@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg: #05060a;
+  --grid: rgba(120, 140, 255, 0.06);
+  --ring: rgba(120, 140, 255, 0.12);
+}
+
+html, body, #root { height: 100%; }
+body { font-family: "Inter", system-ui, sans-serif; }
+
+/* Light theme overrides */
+html:not(.dark) {
+  color-scheme: light;
+}
+html:not(.dark) body {
+  background: #f5f6fb;
+  color: #0a0d18;
+}
+
+/* react-flow theming */
+.react-flow__renderer { background: transparent !important; }
+.react-flow__edge-path { stroke-linecap: round; }
+.react-flow__handle {
+  width: 8px !important; height: 8px !important;
+  background: rgba(120,140,255,0.5) !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+}
+.react-flow__attribution { display: none; }
+.react-flow__minimap {
+  background: rgba(10,13,24,0.7) !important;
+  border: 1px solid rgba(120,140,255,0.2) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+.react-flow__controls {
+  background: rgba(10,13,24,0.7) !important;
+  border: 1px solid rgba(120,140,255,0.2) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(120,140,255,0.15) !important;
+  color: #cbd5ff !important;
+}
+.react-flow__controls-button:hover { background: rgba(120,140,255,0.1) !important; }
+.react-flow__controls-button svg { fill: currentColor; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(120,140,255,0.25); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(120,140,255,0.45); }
+
+/* KaTeX nudges */
+.katex { font-size: 1em; }
+.katex-display { margin: 0.4em 0; }
+
+/* Glass surface */
+.glass {
+  background: linear-gradient(180deg, rgba(16,20,42,0.78), rgba(8,10,20,0.7));
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(120,140,255,0.18);
+}
+html:not(.dark) .glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(245,246,251,0.82));
+  border: 1px solid rgba(40,60,140,0.15);
+  color: #0a0d18;
+}
+
+/* Subtle scanline */
+.scanlines::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,0.015) 3px 4px);
+  mix-blend-mode: overlay;
+}
+
+/* Gradient title */
+.title-gradient {
+  background: linear-gradient(90deg, #5ce1ff 0%, #a78bff 50%, #ffd58a 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Node kind colors */
+.kind-definition { --c: 92, 225, 255; }
+.kind-theorem    { --c: 167, 139, 255; }
+.kind-lemma      { --c: 122, 243, 196; }
+.kind-example    { --c: 255, 213, 138; }
+.kind-proposition{ --c: 255, 143, 177; }
+.kind-corollary  { --c: 255, 184, 108; }
