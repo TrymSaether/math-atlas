@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ArrowDown, ArrowRight, ChevronUp, X } from "lucide-react";
+import { ArrowDown, ArrowRight, X } from "lucide-react";
 import { activePathIds, atlasNodesById, NODE_KIND_META, ROUTE_META } from "../atlas";
 import { useStore } from "../store";
 import { MathText } from "../lib/katex";
@@ -12,9 +12,7 @@ export function Sidebar() {
       <section className="panel-section legend-heading">
         <div>
           <h2>Legend</h2>
-          <p>Transit notation for the visible theorem route.</p>
         </div>
-        <ChevronUp className="h-4 w-4" />
       </section>
 
       <section className="panel-section">
@@ -52,8 +50,8 @@ export function Sidebar() {
         <p className="planner-caption">Find a path between concepts</p>
         <ConceptField label="From" id="D2" title="Topological Space" />
         <ArrowDown className="planner-arrow h-5 w-5" />
-        <ConceptField label="To" id="T12" title="Brouwer Fixed Point Theorem" />
-        <button className="primary-action" onClick={() => select("T12")}>
+        <ConceptField label="To" id="P10" title="Schauder Fixed Point Proposition" />
+        <button className="primary-action" onClick={() => select("P10")}>
           Find Path
         </button>
       </section>

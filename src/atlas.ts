@@ -45,9 +45,9 @@ export const NODE_KIND_META: Record<
 };
 
 export const ROUTE_META: Record<RouteKind, { label: string; color: string }> = {
-  statement: { label: "Statement dependency", color: "#0077B6" },
-  proof: { label: "Proof dependency", color: "#6D597A" },
-  illustration: { label: "Illustration / example link", color: "#D99A2B" },
+  statement: { label: "Statement depends on", color: "#006BA6" },
+  proof: { label: "Used in proof", color: "#7A4D98" },
+  illustration: { label: "Illustrates / Example of", color: "#D97904" },
 };
 
 export const atlasNodes: AtlasNode[] = [
@@ -156,14 +156,14 @@ export const atlasNodes: AtlasNode[] = [
     cluster: "Compactness",
     x: 170,
     y: 382,
-    dependencies: ["D4"],
+    dependencies: ["D3", "D8"],
     illustratedBy: ["E2"],
     description: "A cover argument distilled into a reusable compactness step.",
     formalStatement:
       "Every open cover of a compact space has a finite subcover.",
     proofSketch:
       "The compactness hypothesis is applied to pass from local cover data to finitely many witnesses.",
-    notes: ["The active path enters the compactness line here."],
+    notes: ["A compactness side route used by Heine-Borel-style cover arguments."],
   },
   {
     id: "T7",
@@ -208,7 +208,7 @@ export const atlasNodes: AtlasNode[] = [
     cluster: "Compactness",
     x: 414,
     y: 626,
-    dependencies: ["D2", "L5"],
+    dependencies: ["D2", "D3"],
     illustratedBy: ["E2"],
     description: "A space where every open cover admits a finite subcover.",
     formalStatement:
@@ -224,7 +224,7 @@ export const atlasNodes: AtlasNode[] = [
     cluster: "Fixed Point Theory",
     x: 676,
     y: 598,
-    dependencies: ["D6", "D8", "T8"],
+    dependencies: ["D6", "D8"],
     illustratedBy: [],
     description:
       "A fixed-point bridge from compact convex geometry to self maps.",
@@ -241,7 +241,7 @@ export const atlasNodes: AtlasNode[] = [
     cluster: "Fixed Point Theory",
     x: 914,
     y: 516,
-    dependencies: ["D5", "D6", "P10"],
+    dependencies: ["D5", "D6"],
     illustratedBy: [],
     description: "A deformation tool used to control continuous extensions.",
     formalStatement:
@@ -343,7 +343,7 @@ export const atlasNodesById = new Map(
   atlasNodes.map((node) => [node.id, node]),
 );
 
-export const activePathIds = ["D2", "D4", "L5", "T7", "T8", "P10", "L9", "T12"];
+export const activePathIds = ["D2", "D6", "D8", "P10"];
 
 export const atlasRoutes: AtlasRoute[] = [
   {
@@ -365,7 +365,6 @@ export const atlasRoutes: AtlasRoute[] = [
     from: "D2",
     to: "D4",
     kind: "statement",
-    active: true,
     path: "M500 218 L500 286",
   },
   {
@@ -394,14 +393,22 @@ export const atlasRoutes: AtlasRoute[] = [
     from: "D2",
     to: "D6",
     kind: "statement",
+    active: true,
     path: "M580 182 L770 182 C800 182 810 196 882 196",
+  },
+  {
+    id: "D2-D8",
+    from: "D2",
+    to: "D8",
+    kind: "statement",
+    active: true,
+    path: "M500 218 C500 350 470 500 494 626",
   },
   {
     id: "D4-L5",
     from: "D4",
     to: "L5",
     kind: "statement",
-    active: true,
     path: "M450 346 C388 346 360 412 322 412",
   },
   {
@@ -409,14 +416,20 @@ export const atlasRoutes: AtlasRoute[] = [
     from: "L5",
     to: "T7",
     kind: "proof",
-    active: true,
     path: "M322 420 C362 420 344 530 402 530",
+  },
+  {
+    id: "L5-T8",
+    from: "L5",
+    to: "T8",
+    kind: "proof",
+    path: "M322 420 C440 420 548 466 690 468",
   },
   {
     id: "L5-D8",
     from: "L5",
     to: "D8",
-    kind: "illustration",
+    kind: "proof",
     path: "M250 456 C250 592 360 562 414 650",
   },
   {
@@ -431,7 +444,6 @@ export const atlasRoutes: AtlasRoute[] = [
     from: "T7",
     to: "T8",
     kind: "statement",
-    active: true,
     path: "M562 532 C612 532 612 468 690 468",
   },
   {
@@ -442,18 +454,26 @@ export const atlasRoutes: AtlasRoute[] = [
     path: "M960 238 C960 378 800 348 800 438",
   },
   {
+    id: "D6-P10",
+    from: "D6",
+    to: "P10",
+    kind: "statement",
+    active: true,
+    path: "M960 238 C994 384 874 570 836 628",
+  },
+  {
     id: "T8-P10",
     from: "T8",
     to: "P10",
     kind: "proof",
-    active: true,
     path: "M770 510 C802 558 750 598 756 598",
   },
   {
     id: "D8-P10",
     from: "D8",
     to: "P10",
-    kind: "proof",
+    kind: "statement",
+    active: true,
     path: "M566 658 L676 628",
   },
   {
@@ -461,7 +481,6 @@ export const atlasRoutes: AtlasRoute[] = [
     from: "P10",
     to: "L9",
     kind: "proof",
-    active: true,
     path: "M836 628 C872 628 868 546 914 546",
   },
   {
@@ -476,7 +495,6 @@ export const atlasRoutes: AtlasRoute[] = [
     from: "L9",
     to: "T12",
     kind: "proof",
-    active: true,
     path: "M994 588 C1018 642 948 704 998 704",
   },
   {

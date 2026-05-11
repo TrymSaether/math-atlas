@@ -1,4 +1,4 @@
-import { BookOpen, CircleHelp, Compass, Search, Sun, UserCircle } from "lucide-react";
+import { CircleHelp, Compass, Search, Sun, UserCircle } from "lucide-react";
 import { useStore } from "../store";
 
 const navItems = ["Map", "Library", "Notes", "Paths", "Groups"];
@@ -38,9 +38,6 @@ export function TopBar() {
       </nav>
 
       <div className="top-actions" aria-label="Utilities">
-        <button title="Reference library" aria-label="Reference library">
-          <BookOpen className="h-4 w-4" />
-        </button>
         <button title="Help" aria-label="Help">
           <CircleHelp className="h-4 w-4" />
         </button>

@@ -5,8 +5,8 @@ import { MathText } from "../lib/katex";
 import { useStore } from "../store";
 
 export function NodePanel() {
-  const selectedId = useStore((s) => s.selectedId) ?? "T12";
-  const node = atlasNodesById.get(selectedId) ?? atlasNodesById.get("T12")!;
+  const selectedId = useStore((s) => s.selectedId) ?? "P10";
+  const node = atlasNodesById.get(selectedId) ?? atlasNodesById.get("P10")!;
   const meta = NODE_KIND_META[node.kind];
 
   return (
