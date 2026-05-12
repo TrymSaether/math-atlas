@@ -5,6 +5,7 @@ import { nodeById } from "../data";
 import { MathText } from "../lib/katex";
 import { cn } from "../lib/utils";
 import { KIND_LABEL } from "../types";
+import { animation, layout } from "../design-tokens";
 
 export function NodePanel() {
   const id = useStore((s) => s.selectedId);
@@ -21,23 +22,27 @@ export function NodePanel() {
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 24 }}
-          transition={{ duration: 0.28, ease: [0.2, 0.7, 0.2, 1] }}
+          transition={{ duration: animation.duration.slow / 1000, ease: animation.easing.sharp }}
+          style={{
+            width: `${layout.panel.nodePanel.width}px`,
+            maxWidth: layout.panel.nodePanel.maxWidthViewport,
+          }}
           className={cn(
             `kind-${node.kind}`,
-            "glass scanlines absolute right-3 top-3 bottom-3 z-20 flex w-[400px] max-w-[42vw] flex-col overflow-hidden rounded-2xl shadow-2xl"
+            "glass scanlines absolute right-3 top-3 bottom-3 z-content flex flex-col overflow-hidden rounded-2xl shadow-2xl"
           )}
         >
           {/* Top accent bar */}
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(var(--c),0.9)] to-transparent" />
           <div className="absolute -left-px top-12 h-32 w-px bg-gradient-to-b from-[rgba(var(--c),0.9)] to-transparent" />
 
-          <header className="flex items-start justify-between gap-3 border-b border-white/10 p-4">
+          <header className="flex items-start justify-between gap-3 border-b border-muted p-4">
             <div className="min-w-0">
-              <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[rgba(var(--c),0.95)]">
+              <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-[rgba(var(--c),0.95)]">
                 <span className="rounded-sm bg-[rgba(var(--c),0.12)] px-1.5 py-0.5">
                   {KIND_LABEL[node.kind]}
                 </span>
-                <span className="text-white/60">{node.topicCluster}</span>
+                <span className="text-muted/80">{node.topicCluster}</span>
               </div>
               <h2 className="mt-1.5 font-display text-xl font-semibold leading-tight">
                 <MathText text={node.title} />
@@ -45,7 +50,7 @@ export function NodePanel() {
             </div>
             <button
               onClick={() => select(null)}
-              className="rounded-md p-1 text-white/50 hover:bg-white/10 hover:text-white"
+              className="rounded-md p-1 text-muted/60 hover:bg-surface hover:text-ink transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
