@@ -1,26 +1,32 @@
 import type { ReactNode } from "react";
-import { Bookmark, ChevronDown, ChevronLeft, ChevronRight, MoreVertical, Star } from "lucide-react";
-import { atlasNodesById, NODE_KIND_META } from "../atlas";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { atlasNodes, atlasNodesById, DEFAULT_SELECTED_ID, NODE_KIND_META } from "../atlas";
 import { MathText } from "../lib/katex";
 import { useStore } from "../store";
 
 export function NodePanel() {
-  const selectedId = useStore((s) => s.selectedId) ?? "P10";
-  const node = atlasNodesById.get(selectedId) ?? atlasNodesById.get("P10")!;
+  const selectedId = useStore((s) => s.selectedId) ?? DEFAULT_SELECTED_ID;
+  const select = useStore((s) => s.select);
+  const node = atlasNodesById.get(selectedId) ?? atlasNodesById.get(DEFAULT_SELECTED_ID);
+  if (!node) return <aside className="right-panel" />;
   const meta = NODE_KIND_META[node.kind];
+  const currentIdx = atlasNodes.findIndex((n) => n.id === node.id);
+  const step = (delta: number) => {
+    const next = (currentIdx + delta + atlasNodes.length) % atlasNodes.length;
+    select(atlasNodes[next].id);
+  };
 
   return (
     <aside className="right-panel">
       <header className="detail-nav">
-        <button>
-          <ChevronLeft className="h-4 w-4" />
-          Back to map
-        </button>
-        <div>
-          <ChevronLeft className="h-4 w-4" />
-          <span>7 of 48</span>
-          <ChevronRight className="h-4 w-4" />
-          <MoreVertical className="h-4 w-4" />
+        <div className="detail-counter">
+          <button onClick={() => step(-1)} aria-label="Previous concept">
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <span>{currentIdx + 1} of {atlasNodes.length}</span>
+          <button onClick={() => step(1)} aria-label="Next concept">
+            <ChevronRight className="h-4 w-4" />
+          </button>
         </div>
       </header>
 
@@ -30,15 +36,7 @@ export function NodePanel() {
             <span className="kind-badge" style={{ backgroundColor: meta.color }}>
               {meta.label.toUpperCase()}
             </span>
-            <span className="id-badge">{node.id}</span>
-          </div>
-          <div className="icon-actions">
-            <button aria-label="Star concept">
-              <Star className="h-4 w-4" />
-            </button>
-            <button aria-label="Bookmark concept">
-              <Bookmark className="h-4 w-4" />
-            </button>
+            <span className="id-badge">{node.shortLabel}</span>
           </div>
         </div>
 
@@ -55,12 +53,6 @@ export function NodePanel() {
         <DetailSection title="Formal Statement">
           <p className="math-note">
             <MathText text={node.formalStatement} />
-          </p>
-        </DetailSection>
-
-        <DetailSection title="Proof Sketch">
-          <p>
-            <MathText text={node.proofSketch} />
           </p>
         </DetailSection>
 
@@ -124,7 +116,7 @@ function ChipList({ ids }: { ids: string[] }) {
             }}
             onClick={() => select(id)}
           >
-            <strong>{id}</strong>
+            <strong>{node.shortLabel}</strong>
             <span>
               <MathText text={node.title} />
             </span>

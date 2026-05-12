@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useStore } from "../store";
-import { atlasNodes } from "../atlas";
+import { atlasNodes, DEFAULT_SELECTED_ID } from "../atlas";
 
 /** Arrow keys navigate sequentially; Esc clears selection. */
 export function useKeyboardNav() {
@@ -11,7 +11,7 @@ export function useKeyboardNav() {
       const target = e.target as HTMLElement | null;
       if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) return;
       const { selectedId, select } = useStore.getState();
-      if (e.key === "Escape") { select("T12"); return; }
+      if (e.key === "Escape") { select(DEFAULT_SELECTED_ID); return; }
       if (!["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft", "j", "k"].includes(e.key)) return;
       e.preventDefault();
       const cur = selectedId ? indexById.get(selectedId) ?? -1 : -1;

@@ -1,11 +1,10 @@
-import { CircleHelp, Compass, Search, Sun, UserCircle } from "lucide-react";
+import { Compass, Search } from "lucide-react";
 import { useStore } from "../store";
-
-const navItems = ["Map", "Library", "Notes", "Paths", "Groups"];
 
 export function TopBar() {
   const search = useStore((s) => s.search);
   const setSearch = useStore((s) => s.setSearch);
+  const setPaletteOpen = useStore((s) => s.setPaletteOpen);
 
   return (
     <header className="topbar">
@@ -26,28 +25,15 @@ export function TopBar() {
           placeholder="Search concepts, theorems, definitions..."
           aria-label="Search concepts"
         />
-        <kbd>⌘K</kbd>
+        <button
+          type="button"
+          className="top-search-kbd"
+          onClick={() => setPaletteOpen(true)}
+          aria-label="Open command palette"
+        >
+          ⌘K
+        </button>
       </label>
-
-      <nav className="top-nav" aria-label="Primary">
-        {navItems.map((item) => (
-          <button key={item} className={item === "Map" ? "active" : ""}>
-            {item}
-          </button>
-        ))}
-      </nav>
-
-      <div className="top-actions" aria-label="Utilities">
-        <button title="Help" aria-label="Help">
-          <CircleHelp className="h-4 w-4" />
-        </button>
-        <button title="Light mode" aria-label="Light mode">
-          <Sun className="h-4 w-4" />
-        </button>
-        <button title="Account" aria-label="Account">
-          <UserCircle className="h-5 w-5" />
-        </button>
-      </div>
     </header>
   );
 }

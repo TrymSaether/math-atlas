@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { NodeKind, Relation } from "./types";
+import { DEFAULT_SELECTED_ID } from "./atlas";
 
 export type ViewMode = "dependency" | "cluster";
 export type HighlightMode = "immediate" | "full";
@@ -71,7 +72,7 @@ export const useStore = create<State>((set) => ({
   relations: new Set(ALL_RELATIONS),
   toggleRelation: (r) => set((s) => ({ relations: toggle(s.relations, r) })),
 
-  selectedId: "P10",
+  selectedId: DEFAULT_SELECTED_ID,
   select: (id) => set({ selectedId: id }),
 
   highlight: "immediate",

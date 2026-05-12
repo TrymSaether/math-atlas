@@ -2,6 +2,7 @@ import { Sidebar } from "./components/Sidebar";
 import { TopBar } from "./components/TopBar";
 import { GraphCanvas } from "./components/GraphCanvas";
 import { NodePanel } from "./components/NodePanel";
+import { CommandPalette } from "./components/CommandPalette";
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
         </main>
         <NodePanel />
       </div>
+      <CommandPalette />
     </div>
   );
 }
