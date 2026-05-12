@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Background } from "./components/Background";
 import { Sidebar } from "./components/Sidebar";
 import { TopBar } from "./components/TopBar";
@@ -16,6 +16,15 @@ export default function App() {
   const topics = useStore((s) => s.topics);
   const search = useStore((s) => s.search).toLowerCase().trim();
   const searchScope = useStore((s) => s.searchScope);
+  const themeId = useStore((s) => s.themeId);
+  const colorMode = useStore((s) => s.colorMode);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.theme = themeId;
+    root.dataset.colorMode = colorMode;
+    root.classList.toggle("dark", colorMode === "dark");
+  }, [themeId, colorMode]);
 
   const visibleCount = useMemo(() => {
     return data.nodes.filter((n) => {
@@ -33,12 +42,12 @@ export default function App() {
   }, [kinds, topics, search, searchScope]);
 
   return (
-    <div className="relative flex h-screen w-screen flex-col p-3">
+    <div className="atlas-shell relative flex h-screen w-screen flex-col p-3">
       <Background />
       <TopBar />
       <div className="flex min-h-0 flex-1 gap-3">
         <Sidebar visibleCount={visibleCount} />
-        <main className="relative min-h-0 flex-1 overflow-hidden rounded-2xl border border-white/10 bg-ink-950/30">
+        <main className="atlas-main relative min-h-0 flex-1 overflow-hidden rounded-2xl border border-white/10 bg-ink-950/30">
           <GraphCanvas />
           <NodePanel />
           <PathPanel />

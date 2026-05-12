@@ -13,7 +13,7 @@ import { data } from "../data";
 import { useStore } from "../store";
 import { dependencyLayout, clusterLayout, type Lane } from "../lib/layout";
 import { buildAdjacency, ancestors, descendants } from "../lib/graph";
-import { nodeKindColors, canvas, stroke } from "../lib/colors";
+import { getThemePalette } from "../themes";
 import { TopoNodeView } from "./TopoNode";
 import { TopoEdgeView } from "./TopoEdge";
 import { LaneNode } from "./LaneNode";
@@ -31,7 +31,11 @@ function InnerGraph() {
   const selectedId = useStore((s) => s.selectedId);
   const highlight = useStore((s) => s.highlight);
   const showOrphans = useStore((s) => s.showOrphans);
+  const themeId = useStore((s) => s.themeId);
+  const colorMode = useStore((s) => s.colorMode);
   const rf = useReactFlow();
+
+  const palette = useMemo(() => getThemePalette(themeId, colorMode), [themeId, colorMode]);
 
   const filteredNodes = useMemo(() => {
     return data.nodes.filter((n) => {
@@ -93,18 +97,21 @@ function InnerGraph() {
 
   const laneNodes: Node[] = useMemo(
     () =>
-      lanes.map((l) => ({
-        id: `lane-${l.topic}`,
-        type: "lane",
-        position: { x: -160, y: l.y - 20 },
-        data: { topic: l.topic, subtitle: l.subtitle, width: l.width, height: l.height },
-        draggable: false,
-        selectable: false,
-        focusable: false,
-        zIndex: -1,
-        style: { zIndex: -1 },
-      })),
-    [lanes]
+      lanes.map((l, index) => {
+        const lanePalette = palette.lanes[index % palette.lanes.length];
+        return {
+          id: `lane-${l.topic}`,
+          type: "lane",
+          position: { x: -160, y: l.y - 20 },
+          data: { topic: l.topic, subtitle: l.subtitle, width: l.width, height: l.height, palette: lanePalette },
+          draggable: false,
+          selectable: false,
+          focusable: false,
+          zIndex: -1,
+          style: { zIndex: -1 },
+        };
+      }),
+    [lanes, palette]
   );
 
   const nodes: Node[] = useMemo(
@@ -116,7 +123,8 @@ function InnerGraph() {
         const anyHi = selectedId !== null && visibleIds.has(selectedId);
         const dim = anyHi && !isSel && !isAnc && !isDesc;
         return {
-          ...n, selected: isSel,
+          ...n,
+          selected: isSel,
           data: { ...n.data, dim, highlight: isSel ? "primary" : isAnc ? "anc" : isDesc ? "desc" : null },
         };
       }),
@@ -133,13 +141,11 @@ function InnerGraph() {
     [rawEdges, edgeHi, selectedId, visibleIds]
   );
 
-  // Fit on view-mode change.
   useEffect(() => {
     const t = setTimeout(() => rf.fitView({ padding: 0.18, duration: 600 }), 80);
     return () => clearTimeout(t);
   }, [view, rf]);
 
-  // Pan/zoom to selection.
   useEffect(() => {
     if (!selectedId) return;
     const node = rawNodes.find((n) => n.id === selectedId);
@@ -164,7 +170,7 @@ function InnerGraph() {
         variant={BackgroundVariant.Dots}
         gap={28}
         size={1}
-        color={canvas.gridBackground}
+        color="var(--canvas-grid)"
       />
       <MiniMap
         pannable zoomable
@@ -172,19 +178,19 @@ function InnerGraph() {
         nodeColor={(n) => {
           if (n.type === "lane") return "transparent";
           const k = (n.data as any)?.node?.kind;
-          return k ? nodeKindColors[k as keyof typeof nodeKindColors] ?? nodeKindColors.definition : nodeKindColors.definition;
+          return k ? palette.kindColors[k as keyof typeof palette.kindColors] ?? palette.kindColors.definition : palette.kindColors.definition;
         }}
         nodeStrokeColor={(n) =>
-          n.type === "lane" ? "transparent" : n.selected ? stroke.primaryHover : stroke.primary
+          n.type === "lane" ? "transparent" : n.selected ? "var(--primary-hover)" : "var(--primary)"
         }
         nodeBorderRadius={3}
         nodeStrokeWidth={1}
-        maskColor={canvas.maskBackground}
-        maskStrokeColor={canvas.maskStroke}
+        maskColor={palette.miniMapMask}
+        maskStrokeColor="var(--primary)"
         maskStrokeWidth={1.5}
         style={{
-          background: canvas.background,
-          border: "1px solid rgba(255,255,255,0.10)",
+          background: palette.miniMapBackground,
+          border: palette.miniMapBorder,
           borderRadius: 12,
           backdropFilter: "blur(8px)",
         }}

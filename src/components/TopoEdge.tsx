@@ -1,6 +1,7 @@
 import { BaseEdge, EdgeLabelRenderer, getBezierPath, type EdgeProps } from "reactflow";
 import type { TopoEdge as TopoEdgeT } from "../types";
-import { RELATION_COLOR } from "../types";
+import { useStore } from "../store";
+import { getThemePalette } from "../themes";
 
 interface Data {
   edge: TopoEdgeT;
@@ -10,9 +11,12 @@ interface Data {
 
 export function TopoEdgeView(props: EdgeProps<Data>) {
   const { sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data } = props;
+  const themeId = useStore((s) => s.themeId);
+  const colorMode = useStore((s) => s.colorMode);
+  const palette = getThemePalette(themeId, colorMode);
   const [path] = getBezierPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition });
   const e = data?.edge;
-  const color = e ? RELATION_COLOR[e.relation] : "#5ce1ff";
+  const color = e ? palette.routeColors[e.relation] : palette.routeColors.statement;
   // Statement edges are the spine of the dependency graph — keep them
   // readable. Proof and illustration links are supporting context, so they
   // fade into the background unless they're part of the selected path.
