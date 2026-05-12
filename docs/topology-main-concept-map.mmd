@@ -1,0 +1,82 @@
+flowchart TD
+  def_2_1_metric_spaces["Metric spaces"]
+  def_2_7_open_and_closed_balls["Open and closed balls"]
+  def_2_9_open_and_closed_sets["Open and closed sets"]
+  def_3_1_topological_spaces["Topological spaces"]
+  def_3_11_continuous_maps_between_topological_spaces["Continuous maps between topological spaces"]
+  def_3_19_homeomorphisms["Homeomorphisms"]
+  def_3_24_closed_subsets["Closed subsets"]
+  def_3_29_closure["Closure"]
+  def_3_32_dense["Dense subsets"]
+  def_4_3_generated_topologies["Generated topologies"]
+  def_4_6_basis["Basis"]
+  def_4_12_subbasis["Subbasis"]
+  def_5_1_subspace_topology["Subspace topology"]
+  def_5_7_product_topology["Product topology"]
+  def_5_16_quotient_space["Quotient space"]
+  def_6_1_connected_space["Connected space"]
+  def_6_14_path_connected_space["Path-connected space"]
+  def_6_19_hausdorff["Hausdorff space"]
+  def_6_27_cover["Cover of a space"]
+  def_6_29_compact["Compact spaces"]
+  def_7_1_homotopy["Homotopy"]
+  def_7_7_path_homotopy["Path homotopy"]
+  def_7_11_path_homotopy_classes["Path-homotopy classes"]
+  def_7_12_product_of_paths["Product of paths"]
+  def_7_15_fundamental_group["Fundamental group"]
+  def_7_20_simply_connected["Simply connected spaces"]
+  def_7_21_based_maps["Based maps"]
+  def_7_22_induced_homomorphisms["Induced homomorphisms"]
+  def_7_28_retractions["Retractions"]
+  def_7_31_deformation_retracts["Deformation retracts"]
+  def_7_34_homotopy_equivalences["Homotopy equivalences"]
+  def_8_1_covering_spaces["Covering spaces"]
+  def_8_4_local_homeomorphisms["Local homeomorphisms"]
+  def_8_9_liftings["Liftings"]
+  thm_8_12_unique_path_lifting["Unique path lifting"]
+  thm_8_13_homotopy_lifting["Homotopy lifting"]
+  thm_8_21_pi1_circle["π₁(S¹) ≅ ℤ"]
+  thm_8_23_fta["Fundamental theorem of algebra"]
+
+  def_2_1_metric_spaces --> def_2_7_open_and_closed_balls
+  def_2_7_open_and_closed_balls --> def_2_9_open_and_closed_sets
+  def_2_9_open_and_closed_sets --> def_3_1_topological_spaces
+  def_3_1_topological_spaces --> def_3_11_continuous_maps_between_topological_spaces
+  def_3_11_continuous_maps_between_topological_spaces --> def_3_19_homeomorphisms
+  def_3_1_topological_spaces --> def_3_24_closed_subsets
+  def_3_24_closed_subsets --> def_3_29_closure
+  def_3_29_closure --> def_3_32_dense
+  def_3_1_topological_spaces --> def_4_3_generated_topologies
+  def_4_3_generated_topologies --> def_4_6_basis
+  def_4_3_generated_topologies --> def_4_12_subbasis
+  def_3_1_topological_spaces --> def_5_1_subspace_topology
+  def_3_1_topological_spaces --> def_5_7_product_topology
+  def_3_1_topological_spaces --> def_5_16_quotient_space
+  def_3_1_topological_spaces --> def_6_1_connected_space
+  def_6_1_connected_space --> def_6_14_path_connected_space
+  def_3_1_topological_spaces --> def_6_19_hausdorff
+  def_3_1_topological_spaces --> def_6_27_cover
+  def_6_27_cover --> def_6_29_compact
+  def_3_11_continuous_maps_between_topological_spaces --> def_7_1_homotopy
+  def_5_7_product_topology --> def_7_1_homotopy
+  def_7_1_homotopy --> def_7_7_path_homotopy
+  def_7_7_path_homotopy --> def_7_11_path_homotopy_classes
+  def_6_14_path_connected_space --> def_7_12_product_of_paths
+  def_7_11_path_homotopy_classes --> def_7_15_fundamental_group
+  def_7_12_product_of_paths --> def_7_15_fundamental_group
+  def_7_15_fundamental_group --> def_7_20_simply_connected
+  def_3_11_continuous_maps_between_topological_spaces --> def_7_21_based_maps
+  def_7_21_based_maps --> def_7_22_induced_homomorphisms
+  def_7_15_fundamental_group --> def_7_22_induced_homomorphisms
+  def_3_11_continuous_maps_between_topological_spaces --> def_7_28_retractions
+  def_7_28_retractions --> def_7_31_deformation_retracts
+  def_7_1_homotopy --> def_7_34_homotopy_equivalences
+  def_3_11_continuous_maps_between_topological_spaces --> def_8_1_covering_spaces
+  def_3_19_homeomorphisms --> def_8_4_local_homeomorphisms
+  def_8_4_local_homeomorphisms --> def_8_1_covering_spaces
+  def_8_1_covering_spaces --> def_8_9_liftings
+  def_8_9_liftings --> thm_8_12_unique_path_lifting
+  def_8_9_liftings --> thm_8_13_homotopy_lifting
+  thm_8_12_unique_path_lifting --> thm_8_21_pi1_circle
+  thm_8_13_homotopy_lifting --> thm_8_21_pi1_circle
+  thm_8_21_pi1_circle --> thm_8_23_fta
