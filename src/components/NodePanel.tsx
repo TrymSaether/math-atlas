@@ -1,6 +1,13 @@
 import type { ReactNode } from "react";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { atlasNodes, atlasNodesById, DEFAULT_SELECTED_ID, NODE_KIND_META } from "../atlas";
+import {
+  atlasNodes,
+  atlasNodesById,
+  DEFAULT_SELECTED_ID,
+  NODE_KIND_META,
+  ROUTE_META,
+  type AtlasLink,
+} from "../atlas";
 import { MathText } from "../lib/katex";
 import { useStore } from "../store";
 
@@ -44,6 +51,8 @@ export function NodePanel() {
           <MathText text={node.title} />
         </h1>
         <span className="topic-pill">{node.cluster}</span>
+        {node.semanticLayer ? <span className="topic-pill ml-2">{node.semanticLayer}</span> : null}
+        {node.semanticRole ? <span className="topic-pill ml-2">{node.semanticRole}</span> : null}
         <p className="detail-description">
           <MathText text={node.description} />
         </p>
@@ -57,15 +66,15 @@ export function NodePanel() {
         </DetailSection>
 
         <DetailSection title="Depends On">
-          <ChipList ids={node.dependencies} />
+          <LinkList links={node.dependencies} />
         </DetailSection>
 
         <DetailSection title="Used By">
-          <ChipList ids={node.dependents} />
+          <LinkList links={node.dependents} />
         </DetailSection>
 
         <DetailSection title="Illustrated By">
-          <ChipList ids={node.illustratedBy} />
+          <LinkList links={node.illustratedBy} />
         </DetailSection>
 
         <Divider />
@@ -96,33 +105,60 @@ function DetailSection({ title, children }: { title: string; children: ReactNode
   );
 }
 
-function ChipList({ ids }: { ids: string[] }) {
+function LinkList({ links }: { links: AtlasLink[] }) {
   const select = useStore((s) => s.select);
 
-  if (ids.length === 0) {
+  if (links.length === 0) {
     return <p className="empty-state">No linked stations.</p>;
   }
 
   return (
     <div className="chip-list">
-      {ids.map((id) => {
-        const node = atlasNodesById.get(id);
+      {links.map((link) => {
+        const node = atlasNodesById.get(link.nodeId);
         if (!node) return null;
         const meta = NODE_KIND_META[node.kind];
+        const routeMeta = ROUTE_META[link.relation];
+        const label = link.semanticRelation ?? link.label ?? routeMeta.label;
         return (
           <button
-            key={id}
+            key={link.id}
             className="dependency-chip"
+            title={link.rationale}
             style={{
-              borderColor: colorMix(meta.color, 0.28),
+              alignItems: "flex-start",
+              borderColor: colorMix(meta.color, link.needsHumanReview ? 0.48 : 0.28),
               color: meta.color,
-              backgroundColor: colorMix(meta.color, 0.08),
+              backgroundColor: colorMix(meta.color, link.needsHumanReview ? 0.12 : 0.08),
+              display: "grid",
+              gap: 3,
+              height: "auto",
+              padding: "7px 8px",
+              textAlign: "left",
             }}
-            onClick={() => select(id)}
+            onClick={() => select(link.nodeId)}
           >
-            <strong>{node.shortLabel}</strong>
-            <span>
-              <MathText text={node.title} />
+            <span style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
+              <strong>{node.shortLabel}</strong>
+              <span>
+                <MathText text={node.title} />
+              </span>
+            </span>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                color: "#5d6670",
+                fontSize: 10,
+                fontWeight: 650,
+                letterSpacing: "0.02em",
+                textTransform: "uppercase",
+              }}
+            >
+              <span style={{ color: routeMeta.color }}>{label}</span>
+              <span>{Math.round(link.confidence * 100)}%</span>
+              {link.needsHumanReview ? <span>Review</span> : null}
             </span>
           </button>
         );
