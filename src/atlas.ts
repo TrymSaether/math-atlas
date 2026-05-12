@@ -1,10 +1,23 @@
 import { data } from "./data";
-import type { NodeKind, Relation } from "./types";
+import type { NodeKind, Relation, TopoEdge } from "./types";
 import { dependencyLayout, type Lane } from "./lib/layout";
-import { buildLearningPath, orientEdge } from "./lib/graph";
+import { buildLearningPath, cmpNum, orientEdge } from "./lib/graph";
 
 export type AtlasKind = NodeKind;
 export type RouteKind = Relation;
+
+export interface AtlasLink {
+  id: string;
+  nodeId: string;
+  relation: Relation;
+  semanticRelation?: string;
+  label?: string;
+  confidence: number;
+  source: TopoEdge["source"];
+  rationale?: string;
+  needsHumanReview: boolean;
+  reviewFlags: string[];
+}
 
 export interface AtlasNode {
   id: string;
@@ -14,13 +27,16 @@ export interface AtlasNode {
   cluster: string;
   x: number;
   y: number;
-  dependencies: string[];
-  dependents: string[];
-  illustratedBy: string[];
+  dependencies: AtlasLink[];
+  dependents: AtlasLink[];
+  illustratedBy: AtlasLink[];
   description: string;
   formalStatement: string;
   proofSketch: string;
   notes: string[];
+  semanticLayer?: string;
+  semanticRole?: string;
+  conceptMapPriority?: number;
 }
 
 export interface AtlasRoute {
@@ -63,23 +79,60 @@ const layoutResult = dependencyLayout({
 const posById = new Map<string, { x: number; y: number }>(
   layoutResult.nodes.map((n) => [n.id, n.position]),
 );
+const rawNodeById = new Map(data.nodes.map((n) => [n.id, n]));
 
-const statementDeps = new Map<string, string[]>();
-const usedBy = new Map<string, string[]>();
-const illustratedBy = new Map<string, string[]>();
+const dependencyLinks = new Map<string, AtlasLink[]>();
+const usedByLinks = new Map<string, AtlasLink[]>();
+const illustratedByLinks = new Map<string, AtlasLink[]>();
+
 for (const e of data.edges) {
   if (!posById.has(e.from) || !posById.has(e.to)) continue;
-  if (e.relation === "statement" || e.relation === "proof") {
-    // Raw data direction is dependent -> prerequisite.
-    if (!statementDeps.has(e.from)) statementDeps.set(e.from, []);
-    statementDeps.get(e.from)!.push(e.to);
 
-    // Reverse lookup for the Used By panel: prerequisite -> dependents.
-    if (!usedBy.has(e.to)) usedBy.set(e.to, []);
-    usedBy.get(e.to)!.push(e.from);
+  const sourceLink = edgeToLink(e, e.from);
+  const dependentLink = edgeToLink(e, e.to);
+
+  if (e.relation === "statement" || e.relation === "proof") {
+    // Provenance graph direction is source/prerequisite -> dependent.
+    pushLink(dependencyLinks, e.to, sourceLink);
+    pushLink(usedByLinks, e.from, dependentLink);
   } else if (e.relation === "illustration") {
-    if (!illustratedBy.has(e.to)) illustratedBy.set(e.to, []);
-    illustratedBy.get(e.to)!.push(e.from);
+    pushLink(illustratedByLinks, e.to, sourceLink);
+    pushLink(usedByLinks, e.from, dependentLink);
+  }
+}
+
+sortLinks(dependencyLinks);
+sortLinks(usedByLinks);
+sortLinks(illustratedByLinks);
+
+function pushLink(map: Map<string, AtlasLink[]>, id: string, link: AtlasLink) {
+  if (!map.has(id)) map.set(id, []);
+  map.get(id)!.push(link);
+}
+
+function edgeToLink(edge: TopoEdge, nodeId: string): AtlasLink {
+  return {
+    id: edge.id,
+    nodeId,
+    relation: edge.relation,
+    semanticRelation: edge.semanticRelation,
+    label: edge.label,
+    confidence: edge.confidence,
+    source: edge.source,
+    rationale: edge.rationale,
+    needsHumanReview: edge.review?.needsHumanReview ?? false,
+    reviewFlags: edge.review?.flags ?? [],
+  };
+}
+
+function sortLinks(map: Map<string, AtlasLink[]>) {
+  for (const links of map.values()) {
+    links.sort((a, b) => {
+      const an = rawNodeById.get(a.nodeId);
+      const bn = rawNodeById.get(b.nodeId);
+      if (!an || !bn) return a.nodeId.localeCompare(b.nodeId);
+      return cmpNum(an, bn);
+    });
   }
 }
 
@@ -99,13 +152,16 @@ export const atlasNodes: AtlasNode[] = data.nodes
       cluster: n.topicCluster,
       x: p.x,
       y: p.y,
-      dependencies: statementDeps.get(n.id) ?? [],
-      dependents: usedBy.get(n.id) ?? [],
-      illustratedBy: illustratedBy.get(n.id) ?? [],
+      dependencies: dependencyLinks.get(n.id) ?? [],
+      dependents: usedByLinks.get(n.id) ?? [],
+      illustratedBy: illustratedByLinks.get(n.id) ?? [],
       description: n.explanation || n.cleanText || "",
       formalStatement: n.formalStatement || n.statementText || "",
       proofSketch: "",
       notes: n.qualityFlags ?? [],
+      semanticLayer: n.semantic?.layerName ?? n.semantic?.layer,
+      semanticRole: n.semantic?.role,
+      conceptMapPriority: n.graph?.conceptMapPriorityV2 ?? n.graph?.conceptMapPriority,
     };
   });
 
@@ -124,9 +180,9 @@ export const DEFAULT_SELECTED_ID = pickDefaultTarget();
 
 const ALL_RELATIONS = new Set<Relation>(["statement", "proof", "illustration"]);
 
-// Edges are stored as dependent -> prerequisite.
-// A learning path toward a target follows raw prerequisite edges, then returns
-// the result in study order: prerequisites first, target last.
+// Edges are stored as mathematical source/prerequisite -> dependent concept.
+// A learning path toward a target follows incoming prerequisite/provenance edges,
+// then returns the result in study order: prerequisites first, target last.
 export function computeLearningPath(
   targetId: string,
   allowed: Set<Relation> = ALL_RELATIONS,
