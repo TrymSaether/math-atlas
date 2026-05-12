@@ -32,7 +32,10 @@ export interface AtlasRoute {
   active?: boolean;
 }
 
-export const NODE_KIND_META: Record<AtlasKind, { label: string; color: string; short: string }> = {
+export const NODE_KIND_META: Record<
+  AtlasKind,
+  { label: string; color: string; short: string }
+> = {
   definition: { label: "Definition", color: "#2F5D8C", short: "D" },
   theorem: { label: "Theorem", color: "#8A3B3B", short: "T" },
   lemma: { label: "Lemma", color: "#47715D", short: "L" },
@@ -111,7 +114,9 @@ export const atlasNodesById = new Map(atlasNodes.map((n) => [n.id, n]));
 function pickDefaultTarget(): string {
   const brouwer = atlasNodes.find((n) => /brouwer/i.test(n.title));
   if (brouwer) return brouwer.id;
-  const lastTheorem = [...atlasNodes].reverse().find((n) => n.kind === "theorem");
+  const lastTheorem = [...atlasNodes]
+    .reverse()
+    .find((n) => n.kind === "theorem");
   return lastTheorem?.id ?? atlasNodes[0]?.id ?? "";
 }
 
@@ -122,15 +127,23 @@ const ALL_RELATIONS = new Set<Relation>(["statement", "proof", "illustration"]);
 // Edges are stored as dependent -> prerequisite.
 // A learning path toward a target follows raw prerequisite edges, then returns
 // the result in study order: prerequisites first, target last.
-export function computeLearningPath(targetId: string, allowed: Set<Relation> = ALL_RELATIONS): string[] {
+export function computeLearningPath(
+  targetId: string,
+  allowed: Set<Relation> = ALL_RELATIONS,
+): string[] {
   if (!targetId) return [];
-  return buildLearningPath(targetId, data.edges, allowed, data.nodes).map((n) => n.id);
+  return buildLearningPath(targetId, data.edges, allowed, data.nodes).map(
+    (n) => n.id,
+  );
 }
 
 export const activePathIds: string[] = computeLearningPath(DEFAULT_SELECTED_ID);
 const activePathSet = new Set(activePathIds);
 
-function curvePath(a: { x: number; y: number }, b: { x: number; y: number }): string {
+function curvePath(
+  a: { x: number; y: number },
+  b: { x: number; y: number },
+): string {
   const x1 = a.x + NODE_W;
   const y1 = a.y + NODE_H / 2;
   const x2 = b.x;
@@ -156,8 +169,14 @@ export const atlasRoutes: AtlasRoute[] = data.edges
 
 export const atlasLanes: Lane[] = layoutResult.lanes;
 
-const maxX = layoutResult.nodes.reduce((m, n) => Math.max(m, n.position.x + NODE_W), 0);
-const maxY = layoutResult.nodes.reduce((m, n) => Math.max(m, n.position.y + NODE_H), 0);
+const maxX = layoutResult.nodes.reduce(
+  (m, n) => Math.max(m, n.position.x + NODE_W),
+  0,
+);
+const maxY = layoutResult.nodes.reduce(
+  (m, n) => Math.max(m, n.position.y + NODE_H),
+  0,
+);
 export const CANVAS_W = maxX + PAD;
 export const CANVAS_H = maxY + PAD;
 export const ATLAS_NODE_W = NODE_W;

@@ -209,7 +209,6 @@ export function GraphCanvas() {
         zoomOnPinch
         defaultEdgeOptions={{ type: "topo" }}
       >
-        <RFBackground variant={BackgroundVariant.Dots} gap={44} size={0.45} color="rgba(120,105,80,0.05)" />
         <MiniMap
           pannable
           zoomable
