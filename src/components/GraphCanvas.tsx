@@ -47,7 +47,6 @@ interface LaneData {
   fill: string;
   border: string;
   label: string;
-  radius: string;
 }
 
 const NODE_TYPES = {
@@ -60,36 +59,13 @@ const EDGE_TYPES = {
 };
 
 const LANE_PALETTE = [
-  {
-    fill: "rgba(0, 107, 166, 0.12)",
-    border: "rgba(0, 107, 166, 0.20)",
-    label: "rgba(20, 71, 103, 0.62)",
-    radius: "46% 54% 50% 48% / 44% 40% 60% 56%",
-  },
-  {
-    fill: "rgba(122, 77, 152, 0.12)",
-    border: "rgba(122, 77, 152, 0.19)",
-    label: "rgba(75, 51, 93, 0.62)",
-    radius: "54% 46% 56% 44% / 50% 58% 42% 50%",
-  },
-  {
-    fill: "rgba(217, 121, 4, 0.13)",
-    border: "rgba(217, 121, 4, 0.19)",
-    label: "rgba(119, 77, 22, 0.62)",
-    radius: "50% 52% 44% 56% / 56% 46% 54% 44%",
-  },
-  {
-    fill: "rgba(71, 113, 93, 0.12)",
-    border: "rgba(71, 113, 93, 0.19)",
-    label: "rgba(45, 84, 67, 0.62)",
-    radius: "58% 42% 50% 50% / 44% 54% 46% 56%",
-  },
-  {
-    fill: "rgba(138, 59, 59, 0.11)",
-    border: "rgba(138, 59, 59, 0.18)",
-    label: "rgba(95, 48, 48, 0.62)",
-    radius: "48% 52% 58% 42% / 52% 42% 58% 48%",
-  },
+  { fill: "rgba(26, 115, 232, 0.10)", border: "rgba(26, 115, 232, 0.48)", label: "rgba(26, 70, 135, 0.52)" },
+  { fill: "rgba(15, 157, 88, 0.10)", border: "rgba(15, 157, 88, 0.48)", label: "rgba(23, 96, 62, 0.52)" },
+  { fill: "rgba(251, 140, 0, 0.11)", border: "rgba(251, 140, 0, 0.50)", label: "rgba(143, 83, 13, 0.54)" },
+  { fill: "rgba(126, 87, 194, 0.10)", border: "rgba(126, 87, 194, 0.48)", label: "rgba(83, 58, 136, 0.52)" },
+  { fill: "rgba(219, 68, 55, 0.10)", border: "rgba(219, 68, 55, 0.48)", label: "rgba(132, 54, 46, 0.52)" },
+  { fill: "rgba(0, 172, 193, 0.10)", border: "rgba(0, 172, 193, 0.48)", label: "rgba(18, 103, 115, 0.52)" },
+  { fill: "rgba(121, 85, 72, 0.10)", border: "rgba(121, 85, 72, 0.48)", label: "rgba(90, 65, 56, 0.52)" },
 ];
 
 const ATLAS_NODE_BY_ID = new Map(atlasNodes.map((n) => [n.id, n]));
@@ -108,8 +84,6 @@ export function GraphCanvas() {
     return new Set(computeLearningPath(target, relations));
   }, [pathTargetId, selectedId, relations]);
 
-  // A node "matches" search if any of its searchable text contains the query.
-  // When no search is active, every node matches.
   const matchesSearch = useCallback(
     (node: AtlasNode) =>
       !search ||
@@ -119,9 +93,6 @@ export function GraphCanvas() {
     [search],
   );
 
-  // Visible = passes kind filter AND (no search OR matches search).
-  // Edges respect the relation filter. Orphans (no surviving edges) hide
-  // unless showOrphans is on.
   const { visibleNodeIds, dimmedNodeIds } = useMemo(() => {
     const kindOk = (n: AtlasNode) => kinds.has(n.kind);
     const passing = atlasNodes.filter(kindOk);
@@ -152,11 +123,11 @@ export function GraphCanvas() {
       return {
         id: `lane:${lane.topic}`,
         type: "lane",
-        position: { x: -62, y: lane.y - 26 },
+        position: { x: -72, y: lane.y - 34 },
         data: {
           topic: lane.topic,
-          width: lane.width + 124,
-          height: lane.height + 44,
+          width: lane.width + 144,
+          height: lane.height + 62,
           ...palette,
         } satisfies LaneData,
         draggable: false,
@@ -238,7 +209,7 @@ export function GraphCanvas() {
         zoomOnPinch
         defaultEdgeOptions={{ type: "topo" }}
       >
-        <RFBackground variant={BackgroundVariant.Dots} gap={28} size={1} color="rgba(120,105,80,0.18)" />
+        <RFBackground variant={BackgroundVariant.Dots} gap={28} size={0.8} color="rgba(120,105,80,0.12)" />
         <MiniMap
           pannable
           zoomable
@@ -289,32 +260,28 @@ function TopoNodeView({ data: d }: NodeProps<TopoNodeData>) {
 }
 
 function LaneNodeView({ data: d }: NodeProps<LaneData>) {
+  const notch = 34;
+  const path = `M ${notch} 0 H ${d.width - notch} Q ${d.width} 0 ${d.width} ${notch} V ${d.height - notch} Q ${d.width} ${d.height} ${d.width - notch} ${d.height} H ${notch} Q 0 ${d.height} 0 ${d.height - notch} V ${notch} Q 0 0 ${notch} 0 Z`;
   return (
-    <div
-      className="rf-lane-node"
-      style={{
-        width: d.width,
-        height: d.height,
-        display: "grid",
-        alignItems: "start",
-        padding: "22px 34px",
-        border: `1px solid ${d.border}`,
-        borderRadius: d.radius,
-        background: `radial-gradient(circle at 22% 18%, rgba(255,253,246,0.58), transparent 34%), ${d.fill}`,
-        boxShadow: "inset 0 0 42px rgba(104,95,80,0.04)",
-        color: d.label,
-        pointerEvents: "none",
-      } as CSSProperties}
-    >
+    <div className="rf-lane-node" style={{ width: d.width, height: d.height, pointerEvents: "none" } as CSSProperties}>
+      <svg width={d.width} height={d.height} viewBox={`0 0 ${d.width} ${d.height}`} aria-hidden="true">
+        <path d={path} fill={d.fill} stroke={d.border} strokeWidth="2.5" strokeLinejoin="round" />
+        <path d={path} fill="none" stroke="rgba(255,253,246,0.75)" strokeWidth="1" strokeLinejoin="round" transform="translate(3 3) scale(0.996 0.99)" />
+      </svg>
       <span
         style={{
-          maxWidth: 260,
-          fontFamily: 'Georgia, "Times New Roman", serif',
-          fontSize: 15,
-          fontWeight: 700,
-          letterSpacing: "0.08em",
-          lineHeight: 1.12,
+          position: "absolute",
+          left: 34,
+          top: 21,
+          maxWidth: 340,
+          fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+          fontSize: 21,
+          fontWeight: 800,
+          letterSpacing: "0.16em",
+          lineHeight: 1.05,
           textTransform: "uppercase",
+          color: d.label,
+          textShadow: "0 1px 0 rgba(255,253,246,0.75)",
         }}
       >
         {d.topic}
@@ -339,7 +306,7 @@ function TopoEdgeView(props: EdgeProps<TopoEdgeData>) {
       style={{
         stroke: color,
         strokeWidth: active ? activeWidth : baseWidth,
-        strokeOpacity: dim ? 0.08 : active ? 0.98 : 0.3,
+        strokeOpacity: dim ? 0.08 : active ? 0.98 : 0.24,
         strokeLinecap: "round",
         strokeLinejoin: "round",
         fill: "none",
