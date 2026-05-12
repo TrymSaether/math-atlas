@@ -1,7 +1,5 @@
 import { useCallback, useMemo, type CSSProperties } from "react";
 import ReactFlow, {
-  Background as RFBackground,
-  BackgroundVariant,
   BaseEdge,
   Controls,
   Handle,
@@ -58,6 +56,9 @@ const EDGE_TYPES = {
   topo: TopoEdgeView,
 };
 
+const SELECTED_STATION_COLOR = "#005b8d";
+const ROUTE_ZOOM = 1.04;
+
 const LANE_PALETTE = [
   { fill: "rgba(26, 115, 232, 0.07)", border: "rgba(26, 115, 232, 0.44)", label: "rgba(26, 70, 135, 0.42)" },
   { fill: "rgba(15, 157, 88, 0.07)", border: "rgba(15, 157, 88, 0.44)", label: "rgba(23, 96, 62, 0.42)" },
@@ -94,8 +95,7 @@ export function GraphCanvas() {
   );
 
   const { visibleNodeIds, dimmedNodeIds } = useMemo(() => {
-    const kindOk = (n: AtlasNode) => kinds.has(n.kind);
-    const passing = atlasNodes.filter(kindOk);
+    const passing = atlasNodes.filter((n) => kinds.has(n.kind));
     const visible = new Set(passing.map((n) => n.id));
     if (!showOrphans) {
       const hasEdge = new Set<string>();
@@ -124,12 +124,7 @@ export function GraphCanvas() {
         id: `lane:${lane.topic}`,
         type: "lane",
         position: { x: -72, y: lane.y - 34 },
-        data: {
-          topic: lane.topic,
-          width: lane.width + 120,
-          height: lane.height + 28,
-          ...palette,
-        } satisfies LaneData,
+        data: { topic: lane.topic, width: lane.width + 120, height: lane.height + 28, ...palette } satisfies LaneData,
         draggable: false,
         selectable: false,
         zIndex: 0,
@@ -138,20 +133,19 @@ export function GraphCanvas() {
 
     const topoNodes: Node[] = atlasNodes
       .filter((n) => visibleNodeIds.has(n.id))
-      .map((n) => ({
-        id: n.id,
-        type: "topo",
-        position: { x: n.x, y: n.y },
-        data: {
-          node: n,
-          selected: n.id === selectedId,
-          onRoute: activePathSet.has(n.id),
-          dim: dimmedNodeIds.has(n.id),
-        } satisfies TopoNodeData,
-        draggable: false,
-        selectable: false,
-        zIndex: 2,
-      }));
+      .map((n) => {
+        const selected = n.id === selectedId;
+        const onRoute = activePathSet.has(n.id);
+        return {
+          id: n.id,
+          type: "topo",
+          position: { x: n.x, y: n.y },
+          data: { node: n, selected, onRoute, dim: dimmedNodeIds.has(n.id) } satisfies TopoNodeData,
+          draggable: false,
+          selectable: false,
+          zIndex: selected ? 5 : onRoute ? 4 : 2,
+        };
+      });
 
     return [...laneNodes, ...topoNodes];
   }, [selectedId, activePathSet, visibleNodeIds, dimmedNodeIds]);
@@ -176,17 +170,14 @@ export function GraphCanvas() {
           target: route.to,
           type: "topo",
           data: { relation: e.relation, active, dim } satisfies TopoEdgeData,
-          zIndex: active ? 1 : 0,
+          zIndex: active ? 3 : 1,
         };
       });
   }, [relations, visibleNodeIds, dimmedNodeIds, activePathSet]);
 
-  const onNodeClick = useCallback(
-    (_: unknown, node: Node) => {
-      if (node.type === "topo") select(node.id);
-    },
-    [select],
-  );
+  const onNodeClick = useCallback((_: unknown, node: Node) => {
+    if (node.type === "topo") select(node.id);
+  }, [select]);
 
   return (
     <div className="topo-flow-shell">
@@ -216,7 +207,7 @@ export function GraphCanvas() {
           nodeColor={(n) => {
             if (n.type === "lane") return "rgba(0,0,0,0.03)";
             const d = n.data as TopoNodeData;
-            return NODE_KIND_META[d.node.kind].color;
+            return d.selected ? SELECTED_STATION_COLOR : NODE_KIND_META[d.node.kind].color;
           }}
           nodeStrokeWidth={0}
           style={{ background: "rgba(255,253,246,0.85)", border: "1px solid rgba(74,62,45,0.10)" }}
@@ -230,30 +221,26 @@ export function GraphCanvas() {
 function TopoNodeView({ data: d }: NodeProps<TopoNodeData>) {
   const { node, selected, onRoute, dim } = d;
   const meta = NODE_KIND_META[node.kind];
+  const stationColor = selected ? SELECTED_STATION_COLOR : meta.color;
   return (
     <div
-      className={[
-        "rf-topo-node",
-        selected ? "selected" : "",
-        onRoute ? "on-route" : "",
-        dim ? "search-dim" : "",
-      ].join(" ")}
+      className={["rf-topo-node", selected ? "selected" : "", onRoute ? "on-route" : "", dim ? "search-dim" : ""].join(" ")}
       style={{
-        width: ATLAS_NODE_W,
-        minHeight: ATLAS_NODE_H,
-        borderColor: meta.color,
-        "--node-color": meta.color,
+        width: selected ? ATLAS_NODE_W + 26 : ATLAS_NODE_W,
+        minHeight: selected ? ATLAS_NODE_H + 10 : ATLAS_NODE_H,
+        borderColor: stationColor,
+        "--node-color": stationColor,
+        "--kind-color": meta.color,
       } as CSSProperties}
     >
       <Handle type="target" position={Position.Left} className="!opacity-0" style={{ background: "transparent", border: "none" }} />
       <Handle type="source" position={Position.Right} className="!opacity-0" style={{ background: "transparent", border: "none" }} />
       <span className="node-kicker">
-        <b>{node.shortLabel}</b>
-        <em>{node.cluster}</em>
+        <strong className="node-id">{node.shortLabel}</strong>
+        <span className="node-kind-badge" style={{ background: meta.color }}>{node.kind}</span>
       </span>
-      <span className="node-title">
-        <MathText text={node.title} />
-      </span>
+      <span className="node-title"><MathText text={node.title} /></span>
+      <span className="node-cluster">{node.cluster}</span>
     </div>
   );
 }
@@ -266,21 +253,7 @@ function LaneNodeView({ data: d }: NodeProps<LaneData>) {
       <svg width={d.width} height={d.height} viewBox={`0 0 ${d.width} ${d.height}`} aria-hidden="true">
         <path d={path} fill={d.fill} stroke={d.border} strokeWidth="1.6" strokeLinejoin="round" />
       </svg>
-      <span
-        style={{
-          position: "absolute",
-          left: 30,
-          top: 18,
-          maxWidth: 340,
-          fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-          fontSize: 18,
-          fontWeight: 800,
-          letterSpacing: "0.18em",
-          lineHeight: 1.05,
-          textTransform: "uppercase",
-          color: d.label,
-        }}
-      >
+      <span style={{ position: "absolute", left: 30, top: 18, maxWidth: 340, fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', fontSize: 18, fontWeight: 800, letterSpacing: "0.18em", lineHeight: 1.05, textTransform: "uppercase", color: d.label }}>
         {d.topic}
       </span>
     </div>
@@ -289,49 +262,47 @@ function LaneNodeView({ data: d }: NodeProps<LaneData>) {
 
 function TopoEdgeView(props: EdgeProps<TopoEdgeData>) {
   const { sourceX, sourceY, targetX, targetY } = props;
-  const path = roundedMetroPath(sourceX, sourceY, targetX, targetY);
+  const active = props.data?.active ?? false;
+  const path = roundedMetroPath(sourceX, sourceY, targetX, targetY, active ? ROUTE_ZOOM : 1);
   const relation = props.data?.relation ?? "statement";
   const color = ROUTE_META[relation].color;
-  const active = props.data?.active ?? false;
   const dim = props.data?.dim ?? false;
-  const baseWidth = relation === "statement" ? 5.2 : relation === "proof" ? 4.8 : 4.2;
-  const activeWidth = relation === "statement" ? 9.2 : relation === "proof" ? 8.2 : 7.2;
+  const baseWidth = relation === "statement" ? 4.4 : relation === "proof" ? 4 : 3.4;
+  const activeWidth = relation === "statement" ? 11.5 : relation === "proof" ? 10.2 : 8.8;
   return (
     <BaseEdge
       id={props.id}
       path={path}
       style={{
-        stroke: color,
+        stroke: active ? SELECTED_STATION_COLOR : color,
         strokeWidth: active ? activeWidth : baseWidth,
-        strokeOpacity: dim ? 0.04 : active ? 0.95 : 0.16,
+        strokeOpacity: dim ? 0.035 : active ? 0.98 : 0.12,
         strokeLinecap: "round",
         strokeLinejoin: "round",
         fill: "none",
+        filter: active ? "drop-shadow(0 0 5px rgba(0,91,141,0.20))" : undefined,
       }}
     />
   );
 }
 
-function roundedMetroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
-  const dx = targetX - sourceX;
-  const dy = targetY - sourceY;
-  if (Math.abs(dy) < 6) return `M${sourceX} ${sourceY} L${targetX} ${targetY}`;
+function roundedMetroPath(sourceX: number, sourceY: number, targetX: number, targetY: number, zoom = 1) {
+  const cx = (sourceX + targetX) / 2;
+  const cy = (sourceY + targetY) / 2;
+  const sx = cx + (sourceX - cx) * zoom;
+  const sy = cy + (sourceY - cy) * zoom;
+  const tx = cx + (targetX - cx) * zoom;
+  const ty = cy + (targetY - cy) * zoom;
+  const dx = tx - sx;
+  const dy = ty - sy;
+  if (Math.abs(dy) < 6) return `M${sx} ${sy} L${tx} ${ty}`;
 
   const xDir = dx >= 0 ? 1 : -1;
   const yDir = dy >= 0 ? 1 : -1;
-  const midX = sourceX + dx / 2;
+  const midX = sx + dx / 2;
   const bend = Math.max(0, Math.min(24, Math.abs(dx) / 2 - 2, Math.abs(dy) / 2));
 
-  if (bend < 4) {
-    return `M${sourceX} ${sourceY} L${midX} ${sourceY} L${midX} ${targetY} L${targetX} ${targetY}`;
-  }
+  if (bend < 4) return `M${sx} ${sy} L${midX} ${sy} L${midX} ${ty} L${tx} ${ty}`;
 
-  return [
-    `M${sourceX} ${sourceY}`,
-    `H${midX - xDir * bend}`,
-    `Q${midX} ${sourceY} ${midX} ${sourceY + yDir * bend}`,
-    `V${targetY - yDir * bend}`,
-    `Q${midX} ${targetY} ${midX + xDir * bend} ${targetY}`,
-    `H${targetX}`,
-  ].join(" ");
+  return [`M${sx} ${sy}`, `H${midX - xDir * bend}`, `Q${midX} ${sy} ${midX} ${sy + yDir * bend}`, `V${ty - yDir * bend}`, `Q${midX} ${ty} ${midX + xDir * bend} ${ty}`, `H${tx}`].join(" ");
 }
