@@ -17,6 +17,7 @@ import { getThemePalette } from "../themes";
 import { TopoNodeView } from "./TopoNode";
 import { TopoEdgeView } from "./TopoEdge";
 import { LaneNode } from "./LaneNode";
+import { layout } from "../design-tokens";
 
 const nodeTypes = { topo: TopoNodeView, lane: LaneNode };
 const edgeTypes = { topo: TopoEdgeView };
@@ -102,7 +103,7 @@ function InnerGraph() {
         return {
           id: `lane-${l.topic}`,
           type: "lane",
-          position: { x: -160, y: l.y - 20 },
+          position: { x: layout.canvas.laneOffset.x, y: l.y + layout.canvas.laneOffset.y },
           data: { topic: l.topic, subtitle: l.subtitle, width: l.width, height: l.height, palette: lanePalette },
           draggable: false,
           selectable: false,
@@ -142,7 +143,7 @@ function InnerGraph() {
   );
 
   useEffect(() => {
-    const t = setTimeout(() => rf.fitView({ padding: 0.18, duration: 600 }), 80);
+    const t = setTimeout(() => rf.fitView({ padding: layout.canvas.fitViewPadding, duration: layout.canvas.fitViewDuration }), layout.canvas.initialAnimationDelay);
     return () => clearTimeout(t);
   }, [view, rf]);
 
@@ -150,7 +151,7 @@ function InnerGraph() {
     if (!selectedId) return;
     const node = rawNodes.find((n) => n.id === selectedId);
     if (!node) return;
-    rf.setCenter(node.position.x + 120, node.position.y + 46, { zoom: Math.max(0.9, rf.getZoom()), duration: 450 });
+    rf.setCenter(node.position.x + 120, node.position.y + 46, { zoom: Math.max(0.9, rf.getZoom()), duration: layout.canvas.centerAnimationDuration });
   }, [selectedId, rawNodes, rf]);
 
   return (
@@ -161,15 +162,15 @@ function InnerGraph() {
       edgeTypes={edgeTypes}
       onPaneClick={() => useStore.getState().select(null)}
       proOptions={{ hideAttribution: true }}
-      minZoom={0.06}
-      maxZoom={2.4}
+      minZoom={layout.canvas.minZoom}
+      maxZoom={layout.canvas.maxZoom}
       fitView
       defaultEdgeOptions={{ type: "topo" }}
     >
       <RFBackground
         variant={BackgroundVariant.Dots}
-        gap={28}
-        size={1}
+        gap={layout.canvas.gridGap}
+        size={layout.canvas.miniMapSize}
         color="var(--canvas-grid)"
       />
       <MiniMap

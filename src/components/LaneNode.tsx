@@ -1,5 +1,6 @@
 import type { NodeProps } from "reactflow";
 import type { LanePalette } from "../themes";
+import { typography } from "../design-tokens";
 
 interface Data {
   topic: string;
@@ -24,14 +25,22 @@ export function LaneNode({ data }: NodeProps<Data>) {
         }}
       />
       <div
-        className="absolute left-3 top-3 font-display text-[26px] font-semibold tracking-[0.06em] leading-tight"
-        style={{ color: data.palette?.label ?? "rgba(150,170,255,0.55)" }}
+        className="absolute left-3 top-3 font-display font-semibold leading-tight"
+        style={{
+          fontSize: typography.sizes["3xl"],
+          letterSpacing: typography.letterSpacing.normal,
+          color: data.palette?.label ?? "rgba(var(--primary),0.55)"
+        }}
       >
         {data.topic}
       </div>
       <div
-        className="absolute left-3 top-12 font-display text-[10px] uppercase tracking-[0.28em]"
-        style={{ color: data.palette?.label ?? "rgba(150,170,255,0.4)" }}
+        className="absolute left-3 top-12 font-display uppercase"
+        style={{
+          fontSize: typography.sizes.xs,
+          letterSpacing: typography.letterSpacing.widest,
+          color: data.palette?.label ?? "rgba(var(--primary),0.4)"
+        }}
       >
         {data.subtitle}
       </div>

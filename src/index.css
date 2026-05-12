@@ -22,6 +22,57 @@ body {
   color: var(--ink);
 }
 
+/* Theme-aware text color utilities */
+.text-ink {
+  color: var(--ink);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-surface {
+  color: var(--surface);
+}
+
+/* Theme-aware background utilities */
+.bg-paper {
+  background-color: var(--paper);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.bg-surface-muted {
+  background-color: var(--surface-muted);
+}
+
+.bg-panel {
+  background-color: var(--panel-bg);
+}
+
+/* Theme-aware border utilities */
+.border-ink {
+  border-color: var(--ink);
+}
+
+.border-muted {
+  border-color: var(--muted);
+}
+
+.border-primary {
+  border-color: var(--primary);
+}
+
+.border-surface {
+  border-color: var(--surface);
+}
+
 .react-flow__renderer {
   background: transparent !important;
 }
