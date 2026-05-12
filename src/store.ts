@@ -1,6 +1,14 @@
 import { create } from "zustand";
 import type { NodeKind, Relation } from "./types";
 import { DEFAULT_SELECTED_ID } from "./atlas";
+import {
+  DEFAULT_COLOR_MODE,
+  DEFAULT_THEME_ID,
+  isColorMode,
+  isThemeId,
+  type ColorMode,
+  type ThemeId,
+} from "./themes";
 
 export type ViewMode = "dependency" | "cluster";
 export type HighlightMode = "immediate" | "full";
@@ -42,15 +50,43 @@ interface State {
 
   panelCollapsed: boolean;
   setPanelCollapsed: (v: boolean) => void;
+
+  themeId: ThemeId;
+  setThemeId: (themeId: ThemeId) => void;
+  colorMode: ColorMode;
+  setColorMode: (colorMode: ColorMode) => void;
+  toggleColorMode: () => void;
 }
 
 const ALL_KINDS: NodeKind[] = ["definition", "theorem", "lemma", "example", "proposition", "corollary"];
 const ALL_RELATIONS: Relation[] = ["statement", "proof", "illustration"];
+const THEME_STORAGE_KEY = "topology-map.theme";
+const COLOR_MODE_STORAGE_KEY = "topology-map.color-mode";
 
 function toggle<T>(set: Set<T>, v: T) {
   const next = new Set(set);
   if (next.has(v)) next.delete(v); else next.add(v);
   return next;
+}
+
+function readStoredTheme(): ThemeId {
+  if (typeof window === "undefined") return DEFAULT_THEME_ID;
+  const value = window.localStorage.getItem(THEME_STORAGE_KEY);
+  return isThemeId(value) ? value : DEFAULT_THEME_ID;
+}
+
+function readStoredColorMode(): ColorMode {
+  if (typeof window === "undefined") return DEFAULT_COLOR_MODE;
+  const value = window.localStorage.getItem(COLOR_MODE_STORAGE_KEY);
+  return isColorMode(value) ? value : DEFAULT_COLOR_MODE;
+}
+
+function persistTheme(themeId: ThemeId) {
+  if (typeof window !== "undefined") window.localStorage.setItem(THEME_STORAGE_KEY, themeId);
+}
+
+function persistColorMode(colorMode: ColorMode) {
+  if (typeof window !== "undefined") window.localStorage.setItem(COLOR_MODE_STORAGE_KEY, colorMode);
 }
 
 export const useStore = create<State>((set) => ({
@@ -89,4 +125,21 @@ export const useStore = create<State>((set) => ({
 
   panelCollapsed: false,
   setPanelCollapsed: (v) => set({ panelCollapsed: v }),
+
+  themeId: readStoredTheme(),
+  setThemeId: (themeId) => {
+    persistTheme(themeId);
+    set({ themeId });
+  },
+  colorMode: readStoredColorMode(),
+  setColorMode: (colorMode) => {
+    persistColorMode(colorMode);
+    set({ colorMode });
+  },
+  toggleColorMode: () =>
+    set((s) => {
+      const colorMode = s.colorMode === "light" ? "dark" : "light";
+      persistColorMode(colorMode);
+      return { colorMode };
+    }),
 }));
