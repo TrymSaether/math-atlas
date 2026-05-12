@@ -2,12 +2,13 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   Filter, Search, Network, Layers, Command,
-  GitBranchPlus, GitMerge, Sparkles, Eye, EyeOff, Type, Text,
+  GitBranchPlus, GitMerge, Eye, EyeOff, Type, Text,
 } from "lucide-react";
 import { useStore } from "../store";
 import { data } from "../data";
 import { cn } from "../lib/utils";
-import { KIND_LABEL, RELATION_COLOR, type NodeKind, type Relation } from "../types";
+import { KIND_LABEL, type NodeKind, type Relation } from "../types";
+import { getThemePalette } from "../themes";
 
 const KINDS: NodeKind[] = ["definition", "theorem", "lemma", "example", "proposition", "corollary"];
 const RELATIONS: Relation[] = ["statement", "proof", "illustration"];
@@ -31,6 +32,9 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
   const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   const showOrphans = useStore((s) => s.showOrphans);
   const setShowOrphans = useStore((s) => s.setShowOrphans);
+  const themeId = useStore((s) => s.themeId);
+  const colorMode = useStore((s) => s.colorMode);
+  const palette = getThemePalette(themeId, colorMode);
 
   const { allTopics, topicCounts, counts } = useMemo(() => {
     const tc: Record<string, number> = {};
@@ -53,19 +57,16 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
       initial={{ x: -16, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className="glass scanlines relative flex h-full w-[280px] shrink-0 flex-col overflow-hidden rounded-2xl"
+      className="glass relative flex h-full w-[280px] shrink-0 flex-col overflow-hidden rounded-2xl"
     >
-      <div className="border-b border-white/10 p-4">
+      <div className="border-b p-4" style={{ borderColor: "var(--border)" }}>
         <div className="flex items-center gap-2">
-          <div className="relative">
-            <div className="h-7 w-7 rounded-full border border-accent-cyan/60 bg-accent-cyan/10 shadow-glow-cyan" />
-            <div className="absolute inset-0 m-auto h-2 w-2 rounded-full bg-accent-cyan animate-ring" />
-          </div>
+          <div className="h-7 w-7 rounded-full border bg-transparent" style={{ borderColor: "var(--primary)" }} />
           <div>
             <div className="font-display text-sm font-semibold tracking-wide title-gradient">
               TOPOLOGY · ATLAS
             </div>
-            <div className="text-[10px] uppercase tracking-[0.25em] text-white/40">
+            <div className="text-[10px] uppercase tracking-[0.25em]" style={{ color: "var(--muted)" }}>
               concepts · dependencies
             </div>
           </div>
@@ -73,38 +74,38 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-5">
-        {/* Search */}
         <div>
           <div className="mb-1 flex items-center justify-between">
-            <label className="text-[10px] uppercase tracking-widest text-white/40">Search</label>
-            <div className="flex items-center gap-0.5 rounded-md border border-white/10 bg-black/30 p-0.5">
+            <label className="text-[10px] uppercase tracking-widest" style={{ color: "var(--muted)" }}>Search</label>
+            <div className="flex items-center gap-0.5 rounded-md border p-0.5" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
               <ScopeBtn active={searchScope === "all"} onClick={() => setSearchScope("all")} icon={<Text className="h-3 w-3" />} label="All" />
               <ScopeBtn active={searchScope === "title"} onClick={() => setSearchScope("title")} icon={<Type className="h-3 w-3" />} label="Title" />
             </div>
           </div>
           <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white/40" />
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4" style={{ color: "var(--muted)" }} />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={searchScope === "title" ? "title or number…" : "text · number · tag"}
-              className="w-full rounded-lg border border-white/10 bg-black/30 py-2 pl-8 pr-2 text-sm text-white/90 outline-none placeholder:text-white/30 focus:border-accent-cyan/60 focus:shadow-glow-cyan"
+              className="w-full rounded-lg border py-2 pl-8 pr-2 text-sm outline-none"
+              style={{ borderColor: "var(--border)", background: "var(--surface)", color: "var(--ink)" }}
             />
           </div>
-          <div className="mt-1 flex items-center justify-between text-[10px] text-white/40">
-            <span><span className="text-accent-cyan">{visibleCount}</span> / {data.nodes.length} visible</span>
+          <div className="mt-1 flex items-center justify-between text-[10px]" style={{ color: "var(--muted)" }}>
+            <span><span style={{ color: "var(--primary)" }}>{visibleCount}</span> / {data.nodes.length} visible</span>
             <span>{search ? `“${search}”` : "no query"}</span>
           </div>
           <button
             onClick={() => setPaletteOpen(true)}
-            className="mt-2 flex w-full items-center justify-between rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-white/60 hover:bg-white/10"
+            className="mt-2 flex w-full items-center justify-between rounded-lg border px-2.5 py-1.5 text-[11px]"
+            style={{ borderColor: "var(--border)", background: "var(--surface)", color: "var(--muted)" }}
           >
             <span className="flex items-center gap-1.5"><Command className="h-3 w-3" />Command Palette</span>
-            <kbd className="rounded bg-black/40 px-1.5 py-0.5 font-mono text-[10px]">⌘K</kbd>
+            <kbd className="rounded px-1.5 py-0.5 font-mono text-[10px]" style={{ background: "var(--surface-muted)", color: "var(--ink)" }}>⌘K</kbd>
           </button>
         </div>
 
-        {/* View toggle */}
         <Section title="View" icon={<Eye className="h-3 w-3" />}>
           <div className="grid grid-cols-2 gap-1.5">
             <Pill active={view === "dependency"} onClick={() => setView("dependency")}>
@@ -117,24 +118,19 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
           {view === "dependency" && (
             <button
               onClick={() => setShowOrphans(!showOrphans)}
-              className={cn(
-                "mt-1.5 flex w-full items-center justify-between rounded-md border px-2 py-1 text-[11px]",
-                showOrphans
-                  ? "border-white/15 bg-white/5 text-white/80"
-                  : "border-accent-cyan/40 bg-accent-cyan/10 text-accent-cyan"
-              )}
+              className="mt-1.5 flex w-full items-center justify-between rounded-md border px-2 py-1 text-[11px]"
+              style={{ borderColor: showOrphans ? "var(--border)" : "var(--primary)", background: showOrphans ? "var(--surface)" : "var(--surface-muted)", color: showOrphans ? "var(--ink)" : "var(--primary)" }}
             >
               <span className="flex items-center gap-1.5">
                 {showOrphans ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
                 {showOrphans ? "Show all items" : "Hide unlinked items"}
               </span>
-              <span className="text-white/40 text-[10px]">{showOrphans ? "ON" : "OFF"}</span>
+              <span className="text-[10px]" style={{ color: "var(--muted)" }}>{showOrphans ? "ON" : "OFF"}</span>
             </button>
           )}
         </Section>
 
-        {/* Highlight mode */}
-        <Section title="Highlight" icon={<Sparkles className="h-3 w-3" />}>
+        <Section title="Highlight" icon={<GitBranchPlus className="h-3 w-3" />}>
           <div className="grid grid-cols-2 gap-1.5">
             <Pill active={highlight === "immediate"} onClick={() => setHighlight("immediate")}>
               <GitBranchPlus className="h-3 w-3" /> Immediate
@@ -145,7 +141,6 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
           </div>
         </Section>
 
-        {/* Kinds */}
         <Section title="Kind" icon={<Filter className="h-3 w-3" />}>
           <div className="flex flex-wrap gap-1.5">
             {KINDS.filter((k) => (counts[k] ?? 0) > 0).map((k) => (
@@ -154,33 +149,26 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
           </div>
         </Section>
 
-        {/* Relations */}
         <Section title="Edge relation">
           <div className="flex flex-col gap-1.5">
             {RELATIONS.map((r) => (
-              <label key={r} className="flex cursor-pointer items-center gap-2 rounded-md px-1 py-0.5 hover:bg-white/5">
+              <label key={r} className="flex cursor-pointer items-center gap-2 rounded-md px-1 py-0.5" style={{ color: "var(--ink)" }}>
                 <input
                   type="checkbox"
                   checked={relations.has(r)}
                   onChange={() => toggleRelation(r)}
-                  className="accent-accent-cyan"
                 />
-                <span className="h-2 w-6 rounded" style={{ background: RELATION_COLOR[r] }} />
-                <span className="text-xs capitalize text-white/80">{r}</span>
+                <span className="h-2 w-6 rounded" style={{ background: palette.routeColors[r] }} />
+                <span className="text-xs capitalize">{r}</span>
               </label>
             ))}
           </div>
         </Section>
 
-        {/* Theme */}
         <Section
           title="Theme"
           icon={<Layers className="h-3 w-3" />}
-          aside={
-            topics.size > 0 ? (
-              <button onClick={resetTopics} className="text-[10px] text-accent-cyan hover:underline">All</button>
-            ) : null
-          }
+          aside={topics.size > 0 ? <button onClick={resetTopics} className="text-[10px]" style={{ color: "var(--primary)" }}>All</button> : null}
         >
           <div className="flex flex-col gap-1">
             {allTopics.map((t) => {
@@ -190,17 +178,16 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
                 <button
                   key={t}
                   onClick={() => toggleTopic(t)}
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md border px-2 py-1 text-[12px] transition-colors",
-                    muted
-                      ? "border-white/5 bg-white/[0.01] text-white/30 hover:text-white/60"
-                      : active
-                        ? "border-accent-cyan/40 bg-accent-cyan/8 text-white/90 shadow-glow-cyan"
-                        : "border-white/10 bg-white/[0.02] text-white/55 hover:bg-white/5"
-                  )}
+                  className="flex w-full items-center justify-between rounded-md border px-2 py-1 text-[12px] transition-colors"
+                  style={{
+                    borderColor: active && !muted ? "var(--primary)" : "var(--border)",
+                    background: active && !muted ? "var(--surface-muted)" : "var(--surface)",
+                    color: muted ? "var(--muted)" : "var(--ink)",
+                    opacity: muted ? 0.55 : 1,
+                  }}
                 >
                   <span className="truncate text-left">{t}</span>
-                  <span className="ml-2 shrink-0 text-[10px] text-white/40">{topicCounts[t]}</span>
+                  <span className="ml-2 shrink-0 text-[10px]" style={{ color: "var(--muted)" }}>{topicCounts[t]}</span>
                 </button>
               );
             })}
@@ -208,11 +195,11 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
         </Section>
       </div>
 
-      <div className="border-t border-white/10 p-3 flex items-center justify-between">
-        <span className="text-[10px] uppercase tracking-widest text-white/40">
+      <div className="border-t p-3 flex items-center justify-between" style={{ borderColor: "var(--border)" }}>
+        <span className="text-[10px] uppercase tracking-widest" style={{ color: "var(--muted)" }}>
           {data.nodes.length} concepts · {data.edges.length} links
         </span>
-        <span className="text-[10px] text-white/30">{allTopics.length} themes</span>
+        <span className="text-[10px]" style={{ color: "var(--muted)" }}>{allTopics.length} themes</span>
       </div>
     </motion.aside>
   );
@@ -222,7 +209,7 @@ function Section({ title, icon, aside, children }: { title: string; icon?: React
   return (
     <div>
       <div className="mb-1.5 flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-white/40">
+        <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest" style={{ color: "var(--muted)" }}>
           {icon}{title}
         </div>
         {aside}
@@ -237,28 +224,20 @@ function ScopeBtn({ active, onClick, icon, label }: { active: boolean; onClick: 
     <button
       onClick={onClick}
       title={`Search ${label}`}
-      className={cn(
-        "flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10px] uppercase tracking-wider",
-        active ? "bg-accent-cyan/15 text-accent-cyan" : "text-white/40 hover:text-white/80"
-      )}
+      className="flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10px] uppercase tracking-wider"
+      style={{ background: active ? "var(--surface-muted)" : "transparent", color: active ? "var(--primary)" : "var(--muted)" }}
     >
       {icon}{label}
     </button>
   );
 }
 
-function Pill({ active, onClick, children, muted }: { active?: boolean; onClick?: () => void; children: React.ReactNode; muted?: boolean }) {
+function Pill({ active, onClick, children }: { active?: boolean; onClick?: () => void; children: React.ReactNode; muted?: boolean }) {
   return (
     <button
       onClick={onClick}
-      className={cn(
-        "inline-flex items-center justify-center gap-1 rounded-md border px-2 py-1 text-[11px] transition-colors",
-        muted
-          ? "border-white/5 bg-white/[0.01] text-white/30 hover:text-white/60"
-          : active
-            ? "border-accent-cyan/50 bg-accent-cyan/10 text-accent-cyan shadow-glow-cyan"
-            : "border-white/10 bg-white/[0.02] text-white/50 hover:bg-white/5"
-      )}
+      className="inline-flex items-center justify-center gap-1 rounded-md border px-2 py-1 text-[11px] transition-colors"
+      style={{ borderColor: active ? "var(--primary)" : "var(--border)", background: active ? "var(--surface-muted)" : "var(--surface)", color: active ? "var(--primary)" : "var(--muted)" }}
     >
       {children}
     </button>
@@ -279,17 +258,12 @@ function KindPill({ k, active, count, onClick }: { k: NodeKind; active: boolean;
   return (
     <button
       onClick={onClick}
-      className={cn(
-        `kind-${k}`,
-        "inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-[11px] transition-colors",
-        active
-          ? "border-[rgba(var(--c),0.5)] bg-[rgba(var(--c),0.12)] text-[rgba(var(--c),1)]"
-          : "border-white/10 bg-white/[0.02] text-white/40 hover:bg-white/5"
-      )}
+      className={cn(`kind-${k}`, "inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-[11px] transition-colors")}
+      style={{ borderColor: active ? "rgba(var(--c),0.55)" : "var(--border)", background: active ? "rgba(var(--c),0.10)" : "var(--surface)", color: active ? "rgba(var(--c),1)" : "var(--muted)" }}
     >
       <span className="h-1.5 w-1.5 rounded-full bg-[rgba(var(--c),1)]" />
       {KIND_LABEL[k]}
-      <span className="text-white/40">{count}</span>
+      <span style={{ color: "var(--muted)" }}>{count}</span>
     </button>
   );
 }
