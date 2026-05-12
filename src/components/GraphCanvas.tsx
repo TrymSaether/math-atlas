@@ -1,7 +1,5 @@
 import { useCallback, useMemo, type CSSProperties } from "react";
 import ReactFlow, {
-  Background as RFBackground,
-  BackgroundVariant,
   BaseEdge,
   Controls,
   Handle,
@@ -18,26 +16,27 @@ import {
   computeLearningPath,
   ATLAS_NODE_W,
   ATLAS_NODE_H,
-  NODE_KIND_META,
-  ROUTE_META,
   type AtlasNode,
 } from "../atlas";
 import { data } from "../data";
 import { orientEdge } from "../lib/graph";
 import { MathText } from "../lib/katex";
 import { useStore } from "../store";
+import { getThemePalette } from "../themes";
 
 interface TopoNodeData {
   node: AtlasNode;
   selected: boolean;
   onRoute: boolean;
   dim: boolean;
+  color: string;
 }
 
 interface TopoEdgeData {
   relation: "statement" | "proof" | "illustration";
   active: boolean;
   dim: boolean;
+  color: string;
 }
 
 interface LaneData {
@@ -58,16 +57,6 @@ const EDGE_TYPES = {
   topo: TopoEdgeView,
 };
 
-const LANE_PALETTE = [
-  { fill: "rgba(26, 115, 232, 0.07)", border: "rgba(26, 115, 232, 0.44)", label: "rgba(26, 70, 135, 0.42)" },
-  { fill: "rgba(15, 157, 88, 0.07)", border: "rgba(15, 157, 88, 0.44)", label: "rgba(23, 96, 62, 0.42)" },
-  { fill: "rgba(251, 140, 0, 0.075)", border: "rgba(251, 140, 0, 0.46)", label: "rgba(143, 83, 13, 0.44)" },
-  { fill: "rgba(126, 87, 194, 0.07)", border: "rgba(126, 87, 194, 0.44)", label: "rgba(83, 58, 136, 0.42)" },
-  { fill: "rgba(219, 68, 55, 0.07)", border: "rgba(219, 68, 55, 0.44)", label: "rgba(132, 54, 46, 0.42)" },
-  { fill: "rgba(0, 172, 193, 0.07)", border: "rgba(0, 172, 193, 0.44)", label: "rgba(18, 103, 115, 0.42)" },
-  { fill: "rgba(121, 85, 72, 0.07)", border: "rgba(121, 85, 72, 0.44)", label: "rgba(90, 65, 56, 0.42)" },
-];
-
 const ATLAS_NODE_BY_ID = new Map(atlasNodes.map((n) => [n.id, n]));
 
 export function GraphCanvas() {
@@ -78,6 +67,9 @@ export function GraphCanvas() {
   const relations = useStore((s) => s.relations);
   const showOrphans = useStore((s) => s.showOrphans);
   const pathTargetId = useStore((s) => s.pathTargetId);
+  const themeId = useStore((s) => s.themeId);
+  const colorMode = useStore((s) => s.colorMode);
+  const palette = getThemePalette(themeId, colorMode);
 
   const activePathSet = useMemo(() => {
     const target = pathTargetId ?? selectedId ?? "";
@@ -119,7 +111,7 @@ export function GraphCanvas() {
 
   const rfNodes: Node[] = useMemo(() => {
     const laneNodes: Node[] = atlasLanes.map((lane, index) => {
-      const palette = LANE_PALETTE[index % LANE_PALETTE.length];
+      const lanePalette = palette.lanes[index % palette.lanes.length];
       return {
         id: `lane:${lane.topic}`,
         type: "lane",
@@ -128,7 +120,7 @@ export function GraphCanvas() {
           topic: lane.topic,
           width: lane.width + 120,
           height: lane.height + 28,
-          ...palette,
+          ...lanePalette,
         } satisfies LaneData,
         draggable: false,
         selectable: false,
@@ -147,6 +139,7 @@ export function GraphCanvas() {
           selected: n.id === selectedId,
           onRoute: activePathSet.has(n.id),
           dim: dimmedNodeIds.has(n.id),
+          color: palette.kindColors[n.kind],
         } satisfies TopoNodeData,
         draggable: false,
         selectable: false,
@@ -154,7 +147,7 @@ export function GraphCanvas() {
       }));
 
     return [...laneNodes, ...topoNodes];
-  }, [selectedId, activePathSet, visibleNodeIds, dimmedNodeIds]);
+  }, [selectedId, activePathSet, visibleNodeIds, dimmedNodeIds, palette]);
 
   const rfEdges: Edge[] = useMemo(() => {
     return data.edges
@@ -175,11 +168,16 @@ export function GraphCanvas() {
           source: route.from,
           target: route.to,
           type: "topo",
-          data: { relation: e.relation, active, dim } satisfies TopoEdgeData,
+          data: {
+            relation: e.relation,
+            active,
+            dim,
+            color: palette.routeColors[e.relation],
+          } satisfies TopoEdgeData,
           zIndex: active ? 1 : 0,
         };
       });
-  }, [relations, visibleNodeIds, dimmedNodeIds, activePathSet]);
+  }, [relations, visibleNodeIds, dimmedNodeIds, activePathSet, palette]);
 
   const onNodeClick = useCallback(
     (_: unknown, node: Node) => {
@@ -212,14 +210,14 @@ export function GraphCanvas() {
         <MiniMap
           pannable
           zoomable
-          maskColor="rgba(255,253,246,0.55)"
+          maskColor={palette.miniMapMask}
           nodeColor={(n) => {
             if (n.type === "lane") return "rgba(0,0,0,0.03)";
             const d = n.data as TopoNodeData;
-            return NODE_KIND_META[d.node.kind].color;
+            return d.color;
           }}
           nodeStrokeWidth={0}
-          style={{ background: "rgba(255,253,246,0.85)", border: "1px solid rgba(74,62,45,0.10)" }}
+          style={{ background: palette.miniMapBackground, border: palette.miniMapBorder }}
         />
         <Controls showInteractive={false} />
       </ReactFlow>
@@ -228,8 +226,7 @@ export function GraphCanvas() {
 }
 
 function TopoNodeView({ data: d }: NodeProps<TopoNodeData>) {
-  const { node, selected, onRoute, dim } = d;
-  const meta = NODE_KIND_META[node.kind];
+  const { node, selected, onRoute, dim, color } = d;
   return (
     <div
       className={[
@@ -241,8 +238,8 @@ function TopoNodeView({ data: d }: NodeProps<TopoNodeData>) {
       style={{
         width: ATLAS_NODE_W,
         minHeight: ATLAS_NODE_H,
-        borderColor: meta.color,
-        "--node-color": meta.color,
+        borderColor: color,
+        "--node-color": color,
       } as CSSProperties}
     >
       <Handle type="target" position={Position.Left} className="!opacity-0" style={{ background: "transparent", border: "none" }} />
@@ -291,7 +288,7 @@ function TopoEdgeView(props: EdgeProps<TopoEdgeData>) {
   const { sourceX, sourceY, targetX, targetY } = props;
   const path = roundedMetroPath(sourceX, sourceY, targetX, targetY);
   const relation = props.data?.relation ?? "statement";
-  const color = ROUTE_META[relation].color;
+  const color = props.data?.color ?? "#006BA6";
   const active = props.data?.active ?? false;
   const dim = props.data?.dim ?? false;
   const baseWidth = relation === "statement" ? 5.2 : relation === "proof" ? 4.8 : 4.2;
@@ -307,6 +304,7 @@ function TopoEdgeView(props: EdgeProps<TopoEdgeData>) {
         strokeLinecap: "round",
         strokeLinejoin: "round",
         fill: "none",
+        filter: active ? "drop-shadow(0 0 8px color-mix(in srgb, currentColor 30%, transparent))" : undefined,
       }}
     />
   );
