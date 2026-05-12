@@ -1,0 +1,136 @@
+:root,
+[data-theme="academic"][data-color-mode="light"] {
+  color-scheme: light;
+  --paper: #f7f3e8;
+  --ink: #1f2328;
+  --muted: #697077;
+  --border: #d8cfc0;
+  --surface: #fffdf6;
+  --surface-muted: #ece6d8;
+  --panel-bg: rgba(255, 253, 246, 0.76);
+  --topbar-bg: rgba(255, 253, 246, 0.86);
+  --search-bg: rgba(255, 253, 246, 0.92);
+  --primary: #005b8d;
+  --primary-hover: #004c78;
+  --canvas-grid: rgba(178, 165, 139, 0.13);
+  --canvas-grid-2: rgba(178, 165, 139, 0.11);
+  --canvas-radial-inner: rgba(255, 253, 246, 0.78);
+  --canvas-radial-outer: rgba(247, 243, 232, 0.1);
+  --canvas-bg: #f7f3e8;
+  --node-shadow: rgba(74, 62, 45, 0.06);
+  --node-title: #111418;
+  --control-bg: rgba(255, 253, 246, 0.92);
+  --control-text: #30373d;
+  --scroll-thumb: #cfc5b5;
+}
+
+[data-color-mode="dark"] { color-scheme: dark; }
+
+[data-theme="academic"][data-color-mode="dark"] {
+  --paper: #11141b;
+  --ink: #ece7dc;
+  --muted: #a9adad;
+  --border: #34313a;
+  --surface: #191d26;
+  --surface-muted: #242937;
+  --panel-bg: rgba(17, 20, 27, 0.82);
+  --topbar-bg: rgba(17, 20, 27, 0.88);
+  --search-bg: rgba(25, 29, 38, 0.92);
+  --primary: #5aa5e8;
+  --primary-hover: #78bbff;
+  --canvas-grid: rgba(218, 205, 180, 0.075);
+  --canvas-grid-2: rgba(218, 205, 180, 0.055);
+  --canvas-radial-inner: rgba(30, 34, 44, 0.82);
+  --canvas-radial-outer: rgba(17, 20, 27, 0.25);
+  --canvas-bg: #11141b;
+  --node-shadow: rgba(0, 0, 0, 0.32);
+  --node-title: #fff9ee;
+  --control-bg: rgba(25, 29, 38, 0.94);
+  --control-text: #dfe7ee;
+  --scroll-thumb: #494f5e;
+}
+
+[data-theme="metro"][data-color-mode="light"] {
+  --paper: #f8fafc;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --border: #d8e0ec;
+  --surface: #ffffff;
+  --surface-muted: #edf4ff;
+  --panel-bg: rgba(255, 255, 255, 0.82);
+  --topbar-bg: rgba(255, 255, 255, 0.9);
+  --search-bg: rgba(255, 255, 255, 0.94);
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --canvas-grid: rgba(37, 99, 235, 0.075);
+  --canvas-grid-2: rgba(20, 184, 166, 0.065);
+  --canvas-radial-inner: rgba(255, 255, 255, 0.92);
+  --canvas-radial-outer: rgba(248, 250, 252, 0.16);
+  --canvas-bg: #f8fafc;
+  --node-shadow: rgba(15, 23, 42, 0.08);
+  --node-title: #020617;
+  --control-bg: rgba(255, 255, 255, 0.94);
+  --control-text: #334155;
+  --scroll-thumb: #bfd0e5;
+}
+
+[data-theme="metro"][data-color-mode="dark"] {
+  --paper: #020617;
+  --ink: #e5edf9;
+  --muted: #94a3b8;
+  --border: #1e2b44;
+  --surface: #0b1220;
+  --surface-muted: #13223a;
+  --panel-bg: rgba(8, 13, 27, 0.84);
+  --topbar-bg: rgba(8, 13, 27, 0.9);
+  --search-bg: rgba(15, 23, 42, 0.94);
+  --primary: #2563eb;
+  --primary-hover: #3b82f6;
+  --canvas-grid: rgba(96, 165, 250, 0.08);
+  --canvas-grid-2: rgba(45, 212, 191, 0.06);
+  --canvas-radial-inner: rgba(15, 23, 42, 0.82);
+  --canvas-radial-outer: rgba(2, 6, 23, 0.2);
+  --canvas-bg: #020617;
+  --node-shadow: rgba(0, 0, 0, 0.36);
+  --node-title: #ffffff;
+  --control-bg: rgba(15, 23, 42, 0.95);
+  --control-text: #dbeafe;
+  --scroll-thumb: #233553;
+}
+
+body { background: var(--paper); color: var(--ink); }
+
+.atlas-shell {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(37, 99, 235, 0.10), transparent 32%),
+    radial-gradient(circle at 78% 42%, rgba(20, 184, 166, 0.10), transparent 30%),
+    radial-gradient(circle at 48% 80%, rgba(168, 85, 247, 0.10), transparent 34%),
+    var(--paper);
+}
+
+.atlas-main {
+  background:
+    radial-gradient(circle at 48% 40%, var(--canvas-radial-inner), var(--canvas-radial-outer) 68%),
+    linear-gradient(90deg, var(--canvas-grid) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(0deg, var(--canvas-grid-2) 1px, transparent 1px) 0 0 / 40px 40px,
+    var(--canvas-bg) !important;
+  border-color: var(--border) !important;
+}
+
+.theme-controls { display: inline-flex; align-items: center; gap: 0.5rem; }
+.theme-control, .mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--search-bg);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+}
+.theme-control { padding: 0 0.65rem; }
+.mode-toggle { padding: 0 0.75rem; cursor: pointer; }
+.theme-control select { border: 0; outline: 0; background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
+.theme-control:hover, .mode-toggle:hover { background: var(--surface-muted); }
