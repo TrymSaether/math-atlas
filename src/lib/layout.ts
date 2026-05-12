@@ -1,7 +1,7 @@
 import dagre from "dagre";
 import type { Node, Edge, MarkerType } from "reactflow";
 import type { TopoEdge, TopoNode } from "../types";
-import { cmpNum } from "./graph";
+import { cmpNum, orientEdges, type DirectedTopoEdge } from "./graph";
 
 export interface LayoutInput {
   nodes: TopoNode[];
@@ -11,16 +11,16 @@ export interface LayoutInput {
 
 const NODE_W = 240;
 const NODE_H = 92;
-const COL_W = 280;
-const SUBROW_H = 108;
-const LANE_GAP = 70;
+const COL_W = 340;
+const SUBROW_H = 96;
+const LANE_GAP = 24;
 
 /**
- * Swimlane dependency layout: each topic cluster becomes a horizontal
- * lane, ordered by the mathematical progression (foundations → spaces →
- * constructions → properties → algebraic topology). Items are spread
- * along the X axis by their textbook number within the topic so the
- * timeline reads left-to-right while the vertical axis groups by theme.
+ * Swimlane dependency layout: each topic cluster becomes a compact horizontal
+ * blob, ordered by the mathematical progression (foundations → spaces →
+ * constructions → properties → algebraic topology). Items are spread along
+ * the X axis by route depth so the visible map reads prerequisite → dependent
+ * while raw data edges remain dependent → prerequisite.
  *
  * When `showOrphans === false`, items with neither incoming nor outgoing
  * edges in the current edge set are dropped.
@@ -28,14 +28,15 @@ const LANE_GAP = 70;
 export function dependencyLayout({
   nodes, edges, showOrphans = true,
 }: LayoutInput): { nodes: Node[]; edges: Edge[]; lanes: Lane[] } {
+  const routeEdges = orientEdges(edges, "route");
   const hasEdge = new Set<string>();
-  for (const e of edges) { hasEdge.add(e.from); hasEdge.add(e.to); }
+  for (const e of routeEdges) { hasEdge.add(e.from); hasEdge.add(e.to); }
   const filtered = showOrphans ? nodes : nodes.filter((n) => hasEdge.has(n.id));
   const visible = new Set(filtered.map((n) => n.id));
-  const visibleEdges = edges.filter((e) => visible.has(e.from) && visible.has(e.to));
+  const visibleEdges = routeEdges.filter((e) => visible.has(e.from) && visible.has(e.to));
 
-  // Compute depth = longest predecessor path length in the visible DAG.
-  // Items with no incoming visible edge get depth 0; arrows flow left-to-right.
+  // Compute depth = longest prerequisite path length in the visible DAG.
+  // Items with no incoming visible route edge get depth 0; arrows flow left-to-right.
   const depth = computeDepths(filtered, visibleEdges);
 
   const byTopic = new Map<string, TopoNode[]>();
@@ -83,7 +84,7 @@ export function dependencyLayout({
       height: laneH - (SUBROW_H - NODE_H) + 20,
       width: (maxCol + 1) * COL_W,
     });
-    y += laneH + LANE_GAP - SUBROW_H + NODE_H;
+    y += laneH + LANE_GAP;
   }
   const fullW = (maxCol + 1) * COL_W;
   for (const l of lanes) l.width = fullW;
@@ -94,12 +95,12 @@ export function dependencyLayout({
     target: e.to,
     type: "topo",
     markerEnd: { type: "arrowclosed" as MarkerType, width: 14, height: 14, color: edgeColor(e) },
-    data: { edge: e },
+    data: { edge: e.raw },
   }));
   return { nodes: rfNodes, edges: rfEdges, lanes };
 }
 
-function computeDepths(nodes: TopoNode[], edges: TopoEdge[]): Map<string, number> {
+function computeDepths(nodes: TopoNode[], edges: DirectedTopoEdge[]): Map<string, number> {
   const inMap = new Map<string, string[]>();
   for (const n of nodes) inMap.set(n.id, []);
   for (const e of edges) {
@@ -128,8 +129,9 @@ export function dagreLayout({ nodes, edges }: LayoutInput) {
   const g = new dagre.graphlib.Graph();
   g.setGraph({ rankdir: "LR", nodesep: 36, ranksep: 90, marginx: 24, marginy: 24 });
   g.setDefaultEdgeLabel(() => ({}));
+  const routeEdges = orientEdges(edges, "route");
   for (const n of nodes) g.setNode(n.id, { width: NODE_W, height: NODE_H });
-  for (const e of edges) g.setEdge(e.from, e.to);
+  for (const e of routeEdges) g.setEdge(e.from, e.to);
   dagre.layout(g);
   return nodes.map((n) => {
     const p = g.node(n.id);
@@ -162,10 +164,10 @@ export function clusterLayout({ nodes, edges }: LayoutInput): { nodes: Node[]; e
       });
     });
   });
-  const rfEdges: Edge[] = edges.map((e) => ({
+  const rfEdges: Edge[] = orientEdges(edges, "route").map((e) => ({
     id: e.id, source: e.from, target: e.to, type: "topo",
     markerEnd: { type: "arrowclosed" as MarkerType, width: 12, height: 12, color: edgeColor(e) },
-    data: { edge: e },
+    data: { edge: e.raw },
   }));
   return { nodes: rfNodes, edges: rfEdges };
 }
@@ -202,6 +204,6 @@ function cmpKey(a: [string, number[]], b: [string, number[]]): number {
   return 0;
 }
 
-function edgeColor(e: TopoEdge): string {
+function edgeColor(e: Pick<TopoEdge, "relation">): string {
   return e.relation === "proof" ? "#a78bff" : e.relation === "illustration" ? "#ffd58a" : "#5ce1ff";
 }

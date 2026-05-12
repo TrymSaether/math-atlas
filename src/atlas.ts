@@ -1,7 +1,7 @@
 import { data } from "./data";
 import type { NodeKind, Relation } from "./types";
 import { dependencyLayout, type Lane } from "./lib/layout";
-import { buildAdjacency, descendants, topoSort } from "./lib/graph";
+import { buildLearningPath, orientEdge } from "./lib/graph";
 
 export type AtlasKind = NodeKind;
 export type RouteKind = Relation;
@@ -15,6 +15,7 @@ export interface AtlasNode {
   x: number;
   y: number;
   dependencies: string[];
+  dependents: string[];
   illustratedBy: string[];
   description: string;
   formalStatement: string;
@@ -61,12 +62,18 @@ const posById = new Map<string, { x: number; y: number }>(
 );
 
 const statementDeps = new Map<string, string[]>();
+const usedBy = new Map<string, string[]>();
 const illustratedBy = new Map<string, string[]>();
 for (const e of data.edges) {
   if (!posById.has(e.from) || !posById.has(e.to)) continue;
   if (e.relation === "statement" || e.relation === "proof") {
+    // Raw data direction is dependent -> prerequisite.
     if (!statementDeps.has(e.from)) statementDeps.set(e.from, []);
     statementDeps.get(e.from)!.push(e.to);
+
+    // Reverse lookup for the Used By panel: prerequisite -> dependents.
+    if (!usedBy.has(e.to)) usedBy.set(e.to, []);
+    usedBy.get(e.to)!.push(e.from);
   } else if (e.relation === "illustration") {
     if (!illustratedBy.has(e.to)) illustratedBy.set(e.to, []);
     illustratedBy.get(e.to)!.push(e.from);
@@ -90,6 +97,7 @@ export const atlasNodes: AtlasNode[] = data.nodes
       x: p.x,
       y: p.y,
       dependencies: statementDeps.get(n.id) ?? [],
+      dependents: usedBy.get(n.id) ?? [],
       illustratedBy: illustratedBy.get(n.id) ?? [],
       description: n.explanation || n.cleanText || "",
       formalStatement: n.formalStatement || n.statementText || "",
@@ -111,41 +119,40 @@ export const DEFAULT_SELECTED_ID = pickDefaultTarget();
 
 const ALL_RELATIONS = new Set<Relation>(["statement", "proof", "illustration"]);
 
-// Edges are stored as dependent.from -> prerequisite.to.
-// A learning path "toward" a target = the target + its transitive prerequisites,
-// ordered prereqs-first so the user reads it as a study sequence.
+// Edges are stored as dependent -> prerequisite.
+// A learning path toward a target follows raw prerequisite edges, then returns
+// the result in study order: prerequisites first, target last.
 export function computeLearningPath(targetId: string, allowed: Set<Relation> = ALL_RELATIONS): string[] {
   if (!targetId) return [];
-  const adj = buildAdjacency(data.edges, allowed);
-  const reach = descendants(adj, targetId);
-  reach.add(targetId);
-  const sorted = topoSort(reach, adj, data.nodes);
-  return sorted.reverse().map((n) => n.id);
+  return buildLearningPath(targetId, data.edges, allowed, data.nodes).map((n) => n.id);
 }
 
 export const activePathIds: string[] = computeLearningPath(DEFAULT_SELECTED_ID);
 const activePathSet = new Set(activePathIds);
 
 function curvePath(a: { x: number; y: number }, b: { x: number; y: number }): string {
-  const x1 = a.x + NODE_W / 2;
-  const y1 = a.y + NODE_H;
-  const x2 = b.x + NODE_W / 2;
-  const y2 = b.y;
-  const dy = Math.abs(y2 - y1);
-  const c = Math.min(120, Math.max(40, dy / 2));
-  return `M${x1} ${y1} C${x1} ${y1 + c}, ${x2} ${y2 - c}, ${x2} ${y2}`;
+  const x1 = a.x + NODE_W;
+  const y1 = a.y + NODE_H / 2;
+  const x2 = b.x;
+  const y2 = b.y + NODE_H / 2;
+  const dx = Math.abs(x2 - x1);
+  const c = Math.min(140, Math.max(50, dx / 2));
+  return `M${x1} ${y1} C${x1 + c} ${y1}, ${x2 - c} ${y2}, ${x2} ${y2}`;
 }
 
 export const atlasRoutes: AtlasRoute[] = data.edges
   .filter((e) => posById.has(e.from) && posById.has(e.to))
-  .map((e) => ({
-    id: e.id,
-    from: e.from,
-    to: e.to,
-    kind: e.relation,
-    path: curvePath(posById.get(e.from)!, posById.get(e.to)!),
-    active: activePathSet.has(e.from) && activePathSet.has(e.to),
-  }));
+  .map((e) => {
+    const route = orientEdge(e, "route");
+    return {
+      id: e.id,
+      from: route.from,
+      to: route.to,
+      kind: e.relation,
+      path: curvePath(posById.get(route.from)!, posById.get(route.to)!),
+      active: activePathSet.has(e.from) && activePathSet.has(e.to),
+    };
+  });
 
 export const atlasLanes: Lane[] = layoutResult.lanes;
 

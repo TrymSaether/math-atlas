@@ -7,7 +7,6 @@ import ReactFlow, {
   Handle,
   MiniMap,
   Position,
-  getBezierPath,
   type Edge,
   type EdgeProps,
   type Node,
@@ -24,6 +23,7 @@ import {
   type AtlasNode,
 } from "../atlas";
 import { data } from "../data";
+import { orientEdge } from "../lib/graph";
 import { MathText } from "../lib/katex";
 import { useStore } from "../store";
 
@@ -44,6 +44,10 @@ interface LaneData {
   topic: string;
   width: number;
   height: number;
+  fill: string;
+  border: string;
+  label: string;
+  radius: string;
 }
 
 const NODE_TYPES = {
@@ -54,6 +58,39 @@ const NODE_TYPES = {
 const EDGE_TYPES = {
   topo: TopoEdgeView,
 };
+
+const LANE_PALETTE = [
+  {
+    fill: "rgba(0, 107, 166, 0.12)",
+    border: "rgba(0, 107, 166, 0.20)",
+    label: "rgba(20, 71, 103, 0.62)",
+    radius: "46% 54% 50% 48% / 44% 40% 60% 56%",
+  },
+  {
+    fill: "rgba(122, 77, 152, 0.12)",
+    border: "rgba(122, 77, 152, 0.19)",
+    label: "rgba(75, 51, 93, 0.62)",
+    radius: "54% 46% 56% 44% / 50% 58% 42% 50%",
+  },
+  {
+    fill: "rgba(217, 121, 4, 0.13)",
+    border: "rgba(217, 121, 4, 0.19)",
+    label: "rgba(119, 77, 22, 0.62)",
+    radius: "50% 52% 44% 56% / 56% 46% 54% 44%",
+  },
+  {
+    fill: "rgba(71, 113, 93, 0.12)",
+    border: "rgba(71, 113, 93, 0.19)",
+    label: "rgba(45, 84, 67, 0.62)",
+    radius: "58% 42% 50% 50% / 44% 54% 46% 56%",
+  },
+  {
+    fill: "rgba(138, 59, 59, 0.11)",
+    border: "rgba(138, 59, 59, 0.18)",
+    label: "rgba(95, 48, 48, 0.62)",
+    radius: "48% 52% 58% 42% / 52% 42% 58% 48%",
+  },
+];
 
 const ATLAS_NODE_BY_ID = new Map(atlasNodes.map((n) => [n.id, n]));
 
@@ -110,15 +147,23 @@ export function GraphCanvas() {
   }, [kinds, relations, showOrphans, search, matchesSearch]);
 
   const rfNodes: Node[] = useMemo(() => {
-    const laneNodes: Node[] = atlasLanes.map((lane) => ({
-      id: `lane:${lane.topic}`,
-      type: "lane",
-      position: { x: -40, y: lane.y - 18 },
-      data: { topic: lane.topic, width: lane.width + 80, height: lane.height + 28 } satisfies LaneData,
-      draggable: false,
-      selectable: false,
-      zIndex: 0,
-    }));
+    const laneNodes: Node[] = atlasLanes.map((lane, index) => {
+      const palette = LANE_PALETTE[index % LANE_PALETTE.length];
+      return {
+        id: `lane:${lane.topic}`,
+        type: "lane",
+        position: { x: -62, y: lane.y - 26 },
+        data: {
+          topic: lane.topic,
+          width: lane.width + 124,
+          height: lane.height + 44,
+          ...palette,
+        } satisfies LaneData,
+        draggable: false,
+        selectable: false,
+        zIndex: 0,
+      };
+    });
 
     const topoNodes: Node[] = atlasNodes
       .filter((n) => visibleNodeIds.has(n.id))
@@ -151,12 +196,13 @@ export function GraphCanvas() {
           visibleNodeIds.has(e.to),
       )
       .map((e) => {
+        const route = orientEdge(e, "route");
         const active = activePathSet.has(e.from) && activePathSet.has(e.to);
         const dim = dimmedNodeIds.has(e.from) || dimmedNodeIds.has(e.to);
         return {
           id: e.id,
-          source: e.from,
-          target: e.to,
+          source: route.from,
+          target: route.to,
           type: "topo",
           data: { relation: e.relation, active, dim } satisfies TopoEdgeData,
           zIndex: active ? 1 : 0,
@@ -244,45 +290,87 @@ function TopoNodeView({ data: d }: NodeProps<TopoNodeData>) {
 
 function LaneNodeView({ data: d }: NodeProps<LaneData>) {
   return (
-    <div className="rf-lane-node" style={{ width: d.width, height: d.height }}>
-      <span>{d.topic}</span>
+    <div
+      className="rf-lane-node"
+      style={{
+        width: d.width,
+        height: d.height,
+        display: "grid",
+        alignItems: "start",
+        padding: "22px 34px",
+        border: `1px solid ${d.border}`,
+        borderRadius: d.radius,
+        background: `radial-gradient(circle at 22% 18%, rgba(255,253,246,0.58), transparent 34%), ${d.fill}`,
+        boxShadow: "inset 0 0 42px rgba(104,95,80,0.04)",
+        color: d.label,
+        pointerEvents: "none",
+      } as CSSProperties}
+    >
+      <span
+        style={{
+          maxWidth: 260,
+          fontFamily: 'Georgia, "Times New Roman", serif',
+          fontSize: 15,
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+          lineHeight: 1.12,
+          textTransform: "uppercase",
+        }}
+      >
+        {d.topic}
+      </span>
     </div>
   );
 }
 
 function TopoEdgeView(props: EdgeProps<TopoEdgeData>) {
   const { sourceX, sourceY, targetX, targetY } = props;
-  const [path] = getBezierPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-    sourcePosition: Position.Right,
-    targetPosition: Position.Left,
-  });
+  const path = roundedMetroPath(sourceX, sourceY, targetX, targetY);
   const relation = props.data?.relation ?? "statement";
   const color = ROUTE_META[relation].color;
   const active = props.data?.active ?? false;
   const dim = props.data?.dim ?? false;
-  const dash = relation === "proof" ? "8 8" : undefined;
-  const baseWidth = relation === "statement" ? 2.1 : relation === "proof" ? 1.8 : 1.35;
-  const baseOpacity = relation === "statement" ? 0.46 : relation === "proof" ? 0.44 : 0.5;
+  const baseWidth = relation === "statement" ? 5.2 : relation === "proof" ? 4.8 : 4.2;
+  const activeWidth = relation === "statement" ? 9.2 : relation === "proof" ? 8.2 : 7.2;
   return (
     <BaseEdge
       id={props.id}
       path={path}
       style={{
         stroke: color,
-        strokeWidth: active ? Math.max(4, baseWidth * 2.4) : baseWidth,
-        strokeOpacity: dim ? 0.08 : active ? 0.96 : baseOpacity,
-        strokeDasharray: active && relation === "proof" ? "10 8" : dash,
+        strokeWidth: active ? activeWidth : baseWidth,
+        strokeOpacity: dim ? 0.08 : active ? 0.98 : 0.3,
         strokeLinecap: "round",
         strokeLinejoin: "round",
         fill: "none",
         filter: active
-          ? "drop-shadow(0 1px 0 rgba(255,253,246,0.9)) drop-shadow(0 0 2px rgba(0,77,120,0.18))"
+          ? "drop-shadow(0 1px 0 rgba(255,253,246,0.9)) drop-shadow(0 0 4px rgba(0,77,120,0.22))"
           : undefined,
       }}
     />
   );
+}
+
+function roundedMetroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
+  const dx = targetX - sourceX;
+  const dy = targetY - sourceY;
+  if (Math.abs(dy) < 6) return `M${sourceX} ${sourceY} L${targetX} ${targetY}`;
+
+  const xDir = dx >= 0 ? 1 : -1;
+  const yDir = dy >= 0 ? 1 : -1;
+  const midX = sourceX + dx / 2;
+  const bend = Math.max(0, Math.min(24, Math.abs(dx) / 2 - 2, Math.abs(dy) / 2));
+
+  if (bend < 4) {
+    return `M${sourceX} ${sourceY} L${midX} ${sourceY} L${midX} ${targetY} L${targetX} ${targetY}`;
+  }
+
+  return [
+    `M${sourceX} ${sourceY}`,
+    `H${midX - xDir * bend}`,
+    `Q${midX} ${sourceY} ${midX} ${sourceY + yDir * bend}`,
+    `V${targetY - yDir * bend}`,
+    `Q${midX} ${targetY} ${midX + xDir * bend} ${targetY}`,
+    `H${targetX}`,
+  ].join(" ");
 }

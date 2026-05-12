@@ -60,6 +60,10 @@ export function NodePanel() {
           <ChipList ids={node.dependencies} />
         </DetailSection>
 
+        <DetailSection title="Used By">
+          <ChipList ids={node.dependents} />
+        </DetailSection>
+
         <DetailSection title="Illustrated By">
           <ChipList ids={node.illustratedBy} />
         </DetailSection>
