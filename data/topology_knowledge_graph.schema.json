@@ -1,0 +1,220 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Topology Schema",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "graph_model": {
+          "type": "object",
+          "properties": {
+            "top_level_field_id": {
+              "type": "string"
+            },
+            "directed": {
+              "type": "boolean"
+            },
+            "typed": {
+              "type": "boolean"
+            },
+            "multigraph": {
+              "type": "boolean"
+            },
+            "tree_policy": {
+              "type": "string"
+            }
+          }
+        },
+        "item_kinds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "meaning": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "dependency_classes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "meaning": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "edge_types": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "item_schema": {
+          "type": "object"
+        },
+        "edge_schema": {
+          "type": "object"
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "formal_statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "definition": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "intuition": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notation": {
+            "type": [
+              "string",
+              "null",
+              "array"
+            ]
+          },
+          "assumptions": {
+            "type": "array"
+          },
+          "dependencies": {
+            "type": "object"
+          },
+          "outgoing_relations": {
+            "type": "array"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "tags": {
+                "type": "array"
+              },
+              "syllabus_priority": {
+                "type": "string"
+              },
+              "source": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "hypotheses": {
+            "type": "array"
+          },
+          "conclusion": {
+            "type": "string"
+          },
+          "proof_methods": {
+            "type": "array"
+          },
+          "related_theorems": {
+            "type": "array"
+          },
+          "examples": {
+            "type": "array"
+          },
+          "applications": {
+            "type": "array"
+          },
+          "introduced_object": {
+            "type": "string"
+          },
+          "genus": {
+            "type": "string"
+          },
+          "differentia": {
+            "type": "array"
+          },
+          "non_examples": {
+            "type": "array"
+          },
+          "equivalent_definitions": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "dependency_class": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
