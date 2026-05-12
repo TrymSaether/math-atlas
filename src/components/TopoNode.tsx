@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { cn } from "../lib/utils";
 import { useStore } from "../store";
 import { KIND_LABEL, type NodeKind, type TopoNode as TopoNodeT } from "../types";
+import { layout, typography } from "../design-tokens";
 
 interface Data {
   node: TopoNodeT;
@@ -22,9 +23,19 @@ const KIND_TIER: Record<NodeKind, Tier> = {
 };
 
 const TIER_STYLE: Record<Tier, { w: number; titleClamp: number; titleSize: string; pad: string }> = {
+<<<<<<< Updated upstream
   primary:   { w: 240, titleClamp: 2, titleSize: "text-[13px]", pad: "px-3 py-2" },
   secondary: { w: 200, titleClamp: 2, titleSize: "text-[12px]", pad: "px-2.5 py-1.5" },
   compact:   { w: 168, titleClamp: 1, titleSize: "text-[11px]", pad: "px-2 py-1" },
+||||||| Stash base
+  primary: { w: 240, titleClamp: 2, titleSize: "text-[13px]", pad: "px-3 py-2" },
+  secondary: { w: 200, titleClamp: 2, titleSize: "text-[12px]", pad: "px-2.5 py-1.5" },
+  compact: { w: 168, titleClamp: 1, titleSize: "text-[11px]", pad: "px-2 py-1" },
+=======
+  primary: layout.node.primary,
+  secondary: layout.node.secondary,
+  compact: layout.node.compact,
+>>>>>>> Stashed changes
 };
 
 export function TopoNodeView({ data, selected }: NodeProps<Data>) {
@@ -61,7 +72,7 @@ export function TopoNodeView({ data, selected }: NodeProps<Data>) {
       )}
     >
       <Handle type="target" position={Position.Left} className="!opacity-0" />
-      <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-[rgba(var(--c),0.95)]">
+      <div className="flex items-center justify-between text-xs uppercase tracking-wide text-[rgba(var(--c),0.95)]">
         <span className={cn(isPrimary ? "font-semibold" : "font-medium opacity-80")}>
           {KIND_LABEL[node.kind]}
         </span>
@@ -78,8 +89,16 @@ export function TopoNodeView({ data, selected }: NodeProps<Data>) {
       </div>
       {isPrimary && (
         <div className="mt-1.5 flex items-center gap-1.5">
+<<<<<<< Updated upstream
           <span className="h-1.5 w-1.5 rounded-full bg-[rgba(var(--c),0.95)] shadow-[0_0_8px_rgba(var(--c),0.9)]" />
           <span className="text-[10px] text-white/55 truncate">{node.topicCluster}</span>
+||||||| Stash base
+          <span className="h-1.5 w-1.5 rounded-full bg-[rgba(var(--c),0.95)]" />
+          <span className="truncate text-[10px]" style={{ color: "var(--muted)" }}>{node.topicCluster}</span>
+=======
+          <span className="h-1.5 w-1.5 rounded-full bg-[rgba(var(--c),0.95)]" />
+          <span className="truncate text-xs" style={{ color: "var(--muted)" }}>{node.topicCluster}</span>
+>>>>>>> Stashed changes
         </div>
       )}
       <Handle type="source" position={Position.Right} className="!opacity-0" />

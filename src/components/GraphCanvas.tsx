@@ -17,6 +17,7 @@ import { nodeKindColors, canvas, stroke } from "../lib/colors";
 import { TopoNodeView } from "./TopoNode";
 import { TopoEdgeView } from "./TopoEdge";
 import { LaneNode } from "./LaneNode";
+import { layout } from "../design-tokens";
 
 const nodeTypes = { topo: TopoNodeView, lane: LaneNode };
 const edgeTypes = { topo: TopoEdgeView };
@@ -93,6 +94,7 @@ function InnerGraph() {
 
   const laneNodes: Node[] = useMemo(
     () =>
+<<<<<<< Updated upstream
       lanes.map((l) => ({
         id: `lane-${l.topic}`,
         type: "lane",
@@ -105,6 +107,39 @@ function InnerGraph() {
         style: { zIndex: -1 },
       })),
     [lanes]
+||||||| Stash base
+      lanes.map((l, index) => {
+        const lanePalette = palette.lanes[index % palette.lanes.length];
+        return {
+          id: `lane-${l.topic}`,
+          type: "lane",
+          position: { x: -160, y: l.y - 20 },
+          data: { topic: l.topic, subtitle: l.subtitle, width: l.width, height: l.height, palette: lanePalette },
+          draggable: false,
+          selectable: false,
+          focusable: false,
+          zIndex: -1,
+          style: { zIndex: -1 },
+        };
+      }),
+    [lanes, palette]
+=======
+      lanes.map((l, index) => {
+        const lanePalette = palette.lanes[index % palette.lanes.length];
+        return {
+          id: `lane-${l.topic}`,
+          type: "lane",
+          position: { x: layout.canvas.laneOffset.x, y: l.y + layout.canvas.laneOffset.y },
+          data: { topic: l.topic, subtitle: l.subtitle, width: l.width, height: l.height, palette: lanePalette },
+          draggable: false,
+          selectable: false,
+          focusable: false,
+          zIndex: -1,
+          style: { zIndex: -1 },
+        };
+      }),
+    [lanes, palette]
+>>>>>>> Stashed changes
   );
 
   const nodes: Node[] = useMemo(
@@ -135,7 +170,7 @@ function InnerGraph() {
 
   // Fit on view-mode change.
   useEffect(() => {
-    const t = setTimeout(() => rf.fitView({ padding: 0.18, duration: 600 }), 80);
+    const t = setTimeout(() => rf.fitView({ padding: layout.canvas.fitViewPadding, duration: layout.canvas.fitViewDuration }), layout.canvas.initialAnimationDelay);
     return () => clearTimeout(t);
   }, [view, rf]);
 
@@ -144,7 +179,7 @@ function InnerGraph() {
     if (!selectedId) return;
     const node = rawNodes.find((n) => n.id === selectedId);
     if (!node) return;
-    rf.setCenter(node.position.x + 120, node.position.y + 46, { zoom: Math.max(0.9, rf.getZoom()), duration: 450 });
+    rf.setCenter(node.position.x + 120, node.position.y + 46, { zoom: Math.max(0.9, rf.getZoom()), duration: layout.canvas.centerAnimationDuration });
   }, [selectedId, rawNodes, rf]);
 
   return (
@@ -155,16 +190,26 @@ function InnerGraph() {
       edgeTypes={edgeTypes}
       onPaneClick={() => useStore.getState().select(null)}
       proOptions={{ hideAttribution: true }}
-      minZoom={0.06}
-      maxZoom={2.4}
+      minZoom={layout.canvas.minZoom}
+      maxZoom={layout.canvas.maxZoom}
       fitView
       defaultEdgeOptions={{ type: "topo" }}
     >
       <RFBackground
         variant={BackgroundVariant.Dots}
+<<<<<<< Updated upstream
         gap={28}
         size={1}
         color={canvas.gridBackground}
+||||||| Stash base
+        gap={28}
+        size={1}
+        color="var(--canvas-grid)"
+=======
+        gap={layout.canvas.gridGap}
+        size={layout.canvas.miniMapSize}
+        color="var(--canvas-grid)"
+>>>>>>> Stashed changes
       />
       <MiniMap
         pannable zoomable
