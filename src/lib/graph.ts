@@ -1,15 +1,51 @@
 import type { TopoEdge, TopoNode, Relation } from "../types";
 
+export type GraphDirection = "raw" | "route";
+
+export interface DirectedTopoEdge extends Omit<TopoEdge, "from" | "to"> {
+  /** Oriented endpoint for the requested graph layer. */
+  from: string;
+  /** Oriented endpoint for the requested graph layer. */
+  to: string;
+  /** Original stored edge. Data edges are always dependent -> prerequisite. */
+  raw: TopoEdge;
+}
+
 export interface Adjacency {
   out: Map<string, { id: string; rel: Relation }[]>;
   in: Map<string, { id: string; rel: Relation }[]>;
 }
 
-export function buildAdjacency(edges: TopoEdge[], allowed: Set<Relation>): Adjacency {
+/**
+ * Edge direction layer.
+ *
+ * - raw: stored graph/data direction, dependent -> prerequisite.
+ * - route: visible map/route direction, prerequisite -> dependent.
+ */
+export function orientEdge(edge: TopoEdge, direction: GraphDirection = "raw"): DirectedTopoEdge {
+  const from = direction === "route" ? edge.to : edge.from;
+  const to = direction === "route" ? edge.from : edge.to;
+  return { ...edge, from, to, raw: edge };
+}
+
+export function orientEdges(
+  edges: TopoEdge[],
+  direction: GraphDirection = "raw",
+  allowed?: Set<Relation>,
+): DirectedTopoEdge[] {
+  return edges
+    .filter((edge) => !allowed || allowed.has(edge.relation))
+    .map((edge) => orientEdge(edge, direction));
+}
+
+export function buildAdjacency(
+  edges: TopoEdge[],
+  allowed: Set<Relation>,
+  direction: GraphDirection = "raw",
+): Adjacency {
   const out = new Map<string, { id: string; rel: Relation }[]>();
   const inn = new Map<string, { id: string; rel: Relation }[]>();
-  for (const e of edges) {
-    if (!allowed.has(e.relation)) continue;
+  for (const e of orientEdges(edges, direction, allowed)) {
     if (!out.has(e.from)) out.set(e.from, []);
     if (!inn.has(e.to)) inn.set(e.to, []);
     out.get(e.from)!.push({ id: e.to, rel: e.relation });
@@ -98,8 +134,8 @@ export function buildLearningPath(
   allowed: Set<Relation>,
   nodes: TopoNode[]
 ): TopoNode[] {
-  const adj = buildAdjacency(edges, allowed);
-  const anc = ancestors(adj, targetId);
-  anc.add(targetId);
-  return topoSort(anc, adj, nodes);
+  const adj = buildAdjacency(edges, allowed, "raw");
+  const prerequisites = descendants(adj, targetId);
+  prerequisites.add(targetId);
+  return topoSort(prerequisites, adj, nodes).reverse();
 }
