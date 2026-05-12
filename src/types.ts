@@ -8,6 +8,22 @@ export type NodeKind = z.infer<typeof NodeKind>;
 export const Relation = z.enum(["statement", "proof", "illustration"]);
 export type Relation = z.infer<typeof Relation>;
 
+export const SemanticRelation = z.enum([
+  "application-of",
+  "computes",
+  "consequence-of",
+  "construction-step",
+  "counterexample-to",
+  "definition-use",
+  "equivalent-formulation-of",
+  "generalizes",
+  "illustration",
+  "motivates",
+  "proof-use",
+  "special-case-of",
+]);
+export type SemanticRelation = z.infer<typeof SemanticRelation>;
+
 export const EdgeSource = z.enum(["auto", "verified"]);
 export type EdgeSource = z.infer<typeof EdgeSource>;
 
@@ -26,7 +42,7 @@ export const NodeGraphMetadata = z.object({
   closeness: z.number().optional(),
   component: z.number().int().optional(),
   learnerRank: z.number().int().optional(),
-});
+}).passthrough();
 export type NodeGraphMetadata = z.infer<typeof NodeGraphMetadata>;
 
 export const NodeSemanticMetadata = z.object({
@@ -38,20 +54,20 @@ export const NodeSemanticMetadata = z.object({
   shortLabel: z.string().optional(),
   sortKey: z.array(z.union([z.string(), z.number()])).optional(),
   isCoreConcept: z.boolean().optional(),
-});
+}).passthrough();
 export type NodeSemanticMetadata = z.infer<typeof NodeSemanticMetadata>;
 
 export const MergedNodeFragment = z.object({
   id: z.string(),
   reason: z.string().optional(),
   cleanText: z.string().optional(),
-});
+}).passthrough();
 export type MergedNodeFragment = z.infer<typeof MergedNodeFragment>;
 
 export const EdgeReviewMetadata = z.object({
   flags: z.array(z.string()).default([]),
   needsHumanReview: z.boolean().default(false),
-});
+}).passthrough();
 export type EdgeReviewMetadata = z.infer<typeof EdgeReviewMetadata>;
 
 export const TopoNode = z.object({
@@ -79,7 +95,7 @@ export const TopoNode = z.object({
   mergedFrom: z.array(MergedNodeFragment).default([]),
   graph: NodeGraphMetadata.optional(),
   semantic: NodeSemanticMetadata.optional(),
-});
+}).passthrough();
 export type TopoNode = z.infer<typeof TopoNode>;
 
 export const TopoEdge = z.object({
@@ -93,8 +109,13 @@ export const TopoEdge = z.object({
   // Optional enrichment fields produced by the cleanup/enrichment pass.
   rationale: z.string().optional(),
   label: z.string().optional(),
+  semanticRelation: z.string().optional(),
+  provenance: z.unknown().optional(),
+  evidence: z.string().optional(),
+  sourceExcerpt: z.string().optional(),
+  targetExcerpt: z.string().optional(),
   review: EdgeReviewMetadata.optional(),
-});
+}).passthrough();
 export type TopoEdge = z.infer<typeof TopoEdge>;
 
 export const TopoMeta = z.record(z.unknown());
@@ -104,7 +125,7 @@ export const TopoData = z.object({
   _meta: TopoMeta.optional(),
   nodes: z.array(TopoNode),
   edges: z.array(TopoEdge),
-});
+}).passthrough();
 export type TopoData = z.infer<typeof TopoData>;
 
 export const KIND_LABEL: Record<NodeKind, string> = {
