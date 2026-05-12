@@ -48,7 +48,7 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
               transform: `translate(-50%, -50%) translate(${(sourceX + targetX) / 2}px, ${(sourceY + targetY) / 2}px)`,
               pointerEvents: "none",
             }}
-            className="rounded-full border border-white/15 bg-ink-900/80 px-2 py-0.5 text-[9px] uppercase tracking-widest text-white/80 backdrop-blur"
+            className="rounded-full border border-muted/30 bg-surface p-1 px-2 text-xs uppercase tracking-wider text-ink/80 backdrop-blur"
           >
             {e?.relation}
           </div>
