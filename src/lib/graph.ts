@@ -90,11 +90,17 @@ export function descendants(adj: Adjacency, id: string): Set<string> {
   return seen;
 }
 
-/** Topological sort restricted to the subgraph induced by `nodeIds`. */
-export function topoSort(
+type NodeComparator = (a: TopoNode, b: TopoNode) => number;
+
+/**
+ * Topological sort restricted to the subgraph induced by `nodeIds`.
+ * Uses provided comparator function to order nodes with same in-degree.
+ */
+export function topoSortWith(
   nodeIds: Set<string>,
   adj: Adjacency,
-  allNodes: TopoNode[]
+  allNodes: TopoNode[],
+  comparator: NodeComparator = cmpNum
 ): TopoNode[] {
   const indeg = new Map<string, number>();
   for (const id of nodeIds) indeg.set(id, 0);
@@ -106,7 +112,7 @@ export function topoSort(
   const ready: string[] = [];
   for (const [id, d] of indeg) if (d === 0) ready.push(id);
   const byId = new Map(allNodes.map((n) => [n.id, n]));
-  ready.sort((a, b) => cmpNum(byId.get(a)!, byId.get(b)!));
+  ready.sort((a, b) => comparator(byId.get(a)!, byId.get(b)!));
   const out: TopoNode[] = [];
   while (ready.length) {
     const cur = ready.shift()!;
@@ -118,7 +124,7 @@ export function topoSort(
       indeg.set(nxt, d);
       if (d === 0) {
         let i = 0;
-        while (i < ready.length && cmpNum(byId.get(ready[i])!, byId.get(nxt)!) < 0) i++;
+        while (i < ready.length && comparator(byId.get(ready[i])!, byId.get(nxt)!) < 0) i++;
         ready.splice(i, 0, nxt);
       }
     }
@@ -126,6 +132,76 @@ export function topoSort(
   return out;
 }
 
+/** Topological sort restricted to the subgraph induced by `nodeIds`. */
+export function topoSort(
+  nodeIds: Set<string>,
+  adj: Adjacency,
+  allNodes: TopoNode[]
+): TopoNode[] {
+  return topoSortWith(nodeIds, adj, allNodes, cmpNum);
+}
+
+/** Priority ordering for topic clusters (lower = appears first) */
+const topicClusterPriority: Record<string, number> = {
+  "Overture": 0,
+  "Set Theory": 1,
+  "Algebra": 2,
+  "Metric Foundations": 3,
+  "Topological Spaces": 4,
+  "Generating Topologies": 5,
+  "Constructions": 6,
+  "Topological Properties": 7,
+  "Fundamental Group": 8,
+  "Fundamental Group of S¹": 9,
+};
+
+/** Priority ordering for node kinds (lower = appears first) */
+const nodeKindPriority: Record<string, number> = {
+  "definition": 0,
+  "lemma": 1,
+  "theorem": 2,
+  "example": 3,
+  "remark": 4,
+  "exercise": 5,
+};
+
+/**
+ * Compare nodes using conceptual flow ordering:
+ * 1. Topic cluster (foundational → advanced)
+ * 2. Node kind (definitions first, then lemmas, theorems, examples)
+ * 3. Chapter and section number
+ * 4. Number within chapter
+ */
+export function cmpConceptualFlow(a: TopoNode, b: TopoNode): number {
+  // First, compare by topic cluster priority
+  const aPriority = topicClusterPriority[a.topicCluster] ?? 10;
+  const bPriority = topicClusterPriority[b.topicCluster] ?? 10;
+  if (aPriority !== bPriority) return aPriority - bPriority;
+
+  // Within same cluster, prioritize by node kind
+  const aKindPriority = nodeKindPriority[a.kind] ?? 6;
+  const bKindPriority = nodeKindPriority[b.kind] ?? 6;
+  if (aKindPriority !== bKindPriority) return aKindPriority - bKindPriority;
+
+  // Then by chapter number
+  const [ac, ai] = splitNum(a.number);
+  const [bc, bi] = splitNum(b.number);
+  if (ac !== bc) {
+    // Ensure appendix chapters (A, B, etc.) come after numeric chapters
+    const aIsAppendix = isNaN(parseInt(ac, 10));
+    const bIsAppendix = isNaN(parseInt(bc, 10));
+    if (aIsAppendix !== bIsAppendix) return aIsAppendix ? 1 : -1;
+    return ac < bc ? -1 : 1;
+  }
+
+  // Finally by number within chapter
+  return ai - bi;
+}
+
+/**
+ * Compare nodes by numeric order only (original behavior).
+ * Used as fallback or for specific orderings that need to preserve textbook order.
+ */
 export function cmpNum(a: TopoNode, b: TopoNode): number {
   const [ac, ai] = splitNum(a.number);
   const [bc, bi] = splitNum(b.number);
@@ -148,4 +224,36 @@ export function buildLearningPath(
   const prerequisites = ancestors(adj, targetId);
   prerequisites.add(targetId);
   return topoSort(prerequisites, adj, nodes);
+}
+
+/**
+ * Build a learning path using conceptual flow ordering.
+ * Prerequisites are ordered by topic cluster and node kind for better intuitive flow.
+ */
+export function buildLearningPathConceptual(
+  targetId: string,
+  edges: TopoEdge[],
+  allowed: Set<Relation>,
+  nodes: TopoNode[]
+): TopoNode[] {
+  const adj = buildAdjacency(edges, allowed, "raw");
+  const prerequisites = ancestors(adj, targetId);
+  prerequisites.add(targetId);
+  return topoSortWith(prerequisites, adj, nodes, cmpConceptualFlow);
+}
+
+/**
+ * Sort all nodes using conceptual flow ordering.
+ * Returns nodes ordered by topic cluster, node kind, and chapter number.
+ */
+export function sortNodesConceptually(nodes: TopoNode[]): TopoNode[] {
+  return [...nodes].sort(cmpConceptualFlow);
+}
+
+/**
+ * Sort all nodes using numeric (chapter) ordering.
+ * Preserves original textbook order.
+ */
+export function sortNodesNumeric(nodes: TopoNode[]): TopoNode[] {
+  return [...nodes].sort(cmpNum);
 }
