@@ -1,5 +1,5 @@
 import { useMemo, type ReactNode } from "react";
-import { Lock, LockOpen, Pin } from "lucide-react";
+import { Lock, LockOpen, Pin, Route } from "lucide-react";
 import {
   atlasNodes,
   atlasNodesById,
@@ -30,6 +30,8 @@ export function Sidebar() {
   const setPathTarget = useStore((s) => s.setPathTarget);
   const themeId = useStore((s) => s.themeId);
   const colorMode = useStore((s) => s.colorMode);
+  const mapStructureMode = useStore((s) => s.mapStructureMode);
+  const setMapStructureMode = useStore((s) => s.setMapStructureMode);
   const palette = getThemePalette(themeId, colorMode);
 
   const effectiveTarget = pathTargetId ?? selectedId ?? DEFAULT_SELECTED_ID;
@@ -48,6 +50,26 @@ export function Sidebar() {
       <section className="panel-section legend-heading">
         <div>
           <h2>Filters &amp; Path</h2>
+        </div>
+      </section>
+
+      <section className="panel-section map-structure-section">
+        <SectionLabel>Map Structure</SectionLabel>
+        <div className="structure-segmented" aria-label="Map structure options">
+          <button
+            type="button"
+            className={mapStructureMode === "chapters" ? "active" : ""}
+            onClick={() => setMapStructureMode("chapters")}
+          >
+            Chapters
+          </button>
+          <button
+            type="button"
+            className={mapStructureMode === "islands" ? "active" : ""}
+            onClick={() => setMapStructureMode("islands")}
+          >
+            Islands
+          </button>
         </div>
       </section>
 

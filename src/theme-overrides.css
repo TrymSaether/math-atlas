@@ -193,6 +193,164 @@ select:focus-visible {
   transition: fill 160ms ease, stroke 160ms ease;
 }
 
+.island-node-wrapper,
+.island-node-wrapper.react-flow__node,
+.react-flow__node-lane.island-node-wrapper {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+.island-node-wrapper .react-flow__node-default,
+.island-node-wrapper .react-flow__node-input,
+.island-node-wrapper .react-flow__node-output {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.island-lane-node {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible;
+}
+
+.island-lane-node svg {
+  display: block;
+  overflow: visible;
+}
+
+.island-lane-node path {
+  filter: drop-shadow(0 24px 42px color-mix(in srgb, var(--node-shadow) 95%, transparent));
+}
+
+.island-lane-node::after {
+  position: absolute;
+  inset: 32px;
+  content: "";
+  border-radius: 42% 58% 53% 47% / 55% 42% 58% 45%;
+  background:
+    radial-gradient(circle at 22% 30%, rgba(255,255,255,0.16), transparent 24%),
+    radial-gradient(circle at 74% 66%, rgba(255,255,255,0.10), transparent 26%);
+  pointer-events: none;
+}
+
+.lane-label small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.map-structure-section {
+  display: grid;
+  gap: 12px;
+}
+
+.structure-toggle-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 0 0, color-mix(in srgb, var(--primary) 12%, transparent), transparent 46%),
+    var(--surface);
+}
+
+.structure-toggle-card strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-strong);
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.structure-toggle-card p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.structure-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--link-accent);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.switch-control {
+  position: relative;
+  width: 54px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-muted);
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.switch-control span {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: 0 4px 10px var(--node-shadow);
+  transition: transform 180ms ease, background-color 160ms ease;
+}
+
+.switch-control[aria-checked="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.switch-control[aria-checked="true"] span {
+  transform: translateX(24px);
+  background: var(--primary-contrast);
+}
+
+.structure-segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-muted);
+}
+
+.structure-segmented button {
+  min-width: 0;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.structure-segmented button.active {
+  background: var(--surface);
+  color: var(--link-accent);
+  box-shadow: 0 4px 12px var(--node-shadow);
+}
+
 .react-flow__controls {
   box-shadow: 0 8px 24px var(--node-shadow);
 }
