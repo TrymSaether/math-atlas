@@ -166,12 +166,23 @@
       "sectionTitle": "Introduction",
       "topicCluster": "Overture",
       "originalText": "Let 𝑓 ∶ 𝐷𝑛 → 𝐷𝑛 be a continuous map from the (unit) disk in ℝ𝑛 to itself. Then 𝑓 has a fixed point, i.e., there is some point 𝑥 ∈ 𝐷𝑛 such that 𝑓 (𝑥) = 𝑥.\n\nFor 𝑛 = 1 this is a well-known result from calculus: The graph of any continuous map 𝑓 ∶ [0, 1] → [0, 1] must cross the diagonal 𝑦 = 𝑥 for some 𝑥∗ ∈ [0, 1]. Hence, 𝑓 (𝑥∗ ) = 𝑥∗ . See Figure 1.4. The second theorem is the fundamental theorem of algebra.",
-      "formalStatement": "Let $f : D^n \\to D^n$ be a continuous map from the unit disk in $\\mathbb{R}^n$ to itself. Then there exists $x \\in D^n$ such that $f(x)=x$.",
-      "explanation": "The theorem asserts that every continuous self-map of the closed unit disk has a fixed point. In the introduction it is used as a motivating example: in dimension one, the graph of a continuous map $[0,1]\\to[0,1]$ must cross the diagonal.",
+      "formalStatement": "For $n\\geq 0$, let $D^n=\\{x\\in\\mathbb{R}^n\\mid \\|x\\|\\leq 1\\}$ be the closed unit disk with its Euclidean topology. Every continuous map $f:D^n\\to D^n$ has a fixed point; that is, there exists $x\\in D^n$ such that $f(x)=x$.",
+      "explanation": "The Brouwer fixed point theorem says that a continuous self-map of a closed disk cannot move every point. In dimension $1$, this is the familiar intermediate-value argument: a continuous map $f:[0,1]\\to[0,1]$ must meet the diagonal, so some $x\\in[0,1]$ satisfies $f(x)=x$. The theorem is listed here as a motivating result whose proof is deferred.",
       "statementDependencies": [],
       "proofDependencies": [],
-      "tags": ["continuity", "fixed-points", "maps"],
-      "qualityFlags": []
+      "tags": [
+        "continuity",
+        "fixed-points",
+        "maps",
+        "euclidean-space",
+        "compactness"
+      ],
+      "qualityFlags": ["introductoryResult", "proofDeferred"],
+      "notes": {
+        "correctness": "The statement specifies the closed unit disk with its Euclidean topology. The corresponding assertion for the open disk is false, for example by a fixed-point-free translation-like self-map.",
+        "dependencyReview": "No internal statement dependencies are listed because this theorem is used as an introductory motivation before continuity, Euclidean topology, compactness, and disks are formally developed in the dataset.",
+        "formattingReview": "Use $D^n$, $\\mathbb{R}^n$, $f:D^n\\to D^n$, and $f(x)=x$."
+      }
     },
     {
       "id": "thm-1-2-the-fundamental-theorem-of-algebra",
@@ -183,14 +194,26 @@
       "sectionTitle": "Introduction",
       "topicCluster": "Overture",
       "originalText": "A polynomial equation\n\n𝑧𝑛 + 𝑎𝑛−1 𝑧𝑛−1 + ⋯ + 𝑎1 𝑧 + 𝑎0 = 0\n\nof degree 𝑛 > 0 with complex coefficients has at least one complex root.\n\nChapter 1. Introduction 7\n\n𝑦 (1, 1) ∙\n\n𝑦=𝑥 𝑦 = 𝑓 (𝑥) 𝑥\n\n𝑥∗ 𝑥\n\nFigure 1.4: The graph of any continuous map from [0, 1] to [0, 1] must cross the diagonal.\n\nTo prove it we will use the fact that the fundamental group of the circle is isomorphic to the group of integers. The fundamental theorem of algebra may be proved in many different ways, including using only algebraic techniques and analysis. However, the proof we will provide (based on [4, §56]) is a fairly simple corollary of the computation of the fundamental group of the circle.\n\n2. Continuous maps\n\n2.1 Metric spaces From calculus we know what to mean by a continuous map from ℝ𝑛 to ℝ𝑚 : a map 𝑓 ∶ ℝ𝑛 → ℝ𝑚 is continuous at 𝑝 ∈ ℝ𝑛 if for all 𝜖 > 0 there exists a 𝛿 > 0 such that if ‖𝑝 − 𝑞‖ℝ𝑛 < 𝛿, then ‖𝑓 (𝑝) − 𝑓 (𝑞)‖ℝ𝑚 < 𝜖. Here ‖ ⋅ ‖ℝ𝑛 denotes the Euclidean norm in ℝ𝑛 . Similarly, ‖ ⋅ ‖ℝ𝑚 denotes the Euclidean norm in ℝ𝑚 . Topological spaces provide the most general setting for which the concept of continuity makes sense. Before we get to the concept of a topological space, let us consider metric spaces. Metric spaces allow us to speak of distance between elements. Using the notion of distance between elements we can make sense of continuity of maps between metric spaces.",
-      "formalStatement": "Every nonconstant polynomial with complex coefficients has at least one complex root. Equivalently, every polynomial equation $z^n+a_{n-1}z^{n-1}+\\cdots+a_1z+a_0=0$ with $n>0$ has a solution in $\\mathbb{C}$.",
-      "explanation": "This introductory theorem is presented as a later application of topology: the text notes that it will be proved using the computation of the fundamental group of the circle.",
+      "formalStatement": "Every nonconstant polynomial with complex coefficients has at least one complex root. Equivalently, if $n\\geq 1$ and $a_0,a_1,\\ldots,a_{n-1}\\in\\mathbb{C}$, then the monic polynomial equation\n\\[\nz^n+a_{n-1}z^{n-1}+\\cdots+a_1z+a_0=0\n\\]\nhas a solution $z\\in\\mathbb{C}$.",
+      "explanation": "The fundamental theorem of algebra says that $\\mathbb{C}$ is algebraically closed: every complex polynomial of positive degree has a complex zero. It is included in Chapter 1 as a motivating application of topology, later proved using the fundamental group of the circle.",
       "statementDependencies": [],
       "proofDependencies": [
         "thm-8-16-let-s-1-x-y-r2-x2-y2-1-be-the-circle-considered-as-a-subspac"
       ],
-      "tags": ["fundamental-group", "maps"],
-      "qualityFlags": []
+      "tags": [
+        "complex-numbers",
+        "polynomials",
+        "fundamental-group",
+        "maps",
+        "circle",
+        "applications"
+      ],
+      "qualityFlags": ["introductoryResult", "proofDeferred"],
+      "notes": {
+        "correctness": "The displayed equation is the monic form of the theorem; this is equivalent to the usual nonconstant-polynomial statement after dividing by the nonzero leading coefficient.",
+        "dependencyReview": "The statement itself has no topology dependencies. The proof dependency on the computation of $\\pi_1(S^1)$ is appropriate because the source says the proof will use the fundamental group of the circle.",
+        "formattingReview": "Use $\\mathbb{C}$, $\\pi_1(S^1)$, $\\ldots$, and $\\cdots$ consistently."
+      }
     },
     {
       "id": "def-2-1-metric-spaces",
@@ -4490,13 +4513,13 @@
       "to": "thm-1-2-the-fundamental-theorem-of-algebra",
       "relation": "proof",
       "source": "verified",
-      "confidence": 0.97,
+      "confidence": 1.0,
       "rationale": "The topological proof of the fundamental theorem of algebra uses π₁(S¹)≅Z.",
       "review": {
         "flags": ["mvp-curated", "mvp-provenance"],
         "needsHumanReview": false
       },
-      "semanticRelation": "application-of"
+      "semanticRelation": "proof-use"
     },
     {
       "id": "mvp-statement-ec86e99257c3",

@@ -7,7 +7,6 @@
     "**/dist": true,
     "**/build": true,
     "**/out": true,
-    "**/.vscode": true,
     "**/.tmp": true,
     "**/.cache": true,
     "**/.trash": true
