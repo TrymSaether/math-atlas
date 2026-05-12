@@ -1,111 +1,121 @@
 /**
- * Centralized color system for the topology map
- * All colors are defined here for consistency and maintainability
+ * Centralized color system for the topology map.
+ *
+ * Design direction:
+ * - Flat, saturated, high-contrast colors
+ * - No glow effects
+ * - Dark neutral canvas with crisp borders
+ * - Stable semantic mappings for node kinds and relation types
  */
 
 // Base color palette
 export const palette = {
-  // Accent colors by relation type
-  cyan: "#5ce1ff",
-  violet: "#a78bff",
-  gold: "#ffd58a",
-  rose: "#ff8fb1",
-  mint: "#7af3c4",
-  orange: "#ffb86c",
+  // Vivid semantic accents
+  azure: "#00A6FF",
+  electricViolet: "#7C3AED",
+  amber: "#FFB000",
+  coral: "#FF4D6D",
+  emerald: "#00C781",
+  tangerine: "#FF7A00",
+  lime: "#A3E635",
+  fuchsia: "#E879F9",
 } as const;
 
 // RGB values for CSS custom properties (used with rgba(var(--c), opacity))
-// These must match the hex values above
+// These must match the hex values above.
 export const paletteRGB = {
-  cyan: "92, 225, 255",
-  violet: "167, 139, 255",
-  gold: "255, 213, 138",
-  rose: "255, 143, 177",
-  mint: "122, 243, 196",
-  orange: "255, 184, 108",
+  azure: "0, 166, 255",
+  electricViolet: "124, 58, 237",
+  amber: "255, 176, 0",
+  coral: "255, 77, 109",
+  emerald: "0, 199, 129",
+  tangerine: "255, 122, 0",
+  lime: "163, 230, 53",
+  fuchsia: "232, 121, 249",
 } as const;
 
 // Semantic colors for node kinds
 export const nodeKindColors = {
-  definition: palette.cyan,
-  theorem: palette.violet,
-  lemma: palette.mint,
-  example: palette.gold,
-  proposition: palette.rose,
-  corollary: palette.orange,
+  definition: palette.azure,
+  theorem: palette.electricViolet,
+  lemma: palette.emerald,
+  example: palette.amber,
+  proposition: palette.coral,
+  corollary: palette.tangerine,
 } as const;
 
 // RGB values for node kinds (matching CSS custom properties)
 export const nodeKindColorsRGB = {
-  definition: paletteRGB.cyan,
-  theorem: paletteRGB.violet,
-  lemma: paletteRGB.mint,
-  example: paletteRGB.gold,
-  proposition: paletteRGB.rose,
-  corollary: paletteRGB.orange,
+  definition: paletteRGB.azure,
+  theorem: paletteRGB.electricViolet,
+  lemma: paletteRGB.emerald,
+  example: paletteRGB.amber,
+  proposition: paletteRGB.coral,
+  corollary: paletteRGB.tangerine,
 } as const;
 
 // Semantic colors for relation types
 export const relationColors = {
-  statement: palette.cyan,
-  proof: palette.violet,
-  illustration: palette.gold,
+  statement: palette.azure,
+  proof: palette.electricViolet,
+  illustration: palette.amber,
 } as const;
 
 // UI background colors
 export const bg = {
-  base: "#05060a",
-  surface: "#0a0d18",
-  surface2: "#10142a",
-  surface3: "#161c3a",
-  surface4: "#1e2547",
-  surface5: "#2a3360",
+  base: "#0B1020",
+  surface: "#111827",
+  surface2: "#182235",
+  surface3: "#223047",
+  surface4: "#2C3A54",
+  surface5: "#3A4A66",
 } as const;
 
 // UI border/grid colors
 export const ui = {
-  grid: "rgba(120, 140, 255, 0.06)",
-  ring: "rgba(120, 140, 255, 0.12)",
-  gridAlpha: 0.06,
-  ringAlpha: 0.12,
-  primaryAlpha: 0.06,
-  primaryRGB: [120, 140, 255],
+  grid: "rgba(148, 163, 184, 0.12)",
+  ring: "rgba(255, 255, 255, 0.18)",
+  gridAlpha: 0.12,
+  ringAlpha: 0.18,
+  primaryAlpha: 0.1,
+  primaryRGB: [0, 166, 255],
 } as const;
 
 // Stroke/border colors
 export const stroke = {
-  primary: "rgba(255, 255, 255, 0.18)",
+  primary: "rgba(255, 255, 255, 0.24)",
   primaryHover: "#ffffff",
-  secondary: "rgba(120, 140, 255, 0.2)",
-  tertiary: "rgba(120, 140, 255, 0.15)",
+  secondary: "rgba(148, 163, 184, 0.28)",
+  tertiary: "rgba(148, 163, 184, 0.18)",
 } as const;
 
 // Canvas/graph specific colors
 export const canvas = {
-  background: "rgba(10, 12, 20, 0.85)",
-  maskBackground: "rgba(5, 6, 10, 0.78)",
-  maskStroke: "rgba(92, 225, 255, 0.45)",
-  gridBackground: "rgba(120, 140, 255, 0.22)",
-  scrollbarThumb: "rgba(120, 140, 255, 0.25)",
+  background: "#0F172A",
+  maskBackground: "rgba(11, 16, 32, 0.72)",
+  maskStroke: "rgba(0, 166, 255, 0.8)",
+  gridBackground: "rgba(148, 163, 184, 0.16)",
+  scrollbarThumb: "rgba(148, 163, 184, 0.36)",
 } as const;
 
 // Text colors
 export const text = {
-  primary: "#cbd5ff",
-  secondary: "#0a0d18", // for light mode
-  light: "#f5f6fb",
+  primary: "#F8FAFC",
+  secondary: "#0F172A", // for light mode / text on bright fills
+  muted: "#CBD5E1",
+  light: "#FFFFFF",
 } as const;
 
-// Glow effects (shadows with color)
+// Flat emphasis tokens. Keep this export for compatibility, but intentionally avoid glow.
 export const glows = {
-  primary: "0 0 40px -10px rgba(124,160,255,0.55)",
-  cyan: "0 0 30px -6px rgba(92,225,255,0.6)",
-  violet: "0 0 30px -6px rgba(167,139,255,0.6)",
+  primary: "none",
+  cyan: "none",
+  violet: "none",
 } as const;
 
 /**
- * Convert hex color to RGB values for use in rgba() CSS function
- * @example hexToRgb("#5ce1ff") => [92, 225, 255]
+ * Convert hex color to RGB values for use in rgba() CSS function.
+ * @example hexToRgb("#00A6FF") => [0, 166, 255]
  */
 export function hexToRgb(hex: string): [number, number, number] {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -118,8 +128,8 @@ export function hexToRgb(hex: string): [number, number, number] {
 }
 
 /**
- * Convert hex color to RGB string for use in CSS custom properties
- * @example hexToRgbString("#5ce1ff") => "92, 225, 255"
+ * Convert hex color to RGB string for use in CSS custom properties.
+ * @example hexToRgbString("#00A6FF") => "0, 166, 255"
  */
 export function hexToRgbString(hex: string): string {
   const [r, g, b] = hexToRgb(hex);
@@ -127,8 +137,8 @@ export function hexToRgbString(hex: string): string {
 }
 
 /**
- * Generate an rgba color string from hex and opacity
- * @example rgbaFromHex("#5ce1ff", 0.5) => "rgba(92, 225, 255, 0.5)"
+ * Generate an rgba color string from hex and opacity.
+ * @example rgbaFromHex("#00A6FF", 0.5) => "rgba(0, 166, 255, 0.5)"
  */
 export function rgbaFromHex(hex: string, opacity: number): string {
   const [r, g, b] = hexToRgb(hex);
@@ -136,8 +146,8 @@ export function rgbaFromHex(hex: string, opacity: number): string {
 }
 
 /**
- * Get CSS custom property for a color using CSS custom property syntax
- * Used in inline styles to reference Tailwind-managed colors
+ * Get CSS custom property for a color using CSS custom property syntax.
+ * Used in inline styles to reference Tailwind-managed colors.
  * @example getCSSVar("c") => "rgba(var(--c),1)"
  * @example getCSSVar("c", 0.5) => "rgba(var(--c),0.5)"
  */

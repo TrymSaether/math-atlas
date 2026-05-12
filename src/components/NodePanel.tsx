@@ -58,13 +58,13 @@ export function NodePanel() {
               </div>
             </Section>
 
-            {formalStatement && (
+            {/* {formalStatement && (
               <Section title="Source text">
                 <div className="rounded-lg border border-white/10 bg-white/[0.03] p-3 text-[12px] leading-relaxed text-white/65 font-serif">
                   <MathText text={node.originalText} />
                 </div>
               </Section>
-            )}
+            )} */}
 
             {node.explanation && (
               <Section title="Explanation">
