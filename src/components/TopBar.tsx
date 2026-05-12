@@ -12,19 +12,24 @@ export function TopBar() {
   const isDark = colorMode === "dark";
 
   return (
-    <header className="glass scanlines mx-auto mb-3 flex h-12 w-full items-center justify-between rounded-2xl px-4">
-      <div className="flex items-center gap-3">
+    <header className="glass scanlines mx-auto mb-3 flex min-h-12 w-full flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-2">
+      <div className="flex min-w-[280px] items-center gap-3">
         <Sigma className="h-4 w-4 text-accent-cyan" />
-        <div className="font-display text-[13px] tracking-widest text-white/80">
-          TOPOLOGY · ATLAS <span className="text-white/40">— a map of concepts & their dependencies</span>
+        <div className="font-display text-[13px] tracking-widest" style={{ color: "var(--ink)" }}>
+          TOPOLOGY · ATLAS <span style={{ color: "var(--muted)" }}>— a map of concepts & their dependencies</span>
         </div>
       </div>
-      <div className="flex items-center gap-2 text-[11px] text-white/50">
-        <Compass className="h-3.5 w-3.5" />
-        <span>Mode: <span className="text-white/90">{view}</span></span>
-        <div className="theme-controls ml-2" aria-label="Theme controls">
-          <label className="theme-control">
+
+      <div className="flex flex-wrap items-center justify-end gap-2 text-[11px]" style={{ color: "var(--muted)" }}>
+        <div className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1" style={{ borderColor: "var(--border)", background: "var(--search-bg)" }}>
+          <Compass className="h-3.5 w-3.5" />
+          <span>Mode: <span style={{ color: "var(--ink)" }}>{view}</span></span>
+        </div>
+
+        <div className="theme-controls" aria-label="Theme controls">
+          <label className="theme-control" title="Choose map theme">
             <Palette className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Theme</span>
             <select
               value={themeId}
               onChange={(event) => setThemeId(event.target.value as ThemeId)}
@@ -37,6 +42,7 @@ export function TopBar() {
               ))}
             </select>
           </label>
+
           <button
             type="button"
             className="mode-toggle"
@@ -48,9 +54,11 @@ export function TopBar() {
             <span>{COLOR_MODE_OPTIONS.find((mode) => mode.id === colorMode)?.label ?? "Light"}</span>
           </button>
         </div>
+
         <button
           onClick={() => setPaletteOpen(true)}
-          className="ml-1 inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2 py-1 hover:bg-white/10"
+          className="inline-flex items-center gap-1 rounded-md border px-2 py-1"
+          style={{ borderColor: "var(--border)", background: "var(--search-bg)", color: "var(--ink)" }}
         >
           <CommandIcon className="h-3 w-3" /> Search · <kbd className="font-mono">⌘K</kbd>
         </button>
