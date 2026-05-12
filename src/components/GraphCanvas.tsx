@@ -24,6 +24,7 @@ import {
   type AtlasNode,
 } from "../atlas";
 import { data } from "../data";
+import { orientEdge } from "../lib/graph";
 import { MathText } from "../lib/katex";
 import { useStore } from "../store";
 
@@ -151,12 +152,13 @@ export function GraphCanvas() {
           visibleNodeIds.has(e.to),
       )
       .map((e) => {
+        const route = orientEdge(e, "route");
         const active = activePathSet.has(e.from) && activePathSet.has(e.to);
         const dim = dimmedNodeIds.has(e.from) || dimmedNodeIds.has(e.to);
         return {
           id: e.id,
-          source: e.from,
-          target: e.to,
+          source: route.from,
+          target: route.to,
           type: "topo",
           data: { relation: e.relation, active, dim } satisfies TopoEdgeData,
           zIndex: active ? 1 : 0,
