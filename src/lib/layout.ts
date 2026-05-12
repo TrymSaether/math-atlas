@@ -19,8 +19,8 @@ const LANE_GAP = 96;
  * Swimlane dependency layout: each topic cluster becomes a compact horizontal
  * metro district, ordered by the mathematical progression (foundations → spaces →
  * constructions → properties → algebraic topology). Items are spread along
- * the X axis by route depth so the visible map reads prerequisite → dependent
- * while raw data edges remain dependent → prerequisite.
+ * the X axis by provenance depth so the visible map reads prerequisite/source →
+ * dependent concept/result/example, matching the dataset direction contract.
  *
  * When `showOrphans === false`, items with neither incoming nor outgoing
  * edges in the current edge set are dropped.
