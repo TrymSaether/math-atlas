@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Functional_Analysis Schema",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "graph_model": {
+          "type": "object",
+          "properties": {
+            "top_level_field_id": {
+              "type": "string"
+            },
+            "directed": {
+              "type": "boolean"
+            },
+            "typed": {
+              "type": "boolean"
+            },
+            "multigraph": {
+              "type": "boolean"
+            },
+            "tree_policy": {
+              "type": "string"
+            }
+          }
+        },
+        "item_kinds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "meaning": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "dependency_classes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "meaning": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "edge_types": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "item_schema": {
+          "type": "object"
+        },
+        "edge_schema": {
+          "type": "object"
+        }
+      }
+    },
+    "graph": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "top_level_item": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array"
+        },
+        "edges": {
+          "type": "array"
+        }
+      }
+    },
+    "views": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "example_traversal": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "query_model": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "traversal_conventions": {
+          "type": "object"
+        },
+        "dependency_distinctions": {
+          "type": "object"
+        }
+      }
+    },
+    "example_queries": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}
