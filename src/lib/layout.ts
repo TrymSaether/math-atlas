@@ -11,16 +11,16 @@ export interface LayoutInput {
 
 const NODE_W = 240;
 const NODE_H = 92;
-const COL_W = 280;
-const SUBROW_H = 108;
-const LANE_GAP = 70;
+const COL_W = 340;
+const SUBROW_H = 96;
+const LANE_GAP = 24;
 
 /**
- * Swimlane dependency layout: each topic cluster becomes a horizontal
- * lane, ordered by the mathematical progression (foundations → spaces →
- * constructions → properties → algebraic topology). Items are spread
- * along the X axis by route depth so the visible map reads prerequisite →
- * dependent while raw data edges remain dependent → prerequisite.
+ * Swimlane dependency layout: each topic cluster becomes a compact horizontal
+ * blob, ordered by the mathematical progression (foundations → spaces →
+ * constructions → properties → algebraic topology). Items are spread along
+ * the X axis by route depth so the visible map reads prerequisite → dependent
+ * while raw data edges remain dependent → prerequisite.
  *
  * When `showOrphans === false`, items with neither incoming nor outgoing
  * edges in the current edge set are dropped.
@@ -84,7 +84,7 @@ export function dependencyLayout({
       height: laneH - (SUBROW_H - NODE_H) + 20,
       width: (maxCol + 1) * COL_W,
     });
-    y += laneH + LANE_GAP - SUBROW_H + NODE_H;
+    y += laneH + LANE_GAP;
   }
   const fullW = (maxCol + 1) * COL_W;
   for (const l of lanes) l.width = fullW;
