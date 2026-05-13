@@ -10,18 +10,62 @@ export type RelationStyle = {
 };
 
 const relationGroups = [
-  { match: ["define", "defined"], color: palette.cyan, width: 1.25, opacity: 0.5 },
-  { match: ["proof", "prove", "logical", "implies", "requires", "prerequisite"], color: palette.violet, width: 1.15, opacity: 0.42 },
-  { match: ["example", "counterexample", "instance"], color: palette.gold, width: 0.95, opacity: 0.34, dash: "2 5" },
-  { match: ["assume", "violates", "necessity"], color: palette.rose, width: 1.05, opacity: 0.38, dash: "6 4" },
-  { match: ["general", "special", "subtype", "inherits"], color: palette.mint, width: 1.05, opacity: 0.4 },
-  { match: ["motivate", "pedagogical", "historical"], color: palette.orange, width: 0.9, opacity: 0.28, dash: "1 5" },
+  {
+    match: ["define", "defined"],
+    color: palette.cyan,
+    width: 1.25,
+    opacity: 0.5,
+  },
+  {
+    match: ["proof", "prove", "logical", "implies", "requires", "prerequisite"],
+    color: palette.violet,
+    width: 1.15,
+    opacity: 0.42,
+  },
+  {
+    match: ["example", "counterexample", "instance"],
+    color: palette.gold,
+    width: 0.95,
+    opacity: 0.34,
+    dash: "2 5",
+  },
+  {
+    match: ["assume", "violates", "necessity"],
+    color: palette.rose,
+    width: 1.05,
+    opacity: 0.38,
+    dash: "6 4",
+  },
+  {
+    match: ["general", "special", "subtype", "inherits"],
+    color: palette.mint,
+    width: 1.05,
+    opacity: 0.4,
+  },
+  {
+    match: ["motivate", "pedagogical", "historical"],
+    color: palette.orange,
+    width: 0.9,
+    opacity: 0.28,
+    dash: "1 5",
+  },
 ];
 
-export function getRelationStyle(relation: string, highlighted = false, dimmed = false): RelationStyle {
+export function getRelationStyle(
+  relation: string,
+  highlighted = false,
+  dimmed = false,
+): RelationStyle {
   const normalized = relation.toLowerCase();
-  const group = relationGroups.find((entry) => entry.match.some((part) => normalized.includes(part)));
-  const style: { color: string; width: number; opacity: number; dash?: string } = group ?? { color: palette.cyan, width: 0.95, opacity: 0.3 };
+  const group = relationGroups.find((entry) =>
+    entry.match.some((part) => normalized.includes(part)),
+  );
+  const style: {
+    color: string;
+    width: number;
+    opacity: number;
+    dash?: string;
+  } = group ?? { color: palette.cyan, width: 0.95, opacity: 0.3 };
 
   return {
     color: style.color,

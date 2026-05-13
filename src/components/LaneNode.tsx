@@ -12,19 +12,19 @@ export function LaneNode({ data }: NodeProps<Data>) {
       <div
         className="absolute inset-0 rounded-2xl border border-dashed"
         style={{
-          background: "rgba(120,140,255,0.025)",
-          borderColor: "rgba(120,140,255,0.12)",
+          background: "rgba(var(--primary-rgb),0.035)",
+          borderColor: "rgba(var(--primary-rgb),0.14)",
         }}
       />
       <div
-        className="absolute left-3 top-3 font-display text-[26px] font-semibold tracking-[0.06em] leading-tight"
-        style={{ color: "rgba(150,170,255,0.55)" }}
+        className="absolute left-3 top-3 font-display text-[26px] font-semibold leading-tight tracking-[0.06em]"
+        style={{ color: "rgba(var(--primary-rgb),0.58)" }}
       >
         {data.topic}
       </div>
       <div
         className="absolute left-3 top-12 font-display text-[10px] uppercase tracking-[0.28em]"
-        style={{ color: "rgba(150,170,255,0.4)" }}
+        style={{ color: "rgba(var(--primary-rgb),0.42)" }}
       >
         {data.subtitle}
       </div>

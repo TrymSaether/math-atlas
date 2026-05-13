@@ -17,7 +17,7 @@ export function ViewModePanel() {
       {view === "dependency" && (
         <Button variant="quiet" onClick={() => setShowOrphans(!showOrphans)} className="mt-2 w-full justify-between">
           <span className="flex items-center gap-1.5">{showOrphans ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}{showOrphans ? "Show all items" : "Hide unlinked items"}</span>
-          <span className="text-[10px] text-white/38">{showOrphans ? "ON" : "OFF"}</span>
+          <span className="text-[10px] text-[var(--muted)]">{showOrphans ? "ON" : "OFF"}</span>
         </Button>
       )}
     </Section>

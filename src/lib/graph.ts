@@ -5,7 +5,10 @@ export interface Adjacency {
   in: Map<string, { id: string; rel: string }[]>;
 }
 
-export function buildAdjacency(edges: TopoEdge[], allowed: Set<string>): Adjacency {
+export function buildAdjacency(
+  edges: TopoEdge[],
+  allowed: Set<string>,
+): Adjacency {
   const out = new Map<string, { id: string; rel: string }[]>();
   const inn = new Map<string, { id: string; rel: string }[]>();
   for (const e of edges) {
@@ -24,7 +27,10 @@ export function ancestors(adj: Adjacency, id: string): Set<string> {
   while (stack.length) {
     const cur = stack.pop()!;
     for (const { id: nxt } of adj.in.get(cur) ?? []) {
-      if (!seen.has(nxt)) { seen.add(nxt); stack.push(nxt); }
+      if (!seen.has(nxt)) {
+        seen.add(nxt);
+        stack.push(nxt);
+      }
     }
   }
   return seen;
@@ -36,7 +42,10 @@ export function descendants(adj: Adjacency, id: string): Set<string> {
   while (stack.length) {
     const cur = stack.pop()!;
     for (const { id: nxt } of adj.out.get(cur) ?? []) {
-      if (!seen.has(nxt)) { seen.add(nxt); stack.push(nxt); }
+      if (!seen.has(nxt)) {
+        seen.add(nxt);
+        stack.push(nxt);
+      }
     }
   }
   return seen;
@@ -46,7 +55,7 @@ export function descendants(adj: Adjacency, id: string): Set<string> {
 export function topoSort(
   nodeIds: Set<string>,
   adj: Adjacency,
-  allNodes: TopoNode[]
+  allNodes: TopoNode[],
 ): TopoNode[] {
   const indeg = new Map<string, number>();
   for (const id of nodeIds) indeg.set(id, 0);
@@ -72,7 +81,11 @@ export function topoSort(
       if (d === 0) {
         // insert in sorted position
         let i = 0;
-        while (i < ready.length && cmpNum(byId.get(ready[i])!, byId.get(nxt)!) < 0) i++;
+        while (
+          i < ready.length &&
+          cmpNum(byId.get(ready[i])!, byId.get(nxt)!) < 0
+        )
+          i++;
         ready.splice(i, 0, nxt);
       }
     }
@@ -96,7 +109,7 @@ export function buildLearningPath(
   targetId: string,
   edges: TopoEdge[],
   allowed: Set<string>,
-  nodes: TopoNode[]
+  nodes: TopoNode[],
 ): TopoNode[] {
   const adj = buildAdjacency(edges, allowed);
   const anc = ancestors(adj, targetId);

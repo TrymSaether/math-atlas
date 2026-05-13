@@ -35,7 +35,7 @@ export function GraphEdgeView(props: EdgeProps<Data>) {
               transform: `translate(-50%, -50%) translate(${(sourceX + targetX) / 2}px, ${(sourceY + targetY) / 2}px)`,
               pointerEvents: "none",
             }}
-            className="rounded-full border border-white/12 bg-ink-900/88 px-2 py-0.5 text-[9px] font-medium uppercase tracking-widest text-white/75 backdrop-blur"
+            className="rounded-full border border-[var(--border)] bg-[var(--surface-strong)] px-2 py-0.5 text-[9px] font-medium uppercase tracking-widest text-[var(--text-soft)] backdrop-blur"
           >
             {style.label}
           </div>

@@ -37,12 +37,12 @@ export function GraphNodeCard({ data, selected }: NodeProps<Data>) {
         `kind-${node.kind}`,
         "group relative cursor-pointer overflow-hidden rounded-2xl border font-display",
         tw.pad,
-        "border-white/10 bg-ink-900/72 shadow-[0_12px_36px_-24px_rgba(0,0,0,0.8)] backdrop-blur-md",
-        "transition-all hover:-translate-y-0.5 hover:border-[rgba(var(--c),0.55)] hover:bg-ink-800/80",
+        "border-[var(--border)] bg-[var(--node-bg)] shadow-[var(--node-shadow)] backdrop-blur-md",
+        "transition-all hover:-translate-y-0.5 hover:border-[rgba(var(--c),0.55)] hover:bg-[var(--node-hover)]",
         selected && "ring-2 ring-[rgba(var(--c),0.85)]",
-        highlight === "primary" && "ring-2 ring-white/75",
-        highlight === "anc" && "ring-1 ring-accent-cyan/60",
-        highlight === "desc" && "ring-1 ring-accent-violet/60"
+        highlight === "primary" && "ring-2 ring-[var(--text)]",
+        highlight === "anc" && "ring-1 ring-[rgba(var(--primary-rgb),0.60)]",
+        highlight === "desc" && "ring-1 ring-violet-500/60"
       )}
     >
       <div className="absolute inset-y-0 left-0 w-1 bg-[rgba(var(--c),0.72)]" />
@@ -52,12 +52,12 @@ export function GraphNodeCard({ data, selected }: NodeProps<Data>) {
         <Badge tone="kind" className={cn("rounded-md px-1.5 py-0 text-[9px] uppercase tracking-[0.14em]", !isPrimary && "opacity-80")}>
           {KIND_LABEL[node.kind]}
         </Badge>
-        {node.number && <span className="shrink-0 font-mono text-[10px] text-white/32">{node.number}</span>}
+        {node.number && <span className="shrink-0 font-mono text-[10px] text-[var(--faint)]">{node.number}</span>}
       </div>
 
       <div
         className={cn(
-          "mt-2 pl-1.5 font-semibold leading-snug text-white/92",
+          "mt-2 pl-1.5 font-semibold leading-snug text-[var(--text)]",
           tw.titleSize,
           tw.titleClamp === 1 ? "line-clamp-1" : "line-clamp-2"
         )}
@@ -66,7 +66,7 @@ export function GraphNodeCard({ data, selected }: NodeProps<Data>) {
       </div>
 
       {isPrimary && (
-        <div className="mt-2 flex min-w-0 items-center gap-1.5 pl-1.5 text-[10px] text-white/44">
+        <div className="mt-2 flex min-w-0 items-center gap-1.5 pl-1.5 text-[10px] text-[var(--muted)]">
           <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[rgba(var(--c),0.9)]" />
           <span className="truncate">{node.topicCluster}</span>
         </div>

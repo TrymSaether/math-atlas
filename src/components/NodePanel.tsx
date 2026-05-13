@@ -39,7 +39,7 @@ export function NodePanel({ nodeById, incomingEdgesByNodeId, outgoingEdgesByNode
               icon={<MousePointer2 className="h-4 w-4" />}
               title="Select a concept"
               description="Click a node to read its statement, intuition, prerequisites, and consequences."
-              className="border-white/8 bg-transparent"
+              className="border-[var(--border-soft)] bg-transparent"
             />
           </Panel>
         </motion.aside>
@@ -55,7 +55,7 @@ export function NodePanel({ nodeById, incomingEdgesByNodeId, outgoingEdgesByNode
         >
           <Panel className="flex h-full flex-col overflow-hidden shadow-2xl">
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(var(--c),0.7)] to-transparent" />
-            <header className="border-b border-white/8 p-4">
+            <header className="border-b border-[var(--border-soft)] p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="mb-2 flex flex-wrap items-center gap-1.5">
@@ -63,7 +63,7 @@ export function NodePanel({ nodeById, incomingEdgesByNodeId, outgoingEdgesByNode
                     {node.topicCluster && <Badge tone="muted">{node.topicCluster}</Badge>}
                     {node.number && <Badge tone="muted">#{node.number}</Badge>}
                   </div>
-                  <h2 className="font-display text-xl font-semibold leading-tight text-white/94">
+                  <h2 className="font-display text-xl font-semibold leading-tight text-[var(--text)]">
                     <MathText text={node.title} />
                   </h2>
                 </div>
@@ -99,7 +99,7 @@ export function NodePanel({ nodeById, incomingEdgesByNodeId, outgoingEdgesByNode
               <Reference node={node} incomingCount={incoming.length} outgoingCount={outgoing.length} />
             </div>
 
-            <footer className="border-t border-white/8 p-3">
+            <footer className="border-t border-[var(--border-soft)] p-3">
               <Button variant="primary" onClick={() => setPathTarget(node.id)} className="w-full">
                 <Route className="h-3.5 w-3.5" />
                 Generate learning path to here
@@ -121,20 +121,20 @@ function ConceptBody({ node }: { node: GraphNode }) {
   return (
     <>
       <Section title={formalStatement ? "Formal statement" : "Statement"} icon={<BookOpen className="h-3 w-3" />}>
-        <div className="rounded-2xl border border-white/8 bg-black/16 p-3 font-serif text-[13px] leading-relaxed text-white/82">
+        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--field)] p-3 font-serif text-[13px] leading-relaxed text-[var(--text-soft)]">
           <MathText text={formalStatement || statement || "No statement available."} />
         </div>
       </Section>
 
       {explanation && (
         <Section title="Intuition">
-          <p className="rounded-2xl border border-white/8 bg-white/[0.025] p-3 text-[13px] leading-relaxed text-white/70"><MathText text={explanation} /></p>
+          <p className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-soft)] p-3 text-[13px] leading-relaxed text-[var(--text-soft)]"><MathText text={explanation} /></p>
         </Section>
       )}
 
       {mathematicalFormula && (
         <Section title="Notation / formula">
-          <div className="overflow-x-auto rounded-2xl border border-white/8 bg-white/[0.025] p-3 text-white/78">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-soft)] p-3 text-[var(--text-soft)]">
             <MathText text={asDisplayMath(mathematicalFormula)} />
           </div>
         </Section>
@@ -163,7 +163,7 @@ function EdgeSection({
   return (
     <Section title={title} icon={icon}>
       {edges.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-white/8 bg-white/[0.02] p-3 text-[12px] text-white/38">{empty}</div>
+        <div className="rounded-2xl border border-dashed border-[var(--border-soft)] bg-[var(--surface-soft)] p-3 text-[12px] text-[var(--muted)]">{empty}</div>
       ) : (
         <ul className="space-y-1.5">
           {edges.map((edge) => {
@@ -175,14 +175,14 @@ function EdgeSection({
                 <button
                   type="button"
                   onClick={() => select(other.id)}
-                  className={cn(`kind-${other.kind}`, "group flex w-full items-center justify-between gap-2 rounded-xl border border-white/8 bg-white/[0.03] px-3 py-2 text-left transition hover:border-[rgba(var(--c),0.30)] hover:bg-white/[0.055]")}
+                  className={cn(`kind-${other.kind}`, "group flex w-full items-center justify-between gap-2 rounded-xl border border-[var(--border-soft)] bg-[var(--surface-soft)] px-3 py-2 text-left transition hover:border-[rgba(var(--c),0.30)] hover:bg-[var(--surface-hover)]")}
                 >
                   <span className="flex min-w-0 items-center gap-2">
                     <span className="h-2 w-2 shrink-0 rounded-full bg-[rgba(var(--c),1)]" />
-                    <span className="shrink-0 text-[11px] text-white/38">{RELATION_LABEL[edge.relation]}</span>
-                    <span className="truncate text-[12px] text-white/82"><MathText text={other.title} /></span>
+                    <span className="shrink-0 text-[11px] text-[var(--muted)]">{RELATION_LABEL[edge.relation]}</span>
+                    <span className="truncate text-[12px] text-[var(--text-soft)]"><MathText text={other.title} /></span>
                   </span>
-                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-white/30 transition group-hover:text-white/75" />
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-[var(--faint)] transition group-hover:text-[var(--text-soft)]" />
                 </button>
               </li>
             );
@@ -196,7 +196,7 @@ function EdgeSection({
 function Tags({ tags }: { tags: string[] }) {
   return (
     <Section title="Tags" icon={<Tag className="h-3 w-3" />}>
-      {tags.length === 0 ? <div className="text-[12px] text-white/38">None</div> : (
+      {tags.length === 0 ? <div className="text-[12px] text-[var(--muted)]">None</div> : (
         <div className="flex flex-wrap gap-1.5">
           {tags.map((tag) => <Badge key={tag} tone="muted">{tag}</Badge>)}
         </div>
@@ -208,15 +208,15 @@ function Tags({ tags }: { tags: string[] }) {
 function Reference({ node, incomingCount, outgoingCount }: { node: GraphNode; incomingCount: number; outgoingCount: number }) {
   return (
     <Section title="Reference" icon={<Hash className="h-3 w-3" />}>
-      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 rounded-2xl border border-white/8 bg-white/[0.025] p-3 text-[11px]">
-        <dt className="text-white/38">Group</dt>
-        <dd className="min-w-0 truncate text-white/68">{node.topicCluster}</dd>
-        <dt className="text-white/38">Kind</dt>
-        <dd className="min-w-0 truncate text-white/68">{KIND_LABEL[node.kind]}</dd>
-        <dt className="text-white/38">Links</dt>
-        <dd className="min-w-0 text-white/68"><Network className="mr-1 inline h-3 w-3" />{incomingCount} in · {outgoingCount} out</dd>
-        <dt className="text-white/38">ID</dt>
-        <dd className="min-w-0 truncate font-mono text-white/50">{node.id}</dd>
+      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-soft)] p-3 text-[11px]">
+        <dt className="text-[var(--muted)]">Group</dt>
+        <dd className="min-w-0 truncate text-[var(--text-soft)]">{node.topicCluster}</dd>
+        <dt className="text-[var(--muted)]">Kind</dt>
+        <dd className="min-w-0 truncate text-[var(--text-soft)]">{KIND_LABEL[node.kind]}</dd>
+        <dt className="text-[var(--muted)]">Links</dt>
+        <dd className="min-w-0 text-[var(--text-soft)]"><Network className="mr-1 inline h-3 w-3" />{incomingCount} in · {outgoingCount} out</dd>
+        <dt className="text-[var(--muted)]">ID</dt>
+        <dd className="min-w-0 truncate font-mono text-[var(--muted)]">{node.id}</dd>
       </dl>
     </Section>
   );

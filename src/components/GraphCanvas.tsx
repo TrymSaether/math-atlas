@@ -184,7 +184,7 @@ function InnerGraph({ data }: { data: GraphData }) {
         maskStrokeWidth={1.5}
         style={{
           background: canvas.background,
-          border: "1px solid rgba(255,255,255,0.10)",
+          border: "1px solid var(--border)",
           borderRadius: 12,
           backdropFilter: "blur(8px)",
         }}

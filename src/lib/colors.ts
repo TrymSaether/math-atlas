@@ -6,23 +6,23 @@
 // Base color palette
 export const palette = {
   // Accent colors by relation type
-  cyan: "#5ce1ff",
-  violet: "#a78bff",
-  gold: "#ffd58a",
-  rose: "#ff8fb1",
-  mint: "#7af3c4",
-  orange: "#ffb86c",
+  cyan: "#2563eb",
+  violet: "#7c3aed",
+  gold: "#eab308",
+  rose: "#db2777",
+  mint: "#16a34a",
+  orange: "#f97316",
 } as const;
 
 // RGB values for CSS custom properties (used with rgba(var(--c), opacity))
 // These must match the hex values above
 export const paletteRGB = {
-  cyan: "92, 225, 255",
-  violet: "167, 139, 255",
-  gold: "255, 213, 138",
-  rose: "255, 143, 177",
-  mint: "122, 243, 196",
-  orange: "255, 184, 108",
+  cyan: "37, 99, 235",
+  violet: "124, 58, 237",
+  gold: "234, 179, 8",
+  rose: "219, 39, 119",
+  mint: "22, 163, 74",
+  orange: "249, 115, 22",
 } as const;
 
 // Semantic colors for node kinds
@@ -54,18 +54,18 @@ export const relationColors = {
 
 // UI background colors
 export const bg = {
-  base: "#05060a",
-  surface: "#0a0d18",
-  surface2: "#10142a",
-  surface3: "#161c3a",
-  surface4: "#1e2547",
-  surface5: "#2a3360",
+  base: "var(--app-bg)",
+  surface: "var(--surface)",
+  surface2: "var(--surface-strong)",
+  surface3: "var(--surface-soft)",
+  surface4: "var(--surface-hover)",
+  surface5: "var(--field)",
 } as const;
 
 // UI border/grid colors
 export const ui = {
-  grid: "rgba(120, 140, 255, 0.06)",
-  ring: "rgba(120, 140, 255, 0.12)",
+  grid: "var(--canvas-grid)",
+  ring: "rgba(var(--primary-rgb), 0.12)",
   gridAlpha: 0.06,
   ringAlpha: 0.12,
   primaryAlpha: 0.06,
@@ -74,18 +74,18 @@ export const ui = {
 
 // Stroke/border colors
 export const stroke = {
-  primary: "rgba(255, 255, 255, 0.18)",
-  primaryHover: "#ffffff",
-  secondary: "rgba(120, 140, 255, 0.2)",
-  tertiary: "rgba(120, 140, 255, 0.15)",
+  primary: "var(--border)",
+  primaryHover: "var(--text)",
+  secondary: "rgba(var(--primary-rgb), 0.2)",
+  tertiary: "rgba(var(--primary-rgb), 0.15)",
 } as const;
 
 // Canvas/graph specific colors
 export const canvas = {
-  background: "rgba(10, 12, 20, 0.85)",
-  maskBackground: "rgba(5, 6, 10, 0.78)",
-  maskStroke: "rgba(92, 225, 255, 0.45)",
-  gridBackground: "rgba(120, 140, 255, 0.22)",
+  background: "var(--minimap-bg)",
+  maskBackground: "var(--minimap-mask)",
+  maskStroke: "var(--minimap-stroke)",
+  gridBackground: "var(--canvas-grid)",
   scrollbarThumb: "rgba(120, 140, 255, 0.25)",
 } as const;
 
@@ -144,4 +144,3 @@ export function rgbaFromHex(hex: string, opacity: number): string {
 export function getCSSVar(varName: string, opacity: number = 1): string {
   return `rgba(var(--${varName}),${opacity})`;
 }
-

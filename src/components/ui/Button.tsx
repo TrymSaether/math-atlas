@@ -4,10 +4,10 @@ type ButtonVariant = "primary" | "secondary" | "ghost" | "quiet";
 type ButtonSize = "xs" | "sm" | "md";
 
 const variants: Record<ButtonVariant, string> = {
-  primary: "border-accent-cyan/35 bg-accent-cyan/12 text-accent-cyan hover:bg-accent-cyan/18",
-  secondary: "border-white/10 bg-white/[0.055] text-white/80 hover:bg-white/[0.085] hover:text-white",
-  ghost: "border-transparent bg-transparent text-white/55 hover:bg-white/[0.06] hover:text-white/90",
-  quiet: "border-white/10 bg-transparent text-white/55 hover:border-white/15 hover:bg-white/[0.04] hover:text-white/85",
+  primary: "border-[rgba(var(--primary-rgb),0.35)] bg-[rgba(var(--primary-rgb),0.12)] text-[var(--primary)] hover:bg-[rgba(var(--primary-rgb),0.18)]",
+  secondary: "border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text-soft)] hover:bg-[var(--surface-hover)] hover:text-[var(--text)]",
+  ghost: "border-transparent bg-transparent text-[var(--muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text)]",
+  quiet: "border-[var(--border-soft)] bg-transparent text-[var(--muted)] hover:border-[var(--border)] hover:bg-[var(--surface-soft)] hover:text-[var(--text-soft)]",
 };
 
 const sizes: Record<ButtonSize, string> = {
@@ -30,7 +30,7 @@ export function Button({
     <button
       {...props}
       className={cn(
-        "inline-flex shrink-0 items-center justify-center border font-medium outline-none transition focus-visible:ring-2 focus-visible:ring-accent-cyan/35 disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex shrink-0 items-center justify-center border font-medium outline-none transition focus-visible:ring-2 focus-visible:ring-[rgba(var(--primary-rgb),0.28)] disabled:pointer-events-none disabled:opacity-50",
         variants[variant],
         sizes[size],
         className

@@ -5,7 +5,7 @@ export function Input({ className, ...props }: React.InputHTMLAttributes<HTMLInp
     <input
       {...props}
       className={cn(
-        "h-9 w-full rounded-xl border border-white/10 bg-black/20 px-3 text-sm text-white/88 outline-none transition placeholder:text-white/30 focus:border-accent-cyan/45 focus:bg-black/25 focus:ring-2 focus:ring-accent-cyan/10",
+        "h-9 w-full rounded-xl border border-[var(--border)] bg-[var(--field)] px-3 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--faint)] focus:border-[rgba(var(--primary-rgb),0.45)] focus:bg-[var(--surface-strong)] focus:ring-2 focus:ring-[rgba(var(--primary-rgb),0.12)]",
         className
       )}
     />

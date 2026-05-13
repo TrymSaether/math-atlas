@@ -28,12 +28,12 @@ export function PathPanel({ data, nodeById }: { data: GraphData; nodeById: Map<s
           transition={{ duration: 0.3 }}
           className="glass scanlines absolute bottom-4 left-1/2 z-30 w-[min(960px,92vw)] -translate-x-1/2 rounded-2xl"
         >
-          <header className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
-            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-accent-violet">
+          <header className="flex items-center justify-between border-b border-[var(--border)] px-4 py-2.5">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-violet-600 dark:text-violet-300">
               <Route className="h-3.5 w-3.5" />
               Learning path → {KIND_LABEL[target.kind]} {target.number} · {target.title}
             </div>
-            <button onClick={close} className="rounded p-1 text-white/50 hover:bg-white/10 hover:text-white"><X className="h-4 w-4" /></button>
+            <button onClick={close} className="rounded p-1 text-[var(--muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text)]"><X className="h-4 w-4" /></button>
           </header>
           <div className="overflow-x-auto p-3">
             <ol className="flex min-w-max items-stretch gap-2">
@@ -48,11 +48,11 @@ export function PathPanel({ data, nodeById }: { data: GraphData; nodeById: Map<s
                   >
                     <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-[rgba(var(--c),0.95)]">
                       <span>{KIND_LABEL[n.kind]} {n.number}</span>
-                      <span className="text-white/30">{i + 1}/{path.length}</span>
+                      <span className="text-[var(--faint)]">{i + 1}/{path.length}</span>
                     </div>
-                    <div className="mt-1 line-clamp-2 text-[12px] font-medium text-white/90">{n.title}</div>
+                    <div className="mt-1 line-clamp-2 text-[12px] font-medium text-[var(--text)]">{n.title}</div>
                   </button>
-                  {i < path.length - 1 && <ChevronRight className="h-4 w-4 text-white/30" />}
+                  {i < path.length - 1 && <ChevronRight className="h-4 w-4 text-[var(--faint)]" />}
                 </li>
               ))}
             </ol>

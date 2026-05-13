@@ -7,14 +7,61 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light;
+  --app-bg: #f8fafc;
+  --app-bg-rgb: 248, 250, 252;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-strong: rgba(255, 255, 255, 0.96);
+  --surface-soft: rgba(15, 23, 42, 0.035);
+  --surface-hover: rgba(37, 99, 235, 0.055);
+  --field: rgba(255, 255, 255, 0.78);
+  --border: rgba(15, 23, 42, 0.10);
+  --border-soft: rgba(15, 23, 42, 0.065);
+  --text: rgba(15, 23, 42, 0.93);
+  --text-soft: rgba(15, 23, 42, 0.68);
+  --muted: rgba(15, 23, 42, 0.48);
+  --faint: rgba(15, 23, 42, 0.34);
+  --primary: #2563eb;
+  --primary-rgb: 37, 99, 235;
+  --shadow: 0 24px 80px -48px rgba(15, 23, 42, 0.34), 0 8px 30px -22px rgba(15, 23, 42, 0.26);
+  --inset: inset 0 1px 0 rgba(255, 255, 255, 0.74);
+  --canvas-bg: rgba(255, 255, 255, 0.52);
+  --canvas-grid: rgba(37, 99, 235, 0.16);
+  --minimap-bg: rgba(255, 255, 255, 0.88);
+  --minimap-mask: rgba(248, 250, 252, 0.72);
+  --minimap-stroke: rgba(37, 99, 235, 0.45);
+  --node-bg: rgba(255, 255, 255, 0.92);
+  --node-hover: rgba(255, 255, 255, 0.98);
+  --node-shadow: 0 16px 42px -30px rgba(15, 23, 42, 0.38);
+}
+
+.dark {
   color-scheme: dark;
+  --app-bg: #05060a;
+  --app-bg-rgb: 5, 6, 10;
   --surface: rgba(13, 17, 31, 0.78);
-  --surface-strong: rgba(16, 22, 40, 0.9);
+  --surface-strong: rgba(16, 22, 40, 0.92);
   --surface-soft: rgba(255, 255, 255, 0.045);
+  --surface-hover: rgba(255, 255, 255, 0.065);
+  --field: rgba(0, 0, 0, 0.20);
   --border: rgba(255, 255, 255, 0.10);
   --border-soft: rgba(255, 255, 255, 0.07);
-  --text: rgba(255, 255, 255, 0.88);
+  --text: rgba(255, 255, 255, 0.90);
+  --text-soft: rgba(255, 255, 255, 0.68);
   --muted: rgba(255, 255, 255, 0.46);
+  --faint: rgba(255, 255, 255, 0.32);
+  --primary: #5ce1ff;
+  --primary-rgb: 92, 225, 255;
+  --shadow: 0 24px 80px -52px rgba(0, 0, 0, 0.92), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --inset: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --canvas-bg: rgba(10, 12, 20, 0.86);
+  --canvas-grid: rgba(120, 140, 255, 0.22);
+  --minimap-bg: rgba(12, 16, 28, 0.78);
+  --minimap-mask: rgba(5, 6, 10, 0.78);
+  --minimap-stroke: rgba(92, 225, 255, 0.45);
+  --node-bg: rgba(10, 13, 24, 0.78);
+  --node-hover: rgba(16, 20, 42, 0.86);
+  --node-shadow: 0 12px 36px -24px rgba(0, 0, 0, 0.84);
 }
 
 * { box-sizing: border-box; }
@@ -23,9 +70,9 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    radial-gradient(circle at 18% 10%, rgba(92, 225, 255, 0.12), transparent 30%),
-    radial-gradient(circle at 82% 0%, rgba(167, 139, 255, 0.12), transparent 28%),
-    linear-gradient(135deg, #05060a 0%, #080b15 48%, #05060a 100%);
+    radial-gradient(circle at 16% 10%, rgba(var(--primary-rgb), 0.11), transparent 30%),
+    radial-gradient(circle at 86% 0%, rgba(124, 58, 237, 0.10), transparent 28%),
+    linear-gradient(135deg, var(--app-bg) 0%, var(--app-bg) 100%);
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
   overflow: hidden;
@@ -37,15 +84,31 @@ button { cursor: pointer; }
 .surface-panel {
   position: relative;
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(16, 22, 40, 0.82), rgba(9, 12, 22, 0.76));
+  background: linear-gradient(180deg, var(--surface-strong), var(--surface));
   backdrop-filter: blur(18px) saturate(130%);
   border-radius: 1.5rem;
-  box-shadow: 0 24px 80px -52px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: var(--shadow), var(--inset);
+  color: var(--text);
 }
 
-.glass { background: linear-gradient(180deg, rgba(16,22,40,0.78), rgba(9,12,22,0.7)); backdrop-filter: blur(18px) saturate(130%); border: 1px solid var(--border); }
+.glass {
+  background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+  backdrop-filter: blur(18px) saturate(130%);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
 .scanlines::after { content: none; }
-.title-gradient { color: rgba(255,255,255,0.9); }
+.title-gradient { color: var(--text); }
+
+.ui-text { color: var(--text); }
+.ui-soft { color: var(--text-soft); }
+.ui-muted { color: var(--muted); }
+.ui-faint { color: var(--faint); }
+.ui-border { border-color: var(--border); }
+.ui-border-soft { border-color: var(--border-soft); }
+.ui-soft-bg { background: var(--surface-soft); }
+.ui-field { background: var(--field); border-color: var(--border); }
+.ui-hover:hover { background: var(--surface-hover); }
 
 /* React Flow */
 .react-flow { background: transparent; }
@@ -54,39 +117,55 @@ button { cursor: pointer; }
 .react-flow__controls {
   overflow: hidden !important;
   border-radius: 14px !important;
-  border: 1px solid rgba(255,255,255,0.10) !important;
-  background: rgba(12, 16, 28, 0.72) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface-strong) !important;
   backdrop-filter: blur(10px);
-  box-shadow: none !important;
+  box-shadow: var(--shadow) !important;
 }
 .react-flow__controls-button {
   background: transparent !important;
-  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
-  color: rgba(255,255,255,0.72) !important;
+  border-bottom: 1px solid var(--border-soft) !important;
+  color: var(--text-soft) !important;
 }
-.react-flow__controls-button:hover { background: rgba(255,255,255,0.06) !important; }
+.react-flow__controls-button:hover { background: var(--surface-hover) !important; }
 .react-flow__controls-button svg { fill: currentColor; }
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--muted) 34%, transparent); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--muted) 52%, transparent); }
 
 .katex { font-size: 1em; }
 .katex-display { margin: 0.4em 0; }
 
-.kind-definition  { --c: 92, 225, 255; }
-.kind-theorem     { --c: 167, 139, 255; }
-.kind-lemma       { --c: 122, 243, 196; }
-.kind-example     { --c: 255, 213, 138; }
-.kind-proposition { --c: 255, 143, 177; }
-.kind-corollary   { --c: 255, 184, 108; }
+.kind-definition  { --c: 37, 99, 235; }
+.kind-theorem     { --c: 124, 58, 237; }
+.kind-lemma       { --c: 22, 163, 74; }
+.kind-example     { --c: 234, 179, 8; }
+.kind-proposition { --c: 219, 39, 119; }
+.kind-corollary   { --c: 249, 115, 22; }
 .kind-axiom, .kind-assumption, .kind-structure, .kind-object, .kind-property,
 .kind-construction, .kind-notation, .kind-non_example, .kind-counterexample,
 .kind-conjecture, .kind-proof, .kind-proof_step, .kind-proof_method,
-.kind-application { --c: 92, 225, 255; }
-.kind-structure, .kind-object { --c: 167, 139, 255; }
-.kind-property, .kind-construction { --c: 122, 243, 196; }
-.kind-notation, .kind-application { --c: 255, 213, 138; }
-.kind-counterexample, .kind-non_example, .kind-assumption { --c: 255, 143, 177; }
-.kind-proof, .kind-proof_step, .kind-proof_method, .kind-axiom { --c: 255, 184, 108; }
+.kind-application { --c: 37, 99, 235; }
+.kind-structure, .kind-object { --c: 124, 58, 237; }
+.kind-property, .kind-construction { --c: 22, 163, 74; }
+.kind-notation, .kind-application { --c: 234, 179, 8; }
+.kind-counterexample, .kind-non_example, .kind-assumption { --c: 219, 39, 119; }
+.kind-proof, .kind-proof_step, .kind-proof_method, .kind-axiom { --c: 249, 115, 22; }
+
+.dark .kind-definition  { --c: 92, 225, 255; }
+.dark .kind-theorem     { --c: 167, 139, 255; }
+.dark .kind-lemma       { --c: 122, 243, 196; }
+.dark .kind-example     { --c: 255, 213, 138; }
+.dark .kind-proposition { --c: 255, 143, 177; }
+.dark .kind-corollary   { --c: 255, 184, 108; }
+.dark .kind-axiom, .dark .kind-assumption, .dark .kind-structure, .dark .kind-object, .dark .kind-property,
+.dark .kind-construction, .dark .kind-notation, .dark .kind-non_example, .dark .kind-counterexample,
+.dark .kind-conjecture, .dark .kind-proof, .dark .kind-proof_step, .dark .kind-proof_method,
+.dark .kind-application { --c: 92, 225, 255; }
+.dark .kind-structure, .dark .kind-object { --c: 167, 139, 255; }
+.dark .kind-property, .dark .kind-construction { --c: 122, 243, 196; }
+.dark .kind-notation, .dark .kind-application { --c: 255, 213, 138; }
+.dark .kind-counterexample, .dark .kind-non_example, .dark .kind-assumption { --c: 255, 143, 177; }
+.dark .kind-proof, .dark .kind-proof_step, .dark .kind-proof_method, .dark .kind-axiom { --c: 255, 184, 108; }

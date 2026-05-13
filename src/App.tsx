@@ -1,19 +1,25 @@
-import { useMemo } from "react";
-import { Background } from "./components/Background";
-import { Sidebar } from "./components/Sidebar";
+import { useEffect, useMemo } from "react";
+import { Background } from "../src/components/Background";
+import { Sidebar } from "../src/components/Sidebar";
 import { TopBar } from "./components/TopBar";
-import { GraphCanvas } from "./components/GraphCanvas";
+import { GraphCanvas } from "../src/components/GraphCanvas";
 import { NodePanel } from "../src/components/NodePanel";
-import { CommandPalette } from "./components/CommandPalette";
-import { PathPanel } from "./components/PathPanel";
+import { CommandPalette } from "../src/components/CommandPalette";
+import { PathPanel } from "../src/components/PathPanel";
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
-import { useStore } from "./store";
+import { useStore } from "../src/store";
 import { loadMap } from "./data";
 
 export default function App() {
+  const theme = useStore((s) => s.theme);
   const mapId = useStore((s) => s.mapId);
   const loadedMap = useMemo(() => loadMap(mapId), [mapId]);
   const { data, nodeById, incomingEdgesByNodeId, outgoingEdgesByNodeId } = loadedMap;
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   useKeyboardNav(data.nodes);
 
@@ -43,7 +49,7 @@ export default function App() {
       <TopBar map={data} />
       <div className="flex min-h-0 flex-1 gap-4">
         <Sidebar data={data} visibleCount={visibleCount} availableKinds={loadedMap.kinds} availableRelations={loadedMap.relations} />
-        <main className="relative min-h-0 flex-1 overflow-hidden rounded-[28px] border border-white/8 bg-ink-950/36 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+        <main className="relative min-h-0 flex-1 overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--canvas-bg)] shadow-[var(--inset)]">
           <GraphCanvas data={data} />
           <NodePanel nodeById={nodeById} incomingEdgesByNodeId={incomingEdgesByNodeId} outgoingEdgesByNodeId={outgoingEdgesByNodeId} />
           <PathPanel data={data} nodeById={nodeById} />

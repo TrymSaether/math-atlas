@@ -4,6 +4,7 @@ import { DEFAULT_MAP_ID, isMapId, type MapId } from "./data/mapRegistry";
 export type ViewMode = "dependency" | "cluster";
 export type HighlightMode = "immediate" | "full";
 export type SearchScope = "all" | "title";
+export type ThemeMode = "light" | "dark";
 
 function currentParams() {
   return new URLSearchParams(window.location.search);
@@ -18,6 +19,12 @@ function readInitialNodeId(): string | null {
   return currentParams().get("node");
 }
 
+function readInitialTheme(): ThemeMode {
+  const stored = window.localStorage.getItem("math-atlas-theme");
+  if (stored === "light" || stored === "dark") return stored;
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 function setUrlParam(key: string, value: string | null) {
   const params = currentParams();
   if (value) params.set(key, value);
@@ -28,6 +35,10 @@ function setUrlParam(key: string, value: string | null) {
 }
 
 interface State {
+  theme: ThemeMode;
+  setTheme: (theme: ThemeMode) => void;
+  toggleTheme: () => void;
+
   mapId: MapId;
   setMapId: (id: MapId) => void;
 
@@ -77,7 +88,18 @@ function toggle<T>(set: Set<T>, v: T) {
   return next;
 }
 
-export const useStore = create<State>((set) => ({
+export const useStore = create<State>((set, get) => ({
+  theme: readInitialTheme(),
+  setTheme: (theme) => {
+    window.localStorage.setItem("math-atlas-theme", theme);
+    set({ theme });
+  },
+  toggleTheme: () => {
+    const next = get().theme === "dark" ? "light" : "dark";
+    window.localStorage.setItem("math-atlas-theme", next);
+    set({ theme: next });
+  },
+
   mapId: readInitialMapId(),
   setMapId: (mapId) => {
     setUrlParam("map", mapId);

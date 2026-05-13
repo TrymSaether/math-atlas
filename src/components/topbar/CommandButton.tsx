@@ -8,7 +8,7 @@ export function CommandButton() {
     <Button variant="secondary" onClick={() => setPaletteOpen(true)} className="hidden sm:inline-flex">
       <CommandIcon className="h-3.5 w-3.5" />
       Search
-      <kbd className="rounded bg-black/30 px-1.5 py-0.5 font-mono text-[10px] text-white/45">⌘K</kbd>
+      <kbd className="rounded bg-[var(--surface-soft)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--muted)]">⌘K</kbd>
     </Button>
   );
 }
