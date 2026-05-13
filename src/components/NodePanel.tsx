@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { X, ArrowUpRight, ArrowDownRight, Tag, BookOpen, Route, Hash, Network } from "lucide-react";
-import { useMemo } from "react";
+import { X, ArrowUpRight, ArrowDownRight, Tag, BookOpen, Route, Hash, Network, MousePointer2 } from "lucide-react";
+import { useMemo, type ReactNode } from "react";
 
 import { useStore } from "../store";
 import { MathText, asDisplayMath } from "../lib/katex";
 import { cn } from "../lib/utils";
 import { KIND_LABEL, RELATION_LABEL, type GraphEdge, type GraphNode } from "../types";
+import { Badge, Button, EmptyState, Panel, Section } from "./ui";
 
 interface NodePanelProps {
   nodeById: Map<string, GraphNode>;
@@ -22,135 +23,124 @@ export function NodePanel({ nodeById, incomingEdgesByNodeId, outgoingEdgesByNode
   const incoming = useMemo(() => (node ? incomingEdgesByNodeId.get(node.id) ?? [] : []), [node, incomingEdgesByNodeId]);
   const outgoing = useMemo(() => (node ? outgoingEdgesByNodeId.get(node.id) ?? [] : []), [node, outgoingEdgesByNodeId]);
 
-  if (!node) return <AnimatePresence />;
+  return (
+    <AnimatePresence mode="wait">
+      {!node ? (
+        <motion.aside
+          key="empty-node-panel"
+          initial={{ opacity: 0, x: 18 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 18 }}
+          transition={{ duration: 0.22 }}
+          className="absolute bottom-4 right-4 top-4 z-20 w-[380px] max-w-[40vw]"
+        >
+          <Panel className="flex h-full items-center justify-center p-5">
+            <EmptyState
+              icon={<MousePointer2 className="h-4 w-4" />}
+              title="Select a concept"
+              description="Click a node to read its statement, intuition, prerequisites, and consequences."
+              className="border-white/8 bg-transparent"
+            />
+          </Panel>
+        </motion.aside>
+      ) : (
+        <motion.aside
+          key={node.id}
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 24 }}
+          transition={{ duration: 0.25, ease: [0.2, 0.7, 0.2, 1] }}
+          className={cn(`kind-${node.kind}`, "absolute bottom-4 right-4 top-4 z-20 w-[420px] max-w-[44vw]")}
+          aria-label={`${KIND_LABEL[node.kind]} details`}
+        >
+          <Panel className="flex h-full flex-col overflow-hidden shadow-2xl">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(var(--c),0.7)] to-transparent" />
+            <header className="border-b border-white/8 p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="mb-2 flex flex-wrap items-center gap-1.5">
+                    <Badge tone="kind" className="rounded-md uppercase tracking-[0.14em]">{KIND_LABEL[node.kind]}</Badge>
+                    {node.topicCluster && <Badge tone="muted">{node.topicCluster}</Badge>}
+                    {node.number && <Badge tone="muted">#{node.number}</Badge>}
+                  </div>
+                  <h2 className="font-display text-xl font-semibold leading-tight text-white/94">
+                    <MathText text={node.title} />
+                  </h2>
+                </div>
 
+                <Button variant="ghost" size="xs" onClick={() => select(null)} aria-label="Close panel" className="h-8 w-8 px-0">
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            </header>
+
+            <div className="flex-1 space-y-5 overflow-y-auto p-4">
+              <ConceptBody node={node} />
+
+              <EdgeSection
+                title="Prerequisites"
+                edges={incoming}
+                nodeById={nodeById}
+                direction="source"
+                icon={<ArrowUpRight className="h-3 w-3 rotate-180" />}
+                empty="No upstream dependencies in this map."
+              />
+
+              <EdgeSection
+                title="Consequences"
+                edges={outgoing}
+                nodeById={nodeById}
+                direction="target"
+                icon={<ArrowDownRight className="h-3 w-3" />}
+                empty="No downstream consequences in this map."
+              />
+
+              <Tags tags={node.tags ?? []} />
+              <Reference node={node} incomingCount={incoming.length} outgoingCount={outgoing.length} />
+            </div>
+
+            <footer className="border-t border-white/8 p-3">
+              <Button variant="primary" onClick={() => setPathTarget(node.id)} className="w-full">
+                <Route className="h-3.5 w-3.5" />
+                Generate learning path to here
+              </Button>
+            </footer>
+          </Panel>
+        </motion.aside>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function ConceptBody({ node }: { node: GraphNode }) {
   const formalStatement = node.formalStatement?.trim() ?? "";
   const statement = node.originalText?.trim() ?? "";
   const explanation = node.explanation?.trim() ?? "";
   const mathematicalFormula = node.mathematicalFormula?.trim() ?? "";
 
   return (
-    <AnimatePresence>
-      <motion.aside
-        key={node.id}
-        initial={{ opacity: 0, x: 24 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 24 }}
-        transition={{ duration: 0.28, ease: [0.2, 0.7, 0.2, 1] }}
-        className={cn(
-          `kind-${node.kind}`,
-          "glass scanlines absolute right-3 top-3 bottom-3 z-20 flex w-[420px] max-w-[44vw] flex-col overflow-hidden rounded-2xl shadow-2xl"
-        )}
-        aria-label={`${KIND_LABEL[node.kind]} details`}
-      >
-        <PanelAccent />
-
-        <header className="flex items-start justify-between gap-3 border-b border-white/10 p-4">
-          <div className="min-w-0">
-            <NodeEyebrow node={node} />
-            <h2 className="mt-1.5 font-display text-xl font-semibold leading-tight text-white">
-              <MathText text={node.title} />
-            </h2>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => select(null)}
-            aria-label="Close panel"
-            className="rounded-md p-1 text-white/50 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/25"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </header>
-
-        <div className="flex-1 space-y-5 overflow-y-auto p-4">
-          <Section title={formalStatement ? "Formal statement" : "Statement"} icon={<BookOpen className="h-3 w-3" />}>
-            <Card className="bg-black/20 text-white/85">
-              <MathText text={formalStatement || statement || "No statement available."} />
-            </Card>
-          </Section>
-
-          {explanation && (
-            <Section title="Intuition">
-              <p className="text-[13px] leading-relaxed text-white/75"><MathText text={explanation} /></p>
-            </Section>
-          )}
-
-          {mathematicalFormula && (
-            <Section title="Notation / formula">
-              <Card className="overflow-x-auto bg-white/[0.03] text-white/80">
-                <MathText text={asDisplayMath(mathematicalFormula)} />
-              </Card>
-            </Section>
-          )}
-
-          <EdgeSection
-            title="Dependencies"
-            edges={incoming}
-            nodeById={nodeById}
-            direction="source"
-            icon={<ArrowUpRight className="h-3 w-3 rotate-180" />}
-            empty="No upstream dependencies in this map."
-          />
-
-          <EdgeSection
-            title="Consequences"
-            edges={outgoing}
-            nodeById={nodeById}
-            direction="target"
-            icon={<ArrowDownRight className="h-3 w-3" />}
-            empty="No downstream consequences in this map."
-          />
-
-          <Tags tags={node.tags ?? []} />
-          <Reference node={node} incomingCount={incoming.length} outgoingCount={outgoing.length} />
-        </div>
-
-        <footer className="border-t border-white/10 p-3">
-          <button
-            type="button"
-            onClick={() => setPathTarget(node.id)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-accent-violet/40 bg-accent-violet/10 px-3 py-2 text-xs font-medium text-accent-violet shadow-glow-violet transition hover:bg-accent-violet/20 focus:outline-none focus:ring-2 focus:ring-accent-violet/40"
-          >
-            <Route className="h-3.5 w-3.5" />
-            Generate learning path to here
-          </button>
-        </footer>
-      </motion.aside>
-    </AnimatePresence>
-  );
-}
-
-function PanelAccent() {
-  return (
     <>
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(var(--c),0.9)] to-transparent" />
-      <div className="absolute -left-px top-12 h-32 w-px bg-gradient-to-b from-[rgba(var(--c),0.9)] to-transparent" />
+      <Section title={formalStatement ? "Formal statement" : "Statement"} icon={<BookOpen className="h-3 w-3" />}>
+        <div className="rounded-2xl border border-white/8 bg-black/16 p-3 font-serif text-[13px] leading-relaxed text-white/82">
+          <MathText text={formalStatement || statement || "No statement available."} />
+        </div>
+      </Section>
+
+      {explanation && (
+        <Section title="Intuition">
+          <p className="rounded-2xl border border-white/8 bg-white/[0.025] p-3 text-[13px] leading-relaxed text-white/70"><MathText text={explanation} /></p>
+        </Section>
+      )}
+
+      {mathematicalFormula && (
+        <Section title="Notation / formula">
+          <div className="overflow-x-auto rounded-2xl border border-white/8 bg-white/[0.025] p-3 text-white/78">
+            <MathText text={asDisplayMath(mathematicalFormula)} />
+          </div>
+        </Section>
+      )}
     </>
   );
-}
-
-function NodeEyebrow({ node }: { node: GraphNode }) {
-  return (
-    <div className="flex min-w-0 items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[rgba(var(--c),0.95)]">
-      <span className="shrink-0 rounded-sm bg-[rgba(var(--c),0.12)] px-1.5 py-0.5">{KIND_LABEL[node.kind]}</span>
-      {node.number && <span className="shrink-0 text-white/45">№ {node.number}</span>}
-      <span className="truncate text-white/60">{node.topicCluster}</span>
-    </div>
-  );
-}
-
-function Section({ title, icon, children }: { title: string; icon?: React.ReactNode; children: React.ReactNode }) {
-  return (
-    <section>
-      <div className="mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-white/40">{icon}<span>{title}</span></div>
-      {children}
-    </section>
-  );
-}
-
-function Card({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <div className={cn("rounded-lg border border-white/10 p-3 font-serif text-[13px] leading-relaxed", className)}>{children}</div>;
 }
 
 function EdgeSection({
@@ -165,7 +155,7 @@ function EdgeSection({
   edges: GraphEdge[];
   nodeById: Map<string, GraphNode>;
   direction: "source" | "target";
-  icon: React.ReactNode;
+  icon: ReactNode;
   empty: string;
 }) {
   const select = useStore((s) => s.select);
@@ -173,9 +163,9 @@ function EdgeSection({
   return (
     <Section title={title} icon={icon}>
       {edges.length === 0 ? (
-        <EmptyText>{empty}</EmptyText>
+        <div className="rounded-2xl border border-dashed border-white/8 bg-white/[0.02] p-3 text-[12px] text-white/38">{empty}</div>
       ) : (
-        <ul className="space-y-1">
+        <ul className="space-y-1.5">
           {edges.map((edge) => {
             const other = nodeById.get(direction === "source" ? edge.from : edge.to);
             if (!other) return null;
@@ -185,17 +175,14 @@ function EdgeSection({
                 <button
                   type="button"
                   onClick={() => select(other.id)}
-                  className={cn(
-                    `kind-${other.kind}`,
-                    "group flex w-full items-center justify-between gap-2 rounded-md border border-white/5 bg-white/[0.02] px-2 py-1.5 text-left text-[12px] transition hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-white/15"
-                  )}
+                  className={cn(`kind-${other.kind}`, "group flex w-full items-center justify-between gap-2 rounded-xl border border-white/8 bg-white/[0.03] px-3 py-2 text-left transition hover:border-[rgba(var(--c),0.30)] hover:bg-white/[0.055]")}
                 >
                   <span className="flex min-w-0 items-center gap-2">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[rgba(var(--c),1)]" />
-                    <span className="shrink-0 text-white/40">{RELATION_LABEL[edge.relation]}</span>
-                    <span className="truncate text-white/85"><MathText text={other.title} /></span>
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-[rgba(var(--c),1)]" />
+                    <span className="shrink-0 text-[11px] text-white/38">{RELATION_LABEL[edge.relation]}</span>
+                    <span className="truncate text-[12px] text-white/82"><MathText text={other.title} /></span>
                   </span>
-                  <ArrowUpRight className="h-3 w-3 shrink-0 text-white/30 transition group-hover:text-white/80" />
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-white/30 transition group-hover:text-white/75" />
                 </button>
               </li>
             );
@@ -209,9 +196,9 @@ function EdgeSection({
 function Tags({ tags }: { tags: string[] }) {
   return (
     <Section title="Tags" icon={<Tag className="h-3 w-3" />}>
-      {tags.length === 0 ? <EmptyText>none</EmptyText> : (
+      {tags.length === 0 ? <div className="text-[12px] text-white/38">None</div> : (
         <div className="flex flex-wrap gap-1.5">
-          {tags.map((tag) => <span key={tag} className="rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-[10px] text-white/70">{tag}</span>)}
+          {tags.map((tag) => <Badge key={tag} tone="muted">{tag}</Badge>)}
         </div>
       )}
     </Section>
@@ -221,20 +208,16 @@ function Tags({ tags }: { tags: string[] }) {
 function Reference({ node, incomingCount, outgoingCount }: { node: GraphNode; incomingCount: number; outgoingCount: number }) {
   return (
     <Section title="Reference" icon={<Hash className="h-3 w-3" />}>
-      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[11px]">
-        <dt className="text-white/40">Theme</dt>
-        <dd className="min-w-0 truncate text-white/70">{node.topicCluster}</dd>
-        <dt className="text-white/40">Kind</dt>
-        <dd className="min-w-0 truncate text-white/70">{KIND_LABEL[node.kind]}</dd>
-        <dt className="text-white/40">Links</dt>
-        <dd className="min-w-0 text-white/70"><Network className="mr-1 inline h-3 w-3" />{incomingCount} in · {outgoingCount} out</dd>
-        <dt className="text-white/40">ID</dt>
-        <dd className="min-w-0 truncate font-mono text-white/55">{node.id}</dd>
+      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 rounded-2xl border border-white/8 bg-white/[0.025] p-3 text-[11px]">
+        <dt className="text-white/38">Group</dt>
+        <dd className="min-w-0 truncate text-white/68">{node.topicCluster}</dd>
+        <dt className="text-white/38">Kind</dt>
+        <dd className="min-w-0 truncate text-white/68">{KIND_LABEL[node.kind]}</dd>
+        <dt className="text-white/38">Links</dt>
+        <dd className="min-w-0 text-white/68"><Network className="mr-1 inline h-3 w-3" />{incomingCount} in · {outgoingCount} out</dd>
+        <dt className="text-white/38">ID</dt>
+        <dd className="min-w-0 truncate font-mono text-white/50">{node.id}</dd>
       </dl>
     </Section>
   );
-}
-
-function EmptyText({ children }: { children: React.ReactNode }) {
-  return <div className="text-[11px] text-white/40">{children}</div>;
 }

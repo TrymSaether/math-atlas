@@ -3,7 +3,7 @@ import { Background } from "./components/Background";
 import { Sidebar } from "./components/Sidebar";
 import { TopBar } from "./components/TopBar";
 import { GraphCanvas } from "./components/GraphCanvas";
-import { NodePanel } from "./components/NodePanel";
+import { NodePanel } from "../src/components/NodePanel";
 import { CommandPalette } from "./components/CommandPalette";
 import { PathPanel } from "./components/PathPanel";
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
@@ -38,12 +38,12 @@ export default function App() {
   }, [data.nodes, kinds, topics, search, searchScope]);
 
   return (
-    <div className="relative flex h-screen w-screen flex-col p-3">
+    <div className="relative flex h-screen w-screen flex-col overflow-hidden p-4">
       <Background />
       <TopBar map={data} />
-      <div className="flex min-h-0 flex-1 gap-3">
+      <div className="flex min-h-0 flex-1 gap-4">
         <Sidebar data={data} visibleCount={visibleCount} availableKinds={loadedMap.kinds} availableRelations={loadedMap.relations} />
-        <main className="relative min-h-0 flex-1 overflow-hidden rounded-2xl border border-white/10 bg-ink-950/30">
+        <main className="relative min-h-0 flex-1 overflow-hidden rounded-[28px] border border-white/8 bg-ink-950/36 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
           <GraphCanvas data={data} />
           <NodePanel nodeById={nodeById} incomingEdgesByNodeId={incomingEdgesByNodeId} outgoingEdgesByNodeId={outgoingEdgesByNodeId} />
           <PathPanel data={data} nodeById={nodeById} />
