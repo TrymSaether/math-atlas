@@ -8,20 +8,24 @@ interface Data {
   color: string;
   tint: string;
   border: string;
+  shape?: "rect" | "circle";
 }
 
 /** Metro-map domain region: pastel tint, dashed domain-color border, eyebrow label. */
 export function DomainRegionNode({ data }: NodeProps<Data>) {
+  const isCircle = data.shape === "circle";
+
   return (
     <div
       className="pointer-events-none select-none"
       style={{ width: data.width, height: data.height }}
     >
       <div
-        className="absolute inset-0 rounded-[20px] border-[1.5px] border-dashed"
+        className="absolute inset-0 border-[1.5px] border-dashed"
         style={{
-          background: data.tint,
+          background: `color-mix(in srgb, ${data.tint} ${isCircle ? 34 : 52}%, transparent)`,
           borderColor: data.border,
+          borderRadius: isCircle ? "9999px" : 12,
         }}
       />
       <div

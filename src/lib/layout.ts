@@ -184,36 +184,73 @@ export function dagreLayout({ nodes, edges }: LayoutInput) {
   });
 }
 
-export function clusterLayout({ nodes, edges }: LayoutInput): {
+export function clusterLayout({ nodes, edges, domains = [] }: LayoutInput): {
   nodes: Node[];
   edges: Edge[];
+  regions: DomainRegion[];
 } {
+  const domainById = new Map(domains.map((domain) => [domain.id, domain]));
   const groups = new Map<string, TopoNode[]>();
   for (const n of nodes) {
-    if (!groups.has(n.topicCluster)) groups.set(n.topicCluster, []);
-    groups.get(n.topicCluster)!.push(n);
+    if (!groups.has(n.domainId)) groups.set(n.domainId, []);
+    groups.get(n.domainId)!.push(n);
   }
-  const keys = [...groups.keys()].sort();
+  const keys = [...groups.keys()].sort((a, b) => {
+    const da = domainById.get(a);
+    const db = domainById.get(b);
+    if (da && db && da.order !== db.order) return da.order - db.order;
+    if (da && !db) return -1;
+    if (!da && db) return 1;
+    const ka = minKey(groups.get(a)!);
+    const kb = minKey(groups.get(b)!);
+    return cmpKey(ka, kb);
+  });
   const RING = Math.max(900, keys.length * 200);
   const rfNodes: Node[] = [];
+  const regions: DomainRegion[] = [];
 
-  keys.forEach((k, gi) => {
+  keys.forEach((domainId, gi) => {
+    const domain = domainById.get(domainId);
     const theta = (gi / keys.length) * Math.PI * 2;
     const cx = Math.cos(theta) * RING;
     const cy = Math.sin(theta) * RING;
-    const members = groups.get(k)!.sort(cmpNum);
+    const members = groups.get(domainId)!.sort(cmpNum);
     const r = 90 + Math.sqrt(members.length) * 60;
+    let regionRadius = 130;
     members.forEach((n, i) => {
       const a = (i / members.length) * Math.PI * 2;
+      const x = cx + Math.cos(a) * r - NODE_W / 2;
+      const y = cy + Math.sin(a) * r - NODE_H / 2;
+      for (const [cornerX, cornerY] of [
+        [x, y],
+        [x + NODE_W, y],
+        [x, y + NODE_H],
+        [x + NODE_W, y + NODE_H],
+      ]) {
+        regionRadius = Math.max(
+          regionRadius,
+          Math.hypot(cornerX - cx, cornerY - cy) + 64,
+        );
+      }
       rfNodes.push({
         id: n.id,
         type: "topo",
-        position: {
-          x: cx + Math.cos(a) * r - NODE_W / 2,
-          y: cy + Math.sin(a) * r - NODE_H / 2,
-        },
-        data: { node: n, cluster: k },
+        position: { x, y },
+        data: { node: n, cluster: domain?.label ?? n.topicCluster },
       });
+    });
+    regions.push({
+      id: domainId,
+      label: domain?.label ?? members[0]?.topicCluster ?? domainId,
+      count: members.length,
+      x: cx - regionRadius,
+      y: cy - regionRadius,
+      width: regionRadius * 2,
+      height: regionRadius * 2,
+      color: domain?.color ?? "var(--primary)",
+      tint: domain?.tint ?? "rgba(var(--primary-rgb),0.05)",
+      border: domain?.border ?? "rgba(var(--primary-rgb),0.35)",
+      shape: "circle",
     });
   });
   const rfEdges: Edge[] = edges.map((e) => ({
@@ -229,7 +266,7 @@ export function clusterLayout({ nodes, edges }: LayoutInput): {
     },
     data: { edge: e },
   }));
-  return { nodes: rfNodes, edges: rfEdges };
+  return { nodes: rfNodes, edges: rfEdges, regions };
 }
 
 export interface DomainRegion {
@@ -243,6 +280,7 @@ export interface DomainRegion {
   color: string;
   tint: string;
   border: string;
+  shape?: "rect" | "circle";
 }
 
 function minKey(items: TopoNode[]): [string, number[]] {

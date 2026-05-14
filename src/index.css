@@ -88,7 +88,7 @@
   --primary-hover: #1d4ed8;
   --primary-press: #1e40af;
   --on-primary: #ffffff;
-  --accent-purple-rgb: 124, 58, 237;
+  --accent-cool-rgb: 8, 145, 178;
   --transparent-rgb: 0, 0, 0;
   --mask-rgb: 15, 23, 42;
 
@@ -116,7 +116,7 @@
   --scrim: rgba(15, 23, 42, 0.32);
 
   /* -------- CANVAS / MINIMAP -------- */
-  --canvas-bg: #ffffff;
+  --canvas-bg: #fcfcfd;
   --canvas-grid: rgba(15, 23, 42, 0.05);
   --minimap-bg: rgba(255, 255, 255, 0.85);
   --minimap-mask: rgba(248, 250, 252, 0.6);
@@ -496,7 +496,7 @@ button,
 
 .kind-structure,
 .kind-object {
-  --c: 124, 58, 237;
+  --c: 13, 148, 136;
 }
 
 .kind-property,

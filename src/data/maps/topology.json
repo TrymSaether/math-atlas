@@ -47,20 +47,9 @@
         "proof_method",
         "application"
       ],
-      "results": [
-        "lemma",
-        "proposition",
-        "theorem",
-        "corollary"
-      ],
-      "examples": [
-        "example",
-        "non_example",
-        "counterexample"
-      ],
-      "spaces": [
-        "structure"
-      ]
+      "results": ["lemma", "proposition", "theorem", "corollary"],
+      "examples": ["example", "non_example", "counterexample"],
+      "spaces": ["structure"]
     },
     "dependency_classes": [
       "definitional_dependency",
@@ -74,11 +63,7 @@
     "edge_types": {
       "defines": {
         "meaning": "source gives a definition or characterization of target",
-        "allowed_source_kinds": [
-          "definition",
-          "construction",
-          "notation"
-        ],
+        "allowed_source_kinds": ["definition", "construction", "notation"],
         "allowed_target_kinds": [
           "definition",
           "structure",
@@ -101,11 +86,7 @@
           "construction",
           "notation"
         ],
-        "allowed_target_kinds": [
-          "definition",
-          "construction",
-          "notation"
-        ],
+        "allowed_target_kinds": ["definition", "construction", "notation"],
         "inverse_edge_type": "defines",
         "transitive": false,
         "symmetric": false
@@ -258,10 +239,7 @@
       },
       "proves": {
         "meaning": "source proof or proof step establishes target result",
-        "allowed_source_kinds": [
-          "proof",
-          "proof_step"
-        ],
+        "allowed_source_kinds": ["proof", "proof_step"],
         "allowed_target_kinds": [
           "lemma",
           "proposition",
@@ -356,12 +334,8 @@
       },
       "subtype_of": {
         "meaning": "source structure is a subtype of target structure",
-        "allowed_source_kinds": [
-          "structure"
-        ],
-        "allowed_target_kinds": [
-          "structure"
-        ],
+        "allowed_source_kinds": ["structure"],
+        "allowed_target_kinds": ["structure"],
         "inverse_edge_type": null,
         "transitive": true,
         "symmetric": false
@@ -374,27 +348,15 @@
           "non_example",
           "counterexample"
         ],
-        "allowed_target_kinds": [
-          "definition",
-          "structure",
-          "property"
-        ],
+        "allowed_target_kinds": ["definition", "structure", "property"],
         "inverse_edge_type": null,
         "transitive": false,
         "symmetric": false
       },
       "inherits_from": {
         "meaning": "source inherits structure or properties from target",
-        "allowed_source_kinds": [
-          "structure",
-          "object",
-          "example"
-        ],
-        "allowed_target_kinds": [
-          "structure",
-          "object",
-          "example"
-        ],
+        "allowed_source_kinds": ["structure", "object", "example"],
+        "allowed_target_kinds": ["structure", "object", "example"],
         "inverse_edge_type": null,
         "transitive": true,
         "symmetric": false
@@ -461,11 +423,7 @@
           "example",
           "counterexample"
         ],
-        "allowed_target_kinds": [
-          "definition",
-          "property",
-          "structure"
-        ],
+        "allowed_target_kinds": ["definition", "property", "structure"],
         "inverse_edge_type": null,
         "transitive": false,
         "symmetric": false
@@ -478,10 +436,7 @@
           "property",
           "theorem"
         ],
-        "allowed_target_kinds": [
-          "example",
-          "object"
-        ],
+        "allowed_target_kinds": ["example", "object"],
         "inverse_edge_type": null,
         "transitive": false,
         "symmetric": false
@@ -495,22 +450,14 @@
           "theorem",
           "assumption"
         ],
-        "allowed_target_kinds": [
-          "counterexample",
-          "non_example",
-          "example"
-        ],
+        "allowed_target_kinds": ["counterexample", "non_example", "example"],
         "inverse_edge_type": null,
         "transitive": false,
         "symmetric": false
       },
       "shows_necessity_of": {
         "meaning": "source demonstrates why target assumption or hypothesis is needed",
-        "allowed_source_kinds": [
-          "counterexample",
-          "example",
-          "non_example"
-        ],
+        "allowed_source_kinds": ["counterexample", "example", "non_example"],
         "allowed_target_kinds": [
           "axiom",
           "assumption",
@@ -524,11 +471,7 @@
       },
       "violates_assumption": {
         "meaning": "source fails target assumption, hypothesis, or property",
-        "allowed_source_kinds": [
-          "counterexample",
-          "non_example",
-          "example"
-        ],
+        "allowed_source_kinds": ["counterexample", "non_example", "example"],
         "allowed_target_kinds": [
           "axiom",
           "assumption",
@@ -1299,9 +1242,7 @@
           "e_topology_field_introduces_connectedness"
         ],
         "metadata": {
-          "tags": [
-            "field"
-          ],
+          "tags": ["field"],
           "syllabus_priority": "core",
           "source": null
         },
@@ -1326,13 +1267,9 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_set_prerequisite_for_topology"
-        ],
+        "outgoing_relations": ["e_set_prerequisite_for_topology"],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": null
         },
@@ -1359,9 +1296,7 @@
         },
         "outgoing_relations": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": null
         },
@@ -1388,9 +1323,7 @@
         },
         "outgoing_relations": [],
         "metadata": {
-          "tags": [
-            "axiom"
-          ],
+          "tags": ["axiom"],
           "syllabus_priority": "core",
           "source": null
         },
@@ -1417,9 +1350,7 @@
         },
         "outgoing_relations": [],
         "metadata": {
-          "tags": [
-            "choice"
-          ],
+          "tags": ["choice"],
           "syllabus_priority": "high",
           "source": null
         },
@@ -1639,9 +1570,7 @@
           "e_topological_space_requires_topology"
         ],
         "metadata": {
-          "tags": [
-            "space"
-          ],
+          "tags": ["space"],
           "syllabus_priority": "core",
           "source": null
         },
@@ -1666,9 +1595,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_pseudometric_subtype_topological"
-        ],
+        "outgoing_relations": ["e_pseudometric_subtype_topological"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1725,9 +1652,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_subspace_subtype_topological"
-        ],
+        "outgoing_relations": ["e_subspace_subtype_topological"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1754,9 +1679,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_product_space_subtype_topological"
-        ],
+        "outgoing_relations": ["e_product_space_subtype_topological"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1783,9 +1706,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_quotient_space_subtype_topological"
-        ],
+        "outgoing_relations": ["e_quotient_space_subtype_topological"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1812,9 +1733,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_compact_space_subtype_topological"
-        ],
+        "outgoing_relations": ["e_compact_space_subtype_topological"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1841,9 +1760,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_connected_space_subtype_topological"
-        ],
+        "outgoing_relations": ["e_connected_space_subtype_topological"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1870,9 +1787,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_path_connected_subtype_connected"
-        ],
+        "outgoing_relations": ["e_path_connected_subtype_connected"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1899,9 +1814,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_hausdorff_space_subtype_topological"
-        ],
+        "outgoing_relations": ["e_hausdorff_space_subtype_topological"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1928,9 +1841,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_regular_space_subtype_hausdorff"
-        ],
+        "outgoing_relations": ["e_regular_space_subtype_hausdorff"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1957,9 +1868,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_normal_space_subtype_regular"
-        ],
+        "outgoing_relations": ["e_normal_space_subtype_regular"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -1986,9 +1895,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_locally_compact_subtype_topological"
-        ],
+        "outgoing_relations": ["e_locally_compact_subtype_topological"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -2015,9 +1922,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_second_countable_subtype_topological"
-        ],
+        "outgoing_relations": ["e_second_countable_subtype_topological"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -2097,13 +2002,9 @@
         "notation": "\\((X,\\tau)\\), \\(\\tau\\), \\(\\mathcal P(X)\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "set"
-          ],
+          "definitional_dependency": ["set"],
           "logical_dependency": [],
-          "assumption_dependency": [
-            "topology_axioms"
-          ],
+          "assumption_dependency": ["topology_axioms"],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
@@ -2116,9 +2017,7 @@
           "e_topology_requires_set"
         ],
         "metadata": {
-          "tags": [
-            "definition"
-          ],
+          "tags": ["definition"],
           "syllabus_priority": "core",
           "source": null
         },
@@ -2135,12 +2034,8 @@
           "discrete_space",
           "indiscrete_space"
         ],
-        "non_examples": [
-          "bare_set_without_topology"
-        ],
-        "equivalent_definitions": [
-          "closed-set formulation via complements"
-        ],
+        "non_examples": ["bare_set_without_topology"],
+        "equivalent_definitions": ["closed-set formulation via complements"],
         "label": "topology",
         "domain": "spaces_constructions"
       },
@@ -2153,9 +2048,7 @@
         "notation": "\\(U\\in\\tau\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "topology"
-          ],
+          "definitional_dependency": ["topology"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2168,18 +2061,14 @@
           "e_open_set_requires_topology"
         ],
         "metadata": {
-          "tags": [
-            "definition"
-          ],
+          "tags": ["definition"],
           "syllabus_priority": "core",
           "source": null
         },
         "kind": "definition",
         "introduced_object": "open_set",
         "genus": "subset",
-        "differentia": [
-          "belongs_to_topology"
-        ],
+        "differentia": ["belongs_to_topology"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [],
@@ -2195,9 +2084,7 @@
         "notation": "\\(C\\subseteq X\\) closed, \\(X\\setminus C\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "open_set"
-          ],
+          "definitional_dependency": ["open_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2205,9 +2092,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_closed_set_requires_open_set"
-        ],
+        "outgoing_relations": ["e_closed_set_requires_open_set"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -2216,12 +2101,8 @@
         "kind": "definition",
         "introduced_object": "closed_set",
         "genus": "subset",
-        "differentia": [
-          "complement_is_open"
-        ],
-        "examples": [
-          "cantor_set"
-        ],
+        "differentia": ["complement_is_open"],
+        "examples": ["cantor_set"],
         "non_examples": [],
         "equivalent_definitions": [
           "member of the closed-set system dual to the topology"
@@ -2238,9 +2119,7 @@
         "notation": "\\(\\mathcal N_X(x)\\), \\(N\\ni x\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "open_set"
-          ],
+          "definitional_dependency": ["open_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2248,9 +2127,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_neighborhood_requires_open_set"
-        ],
+        "outgoing_relations": ["e_neighborhood_requires_open_set"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -2259,9 +2136,7 @@
         "kind": "definition",
         "introduced_object": "neighborhood",
         "genus": "subset_containing_point",
-        "differentia": [
-          "contains_open_set_around_point"
-        ],
+        "differentia": ["contains_open_set_around_point"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
@@ -2279,10 +2154,7 @@
         "notation": "\\(\\mathcal B\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "topology",
-            "open_set"
-          ],
+          "definitional_dependency": ["topology", "open_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2308,10 +2180,7 @@
           "refines_each_open_neighborhood",
           "opens_are_unions_of_basis_elements"
         ],
-        "examples": [
-          "real_line_standard_topology",
-          "euclidean_space"
-        ],
+        "examples": ["real_line_standard_topology", "euclidean_space"],
         "non_examples": [],
         "equivalent_definitions": [
           "covers X and locally refines finite intersections"
@@ -2328,10 +2197,7 @@
         "notation": "\\(\\mathcal S\\), \\(\\langle\\mathcal S\\rangle\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "basis_for_topology",
-            "topology"
-          ],
+          "definitional_dependency": ["basis_for_topology", "topology"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2358,9 +2224,7 @@
         ],
         "examples": [],
         "non_examples": [],
-        "equivalent_definitions": [
-          "coarsest topology containing the subbasis"
-        ],
+        "equivalent_definitions": ["coarsest topology containing the subbasis"],
         "label": "subbasis",
         "domain": "spaces_constructions"
       },
@@ -2373,9 +2237,7 @@
         "notation": "\\(\\overline A\\), \\(\\operatorname{cl}_X(A)\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "closed_set"
-          ],
+          "definitional_dependency": ["closed_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2383,9 +2245,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_closure_requires_closed_set"
-        ],
+        "outgoing_relations": ["e_closure_requires_closed_set"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -2394,9 +2254,7 @@
         "kind": "definition",
         "introduced_object": "closure",
         "genus": "operator_on_subsets",
-        "differentia": [
-          "smallest_closed_set_containing_subset"
-        ],
+        "differentia": ["smallest_closed_set_containing_subset"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
@@ -2414,9 +2272,7 @@
         "notation": "\\(A^\\circ\\), \\(\\operatorname{int}_X(A)\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "open_set"
-          ],
+          "definitional_dependency": ["open_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2424,9 +2280,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_interior_requires_open_set"
-        ],
+        "outgoing_relations": ["e_interior_requires_open_set"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -2435,9 +2289,7 @@
         "kind": "definition",
         "introduced_object": "interior",
         "genus": "operator_on_subsets",
-        "differentia": [
-          "largest_open_set_contained_in_subset"
-        ],
+        "differentia": ["largest_open_set_contained_in_subset"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
@@ -2455,10 +2307,7 @@
         "notation": "\\(\\partial_X A\\), \\(\\operatorname{bd}_X(A)\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "closure",
-            "interior"
-          ],
+          "definitional_dependency": ["closure", "interior"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2478,9 +2327,7 @@
         "kind": "definition",
         "introduced_object": "boundary",
         "genus": "operator_on_subsets",
-        "differentia": [
-          "closure_minus_interior"
-        ],
+        "differentia": ["closure_minus_interior"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
@@ -2499,9 +2346,7 @@
         "notation": "\\(\\overline A=X\\), \\(A\\) dense in \\(X\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "closure"
-          ],
+          "definitional_dependency": ["closure"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2509,9 +2354,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_dense_requires_closure"
-        ],
+        "outgoing_relations": ["e_dense_requires_closure"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -2520,12 +2363,8 @@
         "kind": "definition",
         "introduced_object": "dense_subset",
         "genus": "subset",
-        "differentia": [
-          "closure_is_whole_space"
-        ],
-        "examples": [
-          "rationals_with_subspace_topology"
-        ],
+        "differentia": ["closure_is_whole_space"],
+        "examples": ["rationals_with_subspace_topology"],
         "non_examples": [],
         "equivalent_definitions": [
           "every nonempty open set intersects the subset"
@@ -2567,9 +2406,7 @@
         "kind": "definition",
         "introduced_object": "continuous_map",
         "genus": "function",
-        "differentia": [
-          "preimages_of_open_sets_are_open"
-        ],
+        "differentia": ["preimages_of_open_sets_are_open"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
@@ -2588,9 +2425,7 @@
         "notation": "\\(f:X\\cong Y\\), \\(X\\cong Y\\), \\(X\\simeq_{\\mathrm{homeo}}Y\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "continuity"
-          ],
+          "definitional_dependency": ["continuity"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2598,9 +2433,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_homeomorphism_requires_continuity"
-        ],
+        "outgoing_relations": ["e_homeomorphism_requires_continuity"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -2609,9 +2442,7 @@
         "kind": "definition",
         "introduced_object": "homeomorphism",
         "genus": "bijective_continuous_map",
-        "differentia": [
-          "inverse_is_continuous"
-        ],
+        "differentia": ["inverse_is_continuous"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
@@ -2630,9 +2461,7 @@
         "notation": "\\(x_i\\to x\\), \\(x_n\\to x\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "neighborhood"
-          ],
+          "definitional_dependency": ["neighborhood"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2640,9 +2469,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_convergence_requires_neighborhood"
-        ],
+        "outgoing_relations": ["e_convergence_requires_neighborhood"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -2651,9 +2478,7 @@
         "kind": "definition",
         "introduced_object": "convergence",
         "genus": "net_or_sequence_behavior",
-        "differentia": [
-          "eventually_in_every_neighborhood"
-        ],
+        "differentia": ["eventually_in_every_neighborhood"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
@@ -2671,9 +2496,7 @@
         "notation": "\\(\\mathcal U\\) open cover, \\(X=\\bigcup_{k=1}^n U_k\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "open_set"
-          ],
+          "definitional_dependency": ["open_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2697,17 +2520,10 @@
         "kind": "definition",
         "introduced_object": "compact_space",
         "genus": "open_cover_property",
-        "differentia": [
-          "every_open_cover_has_finite_subcover"
-        ],
-        "examples": [
-          "cantor_set",
-          "circle"
-        ],
+        "differentia": ["every_open_cover_has_finite_subcover"],
+        "examples": ["cantor_set", "circle"],
         "non_examples": [],
-        "equivalent_definitions": [
-          "compactness_fip_characterization"
-        ],
+        "equivalent_definitions": ["compactness_fip_characterization"],
         "label": "compactness",
         "domain": "compactness"
       },
@@ -2720,10 +2536,7 @@
         "notation": "\\(\\mathcal F\\) has the finite intersection property (FIP)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "compactness",
-            "closed_set"
-          ],
+          "definitional_dependency": ["compactness", "closed_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2743,14 +2556,10 @@
         "kind": "definition",
         "introduced_object": "compactness_fip_characterization",
         "genus": "equivalent_characterization",
-        "differentia": [
-          "closed_families_with_fip_have_nonempty_intersection"
-        ],
+        "differentia": ["closed_families_with_fip_have_nonempty_intersection"],
         "examples": [],
         "non_examples": [],
-        "equivalent_definitions": [
-          "open-cover definition of compactness"
-        ],
+        "equivalent_definitions": ["open-cover definition of compactness"],
         "label": "finite intersection property characterization",
         "domain": "compactness"
       },
@@ -2763,9 +2572,7 @@
         "notation": "\\(x_{n_k}\\to x\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "convergence"
-          ],
+          "definitional_dependency": ["convergence"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2785,15 +2592,9 @@
         "kind": "definition",
         "introduced_object": "sequential_compactness",
         "genus": "sequence_property",
-        "differentia": [
-          "every_sequence_has_convergent_subsequence"
-        ],
-        "examples": [
-          "cantor_set"
-        ],
-        "non_examples": [
-          "compact_non_sequentially_compact_space"
-        ],
+        "differentia": ["every_sequence_has_convergent_subsequence"],
+        "examples": ["cantor_set"],
+        "non_examples": ["compact_non_sequentially_compact_space"],
         "equivalent_definitions": [],
         "label": "sequential compactness",
         "domain": "compactness"
@@ -2807,9 +2608,7 @@
         "notation": "\\(X\\) connected",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "open_set"
-          ],
+          "definitional_dependency": ["open_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2831,13 +2630,8 @@
         "kind": "definition",
         "introduced_object": "connected_space",
         "genus": "no_separation_property",
-        "differentia": [
-          "no_partition_into_two_nonempty_disjoint_open_sets"
-        ],
-        "examples": [
-          "circle",
-          "topologist_sine_curve"
-        ],
+        "differentia": ["no_partition_into_two_nonempty_disjoint_open_sets"],
+        "examples": ["circle", "topologist_sine_curve"],
         "non_examples": [],
         "equivalent_definitions": [
           "only clopen subsets are \\(\\varnothing\\) and \\(X\\)"
@@ -2854,12 +2648,8 @@
         "notation": "\\(\\gamma:[0,1]\\to X\\), \\(\\gamma(0)=x\\), \\(\\gamma(1)=y\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "continuity"
-          ],
-          "logical_dependency": [
-            "connectedness"
-          ],
+          "definitional_dependency": ["continuity"],
+          "logical_dependency": ["connectedness"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -2881,19 +2671,10 @@
         "kind": "definition",
         "introduced_object": "path_connected_space",
         "genus": "path_property",
-        "differentia": [
-          "continuous_path_between_any_two_points"
-        ],
-        "examples": [
-          "circle",
-          "torus"
-        ],
-        "non_examples": [
-          "connected_not_path_connected_space"
-        ],
-        "equivalent_definitions": [
-          "there is a single path component"
-        ],
+        "differentia": ["continuous_path_between_any_two_points"],
+        "examples": ["circle", "torus"],
+        "non_examples": ["connected_not_path_connected_space"],
+        "equivalent_definitions": ["there is a single path component"],
         "label": "path connectedness",
         "domain": "connectedness"
       },
@@ -2906,11 +2687,7 @@
         "notation": "\\(T_0,T_1,T_2,T_3,T_4\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "open_set",
-            "closed_set",
-            "neighborhood"
-          ],
+          "definitional_dependency": ["open_set", "closed_set", "neighborhood"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2932,9 +2709,7 @@
         "kind": "definition",
         "introduced_object": "separation_axioms",
         "genus": "axiom_scheme",
-        "differentia": [
-          "separates_points_or_closed_sets_by_open_sets"
-        ],
+        "differentia": ["separates_points_or_closed_sets_by_open_sets"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [],
@@ -2950,10 +2725,7 @@
         "notation": "\\(T_2\\)",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "neighborhood",
-            "separation_axioms"
-          ],
+          "definitional_dependency": ["neighborhood", "separation_axioms"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2976,16 +2748,9 @@
         "kind": "definition",
         "introduced_object": "hausdorff_space",
         "genus": "separation_property",
-        "differentia": [
-          "distinct_points_have_disjoint_open_neighborhoods"
-        ],
-        "examples": [
-          "real_line_standard_topology"
-        ],
-        "non_examples": [
-          "indiscrete_space",
-          "sierpinski_space"
-        ],
+        "differentia": ["distinct_points_have_disjoint_open_neighborhoods"],
+        "examples": ["real_line_standard_topology"],
+        "non_examples": ["indiscrete_space", "sierpinski_space"],
         "equivalent_definitions": [
           "the diagonal \\(\\Delta_X\\subseteq X\\times X\\) is closed, when product topology is available"
         ],
@@ -3081,9 +2846,7 @@
           "singletons_are_closed",
           "separate_disjoint_closed_sets"
         ],
-        "examples": [
-          "compact_hausdorff_space"
-        ],
+        "examples": ["compact_hausdorff_space"],
         "non_examples": [],
         "equivalent_definitions": [
           "Urysohn-function separation for normal spaces, in the setting of Urysohn's lemma"
@@ -3100,10 +2863,7 @@
         "notation": "\\(\\aleph_0\\), first countable, second countable",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "basis_for_topology",
-            "neighborhood"
-          ],
+          "definitional_dependency": ["basis_for_topology", "neighborhood"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -3123,9 +2883,7 @@
         "kind": "definition",
         "introduced_object": "countability_axioms",
         "genus": "size_restriction",
-        "differentia": [
-          "countable_local_or_global_bases"
-        ],
+        "differentia": ["countable_local_or_global_bases"],
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [],
@@ -3166,16 +2924,10 @@
         "kind": "definition",
         "introduced_object": "first_countable_space",
         "genus": "local_countability_axiom",
-        "differentia": [
-          "countable_neighborhood_basis_at_each_point"
-        ],
-        "examples": [
-          "metric_space"
-        ],
+        "differentia": ["countable_neighborhood_basis_at_each_point"],
+        "examples": ["metric_space"],
         "non_examples": [],
-        "equivalent_definitions": [
-          "each point has a countable local base"
-        ],
+        "equivalent_definitions": ["each point has a countable local base"],
         "label": "first countability",
         "domain": "separation_countability"
       },
@@ -3213,15 +2965,9 @@
         "kind": "definition",
         "introduced_object": "second_countable_space",
         "genus": "global_countability_axiom",
-        "differentia": [
-          "countable_basis"
-        ],
-        "examples": [
-          "euclidean_space"
-        ],
-        "non_examples": [
-          "long_line"
-        ],
+        "differentia": ["countable_basis"],
+        "examples": ["euclidean_space"],
+        "non_examples": ["long_line"],
         "equivalent_definitions": [],
         "label": "second countability",
         "domain": "separation_countability"
@@ -3235,10 +2981,7 @@
         "notation": "\\(N\\in\\mathcal N_X(x)\\), \\(N\\) compact",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "compactness",
-            "neighborhood"
-          ],
+          "definitional_dependency": ["compactness", "neighborhood"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -3259,12 +3002,8 @@
         "kind": "definition",
         "introduced_object": "locally_compact_space",
         "genus": "local_property",
-        "differentia": [
-          "compact_neighborhoods_at_each_point"
-        ],
-        "examples": [
-          "real_line_standard_topology"
-        ],
+        "differentia": ["compact_neighborhoods_at_each_point"],
+        "examples": ["real_line_standard_topology"],
         "non_examples": [],
         "equivalent_definitions": [
           "in Hausdorff spaces, each point has a neighborhood with compact closure"
@@ -3284,11 +3023,7 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [
-            "topological_space",
-            "open_set",
-            "set"
-          ],
+          "construction_dependency": ["topological_space", "open_set", "set"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
@@ -3320,10 +3055,7 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [
-            "topological_space",
-            "subbasis"
-          ],
+          "construction_dependency": ["topological_space", "subbasis"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
@@ -3354,10 +3086,7 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [
-            "topological_space",
-            "continuity"
-          ],
+          "construction_dependency": ["topological_space", "continuity"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
@@ -3388,10 +3117,7 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [
-            "metric_space",
-            "basis_for_topology"
-          ],
+          "construction_dependency": ["metric_space", "basis_for_topology"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
@@ -3422,16 +3148,12 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [
-            "basis_for_topology"
-          ],
+          "construction_dependency": ["basis_for_topology"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_order_topology_constructed_from_basis"
-        ],
+        "outgoing_relations": ["e_order_topology_constructed_from_basis"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -3453,10 +3175,7 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [
-            "local_compactness",
-            "compactness"
-          ],
+          "construction_dependency": ["local_compactness", "compactness"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
@@ -3521,10 +3240,7 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [
-            "topological_space",
-            "continuity"
-          ],
+          "construction_dependency": ["topological_space", "continuity"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
@@ -3554,11 +3270,7 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [
-            "function",
-            "continuity",
-            "topology"
-          ],
+          "construction_dependency": ["function", "continuity", "topology"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
@@ -3589,11 +3301,7 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [
-            "function",
-            "continuity",
-            "topology"
-          ],
+          "construction_dependency": ["function", "continuity", "topology"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
@@ -3625,15 +3333,11 @@
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
-          "notation_dependency": [
-            "topology"
-          ],
+          "notation_dependency": ["topology"],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_tau_notation_requires_topology"
-        ],
+        "outgoing_relations": ["e_tau_notation_requires_topology"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -3656,10 +3360,7 @@
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
-          "notation_dependency": [
-            "open_set",
-            "compactness"
-          ],
+          "notation_dependency": ["open_set", "compactness"],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
@@ -3689,15 +3390,11 @@
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
-          "notation_dependency": [
-            "product_topology"
-          ],
+          "notation_dependency": ["product_topology"],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_product_notation_requires_product_topology"
-        ],
+        "outgoing_relations": ["e_product_notation_requires_product_topology"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -3996,10 +3693,7 @@
         },
         "outgoing_relations": [],
         "metadata": {
-          "tags": [
-            "choice",
-            "proof_tool"
-          ],
+          "tags": ["choice", "proof_tool"],
           "syllabus_priority": "high",
           "source": null
         },
@@ -4022,9 +3716,7 @@
             "closed_set"
           ],
           "logical_dependency": [],
-          "assumption_dependency": [
-            "hausdorff_assumption"
-          ],
+          "assumption_dependency": ["hausdorff_assumption"],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
@@ -4055,13 +3747,8 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "product_topology",
-            "compactness"
-          ],
-          "logical_dependency": [
-            "tychonoff_theorem"
-          ],
+          "definitional_dependency": ["product_topology", "compactness"],
+          "logical_dependency": ["tychonoff_theorem"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -4091,10 +3778,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "manifold",
-            "homeomorphism"
-          ],
+          "definitional_dependency": ["manifold", "homeomorphism"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -4218,9 +3902,7 @@
             "compactness",
             "closed_set"
           ],
-          "logical_dependency": [
-            "bolzano_weierstrass_theorem"
-          ],
+          "logical_dependency": ["bolzano_weierstrass_theorem"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -4242,32 +3924,21 @@
           "source": null
         },
         "kind": "theorem",
-        "hypotheses": [
-          "K⊆R^n",
-          "standard Euclidean topology"
-        ],
+        "hypotheses": ["K⊆R^n", "standard Euclidean topology"],
         "conclusion": "K is compact iff K is closed and bounded.",
         "proof_methods": [
           "open_cover_argument",
           "finite_subcover_argument",
           "compactness_argument"
         ],
-        "related_theorems": [
-          "bolzano_weierstrass_theorem"
-        ],
-        "examples": [
-          "euclidean_space"
-        ],
-        "applications": [
-          "analysis_on_metric_spaces"
-        ],
+        "related_theorems": ["bolzano_weierstrass_theorem"],
+        "examples": ["euclidean_space"],
+        "applications": ["analysis_on_metric_spaces"],
         "variants": [
           {
             "id": "heine_borel_real_line_variant",
             "label": "Heine-Borel on R",
-            "hypotheses": [
-              "K⊆R"
-            ],
+            "hypotheses": ["K⊆R"],
             "conclusion": "K is compact iff K is closed and bounded."
           }
         ],
@@ -4283,13 +3954,8 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "convergence",
-            "euclidean_space"
-          ],
-          "logical_dependency": [
-            "sequential_compactness"
-          ],
+          "definitional_dependency": ["convergence", "euclidean_space"],
+          "logical_dependency": ["sequential_compactness"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -4308,23 +3974,12 @@
           "source": null
         },
         "kind": "theorem",
-        "hypotheses": [
-          "bounded sequence in R^n"
-        ],
+        "hypotheses": ["bounded sequence in R^n"],
         "conclusion": "The sequence has a convergent subsequence.",
-        "proof_methods": [
-          "diagonal_argument",
-          "compactness_argument"
-        ],
-        "related_theorems": [
-          "heine_borel_theorem"
-        ],
-        "examples": [
-          "euclidean_space"
-        ],
-        "applications": [
-          "analysis_on_metric_spaces"
-        ],
+        "proof_methods": ["diagonal_argument", "compactness_argument"],
+        "related_theorems": ["heine_borel_theorem"],
+        "examples": ["euclidean_space"],
+        "applications": ["analysis_on_metric_spaces"],
         "variants": [],
         "label": "Bolzano-Weierstrass theorem",
         "domain": "compactness"
@@ -4338,15 +3993,9 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "normality",
-            "closed_set",
-            "continuity"
-          ],
+          "definitional_dependency": ["normality", "closed_set", "continuity"],
           "logical_dependency": [],
-          "assumption_dependency": [
-            "normality_assumption"
-          ],
+          "assumption_dependency": ["normality_assumption"],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
@@ -4365,21 +4014,11 @@
           "source": null
         },
         "kind": "theorem",
-        "hypotheses": [
-          "X normal",
-          "A and B disjoint closed subsets"
-        ],
+        "hypotheses": ["X normal", "A and B disjoint closed subsets"],
         "conclusion": "There is continuous f:X→[0,1] with f(A)=0 and f(B)=1.",
-        "proof_methods": [
-          "separation_argument",
-          "basis_argument"
-        ],
-        "related_theorems": [
-          "tietze_extension_theorem"
-        ],
-        "examples": [
-          "compact_hausdorff_space"
-        ],
+        "proof_methods": ["separation_argument", "basis_argument"],
+        "related_theorems": ["tietze_extension_theorem"],
+        "examples": ["compact_hausdorff_space"],
         "applications": [],
         "variants": [],
         "label": "Urysohn lemma",
@@ -4394,17 +4033,9 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "normality",
-            "closed_set",
-            "continuity"
-          ],
-          "logical_dependency": [
-            "urysohn_lemma"
-          ],
-          "assumption_dependency": [
-            "normality_assumption"
-          ],
+          "definitional_dependency": ["normality", "closed_set", "continuity"],
+          "logical_dependency": ["urysohn_lemma"],
+          "assumption_dependency": ["normality_assumption"],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
@@ -4424,25 +4055,12 @@
           "source": null
         },
         "kind": "theorem",
-        "hypotheses": [
-          "X normal",
-          "A closed in X",
-          "f:A→[a,b] continuous"
-        ],
+        "hypotheses": ["X normal", "A closed in X", "f:A→[a,b] continuous"],
         "conclusion": "f extends to a continuous F:X→[a,b].",
-        "proof_methods": [
-          "separation_argument",
-          "compactness_argument"
-        ],
-        "related_theorems": [
-          "urysohn_lemma"
-        ],
-        "examples": [
-          "compact_hausdorff_space"
-        ],
-        "applications": [
-          "analysis_on_metric_spaces"
-        ],
+        "proof_methods": ["separation_argument", "compactness_argument"],
+        "related_theorems": ["urysohn_lemma"],
+        "examples": ["compact_hausdorff_space"],
+        "applications": ["analysis_on_metric_spaces"],
         "variants": [],
         "label": "Tietze extension theorem",
         "domain": "separation_countability"
@@ -4456,16 +4074,9 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "subbasis",
-            "compactness"
-          ],
-          "logical_dependency": [
-            "zorns_lemma"
-          ],
-          "assumption_dependency": [
-            "axiom_of_choice"
-          ],
+          "definitional_dependency": ["subbasis", "compactness"],
+          "logical_dependency": ["zorns_lemma"],
+          "assumption_dependency": ["axiom_of_choice"],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
@@ -4484,21 +4095,15 @@
           "source": null
         },
         "kind": "theorem",
-        "hypotheses": [
-          "S is a subbasis for X"
-        ],
+        "hypotheses": ["S is a subbasis for X"],
         "conclusion": "Compactness can be tested on subbasic open covers.",
         "proof_methods": [
           "open_cover_argument",
           "finite_subcover_argument",
           "zorns_lemma"
         ],
-        "related_theorems": [
-          "tychonoff_theorem"
-        ],
-        "examples": [
-          "product_space"
-        ],
+        "related_theorems": ["tychonoff_theorem"],
+        "examples": ["product_space"],
         "applications": [],
         "variants": [],
         "label": "Alexander subbase theorem",
@@ -4519,18 +4124,10 @@
             "compactness",
             "open_set"
           ],
-          "logical_dependency": [
-            "alexander_subbase_theorem",
-            "zorns_lemma"
-          ],
-          "assumption_dependency": [
-            "axiom_of_choice"
-          ],
+          "logical_dependency": ["alexander_subbase_theorem", "zorns_lemma"],
+          "assumption_dependency": ["axiom_of_choice"],
           "construction_dependency": [],
-          "notation_dependency": [
-            "product_notation",
-            "open_cover_notation"
-          ],
+          "notation_dependency": ["product_notation", "open_cover_notation"],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
@@ -4569,20 +4166,13 @@
           "alexander_subbase_theorem",
           "finite_product_compactness_corollary"
         ],
-        "examples": [
-          "cantor_set",
-          "product_space"
-        ],
-        "applications": [
-          "analysis_on_metric_spaces"
-        ],
+        "examples": ["cantor_set", "product_space"],
+        "applications": ["analysis_on_metric_spaces"],
         "variants": [
           {
             "id": "finite_tychonoff_variant",
             "label": "finite product compactness",
-            "hypotheses": [
-              "finite family of compact spaces"
-            ],
+            "hypotheses": ["finite family of compact spaces"],
             "conclusion": "finite product is compact"
           },
           {
@@ -4641,36 +4231,23 @@
           "source": null
         },
         "kind": "theorem",
-        "hypotheses": [
-          "X complete metric or locally compact Hausdorff"
-        ],
+        "hypotheses": ["X complete metric or locally compact Hausdorff"],
         "conclusion": "Countable intersections of dense open sets are dense.",
-        "proof_methods": [
-          "basis_argument",
-          "compactness_argument"
-        ],
+        "proof_methods": ["basis_argument", "compactness_argument"],
         "related_theorems": [],
-        "examples": [
-          "real_line_standard_topology"
-        ],
-        "applications": [
-          "analysis_on_metric_spaces"
-        ],
+        "examples": ["real_line_standard_topology"],
+        "applications": ["analysis_on_metric_spaces"],
         "variants": [
           {
             "id": "baire_complete_metric_variant",
             "label": "complete metric variant",
-            "hypotheses": [
-              "X complete metric"
-            ],
+            "hypotheses": ["X complete metric"],
             "conclusion": "X is a Baire space"
           },
           {
             "id": "baire_locally_compact_hausdorff_variant",
             "label": "locally compact Hausdorff variant",
-            "hypotheses": [
-              "X locally compact Hausdorff"
-            ],
+            "hypotheses": ["X locally compact Hausdorff"],
             "conclusion": "X is a Baire space"
           }
         ],
@@ -4692,9 +4269,7 @@
             "second_countability",
             "metric_topology"
           ],
-          "logical_dependency": [
-            "urysohn_lemma"
-          ],
+          "logical_dependency": ["urysohn_lemma"],
           "assumption_dependency": [
             "regularity_assumption",
             "hausdorff_assumption",
@@ -4722,25 +4297,12 @@
           "source": null
         },
         "kind": "theorem",
-        "hypotheses": [
-          "X regular",
-          "X Hausdorff",
-          "X second-countable"
-        ],
+        "hypotheses": ["X regular", "X Hausdorff", "X second-countable"],
         "conclusion": "X is metrizable.",
-        "proof_methods": [
-          "basis_argument",
-          "separation_argument"
-        ],
-        "related_theorems": [
-          "urysohn_lemma"
-        ],
-        "examples": [
-          "manifold"
-        ],
-        "applications": [
-          "analysis_on_metric_spaces"
-        ],
+        "proof_methods": ["basis_argument", "separation_argument"],
+        "related_theorems": ["urysohn_lemma"],
+        "examples": ["manifold"],
+        "applications": ["analysis_on_metric_spaces"],
         "variants": [],
         "label": "Urysohn metrization theorem",
         "domain": "separation_countability"
@@ -4759,9 +4321,7 @@
             "compactness",
             "euclidean_space"
           ],
-          "logical_dependency": [
-            "heine_borel_theorem"
-          ],
+          "logical_dependency": ["heine_borel_theorem"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -4780,21 +4340,12 @@
           "source": null
         },
         "kind": "theorem",
-        "hypotheses": [
-          "continuous f:D^n→D^n"
-        ],
+        "hypotheses": ["continuous f:D^n→D^n"],
         "conclusion": "f has a fixed point.",
-        "proof_methods": [
-          "compactness_argument",
-          "connectedness_argument"
-        ],
+        "proof_methods": ["compactness_argument", "connectedness_argument"],
         "related_theorems": [],
-        "examples": [
-          "euclidean_space"
-        ],
-        "applications": [
-          "fixed_point_applications"
-        ],
+        "examples": ["euclidean_space"],
+        "applications": ["fixed_point_applications"],
         "variants": [],
         "label": "Brouwer fixed point theorem",
         "domain": "spaces_constructions"
@@ -4834,21 +4385,12 @@
           "source": null
         },
         "kind": "theorem",
-        "hypotheses": [
-          "C is a simple closed curve in the plane"
-        ],
+        "hypotheses": ["C is a simple closed curve in the plane"],
         "conclusion": "R^2\\C has exactly two connected components with common boundary C.",
-        "proof_methods": [
-          "connectedness_argument",
-          "compactness_argument"
-        ],
+        "proof_methods": ["connectedness_argument", "compactness_argument"],
         "related_theorems": [],
-        "examples": [
-          "circle"
-        ],
-        "applications": [
-          "algebraic_topology_examples"
-        ],
+        "examples": ["circle"],
+        "applications": ["algebraic_topology_examples"],
         "variants": [],
         "label": "Jordan curve theorem",
         "domain": "spaces_constructions"
@@ -4862,17 +4404,9 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [
-            "product_topology",
-            "compactness"
-          ],
-          "logical_dependency": [
-            "alexander_subbase_theorem",
-            "zorns_lemma"
-          ],
-          "assumption_dependency": [
-            "axiom_of_choice"
-          ],
+          "definitional_dependency": ["product_topology", "compactness"],
+          "logical_dependency": ["alexander_subbase_theorem", "zorns_lemma"],
+          "assumption_dependency": ["axiom_of_choice"],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
@@ -4907,13 +4441,8 @@
           "finite_subcover_argument",
           "basis_argument"
         ],
-        "uses_results": [
-          "alexander_subbase_theorem",
-          "zorns_lemma"
-        ],
-        "critical_assumptions": [
-          "axiom_of_choice"
-        ],
+        "uses_results": ["alexander_subbase_theorem", "zorns_lemma"],
+        "critical_assumptions": ["axiom_of_choice"],
         "label": "Proof of Tychonoff via Alexander subbase theorem",
         "domain": "proof_methods"
       },
@@ -4949,11 +4478,7 @@
         "step_number": 1,
         "claim": "It suffices to test compactness on subbasic covers.",
         "justification": "Apply Alexander subbase theorem to the product subbasis.",
-        "uses": [
-          "alexander_subbase_theorem",
-          "product_topology",
-          "subbasis"
-        ],
+        "uses": ["alexander_subbase_theorem", "product_topology", "subbasis"],
         "label": "Tychonoff step: reduce to subbasic cover",
         "domain": "proof_methods"
       },
@@ -4988,10 +4513,7 @@
         "step_number": 2,
         "claim": "Coherent choices produce a point avoiding a cover when no finite subcover exists.",
         "justification": "Use choice or an equivalent maximality argument.",
-        "uses": [
-          "axiom_of_choice",
-          "zorns_lemma"
-        ],
+        "uses": ["axiom_of_choice", "zorns_lemma"],
         "label": "Tychonoff step: choose coordinates",
         "domain": "proof_methods"
       },
@@ -5049,9 +4571,7 @@
             "closed_set",
             "euclidean_space"
           ],
-          "logical_dependency": [
-            "bolzano_weierstrass_theorem"
-          ],
+          "logical_dependency": ["bolzano_weierstrass_theorem"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -5084,9 +4604,7 @@
           "finite_subcover_argument",
           "compactness_argument"
         ],
-        "uses_results": [
-          "bolzano_weierstrass_theorem"
-        ],
+        "uses_results": ["bolzano_weierstrass_theorem"],
         "critical_assumptions": [],
         "label": "Proof of Heine-Borel by open covers",
         "domain": "proof_methods"
@@ -5119,10 +4637,7 @@
         "step_number": 1,
         "claim": "A bounded Euclidean set lies in a compact cube.",
         "justification": "Use interval compactness and finite subcovers.",
-        "uses": [
-          "finite_subcover_argument",
-          "euclidean_space"
-        ],
+        "uses": ["finite_subcover_argument", "euclidean_space"],
         "label": "Heine-Borel step: compact cube",
         "domain": "proof_methods"
       },
@@ -5154,10 +4669,7 @@
         "step_number": 2,
         "claim": "Closed subsets of compact Euclidean spaces are compact.",
         "justification": "Convert covers by using the open complement of a closed set.",
-        "uses": [
-          "closed_set",
-          "compactness"
-        ],
+        "uses": ["closed_set", "compactness"],
         "label": "Heine-Borel step: closed subset",
         "domain": "proof_methods"
       },
@@ -5198,14 +4710,8 @@
           "connectedness"
         ],
         "violates": [],
-        "demonstrates": [
-          "metric_topology",
-          "order_topology"
-        ],
-        "related_theorems": [
-          "heine_borel_theorem",
-          "baire_category_theorem"
-        ],
+        "demonstrates": ["metric_topology", "order_topology"],
+        "related_theorems": ["heine_borel_theorem", "baire_category_theorem"],
         "label": "real line with standard topology",
         "domain": "examples"
       },
@@ -5226,9 +4732,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_euclidean_has_metric_space"
-        ],
+        "outgoing_relations": ["e_euclidean_has_metric_space"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -5243,9 +4747,7 @@
           "local_compactness"
         ],
         "violates": [],
-        "demonstrates": [
-          "metric_topology"
-        ],
+        "demonstrates": ["metric_topology"],
         "related_theorems": [
           "heine_borel_theorem",
           "brouwer_fixed_point_theorem"
@@ -5270,9 +4772,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_discrete_has_normality"
-        ],
+        "outgoing_relations": ["e_discrete_has_normality"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -5286,9 +4786,7 @@
           "first_countability"
         ],
         "violates": [],
-        "demonstrates": [
-          "topology"
-        ],
+        "demonstrates": ["topology"],
         "related_theorems": [],
         "label": "discrete space",
         "domain": "examples"
@@ -5317,17 +4815,9 @@
           "source": null
         },
         "kind": "example",
-        "satisfies": [
-          "topological_space",
-          "compactness",
-          "connectedness"
-        ],
-        "violates": [
-          "hausdorff_property"
-        ],
-        "demonstrates": [
-          "topology"
-        ],
+        "satisfies": ["topological_space", "compactness", "connectedness"],
+        "violates": ["hausdorff_property"],
+        "demonstrates": ["topology"],
         "related_theorems": [],
         "label": "indiscrete space",
         "domain": "examples"
@@ -5356,15 +4846,9 @@
           "source": null
         },
         "kind": "example",
-        "satisfies": [
-          "topological_space"
-        ],
-        "violates": [
-          "hausdorff_property"
-        ],
-        "demonstrates": [
-          "open_set"
-        ],
+        "satisfies": ["topological_space"],
+        "violates": ["hausdorff_property"],
+        "demonstrates": ["open_set"],
         "related_theorems": [],
         "label": "Sierpinski space",
         "domain": "examples"
@@ -5386,28 +4870,17 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_cantor_has_compactness"
-        ],
+        "outgoing_relations": ["e_cantor_has_compactness"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
           "source": null
         },
         "kind": "example",
-        "satisfies": [
-          "compactness",
-          "hausdorff_property"
-        ],
+        "satisfies": ["compactness", "hausdorff_property"],
         "violates": [],
-        "demonstrates": [
-          "closed_set",
-          "compactness"
-        ],
-        "related_theorems": [
-          "heine_borel_theorem",
-          "tychonoff_theorem"
-        ],
+        "demonstrates": ["closed_set", "compactness"],
+        "related_theorems": ["heine_borel_theorem", "tychonoff_theorem"],
         "label": "Cantor set",
         "domain": "examples"
       },
@@ -5428,9 +4901,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_circle_has_path_connectedness"
-        ],
+        "outgoing_relations": ["e_circle_has_path_connectedness"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -5445,13 +4916,8 @@
           "manifold"
         ],
         "violates": [],
-        "demonstrates": [
-          "homeomorphism",
-          "jordan_curve_theorem"
-        ],
-        "related_theorems": [
-          "jordan_curve_theorem"
-        ],
+        "demonstrates": ["homeomorphism", "jordan_curve_theorem"],
+        "related_theorems": ["jordan_curve_theorem"],
         "label": "circle",
         "domain": "examples"
       },
@@ -5472,9 +4938,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_torus_motivates_product_topology"
-        ],
+        "outgoing_relations": ["e_torus_motivates_product_topology"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -5489,10 +4953,7 @@
           "manifold"
         ],
         "violates": [],
-        "demonstrates": [
-          "product_topology",
-          "quotient_topology"
-        ],
+        "demonstrates": ["product_topology", "quotient_topology"],
         "related_theorems": [],
         "label": "torus",
         "domain": "examples"
@@ -5521,19 +4982,9 @@
           "source": null
         },
         "kind": "example",
-        "satisfies": [
-          "topological_space",
-          "metric_space",
-          "dense_subset"
-        ],
-        "violates": [
-          "local_compactness",
-          "connectedness"
-        ],
-        "demonstrates": [
-          "subspace_topology",
-          "dense_subset"
-        ],
+        "satisfies": ["topological_space", "metric_space", "dense_subset"],
+        "violates": ["local_compactness", "connectedness"],
+        "demonstrates": ["subspace_topology", "dense_subset"],
         "related_theorems": [],
         "label": "rationals with subspace topology",
         "domain": "examples"
@@ -5567,12 +5018,8 @@
           "hausdorff_property",
           "local_compactness"
         ],
-        "violates": [
-          "second_countability"
-        ],
-        "demonstrates": [
-          "order_topology"
-        ],
+        "violates": ["second_countability"],
+        "demonstrates": ["order_topology"],
         "related_theorems": [],
         "label": "long line",
         "domain": "examples"
@@ -5606,12 +5053,8 @@
           "hausdorff_property",
           "first_countability"
         ],
-        "violates": [
-          "second_countability"
-        ],
-        "demonstrates": [
-          "basis_for_topology"
-        ],
+        "violates": ["second_countability"],
+        "demonstrates": ["basis_for_topology"],
         "related_theorems": [],
         "label": "Sorgenfrey line",
         "domain": "examples"
@@ -5640,14 +5083,9 @@
           "source": null
         },
         "kind": "example",
-        "satisfies": [
-          "compactness",
-          "path_connectedness"
-        ],
+        "satisfies": ["compactness", "path_connectedness"],
         "violates": [],
-        "demonstrates": [
-          "algebraic_topology_examples"
-        ],
+        "demonstrates": ["algebraic_topology_examples"],
         "related_theorems": [],
         "label": "Hawaiian earring",
         "domain": "examples"
@@ -5676,15 +5114,9 @@
           "source": null
         },
         "kind": "example",
-        "satisfies": [
-          "connectedness"
-        ],
-        "violates": [
-          "path_connectedness"
-        ],
-        "demonstrates": [
-          "connected_not_path_connected_space"
-        ],
+        "satisfies": ["connectedness"],
+        "violates": ["path_connectedness"],
+        "demonstrates": ["connected_not_path_connected_space"],
         "related_theorems": [],
         "label": "topologist's sine curve",
         "domain": "examples"
@@ -5715,14 +5147,9 @@
           "source": null
         },
         "kind": "example",
-        "satisfies": [
-          "quotient_space",
-          "topological_space"
-        ],
+        "satisfies": ["quotient_space", "topological_space"],
         "violates": [],
-        "demonstrates": [
-          "quotient_topology"
-        ],
+        "demonstrates": ["quotient_topology"],
         "related_theorems": [],
         "label": "quotient space examples",
         "domain": "examples"
@@ -5751,15 +5178,9 @@
           "source": null
         },
         "kind": "non_example",
-        "satisfies": [
-          "set"
-        ],
-        "violates": [
-          "topological_space"
-        ],
-        "demonstrates": [
-          "topology"
-        ],
+        "satisfies": ["set"],
+        "violates": ["topological_space"],
+        "demonstrates": ["topology"],
         "related_theorems": [],
         "label": "bare set without topology",
         "domain": "examples"
@@ -5791,19 +5212,10 @@
           "source": null
         },
         "kind": "counterexample",
-        "satisfies": [
-          "topological_space"
-        ],
-        "violates": [
-          "hausdorff_property",
-          "hausdorff_assumption"
-        ],
-        "demonstrates": [
-          "compact_subsets_of_hausdorff_are_closed"
-        ],
-        "related_theorems": [
-          "compact_subsets_of_hausdorff_are_closed"
-        ],
+        "satisfies": ["topological_space"],
+        "violates": ["hausdorff_property", "hausdorff_assumption"],
+        "demonstrates": ["compact_subsets_of_hausdorff_are_closed"],
+        "related_theorems": ["compact_subsets_of_hausdorff_are_closed"],
         "label": "non-Hausdorff spaces as counterexamples",
         "domain": "examples"
       },
@@ -5824,28 +5236,17 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_compact_nonseq_shows_countability_necessity"
-        ],
+        "outgoing_relations": ["e_compact_nonseq_shows_countability_necessity"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
           "source": null
         },
         "kind": "counterexample",
-        "satisfies": [
-          "compactness"
-        ],
-        "violates": [
-          "sequential_compactness",
-          "first_countability"
-        ],
-        "demonstrates": [
-          "sequential_compactness"
-        ],
-        "related_theorems": [
-          "tychonoff_theorem"
-        ],
+        "satisfies": ["compactness"],
+        "violates": ["sequential_compactness", "first_countability"],
+        "demonstrates": ["sequential_compactness"],
+        "related_theorems": ["tychonoff_theorem"],
         "label": "compact non-sequentially compact space",
         "domain": "examples"
       },
@@ -5866,24 +5267,16 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_connected_not_path_shows_path_necessity"
-        ],
+        "outgoing_relations": ["e_connected_not_path_shows_path_necessity"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
           "source": null
         },
         "kind": "counterexample",
-        "satisfies": [
-          "connectedness"
-        ],
-        "violates": [
-          "path_connectedness"
-        ],
-        "demonstrates": [
-          "path_connectedness"
-        ],
+        "satisfies": ["connectedness"],
+        "violates": ["path_connectedness"],
+        "demonstrates": ["path_connectedness"],
         "related_theorems": [],
         "label": "connected not path-connected space",
         "domain": "examples"
@@ -8713,10 +8106,7 @@
         "construction_dependency",
         "pedagogical_dependency"
       ],
-      "root_items": [
-        "topology_field",
-        "topological_space"
-      ],
+      "root_items": ["topology_field", "topological_space"],
       "example_traversal": "topological_space -> defined_by -> topology; compactness -> has_example -> cantor_set; quotient_space_examples -> motivates -> quotient_topology"
     },
     "definition_dependency_graph": {
@@ -8728,20 +8118,12 @@
         "notation",
         "theorem"
       ],
-      "included_edge_types": [
-        "requires",
-        "defines",
-        "defined_by"
-      ],
+      "included_edge_types": ["requires", "defines", "defined_by"],
       "included_dependency_classes": [
         "definitional_dependency",
         "notation_dependency"
       ],
-      "root_items": [
-        "topological_space",
-        "compactness",
-        "tychonoff_theorem"
-      ],
+      "root_items": ["topological_space", "compactness", "tychonoff_theorem"],
       "example_traversal": "tychonoff_theorem -> requires -> product_space, product_topology, compactness, open_set"
     },
     "theorem_dependency_graph": {
@@ -8755,20 +8137,12 @@
         "corollary",
         "proof_method"
       ],
-      "included_edge_types": [
-        "uses",
-        "assumes",
-        "implies",
-        "proves"
-      ],
+      "included_edge_types": ["uses", "assumes", "implies", "proves"],
       "included_dependency_classes": [
         "logical_dependency",
         "assumption_dependency"
       ],
-      "root_items": [
-        "tychonoff_theorem",
-        "urysohn_metrization_theorem"
-      ],
+      "root_items": ["tychonoff_theorem", "urysohn_metrization_theorem"],
       "example_traversal": "tychonoff_theorem -> uses -> alexander_subbase_theorem -> uses -> zorns_lemma; tychonoff_theorem -> assumes -> axiom_of_choice"
     },
     "proof_graph": {
@@ -8802,19 +8176,10 @@
     },
     "inheritance_tree": {
       "description": "Tree-like or DAG-like inheritance view of mathematical structures; multiple inheritance is retained.",
-      "included_item_kinds": [
-        "structure"
-      ],
-      "included_edge_types": [
-        "subtype_of",
-        "inherits_from"
-      ],
-      "included_dependency_classes": [
-        "logical_dependency"
-      ],
-      "root_items": [
-        "topological_space"
-      ],
+      "included_item_kinds": ["structure"],
+      "included_edge_types": ["subtype_of", "inherits_from"],
+      "included_dependency_classes": ["logical_dependency"],
+      "root_items": ["topological_space"],
       "example_traversal": "incoming subtype_of from topological_space, then from compact_space and hausdorff_space to compact_hausdorff_space"
     },
     "construction_graph": {
@@ -8826,11 +8191,7 @@
         "definition",
         "property"
       ],
-      "included_edge_types": [
-        "constructed_from",
-        "induces",
-        "requires"
-      ],
+      "included_edge_types": ["constructed_from", "induces", "requires"],
       "included_dependency_classes": [
         "construction_dependency",
         "definitional_dependency"
@@ -8866,15 +8227,9 @@
         "proof_method",
         "application"
       ],
-      "included_edge_types": [
-        "prerequisite_for"
-      ],
-      "included_dependency_classes": [
-        "pedagogical_dependency"
-      ],
-      "root_items": [
-        "set"
-      ],
+      "included_edge_types": ["prerequisite_for"],
+      "included_dependency_classes": ["pedagogical_dependency"],
+      "root_items": ["set"],
       "example_traversal": "set -> topology -> open_set -> compactness -> alexander_subbase_theorem -> tychonoff_theorem"
     },
     "application_map": {
@@ -8888,11 +8243,7 @@
         "application",
         "example"
       ],
-      "included_edge_types": [
-        "applied_to",
-        "has_example",
-        "motivates"
-      ],
+      "included_edge_types": ["applied_to", "has_example", "motivates"],
       "included_dependency_classes": [
         "logical_dependency",
         "pedagogical_dependency",
@@ -8937,11 +8288,7 @@
       "query_name": "theorem_dependencies",
       "start_node_kind": "theorem",
       "edge_filter": {
-        "edge_types": [
-          "requires",
-          "uses",
-          "assumes"
-        ],
+        "edge_types": ["requires", "uses", "assumes"],
         "dependency_classes": [
           "definitional_dependency",
           "logical_dependency",
@@ -8957,13 +8304,8 @@
       "query_name": "definitions_required_to_state_theorem",
       "start_node_kind": "theorem",
       "edge_filter": {
-        "edge_types": [
-          "requires"
-        ],
-        "dependency_classes": [
-          "definitional_dependency",
-          "notation_dependency"
-        ]
+        "edge_types": ["requires"],
+        "dependency_classes": ["definitional_dependency", "notation_dependency"]
       },
       "traversal_direction": "outgoing",
       "expected_output": "list[item]",
@@ -8973,12 +8315,8 @@
       "query_name": "proof_methods_used_by_theorem",
       "start_node_kind": "theorem",
       "edge_filter": {
-        "edge_types": [
-          "uses"
-        ],
-        "dependency_classes": [
-          "logical_dependency"
-        ]
+        "edge_types": ["uses"],
+        "dependency_classes": ["logical_dependency"]
       },
       "traversal_direction": "outgoing",
       "expected_output": "list[item]",
@@ -8988,12 +8326,8 @@
       "query_name": "necessary_assumptions",
       "start_node_kind": "theorem",
       "edge_filter": {
-        "edge_types": [
-          "assumes"
-        ],
-        "dependency_classes": [
-          "assumption_dependency"
-        ]
+        "edge_types": ["assumes"],
+        "dependency_classes": ["assumption_dependency"]
       },
       "traversal_direction": "outgoing",
       "expected_output": "list[item]",
@@ -9003,9 +8337,7 @@
       "query_name": "examples_satisfying_definition",
       "start_node_kind": "definition",
       "edge_filter": {
-        "edge_types": [
-          "has_example"
-        ],
+        "edge_types": ["has_example"],
         "dependency_classes": []
       },
       "traversal_direction": "outgoing",
@@ -9021,9 +8353,7 @@
           "violates_assumption",
           "has_counterexample"
         ],
-        "dependency_classes": [
-          "assumption_dependency"
-        ]
+        "dependency_classes": ["assumption_dependency"]
       },
       "traversal_direction": "both",
       "expected_output": "list[item]",
@@ -9033,13 +8363,8 @@
       "query_name": "inheritance_tree_of_spaces",
       "start_node_kind": "structure",
       "edge_filter": {
-        "edge_types": [
-          "subtype_of",
-          "inherits_from"
-        ],
-        "dependency_classes": [
-          "logical_dependency"
-        ]
+        "edge_types": ["subtype_of", "inherits_from"],
+        "dependency_classes": ["logical_dependency"]
       },
       "traversal_direction": "incoming",
       "expected_output": "list[item]",

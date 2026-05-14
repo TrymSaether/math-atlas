@@ -91,8 +91,12 @@ export function MinimapCard({
 
   return (
     <div
-      className="absolute right-4 top-4 z-30 rounded-[12px] border border-[var(--border)] p-2 shadow-[var(--shadow-2)] backdrop-blur-[8px]"
-      style={{ width: W + 16, background: "var(--minimap-bg)" }}
+      className="absolute top-4 z-30 rounded-[12px] border border-[var(--border)] p-2 shadow-[var(--shadow-2)] backdrop-blur-[8px] transition-[right] duration-200"
+      style={{
+        width: W + 16,
+        right: selectedId ? "calc(min(420px, 44vw) + 32px)" : 16,
+        background: "var(--minimap-bg)",
+      }}
     >
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -104,6 +108,22 @@ export function MinimapCard({
         {regions.map((region) => {
           const topLeft = layout.toMini(region.x, region.y);
           const bottomRight = layout.toMini(region.x + region.width, region.y + region.height);
+          if (region.shape === "circle") {
+            const center = layout.toMini(region.x + region.width / 2, region.y + region.height / 2);
+            return (
+              <circle
+                key={region.id}
+                cx={center.x}
+                cy={center.y}
+                r={(bottomRight.x - topLeft.x) / 2}
+                fill={region.tint}
+                stroke={region.border}
+                strokeWidth={1}
+                strokeDasharray="2 2"
+                opacity={0.78}
+              />
+            );
+          }
           return (
             <rect
               key={region.id}

@@ -67,7 +67,7 @@ export function RoutePlannerPanel({ data }: { data: GraphData }) {
     >
       <div className="space-y-2">
         <RouteRow label="From" node={fromNode} accent="var(--blue)" onClear={() => setRouteFrom(null)} />
-        <RouteRow label="To" node={toNode} accent="var(--purple)" onClear={() => setRouteTo(null)} />
+        <RouteRow label="To" node={toNode} accent="var(--teal)" onClear={() => setRouteTo(null)} />
 
         <Button variant="primary" size="md" onClick={planRoute} disabled={!canPlan} className="w-full justify-center">
           <Route className="h-3.5 w-3.5" />

@@ -9,7 +9,7 @@ import ReactFlow, {
   type Edge,
 } from "reactflow";
 import { useStore } from "../store";
-import { dependencyLayout, clusterLayout, type DomainRegion } from "../lib/layout";
+import { dependencyLayout, clusterLayout } from "../lib/layout";
 import { buildAdjacency, ancestors, descendants } from "../lib/graph";
 import { findRoute } from "../lib/route";
 import { canvas } from "../lib/colors";
@@ -74,8 +74,8 @@ function InnerGraph({ data }: { data: GraphData }) {
       const r = dependencyLayout({ nodes: filteredNodes, edges: filteredEdges, domains: data.domains, showOrphans });
       return { rawNodes: r.nodes, rawEdges: r.edges, regions: r.regions };
     }
-    const r = clusterLayout({ nodes: filteredNodes, edges: filteredEdges });
-    return { rawNodes: r.nodes, rawEdges: r.edges, regions: [] as DomainRegion[] };
+    const r = clusterLayout({ nodes: filteredNodes, edges: filteredEdges, domains: data.domains });
+    return { rawNodes: r.nodes, rawEdges: r.edges, regions: r.regions };
   }, [view, filteredNodes, filteredEdges, data.domains, showOrphans]);
 
   const adj = useMemo(() => buildAdjacency(filteredEdges, relations), [filteredEdges, relations]);
@@ -164,6 +164,7 @@ function InnerGraph({ data }: { data: GraphData }) {
           color: region.color,
           tint: region.tint,
           border: region.border,
+          shape: region.shape,
         },
         draggable: false,
         selectable: false,
