@@ -89,6 +89,7 @@
   --primary-press: #1e40af;
   --on-primary: #ffffff;
   --accent-cool-rgb: 8, 145, 178;
+  --accent-purple-rgb: 245, 245, 245;
   --transparent-rgb: 0, 0, 0;
   --mask-rgb: 15, 23, 42;
 
@@ -324,6 +325,7 @@ button,
 
 .react-flow__pane {
   cursor: grab;
+  background-color: #ffffff;
 }
 
 .react-flow__pane:active {
@@ -577,6 +579,7 @@ button,
   from {
     stroke-dashoffset: var(--route-len, 1000);
   }
+
   to {
     stroke-dashoffset: 0;
   }
@@ -591,9 +594,11 @@ button,
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.04);
   }
+
   100% {
     transform: scale(1);
   }

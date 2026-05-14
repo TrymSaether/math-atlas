@@ -1608,10 +1608,10 @@
       {
         "id": "metric_space",
         "statement": null,
-        "formal_statement": null,
+        "formal_statement": "Let $(M,d)$ with $d:M\\times M\\to[0,\\infty)$, then $$\\begin{align} d(x,y) &= 0 \\quad \\Longleftrightarrow \\quad x=y \\\\ d(x,y) &= d(y,x) \\\\ d(x,z) &\\le d(x,y)+d(y,z) \\end{align}$$",
         "definition": "A set with a distance function satisfying positivity, symmetry, and the triangle inequality.",
         "intuition": "Topology with numerical distance still visible.",
-        "notation": "(X,d)",
+        "notation": "$$(X,d)$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [],
@@ -1996,10 +1996,10 @@
       {
         "id": "topology",
         "statement": "A topology on a set X is a collection of subsets of X containing ∅ and X and closed under arbitrary unions and finite intersections.",
-        "formal_statement": "\\(\\tau\\subseteq \\mathcal P(X),\\ \\varnothing,X\\in\\tau,\\ \\{U_i\\}_{i\\in I}\\subseteq\\tau\\Rightarrow \\bigcup_{i\\in I}U_i\\in\\tau,\\ \\text{and } U_1,\\ldots,U_n\\in\\tau\\Rightarrow \\bigcap_{k=1}^{n}U_k\\in\\tau.\\)",
+        "formal_statement": "$$\\tau\\subseteq \\mathcal P(X),\\ \\varnothing,X\\in\\tau,\\ \\{U_i\\}_{i\\in I}\\subseteq\\tau\\Rightarrow \\bigcup_{i\\in I}U_i\\in\\tau,\\ \\text{and } U_1,\\ldots,U_n\\in\\tau\\Rightarrow \\bigcap_{k=1}^{n}U_k\\in\\tau.$$",
         "definition": "Given a set X, a topology τ on X is a specified collection of subsets of X, called open sets, satisfying the topology axioms: it contains ∅ and X, is closed under arbitrary unions, and is closed under finite intersections.",
         "intuition": "A topology records which subsets are open, thereby encoding local structure and continuity without choosing numerical distances.",
-        "notation": "\\((X,\\tau)\\), \\(\\tau\\), \\(\\mathcal P(X)\\)",
+        "notation": "$$(X,\\tau)$$, $$\\tau$$, $$\\mathcal P(X)$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["set"],
@@ -2042,10 +2042,10 @@
       {
         "id": "open_set",
         "statement": "In a topological space (X, τ), a subset U of X is open exactly when U belongs to τ.",
-        "formal_statement": "\\(U\\subseteq X \\text{ is open in }(X,\\tau)\\Longleftrightarrow U\\in\\tau.\\)",
+        "formal_statement": "$$U\\subseteq X \\text{ is open in }(X,\\tau)\\Longleftrightarrow U\\in\\tau.$$",
         "definition": "An open set of a topological space (X, τ) is a subset U⊆X that is an element of the topology τ.",
         "intuition": "Open sets are the primitive observable neighborhoods of the space; all topological notions are expressed in terms of them.",
-        "notation": "\\(U\\in\\tau\\)",
+        "notation": "$$U\\in\\tau$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["topology"],
@@ -2078,10 +2078,10 @@
       {
         "id": "closed_set",
         "statement": "A subset C of a topological space X is closed exactly when its complement in X is open.",
-        "formal_statement": "\\(C\\subseteq X \\text{ is closed in }(X,\\tau)\\Longleftrightarrow X\\setminus C\\in\\tau.\\)",
+        "formal_statement": "$$C\\subseteq X \\text{ is closed in }(X,\\tau)\\Longleftrightarrow X\\setminus C\\in\\tau.$$",
         "definition": "For a topological space (X, τ), a subset C⊆X is closed in X if its complement X\\C is open in X.",
         "intuition": "Closed sets are the subsets whose outside is topologically open; they contain their limit behavior as far as the topology detects it.",
-        "notation": "\\(C\\subseteq X\\) closed, \\(X\\setminus C\\)",
+        "notation": "$$C\\subseteq X$$ closed, $$X\\setminus C$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["open_set"],
@@ -2113,10 +2113,10 @@
       {
         "id": "neighborhood",
         "statement": "A neighborhood of a point x is any subset containing an open set that contains x.",
-        "formal_statement": "\\(N\\in\\mathcal N_X(x)\\Longleftrightarrow \\exists U\\in\\tau\\ \\text{such that}\\ x\\in U\\subseteq N.\\)",
+        "formal_statement": "$$N\\in\\mathcal N_X(x)\\Longleftrightarrow \\exists U\\in\\tau\\ \\text{such that}\\ x\\in U\\subseteq N.$$",
         "definition": "In a topological space (X, τ), a subset N⊆X is a neighborhood of x∈X if there is an open set U∈τ with x∈U⊆N. If N itself is open, it is an open neighborhood.",
         "intuition": "Neighborhoods are the sets large enough to contain some genuinely open region around the point.",
-        "notation": "\\(\\mathcal N_X(x)\\), \\(N\\ni x\\)",
+        "notation": "$$\\mathcal N_X(x), \\qquad N\\ni x$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["open_set"],
@@ -2148,10 +2148,10 @@
       {
         "id": "basis_for_topology",
         "statement": "A basis for a topology is a collection of open sets such that every open set is a union of basis elements.",
-        "formal_statement": "\\(\\mathcal B\\subseteq\\tau \\text{ is a basis for }(X,\\tau)\\Longleftrightarrow \\forall U\\in\\tau,\\ U=\\bigcup\\{B\\in\\mathcal B: B\\subseteq U\\}.\\)",
+        "formal_statement": "$$\\mathcal B\\subseteq\\tau \\text{ is a basis for }(X,\\tau)\\Longleftrightarrow \\forall U\\in\\tau,\\ U=\\bigcup\\{B\\in\\mathcal B: B\\subseteq U\\}.$$",
         "definition": "For a topological space (X, τ), a basis is a collection B of open subsets of X such that for every open set U and every point x∈U, there is B∈B with x∈B⊆U. Equivalently, every open set is a union of basis elements.",
         "intuition": "A basis gives small reusable open pieces from which all open sets are assembled by unions.",
-        "notation": "\\(\\mathcal B\\)",
+        "notation": "$$\\mathcal B$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["topology", "open_set"],
@@ -2191,10 +2191,10 @@
       {
         "id": "subbasis",
         "statement": "A subbasis is a collection of subsets whose finite intersections form a basis for the topology it generates.",
-        "formal_statement": "\\(\\langle\\mathcal S\\rangle=\\left\\{\\bigcup_{\\lambda\\in\\Lambda}\\bigcap_{k=1}^{n_\\lambda}S_{\\lambda,k}: S_{\\lambda,k}\\in\\mathcal S,\\ n_\\lambda<\\infty\\right\\};\\ \\mathcal S \\text{ is a subbasis for }\\langle\\mathcal S\\rangle.\\)",
+        "formal_statement": "$$\\langle\\mathcal S\\rangle=\\left\\{\\bigcup_{\\lambda\\in\\Lambda}\\bigcap_{k=1}^{n_\\lambda}S_{\\lambda,k}: S_{\\lambda,k}\\in\\mathcal S,\\ n_\\lambda<\\infty\\right\\};\\ \\mathcal S \\text{ is a subbasis for }\\langle\\mathcal S\\rangle.$$",
         "definition": "For a set X, a subbasis S is a collection of subsets of X, usually with ⋃S=X, such that the finite intersections of members of S form a basis for the topology generated by S.",
         "intuition": "A subbasis specifies even simpler open constraints; finite intersections make basic opens, and arbitrary unions make all opens.",
-        "notation": "\\(\\mathcal S\\), \\(\\langle\\mathcal S\\rangle\\)",
+        "notation": "$$\\mathcal S$$, $$\\langle\\mathcal S\\rangle$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["basis_for_topology", "topology"],
@@ -2231,10 +2231,10 @@
       {
         "id": "closure",
         "statement": "The closure of A in X is the smallest closed subset of X containing A.",
-        "formal_statement": "\\(\\operatorname{cl}_X(A)=\\overline A=\\bigcap\\{F\\subseteq X: A\\subseteq F\\ \\text{and}\\ F \\text{ is closed in }X\\}.\\)",
+        "formal_statement": "$$\\operatorname{cl}_X(A)=\\overline A=\\bigcap\\{F\\subseteq X: A\\subseteq F\\ \\text{and}\\ F \\text{ is closed in }X\\}.$$",
         "definition": "For A⊆X, the closure cl_X(A) is the intersection of all closed subsets of X that contain A; equivalently, it is the least closed subset of X containing A.",
         "intuition": "The closure adds all points that cannot be separated from A by open neighborhoods.",
-        "notation": "\\(\\overline A\\), \\(\\operatorname{cl}_X(A)\\)",
+        "notation": "$$\\overline A$$, $$\\operatorname{cl}_X(A)$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["closed_set"],
@@ -2258,7 +2258,7 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
-          "\\(x\\in\\overline A\\) iff every neighborhood of \\(x\\) intersects \\(A\\)"
+          "$$x\\in\\overline A$$ iff every neighborhood of $$x$$ intersects $$A$$"
         ],
         "label": "closure",
         "domain": "spaces_constructions"
@@ -2266,10 +2266,10 @@
       {
         "id": "interior",
         "statement": "The interior of A in X is the largest open subset of X contained in A.",
-        "formal_statement": "\\(\\operatorname{int}_X(A)=A^\\circ=\\bigcup\\{U\\in\\tau: U\\subseteq A\\}.\\)",
+        "formal_statement": "$$\\operatorname{int}_X(A)=A^\\circ=\\bigcup\\{U\\in\\tau: U\\subseteq A\\}.$$",
         "definition": "For A⊆X, the interior int_X(A) is the union of all open subsets of X contained in A; equivalently, it is the largest open subset of X contained in A.",
         "intuition": "The interior consists of points around which A contains an entire open neighborhood.",
-        "notation": "\\(A^\\circ\\), \\(\\operatorname{int}_X(A)\\)",
+        "notation": "$$A^\\circ$$, $$\\operatorname{int}_X(A)$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["open_set"],
@@ -2293,7 +2293,7 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
-          "\\(x\\in\\operatorname{int}_X(A)\\) iff \\(A\\) is a neighborhood of \\(x\\)"
+          "$$x\\in\\operatorname{int}_X(A)$$ iff $$A$$ is a neighborhood of $$x$$"
         ],
         "label": "interior",
         "domain": "spaces_constructions"
@@ -2301,10 +2301,10 @@
       {
         "id": "boundary",
         "statement": "The boundary of A is the part of the closure of A outside the interior of A.",
-        "formal_statement": "\\(\\partial_X A=\\overline A\\setminus A^\\circ=\\overline A\\cap\\overline{X\\setminus A}.\\)",
+        "formal_statement": "$$\\partial_X A=\\overline A\\setminus A^\\circ=\\overline A\\cap\\overline{X\\setminus A}.$$",
         "definition": "For A⊆X, the boundary ∂_X A is cl_X(A)\\int_X(A). Equivalently, it is the set of points whose every neighborhood meets both A and X\\A.",
         "intuition": "Boundary points are exactly the points where the topology cannot see a whole neighborhood lying entirely inside A or entirely outside A.",
-        "notation": "\\(\\partial_X A\\), \\(\\operatorname{bd}_X(A)\\)",
+        "notation": "$$\\partial_X A, \\; \\operatorname{bd}_X(A)$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["closure", "interior"],
@@ -2331,8 +2331,8 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
-          "\\(\\partial_X A=\\overline A\\cap\\overline{X\\setminus A}\\)",
-          "every neighborhood meets both \\(A\\) and \\(X\\setminus A\\)"
+          "$$\\partial_X A=\\overline A\\cap\\overline{X\\setminus A}$$",
+          "every neighborhood meets both $$A$$ and $$X\\setminus A$$"
         ],
         "label": "boundary",
         "domain": "spaces_constructions"
@@ -2340,10 +2340,10 @@
       {
         "id": "dense_subset",
         "statement": "A subset A of X is dense in X exactly when its closure is all of X.",
-        "formal_statement": "\\(A\\subseteq X \\text{ is dense in }X\\Longleftrightarrow \\overline A=X\\Longleftrightarrow \\forall\\,\\varnothing\\ne U\\in\\tau,\\ U\\cap A\\ne\\varnothing.\\)",
+        "formal_statement": "$$A\\subseteq X \\text{ is dense in }X\\Longleftrightarrow \\overline A=X\\Longleftrightarrow \\forall\\,\\varnothing\\ne U\\in\\tau,\\ U\\cap A\\ne\\varnothing.$$",
         "definition": "For a topological space X, a subset A⊆X is dense in X if cl_X(A)=X. Equivalently, every nonempty open subset of X intersects A.",
         "intuition": "A dense subset is topologically unavoidable: every nonempty open region of the space contains a point of it.",
-        "notation": "\\(\\overline A=X\\), \\(A\\) dense in \\(X\\)",
+        "notation": "$$\\overline A=X$$, $$A$$ dense in $$X$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["closure"],
@@ -2375,10 +2375,10 @@
       {
         "id": "continuity",
         "statement": "A map between topological spaces is continuous exactly when inverse images of open sets are open.",
-        "formal_statement": "\\(f:(X,\\tau_X)\\to(Y,\\tau_Y)\\text{ is continuous}\\Longleftrightarrow \\forall V\\in\\tau_Y,\\ f^{-1}(V)\\in\\tau_X.\\)",
+        "formal_statement": "$$f:(X,\\tau_X)\\to(Y,\\tau_Y)\\text{ is continuous}\\Longleftrightarrow \\forall V\\in\\tau_Y,\\ f^{-1}(V)\\in\\tau_X.$$",
         "definition": "Given topological spaces (X, τ_X) and (Y, τ_Y), a function f:X→Y is continuous if the preimage of every open subset of Y is open in X.",
         "intuition": "Continuity means that topological tests made by open sets in the codomain pull back to valid open tests in the domain.",
-        "notation": "\\(f:X\\to Y\\) continuous, \\(f^{-1}(V)\\)",
+        "notation": "$$f:X\\to Y$$ continuous, $$f^{-1}(V)$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [
@@ -2419,10 +2419,10 @@
       {
         "id": "homeomorphism",
         "statement": "A homeomorphism is a bijective continuous map whose inverse is also continuous.",
-        "formal_statement": "\\(f:X\\to Y\\text{ is a homeomorphism}\\Longleftrightarrow f\\text{ is bijective},\\ f\\text{ is continuous},\\ \\text{and }f^{-1}:Y\\to X\\text{ is continuous}.\\)",
+        "formal_statement": "$$f:X\\to Y\\text{ is a homeomorphism}\\Longleftrightarrow f\\text{ is bijective},\\ f\\text{ is continuous},\\ \\text{and }f^{-1}:Y\\to X\\text{ is continuous}.$$",
         "definition": "For topological spaces X and Y, a homeomorphism is a bijection f:X→Y such that both f and its inverse f^{-1}:Y→X are continuous. If such a map exists, X and Y are homeomorphic.",
         "intuition": "A homeomorphism is an isomorphism of topological spaces: it preserves and reflects exactly the open-set structure.",
-        "notation": "\\(f:X\\cong Y\\), \\(X\\cong Y\\), \\(X\\simeq_{\\mathrm{homeo}}Y\\)",
+        "notation": "$$f:X\\cong Y$$, $$X\\cong Y$$, $$X\\simeq_{\\mathrm{homeo}}Y$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["continuity"],
@@ -2455,10 +2455,10 @@
       {
         "id": "convergence",
         "statement": "A net converges to x when it is eventually contained in every neighborhood of x.",
-        "formal_statement": "\\((x_i)_{i\\in I}\\to x\\Longleftrightarrow \\forall N\\in\\mathcal N_X(x)\\ \\exists i_0\\in I\\ \\forall i\\ge i_0,\\ x_i\\in N.\\)",
+        "formal_statement": "$$(x_i)_{i\\in I}\\to x\\Longleftrightarrow \\forall N\\in\\mathcal N_X(x)\\ \\exists i_0\\in I\\ \\forall i\\ge i_0,\\ x_i\\in N.$$",
         "definition": "In a topological space X, a net (x_i) indexed by a directed set I converges to x∈X if for every neighborhood N of x, the net is eventually in N. For sequences, I=ℕ with its usual order.",
         "intuition": "Convergence means that every topological test neighborhood of the proposed limit eventually contains all later terms.",
-        "notation": "\\(x_i\\to x\\), \\(x_n\\to x\\)",
+        "notation": "$$x_i\\to x$$, $$x_n\\to x$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["neighborhood"],
@@ -2482,7 +2482,7 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [
-          "sequence version when the directed set is \\(\\mathbb N\\)"
+          "sequence version when the directed set is $$\\mathbb N$$"
         ],
         "label": "convergence",
         "domain": "continuity"
@@ -2490,10 +2490,10 @@
       {
         "id": "compactness",
         "statement": "A topological space is compact when every open cover has a finite subcover.",
-        "formal_statement": "\\(X\\text{ compact}\\Longleftrightarrow \\forall\\mathcal U\\subseteq\\tau,\\ \\left(X\\subseteq\\bigcup_{U\\in\\mathcal U}U\\Rightarrow \\exists U_1,\\ldots,U_n\\in\\mathcal U\\text{ with }X=\\bigcup_{k=1}^{n}U_k\\right).\\)",
+        "formal_statement": "$$X\\text{ compact}\\Longleftrightarrow \\forall\\mathcal U\\subseteq\\tau,\\ \\left(X\\subseteq\\bigcup_{U\\in\\mathcal U}U\\Rightarrow \\exists U_1,\\ldots,U_n\\in\\mathcal U\\text{ with }X=\\bigcup_{k=1}^{n}U_k\\right).$$",
         "definition": "A topological space X is compact if every family of open subsets whose union contains X has a finite subfamily whose union still contains X. A subset A⊆X is compact when it is compact with the subspace topology.",
         "intuition": "Compactness says that any open-set description of the whole space already has a finite part that describes the whole space.",
-        "notation": "\\(\\mathcal U\\) open cover, \\(X=\\bigcup_{k=1}^n U_k\\)",
+        "notation": "$$\\mathcal U$$ open cover, $$X=\\bigcup_{k=1}^n U_k$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["open_set"],
@@ -2530,10 +2530,10 @@
       {
         "id": "compactness_fip_characterization",
         "statement": "A space is compact exactly when every closed family with the finite intersection property has nonempty total intersection.",
-        "formal_statement": "\\(X\\text{ compact}\\Longleftrightarrow \\forall\\mathcal F\\subseteq\\{F\\subseteq X:F\\text{ closed}\\},\\ \\left[\\left(\\forall F_1,\\ldots,F_n\\in\\mathcal F,\\ \\bigcap_{k=1}^{n}F_k\\ne\\varnothing\\right)\\Rightarrow \\bigcap_{F\\in\\mathcal F}F\\ne\\varnothing\\right].\\)",
+        "formal_statement": "$$X\\text{ compact}\\Longleftrightarrow \\forall\\mathcal F\\subseteq\\{F\\subseteq X:F\\text{ closed}\\},\\ \\left[\\left(\\forall F_1,\\ldots,F_n\\in\\mathcal F,\\ \\bigcap_{k=1}^{n}F_k\\ne\\varnothing\\right)\\Rightarrow \\bigcap_{F\\in\\mathcal F}F\\ne\\varnothing\\right].$$",
         "definition": "The finite intersection property characterization says that compactness is equivalent to the following closed-set condition: whenever a family of closed subsets has nonempty intersection for every finite subfamily, the whole family has nonempty intersection.",
         "intuition": "This is the closed-set dual of the open-cover definition: failure of a finite subcover corresponds to finite intersections remaining nonempty.",
-        "notation": "\\(\\mathcal F\\) has the finite intersection property (FIP)",
+        "notation": "$$\\mathcal F$$ has the finite intersection property (FIP)",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["compactness", "closed_set"],
@@ -2566,10 +2566,10 @@
       {
         "id": "sequential_compactness",
         "statement": "A topological space is sequentially compact when every sequence has a convergent subsequence whose limit lies in the space.",
-        "formal_statement": "\\(X\\text{ sequentially compact}\\Longleftrightarrow \\forall (x_n)_{n\\in\\mathbb N}\\in X^{\\mathbb N},\\ \\exists n_1<n_2<\\cdots,\\ \\exists x\\in X\\text{ such that }x_{n_k}\\to x.\\)",
+        "formal_statement": "$$X\\text{ sequentially compact}\\Longleftrightarrow \\forall (x_n)_{n\\in\\mathbb N}\\in X^{\\mathbb N},\\ \\exists n_1<n_2<\\cdots,\\ \\exists x\\in X\\text{ such that }x_{n_k}\\to x.$$",
         "definition": "A topological space X is sequentially compact if every sequence in X has a subsequence that converges to a point of X.",
         "intuition": "Sequential compactness is a sequence-based finiteness property; in general topology it is not equivalent to open-cover compactness without additional hypotheses.",
-        "notation": "\\(x_{n_k}\\to x\\)",
+        "notation": "$$x_{n_k}\\to x$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["convergence"],
@@ -2602,10 +2602,10 @@
       {
         "id": "connectedness",
         "statement": "A topological space is connected when it cannot be separated into two disjoint nonempty open subsets.",
-        "formal_statement": "\\(X\\text{ connected}\\Longleftrightarrow \\nexists U,V\\in\\tau\\ \\text{with }U,V\\ne\\varnothing,\\ U\\cap V=\\varnothing,\\ \\text{and }X=U\\cup V.\\)",
+        "formal_statement": "$$X\\text{ connected}\\Longleftrightarrow \\nexists U,V\\in\\tau\\ \\text{with }U,V\\ne\\varnothing,\\ U\\cap V=\\varnothing,\\ \\text{and }X=U\\cup V.$$",
         "definition": "A topological space X is connected if there do not exist disjoint nonempty open subsets U,V⊆X whose union is X. Equivalently, the only subsets of X that are both open and closed are ∅ and X.",
         "intuition": "Connectedness means the topology does not split the whole space into two separated open pieces.",
-        "notation": "\\(X\\) connected",
+        "notation": "$$X$$ connected",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["open_set"],
@@ -2634,7 +2634,7 @@
         "examples": ["circle", "topologist_sine_curve"],
         "non_examples": [],
         "equivalent_definitions": [
-          "only clopen subsets are \\(\\varnothing\\) and \\(X\\)"
+          "only clopen subsets are $$\\varnothing$$ and $$X$$"
         ],
         "label": "connectedness",
         "domain": "connectedness"
@@ -2642,10 +2642,10 @@
       {
         "id": "path_connectedness",
         "statement": "A topological space is path connected when every two points can be joined by a continuous path.",
-        "formal_statement": "\\(X\\text{ path connected}\\Longleftrightarrow \\forall x,y\\in X,\\ \\exists \\gamma:[0,1]\\to X\\text{ continuous with }\\gamma(0)=x,\\ \\gamma(1)=y.\\)",
+        "formal_statement": "$$X\\text{ path connected}\\Longleftrightarrow \\forall x,y\\in X,\\ \\exists \\gamma:[0,1]\\to X\\text{ continuous with }\\gamma(0)=x,\\ \\gamma(1)=y.$$",
         "definition": "A topological space X is path connected if for every pair of points x,y∈X there is a continuous map γ:[0,1]→X from the unit interval to X with γ(0)=x and γ(1)=y.",
         "intuition": "Path connectedness is connectedness witnessed by actual continuous paths between points; it is stronger than connectedness in general.",
-        "notation": "\\(\\gamma:[0,1]\\to X\\), \\(\\gamma(0)=x\\), \\(\\gamma(1)=y\\)",
+        "notation": "$$\\gamma:[0,1]\\to X$$, $$\\gamma(0)=x$$, $$\\gamma(1)=y$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["continuity"],
@@ -2681,10 +2681,10 @@
       {
         "id": "separation_axioms",
         "statement": "Separation axioms are topological conditions that distinguish points and closed sets by open sets or neighborhoods.",
-        "formal_statement": "\\(T_0:\\forall x\\ne y\\,\\exists U\\in\\tau\\,[(x\\in U\\land y\\notin U)\\lor(y\\in U\\land x\\notin U)],\\quad T_2:\\forall x\\ne y\\,\\exists U,V\\in\\tau\\,(x\\in U,\\ y\\in V,\\ U\\cap V=\\varnothing).\\)",
+        "formal_statement": "$$T_0:\\forall x\\ne y\\,\\exists U\\in\\tau\\,[(x\\in U\\land y\\notin U)\\lor(y\\in U\\land x\\notin U)],\\quad T_2:\\forall x\\ne y\\,\\exists U,V\\in\\tau\\,(x\\in U,\\ y\\in V,\\ U\\cap V=\\varnothing).$$",
         "definition": "Separation axioms are a family of properties, including T0, T1, Hausdorff/T2, regularity, and normality, that measure how well a topology separates points from points or points/closed sets from closed sets using open sets.",
         "intuition": "They quantify how much the topology can distinguish different points or closed regions.",
-        "notation": "\\(T_0,T_1,T_2,T_3,T_4\\)",
+        "notation": "$$T_0,T_1,T_2,T_3,T_4$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["open_set", "closed_set", "neighborhood"],
@@ -2719,10 +2719,10 @@
       {
         "id": "hausdorff_property",
         "statement": "A topological space is Hausdorff if any two distinct points have disjoint open neighborhoods.",
-        "formal_statement": "\\((X,\\tau)\\text{ is Hausdorff}\\Longleftrightarrow \\forall x,y\\in X,\\ x\\ne y\\Rightarrow \\exists U,V\\in\\tau\\ (x\\in U,\\ y\\in V,\\ U\\cap V=\\varnothing).\\)",
+        "formal_statement": "$$(X,\\tau)\\text{ is Hausdorff}\\Longleftrightarrow \\forall x,y\\in X,\\ x\\ne y\\Rightarrow \\exists U,V\\in\\tau\\ (x\\in U,\\ y\\in V,\\ U\\cap V=\\varnothing).$$",
         "definition": "A topological space X is Hausdorff, or T2, if for every pair of distinct points x,y∈X there are disjoint open sets U and V with x∈U and y∈V.",
         "intuition": "Hausdorffness says distinct points can be topologically pulled apart by nonoverlapping open regions.",
-        "notation": "\\(T_2\\)",
+        "notation": "$$T_2$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["neighborhood", "separation_axioms"],
@@ -2752,7 +2752,7 @@
         "examples": ["real_line_standard_topology"],
         "non_examples": ["indiscrete_space", "sierpinski_space"],
         "equivalent_definitions": [
-          "the diagonal \\(\\Delta_X\\subseteq X\\times X\\) is closed, when product topology is available"
+          "the diagonal $$\\Delta_X\\subseteq X\\times X$$ is closed, when product topology is available"
         ],
         "label": "Hausdorff property",
         "domain": "separation_countability"
@@ -2760,10 +2760,10 @@
       {
         "id": "regularity",
         "statement": "Under the common T1 convention, a space is regular if points and disjoint closed sets can be separated by disjoint open neighborhoods.",
-        "formal_statement": "\\((X,\\tau)\\text{ regular}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall x\\in X\\ \\forall F\\subseteq X,\\ (F\\text{ closed}\\land x\\notin F)\\Rightarrow \\exists U,V\\in\\tau\\ (x\\in U,\\ F\\subseteq V,\\ U\\cap V=\\varnothing).\\)",
+        "formal_statement": "$$(X,\\tau)\\text{ regular}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall x\\in X\\ \\forall F\\subseteq X,\\ (F\\text{ closed}\\land x\\notin F)\\Rightarrow \\exists U,V\\in\\tau\\ (x\\in U,\\ F\\subseteq V,\\ U\\cap V=\\varnothing).$$",
         "definition": "Using the common T1 convention, a topological space X is regular if singletons are closed and, whenever F is closed and x∉F, there are disjoint open sets U,V with x∈U and F⊆V.",
         "intuition": "Regularity separates a point from a closed obstacle by disjoint open regions.",
-        "notation": "\\(T_3\\) in the T1 convention",
+        "notation": "$$T_3$$ in the T1 convention",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [
@@ -2808,10 +2808,10 @@
       {
         "id": "normality",
         "statement": "Under the common T1 convention, a space is normal if disjoint closed sets can be separated by disjoint open neighborhoods.",
-        "formal_statement": "\\((X,\\tau)\\text{ normal}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall F,G\\subseteq X,\\ (F,G\\text{ closed}\\land F\\cap G=\\varnothing)\\Rightarrow \\exists U,V\\in\\tau\\ (F\\subseteq U,\\ G\\subseteq V,\\ U\\cap V=\\varnothing).\\)",
+        "formal_statement": "$$(X,\\tau)\\text{ normal}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall F,G\\subseteq X,\\ (F,G\\text{ closed}\\land F\\cap G=\\varnothing)\\Rightarrow \\exists U,V\\in\\tau\\ (F\\subseteq U,\\ G\\subseteq V,\\ U\\cap V=\\varnothing).$$",
         "definition": "Using the common T1 convention, a topological space X is normal if singletons are closed and every pair of disjoint closed subsets F,G⊆X has disjoint open neighborhoods U,V with F⊆U and G⊆V.",
         "intuition": "Normality is a strong separation property for closed sets, not just for individual points.",
-        "notation": "\\(T_4\\) in the T1 convention",
+        "notation": "$$T_4$$ in the T1 convention",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [
@@ -2857,10 +2857,10 @@
       {
         "id": "countability_axioms",
         "statement": "Countability axioms require bases or local neighborhood bases to be countable.",
-        "formal_statement": "\\(\\text{First countable: }\\forall x\\in X\\,\\exists\\mathcal B_x\\subseteq\\mathcal N_X(x)\\ (|\\mathcal B_x|\\le\\aleph_0\\ \\text{and }\\mathcal B_x\\text{ is local at }x);\\quad \\text{Second countable: }\\exists\\mathcal B\\text{ basis for }\\tau,\\ |\\mathcal B|\\le\\aleph_0.\\)",
+        "formal_statement": "$$\\text{First countable: }\\forall x\\in X\\,\\exists\\mathcal B_x\\subseteq\\mathcal N_X(x)\\ (|\\mathcal B_x|\\le\\aleph_0\\ \\text{and }\\mathcal B_x\\text{ is local at }x);\\quad \\text{Second countable: }\\exists\\mathcal B\\text{ basis for }\\tau,\\ |\\mathcal B|\\le\\aleph_0.$$",
         "definition": "Countability axioms are topological size restrictions on local or global bases, most commonly first countability and second countability.",
         "intuition": "They say that the topology can be probed using only countably many local or global open pieces.",
-        "notation": "\\(\\aleph_0\\), first countable, second countable",
+        "notation": "$$\\aleph_0$$, first countable, second countable",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["basis_for_topology", "neighborhood"],
@@ -2893,10 +2893,10 @@
       {
         "id": "first_countability",
         "statement": "A space is first countable if each point has a countable neighborhood basis.",
-        "formal_statement": "\\(X\\text{ first countable}\\Longleftrightarrow \\forall x\\in X\\ \\exists\\mathcal B_x\\subseteq\\mathcal N_X(x)\\ \\left(|\\mathcal B_x|\\le\\aleph_0\\ \\land\\ \\forall N\\in\\mathcal N_X(x)\\ \\exists B\\in\\mathcal B_x,\\ x\\in B\\subseteq N\\right).\\)",
+        "formal_statement": "$$X\\text{ first countable}\\Longleftrightarrow \\forall x\\in X\\ \\exists\\mathcal B_x\\subseteq\\mathcal N_X(x)\\ \\left(|\\mathcal B_x|\\le\\aleph_0\\ \\land\\ \\forall N\\in\\mathcal N_X(x)\\ \\exists B\\in\\mathcal B_x,\\ x\\in B\\subseteq N\\right).$$",
         "definition": "A topological space X is first countable if for every point x∈X there is a countable collection of neighborhoods of x such that every neighborhood of x contains one of them.",
         "intuition": "First countability gives each point a countable local scale of neighborhoods, making sequences more informative.",
-        "notation": "\\(\\mathcal B_x\\), countable local basis",
+        "notation": "$$\\mathcal B_x$$, countable local basis",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [
@@ -2934,10 +2934,10 @@
       {
         "id": "second_countability",
         "statement": "A space is second countable if its topology has a countable basis.",
-        "formal_statement": "\\(X\\text{ second countable}\\Longleftrightarrow \\exists\\mathcal B\\subseteq\\tau\\ \\left(\\mathcal B\\text{ is a basis for }\\tau\\ \\land\\ |\\mathcal B|\\le\\aleph_0\\right).\\)",
+        "formal_statement": "$$X\\text{ second countable}\\Longleftrightarrow \\exists\\mathcal B\\subseteq\\tau\\ \\left(\\mathcal B\\text{ is a basis for }\\tau\\ \\land\\ |\\mathcal B|\\le\\aleph_0\\right).$$",
         "definition": "A topological space (X, τ) is second countable if there exists a countable basis for τ.",
         "intuition": "Second countability gives a countable global vocabulary for all open sets.",
-        "notation": "\\(\\mathcal B=\\{B_n:n\\in\\mathbb N\\}\\)",
+        "notation": "$$\\mathcal B=\\{B_n:n\\in\\mathbb N\\}$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [
@@ -2975,10 +2975,10 @@
       {
         "id": "local_compactness",
         "statement": "A space is locally compact if every point has a compact neighborhood.",
-        "formal_statement": "\\(X\\text{ locally compact}\\Longleftrightarrow \\forall x\\in X\\ \\exists N\\in\\mathcal N_X(x)\\ \\text{such that }N\\text{ is compact as a subspace of }X.\\)",
+        "formal_statement": "$$X\\text{ locally compact}\\Longleftrightarrow \\forall x\\in X\\ \\exists N\\in\\mathcal N_X(x)\\ \\text{such that }N\\text{ is compact as a subspace of }X.$$",
         "definition": "A topological space X is locally compact if each point x∈X has a neighborhood N that is compact in the subspace topology. In Hausdorff settings this is often equivalently expressed using neighborhoods with compact closure.",
         "intuition": "Local compactness means that around every point there is a topologically finite region, even if the whole space is not compact.",
-        "notation": "\\(N\\in\\mathcal N_X(x)\\), \\(N\\) compact",
+        "notation": "$$N\\in\\mathcal N_X(x)$$, $$N$$ compact",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["compactness", "neighborhood"],
