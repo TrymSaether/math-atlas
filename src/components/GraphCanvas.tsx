@@ -11,14 +11,14 @@ import ReactFlow, {
 } from "reactflow";
 import { useStore } from "../store";
 import { dependencyLayout, clusterLayout, type Lane } from "../lib/layout";
-import { buildAdjacency, ancestors, descendants } from "../lib/graph";
+import { buildAdjacency, ancestors, descendants, buildLearningPath } from "../lib/graph";
 import { nodeKindColors, canvas, stroke } from "../lib/colors";
 import type { GraphData } from "../types";
 import { TopoNodeView } from "./TopoNode";
 import { TopoEdgeView } from "./TopoEdge";
-import { LaneNode } from "./LaneNode";
+import { GraphGroupRegion } from "./GraphGroupRegion";
 
-const nodeTypes = { topo: TopoNodeView, lane: LaneNode };
+const nodeTypes = { topo: TopoNodeView, lane: GraphGroupRegion };
 const edgeTypes = { topo: TopoEdgeView };
 
 function InnerGraph({ data }: { data: GraphData }) {
@@ -31,6 +31,7 @@ function InnerGraph({ data }: { data: GraphData }) {
   const selectedId = useStore((s) => s.selectedId);
   const highlight = useStore((s) => s.highlight);
   const showOrphans = useStore((s) => s.showOrphans);
+  const pathTargetId = useStore((s) => s.pathTargetId);
   const rf = useReactFlow();
 
   const filteredNodes = useMemo(() => {
@@ -67,9 +68,20 @@ function InnerGraph({ data }: { data: GraphData }) {
   }, [view, filteredNodes, filteredEdges, showOrphans]);
 
   const adj = useMemo(() => buildAdjacency(filteredEdges, relations), [filteredEdges, relations]);
+
+  const routeNodeIds = useMemo(() => {
+    if (!pathTargetId || !visibleIds.has(pathTargetId)) return new Set<string>();
+    return new Set(buildLearningPath(pathTargetId, filteredEdges, relations, filteredNodes).map((n) => n.id));
+  }, [pathTargetId, visibleIds, filteredEdges, relations, filteredNodes]);
+
+  const routeEdgeIds = useMemo(() => {
+    if (!routeNodeIds.size) return new Set<string>();
+    return new Set(filteredEdges.filter((e) => routeNodeIds.has(e.from) && routeNodeIds.has(e.to)).map((e) => e.id));
+  }, [filteredEdges, routeNodeIds]);
+
   const { ancSet, descSet, edgeHi } = useMemo(() => {
     if (!selectedId || !visibleIds.has(selectedId)) {
-      return { ancSet: new Set<string>(), descSet: new Set<string>(), edgeHi: new Set<string>() };
+      return { ancSet: new Set<string>(), descSet: new Set<string>(), edgeHi: new Set<string>(routeEdgeIds) };
     }
     let a: Set<string>, d: Set<string>;
     if (highlight === "immediate") {
@@ -79,7 +91,7 @@ function InnerGraph({ data }: { data: GraphData }) {
       a = ancestors(adj, selectedId);
       d = descendants(adj, selectedId);
     }
-    const eHi = new Set<string>();
+    const eHi = new Set<string>(routeEdgeIds);
     for (const e of filteredEdges) {
       const involves = e.from === selectedId || e.to === selectedId;
       if (involves) eHi.add(e.id);
@@ -89,15 +101,15 @@ function InnerGraph({ data }: { data: GraphData }) {
       }
     }
     return { ancSet: a, descSet: d, edgeHi: eHi };
-  }, [selectedId, adj, filteredEdges, highlight, visibleIds]);
+  }, [selectedId, adj, filteredEdges, highlight, visibleIds, routeEdgeIds]);
 
   const laneNodes: Node[] = useMemo(
     () =>
       lanes.map((l) => ({
         id: `lane-${l.topic}`,
         type: "lane",
-        position: { x: -160, y: l.y - 20 },
-        data: { topic: l.topic, subtitle: l.subtitle, width: l.width, height: l.height },
+        position: { x: l.x - 14, y: l.y - 14 },
+        data: { topic: l.topic, subtitle: l.subtitle, width: l.width + 28, height: l.height + 28, color: l.color, rgb: l.rgb, icon: l.icon },
         draggable: false,
         selectable: false,
         focusable: false,
@@ -113,24 +125,26 @@ function InnerGraph({ data }: { data: GraphData }) {
         const isSel = n.id === selectedId;
         const isAnc = ancSet.has(n.id);
         const isDesc = descSet.has(n.id);
-        const anyHi = selectedId !== null && visibleIds.has(selectedId);
-        const dim = anyHi && !isSel && !isAnc && !isDesc;
+        const isRoute = routeNodeIds.has(n.id);
+        const anyHi = (selectedId !== null && visibleIds.has(selectedId)) || routeNodeIds.size > 0;
+        const dim = anyHi && !isSel && !isAnc && !isDesc && !isRoute;
         return {
           ...n, selected: isSel,
-          data: { ...n.data, dim, highlight: isSel ? "primary" : isAnc ? "anc" : isDesc ? "desc" : null },
+          data: { ...n.data, dim, highlight: isSel ? "primary" : isRoute ? "route" : isAnc ? "anc" : isDesc ? "desc" : null },
         };
       }),
-    [rawNodes, selectedId, ancSet, descSet, visibleIds]
+    [rawNodes, selectedId, ancSet, descSet, visibleIds, routeNodeIds]
   );
 
   const edges: Edge[] = useMemo(
     () =>
       rawEdges.map((e) => {
         const hi = edgeHi.has(e.id);
-        const anyHi = selectedId !== null && visibleIds.has(selectedId);
-        return { ...e, data: { ...e.data, dim: anyHi && !hi, highlight: hi } };
+        const isRoute = routeEdgeIds.has(e.id);
+        const anyHi = (selectedId !== null && visibleIds.has(selectedId)) || routeEdgeIds.size > 0;
+        return { ...e, data: { ...e.data, dim: anyHi && !hi, highlight: hi, route: isRoute } };
       }),
-    [rawEdges, edgeHi, selectedId, visibleIds]
+    [rawEdges, edgeHi, selectedId, visibleIds, routeEdgeIds]
   );
 
   // Fit on view-mode change.
@@ -144,7 +158,7 @@ function InnerGraph({ data }: { data: GraphData }) {
     if (!selectedId) return;
     const node = rawNodes.find((n) => n.id === selectedId);
     if (!node) return;
-    rf.setCenter(node.position.x + 120, node.position.y + 46, { zoom: Math.max(0.9, rf.getZoom()), duration: 450 });
+    rf.setCenter(node.position.x + 124, node.position.y + 54, { zoom: Math.max(0.92, rf.getZoom()), duration: 450 });
   }, [selectedId, rawNodes, rf]);
 
   return (
