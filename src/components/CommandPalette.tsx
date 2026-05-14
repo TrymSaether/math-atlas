@@ -18,8 +18,6 @@ export function CommandPalette({ data }: { data: GraphData }) {
   const setPathTarget = useStore((s) => s.setPathTarget);
   const mapId = useStore((s) => s.mapId);
   const setMapId = useStore((s) => s.setMapId);
-  const toggleTheme = useStore((s) => s.toggleTheme);
-  const theme = useStore((s) => s.theme);
   const [query, setQuery] = useState("");
   const showPath = query.toLowerCase().startsWith("path");
 
@@ -84,7 +82,6 @@ export function CommandPalette({ data }: { data: GraphData }) {
                       <Item onSelect={() => { setHighlight("immediate"); setOpen(false); }}>Highlight: immediate</Item>
                       <Item onSelect={() => { setHighlight("full"); setOpen(false); }}>Highlight: full path</Item>
                       <Item onSelect={() => { setShowOrphans(!showOrphans); setOpen(false); }}>{showOrphans ? "Hide" : "Show"} unlinked items</Item>
-                      <Item onSelect={() => { toggleTheme(); setOpen(false); }}>Switch to {theme === "dark" ? "light" : "dark"} mode</Item>
                     </Command.Group>
 
                     <Command.Group heading="Nodes" className="px-2 pt-3 text-[10px] uppercase tracking-widest text-[var(--muted)]">

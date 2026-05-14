@@ -40,17 +40,17 @@ function GraphNodeCardComponent({ data, selected }: NodeProps<Data>) {
       style={{ width: tw.w }}
       className={cn(
         `kind-${node.kind}`,
-        "group relative cursor-pointer overflow-hidden rounded-2xl border bg-[var(--node-bg)] shadow-[var(--node-shadow)]",
+        "group relative cursor-pointer overflow-hidden rounded-[10px] border-[1.5px] bg-[var(--node-bg)] shadow-[var(--node-shadow)]",
         tw.pad,
-        "border-[rgba(var(--c),0.28)] text-[var(--text)]",
-        "transition-all hover:-translate-y-0.5 hover:border-[rgba(var(--c),0.55)] hover:bg-[var(--node-hover)] hover:shadow-[var(--node-hover-shadow)]",
-        selected && "border-[rgba(var(--primary-rgb),0.85)] ring-2 ring-[rgba(var(--primary-rgb),0.24)]",
-        highlight === "primary" && "ring-2 ring-[rgba(var(--primary-rgb),0.36)]",
-        highlight === "anc" && "ring-1 ring-[rgba(var(--c),0.50)]",
-        highlight === "desc" && "ring-1 ring-[rgba(var(--c),0.50)]"
+        "border-[rgba(var(--c),0.4)] text-[var(--text)]",
+        "transition-all hover:border-[rgba(var(--c),0.95)] hover:bg-[var(--node-hover)] hover:shadow-[var(--node-hover-shadow)]",
+        selected && "border-[rgba(var(--c),0.95)] ring-4 ring-[rgba(var(--c),0.12)]",
+        highlight === "primary" && "ring-4 ring-[rgba(var(--c),0.12)]",
+        highlight === "anc" && "ring-2 ring-[rgba(var(--c),0.4)]",
+        highlight === "desc" && "ring-2 ring-[rgba(var(--c),0.4)]"
       )}
     >
-      <div className="absolute inset-x-0 top-0 h-1 bg-[rgba(var(--c),0.82)]" />
+      <div className="absolute inset-x-0 top-0 h-[3px] bg-[rgba(var(--c),0.95)]" />
       <Handle type="target" position={Position.Left} className="!h-3 !w-3 !border-2 !border-[var(--surface)] !bg-[rgba(var(--c),0.9)]" />
 
       <div className="flex items-start justify-between gap-3">

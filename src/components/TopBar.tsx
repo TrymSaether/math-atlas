@@ -3,7 +3,6 @@ import { Panel, Badge } from "./ui";
 import { BrandMark } from "./topbar/BrandMark";
 import { MapSwitcher } from "./topbar/MapSwitcher";
 import { CommandButton } from "./topbar/CommandButton";
-import { ThemeToggle } from "./topbar/ThemeToggle";
 
 export function TopBar({ map }: { map: GraphData }) {
   return (
@@ -14,7 +13,6 @@ export function TopBar({ map }: { map: GraphData }) {
           <Badge tone="muted">{map.nodes.length} concepts</Badge>
           <Badge tone="muted">{map.edges.length} links</Badge>
         </div>
-        <ThemeToggle />
         <MapSwitcher />
         <CommandButton />
       </div>
