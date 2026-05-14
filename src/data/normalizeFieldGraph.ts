@@ -18,9 +18,45 @@ function formalText(item: FieldItem): string {
   return item.formal_statement ?? "";
 }
 
+const TOPIC_ALIASES: Record<string, string> = {
+  topology: "Foundations",
+  sets: "Foundations",
+  basis: "Foundations",
+  "open-sets": "Foundations",
+  "closed-sets": "Foundations",
+  metric: "Foundations",
+  maps: "Continuity",
+  continuity: "Continuity",
+  connectedness: "Connectedness",
+  paths: "Connectedness",
+  compactness: "Compactness",
+  homotopy: "Homotopy",
+  groups: "Fundamental Group",
+  "fundamental-group": "Fundamental Group",
+  covering: "Covering Spaces",
+  "covering-spaces": "Covering Spaces",
+  example: "Examples",
+  examples: "Examples",
+};
+
+function titleCase(value: string): string {
+  return value
+    .replace(/[_-]+/g, " ")
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 function topicFor(item: FieldItem): string {
   const tags = item.metadata?.tags ?? [];
-  return tags[0] ?? item.metadata?.syllabus_priority ?? item.kind;
+  const normalizedTags = tags.map((tag) => tag.trim().toLowerCase());
+  for (const tag of normalizedTags) {
+    if (TOPIC_ALIASES[tag]) return TOPIC_ALIASES[tag];
+  }
+  const first = tags[0];
+  if (first) return titleCase(first);
+  return titleCase(item.metadata?.syllabus_priority ?? item.kind);
 }
 
 function formulaFromNotation(item: FieldItem): string {

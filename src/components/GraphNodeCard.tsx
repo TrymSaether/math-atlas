@@ -10,7 +10,7 @@ import { getKindTier } from "../lib/kindStyle";
 interface Data {
   node: GraphNode;
   dim?: boolean;
-  highlight?: "primary" | "anc" | "desc" | null;
+  highlight?: "primary" | "anc" | "desc" | "route" | null;
 }
 
 const TIER_STYLE = {
@@ -42,11 +42,13 @@ export function GraphNodeCard({ data, selected }: NodeProps<Data>) {
         "transition-all hover:-translate-y-0.5 hover:border-[rgba(var(--c),0.55)] hover:bg-[var(--node-hover)] hover:shadow-[var(--node-hover-shadow)]",
         selected && "border-[rgba(var(--primary-rgb),0.85)] ring-2 ring-[rgba(var(--primary-rgb),0.24)]",
         highlight === "primary" && "ring-2 ring-[rgba(var(--primary-rgb),0.36)]",
+        highlight === "route" && "border-[rgba(var(--warning-rgb),0.78)] ring-2 ring-[rgba(var(--warning-rgb),0.20)]",
         highlight === "anc" && "ring-1 ring-[rgba(var(--c),0.50)]",
         highlight === "desc" && "ring-1 ring-[rgba(var(--c),0.50)]"
       )}
     >
       <div className="absolute inset-x-0 top-0 h-1 bg-[rgba(var(--c),0.82)]" />
+      {highlight === "route" && !selected && <div className="absolute inset-x-0 bottom-0 h-1 bg-[rgba(var(--warning-rgb),0.78)]" />}
       <Handle type="target" position={Position.Left} className="!h-3 !w-3 !border-2 !border-[var(--surface)] !bg-[rgba(var(--c),0.9)]" />
 
       <div className="flex items-start justify-between gap-3">
@@ -64,6 +66,8 @@ export function GraphNodeCard({ data, selected }: NodeProps<Data>) {
         </div>
         {selected ? (
           <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[var(--primary)]" />
+        ) : highlight === "route" ? (
+          <span className="mt-1 h-4 w-4 shrink-0 rounded-full border border-[rgba(var(--warning-rgb),0.52)] bg-[rgba(var(--warning-rgb),0.14)]" />
         ) : (
           <span className="mt-1 h-4 w-4 shrink-0 rounded-full border border-[rgba(var(--c),0.42)] bg-[var(--surface)]" />
         )}
