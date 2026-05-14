@@ -1,4 +1,5 @@
 import { Handle, Position, type NodeProps } from "reactflow";
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { cn } from "../lib/utils";
@@ -19,19 +20,22 @@ const TIER_STYLE = {
   compact: { w: 178, titleClamp: 1, titleSize: "text-[14px]", pad: "px-3 py-2.5" },
 } as const;
 
-export function GraphNodeCard({ data, selected }: NodeProps<Data>) {
+function GraphNodeCardComponent({ data, selected }: NodeProps<Data>) {
   const { node, dim, highlight } = data;
   const select = useStore((s) => s.select);
   const tier = getKindTier(node.kind);
   const tw = TIER_STYLE[tier];
   const isPrimary = tier === "primary";
 
+  // Disable animations for better performance with large graphs
+  const shouldAnimate = false;
+
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, y: 5 }}
-      animate={{ opacity: dim ? 0.28 : 1, y: 0 }}
-      transition={{ duration: 0.2 }}
+      layout={shouldAnimate}
+      initial={shouldAnimate ? { opacity: 0, y: 5 } : false}
+      animate={shouldAnimate ? { opacity: dim ? 0.28 : 1, y: 0 } : { opacity: dim ? 0.28 : 1 }}
+      transition={shouldAnimate ? { duration: 0.2 } : undefined}
       onClick={() => select(node.id)}
       style={{ width: tw.w }}
       className={cn(
@@ -82,3 +86,6 @@ export function GraphNodeCard({ data, selected }: NodeProps<Data>) {
     </motion.div>
   );
 }
+
+// Memoize to prevent unnecessary re-renders when props don't change
+export const GraphNodeCard = memo(GraphNodeCardComponent);

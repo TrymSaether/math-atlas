@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useCallback } from "react";
 import ReactFlow, {
   Background as RFBackground,
   BackgroundVariant,
@@ -147,6 +147,17 @@ function InnerGraph({ data }: { data: GraphData }) {
     rf.setCenter(node.position.x + 120, node.position.y + 46, { zoom: Math.max(0.9, rf.getZoom()), duration: 450 });
   }, [selectedId, rawNodes, rf]);
 
+  // Memoize MiniMap color functions to avoid recalculation on every render
+  const miniMapNodeColor = useCallback((n: Node) => {
+    if (n.type === "lane") return "transparent";
+    const k = (n.data as any)?.node?.kind;
+    return k ? nodeKindColors[k as keyof typeof nodeKindColors] ?? nodeKindColors.definition : nodeKindColors.definition;
+  }, []);
+
+  const miniMapNodeStrokeColor = useCallback((n: Node) => {
+    return n.type === "lane" ? "transparent" : n.selected ? stroke.primaryHover : stroke.primary;
+  }, []);
+
   return (
     <ReactFlow
       nodes={[...laneNodes, ...nodes]}
@@ -169,14 +180,8 @@ function InnerGraph({ data }: { data: GraphData }) {
       <MiniMap
         pannable zoomable
         ariaLabel="Concept map overview"
-        nodeColor={(n) => {
-          if (n.type === "lane") return "transparent";
-          const k = (n.data as any)?.node?.kind;
-          return k ? nodeKindColors[k as keyof typeof nodeKindColors] ?? nodeKindColors.definition : nodeKindColors.definition;
-        }}
-        nodeStrokeColor={(n) =>
-          n.type === "lane" ? "transparent" : n.selected ? stroke.primaryHover : stroke.primary
-        }
+        nodeColor={miniMapNodeColor}
+        nodeStrokeColor={miniMapNodeStrokeColor}
         nodeBorderRadius={3}
         nodeStrokeWidth={1}
         maskColor={canvas.maskBackground}
@@ -188,6 +193,7 @@ function InnerGraph({ data }: { data: GraphData }) {
           borderRadius: 12,
           backdropFilter: "blur(8px)",
         }}
+        position="bottom-right"
       />
       <Controls position="bottom-right" showInteractive={false} />
     </ReactFlow>

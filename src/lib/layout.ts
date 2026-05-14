@@ -10,11 +10,11 @@ export interface LayoutInput {
   showOrphans?: boolean;
 }
 
-const NODE_W = 240;
-const NODE_H = 92;
-const COL_W = 280;
-const SUBROW_H = 108;
-const LANE_GAP = 70;
+const NODE_W = 220; // Node width
+const NODE_H = 100; // Node height
+const COL_W = 320; // Horizontal spacing between columns (depth levels)
+const SUBROW_H = 140; // Vertical spacing between nodes in same lane
+const LANE_GAP = 100; // Vertical gap between lanes/topics
 
 /**
  * Swimlane dependency layout: each topic cluster becomes a horizontal

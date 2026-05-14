@@ -34,14 +34,14 @@ export function NodePanel({ nodeById, incomingEdgesByNodeId, outgoingEdgesByNode
           transition={{ duration: 0.22 }}
           className="absolute bottom-4 right-4 top-4 z-20 w-[380px] max-w-[40vw]"
         >
-          <Panel className="flex h-full items-center justify-center p-5">
+          {/* <Panel className="flex h-full items-center justify-center p-5">
             <EmptyState
               icon={<MousePointer2 className="h-4 w-4" />}
               title="Select a concept"
               description="Click a node to read its statement, intuition, prerequisites, and consequences."
               className="border-[var(--border-soft)] bg-transparent"
             />
-          </Panel>
+          </Panel> */}
         </motion.aside>
       ) : (
         <motion.aside
@@ -121,14 +121,14 @@ function ConceptBody({ node }: { node: GraphNode }) {
   return (
     <>
       <Section title={formalStatement ? "Formal statement" : "Statement"} icon={<BookOpen className="h-3 w-3" />}>
-        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--field)] p-3 font-serif text-[13px] leading-relaxed text-[var(--text-soft)]">
+        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--field)] p-3 font-serif text-[14px] leading-relaxed text-[var(--text-soft)]">
           <MathText text={formalStatement || statement || "No statement available."} />
         </div>
       </Section>
 
       {explanation && (
         <Section title="Intuition">
-          <p className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-soft)] p-3 text-[13px] leading-relaxed text-[var(--text-soft)]"><MathText text={explanation} /></p>
+          <p className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-soft)] p-3 text-[14px] leading-relaxed text-[var(--text-soft)]"><MathText text={explanation} /></p>
         </Section>
       )}
 

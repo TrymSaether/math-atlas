@@ -1,4 +1,5 @@
 import { BaseEdge, EdgeLabelRenderer, getBezierPath, type EdgeProps } from "reactflow";
+import { memo } from "react";
 import type { GraphEdge as GraphEdgeT } from "../types";
 import { getRelationStyle } from "../lib/relationStyle";
 
@@ -8,7 +9,7 @@ interface Data {
   highlight?: boolean;
 }
 
-export function GraphEdgeView(props: EdgeProps<Data>) {
+function GraphEdgeViewComponent(props: EdgeProps<Data>) {
   const { sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data } = props;
   const [path] = getBezierPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition });
   const e = data?.edge;
@@ -47,3 +48,6 @@ export function GraphEdgeView(props: EdgeProps<Data>) {
     </>
   );
 }
+
+// Memoize to prevent unnecessary re-renders
+export const GraphEdgeView = memo(GraphEdgeViewComponent);
