@@ -15,6 +15,8 @@ interface Data {
   learningState?: LearningState;
   routeRole?: RouteRole;
   routeNonce?: number;
+  hasIncoming?: boolean;
+  hasOutgoing?: boolean;
 }
 
 const TIER_WIDTH = { primary: 208, secondary: 184, compact: 160 } as const;
@@ -63,7 +65,7 @@ function StateBadge({ state, selected }: { state: LearningState; selected: boole
 }
 
 function GraphNodeCardComponent({ data, selected }: NodeProps<Data>) {
-  const { node, dim, highlight, learningState, routeRole } = data;
+  const { node, dim, highlight, learningState, routeRole, hasIncoming, hasOutgoing } = data;
   const select = useStore((s) => s.select);
   const tier = getKindTier(node.kind);
   const width = TIER_WIDTH[tier];
@@ -95,11 +97,9 @@ function GraphNodeCardComponent({ data, selected }: NodeProps<Data>) {
         </span>
       )}
 
-      <Handle
-        type="target"
-        position={Position.Left}
-        className="!h-2.5 !w-2.5 !border-2 !border-[var(--surface)] !bg-[rgb(var(--c))]"
-      />
+      {hasIncoming && (
+        <Handle type="target" position={Position.Left} className="graph-node-handle graph-node-handle-left" />
+      )}
 
       <div className="flex items-center gap-1.5">
         <span
@@ -128,11 +128,9 @@ function GraphNodeCardComponent({ data, selected }: NodeProps<Data>) {
         {node.title}
       </div>
 
-      <Handle
-        type="source"
-        position={Position.Right}
-        className="!h-2.5 !w-2.5 !border-2 !border-[var(--surface)] !bg-[rgb(var(--c))]"
-      />
+      {hasOutgoing && (
+        <Handle type="source" position={Position.Right} className="graph-node-handle graph-node-handle-right" />
+      )}
     </motion.div>
   );
 }
