@@ -13,6 +13,7 @@ import { dependencyLayout, clusterLayout } from "../lib/layout";
 import { buildAdjacency, ancestors, descendants } from "../lib/graph";
 import { findRoute } from "../lib/route";
 import { canvas } from "../lib/colors";
+import { getRelationStyle } from "../lib/relationStyle";
 import type { GraphData } from "../types";
 import { TopoNodeView } from "./TopoNode";
 import { TopoEdgeView } from "./TopoEdge";
@@ -176,12 +177,13 @@ function InnerGraph({ data }: { data: GraphData }) {
   );
 
   const nodeHandleState = useMemo(() => {
-    const incoming = new Set<string>();
-    const outgoing = new Set<string>();
+    const incoming = new Map<string, string>();
+    const outgoing = new Map<string, string>();
 
     for (const edge of filteredEdges) {
-      outgoing.add(edge.from);
-      incoming.add(edge.to);
+      const relationColor = getRelationStyle(edge.relation).color;
+      if (!outgoing.has(edge.from)) outgoing.set(edge.from, relationColor);
+      if (!incoming.has(edge.to)) incoming.set(edge.to, relationColor);
     }
 
     return { incoming, outgoing };
@@ -211,6 +213,8 @@ function InnerGraph({ data }: { data: GraphData }) {
             routeNonce,
             hasIncoming: nodeHandleState.incoming.has(n.id),
             hasOutgoing: nodeHandleState.outgoing.has(n.id),
+            incomingHandleColor: nodeHandleState.incoming.get(n.id),
+            outgoingHandleColor: nodeHandleState.outgoing.get(n.id),
           },
         };
       }),
