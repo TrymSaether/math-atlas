@@ -175,6 +175,18 @@ function InnerGraph({ data }: { data: GraphData }) {
     [regions]
   );
 
+  const nodeHandleState = useMemo(() => {
+    const incoming = new Set<string>();
+    const outgoing = new Set<string>();
+
+    for (const edge of filteredEdges) {
+      outgoing.add(edge.from);
+      incoming.add(edge.to);
+    }
+
+    return { incoming, outgoing };
+  }, [filteredEdges]);
+
   const nodes: Node[] = useMemo(
     () =>
       rawNodes.map((n) => {
@@ -197,10 +209,25 @@ function InnerGraph({ data }: { data: GraphData }) {
             learningState: learningStates[n.id] ?? "not-started",
             routeRole,
             routeNonce,
+            hasIncoming: nodeHandleState.incoming.has(n.id),
+            hasOutgoing: nodeHandleState.outgoing.has(n.id),
           },
         };
       }),
-    [rawNodes, selectedId, ancSet, descSet, visibleIds, focusSet, routeSet, routeFrom, routeTo, routeNonce, learningStates]
+    [
+      rawNodes,
+      selectedId,
+      ancSet,
+      descSet,
+      visibleIds,
+      focusSet,
+      routeSet,
+      routeFrom,
+      routeTo,
+      routeNonce,
+      learningStates,
+      nodeHandleState,
+    ]
   );
 
   const edges: Edge[] = useMemo(
