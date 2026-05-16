@@ -1,0 +1,1666 @@
+{
+  "schema": {
+    "id": "math_kg_normalized_schema_v1",
+    "model": "directed_typed_multigraph",
+    "item_kinds": [
+      "axiom",
+      "assumption",
+      "definition",
+      "structure",
+      "object",
+      "property",
+      "construction",
+      "notation",
+      "example",
+      "non_example",
+      "counterexample",
+      "lemma",
+      "proposition",
+      "theorem",
+      "corollary",
+      "conjecture",
+      "proof",
+      "proof_step",
+      "proof_method",
+      "application"
+    ],
+    "kind_groups": {
+      "any_item": [
+        "axiom",
+        "assumption",
+        "definition",
+        "structure",
+        "object",
+        "property",
+        "construction",
+        "notation",
+        "example",
+        "non_example",
+        "counterexample",
+        "lemma",
+        "proposition",
+        "theorem",
+        "corollary",
+        "conjecture",
+        "proof",
+        "proof_step",
+        "proof_method",
+        "application"
+      ],
+      "results": ["lemma", "proposition", "theorem", "corollary"],
+      "examples": ["example", "non_example", "counterexample"],
+      "spaces": ["structure"]
+    },
+    "dependency_classes": [
+      "definitional_dependency",
+      "logical_dependency",
+      "assumption_dependency",
+      "construction_dependency",
+      "notation_dependency",
+      "pedagogical_dependency",
+      "historical_dependency"
+    ],
+    "required_item_fields": {
+      "id": "string",
+      "label": "string",
+      "kind": "enum:item_kinds",
+      "domain": "ref:graph.domains[].id",
+      "statement": "string|null",
+      "formal_statement": "string|null",
+      "definition": "string|null",
+      "intuition": "string|null",
+      "notation": "string|list[string]|null",
+      "assumptions": "list[string]",
+      "dependencies": {
+        "definitional_dependency": "list[string]",
+        "logical_dependency": "list[string]",
+        "assumption_dependency": "list[string]",
+        "construction_dependency": "list[string]",
+        "notation_dependency": "list[string]",
+        "pedagogical_dependency": "list[string]",
+        "historical_dependency": "list[string]"
+      },
+      "outgoing_relations": "list[string]",
+      "metadata": {
+        "tags": "list[string]",
+        "syllabus_priority": "enum:low|medium|high|core",
+        "source": "string|null"
+      }
+    },
+    "kind_specific_fields": {
+      "theorem": {
+        "hypotheses": "list[string]",
+        "conclusion": "string",
+        "proof_methods": "list[string]",
+        "related_theorems": "list[string]",
+        "examples": "list[string]",
+        "applications": "list[string]",
+        "variants": [
+          {
+            "id": "string",
+            "label": "string",
+            "hypotheses": "list[string]",
+            "conclusion": "string"
+          }
+        ]
+      },
+      "definition": {
+        "introduced_object": "string",
+        "genus": "string",
+        "differentia": "list[string]",
+        "examples": "list[string]",
+        "non_examples": "list[string]",
+        "equivalent_definitions": "list[string]"
+      },
+      "proof": {
+        "proves": "string",
+        "strategy": "string",
+        "steps": "list[string]",
+        "uses_methods": "list[string]",
+        "uses_results": "list[string]",
+        "critical_assumptions": "list[string]"
+      },
+      "proof_step": {
+        "part_of_proof": "string",
+        "step_number": "integer",
+        "claim": "string",
+        "justification": "string",
+        "uses": "list[string]"
+      },
+      "example": {
+        "satisfies": "list[string]",
+        "violates": "list[string]",
+        "demonstrates": "list[string]",
+        "related_theorems": "list[string]"
+      },
+      "counterexample": {
+        "satisfies": "list[string]",
+        "violates": "list[string]",
+        "demonstrates": "list[string]",
+        "related_theorems": "list[string]"
+      },
+      "non_example": {
+        "satisfies": "list[string]",
+        "violates": "list[string]",
+        "demonstrates": "list[string]",
+        "related_theorems": "list[string]"
+      }
+    },
+    "edge_schema": {
+      "id": "string",
+      "source": "string",
+      "target": "string",
+      "type": "enum:schema.edge_types",
+      "dependency_class": "enum:schema.dependency_classes|null",
+      "label": "string",
+      "direction": "source_to_target",
+      "confidence": "high_or_medium_or_low",
+      "notes": "string|null"
+    },
+    "edge_types": {
+      "applied_to": {
+        "meaning": "source result, method, or construction is applied to target",
+        "allowed_source_kinds": [
+          "construction",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "structure",
+          "object",
+          "construction",
+          "example",
+          "theorem",
+          "application"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source result/method is applied to target application/context"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "assumes": {
+        "meaning": "source relies on target as an axiom, assumption, or theorem hypothesis",
+        "allowed_source_kinds": [
+          "construction",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "proof",
+          "proof_step",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "property"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source result or proof assumes target assumption/property/structure"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "constructed_from": {
+        "meaning": "source is constructed from target data",
+        "allowed_source_kinds": [
+          "structure",
+          "object",
+          "construction",
+          "example",
+          "theorem",
+          "proof"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source construction/object is built from target item"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "defined_by": {
+        "meaning": "source is defined by target",
+        "allowed_source_kinds": [
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation"
+        ],
+        "allowed_target_kinds": ["definition", "construction", "notation"],
+        "inverse_edge_type": "defines",
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": ["source item is defined by target definition"],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "defines": {
+        "meaning": "source gives a definition or characterization of target",
+        "allowed_source_kinds": ["definition", "construction", "notation"],
+        "allowed_target_kinds": [
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation"
+        ],
+        "inverse_edge_type": "defined_by",
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": ["source definition defines target item"],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "equivalent_to": {
+        "meaning": "source and target are equivalent formulations in context",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": "equivalent_to",
+        "transitive": true,
+        "symmetric": true,
+        "alternate_meanings": [
+          "source and target are mathematically equivalent"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "generalizes": {
+        "meaning": "source is a more general concept or result than target",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": "specializes",
+        "transitive": true,
+        "symmetric": false,
+        "alternate_meanings": ["source generalizes target"],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "has_counterexample": {
+        "meaning": "source is limited or clarified by target counterexample",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source item is linked to target counterexample/non-example, or a counterexample source is attached to its target class when the label says so"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "has_example": {
+        "meaning": "source has target as an example",
+        "allowed_source_kinds": [
+          "definition",
+          "structure",
+          "property",
+          "theorem"
+        ],
+        "allowed_target_kinds": ["object", "example"],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": ["source class/result has target as example"],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "has_property": {
+        "meaning": "source satisfies or carries target property or structure",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": ["definition", "structure", "property"],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": ["source item has target property"],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "implies": {
+        "meaning": "source logically entails target in the stated context",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "property",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary"
+        ],
+        "allowed_target_kinds": [
+          "definition",
+          "property",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "application"
+        ],
+        "inverse_edge_type": null,
+        "transitive": true,
+        "symmetric": false,
+        "alternate_meanings": ["source result logically implies target result"],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "induces": {
+        "meaning": "source canonically induces target",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": ["source item canonically induces target item"],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "inherits_from": {
+        "meaning": "source inherits structure or properties from target",
+        "allowed_source_kinds": ["structure", "object", "example"],
+        "allowed_target_kinds": ["structure", "object", "example"],
+        "inverse_edge_type": null,
+        "transitive": true,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source inherits operations/properties from target"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "instance_of": {
+        "meaning": "source is an instance or model of target",
+        "allowed_source_kinds": [
+          "object",
+          "example",
+          "non_example",
+          "counterexample"
+        ],
+        "allowed_target_kinds": [
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "theorem"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source example/object is an instance of target class/structure/property"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "introduces": {
+        "meaning": "source introduces a mathematical item or proof component",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source field, text, theorem, or construction introduces target item"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "motivates": {
+        "meaning": "source motivates target concept, theorem, construction, or question",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source item motivates target item pedagogically or historically"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "prerequisite_for": {
+        "meaning": "source is a pedagogical prerequisite for target",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": "requires",
+        "transitive": true,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source is useful or necessary to learn before target"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "proves": {
+        "meaning": "source proof or proof step establishes target result",
+        "allowed_source_kinds": ["proof", "proof_step"],
+        "allowed_target_kinds": [
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": ["source proof establishes target result"],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "requires": {
+        "meaning": "source needs target to be stated, defined, constructed, or used",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": "prerequisite_for",
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source item requires target to be stated or constructed"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "shows_necessity_of": {
+        "meaning": "source demonstrates why target assumption or hypothesis is needed",
+        "allowed_source_kinds": ["example", "non_example", "counterexample"],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "property",
+          "theorem"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source counterexample demonstrates that target assumption/property cannot be dropped"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "specializes": {
+        "meaning": "source is a special case of target",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": "generalizes",
+        "transitive": true,
+        "symmetric": false,
+        "alternate_meanings": ["source specializes target"],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "subtype_of": {
+        "meaning": "source structure is a subtype of target structure",
+        "allowed_source_kinds": ["definition", "structure", "object"],
+        "allowed_target_kinds": ["definition", "structure", "object"],
+        "inverse_edge_type": null,
+        "transitive": true,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source structure/object is a subtype of target"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "uses": {
+        "meaning": "source uses target as a result, method, tool, or construction",
+        "allowed_source_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "object",
+          "property",
+          "construction",
+          "notation",
+          "example",
+          "non_example",
+          "counterexample",
+          "lemma",
+          "proposition",
+          "theorem",
+          "corollary",
+          "conjecture",
+          "proof",
+          "proof_step",
+          "proof_method",
+          "application"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source proof, theorem, application, or step uses target method/result/item"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      },
+      "violates_assumption": {
+        "meaning": "source fails target assumption, hypothesis, or property",
+        "allowed_source_kinds": ["example", "non_example", "counterexample"],
+        "allowed_target_kinds": [
+          "axiom",
+          "assumption",
+          "definition",
+          "structure",
+          "property"
+        ],
+        "inverse_edge_type": null,
+        "transitive": false,
+        "symmetric": false,
+        "alternate_meanings": [
+          "source example/counterexample violates target assumption/property"
+        ],
+        "normalization": "allowed_source_kinds and allowed_target_kinds are the union of topology and functional_analysis variants; enforce as advisory unless strict mode is selected."
+      }
+    },
+    "templates": {
+      "item": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        }
+      },
+      "definition": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "definition",
+        "introduced_object": null,
+        "genus": null,
+        "differentia": [],
+        "examples": [],
+        "non_examples": [],
+        "equivalent_definitions": []
+      },
+      "theorem": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "theorem",
+        "hypotheses": [],
+        "conclusion": null,
+        "proof_methods": [],
+        "related_theorems": [],
+        "examples": [],
+        "applications": [],
+        "variants": []
+      },
+      "proof": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "proof",
+        "proves": null,
+        "strategy": null,
+        "steps": [],
+        "uses_methods": [],
+        "uses_results": [],
+        "critical_assumptions": []
+      },
+      "proof_step": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "proof_step",
+        "part_of_proof": null,
+        "step_number": 0,
+        "claim": null,
+        "justification": null,
+        "uses": []
+      },
+      "example": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "example",
+        "satisfies": [],
+        "violates": [],
+        "demonstrates": [],
+        "related_theorems": []
+      },
+      "counterexample": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "counterexample",
+        "satisfies": [],
+        "violates": [],
+        "demonstrates": [],
+        "related_theorems": []
+      },
+      "non_example": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "non_example",
+        "satisfies": [],
+        "violates": [],
+        "demonstrates": [],
+        "related_theorems": []
+      },
+      "structure": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "structure"
+      },
+      "object": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "object"
+      },
+      "property": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "property"
+      },
+      "construction": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "construction"
+      },
+      "proof_method": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "proof_method"
+      },
+      "axiom": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "axiom"
+      },
+      "assumption": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "assumption"
+      },
+      "lemma": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "lemma"
+      },
+      "proposition": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "proposition"
+      },
+      "corollary": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "corollary"
+      },
+      "conjecture": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "conjecture"
+      },
+      "notation": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "notation"
+      },
+      "application": {
+        "statement": null,
+        "formal_statement": null,
+        "definition": null,
+        "intuition": null,
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "application"
+      }
+    },
+    "graph_semantics": {
+      "model": "directed_typed_multigraph",
+      "node_rule": "every node is a mathematical item",
+      "edge_rule": "source --type--> target is interpreted literally",
+      "view_rule": "trees are extracted views, not the underlying graph",
+      "outgoing_relations_rule": "outgoing_relations is derived from graph.edges by grouping edges on source; do not author it as source-of-truth data",
+      "nullable_dependency_class_rule": "dependency_class=null means the edge is semantic/descriptive and is not classified as a dependency relation"
+    },
+    "validation_rules": {
+      "validation_level": "advisory",
+      "item_id_uniqueness": "Every graph.items[].id must be unique.",
+      "edge_id_uniqueness": "Every graph.edges[].id must be unique.",
+      "edge_endpoint_integrity": "Every graph.edges[].source and graph.edges[].target must reference an existing graph.items[].id.",
+      "domain_integrity": "Every graph.items[].domain must reference an existing graph.domains[].id.",
+      "item_kind_integrity": "Every graph.items[].kind must be listed in schema.item_kinds.",
+      "edge_type_integrity": "Every graph.edges[].type must be a key in schema.edge_types.",
+      "dependency_class_integrity": "Every non-null graph.edges[].dependency_class must be listed in schema.dependency_classes.",
+      "edge_kind_policy": "In strict mode, graph.edges[].source.kind and graph.edges[].target.kind must be allowed by the chosen edge type. In advisory mode, violations are warnings.",
+      "kind_specific_fields": "Items whose kind has schema.kind_specific_fields should include those fields; missing optional fields may be filled from schema.templates.",
+      "derived_outgoing_relations": "If outgoing_relations exists on an item, loaders should verify it equals the list of edge ids whose source is that item, or overwrite it."
+    }
+  },
+  "graph": {
+    "id": "",
+    "label": "",
+    "field": "",
+    "model": "directed_typed_multigraph",
+    "design_notes": [
+      "Do not author outgoing_relations on items; materialize it from graph.edges when loading."
+    ],
+    "domains": [],
+    "items": [],
+    "edges": []
+  },
+  "views": {
+    "concept_map": {
+      "description": "Conceptual dependency and relationship view.",
+      "included_item_kinds": [
+        "axiom",
+        "assumption",
+        "definition",
+        "structure",
+        "object",
+        "property",
+        "construction",
+        "notation",
+        "example",
+        "non_example",
+        "counterexample",
+        "lemma",
+        "proposition",
+        "theorem",
+        "corollary",
+        "conjecture",
+        "proof",
+        "proof_step",
+        "proof_method",
+        "application"
+      ],
+      "included_edge_types": [
+        "defines",
+        "requires",
+        "uses",
+        "implies",
+        "equivalent_to",
+        "generalizes",
+        "specializes",
+        "subtype_of",
+        "has_property"
+      ],
+      "included_dependency_classes": [
+        "definitional_dependency",
+        "logical_dependency",
+        "assumption_dependency",
+        "construction_dependency",
+        "notation_dependency",
+        "pedagogical_dependency",
+        "historical_dependency"
+      ],
+      "root_items": [],
+      "example_traversal": "Start from a root item and traverse requires/prerequisite_for edges by depth."
+    },
+    "proof_graph": {
+      "description": "Proof-oriented view linking proofs, proof steps, methods, and results.",
+      "included_item_kinds": [
+        "proof",
+        "proof_step",
+        "proof_method",
+        "lemma",
+        "proposition",
+        "theorem",
+        "corollary",
+        "assumption"
+      ],
+      "included_edge_types": [
+        "proves",
+        "uses",
+        "assumes",
+        "requires",
+        "implies"
+      ],
+      "included_dependency_classes": [
+        "logical_dependency",
+        "assumption_dependency",
+        "pedagogical_dependency"
+      ],
+      "root_items": [],
+      "example_traversal": "From theorem, find incoming proves edges, then traverse proof steps and uses edges."
+    },
+    "example_counterexample_map": {
+      "description": "Examples and counterexamples attached to concepts, hypotheses, and theorems.",
+      "included_item_kinds": [
+        "example",
+        "non_example",
+        "counterexample",
+        "definition",
+        "structure",
+        "property",
+        "theorem",
+        "assumption"
+      ],
+      "included_edge_types": [
+        "has_example",
+        "has_counterexample",
+        "instance_of",
+        "violates_assumption",
+        "shows_necessity_of"
+      ],
+      "included_dependency_classes": [],
+      "root_items": [],
+      "example_traversal": "From a concept or theorem, follow example and counterexample edges."
+    }
+  },
+  "query_model": {
+    "common_queries": [
+      "dependencies(item_id)",
+      "dependents(item_id)",
+      "proof_dependencies(result_id)",
+      "examples_of(item_id)",
+      "counterexamples_for(item_id)",
+      "learning_prerequisites(item_id)",
+      "theorems_using(item_id)"
+    ],
+    "traversal_defaults": {
+      "preserve_parallel_edges": true,
+      "max_depth": 3,
+      "include_edge_metadata": true
+    }
+  },
+  "example_queries": []
+}
