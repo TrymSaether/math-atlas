@@ -5,11 +5,13 @@ import { cn } from "../lib/utils";
 import { useStore, type LearningState } from "../store";
 import type { GraphNode } from "../types";
 import { getKindAbbrev, getKindTier } from "../lib/kindStyle";
+import type { SemanticDetail } from "../hooks/useSemanticZoom";
 
 export type RouteRole = "from" | "to" | "waypoint" | null;
 
 interface Data {
   node: GraphNode;
+  detail?: SemanticDetail;
   dim?: boolean;
   highlight?: "primary" | "anc" | "desc" | null;
   learningState?: LearningState;
@@ -22,6 +24,8 @@ interface Data {
 }
 
 const TIER_WIDTH = { primary: 208, secondary: 184, compact: 160 } as const;
+const TITLE_WIDTH = { primary: 196, secondary: 176, compact: 152 } as const;
+const DOT_SIZE = { primary: 28, secondary: 22, compact: 16 } as const;
 
 /** Corner status badge — mirrors the design kit's node-state glyphs. */
 function StateBadge({ state, selected }: { state: LearningState; selected: boolean }) {
@@ -73,6 +77,7 @@ function handleColorStyle(color?: string): CSSProperties | undefined {
 function GraphNodeCardComponent({ data, selected }: NodeProps<Data>) {
   const {
     node,
+    detail = "card",
     dim,
     highlight,
     learningState,
@@ -84,14 +89,78 @@ function GraphNodeCardComponent({ data, selected }: NodeProps<Data>) {
   } = data;
   const select = useStore((s) => s.select);
   const tier = getKindTier(node.kind);
-  const width = TIER_WIDTH[tier];
   const state: LearningState = learningState ?? "not-started";
   const onRoute = routeRole != null;
   const accented = selected || onRoute || highlight === "primary";
+  const baseOpacity = dim ? 0.32 : 1;
+
+  if (detail === "dot") {
+    const size = DOT_SIZE[tier];
+    return (
+      <motion.div
+        animate={{ opacity: baseOpacity }}
+        onClick={() => select(node.id)}
+        style={{ width: size, height: size, background: "rgb(var(--c))" }}
+        className={cn(
+          `kind-${node.kind}`,
+          "cursor-pointer rounded-full border-[1.5px] border-[var(--surface)] shadow-[var(--shadow-1)] transition-transform hover:scale-110",
+          accented && "ring-2 ring-offset-1 ring-[rgb(var(--c))]"
+        )}
+        title={node.title}
+      >
+        {hasIncoming && (
+          <Handle type="target" position={Position.Left} style={{ opacity: 0, pointerEvents: "none" }} />
+        )}
+        {hasOutgoing && (
+          <Handle type="source" position={Position.Right} style={{ opacity: 0, pointerEvents: "none" }} />
+        )}
+      </motion.div>
+    );
+  }
+
+  if (detail === "title") {
+    const width = TITLE_WIDTH[tier];
+    return (
+      <motion.div
+        animate={{ opacity: baseOpacity }}
+        onClick={() => select(node.id)}
+        style={{ width }}
+        className={cn(
+          `kind-${node.kind}`,
+          "group relative cursor-pointer rounded-full border-[1.5px] bg-[var(--surface)] px-3 py-1.5 shadow-[var(--shadow-1)] transition-all",
+          "hover:border-[rgb(var(--c))]",
+          accented ? "border-[rgb(var(--c))]" : "border-[var(--border)]"
+        )}
+      >
+        {hasIncoming && (
+          <Handle
+            type="target"
+            position={Position.Left}
+            className="graph-node-handle graph-node-handle-left"
+            style={handleColorStyle(incomingHandleColor)}
+          />
+        )}
+        <div className="flex items-center gap-1.5">
+          <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: "rgb(var(--c))" }} />
+          <span className="truncate text-[12px] font-semibold text-[var(--text)]">{node.title}</span>
+        </div>
+        {hasOutgoing && (
+          <Handle
+            type="source"
+            position={Position.Right}
+            className="graph-node-handle graph-node-handle-right"
+            style={handleColorStyle(outgoingHandleColor)}
+          />
+        )}
+      </motion.div>
+    );
+  }
+
+  const width = TIER_WIDTH[tier];
 
   return (
     <motion.div
-      animate={{ opacity: dim ? 0.32 : 1 }}
+      animate={{ opacity: baseOpacity }}
       onClick={() => select(node.id)}
       style={{ width }}
       className={cn(

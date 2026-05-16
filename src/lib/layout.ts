@@ -269,6 +269,111 @@ export function clusterLayout({ nodes, edges, domains = [] }: LayoutInput): {
   return { nodes: rfNodes, edges: rfEdges, regions };
 }
 
+/* =========================================================
+   OVERVIEW LAYOUT — one big bubble per domain. The default
+   first-paint surface; users drill into a domain on click.
+   ========================================================= */
+
+const BUBBLE_W = 280;
+const BUBBLE_H = 200;
+const BUBBLE_GAP_X = 80;
+const BUBBLE_GAP_Y = 80;
+
+export interface ClusterEdgeData {
+  weight: number;
+  sourceLabel: string;
+  targetLabel: string;
+  sourceColor: string;
+  targetColor: string;
+}
+
+export function overviewLayout({ nodes, edges, domains = [] }: LayoutInput): {
+  nodes: Node[];
+  edges: Edge[];
+  regions: DomainRegion[];
+} {
+  const domainById = new Map(domains.map((d) => [d.id, d]));
+
+  const byDomain = new Map<string, TopoNode[]>();
+  for (const n of nodes) {
+    if (!byDomain.has(n.domainId)) byDomain.set(n.domainId, []);
+    byDomain.get(n.domainId)!.push(n);
+  }
+  const domainIds = [...byDomain.keys()].sort((a, b) => {
+    const da = domainById.get(a);
+    const db = domainById.get(b);
+    if (da && db && da.order !== db.order) return da.order - db.order;
+    if (da && !db) return -1;
+    if (!da && db) return 1;
+    return a.localeCompare(b);
+  });
+
+  // Grid layout — try to keep it close to square.
+  const cols = Math.max(1, Math.ceil(Math.sqrt(domainIds.length)));
+
+  const rfNodes: Node[] = domainIds.map((domainId, i) => {
+    const members = byDomain.get(domainId)!.sort(cmpNum);
+    const domain = domainById.get(domainId);
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const x = col * (BUBBLE_W + BUBBLE_GAP_X);
+    const y = row * (BUBBLE_H + BUBBLE_GAP_Y);
+    const sampleTitles = members.slice(0, 4).map((n) => n.title);
+    return {
+      id: `cluster-bubble-${domainId}`,
+      type: "clusterBubble",
+      position: { x, y },
+      data: {
+        domainId,
+        label: domain?.label ?? members[0]?.topicCluster ?? domainId,
+        count: members.length,
+        sampleTitles,
+        color: domain?.color ?? "var(--primary)",
+        tint: domain?.tint ?? "rgba(var(--primary-rgb),0.05)",
+        border: domain?.border ?? "rgba(var(--primary-rgb),0.35)",
+        width: BUBBLE_W,
+        height: BUBBLE_H,
+      },
+      draggable: false,
+      selectable: false,
+      style: { width: BUBBLE_W, height: BUBBLE_H },
+    };
+  });
+
+  // Aggregate inter-cluster edges into a single weighted edge per ordered pair.
+  const nodeDomain = new Map<string, string>(nodes.map((n) => [n.id, n.domainId]));
+  const aggregate = new Map<string, { from: string; to: string; weight: number }>();
+  for (const e of edges) {
+    const fromDomain = nodeDomain.get(e.from);
+    const toDomain = nodeDomain.get(e.to);
+    if (!fromDomain || !toDomain || fromDomain === toDomain) continue;
+    const key = `${fromDomain}|${toDomain}`;
+    const entry = aggregate.get(key);
+    if (entry) entry.weight += 1;
+    else aggregate.set(key, { from: fromDomain, to: toDomain, weight: 1 });
+  }
+
+  const rfEdges: Edge[] = [...aggregate.values()].map((agg) => {
+    const sourceDomain = domainById.get(agg.from);
+    const targetDomain = domainById.get(agg.to);
+    return {
+      id: `cluster-edge-${agg.from}-${agg.to}`,
+      source: `cluster-bubble-${agg.from}`,
+      target: `cluster-bubble-${agg.to}`,
+      type: "cluster",
+      data: {
+        weight: agg.weight,
+        sourceLabel: sourceDomain?.label ?? agg.from,
+        targetLabel: targetDomain?.label ?? agg.to,
+        sourceColor: sourceDomain?.color ?? "var(--primary)",
+        targetColor: targetDomain?.color ?? "var(--primary)",
+      } satisfies ClusterEdgeData,
+    };
+  });
+
+  return { nodes: rfNodes, edges: rfEdges, regions: [] };
+}
+
 export interface DomainRegion {
   id: string;
   label: string;

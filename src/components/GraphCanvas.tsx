@@ -9,7 +9,7 @@ import ReactFlow, {
   type Edge,
 } from "reactflow";
 import { useStore } from "../store";
-import { dependencyLayout, clusterLayout } from "../lib/layout";
+import { dependencyLayout, clusterLayout, overviewLayout } from "../lib/layout";
 import { buildAdjacency, ancestors, descendants } from "../lib/graph";
 import { findRoute } from "../lib/route";
 import { canvas } from "../lib/colors";
@@ -18,15 +18,23 @@ import type { GraphData } from "../types";
 import { TopoNodeView } from "./TopoNode";
 import { TopoEdgeView } from "./TopoEdge";
 import { DomainRegionNode } from "./DomainRegionNode";
+import { ClusterBubbleNode } from "./ClusterBubbleNode";
+import { ClusterEdge } from "./ClusterEdge";
 import { Dock } from "./Dock";
 import { MinimapCard } from "./MinimapCard";
 import type { RouteRole } from "./GraphNodeCard";
+import { useSemanticDetail } from "../hooks/useSemanticZoom";
 
-const nodeTypes = { topo: TopoNodeView, domainRegion: DomainRegionNode };
-const edgeTypes = { topo: TopoEdgeView };
+const nodeTypes = {
+  topo: TopoNodeView,
+  domainRegion: DomainRegionNode,
+  clusterBubble: ClusterBubbleNode,
+};
+const edgeTypes = { topo: TopoEdgeView, cluster: ClusterEdge };
 
 function InnerGraph({ data }: { data: GraphData }) {
-  const view = useStore((s) => s.view);
+  const layoutMode = useStore((s) => s.layoutMode);
+  const focusDomainId = useStore((s) => s.focusDomainId);
   const search = useStore((s) => s.search).toLowerCase().trim();
   const searchScope = useStore((s) => s.searchScope);
   const kinds = useStore((s) => s.kinds);
@@ -44,9 +52,12 @@ function InnerGraph({ data }: { data: GraphData }) {
   const routePlanned = useStore((s) => s.routePlanned);
   const routeNonce = useStore((s) => s.routeNonce);
   const rf = useReactFlow();
+  const detail = useSemanticDetail();
+  const isOverview = layoutMode === "overview";
 
   const filteredNodes = useMemo(() => {
     return data.nodes.filter((n) => {
+      if (focusDomainId && !isOverview && n.domainId !== focusDomainId) return false;
       if (kinds.size > 0 && !kinds.has(n.kind)) return false;
       if (topics.size && !topics.has(n.domainId)) return false;
       if (hiddenTopics.has(n.domainId)) return false;
@@ -59,7 +70,7 @@ function InnerGraph({ data }: { data: GraphData }) {
       }
       return true;
     });
-  }, [kinds, topics, hiddenTopics, search, searchScope]);
+  }, [data.nodes, kinds, topics, hiddenTopics, search, searchScope, focusDomainId, isOverview]);
 
   const visibleIds = useMemo(() => new Set(filteredNodes.map((n) => n.id)), [filteredNodes]);
   const filteredEdges = useMemo(
@@ -67,17 +78,23 @@ function InnerGraph({ data }: { data: GraphData }) {
       data.edges.filter(
         (e) => (relations.size === 0 || relations.has(e.relation)) && visibleIds.has(e.from) && visibleIds.has(e.to)
       ),
-    [relations, visibleIds]
+    [data.edges, relations, visibleIds]
   );
 
+  // For overview mode the layout uses the *unfiltered* node set so users see
+  // every cluster — filtering happens after they drill in.
   const { rawNodes, rawEdges, regions } = useMemo(() => {
-    if (view === "dependency") {
+    if (layoutMode === "overview") {
+      const r = overviewLayout({ nodes: data.nodes, edges: data.edges, domains: data.domains });
+      return { rawNodes: r.nodes, rawEdges: r.edges, regions: r.regions };
+    }
+    if (layoutMode === "dependency") {
       const r = dependencyLayout({ nodes: filteredNodes, edges: filteredEdges, domains: data.domains, showOrphans });
       return { rawNodes: r.nodes, rawEdges: r.edges, regions: r.regions };
     }
     const r = clusterLayout({ nodes: filteredNodes, edges: filteredEdges, domains: data.domains });
     return { rawNodes: r.nodes, rawEdges: r.edges, regions: r.regions };
-  }, [view, filteredNodes, filteredEdges, data.domains, showOrphans]);
+  }, [layoutMode, filteredNodes, filteredEdges, data.nodes, data.edges, data.domains, showOrphans]);
 
   const adj = useMemo(() => buildAdjacency(filteredEdges, relations), [filteredEdges, relations]);
 
@@ -189,84 +206,88 @@ function InnerGraph({ data }: { data: GraphData }) {
     return { incoming, outgoing };
   }, [filteredEdges]);
 
-  const nodes: Node[] = useMemo(
-    () =>
-      rawNodes.map((n) => {
-        const isSel = n.id === selectedId;
-        const isAnc = ancSet.has(n.id);
-        const isDesc = descSet.has(n.id);
-        const onRoute = routeSet.has(n.id);
-        const anyHi = selectedId !== null && visibleIds.has(selectedId);
-        let dim = anyHi && !isSel && !isAnc && !isDesc;
-        if (focusSet && !focusSet.has(n.id) && !onRoute) dim = true;
-        const routeRole: RouteRole =
-          n.id === routeFrom && onRoute ? "from" : n.id === routeTo && onRoute ? "to" : onRoute ? "waypoint" : null;
-        return {
-          ...n,
-          selected: isSel,
-          data: {
-            ...n.data,
-            dim,
-            highlight: isSel ? "primary" : isAnc ? "anc" : isDesc ? "desc" : null,
-            learningState: learningStates[n.id] ?? "not-started",
-            routeRole,
-            routeNonce,
-            hasIncoming: nodeHandleState.incoming.has(n.id),
-            hasOutgoing: nodeHandleState.outgoing.has(n.id),
-            incomingHandleColor: nodeHandleState.incoming.get(n.id),
-            outgoingHandleColor: nodeHandleState.outgoing.get(n.id),
-          },
-        };
-      }),
-    [
-      rawNodes,
-      selectedId,
-      ancSet,
-      descSet,
-      visibleIds,
-      focusSet,
-      routeSet,
-      routeFrom,
-      routeTo,
-      routeNonce,
-      learningStates,
-      nodeHandleState,
-    ]
-  );
+  const nodes: Node[] = useMemo(() => {
+    if (isOverview) {
+      // Cluster bubbles are self-contained — no enrichment needed.
+      return rawNodes;
+    }
+    return rawNodes.map((n) => {
+      const isSel = n.id === selectedId;
+      const isAnc = ancSet.has(n.id);
+      const isDesc = descSet.has(n.id);
+      const onRoute = routeSet.has(n.id);
+      const anyHi = selectedId !== null && visibleIds.has(selectedId);
+      let dim = anyHi && !isSel && !isAnc && !isDesc;
+      if (focusSet && !focusSet.has(n.id) && !onRoute) dim = true;
+      const routeRole: RouteRole =
+        n.id === routeFrom && onRoute ? "from" : n.id === routeTo && onRoute ? "to" : onRoute ? "waypoint" : null;
+      return {
+        ...n,
+        selected: isSel,
+        data: {
+          ...n.data,
+          detail,
+          dim,
+          highlight: isSel ? "primary" : isAnc ? "anc" : isDesc ? "desc" : null,
+          learningState: learningStates[n.id] ?? "not-started",
+          routeRole,
+          routeNonce,
+          hasIncoming: nodeHandleState.incoming.has(n.id),
+          hasOutgoing: nodeHandleState.outgoing.has(n.id),
+          incomingHandleColor: nodeHandleState.incoming.get(n.id),
+          outgoingHandleColor: nodeHandleState.outgoing.get(n.id),
+        },
+      };
+    });
+  }, [
+    isOverview,
+    rawNodes,
+    selectedId,
+    ancSet,
+    descSet,
+    visibleIds,
+    focusSet,
+    routeSet,
+    routeFrom,
+    routeTo,
+    routeNonce,
+    learningStates,
+    nodeHandleState,
+    detail,
+  ]);
 
-  const edges: Edge[] = useMemo(
-    () =>
-      rawEdges.map((e) => {
-        const hi = edgeHi.has(e.id);
-        const isRoute = routeEdgeKeys.has(`${e.source}|${e.target}`);
-        const anyHi = selectedId !== null && visibleIds.has(selectedId);
-        let dim = anyHi && !hi;
-        if (focusSet && !isRoute) {
-          const inFocus = focusSet.has(e.source) && focusSet.has(e.target);
-          if (!inFocus) dim = true;
-        }
-        return {
-          ...e,
-          zIndex: isRoute ? 10 : undefined,
-          data: { ...e.data, dim: dim && !isRoute, highlight: hi && !isRoute, route: isRoute, routeNonce },
-        };
-      }),
-    [rawEdges, edgeHi, selectedId, visibleIds, focusSet, routeEdgeKeys, routeNonce]
-  );
+  const edges: Edge[] = useMemo(() => {
+    if (isOverview) return rawEdges;
+    return rawEdges.map((e) => {
+      const hi = edgeHi.has(e.id);
+      const isRoute = routeEdgeKeys.has(`${e.source}|${e.target}`);
+      const anyHi = selectedId !== null && visibleIds.has(selectedId);
+      let dim = anyHi && !hi;
+      if (focusSet && !isRoute) {
+        const inFocus = focusSet.has(e.source) && focusSet.has(e.target);
+        if (!inFocus) dim = true;
+      }
+      return {
+        ...e,
+        zIndex: isRoute ? 10 : undefined,
+        data: { ...e.data, detail, dim: dim && !isRoute, highlight: hi && !isRoute, route: isRoute, routeNonce },
+      };
+    });
+  }, [isOverview, rawEdges, edgeHi, selectedId, visibleIds, focusSet, routeEdgeKeys, routeNonce, detail]);
 
-  // Fit on view-mode change.
+  // Fit on layout-mode / focus-domain change.
   useEffect(() => {
     const t = setTimeout(() => rf.fitView({ padding: 0.18, duration: 600 }), 80);
     return () => clearTimeout(t);
-  }, [view, rf]);
+  }, [layoutMode, focusDomainId, rf]);
 
-  // Pan/zoom to selection.
+  // Pan/zoom to selection (only when not in overview — clusters aren't node-selectable).
   useEffect(() => {
-    if (!selectedId) return;
+    if (isOverview || !selectedId) return;
     const node = rawNodes.find((n) => n.id === selectedId);
     if (!node) return;
     rf.setCenter(node.position.x + 120, node.position.y + 46, { zoom: Math.max(0.9, rf.getZoom()), duration: 450 });
-  }, [selectedId, rawNodes, rf]);
+  }, [isOverview, selectedId, rawNodes, rf]);
 
   // Fit the route into view when a new route is planned.
   useEffect(() => {
@@ -290,7 +311,7 @@ function InnerGraph({ data }: { data: GraphData }) {
         edgeTypes={edgeTypes}
         onPaneClick={() => useStore.getState().select(null)}
         onNodeContextMenu={(event, node) => {
-          if (node.type === "domainRegion") return;
+          if (node.type === "domainRegion" || node.type === "clusterBubble") return;
           event.preventDefault();
           useStore.getState().setRouteTo(node.id);
         }}
@@ -303,7 +324,9 @@ function InnerGraph({ data }: { data: GraphData }) {
         <RFBackground variant={BackgroundVariant.Dots} gap={28} size={1} color={canvas.gridBackground} />
         <Controls position="bottom-right" showInteractive={false} />
       </ReactFlow>
-      <MinimapCard nodes={nodes} regions={regions} routeSet={routeSet} selectedId={selectedId} />
+      {!isOverview && (
+        <MinimapCard nodes={nodes} regions={regions} routeSet={routeSet} selectedId={selectedId} />
+      )}
       <Dock />
     </>
   );

@@ -2,14 +2,23 @@ import { BaseEdge, EdgeLabelRenderer, getSmoothStepPath, type EdgeProps } from "
 import { memo } from "react";
 import type { GraphEdge as GraphEdgeT } from "../types";
 import { getRelationStyle } from "../lib/relationStyle";
+import type { SemanticDetail } from "../hooks/useSemanticZoom";
 
 interface Data {
   edge: GraphEdgeT;
+  detail?: SemanticDetail;
   dim?: boolean;
   highlight?: boolean;
   route?: boolean;
   routeNonce?: number;
 }
+
+// Opacity falls off when zoomed out so the graph reads as shape, not noise.
+const DETAIL_OPACITY: Record<SemanticDetail, number> = {
+  dot: 0.18,
+  title: 0.4,
+  card: 0.78,
+};
 
 /** Metro-map style edge: rounded orthogonal path with a white halo at crossings. */
 function GraphEdgeViewComponent(props: EdgeProps<Data>) {
@@ -25,14 +34,23 @@ function GraphEdgeViewComponent(props: EdgeProps<Data>) {
   });
   const e = data?.edge;
   const isRoute = Boolean(data?.route);
+  const detail = data?.detail ?? "card";
   const style = getRelationStyle(e?.relation ?? "relation", Boolean(data?.highlight) || isRoute, Boolean(data?.dim));
   const strokeWidth = isRoute ? 3 : style.width;
   const dim = Boolean(data?.dim) && !isRoute;
 
+  // Highlight / route edges stay loud; everything else dims with zoom.
+  const baseOpacity =
+    isRoute || data?.highlight ? 0.95 : Math.min(style.opacity, DETAIL_OPACITY[detail]);
+
+  // Arrowheads hide when the canvas is zoomed out so they don't blob into the
+  // surrounding edges.
+  const showMarker = isRoute || data?.highlight || detail !== "dot";
+
   return (
     <>
       {/* White halo so crossings read cleanly, metro-map convention. */}
-      {!dim && (
+      {!dim && detail !== "dot" && (
         <path
           d={path}
           fill="none"
@@ -45,10 +63,11 @@ function GraphEdgeViewComponent(props: EdgeProps<Data>) {
       <BaseEdge
         id={props.id}
         path={path}
+        markerEnd={showMarker ? props.markerEnd : undefined}
         style={{
           stroke: isRoute ? "var(--primary)" : style.color,
           strokeWidth,
-          strokeOpacity: isRoute ? 0.28 : style.opacity,
+          strokeOpacity: isRoute ? 0.28 : baseOpacity,
           strokeLinecap: "round",
           strokeLinejoin: "round",
           strokeDasharray: isRoute ? undefined : style.dash,
@@ -68,7 +87,7 @@ function GraphEdgeViewComponent(props: EdgeProps<Data>) {
           style={{ ["--route-len" as string]: 1 }}
         />
       )}
-      {data?.highlight && !isRoute && (
+      {data?.highlight && !isRoute && detail === "card" && (
         <EdgeLabelRenderer>
           <div
             style={{
