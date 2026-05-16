@@ -1,63 +1,64 @@
+import fourierAnalysisRaw from "./maps/fourier_analysis.json";
 import functionalAnalysisRaw from "./maps/functional_analysis.json";
 import topologyRaw from "./maps/topology.json";
-import { FieldJsonSchema, type GraphData, type GraphEdge } from "../types";
-import { DEFAULT_MAP_ID, type MapId } from "./mapRegistry";
+import { FieldJsonSchema, type GraphData } from "../types";
+import { createGraphIndexes, uniqueSorted, type GraphIndexes } from "./graphIndexes";
 import { normalizeFieldGraph } from "./normalizeFieldGraph";
+import { DEFAULT_MAP_ID, getMapDescriptor, type MapId, type RegisteredMap } from "./mapRegistry";
 
-const rawMaps = {
+const RAW_MAPS = {
   functional_analysis: functionalAnalysisRaw,
   topology: topologyRaw,
+  fourier_analysis: fourierAnalysisRaw,
 } satisfies Record<MapId, unknown>;
 
-function groupEdges(edges: GraphEdge[], key: "from" | "to") {
-  const grouped = new Map<string, GraphEdge[]>();
-  for (const edge of edges) {
-    const id = edge[key];
-    const list = grouped.get(id) ?? [];
-    list.push(edge);
-    grouped.set(id, list);
-  }
-  return grouped;
+export interface LoadedMap extends GraphIndexes {
+  readonly id: MapId;
+  readonly descriptor: RegisteredMap;
+  readonly data: GraphData;
+  readonly kinds: readonly string[];
+  readonly relations: readonly string[];
+  readonly topics: readonly string[];
 }
 
-function countDegrees(edges: GraphEdge[], key: "from" | "to"): Map<string, number> {
-  const counts = new Map<string, number>();
-  for (const edge of edges) {
-    const id = edge[key];
-    counts.set(id, (counts.get(id) ?? 0) + 1);
-  }
-  return counts;
-}
-
-export interface LoadedMap {
-  data: GraphData;
-  nodeById: Map<string, GraphData["nodes"][number]>;
-  edgeById: Map<string, GraphEdge>;
-  incomingEdgesByNodeId: Map<string, GraphEdge[]>;
-  outgoingEdgesByNodeId: Map<string, GraphEdge[]>;
-  /** Degree counts derived from the full edge set — used for centrality / suggested starts. */
-  inDegreeByNodeId: Map<string, number>;
-  outDegreeByNodeId: Map<string, number>;
-  kinds: string[];
-  relations: string[];
-  topics: string[];
-}
+export type LoadMapResult =
+  | Readonly<{ ok: true; value: LoadedMap }>
+  | Readonly<{ ok: false; error: Error }>;
 
 export function loadMap(mapId: MapId = DEFAULT_MAP_ID): LoadedMap {
-  const raw = rawMaps[mapId];
-  const parsed = FieldJsonSchema.parse(raw);
+  const result = tryLoadMap(mapId);
+
+  if (!result.ok) {
+    throw result.error;
+  }
+
+  return result.value;
+}
+
+export function tryLoadMap(mapId: MapId = DEFAULT_MAP_ID): LoadMapResult {
+  try {
+    return { ok: true, value: createLoadedMap(mapId) };
+  } catch (error) {
+    return { ok: false, error: toError(error) };
+  }
+}
+
+function createLoadedMap(mapId: MapId): LoadedMap {
+  const parsed = FieldJsonSchema.parse(RAW_MAPS[mapId]);
   const data = normalizeFieldGraph(parsed);
+  const indexes = createGraphIndexes(data);
 
   return {
+    id: mapId,
+    descriptor: getMapDescriptor(mapId),
     data,
-    nodeById: new Map(data.nodes.map((node) => [node.id, node])),
-    edgeById: new Map(data.edges.map((edge) => [edge.id, edge])),
-    incomingEdgesByNodeId: groupEdges(data.edges, "to"),
-    outgoingEdgesByNodeId: groupEdges(data.edges, "from"),
-    inDegreeByNodeId: countDegrees(data.edges, "to"),
-    outDegreeByNodeId: countDegrees(data.edges, "from"),
-    kinds: [...new Set(data.nodes.map((node) => node.kind))].sort(),
-    relations: [...new Set(data.edges.map((edge) => edge.relation))].sort(),
+    ...indexes,
+    kinds: uniqueSorted(data.nodes.map((node) => node.kind)),
+    relations: uniqueSorted(data.edges.map((edge) => edge.relation)),
     topics: data.domains.map((domain) => domain.id),
   };
+}
+
+function toError(error: unknown): Error {
+  return error instanceof Error ? error : new Error(String(error));
 }
