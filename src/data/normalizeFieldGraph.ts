@@ -1,4 +1,4 @@
-import type { FieldJson, FieldItem, GraphData, GraphEdge, GraphNode } from "../types";
+import type { FieldJson, FieldItem, GraphData, GraphDomain, GraphEdge, GraphNode } from "../types";
 
 function confidenceToNumber(value: "high" | "medium" | "low"): number {
   if (value === "high") return 1;
@@ -24,9 +24,29 @@ function formulaFromNotation(item: FieldItem): string {
   return Array.isArray(notation) ? notation.join(", ") : notation;
 }
 
+function hexToRgba(value: string, alpha: number): string | null {
+  const match = value.trim().match(/^#([0-9a-f]{6})$/i);
+  if (!match) return null;
+  const hex = match[1];
+  const red = Number.parseInt(hex.slice(0, 2), 16);
+  const green = Number.parseInt(hex.slice(2, 4), 16);
+  const blue = Number.parseInt(hex.slice(4, 6), 16);
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
+function normalizeDomain(domain: GraphDomain): GraphDomain {
+  return {
+    ...domain,
+    tint: domain.tint || hexToRgba(domain.color, 0.08) || "rgba(var(--primary-rgb),0.05)",
+    border: domain.border || hexToRgba(domain.color, 0.35) || "rgba(var(--primary-rgb),0.35)",
+  };
+}
+
 export function normalizeFieldGraph(input: FieldJson): GraphData {
   const nodeIds = new Set(input.graph.items.map((item) => item.id));
-  const domains = [...input.graph.domains].sort((a, b) => a.order - b.order || a.label.localeCompare(b.label));
+  const domains = input.graph.domains
+    .map(normalizeDomain)
+    .sort((a, b) => a.order - b.order || a.label.localeCompare(b.label));
   const domainById = new Map(domains.map((domain) => [domain.id, domain]));
 
   const nodes: GraphNode[] = input.graph.items.map((item, index) => {

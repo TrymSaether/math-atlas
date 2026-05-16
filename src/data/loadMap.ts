@@ -1,13 +1,6 @@
-import functionalAnalysisRaw from "./maps/functional_analysis.json";
-import topologyRaw from "./maps/topology.json";
 import { FieldJsonSchema, type GraphData, type GraphEdge } from "../types";
-import { DEFAULT_MAP_ID, type MapId } from "./mapRegistry";
+import { DEFAULT_MAP_ID, MAP_CATALOG, getMapCatalogEntry, type MapId } from "./mapRegistry";
 import { normalizeFieldGraph } from "./normalizeFieldGraph";
-
-const rawMaps = {
-  functional_analysis: functionalAnalysisRaw,
-  topology: topologyRaw,
-} satisfies Record<MapId, unknown>;
 
 function groupEdges(edges: GraphEdge[], key: "from" | "to") {
   const grouped = new Map<string, GraphEdge[]>();
@@ -31,11 +24,7 @@ export interface LoadedMap {
   topics: string[];
 }
 
-export function loadMap(mapId: MapId = DEFAULT_MAP_ID): LoadedMap {
-  const raw = rawMaps[mapId];
-  const parsed = FieldJsonSchema.parse(raw);
-  const data = normalizeFieldGraph(parsed);
-
+function buildLoadedMap(data: GraphData): LoadedMap {
   return {
     data,
     nodeById: new Map(data.nodes.map((node) => [node.id, node])),
@@ -46,4 +35,20 @@ export function loadMap(mapId: MapId = DEFAULT_MAP_ID): LoadedMap {
     relations: [...new Set(data.edges.map((edge) => edge.relation))].sort(),
     topics: data.domains.map((domain) => domain.id),
   };
+}
+
+function parseMapData(mapId: MapId): GraphData {
+  const { raw } = getMapCatalogEntry(mapId);
+  const parsed = FieldJsonSchema.parse(raw);
+  return normalizeFieldGraph(parsed);
+}
+
+export function loadMap(mapId: MapId = DEFAULT_MAP_ID): LoadedMap {
+  return buildLoadedMap(parseMapData(mapId));
+}
+
+export function loadRegisteredMaps(): Record<MapId, LoadedMap> {
+  return Object.fromEntries(
+    (Object.keys(MAP_CATALOG) as MapId[]).map((mapId) => [mapId, loadMap(mapId)])
+  ) as Record<MapId, LoadedMap>;
 }

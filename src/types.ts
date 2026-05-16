@@ -15,8 +15,8 @@ export const GraphDomainSchema = z.object({
   label: RequiredTextSchema,
   order: z.number().int().nonnegative(),
   color: RequiredTextSchema,
-  tint: RequiredTextSchema,
-  border: RequiredTextSchema,
+  tint: OptionalTextSchema,
+  border: OptionalTextSchema,
 });
 
 export type GraphDomain = z.infer<typeof GraphDomainSchema>;
