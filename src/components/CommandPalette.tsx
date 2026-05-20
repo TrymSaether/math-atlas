@@ -11,7 +11,7 @@ export function CommandPalette({ data }: { data: GraphData }) {
   const open = useStore((s) => s.paletteOpen);
   const setOpen = useStore((s) => s.setPaletteOpen);
   const select = useStore((s) => s.select);
-  const setView = useStore((s) => s.setView);
+  const setLayoutMode = useStore((s) => s.setLayoutMode);
   const setHighlight = useStore((s) => s.setHighlight);
   const setShowOrphans = useStore((s) => s.setShowOrphans);
   const showOrphans = useStore((s) => s.showOrphans);
@@ -77,8 +77,9 @@ export function CommandPalette({ data }: { data: GraphData }) {
                     </Command.Group>
 
                     <Command.Group heading="Actions" className="px-2 pt-3 text-[10px] uppercase tracking-widest text-[var(--muted)]">
-                      <Item onSelect={() => { setView("dependency"); setOpen(false); }}>Switch to dependency view</Item>
-                      <Item onSelect={() => { setView("cluster"); setOpen(false); }}>Switch to cluster view</Item>
+                      <Item onSelect={() => { setLayoutMode("overview"); setOpen(false); }}>Switch to overview</Item>
+                      <Item onSelect={() => { setLayoutMode("dependency"); setOpen(false); }}>Switch to dependency view</Item>
+                      <Item onSelect={() => { setLayoutMode("cluster"); setOpen(false); }}>Switch to cluster view</Item>
                       <Item onSelect={() => { setHighlight("immediate"); setOpen(false); }}>Highlight: immediate</Item>
                       <Item onSelect={() => { setHighlight("full"); setOpen(false); }}>Highlight: full path</Item>
                       <Item onSelect={() => { setShowOrphans(!showOrphans); setOpen(false); }}>{showOrphans ? "Hide" : "Show"} unlinked items</Item>

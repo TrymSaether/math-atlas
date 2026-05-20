@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ArrowUpRight, ArrowDownRight, Tag, BookOpen, Route, Hash, Network, Flag } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { useStore } from "../store";
 import { MathText, asDisplayMath } from "../lib/katex";
@@ -19,6 +19,17 @@ type Tab = "overview" | "notes" | "references";
 
 export function NodePanel({ nodeById, incomingEdgesByNodeId, outgoingEdgesByNodeId }: NodePanelProps) {
   const id = useStore((s) => s.selectedId);
+  const select = useStore((s) => s.select);
+
+  // Esc closes the overlay without affecting the rail.
+  useEffect(() => {
+    if (!id) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") select(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [id, select]);
 
   const node = useMemo(() => (id ? nodeById.get(id) ?? null : null), [id, nodeById]);
   const incoming = useMemo(() => (node ? incomingEdgesByNodeId.get(node.id) ?? [] : []), [node, incomingEdgesByNodeId]);
@@ -33,7 +44,7 @@ export function NodePanel({ nodeById, incomingEdgesByNodeId, outgoingEdgesByNode
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 24 }}
           transition={{ duration: 0.22, ease: [0.2, 0.7, 0.2, 1] }}
-          className={cn(`kind-${node.kind}`, "absolute bottom-4 right-4 top-4 z-20 w-[420px] max-w-[44vw]")}
+          className={cn(`kind-${node.kind}`, "absolute bottom-4 right-4 top-4 z-20 w-[380px] max-w-[40vw]")}
           aria-label={`${KIND_LABEL[node.kind]} details`}
         >
           <Panel className="flex h-full flex-col overflow-hidden">

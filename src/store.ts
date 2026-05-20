@@ -2,10 +2,12 @@ import { create } from "zustand";
 import { DEFAULT_MAP_ID, isMapId, type MapId } from "./data/mapRegistry";
 import { loadPerMap, savePerMap } from "./lib/persist";
 
-export type ViewMode = "dependency" | "cluster";
+export type AppView = "atlas" | "workspace";
+export type LayoutMode = "overview" | "dependency" | "cluster";
 export type HighlightMode = "immediate" | "full";
 export type SearchScope = "all" | "title";
 export type LearningState = "learned" | "in-progress" | "not-started" | "locked";
+export type RailSection = "explore" | "plan" | "filter" | "progress";
 
 const LEARNING_CYCLE: LearningState[] = ["not-started", "in-progress", "learned", "locked"];
 
@@ -29,6 +31,21 @@ function readInitialMapId(): MapId {
 
 function readInitialNodeId(): string | null {
   return currentParams().get("node");
+}
+
+function readInitialAppView(): AppView {
+  const v = currentParams().get("view");
+  return v === "workspace" ? "workspace" : "atlas";
+}
+
+function readInitialLayoutMode(): LayoutMode {
+  const v = currentParams().get("layout");
+  if (v === "dependency" || v === "cluster" || v === "overview") return v;
+  return "overview";
+}
+
+function readInitialFocusDomain(): string | null {
+  return currentParams().get("domain");
 }
 
 function setUrlParam(key: string, value: string | null) {
@@ -57,11 +74,21 @@ function readPerMap(mapId: MapId): PerMapState {
 }
 
 interface State {
+  /* -------- Top-level navigation -------- */
+  appView: AppView;
+  setAppView: (v: AppView) => void;
+  openMap: (id: MapId) => void;
+  goToAtlas: () => void;
+
   mapId: MapId;
   setMapId: (id: MapId) => void;
 
-  view: ViewMode;
-  setView: (v: ViewMode) => void;
+  /* -------- Graph layout -------- */
+  layoutMode: LayoutMode;
+  setLayoutMode: (m: LayoutMode) => void;
+  focusDomainId: string | null;
+  expandCluster: (domainId: string) => void;
+  collapseToOverview: () => void;
 
   search: string;
   setSearch: (s: string) => void;
@@ -116,6 +143,11 @@ interface State {
   toggleTopicVisibility: (t: string) => void;
   showAllTopics: () => void;
 
+  /* -------- Rail (left-side panel) -------- */
+  railSection: RailSection | null;
+  setRailSection: (s: RailSection | null) => void;
+  toggleRailSection: (s: RailSection) => void;
+
   /* -------- Learning state (persisted per map) -------- */
   learningStates: Record<string, LearningState>;
   setLearningState: (id: string, state: LearningState) => void;
@@ -142,13 +174,63 @@ const initialMapId = readInitialMapId();
 const initialPerMap = readPerMap(initialMapId);
 
 export const useStore = create<State>((set, get) => ({
+  appView: readInitialAppView(),
+  setAppView: (v) => {
+    setUrlParam("view", v);
+    if (v === "atlas") {
+      setUrlParam("node", null);
+      setUrlParam("domain", null);
+      setUrlParam("layout", null);
+    }
+    set({ appView: v });
+  },
+  openMap: (id) => {
+    setUrlParam("view", "workspace");
+    setUrlParam("map", id);
+    setUrlParam("node", null);
+    setUrlParam("domain", null);
+    setUrlParam("layout", "overview");
+    const perMap = readPerMap(id);
+    set({
+      appView: "workspace",
+      mapId: id,
+      layoutMode: "overview",
+      focusDomainId: null,
+      selectedId: null,
+      pathTargetId: null,
+      search: "",
+      kinds: new Set(),
+      topics: new Set(),
+      relations: new Set(),
+      routeFrom: null,
+      routeTo: null,
+      routePlanned: false,
+      focusMode: false,
+      railSection: null,
+      learningStates: perMap.learningStates,
+      notes: perMap.notes,
+      savedPaths: perMap.savedPaths,
+      hiddenTopics: new Set(perMap.hiddenTopics),
+    });
+  },
+  goToAtlas: () => {
+    setUrlParam("view", "atlas");
+    setUrlParam("node", null);
+    setUrlParam("domain", null);
+    setUrlParam("layout", null);
+    set({ appView: "atlas", selectedId: null, railSection: null });
+  },
+
   mapId: initialMapId,
   setMapId: (mapId) => {
     setUrlParam("map", mapId);
     setUrlParam("node", null);
+    setUrlParam("domain", null);
     const perMap = readPerMap(mapId);
     set({
       mapId,
+      layoutMode: "overview",
+      focusDomainId: null,
       selectedId: null,
       pathTargetId: null,
       search: "",
@@ -166,8 +248,22 @@ export const useStore = create<State>((set, get) => ({
     });
   },
 
-  view: "dependency",
-  setView: (v) => set({ view: v }),
+  layoutMode: readInitialLayoutMode(),
+  setLayoutMode: (m) => {
+    setUrlParam("layout", m);
+    set({ layoutMode: m });
+  },
+  focusDomainId: readInitialFocusDomain(),
+  expandCluster: (domainId) => {
+    setUrlParam("layout", "dependency");
+    setUrlParam("domain", domainId);
+    set({ layoutMode: "dependency", focusDomainId: domainId });
+  },
+  collapseToOverview: () => {
+    setUrlParam("layout", "overview");
+    setUrlParam("domain", null);
+    set({ layoutMode: "overview", focusDomainId: null });
+  },
 
   search: "",
   setSearch: (s) => set({ search: s }),
@@ -230,6 +326,11 @@ export const useStore = create<State>((set, get) => ({
       savePerMap(s.mapId, "hiddenTopics", []);
       return { hiddenTopics: new Set<string>() };
     }),
+
+  railSection: null,
+  setRailSection: (s) => set({ railSection: s }),
+  toggleRailSection: (section) =>
+    set((s) => ({ railSection: s.railSection === section ? null : section })),
 
   learningStates: initialPerMap.learningStates,
   setLearningState: (id, state) =>

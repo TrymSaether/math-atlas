@@ -1,9 +1,11 @@
-import { HelpCircle, Settings } from "lucide-react";
+import { Compass, HelpCircle, Settings } from "lucide-react";
 import { Panel } from "./ui";
 import { BrandMark } from "./topbar/BrandMark";
-import { MapSwitcher } from "./topbar/MapSwitcher";
-import { TopBarNav } from "./topbar/TopBarNav";
 import { TopBarSearch } from "./topbar/TopBarSearch";
+import { CurrentMapPill } from "./topbar/CurrentMapPill";
+import { useStore } from "../store";
+import { MAPS } from "../data";
+import { cn } from "../lib/utils";
 
 function IconButton({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -19,13 +21,31 @@ function IconButton({ label, children }: { label: string; children: React.ReactN
 }
 
 export function TopBar() {
+  const appView = useStore((s) => s.appView);
+  const goToAtlas = useStore((s) => s.goToAtlas);
+  const mapId = useStore((s) => s.mapId);
+  const inAtlas = appView === "atlas";
+
   return (
     <Panel as="header" className="mb-4 flex h-16 w-full items-center gap-4 px-4">
       <BrandMark />
-      <TopBarNav />
+      <button
+        type="button"
+        onClick={goToAtlas}
+        aria-current={inAtlas ? "page" : undefined}
+        className={cn(
+          "ml-2 hidden items-center gap-2 rounded-[8px] px-3 py-2 text-[14px] transition lg:inline-flex",
+          inAtlas
+            ? "bg-[var(--surface-muted)] font-semibold text-[var(--text)]"
+            : "font-medium text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--text-soft)]"
+        )}
+      >
+        <Compass className="h-4 w-4" />
+        Atlas
+      </button>
       <TopBarSearch />
       <div className="ml-auto flex items-center gap-1.5">
-        <MapSwitcher />
+        {!inAtlas && <CurrentMapPill label={MAPS[mapId].label} onClick={goToAtlas} />}
         <IconButton label="Help">
           <HelpCircle className="h-[18px] w-[18px]" />
         </IconButton>
