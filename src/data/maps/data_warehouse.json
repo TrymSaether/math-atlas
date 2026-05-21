@@ -1,0 +1,5544 @@
+{
+  "graph": {
+    "id": "tdt4300_knowledge_graph_v1",
+    "label": "TDT4300 Data Warehouse and Data Mining knowledge graph",
+    "field": "data_warehouse_and_data_mining",
+    "model": "directed_typed_multigraph",
+    "design_notes": [
+      "The graph follows the same item/edge/domain/view schema as the provided functional_analysis.json template.",
+      "Definitions, algorithms, processes, schemas, measures, exam recipes, and query patterns are first-class nodes.",
+      "Definitional dependencies differ from logical/algorithmic dependencies and pedagogical learning dependencies.",
+      "Exam recipes are explicit application nodes connected to the concepts they require."
+    ],
+    "source_refs": {
+      "course_plan": "2026-01-27-lecture-plan.pdf",
+      "assignment_1": "Assignment_1_TDT4300.pdf",
+      "assignment_2": "assignment_2_tdt4300.pdf",
+      "assignment_3": "assignment3_report.pdf / Assignment 3 prompt",
+      "assignment_4": "assignment_4_tdt4300.pdf",
+      "assignment_5": "Assignment_5_TDT4300.pdf",
+      "exam_set": "TDT4300 exams 2021-2025 spring/resit, questions and selected solutions",
+      "primary_books": [
+        "Han, Kamber, Pei: Data Mining: Concepts and Techniques, 3rd ed.",
+        "Tan, Steinbach, Kumar: Introduction to Data Mining"
+      ]
+    },
+    "items": [
+      {
+        "id": "tdt4300",
+        "label": "Data Warehouse and Data Mining",
+        "kind": "structure",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Course covering data warehousing, OLAP, preprocessing, association rules, clustering, classification, and web usage mining.",
+        "intuition": "A practical exam course about modelling analytical data and applying core data mining algorithms.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["course", "root"],
+          "syllabus_priority": "core",
+          "source": "Course plan Spring 2026",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "data_mining",
+        "label": "Data mining",
+        "kind": "definition",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Extraction of useful, valid, and understandable patterns or models from data.",
+        "intuition": "Turn stored data into patterns that can support decisions.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["tdt4300"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["data mining", "kdd"],
+          "syllabus_priority": "core",
+          "source": "Han/Tan curriculum",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "knowledge_discovery_process",
+        "label": "Knowledge Discovery Process (KDD)",
+        "kind": "process",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": "KDD consists of preprocessing, data mining, and post-processing.",
+        "formal_statement": null,
+        "definition": "The end-to-end workflow for converting raw data into useful knowledge.",
+        "intuition": "Most work happens before the algorithm: clean, integrate, transform, mine, evaluate.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_mining"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["kdd", "preprocessing"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 spring solution",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "data_preprocessing",
+        "label": "Data preprocessing",
+        "kind": "process",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Cleaning, integration, transformation, reduction, discretization, and sampling applied before mining.",
+        "intuition": "Make data valid and useful before trusting any model.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["knowledge_discovery_process"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["cleaning", "preprocessing"],
+          "syllabus_priority": "core",
+          "source": "Assignments/exams preprocessing sections",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "data_quality",
+        "label": "Data quality",
+        "kind": "property",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Degree to which data is accurate, complete, consistent, relevant, and non-redundant.",
+        "intuition": "Garbage in, garbage out.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_preprocessing"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["quality", "cleaning"],
+          "syllabus_priority": "core",
+          "source": "Tan chapter 2 / assignments",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "missing_values",
+        "label": "Missing values",
+        "kind": "problem",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Absent attribute values requiring deletion, imputation, or model-aware handling.",
+        "intuition": "Missingness can be noise or information; do not blindly fill it.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_quality"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["cleaning", "missing"],
+          "syllabus_priority": "core",
+          "source": "Preprocessing curriculum",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "noise_outliers",
+        "label": "Noise and outliers",
+        "kind": "problem",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Noise is random error; outliers are observations far from the main pattern and may be valid.",
+        "intuition": "Outliers are not automatically mistakes.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_quality"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["outlier", "noise"],
+          "syllabus_priority": "core",
+          "source": "Exam 2025 resit preprocessing",
+          "exam_priority": "recurring",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "normalization",
+        "label": "Normalization / scaling",
+        "kind": "process",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": "min-max: x'=(x-min)/(max-min); z-score: z=(x-\\mu)/\\sigma.",
+        "definition": "Transform numeric attributes to comparable ranges or distributions.",
+        "intuition": "Prevents large-scale attributes from dominating distance-based algorithms.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_preprocessing"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["scaling", "distance"],
+          "syllabus_priority": "core",
+          "source": "Preprocessing curriculum",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "discretization",
+        "label": "Discretization",
+        "kind": "process",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Convert continuous attributes into intervals or categorical bins.",
+        "intuition": "Useful for concept hierarchies and some classification/association tasks.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_preprocessing"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["bins", "preprocessing"],
+          "syllabus_priority": "core",
+          "source": "Exam 2025 questions",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "sampling",
+        "label": "Sampling",
+        "kind": "process",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Selecting a subset of records, e.g. simple random, with/without replacement, or stratified sampling.",
+        "intuition": "Use smaller data while preserving relevant population structure.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_preprocessing"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["sampling", "probability"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 spring questions",
+          "exam_priority": "recurring",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "stratified_sampling",
+        "label": "Stratified sampling",
+        "kind": "process",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Split data into strata/classes and sample from each stratum, often proportionally.",
+        "intuition": "Preserves minority or class structure better than blind random sampling.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["sampling"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["sampling"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 spring questions",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "attribute_types",
+        "label": "Attribute types",
+        "kind": "definition",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Nominal, binary, ordinal, interval, and ratio attributes determine which computations are meaningful.",
+        "intuition": "Do not average IDs or take distances between arbitrary names.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["data_preprocessing"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["attributes", "semantics"],
+          "syllabus_priority": "core",
+          "source": "Exam 2025 questions",
+          "exam_priority": "recurring",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "distance_measures",
+        "label": "Distance measures",
+        "kind": "definition",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": "L_p(x,y)=(\\sum_i |x_i-y_i|^p)^{1/p};\\quad L_\\infty(x,y)=\\max_i |x_i-y_i|.",
+        "definition": "Functions measuring dissimilarity between objects, including L1/Manhattan, L2/Euclidean, and L∞/Chebyshev.",
+        "intuition": "Geometry chosen by the distance measure determines nearest neighbors and clusters.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["attribute_types"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["distance", "similarity"],
+          "syllabus_priority": "core",
+          "source": "Exam 2025 resit questions",
+          "exam_priority": "recurring",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "cosine_similarity",
+        "label": "Cosine similarity",
+        "kind": "definition",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": null,
+        "formal_statement": "\\cos(x,y)=\\frac{x\\cdot y}{\\|x\\|\\|y\\|}.",
+        "definition": "Similarity based on angle rather than magnitude.",
+        "intuition": "Common for sparse text vectors; ignores document length scale.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["distance_measures"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["similarity", "text"],
+          "syllabus_priority": "core",
+          "source": "Preprocessing/web mining curriculum",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "curse_of_dimensionality",
+        "label": "Curse of dimensionality",
+        "kind": "property",
+        "domain": "foundations_kdd_preprocessing",
+        "statement": "As dimensionality increases, data become sparse and distance contrasts can weaken.",
+        "formal_statement": null,
+        "definition": "Collection of effects making high-dimensional analysis harder.",
+        "intuition": "Everything gets far away; nearest neighbor may stop meaning much.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["distance_measures"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["high-dimensional", "distance"],
+          "syllabus_priority": "core",
+          "source": "Exam 2025 questions",
+          "exam_priority": "recurring",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "data_warehouse",
+        "label": "Data warehouse",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Subject-oriented, integrated, time-variant, nonvolatile data store for analytical queries.",
+        "intuition": "Historical, cleaned, read-mostly data arranged for analysis rather than transactions.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["tdt4300"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["warehouse", "olap"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 4 / exams",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "oltp",
+        "label": "OLTP",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Operational transaction processing systems optimized for frequent inserts, updates, deletes, and concurrency.",
+        "intuition": "Runs the business now.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["data_warehouse"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["oltp", "transactions"],
+          "syllabus_priority": "core",
+          "source": "Assignment/exam topics",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "olap",
+        "label": "OLAP",
+        "kind": "process",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Online analytical processing over multidimensional data using aggregation, slicing, dicing, pivoting, drill-down, and roll-up.",
+        "intuition": "Ask aggregated business questions quickly from many angles.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_warehouse"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["olap", "cube"],
+          "syllabus_priority": "core",
+          "source": "Assignment 1 / Han chapter 4",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "data_mart",
+        "label": "Data mart",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "A subject- or department-specific subset of warehouse data.",
+        "intuition": "Smaller analytical store for one group, e.g. sales or HR.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_warehouse"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["warehouse"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 solution",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "enterprise_data_warehouse",
+        "label": "Enterprise Data Warehouse",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Warehouse spanning subjects across the entire organization.",
+        "intuition": "Central analytical memory for the company.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_warehouse"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["warehouse"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 solution",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "etl",
+        "label": "ETL",
+        "kind": "process",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Extract, transform, and load data from source systems into a warehouse.",
+        "intuition": "Move dirty operational data into clean analytical form.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_warehouse"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["data_preprocessing"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["etl", "preprocessing"],
+          "syllabus_priority": "core",
+          "source": "Assignment/exam topics",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "fact_table",
+        "label": "Fact table",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Central warehouse table storing measurements/events and foreign keys to dimensions.",
+        "intuition": "The big table of things that happened.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_warehouse"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["schema", "fact"],
+          "syllabus_priority": "core",
+          "source": "Exams 2021-2025",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "dimension_table",
+        "label": "Dimension table",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Descriptive table giving analysis axes such as time, item, location, customer, product, or device.",
+        "intuition": "The ways facts can be grouped, filtered, and explained.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_warehouse"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["schema", "dimension"],
+          "syllabus_priority": "core",
+          "source": "Exams 2021-2025",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "measure",
+        "label": "Measure",
+        "kind": "definition",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Numerical quantity stored or derived in the fact table, e.g. sales, count, duration, price, quantity.",
+        "intuition": "What you aggregate.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["fact_table"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["measure", "aggregate"],
+          "syllabus_priority": "core",
+          "source": "Assignments/exams",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "concept_hierarchy",
+        "label": "Concept hierarchy",
+        "kind": "construction",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Ordered granularity levels in a dimension, e.g. day→month→year or city→country→continent.",
+        "intuition": "The path for roll-up and drill-down.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["dimension_table"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["hierarchy", "dimension"],
+          "syllabus_priority": "core",
+          "source": "Assignments/exams",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "star_schema",
+        "label": "Star schema",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Schema with one central fact table connected directly to denormalized dimension tables.",
+        "intuition": "Simple, fast joins; redundancy is accepted for analytics.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "fact_table",
+            "dimension_table",
+            "measure"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["schema", "star"],
+          "syllabus_priority": "core",
+          "source": "Assignments 1/5 and exams",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "snowflake_schema",
+        "label": "Snowflake schema",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Normalized variant of a star schema where dimension hierarchies are split into multiple tables.",
+        "intuition": "Less redundancy, more joins.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["star_schema", "concept_hierarchy"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["schema", "snowflake"],
+          "syllabus_priority": "core",
+          "source": "Exams 2021, 2022, 2025",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "fact_constellation",
+        "label": "Fact constellation",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Multiple fact tables sharing dimension tables.",
+        "intuition": "Several business processes analyzed through common dimensions.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["fact_table", "dimension_table"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["schema"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 4",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "data_cube",
+        "label": "Data cube",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Multidimensional model organizing measures by dimensions and hierarchy levels.",
+        "intuition": "A generalized pivot table with dimensions as analysis axes.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "measure",
+            "dimension_table",
+            "concept_hierarchy"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["cube", "olap"],
+          "syllabus_priority": "core",
+          "source": "Assignment 1 / exams",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "cuboid",
+        "label": "Cuboid",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "A particular group-by level combination in a data cube lattice.",
+        "intuition": "One aggregate table/view from the cube.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_cube", "concept_hierarchy"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["cube", "cuboid"],
+          "syllabus_priority": "core",
+          "source": "Assignment 5 / exams",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "base_cuboid",
+        "label": "Base cuboid",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "The cuboid at the lowest granularity level.",
+        "intuition": "Most detailed cube level.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["cuboid"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["cube"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 4",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "apex_cuboid",
+        "label": "Apex cuboid",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "The all-level cuboid aggregating over all dimensions.",
+        "intuition": "One grand total cell.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["cuboid"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["cube"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 4",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "cube_lattice",
+        "label": "Cube lattice",
+        "kind": "structure",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "The partial order of cuboids from detailed to aggregate levels.",
+        "intuition": "All possible roll-up states of a cube.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["cuboid"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["cube", "lattice"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 5 / exams",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "cube_operator",
+        "label": "SQL CUBE operator",
+        "kind": "construction",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": "For n dimensions without hierarchies, CUBE generates 2^n group-by combinations; with m values per dimension, cells scale as (m+1)^n.",
+        "definition": "Operator computing aggregations over all subsets of dimensions.",
+        "intuition": "All GROUP BY combinations at once.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_cube", "cuboid"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["cube", "sql"],
+          "syllabus_priority": "core",
+          "source": "Exam 2025",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "olap_operation",
+        "label": "OLAP operation",
+        "kind": "process",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Transformation over cube granularity or selection: roll-up, drill-down, slice, dice, pivot.",
+        "intuition": "Move around the cube.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_cube"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["olap"],
+          "syllabus_priority": "core",
+          "source": "Assignments/exams",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "roll_up",
+        "label": "ROLL-UP",
+        "kind": "process",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Aggregate from lower to higher hierarchy level, e.g. city→country or day→year.",
+        "intuition": "Zoom out.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["olap_operation", "concept_hierarchy"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["olap", "rollup"],
+          "syllabus_priority": "core",
+          "source": "Exams / Assignment 1",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "drill_down",
+        "label": "DRILL-DOWN",
+        "kind": "process",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Move from higher to lower hierarchy level, e.g. year→month→day.",
+        "intuition": "Zoom in.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["olap_operation", "concept_hierarchy"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["olap", "drilldown"],
+          "syllabus_priority": "core",
+          "source": "Exams / Assignment 1",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "slice",
+        "label": "SLICE",
+        "kind": "process",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Fix one dimension value, reducing cube dimensionality.",
+        "intuition": "Take one layer of the cube.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["olap_operation"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["olap", "slice"],
+          "syllabus_priority": "core",
+          "source": "Exams / Assignment 1",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "dice",
+        "label": "DICE",
+        "kind": "process",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Filter on multiple dimension values or ranges to form a subcube.",
+        "intuition": "Cut out the relevant block.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["olap_operation"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["olap", "dice"],
+          "syllabus_priority": "core",
+          "source": "Exams / Assignment 1",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "pivot",
+        "label": "PIVOT",
+        "kind": "process",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Rotate/reorient dimensions in a cross-tab or cube view.",
+        "intuition": "Same data, different axes.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["olap_operation"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["olap", "pivot"],
+          "syllabus_priority": "core",
+          "source": "Exams / Assignment 1",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "mdx",
+        "label": "MDX",
+        "kind": "notation",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Multidimensional expression language for querying OLAP cubes.",
+        "intuition": "SQL-ish language for cube axes, members, measures, and slicers.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_cube", "olap"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["mdx", "pentaho"],
+          "syllabus_priority": "core",
+          "source": "Assignment 1",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "slicer_axis",
+        "label": "Slicer axis",
+        "kind": "construction",
+        "domain": "data_warehouse_olap",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "MDX WHERE clause restricting the cube context without placing the dimension on rows or columns.",
+        "intuition": "A global cube filter.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["mdx", "slice"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["mdx", "slice"],
+          "syllabus_priority": "core",
+          "source": "Assignment 1",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "molap",
+        "label": "MOLAP",
+        "kind": "architecture",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "OLAP architecture using array-based multidimensional storage engines.",
+        "intuition": "Store cube-like arrays directly for fast lookup and aggregation.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_cube"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["molap", "storage"],
+          "syllabus_priority": "core",
+          "source": "Exam 2025 resit",
+          "exam_priority": "recurring",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "rolap",
+        "label": "ROLAP",
+        "kind": "architecture",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "OLAP architecture storing warehouse data in relational tables and answering OLAP through SQL.",
+        "intuition": "Cubes on top of relational databases.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["star_schema", "snowflake_schema"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["rolap", "storage"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 4",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "holap",
+        "label": "HOLAP",
+        "kind": "architecture",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Hybrid OLAP combining relational storage for detail with multidimensional storage for aggregates.",
+        "intuition": "Use relational scale and MOLAP speed where each fits.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["molap", "rolap"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["holap", "storage"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 4",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "cube_materialization",
+        "label": "Cube materialization",
+        "kind": "process",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Precomputing cuboids to speed up OLAP query processing.",
+        "intuition": "Trade storage and refresh cost for low query latency.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["cube_lattice"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["materialization", "cuboids"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 5 / exams",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "full_materialization",
+        "label": "Full materialization",
+        "kind": "process",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Precompute every cuboid in the cube lattice.",
+        "intuition": "Fast queries, huge memory/storage.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["cube_materialization"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["materialization"],
+          "syllabus_priority": "core",
+          "source": "Exam 2025 resit",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "partial_materialization",
+        "label": "Partial materialization",
+        "kind": "process",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Precompute a selected subset of useful cuboids.",
+        "intuition": "Compromise between speed and storage.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["cube_materialization"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["materialization"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 5",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "iceberg_cube",
+        "label": "Iceberg cube",
+        "kind": "structure",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Cube containing only cells satisfying an aggregate threshold such as min support.",
+        "intuition": "Store only large/interesting aggregates.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["data_cube"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["cube", "iceberg"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 5",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "bitmap_index",
+        "label": "Bitmap index",
+        "kind": "construction",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "For each attribute value, store a bit vector marking rows/facts where that value occurs.",
+        "intuition": "Boolean AND/OR bit operations answer low-cardinality filters fast.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["dimension_table", "fact_table"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["index", "bitmap"],
+          "syllabus_priority": "core",
+          "source": "Exams 2021, 2024, 2025",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "join_index",
+        "label": "Join index",
+        "kind": "construction",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Precomputed mapping from dimension values/row IDs to fact table rows participating in joins.",
+        "intuition": "Skip expensive star joins by remembering which fact rows match.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "star_schema",
+            "fact_table",
+            "dimension_table"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["index", "join"],
+          "syllabus_priority": "core",
+          "source": "Exam 2023 / Exam 2025",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "btree_index",
+        "label": "B-tree index",
+        "kind": "construction",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Tree index suited for selective lookups and ranges, less ideal for low-cardinality warehouse attributes.",
+        "intuition": "Great for OLTP-style point/range lookup; often not the best star-schema bitmap filter tool.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["oltp", "data_warehouse"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["index", "btree"],
+          "syllabus_priority": "core",
+          "source": "Exam 2023",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "star_join_query",
+        "label": "Star-join query",
+        "kind": "query_pattern",
+        "domain": "cube_materialization_indexing",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Query joining a fact table to multiple dimensions, filtering on dimension attributes, then grouping measures.",
+        "intuition": "Classic warehouse query targeted by bitmap/join indexes.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "star_schema",
+            "fact_table",
+            "dimension_table"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["query", "index"],
+          "syllabus_priority": "core",
+          "source": "Exam 2025",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "association_rule_mining",
+        "label": "Association rule mining",
+        "kind": "process",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Find frequent itemsets and implication-like rules in transaction data.",
+        "intuition": "Market basket analysis: items that occur together.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["data_mining"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["association", "market basket"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2 / Assignment 5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "transaction_database",
+        "label": "Transaction database",
+        "kind": "structure",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Collection of transactions, each containing a set of items.",
+        "intuition": "Rows are baskets/playlists/sessions; entries are items.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["association_rule_mining"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["transactions"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2 / Assignment 5",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "itemset",
+        "label": "Itemset",
+        "kind": "definition",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "A set of items occurring in transactions.",
+        "intuition": "Candidate pattern in baskets.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["transaction_database"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["itemset"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "support",
+        "label": "Support",
+        "kind": "measure",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": "support(X)=\\frac{|\\{t:X\\subseteq t\\}|}{|D|}.",
+        "definition": "Fraction or count of transactions containing an itemset.",
+        "intuition": "How common a pattern is.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["itemset", "transaction_database"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["support"],
+          "syllabus_priority": "core",
+          "source": "Assignments 2/5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "frequent_itemset",
+        "label": "Frequent itemset",
+        "kind": "definition",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Itemset whose support is at least minsup.",
+        "intuition": "A pattern common enough to be considered.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["itemset", "support"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["frequent itemset"],
+          "syllabus_priority": "core",
+          "source": "Assignments 2/5",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "confidence",
+        "label": "Confidence",
+        "kind": "measure",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": "conf(X\\Rightarrow Y)=support(X\\cup Y)/support(X).",
+        "definition": "Conditional probability-like strength of a rule.",
+        "intuition": "Among transactions with X, how often Y also appears.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["support"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["confidence", "rule"],
+          "syllabus_priority": "core",
+          "source": "Assignments 2/5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "lift",
+        "label": "Lift",
+        "kind": "measure",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": "lift(X\\Rightarrow Y)=confidence(X\\Rightarrow Y)/support(Y).",
+        "definition": "Association strength relative to independence.",
+        "intuition": "Confidence corrected for how common Y already is.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["confidence", "support"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["lift", "interestingness"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 6",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "association_rule",
+        "label": "Association rule",
+        "kind": "definition",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": "X\\Rightarrow Y,\\quad X\\cap Y=\\varnothing.",
+        "definition": "Rule generated from a frequent itemset using confidence threshold.",
+        "intuition": "When X appears, Y tends to appear.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["frequent_itemset", "confidence"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["rule"],
+          "syllabus_priority": "core",
+          "source": "Assignments 2/5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "apriori_algorithm",
+        "label": "Apriori algorithm",
+        "kind": "algorithm",
+        "domain": "association_pattern_mining",
+        "statement": "Generate candidate k-itemsets from frequent (k-1)-itemsets and prune using downward closure.",
+        "formal_statement": null,
+        "definition": "Level-wise frequent itemset mining algorithm using the Apriori property.",
+        "intuition": "If a set is frequent, all subsets must be frequent; if a subset is infrequent, prune the superset.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["frequent_itemset", "support"],
+          "logical_dependency": ["apriori_property"],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["apriori", "algorithm"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2 / Assignment 5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "apriori_property",
+        "label": "Apriori property",
+        "kind": "property",
+        "domain": "association_pattern_mining",
+        "statement": "All nonempty subsets of a frequent itemset are frequent; any superset of an infrequent itemset is infrequent.",
+        "formal_statement": null,
+        "definition": "Anti-monotonicity of support.",
+        "intuition": "Pruning engine of Apriori.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["support", "itemset"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["pruning", "anti-monotone"],
+          "syllabus_priority": "core",
+          "source": "Han chapter 6 / Assignment 2",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "fp_growth",
+        "label": "FP-growth",
+        "kind": "algorithm",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Frequent pattern-growth algorithm using a compressed FP-tree and conditional pattern bases instead of candidate generation.",
+        "intuition": "Compress transactions once, then mine conditional subtrees.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "frequent_itemset",
+            "fp_tree",
+            "conditional_pattern_base"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["fp-growth", "fp-tree"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "fp_tree",
+        "label": "FP-tree",
+        "kind": "structure",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Compressed prefix tree storing frequent items in support-descending order with counts and links.",
+        "intuition": "Shared transaction prefixes reduce repeated scanning.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["transaction_database", "support"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["fp-tree"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "conditional_pattern_base",
+        "label": "Conditional pattern base",
+        "kind": "structure",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Set of prefix paths co-occurring with a suffix item in an FP-tree.",
+        "intuition": "The local transaction database for one suffix pattern.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["fp_tree"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["fp-growth"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "eclat_algorithm",
+        "label": "ECLAT algorithm",
+        "kind": "algorithm",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Frequent itemset mining using vertical TID-set intersections.",
+        "intuition": "Support becomes set intersection size.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["frequent_itemset", "tidset"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["eclat", "vertical"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "tidset",
+        "label": "TID-set",
+        "kind": "structure",
+        "domain": "association_pattern_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Set of transaction IDs containing an itemset.",
+        "intuition": "Vertical representation of transaction data.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["transaction_database", "itemset"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["eclat", "vertical"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "clustering",
+        "label": "Clustering",
+        "kind": "process",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Unsupervised grouping of objects so that objects in the same cluster are more similar than those in different clusters.",
+        "intuition": "Find natural groups without labels.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["distance_measures"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["data_mining"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["clustering"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3 / Tan chapter 8",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "kmeans",
+        "label": "K-means clustering",
+        "kind": "algorithm",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Partitioning algorithm alternating between assigning points to nearest centroid and updating centroids.",
+        "intuition": "Fit k spherical-ish clusters by moving means.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "clustering",
+            "centroid",
+            "distance_measures"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["kmeans"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "centroid",
+        "label": "Centroid",
+        "kind": "object",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": "\\mu_C=\\frac1{|C|}\\sum_{x\\in C}x.",
+        "definition": "Mean representative of a cluster.",
+        "intuition": "Cluster center for numeric data.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["distance_measures"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["kmeans"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "silhouette_coefficient",
+        "label": "Silhouette coefficient",
+        "kind": "measure",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": "s(i)=\\frac{b(i)-a(i)}{\\max\\{a(i),b(i)\\}}.",
+        "definition": "Cluster validation measure comparing within-cluster distance a(i) with nearest-other-cluster distance b(i).",
+        "intuition": "Near 1 means well placed; near 0 boundary; negative likely wrong cluster.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["clustering", "distance_measures"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["validation", "silhouette"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "hierarchical_clustering",
+        "label": "Hierarchical clustering",
+        "kind": "algorithm",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Build nested clusters using agglomerative merging or divisive splitting.",
+        "intuition": "A dendrogram of groups at multiple scales.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["clustering", "linkage"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["hac", "hierarchical"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3 / Tan chapter 8",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "linkage",
+        "label": "Linkage",
+        "kind": "definition",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Distance between clusters, e.g. single-link, complete-link, average-link.",
+        "intuition": "How HAC decides which clusters are closest.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["distance_measures"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["hac"],
+          "syllabus_priority": "core",
+          "source": "Tan chapter 8",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "dbscan",
+        "label": "DBSCAN",
+        "kind": "algorithm",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Density-based clustering using Eps and MinPts to form clusters of density-connected points.",
+        "intuition": "Find dense blobs and mark sparse leftovers as noise.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "clustering",
+            "eps_neighborhood",
+            "core_border_noise"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["dbscan", "density"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "eps_neighborhood",
+        "label": "Eps-neighborhood",
+        "kind": "definition",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Set of points within distance Eps of a given point.",
+        "intuition": "Local neighborhood for DBSCAN density.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["distance_measures"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["dbscan"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "core_border_noise",
+        "label": "Core, border, and noise points",
+        "kind": "definition",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Core has at least MinPts points in Eps-neighborhood; border is reachable from a core but not core; noise is neither.",
+        "intuition": "DBSCAN labels points by local density role.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["eps_neighborhood"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["dbscan"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "cluster_validation",
+        "label": "Cluster validation",
+        "kind": "process",
+        "domain": "clustering",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Assess clustering quality using internal, external, or relative measures.",
+        "intuition": "Unsupervised output still needs sanity checks.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["clustering"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["validation"],
+          "syllabus_priority": "core",
+          "source": "Tan chapter 8 / Assignment 3",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "classification",
+        "label": "Classification",
+        "kind": "process",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Supervised learning task of assigning records to predefined classes.",
+        "intuition": "Learn labels from labelled examples.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["data_mining"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["classification"],
+          "syllabus_priority": "core",
+          "source": "Assignment 4 / Assignment 5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "training_test_split",
+        "label": "Train/test split",
+        "kind": "process",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Partition labelled data into training data used for fitting and test data used for evaluation.",
+        "intuition": "Do not evaluate on the same data you trained on.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["classification"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["evaluation"],
+          "syllabus_priority": "core",
+          "source": "Assignment 4",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "knn_classifier",
+        "label": "k-Nearest Neighbours",
+        "kind": "algorithm",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Classify by majority label among the k closest training examples.",
+        "intuition": "Local voting in feature space.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["classification", "distance_measures"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["knn", "distance"],
+          "syllabus_priority": "core",
+          "source": "Assignment 4",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "decision_tree",
+        "label": "Decision tree",
+        "kind": "algorithm",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Tree classifier splitting records by attribute tests until leaves predict class labels.",
+        "intuition": "Nested if-then rules learned from data.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["classification", "split_criterion"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["decision tree"],
+          "syllabus_priority": "core",
+          "source": "Assignment 4 / Assignment 5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "split_criterion",
+        "label": "Split criterion",
+        "kind": "measure",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Impurity or gain measure used to choose decision-tree splits.",
+        "intuition": "Pick the split that makes child nodes purer.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["decision_tree"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["gini", "entropy"],
+          "syllabus_priority": "core",
+          "source": "Assignment 5",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "gini_index",
+        "label": "Gini index",
+        "kind": "measure",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": "Gini(D)=1-\\sum_i p_i^2.",
+        "definition": "Impurity measure for class distribution in a node.",
+        "intuition": "Zero means pure; higher means mixed labels.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["split_criterion"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["gini", "decision tree"],
+          "syllabus_priority": "core",
+          "source": "Assignment 5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "entropy_information_gain",
+        "label": "Entropy and information gain",
+        "kind": "measure",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": "H(D)=-\\sum_i p_i\\log_2 p_i;\\quad Gain=H(parent)-\\sum_v \\frac{|D_v|}{|D|}H(D_v).",
+        "definition": "Impurity and reduction in impurity used by decision-tree algorithms.",
+        "intuition": "Prefer splits that reduce uncertainty most.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["split_criterion"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["entropy", "information gain"],
+          "syllabus_priority": "core",
+          "source": "Classification curriculum",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "tree_pruning",
+        "label": "Tree pruning",
+        "kind": "process",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Reduce decision-tree complexity by removing branches to improve generalization.",
+        "intuition": "Fight overfitting by cutting brittle details.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["decision_tree", "overfitting"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["pruning", "overfitting"],
+          "syllabus_priority": "core",
+          "source": "Assignment 5",
+          "exam_priority": "recurring",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "stopping_conditions",
+        "label": "Stopping conditions",
+        "kind": "definition",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Rules to stop splitting, e.g. pure node, no attributes, too few records, max depth, or no gain.",
+        "intuition": "Prevent infinite or useless tree growth.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["decision_tree"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["decision tree"],
+          "syllabus_priority": "core",
+          "source": "Assignment 5",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "confusion_matrix",
+        "label": "Confusion matrix",
+        "kind": "measure",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Table of predicted vs actual labels: TP, FP, TN, FN.",
+        "intuition": "Shows exactly what kinds of errors a classifier makes.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["classification"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["evaluation"],
+          "syllabus_priority": "core",
+          "source": "Assignment 4",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "accuracy_precision_recall_f1",
+        "label": "Accuracy, precision, recall, F1",
+        "kind": "measure",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": "accuracy=(TP+TN)/N; precision=TP/(TP+FP); recall=TP/(TP+FN); F1=2PR/(P+R).",
+        "definition": "Standard classification evaluation metrics.",
+        "intuition": "Accuracy counts total correctness; precision and recall separate false positives/false negatives.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["confusion_matrix"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["metrics"],
+          "syllabus_priority": "core",
+          "source": "Assignment 4",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "overfitting",
+        "label": "Overfitting",
+        "kind": "problem",
+        "domain": "classification",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Model fits training data too closely and generalizes poorly.",
+        "intuition": "Memorizing the exam solutions rather than learning the method.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["training_test_split"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["generalization"],
+          "syllabus_priority": "core",
+          "source": "Assignment 4 / Assignment 5",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "web_mining",
+        "label": "Web mining",
+        "kind": "process",
+        "domain": "web_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Mining useful knowledge from web content, hyperlink structure, and usage logs.",
+        "intuition": "Data mining applied to pages, links, and user behavior.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": ["data_mining"],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["web mining"],
+          "syllabus_priority": "core",
+          "source": "Course plan / Web Data Mining",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "web_content_mining",
+        "label": "Web content mining",
+        "kind": "process",
+        "domain": "web_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Extract information from page content such as terms, text, metadata, and documents.",
+        "intuition": "Mine what pages say.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["web_mining"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["content"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 / Web mining curriculum",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "web_usage_mining",
+        "label": "Web usage mining",
+        "kind": "process",
+        "domain": "web_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Mine user behavior patterns from web/server logs and interactions.",
+        "intuition": "Mine what users do.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["web_mining"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["usage logs"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 / Web Data Mining",
+          "exam_priority": "recurring",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "web_structure_mining",
+        "label": "Web structure mining",
+        "kind": "process",
+        "domain": "web_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Mine hyperlink graph structure between pages.",
+        "intuition": "Mine how pages point to each other.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["web_mining"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["links"],
+          "syllabus_priority": "core",
+          "source": "Web Data Mining",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "log_preprocessing",
+        "label": "Web log preprocessing",
+        "kind": "process",
+        "domain": "web_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Clean logs, identify users/sessions/resources, remove irrelevant requests, and build analysis matrices.",
+        "intuition": "Raw log lines must become user-resource events.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["web_usage_mining", "data_preprocessing"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["logs", "preprocessing"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 spring",
+          "exam_priority": "recurring",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "user_resource_matrix",
+        "label": "User-resource matrix",
+        "kind": "structure",
+        "domain": "web_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Binary/count matrix associating users with accessed web resources.",
+        "intuition": "Rows are users, columns are pages/resources.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["log_preprocessing"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["matrix", "web usage"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 solution",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "resource_term_matrix",
+        "label": "Resource-term matrix",
+        "kind": "structure",
+        "domain": "web_mining",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "Matrix associating resources with terms extracted from their content.",
+        "intuition": "Rows are documents/resources, columns are words.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "web_content_mining",
+            "data_preprocessing"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["matrix", "text"],
+          "syllabus_priority": "core",
+          "source": "Exam 2024 solution",
+          "exam_priority": null,
+          "proof_required": false
+        }
+      },
+      {
+        "id": "schema_design_exam_recipe",
+        "label": "Schema design exam recipe",
+        "kind": "application",
+        "domain": "exam_patterns_applications",
+        "statement": "Identify grain, facts/measures, dimensions, hierarchies, then draw star or snowflake schema.",
+        "formal_statement": null,
+        "definition": "Reusable answer template for warehouse modelling tasks.",
+        "intuition": "Start with what one fact row means; everything else follows.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [
+            "star_schema",
+            "snowflake_schema",
+            "concept_hierarchy",
+            "measure"
+          ],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["exam", "schema"],
+          "syllabus_priority": "core",
+          "source": "Exams 2021-2025",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "olap_sequence_exam_recipe",
+        "label": "OLAP sequence exam recipe",
+        "kind": "application",
+        "domain": "exam_patterns_applications",
+        "statement": "Translate query text into roll-up/drill-down/slice/dice/pivot operations.",
+        "formal_statement": null,
+        "definition": "Reusable answer template for OLAP operation questions.",
+        "intuition": "Map every phrase: where? when? what category? which filter?",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [
+            "roll_up",
+            "drill_down",
+            "slice",
+            "dice",
+            "pivot"
+          ],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["exam", "olap"],
+          "syllabus_priority": "core",
+          "source": "Exams 2021-2025",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "indexing_exam_recipe",
+        "label": "Indexing exam recipe",
+        "kind": "application",
+        "domain": "exam_patterns_applications",
+        "statement": "For low-cardinality warehouse filters use bitmap indexes; for star joins use join indexes.",
+        "formal_statement": null,
+        "definition": "Reusable answer template for bitmap/join index questions.",
+        "intuition": "Turn filters into bit-vector intersections and joins into precomputed row mappings.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [
+            "bitmap_index",
+            "join_index",
+            "star_join_query"
+          ],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["exam", "indexing"],
+          "syllabus_priority": "core",
+          "source": "Exams 2021, 2023, 2025",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "apriori_exam_recipe",
+        "label": "Apriori exam recipe",
+        "kind": "application",
+        "domain": "exam_patterns_applications",
+        "statement": "Compute L1, generate C2/L2, continue by join+prune, then derive rules with confidence.",
+        "formal_statement": null,
+        "definition": "Reusable answer template for Apriori itemset/rule questions.",
+        "intuition": "Count, prune, join, count, then rules.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [
+            "apriori_algorithm",
+            "support",
+            "confidence",
+            "association_rule"
+          ],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["exam", "association"],
+          "syllabus_priority": "core",
+          "source": "Assignments 2/5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "fpgrowth_exam_recipe",
+        "label": "FP-growth exam recipe",
+        "kind": "application",
+        "domain": "exam_patterns_applications",
+        "statement": "Count item supports, filter/order items, build FP-tree, mine conditional pattern bases and conditional FP-trees.",
+        "formal_statement": null,
+        "definition": "Reusable answer template for FP-growth questions.",
+        "intuition": "Compress first, mine recursively.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [
+            "fp_growth",
+            "fp_tree",
+            "conditional_pattern_base"
+          ],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["exam", "fp-growth"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "eclat_exam_recipe",
+        "label": "ECLAT exam recipe",
+        "kind": "application",
+        "domain": "exam_patterns_applications",
+        "statement": "Convert items to TID-sets, intersect TID-sets, keep itemsets meeting min support.",
+        "formal_statement": null,
+        "definition": "Reusable answer template for ECLAT questions.",
+        "intuition": "Support by set intersection.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": ["eclat_algorithm", "tidset", "support"],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["exam", "eclat"],
+          "syllabus_priority": "core",
+          "source": "Assignment 2",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "dbscan_exam_recipe",
+        "label": "DBSCAN exam recipe",
+        "kind": "application",
+        "domain": "exam_patterns_applications",
+        "statement": "Compute Eps-neighborhoods, mark core/border/noise, connect density-reachable cores into clusters.",
+        "formal_statement": null,
+        "definition": "Reusable answer template for DBSCAN point-set questions.",
+        "intuition": "Count neighbors, then grow dense regions.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [
+            "dbscan",
+            "eps_neighborhood",
+            "core_border_noise"
+          ],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["exam", "dbscan"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "decision_tree_exam_recipe",
+        "label": "Decision-tree exam recipe",
+        "kind": "application",
+        "domain": "exam_patterns_applications",
+        "statement": "Compute class distribution, impurity before split, weighted child impurity, choose best reduction; mention pruning/stopping.",
+        "formal_statement": null,
+        "definition": "Reusable answer template for decision-tree questions.",
+        "intuition": "Pure children are good; overgrown trees overfit.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [
+            "decision_tree",
+            "gini_index",
+            "entropy_information_gain",
+            "tree_pruning",
+            "stopping_conditions"
+          ],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["exam", "decision tree"],
+          "syllabus_priority": "core",
+          "source": "Assignment 5",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      },
+      {
+        "id": "clustering_method_choice_recipe",
+        "label": "Clustering method choice recipe",
+        "kind": "application",
+        "domain": "exam_patterns_applications",
+        "statement": "Choose K-means for known k/spherical numeric clusters, HAC for hierarchy/small data, DBSCAN for arbitrary shapes/noise.",
+        "formal_statement": null,
+        "definition": "Reusable answer template for conceptual clustering-method selection.",
+        "intuition": "Match algorithm assumptions to data geometry.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [
+            "kmeans",
+            "hierarchical_clustering",
+            "dbscan",
+            "distance_measures"
+          ],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["exam", "clustering"],
+          "syllabus_priority": "core",
+          "source": "Assignment 3",
+          "exam_priority": "main_pattern",
+          "proof_required": false
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e001",
+        "source": "tdt4300",
+        "target": "data_mining",
+        "type": "introduces",
+        "dependency_class": "pedagogical_dependency",
+        "label": "TDT4300 introduces data_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e002",
+        "source": "tdt4300",
+        "target": "data_warehouse",
+        "type": "introduces",
+        "dependency_class": "pedagogical_dependency",
+        "label": "TDT4300 introduces data_warehouse",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e003",
+        "source": "tdt4300",
+        "target": "olap",
+        "type": "introduces",
+        "dependency_class": "pedagogical_dependency",
+        "label": "TDT4300 introduces olap",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e004",
+        "source": "tdt4300",
+        "target": "association_rule_mining",
+        "type": "introduces",
+        "dependency_class": "pedagogical_dependency",
+        "label": "TDT4300 introduces association_rule_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e005",
+        "source": "tdt4300",
+        "target": "clustering",
+        "type": "introduces",
+        "dependency_class": "pedagogical_dependency",
+        "label": "TDT4300 introduces clustering",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e006",
+        "source": "tdt4300",
+        "target": "classification",
+        "type": "introduces",
+        "dependency_class": "pedagogical_dependency",
+        "label": "TDT4300 introduces classification",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e007",
+        "source": "tdt4300",
+        "target": "web_mining",
+        "type": "introduces",
+        "dependency_class": "pedagogical_dependency",
+        "label": "TDT4300 introduces web_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e008",
+        "source": "data_mining",
+        "target": "tdt4300",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "data_mining prerequisite_for tdt4300",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e009",
+        "source": "knowledge_discovery_process",
+        "target": "data_mining",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "knowledge_discovery_process requires data_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e010",
+        "source": "data_preprocessing",
+        "target": "knowledge_discovery_process",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "data_preprocessing prerequisite_for knowledge_discovery_process",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e011",
+        "source": "data_quality",
+        "target": "data_preprocessing",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "data_quality requires data_preprocessing",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e012",
+        "source": "missing_values",
+        "target": "data_quality",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "missing_values requires data_quality",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e013",
+        "source": "noise_outliers",
+        "target": "data_quality",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "noise_outliers requires data_quality",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e014",
+        "source": "normalization",
+        "target": "data_preprocessing",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "normalization requires data_preprocessing",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e015",
+        "source": "discretization",
+        "target": "data_preprocessing",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "discretization requires data_preprocessing",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e016",
+        "source": "sampling",
+        "target": "data_preprocessing",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "sampling requires data_preprocessing",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e017",
+        "source": "stratified_sampling",
+        "target": "sampling",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "stratified_sampling requires sampling",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e018",
+        "source": "attribute_types",
+        "target": "data_preprocessing",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "attribute_types prerequisite_for data_preprocessing",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e019",
+        "source": "distance_measures",
+        "target": "attribute_types",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "distance_measures requires attribute_types",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e020",
+        "source": "cosine_similarity",
+        "target": "distance_measures",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "cosine_similarity requires distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e021",
+        "source": "curse_of_dimensionality",
+        "target": "distance_measures",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "curse_of_dimensionality requires distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e022",
+        "source": "data_warehouse",
+        "target": "tdt4300",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "data_warehouse prerequisite_for tdt4300",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e023",
+        "source": "oltp",
+        "target": "data_warehouse",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "oltp prerequisite_for data_warehouse",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e024",
+        "source": "olap",
+        "target": "data_warehouse",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "olap requires data_warehouse",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e025",
+        "source": "data_mart",
+        "target": "data_warehouse",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "data_mart requires data_warehouse",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e026",
+        "source": "enterprise_data_warehouse",
+        "target": "data_warehouse",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "enterprise_data_warehouse requires data_warehouse",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e027",
+        "source": "etl",
+        "target": "data_warehouse",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "etl requires data_warehouse",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e028",
+        "source": "etl",
+        "target": "data_preprocessing",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "etl prerequisite_for data_preprocessing",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e029",
+        "source": "fact_table",
+        "target": "data_warehouse",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "fact_table requires data_warehouse",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e030",
+        "source": "dimension_table",
+        "target": "data_warehouse",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "dimension_table requires data_warehouse",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e031",
+        "source": "measure",
+        "target": "fact_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "measure requires fact_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e032",
+        "source": "concept_hierarchy",
+        "target": "dimension_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "concept_hierarchy requires dimension_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e033",
+        "source": "star_schema",
+        "target": "fact_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "star_schema requires fact_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e034",
+        "source": "star_schema",
+        "target": "dimension_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "star_schema requires dimension_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e035",
+        "source": "star_schema",
+        "target": "measure",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "star_schema requires measure",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e036",
+        "source": "snowflake_schema",
+        "target": "star_schema",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "snowflake_schema requires star_schema",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e037",
+        "source": "snowflake_schema",
+        "target": "concept_hierarchy",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "snowflake_schema requires concept_hierarchy",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e038",
+        "source": "fact_constellation",
+        "target": "fact_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "fact_constellation requires fact_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e039",
+        "source": "fact_constellation",
+        "target": "dimension_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "fact_constellation requires dimension_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e040",
+        "source": "data_cube",
+        "target": "measure",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "data_cube requires measure",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e041",
+        "source": "data_cube",
+        "target": "dimension_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "data_cube requires dimension_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e042",
+        "source": "data_cube",
+        "target": "concept_hierarchy",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "data_cube requires concept_hierarchy",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e043",
+        "source": "cuboid",
+        "target": "data_cube",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "cuboid requires data_cube",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e044",
+        "source": "cuboid",
+        "target": "concept_hierarchy",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "cuboid requires concept_hierarchy",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e045",
+        "source": "base_cuboid",
+        "target": "cuboid",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "base_cuboid requires cuboid",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e046",
+        "source": "apex_cuboid",
+        "target": "cuboid",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "apex_cuboid requires cuboid",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e047",
+        "source": "cube_lattice",
+        "target": "cuboid",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "cube_lattice requires cuboid",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e048",
+        "source": "cube_operator",
+        "target": "data_cube",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "cube_operator requires data_cube",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e049",
+        "source": "cube_operator",
+        "target": "cuboid",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "cube_operator requires cuboid",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e050",
+        "source": "olap_operation",
+        "target": "data_cube",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "olap_operation requires data_cube",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e051",
+        "source": "roll_up",
+        "target": "olap_operation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "roll_up requires olap_operation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e052",
+        "source": "roll_up",
+        "target": "concept_hierarchy",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "roll_up requires concept_hierarchy",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e053",
+        "source": "drill_down",
+        "target": "olap_operation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "drill_down requires olap_operation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e054",
+        "source": "drill_down",
+        "target": "concept_hierarchy",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "drill_down requires concept_hierarchy",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e055",
+        "source": "slice",
+        "target": "olap_operation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "slice requires olap_operation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e056",
+        "source": "dice",
+        "target": "olap_operation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "dice requires olap_operation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e057",
+        "source": "pivot",
+        "target": "olap_operation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "pivot requires olap_operation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e058",
+        "source": "mdx",
+        "target": "data_cube",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "mdx requires data_cube",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e059",
+        "source": "mdx",
+        "target": "olap",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "mdx requires olap",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e060",
+        "source": "slicer_axis",
+        "target": "mdx",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "slicer_axis requires mdx",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e061",
+        "source": "slicer_axis",
+        "target": "slice",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "slicer_axis requires slice",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e062",
+        "source": "molap",
+        "target": "data_cube",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "molap requires data_cube",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e063",
+        "source": "rolap",
+        "target": "star_schema",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "rolap requires star_schema",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e064",
+        "source": "rolap",
+        "target": "snowflake_schema",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "rolap requires snowflake_schema",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e065",
+        "source": "holap",
+        "target": "molap",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "holap requires molap",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e066",
+        "source": "holap",
+        "target": "rolap",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "holap requires rolap",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e067",
+        "source": "cube_materialization",
+        "target": "cube_lattice",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "cube_materialization requires cube_lattice",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e068",
+        "source": "full_materialization",
+        "target": "cube_materialization",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "full_materialization requires cube_materialization",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e069",
+        "source": "partial_materialization",
+        "target": "cube_materialization",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "partial_materialization requires cube_materialization",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e070",
+        "source": "iceberg_cube",
+        "target": "data_cube",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "iceberg_cube requires data_cube",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e071",
+        "source": "bitmap_index",
+        "target": "dimension_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "bitmap_index requires dimension_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e072",
+        "source": "bitmap_index",
+        "target": "fact_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "bitmap_index requires fact_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e073",
+        "source": "join_index",
+        "target": "star_schema",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "join_index requires star_schema",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e074",
+        "source": "join_index",
+        "target": "fact_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "join_index requires fact_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e075",
+        "source": "join_index",
+        "target": "dimension_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "join_index requires dimension_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e076",
+        "source": "btree_index",
+        "target": "oltp",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "btree_index requires oltp",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e077",
+        "source": "btree_index",
+        "target": "data_warehouse",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "btree_index requires data_warehouse",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e078",
+        "source": "star_join_query",
+        "target": "star_schema",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "star_join_query requires star_schema",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e079",
+        "source": "star_join_query",
+        "target": "fact_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "star_join_query requires fact_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e080",
+        "source": "star_join_query",
+        "target": "dimension_table",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "star_join_query requires dimension_table",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e081",
+        "source": "association_rule_mining",
+        "target": "data_mining",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "association_rule_mining prerequisite_for data_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e082",
+        "source": "transaction_database",
+        "target": "association_rule_mining",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "transaction_database requires association_rule_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e083",
+        "source": "itemset",
+        "target": "transaction_database",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "itemset requires transaction_database",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e084",
+        "source": "support",
+        "target": "itemset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "support requires itemset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e085",
+        "source": "support",
+        "target": "transaction_database",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "support requires transaction_database",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e086",
+        "source": "frequent_itemset",
+        "target": "itemset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "frequent_itemset requires itemset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e087",
+        "source": "frequent_itemset",
+        "target": "support",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "frequent_itemset requires support",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e088",
+        "source": "confidence",
+        "target": "support",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "confidence requires support",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e089",
+        "source": "lift",
+        "target": "confidence",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "lift requires confidence",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e090",
+        "source": "lift",
+        "target": "support",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "lift requires support",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e091",
+        "source": "association_rule",
+        "target": "frequent_itemset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "association_rule requires frequent_itemset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e092",
+        "source": "association_rule",
+        "target": "confidence",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "association_rule requires confidence",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e093",
+        "source": "apriori_algorithm",
+        "target": "frequent_itemset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "apriori_algorithm requires frequent_itemset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e094",
+        "source": "apriori_algorithm",
+        "target": "support",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "apriori_algorithm requires support",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e095",
+        "source": "apriori_algorithm",
+        "target": "apriori_property",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "apriori_algorithm uses apriori_property",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e096",
+        "source": "apriori_property",
+        "target": "support",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "apriori_property requires support",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e097",
+        "source": "apriori_property",
+        "target": "itemset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "apriori_property requires itemset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e098",
+        "source": "fp_growth",
+        "target": "frequent_itemset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "fp_growth requires frequent_itemset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e099",
+        "source": "fp_growth",
+        "target": "fp_tree",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "fp_growth requires fp_tree",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e100",
+        "source": "fp_growth",
+        "target": "conditional_pattern_base",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "fp_growth requires conditional_pattern_base",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e101",
+        "source": "fp_tree",
+        "target": "transaction_database",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "fp_tree requires transaction_database",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e102",
+        "source": "fp_tree",
+        "target": "support",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "fp_tree requires support",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e103",
+        "source": "conditional_pattern_base",
+        "target": "fp_tree",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "conditional_pattern_base requires fp_tree",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e104",
+        "source": "eclat_algorithm",
+        "target": "frequent_itemset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "eclat_algorithm requires frequent_itemset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e105",
+        "source": "eclat_algorithm",
+        "target": "tidset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "eclat_algorithm requires tidset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e106",
+        "source": "tidset",
+        "target": "transaction_database",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "tidset requires transaction_database",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e107",
+        "source": "tidset",
+        "target": "itemset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "tidset requires itemset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e108",
+        "source": "clustering",
+        "target": "distance_measures",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "clustering requires distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e109",
+        "source": "clustering",
+        "target": "data_mining",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "clustering prerequisite_for data_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e110",
+        "source": "kmeans",
+        "target": "clustering",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "kmeans requires clustering",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e111",
+        "source": "kmeans",
+        "target": "centroid",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "kmeans requires centroid",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e112",
+        "source": "kmeans",
+        "target": "distance_measures",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "kmeans requires distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e113",
+        "source": "centroid",
+        "target": "distance_measures",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "centroid requires distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e114",
+        "source": "silhouette_coefficient",
+        "target": "clustering",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "silhouette_coefficient requires clustering",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e115",
+        "source": "silhouette_coefficient",
+        "target": "distance_measures",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "silhouette_coefficient requires distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e116",
+        "source": "hierarchical_clustering",
+        "target": "clustering",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "hierarchical_clustering requires clustering",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e117",
+        "source": "hierarchical_clustering",
+        "target": "linkage",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "hierarchical_clustering requires linkage",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e118",
+        "source": "linkage",
+        "target": "distance_measures",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "linkage requires distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e119",
+        "source": "dbscan",
+        "target": "clustering",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "dbscan requires clustering",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e120",
+        "source": "dbscan",
+        "target": "eps_neighborhood",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "dbscan requires eps_neighborhood",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e121",
+        "source": "dbscan",
+        "target": "core_border_noise",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "dbscan requires core_border_noise",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e122",
+        "source": "eps_neighborhood",
+        "target": "distance_measures",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "eps_neighborhood requires distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e123",
+        "source": "core_border_noise",
+        "target": "eps_neighborhood",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "core_border_noise requires eps_neighborhood",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e124",
+        "source": "cluster_validation",
+        "target": "clustering",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "cluster_validation requires clustering",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e125",
+        "source": "classification",
+        "target": "data_mining",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "classification prerequisite_for data_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e126",
+        "source": "training_test_split",
+        "target": "classification",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "training_test_split requires classification",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e127",
+        "source": "knn_classifier",
+        "target": "classification",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "knn_classifier requires classification",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e128",
+        "source": "knn_classifier",
+        "target": "distance_measures",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "knn_classifier requires distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e129",
+        "source": "decision_tree",
+        "target": "classification",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "decision_tree requires classification",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e130",
+        "source": "decision_tree",
+        "target": "split_criterion",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "decision_tree requires split_criterion",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e131",
+        "source": "split_criterion",
+        "target": "decision_tree",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "split_criterion requires decision_tree",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e132",
+        "source": "gini_index",
+        "target": "split_criterion",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "gini_index requires split_criterion",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e133",
+        "source": "entropy_information_gain",
+        "target": "split_criterion",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "entropy_information_gain requires split_criterion",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e134",
+        "source": "tree_pruning",
+        "target": "decision_tree",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "tree_pruning requires decision_tree",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e135",
+        "source": "tree_pruning",
+        "target": "overfitting",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "tree_pruning requires overfitting",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e136",
+        "source": "stopping_conditions",
+        "target": "decision_tree",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "stopping_conditions requires decision_tree",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e137",
+        "source": "confusion_matrix",
+        "target": "classification",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "confusion_matrix requires classification",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e138",
+        "source": "accuracy_precision_recall_f1",
+        "target": "confusion_matrix",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "accuracy_precision_recall_f1 requires confusion_matrix",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e139",
+        "source": "overfitting",
+        "target": "training_test_split",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "overfitting requires training_test_split",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e140",
+        "source": "web_mining",
+        "target": "data_mining",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "web_mining prerequisite_for data_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e141",
+        "source": "web_content_mining",
+        "target": "web_mining",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "web_content_mining requires web_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e142",
+        "source": "web_usage_mining",
+        "target": "web_mining",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "web_usage_mining requires web_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e143",
+        "source": "web_structure_mining",
+        "target": "web_mining",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "web_structure_mining requires web_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e144",
+        "source": "log_preprocessing",
+        "target": "web_usage_mining",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "log_preprocessing requires web_usage_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e145",
+        "source": "log_preprocessing",
+        "target": "data_preprocessing",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "log_preprocessing requires data_preprocessing",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e146",
+        "source": "user_resource_matrix",
+        "target": "log_preprocessing",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "user_resource_matrix requires log_preprocessing",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e147",
+        "source": "resource_term_matrix",
+        "target": "web_content_mining",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "resource_term_matrix requires web_content_mining",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e148",
+        "source": "resource_term_matrix",
+        "target": "data_preprocessing",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "resource_term_matrix requires data_preprocessing",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e149",
+        "source": "schema_design_exam_recipe",
+        "target": "star_schema",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "schema_design_exam_recipe uses star_schema",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e150",
+        "source": "schema_design_exam_recipe",
+        "target": "snowflake_schema",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "schema_design_exam_recipe uses snowflake_schema",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e151",
+        "source": "schema_design_exam_recipe",
+        "target": "concept_hierarchy",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "schema_design_exam_recipe uses concept_hierarchy",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e152",
+        "source": "schema_design_exam_recipe",
+        "target": "measure",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "schema_design_exam_recipe uses measure",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e153",
+        "source": "olap_sequence_exam_recipe",
+        "target": "roll_up",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "olap_sequence_exam_recipe uses roll_up",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e154",
+        "source": "olap_sequence_exam_recipe",
+        "target": "drill_down",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "olap_sequence_exam_recipe uses drill_down",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e155",
+        "source": "olap_sequence_exam_recipe",
+        "target": "slice",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "olap_sequence_exam_recipe uses slice",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e156",
+        "source": "olap_sequence_exam_recipe",
+        "target": "dice",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "olap_sequence_exam_recipe uses dice",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e157",
+        "source": "olap_sequence_exam_recipe",
+        "target": "pivot",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "olap_sequence_exam_recipe uses pivot",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e158",
+        "source": "indexing_exam_recipe",
+        "target": "bitmap_index",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "indexing_exam_recipe uses bitmap_index",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e159",
+        "source": "indexing_exam_recipe",
+        "target": "join_index",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "indexing_exam_recipe uses join_index",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e160",
+        "source": "indexing_exam_recipe",
+        "target": "star_join_query",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "indexing_exam_recipe uses star_join_query",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e161",
+        "source": "apriori_exam_recipe",
+        "target": "apriori_algorithm",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "apriori_exam_recipe uses apriori_algorithm",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e162",
+        "source": "apriori_exam_recipe",
+        "target": "support",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "apriori_exam_recipe uses support",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e163",
+        "source": "apriori_exam_recipe",
+        "target": "confidence",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "apriori_exam_recipe uses confidence",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e164",
+        "source": "apriori_exam_recipe",
+        "target": "association_rule",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "apriori_exam_recipe uses association_rule",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e165",
+        "source": "fpgrowth_exam_recipe",
+        "target": "fp_growth",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "fpgrowth_exam_recipe uses fp_growth",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e166",
+        "source": "fpgrowth_exam_recipe",
+        "target": "fp_tree",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "fpgrowth_exam_recipe uses fp_tree",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e167",
+        "source": "fpgrowth_exam_recipe",
+        "target": "conditional_pattern_base",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "fpgrowth_exam_recipe uses conditional_pattern_base",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e168",
+        "source": "eclat_exam_recipe",
+        "target": "eclat_algorithm",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "eclat_exam_recipe uses eclat_algorithm",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e169",
+        "source": "eclat_exam_recipe",
+        "target": "tidset",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "eclat_exam_recipe uses tidset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e170",
+        "source": "eclat_exam_recipe",
+        "target": "support",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "eclat_exam_recipe uses support",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e171",
+        "source": "dbscan_exam_recipe",
+        "target": "dbscan",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "dbscan_exam_recipe uses dbscan",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e172",
+        "source": "dbscan_exam_recipe",
+        "target": "eps_neighborhood",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "dbscan_exam_recipe uses eps_neighborhood",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e173",
+        "source": "dbscan_exam_recipe",
+        "target": "core_border_noise",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "dbscan_exam_recipe uses core_border_noise",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e174",
+        "source": "decision_tree_exam_recipe",
+        "target": "decision_tree",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "decision_tree_exam_recipe uses decision_tree",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e175",
+        "source": "decision_tree_exam_recipe",
+        "target": "gini_index",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "decision_tree_exam_recipe uses gini_index",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e176",
+        "source": "decision_tree_exam_recipe",
+        "target": "entropy_information_gain",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "decision_tree_exam_recipe uses entropy_information_gain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e177",
+        "source": "decision_tree_exam_recipe",
+        "target": "tree_pruning",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "decision_tree_exam_recipe uses tree_pruning",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e178",
+        "source": "decision_tree_exam_recipe",
+        "target": "stopping_conditions",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "decision_tree_exam_recipe uses stopping_conditions",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e179",
+        "source": "clustering_method_choice_recipe",
+        "target": "kmeans",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "clustering_method_choice_recipe uses kmeans",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e180",
+        "source": "clustering_method_choice_recipe",
+        "target": "hierarchical_clustering",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "clustering_method_choice_recipe uses hierarchical_clustering",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e181",
+        "source": "clustering_method_choice_recipe",
+        "target": "dbscan",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "clustering_method_choice_recipe uses dbscan",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e182",
+        "source": "clustering_method_choice_recipe",
+        "target": "distance_measures",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "clustering_method_choice_recipe uses distance_measures",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e183",
+        "source": "data_warehouse",
+        "target": "oltp",
+        "type": "contrasts_with",
+        "dependency_class": "pedagogical_dependency",
+        "label": "warehouse contrasts with OLTP",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e184",
+        "source": "olap",
+        "target": "oltp",
+        "type": "contrasts_with",
+        "dependency_class": "pedagogical_dependency",
+        "label": "OLAP contrasts with OLTP",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e185",
+        "source": "star_schema",
+        "target": "snowflake_schema",
+        "type": "contrasts_with",
+        "dependency_class": "pedagogical_dependency",
+        "label": "star schema contrasts with snowflake schema",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e186",
+        "source": "molap",
+        "target": "rolap",
+        "type": "contrasts_with",
+        "dependency_class": "pedagogical_dependency",
+        "label": "MOLAP contrasts with ROLAP",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e187",
+        "source": "data_cube",
+        "target": "cube_operator",
+        "type": "implemented_by",
+        "dependency_class": "construction_dependency",
+        "label": "data cube can be computed using CUBE",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e188",
+        "source": "roll_up",
+        "target": "concept_hierarchy",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "roll-up uses concept hierarchies",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e189",
+        "source": "drill_down",
+        "target": "concept_hierarchy",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "drill-down uses concept hierarchies",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e190",
+        "source": "bitmap_index",
+        "target": "star_join_query",
+        "type": "applied_to",
+        "dependency_class": "logical_dependency",
+        "label": "bitmap indexes speed up filters in star-join queries",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e191",
+        "source": "join_index",
+        "target": "star_join_query",
+        "type": "applied_to",
+        "dependency_class": "logical_dependency",
+        "label": "join indexes speed up star-join queries",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e192",
+        "source": "apriori_property",
+        "target": "apriori_algorithm",
+        "type": "enables",
+        "dependency_class": "logical_dependency",
+        "label": "Apriori property enables pruning",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e193",
+        "source": "tidset",
+        "target": "eclat_algorithm",
+        "type": "enables",
+        "dependency_class": "construction_dependency",
+        "label": "TID-sets enable ECLAT support computation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e194",
+        "source": "fp_tree",
+        "target": "fp_growth",
+        "type": "enables",
+        "dependency_class": "construction_dependency",
+        "label": "FP-tree enables FP-growth",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e195",
+        "source": "kmeans",
+        "target": "silhouette_coefficient",
+        "type": "evaluated_by",
+        "dependency_class": "logical_dependency",
+        "label": "K-means can be evaluated by silhouette coefficient",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e196",
+        "source": "decision_tree",
+        "target": "gini_index",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Decision tree can use Gini index",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e197",
+        "source": "decision_tree",
+        "target": "entropy_information_gain",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Decision tree can use information gain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e198",
+        "source": "overfitting",
+        "target": "tree_pruning",
+        "type": "mitigated_by",
+        "dependency_class": "logical_dependency",
+        "label": "Pruning mitigates overfitting",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e199",
+        "source": "web_usage_mining",
+        "target": "user_resource_matrix",
+        "type": "constructs",
+        "dependency_class": "construction_dependency",
+        "label": "web usage mining constructs user-resource matrices",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e200",
+        "source": "web_content_mining",
+        "target": "resource_term_matrix",
+        "type": "constructs",
+        "dependency_class": "construction_dependency",
+        "label": "web content mining constructs resource-term matrices",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      }
+    ],
+    "domains": [
+      {
+        "id": "foundations_kdd_preprocessing",
+        "label": "Foundations, KDD & Preprocessing",
+        "order": 1,
+        "color": "#2563EB",
+        "tint": "#EFF4FF",
+        "border": "#C9DAFE"
+      },
+      {
+        "id": "data_warehouse_olap",
+        "label": "Data Warehousing & OLAP",
+        "order": 2,
+        "color": "#16A34A",
+        "tint": "#ECFBF1",
+        "border": "#BEE9CB"
+      },
+      {
+        "id": "cube_materialization_indexing",
+        "label": "Storage, Cuboids & Indexing",
+        "order": 3,
+        "color": "#7C3AED",
+        "tint": "#F4EEFE",
+        "border": "#D8C8FB"
+      },
+      {
+        "id": "association_pattern_mining",
+        "label": "Association & Pattern Mining",
+        "order": 4,
+        "color": "#0D9488",
+        "tint": "#EAF7F5",
+        "border": "#B8DDD6"
+      },
+      {
+        "id": "clustering",
+        "label": "Clustering",
+        "order": 5,
+        "color": "#F97316",
+        "tint": "#FFF1E8",
+        "border": "#F8CFB0"
+      },
+      {
+        "id": "classification",
+        "label": "Classification",
+        "order": 6,
+        "color": "#DB2777",
+        "tint": "#FDEEF5",
+        "border": "#F4C0D7"
+      },
+      {
+        "id": "web_mining",
+        "label": "Web Mining",
+        "order": 7,
+        "color": "#DC2626",
+        "tint": "#FEF1F1",
+        "border": "#F4C5C5"
+      },
+      {
+        "id": "exam_patterns_applications",
+        "label": "Exam Patterns & Answer Recipes",
+        "order": 8,
+        "color": "#EAB308",
+        "tint": "#FBF6E1",
+        "border": "#EFDF8E"
+      }
+    ]
+  },
+  "views": {
+    "concept_map": {
+      "description": "Broad semantic map of TDT4300 concepts, algorithms, schemas, measures, and exam recipes.",
+      "included_item_kinds": [
+        "definition",
+        "structure",
+        "process",
+        "algorithm",
+        "measure",
+        "property",
+        "construction",
+        "architecture",
+        "problem",
+        "application",
+        "query_pattern",
+        "notation"
+      ],
+      "included_edge_types": [
+        "introduces",
+        "requires",
+        "uses",
+        "contrasts_with",
+        "applied_to",
+        "enables",
+        "constructs",
+        "implemented_by",
+        "evaluated_by",
+        "mitigated_by"
+      ],
+      "included_dependency_classes": [
+        "definitional_dependency",
+        "logical_dependency",
+        "construction_dependency",
+        "pedagogical_dependency"
+      ],
+      "root_items": ["tdt4300"],
+      "example_traversal": "tdt4300 --introduces--> data_warehouse --requires--> fact_table --requires--> measure"
+    },
+    "warehouse_olap_view": {
+      "description": "Data warehouse modelling, OLAP operations, cube materialization, and indexing.",
+      "included_item_kinds": [
+        "structure",
+        "process",
+        "construction",
+        "architecture",
+        "query_pattern",
+        "notation"
+      ],
+      "included_edge_types": [
+        "requires",
+        "uses",
+        "contrasts_with",
+        "applied_to",
+        "implemented_by"
+      ],
+      "included_dependency_classes": [
+        "definitional_dependency",
+        "logical_dependency",
+        "construction_dependency"
+      ],
+      "root_items": ["data_warehouse", "olap", "data_cube", "star_schema"],
+      "example_traversal": "star_join_query --uses--> star_schema --requires--> fact_table"
+    },
+    "algorithm_view": {
+      "description": "Mining algorithms and their key data structures/measures.",
+      "included_item_kinds": [
+        "algorithm",
+        "measure",
+        "structure",
+        "definition",
+        "property"
+      ],
+      "included_edge_types": ["requires", "uses", "enables", "evaluated_by"],
+      "included_dependency_classes": [
+        "definitional_dependency",
+        "logical_dependency",
+        "construction_dependency"
+      ],
+      "root_items": [
+        "apriori_algorithm",
+        "fp_growth",
+        "eclat_algorithm",
+        "kmeans",
+        "dbscan",
+        "decision_tree"
+      ],
+      "example_traversal": "eclat_algorithm --requires--> tidset --requires--> transaction_database"
+    },
+    "exam_recipe_view": {
+      "description": "Reusable answer templates for high-frequency exam task types.",
+      "included_item_kinds": [
+        "application",
+        "algorithm",
+        "process",
+        "measure",
+        "construction",
+        "structure"
+      ],
+      "included_edge_types": ["uses", "requires"],
+      "included_dependency_classes": [
+        "logical_dependency",
+        "definitional_dependency"
+      ],
+      "root_items": [
+        "schema_design_exam_recipe",
+        "olap_sequence_exam_recipe",
+        "apriori_exam_recipe",
+        "dbscan_exam_recipe",
+        "decision_tree_exam_recipe"
+      ],
+      "example_traversal": "olap_sequence_exam_recipe --uses--> roll_up --requires--> concept_hierarchy"
+    },
+    "preprocessing_similarity_view": {
+      "description": "Data preprocessing, attribute semantics, distance/similarity, and dimensionality.",
+      "included_item_kinds": [
+        "process",
+        "problem",
+        "property",
+        "measure",
+        "definition"
+      ],
+      "included_edge_types": ["requires", "uses", "contrasts_with"],
+      "included_dependency_classes": [
+        "definitional_dependency",
+        "logical_dependency",
+        "pedagogical_dependency"
+      ],
+      "root_items": [
+        "data_preprocessing",
+        "attribute_types",
+        "distance_measures"
+      ],
+      "example_traversal": "curse_of_dimensionality --requires--> distance_measures"
+    },
+    "prerequisite_map": {
+      "description": "Pedagogical learning order extracted from dependencies.",
+      "included_item_kinds": [
+        "definition",
+        "structure",
+        "process",
+        "algorithm",
+        "measure",
+        "property",
+        "construction",
+        "architecture",
+        "problem",
+        "application"
+      ],
+      "included_edge_types": ["prerequisite_for", "requires"],
+      "included_dependency_classes": [
+        "pedagogical_dependency",
+        "definitional_dependency"
+      ],
+      "root_items": ["tdt4300", "data_mining", "data_warehouse"],
+      "example_traversal": "data_mining --prerequisite_for--> association_rule_mining --requires--> support"
+    }
+  },
+  "query_model": {
+    "description": "Query by filtering items by kind/domain/tags/exam_priority and traversing edges by type and dependency_class. Definitional dependencies state what is needed to define an item; logical dependencies state algorithmic/result usage; construction dependencies state data-structure/schema construction; pedagogical dependencies state useful learning order.",
+    "node_lookup": "Items are addressed by stable snake_case id. Edges are interpreted literally as source --type--> target.",
+    "multigraph_rule": "Multiple edges between the same source and target may coexist when they express different dependency classes or relations.",
+    "recommended_exam_filter": "metadata.exam_priority in {main_pattern, recurring} OR metadata.tags contains exam"
+  },
+  "example_queries": [
+    {
+      "query_name": "schema_design_dependencies",
+      "start_node": "schema_design_exam_recipe",
+      "edge_filter": {
+        "edge_types": ["uses", "requires"],
+        "dependency_classes": ["logical_dependency", "definitional_dependency"]
+      },
+      "traversal_direction": "outgoing",
+      "expected_output": "Fact table, dimension tables, measures, concept hierarchies, star/snowflake schema."
+    },
+    {
+      "query_name": "olap_operation_sequence",
+      "start_node": "olap_sequence_exam_recipe",
+      "edge_filter": {
+        "edge_types": ["uses", "requires"],
+        "dependency_classes": ["logical_dependency", "definitional_dependency"]
+      },
+      "traversal_direction": "outgoing",
+      "expected_output": "Roll-up, drill-down, slice, dice, pivot, and concept hierarchy dependencies."
+    },
+    {
+      "query_name": "association_algorithm_comparison",
+      "start_nodes": ["apriori_algorithm", "fp_growth", "eclat_algorithm"],
+      "edge_filter": {
+        "edge_types": ["requires", "uses", "enables"],
+        "dependency_classes": [
+          "definitional_dependency",
+          "logical_dependency",
+          "construction_dependency"
+        ]
+      },
+      "traversal_direction": "outgoing",
+      "expected_output": "Apriori uses candidate generation and Apriori property; FP-growth uses FP-tree and conditional pattern bases; ECLAT uses TID-set intersections."
+    },
+    {
+      "query_name": "dbscan_worked_problem_prereqs",
+      "start_node": "dbscan_exam_recipe",
+      "edge_filter": {
+        "edge_types": ["uses", "requires"],
+        "dependency_classes": ["logical_dependency", "definitional_dependency"]
+      },
+      "traversal_direction": "outgoing",
+      "expected_output": "Eps-neighborhood, MinPts, core/border/noise, density-connected clusters."
+    }
+  ]
+}
