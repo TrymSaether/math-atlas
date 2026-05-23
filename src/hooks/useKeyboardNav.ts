@@ -1,14 +1,15 @@
 import { useEffect } from "react";
 import { useStore } from "../store";
-import { registeredMaps } from "../data";
 import { cmpNum } from "../lib/graph";
 
 /** Arrow keys navigate sequentially; Esc clears selection. */
 export function useKeyboardNav() {
   const mapId = useStore((s) => s.mapId);
+  const map = useStore((s) => s.loadedMaps[mapId]);
 
   useEffect(() => {
-    const { data } = registeredMaps[mapId];
+    if (!map) return;
+    const { data } = map;
     const sorted = [...data.nodes].sort(cmpNum);
     const indexById = new Map(sorted.map((n, i) => [n.id, i]));
     const onKey = (e: KeyboardEvent) => {
@@ -25,5 +26,5 @@ export function useKeyboardNav() {
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [mapId]);
+  }, [map]);
 }

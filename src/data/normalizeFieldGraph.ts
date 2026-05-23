@@ -1,17 +1,12 @@
-import type { FieldJson, FieldItem, GraphData, GraphDomain, GraphEdge, GraphNode } from "../types";
-
-const SOURCE_DEPENDS_ON_TARGET = new Set([
-  "requires",
-  "uses",
-  "assumes",
-  "defined_by",
-  "constructed_from",
-  "subtype_of",
-  "instance_of",
-  "applied_to",
-  "violates_assumption",
-  "shows_necessity_of",
-]);
+import {
+  SOURCE_DEPENDS_ON_TARGET,
+  type FieldJson,
+  type FieldItem,
+  type GraphData,
+  type GraphDomain,
+  type GraphEdge,
+  type GraphNode,
+} from "../types";
 
 function confidenceToNumber(value: "high" | "medium" | "low"): number {
   if (value === "high") return 1;

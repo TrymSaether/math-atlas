@@ -1,5 +1,5 @@
 import { Sigma, Command as CommandIcon, Compass } from "lucide-react";
-import { MAPS, isMapId, registeredMaps } from "../data";
+import { MAPS, isMapId } from "../data";
 import { useStore } from "../store";
 
 export function TopBar() {
@@ -7,14 +7,14 @@ export function TopBar() {
   const view = useStore((s) => s.view);
   const mapId = useStore((s) => s.mapId);
   const setMap = useStore((s) => s.setMap);
-  const activeMap = registeredMaps[mapId];
+  const activeMap = useStore((s) => s.loadedMaps[mapId]);
 
   return (
     <header className="glass scanlines mx-auto mb-2 flex min-h-12 w-full items-center justify-between gap-2 rounded-xl px-3 py-2 md:mb-3 md:rounded-2xl md:px-4">
       <div className="flex min-w-0 items-center gap-2 md:gap-3">
         <Sigma className="h-4 w-4 shrink-0 text-accent-cyan" />
         <div className="min-w-0 truncate font-display text-[12px] tracking-wider text-white/80 md:text-[13px] md:tracking-widest">
-          {activeMap.data.label || MAPS[mapId].label} <span className="hidden text-white/40 sm:inline">- concepts & dependencies</span>
+          {activeMap?.data.label || MAPS[mapId].label} <span className="hidden text-white/40 sm:inline">- concepts & dependencies</span>
         </div>
       </div>
       <div className="flex shrink-0 items-center gap-1.5 text-[11px] text-white/50 md:gap-2">

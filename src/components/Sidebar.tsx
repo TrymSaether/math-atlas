@@ -5,15 +5,13 @@ import {
   GitBranchPlus, GitMerge, Sparkles, Eye, EyeOff, Type, Text,
 } from "lucide-react";
 import { useStore } from "../store";
-import { registeredMaps } from "../data";
 import { cn } from "../lib/utils";
 import { getNodeKindRgbString } from "../lib/colors";
 import { KIND_LABEL, RELATION_COLOR, RELATION_LABEL, type NodeKind } from "../types";
 
 export function Sidebar({ visibleCount }: { visibleCount: number }) {
   const mapId = useStore((s) => s.mapId);
-  const map = registeredMaps[mapId];
-  const { data } = map;
+  const map = useStore((s) => s.loadedMaps[mapId]);
   const view = useStore((s) => s.view);
   const setView = useStore((s) => s.setView);
   const search = useStore((s) => s.search);
@@ -34,18 +32,35 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
   const setShowOrphans = useStore((s) => s.setShowOrphans);
 
   const { domains, domainCounts, counts } = useMemo(() => {
+    if (!map) return { domains: [], domainCounts: {}, counts: {} };
+
     const tc: Record<string, number> = {};
     const kc: Record<string, number> = {};
-    for (const n of data.nodes) {
+    for (const n of map.data.nodes) {
       tc[n.domainId] = (tc[n.domainId] ?? 0) + 1;
       kc[n.kind] = (kc[n.kind] ?? 0) + 1;
     }
     return {
-      domains: data.domains.filter((domain) => (tc[domain.id] ?? 0) > 0),
+      domains: map.data.domains.filter((domain) => (tc[domain.id] ?? 0) > 0),
       domainCounts: tc,
       counts: kc,
     };
-  }, [data]);
+  }, [map]);
+
+  if (!map) {
+    return (
+      <motion.aside
+        initial={{ x: -16, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        className="glass scanlines relative flex max-h-[38dvh] w-full shrink-0 flex-col justify-center overflow-hidden rounded-xl p-4 text-sm text-white/45 md:h-full md:max-h-none md:w-[280px] md:rounded-2xl"
+      >
+        Loading filters...
+      </motion.aside>
+    );
+  }
+
+  const { data } = map;
 
   return (
     <motion.aside
@@ -62,7 +77,7 @@ export function Sidebar({ visibleCount }: { visibleCount: number }) {
           </div>
           <div>
             <div className="font-display text-sm font-semibold tracking-wide title-gradient">
-              {data.field || "math"} · atlas
+              {data.field || "math"}
             </div>
             <div className="text-[10px] uppercase tracking-[0.25em] text-white/40">
               concepts · dependencies

@@ -5779,28 +5779,6 @@
         "notes": null
       },
       {
-        "id": "e225",
-        "source": "ell_2_as_hilbert_space",
-        "target": "riesz_representation_theorem",
-        "type": "motivates",
-        "dependency_class": "pedagogical_dependency",
-        "label": "ell_2_as_hilbert_space is pedagogically connected to riesz_representation_theorem",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": null
-      },
-      {
-        "id": "e226",
-        "source": "ell_2_as_hilbert_space",
-        "target": "spectral_theorem",
-        "type": "motivates",
-        "dependency_class": "pedagogical_dependency",
-        "label": "ell_2_as_hilbert_space is pedagogically connected to spectral_theorem",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": null
-      },
-      {
         "id": "e227",
         "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
         "target": "normed_vector_space",
@@ -5862,28 +5840,6 @@
         "type": "motivates",
         "dependency_class": "pedagogical_dependency",
         "label": "incomplete_normed_spaces_as_non_examples_of_banach_spaces demonstrates uniform_boundedness_principle",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": null
-      },
-      {
-        "id": "e233",
-        "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-        "target": "open_mapping_theorem",
-        "type": "motivates",
-        "dependency_class": "pedagogical_dependency",
-        "label": "incomplete_normed_spaces_as_non_examples_of_banach_spaces is pedagogically connected to open_mapping_theorem",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": null
-      },
-      {
-        "id": "e234",
-        "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-        "target": "uniform_boundedness_principle",
-        "type": "motivates",
-        "dependency_class": "pedagogical_dependency",
-        "label": "incomplete_normed_spaces_as_non_examples_of_banach_spaces is pedagogically connected to uniform_boundedness_principle",
         "direction": "source_to_target",
         "confidence": "high",
         "notes": null
@@ -6758,17 +6714,6 @@
         "notes": "A normed vector space has the canonical metric $d(x,y)=\\|x-y\\|$."
       },
       {
-        "id": "e314",
-        "source": "banach_space",
-        "target": "normed_vector_space",
-        "type": "subtype_of",
-        "dependency_class": "definitional_dependency",
-        "label": "banach_space is a subtype of normed_vector_space",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": "A Banach space is a complete normed vector space."
-      },
-      {
         "id": "e315",
         "source": "bounded_linear_operator",
         "target": "operator_norm",
@@ -6833,17 +6778,6 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": "An operator is, at base, a function/map."
-      },
-      {
-        "id": "e321",
-        "source": "function",
-        "target": "bounded_function_on_domain",
-        "type": "prerequisite_for",
-        "dependency_class": "definitional_dependency",
-        "label": "function is prerequisite for bounded_function_on_domain as a definition",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": "The bounded-function definition presupposes the general notion of function."
       },
       {
         "id": "e322",

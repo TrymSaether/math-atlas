@@ -3,15 +3,15 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useStore } from "../store";
-import { MAPS, registeredMaps, type MapId } from "../data";
+import { MAPS, type MapId } from "../data";
 import { getNodeKindRgbString } from "../lib/colors";
 import { KIND_LABEL } from "../types";
 import { cn } from "../lib/utils";
 
 export function CommandPalette() {
   const mapId = useStore((s) => s.mapId);
-  const map = registeredMaps[mapId];
-  const { data } = map;
+  const map = useStore((s) => s.loadedMaps[mapId]);
+  const data = map?.data;
   const open = useStore((s) => s.paletteOpen);
   const setOpen = useStore((s) => s.setPaletteOpen);
   const select = useStore((s) => s.select);
@@ -55,6 +55,10 @@ export function CommandPalette() {
                 transition={{ duration: 0.18, ease: [0.2, 0.7, 0.2, 1] }}
                 className="fixed left-1/2 top-[18%] z-50 w-[640px] max-w-[92vw] -translate-x-1/2"
               >
+                <Dialog.Title className="sr-only">Command palette</Dialog.Title>
+                <Dialog.Description className="sr-only">
+                  Search maps, nodes, and actions in the mathematical dependency map.
+                </Dialog.Description>
                 <Command className="glass overflow-hidden rounded-2xl shadow-2xl" loop>
                   <div className="border-b border-white/10 p-3">
                     <Command.Input
@@ -85,27 +89,29 @@ export function CommandPalette() {
                       ))}
                     </Command.Group>
 
-                    <Command.Group heading="Nodes" className="text-[10px] uppercase tracking-widest text-white/40 px-2 pt-3">
-                      {data.nodes.map((n) => (
-                        <Item
-                          key={n.id}
-                          value={`${n.number} ${n.title} ${n.kind} ${n.tags.join(" ")}`}
-                          onSelect={() => { select(n.id); setOpen(false); }}
-                        >
-                          <span
-                            style={{ "--c": getNodeKindRgbString(n.kind) } as React.CSSProperties}
-                            className={cn(`kind-${n.kind}`, "flex items-center gap-2 w-full")}
+                    {data && (
+                      <Command.Group heading="Nodes" className="text-[10px] uppercase tracking-widest text-white/40 px-2 pt-3">
+                        {data.nodes.map((n) => (
+                          <Item
+                            key={n.id}
+                            value={`${n.number} ${n.title} ${n.kind} ${n.tags.join(" ")}`}
+                            onSelect={() => { select(n.id); setOpen(false); }}
                           >
-                            <span className="h-1.5 w-1.5 rounded-full bg-[rgba(var(--c),1)]" />
-                            <span className="text-white/40 text-[11px] w-[110px]">{KIND_LABEL[n.kind]}</span>
-                            <span className="text-white/90 text-[13px] truncate">{n.title}</span>
-                            <span className="ml-auto text-[10px] text-white/30 truncate max-w-[140px]">{n.topicCluster}</span>
-                          </span>
-                        </Item>
-                      ))}
-                    </Command.Group>
+                            <span
+                              style={{ "--c": getNodeKindRgbString(n.kind) } as React.CSSProperties}
+                              className={cn(`kind-${n.kind}`, "flex items-center gap-2 w-full")}
+                            >
+                              <span className="h-1.5 w-1.5 rounded-full bg-[rgba(var(--c),1)]" />
+                              <span className="text-white/40 text-[11px] w-[110px]">{KIND_LABEL[n.kind]}</span>
+                              <span className="text-white/90 text-[13px] truncate">{n.title}</span>
+                              <span className="ml-auto text-[10px] text-white/30 truncate max-w-[140px]">{n.topicCluster}</span>
+                            </span>
+                          </Item>
+                        ))}
+                      </Command.Group>
+                    )}
 
-                    {showPath && (
+                    {showPath && data && (
                       <Command.Group heading="Learning Path" className="text-[10px] uppercase tracking-widest text-white/40 px-2 pt-3">
                         {data.nodes.map((n) => (
                           <Item

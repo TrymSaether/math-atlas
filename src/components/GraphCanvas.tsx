@@ -9,7 +9,7 @@ import ReactFlow, {
   type Node,
   type Edge,
 } from "reactflow";
-import { registeredMaps } from "../data";
+import type { LoadedMap } from "../data";
 import { useStore } from "../store";
 import { dependencyLayout, clusterLayout, type Lane } from "../lib/layout";
 import { buildAdjacency, ancestors, descendants } from "../lib/graph";
@@ -23,8 +23,12 @@ const edgeTypes = { topo: TopoEdgeView };
 
 function InnerGraph() {
   const mapId = useStore((s) => s.mapId);
-  const map = registeredMaps[mapId];
-  const { data } = map;
+  const map = useStore((s) => s.loadedMaps[mapId]);
+  if (!map) return null;
+  return <LoadedGraph map={map} />;
+}
+
+function LoadedGraph({ map }: { map: LoadedMap }) {
   const view = useStore((s) => s.view);
   const search = useStore((s) => s.search).toLowerCase().trim();
   const searchScope = useStore((s) => s.searchScope);
@@ -35,6 +39,8 @@ function InnerGraph() {
   const highlight = useStore((s) => s.highlight);
   const showOrphans = useStore((s) => s.showOrphans);
   const rf = useReactFlow();
+
+  const { data } = map;
 
   const filteredNodes = useMemo(() => {
     return data.nodes.filter((n) => {

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ArrowUpRight, ArrowDownRight, Tag, BookOpen, Route } from "lucide-react";
 import { useStore } from "../store";
-import { registeredMaps, type LoadedMap } from "../data";
+import type { LoadedMap } from "../data";
 import { MathText } from "../lib/katex";
 import { cn } from "../lib/utils";
 import { getNodeKindRgbString } from "../lib/colors";
@@ -9,16 +9,16 @@ import { KIND_LABEL } from "../types";
 
 export function NodePanel() {
   const mapId = useStore((s) => s.mapId);
-  const map = registeredMaps[mapId];
+  const map = useStore((s) => s.loadedMaps[mapId]);
   const id = useStore((s) => s.selectedId);
   const select = useStore((s) => s.select);
   const setPathTarget = useStore((s) => s.setPathTarget);
-  const node = id ? map.nodeById.get(id) ?? null : null;
+  const node = id && map ? map.nodeById.get(id) ?? null : null;
   const formalStatement = node?.formalStatement.trim() ?? "";
 
   return (
     <AnimatePresence>
-      {node && (
+      {node && map && (
         <motion.div
           key={node.id}
           initial={{ opacity: 0, x: 24 }}

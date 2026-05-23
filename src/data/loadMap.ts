@@ -5,7 +5,7 @@ import {
   type GraphDomain,
   type GraphEdge,
 } from "../types";
-import { DEFAULT_MAP_ID, MAP_CATALOG, getMapCatalogEntry, type MapId } from "./mapRegistry";
+import { DEFAULT_MAP_ID, MAPS, loadRawMap, type MapId } from "./mapRegistry";
 import { normalizeFieldGraph } from "./normalizeFieldGraph";
 
 function groupEdges(edges: GraphEdge[], key: "from" | "to") {
@@ -45,18 +45,26 @@ function buildLoadedMap(data: GraphData): LoadedMap {
   };
 }
 
-function parseMapData(mapId: MapId): GraphData {
-  const { raw } = getMapCatalogEntry(mapId);
+async function parseMapData(mapId: MapId): Promise<GraphData> {
+  const raw = await loadRawMap(mapId);
   const parsed = FieldJsonSchema.parse(raw);
   return TopoDataSchema.parse(normalizeFieldGraph(parsed));
 }
 
-export function loadMap(mapId: MapId = DEFAULT_MAP_ID): LoadedMap {
-  return buildLoadedMap(parseMapData(mapId));
+const loadedMapCache = new Map<MapId, Promise<LoadedMap>>();
+
+export function loadMap(mapId: MapId = DEFAULT_MAP_ID): Promise<LoadedMap> {
+  const cached = loadedMapCache.get(mapId);
+  if (cached) return cached;
+
+  const loaded = parseMapData(mapId).then(buildLoadedMap);
+  loadedMapCache.set(mapId, loaded);
+  return loaded;
 }
 
-export function loadRegisteredMaps(): Record<MapId, LoadedMap> {
-  return Object.fromEntries(
-    (Object.keys(MAP_CATALOG) as MapId[]).map((mapId) => [mapId, loadMap(mapId)])
-  ) as Record<MapId, LoadedMap>;
+export async function loadRegisteredMaps(): Promise<Record<MapId, LoadedMap>> {
+  const entries = await Promise.all(
+    (Object.keys(MAPS) as MapId[]).map(async (mapId) => [mapId, await loadMap(mapId)] as const),
+  );
+  return Object.fromEntries(entries) as Record<MapId, LoadedMap>;
 }

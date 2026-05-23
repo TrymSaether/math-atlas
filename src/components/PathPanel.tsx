@@ -2,25 +2,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, Route, ChevronRight } from "lucide-react";
 import { useMemo } from "react";
 import { useStore } from "../store";
-import { registeredMaps } from "../data";
-import { buildLearningPath } from "../lib/graph";
+import { buildLearningPathReport } from "../lib/graph";
 import { getNodeKindRgbString } from "../lib/colors";
 import { KIND_LABEL } from "../types";
 import { cn } from "../lib/utils";
 
 export function PathPanel() {
   const mapId = useStore((s) => s.mapId);
-  const map = registeredMaps[mapId];
-  const { data } = map;
+  const map = useStore((s) => s.loadedMaps[mapId]);
   const targetId = useStore((s) => s.pathTargetId);
   const close = () => useStore.getState().setPathTarget(null);
   const select = useStore((s) => s.select);
   const relations = useStore((s) => s.relations);
-  const target = targetId ? map.nodeById.get(targetId) : null;
+  const target = targetId && map ? map.nodeById.get(targetId) : null;
+  const data = map?.data;
 
   const path = useMemo(() => {
-    if (!target) return [];
-    return buildLearningPath(target.id, data.edges, relations, data.nodes);
+    if (!target || !data) return { nodes: [], cycles: [] };
+    return buildLearningPathReport(target.id, data.edges, relations, data.nodes);
   }, [target, data, relations]);
 
   return (
@@ -40,9 +39,14 @@ export function PathPanel() {
             </div>
             <button onClick={close} className="rounded p-1 text-white/50 hover:bg-white/10 hover:text-white"><X className="h-4 w-4" /></button>
           </header>
+          {path.cycles.length > 0 && (
+            <div className="border-b border-amber-300/15 bg-amber-300/[0.08] px-3 py-2 text-[11px] leading-relaxed text-amber-100/80 md:px-4">
+              {path.cycles.length === 1 ? "This path includes a cyclic prerequisite group" : `This path includes ${path.cycles.length} cyclic prerequisite groups`}; items inside each group are shown in source order.
+            </div>
+          )}
           <div className="overflow-x-auto p-3">
             <ol className="flex min-w-max items-stretch gap-2">
-              {path.map((n, i) => (
+              {path.nodes.map((n, i) => (
                 <li key={n.id} className="flex items-center gap-2">
                   <button
                     onClick={() => select(n.id)}
@@ -54,11 +58,11 @@ export function PathPanel() {
                   >
                     <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-[rgba(var(--c),0.95)]">
                       <span>{KIND_LABEL[n.kind]} {n.number}</span>
-                      <span className="text-white/30">{i + 1}/{path.length}</span>
+                      <span className="text-white/30">{i + 1}/{path.nodes.length}</span>
                     </div>
                     <div className="mt-1 line-clamp-2 text-[12px] font-medium text-white/90">{n.title}</div>
                   </button>
-                  {i < path.length - 1 && <ChevronRight className="h-4 w-4 text-white/30" />}
+                  {i < path.nodes.length - 1 && <ChevronRight className="h-4 w-4 text-white/30" />}
                 </li>
               ))}
             </ol>

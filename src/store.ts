@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { DEFAULT_MAP_ID, registeredMaps, type MapId } from "./data";
+import { DEFAULT_MAP_ID, loadMap, type LoadedMap, type MapId } from "./data";
 import type { NodeKind, Relation } from "./types";
 
 export type ViewMode = "dependency" | "cluster";
@@ -9,6 +9,10 @@ export type SearchScope = "all" | "title";
 interface State {
   mapId: MapId;
   setMap: (mapId: MapId) => void;
+  loadedMaps: Partial<Record<MapId, LoadedMap>>;
+  loadingMapId: MapId | null;
+  mapError: string | null;
+  ensureMapLoaded: (mapId?: MapId) => Promise<void>;
 
   view: ViewMode;
   setView: (v: ViewMode) => void;
@@ -53,21 +57,56 @@ function toggle<T>(set: Set<T>, v: T) {
   return next;
 }
 
-const initialMap = registeredMaps[DEFAULT_MAP_ID];
-
-export const useStore = create<State>((set) => ({
+export const useStore = create<State>((set, get) => ({
   mapId: DEFAULT_MAP_ID,
+  loadedMaps: {},
+  loadingMapId: null,
+  mapError: null,
+  ensureMapLoaded: async (mapId = get().mapId) => {
+    if (get().loadedMaps[mapId]) return;
+
+    set({ loadingMapId: mapId, mapError: null });
+    try {
+      const map = await loadMap(mapId);
+      set((state) => {
+        const loadedMaps = { ...state.loadedMaps, [mapId]: map };
+        if (state.mapId !== mapId) {
+          return {
+            loadedMaps,
+            loadingMapId: state.loadingMapId === mapId ? null : state.loadingMapId,
+          };
+        }
+
+        return {
+          loadedMaps,
+          loadingMapId: null,
+          mapError: null,
+          kinds: new Set(map.kinds),
+          topics: new Set(),
+          relations: new Set(map.relations),
+          selectedId: null,
+          pathTargetId: null,
+        };
+      });
+    } catch (error) {
+      set({
+        loadingMapId: null,
+        mapError: error instanceof Error ? error.message : String(error),
+      });
+    }
+  },
   setMap: (mapId) => {
-    const map = registeredMaps[mapId];
+    const map = get().loadedMaps[mapId];
     set({
       mapId,
       search: "",
-      kinds: new Set(map.kinds),
+      kinds: map ? new Set(map.kinds) : new Set(),
       topics: new Set(),
-      relations: new Set(map.relations),
+      relations: map ? new Set(map.relations) : new Set(),
       selectedId: null,
       pathTargetId: null,
     });
+    void get().ensureMapLoaded(mapId);
   },
 
   view: "dependency",
@@ -78,14 +117,14 @@ export const useStore = create<State>((set) => ({
   searchScope: "all",
   setSearchScope: (s) => set({ searchScope: s }),
 
-  kinds: new Set(initialMap.kinds),
+  kinds: new Set(),
   toggleKind: (k) => set((s) => ({ kinds: toggle(s.kinds, k) })),
 
   topics: new Set(),
   toggleTopic: (t) => set((s) => ({ topics: toggle(s.topics, t) })),
   resetTopics: () => set({ topics: new Set() }),
 
-  relations: new Set(initialMap.relations),
+  relations: new Set(),
   toggleRelation: (r) => set((s) => ({ relations: toggle(s.relations, r) })),
 
   selectedId: null,

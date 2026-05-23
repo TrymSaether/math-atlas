@@ -55,10 +55,18 @@ export function TopoNodeView({ data, selected }: NodeProps<Data>) {
       animate={{ opacity: dim ? 0.28 : 1, y: 0 }}
       transition={{ duration: 0.25 }}
       onClick={() => select(node.id)}
+      onKeyDown={(event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        select(node.id);
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`${KIND_LABEL[node.kind]} ${node.number}: ${node.title}`}
       style={{ width: tw.w, "--c": getNodeKindRgbString(node.kind) } as React.CSSProperties}
       className={cn(
         `kind-${node.kind}`,
-        "group relative cursor-pointer rounded-xl border font-display",
+        "group relative cursor-pointer rounded-xl border font-display outline-none",
         tw.pad,
         isPrimary
           ? "border-[rgba(var(--c),0.55)] bg-[rgba(var(--c),0.08)] shadow-[0_10px_30px_-12px_rgba(var(--c),0.45)]"
@@ -69,6 +77,7 @@ export function TopoNodeView({ data, selected }: NodeProps<Data>) {
         "transition-all hover:-translate-y-0.5 hover:border-[rgba(var(--c),0.85)] hover:bg-[rgba(var(--c),0.12)]",
         "hover:shadow-[0_18px_50px_-10px_rgba(var(--c),0.65),0_0_0_1px_rgba(var(--c),0.45)]",
         selected && "ring-2 ring-[rgba(var(--c),0.9)]",
+        "focus-visible:ring-2 focus-visible:ring-white/90",
         highlight === "primary" && "ring-2 ring-white/80",
         highlight === "anc" && "ring-1 ring-accent-cyan/70",
         highlight === "desc" && "ring-1 ring-accent-violet/70"
