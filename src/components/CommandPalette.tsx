@@ -4,9 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useStore } from "../store";
 import { MAPS, type MapId } from "../data";
-import { getNodeKindRgbString } from "../lib/colors";
+import { getDomainTone } from "../lib/colors";
 import { KIND_LABEL } from "../types";
-import { cn } from "../lib/utils";
 
 export function CommandPalette() {
   const mapId = useStore((s) => s.mapId);
@@ -16,13 +15,7 @@ export function CommandPalette() {
   const setOpen = useStore((s) => s.setPaletteOpen);
   const select = useStore((s) => s.select);
   const setMap = useStore((s) => s.setMap);
-  const setView = useStore((s) => s.setView);
-  const setHighlight = useStore((s) => s.setHighlight);
-  const setShowOrphans = useStore((s) => s.setShowOrphans);
-  const showOrphans = useStore((s) => s.showOrphans);
-  const setPathTarget = useStore((s) => s.setPathTarget);
   const [query, setQuery] = useState("");
-  const showPath = query.toLowerCase().startsWith("path");
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -36,6 +29,10 @@ export function CommandPalette() {
     return () => document.removeEventListener("keydown", onKey);
   }, [setOpen]);
 
+  useEffect(() => {
+    if (!open) setQuery("");
+  }, [open]);
+
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <AnimatePresence>
@@ -43,92 +40,100 @@ export function CommandPalette() {
           <Dialog.Portal forceMount>
             <Dialog.Overlay asChild>
               <motion.div
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-50 bg-ink-900/12 backdrop-blur-[2px]"
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
               <motion.div
-                initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                initial={{ opacity: 0, y: -8, scale: 0.99 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                transition={{ duration: 0.18, ease: [0.2, 0.7, 0.2, 1] }}
-                className="fixed left-1/2 top-[18%] z-50 w-[640px] max-w-[92vw] -translate-x-1/2"
+                exit={{ opacity: 0, y: -8, scale: 0.99 }}
+                transition={{ duration: 0.16, ease: [0.2, 0.7, 0.2, 1] }}
+                className="fixed left-1/2 top-[18%] z-50 w-[620px] max-w-[92vw] -translate-x-1/2"
               >
-                <Dialog.Title className="sr-only">Command palette</Dialog.Title>
+                <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
                 <Dialog.Description className="sr-only">
-                  Search maps, nodes, and actions in the mathematical dependency map.
+                  Jump to a concept or switch fields.
                 </Dialog.Description>
-                <Command className="glass overflow-hidden rounded-2xl shadow-2xl" loop>
-                  <div className="border-b border-white/10 p-3">
+                <Command
+                  className="overflow-hidden rounded-2xl border border-hairline bg-white shadow-float"
+                  loop
+                >
+                  <div className="border-b border-ink-100 px-4 py-3">
                     <Command.Input
                       value={query}
                       onValueChange={setQuery}
-                      placeholder="Jump to a definition, theorem, action…  (try `path connected`)"
-                      className="w-full bg-transparent text-sm text-white/90 outline-none placeholder:text-white/40"
+                      placeholder="Search concepts, definitions, theorems…"
+                      className="w-full bg-transparent text-[14px] text-ink-900 outline-none placeholder:text-ink-400"
                     />
                   </div>
                   <Command.List className="max-h-[420px] overflow-y-auto p-2">
-                    <Command.Empty className="px-3 py-6 text-center text-xs text-white/40">No results.</Command.Empty>
+                    <Command.Empty className="px-3 py-6 text-center text-[12px] text-ink-400">
+                      No results.
+                    </Command.Empty>
 
-                    <Command.Group heading="Actions" className="text-[10px] uppercase tracking-widest text-white/40 px-2 pt-2">
-                      <Item onSelect={() => { setView("dependency"); setOpen(false); }}>Switch to dependency view</Item>
-                      <Item onSelect={() => { setView("cluster"); setOpen(false); }}>Switch to cluster view</Item>
-                      <Item onSelect={() => { setHighlight("immediate"); setOpen(false); }}>Highlight: immediate</Item>
-                      <Item onSelect={() => { setHighlight("full"); setOpen(false); }}>Highlight: full path</Item>
-                      <Item onSelect={() => { setShowOrphans(!showOrphans); setOpen(false); }}>
-                        {showOrphans ? "Hide" : "Show"} unlinked items
-                      </Item>
-                    </Command.Group>
-
-                    <Command.Group heading="Maps" className="text-[10px] uppercase tracking-widest text-white/40 px-2 pt-3">
+                    <Command.Group
+                      heading="Fields"
+                      className="px-2 pt-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-400"
+                    >
                       {(Object.keys(MAPS) as MapId[]).map((id) => (
-                        <Item key={id} value={`map ${MAPS[id].label} ${MAPS[id].description}`} onSelect={() => { setMap(id); setOpen(false); }}>
-                          Open {MAPS[id].label}
+                        <Item
+                          key={id}
+                          value={`field ${MAPS[id].label} ${MAPS[id].description}`}
+                          onSelect={() => {
+                            setMap(id);
+                            setOpen(false);
+                          }}
+                        >
+                          <span className="text-[13px] text-ink-900">Open {MAPS[id].label}</span>
                         </Item>
                       ))}
                     </Command.Group>
 
                     {data && (
-                      <Command.Group heading="Nodes" className="text-[10px] uppercase tracking-widest text-white/40 px-2 pt-3">
-                        {data.nodes.map((n) => (
-                          <Item
-                            key={n.id}
-                            value={`${n.number} ${n.title} ${n.kind} ${n.tags.join(" ")}`}
-                            onSelect={() => { select(n.id); setOpen(false); }}
-                          >
-                            <span
-                              style={{ "--c": getNodeKindRgbString(n.kind) } as React.CSSProperties}
-                              className={cn(`kind-${n.kind}`, "flex items-center gap-2 w-full")}
+                      <Command.Group
+                        heading="Concepts"
+                        className="px-2 pt-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-400"
+                      >
+                        {data.nodes.map((n) => {
+                          const tone = getDomainTone(n.domainId);
+                          return (
+                            <Item
+                              key={n.id}
+                              value={`${n.title} ${n.kind} ${n.tags.join(" ")}`}
+                              onSelect={() => {
+                                select(n.id);
+                                setOpen(false);
+                              }}
                             >
-                              <span className="h-1.5 w-1.5 rounded-full bg-[rgba(var(--c),1)]" />
-                              <span className="text-white/40 text-[11px] w-[110px]">{KIND_LABEL[n.kind]}</span>
-                              <span className="text-white/90 text-[13px] truncate">{n.title}</span>
-                              <span className="ml-auto text-[10px] text-white/30 truncate max-w-[140px]">{n.topicCluster}</span>
-                            </span>
-                          </Item>
-                        ))}
-                      </Command.Group>
-                    )}
-
-                    {showPath && data && (
-                      <Command.Group heading="Learning Path" className="text-[10px] uppercase tracking-widest text-white/40 px-2 pt-3">
-                        {data.nodes.map((n) => (
-                          <Item
-                            key={`path-${n.id}`}
-                            value={`path ${n.number} ${n.title}`}
-                            onSelect={() => { setPathTarget(n.id); setOpen(false); }}
-                          >
-                            → Path to {KIND_LABEL[n.kind]}: {n.title}
-                          </Item>
-                        ))}
+                              <span className="flex w-full items-center gap-2.5">
+                                <span
+                                  className="h-2 w-2 flex-shrink-0 rounded-full"
+                                  style={{ background: tone.color }}
+                                />
+                                <span className="w-[96px] flex-shrink-0 text-[10.5px] font-medium uppercase tracking-[0.08em] text-ink-400">
+                                  {KIND_LABEL[n.kind]}
+                                </span>
+                                <span className="min-w-0 flex-1 truncate text-[13px] text-ink-800">
+                                  {n.title}
+                                </span>
+                                <span className="ml-2 max-w-[140px] truncate text-[10.5px] text-ink-400">
+                                  {n.topicCluster}
+                                </span>
+                              </span>
+                            </Item>
+                          );
+                        })}
                       </Command.Group>
                     )}
                   </Command.List>
 
-                  <div className="flex items-center justify-between border-t border-white/10 px-3 py-1.5 text-[10px] text-white/40">
+                  <div className="flex items-center justify-between border-t border-ink-100 px-3 py-1.5 text-[10.5px] text-ink-400">
                     <span>↑↓ navigate · ↵ select · esc close</span>
-                    <span>⌘K</span>
+                    <span className="font-mono">⌘K</span>
                   </div>
                 </Command>
               </motion.div>
@@ -140,12 +145,20 @@ export function CommandPalette() {
   );
 }
 
-function Item({ children, onSelect, value }: { children: React.ReactNode; onSelect: () => void; value?: string }) {
+function Item({
+  children,
+  onSelect,
+  value,
+}: {
+  children: React.ReactNode;
+  onSelect: () => void;
+  value?: string;
+}) {
   return (
     <Command.Item
       value={value}
       onSelect={onSelect}
-      className="cursor-pointer rounded-md px-2 py-1.5 text-sm text-white/80 aria-selected:bg-accent-cyan/10 aria-selected:text-white aria-selected:shadow-[inset_0_0_0_1px_rgba(92,225,255,0.4)]"
+      className="cursor-pointer rounded-md px-2 py-2 text-[13px] text-ink-800 aria-selected:bg-accent-blueSoft aria-selected:text-ink-900"
     >
       {children}
     </Command.Item>

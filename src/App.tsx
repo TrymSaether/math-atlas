@@ -1,13 +1,13 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
+import { ReactFlowProvider } from "reactflow";
 import { Background } from "./components/Background";
-import { Sidebar } from "./components/Sidebar";
 import { TopBar } from "./components/TopBar";
 import { GraphCanvas } from "./components/GraphCanvas";
 import { NodePanel } from "./components/NodePanel";
 import { CommandPalette } from "./components/CommandPalette";
-import { PathPanel } from "./components/PathPanel";
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
 import { useStore } from "./store";
+import { assignDomainTones } from "./lib/colors";
 
 export default function App() {
   useKeyboardNav();
@@ -16,63 +16,39 @@ export default function App() {
   const loadingMapId = useStore((s) => s.loadingMapId);
   const mapError = useStore((s) => s.mapError);
   const ensureMapLoaded = useStore((s) => s.ensureMapLoaded);
-  const kinds = useStore((s) => s.kinds);
-  const topics = useStore((s) => s.topics);
-  const search = useStore((s) => s.search).toLowerCase().trim();
-  const searchScope = useStore((s) => s.searchScope);
-  const theme = useStore((s) => s.theme);
 
   useEffect(() => {
     void ensureMapLoaded(mapId);
   }, [ensureMapLoaded, mapId]);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    document.documentElement.dataset.theme = theme;
-    try {
-      window.localStorage.setItem("math-map-theme", theme);
-    } catch {
-      // Theme still applies for the current session when storage is unavailable.
-    }
-  }, [theme]);
-
-  const visibleCount = useMemo(() => {
-    if (!map) return 0;
-    return map.data.nodes.filter((n) => {
-      if (!kinds.has(n.kind)) return false;
-      if (topics.size && !topics.has(n.domainId)) return false;
-      if (search) {
-        const hay =
-          searchScope === "title"
-            ? `${n.title} ${n.number} ${n.kind}`.toLowerCase()
-            : `${n.title} ${n.number} ${n.kind} ${n.tags.join(" ")} ${n.formalStatement} ${n.originalText}`.toLowerCase();
-        if (!hay.includes(search)) return false;
-      }
-      return true;
-    }).length;
-  }, [map, kinds, topics, search, searchScope]);
+    if (!map) return;
+    assignDomainTones(map.data.domains.map((d) => d.id));
+  }, [map]);
 
   return (
-    <div className="relative flex h-dvh w-screen flex-col overflow-hidden p-2 md:p-3">
-      <Background />
-      <TopBar />
-      <div className="flex min-h-0 flex-1 flex-col gap-2 md:flex-row md:gap-3">
-          <Sidebar visibleCount={visibleCount} />
-          <main className="relative min-h-0 flex-1 overflow-hidden rounded-xl border border-white/10 bg-ink-950/30 md:rounded-2xl">
+    <ReactFlowProvider>
+      <div className="relative h-dvh w-screen overflow-hidden bg-canvas text-ink-900">
+        <Background />
+        <main className="absolute inset-0">
           {map ? (
             <>
               <GraphCanvas />
               <NodePanel />
-              <PathPanel />
             </>
           ) : (
-            <div className="flex h-full items-center justify-center px-6 text-center text-sm text-white/55">
-              {mapError ? `Could not load map: ${mapError}` : loadingMapId ? "Loading map..." : "Preparing map..."}
+            <div className="flex h-full items-center justify-center px-6 text-center text-sm text-ink-500">
+              {mapError
+                ? `Could not load map: ${mapError}`
+                : loadingMapId
+                  ? "Loading atlas…"
+                  : "Preparing atlas…"}
             </div>
           )}
-          </main>
+        </main>
+        <TopBar />
+        <CommandPalette />
       </div>
-      <CommandPalette />
-    </div>
+    </ReactFlowProvider>
   );
 }

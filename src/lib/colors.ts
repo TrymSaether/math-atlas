@@ -1,146 +1,67 @@
-/** Centralized Math Atlas color tokens. Light mode is canonical; dark mode keeps the same semantic palette. */
-export const atlasColors = {
-  primary: "#2563eb",
-  primaryDark: "#60a5fa",
-  foundations: "#2563eb",
-  continuity: "#16a34a",
-  connectedness: "#7c3aed",
-  fundamentalGroup: "#dc2626",
-  coveringSpaces: "#0d9488",
-  compactness: "#f97316",
-  homotopy: "#db2777",
-  examples: "#eab308",
-  slate: "#64748b",
-} as const;
+/** Apple Maps–inspired palette: soft pastel tints per domain, neutral nodes, blue accent for selection. */
 
-export const palette = {
-  cyan: atlasColors.foundations,
-  blue: atlasColors.foundations,
-  violet: atlasColors.connectedness,
-  gold: atlasColors.examples,
-  rose: atlasColors.homotopy,
-  red: atlasColors.fundamentalGroup,
-  mint: atlasColors.continuity,
-  teal: atlasColors.coveringSpaces,
-  orange: atlasColors.compactness,
-  slate: atlasColors.slate,
-} as const;
+export const APPLE_BLUE = "#0A84FF";
+export const APPLE_BLUE_SOFT = "#E6F0FF";
+export const CANVAS_BG = "#F7F5F0";
+export const INK_900 = "#1C1C1E";
+export const INK_700 = "#3A3A3C";
+export const INK_500 = "#6E6E73";
+export const INK_300 = "#AEAEB2";
+export const INK_100 = "#E5E5EA";
+export const HAIRLINE = "rgba(0, 0, 0, 0.08)";
 
-export const paletteRGB = {
-  cyan: "37, 99, 235",
-  blue: "37, 99, 235",
-  violet: "124, 58, 237",
-  gold: "234, 179, 8",
-  rose: "219, 39, 119",
-  red: "220, 38, 38",
-  mint: "22, 163, 74",
-  teal: "13, 148, 136",
-  orange: "249, 115, 22",
-  slate: "100, 116, 139",
-} as const;
+interface DomainTone {
+  color: string;
+  tint: string;
+  border: string;
+}
 
-export const nodeKindColors = {
-  definition: palette.blue,
-  theorem: palette.violet,
-  lemma: palette.mint,
-  example: palette.gold,
-  proposition: palette.rose,
-  corollary: palette.orange,
-  structure: palette.blue,
-  object: palette.violet,
-  property: palette.mint,
-  construction: palette.teal,
-  notation: palette.gold,
-  counterexample: palette.red,
-  non_example: palette.red,
-  assumption: palette.rose,
-  proof: palette.orange,
-  proof_step: palette.orange,
-  proof_method: palette.orange,
-  axiom: palette.blue,
-  application: palette.teal,
-} as const;
-
-export const relationColors = {
-  statement: palette.blue,
-  proof: palette.violet,
-  illustration: palette.gold,
-  defines: palette.blue,
-  defined_by: palette.blue,
-  requires: palette.violet,
-  uses: palette.violet,
-  proves: palette.violet,
-  implies: palette.violet,
-  has_example: palette.gold,
-  has_counterexample: palette.red,
-  equivalent_to: palette.teal,
-  generalizes: palette.mint,
-  specializes: palette.mint,
-  prerequisite_for: palette.orange,
-} as const;
-
-const fallbackColors = [
-  palette.blue,
-  palette.violet,
-  palette.mint,
-  palette.gold,
-  palette.rose,
-  palette.teal,
-  palette.orange,
-  palette.red,
-  palette.slate,
+/** Soft pastel palette used to color domain accents. Order is cycled deterministically per field. */
+const DOMAIN_TONES: DomainTone[] = [
+  { color: "#3A82F7", tint: "#E7F0FE", border: "#C9DCFB" }, // blue
+  { color: "#34A853", tint: "#E7F5EA", border: "#C7E4CD" }, // green
+  { color: "#E07A4B", tint: "#FBEDE3", border: "#F2D2BC" }, // peach
+  { color: "#8E5BD9", tint: "#F0E8FB", border: "#DBC9F0" }, // lilac
+  { color: "#D9A441", tint: "#F8EFD8", border: "#ECDAA8" }, // amber
+  { color: "#3FA9B5", tint: "#E1F2F4", border: "#BCDEE2" }, // teal
+  { color: "#D55F88", tint: "#FAE3EC", border: "#F0C5D5" }, // rose
+  { color: "#7E8A99", tint: "#EEF1F3", border: "#D6DCE2" }, // slate
+  { color: "#A78A6B", tint: "#F2ECE3", border: "#DCCBB3" }, // sand
 ];
 
-function fallbackColor(value: string): string {
-  let hash = 0;
-  for (const ch of value) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
-  return fallbackColors[hash % fallbackColors.length];
+function hash(value: string): number {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < value.length; i++) {
+    h ^= value.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
 }
 
-export function getNodeKindColor(kind: string): string {
-  return nodeKindColors[kind as keyof typeof nodeKindColors] ?? fallbackColor(kind);
+const domainToneCache = new Map<string, DomainTone>();
+
+export function getDomainTone(domainId: string, fallbackIndex?: number): DomainTone {
+  const cached = domainToneCache.get(domainId);
+  if (cached) return cached;
+  const idx =
+    typeof fallbackIndex === "number"
+      ? fallbackIndex
+      : hash(domainId);
+  const tone = DOMAIN_TONES[idx % DOMAIN_TONES.length];
+  domainToneCache.set(domainId, tone);
+  return tone;
 }
 
-export function getNodeKindRgbString(kind: string): string {
-  return hexToRgbString(getNodeKindColor(kind));
+/** Assign tones in domain-order so adjacent domains do not collide visually. */
+export function assignDomainTones(domainIds: string[]): Map<string, DomainTone> {
+  const result = new Map<string, DomainTone>();
+  domainIds.forEach((id, index) => {
+    const tone = DOMAIN_TONES[index % DOMAIN_TONES.length];
+    result.set(id, tone);
+    domainToneCache.set(id, tone);
+  });
+  return result;
 }
-
-export function getRelationColor(relation: string): string {
-  return relationColors[relation as keyof typeof relationColors] ?? fallbackColor(relation);
-}
-
-export const bg = {
-  base: "var(--background)",
-  surface: "var(--surface)",
-  surface2: "var(--surface-raised)",
-  surface3: "var(--surface-muted)",
-  surface4: "var(--field-hover)",
-  surface5: "var(--field)",
-} as const;
-
-export const ui = {
-  grid: "var(--canvas-grid)",
-  ring: "rgba(var(--primary-rgb), 0.12)",
-  gridAlpha: 0.06,
-  ringAlpha: 0.12,
-  primaryAlpha: 0.06,
-  primaryRGB: [37, 99, 235],
-} as const;
-
-export const stroke = {
-  primary: "var(--border)",
-  primaryHover: "var(--text)",
-  secondary: "rgba(var(--primary-rgb), 0.2)",
-  tertiary: "rgba(var(--primary-rgb), 0.15)",
-} as const;
-
-export const canvas = {
-  background: "var(--minimap-bg)",
-  maskBackground: "var(--minimap-mask)",
-  maskStroke: "var(--minimap-stroke)",
-  gridBackground: "var(--canvas-grid)",
-  scrollbarThumb: "rgba(var(--primary-rgb), 0.25)",
-} as const;
 
 export function hexToRgb(hex: string): [number, number, number] {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -152,16 +73,7 @@ export function hexToRgb(hex: string): [number, number, number] {
   ];
 }
 
-export function hexToRgbString(hex: string): string {
-  const [r, g, b] = hexToRgb(hex);
-  return `${r}, ${g}, ${b}`;
-}
-
 export function rgbaFromHex(hex: string, opacity: number): string {
   const [r, g, b] = hexToRgb(hex);
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-}
-
-export function getCSSVar(varName: string, opacity = 1): string {
-  return `rgba(var(--${varName}),${opacity})`;
 }

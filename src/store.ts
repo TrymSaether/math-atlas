@@ -2,10 +2,7 @@ import { create } from "zustand";
 import { DEFAULT_MAP_ID, loadMap, type LoadedMap, type MapId } from "./data";
 import type { NodeKind, Relation } from "./types";
 
-export type ViewMode = "dependency" | "cluster";
-export type HighlightMode = "immediate" | "full";
 export type SearchScope = "all" | "title";
-export type ThemeMode = "light" | "dark";
 
 interface State {
   mapId: MapId;
@@ -14,9 +11,6 @@ interface State {
   loadingMapId: MapId | null;
   mapError: string | null;
   ensureMapLoaded: (mapId?: MapId) => Promise<void>;
-
-  view: ViewMode;
-  setView: (v: ViewMode) => void;
 
   search: string;
   setSearch: (s: string) => void;
@@ -36,24 +30,8 @@ interface State {
   selectedId: string | null;
   select: (id: string | null) => void;
 
-  highlight: HighlightMode;
-  setHighlight: (h: HighlightMode) => void;
-
-  showOrphans: boolean;
-  setShowOrphans: (v: boolean) => void;
-
   paletteOpen: boolean;
   setPaletteOpen: (o: boolean) => void;
-
-  pathTargetId: string | null;
-  setPathTarget: (id: string | null) => void;
-
-  panelCollapsed: boolean;
-  setPanelCollapsed: (v: boolean) => void;
-
-  theme: ThemeMode;
-  setTheme: (theme: ThemeMode) => void;
-  toggleTheme: () => void;
 }
 
 function toggle<T>(set: Set<T>, v: T) {
@@ -62,23 +40,7 @@ function toggle<T>(set: Set<T>, v: T) {
   return next;
 }
 
-function getInitialTheme(): ThemeMode {
-  if (typeof window === "undefined") return "dark";
-  let stored: string | null = null;
-  try {
-    stored = window.localStorage.getItem("math-map-theme");
-  } catch {
-    stored = null;
-  }
-  if (stored === "light" || stored === "dark") return stored;
-  return document.documentElement.classList.contains("dark") ? "dark" : "light";
-}
-
 export const useStore = create<State>((set, get) => ({
-  theme: getInitialTheme(),
-  setTheme: (theme) => set({ theme }),
-  toggleTheme: () => set((state) => ({ theme: state.theme === "dark" ? "light" : "dark" })),
-
   mapId: DEFAULT_MAP_ID,
   loadedMaps: {},
   loadingMapId: null,
@@ -106,7 +68,6 @@ export const useStore = create<State>((set, get) => ({
           topics: new Set(),
           relations: new Set(map.relations),
           selectedId: null,
-          pathTargetId: null,
         };
       });
     } catch (error) {
@@ -125,13 +86,9 @@ export const useStore = create<State>((set, get) => ({
       topics: new Set(),
       relations: map ? new Set(map.relations) : new Set(),
       selectedId: null,
-      pathTargetId: null,
     });
     void get().ensureMapLoaded(mapId);
   },
-
-  view: "dependency",
-  setView: (v) => set({ view: v }),
 
   search: "",
   setSearch: (s) => set({ search: s }),
@@ -151,18 +108,6 @@ export const useStore = create<State>((set, get) => ({
   selectedId: null,
   select: (id) => set({ selectedId: id }),
 
-  highlight: "immediate",
-  setHighlight: (h) => set({ highlight: h }),
-
-  showOrphans: false,
-  setShowOrphans: (v) => set({ showOrphans: v }),
-
   paletteOpen: false,
   setPaletteOpen: (o) => set({ paletteOpen: o }),
-
-  pathTargetId: null,
-  setPathTarget: (id) => set({ pathTargetId: id }),
-
-  panelCollapsed: false,
-  setPanelCollapsed: (v) => set({ panelCollapsed: v }),
 }));

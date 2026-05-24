@@ -1,59 +1,23 @@
 import { Handle, Position, type NodeProps } from "reactflow";
-import { motion } from "framer-motion";
 import { cn } from "../lib/utils";
-import { getNodeKindRgbString } from "../lib/colors";
+import { getDomainTone } from "../lib/colors";
 import { useStore } from "../store";
 import { KIND_LABEL, type TopoNode as TopoNodeT } from "../types";
 
 interface Data {
   node: TopoNodeT;
   dim?: boolean;
-  highlight?: "primary" | "anc" | "desc" | null;
+  isSelected?: boolean;
+  isRelated?: boolean;
 }
 
-type Tier = "primary" | "secondary" | "compact";
-
-const KIND_TIER: Record<string, Tier> = {
-  definition: "primary",
-  theorem: "primary",
-  structure: "primary",
-  axiom: "primary",
-  property: "primary",
-  proposition: "secondary",
-  lemma: "secondary",
-  corollary: "secondary",
-  construction: "secondary",
-  object: "secondary",
-  algorithm: "secondary",
-  process: "secondary",
-  example: "compact",
-  counterexample: "compact",
-  non_example: "compact",
-  notation: "compact",
-  proof: "compact",
-  proof_step: "compact",
-  proof_method: "compact",
-};
-
-const TIER_STYLE: Record<Tier, { w: number; titleClamp: number; titleSize: string; pad: string }> = {
-  primary:   { w: 240, titleClamp: 2, titleSize: "text-[13px]", pad: "px-3 py-2" },
-  secondary: { w: 200, titleClamp: 2, titleSize: "text-[12px]", pad: "px-2.5 py-1.5" },
-  compact:   { w: 168, titleClamp: 1, titleSize: "text-[11px]", pad: "px-2 py-1" },
-};
-
-export function TopoNodeView({ data, selected }: NodeProps<Data>) {
-  const { node, dim, highlight } = data;
+export function TopoNodeView({ data }: NodeProps<Data>) {
+  const { node, dim, isSelected, isRelated } = data;
   const select = useStore((s) => s.select);
-  const tier = KIND_TIER[node.kind] ?? "secondary";
-  const tw = TIER_STYLE[tier];
-  const isPrimary = tier === "primary";
+  const tone = getDomainTone(node.domainId);
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: dim ? 0.28 : 1, y: 0 }}
-      transition={{ duration: 0.25 }}
+    <div
       onClick={() => select(node.id)}
       onKeyDown={(event) => {
         if (event.key !== "Enter" && event.key !== " ") return;
@@ -62,50 +26,32 @@ export function TopoNodeView({ data, selected }: NodeProps<Data>) {
       }}
       role="button"
       tabIndex={0}
-      aria-label={`${KIND_LABEL[node.kind]} ${node.number}: ${node.title}`}
-      style={{ width: tw.w, "--c": getNodeKindRgbString(node.kind) } as React.CSSProperties}
+      aria-label={`${KIND_LABEL[node.kind]}: ${node.title}`}
       className={cn(
-        `kind-${node.kind}`,
-        "group relative cursor-pointer rounded-xl border font-display outline-none",
-        tw.pad,
-        isPrimary
-          ? "border-[rgba(var(--c),0.55)] bg-[rgba(var(--c),0.08)] shadow-[0_10px_30px_-12px_rgba(var(--c),0.45)]"
-          : tier === "secondary"
-            ? "border-[rgba(var(--c),0.35)] bg-[rgba(var(--c),0.04)] shadow-[0_6px_18px_-12px_rgba(var(--c),0.3)]"
-            : "border-[rgba(var(--c),0.22)] bg-[rgba(var(--c),0.025)]",
-        "backdrop-blur-md",
-        "transition-all hover:-translate-y-0.5 hover:border-[rgba(var(--c),0.85)] hover:bg-[rgba(var(--c),0.12)]",
-        "hover:shadow-[0_18px_50px_-10px_rgba(var(--c),0.65),0_0_0_1px_rgba(var(--c),0.45)]",
-        selected && "ring-2 ring-[rgba(var(--c),0.9)]",
-        "focus-visible:ring-2 focus-visible:ring-white/90",
-        highlight === "primary" && "ring-2 ring-white/80",
-        highlight === "anc" && "ring-1 ring-accent-cyan/70",
-        highlight === "desc" && "ring-1 ring-accent-violet/70"
+        "group relative flex w-[220px] cursor-pointer items-stretch overflow-hidden rounded-[10px] bg-white outline-none transition-[opacity,box-shadow,transform] duration-150",
+        "border border-[rgba(0,0,0,0.08)] shadow-[0_1px_2px_rgba(0,0,0,0.04)]",
+        "hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)]",
+        "focus-visible:ring-2 focus-visible:ring-[#0A84FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F7F5F0]",
+        isSelected && "shadow-[0_0_0_2px_#0A84FF,0_8px_24px_rgba(10,132,255,0.18)] border-transparent",
+        !isSelected && isRelated && "shadow-[0_0_0_1px_#0A84FF80,0_4px_12px_rgba(10,132,255,0.10)]",
+        dim && "opacity-25",
       )}
     >
-      <Handle type="target" position={Position.Left} className="!opacity-0" />
-      <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-[rgba(var(--c),0.95)]">
-        <span className={cn(isPrimary ? "font-semibold" : "font-medium opacity-80")}>
-          {KIND_LABEL[node.kind]}
-        </span>
-        <span className="text-white/40">№ {node.number}</span>
-      </div>
-      <div
-        className={cn(
-          "mt-1 font-medium leading-snug text-white/95",
-          tw.titleSize,
-          tw.titleClamp === 1 ? "line-clamp-1" : "line-clamp-2"
-        )}
-      >
-        {node.title}
-      </div>
-      {isPrimary && (
-        <div className="mt-1.5 flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 rounded-full bg-[rgba(var(--c),0.95)] shadow-[0_0_8px_rgba(var(--c),0.9)]" />
-          <span className="text-[10px] text-white/55 truncate">{node.topicCluster}</span>
+      <Handle type="target" position={Position.Top} className="!opacity-0" />
+      <span
+        aria-hidden
+        className="block w-[5px] flex-shrink-0"
+        style={{ background: tone.color }}
+      />
+      <div className="min-w-0 flex-1 px-3 py-2">
+        <div className="flex items-center gap-2 text-[9.5px] font-medium uppercase tracking-[0.12em] text-ink-400">
+          <span style={{ color: tone.color }}>{KIND_LABEL[node.kind]}</span>
         </div>
-      )}
-      <Handle type="source" position={Position.Right} className="!opacity-0" />
-    </motion.div>
+        <div className="mt-0.5 truncate text-[13px] font-medium leading-snug text-ink-900">
+          {node.title}
+        </div>
+      </div>
+      <Handle type="source" position={Position.Bottom} className="!opacity-0" />
+    </div>
   );
 }

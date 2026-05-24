@@ -5,11 +5,11 @@ interface MapCatalogEntry<Id extends string = string> {
 }
 
 export const MAPS = {
-  functional_analysis: {
-    id: "functional_analysis",
-    label: "Functional Analysis",
+  topology: {
+    id: "topology",
+    label: "Topology",
     description:
-      "Normed spaces, Banach spaces, Hilbert spaces, operators, and duality.",
+      "Topological spaces, compactness, connectedness, and continuity.",
   },
   fourier_analysis: {
     id: "fourier_analysis",
@@ -17,28 +17,22 @@ export const MAPS = {
     description:
       "Fourier series, transforms, convergence, summability, and harmonic analysis.",
   },
-  topology: {
-    id: "topology",
-    label: "Topology",
+  functional_analysis: {
+    id: "functional_analysis",
+    label: "Functional Analysis",
     description:
-      "Topological spaces, compactness, connectedness, and continuity.",
-  },
-  data_warehouse: {
-    id: "data_warehouse",
-    label: "Data Warehouse",
-    description: "Data warehousing concepts, design, and implementation.",
+      "Normed spaces, Banach spaces, Hilbert spaces, operators, and duality.",
   },
 } as const satisfies Record<string, MapCatalogEntry>;
 
 export type MapId = keyof typeof MAPS;
 
-export const DEFAULT_MAP_ID: MapId = "functional_analysis";
+export const DEFAULT_MAP_ID: MapId = "topology";
 
 const MAP_LOADERS = {
-  functional_analysis: () => import("./maps/functional_analysis.json"),
-  fourier_analysis: () => import("./maps/fourier_analysis.json"),
   topology: () => import("./maps/topology.json"),
-  data_warehouse: () => import("./maps/data_warehouse.json"),
+  fourier_analysis: () => import("./maps/fourier_analysis.json"),
+  functional_analysis: () => import("./maps/functional_analysis.json"),
 } satisfies Record<MapId, () => Promise<{ default: unknown }>>;
 
 export function isMapId(value: string | null): value is MapId {

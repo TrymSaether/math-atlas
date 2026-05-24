@@ -2,45 +2,38 @@ import { useMemo, useEffect } from "react";
 import ReactFlow, {
   Background as RFBackground,
   BackgroundVariant,
-  Controls,
   MiniMap,
-  ReactFlowProvider,
   useReactFlow,
   type Node,
   type Edge,
 } from "reactflow";
 import type { LoadedMap } from "../data";
 import { useStore } from "../store";
-import { dependencyLayout, clusterLayout, type Lane } from "../lib/layout";
-import { buildAdjacency, ancestors, descendants } from "../lib/graph";
-import { getNodeKindColor } from "../lib/colors";
+import { getDomainTone } from "../lib/colors";
+import { ATLAS_NODE_WIDTH, ATLAS_NODE_HEIGHT } from "../lib/atlasLayout";
 import { TopoNodeView } from "./TopoNode";
 import { TopoEdgeView } from "./TopoEdge";
-import { LaneNode } from "./LaneNode";
 
-const nodeTypes = { topo: TopoNodeView, lane: LaneNode };
+const nodeTypes = { topo: TopoNodeView };
 const edgeTypes = { topo: TopoEdgeView };
 
 function InnerGraph() {
   const mapId = useStore((s) => s.mapId);
   const map = useStore((s) => s.loadedMaps[mapId]);
   if (!map) return null;
-  return <LoadedGraph map={map} />;
+  return <LoadedGraph map={map} key={mapId} />;
 }
 
 function LoadedGraph({ map }: { map: LoadedMap }) {
-  const view = useStore((s) => s.view);
   const search = useStore((s) => s.search).toLowerCase().trim();
   const searchScope = useStore((s) => s.searchScope);
   const kinds = useStore((s) => s.kinds);
   const topics = useStore((s) => s.topics);
   const relations = useStore((s) => s.relations);
   const selectedId = useStore((s) => s.selectedId);
-  const highlight = useStore((s) => s.highlight);
-  const showOrphans = useStore((s) => s.showOrphans);
   const rf = useReactFlow();
 
-  const { data } = map;
+  const { data, positions } = map;
 
   const filteredNodes = useMemo(() => {
     return data.nodes.filter((n) => {
@@ -49,8 +42,8 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
       if (search) {
         const hay =
           searchScope === "title"
-            ? `${n.title} ${n.number} ${n.kind}`.toLowerCase()
-            : `${n.title} ${n.number} ${n.kind} ${n.tags.join(" ")} ${n.formalStatement} ${n.originalText}`.toLowerCase();
+            ? `${n.title} ${n.kind}`.toLowerCase()
+            : `${n.title} ${n.kind} ${n.tags.join(" ")} ${n.formalStatement} ${n.originalText}`.toLowerCase();
         if (!hay.includes(search)) return false;
       }
       return true;
@@ -58,155 +51,123 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
   }, [data, kinds, topics, search, searchScope]);
 
   const visibleIds = useMemo(() => new Set(filteredNodes.map((n) => n.id)), [filteredNodes]);
+
   const filteredEdges = useMemo(
     () =>
       data.edges.filter(
-        (e) => relations.has(e.relation) && visibleIds.has(e.from) && visibleIds.has(e.to)
+        (e) => relations.has(e.relation) && visibleIds.has(e.from) && visibleIds.has(e.to),
       ),
-    [relations, visibleIds]
+    [data.edges, relations, visibleIds],
   );
 
-  const { rawNodes, rawEdges, lanes } = useMemo(() => {
-    if (view === "dependency") {
-      const r = dependencyLayout({ nodes: filteredNodes, edges: filteredEdges, showOrphans });
-      return { rawNodes: r.nodes, rawEdges: r.edges, lanes: r.lanes };
-    }
-    const r = clusterLayout({ nodes: filteredNodes, edges: filteredEdges });
-    return { rawNodes: r.nodes, rawEdges: r.edges, lanes: [] as Lane[] };
-  }, [view, filteredNodes, filteredEdges, showOrphans]);
-
-  const adj = useMemo(() => buildAdjacency(filteredEdges, relations), [filteredEdges, relations]);
-  const { ancSet, descSet, edgeHi } = useMemo(() => {
-    if (!selectedId || !visibleIds.has(selectedId)) {
-      return { ancSet: new Set<string>(), descSet: new Set<string>(), edgeHi: new Set<string>() };
-    }
-    let a: Set<string>, d: Set<string>;
-    if (highlight === "immediate") {
-      a = new Set((adj.in.get(selectedId) ?? []).map((x) => x.id));
-      d = new Set((adj.out.get(selectedId) ?? []).map((x) => x.id));
-    } else {
-      a = ancestors(adj, selectedId);
-      d = descendants(adj, selectedId);
-    }
-    const eHi = new Set<string>();
+  const relatedIds = useMemo(() => {
+    if (!selectedId) return new Set<string>();
+    const set = new Set<string>();
     for (const e of filteredEdges) {
-      const involves = e.from === selectedId || e.to === selectedId;
-      if (involves) eHi.add(e.id);
-      if (highlight === "full") {
-        if ((a.has(e.from) || e.from === selectedId) && (a.has(e.to) || e.to === selectedId)) eHi.add(e.id);
-        if ((d.has(e.from) || e.from === selectedId) && (d.has(e.to) || e.to === selectedId)) eHi.add(e.id);
-      }
+      if (e.from === selectedId) set.add(e.to);
+      if (e.to === selectedId) set.add(e.from);
     }
-    return { ancSet: a, descSet: d, edgeHi: eHi };
-  }, [selectedId, adj, filteredEdges, highlight, visibleIds]);
+    return set;
+  }, [selectedId, filteredEdges]);
 
-  const laneNodes: Node[] = useMemo(
-    () =>
-      lanes.map((l) => ({
-        id: `lane-${l.topic}`,
-        type: "lane",
-        position: { x: -160, y: l.y - 20 },
-        data: { topic: l.topic, subtitle: l.subtitle, width: l.width, height: l.height },
-        draggable: false,
-        selectable: false,
-        focusable: false,
-        zIndex: -1,
-        style: { zIndex: -1 },
-      })),
-    [lanes]
-  );
+  const highlightedEdgeIds = useMemo(() => {
+    if (!selectedId) return new Set<string>();
+    return new Set(filteredEdges.filter((e) => e.from === selectedId || e.to === selectedId).map((e) => e.id));
+  }, [selectedId, filteredEdges]);
 
   const nodes: Node[] = useMemo(
     () =>
-      rawNodes.map((n) => {
-        const isSel = n.id === selectedId;
-        const isAnc = ancSet.has(n.id);
-        const isDesc = descSet.has(n.id);
-        const anyHi = selectedId !== null && visibleIds.has(selectedId);
-        const dim = anyHi && !isSel && !isAnc && !isDesc;
+      filteredNodes.map((n) => {
+        const pos = positions.get(n.id) ?? { x: 0, y: 0 };
+        const isSelected = n.id === selectedId;
+        const isRelated = relatedIds.has(n.id);
+        const dim = selectedId !== null && !isSelected && !isRelated;
         return {
-          ...n, selected: isSel,
-          data: { ...n.data, dim, highlight: isSel ? "primary" : isAnc ? "anc" : isDesc ? "desc" : null },
+          id: n.id,
+          type: "topo",
+          position: pos,
+          draggable: false,
+          data: { node: n, isSelected, isRelated, dim },
         };
       }),
-    [rawNodes, selectedId, ancSet, descSet, visibleIds]
+    [filteredNodes, positions, selectedId, relatedIds],
   );
 
   const edges: Edge[] = useMemo(
     () =>
-      rawEdges.map((e) => {
-        const hi = edgeHi.has(e.id);
-        const anyHi = selectedId !== null && visibleIds.has(selectedId);
-        return { ...e, data: { ...e.data, dim: anyHi && !hi, highlight: hi } };
+      filteredEdges.map((e) => {
+        const highlight = highlightedEdgeIds.has(e.id);
+        const dim = selectedId !== null && !highlight;
+        return {
+          id: e.id,
+          source: e.from,
+          target: e.to,
+          type: "topo",
+          data: { highlight, dim },
+        };
       }),
-    [rawEdges, edgeHi, selectedId, visibleIds]
+    [filteredEdges, highlightedEdgeIds, selectedId],
   );
 
-  // Fit on view-mode change.
   useEffect(() => {
-    const t = setTimeout(() => rf.fitView({ padding: 0.18, duration: 600 }), 80);
+    const t = setTimeout(() => rf.fitView({ padding: 0.18, duration: 0 }), 30);
     return () => clearTimeout(t);
-  }, [view, rf]);
+  }, [rf, map.data.id]);
 
-  // Pan/zoom to selection.
   useEffect(() => {
     if (!selectedId) return;
-    const node = rawNodes.find((n) => n.id === selectedId);
-    if (!node) return;
-    rf.setCenter(node.position.x + 120, node.position.y + 46, { zoom: Math.max(0.9, rf.getZoom()), duration: 450 });
-  }, [selectedId, rawNodes, rf]);
+    const pos = positions.get(selectedId);
+    if (!pos) return;
+    rf.setCenter(
+      pos.x + ATLAS_NODE_WIDTH / 2,
+      pos.y + ATLAS_NODE_HEIGHT / 2,
+      { zoom: Math.max(0.9, rf.getZoom()), duration: 450 },
+    );
+  }, [selectedId, positions, rf]);
 
   return (
     <ReactFlow
-      nodes={[...laneNodes, ...nodes]}
+      nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
       onPaneClick={() => useStore.getState().select(null)}
       proOptions={{ hideAttribution: true }}
-      minZoom={0.06}
+      minZoom={0.1}
       maxZoom={2.4}
       fitView
+      panOnScroll
+      selectionOnDrag={false}
+      nodesDraggable={false}
       defaultEdgeOptions={{ type: "topo" }}
     >
       <RFBackground
         variant={BackgroundVariant.Dots}
-        gap={28}
-        size={1}
-        color="var(--canvas-grid-dot)"
+        gap={22}
+        size={0.8}
+        color="rgba(0,0,0,0.07)"
       />
       <MiniMap
-        pannable zoomable
-        ariaLabel="Concept map overview"
+        pannable
+        zoomable
+        ariaLabel="Atlas overview"
         nodeColor={(n) => {
-          if (n.type === "lane") return "transparent";
-          const k = (n.data as any)?.node?.kind;
-          return k ? getNodeKindColor(k) : "#2563eb";
+          const node = (n.data as any)?.node;
+          if (!node) return "#0A84FF";
+          return getDomainTone(node.domainId).color;
         }}
-        nodeStrokeColor={(n) =>
-          n.type === "lane" ? "transparent" : n.selected ? "var(--text-strong)" : "var(--border)"
-        }
+        nodeStrokeColor={() => "transparent"}
         nodeBorderRadius={3}
-        nodeStrokeWidth={1}
-        maskColor="var(--minimap-mask)"
-        maskStrokeColor="var(--minimap-stroke)"
-        maskStrokeWidth={1.5}
-        style={{
-          background: "var(--minimap-bg)",
-          border: "1px solid var(--panel-border)",
-          borderRadius: 12,
-          backdropFilter: "blur(8px)",
-        }}
+        nodeStrokeWidth={0}
+        maskColor="rgba(247, 245, 240, 0.72)"
+        maskStrokeColor="rgba(0,0,0,0.12)"
+        maskStrokeWidth={1}
+        style={{ width: 180, height: 130 }}
       />
-      <Controls position="bottom-right" showInteractive={false} />
     </ReactFlow>
   );
 }
 
 export function GraphCanvas() {
-  return (
-    <ReactFlowProvider>
-      <InnerGraph />
-    </ReactFlowProvider>
-  );
+  return <InnerGraph />;
 }

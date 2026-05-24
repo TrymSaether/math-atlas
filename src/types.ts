@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { getRelationColor, relationColors } from "./lib/colors";
 
 export type NodeKind = string;
 export type Relation = string;
@@ -356,15 +355,9 @@ export const RELATION_LABEL = new Proxy(relationLabelBase, {
   },
 }) as Record<string, string>;
 
-const relationColorBase = relationColors as Record<string, string>;
-
-export const RELATION_COLOR = new Proxy(relationColorBase, {
-  get(target, prop) {
-    if (typeof prop !== "string") return undefined;
-    if (target[prop]) return target[prop];
-    return getRelationColor(prop);
-  },
-}) as Record<string, string>;
+/** Single neutral hairline color for edges — domain accents live on nodes only. */
+export const EDGE_COLOR = "rgba(0, 0, 0, 0.16)";
+export const EDGE_COLOR_HIGHLIGHT = "#0A84FF";
 
 export function parseTopoNode(input: unknown): TopoNode {
   return TopoNodeSchema.parse(input);

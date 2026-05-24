@@ -1,180 +1,359 @@
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, ArrowUpRight, ArrowDownRight, Tag, BookOpen, Route } from "lucide-react";
+import {
+  X,
+  Lightbulb,
+  Sigma,
+  Link as LinkIcon,
+  ArrowUpRight,
+  Beaker,
+  StickyNote,
+  ChevronDown,
+} from "lucide-react";
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
 import { MathText } from "../lib/katex";
 import { cn } from "../lib/utils";
-import { getNodeKindRgbString } from "../lib/colors";
-import { KIND_LABEL } from "../types";
+import { getDomainTone } from "../lib/colors";
+import { KIND_LABEL, type GraphNode } from "../types";
+
+const USED_BY_INITIAL = 8;
 
 export function NodePanel() {
   const mapId = useStore((s) => s.mapId);
   const map = useStore((s) => s.loadedMaps[mapId]);
   const id = useStore((s) => s.selectedId);
   const select = useStore((s) => s.select);
-  const setPathTarget = useStore((s) => s.setPathTarget);
   const node = id && map ? map.nodeById.get(id) ?? null : null;
-  const formalStatement = node?.formalStatement.trim() ?? "";
 
   return (
     <AnimatePresence>
       {node && map && (
-        <motion.div
+        <motion.aside
           key={node.id}
-          initial={{ opacity: 0, x: 24 }}
+          initial={{ opacity: 0, x: 16 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 24 }}
-          transition={{ duration: 0.28, ease: [0.2, 0.7, 0.2, 1] }}
-          style={{ "--c": getNodeKindRgbString(node.kind) } as React.CSSProperties}
-          className={cn(
-            `kind-${node.kind}`,
-            "glass scanlines absolute inset-x-2 bottom-2 z-20 flex max-h-[68%] flex-col overflow-hidden rounded-xl shadow-2xl md:inset-x-auto md:bottom-3 md:right-3 md:top-3 md:max-h-none md:w-[400px] md:max-w-[42vw] md:rounded-2xl"
-          )}
+          exit={{ opacity: 0, x: 16 }}
+          transition={{ duration: 0.22, ease: [0.2, 0.7, 0.2, 1] }}
+          className="pointer-events-auto absolute right-3 top-[68px] bottom-3 z-20 flex w-[380px] flex-col overflow-hidden rounded-2xl border border-hairline bg-white shadow-float"
         >
-          {/* Top accent bar */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(var(--c),0.9)] to-transparent" />
-          <div className="absolute -left-px top-12 h-32 w-px bg-gradient-to-b from-[rgba(var(--c),0.9)] to-transparent" />
-
-          <header className="flex items-start justify-between gap-3 border-b border-white/10 p-3 md:p-4">
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[rgba(var(--c),0.95)]">
-                <span className="rounded-sm bg-[rgba(var(--c),0.12)] px-1.5 py-0.5">
-                  {KIND_LABEL[node.kind]}
-                </span>
-                <span className="text-white/60">{node.topicCluster}</span>
-              </div>
-              <h2 className="mt-1.5 font-display text-lg font-semibold leading-tight md:text-xl">
-                <MathText text={node.title} />
-              </h2>
-            </div>
-            <button
-              onClick={() => select(null)}
-              className="rounded-md p-1 text-white/50 hover:bg-white/10 hover:text-white"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </header>
-
-          <div className="flex-1 overflow-y-auto p-3 space-y-4 md:p-4 md:space-y-5">
-            <Section title={formalStatement ? "Formal statement" : "Statement"} icon={<BookOpen className="h-3 w-3" />}>
-              <div className="rounded-lg border border-white/10 bg-black/20 p-3 text-[13px] leading-relaxed text-white/85 font-serif">
-                <MathText text={formalStatement || node.originalText} />
-              </div>
-            </Section>
-
-            {formalStatement && (
-              <Section title="Source text">
-                <div className="rounded-lg border border-white/10 bg-white/[0.03] p-3 text-[12px] leading-relaxed text-white/65 font-serif">
-                  <MathText text={node.originalText} />
-                </div>
-              </Section>
-            )}
-
-            {node.explanation && (
-              <Section title="Explanation">
-                <p className="text-[13px] leading-relaxed text-white/75"><MathText text={node.explanation} /></p>
-              </Section>
-            )}
-
-            <DepSection
-              title="Prerequisites"
-              ids={[...new Set([...node.statementDependencies, ...node.proofDependencies])]}
-              map={map}
-              icon={<ArrowUpRight className="h-3 w-3 rotate-180" />}
-              empty="No upstream dependencies inferred."
-            />
-
-            <DepSection
-              title="Consequences"
-              ids={consequencesOf(node.id, map)}
-              map={map}
-              icon={<ArrowDownRight className="h-3 w-3" />}
-              empty="No downstream results inferred."
-            />
-
-            <Section title="Tags" icon={<Tag className="h-3 w-3" />}>
-              <div className="flex flex-wrap gap-1.5">
-                {node.tags.length === 0 && <span className="text-[11px] text-white/40">none</span>}
-                {node.tags.map((t) => (
-                  <span key={t} className="rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-[10px] text-white/70">{t}</span>
-                ))}
-              </div>
-            </Section>
-
-            <Section title="Reference">
-              <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[11px]">
-                <dt className="text-white/40">Domain</dt><dd className="text-white/70">{node.topicCluster}</dd>
-                <dt className="text-white/40">Source</dt><dd className="text-white/70">{node.chapter} · {node.section || "unranked"} · #{node.number}</dd>
-                <dt className="text-white/40">ID</dt><dd className="font-mono text-white/55 truncate">{node.id}</dd>
-              </dl>
-            </Section>
-          </div>
-
-          <footer className="border-t border-white/10 p-3">
-            <button
-              onClick={() => {
-                setPathTarget(node.id);
-                select(null);
-              }}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-accent-violet/40 bg-accent-violet/10 px-3 py-2 text-xs font-medium text-accent-violet shadow-glow-violet hover:bg-accent-violet/20"
-            >
-              <Route className="h-3.5 w-3.5" /> Generate learning path to here
-            </button>
-          </footer>
-        </motion.div>
+          <PanelContent node={node} map={map} onClose={() => select(null)} />
+        </motion.aside>
       )}
     </AnimatePresence>
   );
 }
 
-function Section({ title, icon, children }: { title: string; icon?: React.ReactNode; children: React.ReactNode }) {
+function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap; onClose: () => void }) {
+  const select = useStore((s) => s.select);
+  const domain = map.domainById.get(node.domainId);
+  const tone = getDomainTone(node.domainId);
+  const [openDeps, setOpenDeps] = useState(true);
+  const [openUsed, setOpenUsed] = useState(true);
+  const [openExamples, setOpenExamples] = useState(true);
+  const [showAllUsed, setShowAllUsed] = useState(false);
+
+  const prereqIds = useMemo(
+    () => [...new Set([...node.statementDependencies, ...node.proofDependencies])],
+    [node],
+  );
+  const allConsequences = useMemo(
+    () => (map.outgoingEdgesByNodeId.get(node.id) ?? []).map((edge) => edge.to),
+    [map, node.id],
+  );
+  const examples = useMemo(
+    () =>
+      [...new Set(allConsequences)]
+        .filter((cid) => {
+          const n = map.nodeById.get(cid);
+          return n && /example/.test(n.kind);
+        }),
+    [allConsequences, map],
+  );
+  const usedBy = useMemo(
+    () =>
+      [...new Set(allConsequences)].filter((cid) => {
+        const n = map.nodeById.get(cid);
+        return n && !/example/.test(n.kind);
+      }),
+    [allConsequences, map],
+  );
+
+  const visibleUsed = showAllUsed ? usedBy : usedBy.slice(0, USED_BY_INITIAL);
+  const hiddenUsedCount = usedBy.length - visibleUsed.length;
+
+  const formal = node.formalStatement.trim();
+  const intuition = node.explanation.trim() || node.originalText.trim();
+
   return (
-    <div>
-      <div className="mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-white/40">
-        {icon}{title}
+    <>
+      <div className="flex items-center gap-2 px-5 pt-4 pb-2">
+        <span
+          className="font-mono text-[11.5px] font-semibold tracking-wide"
+          style={{ color: tone.color }}
+          title={node.id}
+        >
+          {short(node.id)}
+        </span>
+        <span className="ml-auto" />
+        <button
+          onClick={onClose}
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-500 hover:bg-ink-50 hover:text-ink-900"
+          aria-label="Close"
+        >
+          <X className="h-4 w-4" />
+        </button>
       </div>
-      {children}
+
+      <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-7">
+        <h2 className="font-display text-[22px] font-semibold leading-[1.2] tracking-tight text-ink-900">
+          <MathText text={node.title} />
+        </h2>
+
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          <TagPill
+            label={domain?.label ?? node.topicCluster}
+            background={tone.tint}
+            color={tone.color}
+            border={tone.border}
+          />
+          <TagPill label={KIND_LABEL[node.kind]} neutral />
+          {node.tags.slice(0, 3).map((t) => (
+            <TagPill key={t} label={t} neutral />
+          ))}
+        </div>
+
+        <Divider />
+
+        {intuition && (
+          <>
+            <SectionHeader icon={<Lightbulb className="h-[15px] w-[15px]" />} title="Intuition" />
+            <div className="text-[13.5px] leading-[1.6] text-ink-800">
+              <MathText text={intuition} />
+            </div>
+            <Divider />
+          </>
+        )}
+
+        {formal && (
+          <>
+            <SectionHeader icon={<Sigma className="h-[15px] w-[15px]" />} title="Formal definition" />
+            <div className="rounded-[10px] border border-[#C9DCFB] bg-[#EFF4FF] px-4 py-3 text-[14px] leading-[1.6] text-ink-900 font-math">
+              <MathText text={formal} />
+            </div>
+            <Divider />
+          </>
+        )}
+
+        <SectionHeader
+          icon={<LinkIcon className="h-[15px] w-[15px]" />}
+          title="Depends on"
+          count={prereqIds.length}
+          expanded={openDeps}
+          onToggle={() => setOpenDeps((v) => !v)}
+        />
+        {openDeps && (
+          <div className="pb-1">
+            {prereqIds.length === 0 ? (
+              <Empty>No upstream dependencies recorded.</Empty>
+            ) : (
+              prereqIds.map((rid) => <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />)
+            )}
+          </div>
+        )}
+
+        <Divider />
+
+        <SectionHeader
+          icon={<ArrowUpRight className="h-[15px] w-[15px]" />}
+          title="Used by"
+          count={usedBy.length}
+          expanded={openUsed}
+          onToggle={() => setOpenUsed((v) => !v)}
+        />
+        {openUsed && (
+          <div className="pb-1">
+            {usedBy.length === 0 ? (
+              <Empty>Nothing downstream yet.</Empty>
+            ) : (
+              <>
+                {visibleUsed.map((rid) => (
+                  <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />
+                ))}
+                {hiddenUsedCount > 0 && (
+                  <button
+                    onClick={() => setShowAllUsed(true)}
+                    className="mt-1 px-1 text-[12px] text-accent-blue hover:underline"
+                  >
+                    … and {hiddenUsedCount} more
+                  </button>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        <Divider />
+
+        <SectionHeader
+          icon={<Beaker className="h-[15px] w-[15px]" />}
+          title="Examples"
+          count={examples.length}
+          expanded={openExamples}
+          onToggle={() => setOpenExamples((v) => !v)}
+        />
+        {openExamples && (
+          <div className="pb-1">
+            {examples.length === 0 ? (
+              <Empty>No worked examples linked.</Empty>
+            ) : (
+              examples.map((rid) => (
+                <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} dotColor="#E0A92F" />
+              ))
+            )}
+          </div>
+        )}
+
+        <Divider />
+
+        <SectionHeader icon={<StickyNote className="h-[15px] w-[15px]" />} title="Notes" />
+        <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[12px]">
+          <dt className="text-ink-400">Domain</dt>
+          <dd className="text-ink-700">{domain?.label ?? node.topicCluster}</dd>
+          <dt className="text-ink-400">Field</dt>
+          <dd className="text-ink-700">{node.chapter}</dd>
+          {node.tags.length > 0 && (
+            <>
+              <dt className="text-ink-400">Tags</dt>
+              <dd className="text-ink-700">{node.tags.join(", ")}</dd>
+            </>
+          )}
+          <dt className="text-ink-400">ID</dt>
+          <dd className="truncate font-mono text-[11px] text-ink-500" title={node.id}>
+            {node.id}
+          </dd>
+        </dl>
+      </div>
+    </>
+  );
+}
+
+function SectionHeader({
+  icon,
+  title,
+  count,
+  expanded,
+  onToggle,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  count?: number;
+  expanded?: boolean;
+  onToggle?: () => void;
+}) {
+  const interactive = !!onToggle;
+  return (
+    <div
+      onClick={onToggle}
+      className={cn(
+        "flex items-center gap-2.5 py-3",
+        interactive && "cursor-pointer",
+      )}
+    >
+      <span className="text-accent-blue">{icon}</span>
+      <span className="text-[13.5px] font-semibold tracking-[-0.005em] text-ink-900">
+        {title}
+      </span>
+      {typeof count === "number" && (
+        <span className="ml-auto inline-flex h-[22px] min-w-[24px] items-center justify-center rounded-full border border-hairline bg-white px-2 font-mono text-[11px] font-semibold text-ink-500">
+          {count}
+        </span>
+      )}
+      {interactive && (
+        <ChevronDown
+          className={cn(
+            "h-3.5 w-3.5 text-ink-300 transition-transform duration-200",
+            !expanded && "-rotate-90",
+            typeof count !== "number" && "ml-auto",
+          )}
+        />
+      )}
     </div>
   );
 }
 
-function DepSection({ title, ids, map, icon, empty }: { title: string; ids: string[]; map: LoadedMap; icon: React.ReactNode; empty: string }) {
-  const select = useStore((s) => s.select);
+function Divider() {
+  return <div className="my-0.5 border-t border-ink-100" />;
+}
+
+function Empty({ children }: { children: React.ReactNode }) {
+  return <div className="px-1 pb-2 text-[12px] text-ink-400">{children}</div>;
+}
+
+function TagPill({
+  label,
+  neutral,
+  background,
+  color,
+  border,
+}: {
+  label: string;
+  neutral?: boolean;
+  background?: string;
+  color?: string;
+  border?: string;
+}) {
+  if (neutral || !background) {
+    return (
+      <span className="inline-flex h-6 items-center rounded-full border border-hairline bg-white px-2.5 text-[11.5px] font-medium text-ink-700">
+        {label}
+      </span>
+    );
+  }
   return (
-    <Section title={title} icon={icon}>
-      {ids.length === 0 ? (
-        <div className="text-[11px] text-white/40">{empty}</div>
-      ) : (
-        <ul className="space-y-1">
-          {ids.map((id) => {
-            const n = map.nodeById.get(id);
-            if (!n) return null;
-            return (
-              <li key={id}>
-                <button
-                  onClick={() => select(id)}
-                  style={{ "--c": getNodeKindRgbString(n.kind) } as React.CSSProperties}
-                  className={cn(
-                    `kind-${n.kind}`,
-                    "group flex w-full items-center justify-between gap-2 rounded-md border border-white/5 bg-white/[0.02] px-2 py-1.5 text-left text-[12px] hover:bg-white/5"
-                  )}
-                >
-                  <span className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[rgba(var(--c),1)]" />
-                    <span className="text-white/40">{KIND_LABEL[n.kind]} {n.number}</span>
-                    <span className="text-white/85 truncate max-w-[200px]">{n.title}</span>
-                  </span>
-                  <ArrowUpRight className="h-3 w-3 text-white/30 group-hover:text-white/80" />
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </Section>
+    <span
+      className="inline-flex h-6 items-center rounded-full px-2.5 text-[11.5px] font-medium"
+      style={{ background, color, border: `1px solid ${border}` }}
+    >
+      {label}
+    </span>
   );
 }
 
-function consequencesOf(id: string, map: LoadedMap): string[] {
-  return [...new Set((map.outgoingEdgesByNodeId.get(id) ?? []).map((edge) => edge.to))];
+function RefRow({
+  id,
+  map,
+  onClick,
+  dotColor,
+}: {
+  id: string;
+  map: LoadedMap;
+  onClick: () => void;
+  dotColor?: string;
+}) {
+  const node = map.nodeById.get(id);
+  if (!node) return null;
+  const tone = getDomainTone(node.domainId);
+  return (
+    <button
+      onClick={onClick}
+      className="flex w-full items-center gap-2.5 rounded-md px-1 py-1.5 text-left hover:bg-ink-50"
+    >
+      <span
+        className="h-2 w-2 flex-shrink-0 rounded-full"
+        style={{ background: dotColor ?? tone.color }}
+      />
+      <span className="w-[68px] flex-shrink-0 truncate text-[10.5px] font-medium uppercase tracking-[0.08em] text-ink-400">
+        {KIND_LABEL[node.kind]}
+      </span>
+      <span className="min-w-0 flex-1 truncate text-[12.5px] text-ink-800">
+        <MathText text={node.title} />
+      </span>
+    </button>
+  );
+}
+
+function short(id: string): string {
+  if (id.length <= 18) return id;
+  return id.slice(0, 16) + "…";
 }
