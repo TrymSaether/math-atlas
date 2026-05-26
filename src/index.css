@@ -185,6 +185,26 @@ button { font-family: inherit; }
   border: 0 !important;
   opacity: 0;
 }
+.react-flow__handle.graph-node-handle {
+  width: 18px !important;
+  height: 8px !important;
+  border: 0 !important;
+  background: var(--handle-color, var(--accent)) !important;
+  opacity: 0.55 !important;
+  pointer-events: none !important;
+}
+.graph-node-handle-top {
+  top: -4px !important;
+  border-radius: 999px 999px 0 0 !important;
+}
+.graph-node-handle-bottom {
+  bottom: -4px !important;
+  border-radius: 0 0 999px 999px !important;
+}
+.react-flow__node:hover .graph-node-handle,
+.react-flow__node:focus-within .graph-node-handle {
+  opacity: 0.9 !important;
+}
 .react-flow__attribution { display: none; }
 
 .react-flow__minimap {

@@ -4,6 +4,7 @@ import type { NodeKind, Relation } from "./types";
 
 export type SearchScope = "all" | "title";
 export type Theme = "light" | "dark";
+export type GraphMode = "overview" | "detail";
 
 function readInitialTheme(): Theme {
   if (typeof document === "undefined") return "light";
@@ -23,6 +24,12 @@ interface State {
   loadingMapId: MapId | null;
   mapError: string | null;
   ensureMapLoaded: (mapId?: MapId) => Promise<void>;
+
+  graphMode: GraphMode;
+  setGraphMode: (mode: GraphMode) => void;
+  focusDomainId: string | null;
+  expandDomain: (domainId: string) => void;
+  collapseToOverview: () => void;
 
   search: string;
   setSearch: (s: string) => void;
@@ -102,6 +109,8 @@ export const useStore = create<State>((set, get) => ({
           topics: new Set(),
           relations: new Set(map.relations),
           selectedId: null,
+          graphMode: "overview",
+          focusDomainId: null,
         };
       });
     } catch (error) {
@@ -120,9 +129,22 @@ export const useStore = create<State>((set, get) => ({
       topics: new Set(),
       relations: map ? new Set(map.relations) : new Set(),
       selectedId: null,
+      graphMode: "overview",
+      focusDomainId: null,
     });
     void get().ensureMapLoaded(mapId);
   },
+
+  graphMode: "overview",
+  setGraphMode: (graphMode) =>
+    set({
+      graphMode,
+      focusDomainId: graphMode === "overview" ? null : get().focusDomainId,
+      selectedId: graphMode === "overview" ? null : get().selectedId,
+    }),
+  focusDomainId: null,
+  expandDomain: (domainId) => set({ graphMode: "detail", focusDomainId: domainId, selectedId: null }),
+  collapseToOverview: () => set({ graphMode: "overview", focusDomainId: null, selectedId: null }),
 
   search: "",
   setSearch: (s) => set({ search: s }),
