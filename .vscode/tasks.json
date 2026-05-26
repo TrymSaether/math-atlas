@@ -6,7 +6,18 @@
       "script": "preview",
       "problemMatcher": ["$eslint-compact"],
       "label": "npm: preview",
-      "detail": "vite preview"
+      "detail": "vite preview",
+      "inAgents": true,
+      "runOptions": {
+        "runOn": "worktreeCreated"
+      }
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "problemMatcher": ["$armcc5"],
+      "label": "npm: dev",
+      "detail": "vite"
     }
   ]
 }
