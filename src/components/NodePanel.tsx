@@ -52,6 +52,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const [openDeps, setOpenDeps] = useState(true);
   const [openUsed, setOpenUsed] = useState(true);
   const [openExamples, setOpenExamples] = useState(true);
+  const [openExercises, setOpenExercises] = useState(true);
   const [showAllUsed, setShowAllUsed] = useState(false);
 
   const prereqIds = useMemo(
@@ -62,20 +63,37 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
     () => (map.outgoingEdgesByNodeId.get(node.id) ?? []).map((edge) => edge.to),
     [map, node.id],
   );
+  const incomingSources = useMemo(
+    () => (map.incomingEdgesByNodeId.get(node.id) ?? []).map((edge) => edge.from),
+    [map, node.id],
+  );
+  const linkedIds = useMemo(
+    () => [...new Set([...allConsequences, ...incomingSources])],
+    [allConsequences, incomingSources],
+  );
   const examples = useMemo(
     () =>
-      [...new Set(allConsequences)]
+      linkedIds
         .filter((cid) => {
           const n = map.nodeById.get(cid);
           return n && /example/.test(n.kind);
         }),
-    [allConsequences, map],
+    [linkedIds, map],
+  );
+  const exercises = useMemo(
+    () =>
+      linkedIds
+        .filter((cid) => {
+          const n = map.nodeById.get(cid);
+          return n?.kind === "exercise";
+        }),
+    [linkedIds, map],
   );
   const usedBy = useMemo(
     () =>
       [...new Set(allConsequences)].filter((cid) => {
         const n = map.nodeById.get(cid);
-        return n && !/example/.test(n.kind);
+        return n && !/example/.test(n.kind) && n.kind !== "exercise";
       }),
     [allConsequences, map],
   );
@@ -233,6 +251,27 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
             ) : (
               examples.map((rid) => (
                 <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} dotColor="#E0A92F" />
+              ))
+            )}
+          </div>
+        )}
+
+        <Divider />
+
+        <SectionHeader
+          icon={<StickyNote className="h-[15px] w-[15px]" />}
+          title="Exercises"
+          count={exercises.length}
+          expanded={openExercises}
+          onToggle={() => setOpenExercises((v) => !v)}
+        />
+        {openExercises && (
+          <div className="pb-1">
+            {exercises.length === 0 ? (
+              <Empty>No exercises linked.</Empty>
+            ) : (
+              exercises.map((rid) => (
+                <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} dotColor="#64748B" />
               ))
             )}
           </div>

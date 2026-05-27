@@ -4110,7 +4110,10 @@
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "manifold",
+            "homeomorphism"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -4124,7 +4127,7 @@
         },
         "kind": "conjecture",
         "label": "Poincare conjecture",
-        "domain": "examples"
+        "domain": "connectedness"
       },
       {
         "id": "analysis_on_metric_spaces",
@@ -4144,7 +4147,11 @@
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "metric_space",
+            "continuity",
+            "compactness"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -4159,7 +4166,7 @@
         },
         "kind": "application",
         "label": "analysis on metric spaces",
-        "domain": "examples"
+        "domain": "spaces_constructions"
       },
       {
         "id": "fixed_point_applications",
@@ -4186,7 +4193,7 @@
         },
         "kind": "application",
         "label": "fixed point applications",
-        "domain": "examples"
+        "domain": "compactness"
       },
       {
         "id": "algebraic_topology_examples",
@@ -4197,12 +4204,46 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "exercise_7_1",
+            "exercise_7_2",
+            "exercise_7_3",
+            "exercise_7_4",
+            "exercise_7_5",
+            "exercise_7_6",
+            "exercise_7_7",
+            "exercise_7_8",
+            "exercise_8_1",
+            "exercise_8_2",
+            "exercise_8_3",
+            "exercise_8_4",
+            "exercise_8_5",
+            "exercise_8_6",
+            "exercise_8_7",
+            "exercise_8_8"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "exercise_7_1",
+            "exercise_7_2",
+            "exercise_7_3",
+            "exercise_7_4",
+            "exercise_7_5",
+            "exercise_7_6",
+            "exercise_7_7",
+            "exercise_7_8",
+            "exercise_8_1",
+            "exercise_8_2",
+            "exercise_8_3",
+            "exercise_8_4",
+            "exercise_8_5",
+            "exercise_8_6",
+            "exercise_8_7",
+            "exercise_8_8"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [],
@@ -4213,7 +4254,7 @@
         },
         "kind": "application",
         "label": "algebraic topology examples",
-        "domain": "examples"
+        "domain": "connectedness"
       },
       {
         "id": "heine_borel_theorem",
@@ -5185,12 +5226,36 @@
         "notation": "R",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "metric_space",
+            "hausdorff_property",
+            "second_countability",
+            "exercise_4_1",
+            "exercise_4_2",
+            "exercise_4_3",
+            "exercise_4_4",
+            "exercise_4_5",
+            "exercise_4_6",
+            "exercise_4_7",
+            "exercise_4_8"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "metric_space",
+            "hausdorff_property",
+            "second_countability",
+            "exercise_4_1",
+            "exercise_4_2",
+            "exercise_4_3",
+            "exercise_4_4",
+            "exercise_4_5",
+            "exercise_4_6",
+            "exercise_4_7",
+            "exercise_4_8"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5222,7 +5287,7 @@
           "baire_category_theorem"
         ],
         "label": "real line with standard topology",
-        "domain": "examples"
+        "domain": "spaces_constructions"
       },
       {
         "id": "euclidean_space",
@@ -5233,12 +5298,26 @@
         "notation": "R^n",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "heine_borel_theorem",
+            "bolzano_weierstrass_theorem",
+            "brouwer_fixed_point_theorem",
+            "jordan_curve_theorem",
+            "proof_heine_borel_open_cover",
+            "metric_space"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "heine_borel_theorem",
+            "bolzano_weierstrass_theorem",
+            "brouwer_fixed_point_theorem",
+            "jordan_curve_theorem",
+            "proof_heine_borel_open_cover",
+            "metric_space"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5266,7 +5345,7 @@
           "brouwer_fixed_point_theorem"
         ],
         "label": "Euclidean space",
-        "domain": "examples"
+        "domain": "spaces_constructions"
       },
       {
         "id": "discrete_space",
@@ -5277,12 +5356,16 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "normality"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "normality"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5306,7 +5389,7 @@
         ],
         "related_theorems": [],
         "label": "discrete space",
-        "domain": "examples"
+        "domain": "spaces_constructions"
       },
       {
         "id": "indiscrete_space",
@@ -5317,12 +5400,16 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "hausdorff_property"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "hausdorff_property"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [],
@@ -5345,7 +5432,7 @@
         ],
         "related_theorems": [],
         "label": "indiscrete space",
-        "domain": "examples"
+        "domain": "spaces_constructions"
       },
       {
         "id": "sierpinski_space",
@@ -5356,12 +5443,16 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "hausdorff_property"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "hausdorff_property"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [],
@@ -5382,7 +5473,7 @@
         ],
         "related_theorems": [],
         "label": "Sierpinski space",
-        "domain": "examples"
+        "domain": "spaces_constructions"
       },
       {
         "id": "cantor_set",
@@ -5393,12 +5484,16 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "compactness"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "compactness"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5424,7 +5519,7 @@
           "tychonoff_theorem"
         ],
         "label": "Cantor set",
-        "domain": "examples"
+        "domain": "compactness"
       },
       {
         "id": "circle",
@@ -5435,12 +5530,22 @@
         "notation": "S^1",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "jordan_curve_theorem",
+            "path_connectedness",
+            "compactness",
+            "connectedness"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "jordan_curve_theorem",
+            "path_connectedness",
+            "compactness",
+            "connectedness"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5468,7 +5573,7 @@
           "jordan_curve_theorem"
         ],
         "label": "circle",
-        "domain": "examples"
+        "domain": "connectedness"
       },
       {
         "id": "torus",
@@ -5479,12 +5584,18 @@
         "notation": "T^2",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "product_topology",
+            "path_connectedness"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "product_topology",
+            "path_connectedness"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5510,7 +5621,7 @@
         ],
         "related_theorems": [],
         "label": "torus",
-        "domain": "examples"
+        "domain": "connectedness"
       },
       {
         "id": "rationals_with_subspace_topology",
@@ -5551,7 +5662,7 @@
         ],
         "related_theorems": [],
         "label": "rationals with subspace topology",
-        "domain": "examples"
+        "domain": "spaces_constructions"
       },
       {
         "id": "long_line",
@@ -5590,7 +5701,7 @@
         ],
         "related_theorems": [],
         "label": "long line",
-        "domain": "examples"
+        "domain": "separation_countability"
       },
       {
         "id": "sorgenfrey_line",
@@ -5629,7 +5740,7 @@
         ],
         "related_theorems": [],
         "label": "Sorgenfrey line",
-        "domain": "examples"
+        "domain": "separation_countability"
       },
       {
         "id": "hawaiian_earring",
@@ -5665,7 +5776,7 @@
         ],
         "related_theorems": [],
         "label": "Hawaiian earring",
-        "domain": "examples"
+        "domain": "connectedness"
       },
       {
         "id": "topologist_sine_curve",
@@ -5702,7 +5813,7 @@
         ],
         "related_theorems": [],
         "label": "topologist's sine curve",
-        "domain": "examples"
+        "domain": "connectedness"
       },
       {
         "id": "quotient_space_examples",
@@ -5713,12 +5824,16 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "quotient_topology"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "quotient_topology"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5740,7 +5855,7 @@
         ],
         "related_theorems": [],
         "label": "quotient space examples",
-        "domain": "examples"
+        "domain": "spaces_constructions"
       },
       {
         "id": "bare_set_without_topology",
@@ -5777,7 +5892,7 @@
         ],
         "related_theorems": [],
         "label": "bare set without topology",
-        "domain": "examples"
+        "domain": "foundations"
       },
       {
         "id": "non_hausdorff_spaces_as_counterexamples",
@@ -5788,12 +5903,18 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "hausdorff_assumption",
+            "compact_subsets_of_hausdorff_are_closed"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "hausdorff_assumption",
+            "compact_subsets_of_hausdorff_are_closed"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5820,7 +5941,7 @@
           "compact_subsets_of_hausdorff_are_closed"
         ],
         "label": "non-Hausdorff spaces as counterexamples",
-        "domain": "examples"
+        "domain": "separation_countability"
       },
       {
         "id": "compact_non_sequentially_compact_space",
@@ -5831,12 +5952,18 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "sequential_compactness",
+            "first_countability"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "sequential_compactness",
+            "first_countability"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5862,7 +5989,7 @@
           "tychonoff_theorem"
         ],
         "label": "compact non-sequentially compact space",
-        "domain": "examples"
+        "domain": "compactness"
       },
       {
         "id": "connected_not_path_connected_space",
@@ -5873,12 +6000,16 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": [
+            "path_connectedness"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": [
+            "path_connectedness"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -5901,13 +6032,13 @@
         ],
         "related_theorems": [],
         "label": "connected not path-connected space",
-        "domain": "examples"
+        "domain": "connectedness"
       },
       {
         "id": "exercise_2_1",
         "label": "Exercise 2.1",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Does 𝑑(𝑥, 𝑦) = (𝑥 − 𝑦)2 define a metric on 𝑋 = ℝ?",
         "formal_statement": null,
         "definition": null,
@@ -5965,7 +6096,7 @@
         "id": "exercise_2_2",
         "label": "Exercise 2.2",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Show that ℝ2 equipped with the taxi cab metric is a metric space.",
         "formal_statement": null,
         "definition": null,
@@ -6023,7 +6154,7 @@
         "id": "exercise_2_3",
         "label": "Exercise 2.3",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let (𝑋, 𝑑) be a metric space. Show that the map 𝑑 ′ ∶ 𝑋 × 𝑋 → ℝ given by\n𝑑(𝑥, 𝑦)\n𝑑 ′ (𝑥, 𝑦) =\n1 + 𝑑(𝑥, 𝑦)\nis also a metric on 𝑋.",
         "formal_statement": null,
         "definition": null,
@@ -6081,7 +6212,7 @@
         "id": "exercise_2_4",
         "label": "Exercise 2.4",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Draw a picture of the open ball 𝖡((0, 0); 1) in the metric space (ℝ2 , 𝑑) with\n(a) 𝑑(𝑥, 𝑦) = 𝑑1 (𝑥, 𝑦) = |𝑥1 − 𝑦1 | + |𝑥2 − 𝑦2 |;\n√\n(b) 𝑑(𝑥, 𝑦) = 𝑑2 (𝑥, 𝑦) = (𝑥1 − 𝑦1 )2 + (𝑥2 − 𝑦2 )2 ;\n(c) 𝑑(𝑥, 𝑦) = 𝑑∞ (𝑥, 𝑦) = max{|𝑥1 − 𝑦1 |, |𝑥2 − 𝑦2 |}.",
         "formal_statement": null,
         "definition": null,
@@ -6139,7 +6270,7 @@
         "id": "exercise_2_5",
         "label": "Exercise 2.5",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Show that 𝑑1 , 𝑑2 and 𝑑∞ (as defined in Exercise 2.4) are equivalent on 𝑋 = ℝ2 .",
         "formal_statement": null,
         "definition": null,
@@ -6197,7 +6328,7 @@
         "id": "exercise_2_6",
         "label": "Exercise 2.6",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Show that in a discrete metric space (𝑋, 𝑑), cf. Example 2.3, every subset is both\nopen and closed in 𝑋.",
         "formal_statement": null,
         "definition": null,
@@ -6255,7 +6386,7 @@
         "id": "exercise_2_7",
         "label": "Exercise 2.7",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Show that for equivalent metrics 𝑑 and 𝑑 ′ on the set 𝑋, the open sets are the\nsame.",
         "formal_statement": null,
         "definition": null,
@@ -6313,7 +6444,7 @@
         "id": "exercise_2_8",
         "label": "Exercise 2.8",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "continuity",
         "statement": "Let (𝑋, 𝑑𝑋 ) and (𝑌 , 𝑑𝑌 ) be metric spaces, and let 𝑓 ∶ 𝑋 → 𝑌 be a map. Show\nthat 𝑓 is continuous if and only if for every subset 𝐵 ⊆ 𝑌 closed in 𝑌 , the preimage 𝑓 −1 (𝐵) is\nclosed in 𝑋.\n3. Topological spaces\n3.1 Definition and examples\nTopological spaces are spaces constructed to support continuous maps. The definition is as follows.\nDefinition 3.1 (Topological spaces) A topological space is a set 𝑋 together with a collection\n of subsets of 𝑋 that are called open in 𝑋, such that the following properties hold.\nT1 The subsets ∅ and 𝑋 are in  .\nT2 The union of the elements of any subcollection of  is in  .\nT3 The intersection of the elements of any finite subcollection of  is in  .\nA topological space is strictly speaking an ordered pair (𝑋,  ). We refer to  as the topology on 𝑋. We\nwill often omit specific mention of  if no confusion will arise.\nThe following theorem states that every metric space (𝑋, 𝑑) is a topological space with the metric\ntopology 𝑑 on 𝑋.\nTheorem 3.2 (Metric spaces are topological spaces) Let (𝑋, 𝑑) be a metric space. Let 𝑑\nbe the collection of subsets 𝑈 ⊆ 𝑋 with the property that 𝑈 ∈ 𝑑 if and only if for each 𝑥 ∈ 𝑈\nthere is an 𝑟 > 0 such that 𝖡(𝑥; 𝑟) ⊆ 𝑈 . Then 𝑑 defines a topology on 𝑋.\nProof. Clearly, ∅ ∈ 𝑑 . To show that 𝑋 ∈ 𝑑 , note that for any 𝑥 ∈ 𝑋, 𝖡(𝑥; 1) ⊆ 𝑋. Hence, 𝑋 ∈ 𝑑 .\nThus T1 is satisfied.\n⋃\nLet {𝑈𝜆 }𝜆∈Λ be any subcollection of 𝑑 . We need to prove that 𝑉 = 𝜆∈Λ 𝑈𝜆 ∈ 𝑑 . Let 𝑥 ∈ 𝑉 .\n⋃\nFrom 𝑉 = 𝜆∈Λ 𝑈𝜆 there is 𝜆 ∈ Λ such that 𝑥 ∈ 𝑈𝜆 . By the property of 𝑈𝜆 satisfied by the 𝑈𝜆 in 𝑑\nthere is an 𝑟 > 0 such that 𝖡(𝑥; 𝑟) ⊆ 𝑈𝜆 . Hence, 𝖡(𝑥; 𝑟) ⊆ 𝑉 . Thus 𝑉 ∈ 𝑑 , and T2 is satisfied.\nWe prove that the intersection of the elements of any finite subcollection of 𝑑 is also an element of\n𝑑 . Let 𝑈1 , 𝑈2 , … , 𝑈𝑛 ∈ 𝑑 . We need to prove that 𝑈1 ∩ 𝑈2 ∩ ⋯ ∩ 𝑈𝑛 ∈ 𝑑 . Let 𝑥 ∈ 𝑈1 ∩ 𝑈2 ∩ ⋯ ∩ 𝑈𝑛 .\nSince 𝑈1 ∩ 𝑈2 ∩ ⋯ ∩ 𝑈𝑛 ⊆ 𝑈𝑖 , we have that 𝑥 ∈ 𝑈𝑖 for 𝑖 = 1, 2, … , 𝑛. By the defining property\nof 𝑑 there is an 𝑟𝑖 > 0 such that 𝖡(𝑥; 𝑟𝑖 ) ⊆ 𝑈𝑖 for 𝑖 = 1, 2, … , 𝑛. Let 𝑟 = min{𝑟1 , 𝑟2 , … , 𝑟𝑛 }. Then\n𝖡(𝑥; 𝑟) ⊆ 𝖡(𝑥; 𝑟𝑖 ) ⊆ 𝑈𝑖 for 𝑖 = 1, 2, … , 𝑛. Thus 𝖡(𝑥; 𝑟) ⊆ 𝑈1 ∩𝑈2 ∩⋯∩𝑈𝑛 , and so 𝑈1 ∩𝑈2 ∩⋯∩𝑈𝑛 ∈ 𝑑 .\nHence, T3 is satisfied.\nThe following theorem relates the metric topologies for two equivalent metrics.\nTheorem 3.3 Let 𝑋 be any set, and let 𝑑1 and 𝑑2 be two equivalent metrics on 𝑋. Then\n𝑑1 = 𝑑2 .\n13\n14 3.1. Definition and examples\nThis follows from Exercise 2.7.\nExample 3.4 (Discrete topology) Let 𝑋 be any set. The collection  of all subsets of 𝑋, i.e.\nthe power set (𝑋) of 𝑋, is a topology on 𝑋. We refer to this topology as the discrete topology.\nA set 𝑋 equipped with the discrete topology is referred to as a discrete topological space.\nThe discrete topology is the unique topology where the singletons are open. We can think of a\ndiscrete topological space as a space of separate, isolated points, with no close interaction between\ndifferent points.\nFor any set 𝑋, the discrete topology is the largest topology we may equip 𝑋 with. The smallest\ntopology is called the indiscrete topology.\nExample 3.5 (Indiscrete topology) Let 𝑋 be any set. The collection  consisting of ∅ and\n𝑋 is a topology on 𝑋, referred to as the indiscrete topology on 𝑋. A set 𝑋 equipped with the\nindiscrete topology is referred to as an indiscrete topological space.\nExample 3.6 Let 𝑋 = {𝑎, 𝑏, 𝑐}. The following collections all define a topology on 𝑋.\n(1) 1 = ind = {∅, 𝑋}\n(2) 2 = {∅, {𝑎}, 𝑋}\n(3) 3 = {∅, {𝑎, 𝑏}, 𝑋}\n(4) 4 = {∅, {𝑎}, {𝑎, 𝑏}, 𝑋}\n(5) 5 = {∅, {𝑎, 𝑏}, {𝑏}, {𝑏, 𝑐}, 𝑋}\n(6) 6 = disc = (𝑋) = {∅, {𝑎}, {𝑎, 𝑏}, {𝑎, 𝑐}, {𝑏}, {𝑏, 𝑐}, {𝑐}, 𝑋}\nThere are in total 29 topologies on 𝑋. However, there are also collections of subsets of 𝑋\nwhich do not define topologies on 𝑋. None of the following collections of subsets of 𝑋 define\na topology on 𝑋.\n(1) {∅, {𝑎}, {𝑏}, 𝑋}\n(2) {∅, {𝑎}, {𝑐}, 𝑋}\n(3) {∅, {𝑎, 𝑏}, {𝑏, 𝑐}, 𝑋}\nDefinition 3.7 (Comparable topologies) Let 𝑋 be any set and suppose that 1 and 2 are two\ntopologies on 𝑋. If 1 ⊆ 2 , we say that 1 is coarser than 2 and that 2 is finer than 1 . We\nsay that 1 and 2 are comparable if either 1 ⊆ 2 or 2 ⊆ 1 .\nClearly, for any set 𝑋, the discrete topology disc contains the indiscrete topology ind : disc ⊇ ind .\nHence, the discrete topology is finer than the indiscrete topology and the indiscrete topology is coarser\nthan the discrete topology.\nExample 3.8 (Cofinite topology) Let 𝑋 be any set. The collection  of subsets of 𝑋 consisting\nof subsets 𝑈 ⊆ 𝑋 such that 𝑈 𝑐 = 𝑋 ⧵ 𝑈 is either finite or all of 𝑋 is a topology on 𝑋. We refer\nto this topology as the cofinite topology on 𝑋.\nChapter 3. Topological spaces 15\nIf 𝑋 is a finite set, the cofinite topology is equal to the discrete topology. If 𝑋 is an infinite set, the\ncofinite topology is strictly coarser than the discrete topology, in the sense that the cofinite topology\nis properly contained in the discrete topology.\nWe end this section with a theorem that we can use to prove that some set is open. To state the\ntheorem we need the following definition.\nDefinition 3.9 (Neighborhoods) Let 𝑋 be a topological space, 𝑈 a subset of 𝑋 and 𝑥 ∈ 𝑋.\nWe say that 𝑈 is a neighborhood of 𝑥 if 𝑥 ∈ 𝑈 and 𝑈 is open in 𝑋.\nA neighborhood in the sense of the previous definition is sometimes referred to as an open neigh-\nborhood, cf. Definition 2.11.\nTheorem 3.10 Let 𝑋 be a topological space. A subset 𝑈 of 𝑋 is open in 𝑋 if and only if for\nevery 𝑥 ∈ 𝑈 there is a neighborhood 𝑈𝑥 of 𝑥 such that 𝑈𝑥 ⊆ 𝑈 .\nProof. Assume that 𝑈 is open in 𝑋. Then for every 𝑥 ∈ 𝑈 , 𝑈 is a neighborhood of 𝑥 that is contained\nin 𝑈 .\nWe prove the other implication. Assume that for every 𝑥 ∈ 𝑈 there is a 𝑈𝑥 ∈  such that\n𝑥 ∈ 𝑈𝑥 ⊆ 𝑈 , i.e., that 𝑈𝑥 is a neighborhood of 𝑥 such that 𝑈𝑥 ⊆ 𝑈 . To prove that 𝑈 ∈  , we will\n⋃ ⋃\nprove that 𝑈 = 𝑥∈𝑈 𝑈𝑥 . Assume that 𝑥′ ∈ 𝑈𝑥′ . Then 𝑥′ ∈ 𝑈𝑥′ ⊆ 𝑥∈𝑈 𝑈𝑥 . Furthermore, any\n⋃\npoint in 𝑥∈𝑈 𝑈𝑥 is in 𝑈𝑥 for some 𝑥 ∈ 𝑈 so by assumption, 𝑈𝑥 ⊆ 𝑈 and 𝑥 ∈ 𝑈𝑥 ⊆ 𝑈 . Hence,\n⋃\n𝑈 = 𝑥∈𝑈 𝑈𝑥 . As 𝑈 is the union of open sets it must be an open set as well by T2.",
         "formal_statement": null,
         "definition": null,
@@ -6371,7 +6502,7 @@
         "id": "exercise_3_1",
         "label": "Exercise 3.1",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 = {𝑎, 𝑏, 𝑐, 𝑑}. Show that  = {∅, {𝑎}, {𝑎, 𝑏}, {𝑎, 𝑏, 𝑐}, {𝑏, 𝑐, 𝑑}, 𝑋} is\nnot a topology on 𝑋. Find a topology  ′ (different from the discrete topology) on 𝑋 such that\n ⊆  ′.",
         "formal_statement": null,
         "definition": null,
@@ -6446,7 +6577,7 @@
         "id": "exercise_3_2",
         "label": "Exercise 3.2",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 be a non-empty set, and let 𝑥0 be an element of 𝑋. Show that\n = {𝑈 ⊆ 𝑋 ∣ 𝑥0 ∉ 𝑈 or 𝑋 ⧵ 𝑈 is finite}\nis a topology on 𝑋.",
         "formal_statement": null,
         "definition": null,
@@ -6521,7 +6652,7 @@
         "id": "exercise_3_3",
         "label": "Exercise 3.3",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 be a set, and let 𝐴 be a subset of 𝑋. Define the coarsest topology on 𝑋\nsuch that 𝐴 is open in 𝑋.",
         "formal_statement": null,
         "definition": null,
@@ -6596,7 +6727,7 @@
         "id": "exercise_3_4",
         "label": "Exercise 3.4",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Show that the discrete topology disc is finer than the cofinite topology cof on\nany set 𝑋.",
         "formal_statement": null,
         "definition": null,
@@ -6671,7 +6802,7 @@
         "id": "exercise_3_5",
         "label": "Exercise 3.5",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "continuity",
         "statement": "Let 𝑋 = {𝑎, 𝑏, 𝑐, 𝑑}. Find two topologies 1 and 2 with 1 ≠ 2 such that a\nbijection 𝑓 ∶ 𝑋 → 𝑋 is a homeomorphism (where the domain is given 1 as topology and the\ncodomain is given 2 as topology).",
         "formal_statement": null,
         "definition": null,
@@ -6746,7 +6877,7 @@
         "id": "exercise_3_6",
         "label": "Exercise 3.6",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 be a topological space, and let 𝐴 and 𝐵 be subsets of 𝑋.\n(a) Assume that 𝐴 ⊆ 𝐵. Show that 𝐴 ⊆ 𝐵.\n(b) Show that 𝐴 ∪ 𝐵 = 𝐴 ∪ 𝐵.\nChapter 3. Topological spaces 21\nWe say that a set 𝐴 intersects or meets a set 𝐵 if 𝐴 ∩ 𝐵 ≠ ∅.",
         "formal_statement": null,
         "definition": null,
@@ -6821,7 +6952,7 @@
         "id": "exercise_3_7",
         "label": "Exercise 3.7",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 be a topological space, and let 𝐴 be a subset of 𝑋. Show that 𝑥 ∈ 𝐴 if\nand only if every neighborhood of 𝑥 intersects 𝐴.",
         "formal_statement": null,
         "definition": null,
@@ -6896,7 +7027,7 @@
         "id": "exercise_3_8",
         "label": "Exercise 3.8",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 = {𝑎, 𝑏, 𝑐, 𝑑, 𝑒}, and let\n = {∅, {𝑎, 𝑏}, {𝑎, 𝑏, 𝑐}, {𝑎, 𝑏, 𝑑, 𝑒}, {𝑏}, {𝑏, 𝑐}, {𝑏, 𝑑, 𝑒}, {𝑏, 𝑐, 𝑑, 𝑒}, {𝑑, 𝑒}, 𝑋}\nbe a topology on 𝑋. Is the subset {𝑎, 𝑏} dense in 𝑋?\n4. Generating topologies\n4.1 Generating topologies from subsets\nThe following theorem tells us how we may extract a third topology from two other topologies on the\nsame set.\nTheorem 4.1 (The intersection of two topologies is a topology) Let 𝑋 be a set, and let 1\nand 2 be two topologies on 𝑋. Then 1 ∩ 2 is also a topology on 𝑋.\nProof. Clearly, ∅ and 𝑋 are in 1 ∩ 2 , so T1 is satisfied.\nLet {𝑈𝜆 }𝜆∈Λ be a collection of sets such that 𝑈𝜆 ∈ 1 ∩ 2 for each 𝜆 ∈ Λ where Λ is some\n⋃\nindex set. Then, for 𝑖 = 1, 2, 𝑈𝜆 ∈ 𝑖 for each 𝜆 ∈ Λ. Thus 𝜆∈Λ 𝑈𝜆 ∈ 𝑖 for 𝑖 = 1, 2. Hence,\n⋃\n𝜆∈Λ 𝑈𝜆 ∈ 1 ∩ 2 , and so, T2 is satisfied.\nLet {𝑈1 , 𝑈2 , … , 𝑈𝑛 } be a finite subcollection of  . We need to prove that T3 is satisfied, i.e.,\n𝑈1 ∩ 𝑈2 ∩ ⋯ ∩ 𝑈𝑛 ∈  . Note that if 𝑈1 , 𝑈2 , … , 𝑈𝑛 ∈ 𝑖 then 𝑈1 ∩ 𝑈2 ∩ ⋯ ∩ 𝑈𝑛 ∈ 𝑖 for 𝑖 = 1, 2.\nHence, 𝑈1 ∩ 𝑈2 ∩ ⋯ ∩ 𝑈𝑛 ∈ 1 ∩ 2 . Thus T3 is satisfied.\nTheorem\n⋂ 4.1 may be extended to hold for a family of topologies: if {𝜆 }𝜆∈Λ is a family of topologies on 𝑋,\nthen 𝜆∈Λ 𝜆 is also a topology on 𝑋. If we follow the convention that for subsets 𝑆 of a fixed (large) set 𝑈 ,\n⋂\n𝑆 = 𝑈,\n𝑆∈∅\nthen the extended version of Theorem 4.1 may also include an empty family {𝜆 }𝜆∈∅ of topologies with\n⋂\n𝜆 = (𝑋),\n𝜆∈∅\ni.e., the discrete topology on 𝑋 (with our fixed (large) set 𝑈 being equal to (𝑋)). However, not all mathemati-\ncians follow this convention. Thus we will in general not define the intersection of an empty family.\nThe union of two topologies is not necessarily a topology.\nExample 4.2 Let 𝑋 = {𝑎, 𝑏, 𝑐}, and let 1 = {∅, {𝑎}, {𝑎, 𝑏}, 𝑋} and 2 = {∅, {𝑐}, 𝑋} be two\ntopologies on 𝑋. Then\n1 ∩ 2 = {∅, 𝑋}\nis the indiscrete topology on 𝑋 while\n1 ∪ 2 = {∅, {𝑎}, {𝑎, 𝑏}, {𝑐}, 𝑋}\nis not a topology on 𝑋: 1 ∪ 2 does not satisfy T2.\n22\nChapter 4. Generating topologies 23\nRecall from Section 3.1 that for any set 𝑋 the discrete topology disc is the largest topology we\nmay equip 𝑋 with, and the indiscrete topology ind is the smallest topology we may equip 𝑋 with. For\nany topology  on 𝑋 we have\nind ⊆  ⊆ disc .\nThat is, we have partially ordered topologies on 𝑋 by inclusion.\nLet 𝑋 be a set. We often want to have a collection of subsets  of 𝑋 to be the open subsets of a\ntopology on 𝑋.\nDefinition 4.3 (Topology generated by a collection of subsets) Let 𝑋 be a set, and let \nbe a collection of subsets of 𝑋. The topology generated by  is the topology\n⋂\n⟨⟩ = \n topology\n⊆\non 𝑋.\nIn other words, ⟨⟩ contains  and for any other topology  ′ containing , we have ⟨⟩ ⊆  ′ .\nThus ⟨⟩ is unique.\nExample 4.4 Let 𝑋 be a set, and let  = ∅. Then ⟨⟩ is the same as the indiscrete topology\non 𝑋, i.e.,\n⟨⟩ = ind = {∅, 𝑋}.\nExample 4.5 Let 𝑋 be a set, and let  be the collection of all the singletons of 𝑋, i.e.,\n = {{𝑥} ∣ 𝑥 ∈ 𝑋}. Then ⟨⟩ is the same as the discrete topology on 𝑋, i.e.,\n⟨⟩ = disc = (𝑋).",
         "formal_statement": null,
         "definition": null,
@@ -6971,7 +7102,7 @@
         "id": "exercise_4_1",
         "label": "Exercise 4.1",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 = {𝑎, 𝑏, 𝑐, 𝑑, 𝑒}, and let\n = {∅, {𝑎, 𝑏}, {𝑎, 𝑏, 𝑑, 𝑒}, {𝑏}, {𝑏, 𝑑, 𝑒}, {𝑏, 𝑐, 𝑑, 𝑒}, {𝑐, 𝑑, 𝑒}, {𝑑, 𝑒}, 𝑋}\nbe a topology on 𝑋. Show that  = {{𝑎, 𝑏}, {𝑏, 𝑑, 𝑒}, {𝑐, 𝑑, 𝑒}} is a subbasis for  . Is  ′ =\n{{𝑎, 𝑏}, {𝑏, 𝑐, 𝑑, 𝑒}, {𝑑, 𝑒}} a subbasis for  ?\nChapter 4. Generating topologies 27",
         "formal_statement": null,
         "definition": null,
@@ -7034,7 +7165,7 @@
         "id": "exercise_4_2",
         "label": "Exercise 4.2",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let  be the collection of all open intervals (𝑎, 𝑏) = {𝑥 ∈ ℝ ∣ 𝑎 < 𝑥 < 𝑏} in ℝ.\n(a) Show that  is a basis for a topology on ℝ. The topology generated by  is called the\nstandard topology on ℝ denoted by std .\n(b) Show that std = 𝑑 where 𝑑 is the metric topology obtained from the metric 𝑑(𝑥, 𝑦) =\n|𝑥 − 𝑦|.",
         "formal_statement": null,
         "definition": null,
@@ -7097,7 +7228,7 @@
         "id": "exercise_4_3",
         "label": "Exercise 4.3",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Show that\n = {(𝑎, ∞) ∣ 𝑎 ∈ ℝ} ∪ {(−∞, 𝑏) ∣ 𝑏 ∈ ℝ}\nis a subbasis for the standard topology on ℝ.",
         "formal_statement": null,
         "definition": null,
@@ -7160,7 +7291,7 @@
         "id": "exercise_4_4",
         "label": "Exercise 4.4",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let ℚ deonte the set of rational numbers, and let ℝ denote the set of real numbers.\nShow that\n = {(𝑎, 𝑏) ∣ 𝑎 < 𝑏, 𝑎, 𝑏 ∈ ℚ}\nis a basis for the standard topology on ℝ where (𝑎, 𝑏) = {𝑥 ∈ ℝ ∣ 𝑎 < 𝑥 < 𝑏}.",
         "formal_statement": null,
         "definition": null,
@@ -7223,7 +7354,7 @@
         "id": "exercise_4_5",
         "label": "Exercise 4.5",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let  be the collection of all half-open intervals of the form [𝑎, 𝑏) = {𝑥 ∈ ℝ ∣\n𝑎 ⩽ 𝑥 < 𝑏} in ℝ.\n(a) Show that  is a basis for a topology on ℝ. The topology generated by  is called the\nlower limit topology on ℝ.\n(b) Find the closure of the subset (0, 1) of ℝ given the lower limit topology.",
         "formal_statement": null,
         "definition": null,
@@ -7286,7 +7417,7 @@
         "id": "exercise_4_6",
         "label": "Exercise 4.6",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "For each 𝑛 ∈ ℤ, let\n{\n{𝑛} if 𝑛 is odd,\n𝐵(𝑛) =\n{𝑛 − 1, 𝑛, 𝑛 + 1} if 𝑛 is even.\nShow that the collection  = {𝐵(𝑛) ∣ 𝑛 ∈ ℤ} is a basis for a topology on ℤ. The topology gen-\nerated by  is known as the digital line topology on ℤ. See [1, pp. 44–46] for some applications\nof this topology.",
         "formal_statement": null,
         "definition": null,
@@ -7349,7 +7480,7 @@
         "id": "exercise_4_7",
         "label": "Exercise 4.7",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let  be the collection of all subsets of the form 𝐴𝑎,𝑏 = {𝑎𝑧 + 𝑏 ∣ 𝑧 ∈ ℤ} of ℤ,\nwhere 𝑎, 𝑏 ∈ ℤ and 𝑎 ≠ 0. (The set 𝐴𝑎,𝑏 is known as an arithmetic progression.)\n(a) Show that  is a basis for a topology on ℤ.\n(b) Show that there are infinitely many primes by using the topology generated by . (This\ntopology is known as the arithmetic progression topology on ℤ and it was used originally\nby Furstenberg [3] to show that there are infinitely many primes.)\n28 4.4. Exercises",
         "formal_statement": null,
         "definition": null,
@@ -7412,7 +7543,7 @@
         "id": "exercise_4_8",
         "label": "Exercise 4.8",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 be a topological space, and let  be a basis for the topology on 𝑋. Show\nthat a subset 𝐴 of 𝑋 is dense in 𝑋 if and only if every non-empty basis element in  intersects\n𝐴. (Recall that a set 𝑈 intersects a set 𝑉 if 𝑈 ∩ 𝑉 ≠ ∅.)\n5. Constructing topological spaces\n5.1 Subspaces\nLet 𝐴 be a subset of a topological space 𝑋. There is a natural way to define a topology on 𝐴 that is\nbased on the topology on 𝑋.\nDefinition 5.1 (Subspace topology) Let 𝑋 be a topological space, and let 𝐴 be a subset of\n𝑋. The collection\n𝐴 = {𝐴 ∩ 𝑈 ∣ 𝑈 is open in 𝑋}\nof subsets of 𝐴 is called the subspace topology on 𝐴.\nThe subspace topology is indeed a topology.\nLemma 5.2 Let 𝑋 be a topological space, and let 𝐴 be a subset of 𝑋. Then the collection\n𝐴 = {𝐴 ∩ 𝑈 ∣ 𝑈 is open in 𝑋} is a topology on 𝐴.\nProof. Let  denote the topology on 𝑋.\nSince ∅, 𝑋 ∈  , ∅ = 𝐴 ∩ ∅ and 𝐴 = 𝐴 ∩ 𝑋, then, clearly, ∅, 𝐴 ∈ 𝐴 . Hence, T1 is satisfied.\nLet {𝑉𝜆 }𝜆∈Λ be a collection of subsets of 𝐴 who are open in 𝐴, i.e., 𝑉𝜆 ∈ 𝐴 . We must show that\n⋃\n𝜆∈Λ 𝑉𝜆 ∈ 𝐴 . For each 𝜆 ∈ Λ there is a 𝑈𝜆 ∈  such that 𝑉𝜆 = 𝐴 ∩ 𝑈𝜆 . Thus\n⋃ ⋃( ) ⋃\n𝑉𝜆 = 𝐴 ∩ 𝑈𝜆 = 𝐴 ∩ 𝑈𝜆 .\n𝜆∈Λ 𝜆∈Λ 𝜆∈Λ\n⋃ ⋃\nSince 𝜆∈Λ 𝑈𝜆 ∈  , it follows that 𝜆∈Λ 𝑉𝜆 ∈ 𝐴 . Hence, T2 is satisfied.\nLet 𝑉1 , 𝑉2 , … , 𝑉𝑛 be subsets of 𝐴 that are open in 𝐴, i.e., 𝑉𝑖 ∈ 𝐴 for 𝑖 = 1, 2, … , 𝑛. We must\n⋂\nshow that 𝑛𝑖=1 𝑉𝑖 ∈ 𝐴 . For each 𝑖 ∈ {1, 2, … , 𝑛} there is a 𝑈𝑖 ∈  such that 𝑉𝑖 = 𝐴 ∩ 𝑈𝑖 . Thus\n𝑛 𝑛 𝑛\n⋂ ⋂ ( ) ⋂\n𝑉𝑖 = 𝐴 ∩ 𝑈𝑖 = 𝐴 ∩ 𝑈𝑖 .\n𝑖=1 𝑖=1 𝑖=1\n⋂𝑛 ⋂𝑛\nSince 𝑖=1 𝑈𝑖 ∈  , it follows that 𝑖=1 𝑉𝑖 ∈ 𝐴 . Hence, T3 is satisfied.\nLet 𝑋 be a topological space (with topology  ), and let 𝐴 be a subspace of 𝑋. If 𝑉 is a subset of 𝐴, there\nare two possible meanings to the statement “𝑉 is open.” We can either take 𝑉 to be open in 𝑋, i.e., 𝑉 ∈  , or\nwe can take 𝑉 to be open in 𝐴, i.e., 𝑉 ∈ 𝐴 . In general, these do not mean the same thing.\nWe say that 𝑉 is closed in 𝐴 if 𝑉 is closed in the subspace topology of 𝐴. In other words, if 𝑉 is closed in\n𝐴, then 𝐴 ⧵ 𝑉 is open in 𝐴.\n29\n30 5.1. Subspaces\nTheorem 5.3 Let 𝑋 be a topological space, and let 𝐴 be a subspace of 𝑋. Then a subset 𝐾\nof 𝐴 is closed in 𝐴 if and only if there is a closed subset 𝐿 of 𝑋 with 𝐾 = 𝐴 ∩ 𝐿.\nProof. Assume that 𝐾 is a closed subset of 𝐴. Then 𝑉 = 𝐴 ⧵ 𝐾 is open in 𝐴, i.e., there is an open\nsubset 𝑈 of 𝑋 with 𝑉 = 𝐴 ∩ 𝑈 . Moreover, 𝐿 = 𝑋 ⧵ 𝑈 is a closed subset of 𝑋 and\n𝐴 ∩ 𝐿 = 𝐴 ∩ (𝑋 ⧵ 𝑈 ) = 𝐴 ⧵ (𝐴 ∩ 𝑈 ) = 𝐴 ⧵ 𝑉 = 𝐾.\nSee Figure 5.1.\n𝑋\n𝐴 𝑈\n𝐾\n𝑉\nFigure 5.1: 𝐾 = 𝐴 ∩ 𝐿\nNow assume that 𝐿 is a closed subset of 𝑋 with 𝐾 = 𝐴 ∩ 𝐿. Then 𝑈 = 𝑋 ⧵ 𝐿 is an open subset\nof 𝑋, and so, 𝑉 = 𝐴 ∩ 𝑈 is an open subset of 𝐴. Furthermore,\n𝐴 ⧵ 𝐾 = 𝐴 ⧵ (𝐴 ∩ 𝐿) = 𝐴 ∩ (𝑋 ⧵ 𝐿) = 𝐴 ∩ 𝑈 = 𝑉 .\nSee Figure 5.2. Hence, 𝐾 is a closed subset of 𝐴.\n𝑋\n𝐿\n𝐴\n𝑉\n𝐾\nFigure 5.2: 𝑉 = 𝐴 ⧵ 𝐾\nThe next example illustrates the fact that we may have subsets of a topological space 𝑋 that are\nopen in the subspace 𝐴 but which are not open in 𝑋.\nChapter 5. Constructing topological spaces 31\nExample 5.4 Let ℝ denote the set of real numbers equipped with the standard topology, cf.\nExercise 4.2, and let 𝐼 = [0, 1] be a subspace of ℝ. Then sets of the form [0, 𝑎) and (𝑎, 1] with\n0 < 𝑎 < 1 are open in 𝐼 but not in ℝ.\nThe following theorem describes how we may extract a basis for the subspace topology on 𝐴 from\nthe basis of a topology on 𝑋.\nTheorem 5.5 Let 𝑋 be a topological space, and let  be a basis for the topology on 𝑋. If 𝐴\nis a subset of 𝑋, then the collection\n𝐴 = {𝐴 ∩ 𝐵 ∣ 𝐵 ∈ }\nis a basis for the subspace topology on 𝐴.\nProof. We need to prove that 𝐴 is a basis for the subspace topology on 𝐴. We first prove that 𝐴 is\na basis for a topology on 𝐴, and then that the topology generated by 𝐴 equals the subspace topology\non 𝐴.\nFirst note that each 𝐵 ∈  is open in 𝑋, and so, each 𝐴 ∩ 𝐵 ∈ 𝐴 is open in 𝐴. For each 𝑥 ∈ 𝑋\nthere is a basis element 𝐵 ∈  such that 𝑥 ∈ 𝐵. Let 𝑥 ∈ 𝐴. Since 𝐴 = 𝐴 ∩ 𝑋, there must be a basis\nelement 𝐵 ∈  such that 𝑥 ∈ 𝐴 ∩ 𝐵. Hence, B1 holds. Now let 𝑥 ∈ 𝐴 ∩ (𝐵1 ∩ 𝐵2 ) where 𝐵1 and\n𝐵2 are basis elements of . Since  is a basis for the topology on 𝑋, it follows that there is a basis\nelement 𝐵3 of  such that 𝐵3 ⊆ 𝐵1 ∩ 𝐵2 and 𝑥 ∈ 𝐴 ∩ 𝐵3 ⊆ 𝐴 ∩ (𝐵1 ∩ 𝐵2 ). Hence, B2 is satisfied.\nThus 𝐴 is a basis for a topology on 𝐴.\nLet 𝐴 be the subspace topology on 𝐴. We want to prove that the topology  ′ generated by 𝐴 is\nequal to 𝐴 . If 𝐴 ∩ 𝑈 ∈ 𝐴 and 𝑥 ∈ 𝐴 ∩ 𝑈 , then, using the fact that  is a basis for the topology on 𝑋,\nwe have 𝐵 ∈  such that 𝑥 ∈ 𝐴 ∩ 𝐵 ⊆ 𝐴 ∩ 𝑈 . Thus 𝐴 ∩ 𝑈 ∈  ′ , cf. Theorem 4.9. By Theorem 4.10\nwe know that  ′ is equal to the collection of all unions of elements of 𝐴 . Hence, if 𝑊 ∈  ′ then 𝑊\nequals a union of elements of 𝐴 . Since each element of 𝐴 belongs to 𝐴 and 𝐴 is a topology, 𝑊\nalso belongs to 𝐴 .\nWe end this section with an alternative description of the subspace topology. Let 𝑋 be a topological\nspace, and let 𝑇 be a set. There do exist topologies on 𝑇 that make 𝑓 ∶ 𝑇 → 𝑋 continuous, e.g., the\ndiscrete topology. If 𝑓 is the intersection of all topologies on 𝑇 such that 𝑓 is continuous, then 𝑓 is\nthe coarsest topology for which 𝑓 is continuous and\n𝑓 = {𝑓 −1 (𝑈 ) ∣ 𝑈 is open in 𝑋}.\nFrom this we may define the subspace topology as follows: Let 𝑋 be a topological space, and let 𝐴 be\nsubset of 𝑋. The subspace topology on 𝐴 is then the coarsest topology on 𝐴 for which the inclusion\n𝑖 ∶ 𝐴 → 𝑋, given by 𝑖(𝑥) = 𝑥 for 𝑥 ∈ 𝐴, is continuous. This coincides with our previous definition as\n𝑖−1 (𝑈 ) = 𝐴 ∩ 𝑈 for any subset 𝑈 of 𝑋. Thus\n𝑖 = {𝑖−1 (𝑈 ) ∣ 𝑈 is open in 𝑋} = {𝐴 ∩ 𝑈 ∣ 𝑈 is open in 𝑋},\nand hence, 𝑖 = 𝐴 .\nThe following theorem describes a universal property for the subspace topology.\n32 5.1. Subspaces\nTheorem 5.6 Let 𝑋 be a topological space, and let 𝐴 be a subset of 𝑋. Then the subspace\ntopology on 𝐴 is the only topology on 𝐴 with the following universal property: for every topo-\nlogical space 𝑌 and every map 𝑓 ∶ 𝑌 → 𝐴, 𝑓 is continuous if and only if 𝑖◦𝑓 ∶ 𝑌 → 𝑋 is\ncontinuous where 𝑖 ∶ 𝐴 → 𝑋 is the inclusion map given by 𝑖(𝑥) = 𝑥 for 𝑥 ∈ 𝐴.\n𝑋\n𝑖◦𝑓\n𝑖\n𝑌 𝐴\n𝑓\nProof. We will first prove that the subspace topology 𝐴 has the universal property that for every\ntopological space 𝑌 and every map 𝑓 ∶ 𝑌 → 𝐴, 𝑓 is continuous if and only if 𝑖◦𝑓 ∶ 𝑌 → 𝑋 is\ncontinuous. Then we will prove that 𝐴 is the only topology on 𝐴 with this property.\nConsider 𝐴 as a subspace of 𝑋. Assume that 𝑓 is continuous. Since the inclusion map 𝑖 is con-\ntinuous (with 𝐴 given the subspace topology), and the composition of two continuous maps is again\ncontinuous, cf. Theorem 3.16, it follows that 𝑖◦𝑓 is continuous. Now assume that 𝑖◦𝑓 is continuous.\nLet 𝑉 be an open set in 𝐴, i.e., 𝑉 = 𝐴 ∩ 𝑈 for some open set 𝑈 in 𝑋. Since\n𝑓 −1 (𝑉 ) = 𝑓 −1 (𝐴 ∩ 𝑈 ) = 𝑓 −1 (𝑖−1 (𝑈 )) = (𝑖◦𝑓 )−1 (𝑈 )\nis open in 𝑌 by continuity of 𝑖◦𝑓 , it follows that 𝑓 is continuous. Thus the subspace topology 𝐴 has\nthe desired property.\nLet  ′ be a topology on 𝐴 with the universal property that for every topological space 𝑌 and every\nmap 𝑓 ∶ 𝑌 → 𝐴, 𝑓 is continuous if and only if 𝑖◦𝑓 ∶ 𝑌 → 𝑋 is continuous. We must show that\n𝐴 =  ′ .\nLet  be the topology on 𝑋, and let 𝐴 be given the topology  ′ . First let 𝑌 = 𝐴 with the subspace\ntopology. Then for 𝑓 = id ∶ (𝐴, 𝐴 ) → (𝐴,  ′ ), we have 𝑖◦ id = 𝑖 ∶ (𝐴, 𝐴 ) → (𝑋,  ) which is\ncontinuous. Hence, by the universal property id is continuous.\n(𝑋,  )\n𝑖◦ id\n𝑖\n(𝐴, 𝐴 ) (𝐴,  ′ )\nid\nThus any 𝑉 ∈  ′ must also be an element of 𝐴 , and so,  ′ ⊆ 𝐴 .\nSecondly let 𝑌 = 𝐴 with  ′ as its topology. Then, clearly, 𝑓 = id ∶ (𝐴,  ′ ) → (𝐴,  ′ ) is continu-\nous. Thus by the universal property it follows that 𝑖◦ id = 𝑖 ∶ (𝐴,  ′ ) → (𝑋,  ) is continuous.\n(𝑋,  )\n𝑖◦ id\n𝑖\n(𝐴,  ′ ) (𝐴,  ′ )\nid\nThus for any 𝑈 ∈  , we have 𝑖−1 (𝑈 ) = 𝐴 ∩ 𝑈 ∈  ′ . That is, 𝐴 ⊆  ′ . Hence, 𝐴 =  ′ .\nChapter 5. Constructing topological spaces 33",
         "formal_statement": null,
         "definition": null,
@@ -7475,7 +7606,7 @@
         "id": "exercise_5_1",
         "label": "Exercise 5.1",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let ℝ be the set of real numbers equipped with the standard topology. Show that\nany subspace of the form (𝑎, 𝑏), i.e., an open interval, is homeomorphic to ℝ.",
         "formal_statement": null,
         "definition": null,
@@ -7534,7 +7665,7 @@
         "id": "exercise_5_2",
         "label": "Exercise 5.2",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 be a topological space and let 𝑌 be a subspace of 𝑋. If 𝐴 is a subset of\n𝑌 , show that the subspace topology on 𝐴 inherited from 𝑌 is equal to the subspace topology on\n𝐴 inherited from 𝑋.",
         "formal_statement": null,
         "definition": null,
@@ -7593,7 +7724,7 @@
         "id": "exercise_5_3",
         "label": "Exercise 5.3",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let ℝ be the set of real numbers equipped with the standard topology, and\nconsider the set of rational numbers ℚ as a subspace of ℝ. Show that the subset\n{ √ }\n| √\n𝐴= 𝑥∈ℚ|− 5<𝑥< 5\n|\nof ℚ is both open and closed in ℚ.",
         "formal_statement": null,
         "definition": null,
@@ -7652,7 +7783,7 @@
         "id": "exercise_5_4",
         "label": "Exercise 5.4",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "continuity",
         "statement": "Let 𝑋 = {𝑎, 𝑏, 𝑐, 𝑑} be given the topology 𝑋 = {∅, {𝑎}, {𝑎, 𝑐, 𝑑}, {𝑐, 𝑑}, 𝑋},\nand let 𝑌 = {1, 2, 3} be given the topology 𝑌 = {∅, {1}, {1, 3}, 𝑌 }. Find a basis for the product\ntopology on 𝑋 × 𝑌 .",
         "formal_statement": null,
         "definition": null,
@@ -7711,7 +7842,7 @@
         "id": "exercise_5_5",
         "label": "Exercise 5.5",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 and 𝑌 be topological spaces, and let 𝐴 and 𝐵 be subsets of 𝑋 and 𝑌 ,\nrespectively. Show that the topology on 𝐴 × 𝐵 as a subspace of the product 𝑋 × 𝑌 is equal to\nthe product topology on 𝐴 × 𝐵 where 𝐴 and 𝐵 are given the subspace topology inherited from\n𝑋 and 𝑌 , respectively.\n44 5.4. Exercises",
         "formal_statement": null,
         "definition": null,
@@ -7770,7 +7901,7 @@
         "id": "exercise_5_6",
         "label": "Exercise 5.6",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 and 𝑌 be topological spaces. Show that the product topology is the coarsest\ntopology on 𝑋 ×𝑌 for which both of the projection maps pr 1 ∶ 𝑋 ×𝑌 → 𝑋 and pr 2 ∶ 𝑋 ×𝑌 → 𝑌\nare continuous.",
         "formal_statement": null,
         "definition": null,
@@ -7829,7 +7960,7 @@
         "id": "exercise_5_7",
         "label": "Exercise 5.7",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "spaces_constructions",
         "statement": "Let 𝑋 and 𝑌 be two topological spaces, and let 𝑋 × 𝑌 be given the product\ntopology. Show that if 𝑓 ∶ 𝑋 → 𝑌 is a continuous map, the subspace\n𝐺 = {(𝑥, 𝑦) ∈ 𝑋 × 𝑌 ∣ 𝑦 = 𝑓 (𝑥)}\nof 𝑋 × 𝑌 , is homeomorphic to 𝑋.",
         "formal_statement": null,
         "definition": null,
@@ -7888,7 +8019,7 @@
         "id": "exercise_5_8",
         "label": "Exercise 5.8",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "continuity",
         "statement": "Let ℝ be the set of real numbers equipped with the standard topology. Let\n𝜋∶ ℝ → ℤ\nbe the map given by\n{\n𝑥 𝑥∈ℤ\n𝜋(𝑥) =\n𝑛 𝑥 ∈ (𝑛 − 1, 𝑛 + 1), and 𝑛 is an odd integer.\nShow that the quotient topology on ℤ induced by 𝜋 is equal to the digital line topology, cf.\nExercise 4.6.\n6. Topological properties\n6.1 Connected spaces\nOne of the fundamental results of calculus is the intermediate value theorem. The theorem says that\nfor a continuous map 𝑓 ∶ [𝑎, 𝑏] → ℝ and for a real number 𝑟 between 𝑓 (𝑎) and 𝑓 (𝑏) there is a real\nnumber 𝑐 ∈ [𝑎, 𝑏] such that 𝑓 (𝑐) = 𝑟. See Figure 6.1. From this result we can deduce that the graph\nof a continuous map (in this setting) is connected.\n𝑦\n𝑓 (𝑏)\n𝑦 = 𝑓 (𝑥)\n𝑟\n𝑓 (𝑎)\n𝑥\n𝑎 𝑐 𝑏\nFigure 6.1: The intermediate value theorem.\nDefinition 6.1 (Connected space) Let 𝑋 be a topological space. A separation of 𝑋 is a pair\nof non-empty subsets 𝑈 and 𝑉 that are open in 𝑋, disjoint and whose union equal 𝑋. We say\nthat 𝑋 is connected if there are no separations of 𝑋. Otherwise it is disconnected.\nThe property of being connected is a topological property as it is formulated entirely in terms of open subsets.\nIn other words, if 𝑋 and 𝑌 are homeomorphic topological spaces and 𝑋 is connected then so is 𝑌 .\nExample 6.2 Let 𝑋 be the set {𝑎, 𝑏, 𝑐, 𝑑, 𝑒}. If we equip 𝑋 with the topology 1 =\n{∅, {𝑎, 𝑏}, {𝑎, 𝑏, 𝑐}, {𝑎, 𝑏, 𝑑, 𝑒}, {𝑑, 𝑒}, 𝑋} then it is disconnected; the pair 𝑈 = {𝑎, 𝑏, 𝑐} and\n𝑉 = {𝑑, 𝑒} is a separation of 𝑋 in this topology.\nHowever, if we equip 𝑋 with the topology 2 = {∅, {𝑎, 𝑏, 𝑐}, {𝑐}, {𝑐, 𝑑, 𝑒}, 𝑋} then it is\nconnected; there are no separations of 𝑋 in this topology.\n45\n46 6.1. Connected spaces\nExample 6.3 Let 𝑋 be an indiscrete space. Then 𝑋 is connected as there are no separations\nof 𝑋, i.e., there are no non-empty open subsets of 𝑋 who are disjoint and whose union equal 𝑋.\nExample 6.4 Let 𝑋 be a discrete space containing two or more points. Then 𝑋 is disconnected.\nLet 𝑝 ∈ 𝑋 and let 𝑈 = {𝑝} and 𝑉 = 𝑈 𝑐 = 𝑋 ⧵ {𝑝}. Then the pair 𝑈 and 𝑉 is a separation of\n𝑋.\nExample 6.5 Let ℝ be the set of real numbers equipped with the standard topology, and let\n𝑋 = [0, 1) ∪ (1, 2) be a subspace of ℝ. Since 𝑈 = [0, 1) is open in 𝑋 (but not in ℝ) and\n𝑉 = (1, 2) is open 𝑋, 𝑈 ∩ 𝑉 = ∅ and 𝑈 ∪ 𝑉 = 𝑋, they form a separation of 𝑋. Thus 𝑋 is\ndisconnected.\nIn the above examples the spaces that are connected all share the property that the only subsets that\nare both open and closed in 𝑋 are ∅ and 𝑋. Likewise, the disconnected spaces all share the property\nthat there are non-empty proper subsets of 𝑋 that are both open and closed in 𝑋.\nTheorem 6.6 Let 𝑋 be a topological space. Then 𝑋 is connected if and only if the are no\nnon-empty proper subsets of 𝑋 that are both open and closed in 𝑋.\nProof. We prove the equivalent statement that 𝑋 is disconnected if and only if there are non-empty\nproper subsets of 𝑋 that are both open and closed in 𝑋.\nAssume 𝑋 is disconnected, i.e., that there is a separation of 𝑋. Let 𝑈 and 𝑉 be a separation of 𝑋.\nThus 𝑈 is open in 𝑋. Since 𝑈 ∩ 𝑉 = ∅ and 𝑈 ∪ 𝑉 = 𝑋, we have 𝑈 𝑐 = 𝑋 ⧵ 𝑈 = 𝑉 . Thus 𝑈 𝑐 is open\nin 𝑋, and so, 𝑈 is closed in 𝑋. Hence, 𝑈 is both open and closed in 𝑋. Likewise, 𝑉 is both open and\nclosed in 𝑋.\nAssume that the non-empty proper subset 𝑈 of 𝑋 is both open and closed in 𝑋. Let 𝑉 = 𝑈 𝑐 =\n𝑋 ⧵ 𝑈 . Then 𝑉 is open in 𝑋, 𝑈 ∩ 𝑉 = ∅ and 𝑈 ∪ 𝑉 = 𝑋. Hence, the pair 𝑈 and 𝑉 is a separation of\n𝑋. Thus 𝑋 is disconnected.\nTheorem 6.7 Let 𝑋 be a connected space, 𝑌 be a topological space, and let 𝑓 ∶ 𝑋 → 𝑌 be\na surjective continuous map. Then 𝑌 is connected.\nProof. We prove the equivalent statement that if 𝑓 ∶ 𝑋 → 𝑌 is a surjective continuous map and 𝑌 is\ndisconnected then 𝑋 is disconnected.\nAssume that 𝑌 is disconnected, i.e., there is a separation of 𝑌 . Let the pair 𝑈 and 𝑉 be a separation\nof 𝑌 . Then 𝑓 −1 (𝑈 ) and 𝑓 −1 (𝑉 ) are non-empty subsets of 𝑋 which are open in 𝑋 as 𝑓 is a surjective\ncontinuous map. Furthermore,\n𝑓 −1 (𝑈 ) ∩ 𝑓 −1 (𝑉 ) = 𝑓 −1 (𝑈 ∩ 𝑉 ) = ∅ and 𝑓 −1 (𝑈 ) ∪ 𝑓 −1 (𝑉 ) = 𝑓 −1 (𝑈 ∪ 𝑉 ) = 𝑋.\nHence, the pair 𝑓 −1 (𝑈 ) and 𝑓 −1 (𝑉 ) is a separation of 𝑋. Thus 𝑋 is disconnected.\nA subset 𝐴 of a topological space 𝑍 is connected if 𝐴 is connected in the subspace topology. Thus the\ntheorem can be extended to saying that the continuous image of a connected space is connected, i.e., assuming\n𝑋 is a connected space and 𝑓 ∶ 𝑋 → 𝑌 is a continuous map then 𝑓 (𝑋) is connected in 𝑌 .\nChapter 6. Topological properties 47\nWe may also describe connectedness by way of the following theorem.\nTheorem 6.8 Let 𝑋 be a topological space. Then 𝑋 is connected if and only if every contin-\nuous map form 𝑋 to a discrete space, with at least two points, is constant.\nProof. We prove the equivalent statement that 𝑋 is disconnected if and only if there is a non-constant\ncontinuous map from 𝑋 to a discrete space (with at least two points).\nAssume that 𝑋 is disconnected. Let 𝑈 be a non-empty proper subset of 𝑋 that is both open and\nclosed in 𝑋. Let 𝑌 = {𝑎, 𝑏} be given the discrete topology. The map 𝑓 ∶ 𝑋 → 𝑌 that sends 𝑈 to 𝑎\nand 𝑈 𝑐 = 𝑋 ⧵ 𝑈 to 𝑏 is continuous and not constant.\nLet 𝑌 be a discrete space with at least two points. Assume that 𝑓 ∶ 𝑋 → 𝑌 is a non-constant\ncontinuous map. Then for each 𝑦 ∈ 𝑓 (𝑋), i.e., 𝑦 = 𝑓 (𝑥) for some 𝑥 ∈ 𝑋, 𝑓 −1 ({𝑦}) is a non-empty\nproper subset of 𝑋 that is both open and closed in 𝑋. Thus by Theorem 6.6, 𝑋 is disconnected.\nWe will prove that the (finite) product of connected spaces is again connected. To prove this we\nwill need the following two results.\nLemma 6.9 Let 𝑋 be a disconnected space with separation 𝑈 and 𝑉 , and let 𝐴 be a connected\nsubspace of 𝑋. Then 𝐴 ⊆ 𝑈 or 𝐴 ⊆ 𝑉 .\nProof. Since 𝑈 and 𝑉 are open in 𝑋, the intersections 𝐴 ∩ 𝑈 and 𝐴 ∩ 𝑉 are both open in 𝐴 (in the\nsubspace topology). Furthermore, the complement of 𝐴∩𝑈 in 𝐴 is equal to 𝐴∩𝑉 as 𝑈 𝑐 = 𝑋 ⧵𝑈 = 𝑉 .\nHence, 𝐴 ∩ 𝑈 is also closed in 𝐴. Thus by Theorem 6.6, 𝐴 ∩ 𝑈 is either empty or all of 𝐴 as 𝐴 is\nconnected. If 𝐴 ∩ 𝑈 = ∅ then 𝐴 ⊆ 𝑉 . If 𝐴 ∩ 𝑈 = 𝐴 then 𝐴 ⊆ 𝑈 .\nTheorem 6.10 Let 𝑋 be a topological space, and let {𝐴𝜆 }𝜆∈Λ be a collection of connected\n⋂ ⋃\nsubspaces of 𝑋 such that 𝜆∈Λ 𝐴𝜆 is non-empty. Then 𝜆∈Λ 𝐴𝜆 is connected.\n⋃\nProof. Let 𝑌 = 𝜆∈Λ 𝐴𝜆 . Suppose that 𝑌 is disconnected, i.e., that there is a separation of 𝑌 . Let\n𝑈 and 𝑉 be a separation of 𝑌 . We will show that this leads to a contradiction, and so, 𝑌 must be\nconnected.\n⋂\nLet 𝑝 ∈ 𝜆∈Λ 𝐴𝜆 . Then either 𝑝 ∈ 𝑈 or 𝑝 ∈ 𝑉 . Assume without loss of generality that 𝑝 ∈ 𝑈 .\nBy Lemma 6.9 it follows that for each 𝜆 ∈ Λ either 𝐴𝜆 ⊆ 𝑈 or 𝐴𝜆 ⊆ 𝑉 . Since we have assumed that\n𝑝 ∈ 𝑈 we must have 𝐴𝜆 ⊆ 𝑈 for all 𝜆 ∈ Λ. Thus 𝑌 ⊆ 𝑈 . But this implies that 𝑉 is empty, and hence,\ncontradicts that 𝑈 and 𝑉 is a separation of 𝑌 . Thus 𝑌 is connected.\nWe can prove that the (finite) product of connected spaces is again connected.\nTheorem 6.11 Let 𝑋1 , 𝑋2 , … , 𝑋𝑛 be connected spaces. Then the product space 𝑋1 × 𝑋2 ×\n⋯ × 𝑋𝑛 is connected.\nProof. We prove the statement for the product of two connected spaces. The general result then follows\nby an induction argument.\nLet 𝑋 and 𝑌 be two connected spaces. We must prove that 𝑋 × 𝑌 is connected. Since for each\n𝑥 ∈ 𝑋 the subspace {𝑥} × 𝑌 of 𝑋 × 𝑌 is homeomorphic to 𝑌 , it follows that {𝑥} × 𝑌 is connected.\nSimilarly, for each 𝑦 ∈ 𝑌 the subspace 𝑋 × {𝑦} is homeomorphic to 𝑋, and hence, 𝑋 × {𝑦} is\n48 6.1. Connected spaces\nconnected. Thus by Theorem 6.10 it follows that for each 𝑥 ∈ 𝑋 and each 𝑦 ∈ 𝑌 the subspace\n({𝑥} × 𝑌 ) ∪ (𝑋 × {𝑦}) is connected as it is the union of two connected spaces whose intersection is\n({𝑥} × 𝑌 ) ∩ (𝑋 × {𝑦}) = {(𝑥, 𝑦)} ≠ ∅.\nFix 𝑥0 ∈ 𝑋 and let 𝐴𝑦 = ({𝑥0 } × 𝑌 ) ∪ (𝑋 × {𝑦}). Then for each 𝑦 ∈ 𝑌 the subspace 𝐴𝑦 of 𝑋 × 𝑌\nis connected as it is the union of two connected spaces whose intersection is equal to {(𝑥0 , 𝑦)}. Hence,\n⋃\nby Theorem 6.10 it follows that 𝑦∈𝑌 𝐴𝑦 is connected as it is the union of connected spaces whose\nintersection in non-empty. Since\n⋃\n𝐴𝑦 = 𝑋 × 𝑌 ,\n𝑦∈𝑌\nit follows that 𝑋 × 𝑌 is connected.\n∏\nThe theorem can be extended to hold for arbitrary products, 𝜆∈Λ 𝑋𝜆 , if we equip the product with the\n∏\nproduct topology. If we equip 𝜆∈Λ 𝑋𝜆 with the box topology the statement is no longer true.\nAn important example of a connected space is the set of real numbers equipped with the standard\ntopology.\nTheorem 6.12 (The real numbers are connected) Let ℝ be the set of real numbers equipped\nwith the standard topology. Then ℝ is connected.\nWe will use the fact that the real numbers satisfy the following two properties.\n(1) Every subset of ℝ that is bounded above has a least upper bound. This is known as the least\nupper bound property.\n(2) If 𝑥, 𝑦 ∈ ℝ with 𝑥 < 𝑦 then there is a real number 𝑧 such that 𝑥 < 𝑧 < 𝑦.\nProof. Assume that ℝ is disconnected, i.e., that there is a separation of ℝ. Let 𝑈 and 𝑉 be a separation\nof ℝ, and choose 𝑎 ∈ 𝑈 and 𝑏 ∈ 𝑉 . We may assume without loss of generality that 𝑎 < 𝑏.\nLet 𝐴 = [𝑎, 𝑏] ∩ 𝑈 and 𝐵 = [𝑎, 𝑏] ∩ 𝑉 . Then the pair 𝐴 and 𝐵 is a separation of [𝑎, 𝑏], with 𝑎 ∈ 𝐴\nand 𝑏 ∈ 𝐵. Also note that 𝐴 is bounded above by 𝑏. Hence, by the least upper bound property 𝐴 has\na least upper bound; 𝑐 = sup 𝐴. Thus 𝑎 ⩽ 𝑐 ⩽ 𝑏. We will show that 𝑐 belongs neither to 𝐴 nor to 𝐵\nthus contradicting the fact that 𝐴 and 𝐵 is a separation of [𝑎, 𝑏].\nAssume that 𝑐 ∈ 𝐵. Since 𝑎 ∉ 𝐵 and 𝐵 is open in [𝑎, 𝑏], it follows that there is a real number 𝑑\nsuch that 𝑎 < 𝑑 < 𝑐 and (𝑑, 𝑐] ⊆ 𝐵. This implies that 𝑑 is an upper bound of 𝐴 and that 𝑑 is less than\nthe least upper bound 𝑐. That is a contradiction, and so, 𝑐 ∉ 𝐵.\nNow assume that 𝑐 ∈ 𝐴. Since 𝐴 is open in [𝑎, 𝑏] and 𝑏 ∉ 𝐴, there is a real number 𝑑 such that\n[𝑐, 𝑑) ⊆ 𝐴. For any 𝑒 ∈ (𝑐, 𝑑) it follows that 𝑒 ∈ 𝐴 and 𝑒 > 𝑐. That is a contradiction to the fact that 𝑐\nis an upper bound of 𝐴. Thus 𝑐 ∉ 𝐴.\nHence, 𝑐 ∉ 𝐴 and 𝑐 ∉ 𝐵. This is a contradiction to the fact that 𝑐 ∈ [𝑎, 𝑏] and that 𝐴 and 𝐵 is a\nseparation of [𝑎, 𝑏]. Thus ℝ must be connected.\nAs an immediate consequence of Theorem 6.12, we get that open intervals of the form (𝑎, 𝑏),\n(−∞, 𝑏) and (𝑎, ∞) are all connected as they are all homeomorphic to ℝ (with the standard topology).\nWe can also show that every closed interval [𝑎, 𝑏] is connected. Furthermore, by Theorem 6.11 and\nTheorem 6.12 ℝ𝑛 is a connected space.\nChapter 6. Topological properties 49\nTheorem 6.13 (Generalized intermediate value theorem) Let 𝑋 be a connected space, and\nlet 𝑓 ∶ 𝑋 → ℝ be a continuous map where ℝ is given the standard topology. If 𝑎, 𝑏 ∈ 𝑋 and\nif 𝑟 is a real number that lies between 𝑓 (𝑎) and 𝑓 (𝑏), there is a 𝑐 ∈ 𝑋 such that 𝑓 (𝑐) = 𝑟.\nProof. Assume that 𝑟 ∉ 𝑓 (𝑋). We will show that this contradicts the assumption that 𝑋 is connected.\nBy the assumption that 𝑟 ∉ 𝑓 (𝑋), i.e., 𝑓 (𝑋) ⊆ ℝ ⧵ {𝑟} = (−∞, 𝑟) ∪ (𝑟, ∞), we have a separation\nof 𝑋:\n𝑈 = 𝑓 −1 ((−∞, 𝑟)) and 𝑉 = 𝑓 −1 ((𝑟, ∞))\nare disjoint non-empty open subsets of 𝑋 whose union equals 𝑋. Thus they are a separation of 𝑋. This\ncontradicts the assumption that 𝑋 is connected. Hence, 𝑟 ∈ 𝑓 (𝑋). In other words, there is a 𝑐 ∈ 𝑋\nsuch that 𝑓 (𝑐) = 𝑟.\nWe end this section with a discussion of path-connectivity.\nDefinition 6.14 (Path-connected space) Let 𝑋 be a topological space, and let 𝑥, 𝑦 ∈ 𝑋. A\npath from 𝑥 to 𝑦 is a continuous map 𝑓 ∶ [𝑎, 𝑏] → 𝑋 such that 𝑓 (𝑎) = 𝑥 and 𝑓 (𝑏) = 𝑦 where\n[𝑎, 𝑏] is a subspace of ℝ with the standard topology. We say that 𝑋 is path-connected if every\npair of points of 𝑋 can be joined by a path in 𝑋.\nThe property of being path-connected is a topological property as it is completely described using the el-\nements of 𝑋 and its open subsets. In other words, if 𝑋 and 𝑌 are homeomorphic topological spaces and 𝑋 is\npath connected then so is 𝑌 .\nExample 6.15 Let ℝ be the set of real numbers equipped with the standard topology. Then ℝ\nis path-connected as for any two points, 𝑝, 𝑞 ∈ ℝ, there is a path from 𝑝 to 𝑞 in ℝ, e.g., the path\ngiven by 𝑓 (𝑡) = (1 − 𝑡)𝑝 + 𝑡𝑞 where 𝑡 ∈ [0, 1].\nExample 6.16 For all 𝑛 ⩾ 2, ℝ𝑛 with the standard topology is path-connected, and so is\nℝ𝑛 ⧵ {𝑝} for each 𝑝 ∈ ℝ𝑛 . For 𝑛 = 1, ℝ ⧵ {𝑝} is neither connected nor path-connected.\nThe next theorem states that path-connectedness implies connectedness. While the converse is not\ntrue in general, it is true that open subsets of ℝ𝑛 that are connected (where ℝ𝑛 is given the standard\ntopology) are also path-connected. See [7, Proposition 12.25] for a proof of this fact.\nTheorem 6.17 (Path-connectedness implies connectedness) Let 𝑋 be a path-connected\nspace. Then 𝑋 is connected.\nProof. Assume that 𝑋 is path-connected but that 𝑋 is disconnected, i.e., there is a separation of 𝑋.\nLet 𝑈 and 𝑉 be a separation of 𝑋. Let 𝑓 ∶ [𝑎, 𝑏] → 𝑋 be a path from 𝑥 ∈ 𝑈 to 𝑦 ∈ 𝑉 . Then 𝑓 −1 (𝑈 )\nand 𝑓 −1 (𝑉 ) are disjoint non-empty open subsets of [𝑎, 𝑏] whose union is equal to [𝑎, 𝑏]. Thus they are\na separation of [𝑎, 𝑏]. This is a contradiction to the fact that [𝑎, 𝑏] is a connected space.\n50 6.2. Hausdorff spaces\nExample 6.18 (The topologist’s sine curve) The topologist’s sine curve is the subspace\n{( ( )) | }\n1 | 0 < 𝑥 ⩽ 1 ∪ {(0, 𝑦) ∣ −1 ⩽ 𝑦 ⩽ 1}\n𝑆= 𝑥, sin |\n𝑥 |\nof ℝ2 with the standard topology. It can be shown that 𝑆 is connected but not path-connected.\nFor a proof of this fact, see [4, pp. 156–157]. See Figure 6.2.\n𝑦\n𝑆\n1\n𝑥\n1\n−1\nFigure 6.2: The topologist’s sine curve.",
         "formal_statement": null,
         "definition": null,
@@ -7947,7 +8078,7 @@
         "id": "exercise_6_1",
         "label": "Exercise 6.1",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑋 and 𝑌 be topological spaces. Show that if 𝑓 ∶ 𝑋 → 𝑌 is surjective\ncontinuous map and 𝑋 is path-connected then 𝑌 is also path-connected.\nWe say that a subset 𝐴 of a topological space 𝑋 is path-connected if 𝐴 is path-connected in the\nsubspace topology. Hence, the previous exercise may be extended to saying that the continuous image\nof a path-connected space is path-connected.",
         "formal_statement": null,
         "definition": null,
@@ -8006,7 +8137,7 @@
         "id": "exercise_6_2",
         "label": "Exercise 6.2",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑋 be a topological space, and let 𝐴 ⊆ 𝐵 ⊆ 𝐴 be subspaces of 𝑋.\n(a) Show that if 𝐴 is connected then so is 𝐵.\n(b) Show that [𝑎, 𝑏), (𝑎, 𝑏], [𝑎, 𝑏], (−∞, 𝑏] and [𝑎, ∞) are all connected spaces when considered\nas subspaces of ℝ with the standard topology.",
         "formal_statement": null,
         "definition": null,
@@ -8065,7 +8196,7 @@
         "id": "exercise_6_3",
         "label": "Exercise 6.3",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑋 be a topological space, and consider 𝐼 = [0, 1] as a subspace of ℝ where ℝ\nis given the standard topology. Furthermore, let the cone on 𝑋 be quotient space 𝐶𝑋 = 𝑋×𝐼∕∼,\nwhere ∼ is the equivalence relation on the product space 𝑋 × 𝐼 given by (𝑥, 0) ∼ (𝑥′ , 0) for all\n𝑥, 𝑥′ ∈ 𝑋. Show that 𝐶𝑋 is path-connected.",
         "formal_statement": null,
         "definition": null,
@@ -8124,7 +8255,7 @@
         "id": "exercise_6_4",
         "label": "Exercise 6.4",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "separation_countability",
         "statement": "Let 𝑋 be a Hausdorff space, and let 𝐴 be a subspace of 𝑋. Show that 𝐴 is\nHausdorff.",
         "formal_statement": null,
         "definition": null,
@@ -8183,7 +8314,7 @@
         "id": "exercise_6_5",
         "label": "Exercise 6.5",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "compactness",
         "statement": "Let 𝑋 be an infinite set with the cofinite topology.\n(a) Show that 𝑋 is compact.\n(b) Show that any subset of 𝑋 is compact.",
         "formal_statement": null,
         "definition": null,
@@ -8242,7 +8373,7 @@
         "id": "exercise_6_6",
         "label": "Exercise 6.6",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "separation_countability",
         "statement": "Let 𝑋 be a compact space, and let 𝑌 be a Hausdorff space. Furthermore, let\n𝑓 ∶ 𝑋 → 𝑌 be a continuous map.\n(a) Show that 𝑓 is a closed map.\n(b) Show that if 𝑓 is a surjective continuous map, then 𝑓 is a quotient map.\n(c) Show that if 𝑓 a bijective continuous map, then 𝑓 is a homeomorphism.\n(d) Show that 𝑓 is proper, i.e., for each subset 𝐾 of 𝑌 that is compact the preimage 𝑓 −1 (𝐾)\nis compact.",
         "formal_statement": null,
         "definition": null,
@@ -8301,7 +8432,7 @@
         "id": "exercise_6_7",
         "label": "Exercise 6.7",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "compactness",
         "statement": "Show that the surface of the cube centered at the origin,\n𝐶 = {(𝑥, 𝑦, 𝑧) ∈ ℝ3 ∣ max{|𝑥|, |𝑦|, |𝑧|} = 1},\nand the 2-sphere, { }\n|√\n𝑆 2 = (𝑥, 𝑦, 𝑧) ∈ ℝ3 | 𝑥2 + 𝑦2 + 𝑧2 = 1 ,\n|\nChapter 6. Topological properties 59\nare homeomorphic where they are both considered to be subspaces of ℝ3 with the standard\ntopology.",
         "formal_statement": null,
         "definition": null,
@@ -8360,7 +8491,7 @@
         "id": "exercise_6_8",
         "label": "Exercise 6.8",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑋 be a topological space, and let 𝐴1 .𝐴2 , … , 𝐴𝑛 be subspaces of 𝑋 each of\nwhich is compact. Show that\n𝑛\n⋃\n𝐴𝑖\n𝑖=1\nis compact.\n7. The fundamental group\n7.1 Homotopy of paths\nThe topological properties we have discussed so far do not help us to distinguish between, e.g., the\n2-sphere 𝑆 2 and the torus 𝑇 2 = 𝑆 1 × 𝑆 1 . In order to prove that 𝑆 2 and 𝑇 2 are not topologically\nequivalent, i.e., 𝑆 2 ≇ 𝑇 2 , we need new properties and new techniques. A such property is that of\nsimple connectedness.\nA path-connected space 𝑋 is, roughly speaking, simply connected if every closed curve in 𝑋 can be\nshrunk to a point in 𝑋. The 2-sphere 𝑆 2 is simply connected as any closed curve on 𝑆 2 can be shrunk to\na point in 𝑆 2 . On the other hand, the torus 𝑇 2 is not simply connected as there are closed curves which\ncannot be shrunk to a point in 𝑇 2 . See Figure 7.1. To be simply connected is a topological property.\nHence, if 𝑋 and 𝑌 are homeomorphic topological spaces and one of them is simply connected then\nso is the other. We can express that a path connected space is simply connected by saying that its\nfundamental group is trivial. In particular, if 𝑋 ≅ 𝑌 then their fundamental groups are isomorphic.\nWe will show that the fundamental group of 𝑆 2 is not isomorphic to the fundamental group of 𝑇 2 .\nHence, 𝑆 2 ≇ 𝑇 2 . Computing fundamental groups provides us with more information than just that of\nbeing simply connected.\nFigure 7.1: The 2-sphere 𝑆 2 is simply connected while the torus 𝑇 2 = 𝑆 1 ×𝑆 1 is not simply connected.\nIn order to define the fundamental group of a topological space, we will need the concept of ho-\nmotopy (of paths).\nDefinition 7.1 (Homotopy) Let 𝑋 and 𝑌 be two topological spaces, and let 𝑓0 , 𝑓1 ∶ 𝑋 → 𝑌 be\ntwo continuous maps. Furthermore, let ℝ be the set of real numbers with the standard topology,\n𝐼 = [0, 1] be a subspace of ℝ, and let 𝑋 × 𝐼 be given the product topology. We say that 𝑓0 is\nhomotopic to 𝑓1 , written 𝑓0 ≃ 𝑓1 , if there is a continuous map\n𝐻∶ 𝑋 ×𝐼 → 𝑌\nsuch that 𝐻(𝑥, 0) = 𝑓0 (𝑥) and 𝐻(𝑥, 1) = 𝑓1 (𝑥) for all 𝑥 ∈ 𝑋. The map 𝐻 is called a homotopy\nbetween 𝑓0 and 𝑓1 . If 𝑓0 ≃ 𝑓1 and 𝑓1 is a constant map, we say that 𝑓0 is nullhomotopic.\n60\nChapter 7. The fundamental group 61\nWe can think of a homotopy as a continuous one-parameter family {𝐻|𝑋×{𝑡} }𝑡∈𝐼 of continuous maps from\n𝑋 to 𝑌 . See Figure 7.2.\n𝑓1\n𝐼 𝑌\n1\n𝑡 𝐻\n0\n𝑋\n𝑓0\nFigure 7.2: A homotopy from 𝑓0 to 𝑓1 .\nExample 7.2 (Straight-line homotopy) Let 𝑋 be a topological space. Then any two continu-\nous maps 𝑓0 , 𝑓1 ∶ 𝑋 → ℝ𝑛 , where ℝ𝑛 is given the standard topology, are homotopic. The map\n𝐻 ∶ 𝑋 × 𝐼 → ℝ𝑛 given by\n𝐻(𝑥, 𝑡) = (1 − 𝑡)𝑓0 (𝑥) + 𝑡𝑓1 (𝑥).\nfor all 𝑥 ∈ 𝑋 and all 𝑡 ∈ 𝐼 = [0, 1] is a homotopy between 𝑓0 and 𝑓1 . We call it the straight-line\nhomotopy as it deforms for each 𝑥 ∈ 𝑋 the point 𝑓0 (𝑥) to the point 𝑓1 (𝑥) along the straight-line\nsegment between them.\nIn particular, any continuous map 𝑓 ∶ 𝑋 → ℝ𝑛 is homotopic to the constant map 𝑐 ∶ 𝑋 → ℝ𝑛\ngiven by 𝑐(𝑥) = 0 for 𝑥 ∈ 𝑋. Hence, any continuous map into ℝ𝑛 is nullhomotopic.\nWe will need the following lemma to prove that ≃ is an equivalence relation on the set of all\ncontinuous maps between a topological space 𝑋 and a topological space 𝑌 .\nLemma 7.3 (Pasting lemma) Let 𝑋 = 𝐴 ∪ 𝐵 be a topological space, where 𝐴 and 𝐵 are\nclosed in 𝑋. Furthermore, let 𝑌 be a topological space, and assume that 𝑓 ∶ 𝐴 → 𝑌 and\n𝑔 ∶ 𝐵 → 𝑌 are continuous maps. If 𝑓 (𝑥) = 𝑔(𝑥) for all 𝑥 ∈ 𝐴 ∩ 𝐵, then the map ℎ ∶ 𝑋 → 𝑌\ngiven by {\n𝑓 (𝑥) 𝑥 ∈ 𝐴\nℎ(𝑥) =\n𝑔(𝑥) 𝑥 ∈ 𝐵\nis continuous.\nProof. We will prove that the preimage of a closed subset of 𝑌 under ℎ is closed in 𝑋. Let 𝐶 be a\nclosed subset of 𝑌 . Then\nℎ−1 (𝐶) = 𝑓 −1 (𝐶) ∪ 𝑔 −1 (𝐶).\nSince 𝑓 is continuous, it follows that 𝑓 −1 (𝐶) is closed in 𝐴, and so, it is closed in 𝑋. Similarly, 𝑔 −1 (𝐶)\nis closed in 𝐵, and so, it is closed in 𝑋. Hence,\nℎ−1 (𝐶) = 𝑓 −1 (𝐶) ∪ 𝑔 −1 (𝐶)\n62 7.1. Homotopy of paths\nis closed in 𝑋 as it is the union of two closed subsets of 𝑋. Thus ℎ is continuous.\nTheorem 7.4 The relation ≃ is an equivalence relation on the set of all continuous maps from\na topological space 𝑋 to a topological space 𝑌 .\nProof. We must show that ≃ is reflexive, symmetric, and transitive. For any continuous map 𝑓 ∶ 𝑋 →\n𝑌 there is a homotopy 𝐻 ∶ 𝑋 × 𝐼 → 𝑌 given by 𝐻(𝑥, 𝑡) = 𝑓 (𝑥) for all 𝑥 ∈ 𝑋 and all 𝑡 ∈ 𝐼. Then\n𝐻(𝑥, 0) = 𝑓 (𝑥) and 𝐻(𝑥, 1) = 𝑓 (𝑥) for all 𝑥 ∈ 𝑋. Hence, 𝑓 ≃ 𝑓 . Thus ≃ is reflexive.\nLet 𝑓0 ∶ 𝑋 → 𝑌 and 𝑓1 ∶ 𝑋 → 𝑌 be two continuous maps, and let 𝐻 ∶ 𝑋 × 𝐼 → 𝑌 be a homotopy\nbetween them. Then 𝐻 ∶ 𝑋 × 𝐼 → 𝑌 given by 𝐻(𝑥, 𝑡) = 𝐻(𝑥, 1 − 𝑡) is a homotopy between 𝑓1 and\n𝑓0 . Hence, 𝑓0 ≃ 𝑓1 implies 𝑓1 ≃ 𝑓0 . Thus ≃ is symmetric.\nTo show that ≃ is transitive, we must show that if 𝑓0 ≃ 𝑓1 and 𝑓1 ≃ 𝑓2 , then 𝑓0 ≃ 𝑓2 . Let\n𝐻1 ∶ 𝑋 × 𝐼 → 𝑌 be a homotopy from 𝑓0 to 𝑓1 , and let 𝐻2 ∶ 𝑋 × 𝐼 → 𝑌 be a homotopy from 𝑓1 to\n𝑓2 . Then there is a map 𝐻1 ∗ 𝐻2 ∶ 𝑋 × 𝐼 → 𝑌 given by\n{\n𝐻1 (𝑥, 2𝑡) 0 ⩽ 𝑡 ⩽ 1∕2\n(𝐻1 ∗ 𝐻2 )(𝑥, 𝑡) =\n𝐻2 (𝑥, 2𝑡 − 1) 1∕2 ⩽ 𝑡 ⩽ 1.\nIt is continuous for all 𝑡 ∈ 𝐼 = [0, 1] by Lemma 7.3 since 𝑋 × [0, 1∕2] and 𝑋 × [1∕2, 1] are closed\nsubsets of 𝑋 × 𝐼 whose union is equal to 𝑋 × 𝐼, and 𝐻1 (𝑥, 1) = 𝐻2 (𝑥, 0) for all 𝑥 ∈ 𝑋. Hence,\n𝐻1 ∗ 𝐻2 is a homotopy from 𝑓0 to 𝑓2 . Thus ≃ is transitive.\nDefinition 7.5 (Homotopy classes) Let 𝑋 and 𝑌 be topological spaces, and let 𝐶(𝑋, 𝑌 ) be\nthe set of continuous maps from 𝑋 to 𝑌 . The homotopy classes in 𝐶(𝑋, 𝑌 ) are the equivalence\nclasses under the relation ≃. We write [𝑓 ] for the homotopy class of 𝑓 ∈ 𝐶(𝑋, 𝑌 ), i.e.,\n[𝑓 ] = {𝑔 ∈ 𝐶(𝑋, 𝑌 ) ∣ 𝑓 ≃ 𝑔},\nand we write [𝑋, 𝑌 ] for the set of homotopy classes of continuous maps from 𝑋 to 𝑌 , i.e.,\n[𝑋, 𝑌 ] = 𝐶(𝑋, 𝑌 )∕≃.\nIf we can connect two points 𝑥 and 𝑦 in a topological space 𝑋 by a path, i.e., a continuous map\n𝑓 ∶ [𝑎, 𝑏] → 𝑋\nsuch that 𝑓 (𝑎) = 𝑥 and 𝑓 (𝑏) = 𝑦, cf. Definition 6.14, we say that they lie in the same path component.\nSpecifically, the relation ∼𝑝 given by 𝑥 ∼𝑝 𝑦 if and only if there is a path from 𝑥 to 𝑦 in 𝑋, is an\nequivalence relation on 𝑋. We say that an equivalence class in 𝑋 under ∼𝑝 is a path component. We\nwrite 𝜋0 (𝑋) for the set of path components of 𝑋. Note that 𝜋0 (𝑋) consists of only one element if and\nonly if 𝑋 is path-connected.\nExample 7.6 Let 𝑋 = {𝑥0 } and 𝑌 be topological spaces. Then the continuous maps\n𝑓 ∶ 𝑋 → 𝑌 correspond to the points 𝑓 (𝑥0 ) = 𝑦 ∈ 𝑌 . Two continuous maps 𝑓0 , 𝑓1 ∶ 𝑋 → 𝑌 are\nhomotopic if and only if there is a path from 𝑦0 = 𝑓0 (𝑥0 ) to 𝑦1 = 𝑓1 (𝑥0 ). Hence, the homotopy\nclasses of continuous maps from 𝑋 to 𝑌 correspond to the path components of 𝑌 , and [𝑋, 𝑌 ]\ncorresponds to 𝜋0 (𝑌 ).\nWe are particularly interested in the case where we have homotopies between paths in a topological\nspace 𝑋. For simplicity, let all paths be continuous maps from 𝐼 = [0, 1] to 𝑋.\nChapter 7. The fundamental group 63\nDefinition 7.7 (Path homotopy) Let 𝑋 be a topological space, and let 𝑥0 , 𝑥1 ∈ 𝑋. We say\nthat two paths 𝑓 , 𝑔 ∶ 𝐼 → 𝑋 in 𝑋 from 𝑥0 to 𝑥1 are path homotopic, written 𝑓 ≃𝑝 𝑔, if there is\na continuous map 𝐻 ∶ 𝐼 × 𝐼 → 𝑋 such that\n𝐻(𝑠, 0) = 𝑓 (𝑠) and 𝐻(𝑠, 1) = 𝑔(𝑠)\nfor all 𝑠 ∈ 𝐼, and\n𝐻(0, 𝑡) = 𝑥0 and 𝐻(1, 𝑡) = 𝑥1\nfor all 𝑡 ∈ 𝐼. We call 𝐻 a path homotopy from 𝑓 to 𝑔.\nExample 7.8 Let 𝑓 ∶ 𝐼 → ℝ𝑛 and 𝑔 ∶ 𝐼 → ℝ𝑛 be paths from 𝑝0 to 𝑝1 in ℝ𝑛 where ℝ𝑛 is given\nthe standard topology. Then they are path homotopic: the straight-line homotopy 𝐻 ∶ 𝐼 × 𝐼 →\nℝ𝑛 given by\n𝐻(𝑠, 𝑡) = (1 − 𝑡)𝑓 (𝑠) + 𝑡𝑔(𝑠)\nfor all 𝑠 ∈ 𝐼 and all 𝑡 ∈ 𝐼 is a path homotopy from 𝑓 to 𝑔. See Figure 7.3.\n𝑦\n𝑝0\n𝑔 𝑓\n𝑝1\n𝑥\nFigure 7.3: The straight-line homotopy between two paths in ℝ2 is a path homotopy.\nExample 7.9 Let 𝑓 ∶ 𝐼 → ℝ2 ⧵ {(0, 0)}, 𝑔 ∶ 𝐼 → ℝ2 ⧵ {(0, 0)} and ℎ ∶ 𝐼 → ℝ2 ⧵ {(0, 0)} be\npaths from (1, 0) to (−1, 0) in ℝ2 , where ℝ2 is given the standard topology, given by\n𝑓 (𝑠) = (cos(𝜋𝑠), sin(𝜋𝑠))\n( )\n1\n𝑔(𝑠) = cos(𝜋𝑠), sin(𝜋𝑠)\n2\nand\nℎ(𝑠) = (cos(𝜋𝑠), − sin(𝜋𝑠))\nfor all 𝑠 ∈ 𝐼. Then the straight-line homotopy from 𝑓 to 𝑔 is a path homotopy but there are no\npath homotopies from either 𝑓 or 𝑔 to ℎ. See Figure 7.4.\n64 7.1. Homotopy of paths\n𝑦\n1 𝑓\n𝑔\n𝑥\n−1 1\n−1 ℎ\nFigure 7.4: There are no path homotopies between the path homotopic paths 𝑓 and 𝑔, and ℎ in ℝ2 ⧵\n{(0, 0)}.\nTheorem 7.10 Let 𝑋 be a topological space, and let 𝑥0 , 𝑥1 ∈ 𝑋. Then the relation ≃𝑝 is an\nequivalence relation on the set of all paths from 𝑥0 to 𝑥1 in 𝑋.\nProof. The result follows by proving that the homotopies constructed in the proof of Theorem 7.4\nwhen applied to paths are path homotopies.\nLet 𝑓 ∶ 𝐼 → 𝑋 be a path from 𝑥0 to 𝑥1 . Then the constant homotopy 𝐻 ∶ 𝐼 × 𝐼 → 𝑋 given by\n𝐻(𝑠, 𝑡) = 𝑓 (𝑠)\nis path homotopy from 𝑓 to 𝑓 : 𝐻(𝑠, 0) = 𝑓 (𝑠) and 𝐻(𝑠, 1) = 𝑓 (𝑠) for all 𝑠 ∈ 𝐼, and 𝐻(0, 𝑡) = 𝑓 (0) =\n𝑥0 and 𝐻(1, 𝑡) = 𝑓 (1) = 𝑥1 for all 𝑡 ∈ 𝐼.\nAssume that 𝐻 ∶ 𝐼 × 𝐼 → 𝑋 is a path homotopy between paths 𝑓 ∶ 𝐼 → 𝑋 and 𝑔 ∶ 𝐼 → 𝑋 from\n𝑥0 to 𝑥1 . Then the homotopy 𝐻 ∶ 𝐼 × 𝐼 → 𝑋 given by\n𝐻(𝑠, 𝑡) = 𝐻(𝑠, 1 − 𝑡)\nis a path homotopy from 𝑔 to 𝑓 : 𝐻(𝑠, 0) = 𝐻(𝑠, 1) = 𝑔(𝑠) and 𝐻(𝑠, 1) = 𝐻(𝑠, 0) = 𝑓 (𝑠) for all 𝑠 ∈ 𝐼,\nand 𝐻(0, 𝑡) = 𝐻(0, 1 − 𝑡) = 𝑥0 and 𝐻(1, 𝑡) = 𝐻(1, 1 − 𝑡) = 𝑥1 for all 𝑡 ∈ 𝐼.\nFinally, assume that 𝑓0 ∶ 𝐼 → 𝑋, 𝑓1 ∶ 𝐼 → 𝑋 and 𝑓2 ∶ 𝐼 → 𝑋 are paths from 𝑥0 to 𝑥1 , and that\n𝐻1 ∶ 𝐼 × 𝐼 → 𝑋 is a path homotopy from 𝑓0 to 𝑓1 and that 𝐻2 ∶ 𝐼 × 𝐼 → 𝑋 is a path homotopy from\n𝑓1 to 𝑓2 . Then the homotopy 𝐻1 ∗ 𝐻2 ∶ 𝐼 × 𝐼 → 𝑋 given by\n{\n𝐻1 (𝑠, 2𝑡) 0 ⩽ 𝑡 ⩽ 1∕2\n(𝐻1 ∗ 𝐻2 )(𝑠, 𝑡) =\n𝐻2 (𝑠, 2𝑡 − 1) 1∕2 ⩽ 𝑡 ⩽ 1\nis a path homotopy from 𝑓0 to 𝑓2 : (𝐻1 ∗ 𝐻2 )(𝑠, 0) = 𝐻1 (𝑠, 0) = 𝑓0 (𝑠) and (𝐻1 ∗ 𝐻2 )(𝑠, 1) =\n𝐻2 (𝑠, 1) = 𝑓2 (𝑠) for all 𝑠 ∈ 𝐼, and (𝐻1 ∗ 𝐻2 )(0, 𝑡) = 𝑥0 and (𝐻1 ∗ 𝐻2 )(1, 𝑡) = 𝑥1 for all 𝑡 ∈ 𝐼.\nChapter 7. The fundamental group 65\nDefinition 7.11 (Path homotopy classes) Let 𝑋 be a topological space, and let 𝑥0 , 𝑥1 ∈ 𝑋.\nIf 𝑓 ∶ 𝐼 → 𝑋 is a path from 𝑥0 to 𝑥1 , we write [𝑓 ] for its path homotopy class, i.e.,\n[𝑓 ] = {𝑔 ∶ 𝐼 → 𝑋 ∣ 𝑔 is a path from 𝑥0 to 𝑥1 and 𝑓 ≃𝑝 𝑔}.\nThe fundamental group of a topological space 𝑋 with basepoint 𝑥0 is, as a set, the set of path\nhomotopy classes of paths from 𝑥0 to 𝑥0 , i.e., the set of path homotopy classes of loops based at 𝑥0 .\nThe group structure of the fundamental group is derived from the following product.\nDefinition 7.12 (Product of paths) Let 𝑋 be a topological space, and let 𝑥0 , 𝑥1 , 𝑥2 ∈ 𝑋.\nIf 𝑓 ∶ 𝐼 → 𝑋 is a path from 𝑥0 to 𝑥1 , and 𝑔 ∶ 𝐼 → 𝑋 is a path from 𝑥1 to 𝑥2 , we define the\nproduct of 𝑓 and 𝑔 as the path 𝑓 ∗ 𝑔 ∶ 𝐼 → 𝑋 from 𝑥0 to 𝑥2 given by\n{\n𝑓 (2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n(𝑓 ∗ 𝑔)(𝑠) =\n𝑔(2𝑠 − 1) 1∕2 ⩽ 𝑠 ⩽ 1.\nNote that the map 𝑓 ∗ 𝑔 is well-defined and continuous by Lemma 7.3. Furthermore, as (𝑓 ∗\n𝑔)(0) = 𝑓 (0) = 𝑥0 and (𝑓 ∗ 𝑔)(1) = 𝑔(1) = 𝑥2 , 𝑓 ∗ 𝑔 is a path from 𝑥0 to 𝑥2 . See Figure 7.5.\n𝑋\n𝑓 𝑔\n𝑥1\n𝑥2\n𝑥0\nFigure 7.5: The product 𝑓 ∗ 𝑔.\nLemma 7.13 Let 𝑋 be a topological space, and let 𝑥0 , 𝑥1 , 𝑥2 ∈ 𝑋. If 𝑓 ∶ 𝐼 → 𝑋 is a\npath from 𝑥0 to 𝑥1 and 𝑔 ∶ 𝐼 → 𝑋 is a path from 𝑥1 to 𝑥2 , then the product 𝑓 ∗ 𝑔 induces a\nwell-defined operation on path homotopy classes given by\n[𝑓 ] ∗ [𝑔] = [𝑓 ∗ 𝑔].\nProof. Let 𝑓 ′ ∶ 𝐼 → 𝑋 be a path from 𝑥0 to 𝑥1 , and let 𝑔 ′ ∶ 𝐼 → 𝑋 be a path from 𝑥1 to 𝑥2 . Fur-\nthermore, let 𝐻1 ∶ 𝐼 × 𝐼 → 𝑋 be a path homotopy from 𝑓 to 𝑓 ′ , and let 𝐻2 ∶ 𝐼 × 𝐼 → 𝑋 be a path\nhomotopy from 𝑔 to 𝑔 ′ . Then the map 𝐻1 ∗ 𝐻2 ∶ 𝐼 × 𝐼 → 𝑋 given by\n{\n𝐻1 (2𝑠, 𝑡) 0 ⩽ 𝑠 ⩽ 1∕2\n(𝐻1 ∗ 𝐻2 )(𝑠, 𝑡) =\n𝐻2 (2𝑠 − 1, 𝑡) 1∕2 ⩽ 𝑠 ⩽ 1\n66 7.1. Homotopy of paths\nis a path homotopy from 𝑓 ∗ 𝑔 to 𝑓 ′ ∗ 𝑔 ′ : it is well-defined since 𝐻1 (1, 𝑡) = 𝑥1 = 𝐻2 (0, 𝑡) for all\n𝑡 ∈ 𝐼 and it is continuous by Lemma 7.3, and\n(𝐻1 ∗ 𝐻2 )(𝑠, 0) = (𝑓 ∗ 𝑔)(𝑠) and (𝐻1 ∗ 𝐻2 )(𝑠, 1) = (𝑓 ′ ∗ 𝑔 ′ )(𝑠) for all 𝑠 ∈ 𝐼,\n(𝐻1 ∗ 𝐻2 )(0, 𝑡) = 𝐻1 (0, 𝑡) = 𝑥0 and (𝐻1 ∗ 𝐻2 )(1, 𝑡) = 𝐻2 (1, 𝑡) = 𝑥2 for all 𝑡 ∈ 𝐼.\nHence, 𝑓 ∗ 𝑔 induces a well-defined operation on path homotopy classes given by [𝑓 ] ∗ [𝑔] = [𝑓 ∗\n𝑔].\nTheorem 7.14 Let 𝑋 be a topological space. Then the product of paths, ∗, has the following\nproperties on the set of path homotopy classes in 𝑋.\nAssociativity Let 𝑥0 , 𝑥1 , 𝑥2 and 𝑥3 be points in 𝑋. If 𝑓0 ∶ 𝐼 → 𝑋 is a path from 𝑥0 to\n𝑥1 , 𝑓1 ∶ 𝐼 → 𝑋 is a path from 𝑥1 to 𝑥2 , and 𝑓2 ∶ 𝐼 → 𝑋 is a path from\n𝑥2 to 𝑥3 , then\n([𝑓0 ] ∗ [𝑓1 ]) ∗ [𝑓2 ] = [𝑓0 ] ∗ ([𝑓1 ] ∗ [𝑓2 ]).\nLeft and right units For 𝑥 ∈ 𝑋, let 𝑐𝑥 ∶ 𝐼 → 𝑋 denote the constant path at 𝑥, given by\n𝑐𝑥 (𝑠) = 𝑥 for all 𝑠 ∈ 𝐼. If 𝑓 ∶ 𝐼 → 𝑋 is a path from 𝑥0 to 𝑥1 then\n[𝑐𝑥0 ] ∗ [𝑓 ] = [𝑓 ] = [𝑓 ] ∗ [𝑐𝑥1 ].\nInverse If 𝑓 ∶ 𝐼 → 𝑋 is a path from 𝑥0 to 𝑥1 , let 𝑓 ∶ 𝐼 → 𝑋 be the reverse path\nfrom 𝑥1 to 𝑥0 , given by 𝑓 (𝑠) = 𝑓 (1 − 𝑠) for all 𝑠 ∈ 𝐼. Then\n[𝑓 ] ∗ [𝑓 ] = [𝑐𝑥0 ] and [𝑓 ] ∗ [𝑓 ] = [𝑐𝑥1 ].\nProof. We prove that ∗ is an associative operation on the set of path homotopy classes in 𝑋. By\ndefinition, we have\n{\n(𝑓0 ∗ 𝑓1 )(2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n((𝑓0 ∗ 𝑓1 ) ∗ 𝑓2 )(𝑠) =\n𝑓2 (2𝑠 − 1) 1∕2 ⩽ 𝑠 ⩽ 1\n⎧𝑓0 (4𝑠) 0 ⩽ 𝑠 ⩽ 1∕4\n⎪\n= ⎨𝑓1 (4𝑠 − 1) 1∕4 ⩽ 𝑠 ⩽ 1∕2 (7.1)\n⎪𝑓 (2𝑠 − 1) 1∕2 ⩽ 𝑠 ⩽ 1,\n⎩ 2\nand\n{\n𝑓0 (2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n(𝑓0 ∗ (𝑓1 ∗ 𝑓2 ))(𝑠) =\n(𝑓1 ∗ 𝑓2 )(2𝑠 − 1) 1∕2 ⩽ 𝑠 ⩽ 1\n⎧𝑓0 (2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n⎪\n= ⎨𝑓1 (4𝑠 − 2) 1∕2 ⩽ 𝑠 ⩽ 3∕4 (7.2)\n⎪𝑓 (4𝑠 − 3) 3∕4 ⩽ 𝑠 ⩽ 1.\n⎩ 2\nChapter 7. The fundamental group 67\nWe must show that there is a path homotopy 𝐻 ∶ 𝐼 × 𝐼 → 𝑋 from (𝑓0 ∗ 𝑓1 ) ∗ 𝑓2 to 𝑓0 ∗ (𝑓1 ∗ 𝑓2 ).\nIf there is such a path homotopy then [(𝑓0 ∗ 𝑓1 ) ∗ 𝑓2 ] = [𝑓0 ∗ (𝑓1 ∗ 𝑓2 )], and hence, by Lemma 7.13\n([𝑓0 ] ∗ [𝑓1 ]) ∗ [𝑓2 ] = [𝑓0 ] ∗ ([𝑓1 ] ∗ [𝑓2 ]).\nWe can construct a path homotopy 𝐻 ∶ 𝐼 × 𝐼 → 𝑋 from (𝑓0 ∗ 𝑓1 ) ∗ 𝑓2 to 𝑓0 ∗ (𝑓1 ∗ 𝑓2 ) as\nfollows. Draw the straight lines connecting the domain of 𝑓1 in Equation 7.1 and the domain of 𝑓1 in\nEquation 7.2 in 𝐼 × 𝐼. See Figure 7.6.\n1 3\n2 4\n𝑓0 ∗ (𝑓1 ∗ 𝑓2 )\n𝑓0 𝑓1 𝑓2\n𝑡\n𝐻\n𝑓0 𝑓1 𝑓2\n(𝑓0 ∗ 𝑓1 ) ∗ 𝑓2\n1 1\n4 2\nFigure 7.6: The path homotopy 𝐻 ∶ 𝐼 × 𝐼 → 𝑋 from (𝑓0 ∗ 𝑓1 ) ∗ 𝑓2 to 𝑓0 ∗ (𝑓1 ∗ 𝑓2 ).\nThe equation for the straight line from (𝑠, 𝑡) = (1∕4, 0) to (𝑠, 𝑡) = (1∕2, 1) is\n1+𝑡\n𝑠= ,\n4\nand the equation for the straight line from (𝑠, 𝑡) = (1∕2, 0) to (𝑠, 𝑡) = (3∕4, 1) is\n2+𝑡\n𝑠= .\n4\nWe may then define 𝐻 ∶ 𝐼 × 𝐼 → 𝑋 by\n⎧𝑓0 (4𝑠∕(1 + 𝑡)) 0 ⩽ 𝑠 ⩽ (1 + 𝑡)∕4\n⎪\n𝐻(𝑠, 𝑡) = ⎨𝑓1 (4𝑠 − 𝑡 − 1) (1 + 𝑡)∕4 ⩽ 𝑠 ⩽ (2 + 𝑡)∕4\n⎪𝑓 ((4𝑠 − 𝑡 − 2)∕(2 − 𝑡)) (2 + 𝑡)∕4 ⩽ 𝑠 ⩽ 1.\n⎩ 2\nBy Lemma 7.3, 𝐻 is continuous. Since\n⎧𝑓0 (4𝑠) 0 ⩽ 𝑠 ⩽ 1∕4\n⎪\n𝐻(𝑠, 0) = ⎨𝑓1 (4𝑠 − 1) 1∕4 ⩽ 𝑠 ⩽ 1∕2\n⎪𝑓 (2𝑠 − 1) 1∕2 ⩽ 𝑠 ⩽ 1\n⎩ 2\nit follows that 𝐻(𝑠, 0) = ((𝑓0 ∗ 𝑓1 ) ∗ 𝑓2 )(𝑠) for all 𝑠 ∈ 𝐼 by Equation 7.1. Similarly, since\n⎧𝑓0 (2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n⎪\n𝐻(𝑠, 1) = ⎨𝑓1 (4𝑠 − 2) 1∕2 ⩽ 𝑠 ⩽ 3∕4\n⎪𝑓 (4𝑠 − 3) 3∕4 ⩽ 𝑠 ⩽ 1\n⎩ 2\n68 7.1. Homotopy of paths\nit follows that 𝐻(𝑠, 1) = (𝑓0 ∗ (𝑓1 ∗ 𝑓2 ))(𝑠) for all 𝑠 ∈ 𝐼 by Equation 7.2. Finally, since 𝐻(0, 𝑡) =\n𝑓0 (0) = 𝑥0 and 𝐻(1, 𝑡) = 𝑓2 (1) = 𝑥3 for all 𝑡 ∈ 𝐼, it follows that 𝐻 is a path homotopy from\n(𝑓0 ∗ 𝑓1 ) ∗ 𝑓2 to 𝑓0 ∗ (𝑓1 ∗ 𝑓2 ).\nWe prove that the constant path is a left unit under ∗ for path homotopy classes. The proof for the\nfact that the constant path is a right unit under ∗ is similar. By definition, we have\n{\n𝑐𝑥0 (2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n(𝑐𝑥0 ∗ 𝑓 )(𝑠) =\n𝑓 (2𝑠 − 1) 1∕2 ⩽ 𝑠 ⩽ 1\n{\n𝑥0 0 ⩽ 𝑠 ⩽ 1∕2\n= (7.3)\n𝑓 (2𝑠 − 1) 1∕2 ⩽ 𝑠 ⩽ 1.\nWe must show that there is a path homotopy 𝐻 ′ ∶ 𝐼 × 𝐼 → 𝑋 from 𝑐𝑥0 ∗ 𝑓 to 𝑓 . If there is such a\npath homotopy then [𝑐𝑥0 ∗ 𝑓 ] = [𝑓 ], and hence, by Lemma 7.13 [𝑐𝑥0 ] ∗ [𝑓 ] = [𝑓 ].\nWe can construct a path homotopy 𝐻 ′ ∶ 𝐼 ×𝐼 → 𝑋 from 𝑐𝑥0 ∗ 𝑓 to 𝑓 as follows. Draw the straight\nline from (𝑠, 𝑡) = (1∕2, 0) to (𝑠, 𝑡) = (0, 1). See Figure 7.7.\n𝑓\n𝑓\n𝑡\n𝐻′\n𝑐𝑥0 𝑓\n𝑐𝑥0 ∗ 𝑓\n1\n2\nFigure 7.7: The path homotopy 𝐻 ′ ∶ 𝐼 × 𝐼 → 𝑋 from 𝑐𝑥0 ∗ 𝑓 to 𝑓 .\nThe equation for the straight line from (𝑠, 𝑡) = (1∕2, 0) to (𝑠, 𝑡) = (0, 1) is given by\n1−𝑡\n𝑠= .\n2\nWe may then define 𝐻 ′ ∶ 𝐼 × 𝐼 → 𝑋 by\n{\n′ 𝑥0 0 ⩽ 𝑠 ⩽ (1 − 𝑡)∕2\n𝐻 (𝑠, 𝑡) =\n𝑓 ((2𝑠 + 𝑡 − 1)∕(1 + 𝑡)) (1 − 𝑡)∕2 ⩽ 𝑠 ⩽ 1.\nBy Lemma 7.3, 𝐻 ′ is continuous. Since\n{\n′ 𝑥0 0 ⩽ 𝑠 ⩽ 1∕2\n𝐻 (𝑠, 0) =\n𝑓 (2𝑠 − 1) 1∕2 ⩽ 𝑠 ⩽ 1\nChapter 7. The fundamental group 69\nit follows by Equation 7.3 that 𝐻 ′ (𝑠, 0) = (𝑐𝑥0 ∗ 𝑓 )(𝑠), and clearly, 𝐻 ′ (𝑠, 1) = 𝑓 (𝑠), for all 𝑠 ∈ 𝐼.\nFinally, since 𝐻 ′ (0, 𝑡) = 𝑥0 and 𝐻 ′ (1, 𝑡) = 𝑥1 for all 𝑡 ∈ 𝐼, it follows that 𝐻 ′ is a path homotopy from\n𝑐𝑥0 ∗ 𝑓 to 𝑓 .\nFinally, we prove that for each path homotopy class there is an inverse path homotopy class under\n∗. By definition, we have\n{\n𝑓 (2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n(𝑓 ∗ 𝑓 )(𝑠) =\n𝑓 (2𝑠 − 1) 1∕2 ⩽ 𝑠 ⩽ 1\n{\n𝑓 (2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n=\n𝑓 (1 − (2𝑠 − 1)) 1∕2 ⩽ 𝑠 ⩽ 1\n{\n𝑓 (2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n= (7.4)\n𝑓 (2 − 2𝑠) 1∕2 ⩽ 𝑠 ⩽ 1.\nHence, 𝑓 ∗ 𝑓 is a path from 𝑥0 to 𝑥0 . We must show that there is a path homotopy 𝐻 ′′ ∶ 𝐼 × 𝐼 → 𝑋\nfrom 𝑓 ∗ 𝑓 to 𝑐𝑥0 .\nWe can construct such a path homotopy as follows. Draw a straight line from (𝑠, 𝑡) = (0, 0) to\n(𝑠, 𝑡) = (1∕2, 1) and a straight line from (𝑠, 𝑡) = (1, 0) to (𝑠, 𝑡) = (1∕2, 1). See Figure 7.8.\n𝑐𝑥0\n𝑐𝑥0\n𝑡\n𝐻 ′′\n𝑓 𝑓\n1\n𝑓 ∗𝑓\n2\nFigure 7.8: The path homotopy 𝐻 ′′ ∶ 𝐼 × 𝐼 → 𝑋 from 𝑓 ∗ 𝑓 to 𝑐𝑥0 .\nThe equation for the straight line from (𝑠, 𝑡) = (0, 0) to (𝑠, 𝑡) = (1∕2, 1) is given by\n𝑡\n𝑠= ,\n2\nand the equation for the straight line from (𝑠, 𝑡) = (1, 0) to (𝑠, 𝑡) = (1∕2, 1) is given by\n𝑡\n𝑠=1− .\n2\n70 7.2. Definition and elementary properties of the fundamental group\nWe may then define 𝐻 ′′ ∶ 𝐼 × 𝐼 → 𝑋 by\n⎧𝑥 0 ⩽ 𝑠 ⩽ 𝑡∕2\n⎪ 0\n⎪𝑓 (2𝑠 − 𝑡) 𝑡∕2 ⩽ 𝑠 ⩽ 1∕2\n𝐻 ′′ (𝑠, 𝑡) = ⎨\n⎪𝑓 (2 − 2𝑠 − 𝑡) 1∕2 ⩽ 𝑠 ⩽ 1 − 𝑡∕2\n⎪𝑥 1 − 𝑡∕2 ⩽ 𝑠 ⩽ 1.\n⎩ 0\nBy Lemma 7.3, 𝐻 ′′ is continuous. Since\n{\n′′ 𝑓 (2𝑠) 0 ⩽ 𝑠 ⩽ 1∕2\n𝐻 (𝑠, 0) =\n𝑓 (2 − 2𝑠) 1∕2 ⩽ 𝑠 ⩽ 1\nit follows by Equation 7.4 that 𝐻 ′′ (𝑠, 0) = (𝑓 ∗ 𝑓 )(𝑠), and 𝐻 ′′ (𝑠, 1) = 𝑥0 = 𝑐𝑥0 (𝑠) for all 𝑠 ∈ 𝐼.\nFinally, since 𝐻 ′′ (0, 𝑡) = 𝑥0 and 𝐻 ′′ (1, 𝑡) = 𝑥0 for all 𝑡 ∈ 𝐼, it follows that 𝐻 ′′ is a path homotopy\nfrom 𝑓 ∗ 𝑓 to 𝑐𝑥0 . The construction of a path homotopy from 𝑓 ∗ 𝑓 to 𝑐𝑥1 is similar.",
         "formal_statement": null,
         "definition": null,
@@ -8419,7 +8550,7 @@
         "id": "exercise_7_1",
         "label": "Exercise 7.1",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑋, 𝑌 and 𝑍 be topological spaces. Show that if 𝑓 ∶ 𝑋 → 𝑌 is homotopic\nto 𝑓 ′ ∶ 𝑋 → 𝑌 and 𝑔 ∶ 𝑌 → 𝑍 is homotopic to 𝑔 ′ ∶ 𝑌 → 𝑍, then 𝑔◦𝑓 ∶ 𝑋 → 𝑍 is homotopic\nto 𝑔 ′ ◦𝑓 ′ ∶ 𝑋 → 𝑍.",
         "formal_statement": null,
         "definition": null,
@@ -8469,7 +8600,7 @@
         "id": "exercise_7_2",
         "label": "Exercise 7.2",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑋 be a topological space. Show that 𝑋 is path-connected if and only if every\ntwo constant maps 𝑐1 ∶ 𝑋 → 𝑋 and 𝑐2 ∶ 𝑋 → 𝑋 are homotopic.",
         "formal_statement": null,
         "definition": null,
@@ -8519,7 +8650,7 @@
         "id": "exercise_7_3",
         "label": "Exercise 7.3",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑋 be a topological space, and let 𝑥0 , 𝑥1 and 𝑥2 be points in 𝑋. Show that if\n𝛼 ∶ 𝐼 → 𝑋 is a path in 𝑋 from 𝑥0 to 𝑥1 , 𝛽 ∶ 𝐼 → 𝑋 is a path in 𝑋 from 𝑥1 to 𝑥2 and 𝛾 = 𝛼 ∗ 𝛽,\n̂ 𝛼.\nthen 𝛾̂ = 𝛽◦̂",
         "formal_statement": null,
         "definition": null,
@@ -8569,7 +8700,7 @@
         "id": "exercise_7_4",
         "label": "Exercise 7.4",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑆 2 be the 2-sphere considered to be a subspace of ℝ3 with the standard\ntopology. Show that 𝜋1 (𝑆 2 ⧵ {(0, 0, 1)}, 𝑠) is the trivial group where 𝑠 = (0, 0, −1).",
         "formal_statement": null,
         "definition": null,
@@ -8619,7 +8750,7 @@
         "id": "exercise_7_5",
         "label": "Exercise 7.5",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑋 be a Hausdorff space, and let 𝐴 be a subspace of 𝑋. Show that if 𝐴 is a\nretract of 𝑋, then 𝐴 is a closed subset of 𝑋.",
         "formal_statement": null,
         "definition": null,
@@ -8669,7 +8800,7 @@
         "id": "exercise_7_6",
         "label": "Exercise 7.6",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Show that the relation of homotopy equivalence is an equivalence relation on\nany set of topological spaces.\nA topological space 𝑋 is said to be contractible if the identity map of 𝑋, id𝑋 ∶ 𝑋 → 𝑋, is nullho-\nmotopic.",
         "formal_statement": null,
         "definition": null,
@@ -8719,7 +8850,7 @@
         "id": "exercise_7_7",
         "label": "Exercise 7.7",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Show that a topological space 𝑋 is contractible if and only if 𝑋 has the homotopy\ntype of a point, i.e., a topological space consisting of one point.",
         "formal_statement": null,
         "definition": null,
@@ -8769,7 +8900,7 @@
         "id": "exercise_7_8",
         "label": "Exercise 7.8",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑋 be a topological space and let 𝑆 1 be the unit circle considered as a subspace\nof ℝ2 where ℝ2 is given the standard topology. Show that if 𝑓 ∶ 𝑋 → 𝑆 1 is a continuous map\nthat is not surjective, then 𝑓 is nullhomotopic.\n8. The fundamental group of the circle\n8.1 Covering spaces\nThe notion of a covering space is a helpful tool for determining fundamental groups. Specifically, we\nwill compute the fundamental group of the circle by first establishing that the map 𝑝 ∶ ℝ → 𝑆 1 , given\nby\n𝑝(𝑡) = (cos(2𝜋𝑡), sin(2𝜋𝑡)),\nis a covering map.\nDefinition 8.1 (Covering spaces) Let 𝐵 and 𝐸 be topological spaces. We say that a surjective\ncontinuous map 𝑝 ∶ 𝐸 → 𝐵 is a covering map if for each point 𝑏 ∈ 𝐵 there is a neighborhood\n𝑈 such that 𝑝−1 (𝑈 ) is a disjoint union of open subsets 𝑉𝜆 of 𝐸 where 𝜆 ∈ Λ,\n⨆\n𝑝−1 (𝑈 ) = 𝑉𝜆 ,\n𝜆∈Λ\nand 𝑝|𝑉𝜆 ∶ 𝑉𝜆 → 𝑈 is a homeomorphism for each 𝜆 ∈ Λ. We refer to 𝐸 as a covering space of\n𝐵.\nA covering map 𝑝 ∶ 𝐸 → 𝐵 is sometimes also referred to as a covering projection. Note that 𝐵 is often\nreferred to as the base space of the covering map and that 𝐸 is often referred to as the total space of the covering\nmap. An open subset 𝑈 of 𝐵 satisfying the condition that\n⨆\n𝑝−1 (𝑈 ) = 𝑉𝜆 , where 𝑉𝜆 is an open subset of 𝐸,\n𝜆∈Λ\nsuch that 𝑝|𝑉𝜆 ∶ 𝑉𝜆 → 𝑈 is a homeomorphism for each 𝜆 ∈ Λ is said to be evenly covered by 𝑝. See Figure 8.1.\nFor each 𝑏 ∈ 𝐵, we often refer to the preimage 𝑝−1 (𝑏) of {𝑏} under 𝑝 as the fiber over 𝑏. Note also that the\nfiber over 𝑏 is a discrete subspace of 𝐸; each 𝑉𝜆 is an open subset of 𝐸 and intersects the fiber over 𝑏 in a single\npoint, and so, this point is open in the fiber over 𝑏. Finally, we note that a covering map is a special case of a\nfiber bundle with discrete fibers.\nExample 8.2 Let 𝐵 and 𝐸 be topological spaces. If 𝑝 ∶ 𝐸 → 𝐵 is a homeomorphism, then 𝑝\nis also a covering map.\nExample 8.3 Let 𝑋 be a topological space, and let 𝐷 be a discrete space. Then the projection\nmap onto the first factor, pr 1 ∶ 𝑋 × 𝐷 → 𝑋, where 𝑋 × 𝐷 is given the product topology, is a\ncovering map. In particular, 𝑋 is evenly covered by pr 1 .\n80\nChapter 8. The fundamental group of the circle 81\n𝑝−1 (𝑈 )\n𝑝\n𝑈\nFigure 8.1: The open subset 𝑈 of 𝐵 is evenly covered by 𝑝 ∶ 𝐸 → 𝐵.\nDefinition 8.4 (Local homeomorphisms) Let 𝑋 and 𝑌 be topological spaces. A continuous\nmap 𝑓 ∶ 𝑋 → 𝑌 is said to be a local homeomorphism if for each 𝑥 ∈ 𝑋 there is a neighborhood\n𝑈 such that 𝑓 (𝑈 ) is open in 𝑌 and 𝑓 |𝑈 ∶ 𝑈 → 𝑓 (𝑈 ) is a homeomorphism where 𝑈 and 𝑓 (𝑈 )\nare both given the subspace topology from 𝑋 and 𝑌 , respectively.\nExample 8.5 Let 𝑋 and 𝑌 be topological spaces, and let 𝑓 ∶ 𝑋 → 𝑌 be a homeomorphism.\nThen 𝑓 is also a local homeomorphism.\nLocal homeomorphisms preserve local topological properties such as local connectedness and local path-\nconnectedness. In other words, if 𝑓 ∶ 𝑋 → 𝑌 is a local homeomorphism and, say, 𝑋 is locally connected then\nso is 𝑌 .\nA topological space 𝑋 is locally (path) connected at 𝑥 ∈ 𝑋 if for each neighborhood 𝑈 of 𝑥 there is a (path)\nconnected neighborhood 𝑉 of 𝑥 such that 𝑉 ⊆ 𝑈 . We say that 𝑋 is locally (path) connected if 𝑋 is locally\n(path) connected at each 𝑥 ∈ 𝑋. Note that a (path) connected space need not be locally (path) connected.\nClearly, a covering map is also a local homeomorphism. Thus if 𝑝 ∶ 𝐸 → 𝐵 is a covering map, then the\ntotal space and the base space are locally equivalent but they can differ globally.\nThe following theorem provides an important example of a covering space that we will use later\non to compute the fundamental group of the circle.\nTheorem 8.6 Let ℝ be the set of real numbers equipped with the standard topology, and\nconsider the circle 𝑆 1 as a subspace of ℝ2 where ℝ2 is given the standard topology. Then the\nmap 𝑝 ∶ ℝ → 𝑆 1 given by\n𝑝(𝑡) = (cos(2𝜋𝑡), sin(2𝜋𝑡))\nis a covering map.\n82 8.1. Covering spaces\nProof. Clearly, 𝑝 is continuous and surjective. Let 𝑈 = 𝑆 1 ⧵ {(−1, 0)} and 𝑉 = 𝑆 1 ⧵ {(1, 0)}. Then\nboth 𝑈 and 𝑉 are open in 𝑆 1 , and their union is equal to 𝑆 1 . We want to show that they are evenly\ncovered by 𝑝.\nThe preimage of 𝑈 under 𝑝 is the disjoint union of subsets 𝑉𝜆 = (𝜆 − 1∕2, 𝜆 + 1∕2) of ℝ for 𝜆 ∈ ℤ;\n⨆ ⨆( 1 1\n)\n𝑝−1 (𝑈 ) = 𝑉𝜆 = 𝜆 − ,𝜆 + .\n𝜆∈ℤ 𝜆∈ℤ\n2 2\nSimilarly, the preimage of 𝑉 under 𝑝 is the disjoint union of subsets 𝑊𝜆 = (𝜆, 𝜆 + 1) of ℝ for 𝜆 ∈ ℤ;\n⨆ ⨆\n𝑝−1 (𝑉 ) = 𝑊𝜆 = (𝜆, 𝜆 + 1).\n𝜆∈ℤ 𝜆∈ℤ\nSince 𝑝 is continuous and open, cf. [5, Lemma 14.33], and 𝑉𝜆 and 𝑊𝜆 are open subsets of ℝ, it follows\nthat 𝑝|𝑉𝜆 ∶ 𝑉𝜆 → 𝑈 and 𝑝|𝑊𝜆 ∶ 𝑊𝜆 → 𝑉 are open maps for each 𝜆 ∈ ℤ. Moreover, they are both also\nbijective for each 𝜆 ∈ ℤ. Hence, by Theorem 5.21 they are both homeomorphisms. Thus 𝑝 ∶ ℝ → 𝑆 1\nis a covering map.\nThe covering map 𝑝 from Theorem 8.6 is illustrated in Figure 8.2. Theorem 8.6 also provides an example of\na universal covering space since ℝ is simply connected. It is universal in the following sense: for any covering\nmap 𝑞 ∶ 𝐸 → 𝑆 1 where we assume that 𝐸 is path-connected, there is a covering map 𝑟 ∶ ℝ → 𝐸 such that\n𝑝 = 𝑞◦𝑟.\n𝑟\nℝ 𝐸\n𝑝 𝑞\n𝑆1\nTheorem 8.7 Let 𝐵1 , 𝐵2 , 𝐸1 and 𝐸2 be topological spaces, and let 𝑝1 ∶ 𝐸1 → 𝐵1 and\n𝑝2 ∶ 𝐸2 → 𝐵2 be covering maps. Then\n𝑝1 × 𝑝2 ∶ 𝐸1 × 𝐸2 → 𝐵1 × 𝐵2\nis a covering map where both 𝐵1 × 𝐵2 and 𝐸1 × 𝐸2 are given the product topology.\nProof. Let (𝑏1 , 𝑏2 ) ∈ 𝐵1 × 𝐵2 and let 𝑈1 and 𝑈2 be neighborhoods of 𝑏1 and 𝑏2 , respectively, that are\ncovered evenly by 𝑝1 and 𝑝2 , respectively. We want to show that 𝑈1 × 𝑈2 is evenly covered by 𝑝1 × 𝑝2 .\nIf ⨆ ⨆\n𝑝−1\n1\n(𝑈 1 ) = 𝑉 𝜆 and 𝑝 −1\n2\n(𝑈 2 ) = 𝑊𝜔\n𝜆∈Λ 𝜔∈Ω\nthen, clearly, ⨆(\n( )−1 )\n𝑝1 × 𝑝2 (𝑈1 × 𝑈2 ) = 𝑝−1\n1\n(𝑈 1 ) × 𝑝 −1\n2\n(𝑈 2 ) = 𝑉𝜆 × 𝑊𝜔 .\n𝜆∈Λ\n𝜔∈Ω\nFurthermore, 𝑝1 × 𝑝2 |𝑉𝜆 ×𝑊𝜔 ∶ 𝑉𝜆 × 𝑊𝜔 → 𝑈1 × 𝑈2 is a homeomorphism for each 𝜆 ∈ Λ and each\n𝜔 ∈ Ω. Hence, 𝑈1 × 𝑈2 is a neighborhood of (𝑏1 , 𝑏2 ) that is evenly covered by 𝑝1 × 𝑝2 . Thus 𝑝1 × 𝑝2\nis a covering map.\nChapter 8. The fundamental group of the circle 83\nFigure 8.2: The covering map 𝑝 ∶ ℝ → 𝑆 1 given by 𝑝(𝑡) = (cos(2𝜋𝑡), sin(2𝜋𝑡)).\nExample 8.8 From Theorem 8.6 and Theorem 8.7, it follows that\n𝑝 × 𝑝 ∶ ℝ × ℝ → 𝑆1 × 𝑆1\nwhere 𝑝 is the covering map of Theorem 8.6, is a covering map. Hence, ℝ2 is a (universal)\ncovering space of the torus 𝑇 2 = 𝑆 1 × 𝑆 1 .",
         "formal_statement": null,
         "definition": null,
@@ -8819,7 +8950,7 @@
         "id": "exercise_8_1",
         "label": "Exercise 8.1",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let ℝ be the set of real numbers equipped with the standard topology, and\nconsider 𝑆 1 as a subspace of ℝ2 where ℝ2 is given the standard topology. Show that the product\nspace ℝ × 𝑆 1 is a covering space of the torus 𝑇 2 = 𝑆 1 × 𝑆 1 .",
         "formal_statement": null,
         "definition": null,
@@ -8865,7 +8996,7 @@
         "id": "exercise_8_2",
         "label": "Exercise 8.2",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝐵 be a simply connected space, and let 𝐸 be a path-connected space. Show\nthat if 𝑝 ∶ 𝐸 → 𝐵 is a covering map, then 𝑝 is a homeomorphism.",
         "formal_statement": null,
         "definition": null,
@@ -8911,7 +9042,7 @@
         "id": "exercise_8_3",
         "label": "Exercise 8.3",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝐵 and 𝐸 be two topological spaces, and let 𝑒0 ∈ 𝐸. Show that if 𝑝 ∶ 𝐸 → 𝐵\nis a covering map such that 𝑝(𝑒0 ) = 𝑏0 , then the induced homomorphism 𝑝∗ ∶ 𝜋1 (𝐸, 𝑒0 ) →\n𝜋1 (𝐵, 𝑏0 ) is a monomorphism.",
         "formal_statement": null,
         "definition": null,
@@ -8957,7 +9088,7 @@
         "id": "exercise_8_4",
         "label": "Exercise 8.4",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝐵 be a Hausdorff space, and let 𝐸 be a topological space. Show that if\n𝑝 ∶ 𝐸 → 𝐵 is a covering map, then 𝐸 must be Hausdorff.",
         "formal_statement": null,
         "definition": null,
@@ -9003,7 +9134,7 @@
         "id": "exercise_8_5",
         "label": "Exercise 8.5",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑆 1 be the unit circle considered as a subspace of the complex numbers ℂ\nwhere ℂ ≅ ℝ2 is given the standard topology. Show that for every integer 𝑛 greater than 1 the\nmap 𝑝 ∶ 𝑆 1 → 𝑆 1 given by\n𝑝(𝑧) = 𝑧𝑛\nis a covering map.",
         "formal_statement": null,
         "definition": null,
@@ -9049,7 +9180,7 @@
         "id": "exercise_8_6",
         "label": "Exercise 8.6",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let ℝ denote the set of real numbers equipped with the standard topology, and\nlet ℤ denote the set of integers. Consider 𝐸 = {(𝑥, 𝑦) ∈ ℝ2 ∣ 𝑥 − 𝑦 ∈ ℤ} as a subspace of ℝ2\nwhere ℝ2 is given the standard topology. Show that the map 𝑝 ∶ 𝐸 → ℝ given by 𝑝(𝑥, 𝑦) = 𝑥 is\na covering map.\n94 8.4. Exercises",
         "formal_statement": null,
         "definition": null,
@@ -9095,7 +9226,7 @@
         "id": "exercise_8_7",
         "label": "Exercise 8.7",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let 𝑛 be a positive integer that is greater than or equal to 2. Show that for any\n𝑥0 ∈ ℝP𝑛\n𝜋1 (ℝP𝑛 , 𝑥0 ) ≅ ℤ∕2\nwhere ℝP𝑛 is real projective 𝑛-space. (You may assume as a known fact that the 𝑛-sphere 𝑆 𝑛\n(considered as a subspace of ℝ𝑛+1 where ℝ𝑛+1 is given the standard topology) is simply con-\nnected for 𝑛 ⩾ 2.)",
         "formal_statement": null,
         "definition": null,
@@ -9141,7 +9272,7 @@
         "id": "exercise_8_8",
         "label": "Exercise 8.8",
         "kind": "exercise",
-        "domain": "exercises",
+        "domain": "connectedness",
         "statement": "Let { √ }\n2 |\n|\n𝐴𝑎,𝑏 = (𝑥1 , 𝑥2 ) ∈ ℝ | 𝑎 ⩽ 𝑥21 + 𝑥22 ⩽ 𝑏\n|\nand consider it as a subspace of ℝ2 where ℝ2 is given the standard topology and 𝑎, 𝑏 ∈ ℝ with\n0 < 𝑎 < 1 < 𝑏. Compute 𝜋1 (𝐴𝑎,𝑏 , 𝑥0 ) for any 𝑥0 ∈ 𝐴𝑎,𝑏 .\nA. Set theory\nThe purpose of this appendix is not to give a complete and precise introduction to set theory but rather\nto introduce some of the basic ideas, notation and terminologies from set theory that will be used\nin our introduction to topology. We will follow naive set theory in the sense that we will describe\nsets and operations on sets using natural language. The reader who is interested in a more thorough\nintroduction to set theory may wish to consult [4, Chapter 1] or [5, Appendix A]. For an even more\nextensive treatment of set theory, see, e.g., [6].\nA.1 Sets\nIn our naive approach, a set is any collection of mathematical objects, e.g., prime numbers. These\nmathematical objects will be referred to as the elements of the set. We will typically denote sets using\nuppercase letters, e.g., 𝑋, and elements of sets with lowercase letters, e.g., 𝑥. If 𝑋 is a set and 𝑥 an\nelement of 𝑋, we write 𝑥 ∈ 𝑋. If 𝑥 is not an element of 𝑋, we write 𝑥 ∉ 𝑋. In this notation, the\nsymbol “∈” denotes membership in a set. We will use the symbols ℕ, ℚ, ℝ and ℤ to denote the sets of\nnatural numbers, rational numbers, real numbers and integers, respectively. We will use the convention\nthat 0 is a natural number. We will use ℤ+ to denote the set of positive integers, i.e., integers greater\nthan or equal to 1.\nSets may be specified by listing its elements, e.g.,\n𝑃 = {Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune}\nfor the set of planets in the Solar System. We may also specify sets by selecting the elements of some\npreviously given set that satisfy some well-defined condition, e.g.,\n𝑆 = {𝑥 ∈ ℝ ∣ 𝑥 ⩾ 10.9}\nread as “the set of 𝑥 ∈ ℝ such that 𝑥 ⩾ 10.9.” In this example, 129.3 ∈ 𝑆 while −1.5 ∉ 𝑆. Note that\nsome authors use colon instead of ∣ when describing sets in this way.\nA set consisting of exactly one element is referred to as a singleton. If {𝑥} is the singleton consisting\nof only the element 𝑥, then 𝑥 ∈ {𝑥} but 𝑥 is not equal to {𝑥} as the former is one object whereas the\nlatter is a set (consisting of one element) and these are not the same mathematical objects. We will\nrefer to the set of no elements as the empty set and denote it by ∅. If a set 𝑆 has one or more elements,\nwe will say that 𝑆 is non-empty.\nDefinition A.1 (Subsets) Let 𝐴 and 𝐵 be sets. We say that 𝐵 is a subset of 𝐴 if each element\nof 𝐵 is also an element of 𝐴. We write 𝐵 ⊆ 𝐴.\nNote that some authors use the notation 𝐵 ⊂ 𝐴. We might also express that 𝐵 is a subset of 𝐴 by saying\nthat 𝐵 is contained in 𝐴. We say that 𝐴 is equal to 𝐵 if 𝐴 ⊆ 𝐵 and 𝐵 ⊆ 𝐴. If 𝐵 ⊆ 𝐴 but 𝐴 ≠ 𝐵 we will say that\n𝐵 is a proper subset of 𝐴. We write 𝐵 ⊊ 𝐴.\n95\n96 A.1. Sets\nDefinition A.2 (Intersection and union of sets) Let 𝐴 and 𝐵 be sets. The intersection of 𝐴\nand 𝐵, written 𝐴 ∩ 𝐵, is the set whose elements are both in 𝐴 and in 𝐵. That is,\n𝐴 ∩ 𝐵 = {𝑥 ∣ 𝑥 ∈ 𝐴 and 𝑥 ∈ 𝐵}.\nThe union of 𝐴 and 𝐵, written 𝐴 ∪ 𝐵, is the set whose elements are elements in 𝐴 or in 𝐵\nwhere we do not exclude the possibility that an element in 𝐴 ∪ 𝐵 is both an element in 𝐴 and\nan element in 𝐵. That is,\n𝐴 ∪ 𝐵 = {𝑥 ∣ 𝑥 ∈ 𝐴 or 𝑥 ∈ 𝐵}\nwhere “or” should be understood inclusively, i.e., 𝑥 is either an element in 𝐴 or in 𝐵 or in both.\nNote that\n𝐴∩𝐵 ⊆𝐴 𝐴⊆𝐴∪𝐵\n𝐴∩𝐵 ⊆𝐵 𝐵 ⊆ 𝐴 ∪ 𝐵.\nWe say that 𝐴 meets or intersects 𝐵 if 𝐴 ∩ 𝐵 ≠ ∅. We say that 𝐴 and 𝐵 are disjoint if 𝐴 ∩ 𝐵 = ∅.\nThe following equations hold for all sets 𝐴, 𝐵 and 𝐶.\n𝐴∩𝐵 =𝐵∩𝐴 (Commutative law for intersection)\n𝐴∪𝐵 =𝐵∪𝐴 (Commutative law for union)\n𝐴 ∩ (𝐵 ∩ 𝐶) = (𝐴 ∩ 𝐵) ∩ 𝐶 (Associative law for intersection)\n𝐴 ∪ (𝐵 ∪ 𝐶) = (𝐴 ∪ 𝐵) ∪ 𝐶 (Associative law for union)\n𝐴 ∩ (𝐵 ∪ 𝐶) = (𝐴 ∩ 𝐵) ∪ (𝐴 ∩ 𝐶) (Distributive law)\n𝐴 ∪ (𝐵 ∩ 𝐶) = (𝐴 ∪ 𝐵) ∩ (𝐴 ∪ 𝐶) (Distributive law)\nEach statement can be proved by showing that the left-hand side is a subset of the right-hand side and\nvice versa. See, e.g., [6, p. 17] for a proof of the second distributive law using this principle.\nDefinition A.3 (Difference of sets) Let 𝐴 be a set, and let 𝐵 be a subset of 𝐴. The difference\nof 𝐴 and 𝐵, written 𝐴 ⧵ 𝐵, is the set whose elements are in 𝐴 but not in 𝐵. That is,\n𝐴 ⧵ 𝐵 = {𝑥 ∈ 𝐴 ∣ 𝑥 ∉ 𝐵}.\nNote that some authors use the notation 𝐴 − 𝐵 for 𝐴 ⧵ 𝐵. Also, note that\n𝐴 ⧵ 𝐵 ⊆ 𝐴, (𝐴 ⧵ 𝐵) ∪ 𝐵 = 𝐴 ∪ 𝐵\nand that 𝐴 ⧵ 𝐵 and 𝐵 are disjoint, i.e., (𝐴 ⧵ 𝐵) ∩ 𝐵 = ∅.\nDefinition A.4 (Complements) Let 𝐴 be a set, and let 𝐵 be a subset of 𝐴. The complement\nof 𝐵 in 𝐴 is the difference of 𝐴 and 𝐵. We write 𝐵 𝑐 for the complement of 𝐵 in 𝐴, i.e.,\n𝐵 𝑐 = 𝐴 ⧵ 𝐵.\nAppendix A. Set theory 97\nAssume that 𝐴, 𝐵 and 𝐶 are sets with 𝐵 ⊆ 𝐴 and 𝐶 ⊆ 𝐴. Then the following equations, known as\nDe Morgan’s laws, hold.\n𝐴 ⧵ (𝐵 ∩ 𝐶) = (𝐴 ⧵ 𝐵) ∪ (𝐴 ⧵ 𝐶)\n𝐴 ⧵ (𝐵 ∪ 𝐶) = (𝐴 ⧵ 𝐵) ∩ (𝐴 ⧵ 𝐶)\nIn our naive approach, a set is any collection of objects. Thus we might speak of a set of sets, that\nis, a set whose elements are sets. We usually refer to such a set of sets as a collection of sets or as a\nfamily of sets. We will usually speak of a family of sets when the elements in our set of sets are indexed\nover some indexing set. Specifically, if 𝐼 is a set and {𝐴𝑖 ∣ 𝑖 ∈ 𝐼} is collection of sets, we will refer to\n{𝐴𝑖 }𝑖∈𝐼 = {𝐴𝑖 ∣ 𝑖 ∈ 𝐼}\nas an indexed family of sets and refer to 𝐼 as the indexing set for the family.\nFor any set 𝐴 we can speak of the power set of 𝐴. We write (𝐴). The power set of 𝐴 is the\ncollection of all subsets of 𝐴, i.e.,\n(𝐴) = {𝐵 ∣ 𝐵 ⊆ 𝐴}.\nNote that any collection of subsets of 𝐴 is a subset of (𝐴). We will usually denote collections using\nscript letters, e.g., .\nLet  be a collection of sets. The intersection of the elements of  is\n⋂\n𝐴 = {𝑥 ∣ for every 𝐴 ∈  we have 𝑥 ∈ 𝐴}.\n𝐴∈\nThe union of the elements of  is\n⋃\n𝐴 = {𝑥 ∣ there is an 𝐴 ∈  such that 𝑥 ∈ 𝐴}.\n𝐴∈\nIf  = {𝐴𝑖 }𝑖∈𝐼 , we have ⋂ ⋂\n𝐴= 𝐴𝑖\n𝐴∈ 𝑖∈𝐼\nwhere the right-hand side is the set of 𝑥 such that 𝑥 ∈ 𝐴𝑖 for all 𝑖 ∈ 𝐼, and similarly,\n⋃ ⋃\n𝐴= 𝐴𝑖\n𝐴∈ 𝑖∈𝐼\nwhere the right-hand side is the set of 𝑥 such that 𝑥 ∈ 𝐴𝑖 for some 𝑖 ∈ 𝐼.\nIf  = {𝐴1 , 𝐴2 , … , 𝐴𝑛 }, i.e.,  = {𝐴𝑖 }𝑖∈𝐼 where 𝐼 = {1, 2 … , 𝑛}, we write\n⋂ 𝑛\n⋂\n𝐴 as 𝐴𝑖 = 𝐴1 ∩ 𝐴2 ∩ ⋯ ∩ 𝐴𝑛\n𝐴∈ 𝑖=1\nand similarly, we write\n⋃ 𝑛\n⋃\n𝐴 as 𝐴𝑖 = 𝐴1 ∪ 𝐴2 ∪ ⋯ ∪ 𝐴𝑛 .\n𝐴∈ 𝑖=1\nIf  = ∅, we have ⋃\n𝐴 = ∅.\n𝐴∈∅\nThe intersection ⋂\n𝐴\n𝐴∈∅\nmay lead to set-theoretic difficulties. We shall therefore refrain from speaking of such intersections.\n98 A.2. Maps\nDefinition A.5 (Cartesian products) Let 𝐴 and 𝐵 be sets. The cartesian product of 𝐴 and\n𝐵, written 𝐴 × 𝐵, is the set of ordered pairs of elements (𝑥, 𝑦) with 𝑥 ∈ 𝐴 and 𝑦 ∈ 𝐵, i.e.,\n𝐴 × 𝐵 = {(𝑥, 𝑦) ∣ 𝑥 ∈ 𝐴 and 𝑦 ∈ 𝐵}.\nNote that some authors denote elements in a cartesian product as 𝑥 × 𝑦 instead of (𝑥, 𝑦) primarily\nto avoid any ambiguity that might arise when dealing with, e.g., open intervals of ℝ and elements in\nℝ2 = ℝ × ℝ.\nA.2 Maps\nIn the following assume that 𝐴 and 𝐵 are two sets. A map (or function) 𝑓 from 𝐴 to 𝐵, written\n𝑓∶ 𝐴→𝐵\nis a rule that to each element 𝑎 in 𝐴 assigns a unique element 𝑓 (𝑎) in 𝐵. We refer to 𝐴 as the domain\n(or source) of 𝑓 and to 𝐵 as the codomain (or target) of 𝑓 . We refer to the map\nid ∶ 𝐴 → 𝐴\ngiven by\nid(𝑥) = 𝑥\nfor 𝑥 ∈ 𝐴 as the identity map on 𝐴. We will often write id𝐴 to emphasize the domain of the identity\nmap.\nDefinition A.6 (Image of maps) Let 𝐴 and 𝐵 be sets, and let 𝑓 ∶ 𝐴 → 𝐵 be a map. The\nimage of 𝑓 is the subset\n𝑓 (𝐴) = {𝑓 (𝑥) ∈ 𝐵 ∣ 𝑥 ∈ 𝐴}\nof the codomain 𝐵, whose elements are all the values of 𝑓 .\nDefinition A.7 (Surjective, injective and bijective maps) Let 𝐴 and 𝐵 be sets, and let\n𝑓 ∶ 𝐴 → 𝐵 be a map.\nSurjective maps We say that 𝑓 is surjective if for every 𝑏 ∈ 𝐵 there is an 𝑎 ∈ 𝐴 such that\n𝑓 (𝑎) = 𝑏. We will also refer to 𝑓 as a surjection.\nInjective maps We say that 𝑓 is injective if 𝑓 (𝑎1 ) = 𝑓 (𝑎2 ) if and only if 𝑎1 = 𝑎2 where\n𝑎1 , 𝑎2 ∈ 𝐴. We will also refer to 𝑓 as an injection.\nBijective maps We say that 𝑓 is bijective if it is both injective and surjective. We will\nalso refer to 𝑓 as a bijection (or as a one-to-one correspondence).\nNote that 𝑓 is surjective if and only if 𝑓 (𝐴) = 𝐵. If 𝑓 is bijective there is for each 𝑏 ∈ 𝐵 exactly one 𝑎 ∈ 𝐴\nwith 𝑓 (𝑎) = 𝑏, and we can define a map 𝑓 −1 ∶ 𝐵 → 𝐴 given by 𝑓 −1 (𝑏) = 𝑎. We say that 𝑓 −1 is the inverse map\nof 𝑓 . Note that the inverse map is not defined when 𝑓 is not bijective.\nAppendix A. Set theory 99\nDefinition A.8 (Restriction of maps) Let 𝐴 and 𝐵 be sets, and let 𝑓 ∶ 𝐴 → 𝐵 be a map. The\nrestriction of 𝑓 to 𝑅 where 𝑅 ⊆ 𝐴 is the map\n𝑓 |𝑅 ∶ 𝑅 → 𝐵\ngiven by\n𝑓 |𝑅 (𝑥) = 𝑓 (𝑥)\nfor 𝑥 ∈ 𝑅. Let 𝐶 ⊆ 𝐵 and assume that 𝑓 (𝐴) ⊆ 𝐶. The restriction of 𝑓 to 𝐶 is the map\n𝑔∶ 𝐴 → 𝐶\ngiven by\n𝑔(𝑥) = 𝑓 (𝑥)\nfor 𝑥 ∈ 𝐴.\nNote that the restriction of 𝑓 to 𝐶 is not defined unless 𝑓 (𝐴) ⊆ 𝐶. If 𝑅 ⊆ 𝐴 and 𝑓 |𝑅 is injective, then the\nrestriction of 𝑓 |𝑅 to 𝐶 = 𝑓 |𝑅 (𝑅) is bijective.\nDefinition A.9 (Composition of maps) Let 𝐴, 𝐵 and 𝐶 be sets, and let 𝑓 ∶ 𝐴 → 𝐵 and\n𝑔 ∶ 𝐵 → 𝐶 be maps. The composition of 𝑓 and 𝑔, written 𝑔◦𝑓 , is the map\n𝑔◦𝑓 ∶ 𝐴 → 𝐶\ngiven by\n(𝑔◦𝑓 )(𝑥) = 𝑔(𝑓 (𝑥))\nfor 𝑥 ∈ 𝐴.\nNote that composition is associative, i.e., if 𝐷 is a set and ℎ ∶ 𝐶 → 𝐷 is a map, we have\nℎ◦(𝑔◦𝑓 ) = (ℎ◦𝑔)◦𝑓 .\nAlso, 𝑓 ◦ id𝐴 = 𝑓 = id𝐵 ◦𝑓 .\nThe following two theorems describe properties of bijective maps. Proofs are immediate and left\nas an exercise to the reader.\nTheorem A.10 Let 𝐴 and 𝐵 be sets, and let 𝑓 ∶ 𝐴 → 𝐵 be a map. Then 𝑓 is bijective if and\nonly if there is a map 𝑔 ∶ 𝐵 → 𝐴 such that\n𝑔◦𝑓 = id𝐴 and 𝑓 ◦𝑔 = id𝐵 .\nThe map 𝑔 is then the inverse of 𝑓 , i.e., 𝑔 = 𝑓 −1 .\nTheorem A.11 Let 𝐴, 𝐵 and 𝐶 be sets, and let 𝑓 ∶ 𝐴 → 𝐵 and 𝑔 ∶ 𝐵 → 𝐶 be bijective maps.\nThen\n𝑔◦𝑓 ∶ 𝐴 → 𝐶\n100 A.2. Maps\nis also a bijective map with inverse\n(𝑔◦𝑓 )−1 = 𝑓 −1 ◦𝑔 −1 ∶ 𝐶 → 𝐴.\nIf two maps compose to the identity map then the first map must be injective and the second must\nbe surjective.\nTheorem A.12 Let 𝐴 and 𝐵 be sets, and let 𝑓 ∶ 𝐴 → 𝐵 and 𝑔 ∶ 𝐵 → 𝐴 be maps. If\n𝑔◦𝑓 = id𝐴 , then 𝑓 is injective and 𝑔 is surjective.\nProof. Assume that 𝑔◦𝑓 = id𝐴 . Then\n𝑔(𝑓 (𝑥)) = 𝑥\nfor all 𝑥 ∈ 𝐴. Thus for each 𝑥 ∈ 𝐴 there is a 𝑦 ∈ 𝐵 such that\n𝑔(𝑦) = 𝑥\nwhere 𝑦 = 𝑓 (𝑥). Hence, 𝑔 is surjective.\nFurthermore, as 𝑔◦𝑓 = id𝐴 , we have\n𝑔(𝑓 (𝑥1 )) = 𝑔(𝑓 (𝑥2 ))\nif and only if 𝑥1 = 𝑥2 . This implies that 𝑓 (𝑥1 ) = 𝑓 (𝑥2 ) if and only if 𝑥1 = 𝑥2 , and so, 𝑓 is injective.\nDefinition A.13 (Inclusion maps) Let 𝐴, 𝐵 and 𝑅 be sets with 𝑅 ⊆ 𝐴, and let 𝑓 ∶ 𝐴 → 𝐵\nbe map. The inclusion map\n𝑖∶ 𝑅 → 𝐴\nis given by\n𝑖(𝑥) = 𝑥\nfor 𝑥 ∈ 𝑅.\nNote that 𝑓 ◦𝑖 = 𝑓 |𝑅 . If we also assume that 𝐶 ⊆ 𝐵 with 𝑓 (𝐴) ⊆ 𝐶, we may characterize the corestriction\nmap of 𝑓 to 𝐶, 𝑔 ∶ 𝐴 → 𝐶, by the property that 𝑖𝐶 ◦𝑓 = 𝑔 where 𝑖𝐶 is the inclusion map 𝑖𝐶 ∶ 𝐶 → 𝐵 given by\n𝑖𝐶 (𝑦) = 𝑦 for 𝑦 ∈ 𝐶.\nDefinition A.14 (Disjoint union of sets) Let {𝐴𝑖 }𝑖∈𝐼 be a family of sets indexed over the set\n𝐼. The disjoint union of {𝐴𝑖 }𝑖∈𝐼 is the set\n⨆ ⋃\n𝐴𝑖 = {(𝑥, 𝑖) ∣ 𝑥 ∈ 𝐴𝑖 }.\n𝑖∈𝐼 𝑖∈𝐼\nElements in the disjoint union are ordered pairs (𝑥, 𝑖).\nLet ⋃\n𝐴= 𝐴𝑖 .\n𝑖∈𝐼\nAppendix A. Set theory 101\nThen\n𝐷 = {(𝑥, 𝑖) ∈ 𝐴 × 𝐼 ∣ 𝑥 ∈ 𝐴𝑖 }\nis equal to the disjoint union of {𝐴𝑖 }𝑖∈𝐼 . Let\n𝐷𝑖 = 𝐷 ∩ (𝐴𝑖 × {𝑖}) = 𝐴𝑖 × {𝑖}.\nThen the map\n𝑓𝑖 ∶ 𝐷𝑖 → 𝐴𝑖\ngiven by\n𝑓𝑖 (𝑥, 𝑖) = 𝑥\nfor (𝑥, 𝑖) ∈ 𝐷𝑖 , is clearly bijective. Note that ⋃\n𝐷= 𝐷𝑖\n𝑖∈𝐼\nwhere 𝐷𝑖 and 𝐷𝑗 are disjoint if 𝑖 ≠ 𝑗, i.e., 𝐷𝑖 ∩ 𝐷𝑗 = ∅.\nExample A.15 Let 𝐴 = 𝐴1 = {𝑎, 𝑏, 𝑥} and 𝐵 = 𝐴2 = {𝑏, 𝑑, 𝑔, 𝑥}. Then\n2\n⨆ ⨆\n𝐴⊔𝐵 = 𝐴𝑖 = 𝐴𝑖 = {(𝑎, 1), (𝑏, 1), (𝑥, 1), (𝑏, 2), (𝑑, 2), (𝑔, 2), (𝑥, 2)}.\n𝑖∈{1,2} 𝑖=1\nB. Elementary algebra\nB.1 Groups\nGroups are sets with a binary operation satisfying certain axioms, and frequently appear in relation to\nsymmetry.\nDefinition B.1 (Binary operations) Let 𝑆 be a set. A binary operation on 𝑆 is a map\n∗ ∶ 𝑆 × 𝑆 → 𝑆. We write 𝑎 ∗ 𝑏 instead of ∗ (𝑎, 𝑏) for 𝑎, 𝑏 ∈ 𝑆.\nThe definition says that the set 𝑆 is closed under the binary operation ∗ in the sense that if 𝑎 and 𝑏\nare elements in 𝑆, then so is 𝑎 ∗ 𝑏.\nExample B.2 Let ℤ be the set of integers. Addition (+) and multiplication (⋅) are two binary\noperations on ℤ.\nDefinition B.3 (Groups) A group is a non-empty set 𝐺 together with a binary operation ∗\nsuch that the following properties hold.\nG1 For all 𝑎, 𝑏, 𝑐 ∈ 𝐺, (𝑎 ∗ 𝑏) ∗ 𝑐 = 𝑎 ∗ (𝑏 ∗ 𝑐).\nG2 There is an element 𝑒 ∈ 𝐺 such that 𝑎 ∗ 𝑒 = 𝑎 = 𝑒 ∗ 𝑎 for all 𝑎 ∈ 𝐺.\nG3 For each 𝑎 ∈ 𝐺 there is an element 𝑎′ ∈ 𝐺 such that 𝑎 ∗ 𝑎′ = 𝑒 = 𝑎′ ∗ 𝑎.\nWe say that a group is abelian if ∗ is also commutative: 𝑎 ∗ 𝑏 = 𝑏 ∗ 𝑎 for all 𝑎, 𝑏 ∈ 𝐺.\nA group is strictly speaking an ordered pair (𝐺, ∗). We often omit specific mention of ∗ if no confusion\nwill arise. The first axiom, G1, says that ∗ is an associative operation. The second axiom, G2, says that there\nis a neutral or identity element for ∗. The third axiom, G3, says that for each element 𝑎 ∈ 𝐺 there is an inverse\nelement 𝑎′ ∈ 𝐺 such that 𝑎′ is both a left and right inverse element, i.e., 𝑎′ ∗ 𝑎 = 𝑒 and 𝑎 ∗ 𝑎′ = 𝑒, respectively.\nThe order of a group 𝐺 is the number of elements in 𝐺, written |𝐺|.\nWe say that a group is written multiplicatively if we write 𝑎𝑏 instead of 𝑎 ∗ 𝑏, 1 (sometimes) instead of 𝑒 and\n𝑎−1 instead of 𝑎′ , and we say that a group is written additively if we write 𝑎 + 𝑏 instead of 𝑎 ∗ 𝑏, 0 (sometimes)\ninstead of 𝑒 and −𝑎 instead of 𝑎′ .\nExample B.4 The set of real numbers, ℝ, is an abelian group under addition: G1, G2 and G3\nare all satisfied with 𝑒 = 0 and the inverse element of 𝑎 ∈ ℝ being −𝑎. Furthermore, it is an\nabelian group as 𝑎 + 𝑏 = 𝑏 + 𝑎 for all 𝑎, 𝑏 ∈ ℝ.\nNote that ℝ is not a group under multiplication: while G1 and G2 are satisfied (with 𝑒 = 1),\nG3 fails. There is no real number we can multiply with 0 to get 1.\n102\nAppendix B. Elementary algebra 103\nExample B.5 For 𝑛 ∈ ℤ+ , let\nℤ∕𝑛 = {0, 1, 2, … , 𝑛 − 1}.\nThen ℤ∕𝑛 is an abelian group with +𝑛 (addition modulo 𝑛) as its binary operation, i.e., 𝑎 +𝑛 𝑏 =\n𝑎 + 𝑏 mod 𝑛 for 𝑎, 𝑏 ∈ ℤ∕𝑛. Note that some authors write ℤ𝑛 , 𝑍∕(𝑛) or ℤ∕𝑛ℤ for ℤ∕𝑛.\nExample B.6 Let GL𝑛 (ℝ) denote the set of invertible 𝑛 × 𝑛-matrices with entries in ℝ. Then\nGL𝑛 (ℝ) is a group with matrix multiplication as its binary operation. Note that it is not abelian,\nsince, e.g.,\n⎡1 1 0⎤ ⎡1 0 0⎤ ⎡2 1 0⎤ ⎡1 1 0⎤ ⎡1 0 0⎤ ⎡1 1 0⎤\n⎢0 1 0⎥ ⎢1 1 0⎥ = ⎢1 1 0⎥ ≠ ⎢1 2 0⎥ = ⎢1 1 0⎥ ⎢0 1 0⎥ .\n⎢ ⎥⎢ ⎥ ⎢ ⎥ ⎢ ⎥ ⎢ ⎥⎢ ⎥\n⎣0 0 1⎦ ⎣0 0 1⎦ ⎣0 0 1⎦ ⎣0 0 1⎦ ⎣0 0 1⎦ ⎣0 0 1⎦\nDefinition B.7 (Subgroups) Let 𝐺 be a group with binary operation ∗. We say that a subset\n𝐻 of 𝐺 is a subgroup, written 𝐻 ⩽ 𝐺, if ∗ restricted to 𝐻 × 𝐻 is a binary operation on 𝐻\nsuch that 𝐻 with ∗ |𝐻×𝐻 is a group. We say that a subgroup 𝐻 of 𝐺 is a proper subgroup of\n𝐺, written 𝐻 < 𝐺, if 𝐻 is a proper subset of 𝐺.\nThe set consisting of just the identity element is always a subgroup of a group. It is often called\nthe trivial subgroup.\nExample B.8 Let 𝐺 = ℤ with addition as its binary operation. For 𝑚 ∈ ℤ+ ⧵ {1}, let\n𝐻 = 𝑚ℤ = {𝑚𝑛 ∣ 𝑛 ∈ ℤ} = {… , −2𝑚, −𝑚, 0, 𝑚, 2𝑚, …}.\nThen 𝐻 is a proper subgroup of 𝐺.\nTheorem B.9 Let 𝐺 be a group that is written multiplicatively, and let 𝑥 ∈ 𝐺. If 𝐻 is a\nsubgroup of 𝐺 containing 𝑥, then\n⟨𝑥⟩ = {𝑥𝑛 ∣ 𝑛 ∈ ℤ}\nis a subgroup of 𝐻.\nWe say that ⟨𝑥⟩ is the cyclic subgroup of 𝐺 generated by 𝑥. Note that ⟨𝑥⟩ is the smallest subgroup of 𝐺\ncontaining 𝑥. If there is an 𝑥′ ∈ 𝐺 such that 𝐺 = ⟨𝑥′ ⟩, we say that 𝐺 is cyclic, and that 𝑥′ is a generator for 𝐺.\nNote that cyclic groups may have more than one generators and that all cyclic groups are abelian. If the group\nis written additively, we interpret ⟨𝑥⟩ as the set {𝑛𝑥 ∣ 𝑛 ∈ ℤ}.\nProof. Since 𝐻 is a subgroup of 𝐺, it follows that 𝑥−1 ∈ 𝐻. Thus 𝑥𝑥−1 = 𝑥−1 𝑥 = 𝑥0 = 1 ∈ 𝐻.\nFurthermore, 𝑥𝑛 ∈ 𝐻 for all 𝑛 ∈ ℤ where 𝑥−𝑚 = (𝑥−1 )𝑚 . Thus ⟨𝑥⟩ is a subgroup of 𝐻.\n104 B.1. Groups\nExample B.10 The set of integers, ℤ, is an infinite cyclic group with addition as its binary\noperation generated by both −1 and 1, i.e., ⟨−1⟩ = ⟨1⟩ = ℤ.\nDefinition B.11 (Left and right cosets) Let 𝐺 be a group, and let 𝐻 be a subgroup of 𝐺.\nFor 𝑔 ∈ 𝐺, we say that the set\n𝑔 ∗ 𝐻 = {𝑔 ∗ ℎ ∣ ℎ ∈ 𝐻}\nis the left coset of 𝐻 containing 𝑔, and that the set\n𝐻 ∗ 𝑔 = {ℎ ∗ 𝑔 ∣ ℎ ∈ 𝐻}\nis the right coset of 𝐻 containing 𝑔.\nClearly, if 𝐺 is abelian, the left and right cosets are equal. However, the left and right cosets may\ncoincide even if 𝐺 is not abelian.\nDefinition B.12 (Normal subgroups) Let 𝐺 be a group. We say that a subgroup 𝐻 of 𝐺 is\nnormal if the left and right cosets coincide, i.e., 𝑔 ∗ 𝐻 = 𝐻 ∗ 𝑔 for all 𝑔 ∈ 𝐺.\nAn equivalent definition of a normal subgroup is to say that 𝐻 is a normal subgroup of 𝐺 if 𝑔 ∗\nℎ ∗ 𝑔 −1 ∈ 𝐻 for each 𝑔 ∈ 𝐺 and each ℎ ∈ 𝐻.\nTheorem B.13 Let 𝐺 be a group written multiplicatively, and let 𝐻 be a normal subgroup\nof 𝐺. Then the set of cosets of 𝐻, denoted 𝐺∕𝐻, is a group with binary operation given by\n(𝑔1 𝐻)(𝑔2 𝐻) = (𝑔1 𝑔2 )𝐻\nfor 𝑔1 , 𝑔2 ∈ 𝐺.\nWe refer to the group 𝐺∕𝐻 as the factor group or quotient group of 𝐺 by 𝐻. If 𝐺 is a group, and 𝐻 is a\nsubgroup of 𝐺 the relation ∼𝐿 given by 𝑎 ∼𝐿 𝑏 if and only if 𝑎−1 𝑏 ∈ 𝐻 for 𝑎, 𝑏 ∈ 𝐺 is an equivalence relation\non 𝐺. It can be shown that for a fixed 𝑔 ∈ 𝐺, the set {𝑥 ∈ 𝐺 ∣ 𝑔 ∼𝐿 𝑥} is equal to the left coset of 𝐻 containing\n𝑔, i.e., 𝑔𝐻. It is a fact that if 𝑔 ′ ∈ 𝑔𝐻, then 𝑔 ′ 𝐻 = 𝑔𝐻.\nProof. We first show that the binary operation defined on 𝐺∕𝐻 is well-defined. Let 𝑔1′ ∈ 𝑔1 𝐻, and\nlet 𝑔2′ ∈ 𝑔2 𝐻. Then 𝑔1 𝐻 = 𝑔1′ 𝐻 and 𝑔2 𝐻 = 𝑔2′ 𝐻. We must show that (𝑔1 𝐻)(𝑔2 𝐻) = (𝑔1′ 𝐻)(𝑔2′ 𝐻).\nChoose an element (𝑔1 𝑔2 )ℎ ∈ (𝑔1 𝑔2 )𝐻. Since 𝑔1 ∈ 𝑔1 𝐻 = 𝑔1′ 𝐻 and 𝑔2 ∈ 𝑔2 𝐻 = 𝑔2′ 𝐻, there are\nelements ℎ1 and ℎ2 in 𝐻 such that 𝑔1 = 𝑔1′ ℎ1 and 𝑔2 = 𝑔2′ ℎ2 . Thus\n(𝑔1 𝑔2 )ℎ = (𝑔1′ ℎ1 )(𝑔2′ ℎ2 )ℎ\n= 𝑔1′ ℎ1 𝑔2′ ℎ2 ℎ\n= 𝑔1′ (𝑔2′ (𝑔2′ )−1 )ℎ1 𝑔2′ ℎ2 ℎ\n= 𝑔1′ 𝑔2′ ((𝑔2′ )−1 ℎ1 𝑔2′ )ℎ2 ℎ\n= 𝑔1′ 𝑔2′ ℎ′1 ℎ2 ℎ ∈ (𝑔1′ 𝑔2′ )𝐻\nAppendix B. Elementary algebra 105\nwhere the last equality follows from the fact 𝐻 is a normal subgroup of 𝐺; there is an ℎ′1 ∈ 𝐻 such that\n(𝑔2′ )−1 ℎ1 𝑔2 = ℎ′1 . Hence, (𝑔1 𝑔2 )𝐻 ⊆ (𝑔1′ 𝑔2′ )𝐻. A similar argument shows that (𝑔1′ 𝑔2′ )𝐻 ⊆ (𝑔1 𝑔2 )𝐻.\nHence, (𝑔1 𝑔2 )𝐻 = (𝑔1′ 𝑔2′ )𝐻. Thus\n(𝑔1 𝐻)(𝑔2 𝐻) = (𝑔1 𝑔2 )𝐻 = (𝑔1′ 𝑔2′ )𝐻 = (𝑔1′ 𝐻)(𝑔2′ 𝐻).\nWe now show that 𝐺∕𝐻 is a group. Let 𝑔1 𝐻, 𝑔2 𝐻 and 𝑔2 𝐻 be elements in 𝐺∕𝐻. We must show\nthat [(𝑔1 𝐻)(𝑔2 𝐻)](𝑔3 𝐻) = (𝑔1 𝐻)[(𝑔2 𝐻)(𝑔3 𝐻)]. By definition, we have\n[(𝑔1 𝐻)(𝑔2 𝐻)](𝑔3 𝐻) = (𝑔1 𝑔2 𝐻)(𝑔3 𝐻)\n= (𝑔1 𝑔2 )𝑔3 𝐻\n= 𝑔1 (𝑔2 𝑔3 )𝐻\n= (𝑔1 𝐻)(𝑔2 𝑔3 𝐻)\n= (𝑔1 𝐻)[(𝑔2 𝐻)(𝑔3 𝐻)].\nHence, G1 is satisfied. If 𝑒 is the identity element in 𝐺, then\n(𝑔𝐻)(𝑒𝐻) = (𝑔𝑒)𝐻 = 𝑔𝐻 = (𝑒𝑔)𝐻 = (𝑒𝐻)(𝑔𝐻)\nfor all 𝑔 ∈ 𝐺. Hence, G2 is satisfied with 𝑒𝐻 = 𝐻 as the identity element in 𝐺∕𝐻. Finally, for each\n𝑔 ∈ 𝐺, we have\n(𝑔𝐻)(𝑔 −1 𝐻) = (𝑔𝑔 −1 𝐻) = 𝑒𝐻 = (𝑔 −1 𝑔)𝐻 = (𝑔 −1 𝐻)(𝑔𝐻).\nHence, G3 is satisfied with (𝑔𝐻)−1 = 𝑔 −1 𝐻. Thus 𝐺∕𝐻 is a group.\nThe following theorem describes how we may construct a new group from two existing groups.\nTheorem B.14 Let 𝐺1 and 𝐺2 be groups with binary operations ∗1 and ∗2 , respectively. Then\n𝐺1 × 𝐺2 is a group with binary operation given by\n(𝑔1 , 𝑔2 ) ∗ (𝑔1′ , 𝑔2′ ) = (𝑔1 ∗1 𝑔1′ , 𝑔2 ∗2 𝑔2′ )\nfor 𝑔1 , 𝑔1′ ∈ 𝐺1 and 𝑔2 , 𝑔2′ ∈ 𝐺2 .\nWe say that that the group 𝐺1 × 𝐺2 is the direct product of 𝐺1 and 𝐺2 .\nProof. Since 𝐺1 and 𝐺2 are groups with binary operations ∗1 and ∗2 , respectively, it follows that\n(𝑔1 , 𝑔2 ) ∗ (𝑔1′ , 𝑔2′ ) = (𝑔1 ∗1 𝑔1′ , 𝑔2 ∗2 𝑔2′ ) ∈ 𝐺1 × 𝐺2\nfor (𝑔1 , 𝑔2 ), (𝑔1′ , 𝑔2′ ) ∈ 𝐺1 × 𝐺2 .\nLet (𝑎1 , 𝑎2 ), (𝑏1 , 𝑏2 ) and (𝑐1 , 𝑐2 ) be elements in 𝐺1 × 𝐺2 . Then\n[ ]\n(𝑎1 , 𝑎2 ) ∗ (𝑏1 , 𝑏2 ) ∗ (𝑐1 , 𝑐2 ) = (𝑎1 ∗1 𝑏1 , 𝑎2 ∗2 𝑏2 ) ∗ (𝑐1 , 𝑐2 )\n= ((𝑎1 ∗1 𝑏1 ) ∗1 𝑐1 , (𝑎2 ∗2 𝑏2 ) ∗2 𝑐2 )\n= (𝑎1 ∗1 (𝑏1 ∗1 𝑐1 ), 𝑎2 ∗2 (𝑏2 ∗2 𝑐2 ))\n= (𝑎1 , 𝑎2 ) ∗ (𝑏1 ∗1 𝑐1 , 𝑏2 ∗2 𝑐2 )\n= (𝑎1 , 𝑎2 ) ∗ [(𝑏1 , 𝑏2 ) ∗ (𝑐1 , 𝑐2 )].\n106 B.2. Homomorphisms\nThus G1 is satisfied.\nIf 𝑒1 and 𝑒2 are the identity elements in 𝐺1 and 𝐺2 , respectively, then\n(𝑔1 , 𝑔2 ) ∗ (𝑒1 , 𝑒2 ) = (𝑔1 ∗1 𝑒1 , 𝑔2 ∗2 𝑒2 )\n= (𝑔1 , 𝑔2 )\nand\n(𝑒1 , 𝑒2 ) ∗ (𝑔1 , 𝑔2 ) = (𝑒1 ∗1 𝑔1 , 𝑒2 ∗2 𝑔2 )\n= (𝑔1 , 𝑔2 )\nfor all (𝑔1 , 𝑔2 ) ∈ 𝐺1 × 𝐺2 . Hence, G2 is satisfied.\nFinally, if 𝑔1−1 and 𝑔2−1 denotes the inverse elements of elements 𝑔1 ∈ 𝐺1 and 𝑔2 ∈ 𝐺2 , respectively,\nthen\n( )\n(𝑔1 , 𝑔2 ) ∗ (𝑔1−1 , 𝑔2−1 ) = 𝑔1 ∗1 𝑔1−1 , 𝑔2 ∗2 𝑔2−1\n= (𝑒1 , 𝑒2 )\nand\n( )\n(𝑔1−1 , 𝑔2−1 ) ∗ (𝑔1 , 𝑔2 ) = 𝑔1−1 ∗1 𝑔1 , 𝑔2−1 ∗2 𝑔2\n= (𝑒1 , 𝑒2 ).\nThus G3 holds. Hence, 𝐺1 × 𝐺2 with ∗ as its binary operation is a group.\nWe can extend the theorem to hold for a finite collection of groups: if 𝐺1 , 𝐺2 , … , 𝐺𝑛 are groups, then\n𝑛\n∏\n𝐺𝑖 = 𝐺1 × 𝐺2 × ⋯ × 𝐺𝑛\n𝑖=1\nis a group with binary operation as defined above suitably expanded. Note also that the direct product is abelian\nif and only if each of the factors are abelian.\nB.2 Homomorphisms\nHomomorphisms are structure preserving maps from one group to another.\nDefinition B.15 (Homomorphisms) Let 𝐺1 and 𝐺2 be groups with binary operations ∗1 and\n∗2 , respectively. Then a map 𝜑 ∶ 𝐺1 → 𝐺2 is a homomorphism if\n𝜑(𝑥 ∗1 𝑦) = 𝜑(𝑥) ∗2 𝜑(𝑦)\nfor all 𝑥, 𝑦 ∈ 𝐺1 .\nNote that if 𝑒1 and 𝑒2 are the identity elements in 𝐺1 and 𝐺2 , respectively, then for any homomorphism\n𝜑 ∶ 𝐺1 → 𝐺2 , we have 𝜑(𝑒1 ) = 𝑒2 . If 𝑥−1 denotes the inverse element of 𝑥 ∈ 𝐺1 , and 𝑦−1 denotes the inverse\nelement of 𝑦 ∈ 𝐺2 , then 𝜑(𝑥−1 ) = 𝜑(𝑥)−1 : 𝑒2 = 𝜑(𝑒1 ) = 𝜑(𝑥 ∗1 𝑥−1 ) = 𝜑(𝑥) ∗2 𝜑(𝑥−1 ), and similarly,\n𝑒2 = 𝜑(𝑥−1 ) ∗2 𝜑(𝑥). Thus 𝜑(𝑥−1 ) = 𝜑(𝑥)−1 .\nAppendix B. Elementary algebra 107\nExample B.16 Let 𝐺1 and 𝐺2 be groups. Then the map 𝜑 ∶ 𝐺1 → 𝐺2 given by\n𝜑(𝑥) = 𝑒2 ,\nwhere 𝑒2 is the identity element in 𝐺2 , is a homomorphism: 𝜑(𝑥) ∗2 𝜑(𝑦) = 𝑒2 ∗2 𝑒2 = 𝑒2 =\n𝜑(𝑥 ∗1 𝑦) for all 𝑥, 𝑦 ∈ 𝐺1 . The map 𝜑 is often referred to as the trivial homomorphism.\nThe following theorem says that the composition of two homomorphisms is also a homomorphism.\nTheorem B.17 Let 𝐺1 , 𝐺2 and 𝐺3 be groups. If 𝜑1 ∶ 𝐺1 → 𝐺2 and 𝜑2 ∶ 𝐺2 → 𝐺3 are\nhomomorphisms, then the composition 𝜑2 ◦𝜑1 ∶ 𝐺1 → 𝐺3 is also a homomorphism.\nProof. Assume that all three groups are written multiplicatively. Then\n( ) ( ) ( ) ( )\n𝜑2 𝜑1 (𝑥𝑦) = 𝜑2 𝜑1 (𝑥)𝜑1 (𝑦) = 𝜑2 𝜑1 (𝑥) 𝜑2 𝜑1 (𝑦)\nfor all 𝑥, 𝑦 ∈ 𝐺1 . Hence, 𝜑2 ◦𝜑1 is a homomorphism.\nThe following theorem describes how homomorphisms provides two subgroups.\nTheorem B.18 Let 𝐺1 and 𝐺2 be groups, and let 𝜑 ∶ 𝐺1 → 𝐺2 be a homomorphism. Then\n(1) the kernel of 𝜑, ker 𝜑 = {𝑥 ∈ 𝐺1 ∣ 𝜑(𝑥) = 𝑒2 }, where 𝑒2 is the identity element in 𝐺2 , is\na normal subgroup of 𝐺1 ;\n(2) the image of 𝜑, im 𝜑 = {𝑦 ∈ 𝐺2 ∣ there is an 𝑥 ∈ 𝐺1 such that 𝜑(𝑥) = 𝑦} is a subgroup\nof 𝐺2 .\nProof. Assume that 𝐺1 and 𝐺2 are both written multiplicatively. We prove part (1). If 𝑥 and 𝑦 are\nelements in ker 𝜑, then, since 𝜑 is a homomorphism, we have\n𝜑(𝑥𝑦) = 𝜑(𝑥)𝜑(𝑦) = 𝑒2\nwhere we have used the fact that 𝑒2 𝑒2 = 𝑒2 . Since 𝜑 is assumed to be a homomorphism, we have\n𝜑(𝑒1 ) = 𝑒2 where 𝑒1 is the identity element in 𝐺1 . Hence, 𝑒1 ∈ ker 𝜑. Finally, since 𝜑(𝑥−1 ) = 𝜑(𝑥)−1\nfor each 𝑥 ∈ 𝐺1 , we have for each 𝑥 ∈ ker 𝜑 that 𝑥−1 ∈ ker 𝜑. Thus ker 𝜑 is a group, and moreover,\na subgroup of 𝐺1 . We now prove that ker 𝜑 is a normal subgroup of 𝐺1 . Let 𝑥 ∈ ker 𝜑. Then for each\n𝑔 ∈ 𝐺1 , we have\n𝜑(𝑔𝑥𝑔 −1 ) = 𝜑(𝑔)𝜑(𝑥)𝜑(𝑔 −1 ) = 𝜑(𝑔)𝑒2 𝜑(𝑔)−1 = 𝜑(𝑔)𝜑(𝑔)−1 = 𝑒2 .\nHence, ker 𝜑 is a normal subgroup of 𝐺1 . This proves part (1).\nWe now prove part (2). Let 𝑥1 and 𝑥2 be two elements in 𝐺1 . Then, since 𝜑 is a homomorphism,\nwe have\n𝜑(𝑥1 )𝜑(𝑥2 ) = 𝜑(𝑥1 𝑥2 ) ∈ im 𝜑.\nSince 𝜑 is a homomorphism, we have 𝑒2 ∈ im 𝜑. To complete the proof of the fact that im 𝜑 is a\nsubgroup of 𝐺2 , we use the fact that 𝜑(𝑥−1 ) = 𝜑(𝑥)−1 for each 𝑥 ∈ 𝐺1 . Thus 𝜑(𝑥)−1 ∈ im 𝜑 for\neach 𝑥 ∈ 𝐺1 . Hence, for each 𝑦 ∈ im 𝜑, we have 𝑦−1 ∈ im 𝜑. This proves that im 𝜑 is a group, and\nmoreover, that it is a subgroup of 𝐺2 . Hence, we have proved part (2).\nAn injective homomorphism is said to be a monomorphism while a surjective homomorphism is\nsaid to be an epimorphism.\n108 B.2. Homomorphisms\nDefinition B.19 (Isomorphisms) Let 𝐺1 and 𝐺2 be groups. We say that a bijective homo-\nmorphism 𝜑 ∶ 𝐺1 → 𝐺2 is an isomorphism.\nThus a homomorphism which is both a monomorphism and an epimorphism is an isomorphism.\nExample B.20 Let 𝐺 be a group. The identity map id ∶ 𝐺 → 𝐺 is an isomorphism. In general,\nwe refer to an isomorphism from a group 𝐺 to itself as an automorphism.\nTheorem B.21 (Fundamental homomorphism theorem) Let 𝐺1 and 𝐺2 be groups, and let\n𝜑 ∶ 𝐺1 → 𝐺2 be a homomorphism. Then the map 𝜑 ∶ 𝐺1 ∕ ker 𝜑 → im 𝜑 given by\n𝜑(𝑥 ker 𝜑) = 𝜑(𝑥)\nis an isomorphism. Furthermore, if 𝜋 ∶ 𝐺1 → 𝐺1 ∕ ker 𝜑 is the map given by 𝜋(𝑥) = 𝑥 ker 𝜑,\nthen 𝜋 is a homomorphism and 𝜑(𝑥) = (𝜑◦𝜋)(𝑥) for each 𝑥 ∈ 𝐺1 .\n𝐺1\n𝜑\n𝜋\n𝐺1 ∕ ker 𝜑 im 𝜑\n𝜑\nProof. We first show that 𝜑 is well-defined. Let 𝑥1 and 𝑥2 be two elements in 𝐺. If 𝑥1 ker 𝜑 = 𝑥2 ker 𝜑,\nwe must show that 𝜑(𝑥1 ker 𝜑) = 𝜑(𝑥2 ker 𝜑). In other words, we must show that 𝜑(𝑥1 ) = 𝜑(𝑥2 ). Since\n𝑥2 ∈ 𝑥1 ker 𝜑, there is an element 𝑧 in ker 𝜑 such that 𝑥2 = 𝑥1 𝑧. Thus if 𝑒2 is the identity element in\n𝐺2 , we have\n𝜑(𝑥2 ) = 𝜑(𝑥1 𝑧) = 𝜑(𝑥1 )𝜑(𝑧) = 𝜑(𝑥1 )𝑒2 = 𝜑(𝑥1 )\nwhere we have used the fact that 𝜑 is a homomorphism. Hence, 𝜑 is a well-defined map.\nWe now show that 𝜑 is an isomorphism, where we first show that it is a homomorphism, and then\nthat it is bijective. By definition for 𝑥1 ker 𝜑, 𝑥2 ker 𝜑 ∈ 𝐺∕ ker 𝜑, we have\n𝜑((𝑥1 ker 𝜑)(𝑥2 ker 𝜑)) = 𝜑((𝑥1 𝑥2 ) ker 𝜑)\n= 𝜑(𝑥1 𝑥2 )\n= 𝜑(𝑥1 )𝜑(𝑥2 )\n= 𝜑(𝑥1 ker 𝜑)𝜑(𝑥2 ker 𝜑).\nThus 𝜑 is a homomorphism.\nNow assume that 𝜑(𝑥1 ker 𝜑) = 𝜑(𝑥2 ker 𝜑). We must show that this implies that 𝑥1 ker 𝜑 =\n𝑥2 ker 𝜑. If 𝜑(𝑥1 ker 𝜑) = 𝜑(𝑥2 ker 𝜑), then by definition, we have 𝜑(𝑥1 ) = 𝜑(𝑥2 ). This implies that\n𝜑(𝑥2 )−1 𝜑(𝑥1 ) = 𝑒2 . Since 𝜑 is a homomorphism, we have 𝜑(𝑥−1 2\n𝑥1 ) = 𝑒2 . Thus 𝑥−1\n2\n𝑥1 ∈ ker 𝜑, and\n−1\nso, 𝑥2 𝑥1 ker 𝜑 = ker 𝜑. Hence, 𝑥1 ker 𝜑 = 𝑥2 ker 𝜑. Thus 𝜑 is injective. For any 𝜑(𝑥) ∈ im 𝜑, we\nhave, by definition, that 𝜑(𝑥 ker 𝜑) = 𝜑(𝑥). Hence, 𝜑 is surjective. Thus 𝜑 is bijective, and hence, it\nis an isomorphism.\nBy definition, we have, for elements 𝑥1 and 𝑥2 in 𝐺1 , that\n𝜋(𝑥1 𝑥2 ) = (𝑥1 𝑥2 ) ker 𝜑 = (𝑥1 ker 𝜑)(𝑥2 ker 𝜑).\nAppendix B. Elementary algebra 109\nHence, 𝜋 is a homomorphism. Furthermore,\n(𝜑◦𝜋)(𝑥) = 𝜑(𝜋(𝑥)) = 𝜑(𝑥 ker 𝜑) = 𝜑(𝑥)\nfor each 𝑥 ∈ 𝐺1 . This completes the proof.\nBibliography\n[1] C.C. Adams and R.D. Franzosa. Introduction to Topology: Pure and Applied. Pearson Prentice\nHall, Upper Saddle River, NJ, 2008.\n[2] Benjamin Fine and Gerhard Rosenberger. The fundamental theorem of algebra. Undergraduate\nTexts in Mathematics. Springer-Verlag, New York, 1997.\n[3] Harry Furstenberg. On the infinitude of primes. Amer. Math. Monthly, 62:353, 1955.\n[4] J.R. Munkres. Topology. Prentice Hall, Inc., Upper Saddle River, NJ, 2000. Second edition.\n[5] Tej Bahadur Singh. Introduction to topology. Springer, Singapore, 2019.\n[6] Robert R. Stoll. Set theory and logic. Dover Publications, Inc., New York, 1979. Corrected reprint\nof the 1963 edition.\n[7] Wilson A. Sutherland. Introduction to metric and topological spaces. Oxford University Press,\nOxford, 2009. Second edition.\n110\nIndex\nA Cover . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52\nCovering map . . . . . . . . . . . . . . . . . . . . . . . . . . . 80\nAbelian group . . . . . . . . . . . . . . . . . . . . . . . . . 102 Covering space . . . . . . . . . . . . . . . . . . . . . . . . . . 80\nAntipodal points . . . . . . . . . . . . . . . . . . . . . . . . 42 Cyclic group . . . . . . . . . . . . . . . . . . . . . . . . . . . 103\nAutomorphism . . . . . . . . . . . . . . . . . . . . . . . . . 108 Cyclic subgroup . . . . . . . . . . . . . . . . . . . . . . . . 103\nB D\nBase space . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 80 De Morgan’s laws . . . . . . . . . . . . . . . . . . . . . . . 97\nBased map . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 72 Deformation retract . . . . . . . . . . . . . . . . . . . . . . 76\nBased space . . . . . . . . . . . . . . . . . . . . . . . . . . . . 70 Deformation retraction . . . . . . . . . . . . . . . . . . . 76\nBasis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23 Dense . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19\nBinary operation . . . . . . . . . . . . . . . . . . . . . . . 102 Diagonal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52\nBoundary point . . . . . . . . . . . . . . . . . . . . . . . . . 10 Direct product . . . . . . . . . . . . . . . . . . . . . . . . . 105\nBounded subset . . . . . . . . . . . . . . . . . . . . . . . . . 56 Disconnected space . . . . . . . . . . . . . . . . . . . . . . 45\nBox topology . . . . . . . . . . . . . . . . . . . . . . . . . . . 36\nBrouwer fixed point theorem . . . . . . . . . . . . . . . 6\nE\nC Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 95\nEpimorphism . . . . . . . . . . . . . . . . . . . . . . . . . . 107\nClopen set . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10 Equivalence class . . . . . . . . . . . . . . . . . . . . . . . 37\nClosed ball . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9 Exterior point . . . . . . . . . . . . . . . . . . . . . . . . . . . 10\nClosed map . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39\nClosed set\nMetric space . . . . . . . . . . . . . . . . . . . . . . . . 10 F\nSubspace . . . . . . . . . . . . . . . . . . . . . . . . . . . 29\nTopological space . . . . . . . . . . . . . . . . . . . 18 Factor group . . . . . . . . . . . . . . . . . . . . . . . . . . . 104\nClosure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19 Function . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nCompact space . . . . . . . . . . . . . . . . . . . . . . . . . . 53 Functor . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 73\nCompact subspace . . . . . . . . . . . . . . . . . . . . . . . 53 Functoriality . . . . . . . . . . . . . . . . . . . . . . . . . . . . 73\nCone . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 58 Fundamental group . . . . . . . . . . . . . . . . . . . . . . 70\nConnected space . . . . . . . . . . . . . . . . . . . . . . . . 45 Fundamental homomorphism theorem . . . . 108\nConnected subspace . . . . . . . . . . . . . . . . . . . . . 46 Fundamental theorem of algebra . . . . . . . . . . . 6\nContinuous map\nBetween metric spaces at a point . . . . . . . 9\nBetween topological spaces . . . . . . . . . . 15 G\nBetween topological spaces at a point . 16\nContractible space . . . . . . . . . . . . . . . . . . . . . . . 79 Generalized extreme value theorem . . . . . . . 57\n111\n112 Index\nGeneralized intermediate value theorem . . . 49 Bijective . . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nGenerator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 103 Codomain . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nGroup . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 102 Composition . . . . . . . . . . . . . . . . . . . . . . . . 99\nDomain . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nIdentity . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nH Image . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nInclusion . . . . . . . . . . . . . . . . . . . . . . . . . . 100\nHausdorff space . . . . . . . . . . . . . . . . . . . . . . . . . 50 Injective . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nHeine–Borel theorem . . . . . . . . . . . . . . . . . . . . 56 Inverse . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nHomeomorphism . . . . . . . . . . . . . . . . . . . . . . . . 17 Restriction. . . . . . . . . . . . . . . . . . . . . . . . . .99\nHomomorphism . . . . . . . . . . . . . . . . . . . . . . . . 106 Source . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nHomotopic maps . . . . . . . . . . . . . . . . . . . . . . . . 60 Surjective . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nHomotopy . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60 Target . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98\nHomotopy class . . . . . . . . . . . . . . . . . . . . . . . . . 62 Membership . . . . . . . . . . . . . . . . . . . . . . . . . . . . 95\nHomotopy equivalence . . . . . . . . . . . . . . . . . . . 76 Metric . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8\nHomotopy inverse . . . . . . . . . . . . . . . . . . . . . . . 76 Discrete . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9\nHomotopy lifting property . . . . . . . . . . . . . . . 86 Equivalent . . . . . . . . . . . . . . . . . . . . . . . . . . . 9\nHomotopy type . . . . . . . . . . . . . . . . . . . . . . . . . 77 Metric space . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8\nMonomorphism . . . . . . . . . . . . . . . . . . . . . . . . 107\nI\nIdentity element . . . . . . . . . . . . . . . . . . . . . . . . 102\nN\nImage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 107 Neighborhood\nInduced homomorphism . . . . . . . . . . . . . . . . . 72 Evenly covered . . . . . . . . . . . . . . . . . . . . . 80\nInterior . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19 Metric space . . . . . . . . . . . . . . . . . . . . . . . . 10\nInterior point . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10 Topological space . . . . . . . . . . . . . . . . . . . 15\nInverse element . . . . . . . . . . . . . . . . . . . . . . . . 102 Normal subgroup . . . . . . . . . . . . . . . . . . . . . . 104\nIsomorphism . . . . . . . . . . . . . . . . . . . . . . . . . . 108 Nullhomotopy . . . . . . . . . . . . . . . . . . . . . . . . . . 60\nK\nO\nKernel . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 107\nOpen ball . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9\nOpen cover . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52\nL Open map . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39\nOpen set\nLebesgue number . . . . . . . . . . . . . . . . . . . . . . . 84 Metric space . . . . . . . . . . . . . . . . . . . . . . . . 10\nLebesgue number lemma . . . . . . . . . . . . . . . . . 84 Subspace . . . . . . . . . . . . . . . . . . . . . . . . . . . 29\nLeft coset . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 104 Topological space . . . . . . . . . . . . . . . . . . . 13\nLifting . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 84 Order of a group . . . . . . . . . . . . . . . . . . . . . . . 102\nLifting correspondence . . . . . . . . . . . . . . . . . . 87\nLocal homeomorphism . . . . . . . . . . . . . . . . . . 81\nLower limit topology on ℝ . . . . . . . . . . . . . . . 27 P\nPasting lemma . . . . . . . . . . . . . . . . . . . . . . . . . . 61\nM Path . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49\nComponent . . . . . . . . . . . . . . . . . . . . . . . . . 62\nMap . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98 Constant . . . . . . . . . . . . . . . . . . . . . . . . . . . 66\nIndex 113\nLoop . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 70 Non-empty . . . . . . . . . . . . . . . . . . . . . . . . . 95\nProduct . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65 Proper subset . . . . . . . . . . . . . . . . . . . . . . . 95\nReverse . . . . . . . . . . . . . . . . . . . . . . . . . . . . 66 Singleton . . . . . . . . . . . . . . . . . . . . . . . . . . . 95\nPath homotopy . . . . . . . . . . . . . . . . . . . . . . . . . . 63 Subset . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 95\nPath homotopy class . . . . . . . . . . . . . . . . . . . . . 65 Simply connected space . . . . . . . . . . . . . . . . . . 72\nPath-connected space . . . . . . . . . . . . . . . . . . . . 49 Standard topology on ℝ . . . . . . . . . . . . . . . . . . 27\nPath-connected subspace . . . . . . . . . . . . . . . . . 58 Straight-line homotopy . . . . . . . . . . . . . . . . . . . 61\nPreimage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11 Subbasis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25\nProduct topology . . . . . . . . . . . . . . . . . . . . . . . . 33 Subcover . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52\nProper map . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 58 Subgroup . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 103\nSubspace topology . . . . . . . . . . . . . . . . . . . . . . 29\nQ\nT\nQuotient map . . . . . . . . . . . . . . . . . . . . . . . . . . . 38\nQuotient space . . . . . . . . . . . . . . . . . . . . . . . . . . 38 Topological property . . . . . . . . . . . . . . . . . . . . 17\nQuotient topology . . . . . . . . . . . . . . . . . . . . . . . 38 Topological space . . . . . . . . . . . . . . . . . . . . . . . 13\nTopologist sine curve . . . . . . . . . . . . . . . . . . . . 50\nTopology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13\nR Cofinite . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\nComparable . . . . . . . . . . . . . . . . . . . . . . . . 14\nReal projective space . . . . . . . . . . . . . . . . . . . . 42 Discrete . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\nRetract . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75 Indiscrete . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\nRetraction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75 Metric . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13\nRight coset . . . . . . . . . . . . . . . . . . . . . . . . . . . . 104 Total space . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 80\nTrivial homomorphism . . . . . . . . . . . . . . . . . 107\nTube . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54\nS Tube lemma . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54\nTychonoff theorem . . . . . . . . . . . . . . . . . . . . . . 56\nSeparation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45\nSet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 95\nArbitrary intersection . . . . . . . . . . . . . . . . 97 U\nArbitrary union . . . . . . . . . . . . . . . . . . . . . 97\nCartesian product . . . . . . . . . . . . . . . . . . . 98 Unique path lifting property . . . . . . . . . . . . . . 85\nCollection of sets . . . . . . . . . . . . . . . . . . . . 97 Universal covering space . . . . . . . . . . . . . . . . . 82\nDisjoint union . . . . . . . . . . . . . . . . . . . . . 100 Universal property\nEmpty set . . . . . . . . . . . . . . . . . . . . . . . . . . 95 Product topology . . . . . . . . . . . . . . . . . . . . 35\nFamily of sets . . . . . . . . . . . . . . . . . . . . . . . 97 Quotient topology . . . . . . . . . . . . . . . . . . . 42\nIndex set . . . . . . . . . . . . . . . . . . . . . . . . . . . 97 Subspace topology . . . . . . . . . . . . . . . . . . 32",
         "formal_statement": null,
         "definition": null,
@@ -14435,22 +14566,6 @@
         "color": "#DB2777",
         "tint": "#FDEEF5",
         "border": "#F4C0D7"
-      },
-      {
-        "id": "examples",
-        "label": "Examples",
-        "order": 8,
-        "color": "#EAB308",
-        "tint": "#FBF6E1",
-        "border": "#EFDF8E"
-      },
-      {
-        "id": "exercises",
-        "label": "Exercises",
-        "order": 9,
-        "color": "#64748B",
-        "tint": "#F1F5F9",
-        "border": "#CBD5E1"
       }
     ]
   },
