@@ -53,6 +53,7 @@ export const TopoNodeSchema = z.object({
   formalStatement: OptionalTextSchema,
   mathematicalFormula: OptionalTextSchema,
   explanation: OptionalTextSchema,
+  solution: OptionalTextSchema,
   statementDependencies: StringArraySchema,
   proofDependencies: StringArraySchema,
   tags: StringArraySchema,
@@ -158,6 +159,7 @@ export const FieldItemSchema = z
     formal_statement: z.string().nullable().optional(),
     definition: z.string().nullable().optional(),
     intuition: z.string().nullable().optional(),
+    solution: z.string().nullable().optional(),
     notation: z
       .union([z.string(), z.array(z.string())])
       .nullable()

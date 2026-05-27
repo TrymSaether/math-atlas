@@ -85,6 +85,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
 
   const formal = node.formalStatement.trim();
   const intuition = node.explanation.trim() || node.originalText.trim();
+  const solution = node.solution.trim();
 
   return (
     <>
@@ -152,6 +153,16 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
               }}
             >
               <MathText text={formal} />
+            </div>
+            <Divider />
+          </>
+        )}
+
+        {solution && (
+          <>
+            <SectionHeader icon={<StickyNote className="h-[15px] w-[15px]" />} title="Solution" />
+            <div className="text-[13.5px] leading-[1.6]" style={{ color: "var(--fg-1)" }}>
+              <MathText text={solution} />
             </div>
             <Divider />
           </>

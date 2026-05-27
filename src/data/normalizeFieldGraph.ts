@@ -111,6 +111,7 @@ export function normalizeFieldGraph(input: FieldJson): GraphData {
       formalStatement: formalText(item),
       mathematicalFormula: formulaFromNotation(item),
       explanation: item.intuition ?? "",
+      solution: item.solution ?? "",
       statementDependencies: deps,
       proofDependencies: [],
       tags: item.metadata?.tags ?? [],
