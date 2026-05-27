@@ -18,6 +18,7 @@ import { getDomainTone } from "../lib/colors";
 import { KIND_LABEL, type GraphNode } from "../types";
 
 const USED_BY_INITIAL = 8;
+const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample", "application", "conjecture"]);
 
 export function NodePanel() {
   const mapId = useStore((s) => s.mapId);
@@ -74,7 +75,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
       }
       return [...ids].filter((cid) => {
         const n = map.nodeById.get(cid);
-        return n && /example/.test(n.kind);
+        return n && RELATED_CASE_KINDS.has(n.kind);
       });
     },
     [map, node.id],
@@ -92,7 +93,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
     () =>
       [...new Set(allConsequences)].filter((cid) => {
         const n = map.nodeById.get(cid);
-        return n && !/example/.test(n.kind) && n.kind !== "exercise";
+        return n && !RELATED_CASE_KINDS.has(n.kind) && n.kind !== "exercise";
       }),
     [allConsequences, map],
   );
@@ -238,7 +239,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
 
         <SectionHeader
           icon={<Beaker className="h-[15px] w-[15px]" />}
-          title="Examples"
+          title="Related cases"
           count={examples.length}
           expanded={openExamples}
           onToggle={() => setOpenExamples((v) => !v)}
@@ -246,7 +247,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
         {openExamples && (
           <div className="pb-1">
             {examples.length === 0 ? (
-              <Empty>No worked examples linked.</Empty>
+              <Empty>No related cases linked.</Empty>
             ) : (
               examples.map((rid) => (
                 <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} dotColor="#E0A92F" />
