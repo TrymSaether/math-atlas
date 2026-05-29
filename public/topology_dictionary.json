@@ -211,7 +211,7 @@
     "gloss": "Continuity is preserved under composition — the property that makes topological spaces and continuous maps into a category.",
     "example": "Used repeatedly, e.g. to show that being homeomorphic is transitive (Thm. 3.23).",
     "related": ["continuous-map-top", "homeomorphism", "composition-maps"],
-    "diagramPath": "/atlas-assets/diagrams/composition-continuous.svg"
+    "diagramPath": "/atlas-assets/diagrams/composition-continuous-maps.svg"
   },
   {
     "id": "composition-maps",
@@ -265,7 +265,7 @@
     "kind": "Definition",
     "ref": "Def. 3.17",
     "chapter": "3",
-    "statement": "$f\\colon X\\to Y$ is \\textbf{continuous at} $x$ if for every neighborhood $V$ of $f(x)$ there is a neighborhood $U$ of $x$ with $f(U)\\subseteq V$.",
+    "statement": "Let $X$ and $Y$ be topological spaces, let $x\\in X$, and let $f\\colon X\\to Y$. The map $f$ is \\textbf{continuous at} $x$ if for every neighborhood $V$ of $f(x)$ there is a neighborhood $U$ of $x$ such that $f(U)\\subseteq V$. Equivalently, $$\\begin{aligned} f\\text{ is continuous at }x \\quad \\Longleftrightarrow\\quad \\forall V\\in\\mathcal{N}_Y(f(x))\\;\\exists U\\in\\mathcal{N}_X(x)\\text{ such that } f(U)\\subseteq V. \\end{aligned}$$",
     "gloss": "Local continuity stated with neighborhoods. A map is continuous iff it is continuous at every point (Thm. 3.18).",
     "example": "Directly generalises the metric neighborhood criterion of Thm. 2.12.",
     "related": [
@@ -360,9 +360,9 @@
     "kind": "Definition",
     "ref": "Def. 3.11",
     "chapter": "3",
-    "statement": "$f\\colon X\\to Y$ between topological spaces is \\textbf{continuous} if for every open $V\\subseteq Y$ the preimage $f^{-1}(V)$ is open in $X$.",
-    "gloss": "The definition of continuity in full generality: preimages of open sets are open. It needs only the open-set structure, no metric.",
-    "example": "Constant maps are continuous (preimages are $\\varnothing$ or $X$). Every map from a discrete space is continuous.",
+    "statement": "Let $X$ and $Y$ be topological spaces. A map $f\\colon X\\to Y$ is \\textbf{continuous} if preimages of open sets are open; equivalently, $$\\begin{aligned} f\\colon X\\to Y \\text{ is continuous} &\\iff \\forall V\\subseteq Y,\\\\ &\\quad V\\text{ is open in }Y \\Rightarrow f^{-1}(V)\\text{ is open in }X, \\\\ f^{-1}(V) &= \\{x\\in X \\mid f(x)\\in V\\}. \\end{aligned} $$",
+    "gloss": "Continuity means that open regions in the target pull back to open regions in the domain. This is the full topological definition: it uses only the open-set structure, not distances, balls, or a metric.",
+    "example": "Every constant map is continuous, since the preimage of an open set is either $\\varnothing$ or all of $X$. Every map from a discrete topological space is continuous, since every subset of the domain is open.",
     "related": [
       "continuity-preimage-metric",
       "composition-continuous",
@@ -984,7 +984,7 @@
     "kind": "Definition",
     "ref": "Def. 3.9",
     "chapter": "3",
-    "statement": "Let $X$ be a topological space with topology $\tau$, and let $x\\in X$. In these notes, $$\\begin{aligned} U \\text{ is a neighborhood of } x &\\iff x\\in U \\text{ and } U \\text{ is open in } X,\\ &\\iff x\\in U \\text{ and } U\\in\\tau. \\end{aligned}$$",
+    "statement": "Let $(X,\\mathcal{T})$ be a topological space, and let $x\\in X$. In these notes, $$\\begin{aligned} U \\text{ is a neighborhood of } x &\\iff x\\in U \\text{ and } U \\text{ is open in } X \\\\ &\\iff x\\in U \\text{ and } U\\in\\mathcal{T}. \\end{aligned}$$",
     "gloss": "In these notes, a neighborhood is an open set containing the point. Under the broader convention, this is called an open neighborhood. A set is open iff it is a neighborhood of each of its points (Thm. 3.10).",
     "example": "In $\\mathbb{R}$ with the standard topology, $(-1,1)$ is a neighborhood of $0$ because $0\\in(-1,1)$ and $(-1,1)$ is open.",
     "related": [
@@ -993,6 +993,24 @@
       "continuity-point-top"
     ],
     "diagramPath": "/atlas-assets/diagrams/neighborhood-top.svg"
+  },
+  {
+    "id": "neighborhood-characterization-open",
+    "term": "Neighborhood characterization of open sets",
+    "kind": "Theorem",
+    "ref": "Thm. 3.10",
+    "chapter": "3",
+    "statement": "Let $(X,\\mathcal{T})$ be a topological space and let $U\\subseteq X$. Then $$\\begin{aligned} U\\in\\mathcal{T} &\\iff \\forall x\\in U,\\ \\exists U_x\\in\\mathcal{T}\\text{ such that }x\\in U_x\\subseteq U \\\\ &\\iff U=\\bigcup_{x\\in U}U_x\\text{ for some choice of open sets }U_x\\in\\mathcal{T}\\text{ with }x\\in U_x\\subseteq U. \\end{aligned}$$ Equivalently, $U$ is open exactly when every point of $U$ has an open neighborhood contained in $U$.",
+    "gloss": "A set is open exactly when every point inside it has some open neighborhood still contained in the set. If $U$ is already open, choose $U_x=U$ for every $x\\in U$. Conversely, if such neighborhoods $U_x$ exist, then $U=\\bigcup_{x\\in U}U_x$, so $U$ is open.",
+    "example": "In $\\mathbb{R}$ with the standard topology, $(0,1)$ is open because every point $x\\in(0,1)$ has a smaller open interval around it contained in $(0,1)$. The set $[0,1]$ is not open in $\\mathbb{R}$ because $0$ has no open neighborhood contained in $[0,1]$.",
+    "related": [
+      "neighborhood-top",
+      "topological-space",
+      "open-set",
+      "metric-topology",
+      "basis"
+    ],
+    "diagramPath": "/atlas-assets/diagrams/neighborhood-characterization-open.svg"
   },
   {
     "id": "normal-subgroup",
@@ -1350,7 +1368,7 @@
     "kind": "Definition",
     "ref": "Def. 3.1",
     "chapter": "3",
-    "statement": "A \\textbf{topological space} is a pair $(X,\\mathcal{T})$, where $X$ is a set and $\\mathcal{T}\\subseteq\\mathcal{P}(X)$ is a collection of subsets of $X$, called the \\textbf{open sets}, satisfying $$\\begin{aligned} \\textbf{(T1)}&\\quad \\varnothing, X\\in\\mathcal{T},\\\\ \\textbf{(T2)}&\\quad \\{U_i\\}_{i\\in I}\\subseteq\\mathcal{T}\\implies \\bigcup_{i\\in I}U_i\\in\\mathcal{T},\\\\ \\textbf{(T3)}&\\quad U_1,\\dots,U_n\\in\\mathcal{T}\\implies \\bigcap_{k=1}^n U_k\\in\\mathcal{T}. \\end{aligned}$$ The collection $\\mathcal{T}$ is called a \\textbf{topology} on $X$.",
+    "statement": "A \\textbf{topological space} is a pair $(X,\\mathcal{T})$, where $X$ is a set and $\\mathcal{T}\\subseteq\\mathcal{P}(X)$ is a collection of subsets of $X$, called the \\textbf{open sets}, satisfying $$\\begin{aligned} \\textbf{(T1)}&\\quad \\varnothing, X\\in\\mathcal{T},\\\\ \\textbf{(T2)}&\\quad \\text{if }\\{U_i\\}_{i\\in I}\\subseteq\\mathcal{T},\\text{ then }\\bigcup_{i\\in I}U_i\\in\\mathcal{T},\\\\ \\textbf{(T3)}&\\quad \\text{if }U_1,\\dots,U_n\\in\\mathcal{T},\\text{ then }\\bigcap_{k=1}^n U_k\\in\\mathcal{T}. \\end{aligned}$$ The collection $\\mathcal{T}$ is called a \\textbf{topology} on $X$. Equivalently, $$\\operatorname{Top}(X)=\\left\\{\\mathcal{T}\\subseteq\\mathcal{P}(X)\\;\\middle|\\;\\begin{array}{l} \\varnothing,X\\in\\mathcal{T},\\\\ \\forall I,\\ \\forall\\{U_i\\}_{i\\in I}\\subseteq\\mathcal{T},\\ \\bigcup_{i\\in I}U_i\\in\\mathcal{T},\\\\ \\forall n\\in\\mathbb{N},\\ \\forall U_1,\\dots,U_n\\in\\mathcal{T},\\ \\bigcap_{k=1}^nU_k\\in\\mathcal{T} \\end{array}\\right\\}.$$ Thus a topological space is any pair $(X,\\mathcal{T})$ with $\\mathcal{T}\\in\\operatorname{Top}(X)$.",
     "gloss": "The central object of topology: a set together with a choice of which subsets count as open. The axioms are asymmetric: arbitrary unions of open sets are open, but only finite intersections of open sets are required to be open.",
     "example": "Every metric space is a topological space via its metric topology (Thm. 3.2). On $\\{a,b,c\\}$, there are $29$ distinct topologies.",
     "related": [
@@ -1361,6 +1379,25 @@
       "basis"
     ],
     "diagramPath": "/atlas-assets/diagrams/topological-space.svg"
+  },
+  {
+    "id": "metric-topology",
+    "term": "Metric topology",
+    "kind": "Theorem",
+    "ref": "Thm. 3.2",
+    "chapter": "3",
+    "statement": "Let $(X,d)$ be a metric space. Define $$\\mathcal{T}_d=\\left\\{U\\subseteq X\\;\\middle|\\;\\forall x\\in U,\\ \\exists r>0\\text{ such that }B(x;r)\\subseteq U\\right\\}.$$ Then $\\mathcal{T}_d$ is a topology on $X$. Equivalently, every metric space $(X,d)$ canonically determines a topological space $(X,\\mathcal{T}_d)$, where the open sets are exactly those subsets whose every point contains a sufficiently small metric ball inside the subset.",
+    "gloss": "A metric gives a notion of distance, and distance gives a notion of openness: a set is open when every one of its points has some room around it that stays inside the set. The topology axioms follow because unions preserve local room, while finite intersections preserve local room by taking the smallest available radius.",
+    "example": "In $\\mathbb{R}$ with $d(x,y)=|x-y|$, the metric topology is the usual topology generated by open intervals. In a discrete metric space, every subset is open, so the metric topology is the discrete topology.",
+    "related": [
+      "topological-space",
+      "open-closed-set-metric",
+      "open-ball",
+      "metric-space",
+      "discrete-topology",
+      "basis"
+    ],
+    "diagramPath": "/atlas-assets/diagrams/metric-topology.svg"
   },
   {
     "id": "generated-topology",

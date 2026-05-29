@@ -1,0 +1,56 @@
+<svg viewBox="0 0 360 190" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader', Georgia, serif" role="img">
+    <defs>
+        <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#2a2520)" />
+        </marker>
+    </defs>
+
+    <!-- spaces -->
+    <ellipse cx="105" cy="99" rx="65" ry="58" fill="var(--dia-paper,#f4efe6)" stroke="var(--dia-ink,#2a2520)"
+        stroke-width="1.45" />
+
+    <ellipse cx="255" cy="99" rx="65" ry="58" fill="var(--dia-paper,#f4efe6)" stroke="var(--dia-ink,#2a2520)"
+        stroke-width="1.45" />
+
+    <!-- neighborhoods -->
+    <circle cx="105" cy="101" r="24" fill="var(--dia-fill,#e7ddc9)" fill-opacity="0.42" stroke="var(--dia-acc,#a8431d)"
+        stroke-width="1.25" stroke-dasharray="4 4" />
+
+    <circle cx="255" cy="101" r="33" fill="var(--dia-fill,#e7ddc9)" fill-opacity="0.42" stroke="var(--dia-acc,#a8431d)"
+        stroke-width="1.25" stroke-dasharray="4 4" />
+
+    <!-- image of U inside V -->
+    <circle cx="248" cy="103" r="18" fill="none" stroke="var(--dia-acc,#a8431d)" stroke-width="1.15"
+        stroke-dasharray="3 3" />
+
+    <!-- points -->
+    <circle cx="105" cy="101" r="3.3" fill="var(--dia-ink,#2a2520)" />
+
+    <circle cx="248" cy="103" r="3.3" fill="var(--dia-ink,#2a2520)" />
+
+    <!-- map -->
+    <path d="M172,98 C193,80 217,80 238,98" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.5"
+        marker-end="url(#arrow)" />
+
+    <!-- space labels -->
+    <text x="105" y="32" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">X</text>
+
+    <text x="255" y="32" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">Y</text>
+
+    <!-- map label -->
+    <text x="205" y="78" font-size="13" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">f</text>
+
+    <!-- point labels -->
+    <text x="95" y="94" font-size="12" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">x</text>
+
+    <text x="274" y="93" font-size="12" fill="var(--dia-ink,#2a2520)" text-anchor="middle"
+        font-style="italic">f(x)</text>
+
+    <!-- neighborhood labels -->
+    <text x="105" y="138" font-size="13" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">U</text>
+
+    <text x="255" y="145" font-size="13" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">V</text>
+
+    <text x="248" y="122" font-size="11" fill="var(--dia-acc,#a8431d)" text-anchor="middle"
+        font-style="italic">f(U)</text>
+</svg>
