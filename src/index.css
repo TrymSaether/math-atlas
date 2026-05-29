@@ -303,18 +303,22 @@ button { font-family: inherit; }
   opacity: 0;
 }
 .react-flow__handle.graph-node-handle {
-  width: 10px !important;
-  height: 10px !important;
+  width: 8px !important;
+  height: 8px !important;
   background: var(--handle-color) !important;
-  border: 2px solid var(--surface) !important;
-  opacity: 0.92 !important;
+  border: 1.5px solid var(--surface) !important;
+  opacity: 0 !important;
+  transition: opacity 0.15s !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
 }
+.react-flow__node:hover .react-flow__handle.graph-node-handle {
+  opacity: 0.75 !important;
+}
 .react-flow__handle.graph-node-handle-left {
-  left: -5px !important;
+  left: -4px !important;
 }
 .react-flow__handle.graph-node-handle-right {
-  right: -5px !important;
+  right: -4px !important;
 }
 .react-flow__attribution { display: none; }
 

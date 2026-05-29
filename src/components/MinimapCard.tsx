@@ -5,9 +5,9 @@ import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, type DomainBounds } from "../lib/a
 import { getDomainTone } from "../lib/colors";
 import type { GraphNode } from "../types";
 
-const W = 210;
-const H = 132;
-const PAD = 10;
+const MAX_W = 148;
+const MAX_H = 220;
+const PAD = 8;
 
 interface MiniPoint {
   id: string;
@@ -70,11 +70,15 @@ export function MinimapCard({
 
     const spanX = Math.max(maxX - minX, 1);
     const spanY = Math.max(maxY - minY, 1);
-    const scale = Math.min((W - PAD * 2) / spanX, (H - PAD * 2) / spanY);
-    const offX = PAD + ((W - PAD * 2) - spanX * scale) / 2;
-    const offY = PAD + ((H - PAD * 2) - spanY * scale) / 2;
+    const scale = Math.min((MAX_W - PAD * 2) / spanX, (MAX_H - PAD * 2) / spanY);
+    const W = Math.ceil(spanX * scale + PAD * 2);
+    const H = Math.ceil(spanY * scale + PAD * 2);
+    const offX = PAD;
+    const offY = PAD;
 
     return {
+      W,
+      H,
       toMini: (x: number, y: number) => ({
         x: offX + (x - minX) * scale,
         y: offY + (y - minY) * scale,
@@ -88,6 +92,7 @@ export function MinimapCard({
 
   if (!layout) return null;
 
+  const { W, H } = layout;
   const topLeft = layout.toMini(-viewportX / zoom, -viewportY / zoom);
   const bottomRight = layout.toMini((-viewportX + paneW) / zoom, (-viewportY + paneH) / zoom);
 
@@ -107,6 +112,7 @@ export function MinimapCard({
         background: "color-mix(in srgb, var(--surface) 86%, transparent)",
         borderColor: "var(--border)",
         backdropFilter: "blur(12px) saturate(1.15)",
+        transition: "right 0.22s cubic-bezier(0.2,0.7,0.2,1)",
       }}
     >
       <svg

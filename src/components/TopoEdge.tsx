@@ -44,10 +44,10 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
         <marker
           id={markerId}
           viewBox="0 0 10 10"
-          refX="9"
+          refX="7"
           refY="5"
-          markerWidth={highlight ? 7 : 6}
-          markerHeight={highlight ? 7 : 6}
+          markerWidth={highlight ? 6 : 5}
+          markerHeight={highlight ? 6 : 5}
           orient="auto-start-reverse"
         >
           <path

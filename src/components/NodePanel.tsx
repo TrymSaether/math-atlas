@@ -10,6 +10,7 @@ import {
   StickyNote,
   ChevronDown,
 } from "lucide-react";
+
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
 import { MathText } from "../lib/katex";
@@ -108,22 +109,14 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
 
   return (
     <>
-      <div className="flex items-center gap-2 px-5 pt-4 pb-2">
-        <span
-          className="font-mono text-[11.5px] font-semibold tracking-wide"
-          style={{ color: tone.color }}
-          title={node.id}
-        >
-          {short(node.id)}
-        </span>
-        <span className="ml-auto" />
+      <div className="flex items-center justify-end px-4 pt-3 pb-1">
         <button
           onClick={onClose}
-          className="flex h-8 w-8 items-center justify-center rounded-lg"
-          style={{ color: "var(--fg-2)" }}
+          className="flex h-7 w-7 items-center justify-center rounded-lg"
+          style={{ color: "var(--fg-3)" }}
           aria-label="Close"
         >
-          <X className="h-4 w-4" />
+          <X className="h-3.5 w-3.5" />
         </button>
       </div>
 
@@ -187,38 +180,35 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
           </>
         )}
 
-        <SectionHeader
-          icon={<LinkIcon className="h-[15px] w-[15px]" />}
-          title="Depends on"
-          count={prereqIds.length}
-          expanded={openDeps}
-          onToggle={() => setOpenDeps((v) => !v)}
-        />
-        {openDeps && (
-          <div className="pb-1">
-            {prereqIds.length === 0 ? (
-              <Empty>No upstream dependencies recorded.</Empty>
-            ) : (
-              prereqIds.map((rid) => <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />)
+        {prereqIds.length > 0 && (
+          <>
+            <SectionHeader
+              icon={<LinkIcon className="h-[15px] w-[15px]" />}
+              title="Depends on"
+              count={prereqIds.length}
+              expanded={openDeps}
+              onToggle={() => setOpenDeps((v) => !v)}
+            />
+            {openDeps && (
+              <div className="pb-1">
+                {prereqIds.map((rid) => <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />)}
+              </div>
             )}
-          </div>
+            <Divider />
+          </>
         )}
 
-        <Divider />
-
-        <SectionHeader
-          icon={<ArrowUpRight className="h-[15px] w-[15px]" />}
-          title="Used by"
-          count={usedBy.length}
-          expanded={openUsed}
-          onToggle={() => setOpenUsed((v) => !v)}
-        />
-        {openUsed && (
-          <div className="pb-1">
-            {usedBy.length === 0 ? (
-              <Empty>Nothing downstream yet.</Empty>
-            ) : (
-              <>
+        {usedBy.length > 0 && (
+          <>
+            <SectionHeader
+              icon={<ArrowUpRight className="h-[15px] w-[15px]" />}
+              title="Used by"
+              count={usedBy.length}
+              expanded={openUsed}
+              onToggle={() => setOpenUsed((v) => !v)}
+            />
+            {openUsed && (
+              <div className="pb-1">
                 {visibleUsed.map((rid) => (
                   <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />
                 ))}
@@ -231,59 +221,53 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
                     … and {hiddenUsedCount} more
                   </button>
                 )}
-              </>
+              </div>
             )}
-          </div>
+            <Divider />
+          </>
         )}
 
-        <Divider />
-
-        <SectionHeader
-          icon={<Beaker className="h-[15px] w-[15px]" />}
-          title="Related cases"
-          count={examples.length}
-          expanded={openExamples}
-          onToggle={() => setOpenExamples((v) => !v)}
-        />
-        {openExamples && (
-          <div className="pb-1">
-            {examples.length === 0 ? (
-              <Empty>No related cases linked.</Empty>
-            ) : (
-              examples.map((rid) => (
-                <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />
-              ))
+        {examples.length > 0 && (
+          <>
+            <SectionHeader
+              icon={<Beaker className="h-[15px] w-[15px]" />}
+              title="Related cases"
+              count={examples.length}
+              expanded={openExamples}
+              onToggle={() => setOpenExamples((v) => !v)}
+            />
+            {openExamples && (
+              <div className="pb-1">
+                {examples.map((rid) => (
+                  <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />
+                ))}
+              </div>
             )}
-          </div>
+            <Divider />
+          </>
         )}
 
-        <Divider />
-
-        <SectionHeader
-          icon={<StickyNote className="h-[15px] w-[15px]" />}
-          title="Exercises"
-          count={exercises.length}
-          expanded={openExercises}
-          onToggle={() => setOpenExercises((v) => !v)}
-        />
-        {openExercises && (
-          <div className="pb-1">
-            {exercises.length === 0 ? (
-              <Empty>No exercises linked.</Empty>
-            ) : (
-              exercises.map((rid) => (
-                <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />
-              ))
+        {exercises.length > 0 && (
+          <>
+            <SectionHeader
+              icon={<StickyNote className="h-[15px] w-[15px]" />}
+              title="Exercises"
+              count={exercises.length}
+              expanded={openExercises}
+              onToggle={() => setOpenExercises((v) => !v)}
+            />
+            {openExercises && (
+              <div className="pb-1">
+                {exercises.map((rid) => (
+                  <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />
+                ))}
+              </div>
             )}
-          </div>
+            <Divider />
+          </>
         )}
 
-        <Divider />
-
-        <SectionHeader icon={<StickyNote className="h-[15px] w-[15px]" />} title="Notes" />
-        <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[12px]">
-          <dt style={{ color: "var(--fg-3)" }}>Domain</dt>
-          <dd style={{ color: "var(--fg-2)" }}>{domain?.label ?? node.topicCluster}</dd>
+        <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[12px] pb-1">
           <dt style={{ color: "var(--fg-3)" }}>Field</dt>
           <dd style={{ color: "var(--fg-2)" }}>{node.chapter}</dd>
           {node.tags.length > 0 && (
@@ -292,10 +276,6 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
               <dd style={{ color: "var(--fg-2)" }}>{node.tags.join(", ")}</dd>
             </>
           )}
-          <dt style={{ color: "var(--fg-3)" }}>ID</dt>
-          <dd className="truncate font-mono text-[11px]" style={{ color: "var(--fg-3)" }} title={node.id}>
-            {node.id}
-          </dd>
         </dl>
       </div>
     </>
@@ -432,7 +412,3 @@ function RefRow({
   );
 }
 
-function short(id: string): string {
-  if (id.length <= 18) return id;
-  return id.slice(0, 16) + "…";
-}
