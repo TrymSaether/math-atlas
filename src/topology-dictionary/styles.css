@@ -1,5 +1,5 @@
 :root,
-:root[data-theme="light"] {
+:root[data-theme="manuscript"] {
   color-scheme: light;
 
   --paper: #f4efe6;
@@ -40,7 +40,7 @@
   --focus: 2px solid var(--acc2);
 }
 
-:root[data-theme="dark"] {
+:root[data-theme="nocturne"] {
   color-scheme: dark;
 
   --paper: #16140f;
@@ -51,6 +51,37 @@
   --acc: #e08a4f;
   --acc2: #5bc4be;
   --gold: #d9b54e;
+  --shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.7);
+}
+
+/* Cool-slate themes shared with the atlas, mapped onto the dictionary's tokens
+   so the two pages stay visually unified under one theme picker. */
+:root[data-theme="paper"] {
+  color-scheme: light;
+
+  --paper: #f1f5f9;
+  --panel: #ffffff;
+  --ink: #0f172a;
+  --soft: #475569;
+  --line: #e2e8f0;
+  --acc: #2563eb;
+  --acc2: #0d9488;
+  --gold: #eab308;
+  --shadow: 0 1px 0 rgba(15, 23, 42, 0.04),
+    0 10px 30px -18px rgba(15, 23, 42, 0.4);
+}
+
+:root[data-theme="chalkboard"] {
+  color-scheme: dark;
+
+  --paper: #0e1322;
+  --panel: #161d2f;
+  --ink: #eceef4;
+  --soft: #a8b0c0;
+  --line: rgba(255, 255, 255, 0.1);
+  --acc: #58c4dd;
+  --acc2: #5cd0b3;
+  --gold: #ffd93d;
   --shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.7);
 }
 

@@ -1,37 +1,18 @@
-import { STORAGE_THEME_KEY } from "./constants";
+import { applyTheme, readStoredTheme, THEMES } from "../lib/themes";
 
-type Theme = "light" | "dark";
-
-function resolveTheme(value: string | null): Theme {
-  if (value === "light" || value === "dark") return value;
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
-export function applyTheme(theme: Theme): void {
-  document.documentElement.dataset.theme = theme;
-  document.documentElement.classList.toggle("dark", theme === "dark");
-}
-
+/**
+ * The dictionary shares the atlas theme registry (src/lib/themes.ts). The theme
+ * button cycles through the same set, and the choice persists under the shared
+ * storage key, so the two pages stay in sync.
+ */
 export function initTheme(button: HTMLButtonElement): void {
-  let stored: string | null = null;
-  try {
-    stored = localStorage.getItem(STORAGE_THEME_KEY);
-  } catch {
-    stored = null;
-  }
-
-  applyTheme(resolveTheme(stored));
+  applyTheme(readStoredTheme());
 
   button.addEventListener("click", () => {
-    const current = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
-    const next: Theme = current === "dark" ? "light" : "dark";
-
-    applyTheme(next);
-
-    try {
-      localStorage.setItem(STORAGE_THEME_KEY, next);
-    } catch {
-      // Ignore private-mode/quota failures.
-    }
+    const current = document.documentElement.dataset.theme ?? THEMES[0].id;
+    const index = THEMES.findIndex((t) => t.id === current);
+    const next = THEMES[(index + 1) % THEMES.length];
+    applyTheme(next.id);
+    button.setAttribute("title", `Theme: ${next.label}`);
   });
 }

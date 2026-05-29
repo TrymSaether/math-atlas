@@ -1,17 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  Search,
-  SlidersHorizontal,
-  Sun,
-  Moon,
-  ChevronDown,
-  BookOpen,
-  Settings2,
-  Spline,
-  PencilLine,
-} from "lucide-react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Search, SlidersHorizontal, ChevronDown, BookOpen, Settings2 } from "lucide-react";
 import { MAPS, type MapId } from "../data";
 import { useStore, type EdgeStyle } from "../store";
+import { THEMES } from "../lib/themes";
 import { cn } from "../lib/utils";
 import { getDomainTone } from "../lib/colors";
 import { KIND_LABEL } from "../types";
@@ -307,65 +298,198 @@ function FilterPopover() {
   );
 }
 
-function ZoomControls() {
-  const rf = useReactFlow();
+function DisplayButton() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [open]);
+
   return (
-    <div
-      className="flex h-10 items-center overflow-hidden rounded-pill border"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        boxShadow: "var(--shadow-1)",
-      }}
-    >
+    <div className="relative" ref={ref}>
       <button
-        onClick={() => rf.zoomOut({ duration: 200 })}
-        className="flex h-10 w-10 items-center justify-center"
-        style={{ color: "var(--fg-2)" }}
-        aria-label="Zoom out"
+        onClick={() => setOpen((o) => !o)}
+        className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
+        style={{
+          background: "var(--surface)",
+          borderColor: "var(--border)",
+          color: open ? "var(--accent)" : "var(--fg-2)",
+          boxShadow: "var(--shadow-1)",
+        }}
+        aria-label="Display settings"
+        aria-expanded={open}
+        title="Display"
       >
-        <Minus className="h-4 w-4" />
+        <Settings2 className="h-4 w-4" />
       </button>
-      <span className="h-5 w-px" style={{ background: "var(--border)" }} />
-      <button
-        onClick={() => rf.zoomIn({ duration: 200 })}
-        className="flex h-10 w-10 items-center justify-center"
-        style={{ color: "var(--fg-2)" }}
-        aria-label="Zoom in"
-      >
-        <Plus className="h-4 w-4" />
-      </button>
-      <span className="h-5 w-px" style={{ background: "var(--border)" }} />
-      <button
-        onClick={() => rf.fitView({ padding: 0.18, duration: 400 })}
-        className="flex h-10 w-10 items-center justify-center"
-        style={{ color: "var(--fg-2)" }}
-        aria-label="Fit to view"
-      >
-        <Locate className="h-4 w-4" />
-      </button>
+      {open && <DisplayPopover />}
     </div>
   );
 }
 
-function ThemeToggle() {
-  const theme = useStore((s) => s.theme);
-  const toggle = useStore((s) => s.toggleTheme);
-  const isDark = theme === "dark";
+function SettingRow({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
+  return (
+    <div className="flex items-center justify-between gap-3 py-1.5">
+      <div className="min-w-0">
+        <div className="text-[12.5px] font-medium" style={{ color: "var(--fg-1)" }}>
+          {label}
+        </div>
+        {hint && (
+          <div className="text-[11px]" style={{ color: "var(--fg-3)" }}>
+            {hint}
+          </div>
+        )}
+      </div>
+      <div className="shrink-0">{children}</div>
+    </div>
+  );
+}
+
+function Segmented<T extends string>({
+  value,
+  options,
+  onChange,
+}: {
+  value: T;
+  options: { value: T; label: string }[];
+  onChange: (v: T) => void;
+}) {
+  return (
+    <div
+      className="inline-flex items-center gap-0.5 rounded-pill border p-0.5"
+      style={{ background: "var(--surface-2)", borderColor: "var(--border)" }}
+    >
+      {options.map((o) => {
+        const active = o.value === value;
+        return (
+          <button
+            key={o.value}
+            onClick={() => onChange(o.value)}
+            className="rounded-pill px-2.5 py-1 text-[11.5px] font-medium transition-colors"
+            style={{
+              background: active ? "var(--surface)" : "transparent",
+              color: active ? "var(--fg-1)" : "var(--fg-3)",
+              boxShadow: active ? "var(--shadow-1)" : "none",
+            }}
+            aria-pressed={active}
+          >
+            {o.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function ToggleSwitch({ active, onClick }: { active: boolean; onClick: () => void }) {
   return (
     <button
-      onClick={toggle}
-      className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
+      onClick={onClick}
+      className="relative h-5 w-9 rounded-pill transition-colors"
+      style={{ background: active ? "var(--accent)" : "var(--border-strong)" }}
+      role="switch"
+      aria-checked={active}
+    >
+      <span
+        className="absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all"
+        style={{ left: active ? "18px" : "2px", boxShadow: "var(--shadow-1)" }}
+      />
+    </button>
+  );
+}
+
+function DisplayPopover() {
+  const theme = useStore((s) => s.theme);
+  const setTheme = useStore((s) => s.setTheme);
+  const edgeStyle = useStore((s) => s.edgeStyle);
+  const setEdgeStyle = useStore((s) => s.setEdgeStyle);
+  const showSoftDeps = useStore((s) => s.showSoftDeps);
+  const toggleSoftDeps = useStore((s) => s.toggleSoftDeps);
+  const showExercises = useStore((s) => s.showExercises);
+  const toggleExercises = useStore((s) => s.toggleExercises);
+
+  return (
+    <div
+      className="absolute right-0 top-12 w-[300px] rounded-2xl border p-4"
       style={{
         background: "var(--surface)",
         borderColor: "var(--border)",
-        color: "var(--fg-2)",
-        boxShadow: "var(--shadow-1)",
+        boxShadow: "var(--shadow-3)",
       }}
-      aria-label={isDark ? "Switch to paper theme" : "Switch to chalkboard theme"}
-      title={isDark ? "Paper" : "Chalkboard"}
     >
-      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-    </button>
+      <div
+        className="mb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em]"
+        style={{ color: "var(--fg-3)" }}
+      >
+        Appearance
+      </div>
+      <div className="mt-1 grid grid-cols-2 gap-1.5">
+        {THEMES.map((t) => {
+          const active = t.id === theme;
+          return (
+            <button
+              key={t.id}
+              onClick={() => setTheme(t.id)}
+              className="flex items-center gap-2 rounded-xl border px-2.5 py-2 text-left transition-colors"
+              style={{
+                borderColor: active ? "var(--accent)" : "var(--border)",
+                background: active ? "var(--accent-soft)" : "var(--surface-2)",
+                boxShadow: active ? `0 0 0 1px var(--accent)` : "none",
+              }}
+              aria-pressed={active}
+            >
+              <span
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border"
+                style={{ background: t.swatch[0], borderColor: "var(--border)" }}
+              >
+                <span
+                  className="flex h-3.5 w-3.5 items-center justify-center rounded-full"
+                  style={{ background: t.swatch[1] }}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: t.swatch[2] }} />
+                </span>
+              </span>
+              <span
+                className="text-[12px] font-medium"
+                style={{ color: active ? "var(--accent)" : "var(--fg-1)" }}
+              >
+                {t.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="my-2 h-px" style={{ background: "var(--border)" }} />
+      <div
+        className="mb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em]"
+        style={{ color: "var(--fg-3)" }}
+      >
+        Graph
+      </div>
+      <SettingRow label="Edge style">
+        <Segmented<EdgeStyle>
+          value={edgeStyle}
+          onChange={setEdgeStyle}
+          options={[
+            { value: "smooth", label: "Step" },
+            { value: "bezier", label: "Curve" },
+            { value: "straight", label: "Line" },
+          ]}
+        />
+      </SettingRow>
+      <SettingRow label="Soft links" hint="Pedagogical 'learn-first' edges">
+        <ToggleSwitch active={showSoftDeps} onClick={toggleSoftDeps} />
+      </SettingRow>
+      <SettingRow label="Exercises" hint="Show practice nodes on the map">
+        <ToggleSwitch active={showExercises} onClick={toggleExercises} />
+      </SettingRow>
+    </div>
   );
 }

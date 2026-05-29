@@ -8,7 +8,7 @@
    ======================================================================== */
 
 :root,
-:root[data-theme="light"] {
+:root[data-theme="paper"] {
   color-scheme: light;
 
   /* Surfaces */
@@ -80,7 +80,7 @@
   --grid-minor: rgba(15, 23, 42, 0.025);
 }
 
-:root[data-theme="dark"] {
+:root[data-theme="chalkboard"] {
   color-scheme: dark;
 
   /* Chalkboard surfaces */
@@ -146,6 +146,115 @@
   --grid-dot:   rgba(255, 255, 255, 0.08);
   --grid-major: rgba(255, 255, 255, 0.05);
   --grid-minor: rgba(255, 255, 255, 0.025);
+}
+
+/* Manuscript — warm "old paper" reskin. Only the surfaces/ink/borders/accent
+   change; the domain palette is inherited from Paper so cluster colors stay
+   consistent across themes. */
+:root[data-theme="manuscript"] {
+  color-scheme: light;
+
+  --bg:         #F4EFE6;
+  --bg-deep:    #ECE5D8;
+  --surface:    #FBF8F1;
+  --surface-2:  #F6F1E7;
+  --surface-3:  #ECE5D8;
+
+  --fg-1:       #211D18;
+  --fg-2:       #6B6256;
+  --fg-3:       #9A8E7C;
+  --fg-4:       #C9BCA6;
+  --fg-on-color:#FBF8F1;
+
+  --border:        #DDD2BD;
+  --border-strong: #C9BCA6;
+  --border-subtle: #ECE5D8;
+  --hairline:      #DDD2BD;
+
+  --accent:        #A8431D;
+  --accent-soft:   #F3E4DA;
+  --accent-border: #E3C3B2;
+
+  --selection: rgba(168, 67, 29, 0.16);
+
+  --edge-ink:       #8A7E6C;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(40, 30, 15, 0.06);
+  --shadow-2: 0 4px 14px rgba(40, 30, 15, 0.10), 0 1px 2px rgba(40, 30, 15, 0.06);
+  --shadow-3: 0 14px 36px rgba(40, 30, 15, 0.16), 0 2px 6px rgba(40, 30, 15, 0.08);
+
+  --grid-dot:   #E2D7C4;
+  --grid-major: rgba(33, 29, 24, 0.05);
+  --grid-minor: rgba(33, 29, 24, 0.025);
+}
+
+/* Nocturne — warm dark. Self-contained: dark schemes must redefine the lifted
+   domain palette and tints, so this mirrors Chalkboard's structure in sepia. */
+:root[data-theme="nocturne"] {
+  color-scheme: dark;
+
+  --bg:         #16140F;
+  --bg-deep:    #100E0A;
+  --surface:    #1F1C16;
+  --surface-2:  #2A261E;
+  --surface-3:  #353026;
+
+  --fg-1:       #ECE4D4;
+  --fg-2:       #A99E89;
+  --fg-3:       #7A7060;
+  --fg-4:       #4A4334;
+  --fg-on-color:#16140F;
+
+  --border:        rgba(236, 228, 212, 0.12);
+  --border-strong: rgba(236, 228, 212, 0.20);
+  --border-subtle: rgba(236, 228, 212, 0.06);
+  --hairline:      rgba(236, 228, 212, 0.12);
+
+  /* Lifted domain hues (warm-leaning) for contrast on sepia. */
+  --blue:    #6FB6C9;
+  --green:   #9FC279;
+  --purple:  #C0A0DA;
+  --red:     #F0795F;
+  --teal:    #66CDB8;
+  --orange:  #E0A05A;
+  --pink:    #D96FA8;
+  --gold:    #E6C45A;
+
+  --blue-50:   rgba(111, 182, 201, 0.13);
+  --green-50:  rgba(159, 194, 121, 0.13);
+  --purple-50: rgba(192, 160, 218, 0.14);
+  --red-50:    rgba(240, 121,  95, 0.13);
+  --teal-50:   rgba(102, 205, 184, 0.13);
+  --orange-50: rgba(224, 160,  90, 0.13);
+  --pink-50:   rgba(217, 111, 168, 0.13);
+  --gold-50:   rgba(230, 196,  90, 0.13);
+
+  --blue-200:   rgba(111, 182, 201, 0.36);
+  --green-200:  rgba(159, 194, 121, 0.36);
+  --purple-200: rgba(192, 160, 218, 0.36);
+  --red-200:    rgba(240, 121,  95, 0.36);
+  --teal-200:   rgba(102, 205, 184, 0.36);
+  --orange-200: rgba(224, 160,  90, 0.36);
+  --pink-200:   rgba(217, 111, 168, 0.36);
+  --gold-200:   rgba(230, 196,  90, 0.36);
+
+  --accent:        #E08A4F;
+  --accent-soft:   rgba(224, 138, 79, 0.14);
+  --accent-border: rgba(224, 138, 79, 0.40);
+
+  --selection: rgba(224, 138, 79, 0.26);
+
+  --edge-ink:       #7A7060;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --grid-dot:   rgba(236, 228, 212, 0.08);
+  --grid-major: rgba(236, 228, 212, 0.05);
+  --grid-minor: rgba(236, 228, 212, 0.025);
 }
 
 /* ---- TYPOGRAPHY ----------------------------------------------------- */

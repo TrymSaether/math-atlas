@@ -1,23 +1,18 @@
 import { create } from "zustand";
 import { DEFAULT_MAP_ID, loadMap, type LoadedMap, type MapId } from "./data";
+import { applyTheme, readStoredTheme, schemeFor } from "./lib/themes";
 import type { NodeKind, Relation } from "./types";
 
 export type SearchScope = "all" | "title";
-export type Theme = "light" | "dark";
 export type ViewMode = "dependency" | "cluster";
 export type EdgeStyle = "smooth" | "straight" | "bezier";
 
-function readInitialTheme(): Theme {
-  if (typeof document === "undefined") return "light";
-  const attr = document.documentElement.dataset.theme;
-  if (attr === "dark" || attr === "light") return attr;
-  return "light";
-}
-
 interface State {
-  theme: Theme;
-  setTheme: (t: Theme) => void;
-  toggleTheme: () => void;
+  /** Active theme id (see src/lib/themes.ts). */
+  theme: string;
+  setTheme: (id: string) => void;
+  /** Light/dark of the active theme — drives scheme-dependent UI. */
+  scheme: () => "light" | "dark";
 
   mapId: MapId;
   setMap: (mapId: MapId) => void;
@@ -70,28 +65,13 @@ function toggle<T>(set: Set<T>, v: T) {
   return next;
 }
 
-function applyTheme(theme: Theme) {
-  if (typeof document === "undefined") return;
-  document.documentElement.dataset.theme = theme;
-  document.documentElement.classList.toggle("dark", theme === "dark");
-  try {
-    localStorage.setItem("math-map-theme", theme);
-  } catch {
-    /* ignore */
-  }
-}
-
 export const useStore = create<State>((set, get) => ({
-  theme: readInitialTheme(),
-  setTheme: (theme) => {
-    applyTheme(theme);
-    set({ theme });
+  theme: readStoredTheme(),
+  setTheme: (id) => {
+    applyTheme(id);
+    set({ theme: id });
   },
-  toggleTheme: () => {
-    const next: Theme = get().theme === "dark" ? "light" : "dark";
-    applyTheme(next);
-    set({ theme: next });
-  },
+  scheme: () => schemeFor(get().theme),
 
   mapId: DEFAULT_MAP_ID,
   loadedMaps: {},
