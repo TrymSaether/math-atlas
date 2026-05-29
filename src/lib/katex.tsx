@@ -1,6 +1,10 @@
 import katex from "katex";
 import { useMemo } from "react";
 
+export type MathSegment =
+  | { type: "text"; value: string }
+  | { type: "math"; value: string; display: boolean };
+
 /**
  * Render text with inline TeX delimited by $...$ and display TeX by $$...$$,
  * plus Unicode math passthrough. Robust against unbalanced dollar signs.
@@ -23,7 +27,7 @@ function escape(s: string) {
     .replace(/>/g, "&gt;");
 }
 
-function renderTeX(src: string, display: boolean): string {
+export function renderKatex(src: string, display: boolean): string {
   try {
     return katex.renderToString(src, {
       displayMode: display,
@@ -36,45 +40,49 @@ function renderTeX(src: string, display: boolean): string {
   }
 }
 
-export function renderMathInString(text: string): string {
-  // First pass: $$...$$
-  const parts: string[] = [];
-  let i = 0;
-  while (i < text.length) {
-    const dd = text.indexOf("$$", i);
-    if (dd === -1) {
-      parts.push(processInline(text.slice(i)));
+export function splitMathSegments(text: string): MathSegment[] {
+  const segments: MathSegment[] = [];
+  let index = 0;
+
+  while (index < text.length) {
+    const displayStart = text.indexOf("$$", index);
+    const inlineStart = text.indexOf("$", index);
+
+    let start = -1;
+    let display = false;
+
+    if (displayStart !== -1 && (inlineStart === -1 || displayStart <= inlineStart)) {
+      start = displayStart;
+      display = true;
+    } else if (inlineStart !== -1) {
+      start = inlineStart;
+    }
+
+    if (start === -1) {
+      segments.push({ type: "text", value: text.slice(index) });
       break;
     }
-    parts.push(processInline(text.slice(i, dd)));
-    const end = text.indexOf("$$", dd + 2);
+
+    if (start > index) {
+      segments.push({ type: "text", value: text.slice(index, start) });
+    }
+
+    const delimiter = display ? "$$" : "$";
+    const end = text.indexOf(delimiter, start + delimiter.length);
     if (end === -1) {
-      parts.push(processInline(text.slice(dd)));
+      segments.push({ type: "text", value: text.slice(start) });
       break;
     }
-    parts.push(renderTeX(text.slice(dd + 2, end), true));
-    i = end + 2;
+
+    segments.push({ type: "math", value: text.slice(start + delimiter.length, end), display });
+    index = end + delimiter.length;
   }
-  return parts.join("");
+
+  return segments;
 }
 
-function processInline(seg: string): string {
-  let out = "";
-  let i = 0;
-  while (i < seg.length) {
-    const d = seg.indexOf("$", i);
-    if (d === -1) {
-      out += escape(seg.slice(i));
-      break;
-    }
-    out += escape(seg.slice(i, d));
-    const end = seg.indexOf("$", d + 1);
-    if (end === -1) {
-      out += escape(seg.slice(d));
-      break;
-    }
-    out += renderTeX(seg.slice(d + 1, end), false);
-    i = end + 1;
-  }
-  return out;
+export function renderMathInString(text: string): string {
+  return splitMathSegments(text)
+    .map((segment) => (segment.type === "text" ? escape(segment.value) : renderKatex(segment.value, segment.display)))
+    .join("");
 }
