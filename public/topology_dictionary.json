@@ -1350,9 +1350,9 @@
     "kind": "Definition",
     "ref": "Def. 3.1",
     "chapter": "3",
-    "statement": "A \\textbf{topological space} is a set $X$ with a collection $\\mathcal{T}$ of subsets (the \\textbf{open sets}) such that:\\;\\textbf{(T1)}\\ \\varnothing,X\\in\\mathcal{T};\\;\\textbf{(T2)}\\ arbitrary unions of members of $\\mathcal{T}$ lie in $\\mathcal{T}$;\\;\\textbf{(T3)}\\ finite intersections of members of $\\mathcal{T}$ lie in $\\mathcal{T}$.",
-    "gloss": "The central object: a set together with a choice of which subsets count as open. Note the asymmetry — <em>any</em> union but only <em>finite</em> intersections.",
-    "example": "Every metric space is a topological space via its metric topology (Thm. 3.2). On $\\{a,b,c\\}$ there are $29$ distinct topologies.",
+    "statement": "A \\textbf{topological space} is a pair $(X,\\mathcal{T})$, where $X$ is a set and $\\mathcal{T}\\subseteq\\mathcal{P}(X)$ is a collection of subsets of $X$, called the \\textbf{open sets}, satisfying $$\\begin{aligned} \\textbf{(T1)}&\\quad \\varnothing, X\\in\\mathcal{T},\\\\ \\textbf{(T2)}&\\quad \\{U_i\\}_{i\\in I}\\subseteq\\mathcal{T}\\implies \\bigcup_{i\\in I}U_i\\in\\mathcal{T},\\\\ \\textbf{(T3)}&\\quad U_1,\\dots,U_n\\in\\mathcal{T}\\implies \\bigcap_{k=1}^n U_k\\in\\mathcal{T}. \\end{aligned}$$ The collection $\\mathcal{T}$ is called a \\textbf{topology} on $X$.",
+    "gloss": "The central object of topology: a set together with a choice of which subsets count as open. The axioms are asymmetric: arbitrary unions of open sets are open, but only finite intersections of open sets are required to be open.",
+    "example": "Every metric space is a topological space via its metric topology (Thm. 3.2). On $\\{a,b,c\\}$, there are $29$ distinct topologies.",
     "related": [
       "open-closed-set-metric",
       "discrete-topology",
