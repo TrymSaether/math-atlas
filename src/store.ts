@@ -5,6 +5,7 @@ import type { NodeKind, Relation } from "./types";
 export type SearchScope = "all" | "title";
 export type Theme = "light" | "dark";
 export type ViewMode = "dependency" | "cluster";
+export type EdgeStyle = "smooth" | "straight" | "bezier";
 
 function readInitialTheme(): Theme {
   if (typeof document === "undefined") return "light";
@@ -42,6 +43,15 @@ interface State {
 
   view: ViewMode;
   setView: (v: ViewMode) => void;
+  /** Exercises are practice, not concept structure — hidden from the map by default. */
+  showExercises: boolean;
+  toggleExercises: () => void;
+  /** Pedagogical "learn-this-first" edges — hidden by default to cut the spaghetti. */
+  showSoftDeps: boolean;
+  toggleSoftDeps: () => void;
+  /** Edge routing for the dependency graph. */
+  edgeStyle: EdgeStyle;
+  setEdgeStyle: (s: EdgeStyle) => void;
   focusMode: boolean;
   toggleFocusMode: () => void;
   focusDepth: number;
@@ -149,6 +159,12 @@ export const useStore = create<State>((set, get) => ({
 
   view: "dependency",
   setView: (v) => set({ view: v }),
+  showExercises: false,
+  toggleExercises: () => set((s) => ({ showExercises: !s.showExercises })),
+  showSoftDeps: false,
+  toggleSoftDeps: () => set((s) => ({ showSoftDeps: !s.showSoftDeps })),
+  edgeStyle: "smooth",
+  setEdgeStyle: (edgeStyle) => set({ edgeStyle }),
   focusMode: false,
   toggleFocusMode: () => set((s) => ({ focusMode: !s.focusMode })),
   focusDepth: 1,

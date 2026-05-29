@@ -14,6 +14,14 @@ interface Data {
 export function DomainRegionNode({ data }: NodeProps<Data>) {
   const isCircle = data.shape === "circle";
 
+  // Watermark title: large enough to label the territory when the cards
+  // themselves become unreadable on zoom-out. Sized to the band so it never
+  // overflows a narrow or short region.
+  const watermarkSize = Math.max(
+    28,
+    Math.min(data.width / Math.max(8, data.label.length * 0.62), data.height * 0.42, 132),
+  );
+
   return (
     <div
       className="pointer-events-none relative select-none"
@@ -28,6 +36,32 @@ export function DomainRegionNode({ data }: NodeProps<Data>) {
           boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--surface) 68%, transparent)",
         }}
       />
+      {/* Colored left rail — extends the per-card lane metaphor to the band, so
+          the domain reads even where the tint washes out. */}
+      {!isCircle && (
+        <div
+          className="absolute inset-y-5 left-0 w-[4px] rounded-pill"
+          style={{ background: data.color, opacity: 0.5 }}
+        />
+      )}
+      {/* Faint oversized domain name — the label of last resort at low zoom. */}
+      <div
+        className="absolute inset-0 flex items-center justify-center overflow-hidden px-8"
+        aria-hidden
+      >
+        <span
+          className="font-serif leading-none"
+          style={{
+            fontSize: watermarkSize,
+            color: data.color,
+            opacity: 0.1,
+            textAlign: "center",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {data.label}
+        </span>
+      </div>
       <div
         className="absolute left-4 top-3 inline-flex max-w-[calc(100%-32px)] items-center gap-2 rounded-pill border px-2 py-1 text-[10.5px] font-bold uppercase"
         style={{

@@ -2,19 +2,23 @@ import { memo, type CSSProperties } from "react";
 import { Handle, Position, type NodeProps } from "reactflow";
 import { getDomainTone } from "../lib/colors";
 import { MathText } from "../lib/katex";
+import { CATEGORY_META, categoryOf, railBackground, type NodeCategory } from "../lib/nodeCategory";
 import { cn } from "../lib/utils";
 import { useStore } from "../store";
 import { KIND_LABEL, type TopoNode as TopoNodeT } from "../types";
+import type { NodeEmphasis, NodeLOD } from "./GraphCanvas";
 
 interface Data {
   node: TopoNodeT;
+  category?: NodeCategory;
+  emphasis?: NodeEmphasis;
+  lod?: NodeLOD;
   dim?: boolean;
   isSelected?: boolean;
   isRelated?: boolean;
   hasIncoming?: boolean;
   hasOutgoing?: boolean;
-  incomingHandleColor?: string;
-  outgoingHandleColor?: string;
+  handleColor?: string;
 }
 
 const KIND_ABBREV: Record<string, string> = {
@@ -45,7 +49,7 @@ function kindAbbrev(kind: string): string {
 }
 
 function handleStyle(color?: string): CSSProperties {
-  return { "--handle-color": color ?? "var(--accent)" } as CSSProperties;
+  return { "--handle-color": color ?? "var(--edge-ink)" } as CSSProperties;
 }
 
 function TopoNodeViewComponent({ data }: NodeProps<Data>) {
@@ -56,12 +60,32 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
     isRelated,
     hasIncoming,
     hasOutgoing,
-    incomingHandleColor,
-    outgoingHandleColor,
+    handleColor,
   } = data;
   const select = useStore((s) => s.select);
   const tone = getDomainTone(node.domainId);
   const accented = isSelected || isRelated;
+  const emphasis = data.emphasis ?? "normal";
+  const category = data.category ?? categoryOf(node.kind);
+  const categoryMeta = CATEGORY_META[category];
+  const CategoryIcon = categoryMeta.icon;
+
+  const isLandmark = emphasis === "landmark";
+  const isMinor = emphasis === "minor";
+
+  const lod = data.lod ?? "near";
+  const showMeta = lod === "near" || lod === "mid";
+  const showFooter = lod === "near";
+  // At distance the card is just a label — let the title grow and use more lines.
+  const titleClass =
+    lod === "far"
+      ? isLandmark
+        ? "text-[20px]"
+        : "text-[17px]"
+      : isLandmark
+        ? "text-[14px]"
+        : "text-[13px]";
+  const titleLineClamp = lod === "far" ? 3 : 2;
 
   return (
     <div
@@ -75,83 +99,123 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       tabIndex={0}
       aria-label={`${KIND_LABEL[node.kind]}: ${node.title}`}
       className={cn(
-        "group relative flex min-h-[76px] w-[216px] cursor-pointer flex-col rounded-[12px] border px-3 py-2.5 outline-none transition-all duration-150",
+        "group relative flex min-h-[76px] w-[216px] cursor-pointer flex-col overflow-hidden rounded-[12px] border pl-[14px] pr-3 py-2.5 outline-none transition-all duration-150",
         "hover:-translate-y-px hover:shadow-[var(--shadow-2)]",
         dim && "opacity-30",
+        isMinor && !accented && !dim && "opacity-[0.82]",
       )}
       style={{
         background: "var(--surface)",
-        borderColor: accented ? tone.color : "var(--border)",
+        borderColor: accented ? tone.color : isLandmark ? tone.border : "var(--border)",
+        borderWidth: isLandmark || accented ? 1.5 : 1,
         boxShadow: isSelected
           ? `0 0 0 4px ${tone.tint}, var(--shadow-2)`
           : isRelated
             ? `0 0 0 2px ${tone.tint}, var(--shadow-1)`
-            : "var(--shadow-1)",
+            : isLandmark
+              ? "var(--shadow-2)"
+              : "var(--shadow-1)",
       }}
     >
+      {/* Lane rail — color says which domain, texture says which kind. */}
+      <span
+        className="absolute inset-y-0 left-0 w-[3px]"
+        style={{
+          background: railBackground(tone.color, categoryMeta.rail),
+          opacity: isLandmark || accented ? 1 : 0.55,
+        }}
+      />
+
       {hasIncoming && (
         <Handle
           type="target"
-          position={Position.Left}
-          className="graph-node-handle graph-node-handle-left"
-          style={handleStyle(incomingHandleColor)}
+          position={Position.Right}
+          className="graph-node-handle graph-node-handle-right"
+          style={handleStyle(handleColor)}
         />
       )}
 
-      <div className="flex min-w-0 items-center gap-1.5">
-        <span
-          className="inline-flex h-[20px] shrink-0 items-center rounded-[6px] border px-1.5 text-[9.5px] font-bold uppercase"
-          style={{
-            background: tone.tint,
-            borderColor: tone.border,
-            color: tone.color,
-          }}
-        >
-          {kindAbbrev(node.kind)}
-        </span>
-        {node.number && (
+      {showMeta && (
+        <div className="flex min-w-0 items-center gap-1.5">
+          {categoryMeta.glyphFilled ? (
+            <span
+              className="flex h-[17px] w-[17px] shrink-0 items-center justify-center rounded-full"
+              style={{ background: tone.color }}
+              aria-hidden
+            >
+              <CategoryIcon
+                className="h-[10px] w-[10px]"
+                strokeWidth={2.75}
+                style={{ color: "var(--fg-on-color)" }}
+              />
+            </span>
+          ) : (
+            <CategoryIcon
+              className="h-[13px] w-[13px] shrink-0"
+              strokeWidth={2.25}
+              style={{ color: "var(--fg-3)" }}
+              aria-hidden
+            />
+          )}
           <span
-            className="min-w-0 truncate font-mono text-[10.5px] font-semibold tabular-nums"
-            style={{ color: tone.color }}
-            title={node.id}
+            className="inline-flex h-[18px] shrink-0 items-center rounded-[5px] border px-1.5 text-[9.5px] font-bold uppercase tracking-wide"
+            style={{
+              background: "var(--surface-2)",
+              borderColor: "var(--border)",
+              color: "var(--fg-2)",
+            }}
           >
-            {node.number}
+            {kindAbbrev(node.kind)}
           </span>
-        )}
-      </div>
+          {node.number && (
+            <span
+              className="min-w-0 truncate font-mono text-[10.5px] font-semibold tabular-nums"
+              style={{ color: tone.color }}
+              title={node.id}
+            >
+              {node.number}
+            </span>
+          )}
+          {isLandmark && (
+            <span
+              className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full"
+              style={{ background: tone.color }}
+              title="Foundational — many results depend on this"
+            />
+          )}
+        </div>
+      )}
 
       <div
-        className="mt-1.5 overflow-hidden text-[13px] font-semibold leading-[1.28]"
+        className={cn(
+          "overflow-hidden font-semibold leading-[1.28]",
+          showMeta ? "mt-1.5" : "my-auto",
+          titleClass,
+        )}
         style={{
           color: "var(--fg-1)",
           display: "-webkit-box",
-          WebkitLineClamp: 2,
+          WebkitLineClamp: titleLineClamp,
           WebkitBoxOrient: "vertical",
         }}
       >
         <MathText text={node.title} />
       </div>
 
-      <div className="mt-auto flex items-center gap-1.5 pt-2">
-        <span className="h-1.5 w-1.5 rounded-full" style={{ background: tone.color }} />
-        <span className="min-w-0 truncate text-[10.5px] font-medium" style={{ color: "var(--fg-3)" }}>
-          {node.topicCluster}
-        </span>
-      </div>
-
-      {isSelected && (
-        <span
-          className="absolute -right-[6px] -top-[6px] h-3.5 w-3.5 rounded-full border-[2px]"
-          style={{ background: tone.color, borderColor: "var(--surface)" }}
-        />
+      {showFooter && (
+        <div className="mt-auto flex items-center gap-1.5 pt-2">
+          <span className="min-w-0 truncate text-[10.5px] font-medium" style={{ color: "var(--fg-3)" }}>
+            {node.topicCluster}
+          </span>
+        </div>
       )}
 
       {hasOutgoing && (
         <Handle
           type="source"
-          position={Position.Right}
-          className="graph-node-handle graph-node-handle-right"
-          style={handleStyle(outgoingHandleColor)}
+          position={Position.Left}
+          className="graph-node-handle graph-node-handle-left"
+          style={handleStyle(handleColor)}
         />
       )}
     </div>

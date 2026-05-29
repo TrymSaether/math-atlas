@@ -1,6 +1,16 @@
-import { BaseEdge, EdgeLabelRenderer, getSmoothStepPath, type EdgeProps } from "reactflow";
-import { getRelationStyle } from "../lib/relationStyle";
+import {
+  BaseEdge,
+  EdgeLabelRenderer,
+  getBezierPath,
+  getSmoothStepPath,
+  getStraightPath,
+  type EdgeProps,
+} from "reactflow";
+import { getEdgeStyle } from "../lib/relationStyle";
+import { useStore } from "../store";
 import type { GraphEdge } from "../types";
+
+const FALLBACK_EDGE = { relation: "relation", dependencyClass: "" };
 
 interface Data {
   edge?: GraphEdge;
@@ -14,17 +24,16 @@ interface Data {
  */
 export function TopoEdgeView(props: EdgeProps<Data>) {
   const { sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data } = props;
-  const [path, labelX, labelY] = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-    sourcePosition,
-    targetPosition,
-    borderRadius: 14,
-  });
+  const edgeStyle = useStore((s) => s.edgeStyle);
+  const geom = { sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition };
+  const [path, labelX, labelY] =
+    edgeStyle === "straight"
+      ? getStraightPath(geom)
+      : edgeStyle === "bezier"
+        ? getBezierPath(geom)
+        : getSmoothStepPath({ ...geom, borderRadius: 14 });
 
-  const style = getRelationStyle(data?.edge?.relation ?? "relation", Boolean(data?.highlight), Boolean(data?.dim));
+  const style = getEdgeStyle(data?.edge ?? FALLBACK_EDGE, Boolean(data?.highlight), Boolean(data?.dim));
   const highlight = Boolean(data?.highlight);
   const dim = Boolean(data?.dim);
   const markerId = `arrow-${props.id}`;

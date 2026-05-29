@@ -1,5 +1,6 @@
 import dagre from "dagre";
 import type { GraphData, GraphDomain, GraphNode } from "../types";
+import type { GraphMetrics } from "./graphMetrics";
 
 export interface Position {
   x: number;
@@ -11,6 +12,15 @@ const NODE_HEIGHT = 84;
 const RANK_SEP = 92;
 const NODE_SEP = 36;
 const CLUSTER_PAD = 40;
+
+// Swimlane layout geometry.
+const ROW_GAP = 28; // vertical gap between stacked nodes
+const COL_GAP_INNER = 24; // gap between sub-columns inside one depth cell
+const DEPTH_GAP = 104; // gap between adjacent depth cells (reads as "next level")
+const LANE_GAP = 96; // vertical gap between domain lanes
+const LANE_PAD_Y = 56; // inner vertical padding inside a lane band
+const LANE_PAD_X = 48; // inner horizontal padding at lane ends
+const MAX_ROWS_PER_CELL = 7; // a depth cell wraps into a grid block past this height
 
 // Deterministic seeded PRNG (mulberry32).
 function seeded(seed: number): () => number {
@@ -115,6 +125,121 @@ export function computeAtlasLayout(data: GraphData): AtlasLayout {
       height: cluster.height + CLUSTER_PAD * 2,
     });
   }
+
+  return { positions, domainBounds };
+}
+
+/**
+ * Swimlane layout: a layered DAG drawn as an atlas.
+ *
+ *   x = epistemic depth  (foundations on the left, advanced results on the right)
+ *   y = domain lane       (one horizontal band per domain, ordered by domain.order)
+ *
+ * Within a (domain, depth) cell, nodes are stacked vertically, most-impactful
+ * first. Columns share a global x-grid so a vertical scan reads "same depth"
+ * across every lane. Lane bands span the full canvas width so they read as
+ * geography, not bounding boxes.
+ *
+ * Positions are deterministic: ordering is fully determined by depth, impact,
+ * and the stable node ordering — no jitter, so spatial memory survives reloads.
+ */
+export function computeSwimlaneLayout(
+  data: GraphData,
+  metrics: GraphMetrics,
+): AtlasLayout {
+  const positions = new Map<string, Position>();
+  const domainBounds = new Map<string, DomainBounds>();
+  if (data.nodes.length === 0) return { positions, domainBounds };
+
+  const { depthByNodeId, impactByNodeId } = metrics;
+
+  // Lane order: declared domain order first, then any stragglers.
+  const laneOrder = data.domains.map((d) => d.id);
+  for (const node of data.nodes) {
+    if (!laneOrder.includes(node.domainId)) laneOrder.push(node.domainId);
+  }
+
+  const nodesByDomain = new Map<string, GraphNode[]>();
+  for (const node of data.nodes) {
+    const list = nodesByDomain.get(node.domainId) ?? [];
+    list.push(node);
+    nodesByDomain.set(node.domainId, list);
+  }
+
+  let laneTop = 0;
+  let maxLaneWidth = 0;
+  for (const domainId of laneOrder) {
+    const members = nodesByDomain.get(domainId);
+    if (!members || members.length === 0) continue;
+
+    // Bucket members by their (global) depth.
+    const byDepth = new Map<number, GraphNode[]>();
+    for (const node of members) {
+      const depth = depthByNodeId.get(node.id) ?? 0;
+      const list = byDepth.get(depth) ?? [];
+      list.push(node);
+      byDepth.set(depth, list);
+    }
+
+    // Depth levels this lane actually uses, in order (foundations left → advanced
+    // right). Absent global levels are skipped so lanes stay dense.
+    const usedDepths = [...byDepth.keys()].sort((a, b) => a - b);
+
+    // Sort each cell most-impactful first.
+    for (const list of byDepth.values()) {
+      list.sort((a, b) => {
+        const diff = (impactByNodeId.get(b.id) ?? 0) - (impactByNodeId.get(a.id) ?? 0);
+        if (diff !== 0) return diff;
+        return compareNodeOrder(a, b);
+      });
+    }
+
+    // A depth cell wraps into a grid block (rows × sub-columns) when it has more
+    // than MAX_ROWS_PER_CELL nodes, so a big pile of dependency-less nodes packs
+    // into a square block instead of one absurdly tall strip. The tallest block
+    // sets the lane height.
+    const cellRows = (n: number) => Math.min(n, MAX_ROWS_PER_CELL);
+    let maxRows = 0;
+    for (const depth of usedDepths) maxRows = Math.max(maxRows, cellRows(byDepth.get(depth)!.length));
+
+    const laneHeight = LANE_PAD_Y * 2 + maxRows * NODE_HEIGHT + Math.max(0, maxRows - 1) * ROW_GAP;
+    const laneMidY = laneTop + laneHeight / 2;
+
+    let cursorX = LANE_PAD_X;
+    for (const depth of usedDepths) {
+      const list = byDepth.get(depth)!;
+      const rows = cellRows(list.length);
+      const cols = Math.ceil(list.length / rows);
+      const blockHeight = rows * NODE_HEIGHT + (rows - 1) * ROW_GAP;
+      const blockTop = laneMidY - blockHeight / 2;
+      // Fill row-major: highest-impact lands top-left.
+      list.forEach((node, i) => {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        positions.set(node.id, {
+          x: cursorX + col * (NODE_WIDTH + COL_GAP_INNER),
+          y: blockTop + row * (NODE_HEIGHT + ROW_GAP),
+        });
+      });
+      const blockWidth = cols * NODE_WIDTH + (cols - 1) * COL_GAP_INNER;
+      cursorX += blockWidth + DEPTH_GAP;
+    }
+
+    const laneWidth = cursorX - DEPTH_GAP + LANE_PAD_X;
+    maxLaneWidth = Math.max(maxLaneWidth, laneWidth);
+    domainBounds.set(domainId, {
+      x: 0,
+      y: laneTop,
+      width: laneWidth,
+      height: laneHeight,
+      shape: "rect",
+    });
+
+    laneTop += laneHeight + LANE_GAP;
+  }
+
+  // Normalize every band to the widest lane so they read as aligned geography.
+  for (const bounds of domainBounds.values()) bounds.width = maxLaneWidth;
 
   return { positions, domainBounds };
 }

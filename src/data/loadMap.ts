@@ -4,7 +4,8 @@ import {
   type GraphDomain,
   type GraphEdge,
 } from "../types";
-import { computeAtlasLayout, type DomainBounds, type Position } from "../lib/atlasLayout";
+import { computeSwimlaneLayout, type DomainBounds, type Position } from "../lib/atlasLayout";
+import { computeGraphMetrics, type GraphMetrics } from "../lib/graphMetrics";
 import { DEFAULT_MAP_ID, MAPS, loadRawMap, type MapId } from "./mapRegistry";
 import { normalizeFieldGraph } from "./normalizeFieldGraph";
 
@@ -58,10 +59,13 @@ export interface LoadedMap {
   topics: string[];
   positions: Map<string, Position>;
   domainBounds: Map<string, DomainBounds>;
+  /** Derived structural metrics: depth (x-axis), impact (node size), reduction. */
+  metrics: GraphMetrics;
 }
 
 function buildLoadedMap(data: GraphData): LoadedMap {
-  const layout = computeAtlasLayout(data);
+  const metrics = computeGraphMetrics(data);
+  const layout = computeSwimlaneLayout(data, metrics);
   return {
     data,
     nodeById: new Map(data.nodes.map((node) => [node.id, node])),
@@ -76,6 +80,7 @@ function buildLoadedMap(data: GraphData): LoadedMap {
     topics: data.domains.map((domain) => domain.id),
     positions: layout.positions,
     domainBounds: layout.domainBounds,
+    metrics,
   };
 }
 

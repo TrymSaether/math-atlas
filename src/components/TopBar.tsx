@@ -1,8 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { Search, SlidersHorizontal, Plus, Minus, Locate, Sun, Moon, ChevronDown, BookOpen } from "lucide-react";
-import { useReactFlow } from "reactflow";
+import {
+  Search,
+  SlidersHorizontal,
+  Sun,
+  Moon,
+  ChevronDown,
+  BookOpen,
+  Settings2,
+  Spline,
+  PencilLine,
+} from "lucide-react";
 import { MAPS, type MapId } from "../data";
-import { useStore } from "../store";
+import { useStore, type EdgeStyle } from "../store";
 import { cn } from "../lib/utils";
 import { getDomainTone } from "../lib/colors";
 import { KIND_LABEL } from "../types";
@@ -17,7 +26,7 @@ export function TopBar() {
           <SearchBox />
           <DictionaryButton />
           <FilterButton />
-          <ThemeToggle />
+          <DisplayButton />
         </div>
       </div>
     </header>
@@ -120,48 +129,6 @@ function BrandSection() {
           })}
         </div>
       )}
-    </div>
-  );
-}
-
-function MapButton() {
-  return (
-    <button
-      className="flex h-10 items-center rounded-pill border px-3 text-[12.5px] font-medium transition-colors"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        color: "var(--fg-2)",
-        boxShadow: "var(--shadow-1)",
-      }}
-      aria-label="Map"
-    >
-      Map
-    </button>
-  );
-}
-
-function PagesNav() {
-  return (
-    <div
-      className="flex h-10 items-center gap-1 rounded-pill border p-1"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        borderWidth: "1px",
-        boxShadow: "var(--shadow-1)",
-      }}
-    >
-      <button
-        className="flex h-8 items-center rounded-pill px-3 text-[12.5px] font-medium transition-colors"
-        style={{
-          background: "var(--surface-2)",
-          color: "var(--fg-1)",
-        }}
-        aria-label="Map"
-      >
-        Map
-      </button>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { RELATION_LABEL } from "../types";
+import type { GraphEdge } from "../types";
 
 export interface RelationStyle {
   color: string;
@@ -8,67 +9,57 @@ export interface RelationStyle {
   label: string;
 }
 
-interface BaseStyle {
-  color: string;
-  width: number;
-  opacity: number;
-  dash?: string;
+/**
+ * Edge classes. Color is reserved for domains, so edges are near-monochrome and
+ * distinguished by weight + dash instead of hue:
+ *
+ * - `hard` — definitional / logical / construction / assumption dependencies and
+ *            the structural backbone. Solid hairline. This is the real hierarchy.
+ * - `soft` — pedagogical "learn-this-first" orderings (≈half the edges) and loose
+ *            illustrative links. Dashed and fainter; hidden by default.
+ */
+export type EdgeClass = "hard" | "soft";
+
+const SOFT_DEPENDENCY_CLASSES = new Set(["pedagogical_dependency"]);
+const SOFT_RELATIONS = new Set([
+  "motivates",
+  "prerequisite_for",
+  "has_example",
+  "has_counterexample",
+  "has_property",
+]);
+
+export function classifyEdge(edge: Pick<GraphEdge, "relation" | "dependencyClass">): EdgeClass {
+  if (edge.dependencyClass && SOFT_DEPENDENCY_CLASSES.has(edge.dependencyClass)) return "soft";
+  if (SOFT_RELATIONS.has(edge.relation)) return "soft";
+  return "hard";
 }
 
-/**
- * Explicit per-relation style table. Keys are the exact relation strings
- * emitted by the data pipeline (see SOURCE_DEPENDS_ON_TARGET and the
- * edge_types catalogued across the field JSON files).
- */
-const RELATION_STYLES: Record<string, BaseStyle> = {
-  // Logical dependency — strongest, purple.
-  requires:           { color: "var(--purple)", width: 2.2, opacity: 0.58 },
-  uses:               { color: "var(--purple)", width: 2.0, opacity: 0.50 },
-  assumes:            { color: "var(--purple)", width: 2.0, opacity: 0.50, dash: "6 5" },
-  implies:            { color: "var(--purple)", width: 2.2, opacity: 0.62 },
-  proves:             { color: "var(--purple)", width: 2.2, opacity: 0.62 },
-
-  // Definitional / notational — blue.
-  defines:            { color: "var(--blue)",   width: 2.2, opacity: 0.60 },
-  defined_by:         { color: "var(--blue)",   width: 2.0, opacity: 0.54 },
-  introduces:         { color: "var(--blue)",   width: 2.0, opacity: 0.50 },
-
-  // Structural — green / teal.
-  subtype_of:         { color: "var(--green)",  width: 2.0, opacity: 0.55 },
-  generalizes:        { color: "var(--green)",  width: 2.0, opacity: 0.55 },
-  equivalent_to:      { color: "var(--green)",  width: 2.1, opacity: 0.58, dash: "1 3" },
-  instance_of:        { color: "var(--teal)",   width: 1.9, opacity: 0.50 },
-  has_property:       { color: "var(--teal)",   width: 1.9, opacity: 0.48 },
-  constructed_from:   { color: "var(--teal)",   width: 2.0, opacity: 0.52 },
-  induces:            { color: "var(--teal)",   width: 2.0, opacity: 0.52 },
-
-  // Illustrative — gold, dashed.
-  has_example:        { color: "var(--gold)",   width: 1.9, opacity: 0.46, dash: "4 7" },
-  has_counterexample: { color: "var(--red)",    width: 1.9, opacity: 0.50, dash: "4 7" },
-  applied_to:         { color: "var(--gold)",   width: 1.9, opacity: 0.46 },
-
-  // Constraints / failures — red, dashed.
-  violates_assumption:{ color: "var(--red)",    width: 2.0, opacity: 0.55, dash: "8 6" },
-  shows_necessity_of: { color: "var(--red)",    width: 2.0, opacity: 0.55, dash: "8 6" },
-
-  // Pedagogical — orange, dotted.
-  motivates:          { color: "var(--orange)", width: 1.9, opacity: 0.44, dash: "2 6" },
-  prerequisite_for:   { color: "var(--orange)", width: 1.9, opacity: 0.46, dash: "2 6" },
+// Neutral ink — the same hairline for every hard edge, so structure reads as one
+// quiet web rather than a rainbow. Highlight switches to the accent.
+const HARD: Omit<RelationStyle, "label"> = {
+  color: "var(--edge-ink)",
+  opacity: 0.34,
+  width: 1.6,
+};
+const SOFT: Omit<RelationStyle, "label"> = {
+  color: "var(--edge-ink)",
+  opacity: 0.22,
+  width: 1.3,
+  dash: "2 6",
 };
 
-const FALLBACK: BaseStyle = { color: "var(--fg-4)", width: 1.6, opacity: 0.42 };
-
-export function getRelationStyle(
-  relation: string,
+export function getEdgeStyle(
+  edge: Pick<GraphEdge, "relation" | "dependencyClass">,
   highlighted = false,
   dimmed = false,
 ): RelationStyle {
-  const style = RELATION_STYLES[relation] ?? FALLBACK;
+  const base = classifyEdge(edge) === "soft" ? SOFT : HARD;
   return {
-    color: style.color,
-    opacity: dimmed ? 0.08 : highlighted ? 0.95 : style.opacity,
-    width: highlighted ? Math.max(style.width + 1.2, 3.2) : style.width,
-    dash: style.dash,
-    label: RELATION_LABEL[relation],
+    color: highlighted ? "var(--edge-highlight)" : base.color,
+    opacity: dimmed ? 0.06 : highlighted ? 0.95 : base.opacity,
+    width: highlighted ? Math.max(base.width + 1.4, 2.8) : base.width,
+    dash: highlighted ? undefined : base.dash,
+    label: RELATION_LABEL[edge.relation],
   };
 }
