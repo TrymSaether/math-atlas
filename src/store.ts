@@ -1,11 +1,14 @@
 import { create } from "zustand";
 import { DEFAULT_MAP_ID, loadMap, type LoadedMap, type MapId } from "./data";
 import { applyTheme, readStoredTheme, schemeFor } from "./lib/themes";
+import { defaultVisibleKinds } from "./lib/nodeCategory";
 import type { NodeKind, Relation } from "./types";
 
 export type SearchScope = "all" | "title";
 export type ViewMode = "dependency" | "cluster";
 export type EdgeStyle = "smooth" | "straight" | "bezier";
+/** Which surface is shown: the graph canvas, or the dictionary reading view. */
+export type Surface = "atlas" | "dictionary";
 
 interface State {
   /** Active theme id (see src/lib/themes.ts). */
@@ -38,9 +41,6 @@ interface State {
 
   view: ViewMode;
   setView: (v: ViewMode) => void;
-  /** Exercises are practice, not concept structure — hidden from the map by default. */
-  showExercises: boolean;
-  toggleExercises: () => void;
   /** Pedagogical "learn-this-first" edges — hidden by default to cut the spaghetti. */
   showSoftDeps: boolean;
   toggleSoftDeps: () => void;
@@ -55,13 +55,17 @@ interface State {
   selectedId: string | null;
   select: (id: string | null) => void;
 
+  surface: Surface;
+  setSurface: (s: Surface) => void;
+
   paletteOpen: boolean;
   setPaletteOpen: (o: boolean) => void;
 }
 
 function toggle<T>(set: Set<T>, v: T) {
   const next = new Set(set);
-  if (next.has(v)) next.delete(v); else next.add(v);
+  if (next.has(v)) next.delete(v);
+  else next.add(v);
   return next;
 }
 
@@ -88,7 +92,8 @@ export const useStore = create<State>((set, get) => ({
         if (state.mapId !== mapId) {
           return {
             loadedMaps,
-            loadingMapId: state.loadingMapId === mapId ? null : state.loadingMapId,
+            loadingMapId:
+              state.loadingMapId === mapId ? null : state.loadingMapId,
           };
         }
 
@@ -96,7 +101,7 @@ export const useStore = create<State>((set, get) => ({
           loadedMaps,
           loadingMapId: null,
           mapError: null,
-          kinds: new Set(map.kinds),
+          kinds: new Set(defaultVisibleKinds(map.kinds)),
           topics: new Set(),
           relations: new Set(map.relations),
           selectedId: null,
@@ -114,7 +119,7 @@ export const useStore = create<State>((set, get) => ({
     set({
       mapId,
       search: "",
-      kinds: map ? new Set(map.kinds) : new Set(),
+      kinds: map ? new Set(defaultVisibleKinds(map.kinds)) : new Set(),
       topics: new Set(),
       relations: map ? new Set(map.relations) : new Set(),
       selectedId: null,
@@ -138,9 +143,11 @@ export const useStore = create<State>((set, get) => ({
   toggleRelation: (r) => set((s) => ({ relations: toggle(s.relations, r) })),
 
   view: "dependency",
-  setView: (v) => set({ view: v }),
-  showExercises: false,
-  toggleExercises: () => set((s) => ({ showExercises: !s.showExercises })),
+  setView: (view) =>
+    set({
+      view,
+      edgeStyle: view === "cluster" ? "bezier" : "smooth",
+    }),
   showSoftDeps: false,
   toggleSoftDeps: () => set((s) => ({ showSoftDeps: !s.showSoftDeps })),
   edgeStyle: "smooth",
@@ -152,6 +159,9 @@ export const useStore = create<State>((set, get) => ({
 
   selectedId: null,
   select: (id) => set({ selectedId: id }),
+
+  surface: "atlas",
+  setSurface: (surface) => set({ surface }),
 
   paletteOpen: false,
   setPaletteOpen: (o) => set({ paletteOpen: o }),

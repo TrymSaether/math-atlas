@@ -11,11 +11,12 @@ import {
   StickyNote,
   Tag,
   ChevronDown,
+  MessageSquareText,
 } from "lucide-react";
 
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
-import { MathText } from "../lib/katex";
+import { MathText, MathProse } from "../lib/katex";
 import { cn } from "../lib/utils";
 import { getDomainTone } from "../lib/colors";
 import { CATEGORY_META, categoryOf } from "../lib/nodeCategory";
@@ -109,6 +110,12 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const formalStatement = node.formalStatement.trim();
   const explanation = node.explanation.trim();
   const solution = node.solution.trim();
+  const gloss = node.gloss.trim();
+  const example = node.example.trim();
+  const diagramPath = node.diagramPath.trim();
+  // For dictionary-origin nodes the gloss seeds the intuition, so suppress the
+  // duplicate.
+  const showGloss = gloss && gloss !== explanation;
 
   return (
     <>
@@ -154,11 +161,25 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
 
         <Divider />
 
+        {diagramPath && (
+          <>
+            <img
+              src={diagramPath}
+              alt={`Diagram for ${node.title}`}
+              loading="lazy"
+              decoding="async"
+              className="w-full rounded-[10px] border p-2"
+              style={{ background: "var(--surface-2)", borderColor: "var(--border)" }}
+            />
+            <Divider />
+          </>
+        )}
+
         {statement && (
           <>
             <SectionHeader icon={<BookOpen className="h-[15px] w-[15px]" />} title="Statement" />
             <div className="text-[13.5px] leading-[1.6]" style={{ color: "var(--fg-1)" }}>
-              <MathText text={statement} />
+              <MathProse text={statement} />
             </div>
             <Divider />
           </>
@@ -196,6 +217,26 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
             <SectionHeader icon={<StickyNote className="h-[15px] w-[15px]" />} title="Solution" />
             <div className="text-[13.5px] leading-[1.6]" style={{ color: "var(--fg-1)" }}>
               <MathText text={solution} />
+            </div>
+            <Divider />
+          </>
+        )}
+
+        {showGloss && (
+          <>
+            <SectionHeader icon={<MessageSquareText className="h-[15px] w-[15px]" />} title="In words" />
+            <div className="text-[13.5px] leading-[1.6]" style={{ color: "var(--fg-1)" }}>
+              <MathProse text={gloss} />
+            </div>
+            <Divider />
+          </>
+        )}
+
+        {example && (
+          <>
+            <SectionHeader icon={<Beaker className="h-[15px] w-[15px]" />} title="Example" />
+            <div className="text-[13.5px] leading-[1.6]" style={{ color: "var(--fg-2)" }}>
+              <MathProse text={example} />
             </div>
             <Divider />
           </>
@@ -305,6 +346,12 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
           <dd style={{ color: "var(--fg-2)" }}>{domain?.label ?? node.topicCluster}</dd>
           <dt style={{ color: "var(--fg-3)" }}>Source</dt>
           <dd style={{ color: "var(--fg-2)" }}>{node.chapter} · {node.section || "unranked"} · #{node.number}</dd>
+          {node.ref && (
+            <>
+              <dt style={{ color: "var(--fg-3)" }}>Reference</dt>
+              <dd style={{ color: "var(--fg-2)" }}>{node.ref}</dd>
+            </>
+          )}
           <dt style={{ color: "var(--fg-3)" }}>ID</dt>
           <dd className="truncate font-mono text-[11px]" style={{ color: "var(--fg-2)" }} title={node.id}>
             {node.id}

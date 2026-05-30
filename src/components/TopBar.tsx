@@ -5,7 +5,7 @@ import { useStore, type EdgeStyle } from "../store";
 import { THEMES, schemeFor, siblingOf } from "../lib/themes";
 import { cn } from "../lib/utils";
 import { getDomainTone } from "../lib/colors";
-import { KIND_LABEL } from "../types";
+import { CATEGORY_META, kindsByCategory } from "../lib/nodeCategory";
 import { LogoMark } from "./Logo";
 
 export function TopBar() {
@@ -156,23 +156,26 @@ function SearchBox() {
 }
 
 function DictionaryButton() {
+  const surface = useStore((s) => s.surface);
+  const setSurface = useStore((s) => s.setSurface);
+  const active = surface === "dictionary";
   return (
-    <a
-      href="/topology-dictionary.html"
-      target="_blank"
-      rel="noopener noreferrer"
+    <button
+      type="button"
+      onClick={() => setSurface(active ? "atlas" : "dictionary")}
       className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
       style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        color: "var(--fg-2)",
+        background: active ? "var(--accent)" : "var(--surface)",
+        borderColor: active ? "var(--accent)" : "var(--border)",
+        color: active ? "var(--surface)" : "var(--fg-2)",
         boxShadow: "var(--shadow-1)",
       }}
       aria-label="Topology Dictionary"
-      title="Topology Dictionary"
+      aria-pressed={active}
+      title={active ? "Back to atlas" : "Topology Dictionary"}
     >
       <BookOpen className="h-4 w-4" />
-    </a>
+    </button>
   );
 }
 
@@ -220,8 +223,6 @@ function FilterPopover() {
   const resetTopics = useStore((s) => s.resetTopics);
   const showSoftDeps = useStore((s) => s.showSoftDeps);
   const toggleSoftDeps = useStore((s) => s.toggleSoftDeps);
-  const showExercises = useStore((s) => s.showExercises);
-  const toggleExercises = useStore((s) => s.toggleExercises);
   if (!map) return null;
 
   return (
@@ -274,16 +275,18 @@ function FilterPopover() {
         className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.14em]"
         style={{ color: "var(--fg-3)" }}
       >
-        Kinds
+        Categories
       </div>
       <div className="flex flex-wrap gap-1.5">
-        {map.kinds.map((k) => {
-          const active = kinds.has(k);
+        {kindsByCategory(map.kinds).map(({ category, kinds: groupKinds }) => {
+          const meta = CATEGORY_META[category];
+          const Icon = meta.icon;
+          const active = groupKinds.every((k) => kinds.has(k));
           return (
             <button
-              key={k}
-              onClick={() => toggleKind(k)}
-              className="rounded-pill border px-2.5 py-1 text-[11.5px] font-medium transition"
+              key={category}
+              onClick={() => groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))}
+              className="flex items-center gap-1.5 rounded-pill border px-2.5 py-1 text-[11.5px] font-medium transition"
               style={
                 active
                   ? {
@@ -294,7 +297,8 @@ function FilterPopover() {
                   : { background: "var(--surface)", borderColor: "var(--border)", color: "var(--fg-3)" }
               }
             >
-              {KIND_LABEL[k]}
+              <Icon className="h-3 w-3" strokeWidth={2.25} aria-hidden />
+              {meta.label}
             </button>
           );
         })}
@@ -305,11 +309,8 @@ function FilterPopover() {
         className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.14em]"
         style={{ color: "var(--fg-3)" }}
       >
-        On the map
+        Edges
       </div>
-      <SettingRow label="Exercises" hint="Show practice nodes">
-        <ToggleSwitch active={showExercises} onClick={toggleExercises} />
-      </SettingRow>
       <SettingRow label="Soft links" hint="Pedagogical 'learn-first' edges">
         <ToggleSwitch active={showSoftDeps} onClick={toggleSoftDeps} />
       </SettingRow>

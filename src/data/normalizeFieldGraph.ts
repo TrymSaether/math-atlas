@@ -116,6 +116,12 @@ export function normalizeFieldGraph(input: FieldJson): GraphData {
       proofDependencies: [],
       tags: item.metadata?.tags ?? [],
       qualityFlags: [],
+      gloss: item.gloss ?? "",
+      example: item.example ?? "",
+      diagramPath: item.diagram_path ?? "",
+      ref: item.ref ?? "",
+      dictChapter: item.chapter ?? "",
+      related: (item.related ?? []).filter((id) => nodeIds.has(id)),
     };
   });
 

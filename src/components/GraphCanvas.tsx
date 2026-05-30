@@ -4,7 +4,7 @@ import type { LoadedMap } from "../data";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout } from "../lib/atlasLayout";
 import { getDomainTone } from "../lib/colors";
 import { classifyEdge } from "../lib/relationStyle";
-import { categoryOf, isExerciseKind, type NodeCategory } from "../lib/nodeCategory";
+import { categoryOf, type NodeCategory } from "../lib/nodeCategory";
 import { useStore } from "../store";
 import { DomainRegionNode } from "./DomainRegionNode";
 import { Dock } from "./Dock";
@@ -60,7 +60,6 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
   const selectedId = useStore((s) => s.selectedId);
   const focusMode = useStore((s) => s.focusMode);
   const focusDepth = useStore((s) => s.focusDepth);
-  const showExercises = useStore((s) => s.showExercises);
   const showSoftDeps = useStore((s) => s.showSoftDeps);
   const rf = useReactFlow();
 
@@ -72,7 +71,6 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
 
   const filteredNodes = useMemo(() => {
     return data.nodes.filter((node) => {
-      if (!showExercises && isExerciseKind(node.kind)) return false;
       if (!kinds.has(node.kind)) return false;
       if (topics.size && !topics.has(node.domainId)) return false;
       if (search) {
@@ -84,7 +82,7 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
       }
       return true;
     });
-  }, [data.nodes, kinds, topics, search, searchScope, showExercises]);
+  }, [data.nodes, kinds, topics, search, searchScope]);
 
   const visibleIds = useMemo(() => new Set(filteredNodes.map((node) => node.id)), [filteredNodes]);
 

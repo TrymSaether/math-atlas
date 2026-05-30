@@ -111,3 +111,24 @@ export function categoryOf(kind: string): NodeCategory {
 export function isExerciseKind(kind: string): boolean {
   return categoryOf(kind) === "exercise";
 }
+
+/** Categories shown on first load — the concept skeleton without proof detail or practice. */
+export const DEFAULT_VISIBLE_CATEGORIES: NodeCategory[] = [
+  "definition",
+  "result",
+  "construction",
+  "example",
+];
+
+/** Raw kinds present in the map, grouped by category in display order. */
+export function kindsByCategory(kinds: string[]): { category: NodeCategory; kinds: string[] }[] {
+  return CATEGORY_ORDER.map((category) => ({
+    category,
+    kinds: kinds.filter((k) => categoryOf(k) === category),
+  })).filter((group) => group.kinds.length > 0);
+}
+
+/** The default visible kind set: every kind whose category is shown by default. */
+export function defaultVisibleKinds(kinds: string[]): string[] {
+  return kinds.filter((k) => DEFAULT_VISIBLE_CATEGORIES.includes(categoryOf(k)));
+}

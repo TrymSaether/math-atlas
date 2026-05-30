@@ -58,6 +58,15 @@ export const TopoNodeSchema = z.object({
   proofDependencies: StringArraySchema,
   tags: StringArraySchema,
   qualityFlags: StringArraySchema,
+  // Curated dictionary fields (present on topology nodes merged from the
+  // dictionary; empty elsewhere). Drive the dictionary view and the panel's
+  // gloss/example/diagram sections.
+  gloss: OptionalTextSchema,
+  example: OptionalTextSchema,
+  diagramPath: OptionalTextSchema,
+  ref: OptionalTextSchema,
+  dictChapter: OptionalTextSchema,
+  related: StringArraySchema,
 });
 
 export type TopoNode = z.infer<typeof TopoNodeSchema>;
@@ -164,6 +173,13 @@ export const FieldItemSchema = z
       .union([z.string(), z.array(z.string())])
       .nullable()
       .optional(),
+    // Curated dictionary fields, folded in by scripts/reconcile_dictionary.py.
+    chapter: z.string().nullable().optional(),
+    ref: z.string().nullable().optional(),
+    gloss: z.string().nullable().optional(),
+    example: z.string().nullable().optional(),
+    diagram_path: z.string().nullable().optional(),
+    related: z.array(z.string()).default([]),
     assumptions: z.array(z.string()).default([]),
     dependencies: z.record(z.array(z.string())).default({}),
     outgoing_relations: z.array(z.string()).default([]),

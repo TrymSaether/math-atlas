@@ -14,7 +14,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, "index.html"),
-        dictionary: path.resolve(__dirname, "topology-dictionary.html"),
       },
     },
   },

@@ -1,0 +1,289 @@
+/*
+ * Dictionary reading view. Uses the atlas design tokens and fonts (src/index.css)
+ * — no separate palette or typeface — so it reads as the same product as the
+ * graph. Search and filtering are driven by the shared TopBar (⌘K palette +
+ * Filters popover); this view adds only a compact header and sort control.
+ * All rules are scoped under .dictionary-view.
+ */
+
+.dictionary-view {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+}
+
+/* Clears the floating TopBar (top: 12px, ~40px tall). */
+.dictionary-view .dict-wrap {
+  max-width: 1040px;
+  margin-inline: auto;
+  padding: 64px 24px 0;
+}
+
+.dictionary-view .dict-header {
+  padding-block: 8px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dictionary-view .dict-headrow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dictionary-view .dict-kicker {
+  margin: 0;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.dictionary-view .dict-title {
+  margin: 6px 0 0;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--fg-1);
+}
+
+.dictionary-view .dict-sub {
+  margin: 8px 0 0;
+  max-width: 62ch;
+  color: var(--fg-2);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.dictionary-view .dict-sortrow {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.dictionary-view .dict-count {
+  margin-right: 4px;
+  color: var(--fg-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.dictionary-view .dict-chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--fg-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  padding: 4px 10px;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.dictionary-view .dict-chip:hover {
+  border-color: var(--border-strong);
+  color: var(--fg-1);
+}
+
+.dictionary-view .dict-chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.dictionary-view .dict-azbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  margin-top: 12px;
+}
+
+.dictionary-view .dict-azbar a {
+  border-radius: 5px;
+  color: var(--fg-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 6px;
+  text-decoration: none;
+}
+
+.dictionary-view .dict-azbar a:hover {
+  background: var(--surface-2);
+  color: var(--accent);
+}
+
+.dictionary-view .dict-list {
+  padding-block: 12px 80px;
+}
+
+.dictionary-view .dict-letter-head {
+  margin: 24px 0 4px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  scroll-margin-top: 90px;
+}
+
+.dictionary-view .dict-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 280px);
+  align-items: start;
+  gap: 20px;
+  margin-block: 12px;
+  padding: 18px 20px;
+  scroll-margin-top: 90px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+
+.dictionary-view .dict-card.dict-flash {
+  animation: dict-flash 1.4s ease;
+}
+
+@keyframes dict-flash {
+  0% {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+}
+
+.dictionary-view .dict-body {
+  min-width: 0;
+}
+
+.dictionary-view .dict-term {
+  margin: 0 0 8px;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--fg-1);
+}
+
+.dictionary-view .dict-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 12px;
+}
+
+.dictionary-view .dict-tag {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--fg-2);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  padding: 2px 8px;
+}
+
+.dictionary-view .dict-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: auto;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  padding: 2px 6px;
+}
+
+.dictionary-view .dict-open:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+
+.dictionary-view .dict-statement {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  overflow-x: auto;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  background: var(--accent-soft);
+  font-size: 13.5px;
+}
+
+.dictionary-view .dict-lab {
+  display: block;
+  margin: 0 0 3px;
+  color: var(--fg-3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dictionary-view .dict-gloss,
+.dictionary-view .dict-example {
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.dictionary-view .dict-example {
+  color: var(--fg-2);
+}
+
+.dictionary-view .dict-related {
+  border-top: 1px dashed var(--border);
+  padding-top: 10px;
+  font-size: 13px;
+}
+
+.dictionary-view .dict-related a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.dictionary-view .dict-related a:hover {
+  border-color: var(--accent);
+}
+
+.dictionary-view .dict-dia img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  padding: 8px;
+}
+
+.dictionary-view .dict-empty {
+  padding-block: 64px;
+  color: var(--fg-3);
+  font-style: italic;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .dictionary-view .dict-headrow {
+    flex-direction: column;
+  }
+  .dictionary-view .dict-card {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+  .dictionary-view .dict-dia {
+    order: -1;
+  }
+}

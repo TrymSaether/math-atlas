@@ -4,6 +4,7 @@ import { Background } from "./components/Background";
 import { TopBar } from "./components/TopBar";
 import { GraphCanvas } from "./components/GraphCanvas";
 import { NodePanel } from "./components/NodePanel";
+import { DictionaryView } from "./components/DictionaryView";
 import { CommandPalette } from "./components/CommandPalette";
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
 import { useStore } from "./store";
@@ -16,6 +17,7 @@ export default function App() {
   const loadingMapId = useStore((s) => s.loadingMapId);
   const mapError = useStore((s) => s.mapError);
   const ensureMapLoaded = useStore((s) => s.ensureMapLoaded);
+  const surface = useStore((s) => s.surface);
 
   useEffect(() => {
     void ensureMapLoaded(mapId);
@@ -38,10 +40,14 @@ export default function App() {
         <Background />
         <main className="absolute inset-0">
           {map ? (
-            <>
-              <GraphCanvas />
-              <NodePanel />
-            </>
+            surface === "dictionary" ? (
+              <DictionaryView />
+            ) : (
+              <>
+                <GraphCanvas />
+                <NodePanel />
+              </>
+            )
           ) : (
             <div
               className="flex h-full items-center justify-center px-6 text-center text-sm"

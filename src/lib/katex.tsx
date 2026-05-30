@@ -28,6 +28,35 @@ function escape(s: string) {
     .replace(/>/g, "&gt;");
 }
 
+/** Lightweight LaTeX text-mode markup for prose segments outside $…$ math. */
+function renderTextMarkup(value: string): string {
+  return escape(value)
+    .replace(/\\textbf\{([^{}]*)\}/g, "<strong>$1</strong>")
+    .replace(/\\(?:textit|emph)\{([^{}]*)\}/g, "<em>$1</em>")
+    .replace(/\\text\{([^{}]*)\}/g, "$1")
+    .replace(/\\;/g, " ")
+    .replace(/\\ /g, " ");
+}
+
+function renderProseInString(text: string): string {
+  return splitMathSegments(text)
+    .map((segment) =>
+      segment.type === "text" ? renderTextMarkup(segment.value) : renderKatex(segment.value, segment.display),
+    )
+    .join("");
+}
+
+/**
+ * Like {@link MathText}, but also resolves common LaTeX text-mode markup
+ * (\textbf, \textit/\emph, \text) in the prose between math spans. Used by the
+ * dictionary view, whose curated statements mix prose and TeX.
+ */
+export function MathProse({ text, className, asBlock = false }: { text: string; className?: string; asBlock?: boolean }) {
+  const html = useMemo(() => renderProseInString(text), [text]);
+  const Tag = asBlock ? "div" : "span";
+  return <Tag className={className} dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
 export function renderKatex(src: string, display: boolean): string {
   try {
     return katex.renderToString(src, {
