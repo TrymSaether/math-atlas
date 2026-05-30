@@ -681,7 +681,7 @@
     "chapter": "3",
     "statement": "Let $X$ and $Y$ be topological spaces. A \\textbf{homeomorphism} is a bijective map $f\\colon X\\to Y$ such that both $f$ and $f^{-1}\\colon Y\\to X$ are continuous. If such a map exists, we write $X\\cong Y$ and say that $X$ and $Y$ are \\textbf{homeomorphic}.",
     "gloss": "The notion of sameness in topology: two spaces are homeomorphic when one can be transformed into the other by a reversible continuous deformation. their open-set structures correspond perfectly in both directions.",
-    "example": "The map $f\\colon \\mathbb{R}\\to\\mathbb{R}$, $f(x)=2x-1$, is a homeomorphism with inverse $f^{-1}(y)=\\frac{y+1}{2}$. A continuous bijection need <em>not</em> be a homeomorphism: if $X$ has at least two points, then $\\mathrm{id}\\colon X_{\\mathrm{disc}}\\to X_{\\mathrm{ind}}$ is continuous and bijective, but its inverse is not continuous.",
+    "example": "The map $f\\colon \\mathbb{R}\\to\\mathbb{R}$, $f(x)=2x-1$, is a homeomorphism with inverse $f^{-1}(y)=\\frac{y+1}{2}$. A continuous bijection need \\emph{not} be a homeomorphism: if $X$ has at least two points, then $\\mathrm{id}\\colon X_{\\mathrm{disc}}\\to X_{\\mathrm{ind}}$ is continuous and bijective, but its inverse is not continuous.",
     "related": [
       "topological-property",
       "continuous-map-top",
@@ -700,7 +700,7 @@
     "chapter": "7",
     "statement": "Continuous maps $f_0,f_1\\colon X\\to Y$ are \\textbf{homotopic} ($f_0\\simeq f_1$) if there is a continuous $H\\colon X\\times I\\to Y$ with $H(x,0)=f_0(x)$ and $H(x,1)=f_1(x)$. $H$ is a \\textbf{homotopy}.",
     "gloss": "A continuous one-parameter deformation of one map into another. Think of $t\\in[0,1]$ as time, sliding $f_0$ to $f_1$.",
-    "example": "If $f_0\\simeq f_1$ with $f_1$ constant, $f_0$ is <em>nullhomotopic</em>. Any two maps into $\\mathbb{R}^n$ are homotopic via the straight-line homotopy.",
+    "example": "If $f_0\\simeq f_1$ with $f_1$ constant, $f_0$ is \\emph{nullhomotopic}. Any two maps into $\\mathbb{R}^n$ are homotopic via the straight-line homotopy.",
     "related": [
       "nullhomotopic",
       "path-homotopy",
@@ -816,7 +816,7 @@
     "chapter": "3",
     "statement": "On any set $X$, the \\textbf{indiscrete topology} is $\\mathcal{T}_{\\mathrm{ind}}=\\{\\varnothing,X\\}$.",
     "gloss": "The coarsest possible topology — the only open sets are the empty set and the whole space. Points are topologically indistinguishable.",
-    "example": "For any topology $\\mathcal{T}$ on $X$ we have $\\mathcal{T}_{\\mathrm{ind}}\\subseteq\\mathcal{T}\\subseteq\\mathcal{T}_{\\mathrm{disc}}$. Every map <em>into</em> an indiscrete space is continuous.",
+    "example": "For any topology $\\mathcal{T}$ on $X$ we have $\\mathcal{T}_{\\mathrm{ind}}\\subseteq\\mathcal{T}\\subseteq\\mathcal{T}_{\\mathrm{disc}}$. Every map \\emph{into} an indiscrete space is continuous.",
     "related": [
       "discrete-topology",
       "comparable-topologies",
@@ -861,7 +861,7 @@
     "chapter": "A",
     "statement": "$A\\cap B=\\{x\\mid x\\in A\\ \\text{and}\\ x\\in B\\}$ and $A\\cup B=\\{x\\mid x\\in A\\ \\text{or}\\ x\\in B\\}$ (inclusive “or”).",
     "gloss": "Intersection keeps common elements; union pools both. They are commutative, associative, and distribute over each other.",
-    "example": "$A,B$ are <em>disjoint</em> when $A\\cap B=\\varnothing$. Always $A\\cap B\\subseteq A\\subseteq A\\cup B$.",
+    "example": "$A,B$ are \\emph{disjoint} when $A\\cap B=\\varnothing$. Always $A\\cap B\\subseteq A\\subseteq A\\cup B$.",
     "related": ["subset", "set-difference", "complement"],
     "diagramPath": "/atlas-assets/diagrams/intersection-union.svg"
   },
@@ -872,7 +872,7 @@
     "ref": "Thm. 4.1",
     "chapter": "4",
     "statement": "If $\\mathcal{T}_1,\\mathcal{T}_2$ are topologies on $X$, then $\\mathcal{T}_1\\cap\\mathcal{T}_2$ is a topology. More generally $\\bigcap_{\\lambda}\\mathcal{T}_\\lambda$ is a topology for any family.",
-    "gloss": "Topologies are closed under intersection — the basis for “generating” the smallest topology containing a given collection. The <em>union</em> of topologies generally is not a topology.",
+    "gloss": "Topologies are closed under intersection — the basis for “generating” the smallest topology containing a given collection. The \\emph{union} of topologies generally is not a topology.",
     "example": "On $\\{a,b,c\\}$, intersecting two topologies can give $\\{\\varnothing,X\\}$ while their union fails T2.",
     "related": ["generated-topology", "topological-space"],
     "diagramPath": "/atlas-assets/diagrams/intersection-topologies.svg"
@@ -972,7 +972,7 @@
     "chapter": "2",
     "statement": "A \\textbf{metric space} $(X,d)$ is a non-empty set $X$ with a map $d\\colon X\\times X\\to\\mathbb{R}$ such that for all $x,y,z\\in X$: $$\\begin{aligned} \\textbf{(M1)}\\quad d(x,y) &\\ge 0,\\ \\text{and}\\ d(x,y)=0\\Leftrightarrow x=y \\\\ \\textbf{(M2)}\\quad d(x,y) &= d(y,x) \\\\ \\textbf{(M3)}\\quad d(x,z) &\\le d(x,y)+d(y,z). \\end{aligned}$$",
     "gloss": "A set equipped with a notion of distance. The three axioms say distance is non-negative (and zero only between identical points), symmetric, and obeys the triangle inequality.",
-    "example": "$\\mathbb{R}^n$ with $d(x,y)=\\lVert x-y\\rVert$ is the prototype. The <em>discrete metric</em> ($d(x,y)=1$ for $x\\neq y$, else $0$) makes any set a metric space.",
+    "example": "$\\mathbb{R}^n$ with $d(x,y)=\\lVert x-y\\rVert$ is the prototype. The \\emph{discrete metric} ($d(x,y)=1$ for $x\\neq y$, else $0$) makes any set a metric space.",
     "related": [
       "open-closed-ball",
       "open-closed-set-metric",
@@ -1051,7 +1051,7 @@
     "chapter": "7",
     "statement": "A map $f$ is \\textbf{nullhomotopic} if $f\\simeq c$ for some constant map $c$.",
     "gloss": "The map can be continuously shrunk to a single point. Loops being nullhomotopic is what makes a space simply connected.",
-    "example": "Every map into $\\mathbb{R}^n$ is nullhomotopic; the identity $S^1\\to S^1$ is <em>not</em>.",
+    "example": "Every map into $\\mathbb{R}^n$ is nullhomotopic; the identity $S^1\\to S^1$ is \\emph{not}.",
     "related": ["homotopy", "simply-connected", "fundamental-group"],
     "diagramPath": "/atlas-assets/diagrams/nullhomotopic.svg"
   },
@@ -1062,7 +1062,7 @@
     "ref": "Def. 2.9",
     "chapter": "2",
     "statement": "$A\\subseteq X$ is \\textbf{open} if every $a\\in A$ has an open ball $\\mathsf{B}(a;r)\\subseteq A$. It is \\textbf{closed} if its complement $A^c=X\\setminus A$ is open.",
-    "gloss": "Open means every point sits inside the set with a little room to spare. Closed is defined by its complement. Most sets are neither; sets that are both are called <em>clopen</em>.",
+    "gloss": "Open means every point sits inside the set with a little room to spare. Closed is defined by its complement. Most sets are neither; sets that are both are called \\emph{clopen}.",
     "example": "Open balls are open and closed balls are closed (Lemma 2.10). Both $\\varnothing$ and $X$ are clopen.",
     "related": [
       "open-closed-ball",
@@ -1095,7 +1095,7 @@
     "ref": "Def. 5.19",
     "chapter": "5",
     "statement": "A continuous $f\\colon X\\to Y$ is an \\textbf{open map} if $f(U)$ is open for every open $U$, and a \\textbf{closed map} if $f(V)$ is closed for every closed $V$.",
-    "gloss": "These push openness/closedness <em>forward</em>, unlike continuity which pulls openness back. They are the tool linking quotient maps to homeomorphisms.",
+    "gloss": "These push openness/closedness \\emph{forward}, unlike continuity which pulls openness back. They are the tool linking quotient maps to homeomorphisms.",
     "example": "Every homeomorphism is both open and closed, but $\\mathbb{R}\\to\\{*\\}$ is open and closed yet not a homeomorphism.",
     "related": [
       "quotient-space",
@@ -1371,7 +1371,7 @@
     "ref": "near 3.19",
     "chapter": "3",
     "statement": "A \\textbf{topological property} is any property expressible in terms of points and open sets; such properties are preserved by homeomorphisms. A \\textbf{topological invariant} is a quantity invariant under homeomorphism.",
-    "gloss": "These are exactly the features topology can see. If $X\\cong Y$ and $X$ has the property, so does $Y$ — hence invariants can prove two spaces are <em>not</em> homeomorphic.",
+    "gloss": "These are exactly the features topology can see. If $X\\cong Y$ and $X$ has the property, so does $Y$ — hence invariants can prove two spaces are \\emph{not} homeomorphic.",
     "example": "Connectedness, compactness, Hausdorffness and the fundamental group are all topological invariants.",
     "related": [
       "homeomorphism",
@@ -1467,7 +1467,7 @@
     "ref": "Thm. 5.26",
     "chapter": "5",
     "statement": "The quotient topology is the unique topology on $A$ such that for every space $Y$ and every map $f\\colon A\\to Y$: $f$ is continuous iff $f\\circ\\pi\\colon X\\to Y$ is continuous.",
-    "gloss": "A clean test: a map <em>out of</em> a quotient is continuous exactly when its composite with $\\pi$ is. This characterises the quotient topology completely.",
+    "gloss": "A clean test: a map \\emph{out of} a quotient is continuous exactly when its composite with $\\pi$ is. This characterises the quotient topology completely.",
     "example": "Lets you define continuous maps on glued spaces by defining them on $X$ in a $\\sim$-compatible way.",
     "related": ["quotient-space", "composition-continuous"],
     "diagramPath": "/atlas-assets/diagrams/quotient-universal.svg"

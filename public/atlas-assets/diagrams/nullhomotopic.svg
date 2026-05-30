@@ -13,5 +13,5 @@
     <!-- arrows showing contraction direction -->
     <text x="222" y="99" font-size="16" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">←</text>
     <!-- caption -->
-    <text x="160" y="175" font-size="10" fill="var(--dia-acc,#a8431d)" text-anchor="middle">f ≃ const_{x₀}</text>
+    <text x="160" y="175" font-size="10" fill="var(--dia-acc,#a8431d)" text-anchor="middle">f ≃ const<tspan baseline-shift="sub" font-size="7">x₀</tspan></text>
 </svg>

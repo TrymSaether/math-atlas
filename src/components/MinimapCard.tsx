@@ -5,9 +5,9 @@ import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, type DomainBounds } from "../lib/a
 import { getMutedDomainTone } from "../lib/colors";
 import type { GraphNode } from "../types";
 
-const MAX_W = 148;
-const MAX_H = 220;
-const PAD = 8;
+const MAX_W = 132;
+const MAX_H = 196;
+const PAD = 5;
 
 interface MiniPoint {
   id: string;
@@ -106,13 +106,10 @@ export function MinimapCard({
 
   return (
     <div
-      className="absolute top-[68px] z-20 hidden rounded-[16px] border p-2 shadow-[var(--shadow-2)] md:block"
+      className="absolute bottom-4 left-4 z-20 hidden rounded-[10px] border p-1 md:block"
       style={{
-        right: selectedId ? "calc(min(380px, 42vw) + 28px)" : 16,
-        background: "color-mix(in srgb, var(--surface) 86%, transparent)",
+        background: "var(--surface)",
         borderColor: "var(--border)",
-        backdropFilter: "blur(12px) saturate(1.15)",
-        transition: "right 0.22s cubic-bezier(0.2,0.7,0.2,1)",
       }}
     >
       <svg
@@ -120,8 +117,8 @@ export function MinimapCard({
         width={W}
         height={H}
         onClick={handleClick}
-        className="block cursor-pointer rounded-[10px]"
-        style={{ background: "color-mix(in srgb, var(--bg-deep) 64%, var(--surface))" }}
+        className="block cursor-pointer rounded-[7px]"
+        style={{ background: "transparent" }}
       >
         {[...regions.entries()].map(([domainId, region]) => {
           const tone = getMutedDomainTone(domainId);

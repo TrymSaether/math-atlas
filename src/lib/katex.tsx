@@ -28,9 +28,17 @@ function escape(s: string) {
     .replace(/>/g, "&gt;");
 }
 
+function restoreAllowedInlineHtml(value: string): string {
+  return value
+    .replace(/&lt;(\/?)em&gt;/g, "<$1em>")
+    .replace(/&lt;(\/?)i&gt;/g, "<$1em>")
+    .replace(/&lt;(\/?)strong&gt;/g, "<$1strong>")
+    .replace(/&lt;(\/?)b&gt;/g, "<$1strong>");
+}
+
 /** Lightweight LaTeX text-mode markup for prose segments outside $…$ math. */
 function renderTextMarkup(value: string): string {
-  return escape(value)
+  return restoreAllowedInlineHtml(escape(value))
     .replace(/\\textbf\{([^{}]*)\}/g, "<strong>$1</strong>")
     .replace(/\\(?:textit|emph)\{([^{}]*)\}/g, "<em>$1</em>")
     .replace(/\\text\{([^{}]*)\}/g, "$1")

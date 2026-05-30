@@ -1,45 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  X,
-  Lightbulb,
-  Sigma,
-  BookOpen,
-  Link as LinkIcon,
-  ArrowUpRight,
-  Beaker,
-  StickyNote,
-  ChevronDown,
-  MessageSquareText,
-  FileText,
-} from "lucide-react";
+import { X, ChevronUp, ChevronDown, BookOpen } from "lucide-react";
 
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse } from "../lib/katex";
-import { cn } from "../lib/utils";
 import { getDomainTone } from "../lib/colors";
-import { CATEGORY_META, categoryOf } from "../lib/nodeCategory";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { ThemedDiagram } from "./ThemedDiagram";
+import { Spine, Facet, ConnectionChip, specimenMeta } from "./Specimen";
 
-const USED_BY_INITIAL = 6;
+const USED_BY_INITIAL = 8;
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample", "application", "conjecture"]);
-const KIND_SHORT_LABEL: Record<string, string> = {
-  definition: "Def",
-  theorem: "Thm",
-  lemma: "Lem",
-  proposition: "Prop",
-  corollary: "Cor",
-  example: "Ex",
-  non_example: "Non-ex",
-  counterexample: "Cex",
-  application: "App",
-  conjecture: "Conj",
-  exercise: "Exr",
-  construction: "Const",
-  structure: "Struct",
-};
+
+interface SectionDef {
+  id: string;
+  label: string;
+}
 
 export function NodePanel() {
   const mapId = useStore((s) => s.mapId);
@@ -57,7 +34,7 @@ export function NodePanel() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 16 }}
           transition={{ duration: 0.22, ease: [0.2, 0.7, 0.2, 1] }}
-          className="pointer-events-auto absolute left-3 right-3 top-[68px] bottom-3 z-20 flex flex-col overflow-hidden rounded-[14px] border sm:left-auto sm:w-[min(440px,calc(100vw-24px))]"
+          className="pointer-events-auto absolute left-3 right-3 top-[68px] bottom-3 z-20 flex flex-col overflow-hidden rounded-[16px] border sm:left-auto sm:w-[min(480px,calc(100vw-24px))]"
           style={{ background: "var(--surface)", borderColor: "var(--border)", boxShadow: "var(--shadow-3)" }}
         >
           <PanelContent node={node} map={map} onClose={() => select(null)} />
@@ -69,14 +46,11 @@ export function NodePanel() {
 
 function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap; onClose: () => void }) {
   const select = useStore((s) => s.select);
+  const setSurface = useStore((s) => s.setSurface);
   const domain = map.domainById.get(node.domainId);
   const tone = getDomainTone(node.domainId);
-  const [openDeps, setOpenDeps] = useState(true);
-  const [openUsed, setOpenUsed] = useState(true);
-  const [openExamples, setOpenExamples] = useState(true);
-  const [openExercises, setOpenExercises] = useState(false);
-  const [openReferences, setOpenReferences] = useState(false);
   const [showAllUsed, setShowAllUsed] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const prereqIds = useMemo(
@@ -87,22 +61,19 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
     () => (map.outgoingEdgesByNodeId.get(node.id) ?? []).map((edge) => edge.to),
     [map, node.id],
   );
-  const examples = useMemo(
-    () => {
-      const ids = new Set<string>();
-      for (const edge of map.outgoingEdgesByNodeId.get(node.id) ?? []) {
-        if (edge.relation === "has_example" || edge.relation === "has_counterexample") ids.add(edge.to);
-      }
-      for (const edge of map.incomingEdgesByNodeId.get(node.id) ?? []) {
-        if (edge.relation === "has_property" || edge.relation === "motivates") ids.add(edge.from);
-      }
-      return [...ids].filter((cid) => {
-        const n = map.nodeById.get(cid);
-        return n && RELATED_CASE_KINDS.has(n.kind);
-      });
-    },
-    [map, node.id],
-  );
+  const examples = useMemo(() => {
+    const ids = new Set<string>();
+    for (const edge of map.outgoingEdgesByNodeId.get(node.id) ?? []) {
+      if (edge.relation === "has_example" || edge.relation === "has_counterexample") ids.add(edge.to);
+    }
+    for (const edge of map.incomingEdgesByNodeId.get(node.id) ?? []) {
+      if (edge.relation === "has_property" || edge.relation === "motivates") ids.add(edge.from);
+    }
+    return [...ids].filter((cid) => {
+      const n = map.nodeById.get(cid);
+      return n && RELATED_CASE_KINDS.has(n.kind);
+    });
+  }, [map, node.id]);
   const exercises = useMemo(
     () =>
       (map.outgoingEdgesByNodeId.get(node.id) ?? [])
@@ -121,6 +92,15 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
     [allConsequences, map],
   );
 
+  // Ordered domain peers drive the prev/next pager in the header.
+  const peers = useMemo(
+    () => map.data.nodes.filter((n) => n.domainId === node.domainId),
+    [map, node.domainId],
+  );
+  const peerIdx = peers.findIndex((n) => n.id === node.id);
+  const prev = peerIdx > 0 ? peers[peerIdx - 1] : null;
+  const next = peerIdx >= 0 && peerIdx < peers.length - 1 ? peers[peerIdx + 1] : null;
+
   const visibleUsed = showAllUsed ? usedBy : usedBy.slice(0, USED_BY_INITIAL);
   const hiddenUsedCount = usedBy.length - visibleUsed.length;
 
@@ -131,398 +111,322 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const gloss = node.gloss.trim();
   const example = node.example.trim();
   const diagramPath = node.diagramPath.trim();
-  // For dictionary-origin nodes the gloss seeds the intuition, so suppress the
-  // duplicate.
   const showGloss = gloss && gloss !== explanation;
+  const hasConnections =
+    prereqIds.length > 0 || usedBy.length > 0 || examples.length > 0 || exercises.length > 0;
+
+  // The nav rail mirrors exactly the sections rendered, in order.
+  const sections = useMemo<SectionDef[]>(() => {
+    const list: SectionDef[] = [];
+    if (diagramPath) list.push({ id: "diagram", label: "Figure" });
+    if (statement) list.push({ id: "statement", label: "Statement" });
+    if (formalStatement) list.push({ id: "formal", label: "Formal" });
+    if (explanation) list.push({ id: "intuition", label: "Intuition" });
+    if (solution) list.push({ id: "solution", label: "Solution" });
+    if (showGloss) list.push({ id: "inwords", label: "In words" });
+    if (example) list.push({ id: "example", label: "Example" });
+    if (hasConnections) list.push({ id: "connections", label: "Links" });
+    list.push({ id: "metadata", label: "Meta" });
+    return list;
+  }, [diagramPath, statement, formalStatement, explanation, solution, showGloss, example, hasConnections]);
 
   useEffect(() => {
+    setShowAllUsed(false);
     scrollRef.current?.scrollTo({ top: 0 });
-  }, [node.id]);
+    setActiveSection(sections[0]?.id ?? "");
+  }, [node.id, sections]);
+
+  // Scroll-spy: light up the rail dot for the section nearest the top.
+  useEffect(() => {
+    const root = scrollRef.current;
+    if (!root) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActiveSection(visible[0].target.id.replace("sec-", ""));
+      },
+      { root, rootMargin: "0px 0px -65% 0px", threshold: 0 },
+    );
+    for (const s of sections) {
+      const el = root.querySelector(`#sec-${s.id}`);
+      if (el) observer.observe(el);
+    }
+    return () => observer.disconnect();
+  }, [sections, node.id]);
+
+  const jumpTo = (id: string) => {
+    const el = scrollRef.current?.querySelector(`#sec-${id}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActiveSection(id);
+  };
+
+  const openInDictionary = () => {
+    select(node.id);
+    setSurface("dictionary");
+  };
 
   return (
     <>
-      <div className="relative border-b px-6 pb-5 pt-5" style={{ borderColor: "var(--border-subtle)" }}>
-        <button
-          onClick={onClose}
-          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
-          style={{ color: "var(--fg-2)" }}
-          aria-label="Close"
-        >
-          <X className="h-4 w-4" />
-        </button>
-        <h2
-          className="pr-9 font-serif text-[30px] leading-[1.05]"
-          style={{ color: "var(--fg-1)" }}
-        >
+      {/* Sticky header */}
+      <header
+        className="relative shrink-0 border-b px-5 pb-4 pt-3"
+        style={{ borderColor: "var(--border-subtle)", background: "var(--surface)" }}
+      >
+        <div className="mb-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-0.5">
+            <IconButton label="Previous in domain" disabled={!prev} onClick={() => prev && select(prev.id)}>
+              <ChevronUp className="h-4 w-4" />
+            </IconButton>
+            <IconButton label="Next in domain" disabled={!next} onClick={() => next && select(next.id)}>
+              <ChevronDown className="h-4 w-4" />
+            </IconButton>
+            {peerIdx >= 0 && (
+              <span className="ml-1.5 font-mono text-[10.5px]" style={{ color: "var(--fg-3)" }}>
+                {peerIdx + 1}/{peers.length}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-0.5">
+            <IconButton label="Open in dictionary" onClick={openInDictionary}>
+              <BookOpen className="h-4 w-4" />
+            </IconButton>
+            <IconButton label="Close" onClick={onClose}>
+              <X className="h-4 w-4" />
+            </IconButton>
+          </div>
+        </div>
+        <h2 className="font-serif text-[27px] leading-[1.08]" style={{ color: "var(--fg-1)" }}>
           <MathText text={node.title} />
         </h2>
-
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          <TagPill
-            label={domain?.label ?? node.topicCluster}
-            background={tone.tint}
-            color={tone.color}
-            border={tone.border}
-          />
-          <TagPill label={KIND_LABEL[node.kind]} neutral />
-          {node.tags.slice(0, 3).map((t) => (
-            <TagPill key={t} label={t} neutral />
-          ))}
+        <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px]">
+          <span className="inline-flex items-center gap-1.5 font-medium" style={{ color: tone.color }}>
+            <span className="h-2 w-2 rounded-full" style={{ background: tone.color }} />
+            {domain?.label ?? node.topicCluster}
+          </span>
+          <span aria-hidden style={{ color: "var(--fg-4)" }}>·</span>
+          <span style={{ color: "var(--fg-2)" }}>{specimenMeta(node)}</span>
         </div>
-        <div className="mt-3 flex min-w-0 items-center gap-2 text-[11px]" style={{ color: "var(--fg-3)" }}>
-          <span className="font-mono" title={node.id}>{node.id}</span>
-          {node.sectionTitle && (
-            <>
-              <span aria-hidden>·</span>
-              <span className="truncate">{node.sectionTitle}</span>
-            </>
+      </header>
+
+      <div className="flex min-h-0 flex-1">
+        {/* Scroll-spy nav rail */}
+        {sections.length > 1 && (
+          <nav
+            className="hidden shrink-0 flex-col gap-0.5 border-r py-4 pl-3 pr-2 sm:flex"
+            style={{ borderColor: "var(--border-subtle)", width: 104 }}
+            aria-label="Section navigation"
+          >
+            {sections.map((s) => {
+              const active = activeSection === s.id;
+              return (
+                <button
+                  key={s.id}
+                  onClick={() => jumpTo(s.id)}
+                  className="group flex items-center gap-2 rounded-md py-1 pl-1 pr-0.5 text-left transition-colors"
+                  style={{ color: active ? "var(--fg-1)" : "var(--fg-3)" }}
+                >
+                  <span
+                    className="h-1.5 w-1.5 shrink-0 rounded-full transition-all"
+                    style={{
+                      background: active ? tone.color : "var(--border-strong)",
+                      transform: active ? "scale(1.35)" : "scale(1)",
+                    }}
+                  />
+                  <span className="truncate text-[11px] font-medium">{s.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        )}
+
+        {/* Content */}
+        <div ref={scrollRef} className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-5">
+          {diagramPath && (
+            <section id="sec-diagram">
+              <ThemedDiagram
+                src={diagramPath}
+                alt={`Diagram for ${node.title}`}
+                className="w-full rounded-[12px] border p-3"
+              />
+            </section>
           )}
-        </div>
-      </div>
 
-      <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-6 pb-7">
-        {diagramPath && (
-          <>
-            <ThemedDiagram
-              src={diagramPath}
-              alt={`Diagram for ${node.title}`}
-              className="w-full rounded-[10px] border p-2"
-            />
-            <Divider />
-          </>
-        )}
+          {statement && (
+            <section id="sec-statement">
+              <Spine tone={tone} kind={node.kind} label="Statement">
+                <MathProse text={statement} />
+              </Spine>
+            </section>
+          )}
 
-        {statement && (
-          <>
-            <SectionHeader icon={<BookOpen className="h-[15px] w-[15px]" />} title="Statement" />
-            <div className="font-math text-[15px] leading-[1.65]" style={{ color: "var(--fg-1)" }}>
-              <MathProse text={statement} />
-            </div>
-            <Divider />
-          </>
-        )}
+          {formalStatement && (
+            <section id="sec-formal">
+              <Facet label="Formal statement" toneColor={tone.color}>
+                <div
+                  className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-[14px] leading-[1.6]"
+                  style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
+                >
+                  <MathText text={formalStatement} asBlock />
+                </div>
+              </Facet>
+            </section>
+          )}
 
-        {formalStatement && (
-          <>
-            <SectionHeader icon={<Sigma className="h-[15px] w-[15px]" />} title="Formal statement" />
-            <div
-              className="block max-w-full overflow-x-auto rounded-[10px] border px-4 py-3 font-math text-[14px] leading-[1.6]"
-              style={{
-                background: "var(--accent-soft)",
-                borderColor: "var(--accent-border)",
-                color: "var(--fg-1)",
-              }}
-            >
-              <MathText text={formalStatement} asBlock />
-            </div>
-            <Divider />
-          </>
-        )}
+          {explanation && (
+            <section id="sec-intuition">
+              <Facet label="Intuition">
+                <MathProse text={explanation} />
+              </Facet>
+            </section>
+          )}
 
-        {explanation && (
-          <>
-            <SectionHeader icon={<Lightbulb className="h-[15px] w-[15px]" />} title="Intuition" />
-            <div className="text-[13.5px] leading-[1.6]" style={{ color: "var(--fg-1)" }}>
-              <MathText text={explanation} />
-            </div>
-            <Divider />
-          </>
-        )}
+          {solution && (
+            <section id="sec-solution">
+              <Facet label="Solution">
+                <MathProse text={solution} />
+              </Facet>
+            </section>
+          )}
 
-        {solution && (
-          <>
-            <SectionHeader icon={<StickyNote className="h-[15px] w-[15px]" />} title="Solution" />
-            <div className="text-[13.5px] leading-[1.6]" style={{ color: "var(--fg-1)" }}>
-              <MathText text={solution} />
-            </div>
-            <Divider />
-          </>
-        )}
+          {showGloss && (
+            <section id="sec-inwords">
+              <Facet label="In words">
+                <MathProse text={gloss} />
+              </Facet>
+            </section>
+          )}
 
-        {showGloss && (
-          <>
-            <SectionHeader icon={<MessageSquareText className="h-[15px] w-[15px]" />} title="In words" />
-            <div className="text-[13.5px] leading-[1.6]" style={{ color: "var(--fg-1)" }}>
-              <MathProse text={gloss} />
-            </div>
-            <Divider />
-          </>
-        )}
+          {example && (
+            <section id="sec-example">
+              <Facet label="Example" muted>
+                <MathProse text={example} />
+              </Facet>
+            </section>
+          )}
 
-        {example && (
-          <>
-            <SectionHeader icon={<Beaker className="h-[15px] w-[15px]" />} title="Example" />
-            <div className="text-[13.5px] leading-[1.6]" style={{ color: "var(--fg-2)" }}>
-              <MathProse text={example} />
-            </div>
-            <Divider />
-          </>
-        )}
-
-        {prereqIds.length > 0 && (
-          <>
-            <SectionHeader
-              icon={<LinkIcon className="h-[15px] w-[15px]" />}
-              title="Depends on"
-              count={prereqIds.length}
-              expanded={openDeps}
-              onToggle={() => setOpenDeps((v) => !v)}
-            />
-            {openDeps && (
-              <div className="pb-1">
-                {prereqIds.map((rid) => <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />)}
-              </div>
-            )}
-            <Divider />
-          </>
-        )}
-
-        {usedBy.length > 0 && (
-          <>
-            <SectionHeader
-              icon={<ArrowUpRight className="h-[15px] w-[15px]" />}
-              title="Used by"
-              count={usedBy.length}
-              expanded={openUsed}
-              onToggle={() => setOpenUsed((v) => !v)}
-            />
-            {openUsed && (
-              <div className="pb-1">
-                {visibleUsed.map((rid) => (
-                  <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />
-                ))}
-                {hiddenUsedCount > 0 && (
-                  <button
-                    onClick={() => setShowAllUsed(true)}
-                    className="mt-1 px-1 text-[12px] hover:underline"
-                    style={{ color: "var(--accent)" }}
-                  >
-                    … and {hiddenUsedCount} more
-                  </button>
-                )}
-              </div>
-            )}
-            <Divider />
-          </>
-        )}
-
-        {examples.length > 0 && (
-          <>
-            <SectionHeader
-              icon={<Beaker className="h-[15px] w-[15px]" />}
-              title="Related cases"
-              count={examples.length}
-              expanded={openExamples}
-              onToggle={() => setOpenExamples((v) => !v)}
-            />
-            {openExamples && (
-              <div className="pb-1">
-                {examples.map((rid) => (
-                  <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />
-                ))}
-              </div>
-            )}
-            <Divider />
-          </>
-        )}
-
-        {exercises.length > 0 && (
-          <>
-            <SectionHeader
-              icon={<StickyNote className="h-[15px] w-[15px]" />}
-              title="Exercises"
-              count={exercises.length}
-              expanded={openExercises}
-              onToggle={() => setOpenExercises((v) => !v)}
-            />
-            {openExercises && (
-              <div className="pb-1">
-                {exercises.map((rid) => (
-                  <RefRow key={rid} id={rid} map={map} onClick={() => select(rid)} />
-                ))}
-              </div>
-            )}
-            <Divider />
-          </>
-        )}
-
-        <SectionHeader
-          icon={<FileText className="h-[15px] w-[15px]" />}
-          title="Metadata"
-          count={node.tags.length + (node.ref ? 1 : 0)}
-          expanded={openReferences}
-          onToggle={() => setOpenReferences((v) => !v)}
-        />
-        {openReferences && (
-          <>
-            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 pb-1 text-[12px]">
-              <dt style={{ color: "var(--fg-3)" }}>Tags</dt>
-              <dd style={{ color: "var(--fg-2)" }}>
-                {node.tags.length > 0 ? node.tags.join(", ") : "No tags recorded."}
-              </dd>
-              <dt style={{ color: "var(--fg-3)" }}>Domain</dt>
-              <dd style={{ color: "var(--fg-2)" }}>{domain?.label ?? node.topicCluster}</dd>
-              <dt style={{ color: "var(--fg-3)" }}>Source</dt>
-              <dd style={{ color: "var(--fg-2)" }}>
-                {node.chapter} · {node.section || "unranked"} · #{node.number}
-              </dd>
-              {node.ref && (
-                <>
-                  <dt style={{ color: "var(--fg-3)" }}>Reference</dt>
-                  <dd style={{ color: "var(--fg-2)" }}>{node.ref}</dd>
-                </>
+          {hasConnections && (
+            <section id="sec-connections" className="space-y-3.5 border-t pt-4" style={{ borderColor: "var(--border-subtle)" }}>
+              {prereqIds.length > 0 && (
+                <ChipGroup label="Depends on" count={prereqIds.length}>
+                  {prereqIds.map((rid) => (
+                    <ConnectionChip key={rid} id={rid} map={map} onClick={() => select(rid)} />
+                  ))}
+                </ChipGroup>
               )}
-              <dt style={{ color: "var(--fg-3)" }}>ID</dt>
-              <dd className="truncate font-mono text-[11px]" style={{ color: "var(--fg-2)" }} title={node.id}>
-                {node.id}
-              </dd>
-            </dl>
-          </>
-        )}
+              {usedBy.length > 0 && (
+                <ChipGroup label="Used by" count={usedBy.length}>
+                  {visibleUsed.map((rid) => (
+                    <ConnectionChip key={rid} id={rid} map={map} onClick={() => select(rid)} />
+                  ))}
+                  {hiddenUsedCount > 0 && (
+                    <button
+                      onClick={() => setShowAllUsed(true)}
+                      className="self-center px-1 text-[12px] hover:underline"
+                      style={{ color: "var(--accent)" }}
+                    >
+                      +{hiddenUsedCount} more
+                    </button>
+                  )}
+                </ChipGroup>
+              )}
+              {examples.length > 0 && (
+                <ChipGroup label="Related cases" count={examples.length}>
+                  {examples.map((rid) => (
+                    <ConnectionChip key={rid} id={rid} map={map} onClick={() => select(rid)} />
+                  ))}
+                </ChipGroup>
+              )}
+              {exercises.length > 0 && (
+                <ChipGroup label="Exercises" count={exercises.length}>
+                  {exercises.map((rid) => (
+                    <ConnectionChip key={rid} id={rid} map={map} onClick={() => select(rid)} />
+                  ))}
+                </ChipGroup>
+              )}
+            </section>
+          )}
+
+          <section id="sec-metadata" className="border-t pt-4" style={{ borderColor: "var(--border-subtle)" }}>
+            <Facet label="Metadata">
+              <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[12px]">
+                <dt style={{ color: "var(--fg-3)" }}>Tags</dt>
+                <dd style={{ color: "var(--fg-2)" }}>
+                  {node.tags.length > 0 ? node.tags.join(", ") : "No tags recorded."}
+                </dd>
+                <dt style={{ color: "var(--fg-3)" }}>Domain</dt>
+                <dd style={{ color: "var(--fg-2)" }}>{domain?.label ?? node.topicCluster}</dd>
+                <dt style={{ color: "var(--fg-3)" }}>Kind</dt>
+                <dd style={{ color: "var(--fg-2)" }}>{KIND_LABEL[node.kind]}</dd>
+                <dt style={{ color: "var(--fg-3)" }}>Source</dt>
+                <dd style={{ color: "var(--fg-2)" }}>
+                  {node.chapter} · {node.section || "unranked"} · #{node.number}
+                </dd>
+                {node.ref && (
+                  <>
+                    <dt style={{ color: "var(--fg-3)" }}>Reference</dt>
+                    <dd style={{ color: "var(--fg-2)" }}>{node.ref}</dd>
+                  </>
+                )}
+                <dt style={{ color: "var(--fg-3)" }}>ID</dt>
+                <dd className="truncate font-mono text-[11px]" style={{ color: "var(--fg-2)" }} title={node.id}>
+                  {node.id}
+                </dd>
+              </dl>
+            </Facet>
+          </section>
+        </div>
       </div>
     </>
   );
 }
 
-function SectionHeader({
-  icon,
-  title,
-  count,
-  expanded,
-  onToggle,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  count?: number;
-  expanded?: boolean;
-  onToggle?: () => void;
-}) {
-  const interactive = !!onToggle;
-  const content = (
-    <>
-      <span className="flex h-6 w-6 items-center justify-center rounded-md" style={{ color: "var(--accent)" }}>
-        {icon}
-      </span>
-      <span className="text-[13px] font-semibold" style={{ color: "var(--fg-1)" }}>
-        {title}
-      </span>
-      {typeof count === "number" && (
-        <span
-          className="ml-auto inline-flex h-[22px] min-w-[24px] items-center justify-center rounded-full border px-2 font-mono text-[11px] font-semibold"
-          style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-2)" }}
-        >
-          {count}
-        </span>
-      )}
-      {interactive && (
-        <ChevronDown
-          className={cn(
-            "h-3.5 w-3.5 transition-transform duration-200",
-            !expanded && "-rotate-90",
-            typeof count !== "number" && "ml-auto",
-          )}
-          style={{ color: "var(--fg-3)" }}
-        />
-      )}
-    </>
-  );
-
-  if (interactive) {
-    return (
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={expanded}
-        className="flex w-full items-center gap-2.5 py-3 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[color:var(--accent-border)]"
-      >
-        {content}
-      </button>
-    );
-  }
-
-  return (
-    <div className="flex items-center gap-2.5 py-3">
-      {content}
-    </div>
-  );
-}
-
-function Divider() {
-  return <div className="my-3 border-t" style={{ borderColor: "var(--border-subtle)" }} />;
-}
-
-function TagPill({
+function IconButton({
   label,
-  neutral,
-  background,
-  color,
-  border,
+  onClick,
+  disabled,
+  children,
 }: {
   label: string;
-  neutral?: boolean;
-  background?: string;
-  color?: string;
-  border?: string;
-}) {
-  if (neutral || !background) {
-    return (
-      <span
-        className="inline-flex h-6 items-center rounded-full border px-2.5 text-[11.5px] font-medium"
-        style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-2)" }}
-      >
-        {label}
-      </span>
-    );
-  }
-  return (
-    <span
-      className="inline-flex h-6 items-center rounded-full px-2.5 text-[11.5px] font-medium"
-      style={{ background, color, border: `1px solid ${border}` }}
-    >
-      {label}
-    </span>
-  );
-}
-
-function RefRow({
-  id,
-  map,
-  onClick,
-}: {
-  id: string;
-  map: LoadedMap;
   onClick: () => void;
+  disabled?: boolean;
+  children: React.ReactNode;
 }) {
-  const node = map.nodeById.get(id);
-  if (!node) return null;
-  const tone = getDomainTone(node.domainId);
-  const Icon = CATEGORY_META[categoryOf(node.kind)].icon;
   return (
     <button
       onClick={onClick}
-      className="group grid w-full grid-cols-[22px_minmax(0,1fr)_auto] items-center gap-2 rounded-lg px-2 py-2 text-left transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[color:var(--accent-border)]"
+      disabled={disabled}
+      aria-label={label}
+      title={label}
+      className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)] disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+      style={{ color: "var(--fg-2)" }}
     >
-      <span
-        className="flex h-[22px] w-[22px] items-center justify-center rounded-md"
-        style={{ background: tone.tint, color: tone.color }}
-      >
-        <Icon className="h-3.5 w-3.5" strokeWidth={2.2} aria-hidden />
-      </span>
-      <span className="min-w-0">
-        <span className="block truncate text-[13px] leading-5" style={{ color: "var(--fg-1)" }}>
-          <MathText text={node.title} />
-        </span>
-        <span className="block truncate text-[10.5px] leading-4" style={{ color: "var(--fg-3)" }}>
-          {map.domainById.get(node.domainId)?.label ?? node.topicCluster}
-        </span>
-      </span>
-      <span
-        className="rounded-full border px-2 py-0.5 text-[10px] font-semibold"
-        style={{ borderColor: tone.border, color: tone.color, background: tone.tint }}
-        title={KIND_LABEL[node.kind]}
-      >
-        {KIND_SHORT_LABEL[node.kind] ?? KIND_LABEL[node.kind]}
-      </span>
+      {children}
     </button>
+  );
+}
+
+function ChipGroup({
+  label,
+  count,
+  children,
+}: {
+  label: string;
+  count: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div className="mb-2 flex items-center gap-2">
+        <span className="font-mono text-[10px] uppercase tracking-[0.13em]" style={{ color: "var(--fg-3)" }}>
+          {label}
+        </span>
+        <span className="font-mono text-[10px]" style={{ color: "var(--fg-4)" }}>
+          {count}
+        </span>
+      </div>
+      <div className="flex flex-wrap gap-1.5">{children}</div>
+    </div>
   );
 }
