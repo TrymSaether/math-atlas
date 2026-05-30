@@ -9,7 +9,6 @@ import {
   ArrowUpRight,
   Beaker,
   StickyNote,
-  Tag,
   ChevronDown,
   MessageSquareText,
 } from "lucide-react";
@@ -59,6 +58,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const [openUsed, setOpenUsed] = useState(true);
   const [openExamples, setOpenExamples] = useState(true);
   const [openExercises, setOpenExercises] = useState(true);
+  const [openReferences, setOpenReferences] = useState(false);
   const [showAllUsed, setShowAllUsed] = useState(false);
 
   const prereqIds = useMemo(
@@ -329,34 +329,39 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
           </>
         )}
 
-        <SectionHeader icon={<Tag className="h-[15px] w-[15px]" />} title="Tags" />
-        {node.tags.length > 0 ? (
-          <div className="pb-1 text-[12px] leading-[1.6]" style={{ color: "var(--fg-2)" }}>
-            {node.tags.join(", ")}
-          </div>
-        ) : (
-          <Empty>No tags recorded.</Empty>
+        <SectionHeader
+          icon={<LinkIcon className="h-[15px] w-[15px]" />}
+          title="References"
+          count={node.tags.length + (node.ref ? 1 : 0)}
+          expanded={openReferences}
+          onToggle={() => setOpenReferences((v) => !v)}
+        />
+        {openReferences && (
+          <>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 pb-1 text-[12px]">
+              <dt style={{ color: "var(--fg-3)" }}>Tags</dt>
+              <dd style={{ color: "var(--fg-2)" }}>
+                {node.tags.length > 0 ? node.tags.join(", ") : "No tags recorded."}
+              </dd>
+              <dt style={{ color: "var(--fg-3)" }}>Domain</dt>
+              <dd style={{ color: "var(--fg-2)" }}>{domain?.label ?? node.topicCluster}</dd>
+              <dt style={{ color: "var(--fg-3)" }}>Source</dt>
+              <dd style={{ color: "var(--fg-2)" }}>
+                {node.chapter} · {node.section || "unranked"} · #{node.number}
+              </dd>
+              {node.ref && (
+                <>
+                  <dt style={{ color: "var(--fg-3)" }}>Reference</dt>
+                  <dd style={{ color: "var(--fg-2)" }}>{node.ref}</dd>
+                </>
+              )}
+              <dt style={{ color: "var(--fg-3)" }}>ID</dt>
+              <dd className="truncate font-mono text-[11px]" style={{ color: "var(--fg-2)" }} title={node.id}>
+                {node.id}
+              </dd>
+            </dl>
+          </>
         )}
-
-        <Divider />
-
-        <SectionHeader icon={<LinkIcon className="h-[15px] w-[15px]" />} title="Reference" />
-        <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[12px] pb-1">
-          <dt style={{ color: "var(--fg-3)" }}>Domain</dt>
-          <dd style={{ color: "var(--fg-2)" }}>{domain?.label ?? node.topicCluster}</dd>
-          <dt style={{ color: "var(--fg-3)" }}>Source</dt>
-          <dd style={{ color: "var(--fg-2)" }}>{node.chapter} · {node.section || "unranked"} · #{node.number}</dd>
-          {node.ref && (
-            <>
-              <dt style={{ color: "var(--fg-3)" }}>Reference</dt>
-              <dd style={{ color: "var(--fg-2)" }}>{node.ref}</dd>
-            </>
-          )}
-          <dt style={{ color: "var(--fg-3)" }}>ID</dt>
-          <dd className="truncate font-mono text-[11px]" style={{ color: "var(--fg-2)" }} title={node.id}>
-            {node.id}
-          </dd>
-        </dl>
       </div>
     </>
   );
