@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" width="560" height="380" font-family="Georgia, 'Times New Roman', serif">
+
+  <!-- Background -->
+  <rect width="560" height="380" fill="#faf8f4" rx="12"/>
+
+  <!-- Title -->
+  <text x="280" y="38" text-anchor="middle" font-size="19" font-weight="bold" fill="#1a1a2e" letter-spacing="0.5">Hausdorff Space (T₂)</text>
+  <text x="280" y="58" text-anchor="middle" font-size="12.5" fill="#555" font-style="italic">Any two distinct points can be separated by disjoint open sets</text>
+
+  <!-- Outer space X boundary -->
+  <ellipse cx="280" cy="220" rx="230" ry="130" fill="none" stroke="#9b8ea0" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <text x="495" y="165" font-size="13" fill="#7a6a80" font-style="italic" font-weight="bold">X</text>
+
+  <!-- Open set U (left) — soft blue fill -->
+  <ellipse cx="170" cy="220" rx="95" ry="72" fill="#d0e8f7" fill-opacity="0.72" stroke="#3a7ec0" stroke-width="2.2"/>
+  <!-- Label U -->
+  <text x="94" y="195" font-size="15" fill="#1f5fa0" font-weight="bold" font-style="italic">U</text>
+
+  <!-- Open set V (right) — soft amber fill -->
+  <ellipse cx="390" cy="220" rx="95" ry="72" fill="#fde9c4" fill-opacity="0.72" stroke="#c07a1a" stroke-width="2.2"/>
+  <!-- Label V -->
+  <text x="468" y="195" font-size="15" fill="#9a5800" font-weight="bold" font-style="italic">V</text>
+
+  <!-- Gap indicator between the two sets -->
+  <line x1="265" y1="220" x2="295" y2="220" stroke="#c0bab8" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <text x="280" y="215" text-anchor="middle" font-size="10" fill="#999">∅</text>
+  <text x="280" y="228" text-anchor="middle" font-size="8.5" fill="#aaa">U∩V</text>
+
+  <!-- Point x -->
+  <circle cx="155" cy="220" r="6" fill="#1f5fa0"/>
+  <text x="155" y="208" text-anchor="middle" font-size="14" fill="#1a1a2e" font-style="italic" font-weight="bold">x</text>
+
+  <!-- Point y -->
+  <circle cx="405" cy="220" r="6" fill="#c07a1a"/>
+  <text x="405" y="208" text-anchor="middle" font-size="14" fill="#1a1a2e" font-style="italic" font-weight="bold">y</text>
+
+  <!-- "x ≠ y" label -->
+  <text x="280" y="178" text-anchor="middle" font-size="12.5" fill="#666" font-style="italic">x ≠ y</text>
+
+  <!-- Formal statement box -->
+  <rect x="48" y="318" width="464" height="46" rx="8" fill="#f0ecea" stroke="#c8bfc5" stroke-width="1.2"/>
+  <text x="280" y="337" text-anchor="middle" font-size="12" fill="#444">
+    <tspan font-weight="bold">Definition: </tspan>
+    <tspan font-style="italic">X</tspan> is Hausdorff iff for all
+    <tspan font-style="italic"> x, y ∈ X</tspan> with
+    <tspan font-style="italic"> x ≠ y</tspan>,
+  </text>
+  <text x="280" y="355" text-anchor="middle" font-size="12" fill="#444">
+    ∃ open
+    <tspan font-style="italic"> U ∋ x</tspan>,
+    <tspan font-style="italic"> V ∋ y</tspan> such that
+    <tspan font-style="italic"> U ∩ V = ∅</tspan>
+  </text>
+
+  <!-- Open set tick marks (dashed border decoration) to hint "open" -->
+  <!-- small arrowhead hint on U border -->
+  <text x="165" y="294" text-anchor="middle" font-size="9.5" fill="#3a7ec0" font-style="italic">open</text>
+  <text x="395" y="294" text-anchor="middle" font-size="9.5" fill="#c07a1a" font-style="italic">open</text>
+
+</svg>

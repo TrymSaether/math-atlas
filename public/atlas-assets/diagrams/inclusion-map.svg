@@ -3,25 +3,34 @@
         <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
             <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#2a2520)" />
         </marker>
-        <marker id="ara" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#a8431d)" />
-        </marker>
     </defs>
+
     <!-- Ambient space X -->
-    <ellipse cx="160" cy="95" rx="138" ry="72" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#2a2520)" stroke-width="1.6" />
-    <text x="278" y="42" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">R</text>
-    <!-- Subset A nested inside X -->
-    <ellipse cx="120" cy="100" rx="62" ry="44" fill="var(--dia-fil2,#d6c9a8)" stroke="var(--dia-acc,#a8431d)" stroke-width="1.6" />
-    <text x="80" y="72" font-size="14" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">R</text>
-    <!-- a point in A with its image in X (same spot — identity) -->
-    <circle cx="120" cy="102" r="3" fill="var(--dia-acc,#a8431d)" />
-    <text x="120" y="118" font-size="11" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">r</text>
-    <!-- inclusion arrow: from A-region toward X, curving to show embedding -->
-    <path d="M182,90 C210,78 235,78 255,88" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.5" marker-end="url(#ar)" />
-    <text x="222" y="72" font-size="13" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">i</text>
-    <!-- image point in X (same value) -->
-    <circle cx="258" cy="90" r="3" fill="var(--dia-ink,#2a2520)" />
-    <text x="258" y="106" font-size="11" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">r</text>
-    <!-- caption -->
-    <text x="160" y="176" font-size="10" fill="var(--dia-acc,#a8431d)" text-anchor="middle">i(r) = r,  R &#x2286; A</text>
+    <ellipse cx="160" cy="88" rx="136" ry="66" fill="var(--dia-paper,#f4efe6)" stroke="var(--dia-ink,#2a2520)"
+        stroke-width="1.6" />
+    <text x="260" y="50" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">X</text>
+
+    <!-- Subset A -->
+    <ellipse cx="118" cy="92" rx="62" ry="42" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc,#a8431d)"
+        stroke-width="1.6" />
+    <text x="72" y="70" font-size="14" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">A</text>
+
+    <!-- Point r in A -->
+    <circle cx="118" cy="96" r="3.4" fill="var(--dia-acc,#a8431d)" />
+    <text x="118" y="113" font-size="11" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">r</text>
+
+    <!-- Inclusion arrow -->
+    <path d="M181,92 C205,78 230,78 254,91" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.5"
+        marker-end="url(#ar)" />
+    <text x="218" y="76" font-size="13" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">i</text>
+
+    <!-- Image point in X -->
+    <circle cx="258" cy="93" r="3.4" fill="var(--dia-ink,#2a2520)" />
+    <text x="258" y="111" font-size="11" fill="var(--dia-ink,#2a2520)" text-anchor="middle"
+        font-style="italic">i(r)</text>
+
+    <!-- Caption -->
+    <text x="160" y="166" font-size="11" fill="var(--dia-acc,#a8431d)" text-anchor="middle">
+        i: A ↪ X, i(r) = r, A ⊆ X
+    </text>
 </svg>

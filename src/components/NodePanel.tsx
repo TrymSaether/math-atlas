@@ -13,11 +13,6 @@ import { Spine, Facet, ConnectionChip, specimenMeta } from "./Specimen";
 const USED_BY_INITIAL = 8;
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample", "application", "conjecture"]);
 
-interface SectionDef {
-  id: string;
-  label: string;
-}
-
 export function NodePanel() {
   const mapId = useStore((s) => s.mapId);
   const map = useStore((s) => s.loadedMaps[mapId]);
@@ -50,7 +45,6 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const domain = map.domainById.get(node.domainId);
   const tone = getDomainTone(node.domainId);
   const [showAllUsed, setShowAllUsed] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("");
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const prereqIds = useMemo(
@@ -115,52 +109,10 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const hasConnections =
     prereqIds.length > 0 || usedBy.length > 0 || examples.length > 0 || exercises.length > 0;
 
-  // The nav rail mirrors exactly the sections rendered, in order.
-  const sections = useMemo<SectionDef[]>(() => {
-    const list: SectionDef[] = [];
-    if (diagramPath) list.push({ id: "diagram", label: "Figure" });
-    if (statement) list.push({ id: "statement", label: "Statement" });
-    if (formalStatement) list.push({ id: "formal", label: "Formal" });
-    if (explanation) list.push({ id: "intuition", label: "Intuition" });
-    if (solution) list.push({ id: "solution", label: "Solution" });
-    if (showGloss) list.push({ id: "inwords", label: "In words" });
-    if (example) list.push({ id: "example", label: "Example" });
-    if (hasConnections) list.push({ id: "connections", label: "Links" });
-    list.push({ id: "metadata", label: "Meta" });
-    return list;
-  }, [diagramPath, statement, formalStatement, explanation, solution, showGloss, example, hasConnections]);
-
   useEffect(() => {
     setShowAllUsed(false);
     scrollRef.current?.scrollTo({ top: 0 });
-    setActiveSection(sections[0]?.id ?? "");
-  }, [node.id, sections]);
-
-  // Scroll-spy: light up the rail dot for the section nearest the top.
-  useEffect(() => {
-    const root = scrollRef.current;
-    if (!root) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) setActiveSection(visible[0].target.id.replace("sec-", ""));
-      },
-      { root, rootMargin: "0px 0px -65% 0px", threshold: 0 },
-    );
-    for (const s of sections) {
-      const el = root.querySelector(`#sec-${s.id}`);
-      if (el) observer.observe(el);
-    }
-    return () => observer.disconnect();
-  }, [sections, node.id]);
-
-  const jumpTo = (id: string) => {
-    const el = scrollRef.current?.querySelector(`#sec-${id}`);
-    el?.scrollIntoView({ behavior: "smooth", block: "start" });
-    setActiveSection(id);
-  };
+  }, [node.id]);
 
   const openInDictionary = () => {
     select(node.id);
@@ -197,7 +149,10 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
             </IconButton>
           </div>
         </div>
-        <h2 className="font-serif text-[27px] leading-[1.08]" style={{ color: "var(--fg-1)" }}>
+        <h2
+          className="font-serif text-[27px] leading-[1.06]"
+          style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.015em" }}
+        >
           <MathText text={node.title} />
         </h2>
         <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px]">
@@ -210,39 +165,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
         </div>
       </header>
 
-      <div className="flex min-h-0 flex-1">
-        {/* Scroll-spy nav rail */}
-        {sections.length > 1 && (
-          <nav
-            className="hidden shrink-0 flex-col gap-0.5 border-r py-4 pl-3 pr-2 sm:flex"
-            style={{ borderColor: "var(--border-subtle)", width: 104 }}
-            aria-label="Section navigation"
-          >
-            {sections.map((s) => {
-              const active = activeSection === s.id;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => jumpTo(s.id)}
-                  className="group flex items-center gap-2 rounded-md py-1 pl-1 pr-0.5 text-left transition-colors"
-                  style={{ color: active ? "var(--fg-1)" : "var(--fg-3)" }}
-                >
-                  <span
-                    className="h-1.5 w-1.5 shrink-0 rounded-full transition-all"
-                    style={{
-                      background: active ? tone.color : "var(--border-strong)",
-                      transform: active ? "scale(1.35)" : "scale(1)",
-                    }}
-                  />
-                  <span className="truncate text-[11px] font-medium">{s.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        )}
-
-        {/* Content */}
-        <div ref={scrollRef} className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-5">
+      <div ref={scrollRef} className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
           {diagramPath && (
             <section id="sec-diagram">
               <ThemedDiagram
@@ -376,7 +299,6 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
               </dl>
             </Facet>
           </section>
-        </div>
       </div>
     </>
   );

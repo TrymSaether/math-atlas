@@ -48,108 +48,109 @@ export function CommandPalette() {
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
-              <motion.div
-                initial={{ opacity: 0, y: -12, scale: 0.99 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -12, scale: 0.99 }}
-                transition={{ duration: 0.16, ease: [0.2, 0.7, 0.2, 1] }}
-                className="fixed left-1/2 top-1/2 z-50 w-[620px] max-w-[92vw] -translate-x-1/2 -translate-y-1/2"
-              >
+              <div className="fixed left-1/2 top-1/2 z-50 w-[620px] max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
                 <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
                 <Dialog.Description className="sr-only">
                   Jump to a concept or switch fields.
                 </Dialog.Description>
-                <Command
-                  className="overflow-hidden rounded-2xl border"
-                  style={{
-                    background: "var(--surface)",
-                    borderColor: "var(--border)",
-                    boxShadow: "var(--shadow-3)",
-                  }}
-                  loop
+                <motion.div
+                  initial={{ opacity: 0, y: -12, scale: 0.99 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -12, scale: 0.99 }}
+                  transition={{ duration: 0.16, ease: [0.2, 0.7, 0.2, 1] }}
                 >
-                  <div
-                    className="border-b px-4 py-3"
-                    style={{ borderColor: "var(--border-subtle)" }}
+                  <Command
+                    className="overflow-hidden rounded-2xl border"
+                    style={{
+                      background: "var(--surface)",
+                      borderColor: "var(--border)",
+                      boxShadow: "var(--shadow-3)",
+                    }}
+                    loop
                   >
-                    <Command.Input
-                      value={query}
-                      onValueChange={setQuery}
-                      placeholder="Search concepts, definitions, theorems…"
-                      className="w-full bg-transparent text-[14px] outline-none"
-                      style={{ color: "var(--fg-1)" }}
-                    />
-                  </div>
-                  <Command.List className="max-h-[420px] overflow-y-auto p-2">
-                    <Command.Empty className="px-3 py-6 text-center text-[12px] text-[color:var(--fg-3)]">
-                      No results.
-                    </Command.Empty>
-
-                    <Command.Group
-                      heading="Fields"
-                      className="px-2 pt-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--fg-3)]"
+                    <div
+                      className="border-b px-4 py-3"
+                      style={{ borderColor: "var(--border-subtle)" }}
                     >
-                      {(Object.keys(MAPS) as MapId[]).map((id) => (
-                        <Item
-                          key={id}
-                          value={`field ${MAPS[id].label} ${MAPS[id].description}`}
-                          onSelect={() => {
-                            setMap(id);
-                            setOpen(false);
-                          }}
-                        >
-                          <span className="text-[13px] text-[color:var(--fg-1)]">Open {MAPS[id].label}</span>
-                        </Item>
-                      ))}
-                    </Command.Group>
+                      <Command.Input
+                        value={query}
+                        onValueChange={setQuery}
+                        placeholder="Search concepts, definitions, theorems…"
+                        className="w-full bg-transparent text-[14px] outline-none"
+                        style={{ color: "var(--fg-1)" }}
+                      />
+                    </div>
+                    <Command.List className="max-h-[420px] overflow-y-auto p-2">
+                      <Command.Empty className="px-3 py-6 text-center text-[12px] text-[color:var(--fg-3)]">
+                        No results.
+                      </Command.Empty>
 
-                    {data && (
                       <Command.Group
-                        heading="Concepts"
-                        className="px-2 pt-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--fg-3)]"
+                        heading="Fields"
+                        className="px-2 pt-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--fg-3)]"
                       >
-                        {data.nodes.map((n) => {
-                          const tone = getDomainTone(n.domainId);
-                          return (
-                            <Item
-                              key={n.id}
-                              value={`${n.title} ${n.kind} ${n.tags.join(" ")}`}
-                              onSelect={() => {
-                                select(n.id);
-                                setOpen(false);
-                              }}
-                            >
-                              <span className="flex w-full items-center gap-2.5">
-                                <span
-                                  className="h-2 w-2 flex-shrink-0 rounded-full"
-                                  style={{ background: tone.color }}
-                                />
-                                <span className="w-[96px] flex-shrink-0 text-[10.5px] font-medium uppercase tracking-[0.08em] text-[color:var(--fg-3)]">
-                                  {KIND_LABEL[n.kind]}
-                                </span>
-                                <span className="min-w-0 flex-1 truncate text-[13px] text-[color:var(--fg-1)]">
-                                  {n.title}
-                                </span>
-                                <span className="ml-2 max-w-[140px] truncate text-[10.5px] text-[color:var(--fg-3)]">
-                                  {n.topicCluster}
-                                </span>
-                              </span>
-                            </Item>
-                          );
-                        })}
+                        {(Object.keys(MAPS) as MapId[]).map((id) => (
+                          <Item
+                            key={id}
+                            value={`field ${MAPS[id].label} ${MAPS[id].description}`}
+                            onSelect={() => {
+                              setMap(id);
+                              setOpen(false);
+                            }}
+                          >
+                            <span className="text-[13px] text-[color:var(--fg-1)]">Open {MAPS[id].label}</span>
+                          </Item>
+                        ))}
                       </Command.Group>
-                    )}
-                  </Command.List>
 
-                  <div
-                    className="flex items-center justify-between border-t px-3 py-1.5 text-[10.5px] text-[color:var(--fg-3)]"
-                    style={{ borderColor: "var(--border-subtle)" }}
-                  >
-                    <span>↑↓ navigate · ↵ select · esc close</span>
-                    <span className="font-mono">⌘K</span>
-                  </div>
-                </Command>
-              </motion.div>
+                      {data && (
+                        <Command.Group
+                          heading="Concepts"
+                          className="px-2 pt-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--fg-3)]"
+                        >
+                          {data.nodes.map((n) => {
+                            const tone = getDomainTone(n.domainId);
+                            return (
+                              <Item
+                                key={n.id}
+                                value={`${n.title} ${n.kind} ${n.tags.join(" ")}`}
+                                onSelect={() => {
+                                  select(n.id);
+                                  setOpen(false);
+                                }}
+                              >
+                                <span className="flex w-full items-center gap-2.5">
+                                  <span
+                                    className="h-2 w-2 flex-shrink-0 rounded-full"
+                                    style={{ background: tone.color }}
+                                  />
+                                  <span className="w-[96px] flex-shrink-0 text-[10.5px] font-medium uppercase tracking-[0.08em] text-[color:var(--fg-3)]">
+                                    {KIND_LABEL[n.kind]}
+                                  </span>
+                                  <span className="min-w-0 flex-1 truncate text-[13px] text-[color:var(--fg-1)]">
+                                    {n.title}
+                                  </span>
+                                  <span className="ml-2 max-w-[140px] truncate text-[10.5px] text-[color:var(--fg-3)]">
+                                    {n.topicCluster}
+                                  </span>
+                                </span>
+                              </Item>
+                            );
+                          })}
+                        </Command.Group>
+                      )}
+                    </Command.List>
+
+                    <div
+                      className="flex items-center justify-between border-t px-3 py-1.5 text-[10.5px] text-[color:var(--fg-3)]"
+                      style={{ borderColor: "var(--border-subtle)" }}
+                    >
+                      <span>↑↓ navigate · ↵ select · esc close</span>
+                      <span className="font-mono">⌘K</span>
+                    </div>
+                  </Command>
+                </motion.div>
+              </div>
             </Dialog.Content>
           </Dialog.Portal>
         )}

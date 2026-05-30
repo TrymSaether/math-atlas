@@ -2634,44 +2634,68 @@
       },
       {
         "id": "compactness",
-        "statement": "A topological space is compact when every open cover has a finite subcover.",
-        "formal_statement": "$$X\\text{ compact}\\Longleftrightarrow \\forall\\mathcal U\\subseteq\\tau,\\ \\left(X\\subseteq\\bigcup_{U\\in\\mathcal U}U\\Rightarrow \\exists U_1,\\ldots,U_n\\in\\mathcal U\\text{ with }X=\\bigcup_{k=1}^{n}U_k\\right).$$",
-        "definition": "A topological space X is compact if every family of open subsets whose union contains X has a finite subfamily whose union still contains X. A subset A⊆X is compact when it is compact with the subspace topology.",
-        "intuition": "Compactness says that any open-set description of the whole space already has a finite part that describes the whole space.",
-        "notation": "$$\\mathcal U$$ open cover, $$X=\\bigcup_{k=1}^n U_k$$",
-        "assumptions": [],
+        "statement": "A topological space is compact if every open cover has a finite subcover.",
+        "formal_statement": "$$\\begin{aligned} (X,\\mathcal T)\\text{ is compact} \\quad\\Longleftrightarrow\\quad &\\forall \\mathcal U\\subseteq \\mathcal T,\\\\ &\\left(X=\\bigcup_{U\\in\\mathcal U}U \\Rightarrow \\exists U_1,\\dots,U_n\\in\\mathcal U\\text{ such that }X=\\bigcup_{k=1}^{n}U_k\\right). \\end{aligned}$$",
+        "definition": "Let $(X,\\mathcal T)$ be a topological space. A collection $\\mathcal U\\subseteq\\mathcal T$ is an open cover of $X$ if $X=\\bigcup_{U\\in\\mathcal U}U$. The space $(X,\\mathcal T)$ is compact if every open cover $\\mathcal U$ of $X$ contains a finite subcover.",
+        "intuition": "Compactness says that whenever the whole space is described by possibly infinitely many open pieces, finitely many of those pieces already describe the whole space. It is a topological finiteness condition, not a size condition.",
+        "notation": "$$\\begin{aligned} \\mathcal U&=\\text{an open cover of }X,\\\\ \\mathcal U_0&=\\{U_1,\\dots,U_n\\}\\subseteq\\mathcal U=\\text{a finite subcover},\\\\ X&=U_1\\cup\\cdots\\cup U_n. \\end{aligned}$$",
+        "assumptions": ["X is a topological space"],
         "dependencies": {
-          "definitional_dependency": ["open_set", "cover"],
+          "definitional_dependency": ["topological_space", "open_set", "cover"],
           "logical_dependency": [],
-          "assumption_dependency": [],
+          "assumption_dependency": ["topological_space"],
           "construction_dependency": [],
-          "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "notation_dependency": [
+            "intersection_union",
+            "open_cover_notation",
+            "finite_subcover_argument"
+          ],
+          "pedagogical_dependency": [
+            "open_set",
+            "closed_set",
+            "subspace_topology"
+          ],
           "historical_dependency": []
         },
         "outgoing_relations": [
-          "e_compactness_requires_open_set",
+          "e_compactness_requires_open_cover",
+          "e_compactness_has_finite_subcover",
+          "e_compactness_is_topological_property",
           "e_compactness_equiv_fip",
-          "e_compactness_defines_compact_space",
-          "e_compactness_has_example_cantor",
-          "e_compactness_has_example_circle",
-          "e_compactness_prerequisite_for_alexander"
+          "e_compactness_implies_closed_subsets_compact",
+          "e_continuous_image_of_compact_is_compact",
+          "e_compact_hausdorff_bijection_homeomorphism"
         ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": null
+          "tags": ["topological_property", "open_cover", "finite_subcover"],
+          "syllabus_priority": "high",
+          "source": "Thaule, Definition 6.29"
         },
         "kind": "definition",
         "introduced_object": "compact_space",
-        "genus": "open_cover_property",
+        "genus": "topological_property",
         "differentia": ["every_open_cover_has_finite_subcover"],
-        "examples": ["cantor_set", "circle"],
-        "non_examples": [],
+        "examples": [
+          "finite_topological_space",
+          "indiscrete_space",
+          "closed_interval",
+          "circle"
+        ],
+        "non_examples": [
+          "real_line_standard_topology",
+          "infinite_discrete_space",
+          "open_interval"
+        ],
         "equivalent_definitions": ["compactness_fip_characterization"],
         "label": "compactness",
         "domain": "compactness",
-        "related": []
+        "related": [
+          "open_cover",
+          "finite_subcover",
+          "compact_subspace",
+          "heine_borel_theorem",
+          "continuous_image_compact"
+        ]
       },
       {
         "id": "compactness_fip_characterization",
