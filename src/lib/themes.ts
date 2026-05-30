@@ -2,9 +2,6 @@
  * Theme registry shared by the atlas app and the dictionary page. Both surfaces
  * write the chosen theme id to `data-theme` on <html> and persist it under the
  * same localStorage key, so a theme picked on one page carries to the other.
- *
- * Each theme id has a matching `:root[data-theme="<id>"]` token block in
- * `src/index.css` (atlas) and `src/topology-dictionary/styles.css` (dictionary).
  */
 
 export type ColorScheme = "light" | "dark";
@@ -32,28 +29,48 @@ export const THEMES: ThemeDef[] = [
     label: "Paper",
     scheme: "light",
     family: "slate",
-    preview: { bg: "#F8FAFC", surface: "#FFFFFF", ink: "#0F172A", accent: "#2563EB" },
+    preview: {
+      bg: "#F8FAFC",
+      surface: "#FFFFFF",
+      ink: "#0F172A",
+      accent: "#2563EB",
+    },
   },
   {
     id: "chalkboard",
     label: "Chalkboard",
     scheme: "dark",
     family: "slate",
-    preview: { bg: "#0E1322", surface: "#1F2740", ink: "#ECEEF4", accent: "#58C4DD" },
+    preview: {
+      bg: "#0E1322",
+      surface: "#1F2740",
+      ink: "#ECEEF4",
+      accent: "#58C4DD",
+    },
   },
   {
     id: "manuscript",
     label: "Manuscript",
     scheme: "light",
     family: "sepia",
-    preview: { bg: "#F4EFE6", surface: "#FBF8F1", ink: "#211D18", accent: "#A8431D" },
+    preview: {
+      bg: "#F4EFE6",
+      surface: "#FBF8F1",
+      ink: "#211D18",
+      accent: "#A8431D",
+    },
   },
   {
     id: "nocturne",
     label: "Nocturne",
     scheme: "dark",
     family: "sepia",
-    preview: { bg: "#16140F", surface: "#2A261E", ink: "#ECE4D4", accent: "#E08A4F" },
+    preview: {
+      bg: "#16140F",
+      surface: "#2A261E",
+      ink: "#ECE4D4",
+      accent: "#E08A4F",
+    },
   },
 ];
 
@@ -82,7 +99,9 @@ export function schemeFor(themeId: string): ColorScheme {
 export function siblingOf(themeId: string): string {
   const theme = THEME_BY_ID.get(themeId);
   if (!theme) return DEFAULT_THEME_ID;
-  const sib = THEMES.find((t) => t.family === theme.family && t.scheme !== theme.scheme);
+  const sib = THEMES.find(
+    (t) => t.family === theme.family && t.scheme !== theme.scheme,
+  );
   return sib?.id ?? themeId;
 }
 

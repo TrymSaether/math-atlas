@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import type { MouseEvent } from "react";
 import { useReactFlow, useStore as useReactFlowStore, useViewport, type Node } from "reactflow";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, type DomainBounds } from "../lib/atlasLayout";
-import { getDomainTone } from "../lib/colors";
+import { getMutedDomainTone } from "../lib/colors";
 import type { GraphNode } from "../types";
 
 const MAX_W = 148;
@@ -124,7 +124,7 @@ export function MinimapCard({
         style={{ background: "color-mix(in srgb, var(--bg-deep) 64%, var(--surface))" }}
       >
         {[...regions.entries()].map(([domainId, region]) => {
-          const tone = getDomainTone(domainId);
+          const tone = getMutedDomainTone(domainId);
           const a = layout.toMini(region.x, region.y);
           const b = layout.toMini(region.x + region.width, region.y + region.height);
           if (region.shape === "circle") {
@@ -139,7 +139,7 @@ export function MinimapCard({
                 stroke={tone.border}
                 strokeDasharray="2 2"
                 strokeWidth={1}
-                opacity={0.76}
+                opacity={0.56}
               />
             );
           }
@@ -155,21 +155,22 @@ export function MinimapCard({
               stroke={tone.border}
               strokeDasharray="2 2"
               strokeWidth={1}
-              opacity={0.76}
+              opacity={0.56}
             />
           );
         })}
         {points.map((point) => {
           const p = layout.toMini(point.cx, point.cy);
           const selected = point.id === selectedId;
+          const tone = getMutedDomainTone(point.domainId);
           return (
             <circle
               key={point.id}
               cx={p.x}
               cy={p.y}
               r={selected ? 3.1 : 1.7}
-              fill={getDomainTone(point.domainId).color}
-              opacity={selected ? 1 : 0.6}
+              fill={tone.color}
+              opacity={selected ? 0.95 : 0.72}
             />
           );
         })}

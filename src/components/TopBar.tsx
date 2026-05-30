@@ -10,10 +10,10 @@ import { LogoMark } from "./Logo";
 
 export function TopBar() {
   return (
-    <header className="pointer-events-none absolute inset-x-0 top-3 z-30 flex justify-center px-3">
-      <div className="pointer-events-auto flex w-full max-w-[1180px] items-center gap-2">
+    <header className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-3">
+      <div className="pointer-events-auto flex w-full items-center justify-between gap-3">
         <BrandSection />
-        <div className="ml-auto flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <SearchBox />
           <DictionaryButton />
           <FilterButton />

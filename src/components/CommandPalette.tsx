@@ -49,11 +49,11 @@ export function CommandPalette() {
             </Dialog.Overlay>
             <Dialog.Content asChild>
               <motion.div
-                initial={{ opacity: 0, y: -8, scale: 0.99 }}
+                initial={{ opacity: 0, y: -12, scale: 0.99 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.99 }}
+                exit={{ opacity: 0, y: -12, scale: 0.99 }}
                 transition={{ duration: 0.16, ease: [0.2, 0.7, 0.2, 1] }}
-                className="fixed left-1/2 top-[18%] z-50 w-[620px] max-w-[92vw] -translate-x-1/2"
+                className="fixed left-1/2 top-1/2 z-50 w-[620px] max-w-[92vw] -translate-x-1/2 -translate-y-1/2"
               >
                 <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
                 <Dialog.Description className="sr-only">
