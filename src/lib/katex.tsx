@@ -65,6 +65,24 @@ export function MathProse({ text, className, asBlock = false }: { text: string; 
   return <Tag className={className} dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
+/**
+ * PDF-extracted proofs arrive as raw Unicode math (𝛼, 𝑓, 𝑋…) with column-wrap
+ * line breaks mid-sentence, combining accents detached from their base glyph
+ * (𝛼 ̂), and stray spaces hugging brackets and punctuation. Tidy them into
+ * flowing prose so they read cleanly in the math serif font. No semantic
+ * rewriting — purely whitespace and glyph reattachment.
+ */
+export function tidyMathText(raw: string): string {
+  return raw
+    .replace(/\r/g, "")
+    .replace(/[ \t]*\n[ \t]*/g, " ") // soft column wraps → spaces
+    .replace(/\s+([̀-ͯ])/g, "$1") // reattach combining accents: 𝛼 ̂ → 𝛼̂
+    .replace(/([([{])\s+/g, "$1") // drop space after an opening bracket
+    .replace(/\s+([)\]}.,;:!?])/g, "$1") // drop space before a closing bracket / punctuation
+    .replace(/[ \t]{2,}/g, " ")
+    .trim();
+}
+
 export function renderKatex(src: string, display: boolean): string {
   try {
     return katex.renderToString(src, {

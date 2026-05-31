@@ -11,9 +11,11 @@
  * Keeping these here means the panel and the dictionary render the same data with
  * one design — change it once, both surfaces follow.
  */
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 import type { LoadedMap } from "../data";
-import { MathText, MathProse } from "../lib/katex";
+import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { getDomainTone, type DomainTone } from "../lib/colors";
 import { CATEGORY_META, categoryOf, railBackground } from "../lib/nodeCategory";
 import { KIND_LABEL, type GraphNode } from "../types";
@@ -117,6 +119,81 @@ export function Facet({
       >
         {children}
       </div>
+    </div>
+  );
+}
+
+/**
+ * A proof: the rigorous spine of a result. Treated distinctly from a Facet —
+ * proofs run long and are read deliberately, so they're collapsible and carry a
+ * "manuscript" texture: a dotted derivation rail in the domain tone, a mono
+ * PROOF label that doubles as the fold toggle, and the classic ∎ tombstone
+ * closing the argument. Shared by the panel and the dictionary.
+ */
+export function Proof({
+  text,
+  toneColor,
+  defaultOpen = false,
+}: {
+  text: string;
+  toneColor: string;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="group flex w-full items-center gap-1.5 focus:outline-none"
+      >
+        <ChevronRight
+          className="h-3 w-3 shrink-0 transition-transform duration-200"
+          style={{ color: toneColor, transform: open ? "rotate(90deg)" : "none" }}
+          aria-hidden
+        />
+        <span
+          className="font-mono text-[10px] uppercase tracking-[0.13em]"
+          style={{ color: toneColor }}
+        >
+          Proof
+        </span>
+        <span
+          aria-hidden
+          className="h-px flex-1 opacity-50 transition-opacity group-hover:opacity-100"
+          style={{ background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)` }}
+        />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="proof-body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.22, ease: [0.2, 0.7, 0.2, 1] }}
+            className="overflow-hidden"
+          >
+            <div
+              className="font-math mt-2 pl-3.5 text-[13.5px] leading-[1.7]"
+              style={{
+                color: "var(--fg-1)",
+                borderLeft: `1.5px dotted color-mix(in srgb, ${toneColor} 55%, transparent)`,
+              }}
+            >
+              <MathProse text={tidyMathText(text)} asBlock />
+              <span
+                aria-hidden
+                className="mt-1.5 block text-right text-[13px]"
+                style={{ color: toneColor }}
+              >
+                ∎
+              </span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

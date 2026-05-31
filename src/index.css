@@ -12,100 +12,101 @@
 :root[data-theme="paper"] {
   color-scheme: light;
 
-  /* Surfaces: warm paper, matching the standalone SVG/HTML cards. */
-  --bg: #F8F5EF;
-  --bg-deep: #EFE7DA;
-  --surface: #FFFDF8;
-  --surface-2: #FBFAF6;
-  --surface-3: #F4EFE6;
+  /* Surfaces */
+  --bg: #F8FAFC;
+  --bg-deep: #F1F5F9;
+  --surface: #FFFFFF;
+  --surface-2: #FCFCFD;
+  --surface-3: #F1F5F9;
 
   /* Ink */
-  --fg-1: #27221D;
-  --fg-2: #51493F;
-  --fg-3: #8C8274;
-  --fg-4: #D8D0C2;
-  --fg-on-color: #FFFDF8;
+  --fg-1: #0F172A;
+  --fg-2: #475569;
+  --fg-3: #94A3B8;
+  --fg-4: #CBD5E1;
+  --fg-on-color: #FFFFFF;
 
   /* Borders */
-  --border: #D8D0C2;
-  --border-strong: #C9BCA6;
-  --border-subtle: #ECE5D8;
-  --hairline: #D8D0C2;
+  --border: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --border-subtle: #F1F5F9;
+  --hairline: #E2E8F0;
 
   /* 8 Atlas domains */
-  --blue: #2457C5;
+  --blue: #2563EB;
   /* Foundations */
-  --green: #26844A;
+  --green: #16A34A;
   /* Continuity */
   --purple: #7C3AED;
   /* Connectedness */
-  --red: #A8431D;
+  --red: #DC2626;
   /* Fundamental Group */
   --teal: #0D9488;
   /* Covering Spaces */
-  --orange: #C56A24;
+  --orange: #F97316;
   /* Compactness */
-  --pink: #B83280;
+  --pink: #DB2777;
   /* Homotopy */
-  --gold: #B89418;
+  --gold: #EAB308;
   /* Examples */
 
-  /* Soft domain fills, tuned for manuscript diagrams. */
-  --blue-50: #DCE8FF;
-  --green-50: #E8F5EC;
-  --purple-50: #F1EAFE;
-  --red-50: #F3E4DA;
+  /* Pastel surface tints (96% L) */
+  --blue-50: #EFF4FF;
+  --green-50: #ECFBF1;
+  --purple-50: #F4EEFE;
+  --red-50: #FEF1F1;
   --teal-50: #EAF7F5;
-  --orange-50: #F7E7DA;
-  --pink-50: #F7E8F0;
-  --gold-50: #F6EFD2;
+  --orange-50: #FFF1E8;
+  --pink-50: #FDEEF5;
+  --gold-50: #FBF6E1;
 
-  --blue-200: #AFC7F7;
-  --green-200: #B9D8C1;
+  /* Border weight for region outlines (88% L) */
+  --blue-200: #C9DAFE;
+  --green-200: #BEE9CB;
   --purple-200: #D8C8FB;
-  --red-200: #E3C3B2;
+  --red-200: #F4C5C5;
   --teal-200: #B8DDD6;
-  --orange-200: #E6C5AA;
-  --pink-200: #E7BED2;
-  --gold-200: #DDCB82;
+  --orange-200: #F8CFB0;
+  --pink-200: #F4C0D7;
+  --gold-200: #EFDF8E;
 
   --accent: var(--blue);
   --accent-soft: var(--blue-50);
   --accent-border: var(--blue-200);
 
-  --selection: rgba(36, 87, 197, 0.16);
+  --selection: rgba(37, 99, 235, 0.18);
 
   /* Edges are monochrome ink — color is reserved for domains. */
-  --edge-ink: #8C8274;
+  --edge-ink: #64748B;
   --edge-highlight: var(--blue);
 
-  --shadow-1: 0 1px 2px rgba(42, 37, 32, 0.05);
-  --shadow-2: 0 4px 14px rgba(42, 37, 32, 0.08), 0 1px 2px rgba(42, 37, 32, 0.05);
-  --shadow-3: 0 18px 60px rgba(42, 37, 32, 0.10);
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-2: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-3: 0 12px 32px rgba(15, 23, 42, 0.10), 0 2px 6px rgba(15, 23, 42, 0.05);
 
-  --grid-dot: #E2D7C4;
-  --grid-major: rgba(39, 34, 29, 0.05);
-  --grid-minor: rgba(39, 34, 29, 0.025);
+  --grid-dot: #E5E7EB;
+  --grid-major: rgba(15, 23, 42, 0.05);
+  --grid-minor: rgba(15, 23, 42, 0.025);
 
   /* Diagram tokens (used by inline SVGs in /public/atlas-assets/diagrams). */
   --dia-paper: var(--surface);
   --dia-space: var(--surface-2);
   --dia-panel: var(--surface);
-  --dia-fill: #E7DDC9;
-  --dia-fill2: #F4EFE6;
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
   --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
-  --dia-open: #DCE8FF;
-  --dia-int: #DCE8FF;
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
   --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
-  --dia-boundary: #A8431D;
-  --dia-ext: #8F8678;
-  --dia-ok: #26844A;
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
   --dia-line: var(--border);
   --dia-border: var(--border);
   --dia-ink: var(--fg-1);
-  --dia-acc: #2457C5;
+  --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
   --dia-mut: var(--fg-3);
   --dia-muted: var(--dia-mut);
@@ -181,11 +182,21 @@
 
   /* Diagram tokens */
   --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
   --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
@@ -194,9 +205,9 @@
   --dia-muted-fill: var(--border-strong);
 }
 
-/* Manuscript — warm "old paper" reskin. Kept in lockstep with the
-   topology SVG/HTML visual style so embedded diagrams do not look like they
-   wandered in from another website, tragic as that would be. */
+/* Manuscript — warm "old paper" reskin matching the symbolic topology
+   SVG/HTML style. Distinct from Paper: warmer surfaces, brown ink, and
+   manuscript-specific diagram fills. */
 :root[data-theme="manuscript"] {
   color-scheme: light;
 
@@ -216,6 +227,35 @@
   --border-strong: #C9BCA6;
   --border-subtle: #ECE5D8;
   --hairline: #D8D0C2;
+
+  /* Warm domain hues for manuscript mode. */
+  --blue: #2457C5;
+  --green: #26844A;
+  --purple: #7C3AED;
+  --red: #A8431D;
+  --teal: #0D9488;
+  --orange: #C56A24;
+  --pink: #B83280;
+  --gold: #B89418;
+
+  --blue-50: #DCE8FF;
+  --green-50: #E8F5EC;
+  --purple-50: #F1EAFE;
+  --red-50: #F3E4DA;
+  --teal-50: #EAF7F5;
+  --orange-50: #F7E7DA;
+  --pink-50: #F7E8F0;
+  --gold-50: #F6EFD2;
+
+  --blue-200: #AFC7F7;
+  --green-200: #B9D8C1;
+  --purple-200: #D8C8FB;
+  --red-200: #E3C3B2;
+  --teal-200: #B8DDD6;
+  --orange-200: #E6C5AA;
+  --pink-200: #E7BED2;
+  --gold-200: #DDCB82;
+
 
   --accent: #2457C5;
   --accent-soft: #DCE8FF;
@@ -328,11 +368,740 @@
 
   /* Diagram tokens */
   --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
   --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Lagoon — cool aqua light. Slate-family structure retuned to a tidal,
+   blue-green paper with a teal accent. */
+:root[data-theme="lagoon"] {
+  color-scheme: light;
+
+  --bg: #EFF6F6;
+  --bg-deep: #E1EDED;
+  --surface: #FFFFFF;
+  --surface-2: #F6FBFB;
+  --surface-3: #E6F1F1;
+
+  --fg-1: #0C2A2E;
+  --fg-2: #3D5C5F;
+  --fg-3: #7C9A9C;
+  --fg-4: #C2D8D8;
+  --fg-on-color: #FFFFFF;
+
+  --border: #D4E6E5;
+  --border-strong: #BAD4D3;
+  --border-subtle: #E6F1F1;
+  --hairline: #D4E6E5;
+
+  --blue: #2563EB;
+  --green: #16A34A;
+  --purple: #7C3AED;
+  --red: #DC2626;
+  --teal: #0D9488;
+  --orange: #F97316;
+  --pink: #DB2777;
+  --gold: #EAB308;
+
+  --blue-50: #EFF4FF;
+  --green-50: #ECFBF1;
+  --purple-50: #F4EEFE;
+  --red-50: #FEF1F1;
+  --teal-50: #EAF7F5;
+  --orange-50: #FFF1E8;
+  --pink-50: #FDEEF5;
+  --gold-50: #FBF6E1;
+
+  --blue-200: #C9DAFE;
+  --green-200: #BEE9CB;
+  --purple-200: #D8C8FB;
+  --red-200: #F4C5C5;
+  --teal-200: #B8DDD6;
+  --orange-200: #F8CFB0;
+  --pink-200: #F4C0D7;
+  --gold-200: #EFDF8E;
+
+  --accent: #0E7C86;
+  --accent-soft: #DCF0F0;
+  --accent-border: #A7D4D6;
+
+  --selection: rgba(14, 124, 134, 0.16);
+
+  --edge-ink: #6E9092;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(12, 42, 46, 0.04);
+  --shadow-2: 0 4px 14px rgba(12, 42, 46, 0.07), 0 1px 2px rgba(12, 42, 46, 0.04);
+  --shadow-3: 0 16px 44px rgba(12, 42, 46, 0.11), 0 2px 6px rgba(12, 42, 46, 0.05);
+
+  --grid-dot: #D2E5E4;
+  --grid-major: rgba(12, 42, 46, 0.05);
+  --grid-minor: rgba(12, 42, 46, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Deepsea — cool aqua dark. Mirrors Chalkboard's lifted palette over a deep
+   teal-blue background; sibling of Lagoon. */
+:root[data-theme="deepsea"] {
+  color-scheme: dark;
+
+  --bg: #0A1A1F;
+  --bg-deep: #061215;
+  --surface: #102A30;
+  --surface-2: #163840;
+  --surface-3: #1E4751;
+
+  --fg-1: #E4EEF0;
+  --fg-2: #9EB4B8;
+  --fg-3: #647B80;
+  --fg-4: #3A4F55;
+  --fg-on-color: #0A1A1F;
+
+  --border: rgba(228, 238, 240, 0.10);
+  --border-strong: rgba(228, 238, 240, 0.18);
+  --border-subtle: rgba(228, 238, 240, 0.05);
+  --hairline: rgba(228, 238, 240, 0.10);
+
+  --blue: #58C4DD;
+  --green: #83C167;
+  --purple: #B594D6;
+  --red: #FC6255;
+  --teal: #5CD0B3;
+  --orange: #F0AC5F;
+  --pink: #D147BD;
+  --gold: #FFD93D;
+
+  --blue-50: rgba(88, 196, 221, 0.12);
+  --green-50: rgba(131, 193, 103, 0.12);
+  --purple-50: rgba(181, 148, 214, 0.14);
+  --red-50: rgba(252, 98, 85, 0.12);
+  --teal-50: rgba(92, 208, 179, 0.12);
+  --orange-50: rgba(240, 172, 95, 0.12);
+  --pink-50: rgba(209, 71, 189, 0.12);
+  --gold-50: rgba(255, 217, 61, 0.12);
+
+  --blue-200: rgba(88, 196, 221, 0.36);
+  --green-200: rgba(131, 193, 103, 0.36);
+  --purple-200: rgba(181, 148, 214, 0.36);
+  --red-200: rgba(252, 98, 85, 0.36);
+  --teal-200: rgba(92, 208, 179, 0.36);
+  --orange-200: rgba(240, 172, 95, 0.36);
+  --pink-200: rgba(209, 71, 189, 0.36);
+  --gold-200: rgba(255, 217, 61, 0.36);
+
+  --accent: #5CD0B3;
+  --accent-soft: rgba(92, 208, 179, 0.13);
+  --accent-border: rgba(92, 208, 179, 0.40);
+
+  --selection: rgba(92, 208, 179, 0.26);
+
+  --edge-ink: #5E767B;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --grid-dot: rgba(228, 238, 240, 0.08);
+  --grid-major: rgba(228, 238, 240, 0.05);
+  --grid-minor: rgba(228, 238, 240, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Blossom — warm rose light. A blush paper with a deep-rose accent. */
+:root[data-theme="blossom"] {
+  color-scheme: light;
+
+  --bg: #FBF1F3;
+  --bg-deep: #F4E2E6;
+  --surface: #FFFBFC;
+  --surface-2: #FDF5F7;
+  --surface-3: #F7E8EC;
+
+  --fg-1: #2C1620;
+  --fg-2: #5C4049;
+  --fg-3: #9C8088;
+  --fg-4: #E2CDD3;
+  --fg-on-color: #FFFBFC;
+
+  --border: #EFD9DF;
+  --border-strong: #E3C3CC;
+  --border-subtle: #F7E8EC;
+  --hairline: #EFD9DF;
+
+  --blue: #2563EB;
+  --green: #16A34A;
+  --purple: #7C3AED;
+  --red: #DC2626;
+  --teal: #0D9488;
+  --orange: #F97316;
+  --pink: #DB2777;
+  --gold: #EAB308;
+
+  --blue-50: #EFF4FF;
+  --green-50: #ECFBF1;
+  --purple-50: #F4EEFE;
+  --red-50: #FEF1F1;
+  --teal-50: #EAF7F5;
+  --orange-50: #FFF1E8;
+  --pink-50: #FDEEF5;
+  --gold-50: #FBF6E1;
+
+  --blue-200: #C9DAFE;
+  --green-200: #BEE9CB;
+  --purple-200: #D8C8FB;
+  --red-200: #F4C5C5;
+  --teal-200: #B8DDD6;
+  --orange-200: #F8CFB0;
+  --pink-200: #F4C0D7;
+  --gold-200: #EFDF8E;
+
+  --accent: #BE2D5A;
+  --accent-soft: #FADEE6;
+  --accent-border: #EFB6C7;
+
+  --selection: rgba(190, 45, 90, 0.15);
+
+  --edge-ink: #A78A93;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(44, 22, 32, 0.04);
+  --shadow-2: 0 4px 14px rgba(44, 22, 32, 0.07), 0 1px 2px rgba(44, 22, 32, 0.04);
+  --shadow-3: 0 16px 44px rgba(44, 22, 32, 0.11), 0 2px 6px rgba(44, 22, 32, 0.05);
+
+  --grid-dot: #EFD9DF;
+  --grid-major: rgba(44, 22, 32, 0.05);
+  --grid-minor: rgba(44, 22, 32, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Aubergine — deep plum dark. Sibling of Blossom; lifted palette over a rich
+   aubergine background with a rose accent. */
+:root[data-theme="aubergine"] {
+  color-scheme: dark;
+
+  --bg: #18101C;
+  --bg-deep: #120B16;
+  --surface: #241A2A;
+  --surface-2: #2F2237;
+  --surface-3: #3A2C44;
+
+  --fg-1: #ECE2F0;
+  --fg-2: #B0A2B8;
+  --fg-3: #7C7186;
+  --fg-4: #4A3F54;
+  --fg-on-color: #18101C;
+
+  --border: rgba(236, 226, 240, 0.11);
+  --border-strong: rgba(236, 226, 240, 0.19);
+  --border-subtle: rgba(236, 226, 240, 0.05);
+  --hairline: rgba(236, 226, 240, 0.11);
+
+  --blue: #58C4DD;
+  --green: #83C167;
+  --purple: #B594D6;
+  --red: #FC6255;
+  --teal: #5CD0B3;
+  --orange: #F0AC5F;
+  --pink: #E07AC0;
+  --gold: #FFD93D;
+
+  --blue-50: rgba(88, 196, 221, 0.12);
+  --green-50: rgba(131, 193, 103, 0.12);
+  --purple-50: rgba(181, 148, 214, 0.14);
+  --red-50: rgba(252, 98, 85, 0.12);
+  --teal-50: rgba(92, 208, 179, 0.12);
+  --orange-50: rgba(240, 172, 95, 0.12);
+  --pink-50: rgba(224, 122, 192, 0.14);
+  --gold-50: rgba(255, 217, 61, 0.12);
+
+  --blue-200: rgba(88, 196, 221, 0.36);
+  --green-200: rgba(131, 193, 103, 0.36);
+  --purple-200: rgba(181, 148, 214, 0.36);
+  --red-200: rgba(252, 98, 85, 0.36);
+  --teal-200: rgba(92, 208, 179, 0.36);
+  --orange-200: rgba(240, 172, 95, 0.36);
+  --pink-200: rgba(224, 122, 192, 0.40);
+  --gold-200: rgba(255, 217, 61, 0.36);
+
+  --accent: #E07AC0;
+  --accent-soft: rgba(224, 122, 192, 0.14);
+  --accent-border: rgba(224, 122, 192, 0.40);
+
+  --selection: rgba(224, 122, 192, 0.26);
+
+  --edge-ink: #786C82;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --grid-dot: rgba(236, 226, 240, 0.08);
+  --grid-major: rgba(236, 226, 240, 0.05);
+  --grid-minor: rgba(236, 226, 240, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Prism — vibrant light. A bright, saturated palette over a faint lavender
+   paper with an electric-magenta accent. */
+:root[data-theme="prism"] {
+  color-scheme: light;
+
+  --bg: #F7F8FA;
+  --bg-deep: #ECEEF2;
+  --surface: #FFFFFF;
+  --surface-2: #FBFBFD;
+  --surface-3: #EFF0F4;
+
+  --fg-1: #14151A;
+  --fg-2: #44464F;
+  --fg-3: #888A94;
+  --fg-4: #C9CBD3;
+  --fg-on-color: #FFFFFF;
+
+  --border: #E3E5EB;
+  --border-strong: #CDD0D8;
+  --border-subtle: #EFF0F4;
+  --hairline: #E3E5EB;
+
+  --blue: #2563EB;
+  --green: #059669;
+  --purple: #9333EA;
+  --red: #E11D48;
+  --teal: #0891B2;
+  --orange: #EA580C;
+  --pink: #DB2777;
+  --gold: #CA8A04;
+
+  --blue-50: #E6EDFF;
+  --green-50: #DEF7EE;
+  --purple-50: #F3E6FF;
+  --red-50: #FFE4EA;
+  --teal-50: #DEF3FA;
+  --orange-50: #FFEADD;
+  --pink-50: #FFE2F0;
+  --gold-50: #FBF0D6;
+
+  --blue-200: #BBCDFD;
+  --green-200: #ABE6D1;
+  --purple-200: #DDBBFB;
+  --red-200: #F9B6C5;
+  --teal-200: #ACDDEC;
+  --orange-200: #F9C2A1;
+  --pink-200: #F7B3D3;
+  --gold-200: #ECD78A;
+
+  --accent: #4F46E5;
+  --accent-soft: #E7E5FE;
+  --accent-border: #C2BCF8;
+
+  --selection: rgba(79, 70, 229, 0.16);
+
+  --edge-ink: #8A8C96;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(20, 21, 26, 0.05);
+  --shadow-2: 0 4px 14px rgba(20, 21, 26, 0.09), 0 1px 2px rgba(20, 21, 26, 0.05);
+  --shadow-3: 0 16px 44px rgba(20, 21, 26, 0.14), 0 2px 6px rgba(20, 21, 26, 0.06);
+
+  --grid-dot: #E3E5EB;
+  --grid-major: rgba(20, 21, 26, 0.05);
+  --grid-minor: rgba(20, 21, 26, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Neon — vibrant dark. Saturated neon domain hues over a deep violet-black,
+   sibling of Prism, with an electric-pink accent. */
+:root[data-theme="neon"] {
+  color-scheme: dark;
+
+  --bg: #0A0A0E;
+  --bg-deep: #060608;
+  --surface: #141419;
+  --surface-2: #1C1C23;
+  --surface-3: #26262F;
+
+  --fg-1: #F2F3F7;
+  --fg-2: #ABADBA;
+  --fg-3: #71737F;
+  --fg-4: #42434D;
+  --fg-on-color: #0A0A0E;
+
+  --border: rgba(242, 243, 247, 0.11);
+  --border-strong: rgba(242, 243, 247, 0.20);
+  --border-subtle: rgba(242, 243, 247, 0.05);
+  --hairline: rgba(242, 243, 247, 0.11);
+
+  --blue: #38BDF8;
+  --green: #4ADE80;
+  --purple: #C084FC;
+  --red: #FB7185;
+  --teal: #2DD4BF;
+  --orange: #FB923C;
+  --pink: #F472D0;
+  --gold: #FCD34D;
+
+  --blue-50: rgba(56, 189, 248, 0.13);
+  --green-50: rgba(74, 222, 128, 0.13);
+  --purple-50: rgba(192, 132, 252, 0.15);
+  --red-50: rgba(251, 113, 133, 0.13);
+  --teal-50: rgba(45, 212, 191, 0.13);
+  --orange-50: rgba(251, 146, 60, 0.13);
+  --pink-50: rgba(244, 114, 208, 0.15);
+  --gold-50: rgba(252, 211, 77, 0.13);
+
+  --blue-200: rgba(56, 189, 248, 0.40);
+  --green-200: rgba(74, 222, 128, 0.40);
+  --purple-200: rgba(192, 132, 252, 0.40);
+  --red-200: rgba(251, 113, 133, 0.40);
+  --teal-200: rgba(45, 212, 191, 0.40);
+  --orange-200: rgba(251, 146, 60, 0.40);
+  --pink-200: rgba(244, 114, 208, 0.40);
+  --gold-200: rgba(252, 211, 77, 0.40);
+
+  --accent: #22D3EE;
+  --accent-soft: rgba(34, 211, 238, 0.15);
+  --accent-border: rgba(34, 211, 238, 0.44);
+
+  --selection: rgba(34, 211, 238, 0.28);
+
+  --edge-ink: #6C6E7A;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.6);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.65);
+
+  --grid-dot: rgba(242, 243, 247, 0.09);
+  --grid-major: rgba(242, 243, 247, 0.05);
+  --grid-minor: rgba(242, 243, 247, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Journal — academic light. A restrained, journal-paper palette: warm article
+   white, near-black ink, and a sober Oxford-blue accent. */
+:root[data-theme="journal"] {
+  color-scheme: light;
+
+  --bg: #FBFAF7;
+  --bg-deep: #F1EFE9;
+  --surface: #FFFFFF;
+  --surface-2: #FAF9F5;
+  --surface-3: #F0EEE7;
+
+  --fg-1: #1C1B18;
+  --fg-2: #48463F;
+  --fg-3: #8A877C;
+  --fg-4: #CFCCC1;
+  --fg-on-color: #FFFFFF;
+
+  --border: #E4E1D7;
+  --border-strong: #CFCCC1;
+  --border-subtle: #F0EEE7;
+  --hairline: #E4E1D7;
+
+  --blue: #1F3A5F;
+  --green: #2F6B4F;
+  --purple: #5A4A8A;
+  --red: #8A2A2A;
+  --teal: #2A6E6E;
+  --orange: #A35A1E;
+  --pink: #8A2A55;
+  --gold: #8A6A1E;
+
+  --blue-50: #E7ECF3;
+  --green-50: #E6F0EB;
+  --purple-50: #ECE8F4;
+  --red-50: #F4E6E6;
+  --teal-50: #E4F0F0;
+  --orange-50: #F5EAE0;
+  --pink-50: #F4E6ED;
+  --gold-50: #F3EEDF;
+
+  --blue-200: #B6C3D5;
+  --green-200: #B6D0C2;
+  --purple-200: #C9BFDF;
+  --red-200: #DCB6B6;
+  --teal-200: #B0D0D0;
+  --orange-200: #DEC2A6;
+  --pink-200: #DBB6C7;
+  --gold-200: #D8C99E;
+
+  --accent: #1F3A5F;
+  --accent-soft: #E7ECF3;
+  --accent-border: #B6C3D5;
+
+  --selection: rgba(31, 58, 95, 0.15);
+
+  --edge-ink: #8A877C;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(28, 27, 24, 0.04);
+  --shadow-2: 0 4px 12px rgba(28, 27, 24, 0.07), 0 1px 2px rgba(28, 27, 24, 0.04);
+  --shadow-3: 0 14px 40px rgba(28, 27, 24, 0.10), 0 2px 6px rgba(28, 27, 24, 0.05);
+
+  --grid-dot: #E4E1D7;
+  --grid-major: rgba(28, 27, 24, 0.05);
+  --grid-minor: rgba(28, 27, 24, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Seminar — academic dark. Sibling of Journal: a warm charcoal reader with a
+   lifted, muted palette and a soft slate-blue accent. */
+:root[data-theme="seminar"] {
+  color-scheme: dark;
+
+  --bg: #1A1815;
+  --bg-deep: #131210;
+  --surface: #23211D;
+  --surface-2: #2C2A25;
+  --surface-3: #36332D;
+
+  --fg-1: #ECEAE3;
+  --fg-2: #ACA89C;
+  --fg-3: #76736A;
+  --fg-4: #46443D;
+  --fg-on-color: #1A1815;
+
+  --border: rgba(236, 234, 227, 0.11);
+  --border-strong: rgba(236, 234, 227, 0.19);
+  --border-subtle: rgba(236, 234, 227, 0.05);
+  --hairline: rgba(236, 234, 227, 0.11);
+
+  --blue: #7FA8DC;
+  --green: #88BE8E;
+  --purple: #B49AD4;
+  --red: #E08A82;
+  --teal: #6FC2BA;
+  --orange: #DCA974;
+  --pink: #D88AAE;
+  --gold: #DCC57E;
+
+  --blue-50: rgba(127, 168, 220, 0.13);
+  --green-50: rgba(136, 190, 142, 0.13);
+  --purple-50: rgba(180, 154, 212, 0.14);
+  --red-50: rgba(224, 138, 130, 0.13);
+  --teal-50: rgba(111, 194, 186, 0.13);
+  --orange-50: rgba(220, 169, 116, 0.13);
+  --pink-50: rgba(216, 138, 174, 0.13);
+  --gold-50: rgba(220, 197, 126, 0.13);
+
+  --blue-200: rgba(127, 168, 220, 0.36);
+  --green-200: rgba(136, 190, 142, 0.36);
+  --purple-200: rgba(180, 154, 212, 0.36);
+  --red-200: rgba(224, 138, 130, 0.36);
+  --teal-200: rgba(111, 194, 186, 0.36);
+  --orange-200: rgba(220, 169, 116, 0.36);
+  --pink-200: rgba(216, 138, 174, 0.36);
+  --gold-200: rgba(220, 197, 126, 0.36);
+
+  --accent: #7FA8DC;
+  --accent-soft: rgba(127, 168, 220, 0.14);
+  --accent-border: rgba(127, 168, 220, 0.40);
+
+  --selection: rgba(127, 168, 220, 0.26);
+
+  --edge-ink: #76736A;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --grid-dot: rgba(236, 234, 227, 0.08);
+  --grid-major: rgba(236, 234, 227, 0.05);
+  --grid-minor: rgba(236, 234, 227, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);

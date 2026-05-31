@@ -8,7 +8,7 @@ import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { ThemedDiagram } from "./ThemedDiagram";
-import { Spine, Facet, ConnectionChip, specimenMeta } from "./Specimen";
+import { Spine, Facet, Proof, ConnectionChip, specimenMeta } from "./Specimen";
 
 const USED_BY_INITIAL = 8;
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample", "application", "conjecture"]);
@@ -102,6 +102,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const formalStatement = node.formalStatement.trim();
   const explanation = node.explanation.trim();
   const solution = node.solution.trim();
+  const proof = node.proof.trim();
   const gloss = node.gloss.trim();
   const example = node.example.trim();
   const diagramPath = node.diagramPath.trim();
@@ -210,6 +211,12 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
             <Facet label="Solution">
               <MathProse text={solution} />
             </Facet>
+          </section>
+        )}
+
+        {proof && (
+          <section id="sec-proof">
+            <Proof text={proof} toneColor={tone.color} />
           </section>
         )}
 

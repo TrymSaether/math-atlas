@@ -15,7 +15,7 @@ import {
   type DictSortMode,
   type SectionFacet,
 } from "../lib/dictionary";
-import { Spine, Facet, specimenMeta } from "./Specimen";
+import { Spine, Facet, Proof, specimenMeta } from "./Specimen";
 import { ThemedDiagram } from "./ThemedDiagram";
 import "./DictionaryView.css";
 
@@ -199,7 +199,8 @@ function DictionaryCard({
 
   // Content-driven density: an entry with only a short gloss becomes a compact
   // card, giving the page rhythm instead of 100+ identical blocks.
-  const compact = !entry.diagramPath && !statement && !entry.example;
+  const proof = entry.proof.trim();
+  const compact = !entry.diagramPath && !statement && !entry.example && !proof;
 
   const openInAtlas = () => {
     onOpen(entry.id);
@@ -257,6 +258,7 @@ function DictionaryCard({
             <MathProse text={entry.example} asBlock />
           </Facet>
         )}
+        {proof && <Proof text={proof} toneColor={tone.color} />}
 
         <div className="dict-cardfoot">
           {related.length > 0 && (

@@ -72,6 +72,102 @@ export const THEMES: ThemeDef[] = [
       accent: "#E08A4F",
     },
   },
+  {
+    id: "lagoon",
+    label: "Lagoon",
+    scheme: "light",
+    family: "aqua",
+    preview: {
+      bg: "#EFF6F6",
+      surface: "#FFFFFF",
+      ink: "#0C2A2E",
+      accent: "#0E7C86",
+    },
+  },
+  {
+    id: "deepsea",
+    label: "Deepsea",
+    scheme: "dark",
+    family: "aqua",
+    preview: {
+      bg: "#0A1A1F",
+      surface: "#163840",
+      ink: "#E4EEF0",
+      accent: "#5CD0B3",
+    },
+  },
+  {
+    id: "blossom",
+    label: "Blossom",
+    scheme: "light",
+    family: "rose",
+    preview: {
+      bg: "#FBF1F3",
+      surface: "#FFFBFC",
+      ink: "#2C1620",
+      accent: "#BE2D5A",
+    },
+  },
+  {
+    id: "aubergine",
+    label: "Aubergine",
+    scheme: "dark",
+    family: "rose",
+    preview: {
+      bg: "#18101C",
+      surface: "#2F2237",
+      ink: "#ECE2F0",
+      accent: "#E07AC0",
+    },
+  },
+  {
+    id: "prism",
+    label: "Prism",
+    scheme: "light",
+    family: "spectrum",
+    preview: {
+      bg: "#F7F8FA",
+      surface: "#FFFFFF",
+      ink: "#14151A",
+      accent: "#4F46E5",
+    },
+  },
+  {
+    id: "neon",
+    label: "Neon",
+    scheme: "dark",
+    family: "spectrum",
+    preview: {
+      bg: "#0A0A0E",
+      surface: "#1C1C23",
+      ink: "#F2F3F7",
+      accent: "#22D3EE",
+    },
+  },
+  {
+    id: "journal",
+    label: "Journal",
+    scheme: "light",
+    family: "academic",
+    preview: {
+      bg: "#FBFAF7",
+      surface: "#FFFFFF",
+      ink: "#1C1B18",
+      accent: "#1F3A5F",
+    },
+  },
+  {
+    id: "seminar",
+    label: "Seminar",
+    scheme: "dark",
+    family: "academic",
+    preview: {
+      bg: "#1A1815",
+      surface: "#2C2A25",
+      ink: "#ECEAE3",
+      accent: "#7FA8DC",
+    },
+  },
 ];
 
 export const DEFAULT_THEME_ID = "paper";
