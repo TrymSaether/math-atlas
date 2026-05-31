@@ -356,6 +356,7 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
   const showGloss = gloss && gloss !== explanation && gloss !== statement;
   // When there is no formal statement block, lead with the best plain answer.
   const lead = statement || formal || gloss || explanation || solution;
+  const diagramPath = node.diagramPath.trim();
 
   return (
     <CardShell
@@ -411,6 +412,11 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
         {example && (
           <Facet label="Example" muted>
             <MathProse text={example} />
+          </Facet>
+        )}
+        {diagramPath && (
+          <Facet label="Diagram" muted>
+            <img src={diagramPath} alt="Diagram" className="mx-auto max-h-64 object-contain" />
           </Facet>
         )}
         {proof && <Proof text={proof} toneColor={tone.color} />}
