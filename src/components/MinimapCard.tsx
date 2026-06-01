@@ -106,18 +106,14 @@ export function MinimapCard({
 
   return (
     <div
-      className="absolute bottom-4 left-4 z-20 hidden rounded-[10px] border p-1 md:block"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-      }}
+      className="map-chrome-soft absolute bottom-4 left-4 z-20 hidden rounded-[18px] p-1.5 md:block"
     >
       <svg
         viewBox={`0 0 ${W} ${H}`}
         width={W}
         height={H}
         onClick={handleClick}
-        className="block cursor-pointer rounded-[7px]"
+        className="block cursor-pointer rounded-[13px]"
         style={{ background: "transparent" }}
       >
         {[...regions.entries()].map(([domainId, region]) => {

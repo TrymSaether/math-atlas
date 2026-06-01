@@ -1154,6 +1154,35 @@
   --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
   --dur-micro: 120ms;
   --dur-std: 220ms;
+
+  --chrome-bg: color-mix(in srgb, var(--surface) 86%, transparent);
+  --chrome-bg-strong: color-mix(in srgb, var(--surface) 94%, transparent);
+  --chrome-hover: color-mix(in srgb, var(--fg-1) 7%, transparent);
+  --chrome-active: color-mix(in srgb, var(--fg-1) 9%, var(--surface) 88%);
+  --chrome-border: color-mix(in srgb, var(--border) 78%, transparent);
+  --chrome-divider: color-mix(in srgb, var(--border) 72%, transparent);
+  --chrome-highlight: color-mix(in srgb, var(--surface) 82%, transparent);
+  --chrome-shadow: 0 8px 22px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --chrome-shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --chrome-shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.13), 0 4px 10px rgba(15, 23, 42, 0.07);
+}
+
+:root[data-theme="chalkboard"],
+:root[data-theme="nocturne"],
+:root[data-theme="deepsea"],
+:root[data-theme="aubergine"],
+:root[data-theme="neon"],
+:root[data-theme="seminar"] {
+  --chrome-bg: color-mix(in srgb, var(--surface) 82%, transparent);
+  --chrome-bg-strong: color-mix(in srgb, var(--surface) 92%, transparent);
+  --chrome-hover: color-mix(in srgb, var(--fg-1) 10%, transparent);
+  --chrome-active: color-mix(in srgb, var(--fg-1) 14%, var(--surface) 84%);
+  --chrome-border: color-mix(in srgb, var(--border-strong) 70%, transparent);
+  --chrome-divider: color-mix(in srgb, var(--border-strong) 58%, transparent);
+  --chrome-highlight: color-mix(in srgb, var(--fg-1) 12%, transparent);
+  --chrome-shadow: 0 10px 28px rgba(0, 0, 0, 0.34), 0 1px 5px rgba(0, 0, 0, 0.26);
+  --chrome-shadow-soft: 0 5px 16px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --chrome-shadow-popover: 0 22px 54px rgba(0, 0, 0, 0.46), 0 5px 14px rgba(0, 0, 0, 0.34);
 }
 
 html,
@@ -1195,6 +1224,138 @@ button {
 
 .font-mono {
   font-family: var(--font-mono);
+}
+
+/* Floating map chrome */
+.map-chrome {
+  background: var(--chrome-bg);
+  border: 1px solid var(--chrome-border);
+  box-shadow: var(--chrome-shadow), inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(170%) blur(18px);
+  -webkit-backdrop-filter: saturate(170%) blur(18px);
+}
+
+.map-chrome-soft {
+  background: var(--chrome-bg);
+  border: 1px solid var(--chrome-border);
+  box-shadow: var(--chrome-shadow-soft), inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+}
+
+.map-popover {
+  background: var(--chrome-bg-strong);
+  border: 1px solid var(--chrome-border);
+  box-shadow: var(--chrome-shadow-popover), inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(170%) blur(20px);
+  -webkit-backdrop-filter: saturate(170%) blur(20px);
+}
+
+.map-icon-button,
+.map-text-button,
+.map-field-button {
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    transform var(--dur-micro) var(--ease-standard);
+}
+
+.map-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  color: var(--fg-2);
+}
+
+.map-control-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+}
+
+.top-tools .map-icon-button {
+  width: 38px;
+  height: 36px;
+  border-radius: 18px;
+}
+
+.top-tools .map-text-button {
+  flex-shrink: 0;
+}
+
+.top-tools .map-icon-button + .map-icon-button,
+.top-tools .map-text-button + .map-icon-button,
+.top-tools .relative + .relative,
+.top-tools .relative + .map-icon-button,
+.top-tools .map-icon-button + .relative {
+  margin-left: 1px;
+}
+
+.map-icon-button:hover,
+.map-text-button:hover,
+.map-field-button:hover {
+  background: var(--chrome-hover);
+  color: var(--fg-1);
+}
+
+.map-icon-button:active,
+.map-text-button:active,
+.map-field-button:active {
+  transform: scale(0.97);
+}
+
+.map-icon-button.is-active,
+.map-text-button.is-active,
+.map-field-button.is-active {
+  background: var(--chrome-active);
+  color: var(--fg-1);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.map-icon-button.is-accent {
+  background: var(--accent);
+  color: var(--fg-on-color);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 26%, transparent);
+}
+
+.map-divider {
+  background: var(--chrome-divider);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-icon-button,
+  .map-text-button,
+  .map-field-button {
+    transition: none;
+  }
+
+  .map-icon-button:active,
+  .map-text-button:active,
+  .map-field-button:active {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .map-icon-button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .map-control-button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .top-tools .map-icon-button {
+    width: 36px;
+    height: 34px;
+  }
 }
 
 

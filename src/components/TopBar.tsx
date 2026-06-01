@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import { createPortal } from "react-dom";
 import { Search, SlidersHorizontal, ChevronDown, BookOpen, GraduationCap, Compass, Settings2, Sun, Moon } from "lucide-react";
 import { MAPS, type MapId } from "../data";
 import { useStore, type EdgeStyle } from "../store";
@@ -8,12 +9,25 @@ import { getDomainTone } from "../lib/colors";
 import { CATEGORY_META, kindsByCategory } from "../lib/nodeCategory";
 import { LogoMark } from "./Logo";
 
+interface PopoverPosition {
+  top: number;
+  right: number;
+}
+
+function popoverPositionFor(el: HTMLElement): PopoverPosition {
+  const rect = el.getBoundingClientRect();
+  return {
+    top: Math.round(rect.bottom + 8),
+    right: Math.max(12, Math.round(window.innerWidth - rect.right)),
+  };
+}
+
 export function TopBar() {
   return (
-    <header className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-3">
-      <div className="pointer-events-auto flex w-full min-w-0 items-center justify-between gap-2 sm:gap-3">
+    <header className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-3 sm:px-4">
+      <div className="pointer-events-auto flex w-full min-w-0 items-start justify-between gap-2 sm:gap-3">
         <BrandSection />
-        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+        <div className="map-chrome top-tools dock-scrollbar flex h-11 min-w-0 flex-1 items-center justify-end gap-0 overflow-x-auto rounded-[24px] p-1 sm:flex-none">
           <SearchBox />
           <DictionaryButton />
           <FlashcardsButton />
@@ -54,37 +68,39 @@ function BrandSection() {
   return (
     <div
       ref={ref}
-      className="relative flex h-10 min-w-0 max-w-[calc(100vw-214px)] items-center gap-1 rounded-pill border p-1 sm:max-w-none"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        borderWidth: "1px",
-        boxShadow: "var(--shadow-1)",
-      }}
+      className="map-chrome relative flex h-11 min-w-0 max-w-[calc(100vw-224px)] items-center gap-1 rounded-[24px] p-1 sm:max-w-none"
     >
-      <div className="flex min-w-0 items-center gap-2.5 pl-2 pr-1 sm:px-2.5">
-        <LogoMark size={20} className="text-[color:var(--fg-1)]" />
+      <div className="flex min-w-0 items-center gap-2.5 pl-2.5 pr-1 sm:px-3">
+        <span
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
+          style={{
+            background: "color-mix(in srgb, var(--surface) 78%, transparent)",
+            boxShadow: "inset 0 0 0 1px var(--chrome-border)",
+          }}
+        >
+          <LogoMark size={18} className="text-[color:var(--fg-1)]" />
+        </span>
         <span
           className="hidden whitespace-nowrap font-serif text-atlas-brand sm:inline"
-          style={{ color: "var(--fg-1)", letterSpacing: "-0.005em" }}
+          style={{ color: "var(--fg-1)" }}
         >
           Math Atlas
         </span>
       </div>
+      <span className="map-divider hidden h-7 w-px shrink-0 sm:block" />
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex h-8 min-w-0 items-center gap-1.5 rounded-pill px-2.5 text-ui-control font-medium transition-all sm:px-3"
-        style={{
-          background: open ? "var(--surface-3)" : "var(--surface-2)",
-          color: "var(--fg-1)",
-          border: `1px solid var(--border)`,
-        }}
+        className={cn(
+          "map-field-button flex h-9 min-w-0 items-center gap-2 rounded-[18px] px-2.5 text-ui-control font-semibold sm:px-3",
+          open && "is-active",
+        )}
+        style={{ color: "var(--fg-1)" }}
         aria-label="Field selector"
         aria-expanded={open}
       >
         <span className="min-w-0 truncate">{currentLabel}</span>
         <ChevronDown
-          className="h-3.5 w-3.5 shrink-0 transition-transform"
+          className="h-3.5 w-3.5 shrink-0 transition-transform duration-150"
           style={{
             color: "var(--fg-2)",
             transform: open ? "rotate(180deg)" : "rotate(0deg)",
@@ -93,12 +109,7 @@ function BrandSection() {
       </button>
       {open && (
         <div
-          className="absolute left-0 top-12 w-[min(280px,calc(100vw-24px))] rounded-2xl border sm:w-max"
-          style={{
-            background: "var(--surface)",
-            borderColor: "var(--border)",
-            boxShadow: "var(--shadow-3)",
-          }}
+          className="map-popover absolute left-0 top-[52px] w-[min(300px,calc(100vw-24px))] overflow-hidden rounded-[20px] p-1.5 sm:w-[260px]"
         >
           {(Object.keys(MAPS) as MapId[]).map((id) => {
             const active = id === mapId;
@@ -109,15 +120,17 @@ function BrandSection() {
                   setMap(id);
                   setOpen(false);
                 }}
-                className="block w-full px-3 py-2 text-left text-ui-control font-medium transition-colors"
-                style={{
-                  background: active ? "var(--surface-3)" : "transparent",
-                  color: active ? "var(--fg-1)" : "var(--fg-2)",
-                  borderBottomColor: "var(--border)",
-                  borderBottomWidth: id !== "functional_analysis" ? "1px" : "0",
-                }}
+                className={cn(
+                  "map-text-button flex w-full items-center gap-2 rounded-[14px] px-3 py-2.5 text-left text-ui-control font-semibold",
+                  active && "is-active",
+                )}
+                style={{ color: active ? "var(--fg-1)" : "var(--fg-2)" }}
               >
-                <span className="block truncate">{MAPS[id].label}</span>
+                <span
+                  className="h-2 w-2 shrink-0 rounded-full"
+                  style={{ background: active ? "var(--accent)" : "var(--fg-4)" }}
+                />
+                <span className="block min-w-0 flex-1 truncate">{MAPS[id].label}</span>
               </button>
             );
           })}
@@ -132,22 +145,17 @@ function SearchBox() {
   return (
     <button
       onClick={() => setPaletteOpen(true)}
-      className="flex h-9 items-center gap-2 rounded-pill border px-3 text-ui-control sm:h-10"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        color: "var(--fg-2)",
-        boxShadow: "var(--shadow-1)",
-      }}
+      className="map-text-button flex h-9 min-w-9 items-center gap-2 rounded-[18px] px-2.5 text-ui-control md:min-w-[190px] md:px-3.5"
+      style={{ color: "var(--fg-2)" }}
       aria-label="Open search"
     >
-      <Search className="h-3.5 w-3.5" style={{ color: "var(--fg-3)" }} />
+      <Search className="h-4 w-4 shrink-0" style={{ color: "var(--fg-3)" }} />
       <span className="hidden md:inline">Search the atlas</span>
       <kbd
-        className="hidden h-5 items-center rounded border px-1.5 font-mono text-ui-2xs md:inline-flex"
+        className="ml-auto hidden h-5 items-center rounded-[7px] border px-1.5 font-mono text-ui-2xs md:inline-flex"
         style={{
-          background: "var(--surface-3)",
-          borderColor: "var(--border)",
+          background: "var(--chrome-hover)",
+          borderColor: "var(--chrome-border)",
           color: "var(--fg-2)",
         }}
       >
@@ -157,27 +165,55 @@ function SearchBox() {
   );
 }
 
+function TopIconButton({
+  active,
+  accentActive,
+  expanded,
+  label,
+  title,
+  onClick,
+  children,
+}: {
+  active?: boolean;
+  accentActive?: boolean;
+  expanded?: boolean;
+  label: string;
+  title?: string;
+  onClick: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "pointer-events-auto map-icon-button",
+        active && (accentActive ? "is-accent" : "is-active"),
+      )}
+      aria-label={label}
+      aria-pressed={active}
+      aria-expanded={expanded}
+      title={title}
+    >
+      {children}
+    </button>
+  );
+}
+
 function DictionaryButton() {
   const surface = useStore((s) => s.surface);
   const setSurface = useStore((s) => s.setSurface);
   const active = surface === "dictionary";
   return (
-    <button
-      type="button"
+    <TopIconButton
       onClick={() => setSurface(active ? "atlas" : "dictionary")}
-      className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
-      style={{
-        background: active ? "var(--accent)" : "var(--surface)",
-        borderColor: active ? "var(--accent)" : "var(--border)",
-        color: active ? "var(--surface)" : "var(--fg-2)",
-        boxShadow: "var(--shadow-1)",
-      }}
-      aria-label="Topology Dictionary"
-      aria-pressed={active}
+      active={active}
+      accentActive
+      label="Topology Dictionary"
       title={active ? "Back to atlas" : "Topology Dictionary"}
     >
       <BookOpen className="h-4 w-4" />
-    </button>
+    </TopIconButton>
   );
 }
 
@@ -186,22 +222,15 @@ function FlashcardsButton() {
   const setSurface = useStore((s) => s.setSurface);
   const active = surface === "flashcards";
   return (
-    <button
-      type="button"
+    <TopIconButton
       onClick={() => setSurface(active ? "atlas" : "flashcards")}
-      className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
-      style={{
-        background: active ? "var(--accent)" : "var(--surface)",
-        borderColor: active ? "var(--accent)" : "var(--border)",
-        color: active ? "var(--surface)" : "var(--fg-2)",
-        boxShadow: "var(--shadow-1)",
-      }}
-      aria-label="Flashcards"
-      aria-pressed={active}
+      active={active}
+      accentActive
+      label="Flashcards"
       title={active ? "Back to atlas" : "Flashcards"}
     >
       <GraduationCap className="h-4 w-4" />
-    </button>
+    </TopIconButton>
   );
 }
 
@@ -210,60 +239,78 @@ function SandboxButton() {
   const setSurface = useStore((s) => s.setSurface);
   const active = surface === "sandbox";
   return (
-    <button
-      type="button"
+    <TopIconButton
       onClick={() => setSurface(active ? "atlas" : "sandbox")}
-      className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
-      style={{
-        background: active ? "var(--accent)" : "var(--surface)",
-        borderColor: active ? "var(--accent)" : "var(--border)",
-        color: active ? "var(--surface)" : "var(--fg-2)",
-        boxShadow: "var(--shadow-1)",
-      }}
-      aria-label="Sandbox"
-      aria-pressed={active}
+      active={active}
+      accentActive
+      label="Sandbox"
       title={active ? "Back to atlas" : "Geometric sandbox"}
     >
       <Compass className="h-4 w-4" />
-    </button>
+    </TopIconButton>
   );
 }
 
 function FilterButton() {
   const [open, setOpen] = useState(false);
+  const [position, setPosition] = useState<PopoverPosition | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      const target = e.target as Node;
+      if (
+        ref.current &&
+        !ref.current.contains(target) &&
+        popoverRef.current &&
+        !popoverRef.current.contains(target)
+      ) {
+        setOpen(false);
+      }
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onResize = () => {
+      if (ref.current) setPosition(popoverPositionFor(ref.current));
     };
     document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+    };
   }, [open]);
 
   return (
-    <div className="relative" ref={ref}>
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
-        style={{
-          background: "var(--surface)",
-          borderColor: "var(--border)",
-          color: open ? "var(--accent)" : "var(--fg-2)",
-          boxShadow: "var(--shadow-1)",
+    <div className="pointer-events-auto relative" ref={ref}>
+      <TopIconButton
+        onClick={() => {
+          if (ref.current) setPosition(popoverPositionFor(ref.current));
+          setOpen((o) => !o);
         }}
-        aria-label="Filters"
-        aria-expanded={open}
+        active={open}
+        expanded={open}
+        label="Filters"
       >
         <SlidersHorizontal className="h-4 w-4" />
-      </button>
-      {open && <FilterPopover />}
+      </TopIconButton>
+      {open && position && <FilterPopover popoverRef={popoverRef} position={position} />}
     </div>
   );
 }
 
-function FilterPopover() {
+function FilterPopover({
+  popoverRef,
+  position,
+}: {
+  popoverRef: RefObject<HTMLDivElement>;
+  position: PopoverPosition;
+}) {
   const mapId = useStore((s) => s.mapId);
   const map = useStore((s) => s.loadedMaps[mapId]);
   const kinds = useStore((s) => s.kinds);
@@ -275,14 +322,11 @@ function FilterPopover() {
   const toggleSoftDeps = useStore((s) => s.toggleSoftDeps);
   if (!map) return null;
 
-  return (
+  return createPortal(
     <div
-      className="absolute right-0 top-12 w-[300px] rounded-2xl border p-4"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        boxShadow: "var(--shadow-3)",
-      }}
+      ref={popoverRef}
+      className="map-popover pointer-events-auto fixed z-50 w-[min(300px,calc(100vw-24px))] rounded-[20px] p-4"
+      style={{ top: position.top, right: position.right }}
     >
       <div
         className="mb-2 text-ui-caption font-semibold uppercase tracking-label-wide"
@@ -364,41 +408,61 @@ function FilterPopover() {
       <SettingRow label="Soft links" hint="Pedagogical 'learn-first' edges">
         <ToggleSwitch active={showSoftDeps} onClick={toggleSoftDeps} />
       </SettingRow>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
 function DisplayButton() {
   const [open, setOpen] = useState(false);
+  const [position, setPosition] = useState<PopoverPosition | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      const target = e.target as Node;
+      if (
+        ref.current &&
+        !ref.current.contains(target) &&
+        popoverRef.current &&
+        !popoverRef.current.contains(target)
+      ) {
+        setOpen(false);
+      }
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onResize = () => {
+      if (ref.current) setPosition(popoverPositionFor(ref.current));
     };
     document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+    };
   }, [open]);
 
   return (
-    <div className="relative" ref={ref}>
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
-        style={{
-          background: "var(--surface)",
-          borderColor: "var(--border)",
-          color: open ? "var(--accent)" : "var(--fg-2)",
-          boxShadow: "var(--shadow-1)",
+    <div className="pointer-events-auto relative" ref={ref}>
+      <TopIconButton
+        onClick={() => {
+          if (ref.current) setPosition(popoverPositionFor(ref.current));
+          setOpen((o) => !o);
         }}
-        aria-label="Display settings"
-        aria-expanded={open}
+        active={open}
+        expanded={open}
+        label="Display settings"
         title="Display"
       >
         <Settings2 className="h-4 w-4" />
-      </button>
-      {open && <DisplayPopover />}
+      </TopIconButton>
+      {open && position && <DisplayPopover popoverRef={popoverRef} position={position} />}
     </div>
   );
 }
@@ -478,6 +542,7 @@ function ThemeSwatch({ theme, active, onClick }: { theme: (typeof THEMES)[number
   const p = theme.preview;
   return (
     <button
+      type="button"
       onClick={onClick}
       className="h-[22px] w-[22px] rounded-full transition-transform hover:scale-110"
       style={{
@@ -493,21 +558,24 @@ function ThemeSwatch({ theme, active, onClick }: { theme: (typeof THEMES)[number
   );
 }
 
-function DisplayPopover() {
+function DisplayPopover({
+  popoverRef,
+  position,
+}: {
+  popoverRef: RefObject<HTMLDivElement>;
+  position: PopoverPosition;
+}) {
   const theme = useStore((s) => s.theme);
   const setTheme = useStore((s) => s.setTheme);
   const edgeStyle = useStore((s) => s.edgeStyle);
   const setEdgeStyle = useStore((s) => s.setEdgeStyle);
   const activeLabel = THEMES.find((t) => t.id === theme)?.label ?? theme;
 
-  return (
+  return createPortal(
     <div
-      className="absolute right-0 top-12 w-[260px] rounded-2xl border p-4"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        boxShadow: "var(--shadow-3)",
-      }}
+      ref={popoverRef}
+      className="map-popover pointer-events-auto fixed z-50 w-[min(260px,calc(100vw-24px))] rounded-[20px] p-4"
+      style={{ top: position.top, right: position.right }}
     >
       <div className="mb-2.5 flex items-baseline justify-between">
         <span
@@ -538,7 +606,8 @@ function DisplayPopover() {
           ]}
         />
       </SettingRow>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -547,19 +616,12 @@ function SchemeToggle() {
   const setTheme = useStore((s) => s.setTheme);
   const isDark = schemeFor(theme) === "dark";
   return (
-    <button
+    <TopIconButton
       onClick={() => setTheme(siblingOf(theme))}
-      className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        color: "var(--fg-2)",
-        boxShadow: "var(--shadow-1)",
-      }}
-      aria-label={isDark ? "Switch to light scheme" : "Switch to dark scheme"}
+      label={isDark ? "Switch to light scheme" : "Switch to dark scheme"}
       title={isDark ? "Light" : "Dark"}
     >
       {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-    </button>
+    </TopIconButton>
   );
 }

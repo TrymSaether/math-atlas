@@ -16,41 +16,39 @@ export function CanvasControls() {
   return (
     <>
       {/* Top-right control column. Keep it below the global top bar. */}
-      <div className="pointer-events-none absolute right-3 top-16 z-30 flex flex-col items-end gap-2">
-        <Stack>
-          <FloatButton
-            label="Fit view"
-            onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}
-          >
-            <Compass />
-          </FloatButton>
-        </Stack>
-        <Stack>
+      <div className="pointer-events-none absolute right-3 top-[72px] z-30 flex flex-col items-end gap-2.5 sm:right-4">
+        <FloatButton
+          label="Fit view"
+          onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}
+        >
+          <Compass />
+        </FloatButton>
+        <div className="map-chrome-soft pointer-events-auto flex flex-col overflow-hidden rounded-[24px]">
           <FloatButton
             label="Zoom in"
+            grouped
             onClick={() => rf.zoomIn({ duration: 180 })}
           >
-            <Plus className="h-[17px] w-[17px]" strokeWidth={1.8} />
+            <Plus className="h-[18px] w-[18px]" strokeWidth={2} />
           </FloatButton>
-          <span className="h-px w-full" style={{ background: "var(--border)" }} />
+          <span className="map-divider mx-2 h-px" />
           <FloatButton
             label="Zoom out"
+            grouped
             onClick={() => rf.zoomOut({ duration: 180 })}
           >
-            <Minus className="h-[17px] w-[17px]" strokeWidth={1.8} />
+            <Minus className="h-[18px] w-[18px]" strokeWidth={2} />
           </FloatButton>
-        </Stack>
+        </div>
 
-        <div className="relative">
-          <Stack>
-            <FloatButton
-              label="Map layers"
-              active={layersOpen}
-              onClick={() => setLayersOpen((o) => !o)}
-            >
-              <Layers className="h-[17px] w-[17px]" strokeWidth={1.8} />
-            </FloatButton>
-          </Stack>
+        <div className="pointer-events-auto relative">
+          <FloatButton
+            label="Map layers"
+            active={layersOpen}
+            onClick={() => setLayersOpen((o) => !o)}
+          >
+            <Layers className="h-[18px] w-[18px]" strokeWidth={2} />
+          </FloatButton>
           {layersOpen && <LayersPopover onClose={() => setLayersOpen(false)} />}
         </div>
       </div>
@@ -58,32 +56,17 @@ export function CanvasControls() {
   );
 }
 
-function Stack({ children }: { children: ReactNode }) {
-  return (
-    <div
-      className="pointer-events-auto flex flex-col overflow-hidden rounded-xl border"
-      style={{
-        background: "color-mix(in srgb, var(--surface) 92%, transparent)",
-        backdropFilter: "saturate(140%) blur(12px)",
-        WebkitBackdropFilter: "saturate(140%) blur(12px)",
-        borderColor: "var(--border)",
-        boxShadow: "var(--shadow-2)",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
 function FloatButton({
   label,
   onClick,
   active,
+  grouped,
   children,
 }: {
   label: string;
   onClick: () => void;
   active?: boolean;
+  grouped?: boolean;
   children: ReactNode;
 }) {
   return (
@@ -91,13 +74,10 @@ function FloatButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "flex h-[38px] w-[38px] items-center justify-center transition-colors",
-        !active && "hover:bg-[var(--surface-3)]",
+        "pointer-events-auto map-icon-button map-control-button",
+        grouped ? "rounded-none" : "map-chrome-soft rounded-full",
+        active && "is-active",
       )}
-      style={{
-        background: active ? "var(--surface-3)" : "transparent",
-        color: active ? "var(--fg-1)" : "var(--fg-2)",
-      }}
       aria-label={label}
       aria-pressed={active}
       title={label}
@@ -143,15 +123,10 @@ function LayersPopover({ onClose }: { onClose: () => void }) {
   return (
     <div
       ref={ref}
-      className="pointer-events-auto absolute right-0 top-12 w-60 rounded-2xl border p-1.5"
-      style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        boxShadow: "var(--shadow-3)",
-      }}
+      className="map-popover pointer-events-auto absolute right-0 top-[54px] w-64 rounded-[20px] p-2"
     >
       <div
-        className="px-3 pb-1.5 pt-1 text-ui-2xs font-semibold uppercase tracking-label"
+        className="px-3 pb-1.5 pt-1.5 text-ui-2xs font-semibold uppercase tracking-label"
         style={{ color: "var(--fg-3)" }}
       >
         Map layers
@@ -159,7 +134,7 @@ function LayersPopover({ onClose }: { onClose: () => void }) {
       {LAYERS.map(({ key, label }) => (
         <label
           key={key}
-          className="flex cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2 text-ui-control transition-colors hover:bg-[var(--surface-2)]"
+          className="map-text-button flex cursor-pointer items-center gap-2.5 rounded-[14px] px-3 py-2.5 text-ui-control font-medium"
           style={{ color: "var(--fg-1)" }}
         >
           <input
@@ -179,8 +154,8 @@ function LayersPopover({ onClose }: { onClose: () => void }) {
 /** Compass rose with a red north needle (themes via currentColor). */
 function Compass() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.4" />
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="12" r="9.2" stroke="currentColor" strokeWidth="1.45" opacity="0.86" />
       <path d="M12 4 L14 12 L12 11 L10 12 Z" fill="var(--red)" stroke="none" />
       <path
         d="M12 20 L10 12 L12 13 L14 12 Z"

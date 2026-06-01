@@ -41,7 +41,6 @@ const KIND_ABBREV: Record<string, string> = {
   assumption: "Asm",
   structure: "Str",
   object: "Obj",
-  property: "Prop",
   construction: "Con",
   notation: "Not",
   conjecture: "Conj",

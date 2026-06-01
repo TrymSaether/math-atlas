@@ -82,14 +82,62 @@ export interface CategoryMeta {
 }
 
 export const CATEGORY_META: Record<NodeCategory, CategoryMeta> = {
-  definition: { id: "definition", label: "Definition", icon: Circle, rail: "solid", glyphFilled: false },
-  structure:  { id: "structure",  label: "Structure",  icon: Layers,  rail: "solid", glyphFilled: false },
-  theorem:    { id: "theorem",    label: "Theorem",    icon: Diamond, rail: "solid", glyphFilled: true  },
-  property:   { id: "property",   label: "Property",   icon: Tag,     rail: "solid", glyphFilled: false },
-  construction: { id: "construction", label: "Construction", icon: Box, rail: "solid", glyphFilled: false },
-  example:    { id: "example",    label: "Example",    icon: FlaskConical, rail: "dashed", glyphFilled: false },
-  proof:      { id: "proof",      label: "Proof",      icon: Check,   rail: "dotted", glyphFilled: false },
-  exercise:   { id: "exercise",   label: "Exercise",   icon: PencilLine, rail: "dotted", glyphFilled: false },
+  definition: {
+    id: "definition",
+    label: "Definition",
+    icon: Circle,
+    rail: "solid",
+    glyphFilled: false,
+  },
+  structure: {
+    id: "structure",
+    label: "Structure",
+    icon: Layers,
+    rail: "solid",
+    glyphFilled: false,
+  },
+  theorem: {
+    id: "theorem",
+    label: "Theorem",
+    icon: Diamond,
+    rail: "solid",
+    glyphFilled: true,
+  },
+  property: {
+    id: "property",
+    label: "Property",
+    icon: Tag,
+    rail: "solid",
+    glyphFilled: false,
+  },
+  construction: {
+    id: "construction",
+    label: "Construction",
+    icon: Box,
+    rail: "solid",
+    glyphFilled: false,
+  },
+  example: {
+    id: "example",
+    label: "Example",
+    icon: FlaskConical,
+    rail: "dashed",
+    glyphFilled: false,
+  },
+  proof: {
+    id: "proof",
+    label: "Proof",
+    icon: Check,
+    rail: "dotted",
+    glyphFilled: false,
+  },
+  exercise: {
+    id: "exercise",
+    label: "Exercise",
+    icon: PencilLine,
+    rail: "dotted",
+    glyphFilled: false,
+  },
 };
 
 /** CSS `background` for the lane rail given its domain color and texture. */
@@ -134,7 +182,9 @@ export const DEFAULT_VISIBLE_CATEGORIES: NodeCategory[] = [
 ];
 
 /** Raw kinds present in the map, grouped by category in display order. */
-export function kindsByCategory(kinds: string[]): { category: NodeCategory; kinds: string[] }[] {
+export function kindsByCategory(
+  kinds: string[],
+): { category: NodeCategory; kinds: string[] }[] {
   return CATEGORY_ORDER.map((category) => ({
     category,
     kinds: kinds.filter((k) => categoryOf(k) === category),
@@ -143,5 +193,7 @@ export function kindsByCategory(kinds: string[]): { category: NodeCategory; kind
 
 /** The default visible kind set: every kind whose category is shown by default. */
 export function defaultVisibleKinds(kinds: string[]): string[] {
-  return kinds.filter((k) => DEFAULT_VISIBLE_CATEGORIES.includes(categoryOf(k)));
+  return kinds.filter((k) =>
+    DEFAULT_VISIBLE_CATEGORIES.includes(categoryOf(k)),
+  );
 }
