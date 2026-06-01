@@ -2,6 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { dist, type SandboxObject, type ToolId } from "./types";
 
 const MATH = { xMin: -12, xMax: 12, yMin: -8, yMax: 8 };
+const GRID_MIN_PX = 24;
+const GRID_MAJOR_EVERY = 5;
+const VIEW_PADDING_UNITS = 1;
+const ZOOM_MIN = 1e-6;
+const ZOOM_MAX = 1e6;
 
 interface PendingPoint {
   x: number;
@@ -48,6 +53,18 @@ export function SandboxCanvas({
   const my = (y: number) => oy - y * scale;
   const toMathX = (px: number) => (px - ox) / scale;
   const toMathY = (py: number) => (oy - py) / scale;
+  const visible = {
+    xMin: toMathX(0) - VIEW_PADDING_UNITS,
+    xMax: toMathX(size.w) + VIEW_PADDING_UNITS,
+    yMin: toMathY(size.h) - VIEW_PADDING_UNITS,
+    yMax: toMathY(0) + VIEW_PADDING_UNITS,
+  };
+  const xAxisY = my(0);
+  const yAxisX = mx(0);
+  const hasXAxis = xAxisY >= -1 && xAxisY <= size.h + 1;
+  const hasYAxis = yAxisX >= -1 && yAxisX <= size.w + 1;
+  const gridStep = gridStepForScale(scale);
+  const majorStep = gridStep * GRID_MAJOR_EVERY;
 
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.button !== 0) return;
@@ -72,8 +89,9 @@ export function SandboxCanvas({
   };
 
   const onWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
     const factor = e.deltaY > 0 ? 0.94 : 1.06;
-    const next = Math.max(0.4, Math.min(4, zoom * factor));
+    const next = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, zoom * factor));
     const rect = ref.current!.getBoundingClientRect();
     const cx = e.clientX - rect.left;
     const cy = e.clientY - rect.top;
@@ -84,11 +102,9 @@ export function SandboxCanvas({
     setZoom(next);
   };
 
-  // Gridlines (every 1 unit, major every 5).
-  const xs: number[] = [];
-  for (let v = Math.ceil(MATH.xMin); v <= Math.floor(MATH.xMax); v++) xs.push(v);
-  const ys: number[] = [];
-  for (let v = Math.ceil(MATH.yMin); v <= Math.floor(MATH.yMax); v++) ys.push(v);
+  // Gridlines cover the visible math viewport, not just the initial framing box.
+  const xs = ticks(visible.xMin, visible.xMax, gridStep);
+  const ys = ticks(visible.yMin, visible.yMax, gridStep);
 
   return (
     <div
@@ -108,54 +124,60 @@ export function SandboxCanvas({
         {/* grid */}
         <g pointerEvents="none">
           {xs.map((v) => {
-            const px = mx(v);
+            const px = mx(v.value);
             if (px < -2 || px > size.w + 2) return null;
-            const major = v % 5 === 0;
+            const major = isMajorTick(v, majorStep);
             return (
               <line
-                key={`x${v}`}
+                key={`x${v.key}`}
                 x1={px}
                 x2={px}
                 y1={0}
                 y2={size.h}
-                stroke={major ? "var(--border-strong)" : "var(--surface-2)"}
+                stroke={major ? "var(--border-strong)" : "var(--grid-dot)"}
                 strokeWidth={major ? 1 : 0.75}
               />
             );
           })}
           {ys.map((v) => {
-            const py = my(v);
+            const py = my(v.value);
             if (py < -2 || py > size.h + 2) return null;
-            const major = v % 5 === 0;
+            const major = isMajorTick(v, majorStep);
             return (
               <line
-                key={`y${v}`}
+                key={`y${v.key}`}
                 x1={0}
                 x2={size.w}
                 y1={py}
                 y2={py}
-                stroke={major ? "var(--border-strong)" : "var(--surface-2)"}
+                stroke={major ? "var(--border-strong)" : "var(--grid-dot)"}
                 strokeWidth={major ? 1 : 0.75}
               />
             );
           })}
           {/* axes */}
-          <line x1={0} x2={size.w} y1={my(0)} y2={my(0)} stroke="var(--fg-3)" strokeWidth={1.3} />
-          <line x1={mx(0)} x2={mx(0)} y1={0} y2={size.h} stroke="var(--fg-3)" strokeWidth={1.3} />
+          {hasXAxis && (
+            <line x1={0} x2={size.w} y1={xAxisY} y2={xAxisY} stroke="var(--fg-3)" strokeWidth={1.3} />
+          )}
+          {hasYAxis && (
+            <line x1={yAxisX} x2={yAxisX} y1={0} y2={size.h} stroke="var(--fg-3)" strokeWidth={1.3} />
+          )}
           {showLabels &&
+            hasXAxis &&
             xs
-              .filter((v) => v % 5 === 0 && v !== 0)
+              .filter((v) => isMajorTick(v, majorStep) && v.value !== 0)
               .map((v) => (
-                <text key={`xt${v}`} x={mx(v)} y={my(0) + 14} textAnchor="middle" fontSize={10} fill="var(--fg-3)" style={{ fontFamily: "var(--font-mono)" }}>
-                  {v}
+                <text key={`xt${v.key}`} x={mx(v.value)} y={xAxisY + 14} textAnchor="middle" fontSize={10} fill="var(--fg-3)" style={{ fontFamily: "var(--font-mono)" }}>
+                  {formatTick(v.value)}
                 </text>
               ))}
           {showLabels &&
+            hasYAxis &&
             ys
-              .filter((v) => v % 5 === 0 && v !== 0)
+              .filter((v) => isMajorTick(v, majorStep) && v.value !== 0)
               .map((v) => (
-                <text key={`yt${v}`} x={mx(0) + 6} y={my(v) + 3} fontSize={10} fill="var(--fg-3)" style={{ fontFamily: "var(--font-mono)" }}>
-                  {v}
+                <text key={`yt${v.key}`} x={yAxisX + 6} y={my(v.value) + 3} fontSize={10} fill="var(--fg-3)" style={{ fontFamily: "var(--font-mono)" }}>
+                  {formatTick(v.value)}
                 </text>
               ))}
         </g>
@@ -180,6 +202,45 @@ export function SandboxCanvas({
       </svg>
     </div>
   );
+}
+
+interface GridTick {
+  key: number;
+  value: number;
+}
+
+function gridStepForScale(scale: number) {
+  const raw = GRID_MIN_PX / scale;
+  const magnitude = 10 ** Math.floor(Math.log10(raw));
+  const normalized = raw / magnitude;
+  const nice = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+  return nice * magnitude;
+}
+
+function ticks(min: number, max: number, step: number): GridTick[] {
+  const values: GridTick[] = [];
+  const start = Math.ceil(min / step);
+  const end = Math.floor(max / step);
+  for (let i = start; i <= end; i += 1) {
+    const value = cleanTick(i * step);
+    values.push({ key: i, value });
+  }
+  return values;
+}
+
+function isMajorTick(tick: GridTick, majorStep: number) {
+  return Math.abs(tick.value / majorStep - Math.round(tick.value / majorStep)) < 1e-6;
+}
+
+function cleanTick(value: number) {
+  const rounded = Number(value.toPrecision(12));
+  return Object.is(rounded, -0) ? 0 : rounded;
+}
+
+function formatTick(value: number) {
+  const abs = Math.abs(value);
+  if ((abs >= 1e5 || (abs > 0 && abs < 1e-3))) return value.toExponential(1);
+  return String(cleanTick(value));
 }
 
 function ObjectGlyph({
