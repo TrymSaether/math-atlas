@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Layers, LocateFixed, Minus, Plus } from "lucide-react";
+import { Layers, Minus, Plus } from "lucide-react";
 import { useReactFlow } from "reactflow";
 import { useStore } from "../store";
 import { cn } from "../lib/utils";
 
 /**
  * Floating Apple-Maps-style canvas chrome: a top-right column of glass button
- * stacks (zoom, fit, layers) plus a top-left compass. Replaces the Dock's zoom
- * cluster; the Dock keeps the app-specific view/focus controls.
+ * stacks for zoom, fit, and layers. Replaces the Dock's zoom cluster; the Dock
+ * keeps the app-specific view/focus controls.
  */
 export function CanvasControls() {
   const rf = useReactFlow();
@@ -15,24 +15,16 @@ export function CanvasControls() {
 
   return (
     <>
-      {/* Top-left compass — re-orients (fits) the view. */}
-      <div className="pointer-events-none absolute left-3 top-16 z-30">
+      {/* Top-right control column. Keep it below the global top bar. */}
+      <div className="pointer-events-none absolute right-3 top-16 z-30 flex flex-col items-end gap-2">
         <Stack>
-          <button
-            type="button"
+          <FloatButton
+            label="Fit view"
             onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}
-            className="pointer-events-auto flex h-[38px] w-[38px] items-center justify-center transition-colors hover:bg-[var(--surface-3)]"
-            style={{ color: "var(--fg-2)" }}
-            aria-label="Re-center the map"
-            title="Re-center the map"
           >
             <Compass />
-          </button>
+          </FloatButton>
         </Stack>
-      </div>
-
-      {/* Top-right control column. */}
-      <div className="pointer-events-none absolute right-3 top-16 z-30 flex flex-col items-end gap-2 sm:top-3">
         <Stack>
           <FloatButton
             label="Zoom in"
@@ -46,15 +38,6 @@ export function CanvasControls() {
             onClick={() => rf.zoomOut({ duration: 180 })}
           >
             <Minus className="h-[17px] w-[17px]" strokeWidth={1.8} />
-          </FloatButton>
-        </Stack>
-
-        <Stack>
-          <FloatButton
-            label="Fit view"
-            onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}
-          >
-            <LocateFixed className="h-[17px] w-[17px]" strokeWidth={1.8} />
           </FloatButton>
         </Stack>
 
