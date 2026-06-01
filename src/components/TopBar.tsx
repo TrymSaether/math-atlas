@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
-import { Search, ChevronDown, BookOpen, GraduationCap, Compass, Settings2, Sun, Moon, Check } from "lucide-react";
+import { Search, ChevronDown, Map, BookOpen, GraduationCap, Compass, Settings2, Sun, Moon, Check } from "lucide-react";
 import { useReactFlow } from "reactflow";
 import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
@@ -34,6 +34,7 @@ export function TopBar() {
           </Pill>
           {/* Surfaces — mutually-exclusive view switches, grouped */}
           <Pill variant="soft" className="top-tools">
+            <AtlasButton />
             <DictionaryButton />
             <FlashcardsButton />
             <SandboxButton />
@@ -117,19 +118,14 @@ function MapBrandSelector() {
           Math Atlas
         </span>
       </button>
-      <span className="map-divider hidden h-7 w-px shrink-0 sm:block" />
       <button
+        type="button"
         onClick={() => setOpen((o) => !o)}
-        className="map-field-button flex h-9 min-w-0 items-center gap-2 rounded-[14px] px-2.5 text-ui-control font-semibold sm:px-3"
-        style={
-          open
-            ? {
-              background: "var(--accent-soft)",
-              color: "var(--accent)",
-              boxShadow: "inset 0 0 0 1px var(--accent-border)",
-            }
-            : { color: "var(--fg-1)" }
-        }
+        className={cn(
+          "map-field-button flex h-9 min-w-0 items-center gap-2 rounded-[14px] px-2.5 text-ui-control font-semibold sm:px-3",
+          open && "is-active",
+        )}
+        style={!open ? { color: "var(--fg-1)" } : undefined}
         aria-label="Field selector"
         aria-expanded={open}
       >
@@ -151,20 +147,16 @@ function MapBrandSelector() {
             return (
               <button
                 key={id}
+                type="button"
                 onClick={() => {
                   setMap(id);
                   setOpen(false);
                 }}
-                className="map-text-button flex w-full items-center gap-2 rounded-[14px] px-3 py-2.5 text-left text-ui-control font-semibold"
-                style={
-                  active
-                    ? {
-                      background: "var(--accent-soft)",
-                      color: "var(--accent)",
-                      boxShadow: "inset 0 0 0 1px var(--accent-border)",
-                    }
-                    : { color: "var(--fg-2)" }
-                }
+                className={cn(
+                  "map-text-button flex w-full items-center gap-2 rounded-[14px] px-3 py-2.5 text-left text-ui-control font-semibold",
+                  active && "is-active",
+                )}
+                style={!active ? { color: "var(--fg-2)" } : undefined}
               >
                 <span className="block min-w-0 flex-1 truncate">{MAPS[id].label}</span>
                 {active && <Check className="h-4 w-4 shrink-0" strokeWidth={2.5} />}
@@ -181,6 +173,7 @@ function SearchBox() {
   const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   return (
     <button
+      type="button"
       onClick={() => setPaletteOpen(true)}
       className="map-text-button flex h-9 min-w-9 items-center gap-2 rounded-[18px] px-2.5 text-ui-control md:min-w-[190px] md:px-3.5"
       style={{ color: "var(--fg-2)" }}
@@ -199,6 +192,22 @@ function SearchBox() {
         ⌘K
       </kbd>
     </button>
+  );
+}
+
+function AtlasButton() {
+  const surface = useStore((s) => s.surface);
+  const setSurface = useStore((s) => s.setSurface);
+  const active = surface === "atlas";
+  return (
+    <DockButton
+      onClick={() => setSurface("atlas")}
+      active={active}
+      label="Atlas map"
+      title="Atlas map"
+    >
+      <Map className="h-4 w-4" />
+    </DockButton>
   );
 }
 
@@ -369,6 +378,7 @@ function SchemeToggle() {
   return (
     <DockButton
       onClick={() => setTheme(siblingOf(theme))}
+      active={isDark}
       label={isDark ? "Switch to light scheme" : "Switch to dark scheme"}
       title={isDark ? "Light" : "Dark"}
     >
