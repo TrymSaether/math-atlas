@@ -1,4 +1,4 @@
-import { Crosshair, Layers, Network } from "lucide-react";
+import { Crosshair, Layers, Network, Waypoints } from "lucide-react";
 import { cn } from "../lib/utils";
 import { useStore, type ViewMode } from "../store";
 
@@ -14,6 +14,11 @@ export function Dock() {
   const toggleFocusMode = useStore((s) => s.toggleFocusMode);
   const focusDepth = useStore((s) => s.focusDepth);
   const setFocusDepth = useStore((s) => s.setFocusDepth);
+  const routeMode = useStore((s) => s.routeMode);
+  const routeFrom = useStore((s) => s.routeFrom);
+  const routeTo = useStore((s) => s.routeTo);
+  const toggleRouteMode = useStore((s) => s.toggleRouteMode);
+  const routeActive = routeMode || (routeFrom !== null && routeTo !== null);
 
   return (
     <div className="pointer-events-none absolute inset-x-3 bottom-4 z-30 flex justify-center px-0 sm:px-3">
@@ -101,6 +106,23 @@ export function Dock() {
             );
           })}
         </div>
+
+        <Divider />
+
+        <button
+          onClick={toggleRouteMode}
+          className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-pill border px-3 text-ui-control font-medium transition-colors hover:bg-[var(--surface-3)]"
+          style={{
+            background: routeActive ? "var(--surface-2)" : "transparent",
+            color: routeActive ? "var(--fg-1)" : "var(--fg-2)",
+            borderColor: routeActive ? "var(--border)" : "transparent",
+          }}
+          aria-pressed={routeMode}
+          title="Plan a route between two concepts"
+        >
+          <Waypoints className="h-3.5 w-3.5" />
+          <span className="hidden sm:inline">Route</span>
+        </button>
       </div>
     </div>
   );

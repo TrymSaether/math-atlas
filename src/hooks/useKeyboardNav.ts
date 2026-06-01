@@ -15,10 +15,15 @@ export function useKeyboardNav() {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
       if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) return;
-      const { selectedId, select, surface } = useStore.getState();
+      const { selectedId, select, surface, routeMode, routeFrom, routeTo, clearRoute } = useStore.getState();
       // The flashcard and sandbox surfaces own their own keyboard shortcuts.
       if (surface === "flashcards" || surface === "sandbox") return;
-      if (e.key === "Escape") { select(null); return; }
+      if (e.key === "Escape") {
+        // Cancel route planning first, then fall back to clearing selection.
+        if (routeMode || (routeFrom && routeTo)) clearRoute();
+        else select(null);
+        return;
+      }
       if (!["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft", "j", "k"].includes(e.key)) return;
       e.preventDefault();
       const cur = selectedId ? indexById.get(selectedId) ?? -1 : -1;
