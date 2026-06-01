@@ -231,3 +231,10 @@ tmbootpicker.efi
 
 # Windows thumbnail cache files
 .playwright-cli/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
