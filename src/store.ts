@@ -7,8 +7,8 @@ import type { NodeKind, Relation } from "./types";
 export type SearchScope = "all" | "title";
 export type ViewMode = "dependency" | "cluster";
 export type EdgeStyle = "smooth" | "straight" | "bezier";
-/** Which surface is shown: the graph canvas, the dictionary reading view, or the flashcard study mode. */
-export type Surface = "atlas" | "dictionary" | "flashcards";
+/** Which surface is shown: the graph canvas, the dictionary reading view, the flashcard study mode, or the geometric sandbox. */
+export type Surface = "atlas" | "dictionary" | "flashcards" | "sandbox";
 
 interface State {
   /** Active theme id (see src/lib/themes.ts). */
@@ -51,6 +51,12 @@ interface State {
   toggleFocusMode: () => void;
   focusDepth: number;
   setFocusDepth: (d: number) => void;
+
+  /** Canvas "Map layers" toggles (driven by the floating Layers control). */
+  showGrid: boolean;
+  toggleGrid: () => void;
+  showRegions: boolean;
+  toggleRegions: () => void;
 
   selectedId: string | null;
   select: (id: string | null) => void;
@@ -156,6 +162,11 @@ export const useStore = create<State>((set, get) => ({
   toggleFocusMode: () => set((s) => ({ focusMode: !s.focusMode })),
   focusDepth: 1,
   setFocusDepth: (d) => set({ focusDepth: Math.min(3, Math.max(1, d)) }),
+
+  showGrid: true,
+  toggleGrid: () => set((s) => ({ showGrid: !s.showGrid })),
+  showRegions: true,
+  toggleRegions: () => set((s) => ({ showRegions: !s.showRegions })),
 
   selectedId: null,
   select: (id) => set({ selectedId: id }),

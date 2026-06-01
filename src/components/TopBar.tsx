@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Search, SlidersHorizontal, ChevronDown, BookOpen, GraduationCap, Settings2, Sun, Moon } from "lucide-react";
+import { Search, SlidersHorizontal, ChevronDown, BookOpen, GraduationCap, Compass, Settings2, Sun, Moon } from "lucide-react";
 import { MAPS, type MapId } from "../data";
 import { useStore, type EdgeStyle } from "../store";
 import { THEMES, schemeFor, siblingOf } from "../lib/themes";
@@ -17,6 +17,7 @@ export function TopBar() {
           <SearchBox />
           <DictionaryButton />
           <FlashcardsButton />
+          <SandboxButton />
           <FilterButton />
           <SchemeToggle />
           <DisplayButton />
@@ -200,6 +201,30 @@ function FlashcardsButton() {
       title={active ? "Back to atlas" : "Flashcards"}
     >
       <GraduationCap className="h-4 w-4" />
+    </button>
+  );
+}
+
+function SandboxButton() {
+  const surface = useStore((s) => s.surface);
+  const setSurface = useStore((s) => s.setSurface);
+  const active = surface === "sandbox";
+  return (
+    <button
+      type="button"
+      onClick={() => setSurface(active ? "atlas" : "sandbox")}
+      className="flex h-9 w-9 items-center justify-center rounded-pill border sm:h-10 sm:w-10"
+      style={{
+        background: active ? "var(--accent)" : "var(--surface)",
+        borderColor: active ? "var(--accent)" : "var(--border)",
+        color: active ? "var(--surface)" : "var(--fg-2)",
+        boxShadow: "var(--shadow-1)",
+      }}
+      aria-label="Sandbox"
+      aria-pressed={active}
+      title={active ? "Back to atlas" : "Geometric sandbox"}
+    >
+      <Compass className="h-4 w-4" />
     </button>
   );
 }

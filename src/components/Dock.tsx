@@ -1,6 +1,4 @@
-import { Crosshair, Layers, LocateFixed, Network, ZoomIn, ZoomOut } from "lucide-react";
-import type { ReactNode } from "react";
-import { useReactFlow, useViewport } from "reactflow";
+import { Crosshair, Layers, Network } from "lucide-react";
 import { cn } from "../lib/utils";
 import { useStore, type ViewMode } from "../store";
 
@@ -16,8 +14,6 @@ export function Dock() {
   const toggleFocusMode = useStore((s) => s.toggleFocusMode);
   const focusDepth = useStore((s) => s.focusDepth);
   const setFocusDepth = useStore((s) => s.setFocusDepth);
-  const rf = useReactFlow();
-  const { zoom } = useViewport();
 
   return (
     <div className="pointer-events-none absolute inset-x-3 bottom-4 z-30 flex justify-center px-0 sm:px-3">
@@ -105,26 +101,6 @@ export function Dock() {
             );
           })}
         </div>
-
-        <Divider />
-
-        <div className="flex shrink-0 items-center gap-0.5">
-          <IconButton label="Zoom out" onClick={() => rf.zoomOut({ duration: 180 })}>
-            <ZoomOut className="h-4 w-4" />
-          </IconButton>
-          <span
-            className="w-11 text-center font-mono text-ui-hint font-semibold tabular-nums"
-            style={{ color: "var(--fg-2)" }}
-          >
-            {Math.round(zoom * 100)}%
-          </span>
-          <IconButton label="Zoom in" onClick={() => rf.zoomIn({ duration: 180 })}>
-            <ZoomIn className="h-4 w-4" />
-          </IconButton>
-          <IconButton label="Fit view" onClick={() => rf.fitView({ padding: 0.2, duration: 420 })}>
-            <LocateFixed className="h-4 w-4" />
-          </IconButton>
-        </div>
       </div>
     </div>
   );
@@ -132,26 +108,4 @@ export function Dock() {
 
 function Divider() {
   return <span className="h-6 w-px shrink-0" style={{ background: "var(--border)" }} />;
-}
-
-function IconButton({
-  label,
-  onClick,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex h-9 w-9 items-center justify-center rounded-[18px] transition-colors hover:bg-[var(--surface-3)]"
-      style={{ color: "var(--fg-2)" }}
-      aria-label={label}
-      title={label}
-    >
-      {children}
-    </button>
-  );
 }

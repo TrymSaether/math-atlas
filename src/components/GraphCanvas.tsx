@@ -6,6 +6,7 @@ import { getDomainTone } from "../lib/colors";
 import { classifyEdge } from "../lib/relationStyle";
 import { categoryOf, type NodeCategory } from "../lib/nodeCategory";
 import { useStore } from "../store";
+import { CanvasControls } from "./CanvasControls";
 import { DomainRegionNode } from "./DomainRegionNode";
 import { Dock } from "./Dock";
 import { MinimapCard } from "./MinimapCard";
@@ -61,6 +62,7 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
   const focusMode = useStore((s) => s.focusMode);
   const focusDepth = useStore((s) => s.focusDepth);
   const showSoftDeps = useStore((s) => s.showSoftDeps);
+  const showRegions = useStore((s) => s.showRegions);
   const rf = useReactFlow();
 
   const { data } = map;
@@ -192,6 +194,7 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
 
   const regionNodes: Node[] = useMemo(() => {
     const nodes: Node[] = [];
+    if (!showRegions) return nodes;
     for (const [domainId, bounds] of activeLayout.domainBounds) {
       const count = visibleDomainCounts.get(domainId) ?? 0;
       if (count === 0) continue;
@@ -223,7 +226,7 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
       });
     }
     return nodes;
-  }, [activeLayout.domainBounds, visibleDomainCounts, map.domainById]);
+  }, [activeLayout.domainBounds, visibleDomainCounts, map.domainById, showRegions]);
 
   // Stable per-node data refs: only allocate a new data object when something
   // material changed for that specific node. Keeps React Flow's per-node memo
@@ -351,6 +354,7 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
         defaultEdgeOptions={{ type: "topo" }}
       />
       <MinimapCard nodes={conceptNodes} regions={activeLayout.domainBounds} selectedId={selectedId} />
+      <CanvasControls />
       <Dock />
     </>
   );

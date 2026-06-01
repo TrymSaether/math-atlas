@@ -6,6 +6,7 @@ import { GraphCanvas } from "./components/GraphCanvas";
 import { NodePanel } from "./components/NodePanel";
 import { DictionaryView } from "./components/DictionaryView";
 import { FlashcardsView } from "./components/FlashcardsView";
+import { SandboxView } from "./components/sandbox/SandboxView";
 import { CommandPalette } from "./components/CommandPalette";
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
 import { useStore } from "./store";
@@ -45,6 +46,8 @@ export default function App() {
               <DictionaryView />
             ) : surface === "flashcards" ? (
               <FlashcardsView />
+            ) : surface === "sandbox" ? (
+              <SandboxView />
             ) : (
               <>
                 <GraphCanvas />
