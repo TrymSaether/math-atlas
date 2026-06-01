@@ -70,93 +70,90 @@ export function CanvasControls() {
       </div>
 
       <div className="pointer-events-none absolute right-3 top-[72px] z-30 flex flex-col items-end gap-2.5 sm:right-4">
-      <ToolbarStack label="Map modes">
-        <FloatButton
-          label="Dependency map"
-          active={view === "dependency"}
-          grouped
-          onClick={() => setView("dependency")}
-        >
-          <Network className="h-[18px] w-[18px]" strokeWidth={2} />
-        </FloatButton>
-        <Divider />
-        <FloatButton
-          label="Region map"
-          active={view === "cluster"}
-          grouped
-          onClick={() => setView("cluster")}
-        >
-          <Layers className="h-[18px] w-[18px]" strokeWidth={2} />
-        </FloatButton>
-      </ToolbarStack>
+        <ToolbarStack label="Map modes">
+          <FloatButton
+            label="Dependency map"
+            active={view === "dependency"}
+            grouped
+            onClick={() => setView("dependency")}
+          >
+            <Network className="h-[18px] w-[18px]" strokeWidth={2} />
+          </FloatButton>
+          <FloatButton
+            label="Region map"
+            active={view === "cluster"}
+            grouped
+            onClick={() => setView("cluster")}
+          >
+            <Layers className="h-[18px] w-[18px]" strokeWidth={2} />
+          </FloatButton>
+        </ToolbarStack>
 
-      <ToolbarStack label="Navigation tools">
-        <FloatButton
-          label={routeActive ? "Cancel route" : "Plan route"}
-          active={routeActive}
-          grouped
-          onClick={toggleRouteMode}
-        >
-          <Waypoints className="h-[18px] w-[18px]" strokeWidth={2} />
-        </FloatButton>
-        <Divider />
-        <FloatButton
-          label="Focus neighborhood"
-          active={focusMode}
-          grouped
-          onClick={toggleFocusMode}
-        >
-          <Crosshair className="h-[18px] w-[18px]" strokeWidth={2} />
-        </FloatButton>
-        {focusMode && <DepthPicker value={focusDepth} onChange={setFocusDepth} />}
-      </ToolbarStack>
+        <ToolbarStack label="Navigation tools">
+          <FloatButton
+            label={routeActive ? "Cancel route" : "Plan route"}
+            active={routeActive}
+            grouped
+            onClick={toggleRouteMode}
+          >
+            <Waypoints className="h-[18px] w-[18px]" strokeWidth={2} />
+          </FloatButton>
+          <FloatButton
+            label="Focus neighborhood"
+            active={focusMode}
+            grouped
+            onClick={toggleFocusMode}
+          >
+            <Crosshair className="h-[18px] w-[18px]" strokeWidth={2} />
+          </FloatButton>
+          {focusMode && <DepthPicker value={focusDepth} onChange={setFocusDepth} />}
+        </ToolbarStack>
 
-      <ToolbarStack label="Overlays">
-        <FloatButton
-          label={showMinimap ? "Hide minimap" : "Show minimap"}
-          active={showMinimap}
-          grouped
-          onClick={toggleMinimap}
-        >
-          <Map className="h-[18px] w-[18px]" strokeWidth={2} />
-        </FloatButton>
-      </ToolbarStack>
+        <ToolbarStack label="Overlays">
+          <FloatButton
+            label={showMinimap ? "Hide minimap" : "Show minimap"}
+            active={showMinimap}
+            grouped
+            onClick={toggleMinimap}
+          >
+            <Map className="h-[18px] w-[18px]" strokeWidth={2} />
+          </FloatButton>
+        </ToolbarStack>
 
-      <ToolbarStack label="Zoom">
-        <FloatButton
-          label="Zoom in"
-          grouped
-          onClick={() => rf.zoomIn({ duration: 180 })}
-        >
-          <Plus className="h-[18px] w-[18px]" strokeWidth={2} />
-        </FloatButton>
-        <Divider />
-        <FloatButton
-          label="Zoom out"
-          grouped
-          onClick={() => rf.zoomOut({ duration: 180 })}
-        >
-          <Minus className="h-[18px] w-[18px]" strokeWidth={2} />
-        </FloatButton>
-      </ToolbarStack>
+        <ToolbarStack label="Zoom">
+          <FloatButton
+            label="Zoom in"
+            grouped
+            onClick={() => rf.zoomIn({ duration: 180 })}
+          >
+            <Plus className="h-[18px] w-[18px]" strokeWidth={2} />
+          </FloatButton>
+          <FloatButton
+            label="Zoom out"
+            grouped
+            onClick={() => rf.zoomOut({ duration: 180 })}
+          >
+            <Minus className="h-[18px] w-[18px]" strokeWidth={2} />
+          </FloatButton>
+        </ToolbarStack>
 
-      <FloatButton
-        label="Fit view"
-        onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}
-      >
-        <Compass />
-      </FloatButton>
-
-      <div ref={layersRef} className="pointer-events-auto relative">
         <FloatButton
-          label="Map layers"
-          active={layersOpen}
-          onClick={() => setLayersOpen((o) => !o)}
+          label="Fit view"
+          onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}
         >
-          <SlidersHorizontal className="h-[18px] w-[18px]" strokeWidth={2} />
+          <Compass />
         </FloatButton>
-        {layersOpen && <LayersPopover />}
-      </div>
+
+        <div ref={layersRef} className="pointer-events-auto relative">
+          <FloatButton
+            label="Map layers"
+            active={layersOpen}
+            onClick={() => setLayersOpen((o) => !o)}
+          >
+            <SlidersHorizontal className="h-[18px] w-[18px]" strokeWidth={2} />
+          </FloatButton>
+          {layersOpen && <LayersPopover />}
+        </div>
       </div>
     </>
   );
@@ -212,7 +209,6 @@ function Divider() {
 function DepthPicker({ value, onChange }: { value: number; onChange: (value: number) => void }) {
   return (
     <>
-      <Divider />
       <div className="flex flex-col items-center gap-1 px-1.5 py-1.5" aria-label="Focus depth">
         {[1, 2, 3].map((depth) => {
           const active = value === depth;
