@@ -18,19 +18,20 @@ export function NodePanel() {
   const map = useStore((s) => s.loadedMaps[mapId]);
   const id = useStore((s) => s.selectedId);
   const select = useStore((s) => s.select);
+  const showNodePanel = useStore((s) => s.showNodePanel);
   const node = id && map ? map.nodeById.get(id) ?? null : null;
   const reduceMotion = useReducedMotion();
 
   return (
     <AnimatePresence>
-      {node && map && (
+      {showNodePanel && node && map && (
         <motion.aside
           key={node.id}
-          initial={reduceMotion ? false : { opacity: 0, x: 16 }}
+          initial={reduceMotion ? false : { opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 16 }}
+          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -16 }}
           transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.2, 0.7, 0.2, 1] }}
-          className="pointer-events-auto absolute left-3 right-3 top-[68px] bottom-3 z-20 flex flex-col overflow-hidden rounded-[16px] border sm:left-auto sm:w-[min(560px,calc(100vw-24px))]"
+          className="pointer-events-auto absolute left-3 right-3 top-[68px] bottom-3 z-20 flex flex-col overflow-hidden rounded-[16px] border sm:right-auto sm:w-[min(560px,calc(100vw-24px))]"
           style={{ background: "var(--surface)", borderColor: "var(--border)", boxShadow: "var(--shadow-3)" }}
         >
           <PanelContent node={node} map={map} onClose={() => select(null)} />

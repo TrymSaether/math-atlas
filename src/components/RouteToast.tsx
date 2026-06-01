@@ -4,7 +4,7 @@ import { useStore } from "../store";
 /**
  * Floating status card for the route planner. Shows planning hints while picking
  * endpoints, then the traced From → To summary with Replay / Clear once a route
- * is drawn. Sits above the Dock.
+ * is drawn.
  */
 export function RouteToast({
   fromTitle,
@@ -29,7 +29,7 @@ export function RouteToast({
   if (!planning && !hasRoute) return null;
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-16 z-30 flex justify-center px-3">
+    <div className="pointer-events-none absolute inset-x-0 bottom-4 z-30 flex justify-center px-3">
       <div
         className="pointer-events-auto flex max-w-full items-center gap-2.5 rounded-pill border py-1.5 pl-4 pr-1.5"
         style={{

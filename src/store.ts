@@ -57,6 +57,11 @@ interface State {
   toggleGrid: () => void;
   showRegions: boolean;
   toggleRegions: () => void;
+  /** Floating atlas overlays. */
+  showNodePanel: boolean;
+  toggleNodePanel: () => void;
+  showMinimap: boolean;
+  toggleMinimap: () => void;
 
   selectedId: string | null;
   select: (id: string | null) => void;
@@ -183,6 +188,10 @@ export const useStore = create<State>((set, get) => ({
   toggleGrid: () => set((s) => ({ showGrid: !s.showGrid })),
   showRegions: true,
   toggleRegions: () => set((s) => ({ showRegions: !s.showRegions })),
+  showNodePanel: true,
+  toggleNodePanel: () => set((s) => ({ showNodePanel: !s.showNodePanel })),
+  showMinimap: true,
+  toggleMinimap: () => set((s) => ({ showMinimap: !s.showMinimap })),
 
   selectedId: null,
   select: (id) => set({ selectedId: id }),

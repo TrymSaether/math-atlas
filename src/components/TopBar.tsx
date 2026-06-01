@@ -318,8 +318,6 @@ function FilterPopover({
   const topics = useStore((s) => s.topics);
   const toggleTopic = useStore((s) => s.toggleTopic);
   const resetTopics = useStore((s) => s.resetTopics);
-  const showSoftDeps = useStore((s) => s.showSoftDeps);
-  const toggleSoftDeps = useStore((s) => s.toggleSoftDeps);
   if (!map) return null;
 
   return createPortal(
@@ -397,17 +395,6 @@ function FilterPopover({
           );
         })}
       </div>
-
-      <div className="my-3.5 h-px" style={{ background: "var(--border)" }} />
-      <div
-        className="mb-1 text-ui-caption font-semibold uppercase tracking-label-wide"
-        style={{ color: "var(--fg-3)" }}
-      >
-        Edges
-      </div>
-      <SettingRow label="Soft links" hint="Pedagogical 'learn-first' edges">
-        <ToggleSwitch active={showSoftDeps} onClick={toggleSoftDeps} />
-      </SettingRow>
     </div>,
     document.body,
   );
@@ -518,23 +505,6 @@ function Segmented<T extends string>({
         );
       })}
     </div>
-  );
-}
-
-function ToggleSwitch({ active, onClick }: { active: boolean; onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className="relative h-5 w-9 rounded-pill transition-colors"
-      style={{ background: active ? "var(--accent)" : "var(--border-strong)" }}
-      role="switch"
-      aria-checked={active}
-    >
-      <span
-        className="absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all"
-        style={{ left: active ? "18px" : "2px", boxShadow: "var(--shadow-1)" }}
-      />
-    </button>
   );
 }
 

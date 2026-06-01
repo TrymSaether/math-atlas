@@ -106,7 +106,7 @@ export function MinimapCard({
 
   return (
     <div
-      className="map-chrome-soft absolute bottom-4 left-4 z-20 hidden rounded-[18px] p-1.5 md:block"
+      className="atlas-minimap-card map-chrome-soft absolute bottom-4 right-4 z-20 hidden rounded-[18px] p-1.5 md:block"
     >
       <svg
         viewBox={`0 0 ${W} ${H}`}
