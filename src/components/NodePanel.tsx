@@ -6,6 +6,7 @@ import { useStore } from "../store";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
+import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { ThemedDiagram } from "./ThemedDiagram";
 import { Spine, Facet, Proof, ConnectionChip, specimenMeta } from "./Specimen";
@@ -45,6 +46,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const setSurface = useStore((s) => s.setSurface);
   const domain = map.domainById.get(node.domainId);
   const tone = getDomainTone(node.domainId);
+  const domainGlyphId = getDomainGlyphId(node.domainId);
   const [showAllUsed, setShowAllUsed] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -159,7 +161,11 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
         </h2>
         <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-ui-meta">
           <span className="inline-flex items-center gap-1.5 font-medium" style={{ color: tone.color }}>
-            <span className="h-2 w-2 rounded-full" style={{ background: tone.color }} />
+            {domainGlyphId ? (
+              <DomainGlyph id={domainGlyphId} size={14} />
+            ) : (
+              <span className="h-2 w-2 rounded-full" style={{ background: tone.color }} />
+            )}
             {domain?.label ?? node.topicCluster}
           </span>
           <span aria-hidden style={{ color: "var(--fg-4)" }}>·</span>

@@ -1299,9 +1299,9 @@
 
 /* ---- TYPOGRAPHY ----------------------------------------------------- */
 :root {
-  --font-serif: "Newsreader", "STIX Two Text", "Iowan Old Style", "Georgia", serif;
-  --font-sans: "IBM Plex Sans", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", "SF Mono", ui-monospace, Menlo, monospace;
+  --font-serif: "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
+  --font-sans: "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
   --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
 
   --type-edge-label: 9px;

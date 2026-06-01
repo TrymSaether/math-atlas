@@ -258,6 +258,7 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
         focusable: false,
         zIndex: -10,
         data: {
+          domainId,
           label: domain?.label ?? domainId,
           count,
           width: bounds.width,

@@ -1,6 +1,9 @@
 import type { NodeProps } from "reactflow";
 
+import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
+
 interface Data {
+  domainId?: string;
   label: string;
   count: number;
   width: number;
@@ -13,6 +16,7 @@ interface Data {
 
 export function DomainRegionNode({ data }: NodeProps<Data>) {
   const isCircle = data.shape === "circle";
+  const glyphId = data.domainId ? getDomainGlyphId(data.domainId) : null;
 
   // Watermark title: large enough to label the territory when the cards
   // themselves become unreadable on zoom-out. Sized to the band so it never
@@ -71,7 +75,11 @@ export function DomainRegionNode({ data }: NodeProps<Data>) {
           boxShadow: "var(--shadow-1)",
         }}
       >
-        <span className="h-1.5 w-1.5 rounded-full" style={{ background: data.color }} />
+        {glyphId ? (
+          <DomainGlyph id={glyphId} size={13} />
+        ) : (
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: data.color }} />
+        )}
         <span className="min-w-0 truncate">{data.label}</span>
         <span
           className="font-mono text-ui-tiny font-semibold"
