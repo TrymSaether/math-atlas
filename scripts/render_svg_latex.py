@@ -115,7 +115,7 @@ def render_formula(tex: str, prefix: str) -> tuple[float, str]:
     body = match.group(2).strip()
     body = re.sub(r"\bid='([^']+)'", lambda m: f"id='{prefix}-{m.group(1)}'", body)
     body = re.sub(r"xlink:href='#([^']+)'", lambda m: f"xlink:href='#{prefix}-{m.group(1)}'", body)
-    body = re.sub(r"href='#([^']+)'", lambda m: f"href='#{prefix}-{m.group(1)}'", body)
+    body = re.sub(r"(?<!xlink:)href='#([^']+)'", lambda m: f"href='#{prefix}-{m.group(1)}'", body)
     normalized = f"<g transform=\"translate({-min_x:.4f} {-min_y:.4f})\">\n{body}\n</g>"
     return width, normalized
 
@@ -138,19 +138,38 @@ def replacement(label: Label, prefix: str) -> str:
 
 
 def replace_one(svg: str, label: Label, prefix: str) -> str:
-    old_pattern = re.compile(r"<text\b[^>]*>" + re.escape(label.old) + r"</text>")
     new = replacement(label, prefix)
-    svg, count = old_pattern.subn(new, svg, count=1)
-    if count != 1:
-        raise RuntimeError(f"Could not replace label {label.old!r}")
-    return svg
+    old_pattern = re.compile(r"<text\b[^>]*>" + re.escape(label.old) + r"</text>")
+    svg, count = old_pattern.subn(lambda _match: new, svg, count=1)
+    if count == 1:
+        return svg
+
+    data_tex = f'data-tex="{html.escape(label.tex, quote=True)}"'
+    start = svg.find('<g class="latex-svg"')
+    while start >= 0:
+        tag_end = svg.find(">", start)
+        if tag_end < 0:
+            break
+        if data_tex in svg[start : tag_end + 1]:
+            depth = 0
+            for match in re.finditer(r"<g\b|</g>", svg[start:]):
+                if match.group(0).startswith("<g"):
+                    depth += 1
+                else:
+                    depth -= 1
+                    if depth == 0:
+                        end = start + match.end()
+                        return svg[:start] + new + svg[end:]
+            break
+        start = svg.find('<g class="latex-svg"', tag_end)
+
+    raise RuntimeError(f"Could not replace label {label.old!r} / {label.tex!r}")
 
 
 def main() -> None:
     for file_name, labels in LABELS.items():
         path = DIAGRAM_DIR / file_name
         svg = path.read_text(encoding="utf-8")
-        svg = re.sub(r"\n\s*<g class=\"latex-svg\".*?</g>\s*", "\n", svg, flags=re.S)
         for index, label in enumerate(labels, start=1):
             prefix = f"ltx-{path.stem}-{index}".replace("_", "-")
             svg = replace_one(svg, label, prefix)

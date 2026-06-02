@@ -27,7 +27,7 @@ export const MAPS = {
 
 export type MapId = keyof typeof MAPS;
 
-export const DEFAULT_MAP_ID: MapId = "topology";
+export const DEFAULT_MAP_ID: MapId = "fourier_analysis";
 
 const MAP_LOADERS = {
   topology: () => import("./maps/topology.json"),
@@ -39,7 +39,9 @@ export function isMapId(value: string | null): value is MapId {
   return value !== null && value in MAPS;
 }
 
-export async function loadRawMap(mapId: MapId = DEFAULT_MAP_ID): Promise<unknown> {
+export async function loadRawMap(
+  mapId: MapId = DEFAULT_MAP_ID,
+): Promise<unknown> {
   const module = await MAP_LOADERS[mapId]();
   return module.default;
 }
