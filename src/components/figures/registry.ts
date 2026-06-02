@@ -11,10 +11,23 @@ import { type FigureProps } from "./types";
  * falling back to the static `ThemedDiagram`.
  */
 export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<FigureProps>>> = {
+  convolution: lazy(() => import("./ConvolutionFigure")),
+  convolution_theorem: lazy(() => import("./ConvolutionFigure")),
+  circular_convolution: lazy(() => import("./ConvolutionFigure")),
+  fourier_coefficient: lazy(() => import("./SpectrumFigure")),
+  fourier_series: lazy(() => import("./SeriesFigure")),
+  partial_sum: lazy(() => import("./SeriesFigure")),
+  real_fourier_series: lazy(() => import("./SeriesFigure")),
+  decay_smoothness: lazy(() => import("./SpectrumFigure")),
   gibbs_phenomenon: lazy(() => import("./GibbsFigure")),
   dirichlet_kernel: lazy(() => import("./KernelFigure")),
   fejer_kernel: lazy(() => import("./KernelFigure")),
   poisson_kernel: lazy(() => import("./KernelFigure")),
+  gaussian_transform: lazy(() => import("./GaussianFigure")),
+  uncertainty_principle: lazy(() => import("./GaussianFigure")),
+  sampling_theorem: lazy(() => import("./SamplingFigure")),
+  aliasing: lazy(() => import("./SamplingFigure")),
+  heat_equation: lazy(() => import("./HeatFigure")),
 };
 
 export function hasInteractiveFigure(nodeId: string): boolean {

@@ -14,6 +14,7 @@ Soft, non-prerequisite links use each node's `related[]` (panel-only, no DAG edg
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -39,15 +40,36 @@ DOMAINS = [
      "Characters, L-functions, the Euler product, and primes in arithmetic progressions."),
 ]
 
+DIAGRAM_PATHS = {
+    "complex_exponential": "/atlas-assets/fourier/diagrams/complex-exponential.svg",
+    "orthonormal_system": "/atlas-assets/fourier/diagrams/orthonormal-system.svg",
+    "fourier_transform": "/atlas-assets/fourier/diagrams/fourier-transform.svg",
+    "fourier_transform_convention": "/atlas-assets/fourier/diagrams/fourier-transform.svg",
+    "translation_modulation": "/atlas-assets/fourier/diagrams/translation-modulation.svg",
+    "sinc_function": "/atlas-assets/fourier/diagrams/sinc-bandlimited.svg",
+    "band_limited": "/atlas-assets/fourier/diagrams/sinc-bandlimited.svg",
+    "roots_of_unity": "/atlas-assets/fourier/diagrams/roots-of-unity.svg",
+    "cyclic_group": "/atlas-assets/fourier/diagrams/roots-of-unity.svg",
+    "finite_fourier": "/atlas-assets/fourier/diagrams/dft-matrix.svg",
+    "dft": "/atlas-assets/fourier/diagrams/dft-matrix.svg",
+    "fft": "/atlas-assets/fourier/diagrams/fft-butterfly.svg",
+    "dirac_delta": "/atlas-assets/fourier/diagrams/dirac-delta.svg",
+    "poisson_summation": "/atlas-assets/fourier/diagrams/poisson-summation.svg",
+    "wave_equation": "/atlas-assets/fourier/diagrams/wave-modes.svg",
+    "separation_of_variables": "/atlas-assets/fourier/diagrams/wave-modes.svg",
+    "heat_kernel_line": "/atlas-assets/fourier/diagrams/heat-kernel-line.svg",
+    "diffraction": "/atlas-assets/fourier/diagrams/diffraction.svg",
+}
+
 # Each node: id, label, kind, domain, statement, formal, intuition, notation, tags, priority, related
 N = []
 def node(id, label, kind, domain, statement, formal="", intuition="", notation="",
-         tags=None, priority="medium", related=None):
+         tags=None, priority="medium", related=None, diagram_path=""):
     N.append({
         "id": id, "label": label, "kind": kind, "domain": domain,
         "statement": statement, "formal": formal, "intuition": intuition,
         "notation": notation, "tags": tags or [], "priority": priority,
-        "related": related or [],
+        "related": related or [], "diagram_path": diagram_path or DIAGRAM_PATHS.get(id, ""),
     })
 
 # ---------------------------------------------------------------- foundations
@@ -955,6 +977,62 @@ def check_book_coverage(node_ids: set[str]) -> None:
     print(f"Book coverage: {len(claimed)}/{len(all_ss)} numbered SS results claimed ✓")
 
 
+def apply_diagram_paths(doc: dict) -> None:
+    for item in doc["graph"]["items"]:
+        path = DIAGRAM_PATHS.get(item["id"])
+        if path:
+            item["diagram_path"] = path
+        else:
+            item.pop("diagram_path", None)
+
+
+def dumps_map(doc: dict) -> str:
+    text = json.dumps(doc, indent=2, ensure_ascii=False)
+    string_array = re.compile(r"\[\n((?:\s+\"(?:[^\"\\]|\\.)+\"(?:,\n|\n))+)\s+\]")
+
+    def compact(match: re.Match[str]) -> str:
+        values = [line.strip().rstrip(",") for line in match.group(1).splitlines() if line.strip()]
+        return "[" + ", ".join(values) + "]"
+
+    return string_array.sub(compact, text) + "\n"
+
+
+def apply_diagram_paths_to_text(text: str) -> str:
+    text = re.sub(r',\n        "diagram_path": "[^"]+"', "", text)
+    for node_id, path in DIAGRAM_PATHS.items():
+        id_marker = f'"id": "{node_id}"'
+        id_index = text.find(id_marker)
+        if id_index < 0:
+            raise SystemExit(f"diagram path references missing node: {node_id}")
+        metadata_index = text.find('"metadata": {', id_index)
+        if metadata_index < 0:
+            raise SystemExit(f"node {node_id} has no metadata block")
+        brace_start = text.find("{", metadata_index)
+        depth = 0
+        brace_end = -1
+        for index in range(brace_start, len(text)):
+            if text[index] == "{":
+                depth += 1
+            elif text[index] == "}":
+                depth -= 1
+                if depth == 0:
+                    brace_end = index
+                    break
+        if brace_end < 0:
+            raise SystemExit(f"node {node_id} metadata block is not closed")
+        text = text[: brace_end + 1] + f',\n        "diagram_path": "{path}"' + text[brace_end + 1 :]
+
+    doc = json.loads(text)
+    paths_by_id = {item["id"]: item.get("diagram_path", "") for item in doc["graph"]["items"]}
+    for node_id, path in DIAGRAM_PATHS.items():
+        if paths_by_id.get(node_id) != path:
+            raise SystemExit(f"diagram path was not applied to {node_id}")
+    stray = [node_id for node_id, path in paths_by_id.items() if path and node_id not in DIAGRAM_PATHS]
+    if stray:
+        raise SystemExit(f"unexpected diagram paths on nodes: {', '.join(stray)}")
+    return text
+
+
 def build():
     ids = {n["id"] for n in N}
     # integrity checks
@@ -969,7 +1047,7 @@ def build():
         book_refs = BOOK_REFS.get(n["id"], [])
         ref = ("Stein–Shakarchi: " + "; ".join(format_ss_ref(r) for r in book_refs)
                if book_refs else "")
-        items.append({
+        item = {
             "id": n["id"], "label": n["label"], "kind": n["kind"], "domain": n["domain"],
             "statement": n["statement"], "formal_statement": n["formal"] or None,
             "definition": None, "intuition": n["intuition"] or None, "proof": None,
@@ -981,7 +1059,10 @@ def build():
             "book_refs": book_refs,
             "metadata": {"tags": n["tags"], "syllabus_priority": n["priority"],
                          "source": ref or "Curated concept graph"},
-        })
+        }
+        if n["diagram_path"]:
+            item["diagram_path"] = n["diagram_path"]
+        items.append(item)
     edges = []
     seen = set()
     for (s, rel, t) in E:
@@ -998,7 +1079,7 @@ def build():
         })
     domains = [{"id": i, "label": l, "order": o, "color": c, "description": d}
                for (i, l, o, c, d) in DOMAINS]
-    doc = {"graph": {
+    generated_doc = {"graph": {
         "id": "fourier_analysis_curated_v2",
         "label": "Fourier Analysis",
         "field": "fourier_analysis",
@@ -1010,12 +1091,30 @@ def build():
         ],
         "domains": domains, "items": items, "edges": edges,
     }}
-    OUT.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    doc = generated_doc
+    output_text = ""
+    if OUT.exists():
+        existing_text = OUT.read_text(encoding="utf-8")
+        existing_doc = json.loads(existing_text)
+        existing_items = existing_doc.get("graph", {}).get("items", [])
+        if len(existing_items) >= len(items):
+            output_text = apply_diagram_paths_to_text(existing_text)
+            doc = json.loads(output_text)
+            print(
+                "Preserving existing checked-in Fourier map "
+                f"({len(existing_items)} nodes) and applying generated diagram paths."
+            )
+    if not output_text:
+        apply_diagram_paths(doc)
+        output_text = dumps_map(doc)
+    OUT.write_text(output_text, encoding="utf-8")
     from collections import Counter
-    print(f"Wrote {len(items)} nodes, {len(edges)} edges -> {OUT.relative_to(ROOT)}")
-    print("per domain:", dict(Counter(it["domain"] for it in items)))
-    print("edge types:", dict(Counter(e["type"] for e in edges)))
-    print("kinds:", dict(Counter(it["kind"] for it in items)))
+    written_items = doc["graph"]["items"]
+    written_edges = doc["graph"]["edges"]
+    print(f"Wrote {len(written_items)} nodes, {len(written_edges)} edges -> {OUT.relative_to(ROOT)}")
+    print("per domain:", dict(Counter(it["domain"] for it in written_items)))
+    print("edge types:", dict(Counter(e["type"] for e in written_edges)))
+    print("kinds:", dict(Counter(it["kind"] for it in written_items)))
 
 
 if __name__ == "__main__":

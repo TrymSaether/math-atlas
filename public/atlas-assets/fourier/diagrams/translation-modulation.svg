@@ -1,0 +1,23 @@
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
+  <title>Translation and modulation under the Fourier transform</title>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#2a2520)"/>
+    </marker>
+  </defs>
+  <g fill="none" stroke-width="1.6">
+    <path d="M28 70 C42 48 58 48 72 70 S100 92 114 70" stroke="var(--dia-mut,#9a8f7d)"/>
+    <path d="M48 70 C62 48 78 48 92 70 S120 92 134 70" stroke="var(--dia-acc,#a8431d)"/>
+    <path d="M186 70 C200 48 216 48 230 70 S258 92 272 70" stroke="var(--dia-acc,#a8431d)" stroke-dasharray="4 3"/>
+  </g>
+  <path d="M140 67 L174 67" stroke="var(--dia-ink,#2a2520)" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <text x="160" y="55" font-size="10.5" fill="var(--dia-ink,#2a2520)" text-anchor="middle">shift x</text>
+  <g stroke="var(--dia-ink,#2a2520)" stroke-width="1.2" fill="none">
+    <line x1="34" y1="123" x2="134" y2="123"/>
+    <line x1="199" y1="123" x2="281" y2="123"/>
+    <path d="M208 123 C218 101 230 101 240 123 S260 145 270 123" stroke="var(--dia-acc,#a8431d)"/>
+  </g>
+  <path d="M140 120 L174 120" stroke="var(--dia-ink,#2a2520)" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <text x="160" y="111" font-size="10.5" fill="var(--dia-ink,#2a2520)" text-anchor="middle">multiply by phase</text>
+  <text x="160" y="162" font-size="10.5" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">time shift becomes frequency phase; modulation shifts the spectrum</text>
+</svg>

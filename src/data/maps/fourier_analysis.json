@@ -118,7 +118,8 @@
           "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/complex-exponential.svg"
       },
       {
         "id": "inner_product_space",
@@ -172,7 +173,8 @@
           "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/orthonormal-system.svg"
       },
       {
         "id": "lp_space",
@@ -1097,7 +1099,8 @@
           "tags": ["transform"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/fourier-transform.svg"
       },
       {
         "id": "fourier_inversion",
@@ -1294,7 +1297,8 @@
           "tags": ["transform"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Theorem 3.1"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/poisson-summation.svg"
       },
       {
         "id": "fourier_transform_rd",
@@ -1414,7 +1418,8 @@
           "tags": ["distributions"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/dirac-delta.svg"
       },
       {
         "id": "weak_derivative",
@@ -1499,7 +1504,8 @@
           "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/roots-of-unity.svg"
       },
       {
         "id": "cyclic_group",
@@ -1523,7 +1529,8 @@
           "tags": ["discrete", "group"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/roots-of-unity.svg"
       },
       {
         "id": "finite_abelian_group",
@@ -1603,7 +1610,8 @@
           "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.7 Lemma 1.1"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/dft-matrix.svg"
       },
       {
         "id": "dft",
@@ -1631,7 +1639,8 @@
           "tags": ["discrete"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/dft-matrix.svg"
       },
       {
         "id": "dtft",
@@ -1690,7 +1699,8 @@
           "tags": ["discrete"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.7 Lemma 1.4; Ch.7 Theorem 1.3"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/fft-butterfly.svg"
       },
       {
         "id": "circular_convolution",
@@ -1846,7 +1856,8 @@
           "tags": ["applications", "pde"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/wave-modes.svg"
       },
       {
         "id": "isoperimetric",
@@ -2314,7 +2325,8 @@
           "tags": ["transform"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.5 Proposition 1.2"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/translation-modulation.svg"
       },
       {
         "id": "ft_continuity",
@@ -2372,7 +2384,8 @@
           "tags": ["transform", "signal"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/sinc-bandlimited.svg"
       },
       {
         "id": "paley_wiener",
@@ -2439,7 +2452,8 @@
           "tags": ["transform", "pde"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.5 Corollary 1.5; Ch.5 Corollary 3.4; Ch.5 Theorem 3.3"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/heat-kernel-line.svg"
       },
       {
         "id": "test_function",
@@ -2613,7 +2627,8 @@
           "tags": ["applications", "pde"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/wave-modes.svg"
       },
       {
         "id": "dirichlet_problem_disk",
@@ -2737,7 +2752,8 @@
           "tags": ["applications", "optics"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/diffraction.svg"
       },
       {
         "id": "weierstrass_function",
@@ -3445,7 +3461,8 @@
           "tags": ["discrete", "sampling"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/sinc-bandlimited.svg"
       },
       {
         "id": "entire_function",
@@ -3503,7 +3520,8 @@
           "tags": ["transform", "notation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/fourier-transform.svg"
       },
       {
         "id": "variance_standard_deviation",
