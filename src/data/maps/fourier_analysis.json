@@ -73,17 +73,19 @@
         "label": "Periodic Function",
         "kind": "definition",
         "domain": "foundations",
-        "statement": "A function repeating after a fixed period; equivalently a function on the circle.",
-        "formal_statement": "$f:\\mathbb{R}\\to\\mathbb{C}$ is periodic of period $T$ if $f(x+T)=f(x)$ for all $x$. We work with $2\\pi$-periodic functions, i.e. functions on the circle $\\mathbb{T}=\\mathbb{R}/2\\pi\\mathbb{Z}$.",
+        "statement": "A function whose values repeat after a fixed nonzero period; $2\\pi$-periodic functions are functions on the circle.",
+        "formal_statement": "A function $f:\\mathbb R\\to\\mathbb C$ is periodic with period $T>0$ if $f(x+T)=f(x)$ for every $x\\in\\mathbb R$. In Fourier series, the standard convention is $T=2\\pi$, so functions are viewed on $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$.",
         "definition": null,
-        "intuition": "The natural domain of Fourier series: gluing the ends of an interval into a loop.",
+        "intuition": "A periodic function lives on a loop: moving by one full period brings you back to the same value.",
         "proof": null,
-        "notation": "$f:\\mathbb{T}\\to\\mathbb{C}$",
+        "notation": "$f:\\mathbb T\\to\\mathbb C$",
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
         "related": [],
-        "assumptions": [],
+        "assumptions": [
+          "Periods are taken positive; a $2\\pi$-periodic function may be identified with a function on the circle."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -97,10 +99,10 @@
         "label": "Complex Exponential",
         "kind": "object",
         "domain": "foundations",
-        "statement": "The pure harmonics $e^{inx}$ that serve as the building blocks of Fourier analysis.",
-        "formal_statement": "$e_n(x)=e^{inx}$, $n\\in\\mathbb{Z}$. By Euler's formula $e^{inx}=\\cos nx+i\\sin nx$.",
+        "statement": "The pure harmonics $e^{inx}$ that serve as the basic waves in Fourier series.",
+        "formal_statement": "For $n\\in\\mathbb Z$, define $e_n(x)=e^{inx}$. Euler's formula gives $e^{inx}=\\cos(nx)+i\\sin(nx)$, and $e_n$ is $2\\pi$-periodic.",
         "definition": null,
-        "intuition": "Each $e_n$ is a single frequency; Fourier analysis writes every function as a superposition of these.",
+        "intuition": "Each $e_n$ is one pure frequency. Fourier analysis decomposes a signal by measuring how much it aligns with each of these rotating waves.",
         "proof": null,
         "notation": "$e_n(x)=e^{inx}$",
         "proof_dependencies": [],
@@ -123,10 +125,10 @@
         "label": "Inner Product Space",
         "kind": "structure",
         "domain": "foundations",
-        "statement": "A vector space with an inner product, giving lengths and angles.",
-        "formal_statement": "A complex vector space $V$ with $\\langle\\cdot,\\cdot\\rangle:V\\times V\\to\\mathbb{C}$ that is linear, conjugate-symmetric, and positive-definite. For functions, $\\langle f,g\\rangle=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi} f\\overline{g}\\,dx$.",
+        "statement": "A vector space with a notion of length, angle, and orthogonality.",
+        "formal_statement": "A complex inner product space is a complex vector space $V$ with $\\langle\\cdot,\\cdot\\rangle:V\\times V\\to\\mathbb C$ that is linear in the first variable, conjugate-linear in the second, conjugate-symmetric, and positive-definite. On $L^2(\\mathbb T)$, $\\langle f,g\\rangle=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)\\overline{g(x)}\\,dx$.",
         "definition": null,
-        "intuition": "Provides the geometry — orthogonality and projection — behind Fourier coefficients.",
+        "intuition": "This is the geometry behind Fourier coefficients: coefficients are projections, and different frequencies are perpendicular directions.",
         "proof": null,
         "notation": "$\\langle f,g\\rangle$",
         "proof_dependencies": [],
@@ -135,7 +137,9 @@
         },
         "outgoing_relations": [],
         "related": [],
-        "assumptions": [],
+        "assumptions": [
+          "Convention used here: inner products are linear in the first variable and conjugate-linear in the second."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -149,10 +153,10 @@
         "label": "Orthonormal System",
         "kind": "definition",
         "domain": "foundations",
-        "statement": "A family of mutually orthogonal unit vectors; the exponentials $e^{inx}$ form one.",
-        "formal_statement": "$\\{\\varphi_k\\}$ with $\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk}$. The system $\\{e^{inx}\\}_{n\\in\\mathbb{Z}}$ is orthonormal on $\\mathbb{T}$.",
+        "statement": "A family of unit vectors that are mutually orthogonal.",
+        "formal_statement": "A family $\\{\\varphi_k\\}_{k\\in I}$ in an inner product space is orthonormal if $\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk}$ for all $j,k\\in I$. In $L^2(\\mathbb T)$, $\\{e^{inx}\\}_{n\\in\\mathbb Z}$ is orthonormal.",
         "definition": null,
-        "intuition": "An orthonormal basis lets you read off coordinates by projection — exactly what a Fourier coefficient is.",
+        "intuition": "An orthonormal system gives independent directions. Fourier coefficients are coordinates along those directions.",
         "proof": null,
         "notation": "$\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk}$",
         "proof_dependencies": [],
@@ -175,12 +179,12 @@
         "label": "L^p Space",
         "kind": "structure",
         "domain": "foundations",
-        "statement": "Equivalence classes of measurable functions whose size is finite in an \\(L^p\\) norm.",
-        "formal_statement": "On \\(\\mathbb T\\), for \\(1\\le p<\\infty\\), \\(L^p(\\mathbb T)=\\{f:\\|f\\|_p=(\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|^p\\,dx)^{1/p}<\\infty\\}\\), with functions identified if they agree a.e.; for \\(p=\\infty\\), \\(\\|f\\|_\\infty=\\operatorname*{ess\\,sup}_{x\\in\\mathbb T}|f(x)|\\).",
+        "statement": "Equivalence classes of measurable functions whose size is finite in an $L^p$ norm.",
+        "formal_statement": "On $\\mathbb T$, for $1\\le p<\\infty$, $L^p(\\mathbb T)=\\{f:\\|f\\|_p=(\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|^p\\,dx)^{1/p}<\\infty\\}$, with functions identified if they agree a.e.; for $p=\\infty$, $\\|f\\|_\\infty=\\operatorname*{ess\\,sup}_{x\\in\\mathbb T}|f(x)|$.",
         "definition": null,
-        "intuition": "\\(L^p\\) measures average size. Small \\(p\\) tolerates spikes more easily; large \\(p\\) controls peaks more strongly.",
+        "intuition": "$L^p$ measures average size. Small $p$ tolerates spikes more easily; large $p$ controls peaks more strongly.",
         "proof": null,
-        "notation": "\\(L^p(\\mathbb T),\\ \\|f\\|_p\\)",
+        "notation": "$L^p(\\mathbb T),\\ \\|f\\|_p$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -208,18 +212,14 @@
         "kind": "structure",
         "domain": "foundations",
         "statement": "Absolutely integrable functions on the circle, the minimal setting where Fourier coefficients are defined.",
-        "formal_statement": "\\(L^1(\\mathbb T)=\\{f:\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|\\,dx<\\infty\\}\\), modulo equality almost everywhere.",
+        "formal_statement": "$L^1(\\mathbb T)=\\{f:\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|\\,dx<\\infty\\}$, modulo equality almost everywhere.",
         "definition": null,
-        "intuition": "Integrability is enough to define \\(\\hat f(n)\\). Convergence of the Fourier series requires extra structure.",
+        "intuition": "Integrability is enough to define $\\hat f(n)$. Convergence of the Fourier series requires extra structure.",
         "proof": null,
-        "notation": "\\(L^1(\\mathbb T),\\ \\|f\\|_1<\\infty\\)",
+        "notation": "$L^1(\\mathbb T),\\ \\|f\\|_1<\\infty$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "lp_space",
-            "lebesgue_integral",
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["lebesgue_integral", "almost_everywhere"]
         },
         "outgoing_relations": [],
         "related": ["lp_space"],
@@ -240,18 +240,14 @@
         "kind": "structure",
         "domain": "foundations",
         "statement": "Square-integrable functions on the circle, where Fourier series become Hilbert-space geometry.",
-        "formal_statement": "\\(L^2(\\mathbb T)\\) consists of measurable functions with \\(\\|f\\|_2^2=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|^2\\,dx<\\infty\\), modulo equality a.e. Its inner product is \\(\\langle f,g\\rangle=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi} f(x)\\overline{g(x)}\\,dx\\).",
+        "formal_statement": "$L^2(\\mathbb T)$ consists of measurable functions with $\\|f\\|_2^2=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|^2\\,dx<\\infty$, modulo equality a.e. Its inner product is $\\langle f,g\\rangle=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi} f(x)\\overline{g(x)}\\,dx$.",
         "definition": null,
-        "intuition": "In \\(L^2\\), Fourier coefficients are coordinates, partial sums are orthogonal projections, and convergence means convergence in energy.",
+        "intuition": "In $L^2$, Fourier coefficients are coordinates, partial sums are orthogonal projections, and convergence means convergence in energy.",
         "proof": null,
-        "notation": "\\(L^2(\\mathbb T),\\ \\langle f,g\\rangle,\\ \\|f\\|_2\\)",
+        "notation": "$L^2(\\mathbb T),\\ \\langle f,g\\rangle,\\ \\|f\\|_2$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "lp_space",
-            "inner_product_space",
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["inner_product_space", "almost_everywhere"]
         },
         "outgoing_relations": [],
         "related": ["lp_space", "inner_product_space", "hilbert_space"],
@@ -271,10 +267,10 @@
         "label": "Hilbert Space",
         "kind": "structure",
         "domain": "foundations",
-        "statement": "A complete inner-product space — the abstract setting that makes $L^2$ work.",
-        "formal_statement": "An inner-product space that is complete in the induced norm. $L^2(\\mathbb{T})$ and $\\ell^2(\\mathbb{Z})$ are the central examples.",
+        "statement": "A complete inner-product space where orthogonal projection and infinite expansions behave well.",
+        "formal_statement": "A Hilbert space is an inner product space that is complete in the norm $\\|x\\|=\\sqrt{\\langle x,x\\rangle}$. Central examples are $L^2(\\mathbb T)$, $L^2(\\mathbb R)$, and $\\ell^2(\\mathbb Z)$.",
         "definition": null,
-        "intuition": "Completeness guarantees that orthogonal expansions actually converge to a limit in the space.",
+        "intuition": "Completeness means Cauchy sequences of approximations have a limit inside the space, so infinite orthogonal expansions have somewhere to land.",
         "proof": null,
         "notation": "$H$",
         "proof_dependencies": [],
@@ -297,17 +293,21 @@
         "label": "Schwartz Space",
         "kind": "structure",
         "domain": "foundations",
-        "statement": "Smooth functions that, with all derivatives, decay faster than any polynomial.",
-        "formal_statement": "$\\mathcal{S}(\\mathbb{R})=\\{f\\in C^\\infty:\\sup_x|x^\\alpha\\partial^\\beta f|<\\infty\\ \\forall\\alpha,\\beta\\}$.",
+        "statement": "Smooth functions whose derivatives decay faster than every polynomial.",
+        "formal_statement": "The Schwartz space $\\mathcal S(\\mathbb R)$ consists of all $f\\in C^\\infty(\\mathbb R)$ such that $\\sup_{x\\in\\mathbb R}|x^\\alpha f^{(\\beta)}(x)|<\\infty$ for all nonnegative integers $\\alpha,\\beta$.",
         "definition": null,
-        "intuition": "The ideal playground for the Fourier transform: it maps $\\mathcal S$ to itself bijectively.",
+        "intuition": "Schwartz functions are the safest playground for the Fourier transform: decay, smoothness, differentiation, and inversion all work cleanly.",
         "proof": null,
-        "notation": "$\\mathcal{S}(\\mathbb{R})$",
+        "notation": "$\\mathcal S(\\mathbb R)$",
         "proof_dependencies": [],
-        "dependencies": {},
+        "dependencies": {
+          "logical_dependency": []
+        },
         "outgoing_relations": [],
         "related": [],
-        "assumptions": [],
+        "assumptions": [
+          "This one-dimensional definition extends to $\\mathbb R^d$ using multi-indices."
+        ],
         "ref": "Stein–Shakarchi: Ch.5 Corollary 2.4; Ch.5 Proposition 1.1; Ch.5 Theorem 1.3",
         "book_refs": ["c5_cor_2_4", "c5_prop_1_1", "c5_thm_1_3"],
         "metadata": {
@@ -321,10 +321,10 @@
         "label": "Convolution",
         "kind": "construction",
         "domain": "foundations",
-        "statement": "An averaging product of two functions that becomes multiplication after Fourier transform.",
-        "formal_statement": "$(f*g)(x)=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi} f(y)g(x-y)\\,dy$ (circle); on $\\mathbb{R}$, $(f*g)(x)=\\int f(y)g(x-y)\\,dy$.",
+        "statement": "A sliding weighted average of one function against another.",
+        "formal_statement": "On $\\mathbb T$, $(f*g)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(y)g(x-y)\\,dy$. On $\\mathbb R$, $(f*g)(x)=\\int_{\\mathbb R}f(y)g(x-y)\\,dy$, whenever the integral is defined.",
         "definition": null,
-        "intuition": "Smoothing by a kernel; the operation Fourier analysis is built to diagonalize.",
+        "intuition": "Convolution blends nearby values according to a kernel. Fourier analysis is powerful because it turns this averaging operation into multiplication.",
         "proof": null,
         "notation": "$f*g$",
         "proof_dependencies": [],
@@ -333,7 +333,9 @@
         },
         "outgoing_relations": [],
         "related": [],
-        "assumptions": [],
+        "assumptions": [
+          "The normalization differs between the circle and the real line."
+        ],
         "ref": "Stein–Shakarchi: Ch.2 Lemma 3.2; Ch.2 Proposition 3.1",
         "book_refs": ["c2_lem_3_2", "c2_prop_3_1"],
         "metadata": {
@@ -347,10 +349,10 @@
         "label": "Fourier Coefficient",
         "kind": "definition",
         "domain": "series",
-        "statement": "The amount of frequency $n$ present in $f$, obtained by projecting onto $e^{inx}$.",
-        "formal_statement": "$\\hat f(n)=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi} f(x)e^{-inx}\\,dx=\\langle f,e_n\\rangle$.",
+        "statement": "The coordinate of a periodic function at frequency $n$.",
+        "formal_statement": "For $f\\in L^1(\\mathbb T)$, $\\hat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx=\\langle f,e_n\\rangle$ when the inner product notation is justified.",
         "definition": null,
-        "intuition": "The coordinate of $f$ along the $n$-th harmonic — a single complex number per frequency.",
+        "intuition": "The coefficient $\\hat f(n)$ measures alignment with the $n$-th rotating wave. Large alignment means that frequency is strongly present.",
         "proof": null,
         "notation": "$\\hat f(n)$",
         "proof_dependencies": [],
@@ -363,7 +365,9 @@
         },
         "outgoing_relations": [],
         "related": ["complex_exponential", "inner_product_space"],
-        "assumptions": [],
+        "assumptions": [
+          "For $L^1$ functions the integral definition is primary; the projection interpretation is geometrically literal in $L^2$."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -377,19 +381,21 @@
         "label": "Fourier Series",
         "kind": "object",
         "domain": "series",
-        "statement": "The infinite sum of harmonics reconstructing a function from its coefficients.",
-        "formal_statement": "$f(x)\\sim\\sum_{n=-\\infty}^{\\infty}\\hat f(n)e^{inx}$.",
+        "statement": "The formal reconstruction of a periodic function from all its Fourier coefficients.",
+        "formal_statement": "For $f\\in L^1(\\mathbb T)$, its Fourier series is written $f(x)\\sim\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$. The symbol $\\sim$ means “has Fourier series,” not automatic pointwise equality.",
         "definition": null,
-        "intuition": "The candidate reconstruction of $f$; whether it equals $f$ is the convergence question.",
+        "intuition": "The series is a candidate reconstruction. Much of Fourier analysis asks in what sense these candidate sums converge back to $f$.",
         "proof": null,
-        "notation": "$\\sum_n \\hat f(n)e^{inx}$",
+        "notation": "$\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_coefficient"]
         },
         "outgoing_relations": [],
         "related": ["fourier_coefficient"],
-        "assumptions": [],
+        "assumptions": [
+          "The notation $f\\sim\\sum\\hat f(n)e^{inx}$ does not by itself assert convergence."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -403,12 +409,12 @@
         "label": "Trigonometric Polynomial",
         "kind": "object",
         "domain": "series",
-        "statement": "A finite sum of harmonics; the dense, well-behaved functions used for approximation.",
-        "formal_statement": "$p(x)=\\sum_{|n|\\le N} c_n e^{inx}$.",
+        "statement": "A finite linear combination of Fourier harmonics.",
+        "formal_statement": "A trigonometric polynomial has the form $p(x)=\\sum_{|n|\\le N}c_ne^{inx}$ for some $N\\ge0$ and complex coefficients $c_n$.",
         "definition": null,
-        "intuition": "Finite Fourier series — the simple objects everything is approximated by.",
+        "intuition": "These are finite Fourier series: simple, smooth, periodic building blocks used to approximate more complicated functions.",
         "proof": null,
-        "notation": "$\\sum_{|n|\\le N}c_n e^{inx}$",
+        "notation": "$\\sum_{|n|\\le N}c_ne^{inx}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["complex_exponential"]
@@ -429,12 +435,12 @@
         "label": "Partial Sum",
         "kind": "definition",
         "domain": "series",
-        "statement": "The truncation of a Fourier series to frequencies $|n|\\le N$.",
-        "formal_statement": "$S_N f(x)=\\sum_{|n|\\le N}\\hat f(n)e^{inx}=(D_N*f)(x)$, where $D_N$ is the Dirichlet kernel.",
+        "statement": "The finite Fourier approximation obtained by keeping only frequencies $|n|\\le N$.",
+        "formal_statement": "For $f\\in L^1(\\mathbb T)$, $S_Nf(x)=\\sum_{|n|\\le N}\\hat f(n)e^{inx}$. Equivalently, $S_Nf=D_N*f$, where $D_N$ is the Dirichlet kernel.",
         "definition": null,
-        "intuition": "The finite approximation whose limit (if any) defines convergence of the series.",
+        "intuition": "A partial sum is the low-frequency shadow of $f$. Whether these shadows converge to the original function is subtle.",
         "proof": null,
-        "notation": "$S_N f$",
+        "notation": "$S_Nf$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_series", "trigonometric_polynomial"]
@@ -455,12 +461,12 @@
         "label": "Bessel's Inequality",
         "kind": "theorem",
         "domain": "series",
-        "statement": "The energy of the Fourier coefficients never exceeds the energy of the function.",
-        "formal_statement": "$\\sum_{n}|\\hat f(n)|^2\\le\\|f\\|_2^2$ for $f\\in L^2(\\mathbb{T})$.",
+        "statement": "The squared Fourier coefficients of an $L^2$ function cannot carry more energy than the function itself.",
+        "formal_statement": "If $f\\in L^2(\\mathbb T)$, then $\\sum_{n\\in\\mathbb Z}|\\hat f(n)|^2\\le \\|f\\|_2^2$.",
         "definition": null,
-        "intuition": "Projections can only lose energy; equality (Parseval) signals a complete basis.",
+        "intuition": "Projecting onto orthonormal directions cannot create energy. Equality requires that the chosen directions are complete.",
         "proof": null,
-        "notation": "$\\sum|\\hat f(n)|^2\\le\\|f\\|_2^2$",
+        "notation": "$\\sum_n|\\hat f(n)|^2\\le\\|f\\|_2^2$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -471,7 +477,9 @@
         },
         "outgoing_relations": [],
         "related": [],
-        "assumptions": [],
+        "assumptions": [
+          "This is an $L^2$ statement; it uses the normalized inner product on $\\mathbb T$."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -485,19 +493,25 @@
         "label": "Parseval's Identity",
         "kind": "theorem",
         "domain": "series",
-        "statement": "Energy is exactly conserved between a function and its Fourier coefficients.",
-        "formal_statement": "$\\sum_{n}|\\hat f(n)|^2=\\|f\\|_2^2$, and $\\langle f,g\\rangle=\\sum_n\\hat f(n)\\overline{\\hat g(n)}$, for $f,g\\in L^2(\\mathbb{T})$.",
+        "statement": "Fourier coefficients preserve the full $L^2$ energy of a function.",
+        "formal_statement": "For $f,g\\in L^2(\\mathbb T)$, $\\sum_{n\\in\\mathbb Z}|\\hat f(n)|^2=\\|f\\|_2^2$ and $\\langle f,g\\rangle=\\sum_{n\\in\\mathbb Z}\\hat f(n)\\overline{\\hat g(n)}$.",
         "definition": null,
-        "intuition": "Bessel becomes equality because $\\{e^{inx}\\}$ is a complete orthonormal basis — Fourier is an isometry.",
+        "intuition": "Fourier analysis is an isometry in $L^2$: functions and their coefficient sequences carry the same geometric information.",
         "proof": null,
-        "notation": "$\\sum|\\hat f(n)|^2=\\|f\\|_2^2$",
+        "notation": "$\\sum_n|\\hat f(n)|^2=\\|f\\|_2^2$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["bessel_inequality", "l2_space"]
+          "logical_dependency": [
+            "bessel_inequality",
+            "l2_space",
+            "orthonormal_system"
+          ]
         },
         "outgoing_relations": [],
         "related": ["bessel_inequality", "plancherel_theorem"],
-        "assumptions": [],
+        "assumptions": [
+          "Equality uses completeness of the trigonometric system in $L^2(\\mathbb T)$."
+        ],
         "ref": "Stein–Shakarchi: Ch.3 Lemma 1.5; Ch.3 Theorem 1.3",
         "book_refs": ["c3_lem_1_5", "c3_thm_1_3"],
         "metadata": {
@@ -512,11 +526,11 @@
         "kind": "theorem",
         "domain": "series",
         "statement": "Fourier coefficients of an integrable function vanish at high frequency.",
-        "formal_statement": "If \\(f\\in L^1(\\mathbb T)\\), then \\(\\hat f(n)\\to0\\) as \\(|n|\\to\\infty\\). Equivalently, high-frequency oscillations average out against every \\(L^1\\) function on the circle.",
+        "formal_statement": "If $f\\in L^1(\\mathbb T)$, then $\\hat f(n)\\to0$ as $|n|\\to\\infty$. Equivalently, high-frequency oscillations average out against every $L^1$ function on the circle.",
         "definition": null,
-        "intuition": "The waves \\(e^{-inx}\\) oscillate faster and faster. Against an integrable function, their positive and negative swings cancel in the limit.",
+        "intuition": "The waves $e^{-inx}$ oscillate faster and faster. Against an integrable function, their positive and negative swings cancel in the limit.",
         "proof": null,
-        "notation": "\\(\\hat f(n)\\to0\\)",
+        "notation": "$\\hat f(n)\\to0$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_coefficient", "l1_space"]
@@ -524,7 +538,7 @@
         "outgoing_relations": [],
         "related": ["fourier_coefficient", "ft_continuity"],
         "assumptions": [
-          "The function is understood as an \\(L^1(\\mathbb T)\\) equivalence class; the conclusion concerns its Fourier coefficients."
+          "The function is understood as an $L^1(\\mathbb T)$ equivalence class; the conclusion concerns its Fourier coefficients."
         ],
         "ref": "Stein–Shakarchi: Ch.3 Theorem 1.4",
         "book_refs": ["c3_thm_1_4"],
@@ -540,11 +554,11 @@
         "kind": "theorem",
         "domain": "series",
         "statement": "An integrable function is determined, up to equality almost everywhere, by all of its Fourier coefficients.",
-        "formal_statement": "If \\(f\\in L^1(\\mathbb T)\\) and \\(\\hat f(n)=0\\) for every \\(n\\in\\mathbb Z\\), then \\(f=0\\) a.e. In particular, if \\(f\\in C(\\mathbb T)\\), then \\(f\\equiv0\\).",
+        "formal_statement": "If $f\\in L^1(\\mathbb T)$ and $\\hat f(n)=0$ for every $n\\in\\mathbb Z$, then $f=0$ a.e. In particular, if $f\\in C(\\mathbb T)$, then $f\\equiv0$.",
         "definition": null,
-        "intuition": "The full frequency spectrum contains all information about the function. For continuous functions this recovers pointwise equality; for \\(L^1\\) functions equality means equality almost everywhere.",
+        "intuition": "The full frequency spectrum contains all information about the function. For continuous functions this recovers pointwise equality; for $L^1$ functions equality means equality almost everywhere.",
         "proof": null,
-        "notation": "\\(\\hat f(n)=0\\ \\forall n\\Rightarrow f=0\\text{ a.e.}\\)",
+        "notation": "$\\hat f(n)=0\\ \\forall n\\Rightarrow f=0\\text{ a.e.}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -557,7 +571,7 @@
         "outgoing_relations": [],
         "related": ["fourier_coefficient", "fejer_theorem"],
         "assumptions": [
-          "For \\(L^1\\) functions, equality is interpreted almost everywhere. For continuous representatives, it becomes pointwise equality."
+          "For $L^1$ functions, equality is interpreted almost everywhere. For continuous representatives, it becomes pointwise equality."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Corollary 2.2; Ch.2 Corollary 2.3; Ch.2 Corollary 5.3; Ch.2 Theorem 2.1",
         "book_refs": ["c2_cor_2_2", "c2_cor_2_3", "c2_cor_5_3", "c2_thm_2_1"],
@@ -573,11 +587,11 @@
         "kind": "theorem",
         "domain": "series",
         "statement": "The Fourier partial sum is the orthogonal projection onto the low-frequency trigonometric polynomials.",
-        "formal_statement": "For \\(f\\in L^2(\\mathbb T)\\), \\(S_Nf\\) is the unique element of \\(\\operatorname{span}\\{e^{inx}:|n|\\le N\\}\\) minimizing \\(\\|f-p\\|_2\\). Equivalently, \\(f-S_Nf\\) is orthogonal to every trigonometric polynomial of degree at most \\(N\\).",
+        "formal_statement": "For $f\\in L^2(\\mathbb T)$, $S_Nf$ is the unique element of $\\operatorname{span}\\{e^{inx}:|n|\\le N\\}$ minimizing $\\|f-p\\|_2$. Equivalently, $f-S_Nf$ is orthogonal to every trigonometric polynomial of degree at most $N$.",
         "definition": null,
-        "intuition": "Truncating a Fourier series is not a random cutoff. It is the closest low-frequency shadow of \\(f\\) in the geometry of \\(L^2\\).",
+        "intuition": "Truncating a Fourier series is not a random cutoff. It is the closest low-frequency shadow of $f$ in the geometry of $L^2$.",
         "proof": null,
-        "notation": "\\(S_Nf=P_Nf\\)",
+        "notation": "$S_Nf=P_Nf$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -594,7 +608,7 @@
           "mean_square_convergence"
         ],
         "assumptions": [
-          "The minimization is in the \\(L^2\\)-norm on \\(\\mathbb T\\)."
+          "The minimization is in the $L^2$-norm on $\\mathbb T$."
         ],
         "ref": "Stein–Shakarchi: Ch.3 Lemma 1.2",
         "book_refs": ["c3_lem_1_2"],
@@ -610,14 +624,14 @@
         "kind": "property",
         "domain": "series",
         "statement": "Smoothness of a periodic function forces decay of its Fourier coefficients; sufficiently fast coefficient decay forces smoothness.",
-        "formal_statement": "If \\(f\\) is \\(2\\pi\\)-periodic and \\(C^k\\) with matching periodic derivatives up to order \\(k\\), then \\(\\hat f(n)=o(|n|^{-k})\\). Conversely, if \\(\\sum_{n\\in\\mathbb Z}|n|^k|\\hat f(n)|<\\infty\\), then the Fourier series defines a \\(C^k\\) function.",
+        "formal_statement": "If $f$ is $2\\pi$-periodic and $C^k$ with matching periodic derivatives up to order $k$, then repeated integration by parts gives $\\hat f(n)=o(|n|^{-k})$ under standard endpoint regularity. Conversely, if $\\sum_{n\\in\\mathbb Z}|n|^k|\\hat f(n)|<\\infty$, then the Fourier series defines a $C^k$ function.",
         "definition": null,
-        "intuition": "Differentiation multiplies the \\(n\\)-th Fourier coefficient by \\(in\\). So every derivative demands extra frequency decay, and extra decay buys differentiability back.",
+        "intuition": "Differentiation multiplies the $n$-th Fourier coefficient by $in$. Smooth functions therefore have coefficients that die quickly, while sufficiently fast decay lets derivatives be reconstructed term by term.",
         "proof": null,
-        "notation": "\\(\\widehat{f^{(k)}}(n)=(in)^k\\hat f(n)\\)",
+        "notation": "$\\widehat{f^{(k)}}(n)=(in)^k\\hat f(n)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_coefficient", "term_differentiation"]
+          "logical_dependency": ["fourier_coefficient", "fourier_series"]
         },
         "outgoing_relations": [],
         "related": ["term_differentiation", "differentiation_rule"],
@@ -637,12 +651,12 @@
         "label": "Good Kernel (Approximate Identity)",
         "kind": "definition",
         "domain": "convergence",
-        "statement": "A normalized family of kernels whose mass concentrates near \\(0\\), so convolution approximates the identity.",
-        "formal_statement": "A family \\(\\{K_n\\}\\) on \\(\\mathbb T\\) is a good kernel if \\(\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(x)\\,dx=1\\), \\(\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(x)|\\,dx\\le M\\), and for every \\(\\delta>0\\), \\(\\frac1{2\\pi}\\int_{\\delta\\le |x|\\le\\pi}|K_n(x)|\\,dx\\to0\\). Then \\(K_n*f\\to f\\) uniformly for \\(f\\in C(\\mathbb T)\\).",
+        "statement": "A normalized family of kernels whose mass concentrates near $0$, so convolution approximates the identity.",
+        "formal_statement": "A family $\\{K_n\\}$ on $\\mathbb T$ is a good kernel if $\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(x)\\,dx=1$, $\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(x)|\\,dx\\le M$, and for every $\\delta>0$, $\\frac1{2\\pi}\\int_{\\delta\\le |x|\\le\\pi}|K_n(x)|\\,dx\\to0$. Then $K_n*f\\to f$ uniformly for $f\\in C(\\mathbb T)$.",
         "definition": null,
-        "intuition": "A good kernel is a controlled bump whose mass collapses to the origin. Convolution replaces \\(f(x)\\) by a weighted local average near \\(x\\), and the average becomes exact in the limit.",
+        "intuition": "A good kernel is a controlled bump whose mass collapses to the origin. Convolution replaces $f(x)$ by a weighted local average near $x$, and the average becomes exact in the limit.",
         "proof": null,
-        "notation": "\\(K_n*f\\to f\\) uniformly on \\(C(\\mathbb T)\\)",
+        "notation": "$K_n*f\\to f$ uniformly on $C(\\mathbb T)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["convolution", "l1_space"]
@@ -650,7 +664,7 @@
         "outgoing_relations": [],
         "related": ["convolution"],
         "assumptions": [
-          "Kernels are normalized using the circle measure \\(\\frac1{2\\pi}dx\\)."
+          "Kernels are normalized using the circle measure $\\frac1{2\\pi}dx$."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Theorem 4.1; Ch.5 Corollary 1.7; Ch.5 Theorem 1.6",
         "book_refs": ["c2_thm_4_1", "c5_cor_1_7", "c5_thm_1_6"],
@@ -666,11 +680,11 @@
         "kind": "object",
         "domain": "convergence",
         "statement": "The convolution kernel for ordinary Fourier partial sums.",
-        "formal_statement": "\\(D_N(x)=\\sum_{|n|\\le N}e^{inx}=\\frac{\\sin((N+\\frac12)x)}{\\sin(x/2)}\\), with removable value \\(D_N(0)=2N+1\\). For \\(f\\in L^1(\\mathbb T)\\), \\(S_Nf=D_N*f\\).",
+        "formal_statement": "$D_N(x)=\\sum_{|n|\\le N}e^{inx}=\\frac{\\sin((N+\\frac12)x)}{\\sin(x/2)}$, with removable value $D_N(0)=2N+1$. For $f\\in L^1(\\mathbb T)$, $S_Nf=D_N*f$.",
         "definition": null,
-        "intuition": "\\(D_N\\) reconstructs by sharp frequency cutoff. Its oscillations and growing \\(L^1\\)-norm make ordinary partial sums unstable compared with Fejér averages.",
+        "intuition": "$D_N$ reconstructs by sharp frequency cutoff. Its oscillations and growing $L^1$-norm make ordinary partial sums unstable compared with Fejér averages.",
         "proof": null,
-        "notation": "\\(D_N,\\ S_Nf=D_N*f\\)",
+        "notation": "$D_N,\\ S_Nf=D_N*f$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["partial_sum", "convolution", "l1_space"]
@@ -692,18 +706,14 @@
         "kind": "object",
         "domain": "convergence",
         "statement": "The nonnegative Cesàro average of Dirichlet kernels.",
-        "formal_statement": "\\(F_N(x)=\\frac1{N+1}\\sum_{n=0}^{N}D_n(x)=\\frac1{N+1}\\left(\\frac{\\sin((N+1)x/2)}{\\sin(x/2)}\\right)^2\\ge0\\), with \\(F_N(0)=N+1\\), and \\(\\sigma_Nf=F_N*f\\).",
+        "formal_statement": "$F_N(x)=\\frac1{N+1}\\sum_{n=0}^{N}D_n(x)=\\frac1{N+1}\\left(\\frac{\\sin((N+1)x/2)}{\\sin(x/2)}\\right)^2\\ge0$, with $F_N(0)=N+1$, and $\\sigma_Nf=F_N*f$.",
         "definition": null,
-        "intuition": "Averaging the unstable Dirichlet kernels cancels their worst oscillations. Positivity and mass concentration make \\(F_N\\) a genuine approximate identity.",
+        "intuition": "Averaging the unstable Dirichlet kernels cancels their worst oscillations. Positivity and mass concentration make $F_N$ a genuine approximate identity.",
         "proof": null,
-        "notation": "\\(F_N,\\ \\sigma_Nf=F_N*f\\)",
+        "notation": "$F_N,\\ \\sigma_Nf=F_N*f$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "good_kernel",
-            "dirichlet_kernel",
-            "cesaro_summation"
-          ]
+          "logical_dependency": ["dirichlet_kernel", "cesaro_summation"]
         },
         "outgoing_relations": [],
         "related": ["dirichlet_kernel", "good_kernel"],
@@ -722,14 +732,14 @@
         "kind": "object",
         "domain": "convergence",
         "statement": "The positive approximate identity behind Abel summation and harmonic extension to the disk.",
-        "formal_statement": "For \\(0\\le r<1\\), \\(P_r(\\theta)=\\sum_{n\\in\\mathbb Z}r^{|n|}e^{in\\theta}=\\frac{1-r^2}{1-2r\\cos\\theta+r^2}\\), with \\(P_r\\ge0\\) and \\(\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}P_r(\\theta)\\,d\\theta=1\\). As \\(r\\to1^-\\), \\(P_r*f\\to f\\) for \\(f\\in C(\\mathbb T)\\).",
+        "formal_statement": "For $0\\le r<1$, $P_r(\\theta)=\\sum_{n\\in\\mathbb Z}r^{|n|}e^{in\\theta}=\\frac{1-r^2}{1-2r\\cos\\theta+r^2}$, with $P_r\\ge0$ and $\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}P_r(\\theta)\\,d\\theta=1$. As $r\\to1^-$, $P_r*f\\to f$ for $f\\in C(\\mathbb T)$.",
         "definition": null,
-        "intuition": "\\(P_r*f\\) is the harmonic extension of boundary data into the disk. Letting \\(r\\to1^-\\) approaches the boundary from inside, smoothing first and recovering later.",
+        "intuition": "$P_r*f$ is the harmonic extension of boundary data into the disk. Letting $r\\to1^-$ approaches the boundary from inside, smoothing first and recovering later.",
         "proof": null,
-        "notation": "\\(P_r,\\ P_r*f\\to f\\) as \\(r\\to1^-\\)",
+        "notation": "$P_r,\\ P_r*f\\to f$ as $r\\to1^-$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["good_kernel", "abel_summation"]
+          "logical_dependency": ["abel_summation"]
         },
         "outgoing_relations": [],
         "related": ["good_kernel"],
@@ -748,11 +758,11 @@
         "kind": "construction",
         "domain": "convergence",
         "statement": "A summability process that replaces partial sums by their arithmetic averages.",
-        "formal_statement": "For Fourier series, \\(\\sigma_Nf(x)=\\frac1{N+1}\\sum_{n=0}^{N}S_nf(x)\\). Equivalently, \\(\\sigma_Nf=F_N*f\\).",
+        "formal_statement": "For Fourier series, $\\sigma_Nf(x)=\\frac1{N+1}\\sum_{n=0}^{N}S_nf(x)$. Equivalently, $\\sigma_Nf=F_N*f$.",
         "definition": null,
         "intuition": "Instead of trusting the last partial sum, Cesàro summation averages all earlier partial sums. This damps oscillation and leads to Fejér's theorem.",
         "proof": null,
-        "notation": "\\(\\sigma_Nf\\)",
+        "notation": "$\\sigma_Nf$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["partial_sum"]
@@ -773,12 +783,12 @@
         "label": "Abel Summation",
         "kind": "construction",
         "domain": "convergence",
-        "statement": "A summability process that damps high frequencies by \\(r^{|n|}\\), then lets \\(r\\to1^-\\).",
-        "formal_statement": "For a Fourier series \\(\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}\\), its Abel means are \\(A_rf(x)=\\sum_{n\\in\\mathbb Z}r^{|n|}\\hat f(n)e^{inx}\\), \\(0\\le r<1\\). Abel summability asks whether \\(A_rf(x)\\to L\\) as \\(r\\to1^-\\).",
+        "statement": "A summability process that damps high frequencies by $r^{|n|}$, then lets $r\\to1^-$.",
+        "formal_statement": "For a Fourier series $\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$, its Abel means are $A_rf(x)=\\sum_{n\\in\\mathbb Z}r^{|n|}\\hat f(n)e^{inx}$, $0\\le r<1$. Abel summability asks whether $A_rf(x)\\to L$ as $r\\to1^-$.",
         "definition": null,
-        "intuition": "Abel summation approaches the Fourier series from inside the unit disk. The factor \\(r^{|n|}\\) suppresses high frequencies first, then gradually releases them.",
+        "intuition": "Abel summation approaches the Fourier series from inside the unit disk. The factor $r^{|n|}$ suppresses high frequencies first, then gradually releases them.",
         "proof": null,
-        "notation": "\\(A_rf,\\ r\\to1^-\\)",
+        "notation": "$A_rf,\\ r\\to1^-$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_series", "fourier_coefficient"]
@@ -800,11 +810,11 @@
         "kind": "theorem",
         "domain": "convergence",
         "statement": "Fejer means of a continuous periodic function converge uniformly to the function.",
-        "formal_statement": "If \\(f\\in C(\\mathbb T)\\), then \\(\\sigma_Nf=F_N*f\\to f\\) uniformly on \\(\\mathbb T\\). More generally, if \\(f\\in L^1(\\mathbb T)\\), then \\(\\sigma_Nf\\to f\\) in \\(L^1\\).",
+        "formal_statement": "If $f\\in C(\\mathbb T)$, then $\\sigma_Nf=F_N*f\\to f$ uniformly on $\\mathbb T$. More generally, if $f\\in L^1(\\mathbb T)$, then $\\sigma_Nf\\to f$ in $L^1$.",
         "definition": null,
-        "intuition": "Averaging partial sums replaces the oscillatory Dirichlet kernel by the positive Fejer kernel. The result is a stable local average that sharpens into \\(f\\).",
+        "intuition": "Averaging partial sums replaces the oscillatory Dirichlet kernel by the positive Fejer kernel. The result is a stable local average that sharpens into $f$.",
         "proof": null,
-        "notation": "\\(\\sigma_Nf=F_N*f\\to f\\)",
+        "notation": "$\\sigma_Nf=F_N*f\\to f$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -816,7 +826,7 @@
         "outgoing_relations": [],
         "related": ["fejer_kernel", "good_kernel", "weierstrass_approximation"],
         "assumptions": [
-          "Uniform convergence requires \\(f\\in C(\\mathbb T)\\); the \\(L^1\\) version has \\(L^1\\)-convergence."
+          "Uniform convergence requires $f\\in C(\\mathbb T)$; the $L^1$ version has $L^1$-convergence."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Theorem 5.2",
         "book_refs": ["c2_thm_5_2"],
@@ -831,12 +841,12 @@
         "label": "Mean-Square Convergence",
         "kind": "theorem",
         "domain": "convergence",
-        "statement": "Fourier partial sums converge to every \\(L^2\\) function in mean square.",
-        "formal_statement": "For every \\(f\\in L^2(\\mathbb T)\\), \\(\\|f-S_Nf\\|_2\\to0\\) as \\(N\\to\\infty\\). Equivalently, the trigonometric system \\(\\{e^{inx}\\}_{n\\in\\mathbb Z}\\) is complete in \\(L^2(\\mathbb T)\\).",
+        "statement": "Fourier partial sums converge to every $L^2$ function in mean square.",
+        "formal_statement": "For every $f\\in L^2(\\mathbb T)$, $\\|f-S_Nf\\|_2\\to0$ as $N\\to\\infty$. Equivalently, the trigonometric system $\\{e^{inx}\\}_{n\\in\\mathbb Z}$ is complete in $L^2(\\mathbb T)$.",
         "definition": null,
-        "intuition": "In \\(L^2\\), Fourier series are orthogonal projections onto larger and larger frequency subspaces. Completeness says those shadows converge back to the original object in energy.",
+        "intuition": "In $L^2$, Fourier series are orthogonal projections onto larger and larger frequency subspaces. Completeness says those shadows converge back to the original object in energy.",
         "proof": null,
-        "notation": "\\(\\|f-S_Nf\\|_2\\to0\\)",
+        "notation": "$\\|f-S_Nf\\|_2\\to0$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -849,7 +859,7 @@
         "outgoing_relations": [],
         "related": ["l2_space", "parseval_identity", "best_approximation"],
         "assumptions": [
-          "Convergence is in the \\(L^2\\)-norm, not necessarily pointwise."
+          "Convergence is in the $L^2$-norm, not necessarily pointwise."
         ],
         "ref": "Stein–Shakarchi: Ch.3 Lemma 2.4; Ch.3 Lemma 3.2; Ch.3 Theorem 1.1",
         "book_refs": ["c3_lem_2_4", "c3_lem_3_2", "c3_thm_1_1"],
@@ -865,11 +875,11 @@
         "kind": "property",
         "domain": "convergence",
         "statement": "The question whether Fourier partial sums converge at a specific point.",
-        "formal_statement": "Given \\(f\\in L^1(\\mathbb T)\\) and \\(x_0\\in\\mathbb T\\), ask whether \\(S_Nf(x_0)=(D_N*f)(x_0)\\) has a limit, and whether that limit equals \\(f(x_0)\\) or the jump average \\(\\frac12(f(x_0^+)+f(x_0^-))\\).",
+        "formal_statement": "Given $f\\in L^1(\\mathbb T)$ and $x_0\\in\\mathbb T$, ask whether $S_Nf(x_0)=(D_N*f)(x_0)$ has a limit, and whether that limit equals $f(x_0)$ or the jump average $\\frac12(f(x_0^+)+f(x_0^-))$.",
         "definition": null,
         "intuition": "Pointwise convergence is delicate because the Dirichlet kernel is oscillatory and not a good approximate identity. Local regularity can tame it; mere continuity cannot.",
         "proof": null,
-        "notation": "\\(S_Nf(x_0)\\to L\\)",
+        "notation": "$S_Nf(x_0)\\to L$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["dirichlet_kernel", "partial_sum", "l1_space"]
@@ -883,7 +893,7 @@
           "carleson_theorem"
         ],
         "assumptions": [
-          "The value \\(f(x_0)\\) must be meaningful; for discontinuities one usually compares with the average of one-sided limits."
+          "The value $f(x_0)$ must be meaningful; for discontinuities one usually compares with the average of one-sided limits."
         ],
         "ref": "",
         "book_refs": [],
@@ -899,11 +909,11 @@
         "kind": "theorem",
         "domain": "convergence",
         "statement": "A local Dini condition guarantees pointwise convergence at a chosen point.",
-        "formal_statement": "If \\(f\\in L^1(\\mathbb T)\\) and \\(\\int_{-\\pi}^{\\pi}\\left|\\frac{f(x_0+t)-f(x_0)}{t}\\right|\\,dt<\\infty\\), then \\(S_Nf(x_0)\\to f(x_0)\\).",
+        "formal_statement": "If $f\\in L^1(\\mathbb T)$ and $\\int_{-\\pi}^{\\pi}\\left|\\frac{f(x_0+t)-f(x_0)}{t}\\right|\\,dt<\\infty$, then $S_Nf(x_0)\\to f(x_0)$.",
         "definition": null,
-        "intuition": "The condition measures whether the local error \\(f(x_0+t)-f(x_0)\\) is tame enough to survive division by \\(t\\). It is a pointwise regularity test, not a global smoothness assumption.",
+        "intuition": "The condition measures whether the local error $f(x_0+t)-f(x_0)$ is tame enough to survive division by $t$. It is a pointwise regularity test, not a global smoothness assumption.",
         "proof": null,
-        "notation": "\\(\\int\\left|\\frac{f(x_0+t)-f(x_0)}{t}\\right|dt<\\infty\\)",
+        "notation": "$\\int\\left|\\frac{f(x_0+t)-f(x_0)}{t}\\right|dt<\\infty$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -915,7 +925,7 @@
         "outgoing_relations": [],
         "related": ["pointwise_convergence"],
         "assumptions": [
-          "The value \\(f(x_0)\\) must be specified; the condition is local at \\(x_0\\)."
+          "The value $f(x_0)$ must be specified; the condition is local at $x_0$."
         ],
         "ref": "Stein–Shakarchi: Ch.3 Theorem 2.1",
         "book_refs": ["c3_thm_2_1"],
@@ -931,11 +941,11 @@
         "kind": "theorem",
         "domain": "convergence",
         "statement": "Piecewise smooth functions have Fourier partial sums converging to the midpoint of each jump.",
-        "formal_statement": "If \\(f\\) is \\(2\\pi\\)-periodic and piecewise \\(C^1\\), then \\(S_Nf(x)\\to\\frac12(f(x^+)+f(x^-))\\) at every \\(x\\). In particular, at points of continuity, \\(S_Nf(x)\\to f(x)\\).",
+        "formal_statement": "If $f$ is $2\\pi$-periodic and piecewise $C^1$, then $S_Nf(x)\\to\\frac12(f(x^+)+f(x^-))$ at every $x$. In particular, at points of continuity, $S_Nf(x)\\to f(x)$.",
         "definition": null,
         "intuition": "Fourier series cannot choose one side of a jump, so the symmetric oscillations settle on the average of the two one-sided limits.",
         "proof": null,
-        "notation": "\\(S_Nf(x)\\to\\frac12(f(x^+)+f(x^-))\\)",
+        "notation": "$S_Nf(x)\\to\\frac12(f(x^+)+f(x^-))$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -947,7 +957,7 @@
         "outgoing_relations": [],
         "related": ["pointwise_convergence"],
         "assumptions": [
-          "Uses a periodic piecewise \\(C^1\\) convention with one-sided limits at jumps."
+          "Uses a periodic piecewise $C^1$ convention with one-sided limits at jumps."
         ],
         "ref": "",
         "book_refs": [],
@@ -963,11 +973,11 @@
         "kind": "property",
         "domain": "convergence",
         "statement": "Fourier partial sums have a persistent overshoot near jump discontinuities.",
-        "formal_statement": "For a piecewise smooth function with a jump of size \\(J\\), the overshoot of \\(S_Nf\\) near the jump approaches \\(GJ\\), where \\(G=\\frac1\\pi\\int_0^\\pi\\frac{\\sin t}{t}\\,dt-\\frac12\\approx0.08949\\). The overshoot region narrows as \\(N\\to\\infty\\), but its height does not vanish.",
+        "formal_statement": "For a piecewise smooth function with a jump of size $J$, the overshoot of $S_Nf$ near the jump approaches $GJ$, where $G=\\frac1\\pi\\int_0^\\pi\\frac{\\sin t}{t}\\,dt-\\frac12\\approx0.08949$. The overshoot region narrows as $N\\to\\infty$, but its height does not vanish.",
         "definition": null,
         "intuition": "Truncating frequencies cannot draw a sharp jump cleanly. The ringing gets squeezed toward the discontinuity, but the first overshoot keeps roughly nine percent of the jump.",
         "proof": null,
-        "notation": "\\(G\\approx0.08949\\)",
+        "notation": "$G\\approx0.08949$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -994,12 +1004,12 @@
         "label": "Carleson's Theorem",
         "kind": "theorem",
         "domain": "convergence",
-        "statement": "Fourier series of \\(L^2\\) functions converge almost everywhere.",
-        "formal_statement": "If \\(f\\in L^2(\\mathbb T)\\), then \\(S_Nf(x)\\to f(x)\\) for almost every \\(x\\in\\mathbb T\\). Hunt extended this to \\(L^p(\\mathbb T)\\) for \\(1<p<\\infty\\).",
+        "statement": "Fourier series of $L^2$ functions converge almost everywhere.",
+        "formal_statement": "If $f\\in L^2(\\mathbb T)$, then $S_Nf(x)\\to f(x)$ for almost every $x\\in\\mathbb T$. Hunt extended this to $L^p(\\mathbb T)$ for $1<p<\\infty$.",
         "definition": null,
         "intuition": "Despite bad kernels and possible pointwise chaos, square-integrability is still strong enough to force convergence at almost every point. The proof is deep; the statement is not a routine kernel argument.",
         "proof": null,
-        "notation": "\\(S_Nf\\to f\\text{ a.e.}\\)",
+        "notation": "$S_Nf\\to f\\text{ a.e.}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1011,7 +1021,7 @@
         "outgoing_relations": [],
         "related": ["pointwise_convergence", "l2_space", "almost_everywhere"],
         "assumptions": [
-          "Almost everywhere is with respect to Lebesgue measure on \\(\\mathbb T\\)."
+          "Almost everywhere is with respect to Lebesgue measure on $\\mathbb T$."
         ],
         "ref": "",
         "book_refs": [],
@@ -1027,11 +1037,11 @@
         "kind": "counterexample",
         "domain": "convergence",
         "statement": "There exists a continuous periodic function whose Fourier partial sums diverge at a point.",
-        "formal_statement": "There is \\(f\\in C(\\mathbb T)\\) such that the sequence \\(S_Nf(x_0)\\) diverges for some \\(x_0\\in\\mathbb T\\); in stronger versions, \\(\\sup_N|S_Nf(x_0)|=\\infty\\).",
+        "formal_statement": "There is $f\\in C(\\mathbb T)$ such that the sequence $S_Nf(x_0)$ diverges for some $x_0\\in\\mathbb T$; in stronger versions, $\\sup_N|S_Nf(x_0)|=\\infty$.",
         "definition": null,
         "intuition": "Continuity alone does not control the Dirichlet kernel strongly enough. This counterexample explains why Fejer averaging is not just a cosmetic improvement.",
         "proof": null,
-        "notation": "\\(S_Nf(x_0)\\) diverges",
+        "notation": "$S_Nf(x_0)$ diverges",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1062,12 +1072,12 @@
         "label": "Fourier Transform",
         "kind": "definition",
         "domain": "transform",
-        "statement": "The transform that decomposes functions on \\(\\mathbb R\\) into continuous frequencies.",
-        "formal_statement": "For \\(f\\in L^1(\\mathbb R)\\), \\(\\hat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx\\). This graph uses the \\(2\\pi\\)-frequency convention.",
+        "statement": "The transform that decomposes functions on $\\mathbb R$ into continuous frequencies.",
+        "formal_statement": "For $f\\in L^1(\\mathbb R)$, $\\hat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx$. This graph uses the $2\\pi$-frequency convention.",
         "definition": null,
         "intuition": "Fourier coefficients measure alignment with discrete waves on the circle; the Fourier transform does the same with a continuum of waves on the line.",
         "proof": null,
-        "notation": "\\(\\hat f(\\xi)=\\mathcal Ff(\\xi)\\)",
+        "notation": "$\\hat f(\\xi)=\\mathcal Ff(\\xi)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1079,7 +1089,7 @@
         "outgoing_relations": [],
         "related": ["fourier_coefficient", "fourier_series"],
         "assumptions": [
-          "Convention: \\(\\hat f(\\xi)=\\int f(x)e^{-2\\pi i x\\xi}\\,dx\\)."
+          "Convention: $\\hat f(\\xi)=\\int f(x)e^{-2\\pi i x\\xi}\\,dx$."
         ],
         "ref": "",
         "book_refs": [],
@@ -1095,11 +1105,11 @@
         "kind": "theorem",
         "domain": "transform",
         "statement": "The Fourier transform is inverted by the opposite-sign integral when the hypotheses justify reconstruction.",
-        "formal_statement": "For \\(f\\in\\mathcal S(\\mathbb R)\\), \\(f(x)=\\int_{\\mathbb R}\\hat f(\\xi)e^{2\\pi i x\\xi}\\,d\\xi\\). More generally, inversion holds in other spaces with the appropriate convergence interpretation.",
+        "formal_statement": "For $f\\in\\mathcal S(\\mathbb R)$, $f(x)=\\int_{\\mathbb R}\\hat f(\\xi)e^{2\\pi i x\\xi}\\,d\\xi$. More generally, inversion holds in other spaces with the appropriate convergence interpretation.",
         "definition": null,
         "intuition": "Analysis and synthesis are symmetric: the inverse transform recombines continuous waves with the sign reversed.",
         "proof": null,
-        "notation": "\\(f=(\\hat f)^\\vee\\)",
+        "notation": "$f=(\\hat f)^\\vee$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1110,7 +1120,7 @@
         },
         "outgoing_relations": [],
         "related": ["fourier_transform", "schwartz_space"],
-        "assumptions": ["Uses the graph's \\(2\\pi\\)-frequency convention."],
+        "assumptions": ["Uses the graph's $2\\pi$-frequency convention."],
         "ref": "Stein–Shakarchi: Ch.5 Corollary 1.10; Ch.5 Theorem 1.9",
         "book_refs": ["c5_cor_1_10", "c5_thm_1_9"],
         "metadata": {
@@ -1125,11 +1135,11 @@
         "kind": "theorem",
         "domain": "transform",
         "statement": "The Fourier transform turns convolution into multiplication, and multiplication into convolution under suitable hypotheses.",
-        "formal_statement": "If \\(f,g\\in L^1(\\mathbb R)\\), then \\(\\widehat{f*g}=\\hat f\\,\\hat g\\). If \\(f,g\\in\\mathcal S(\\mathbb R)\\), then \\(\\widehat{fg}=\\hat f*\\hat g\\), using the same Fourier convention.",
+        "formal_statement": "If $f,g\\in L^1(\\mathbb R)$, then $\\widehat{f*g}=\\hat f\\,\\hat g$. If $f,g\\in\\mathcal S(\\mathbb R)$, then $\\widehat{fg}=\\hat f*\\hat g$, using the same Fourier convention.",
         "definition": null,
         "intuition": "Fourier waves diagonalize translation-invariant averaging. That is why convolution, which mixes nearby values, becomes pointwise multiplication in frequency.",
         "proof": null,
-        "notation": "\\(\\widehat{f*g}=\\hat f\\,\\hat g\\)",
+        "notation": "$\\widehat{f*g}=\\hat f\\,\\hat g$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1142,7 +1152,7 @@
         "outgoing_relations": [],
         "related": ["convolution", "fourier_transform"],
         "assumptions": [
-          "Assumptions depend on the identity: \\(L^1\\) is enough for convolution-to-product; Schwartz functions safely justify both identities."
+          "Assumptions depend on the identity: $L^1$ is enough for convolution-to-product; Schwartz functions safely justify both identities."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Proposition 1.8; Ch.5 Proposition 1.11",
         "book_refs": ["c5_prop_1_8", "c5_prop_1_11"],
@@ -1157,12 +1167,12 @@
         "label": "Plancherel's Theorem",
         "kind": "theorem",
         "domain": "transform",
-        "statement": "The Fourier transform extends to a unitary operator on \\(L^2(\\mathbb R)\\).",
-        "formal_statement": "For \\(f\\in\\mathcal S(\\mathbb R)\\), \\(\\|\\hat f\\|_{L^2(\\mathbb R)}=\\|f\\|_{L^2(\\mathbb R)}\\). Hence \\(\\mathcal F\\) extends uniquely to a unitary map on \\(L^2(\\mathbb R)\\).",
+        "statement": "The Fourier transform extends to a unitary operator on $L^2(\\mathbb R)$.",
+        "formal_statement": "For $f\\in\\mathcal S(\\mathbb R)$, $\\|\\hat f\\|_{L^2(\\mathbb R)}=\\|f\\|_{L^2(\\mathbb R)}$. Hence $\\mathcal F$ extends uniquely to a unitary map on $L^2(\\mathbb R)$.",
         "definition": null,
-        "intuition": "The Fourier transform preserves energy. In \\(L^2\\), it is not a lossy change of representation but a rotation of Hilbert space.",
+        "intuition": "The Fourier transform preserves energy. In $L^2$, it is not a lossy change of representation but a rotation of Hilbert space.",
         "proof": null,
-        "notation": "\\(\\|\\hat f\\|_2=\\|f\\|_2\\)",
+        "notation": "$\\|\\hat f\\|_2=\\|f\\|_2$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1175,7 +1185,7 @@
         "outgoing_relations": [],
         "related": ["l2_space_r", "parseval_identity"],
         "assumptions": [
-          "Fourier convention \\(e^{-2\\pi i x\\xi}\\); \\(L^2\\) is on \\(\\mathbb R\\)."
+          "Fourier convention $e^{-2\\pi i x\\xi}$; $L^2$ is on $\\mathbb R$."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 1.12",
         "book_refs": ["c5_thm_1_12"],
@@ -1191,22 +1201,21 @@
         "kind": "example",
         "domain": "transform",
         "statement": "The normalized Gaussian is fixed by the Fourier transform.",
-        "formal_statement": "With the graph's convention, if \\(f(x)=e^{-\\pi x^2}\\), then \\(\\hat f(\\xi)=e^{-\\pi \\xi^2}\\). More generally, Fourier transforms send Gaussians to Gaussians.",
+        "formal_statement": "With the graph's convention, if $f(x)=e^{-\\pi x^2}$, then $\\hat f(\\xi)=e^{-\\pi \\xi^2}$. More generally, Fourier transforms send Gaussians to Gaussians.",
         "definition": null,
         "intuition": "The Gaussian is the perfectly balanced function: stable under Fourier transform and extremal for uncertainty.",
         "proof": null,
-        "notation": "\\(\\widehat{e^{-\\pi x^2}}=e^{-\\pi \\xi^2}\\)",
+        "notation": "$\\widehat{e^{-\\pi x^2}}=e^{-\\pi \\xi^2}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
             "fourier_transform",
-            "schwartz_space",
             "fourier_transform_convention"
           ]
         },
         "outgoing_relations": [],
         "related": ["schwartz_space", "uncertainty_principle"],
-        "assumptions": ["Uses the \\(e^{-2\\pi i x\\xi}\\) convention."],
+        "assumptions": ["Uses the $e^{-2\\pi i x\\xi}$ convention."],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 1.4",
         "book_refs": ["c5_thm_1_4"],
         "metadata": {
@@ -1221,11 +1230,11 @@
         "kind": "theorem",
         "domain": "transform",
         "statement": "A nonzero function and its Fourier transform cannot both be arbitrarily concentrated.",
-        "formal_statement": "If \\(f\\in L^2(\\mathbb R)\\), \\(xf\\in L^2\\), \\(\\xi\\hat f\\in L^2\\), and \\(\\|f\\|_2=1\\), then \\(\\Delta_x(f)\\Delta_\\xi(\\hat f)\\ge \\frac1{4\\pi}\\), where \\(\\Delta_x,\\Delta_\\xi\\) are centered standard deviations in position and frequency.",
+        "formal_statement": "If $f\\in L^2(\\mathbb R)$, $xf\\in L^2$, $\\xi\\hat f\\in L^2$, and $\\|f\\|_2=1$, then $\\Delta_x(f)\\Delta_\\xi(\\hat f)\\ge \\frac1{4\\pi}$, where $\\Delta_x,\\Delta_\\xi$ are centered standard deviations in position and frequency.",
         "definition": null,
-        "intuition": "Narrow localization in \\(x\\) requires many frequencies; narrow localization in frequency forces spreading in \\(x\\). Gaussians are the optimally balanced case.",
+        "intuition": "Narrow localization in $x$ requires many frequencies; narrow localization in frequency forces spreading in $x$. Gaussians are the optimally balanced case.",
         "proof": null,
-        "notation": "\\(\\Delta_x\\Delta_\\xi\\ge\\frac1{4\\pi}\\)",
+        "notation": "$\\Delta_x\\Delta_\\xi\\ge\\frac1{4\\pi}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1239,7 +1248,7 @@
         "outgoing_relations": [],
         "related": ["gaussian_transform"],
         "assumptions": [
-          "Uses centered variances; equality occurs for Gaussian wave packets under the \\(2\\pi\\)-frequency convention."
+          "Uses centered variances; equality occurs for Gaussian wave packets under the $2\\pi$-frequency convention."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 4.1",
         "book_refs": ["c5_thm_4_1"],
@@ -1255,11 +1264,11 @@
         "kind": "theorem",
         "domain": "transform",
         "statement": "Periodizing a function in space corresponds to sampling its Fourier transform.",
-        "formal_statement": "For \\(f\\in\\mathcal S(\\mathbb R)\\), using \\(\\hat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx\\), one has \\(\\sum_{n\\in\\mathbb Z}f(n)=\\sum_{k\\in\\mathbb Z}\\hat f(k)\\).",
+        "formal_statement": "For $f\\in\\mathcal S(\\mathbb R)$, using $\\hat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx$, one has $\\sum_{n\\in\\mathbb Z}f(n)=\\sum_{k\\in\\mathbb Z}\\hat f(k)$.",
         "definition": null,
-        "intuition": "The formula is the hinge between continuous and discrete Fourier analysis: adding copies of \\(f\\) at integer shifts turns into reading \\(\\hat f\\) at integer frequencies.",
+        "intuition": "The formula is the hinge between continuous and discrete Fourier analysis: adding copies of $f$ at integer shifts turns into reading $\\hat f$ at integer frequencies.",
         "proof": null,
-        "notation": "\\(\\sum_{n\\in\\mathbb Z}f(n)=\\sum_{k\\in\\mathbb Z}\\hat f(k)\\)",
+        "notation": "$\\sum_{n\\in\\mathbb Z}f(n)=\\sum_{k\\in\\mathbb Z}\\hat f(k)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1292,23 +1301,24 @@
         "label": "Fourier Transform on R^d",
         "kind": "definition",
         "domain": "transform",
-        "statement": "The multidimensional Fourier transform on \\(\\mathbb R^d\\).",
-        "formal_statement": "For \\(f\\in L^1(\\mathbb R^d)\\), \\(\\hat f(\\xi)=\\int_{\\mathbb R^d}f(x)e^{-2\\pi i x\\cdot \\xi}\\,dx\\), where \\(x,\\xi\\in\\mathbb R^d\\).",
+        "statement": "The Fourier transform on $\\mathbb R^d$, decomposing functions into multidimensional plane waves.",
+        "formal_statement": "For $f\\in L^1(\\mathbb R^d)$, $\\hat f(\\xi)=\\int_{\\mathbb R^d}f(x)e^{-2\\pi i x\\cdot\\xi}\\,dx$, where $x,\\xi\\in\\mathbb R^d$. The inverse uses $e^{2\\pi i x\\cdot\\xi}$ when inversion is valid.",
         "definition": null,
-        "intuition": "The one-dimensional transform becomes a dot-product wave \\(e^{-2\\pi i x\\cdot\\xi}\\). Direction and magnitude of \\(\\xi\\) encode direction and frequency.",
+        "intuition": "In several variables, the pure frequencies are plane waves. The vector $\\xi$ records both direction and rate of oscillation.",
         "proof": null,
-        "notation": "\\(\\hat f(\\xi),\\ x,\\xi\\in\\mathbb R^d\\)",
+        "notation": "$\\hat f(\\xi)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
             "fourier_transform",
-            "fourier_transform_convention"
+            "fourier_transform_convention",
+            "l1_space_r"
           ]
         },
         "outgoing_relations": [],
         "related": ["fourier_transform"],
         "assumptions": [
-          "Uses the same \\(2\\pi\\)-frequency convention as the one-dimensional transform."
+          "Uses the same $2\\pi$-frequency convention as the one-dimensional transform."
         ],
         "ref": "Stein–Shakarchi: Ch.6 Corollary 2.2; Ch.6 Corollary 2.3; Ch.6 Proposition 2.1",
         "book_refs": ["c6_cor_2_2", "c6_cor_2_3", "c6_prop_2_1"],
@@ -1324,11 +1334,11 @@
         "kind": "property",
         "domain": "transform",
         "statement": "Differentiation becomes multiplication by frequency under the Fourier transform.",
-        "formal_statement": "For \\(f\\in\\mathcal S(\\mathbb R)\\), \\(\\widehat{f'}(\\xi)=2\\pi i\\xi\\,\\hat f(\\xi)\\) and \\(\\widehat{xf}(\\xi)=-\\frac1{2\\pi i}\\frac{d}{d\\xi}\\hat f(\\xi)\\).",
+        "formal_statement": "For $f\\in\\mathcal S(\\mathbb R)$, $\\widehat{f'}(\\xi)=2\\pi i\\xi\\,\\hat f(\\xi)$ and $\\widehat{xf}(\\xi)=-\\frac1{2\\pi i}\\frac{d}{d\\xi}\\hat f(\\xi)$.",
         "definition": null,
         "intuition": "The Fourier transform turns differential operators into algebraic multipliers, which is why linear constant-coefficient PDEs become solvable in frequency space.",
         "proof": null,
-        "notation": "\\(\\widehat{f'}=2\\pi i\\xi\\,\\hat f\\)",
+        "notation": "$\\widehat{f'}=2\\pi i\\xi\\,\\hat f$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1355,19 +1365,21 @@
         "label": "Tempered Distribution",
         "kind": "structure",
         "domain": "distributions",
-        "statement": "A continuous linear functional on Schwartz space — a generalized function.",
-        "formal_statement": "$T\\in\\mathcal{S}'(\\mathbb{R})$, the continuous dual of $\\mathcal{S}(\\mathbb{R})$; functions of moderate growth embed via $T_f(\\varphi)=\\int f\\varphi$.",
+        "statement": "A continuous linear functional on Schwartz space.",
+        "formal_statement": "A tempered distribution is an element $T\\in\\mathcal S'(\\mathbb R)$, the continuous dual of $\\mathcal S(\\mathbb R)$. A locally integrable function of at most polynomial growth defines one by $T_f(\\varphi)=\\int_{\\mathbb R}f(x)\\varphi(x)\\,dx$.",
         "definition": null,
-        "intuition": "Lets you Fourier-transform objects (like $1$, $\\delta$, polynomials) that aren't integrable.",
+        "intuition": "Tempered distributions let Fourier analysis handle objects such as constants, deltas, and polynomials that are not ordinary integrable functions.",
         "proof": null,
-        "notation": "$\\mathcal{S}'(\\mathbb{R})$",
+        "notation": "$\\mathcal S'(\\mathbb R)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["schwartz_space"]
         },
         "outgoing_relations": [],
         "related": ["schwartz_space"],
-        "assumptions": [],
+        "assumptions": [
+          "Continuity is with respect to the Schwartz-space topology."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -1381,19 +1393,21 @@
         "label": "Dirac Delta",
         "kind": "object",
         "domain": "distributions",
-        "statement": "The idealized unit spike: evaluation at a point, the identity for convolution.",
-        "formal_statement": "$\\delta(\\varphi)=\\varphi(0)$; $f*\\delta=f$ and $\\hat\\delta\\equiv 1$.",
+        "statement": "The unit point mass at the origin, acting by evaluation.",
+        "formal_statement": "The Dirac delta is the distribution $\\delta(\\varphi)=\\varphi(0)$. In distributional notation, $\\delta*T=T$ when convolution is defined, and $\\hat\\delta=1$ under the graph's Fourier convention.",
         "definition": null,
-        "intuition": "Not a function but a distribution — the limit of any approximate identity.",
+        "intuition": "The delta is not an ordinary function. It is the idealized point source and the limiting shape of approximate identities.",
         "proof": null,
         "notation": "$\\delta$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["tempered_distribution"]
+          "logical_dependency": ["test_function"]
         },
         "outgoing_relations": [],
         "related": ["tempered_distribution", "good_kernel"],
-        "assumptions": [],
+        "assumptions": [
+          "Convolution and Fourier transform identities are interpreted distributionally."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -1408,11 +1422,11 @@
         "kind": "definition",
         "domain": "distributions",
         "statement": "A distributional derivative is defined by transferring the derivative to the test function.",
-        "formal_statement": "For a distribution \\(T\\), its derivative \\(T'\\) is defined by \\(T'(\\varphi)=-T(\\varphi')\\) for every test function \\(\\varphi\\). More generally, \\(T^{(k)}(\\varphi)=(-1)^kT(\\varphi^{(k)})\\).",
+        "formal_statement": "For a distribution $T$, its derivative $T'$ is defined by $T'(\\varphi)=-T(\\varphi')$ for every test function $\\varphi$. More generally, $T^{(k)}(\\varphi)=(-1)^kT(\\varphi^{(k)})$.",
         "definition": null,
         "intuition": "Integration by parts moves derivatives off rough objects and onto smooth test functions. This lets jumps and spikes have derivatives in a generalized sense.",
         "proof": null,
-        "notation": "\\(T'(\\varphi)=-T(\\varphi')\\)",
+        "notation": "$T'(\\varphi)=-T(\\varphi')$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["tempered_distribution", "test_function"]
@@ -1434,11 +1448,11 @@
         "kind": "theorem",
         "domain": "distributions",
         "statement": "The Fourier transform extends from functions to tempered distributions by duality.",
-        "formal_statement": "For \\(T\\in\\mathcal S'(\\mathbb R)\\), define \\(\\hat T\\in\\mathcal S'(\\mathbb R)\\) by \\(\\hat T(\\varphi)=T(\\hat\\varphi)\\) for every \\(\\varphi\\in\\mathcal S(\\mathbb R)\\), using the graph's Fourier convention.",
+        "formal_statement": "For $T\\in\\mathcal S'(\\mathbb R)$, define $\\hat T\\in\\mathcal S'(\\mathbb R)$ by $\\hat T(\\varphi)=T(\\hat\\varphi)$ for every $\\varphi\\in\\mathcal S(\\mathbb R)$, using the graph's Fourier convention.",
         "definition": null,
-        "intuition": "Instead of transforming \\(T\\) directly, test it against transformed test functions. This makes objects like constants, deltas, and polynomials Fourier-transformable.",
+        "intuition": "Instead of transforming $T$ directly, test it against transformed test functions. This makes objects like constants, deltas, and polynomials Fourier-transformable.",
         "proof": null,
-        "notation": "\\(\\hat T(\\varphi)=T(\\hat\\varphi)\\)",
+        "notation": "$\\hat T(\\varphi)=T(\\hat\\varphi)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1451,7 +1465,7 @@
         "outgoing_relations": [],
         "related": ["tempered_distribution", "fourier_transform"],
         "assumptions": [
-          "Uses bilinear distribution pairing and the \\(e^{-2\\pi i x\\xi}\\) convention."
+          "Uses bilinear distribution pairing and the $e^{-2\\pi i x\\xi}$ convention."
         ],
         "ref": "",
         "book_refs": [],
@@ -1466,12 +1480,12 @@
         "label": "Roots of Unity",
         "kind": "object",
         "domain": "discrete",
-        "statement": "The \\(N\\)-th roots of unity are the finite phases used as discrete harmonics.",
-        "formal_statement": "\\(\\omega_N=e^{2\\pi i/N}\\), and \\(\\omega_N^k\\), \\(k=0,\\dots,N-1\\), are exactly the solutions of \\(z^N=1\\). Characters of \\(\\mathbb Z/N\\mathbb Z\\) have the form \\(k\\mapsto\\omega_N^{jk}\\).",
+        "statement": "The $N$-th roots of unity are the finite phases used as discrete harmonics.",
+        "formal_statement": "$\\omega_N=e^{2\\pi i/N}$, and $\\omega_N^k$, $k=0,\\dots,N-1$, are exactly the solutions of $z^N=1$. Characters of $\\mathbb Z/N\\mathbb Z$ have the form $k\\mapsto\\omega_N^{jk}$.",
         "definition": null,
-        "intuition": "These are the equally spaced points on the unit circle. They are the finite analogue of the continuous waves \\(e^{inx}\\).",
+        "intuition": "These are the equally spaced points on the unit circle. They are the finite analogue of the continuous waves $e^{inx}$.",
         "proof": null,
-        "notation": "\\(\\omega_N=e^{2\\pi i/N}\\)",
+        "notation": "$\\omega_N=e^{2\\pi i/N}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["complex_exponential", "cyclic_group"]
@@ -1492,12 +1506,12 @@
         "label": "Cyclic Group",
         "kind": "structure",
         "domain": "discrete",
-        "statement": "A group generated by one element; the model group for length-\\(N\\) finite Fourier analysis.",
-        "formal_statement": "\\(\\mathbb Z/N\\mathbb Z\\) is the additive group of residue classes modulo \\(N\\). Every element is generated by repeatedly adding \\(1\\).",
+        "statement": "A group generated by one element; the model group for length-$N$ finite Fourier analysis.",
+        "formal_statement": "$\\mathbb Z/N\\mathbb Z$ is the additive group of residue classes modulo $N$. Every element is generated by repeatedly adding $1$.",
         "definition": null,
-        "intuition": "The cyclic group is a finite clock: after \\(N\\) steps you return to the start. Its characters are the finite waves used by the DFT.",
+        "intuition": "The cyclic group is a finite clock: after $N$ steps you return to the start. Its characters are the finite waves used by the DFT.",
         "proof": null,
-        "notation": "\\(\\mathbb Z/N\\mathbb Z\\)",
+        "notation": "$\\mathbb Z/N\\mathbb Z$",
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
@@ -1517,11 +1531,11 @@
         "kind": "structure",
         "domain": "discrete",
         "statement": "A finite group whose operation is commutative.",
-        "formal_statement": "A finite abelian group \\(G\\) is a finite set with an associative operation, identity, inverses, and \\(xy=yx\\) for all \\(x,y\\in G\\).",
+        "formal_statement": "A finite abelian group $G$ is a finite set with an associative operation, identity, inverses, and $xy=yx$ for all $x,y\\in G$.",
         "definition": null,
         "intuition": "Finite abelian groups are the natural finite domains where Fourier analysis works cleanly: the frequencies are group characters.",
         "proof": null,
-        "notation": "\\(G\\)",
+        "notation": "$G$",
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
@@ -1541,11 +1555,11 @@
         "kind": "definition",
         "domain": "discrete",
         "statement": "A multiplicative homomorphism from a group into the unit circle.",
-        "formal_statement": "For a finite abelian group \\(G\\), a character is a homomorphism \\(\\chi:G\\to \\mathbb C^\\times\\). Since \\(G\\) is finite, \\(\\chi(x)\\) is a root of unity and \\(|\\chi(x)|=1\\).",
+        "formal_statement": "For a finite abelian group $G$, a character is a homomorphism $\\chi:G\\to \\mathbb C^\\times$. Since $G$ is finite, $\\chi(x)$ is a root of unity and $|\\chi(x)|=1$.",
         "definition": null,
         "intuition": "A character is a pure frequency on a group. It turns the group operation into multiplication of phases.",
         "proof": null,
-        "notation": "\\(\\chi:G\\to\\mathbb C^\\times\\)",
+        "notation": "$\\chi:G\\to\\mathbb C^\\times$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["finite_abelian_group", "roots_of_unity"]
@@ -1566,12 +1580,12 @@
         "label": "Fourier Analysis on Z(N)",
         "kind": "structure",
         "domain": "discrete",
-        "statement": "Fourier analysis on the cyclic group \\(\\mathbb Z/N\\mathbb Z\\), where all sums are finite.",
-        "formal_statement": "For functions \\(f:\\mathbb Z/N\\mathbb Z\\to\\mathbb C\\), the characters \\(\\chi_j(k)=\\omega_N^{jk}\\), \\(j=0,\\dots,N-1\\), form an orthogonal basis of \\(L^2(\\mathbb Z/N\\mathbb Z)\\) with normalized inner product \\(\\langle f,g\\rangle=\\frac1N\\sum_{k=0}^{N-1}f(k)\\overline{g(k)}\\).",
+        "statement": "Fourier analysis on the cyclic group $\\mathbb Z/N\\mathbb Z$, where all sums are finite.",
+        "formal_statement": "For functions $f:\\mathbb Z/N\\mathbb Z\\to\\mathbb C$, the characters $\\chi_j(k)=\\omega_N^{jk}$, $j=0,\\dots,N-1$, form an orthogonal basis of $L^2(\\mathbb Z/N\\mathbb Z)$ with normalized inner product $\\langle f,g\\rangle=\\frac1N\\sum_{k=0}^{N-1}f(k)\\overline{g(k)}$.",
         "definition": null,
         "intuition": "This is Fourier series with no convergence trouble: finite data decomposes exactly into finite cyclic waves.",
         "proof": null,
-        "notation": "\\(L^2(\\mathbb Z/N\\mathbb Z),\\ \\chi_j(k)=\\omega_N^{jk}\\)",
+        "notation": "$L^2(\\mathbb Z/N\\mathbb Z),\\ \\chi_j(k)=\\omega_N^{jk}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1582,9 +1596,7 @@
         },
         "outgoing_relations": [],
         "related": ["roots_of_unity", "orthonormal_system", "dft"],
-        "assumptions": [
-          "The normalized inner product uses the factor \\(1/N\\)."
-        ],
+        "assumptions": ["The normalized inner product uses the factor $1/N$."],
         "ref": "Stein–Shakarchi: Ch.7 Lemma 1.1",
         "book_refs": ["c7_lem_1_1"],
         "metadata": {
@@ -1598,12 +1610,12 @@
         "label": "Discrete Fourier Transform",
         "kind": "definition",
         "domain": "discrete",
-        "statement": "The Fourier transform of a length-\\(N\\) vector.",
-        "formal_statement": "For \\(a=(a_0,\\dots,a_{N-1})\\), \\(\\hat a(k)=\\sum_{j=0}^{N-1}a_j\\omega_N^{-jk}\\), \\(k=0,\\dots,N-1\\), where \\(\\omega_N=e^{2\\pi i/N}\\).",
+        "statement": "The Fourier transform of a length-$N$ vector.",
+        "formal_statement": "For $a=(a_0,\\dots,a_{N-1})$, $\\hat a(k)=\\sum_{j=0}^{N-1}a_j\\omega_N^{-jk}$, $k=0,\\dots,N-1$, where $\\omega_N=e^{2\\pi i/N}$.",
         "definition": null,
         "intuition": "The DFT decomposes finite data into finite cyclic frequencies. It is exact linear algebra, not an approximation by itself.",
         "proof": null,
-        "notation": "\\(\\hat a(k),\\ \\omega_N=e^{2\\pi i/N}\\)",
+        "notation": "$\\hat a(k),\\ \\omega_N=e^{2\\pi i/N}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["finite_fourier", "roots_of_unity"]
@@ -1611,7 +1623,7 @@
         "outgoing_relations": [],
         "related": ["finite_fourier", "roots_of_unity"],
         "assumptions": [
-          "Normalization conventions vary; this graph puts the \\(1/N\\) factor in the inverse transform."
+          "Normalization conventions vary; this graph puts the $1/N$ factor in the inverse transform."
         ],
         "ref": "",
         "book_refs": [],
@@ -1627,11 +1639,11 @@
         "kind": "definition",
         "domain": "discrete",
         "statement": "The Fourier transform of an infinite sequence, producing a periodic frequency function.",
-        "formal_statement": "For \\(a\\in\\ell^1(\\mathbb Z)\\), \\(\\hat a(\\xi)=\\sum_{n\\in\\mathbb Z}a_n e^{-2\\pi i n\\xi}\\), and \\(\\hat a\\) is \\(1\\)-periodic in \\(\\xi\\).",
+        "formal_statement": "For $a\\in\\ell^1(\\mathbb Z)$, $\\hat a(\\xi)=\\sum_{n\\in\\mathbb Z}a_n e^{-2\\pi i n\\xi}$, and $\\hat a$ is $1$-periodic in $\\xi$.",
         "definition": null,
         "intuition": "Discrete time creates periodic frequency. This is the dual picture to Fourier series.",
         "proof": null,
-        "notation": "\\(\\hat a(\\xi)\\)",
+        "notation": "$\\hat a(\\xi)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1657,12 +1669,12 @@
         "label": "Fast Fourier Transform",
         "kind": "construction",
         "domain": "discrete",
-        "statement": "An \\(O(N\\log N)\\) algorithm for computing the DFT.",
-        "formal_statement": "For composite \\(N\\), Cooley-Tukey factorizes a size-\\(N\\) DFT into smaller DFTs. For \\(N=2^m\\), this gives \\(O(N\\log N)\\) operations instead of the direct \\(O(N^2)\\) computation.",
+        "statement": "An $O(N\\log N)$ algorithm for computing the DFT.",
+        "formal_statement": "For composite $N$, Cooley-Tukey factorizes a size-$N$ DFT into smaller DFTs. For $N=2^m$, this gives $O(N\\log N)$ operations instead of the direct $O(N^2)$ computation.",
         "definition": null,
         "intuition": "The FFT exploits symmetry and repeated roots of unity, avoiding the waste of recomputing the same oscillatory patterns.",
         "proof": null,
-        "notation": "\\(O(N\\log N)\\)",
+        "notation": "$O(N\\log N)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["dft", "roots_of_unity"]
@@ -1670,7 +1682,7 @@
         "outgoing_relations": [],
         "related": ["dft"],
         "assumptions": [
-          "The cleanest radix-2 statement assumes \\(N\\) is a power of two; other factorizations handle other composite sizes."
+          "The cleanest radix-2 statement assumes $N$ is a power of two; other factorizations handle other composite sizes."
         ],
         "ref": "Stein–Shakarchi: Ch.7 Lemma 1.4; Ch.7 Theorem 1.3",
         "book_refs": ["c7_lem_1_4", "c7_thm_1_3"],
@@ -1685,12 +1697,12 @@
         "label": "Circular Convolution",
         "kind": "construction",
         "domain": "discrete",
-        "statement": "Convolution on \\(\\mathbb Z/N\\mathbb Z\\), where indices wrap around modulo \\(N\\).",
-        "formal_statement": "For \\(a,b:\\mathbb Z/N\\mathbb Z\\to\\mathbb C\\), define \\((a\\circledast b)_k=\\sum_{j=0}^{N-1}a_j b_{k-j\\,\\mathrm{mod}\\,N}\\). With the unnormalized DFT \\(\\hat a(k)=\\sum_j a_j\\omega_N^{-jk}\\), one has \\(\\widehat{a\\circledast b}(k)=\\hat a(k)\\hat b(k)\\).",
+        "statement": "Convolution on $\\mathbb Z/N\\mathbb Z$, where indices wrap around modulo $N$.",
+        "formal_statement": "For $a,b:\\mathbb Z/N\\mathbb Z\\to\\mathbb C$, define $(a\\circledast b)_k=\\sum_{j=0}^{N-1}a_j b_{k-j\\,\\mathrm{mod}\\,N}$. With the unnormalized DFT $\\hat a(k)=\\sum_j a_j\\omega_N^{-jk}$, one has $\\widehat{a\\circledast b}(k)=\\hat a(k)\\hat b(k)$.",
         "definition": null,
         "intuition": "Circular convolution is sliding-and-averaging on a finite clock. The DFT turns this wrapped mixing operation into pointwise multiplication.",
         "proof": null,
-        "notation": "\\(a\\circledast b\\)",
+        "notation": "$a\\circledast b$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["finite_fourier", "dft", "convolution"]
@@ -1698,7 +1710,7 @@
         "outgoing_relations": [],
         "related": ["dft", "convolution", "fft"],
         "assumptions": [
-          "The exact constants depend on the DFT normalization. Here the DFT is unnormalized and the inverse carries the factor \\(1/N\\)."
+          "The exact constants depend on the DFT normalization. Here the DFT is unnormalized and the inverse carries the factor $1/N$."
         ],
         "ref": "",
         "book_refs": [],
@@ -1714,11 +1726,11 @@
         "kind": "theorem",
         "domain": "discrete",
         "statement": "A band-limited function can be reconstructed from sufficiently dense samples.",
-        "formal_statement": "If \\(f\\in L^2(\\mathbb R)\\) and \\(\\operatorname{supp}\\hat f\\subset[-W,W]\\), then \\(f\\) is recovered from samples spaced \\(1/(2W)\\) by \\(f(x)=\\sum_{n\\in\\mathbb Z}f(\\frac{n}{2W})\\operatorname{sinc}(2Wx-n)\\), with convergence in \\(L^2\\) and, under stronger regularity, pointwise or uniform convergence. Here \\(\\operatorname{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}\\).",
+        "formal_statement": "If $f\\in L^2(\\mathbb R)$ and $\\operatorname{supp}\\hat f\\subset[-W,W]$, then $f$ is recovered from samples spaced $1/(2W)$ by $f(x)=\\sum_{n\\in\\mathbb Z}f(\\frac{n}{2W})\\operatorname{sinc}(2Wx-n)$, with convergence in $L^2$ and, under stronger regularity, pointwise or uniform convergence. Here $\\operatorname{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}$.",
         "definition": null,
         "intuition": "Band limitation means there are no hidden high-frequency wiggles between samples. Sampling above the Nyquist rate captures all degrees of freedom.",
         "proof": null,
-        "notation": "\\(f_s\\ge2W,\\ \\operatorname{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}\\)",
+        "notation": "$f_s\\ge2W,\\ \\operatorname{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1749,11 +1761,11 @@
         "kind": "property",
         "domain": "discrete",
         "statement": "Undersampling makes different frequencies become indistinguishable.",
-        "formal_statement": "Sampling at rate \\(f_s\\) identifies frequencies modulo \\(f_s\\). Components outside the Nyquist band \\([-f_s/2,f_s/2]\\) fold back into that band.",
+        "formal_statement": "Sampling at rate $f_s$ identifies frequencies modulo $f_s$. Components outside the Nyquist band $[-f_s/2,f_s/2]$ fold back into that band.",
         "definition": null,
         "intuition": "Aliasing is not noise; it is ambiguity caused by too few samples. High frequencies impersonate lower ones because the sampled values match.",
         "proof": null,
-        "notation": "\\(\\xi\\sim \\xi+kf_s\\)",
+        "notation": "$\\xi\\sim \\xi+kf_s$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["sampling_theorem", "band_limited"]
@@ -1777,11 +1789,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "Diffusion is solved by damping each Fourier mode.",
-        "formal_statement": "On the circle, \\(u_t=u_{xx}\\), \\(u(x,0)=f(x)\\), has formal solution \\(u(x,t)=\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{-n^2t}e^{inx}\\). On \\(\\mathbb R\\), \\(u(x,t)=(H_t*f)(x)\\).",
+        "formal_statement": "On the circle, $u_t=u_{xx}$, $u(x,0)=f(x)$, has formal solution $u(x,t)=\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{-n^2t}e^{inx}$. On $\\mathbb R$, $u(x,t)=(H_t*f)(x)$.",
         "definition": null,
         "intuition": "High frequencies decay faster than low frequencies, so heat flow smooths rough data as time increases.",
         "proof": null,
-        "notation": "\\(u_t=u_{xx}\\)",
+        "notation": "$u_t=u_{xx}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1794,7 +1806,7 @@
         "outgoing_relations": [],
         "related": ["fourier_series", "good_kernel"],
         "assumptions": [
-          "Constants depend on whether the circle basis is \\(e^{inx}\\) or the real-line transform convention is used."
+          "Constants depend on whether the circle basis is $e^{inx}$ or the real-line transform convention is used."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Corollary 2.2; Ch.5 Theorem 2.1; Ch.5 Theorem 2.3",
         "book_refs": ["c5_cor_2_2", "c5_thm_2_1", "c5_thm_2_3"],
@@ -1810,11 +1822,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "Vibrating strings decompose into standing harmonic waves.",
-        "formal_statement": "For fixed-end data on \\([0,\\pi]\\), formal solutions have the form \\(u(x,t)=\\sum_{n\\ge1}(a_n\\cos nt+b_n\\sin nt)\\sin(nx)\\). Periodic formulations use complex exponentials instead.",
+        "formal_statement": "For fixed-end data on $[0,\\pi]$, formal solutions have the form $u(x,t)=\\sum_{n\\ge1}(a_n\\cos nt+b_n\\sin nt)\\sin(nx)$. Periodic formulations use complex exponentials instead.",
         "definition": null,
         "intuition": "The wave equation preserves oscillation rather than damping it. Each spatial harmonic evolves as a harmonic oscillator in time.",
         "proof": null,
-        "notation": "\\(u_{tt}=u_{xx}\\)",
+        "notation": "$u_{tt}=u_{xx}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1842,11 +1854,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "A simple closed plane curve of fixed length encloses maximal area exactly when it is a circle.",
-        "formal_statement": "If a sufficiently smooth simple closed plane curve has length \\(L\\) and encloses area \\(A\\), then \\(A\\le L^2/(4\\pi)\\), with equality exactly for circles.",
+        "formal_statement": "If a sufficiently smooth simple closed plane curve has length $L$ and encloses area $A$, then $A\\le L^2/(4\\pi)$, with equality exactly for circles.",
         "definition": null,
         "intuition": "Writing the boundary curve as a Fourier series turns area and length into coefficient sums. Parseval then becomes a geometric inequality.",
         "proof": null,
-        "notation": "\\(A\\le L^2/(4\\pi)\\)",
+        "notation": "$A\\le L^2/(4\\pi)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["parseval_identity", "fourier_series"]
@@ -1854,7 +1866,7 @@
         "outgoing_relations": [],
         "related": ["parseval_identity", "fourier_series"],
         "assumptions": [
-          "Assume a regular simple closed curve, for example piecewise \\(C^1\\), oriented positively."
+          "Assume a regular simple closed curve, for example piecewise $C^1$, oriented positively."
         ],
         "ref": "Stein–Shakarchi: Ch.4 Theorem 1.1",
         "book_refs": ["c4_thm_1_1"],
@@ -1870,11 +1882,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "Equidistribution can be tested by checking the decay of all nonzero exponential averages.",
-        "formal_statement": "A sequence \\((x_n)\\) in \\(\\mathbb R/\\mathbb Z\\) is equidistributed iff \\(\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0\\) for every nonzero \\(k\\in\\mathbb Z\\). In particular, \\(x_n=n\\alpha\\) is equidistributed when \\(\\alpha\\notin\\mathbb Q\\).",
+        "formal_statement": "A sequence $(x_n)$ in $\\mathbb R/\\mathbb Z$ is equidistributed iff $\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0$ for every nonzero $k\\in\\mathbb Z$. In particular, $x_n=n\\alpha$ is equidistributed when $\\alpha\\notin\\mathbb Q$.",
         "definition": null,
         "intuition": "Intervals can be approximated by trigonometric polynomials, so uniform distribution of points is equivalent to cancellation against every nonzero frequency.",
         "proof": null,
-        "notation": "\\(\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0\\)",
+        "notation": "$\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1886,7 +1898,7 @@
         "outgoing_relations": [],
         "related": ["weierstrass_approximation", "trigonometric_polynomial"],
         "assumptions": [
-          "The criterion is stated on the circle \\(\\mathbb R/\\mathbb Z\\)."
+          "The criterion is stated on the circle $\\mathbb R/\\mathbb Z$."
         ],
         "ref": "Stein–Shakarchi: Ch.4 Corollary 2.3; Ch.4 Lemma 2.2; Ch.4 Theorem 2.1",
         "book_refs": ["c4_cor_2_3", "c4_lem_2_2", "c4_thm_2_1"],
@@ -1902,11 +1914,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "Fourier methods prove that normalized sums of independent variables converge in distribution to a Gaussian.",
-        "formal_statement": "For i.i.d. random variables with mean \\(\\mu\\) and variance \\(\\sigma^2>0\\), the characteristic functions of \\((X_1+\\cdots+X_n-n\\mu)/(\\sigma\\sqrt n)\\) converge pointwise to \\(e^{-t^2/2}\\), the characteristic function of the standard normal law.",
+        "formal_statement": "For i.i.d. random variables with mean $\\mu$ and variance $\\sigma^2>0$, the characteristic functions of $(X_1+\\cdots+X_n-n\\mu)/(\\sigma\\sqrt n)$ converge pointwise to $e^{-t^2/2}$, the characteristic function of the standard normal law.",
         "definition": null,
         "intuition": "Independence turns sums into products of characteristic functions. After normalization, those products converge to the Gaussian multiplier.",
         "proof": null,
-        "notation": "\\(\\varphi_n(t)\\to e^{-t^2/2}\\)",
+        "notation": "$\\varphi_n(t)\\to e^{-t^2/2}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1918,7 +1930,7 @@
         "outgoing_relations": [],
         "related": ["convolution_theorem", "gaussian_transform"],
         "assumptions": [
-          "Uses the probability convention \\(\\varphi_X(t)=\\mathbb E e^{itX}\\), not the graph's \\(2\\pi\\)-Fourier transform convention."
+          "Uses the probability convention $\\varphi_X(t)=\\mathbb E e^{itX}$, not the graph's $2\\pi$-Fourier transform convention."
         ],
         "ref": "",
         "book_refs": [],
@@ -1933,19 +1945,21 @@
         "label": "Filtering & Signal Processing",
         "kind": "application",
         "domain": "applications",
-        "statement": "Designing systems that pass or reject frequency bands via multiplication of spectra.",
-        "formal_statement": "A linear time-invariant filter acts by $\\widehat{(h*x)}=\\hat h\\cdot\\hat x$; the transfer function $\\hat h$ shapes the spectrum.",
+        "statement": "Frequency-selective processing by convolution in time or space.",
+        "formal_statement": "For a linear time-invariant filter with impulse response $h$, $y=h*x$, so $\\hat y=\\hat h\\,\\hat x$ whenever the transforms are defined. The multiplier $\\hat h$ is the transfer function.",
         "definition": null,
-        "intuition": "All of audio/image processing: convolve in time = multiply in frequency, computed by the FFT.",
+        "intuition": "Filtering is easier in frequency: convolutional systems become pointwise multiplication, so passing or rejecting frequency bands becomes a multiplier design problem.",
         "proof": null,
         "notation": "$\\hat y=\\hat h\\,\\hat x$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["convolution_theorem", "fft", "dct"]
+          "logical_dependency": ["convolution_theorem", "fourier_transform"]
         },
         "outgoing_relations": [],
         "related": ["convolution_theorem", "fft", "dft"],
-        "assumptions": [],
+        "assumptions": [
+          "Precise hypotheses depend on whether signals are modeled in $L^1$, $L^2$, distributions, or discrete spaces."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -1960,11 +1974,11 @@
         "kind": "theorem",
         "domain": "dirichlet",
         "statement": "Every reduced arithmetic progression contains infinitely many primes.",
-        "formal_statement": "If \\(q\\ge2\\) and \\(\\gcd(a,q)=1\\), then infinitely many primes \\(p\\) satisfy \\(p\\equiv a\\pmod q\\). The proof expands residue-class indicators using Dirichlet characters and uses \\(L(1,\\chi)\\ne0\\) for nonprincipal characters.",
+        "formal_statement": "If $q\\ge2$ and $\\gcd(a,q)=1$, then infinitely many primes $p$ satisfy $p\\equiv a\\pmod q$. The proof expands residue-class indicators using Dirichlet characters and uses $L(1,\\chi)\\ne0$ for nonprincipal characters.",
         "definition": null,
-        "intuition": "Finite Fourier analysis separates residue classes; analytic information about the resulting \\(L\\)-functions prevents any reduced class from running out of primes.",
+        "intuition": "Finite Fourier analysis separates residue classes; analytic information about the resulting $L$-functions prevents any reduced class from running out of primes.",
         "proof": null,
-        "notation": "\\(p\\equiv a\\pmod q\\)",
+        "notation": "$p\\equiv a\\pmod q$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1983,7 +1997,7 @@
           "primes_diverge"
         ],
         "assumptions": [
-          "The condition \\(\\gcd(a,q)=1\\) is necessary: otherwise every number in the progression shares a fixed divisor with \\(q\\)."
+          "The condition $\\gcd(a,q)=1$ is necessary: otherwise every number in the progression shares a fixed divisor with $q$."
         ],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 2.1",
         "book_refs": ["c8_thm_2_1"],
@@ -1998,14 +2012,16 @@
         "label": "Lebesgue Integral",
         "kind": "structure",
         "domain": "foundations",
-        "statement": "The integral that makes the Fourier function spaces complete.",
-        "formal_statement": "$\\int f\\,d\\mu$ defined for measurable $f$; limits behave well (unlike the Riemann integral), making $L^p$ complete.",
+        "statement": "The integration theory underlying $L^p$ spaces and modern Fourier analysis.",
+        "formal_statement": "The Lebesgue integral $\\int f\\,d\\mu$ is defined for measurable functions on a measure space. It has strong limit theorems, such as dominated convergence and monotone convergence, that make $L^p$ spaces complete.",
         "definition": null,
-        "intuition": "The right notion of integration — without it $L^1$ and $L^2$ would have holes.",
+        "intuition": "Lebesgue integration measures functions by size on sets rather than by partitions of the domain. That is what makes limits of functions behave properly.",
         "proof": null,
         "notation": "$\\int f\\,d\\mu$",
         "proof_dependencies": [],
-        "dependencies": {},
+        "dependencies": {
+          "logical_dependency": []
+        },
         "outgoing_relations": [],
         "related": [],
         "assumptions": [],
@@ -2022,12 +2038,12 @@
         "label": "Almost Everywhere",
         "kind": "definition",
         "domain": "foundations",
-        "statement": "A property holding except on a set of measure zero.",
-        "formal_statement": "$P$ holds a.e. if $\\mu(\\{x:\\neg P(x)\\})=0$. Functions equal a.e. are identified in $L^p$.",
+        "statement": "A property that fails only on a set of measure zero.",
+        "formal_statement": "A property $P(x)$ holds almost everywhere if $\\mu(\\{x:\\neg P(x)\\})=0$. In $L^p$ spaces, functions that agree almost everywhere represent the same element.",
         "definition": null,
-        "intuition": "The equivalence that lets us treat $L^p$ elements as functions; the natural mode of Fourier convergence (cf. Carleson).",
+        "intuition": "Fourier analysis often ignores changes on negligible sets. This is why $L^p$ objects are equivalence classes, not pointwise functions.",
         "proof": null,
-        "notation": "\\text{a.e.}",
+        "notation": "a.e.",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["lebesgue_integral"]
@@ -2048,15 +2064,19 @@
         "label": "Dominated Convergence",
         "kind": "theorem",
         "domain": "foundations",
-        "statement": "Interchange of limit and integral under a dominating function.",
-        "formal_statement": "If $f_n\\to f$ a.e. and $|f_n|\\le g\\in L^1$, then $\\int f_n\\to\\int f$.",
+        "statement": "A theorem allowing limits to pass through integrals under an integrable bound.",
+        "formal_statement": "If $f_n\\to f$ almost everywhere and $|f_n|\\le g$ for all $n$, with $g\\in L^1$, then $f\\in L^1$ and $\\int f_n\\to\\int f$.",
         "definition": null,
-        "intuition": "The workhorse that justifies swapping limits, sums, and integrals throughout Fourier analysis.",
+        "intuition": "A pointwise limit is safe to integrate when all functions stay under one integrable roof.",
         "proof": null,
         "notation": "$\\int f_n\\to\\int f$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["lebesgue_integral"]
+          "logical_dependency": [
+            "lebesgue_integral",
+            "l1_space",
+            "almost_everywhere"
+          ]
         },
         "outgoing_relations": [],
         "related": ["lebesgue_integral"],
@@ -2074,19 +2094,21 @@
         "label": "Fubini–Tonelli Theorem",
         "kind": "theorem",
         "domain": "foundations",
-        "statement": "Iterated integrals may be swapped for (absolutely) integrable functions.",
-        "formal_statement": "$\\iint f(x,y)\\,dx\\,dy=\\iint f(x,y)\\,dy\\,dx$ when $f\\in L^1$ (Fubini) or $f\\ge0$ (Tonelli).",
+        "statement": "Theorems that justify changing the order of integration.",
+        "formal_statement": "Tonelli applies to nonnegative measurable functions; Fubini applies when $f\\in L^1(X\\times Y)$. Under these hypotheses, iterated integrals agree with the integral over the product space.",
         "definition": null,
-        "intuition": "What makes convolution and the inversion formula well-defined — you reorder double integrals.",
+        "intuition": "Convolution, Fourier inversion, and many kernel identities require moving integrals past each other. Fubini and Tonelli say when that move is legal.",
         "proof": null,
-        "notation": "$\\iint=\\iint$",
+        "notation": "$\\int\\!\\int f(x,y)\\,dx\\,dy$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["lebesgue_integral"]
+          "logical_dependency": ["lebesgue_integral", "l1_space"]
         },
         "outgoing_relations": [],
         "related": ["lebesgue_integral"],
-        "assumptions": [],
+        "assumptions": [
+          "Tonelli handles nonnegative functions; Fubini handles absolutely integrable functions."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -2100,19 +2122,21 @@
         "label": "Real (Sine–Cosine) Series",
         "kind": "object",
         "domain": "series",
-        "statement": "The classical $a_n\\cos+b_n\\sin$ form, equivalent to the complex series.",
-        "formal_statement": "$f(x)\\sim\\frac{a_0}{2}+\\sum_{n\\ge1}(a_n\\cos nx+b_n\\sin nx)$, with $a_n=\\frac1\\pi\\int f\\cos nx$, $b_n=\\frac1\\pi\\int f\\sin nx$.",
+        "statement": "The sine-cosine form of a Fourier series, equivalent to the complex exponential form.",
+        "formal_statement": "For a real-valued $2\\pi$-periodic $f$, $f(x)\\sim\\frac{a_0}{2}+\\sum_{n\\ge1}(a_n\\cos nx+b_n\\sin nx)$, where $a_n=\\frac1\\pi\\int_{-\\pi}^{\\pi}f(x)\\cos(nx)\\,dx$ and $b_n=\\frac1\\pi\\int_{-\\pi}^{\\pi}f(x)\\sin(nx)\\,dx$.",
         "definition": null,
-        "intuition": "The original 19th-century form; real and imaginary parts of the complex coefficients.",
+        "intuition": "This is the classical form. The complex exponential notation packages the same information more compactly.",
         "proof": null,
-        "notation": "$a_n\\cos nx+b_n\\sin nx$",
+        "notation": "$a_n\\cos(nx)+b_n\\sin(nx)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_series"]
+          "logical_dependency": ["fourier_series", "complex_exponential"]
         },
         "outgoing_relations": [],
         "related": ["fourier_series"],
-        "assumptions": [],
+        "assumptions": [
+          "The displayed coefficients use the $2\\pi$-periodic interval $[-\\pi,\\pi]$."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -2126,19 +2150,21 @@
         "label": "Half-Range Expansions",
         "kind": "construction",
         "domain": "series",
-        "statement": "Expanding a function on $[0,L]$ in pure sines or pure cosines via even/odd extension.",
-        "formal_statement": "Extend $f$ on $[0,\\pi]$ evenly (cosine series) or oddly (sine series) to $[-\\pi,\\pi]$.",
+        "statement": "A sine or cosine expansion on an interval obtained by odd or even periodic extension.",
+        "formal_statement": "A function on $[0,\\pi]$ can be extended oddly to obtain a sine series or evenly to obtain a cosine series on $[-\\pi,\\pi]$. The chosen extension determines the boundary behavior.",
         "definition": null,
-        "intuition": "How boundary conditions pick sine vs. cosine series when solving PDEs on an interval.",
+        "intuition": "Boundary conditions choose the symmetry. Fixed endpoints naturally lead to sines; Neumann-type symmetry naturally leads to cosines.",
         "proof": null,
-        "notation": null,
+        "notation": "sine series / cosine series",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["real_fourier_series"]
         },
         "outgoing_relations": [],
         "related": ["real_fourier_series"],
-        "assumptions": [],
+        "assumptions": [
+          "Endpoint behavior depends on the chosen extension and the regularity of the original function."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -2153,11 +2179,11 @@
         "kind": "theorem",
         "domain": "series",
         "statement": "Pointwise convergence of a Fourier series at a point depends only on the function near that point.",
-        "formal_statement": "If \\(f,g\\in L^1(\\mathbb T)\\) agree on an open neighborhood of \\(x_0\\), then \\(S_Nf(x_0)-S_Ng(x_0)\\to0\\). Hence convergence and the limiting value at \\(x_0\\), when they exist, are local.",
+        "formal_statement": "If $f,g\\in L^1(\\mathbb T)$ agree on an open neighborhood of $x_0$, then $S_Nf(x_0)-S_Ng(x_0)\\to0$. Hence convergence and the limiting value at $x_0$, when they exist, are local.",
         "definition": null,
         "intuition": "Fourier coefficients are global, but the oscillation of the Dirichlet kernel cancels distant contributions at a fixed point.",
         "proof": null,
-        "notation": "\\(S_Nf(x_0)-S_Ng(x_0)\\to0\\)",
+        "notation": "$S_Nf(x_0)-S_Ng(x_0)\\to0$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2168,9 +2194,7 @@
         },
         "outgoing_relations": [],
         "related": ["dirichlet_kernel"],
-        "assumptions": [
-          "Usually stated for \\(L^1\\) functions on the circle."
-        ],
+        "assumptions": ["Usually stated for $L^1$ functions on the circle."],
         "ref": "Stein–Shakarchi: Ch.3 Theorem 2.2",
         "book_refs": ["c3_thm_2_2"],
         "metadata": {
@@ -2185,18 +2209,14 @@
         "kind": "property",
         "domain": "series",
         "statement": "A Fourier series may be differentiated term by term when the differentiated series is sufficiently controlled.",
-        "formal_statement": "If \\(\\sum_{n\\in\\mathbb Z}|n\\hat f(n)|<\\infty\\), then \\(\\sum_n\\hat f(n)e^{inx}\\) defines a \\(C^1\\) function and \\(f'(x)=\\sum_{n\\in\\mathbb Z}in\\hat f(n)e^{inx}\\), with uniform convergence of the differentiated series.",
+        "formal_statement": "If $\\sum_{n\\in\\mathbb Z}|n\\hat f(n)|<\\infty$, then $\\sum_n\\hat f(n)e^{inx}$ defines a $C^1$ function and may be differentiated term by term: $f'(x)=\\sum_{n\\in\\mathbb Z}in\\hat f(n)e^{inx}$, uniformly in $x$.",
         "definition": null,
-        "intuition": "Differentiating a frequency \\(e^{inx}\\) multiplies it by \\(in\\). Absolute summability after that multiplication is the safety check that prevents termwise differentiation from lying to you.",
+        "intuition": "Differentiating a frequency $e^{inx}$ multiplies it by $in$. Absolute summability after that multiplication is the safety check that prevents termwise differentiation from lying to you.",
         "proof": null,
-        "notation": "\\(f'=\\sum_n in\\hat f(n)e^{inx}\\)",
+        "notation": "$f'=\\sum_n in\\hat f(n)e^{inx}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "decay_smoothness",
-            "fourier_series",
-            "fourier_coefficient"
-          ]
+          "logical_dependency": ["fourier_series", "fourier_coefficient"]
         },
         "outgoing_relations": [],
         "related": ["decay_smoothness"],
@@ -2217,11 +2237,11 @@
         "kind": "theorem",
         "domain": "convergence",
         "statement": "Continuous periodic functions can be uniformly approximated by trigonometric polynomials.",
-        "formal_statement": "For every \\(f\\in C(\\mathbb T)\\) and every \\(\\varepsilon>0\\), there exists a trigonometric polynomial \\(p\\) such that \\(\\|f-p\\|_\\infty<\\varepsilon\\). Equivalently, trigonometric polynomials are dense in \\(C(\\mathbb T)\\) in the uniform norm.",
+        "formal_statement": "For every $f\\in C(\\mathbb T)$ and every $\\varepsilon>0$, there exists a trigonometric polynomial $p$ such that $\\|f-p\\|_\\infty<\\varepsilon$. Equivalently, trigonometric polynomials are dense in $C(\\mathbb T)$ in the uniform norm.",
         "definition": null,
-        "intuition": "Fejer means are themselves trigonometric polynomials and converge uniformly to \\(f\\), so they provide explicit approximants rather than just existence magic.",
+        "intuition": "Fejer means are themselves trigonometric polynomials and converge uniformly to $f$, so they provide explicit approximants rather than just existence magic.",
         "proof": null,
-        "notation": "\\(\\overline{\\mathrm{Trig}}^{\\|\\cdot\\|_\\infty}=C(\\mathbb T)\\)",
+        "notation": "$\\overline{\\mathrm{Trig}}^{\\|\\cdot\\|_\\infty}=C(\\mathbb T)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fejer_theorem", "trigonometric_polynomial"]
@@ -2245,11 +2265,11 @@
         "kind": "theorem",
         "domain": "convergence",
         "statement": "Ordinary convergence implies Abel summability to the same value.",
-        "formal_statement": "If \\(\\sum_{n=0}^\\infty a_n=s\\) converges, then \\(\\lim_{r\\to1^-}\\sum_{n=0}^\\infty a_nr^n=s\\). For Fourier series, Abel means agree with the ordinary limit wherever ordinary convergence is already valid.",
+        "formal_statement": "If $\\sum_{n=0}^\\infty a_n=s$ converges, then $\\lim_{r\\to1^-}\\sum_{n=0}^\\infty a_nr^n=s$. For Fourier series, Abel means agree with the ordinary limit wherever ordinary convergence is already valid.",
         "definition": null,
         "intuition": "Abel summation is consistent: the gentler radial limiting process does not change answers that already converge honestly.",
         "proof": null,
-        "notation": "\\(\\lim_{r\\to1^-}\\sum a_nr^n=s\\)",
+        "notation": "$\\lim_{r\\to1^-}\\sum a_nr^n=s$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["abel_summation"]
@@ -2257,7 +2277,7 @@
         "outgoing_relations": [],
         "related": ["abel_summation"],
         "assumptions": [
-          "The displayed scalar form is one-sided in \\(r\\), with \\(0\\le r<1\\)."
+          "The displayed scalar form is one-sided in $r$, with $0\\le r<1$."
         ],
         "ref": "",
         "book_refs": [],
@@ -2273,11 +2293,11 @@
         "kind": "property",
         "domain": "transform",
         "statement": "Translation in space becomes modulation in frequency, and modulation in space becomes translation in frequency.",
-        "formal_statement": "For suitable \\(f\\), \\(\\widehat{f(\\cdot-a)}(\\xi)=e^{-2\\pi ia\\xi}\\hat f(\\xi)\\) and \\(\\widehat{e^{2\\pi ibx}f(x)}(\\xi)=\\hat f(\\xi-b)\\).",
+        "formal_statement": "For suitable $f$, $\\widehat{f(\\cdot-a)}(\\xi)=e^{-2\\pi ia\\xi}\\hat f(\\xi)$ and $\\widehat{e^{2\\pi ibx}f(x)}(\\xi)=\\hat f(\\xi-b)$.",
         "definition": null,
         "intuition": "Moving a signal changes phases but not frequency magnitudes; multiplying by a pure wave shifts the frequency content.",
         "proof": null,
-        "notation": "\\(\\widehat{f(\\cdot-a)}=e^{-2\\pi ia\\xi}\\hat f\\)",
+        "notation": "$\\widehat{f(\\cdot-a)}=e^{-2\\pi ia\\xi}\\hat f$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2287,7 +2307,7 @@
         },
         "outgoing_relations": [],
         "related": ["fourier_transform"],
-        "assumptions": ["Uses the graph's \\(2\\pi\\)-frequency convention."],
+        "assumptions": ["Uses the graph's $2\\pi$-frequency convention."],
         "ref": "Stein–Shakarchi: Ch.5 Proposition 1.2",
         "book_refs": ["c5_prop_1_2"],
         "metadata": {
@@ -2302,11 +2322,11 @@
         "kind": "property",
         "domain": "transform",
         "statement": "The Fourier transform of an integrable function is continuous and vanishes at infinity.",
-        "formal_statement": "If \\(f\\in L^1(\\mathbb R)\\), then \\(\\hat f\\in C_0(\\mathbb R)\\): it is continuous and \\(\\hat f(\\xi)\\to0\\) as \\(|\\xi|\\to\\infty\\).",
+        "formal_statement": "If $f\\in L^1(\\mathbb R)$, then $\\hat f\\in C_0(\\mathbb R)$: it is continuous and $\\hat f(\\xi)\\to0$ as $|\\xi|\\to\\infty$.",
         "definition": null,
         "intuition": "Integrability makes high-frequency oscillations average out. This is the Riemann-Lebesgue lemma on the line.",
         "proof": null,
-        "notation": "\\(\\hat f\\in C_0(\\mathbb R)\\)",
+        "notation": "$\\hat f\\in C_0(\\mathbb R)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2332,18 +2352,20 @@
         "kind": "definition",
         "domain": "transform",
         "statement": "A function whose Fourier transform vanishes outside a bounded frequency band.",
-        "formal_statement": "A function \\(f\\) is band-limited to \\([-W,W]\\) if \\(\\operatorname{supp}\\hat f\\subset[-W,W]\\). Equivalently, no frequencies with \\(|\\xi|>W\\) are present.",
+        "formal_statement": "A function $f$ is band-limited to $[-W,W]$ if $\\operatorname{supp}\\hat f\\subset[-W,W]$. Equivalently, no frequencies with $|\\xi|>W$ are present.",
         "definition": null,
         "intuition": "Band-limited signals have finite frequency range. That frequency restriction makes exact sampling and analytic continuation possible.",
         "proof": null,
-        "notation": "\\(\\operatorname{supp}\\hat f\\subset[-W,W]\\)",
+        "notation": "$\\operatorname{supp}\\hat f\\subset[-W,W]$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_transform", "support_of_function"]
         },
         "outgoing_relations": [],
         "related": ["fourier_transform"],
-        "assumptions": [],
+        "assumptions": [
+          "Support of $\\hat f$ is understood in the appropriate sense: ordinary support for continuous transforms, essential support for $L^2$ transforms."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -2358,11 +2380,11 @@
         "kind": "theorem",
         "domain": "transform",
         "statement": "Compact frequency support corresponds to entire extension with controlled exponential growth.",
-        "formal_statement": "For \\(f\\in L^2(\\mathbb R)\\), \\(\\operatorname{supp}\\hat f\\subset[-W,W]\\) iff \\(f\\) agrees a.e. on \\(\\mathbb R\\) with an entire function \\(F\\) such that \\(F|_{\\mathbb R}\\in L^2(\\mathbb R)\\) and \\(|F(z)|\\le C e^{2\\pi W|\\operatorname{Im}z|}\\) in the appropriate \\(L^2\\) Paley-Wiener sense.",
+        "formal_statement": "For $f\\in L^2(\\mathbb R)$, $\\operatorname{supp}\\hat f\\subset[-W,W]$ iff $f$ agrees a.e. on $\\mathbb R$ with an entire function $F$ such that $F|_{\\mathbb R}\\in L^2(\\mathbb R)$ and $|F(z)|\\le C e^{2\\pi W|\\operatorname{Im}z|}$ in the appropriate $L^2$ Paley-Wiener sense.",
         "definition": null,
         "intuition": "Cutting off frequency creates strong analytic structure in space. Band limitation is not just smoothness; it forces complex-analytic continuation.",
         "proof": null,
-        "notation": "\\(\\operatorname{supp}\\hat f\\subset[-W,W]\\)",
+        "notation": "$\\operatorname{supp}\\hat f\\subset[-W,W]$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2376,7 +2398,7 @@
         "outgoing_relations": [],
         "related": ["band_limited"],
         "assumptions": [
-          "This is the \\(L^2\\) Paley-Wiener formulation; other versions use different function classes and growth conditions."
+          "This is a schematic $L^2$ Paley-Wiener formulation; precise versions specify the exact growth and square-integrability condition."
         ],
         "ref": "",
         "book_refs": [],
@@ -2392,11 +2414,11 @@
         "kind": "object",
         "domain": "transform",
         "statement": "The Gaussian convolution kernel solving the heat equation on the real line.",
-        "formal_statement": "For \\(t>0\\), \\(H_t(x)=\\frac1{\\sqrt{4\\pi t}}e^{-x^2/(4t)}\\), \\(\\hat H_t(\\xi)=e^{-4\\pi^2t\\xi^2}\\), and \\(u(x,t)=(H_t*f)(x)\\) solves \\(u_t=u_{xx}\\) with initial data \\(f\\) in suitable senses.",
+        "formal_statement": "For $t>0$, $H_t(x)=\\frac1{\\sqrt{4\\pi t}}e^{-x^2/(4t)}$, $\\hat H_t(\\xi)=e^{-4\\pi^2t\\xi^2}$, and $u(x,t)=(H_t*f)(x)$ solves $u_t=u_{xx}$ with initial data $f$ in suitable senses.",
         "definition": null,
-        "intuition": "Heat flow is Gaussian averaging. As \\(t\\downarrow0\\), \\(H_t\\) concentrates near \\(0\\); as \\(t\\) grows, it spreads and smooths.",
+        "intuition": "Heat flow is Gaussian averaging. As $t\\downarrow0$, $H_t$ concentrates near $0$; as $t$ grows, it spreads and smooths.",
         "proof": null,
-        "notation": "\\(H_t(x)=\\frac1{\\sqrt{4\\pi t}}e^{-x^2/(4t)}\\)",
+        "notation": "$H_t(x)=\\frac1{\\sqrt{4\\pi t}}e^{-x^2/(4t)}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2409,7 +2431,7 @@
         "outgoing_relations": [],
         "related": ["gaussian_transform", "convolution_theorem"],
         "assumptions": [
-          "The initial-data interpretation depends on the function space, such as \\(L^p\\), \\(C_0\\), or distributions."
+          "The initial-data interpretation depends on the function space, such as $L^p$, $C_0$, or distributions."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Corollary 1.5; Ch.5 Corollary 3.4; Ch.5 Theorem 3.3",
         "book_refs": ["c5_cor_1_5", "c5_cor_3_4", "c5_thm_3_3"],
@@ -2424,12 +2446,12 @@
         "label": "Test Function",
         "kind": "definition",
         "domain": "distributions",
-        "statement": "A smooth, compactly supported function used to probe distributions.",
-        "formal_statement": "$\\varphi\\in C_c^\\infty(\\mathbb{R})$; the space $\\mathcal{D}$ of test functions sits inside $\\mathcal{S}$.",
+        "statement": "A smooth compactly supported function used to probe distributions.",
+        "formal_statement": "A test function is $\\varphi\\in C_c^\\infty(\\mathbb R)$. The space of test functions is often denoted $\\mathcal D(\\mathbb R)$, and $C_c^\\infty(\\mathbb R)\\subset\\mathcal S(\\mathbb R)$.",
         "definition": null,
-        "intuition": "The 'measuring instruments' of distribution theory — you know a distribution by how it pairs with these.",
+        "intuition": "Test functions are controlled measuring instruments. A distribution is known by how it acts on every such probe.",
         "proof": null,
-        "notation": "\\varphi\\in C_c^\\infty",
+        "notation": "$\\varphi\\in C_c^\\infty(\\mathbb R)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["schwartz_space"]
@@ -2451,11 +2473,11 @@
         "kind": "construction",
         "domain": "distributions",
         "statement": "Convolution can be extended to distributions when the support hypotheses make the pairing well-defined.",
-        "formal_statement": "For a distribution \\(T\\) and test function \\(\\varphi\\), \\((T*\\varphi)(x)=T(\\tau_x\\tilde\\varphi)\\), where \\(\\tilde\\varphi(y)=\\varphi(-y)\\). More generally, \\(T*S\\) is defined under suitable support conditions, and \\(\\delta*T=T\\).",
+        "formal_statement": "For a distribution $T$ and test function $\\varphi$, $(T*\\varphi)(x)=T(\\tau_x\\tilde\\varphi)$, where $\\tilde\\varphi(y)=\\varphi(-y)$. More generally, $T*S$ is defined under suitable support conditions, and $\\delta*T=T$.",
         "definition": null,
         "intuition": "Convolution with a test function smooths a distribution. This lets spikes and generalized sources interact with kernels in PDEs.",
         "proof": null,
-        "notation": "\\((T*\\varphi)(x)=T(\\tau_x\\tilde\\varphi),\\ \\delta*T=T\\)",
+        "notation": "$(T*\\varphi)(x)=T(\\tau_x\\tilde\\varphi),\\ \\delta*T=T$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2483,12 +2505,12 @@
         "label": "Fundamental Solution",
         "kind": "construction",
         "domain": "distributions",
-        "statement": "A distribution \\(E\\) with \\(LE=\\delta\\), used to solve linear equations by convolution.",
-        "formal_statement": "For a linear constant-coefficient differential operator \\(L\\), a fundamental solution is a distribution \\(E\\) satisfying \\(LE=\\delta\\). If convolution is defined, then \\(u=E*f\\) solves \\(Lu=f\\).",
+        "statement": "A distribution $E$ with $LE=\\delta$, used to solve linear equations by convolution.",
+        "formal_statement": "For a linear constant-coefficient differential operator $L$, a fundamental solution is a distribution $E$ satisfying $LE=\\delta$. If convolution is defined, then $u=E*f$ solves $Lu=f$.",
         "definition": null,
         "intuition": "A fundamental solution is the response to a point source. Once the point-source response is known, general forcing is obtained by superposition through convolution.",
         "proof": null,
-        "notation": "\\(LE=\\delta,\\ u=E*f\\)",
+        "notation": "$LE=\\delta,\\ u=E*f$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2501,7 +2523,7 @@
         "outgoing_relations": [],
         "related": ["distributional_ft", "convolution_distributions"],
         "assumptions": [
-          "The formula \\(u=E*f\\) requires convolution to be defined and \\(L\\) to commute with convolution in the intended setting."
+          "The formula $u=E*f$ requires convolution to be defined and $L$ to commute with convolution in the intended setting."
         ],
         "ref": "",
         "book_refs": [],
@@ -2517,11 +2539,11 @@
         "kind": "property",
         "domain": "discrete",
         "statement": "Energy is conserved by the DFT up to the chosen normalization factor.",
-        "formal_statement": "With \\(\\hat a(k)=\\sum_{j=0}^{N-1}a_j\\omega_N^{-jk}\\), \\(\\sum_{j=0}^{N-1}|a_j|^2=\\frac1N\\sum_{k=0}^{N-1}|\\hat a(k)|^2\\).",
+        "formal_statement": "With $\\hat a(k)=\\sum_{j=0}^{N-1}a_j\\omega_N^{-jk}$, $\\sum_{j=0}^{N-1}|a_j|^2=\\frac1N\\sum_{k=0}^{N-1}|\\hat a(k)|^2$.",
         "definition": null,
-        "intuition": "The DFT matrix is unitary after scaling by \\(1/\\sqrt N\\). This is finite-dimensional Plancherel.",
+        "intuition": "The DFT matrix is unitary after scaling by $1/\\sqrt N$. This is finite-dimensional Plancherel.",
         "proof": null,
-        "notation": "\\(\\sum|a_j|^2=\\frac1N\\sum|\\hat a(k)|^2\\)",
+        "notation": "$\\sum|a_j|^2=\\frac1N\\sum|\\hat a(k)|^2$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["dft"]
@@ -2543,11 +2565,11 @@
         "kind": "definition",
         "domain": "discrete",
         "statement": "A cosine-only transform obtained from an even extension of finite data.",
-        "formal_statement": "One common DCT-II convention is \\(C_k=\\sum_{j=0}^{N-1}a_j\\cos\\!\\left(\\frac{\\pi}{N}(j+\\frac12)k\\right)\\), \\(k=0,\\dots,N-1\\). It can be viewed as a DFT of a symmetrically extended sequence.",
+        "formal_statement": "One common DCT-II convention is $C_k=\\sum_{j=0}^{N-1}a_j\\cos\\!\\left(\\frac{\\pi}{N}(j+\\frac12)k\\right)$, $k=0,\\dots,N-1$. It can be viewed as a DFT of a symmetrically extended sequence.",
         "definition": null,
         "intuition": "Even symmetry removes sine components. The DCT often concentrates signal energy into few low-frequency coefficients, which is why it is useful in compression.",
         "proof": null,
-        "notation": "\\(C_k\\)",
+        "notation": "$C_k$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["dft", "half_range_expansion"]
@@ -2571,11 +2593,11 @@
         "kind": "proof_method",
         "domain": "applications",
         "statement": "A method for solving linear PDEs by expanding in spatial eigenfunctions.",
-        "formal_statement": "Seek \\(u(x,t)=\\sum_n c_n(t)e_n(x)\\), where \\(e_n\\) are eigenfunctions of the spatial operator. Orthogonality decouples the PDE into ODEs for the coefficients \\(c_n(t)\\).",
+        "formal_statement": "Seek $u(x,t)=\\sum_n c_n(t)e_n(x)$, where $e_n$ are eigenfunctions of the spatial operator. Orthogonality decouples the PDE into ODEs for the coefficients $c_n(t)$.",
         "definition": null,
         "intuition": "The method chooses coordinates that match the operator. In those coordinates, the PDE splits into independent one-frequency motions.",
         "proof": null,
-        "notation": "\\(u(x,t)=\\sum_n c_n(t)e_n(x)\\)",
+        "notation": "$u(x,t)=\\sum_n c_n(t)e_n(x)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_series", "orthonormal_system"]
@@ -2599,11 +2621,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "The Poisson kernel gives the harmonic extension of boundary data on the disk.",
-        "formal_statement": "If \\(f\\in C(\\mathbb T)\\), then \\(u(r,\\theta)=(P_r*f)(\\theta)\\) is harmonic for \\(0\\le r<1\\) and \\(u(r,\\theta)\\to f(\\theta)\\) as \\(r\\to1^-\\).",
+        "formal_statement": "If $f\\in C(\\mathbb T)$, then $u(r,\\theta)=(P_r*f)(\\theta)$ is harmonic for $0\\le r<1$ and $u(r,\\theta)\\to f(\\theta)$ as $r\\to1^-$.",
         "definition": null,
         "intuition": "Boundary values are averaged with a kernel that concentrates near the boundary point as one approaches the circle.",
         "proof": null,
-        "notation": "\\(u(r,\\theta)=P_r*f(\\theta)\\)",
+        "notation": "$u(r,\\theta)=P_r*f(\\theta)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2631,11 +2653,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "Poisson summation applied to the Gaussian gives the modular identity for the theta function.",
-        "formal_statement": "For \\(t>0\\), \\(\\theta(t)=\\sum_{n\\in\\mathbb Z}e^{-\\pi n^2t}\\) satisfies \\(\\theta(1/t)=\\sqrt t\\,\\theta(t)\\).",
+        "formal_statement": "For $t>0$, $\\theta(t)=\\sum_{n\\in\\mathbb Z}e^{-\\pi n^2t}$ satisfies $\\theta(1/t)=\\sqrt t\\,\\theta(t)$.",
         "definition": null,
-        "intuition": "The Gaussian is essentially fixed by the Fourier transform, so Poisson summation turns a sum at scale \\(t\\) into a sum at reciprocal scale \\(1/t\\).",
+        "intuition": "The Gaussian is essentially fixed by the Fourier transform, so Poisson summation turns a sum at scale $t$ into a sum at reciprocal scale $1/t$.",
         "proof": null,
-        "notation": "\\(\\theta(1/t)=\\sqrt t\\,\\theta(t)\\)",
+        "notation": "$\\theta(1/t)=\\sqrt t\\,\\theta(t)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2647,7 +2669,7 @@
         "outgoing_relations": [],
         "related": ["poisson_summation", "gaussian_transform"],
         "assumptions": [
-          "Uses the \\(2\\pi\\)-Fourier convention where \\(e^{-\\pi x^2}\\) is self-dual."
+          "Uses the $2\\pi$-Fourier convention where $e^{-\\pi x^2}$ is self-dual."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 3.2",
         "book_refs": ["c5_thm_3_2"],
@@ -2663,11 +2685,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "The free Schrödinger equation is solved by multiplying each Fourier mode by a dispersive phase.",
-        "formal_statement": "For \\(iu_t=-u_{xx}\\) on \\(\\mathbb R\\) with initial data \\(u_0\\), the Fourier transform satisfies \\(\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)\\).",
+        "formal_statement": "For $iu_t=-u_{xx}$ on $\\mathbb R$ with initial data $u_0$, the Fourier transform satisfies $\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)$.",
         "definition": null,
-        "intuition": "The Fourier transform turns the spatial second derivative into multiplication by \\(-4\\pi^2\\xi^2\\). Unlike heat flow, the multiplier has modulus one, so waves disperse rather than decay.",
+        "intuition": "The Fourier transform turns the spatial second derivative into multiplication by $-4\\pi^2\\xi^2$. Unlike heat flow, the multiplier has modulus one, so waves disperse rather than decay.",
         "proof": null,
-        "notation": "\\(\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)\\)",
+        "notation": "$\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2679,7 +2701,7 @@
         "outgoing_relations": [],
         "related": ["fourier_transform", "differentiation_rule"],
         "assumptions": [
-          "Uses the Fourier convention \\(e^{-2\\pi ix\\xi}\\). Regularity assumptions depend on whether one wants classical, \\(L^2\\), or distributional solutions."
+          "Uses the Fourier convention $e^{-2\\pi ix\\xi}$. Regularity assumptions depend on whether one wants classical, $L^2$, or distributional solutions."
         ],
         "ref": "",
         "book_refs": [],
@@ -2695,11 +2717,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "In the Fraunhofer far-field approximation, the diffraction amplitude is essentially the Fourier transform of the aperture.",
-        "formal_statement": "For an aperture indicator \\(\\mathbf 1_A\\) in the aperture plane, the far-field amplitude is proportional to \\(\\widehat{\\mathbf 1_A}(\\xi)\\), and the observed intensity is proportional to \\(|\\widehat{\\mathbf 1_A}(\\xi)|^2\\).",
+        "formal_statement": "For an aperture indicator $\\mathbf 1_A$ in the aperture plane, the far-field amplitude is proportional to $\\widehat{\\mathbf 1_A}(\\xi)$, and the observed intensity is proportional to $|\\widehat{\\mathbf 1_A}(\\xi)|^2$.",
         "definition": null,
         "intuition": "A lens or far-field propagation physically separates spatial frequencies. A slit produces a sinc pattern; a circular aperture produces an Airy-type pattern.",
         "proof": null,
-        "notation": "\\(I(\\xi)\\propto |\\widehat{\\mathbf 1_A}(\\xi)|^2\\)",
+        "notation": "$I(\\xi)\\propto |\\widehat{\\mathbf 1_A}(\\xi)|^2$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_transform_rd", "fourier_transform"]
@@ -2723,11 +2745,11 @@
         "kind": "example",
         "domain": "series",
         "statement": "A continuous nowhere-differentiable periodic function can be built from a lacunary trigonometric series.",
-        "formal_statement": "A classical example is \\(W(x)=\\sum_{n=0}^\\infty a^n\\cos(b^n x)\\), where \\(0<a<1\\), \\(b\\) is an odd integer, and suitable conditions such as \\(ab>1+3\\pi/2\\) guarantee that \\(W\\) is continuous and nowhere differentiable.",
+        "formal_statement": "A classical example is $W(x)=\\sum_{n=0}^\\infty a^n\\cos(b^n x)$, where $0<a<1$, $b$ is an odd integer, and suitable conditions such as $ab>1+3\\pi/2$ guarantee that $W$ is continuous and nowhere differentiable.",
         "definition": null,
         "intuition": "The coefficients decay enough to give continuity, but the rapidly separated frequencies keep injecting small sharp oscillations at every scale.",
         "proof": null,
-        "notation": "\\(W(x)=\\sum a^n\\cos(b^nx)\\)",
+        "notation": "$W(x)=\\sum a^n\\cos(b^nx)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2755,11 +2777,11 @@
         "kind": "object",
         "domain": "transform",
         "statement": "The Poisson kernel solving the Dirichlet problem on the upper half-plane.",
-        "formal_statement": "For \\(y>0\\), \\(P_y(x)=\\frac1\\pi\\frac{y}{x^2+y^2}\\), \\(\\hat P_y(\\xi)=e^{-2\\pi y|\\xi|}\\), and \\(u(x,y)=(f*P_y)(x)\\) is harmonic in \\(\\mathbb R^2_+\\) with boundary trace \\(f\\) under suitable hypotheses.",
+        "formal_statement": "For $y>0$, $P_y(x)=\\frac1\\pi\\frac{y}{x^2+y^2}$, $\\hat P_y(\\xi)=e^{-2\\pi y|\\xi|}$, and $u(x,y)=(f*P_y)(x)$ is harmonic in $\\mathbb R^2_+$ with boundary trace $f$ under suitable hypotheses.",
         "definition": null,
-        "intuition": "It is the real-line version of harmonic extension: moving upward into the half-plane smooths boundary data by a scale \\(y\\).",
+        "intuition": "It is the real-line version of harmonic extension: moving upward into the half-plane smooths boundary data by a scale $y$.",
         "proof": null,
-        "notation": "\\(P_y(x)=\\frac1\\pi\\frac{y}{x^2+y^2}\\)",
+        "notation": "$P_y(x)=\\frac1\\pi\\frac{y}{x^2+y^2}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2775,7 +2797,7 @@
           "dirichlet_problem_disk"
         ],
         "assumptions": [
-          "Boundary convergence depends on the function space of \\(f\\)."
+          "Boundary convergence depends on the function space of $f$."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Lemma 2.4; Ch.5 Lemma 2.5; Ch.5 Lemma 2.8; Ch.5 Theorem 2.6; Ch.5 Theorem 2.7; Ch.5 Theorem 3.5",
         "book_refs": [
@@ -2798,11 +2820,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "The multidimensional wave equation is solved in frequency by independent oscillators.",
-        "formal_statement": "For \\(\\partial_t^2u=\\Delta u\\) with \\(u(\\cdot,0)=f\\), \\(u_t(\\cdot,0)=g\\), the Fourier transform gives \\(\\hat u(\\xi,t)=\\cos(2\\pi|\\xi|t)\\hat f(\\xi)+\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}\\hat g(\\xi)\\), with the second term interpreted by its limit at \\(\\xi=0\\).",
+        "formal_statement": "For $\\partial_t^2u=\\Delta u$ with $u(\\cdot,0)=f$, $u_t(\\cdot,0)=g$, the Fourier transform gives $\\hat u(\\xi,t)=\\cos(2\\pi|\\xi|t)\\hat f(\\xi)+\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}\\hat g(\\xi)$, with the second term interpreted by its limit at $\\xi=0$.",
         "definition": null,
-        "intuition": "Each frequency oscillates at speed proportional to \\(|\\xi|\\). Special odd-dimensional formulas reveal Huygens' principle, where waves propagate sharply without a trailing wake.",
+        "intuition": "Each frequency oscillates at speed proportional to $|\\xi|$. Special odd-dimensional formulas reveal Huygens' principle, where waves propagate sharply without a trailing wake.",
         "proof": null,
-        "notation": "\\(\\partial_t^2u=\\Delta u\\)",
+        "notation": "$\\partial_t^2u=\\Delta u$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2814,7 +2836,7 @@
         "outgoing_relations": [],
         "related": ["fourier_transform_rd", "wave_equation"],
         "assumptions": [
-          "Formula uses the \\(2\\pi\\)-frequency convention and requires suitable data or distributional interpretation."
+          "Formula uses the $2\\pi$-frequency convention and requires suitable data or distributional interpretation."
         ],
         "ref": "Stein–Shakarchi: Ch.6 Lemma 3.3; Ch.6 Lemma 3.4; Ch.6 Lemma 3.5; Ch.6 Theorem 2.4; Ch.6 Theorem 3.1; Ch.6 Theorem 3.2; Ch.6 Theorem 3.6; Ch.6 Theorem 3.7",
         "book_refs": [
@@ -2839,11 +2861,11 @@
         "kind": "application",
         "domain": "applications",
         "statement": "The Radon transform reconstructs a function from its integrals over hyperplanes.",
-        "formal_statement": "For suitable \\(f\\) on \\(\\mathbb R^d\\), \\(Rf(t,\\gamma)=\\int_{x\\cdot\\gamma=t}f(x)\\,d\\sigma(x)\\). The Fourier slice theorem says the one-dimensional Fourier transform in \\(t\\) satisfies \\(\\mathcal F_t(Rf)(s,\\gamma)=\\hat f(s\\gamma)\\).",
+        "formal_statement": "For suitable $f$ on $\\mathbb R^d$, $Rf(t,\\gamma)=\\int_{x\\cdot\\gamma=t}f(x)\\,d\\sigma(x)$. The Fourier slice theorem says the one-dimensional Fourier transform in $t$ satisfies $\\mathcal F_t(Rf)(s,\\gamma)=\\hat f(s\\gamma)$.",
         "definition": null,
         "intuition": "Each X-ray projection reveals one slice of the Fourier transform. Combining slices over many directions reconstructs the object.",
         "proof": null,
-        "notation": "\\(\\mathcal F_t(Rf)(s,\\gamma)=\\hat f(s\\gamma)\\)",
+        "notation": "$\\mathcal F_t(Rf)(s,\\gamma)=\\hat f(s\\gamma)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_transform_rd"]
@@ -2867,11 +2889,11 @@
         "kind": "structure",
         "domain": "discrete",
         "statement": "The group of all characters of a finite abelian group.",
-        "formal_statement": "For a finite abelian group \\(G\\), its dual group is \\(\\widehat G=\\operatorname{Hom}(G,\\mathbb C^\\times)\\), with pointwise multiplication. The group \\(\\widehat G\\) is finite abelian and is isomorphic to \\(G\\), though not canonically in general.",
+        "formal_statement": "For a finite abelian group $G$, its dual group is $\\widehat G=\\operatorname{Hom}(G,\\mathbb C^\\times)$, with pointwise multiplication. The group $\\widehat G$ is finite abelian and is isomorphic to $G$, though not canonically in general.",
         "definition": null,
-        "intuition": "The dual group is the frequency side of \\(G\\). Its elements are the waves that detect structure in functions on \\(G\\).",
+        "intuition": "The dual group is the frequency side of $G$. Its elements are the waves that detect structure in functions on $G$.",
         "proof": null,
-        "notation": "\\(\\widehat G\\)",
+        "notation": "$\\widehat G$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["finite_abelian_group", "group_character"]
@@ -2899,11 +2921,11 @@
         "kind": "theorem",
         "domain": "discrete",
         "statement": "Characters form an orthonormal basis for functions on a finite abelian group.",
-        "formal_statement": "Let \\(G\\) be a finite abelian group and use \\(\\langle f,g\\rangle=\\frac1{|G|}\\sum_{x\\in G}f(x)\\overline{g(x)}\\). Then the characters \\(\\chi\\in\\widehat G\\) form an orthonormal basis of \\(L^2(G)\\). Hence \\(\\hat f(\\chi)=\\frac1{|G|}\\sum_{x\\in G}f(x)\\overline{\\chi(x)}\\) and \\(f(x)=\\sum_{\\chi\\in\\widehat G}\\hat f(\\chi)\\chi(x)\\).",
+        "formal_statement": "Let $G$ be a finite abelian group and use $\\langle f,g\\rangle=\\frac1{|G|}\\sum_{x\\in G}f(x)\\overline{g(x)}$. Then the characters $\\chi\\in\\widehat G$ form an orthonormal basis of $L^2(G)$. Hence $\\hat f(\\chi)=\\frac1{|G|}\\sum_{x\\in G}f(x)\\overline{\\chi(x)}$ and $f(x)=\\sum_{\\chi\\in\\widehat G}\\hat f(\\chi)\\chi(x)$.",
         "definition": null,
-        "intuition": "Every finite abelian group has enough pure frequencies to decompose every function on it. The cyclic DFT is just the special case \\(G=\\mathbb Z/N\\mathbb Z\\).",
+        "intuition": "Every finite abelian group has enough pure frequencies to decompose every function on it. The cyclic DFT is just the special case $G=\\mathbb Z/N\\mathbb Z$.",
         "proof": null,
-        "notation": "\\(\\widehat G,\\ \\hat f(\\chi)\\)",
+        "notation": "$\\widehat G,\\ \\hat f(\\chi)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -2946,18 +2968,16 @@
         "kind": "theorem",
         "domain": "dirichlet",
         "statement": "The Euclidean algorithm computes greatest common divisors and gives Bézout identities.",
-        "formal_statement": "For integers \\(a,b\\) with \\(b>0\\), there are unique integers \\(q,r\\) such that \\(a=qb+r\\) and \\(0\\le r<b\\). Iterating division gives \\(\\gcd(a,b)\\), and there exist integers \\(m,n\\) such that \\(\\gcd(a,b)=ma+nb\\).",
+        "formal_statement": "For integers $a,b$ with $b>0$, there are unique integers $q,r$ such that $a=qb+r$ and $0\\le r<b$. Iterating division gives $\\gcd(a,b)$, and there exist integers $m,n$ such that $\\gcd(a,b)=ma+nb$.",
         "definition": null,
         "intuition": "Repeatedly subtract the largest possible multiple until no remainder remains. Running the steps backward expresses the gcd as an integer linear combination.",
         "proof": null,
-        "notation": "\\(\\gcd(a,b)=ma+nb\\)",
+        "notation": "$\\gcd(a,b)=ma+nb$",
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
         "related": ["fundamental_arithmetic", "euler_phi_function"],
-        "assumptions": [
-          "Usually stated for integers \\(a,b\\), not both zero."
-        ],
+        "assumptions": ["Usually stated for integers $a,b$, not both zero."],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 1.1; Ch.8 Theorem 1.2; Ch.8 Corollary 1.3; Ch.8 Corollary 1.4",
         "book_refs": ["c8_thm_1_1", "c8_thm_1_2", "c8_cor_1_3", "c8_cor_1_4"],
         "metadata": {
@@ -2971,12 +2991,12 @@
         "label": "Fundamental Theorem of Arithmetic",
         "kind": "theorem",
         "domain": "dirichlet",
-        "statement": "Every integer greater than \\(1\\) factors uniquely into primes.",
-        "formal_statement": "For every integer \\(n>1\\), there exist primes \\(p_1<\\cdots<p_k\\) and positive integers \\(\\alpha_1,\\dots,\\alpha_k\\) such that \\(n=p_1^{\\alpha_1}\\cdots p_k^{\\alpha_k}\\). This factorization is unique.",
+        "statement": "Every integer greater than $1$ factors uniquely into primes.",
+        "formal_statement": "For every integer $n>1$, there exist primes $p_1<\\cdots<p_k$ and positive integers $\\alpha_1,\\dots,\\alpha_k$ such that $n=p_1^{\\alpha_1}\\cdots p_k^{\\alpha_k}$. This factorization is unique.",
         "definition": null,
         "intuition": "Primes are the multiplicative atoms of the integers. Unique factorization lets analytic sums over integers become products over primes.",
         "proof": null,
-        "notation": "\\(n=\\prod_{p}p^{\\alpha_p}\\)",
+        "notation": "$n=\\prod_{p}p^{\\alpha_p}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["euclid_algorithm"]
@@ -3004,11 +3024,11 @@
         "kind": "theorem",
         "domain": "dirichlet",
         "statement": "There are infinitely many primes.",
-        "formal_statement": "If \\(p_1,\\dots,p_k\\) are finitely many primes, then any prime divisor of \\(p_1\\cdots p_k+1\\) is not among \\(p_1,\\dots,p_k\\). Hence no finite list contains all primes.",
+        "formal_statement": "If $p_1,\\dots,p_k$ are finitely many primes, then any prime divisor of $p_1\\cdots p_k+1$ is not among $p_1,\\dots,p_k$. Hence no finite list contains all primes.",
         "definition": null,
         "intuition": "Any alleged complete list of primes manufactures a new number that escapes divisibility by every prime on the list.",
         "proof": null,
-        "notation": "\\(|\\{p:p\\text{ prime}\\}|=\\infty\\)",
+        "notation": "$|\\{p:p\\text{ prime}\\}|=\\infty$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fundamental_arithmetic"]
@@ -3034,11 +3054,11 @@
         "kind": "theorem",
         "domain": "dirichlet",
         "statement": "The zeta function factors into local contributions from each prime.",
-        "formal_statement": "For \\(\\operatorname{Re}s>1\\), \\(\\zeta(s)=\\sum_{n=1}^{\\infty}n^{-s}=\\prod_{p}(1-p^{-s})^{-1}\\), with absolute convergence justifying the rearrangement.",
+        "formal_statement": "For $\\operatorname{Re}s>1$, $\\zeta(s)=\\sum_{n=1}^{\\infty}n^{-s}=\\prod_{p}(1-p^{-s})^{-1}$, with absolute convergence justifying the rearrangement.",
         "definition": null,
         "intuition": "Unique factorization turns the sum over all integers into independent geometric series over primes. This is where arithmetic becomes analysis.",
         "proof": null,
-        "notation": "\\(\\zeta(s)=\\prod_p(1-p^{-s})^{-1}\\)",
+        "notation": "$\\zeta(s)=\\prod_p(1-p^{-s})^{-1}$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -3053,7 +3073,7 @@
           "dirichlet_l_function"
         ],
         "assumptions": [
-          "Initially valid only in the half-plane \\(\\operatorname{Re}s>1\\)."
+          "Initially valid only in the half-plane $\\operatorname{Re}s>1$."
         ],
         "ref": "Stein–Shakarchi: Ch.8 Lemma 1.8; Ch.8 Proposition 1.9; Ch.8 Theorem 1.10; Ch.8 Proposition 3.2",
         "book_refs": [
@@ -3074,11 +3094,11 @@
         "kind": "theorem",
         "domain": "dirichlet",
         "statement": "The reciprocal sum over the primes diverges.",
-        "formal_statement": "\\(\\sum_p\\frac1p=\\infty\\). One proof takes logarithms of the Euler product and compares \\(\\log\\zeta(s)\\) as \\(s\\to1^+\\).",
+        "formal_statement": "$\\sum_p\\frac1p=\\infty$. One proof takes logarithms of the Euler product and compares $\\log\\zeta(s)$ as $s\\to1^+$.",
         "definition": null,
         "intuition": "There are not merely infinitely many primes; they are numerous enough that their reciprocal weights still accumulate without bound.",
         "proof": null,
-        "notation": "\\(\\sum_p 1/p=\\infty\\)",
+        "notation": "$\\sum_p 1/p=\\infty$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["euler_product", "riemann_zeta_function"]
@@ -3101,12 +3121,12 @@
         "label": "Residue Class Modulo q",
         "kind": "definition",
         "domain": "dirichlet",
-        "statement": "Integers are grouped by having the same remainder modulo \\(q\\).",
-        "formal_statement": "For \\(q\\ge2\\), \\(a\\equiv b\\pmod q\\) means \\(q\\mid(a-b)\\). The residue class of \\(a\\) is \\([a]_q=\\{n\\in\\mathbb Z:n\\equiv a\\pmod q\\}\\).",
+        "statement": "Integers are grouped by having the same remainder modulo $q$.",
+        "formal_statement": "For $q\\ge2$, $a\\equiv b\\pmod q$ means $q\\mid(a-b)$. The residue class of $a$ is $[a]_q=\\{n\\in\\mathbb Z:n\\equiv a\\pmod q\\}$.",
         "definition": null,
         "intuition": "A residue class is one lane in modular arithmetic. Dirichlet’s theorem asks whether each reduced lane contains infinitely many primes.",
         "proof": null,
-        "notation": "\\(a\\equiv b\\pmod q\\)",
+        "notation": "$a\\equiv b\\pmod q$",
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
@@ -3125,12 +3145,12 @@
         "label": "Euler Phi Function",
         "kind": "definition",
         "domain": "dirichlet",
-        "statement": "Euler’s phi function counts the invertible residue classes modulo \\(q\\).",
-        "formal_statement": "\\(\\varphi(q)=| (\\mathbb Z/q\\mathbb Z)^\\times |=|\\{1\\le a\\le q:\\gcd(a,q)=1\\}|\\).",
+        "statement": "Euler’s phi function counts the invertible residue classes modulo $q$.",
+        "formal_statement": "$\\varphi(q)=| (\\mathbb Z/q\\mathbb Z)^\\times |=|\\{1\\le a\\le q:\\gcd(a,q)=1\\}|$.",
         "definition": null,
-        "intuition": "The number \\(\\varphi(q)\\) is the size of the frequency system used by Dirichlet characters modulo \\(q\\).",
+        "intuition": "The number $\\varphi(q)$ is the size of the frequency system used by Dirichlet characters modulo $q$.",
         "proof": null,
-        "notation": "\\(\\varphi(q)\\)",
+        "notation": "$\\varphi(q)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["residue_class_modulo", "euclid_algorithm"]
@@ -3152,18 +3172,20 @@
         "kind": "structure",
         "domain": "dirichlet",
         "statement": "The Dirichlet series whose Euler product encodes the primes.",
-        "formal_statement": "For \\(\\operatorname{Re}s>1\\), \\(\\zeta(s)=\\sum_{n=1}^{\\infty}n^{-s}\\). It has Euler product \\(\\zeta(s)=\\prod_p(1-p^{-s})^{-1}\\).",
+        "formal_statement": "For $\\operatorname{Re}s>1$, $\\zeta(s)=\\sum_{n=1}^{\\infty}n^{-s}$. It has Euler product $\\zeta(s)=\\prod_p(1-p^{-s})^{-1}$.",
         "definition": null,
         "intuition": "The zeta function packages all positive integers into one analytic object; unique factorization then rewrites it as a product over primes.",
         "proof": null,
-        "notation": "\\(\\zeta(s)\\)",
+        "notation": "$\\zeta(s)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fundamental_arithmetic"]
         },
         "outgoing_relations": [],
         "related": ["euler_product", "primes_diverge"],
-        "assumptions": [],
+        "assumptions": [
+          "The displayed Dirichlet series and Euler product are valid for $\\operatorname{Re}s>1$."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -3177,12 +3199,12 @@
         "label": "Dirichlet Character",
         "kind": "definition",
         "domain": "dirichlet",
-        "statement": "A Dirichlet character is a group character modulo \\(q\\), extended by zero on non-coprime integers.",
-        "formal_statement": "Modulo \\(q\\), a Dirichlet character \\(\\chi:\\mathbb Z\\to\\mathbb C\\) is \\(q\\)-periodic, completely multiplicative, agrees with a character on \\((\\mathbb Z/q\\mathbb Z)^\\times\\), and satisfies \\(\\chi(n)=0\\) when \\(\\gcd(n,q)>1\\). For \\(\\gcd(a,q)=1\\), \\(\\frac1{\\varphi(q)}\\sum_{\\chi\\bmod q}\\overline{\\chi(a)}\\chi(n)\\) detects the reduced residue class \\(n\\equiv a\\pmod q\\).",
+        "statement": "A Dirichlet character is a group character modulo $q$, extended by zero on non-coprime integers.",
+        "formal_statement": "Modulo $q$, a Dirichlet character $\\chi:\\mathbb Z\\to\\mathbb C$ is $q$-periodic, completely multiplicative, agrees with a character on $(\\mathbb Z/q\\mathbb Z)^\\times$, and satisfies $\\chi(n)=0$ when $\\gcd(n,q)>1$. For $\\gcd(a,q)=1$, $\\frac1{\\varphi(q)}\\sum_{\\chi\\bmod q}\\overline{\\chi(a)}\\chi(n)$ detects the reduced residue class $n\\equiv a\\pmod q$.",
         "definition": null,
         "intuition": "Dirichlet characters are multiplicative Fourier modes for reduced residue classes. They convert congruence conditions into character sums.",
         "proof": null,
-        "notation": "\\(\\chi\\bmod q\\)",
+        "notation": "$\\chi\\bmod q$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -3198,7 +3220,7 @@
           "dirichlet_primes"
         ],
         "assumptions": [
-          "Characters are extended by zero away from integers coprime to \\(q\\)."
+          "Characters are extended by zero away from integers coprime to $q$."
         ],
         "ref": "Stein–Shakarchi: Ch.8 Lemma 2.2; Ch.8 Proposition 3.3",
         "book_refs": ["c8_lem_2_2", "c8_prop_3_3"],
@@ -3214,11 +3236,11 @@
         "kind": "structure",
         "domain": "dirichlet",
         "statement": "A Dirichlet L-function is the zeta function twisted by a Dirichlet character.",
-        "formal_statement": "For \\(\\operatorname{Re}s>1\\), \\(L(s,\\chi)=\\sum_{n=1}^{\\infty}\\chi(n)n^{-s}=\\prod_p(1-\\chi(p)p^{-s})^{-1}\\). For a nonprincipal character, \\(L(s,\\chi)\\) has a finite value at \\(s=1\\) by analytic continuation or Abel limiting.",
+        "formal_statement": "For $\\operatorname{Re}s>1$, $L(s,\\chi)=\\sum_{n=1}^{\\infty}\\chi(n)n^{-s}=\\prod_p(1-\\chi(p)p^{-s})^{-1}$. For a nonprincipal character, $L(s,\\chi)$ has a finite value at $s=1$ by analytic continuation or Abel limiting.",
         "definition": null,
-        "intuition": "The character twist filters integers, and especially primes, by residue class. The behavior near \\(s=1\\) is the analytic lever in Dirichlet’s theorem.",
+        "intuition": "The character twist filters integers, and especially primes, by residue class. The behavior near $s=1$ is the analytic lever in Dirichlet’s theorem.",
         "proof": null,
-        "notation": "\\(L(s,\\chi)\\)",
+        "notation": "$L(s,\\chi)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -3234,7 +3256,7 @@
           "l_function_nonvanishing"
         ],
         "assumptions": [
-          "Euler product identity is initially valid for \\(\\operatorname{Re}s>1\\). The principal character gives a zeta-like pole at \\(s=1\\)."
+          "Euler product identity is initially valid for $\\operatorname{Re}s>1$. The principal character gives a zeta-like pole at $s=1$."
         ],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 2.4; Ch.8 Proposition 3.1; Ch.8 Proposition 3.4; Ch.8 Lemma 3.5; Ch.8 Proposition 3.6",
         "book_refs": [
@@ -3255,12 +3277,12 @@
         "label": "Non-Vanishing of L(1,χ)",
         "kind": "theorem",
         "domain": "dirichlet",
-        "statement": "Nonprincipal Dirichlet L-functions do not vanish at \\(s=1\\).",
-        "formal_statement": "If \\(\\chi\\) is a nonprincipal Dirichlet character modulo \\(q\\), then \\(L(1,\\chi)\\ne0\\).",
+        "statement": "Nonprincipal Dirichlet L-functions do not vanish at $s=1$.",
+        "formal_statement": "If $\\chi$ is a nonprincipal Dirichlet character modulo $q$, then $L(1,\\chi)\\ne0$.",
         "definition": null,
         "intuition": "The character decomposition of residue classes would fail to force primes in every class if these values could vanish. Non-vanishing blocks that cancellation.",
         "proof": null,
-        "notation": "\\(L(1,\\chi)\\ne0\\)",
+        "notation": "$L(1,\\chi)\\ne0$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["dirichlet_l_function", "dirichlet_character"]
@@ -3268,7 +3290,7 @@
         "outgoing_relations": [],
         "related": ["dirichlet_l_function", "dirichlet_primes"],
         "assumptions": [
-          "The principal character is excluded; its \\(L\\)-function has a pole at \\(s=1\\), not a finite nonzero value."
+          "The principal character is excluded; its $L$-function has a pole at $s=1$, not a finite nonzero value."
         ],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 3.7; Ch.8 Theorem 2.3; Ch.8 Lemma 3.8; Ch.8 Lemma 3.9; Ch.8 Proposition 3.10; Ch.8 Proposition 3.11; Ch.8 Proposition 3.13; Ch.8 Theorem 3.12; Ch.8 Lemma 3.14; Ch.8 Lemma 3.15",
         "book_refs": [
@@ -3295,11 +3317,11 @@
         "kind": "definition",
         "domain": "foundations",
         "statement": "The almost-everywhere version of a maximum size.",
-        "formal_statement": "For a measurable function \\(f\\), \\(\\operatorname*{ess\\,sup}|f|\\) is the least \\(M\\in[0,\\infty]\\) such that \\(|f(x)|\\le M\\) for almost every \\(x\\).",
+        "formal_statement": "For a measurable function $f$, $\\operatorname*{ess\\,sup}|f|$ is the least $M\\in[0,\\infty]$ such that $|f(x)|\\le M$ for almost every $x$.",
         "definition": null,
-        "intuition": "It ignores values on sets of measure zero, so it is the correct maximum-size notion for \\(L^\\infty\\).",
+        "intuition": "It ignores values on sets of measure zero, so it is the correct maximum-size notion for $L^\\infty$.",
         "proof": null,
-        "notation": "\\(\\operatorname*{ess\\,sup}|f|\\)",
+        "notation": "$\\operatorname*{ess\\,sup}|f|$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["almost_everywhere", "lebesgue_integral"]
@@ -3321,18 +3343,14 @@
         "kind": "structure",
         "domain": "foundations",
         "statement": "Absolutely integrable functions on the real line.",
-        "formal_statement": "\\(L^1(\\mathbb R)=\\{f:\\int_{\\mathbb R}|f(x)|\\,dx<\\infty\\}\\), with functions identified if they agree almost everywhere.",
+        "formal_statement": "$L^1(\\mathbb R)=\\{f:\\int_{\\mathbb R}|f(x)|\\,dx<\\infty\\}$, with functions identified if they agree almost everywhere.",
         "definition": null,
         "intuition": "This is the natural minimal setting where the Fourier transform integral is defined as an absolutely convergent integral.",
         "proof": null,
-        "notation": "\\(L^1(\\mathbb R),\\ \\|f\\|_1\\)",
+        "notation": "$L^1(\\mathbb R),\\ \\|f\\|_1$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "lp_space",
-            "lebesgue_integral",
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["lebesgue_integral", "almost_everywhere"]
         },
         "outgoing_relations": [],
         "related": ["fourier_transform", "lp_space"],
@@ -3353,18 +3371,14 @@
         "kind": "structure",
         "domain": "foundations",
         "statement": "Square-integrable functions on the real line.",
-        "formal_statement": "\\(L^2(\\mathbb R)=\\{f:\\int_{\\mathbb R}|f(x)|^2\\,dx<\\infty\\}\\), modulo equality almost everywhere, with inner product \\(\\langle f,g\\rangle=\\int_{\\mathbb R}f(x)\\overline{g(x)}\\,dx\\).",
+        "formal_statement": "$L^2(\\mathbb R)=\\{f:\\int_{\\mathbb R}|f(x)|^2\\,dx<\\infty\\}$, modulo equality almost everywhere, with inner product $\\langle f,g\\rangle=\\int_{\\mathbb R}f(x)\\overline{g(x)}\\,dx$.",
         "definition": null,
         "intuition": "This is the energy space for the Fourier transform. Plancherel says the transform preserves this energy exactly.",
         "proof": null,
-        "notation": "\\(L^2(\\mathbb R),\\ \\|f\\|_2,\\ \\langle f,g\\rangle\\)",
+        "notation": "$L^2(\\mathbb R),\\ \\|f\\|_2,\\ \\langle f,g\\rangle$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "lp_space",
-            "inner_product_space",
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["inner_product_space", "almost_everywhere"]
         },
         "outgoing_relations": [],
         "related": ["fourier_transform", "plancherel_theorem"],
@@ -3385,11 +3399,11 @@
         "kind": "definition",
         "domain": "foundations",
         "statement": "The region where a function or distribution is nonzero.",
-        "formal_statement": "For a continuous function, \\(\\operatorname{supp}f=\\overline{\\{x:f(x)\\ne0\\}}\\). For measurable functions, support is usually understood up to almost-everywhere changes.",
+        "formal_statement": "For a continuous function, $\\operatorname{supp}f=\\overline{\\{x:f(x)\\ne0\\}}$. For measurable functions, support is usually understood up to almost-everywhere changes.",
         "definition": null,
         "intuition": "Support tells where an object lives. Frequency support tells which waves are present.",
         "proof": null,
-        "notation": "\\(\\operatorname{supp}f\\)",
+        "notation": "$\\operatorname{supp}f$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["almost_everywhere"]
@@ -3411,18 +3425,20 @@
         "kind": "definition",
         "domain": "discrete",
         "statement": "The interpolation kernel in the sampling theorem.",
-        "formal_statement": "\\(\\operatorname{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}\\) for \\(t\\ne0\\), with \\(\\operatorname{sinc}(0)=1\\).",
+        "formal_statement": "$\\operatorname{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}$ for $t\\ne0$, with $\\operatorname{sinc}(0)=1$.",
         "definition": null,
         "intuition": "Sinc is the ideal reconstruction pulse: it equals one at its own sample point and zero at the other integer sample points.",
         "proof": null,
-        "notation": "\\(\\operatorname{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}\\)",
+        "notation": "$\\operatorname{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_transform"]
+          "logical_dependency": []
         },
         "outgoing_relations": [],
         "related": ["sampling_theorem"],
-        "assumptions": [],
+        "assumptions": [
+          "This graph uses the normalized sinc convention $\\operatorname{sinc}(t)=\\sin(\\pi t)/(\\pi t)$."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -3437,16 +3453,20 @@
         "kind": "definition",
         "domain": "transform",
         "statement": "A complex function holomorphic on the whole complex plane.",
-        "formal_statement": "A function \\(F:\\mathbb C\\to\\mathbb C\\) is entire if it is complex-differentiable at every point of \\(\\mathbb C\\).",
+        "formal_statement": "A function $F:\\mathbb C\\to\\mathbb C$ is entire if it is complex-differentiable at every point of $\\mathbb C$.",
         "definition": null,
         "intuition": "Entire functions are globally analytic. Paley-Wiener connects compact frequency support with this strong complex-analytic regularity.",
         "proof": null,
-        "notation": "\\(F\\text{ entire}\\)",
+        "notation": "$F\\text{ entire}$",
         "proof_dependencies": [],
-        "dependencies": {},
+        "dependencies": {
+          "logical_dependency": []
+        },
         "outgoing_relations": [],
         "related": ["paley_wiener"],
-        "assumptions": [],
+        "assumptions": [
+          "This is a complex-analysis prerequisite used only where analytic continuation matters."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -3461,11 +3481,11 @@
         "kind": "notation",
         "domain": "transform",
         "statement": "The sign and 2π-normalization used for the Fourier transform.",
-        "formal_statement": "\\(\\hat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx\\), with inverse \\(f(x)=\\int_{\\mathbb R}\\hat f(\\xi)e^{2\\pi i x\\xi}\\,d\\xi\\) when inversion is valid.",
+        "formal_statement": "$\\hat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx$, with inverse $f(x)=\\int_{\\mathbb R}\\hat f(\\xi)e^{2\\pi i x\\xi}\\,d\\xi$ when inversion is valid.",
         "definition": null,
         "intuition": "Fourier constants are bookkeeping with teeth. Fixing the convention prevents sign and 2π errors across inversion, Plancherel, PDEs, and uncertainty.",
         "proof": null,
-        "notation": "\\(\\hat f(\\xi)=\\int f(x)e^{-2\\pi i x\\xi}\\,dx\\)",
+        "notation": "$\\hat f(\\xi)=\\int f(x)e^{-2\\pi i x\\xi}\\,dx$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["complex_exponential"]
@@ -3491,11 +3511,11 @@
         "kind": "definition",
         "domain": "transform",
         "statement": "The centered second moment measuring spread.",
-        "formal_statement": "For a normalized density \\(\\rho\\), \\(\\mu=\\int x\\rho(x)\\,dx\\) and \\(\\Delta_x^2=\\int (x-\\mu)^2\\rho(x)\\,dx\\). In uncertainty estimates, \\(\\rho(x)=|f(x)|^2/\\|f\\|_2^2\\).",
+        "formal_statement": "For a normalized density $\\rho$, $\\mu=\\int x\\rho(x)\\,dx$ and $\\Delta_x^2=\\int (x-\\mu)^2\\rho(x)\\,dx$. In uncertainty estimates, $\\rho(x)=|f(x)|^2/\\|f\\|_2^2$.",
         "definition": null,
         "intuition": "The uncertainty principle is about spread around the center of mass, not just raw distance from zero.",
         "proof": null,
-        "notation": "\\(\\Delta_x,\\ \\Delta_\\xi\\)",
+        "notation": "$\\Delta_x,\\ \\Delta_\\xi$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["l2_space_r"]
@@ -3690,17 +3710,6 @@
         "notes": ""
       },
       {
-        "id": "e_l1_space__requires__lp_space",
-        "source": "l1_space",
-        "target": "lp_space",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
         "id": "e_l1_space__requires__lebesgue_integral",
         "source": "l1_space",
         "target": "lebesgue_integral",
@@ -3715,17 +3724,6 @@
         "id": "e_l1_space__requires__almost_everywhere",
         "source": "l1_space",
         "target": "almost_everywhere",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_l2_space__requires__lp_space",
-        "source": "l2_space",
-        "target": "lp_space",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -3921,6 +3919,17 @@
         "notes": ""
       },
       {
+        "id": "e_parseval_identity__requires__orthonormal_system",
+        "source": "parseval_identity",
+        "target": "orthonormal_system",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
         "id": "e_riemann_lebesgue__requires__fourier_coefficient",
         "source": "riemann_lebesgue",
         "target": "fourier_coefficient",
@@ -4042,9 +4051,9 @@
         "notes": ""
       },
       {
-        "id": "e_decay_smoothness__requires__term_differentiation",
+        "id": "e_decay_smoothness__requires__fourier_series",
         "source": "decay_smoothness",
-        "target": "term_differentiation",
+        "target": "fourier_series",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -4108,17 +4117,6 @@
         "notes": ""
       },
       {
-        "id": "e_fejer_kernel__requires__good_kernel",
-        "source": "fejer_kernel",
-        "target": "good_kernel",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
         "id": "e_fejer_kernel__requires__dirichlet_kernel",
         "source": "fejer_kernel",
         "target": "dirichlet_kernel",
@@ -4133,17 +4131,6 @@
         "id": "e_fejer_kernel__requires__cesaro_summation",
         "source": "fejer_kernel",
         "target": "cesaro_summation",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_poisson_kernel__requires__good_kernel",
-        "source": "poisson_kernel",
-        "target": "good_kernel",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -4636,17 +4623,6 @@
         "notes": ""
       },
       {
-        "id": "e_gaussian_transform__requires__schwartz_space",
-        "source": "gaussian_transform",
-        "target": "schwartz_space",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
         "id": "e_gaussian_transform__requires__fourier_transform_convention",
         "source": "gaussian_transform",
         "target": "fourier_transform_convention",
@@ -4779,6 +4755,17 @@
         "notes": ""
       },
       {
+        "id": "e_fourier_transform_rd__requires__l1_space_r",
+        "source": "fourier_transform_rd",
+        "target": "l1_space_r",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
         "id": "e_differentiation_rule__requires__fourier_transform",
         "source": "differentiation_rule",
         "target": "fourier_transform",
@@ -4823,9 +4810,9 @@
         "notes": ""
       },
       {
-        "id": "e_dirac_delta__requires__tempered_distribution",
+        "id": "e_dirac_delta__requires__test_function",
         "source": "dirac_delta",
-        "target": "tempered_distribution",
+        "target": "test_function",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -5340,20 +5327,9 @@
         "notes": ""
       },
       {
-        "id": "e_signal_filtering__requires__fft",
+        "id": "e_signal_filtering__requires__fourier_transform",
         "source": "signal_filtering",
-        "target": "fft",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_signal_filtering__requires__dct",
-        "source": "signal_filtering",
-        "target": "dct",
+        "target": "fourier_transform",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -5439,6 +5415,28 @@
         "notes": ""
       },
       {
+        "id": "e_dominated_convergence__requires__l1_space",
+        "source": "dominated_convergence",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dominated_convergence__requires__almost_everywhere",
+        "source": "dominated_convergence",
+        "target": "almost_everywhere",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
         "id": "e_fubini_tonelli__requires__lebesgue_integral",
         "source": "fubini_tonelli",
         "target": "lebesgue_integral",
@@ -5450,9 +5448,31 @@
         "notes": ""
       },
       {
+        "id": "e_fubini_tonelli__requires__l1_space",
+        "source": "fubini_tonelli",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
         "id": "e_real_fourier_series__requires__fourier_series",
         "source": "real_fourier_series",
         "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_real_fourier_series__requires__complex_exponential",
+        "source": "real_fourier_series",
+        "target": "complex_exponential",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -5497,17 +5517,6 @@
         "id": "e_localization_principle__requires__l1_space",
         "source": "localization_principle",
         "target": "l1_space",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_term_differentiation__requires__decay_smoothness",
-        "source": "term_differentiation",
-        "target": "decay_smoothness",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -6418,17 +6427,6 @@
         "notes": ""
       },
       {
-        "id": "e_l1_space_r__requires__lp_space",
-        "source": "l1_space_r",
-        "target": "lp_space",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
         "id": "e_l1_space_r__requires__lebesgue_integral",
         "source": "l1_space_r",
         "target": "lebesgue_integral",
@@ -6443,17 +6441,6 @@
         "id": "e_l1_space_r__requires__almost_everywhere",
         "source": "l1_space_r",
         "target": "almost_everywhere",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_l2_space_r__requires__lp_space",
-        "source": "l2_space_r",
-        "target": "lp_space",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -6487,17 +6474,6 @@
         "id": "e_support_of_function__requires__almost_everywhere",
         "source": "support_of_function",
         "target": "almost_everywhere",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_sinc_function__requires__fourier_transform",
-        "source": "sinc_function",
-        "target": "fourier_transform",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
