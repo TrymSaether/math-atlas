@@ -6,6 +6,7 @@ import { useStore } from "../store";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
+import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { ThemedDiagram } from "./ThemedDiagram";
@@ -102,8 +103,10 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const visibleUsed = showAllUsed ? usedBy : usedBy.slice(0, USED_BY_INITIAL);
   const hiddenUsedCount = usedBy.length - visibleUsed.length;
 
-  const statement = node.originalText.trim();
-  const formalStatement = node.formalStatement.trim();
+  const statement = nodeStatement(node);
+  const formalStatement = nodeFormalStatement(node);
+  const definition = nodeDefinition(node, [statement, formalStatement]);
+  const formula = nodeFormula(node, [statement, formalStatement, definition]);
   const explanation = node.explanation.trim();
   const solution = node.solution.trim();
   const proof = node.proof.trim();
@@ -211,7 +214,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
           </section>
         )}
 
-        {formalStatement && (
+        {formalStatement && formalStatement !== statement && (
           <section id="sec-formal">
             <Facet label="Formal statement" toneColor={tone.color}>
               <div
@@ -219,6 +222,32 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
                 style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
               >
                 <MathText text={formalStatement} asBlock />
+              </div>
+            </Facet>
+          </section>
+        )}
+
+        {definition && (
+          <section id="sec-definition">
+            <Facet label="Definition" toneColor={tone.color}>
+              <div
+                className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
+                style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
+              >
+                <MathText text={definition} asBlock />
+              </div>
+            </Facet>
+          </section>
+        )}
+
+        {formula && (
+          <section id="sec-formula">
+            <Facet label="Formula" toneColor={tone.color}>
+              <div
+                className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
+                style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
+              >
+                <MathText text={formula} asBlock />
               </div>
             </Facet>
           </section>

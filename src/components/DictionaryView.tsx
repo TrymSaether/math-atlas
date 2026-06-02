@@ -7,6 +7,7 @@ import type { GraphNode } from "../types";
 import { MathText, MathProse } from "../lib/katex";
 import { KIND_LABEL } from "../types";
 import { getDomainTone } from "../lib/colors";
+import { nodeDefinition, nodeFormula } from "../lib/nodeContent";
 import {
   KIND_ORDER,
   dictionaryEntries,
@@ -194,6 +195,8 @@ function DictionaryCard({
   const tone = getDomainTone(entry.domainId);
   const statement = entryStatement(entry);
   const formalStatement = entryFormalStatement(entry);
+  const definition = nodeDefinition(entry, [statement, formalStatement]);
+  const formula = nodeFormula(entry, [statement, formalStatement, definition]);
   const related = entry.related
     .map((id) => map.nodeById.get(id))
     .filter((n): n is GraphNode => Boolean(n));
@@ -253,6 +256,16 @@ function DictionaryCard({
         {formalStatement && formalStatement !== statement && (
           <Facet label="Formal statement" muted>
             <MathProse text={formalStatement} asBlock />
+          </Facet>
+        )}
+        {definition && (
+          <Facet label="Definition" muted>
+            <MathProse text={definition} asBlock />
+          </Facet>
+        )}
+        {formula && (
+          <Facet label="Formula" muted>
+            <MathProse text={formula} asBlock />
           </Facet>
         )}
         {entry.gloss && (

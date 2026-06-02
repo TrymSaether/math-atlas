@@ -6,21 +6,14 @@ import { useStore } from "../store";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
+import { nodeAnswerText, nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
 import type { GraphNode } from "../types";
 import { Spine, Facet, Proof, specimenMeta } from "./Specimen";
 import { ThemedDiagram } from "./ThemedDiagram";
 
 /** A node carries enough to drill if it has a title and at least one answer-side facet. */
 function answerText(n: GraphNode): string {
-  return (
-    n.originalText.trim() ||
-    n.gloss.trim() ||
-    n.formalStatement.trim() ||
-    n.explanation.trim() ||
-    n.solution.trim() ||
-    n.proof.trim() ||
-    n.example.trim()
-  );
+  return nodeAnswerText(n);
 }
 
 type Rating = "again" | "got";
@@ -348,8 +341,10 @@ function CardFront({ node, map, onFlip }: { node: GraphNode; map: LoadedMap; onF
 
 function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOpen: () => void }) {
   const tone = getDomainTone(node.domainId);
-  const statement = node.originalText.trim();
-  const formal = node.formalStatement.trim();
+  const statement = nodeStatement(node);
+  const formal = nodeFormalStatement(node);
+  const definition = nodeDefinition(node, [statement, formal]);
+  const formula = nodeFormula(node, [statement, formal, definition]);
   const gloss = node.gloss.trim();
   const explanation = node.explanation.trim();
   const solution = node.solution.trim();
@@ -386,13 +381,33 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
             <MathProse text={lead} />
           </Spine>
         )}
-        {statement && formal && (
+        {formal && formal !== lead && (
           <Facet label="Formal statement" toneColor={tone.color}>
             <div
               className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
               style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
             >
               <MathText text={formal} asBlock />
+            </div>
+          </Facet>
+        )}
+        {definition && (
+          <Facet label="Definition" toneColor={tone.color}>
+            <div
+              className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
+              style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
+            >
+              <MathText text={definition} asBlock />
+            </div>
+          </Facet>
+        )}
+        {formula && (
+          <Facet label="Formula" toneColor={tone.color}>
+            <div
+              className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
+              style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
+            >
+              <MathText text={formula} asBlock />
             </div>
           </Facet>
         )}

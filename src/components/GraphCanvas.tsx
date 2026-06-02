@@ -4,6 +4,7 @@ import type { LoadedMap } from "../data";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout } from "../lib/atlasLayout";
 import { getDomainTone } from "../lib/colors";
 import { bfsPath } from "../lib/graph";
+import { nodeSearchText } from "../lib/nodeContent";
 import { classifyEdge } from "../lib/relationStyle";
 import { categoryOf, type NodeCategory } from "../lib/nodeCategory";
 import { useStore } from "../store";
@@ -89,7 +90,7 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
         const haystack =
           searchScope === "title"
             ? `${node.title} ${node.kind}`.toLowerCase()
-            : `${node.title} ${node.kind} ${node.tags.join(" ")} ${node.formalStatement} ${node.originalText}`.toLowerCase();
+            : nodeSearchText(node);
         if (!haystack.includes(search)) return false;
       }
       return true;

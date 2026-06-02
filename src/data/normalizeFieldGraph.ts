@@ -26,6 +26,14 @@ function formalText(item: FieldItem): string {
   return item.formal_statement ?? "";
 }
 
+function definitionText(item: FieldItem): string {
+  return item.definition ?? "";
+}
+
+function formulaText(item: FieldItem): string {
+  return item.formula ?? "";
+}
+
 function formulaFromNotation(item: FieldItem): string {
   const notation = item.notation;
   if (!notation) return "";
@@ -109,6 +117,8 @@ export function normalizeFieldGraph(input: FieldJson): GraphData {
       topicCluster: domain.label,
       originalText: sourceText(item),
       formalStatement: formalText(item),
+      definitionText: definitionText(item),
+      formulaText: formulaText(item),
       mathematicalFormula: formulaFromNotation(item),
       explanation: item.intuition ?? "",
       solution: item.solution ?? "",

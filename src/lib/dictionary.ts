@@ -1,5 +1,6 @@
 import type { LoadedMap } from "../data";
 import type { GraphNode } from "../types";
+import { nodeAnswerText, nodeFormalStatement, nodeStatement } from "./nodeContent";
 
 /**
  * The dictionary is a field-agnostic projection of the active atlas map: every
@@ -34,7 +35,7 @@ export const KIND_ORDER: Record<string, number> = {
 export type DictSortMode = "alpha" | "section" | "kind";
 
 export function isDictionaryEntry(node: GraphNode): boolean {
-  return Boolean(node.gloss || node.diagramPath);
+  return Boolean(nodeAnswerText(node) || node.diagramPath);
 }
 
 export function dictionaryEntries(map: LoadedMap): GraphNode[] {
@@ -43,11 +44,11 @@ export function dictionaryEntries(map: LoadedMap): GraphNode[] {
 
 /** The reading-view statement, falling back through the available text fields. */
 export function entryStatement(node: GraphNode): string {
-  return node.originalText || node.formalStatement || node.explanation || "";
+  return nodeStatement(node);
 }
 
 export function entryFormalStatement(node: GraphNode): string {
-  return node.formalStatement || node.originalText || node.explanation || "";
+  return nodeFormalStatement(node);
 }
 
 export function chapterLabel(chapter: string): string {
