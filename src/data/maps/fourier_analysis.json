@@ -3605,6 +3605,413 @@
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
+      },
+      {
+        "id": "moderate_decrease",
+        "kind": "definition",
+        "domain": "foundations",
+        "label": "Functions of Moderate Decrease",
+        "statement": "Continuous functions on the line that decay at least like $1/x^2$; the working class on which the Fourier transform is first built.",
+        "formal_statement": "A continuous $f:\\mathbb R\\to\\mathbb C$ has \\textbf{moderate decrease} if there is $A>0$ with $|f(x)|\\le \\dfrac{A}{1+x^2}$ for all $x$. The class is written $\\mathcal M(\\mathbb R)$.",
+        "definition": "$$f\\in\\mathcal M(\\mathbb R)\\iff f\\in C(\\mathbb R)\\ \\text{and}\\ \\exists A>0:\\ |f(x)|\\le \\frac{A}{1+x^2}\\ \\ (\\forall x\\in\\mathbb R).$$",
+        "formula": null,
+        "notation": "$\\mathcal M(\\mathbb R)$",
+        "intuition": "Just enough decay to integrate freely: the integral, the Fourier transform, multiplication and translation all behave, yet no smoothness is assumed.",
+        "solution": null,
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [
+          "$\\mathcal M(\\mathbb R)\\subset L^1(\\mathbb R)\\cap L^2(\\mathbb R)$, since $1/(1+x^2)$ is both integrable and square-integrable."
+        ],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": ["l1_space_r"]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "schwartz_space",
+          "l2_space_r",
+          "ft_continuity",
+          "riemann_lebesgue"
+        ],
+        "ref": "Stein–Shakarchi: Ch.5 §1.1 (functions of moderate decrease)",
+        "metadata": {
+          "source": "Stein–Shakarchi: Ch.5 §1.1 (functions of moderate decrease)",
+          "syllabus_priority": "core",
+          "tags": ["foundation", "transform"]
+        }
+      },
+      {
+        "id": "heat_kernel_rd",
+        "kind": "object",
+        "domain": "transform",
+        "label": "Heat Kernel on R^d",
+        "statement": "The Gaussian convolution kernel that solves the heat equation in $\\mathbb R^d$; an approximate identity as $t\\to0^+$.",
+        "formal_statement": "For $t>0$, $\\mathcal H_t^{(d)}(x)=(4\\pi t)^{-d/2}e^{-|x|^2/(4t)}$ with $\\widehat{\\mathcal H_t^{(d)}}(\\xi)=e^{-4\\pi^2 t|\\xi|^2}$. Then $u(x,t)=(\\mathcal H_t^{(d)}*f)(x)$ solves $\\partial_t u=\\Delta u$ with $u(\\cdot,t)\\to f$ as $t\\to0^+$.",
+        "definition": "$$\\mathcal H_t^{(d)}(x)=\\frac{1}{(4\\pi t)^{d/2}}\\,e^{-|x|^2/(4t)},\\qquad \\widehat{\\mathcal H_t^{(d)}}(\\xi)=e^{-4\\pi^2 t|\\xi|^2}.$$",
+        "formula": null,
+        "notation": "$\\mathcal H_t^{(d)}$",
+        "intuition": "A product of one-dimensional Gaussians, one per coordinate; total mass $1$, concentrating at the origin as $t\\downarrow0$.",
+        "solution": null,
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [
+          "Separability: $\\mathcal H_t^{(d)}(x)=\\prod_{j=1}^d \\mathcal H_t^{(1)}(x_j)$, so all one-dimensional identities tensor up."
+        ],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "heat_kernel_line",
+            "fourier_transform_rd",
+            "gaussian_transform",
+            "good_kernel"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["heat_equation", "convolution", "wave_equation_rd"],
+        "ref": "Stein–Shakarchi: Ch.6 §2 (the heat kernel in R^d)",
+        "metadata": {
+          "source": "Stein–Shakarchi: Ch.6 §2 (the heat kernel in R^d)",
+          "syllabus_priority": "medium",
+          "tags": ["transform", "pde"]
+        }
+      },
+      {
+        "id": "absolute_uniform_convergence",
+        "kind": "theorem",
+        "domain": "convergence",
+        "label": "Absolute Coefficients ⟹ Uniform Convergence",
+        "statement": "If the Fourier coefficients are absolutely summable, the Fourier series converges absolutely and uniformly; for continuous $f$ the limit is $f$.",
+        "formal_statement": "If $\\sum_{n\\in\\mathbb Z}|\\hat f(n)|<\\infty$ then $\\sum_n \\hat f(n)e^{inx}$ converges absolutely and uniformly to a continuous limit $g$. If moreover $f\\in C(\\mathbb T)$ (or $f$ is continuous), then $g=f$, so $S_N[f]\\to f$ uniformly.",
+        "definition": null,
+        "formula": "$$\\sum_{n\\in\\mathbb Z}|\\hat f(n)|<\\infty\\ \\Longrightarrow\\ S_N[f]\\rightrightarrows g\\in C(\\mathbb T),\\quad\\text{and}\\quad f\\in C(\\mathbb T)\\Rightarrow g=f.$$",
+        "notation": "$S_N[f]\\rightrightarrows f$",
+        "intuition": "The Weierstrass M-test: bound each harmonic by $|\\hat f(n)|$; a summable bound forces uniform convergence. Uniqueness pins the limit to $f$.",
+        "solution": null,
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_series",
+            "fourier_coefficient",
+            "uniqueness_series",
+            "decay_smoothness"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "mean_square_convergence",
+          "dini_criterion",
+          "weierstrass_approximation"
+        ],
+        "ref": "Stein–Shakarchi: Ch.2 §1, Ch.2 Cor. 2.3–2.4 (Weierstrass M-test + uniqueness)",
+        "metadata": {
+          "source": "Stein–Shakarchi: Ch.2 §1, Ch.2 Cor. 2.3–2.4 (Weierstrass M-test + uniqueness)",
+          "syllabus_priority": "core",
+          "tags": ["convergence", "series"]
+        }
+      },
+      {
+        "id": "exam2025_p1a",
+        "kind": "exercise",
+        "domain": "series",
+        "label": "Exam 2025 · 1a — Triangular-wave coefficients",
+        "statement": "Compute the Fourier coefficients of the triangular wave $f(x)=1-|x|/\\pi$ on $[-\\pi,\\pi]$.",
+        "formal_statement": "Let $f$ be $2\\pi$-periodic with $f(x)=1-\\frac{|x|}{\\pi}$ for $x\\in[-\\pi,\\pi]$. Show that for $n\\neq0$, $\\ \\hat f(n)=\\frac{2}{\\pi^2 n^2}$ if $n$ is odd and $\\hat f(n)=0$ if $n$ is even.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Even + continuous + a single corner per half-period gives real coefficients decaying like $1/n^2$, with even harmonics annihilated by the symmetry $f(x+\\pi)$.",
+        "solution": "$f$ is the \\textbf{triangular wave}: even, continuous (note $f(\\pm\\pi)=0$, so the periodic extension has no jumps), piecewise linear with corners at integer multiples of $\\pi$. Because $f$ is even and real, $\\hat f(n)=\\hat f(-n)\\in\\mathbb R$ and the sine part of $e^{-inx}$ drops out:\n$$\\hat f(n)=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi}\\Big(1-\\tfrac{|x|}{\\pi}\\Big)\\cos(nx)\\,dx=\\frac1\\pi\\int_0^\\pi\\Big(1-\\tfrac{x}{\\pi}\\Big)\\cos(nx)\\,dx,$$\nwhere evenness folds $[-\\pi,\\pi]$ onto $[0,\\pi]$. For $n\\neq0$, $\\int_0^\\pi\\cos(nx)\\,dx=\\frac{\\sin(n\\pi)}{n}=0$, and integration by parts gives\n$$\\int_0^\\pi x\\cos(nx)\\,dx=\\Big[\\tfrac{x\\sin(nx)}{n}\\Big]_0^\\pi-\\frac1n\\int_0^\\pi\\sin(nx)\\,dx=\\frac{1}{n^2}\\big[\\cos(nx)\\big]_0^\\pi=\\frac{(-1)^n-1}{n^2}.$$\nHence\n$$\\hat f(n)=\\frac1\\pi\\Big(0-\\frac1\\pi\\cdot\\frac{(-1)^n-1}{n^2}\\Big)=\\frac{1}{\\pi^2}\\cdot\\frac{1-(-1)^n}{n^2}.$$\nFor $n$ even, $1-(-1)^n=0\\Rightarrow\\hat f(n)=0$; for $n$ odd, $1-(-1)^n=2\\Rightarrow\\hat f(n)=\\dfrac{2}{\\pi^2 n^2}$. $\\blacksquare$\n\n\\textbf{Remark.} The mean value is $\\hat f(0)=\\frac{1}{2\\pi}\\int_{-\\pi}^\\pi(1-|x|/\\pi)\\,dx=\\tfrac12$ — the average height of the triangle (used in 1c).",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_coefficient",
+            "periodic_function",
+            "complex_exponential"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["real_fourier_series", "decay_smoothness"],
+        "ref": "TMA4170 Final Exam, 30 May 2025, Problem 1a",
+        "metadata": {
+          "source": "TMA4170 Final Exam, 30 May 2025, Problem 1a",
+          "syllabus_priority": "core",
+          "tags": ["exam", "series"]
+        }
+      },
+      {
+        "id": "exam2025_p1b",
+        "kind": "exercise",
+        "domain": "series",
+        "label": "Exam 2025 · 1b — Uniform convergence",
+        "statement": "Prove the Fourier series of the triangular wave converges uniformly to $f$.",
+        "formal_statement": "With $f$ and $\\hat f$ as in 1a, prove that the Fourier series of $f$ converges uniformly to $f$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Continuity + a single corner ⟹ $1/n^2$ decay ⟹ absolutely summable coefficients ⟹ uniform convergence; uniqueness fixes the limit at $f$.",
+        "solution": "From 1a, $|\\hat f(n)|\\le \\dfrac{2}{\\pi^2 n^2}$ for $n\\neq0$, so the coefficients are \\textbf{absolutely summable}:\n$$\\sum_{n\\in\\mathbb Z}|\\hat f(n)|=\\tfrac12+\\frac{4}{\\pi^2}\\sum_{\\substack{n\\ge1\\\\ n\\ \\mathrm{odd}}}\\frac1{n^2}<\\infty$$\nby comparison with $\\sum 1/n^2$. Since $|\\hat f(n)e^{inx}|=|\\hat f(n)|$, the \\textbf{Weierstrass M-test} makes\n$$g(x):=\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$$\nconverge absolutely and uniformly on $\\mathbb R$; a uniform limit of continuous trigonometric polynomials is continuous, so $g\\in C(\\mathbb T)$.\n\nTo identify $g=f$: uniform convergence lets us integrate term by term, so for every $m$,\n$$\\hat g(m)=\\frac{1}{2\\pi}\\int_{-\\pi}^\\pi g(x)e^{-imx}\\,dx=\\sum_n\\hat f(n)\\cdot\\frac1{2\\pi}\\int_{-\\pi}^\\pi e^{i(n-m)x}\\,dx=\\hat f(m).$$\nThus $f$ and $g$ are both continuous with the same Fourier coefficients; by the uniqueness theorem (applied to $f-g$), $f\\equiv g$. Therefore $S_N[f]\\to f$ uniformly. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "absolute_uniform_convergence",
+            "uniqueness_series",
+            "decay_smoothness",
+            "fourier_series"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["riemann_lebesgue", "weierstrass_approximation"],
+        "ref": "TMA4170 Final Exam, 30 May 2025, Problem 1b",
+        "metadata": {
+          "source": "TMA4170 Final Exam, 30 May 2025, Problem 1b",
+          "syllabus_priority": "core",
+          "tags": ["exam", "series", "convergence"]
+        }
+      },
+      {
+        "id": "exam2025_p1c",
+        "kind": "exercise",
+        "domain": "series",
+        "label": "Exam 2025 · 1c — Sum 1/(2n+1)^4 = π⁴/96",
+        "statement": "Use Parseval to prove $\\sum_{n\\ge0}1/(2n+1)^4=\\pi^4/96$.",
+        "formal_statement": "With $f$ as in 1a, prove $\\displaystyle\\sum_{n=0}^\\infty \\frac{1}{(2n+1)^4}=\\frac{\\pi^4}{96}$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Parseval converts an integral of $f^2$ (easy: $1/3$) into a sum over coefficients; only odd harmonics survive, isolating the odd-index zeta value.",
+        "solution": "Apply \\textbf{Parseval's identity} $\\sum_{n}|\\hat f(n)|^2=\\frac{1}{2\\pi}\\int_{-\\pi}^\\pi|f|^2$.\n\n\\emph{Right side.} Using evenness and $u=1-x/\\pi$,\n$$\\frac{1}{2\\pi}\\int_{-\\pi}^\\pi\\Big(1-\\tfrac{|x|}\\pi\\Big)^2dx=\\frac1\\pi\\int_0^\\pi\\Big(1-\\tfrac{x}\\pi\\Big)^2dx=\\frac1\\pi\\cdot\\pi\\int_0^1u^2\\,du=\\frac13.$$\n\n\\emph{Left side.} With $\\hat f(0)=\\tfrac12$ and $\\hat f(\\pm n)=\\tfrac{2}{\\pi^2n^2}$ for odd $n$ (zero for even $n\\neq0$),\n$$\\sum_n|\\hat f(n)|^2=\\frac14+2\\sum_{\\substack{n\\ge1\\\\ n\\ \\mathrm{odd}}}\\Big(\\frac{2}{\\pi^2n^2}\\Big)^2=\\frac14+\\frac{8}{\\pi^4}\\sum_{k=0}^\\infty\\frac{1}{(2k+1)^4}.$$\n\nEquating, $\\frac14+\\frac{8}{\\pi^4}S=\\frac13$ with $S=\\sum_{k\\ge0}(2k+1)^{-4}$, so $\\frac{8}{\\pi^4}S=\\frac1{12}$ and\n$$\\boxed{\\ \\sum_{n=0}^\\infty\\frac{1}{(2n+1)^4}=\\frac{\\pi^4}{96}.\\ }$$\n\\textbf{Check.} $\\zeta(4)=\\frac{\\pi^4}{90}$; odd/even split gives $S=\\zeta(4)-\\frac{1}{16}\\zeta(4)=\\frac{15}{16}\\cdot\\frac{\\pi^4}{90}=\\frac{\\pi^4}{96}$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": ["parseval_identity", "fourier_coefficient"]
+        },
+        "outgoing_relations": [],
+        "related": ["riemann_zeta_function", "bessel_inequality"],
+        "ref": "TMA4170 Final Exam, 30 May 2025, Problem 1c",
+        "metadata": {
+          "source": "TMA4170 Final Exam, 30 May 2025, Problem 1c",
+          "syllabus_priority": "core",
+          "tags": ["exam", "series"]
+        }
+      },
+      {
+        "id": "exam2025_p2",
+        "kind": "exercise",
+        "domain": "convergence",
+        "label": "Exam 2025 · 2 — Modes of convergence (MC)",
+        "statement": "For four functions on the circle, decide which of: uniform / $L^2$ / pointwise-at-0 / Cesàro convergence hold.",
+        "formal_statement": "On the circle, with statements A (uniform $\\to f$), B ($L^2$ $\\to f$), C ($S[f](0)\\to f(0)=1$), D (Cesàro sum at $0$ equals $f(0)=1$), classify:\n(1) $f$ Riemann integrable, $\\lim_{x\\to0}f=f(0)=1$;\n(2) as (1) and $f'(0)$ exists;\n(3) $f\\in C(\\mathbb S)$, $f(0)=1$, $\\sum_n|\\hat f(n)|<\\infty$;\n(4) $f=\\mathbf 1_{[-\\pi,0]}$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "$L^2$ convergence is free for integrable $f$; pointwise/uniform need smoothness or absolute summability; at a jump everything converges to the midpoint, not the assigned value.",
+        "solution": "\\textbf{Three tools settle everything.} (i) \\emph{Mean-square convergence} holds for every Riemann-integrable $f$ — so \\textbf{B is true in all four rows}. (ii) \\emph{Absolutely summable coefficients} on a continuous $f$ ⟹ uniform (hence pointwise) convergence to $f$. (iii) \\emph{Pointwise/Fejér:} if $f$ is integrable and differentiable at $x_0$ then $S_N[f](x_0)\\to f(x_0)$; and (Fejér) if the one-sided limits $f(x_0^\\pm)$ exist then the Cesàro means converge to $\\tfrac12(f(x_0^+)+f(x_0^-))$. Crucially, \\emph{mere continuity at a point — or even everywhere — does not give pointwise or uniform convergence} (du Bois-Reymond).\n\n\\textbf{Row 1} (RI, continuous only at $0$): A ✗ ($f$ may be discontinuous elsewhere, and a uniform limit of continuous functions is continuous), B ✓, C ✗ (continuity at a point is not enough), D ✓ (Fejér: $f(0^\\pm)=1$). $\\Rightarrow$ \\textbf{B, D}.\n\n\\textbf{Row 2} (also $f'(0)$ exists): adds C ✓ (differentiability at $0$ forces $S_N(0)\\to f(0)=1$); A still ✗. $\\Rightarrow$ \\textbf{B, C, D}.\n\n\\textbf{Row 3} ($f$ continuous, $\\sum|\\hat f(n)|<\\infty$): uniform convergence to $f$, so A ✓, and then B, C ✓; a convergent series is Cesàro summable to the same value, D ✓. $\\Rightarrow$ \\textbf{A, B, C, D}.\n\n\\textbf{Row 4} ($f=\\mathbf 1_{[-\\pi,0]}$, a jump at $0$): $f(0^-)=1,\\ f(0^+)=0$. Both the partial sums (Dirichlet) and the Cesàro means (Fejér) converge to the average $\\tfrac12\\neq1$, so C ✗ and D ✗; A ✗ (discontinuous), B ✓. $\\Rightarrow$ \\textbf{B}.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "mean_square_convergence",
+            "fejer_theorem",
+            "cesaro_summation",
+            "dirichlet_conditions",
+            "pointwise_convergence",
+            "absolute_uniform_convergence"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["dubois_reymond", "dini_criterion", "gibbs_phenomenon"],
+        "ref": "TMA4170 Final Exam, 30 May 2025, Problem 2",
+        "metadata": {
+          "source": "TMA4170 Final Exam, 30 May 2025, Problem 2",
+          "syllabus_priority": "core",
+          "tags": ["exam", "convergence"]
+        }
+      },
+      {
+        "id": "exam2025_p3a",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Exam 2025 · 3a — sinc ∈ L² with box transform",
+        "statement": "Show the sinc function lies in $L^2(\\mathbb R)$ and has Fourier transform $\\chi_{[-1/2,1/2]}$.",
+        "formal_statement": "For $\\psi(x)=\\frac{\\sin(\\pi x)}{\\pi x}$ ($\\psi(0)=1$), show $\\psi\\in L^2(\\mathbb R)$ and $\\hat\\psi(\\xi)=\\chi_{[-1/2,1/2]}(\\xi)$ (transform convention $\\hat f(\\xi)=\\int f(x)e^{-2\\pi i x\\xi}dx$).",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Box and sinc are a Fourier pair; the box is the easy ($L^1$) side, and unitarity of $\\mathcal F$ on $L^2$ transports the identity back to the sinc.",
+        "solution": "\\textbf{$\\psi\\in L^2$.} $\\psi$ is continuous and $|\\psi(x)|^2=\\frac{\\sin^2(\\pi x)}{\\pi^2x^2}$ is bounded near $0$ (limit $1$); for $|x|\\ge1$, $|\\psi(x)|^2\\le\\frac{1}{\\pi^2x^2}$, which is integrable. Hence $\\int_{\\mathbb R}|\\psi|^2<\\infty$. (Note $\\psi\\notin L^1$: it decays only like $1/|x|$, so the transform must be taken in the $L^2$/Plancherel sense.)\n\n\\textbf{Identify $\\hat\\psi$.} Let $b:=\\chi_{[-1/2,1/2]}\\in L^1\\cap L^2$, even. Compute its transform directly:\n$$\\hat b(x)=\\int_{-1/2}^{1/2}e^{-2\\pi i x\\xi}\\,d\\xi=\\frac{e^{-\\pi ix}-e^{\\pi ix}}{-2\\pi ix}=\\frac{\\sin(\\pi x)}{\\pi x}=\\psi(x).$$\nSo $\\hat b=\\psi$. The Fourier transform extends to a \\textbf{unitary} map on $L^2$ with $\\mathcal F\\mathcal F\\,b=b(-\\,\\cdot)$ (double transform = reflection). Since $b$ is even, $b(-\\cdot)=b$, hence\n$$\\hat\\psi=\\mathcal F[\\hat b]=\\mathcal F\\mathcal F\\,b=b(-\\cdot)=b=\\chi_{[-1/2,1/2]}.\\qquad\\blacksquare$$\nEquivalently: $\\psi$ is the inverse transform of the unit box, so by inversion the forward transform of $\\psi$ is that box; membership $\\psi\\in L^2$ is exactly what makes Plancherel applicable despite $\\psi\\notin L^1$.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "sinc_function",
+            "fourier_transform",
+            "fourier_inversion",
+            "plancherel_theorem",
+            "l2_space_r"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["fourier_transform_convention", "band_limited"],
+        "ref": "TMA4170 Final Exam, 30 May 2025, Problem 3a",
+        "metadata": {
+          "source": "TMA4170 Final Exam, 30 May 2025, Problem 3a",
+          "syllabus_priority": "core",
+          "tags": ["exam", "transform"]
+        }
+      },
+      {
+        "id": "exam2025_p3b",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Exam 2025 · 3b — Shannon orthonormal sets",
+        "statement": "Show the integer translates of sinc, and their transforms, are orthonormal in $L^2(\\mathbb R)$.",
+        "formal_statement": "With $\\psi_k(x)=\\psi(x+k)$ and $\\hat\\psi_k=\\mathcal F[\\psi_k]$, show $\\{\\hat\\psi_k\\}_{k\\in\\mathbb Z}$ and $\\{\\psi_k\\}_{k\\in\\mathbb Z}$ are orthonormal sets in $L^2(\\mathbb R)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "On the frequency side the translates become pure exponentials on $[-1/2,1/2]$, whose orthonormality is classical; unitarity carries it back to the sincs.",
+        "solution": "Translation by $+k$ multiplies the transform by a phase:\n$$\\hat\\psi_k(\\xi)=\\mathcal F[\\psi(\\cdot+k)](\\xi)=e^{2\\pi i k\\xi}\\,\\hat\\psi(\\xi)=e^{2\\pi i k\\xi}\\,\\chi_{[-1/2,1/2]}(\\xi).$$\n\n\\textbf{$\\{\\hat\\psi_k\\}$ orthonormal.} For $k,\\ell\\in\\mathbb Z$,\n$$\\langle\\hat\\psi_k,\\hat\\psi_\\ell\\rangle=\\int_{-1/2}^{1/2}e^{2\\pi i(k-\\ell)\\xi}\\,d\\xi=\\frac{\\sin(\\pi(k-\\ell))}{\\pi(k-\\ell)}=\\delta_{k\\ell},$$\nthe classical orthonormality of $\\{e^{2\\pi i k\\xi}\\}$ on an interval of length $1$.\n\n\\textbf{$\\{\\psi_k\\}$ orthonormal.} The Fourier transform is \\textbf{unitary} on $L^2$ (Plancherel), so it preserves inner products:\n$$\\langle\\psi_k,\\psi_\\ell\\rangle_{L^2}=\\langle\\hat\\psi_k,\\hat\\psi_\\ell\\rangle_{L^2}=\\delta_{k\\ell}.\\qquad\\blacksquare$$\n\n\\textbf{Interpretation (Shannon sampling).} The $\\psi_k$ form an orthonormal basis of the Paley–Wiener space $\\mathrm{PW}_{1/2}=\\{f\\in L^2:\\hat f\\ \\text{supported in}\\ [-\\tfrac12,\\tfrac12]\\}$ of band-limited functions; on the transform side this is just the Fourier basis $e^{2\\pi i k\\xi}$ on the band, and the reconstruction $f(x)=\\sum_k f(-k)\\psi(x+k)$ is the sampling theorem.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "translation_modulation",
+            "plancherel_theorem",
+            "orthonormal_system",
+            "sinc_function"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["sampling_theorem", "band_limited", "paley_wiener"],
+        "ref": "TMA4170 Final Exam, 30 May 2025, Problem 3b",
+        "metadata": {
+          "source": "TMA4170 Final Exam, 30 May 2025, Problem 3b",
+          "syllabus_priority": "core",
+          "tags": ["exam", "transform"]
+        }
+      },
+      {
+        "id": "exam2025_p4",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Exam 2025 · 4 — FT mapping properties (MC)",
+        "statement": "Decide, for $f$ Schwartz / moderate-decrease / $L^2$ / a jump function, which target spaces $\\hat f$ lands in.",
+        "formal_statement": "Classify $\\hat f$ for each $f$ against: A ($\\hat f\\in C_0$), B ($\\hat f\\in C_m$, moderate decrease), C ($\\hat f\\in\\mathcal S$), D ($\\hat f\\in L^1$), E ($\\hat f\\in L^2$), where\n(1) $f\\in\\mathcal S(\\mathbb R)$; (2) $f\\in C_m(\\mathbb R)$; (3) $f\\in L^2(\\mathbb R)$; (4) $f(x)=x^{-2}\\chi_{[1,\\infty)}(x)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "L¹ buys continuity-and-decay (A); L² buys L² (E); rapid decay of $\\hat f$ (B, C, D) is bought only by smoothness of $f$ — a jump caps decay at $1/|\\xi|$.",
+        "solution": "\\textbf{Facts.} Riemann–Lebesgue: $f\\in L^1\\Rightarrow\\hat f\\in C_0$ (gives A). Plancherel: $f\\in L^2\\Rightarrow\\hat f\\in L^2$ (gives E). $\\mathcal F:\\mathcal S\\to\\mathcal S$ bijectively, and $\\mathcal S\\subset C_m\\subset L^1\\cap L^2$, $\\mathcal S\\subset C_0$. \\emph{Decay of $\\hat f$ is governed by smoothness of $f$}: a jump in $f$ ⟹ $\\hat f\\sim 1/|\\xi|$ only.\n\n\\textbf{Row 1} ($f\\in\\mathcal S$): $\\hat f\\in\\mathcal S$ (C ✓), and $\\mathcal S$ sits inside all the others, so \\textbf{A, B, C, D, E}.\n\n\\textbf{Row 2} ($f\\in C_m$): $C_m\\subset L^1\\Rightarrow$ A ✓ (R–L); $C_m\\subset L^2\\Rightarrow$ E ✓ (Plancherel). But moderate decrease says nothing about smoothness of $f$, so $\\hat f$ need not decay faster than $C_0$: B ✗, C ✗, D ✗. $\\Rightarrow$ \\textbf{A, E}.\n\n\\textbf{Row 3} ($f\\in L^2$ only): Plancherel gives E ✓; without $f\\in L^1$ there is no continuity/decay, so A, B, C, D ✗. $\\Rightarrow$ \\textbf{E}.\n\n\\textbf{Row 4} ($f=x^{-2}\\chi_{[1,\\infty)}$): $\\int_1^\\infty x^{-2}=1$ and $\\int_1^\\infty x^{-4}<\\infty$, so $f\\in L^1\\cap L^2$ ⟹ A ✓, E ✓. But $f$ has a jump at $x=1$; integrating by parts,\n$$\\hat f(\\xi)=\\frac{e^{-2\\pi i\\xi}}{2\\pi i\\xi}-\\frac{1}{\\pi i\\xi}\\int_1^\\infty x^{-3}e^{-2\\pi i x\\xi}\\,dx,$$\nso $\\hat f\\sim \\frac{1}{2\\pi|\\xi|}$. Since $1/|\\xi|$ is neither integrable nor of moderate decrease, B ✗, D ✗, C ✗. $\\Rightarrow$ \\textbf{A, E}.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "ft_continuity",
+            "plancherel_theorem",
+            "schwartz_space",
+            "moderate_decrease",
+            "decay_smoothness"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["riemann_lebesgue", "fourier_inversion"],
+        "ref": "TMA4170 Final Exam, 30 May 2025, Problem 4",
+        "metadata": {
+          "source": "TMA4170 Final Exam, 30 May 2025, Problem 4",
+          "syllabus_priority": "core",
+          "tags": ["exam", "transform"]
+        }
+      },
+      {
+        "id": "exam2025_p5",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Exam 2025 · 5 — Heisenberg core inequality",
+        "statement": "For Schwartz $\\phi$, prove $\\|\\phi\\|_2^2\\le 2\\|x\\phi\\|_2\\|\\phi'\\|_2$.",
+        "formal_statement": "For $\\phi\\in\\mathcal S(\\mathbb R)$ with $\\|\\phi\\|_2\\neq0$, show $\\|\\phi\\|_2^2\\le 2\\,\\|x\\phi\\|_2\\,\\|\\phi'\\|_2$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Integration by parts trades $\\|\\phi\\|_2^2$ for a product of position-spread $\\|x\\phi\\|_2$ and gradient-size $\\|\\phi'\\|_2$; Cauchy–Schwarz closes it — a function cannot be sharp in both position and frequency.",
+        "solution": "Differentiate $|\\phi|^2$: $\\ \\frac{d}{dx}|\\phi(x)|^2=\\phi'\\overline\\phi+\\phi\\overline{\\phi'}=2\\,\\mathrm{Re}\\big(\\overline{\\phi}\\,\\phi'\\big)$. Integrate $\\|\\phi\\|_2^2=\\int 1\\cdot|\\phi|^2$ by parts with $u=|\\phi|^2$, $v=x$:\n$$\\int_{\\mathbb R}|\\phi|^2\\,dx=\\Big[x|\\phi(x)|^2\\Big]_{-\\infty}^{\\infty}-\\int_{\\mathbb R}x\\,\\frac{d}{dx}|\\phi(x)|^2\\,dx.$$\nThe boundary term vanishes because $\\phi\\in\\mathcal S$ decays faster than any power, so $x|\\phi(x)|^2\\to0$. Therefore, using $-2\\,\\mathrm{Re}(z)\\le2|z|$ and then Cauchy–Schwarz on $|x\\phi|$ and $|\\phi'|$,\n$$\\|\\phi\\|_2^2=-2\\int_{\\mathbb R}x\\,\\mathrm{Re}\\big(\\overline\\phi\\,\\phi'\\big)\\,dx\\le 2\\int_{\\mathbb R}|x\\phi|\\,|\\phi'|\\,dx\\le 2\\,\\|x\\phi\\|_2\\,\\|\\phi'\\|_2.\\qquad\\blacksquare$$\n\n\\textbf{Why this is Heisenberg.} Plancherel gives $\\|\\phi'\\|_2=\\|\\widehat{\\phi'}\\|_2=\\|2\\pi i\\xi\\,\\hat\\phi\\|_2=2\\pi\\|\\xi\\hat\\phi\\|_2$, so\n$$\\|x\\phi\\|_2^2\\,\\|\\xi\\hat\\phi\\|_2^2\\ge\\frac{\\|\\phi\\|_2^4}{16\\pi^2},$$\nwhich, normalised to $\\|\\phi\\|_2=1$, is the uncertainty principle in the problem's header.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "uncertainty_principle",
+            "plancherel_theorem",
+            "schwartz_space",
+            "differentiation_rule"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["variance_standard_deviation", "gaussian_transform"],
+        "ref": "TMA4170 Final Exam, 30 May 2025, Problem 5",
+        "metadata": {
+          "source": "TMA4170 Final Exam, 30 May 2025, Problem 5",
+          "syllabus_priority": "core",
+          "tags": ["exam", "transform"]
+        }
+      },
+      {
+        "id": "exam2025_p6",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Exam 2025 · 6 — 2-D heat kernel approximate identity",
+        "statement": "Show $(\\mathcal H_t^{(2)}*f)(x)\\to f(x)$ as $t\\to0^+$ for $f\\in\\mathcal S(\\mathbb R^2)$.",
+        "formal_statement": "For $\\mathcal H_t^{(2)}(x)=\\frac{1}{4\\pi t}e^{-|x|^2/(4t)}$ and $f\\in\\mathcal S(\\mathbb R^2)$, show $(\\mathcal H_t^{(2)}*f)(x)\\to f(x)$ as $t\\to0^+$ for every $x\\in\\mathbb R^2$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "A Gaussian of shrinking width and unit mass becomes a delta; convolving against it returns the function. Split into a near part (continuity) and a far part (vanishing tail mass).",
+        "solution": "We show $\\{\\mathcal H_t^{(2)}\\}$ is an \\textbf{approximate identity} as $t\\to0^+$.\n\n\\textbf{(i) Mass $1$.} With $\\int_{\\mathbb R}e^{-s^2/4t}ds=\\sqrt{4\\pi t}$,\n$$\\int_{\\mathbb R^2}\\mathcal H_t^{(2)}=\\frac{1}{4\\pi t}\\Big(\\int_{\\mathbb R}e^{-y_1^2/4t}dy_1\\Big)\\Big(\\int_{\\mathbb R}e^{-y_2^2/4t}dy_2\\Big)=\\frac{1}{4\\pi t}(4\\pi t)=1.$$\n\\textbf{(ii) Positivity.} $\\mathcal H_t^{(2)}\\ge0$, so $\\|\\mathcal H_t^{(2)}\\|_{L^1}=1$ uniformly.\n\\textbf{(iii) Concentration.} For $\\delta>0$, substitute $y=\\sqrt t\\,u$:\n$$\\int_{|y|\\ge\\delta}\\mathcal H_t^{(2)}(y)\\,dy=\\frac{1}{4\\pi}\\int_{|u|\\ge\\delta/\\sqrt t}e^{-|u|^2/4}\\,du\\xrightarrow[t\\to0^+]{}0,$$\nsince $\\delta/\\sqrt t\\to\\infty$ and $e^{-|u|^2/4}$ is integrable.\n\n\\textbf{Conclusion.} Fix $x,\\ \\varepsilon>0$. Using (i),\n$$\\big(\\mathcal H_t^{(2)}*f\\big)(x)-f(x)=\\int_{\\mathbb R^2}\\mathcal H_t^{(2)}(y)\\big[f(x-y)-f(x)\\big]\\,dy.$$\n$f\\in\\mathcal S$ is bounded and uniformly continuous; choose $\\delta$ with $|f(x-y)-f(x)|<\\varepsilon$ for $|y|<\\delta$. Splitting and using $\\mathcal H_t^{(2)}\\ge0$,\n$$\\big|\\mathcal H_t^{(2)}*f(x)-f(x)\\big|\\le \\varepsilon\\cdot1+2\\|f\\|_\\infty\\int_{|y|\\ge\\delta}\\mathcal H_t^{(2)}(y)\\,dy.$$\nBy (iii) the second term $\\to0$, so $\\limsup_{t\\to0^+}|\\cdots|\\le\\varepsilon$ for all $\\varepsilon>0$; the limit is $0$. $\\blacksquare$\n\n\\textbf{Remarks.} The bound used only uniform continuity and boundedness, so convergence is in fact uniform in $x$. On the transform side $\\widehat{\\mathcal H_t^{(2)}}(\\xi)=e^{-4\\pi^2t|\\xi|^2}\\to1$, i.e. $u(x,t)=\\mathcal H_t^{(2)}*f$ solves the heat equation with initial data $f$.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "good_kernel",
+            "heat_kernel_rd",
+            "convolution",
+            "schwartz_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "heat_equation",
+          "gaussian_transform",
+          "fourier_transform_rd"
+        ],
+        "ref": "TMA4170 Final Exam, 30 May 2025, Problem 6",
+        "metadata": {
+          "source": "TMA4170 Final Exam, 30 May 2025, Problem 6",
+          "syllabus_priority": "core",
+          "tags": ["exam", "transform", "pde"]
+        }
       }
     ],
     "edges": [
@@ -6575,6 +6982,534 @@
         "dependency_class": "logical_dependency",
         "label": "requires",
         "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_moderate_decrease__requires__l1_space_r",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "moderate_decrease",
+        "target": "l1_space_r",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_kernel_rd__requires__heat_kernel_line",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "heat_kernel_rd",
+        "target": "heat_kernel_line",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_kernel_rd__requires__fourier_transform_rd",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "heat_kernel_rd",
+        "target": "fourier_transform_rd",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_kernel_rd__requires__gaussian_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "heat_kernel_rd",
+        "target": "gaussian_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_kernel_rd__requires__good_kernel",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "heat_kernel_rd",
+        "target": "good_kernel",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_absolute_uniform_convergence__requires__fourier_series",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "absolute_uniform_convergence",
+        "target": "fourier_series",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_absolute_uniform_convergence__requires__fourier_coefficient",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "absolute_uniform_convergence",
+        "target": "fourier_coefficient",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_absolute_uniform_convergence__requires__uniqueness_series",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "absolute_uniform_convergence",
+        "target": "uniqueness_series",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_absolute_uniform_convergence__requires__decay_smoothness",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "absolute_uniform_convergence",
+        "target": "decay_smoothness",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_schwartz_space__instance_of__moderate_decrease",
+        "type": "instance_of",
+        "direction": "source_to_target",
+        "source": "schwartz_space",
+        "target": "moderate_decrease",
+        "label": "is a subclass of",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": "Every Schwartz function has moderate decrease."
+      },
+      {
+        "id": "e_exam2025_p1a__requires__fourier_coefficient",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p1a",
+        "target": "fourier_coefficient",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p1a__requires__periodic_function",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p1a",
+        "target": "periodic_function",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p1a__requires__complex_exponential",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p1a",
+        "target": "complex_exponential",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p1b__requires__absolute_uniform_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p1b",
+        "target": "absolute_uniform_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p1b__requires__uniqueness_series",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p1b",
+        "target": "uniqueness_series",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p1b__requires__decay_smoothness",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p1b",
+        "target": "decay_smoothness",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p1b__requires__fourier_series",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p1b",
+        "target": "fourier_series",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p1c__requires__parseval_identity",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p1c",
+        "target": "parseval_identity",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p1c__requires__fourier_coefficient",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p1c",
+        "target": "fourier_coefficient",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p2__requires__mean_square_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p2",
+        "target": "mean_square_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p2__requires__fejer_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p2",
+        "target": "fejer_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p2__requires__cesaro_summation",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p2",
+        "target": "cesaro_summation",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p2__requires__dirichlet_conditions",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p2",
+        "target": "dirichlet_conditions",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p2__requires__pointwise_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p2",
+        "target": "pointwise_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p2__requires__absolute_uniform_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p2",
+        "target": "absolute_uniform_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p3a__requires__sinc_function",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p3a",
+        "target": "sinc_function",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p3a__requires__fourier_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p3a",
+        "target": "fourier_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p3a__requires__fourier_inversion",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p3a",
+        "target": "fourier_inversion",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p3a__requires__plancherel_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p3a",
+        "target": "plancherel_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p3a__requires__l2_space_r",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p3a",
+        "target": "l2_space_r",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p3b__requires__translation_modulation",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p3b",
+        "target": "translation_modulation",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p3b__requires__plancherel_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p3b",
+        "target": "plancherel_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p3b__requires__orthonormal_system",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p3b",
+        "target": "orthonormal_system",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p3b__requires__sinc_function",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p3b",
+        "target": "sinc_function",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p4__requires__fourier_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p4",
+        "target": "fourier_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p4__requires__ft_continuity",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p4",
+        "target": "ft_continuity",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p4__requires__plancherel_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p4",
+        "target": "plancherel_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p4__requires__schwartz_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p4",
+        "target": "schwartz_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p4__requires__moderate_decrease",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p4",
+        "target": "moderate_decrease",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p4__requires__decay_smoothness",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p4",
+        "target": "decay_smoothness",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p5__requires__uncertainty_principle",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p5",
+        "target": "uncertainty_principle",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p5__requires__plancherel_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p5",
+        "target": "plancherel_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p5__requires__schwartz_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p5",
+        "target": "schwartz_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p5__requires__differentiation_rule",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p5",
+        "target": "differentiation_rule",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p6__requires__good_kernel",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p6",
+        "target": "good_kernel",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p6__requires__heat_kernel_rd",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p6",
+        "target": "heat_kernel_rd",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p6__requires__convolution",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p6",
+        "target": "convolution",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p6__requires__schwartz_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p6",
+        "target": "schwartz_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
         "confidence": "high",
         "notes": ""
       }
