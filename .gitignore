@@ -238,3 +238,7 @@ tmbootpicker.efi
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+
+# references
+content/
