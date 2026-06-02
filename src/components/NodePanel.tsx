@@ -171,7 +171,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
             {domain?.label ?? node.topicCluster}
           </span>
           <span aria-hidden style={{ color: "var(--fg-4)" }}>·</span>
-          <span style={{ color: "var(--fg-2)" }}>{specimenMeta(node)}</span>
+          <span style={{ color: "var(--fg-2)" }}>{KIND_LABEL[node.kind]}</span>
         </div>
       </header>
 
