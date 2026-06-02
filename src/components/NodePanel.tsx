@@ -241,13 +241,23 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
         )}
 
         {formula && (
-          <section id="sec-formula">
+          <section id={`sec-formula-${node.id}`} aria-label={`${node.title} formula`}>
             <Facet label="Formula" toneColor={tone.color}>
               <div
-                className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-                style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
+                className="relative block max-w-full overflow-x-auto rounded-[10px] border px-4 py-3 font-math text-ui-body leading-[1.65]"
+                style={{
+                  background: tone.tint,
+                  borderColor: tone.border,
+                  color: "var(--fg-1)",
+                  boxShadow: `inset 3px 0 0 ${tone.color}`,
+                }}
               >
-                <MathText text={formula} asBlock />
+                <div className="mb-1.5 font-mono text-ui-tiny font-semibold uppercase tracking-label-wide" style={{ color: tone.color }}>
+                  Symbolic form
+                </div>
+                <div className="min-w-max">
+                  <MathText text={formula} asBlock />
+                </div>
               </div>
             </Facet>
           </section>
