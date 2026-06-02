@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X, ChevronUp, ChevronDown, BookOpen } from "lucide-react";
 
@@ -9,6 +9,7 @@ import { getDomainTone } from "../lib/colors";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { ThemedDiagram } from "./ThemedDiagram";
+import { FIGURE_REGISTRY } from "./figures/registry";
 import { Spine, Facet, Proof, ConnectionChip, specimenMeta } from "./Specimen";
 
 const USED_BY_INITIAL = 8;
@@ -109,6 +110,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const gloss = node.gloss.trim();
   const example = node.example.trim();
   const diagramPath = node.diagramPath.trim();
+  const InteractiveFigure = FIGURE_REGISTRY[node.id];
   const showGloss = gloss && gloss !== explanation;
   const hasConnections =
     prereqIds.length > 0 || usedBy.length > 0 || examples.length > 0 || exercises.length > 0;
@@ -174,7 +176,24 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
       </header>
 
       <div ref={scrollRef} className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
-        {diagramPath && (
+        {InteractiveFigure ? (
+          <section id="sec-diagram">
+            <div
+              className="block w-full rounded-[12px] border p-3"
+              style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+            >
+              <Suspense
+                fallback={
+                  <div className="py-8 text-center text-ui-meta" style={{ color: "var(--fg-3)" }}>
+                    Loading figure…
+                  </div>
+                }
+              >
+                <InteractiveFigure nodeId={node.id} />
+              </Suspense>
+            </div>
+          </section>
+        ) : diagramPath ? (
           <section id="sec-diagram">
             <ThemedDiagram
               src={diagramPath}
@@ -182,7 +201,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
               className="block w-full rounded-[12px] border p-3"
             />
           </section>
-        )}
+        ) : null}
 
         {statement && (
           <section id="sec-statement">
