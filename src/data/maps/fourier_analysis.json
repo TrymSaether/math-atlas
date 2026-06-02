@@ -6597,7 +6597,7 @@
         "domain": "transform",
         "label": "SS 6.6.1 — Planar rotations as complex multiplication",
         "statement": "Identify 2D orthogonal matrices with complex multiplication/conjugation.",
-        "formal_statement": "For a $2\\times2$ matrix $R=\\begin{psmallmatrix}a&b\\\\c&d\\end{psmallmatrix}$: (a) write $R^t=R^{-1}$, $\\det R=\\pm1$ as equations in $a,b,c,d$; (b) find $\\varphi$ with $a+ib=e^{i\\varphi}$; (c) conclude a proper rotation is $z\\mapsto e^{i\\varphi}z$ and an improper one $z\\mapsto e^{i\\varphi}\\bar z$.",
+        "formal_statement": "For a $2\\times2$ matrix $R=\\left(\\begin{smallmatrix}a&b\\\\c&d\\end{smallmatrix}\\right)$: (a) write $R^t=R^{-1}$, $\\det R=\\pm1$ as equations in $a,b,c,d$; (b) find $\\varphi$ with $a+ib=e^{i\\varphi}$; (c) conclude a proper rotation is $z\\mapsto e^{i\\varphi}z$ and an improper one $z\\mapsto e^{i\\varphi}\\bar z$.",
         "definition": null,
         "formula": null,
         "notation": null,

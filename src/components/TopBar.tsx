@@ -254,7 +254,7 @@ function SandboxButton() {
       label="Sandbox"
       title={active ? "Back to atlas" : "Geometric sandbox"}
     >
-      <Earth className="h-4 w-4" />
+      <DraftingCompass className="h-4 w-4" style={{ color: active ? "var(--accent)" : "var(--fg-2)" }} />
     </DockButton>
   );
 }
