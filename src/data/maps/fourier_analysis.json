@@ -1,0 +1,4358 @@
+{
+  "graph": {
+    "id": "fourier_analysis_curated_v2",
+    "label": "Fourier Analysis",
+    "field": "fourier_analysis",
+    "model": "directed_typed_multigraph",
+    "design_notes": [
+      "Curated conceptual knowledge graph of Fourier analysis (not tied to a single text).",
+      "Nodes are named concepts/results; edges form a prerequisite DAG via `requires`/`instance_of`.",
+      "Soft associations live in each node's `related[]` (panel-only, not layout edges)."
+    ],
+    "domains": [
+      {
+        "id": "foundations",
+        "label": "Foundations & Function Spaces",
+        "order": 1,
+        "color": "#2563EB",
+        "description": "Periodic functions, inner-product geometry, and the function spaces (L^1, L^2, Schwartz) where Fourier analysis lives."
+      },
+      {
+        "id": "series",
+        "label": "Fourier Series",
+        "order": 2,
+        "color": "#0D9488",
+        "description": "Decomposing periodic functions into harmonics: coefficients, partial sums, and the basic identities."
+      },
+      {
+        "id": "convergence",
+        "label": "Convergence & Summability",
+        "order": 3,
+        "color": "#16A34A",
+        "description": "When and how Fourier series converge: kernels, summability methods, and the classical convergence theorems."
+      },
+      {
+        "id": "transform",
+        "label": "The Fourier Transform",
+        "order": 4,
+        "color": "#DC2626",
+        "description": "Fourier analysis on the line and R^d: inversion, convolution, Plancherel, and the uncertainty principle."
+      },
+      {
+        "id": "distributions",
+        "label": "Distributions",
+        "order": 5,
+        "color": "#9333EA",
+        "description": "Generalized functions: tempered distributions, the Dirac delta, and Fourier analysis beyond classical functions."
+      },
+      {
+        "id": "discrete",
+        "label": "Discrete & Computational",
+        "order": 6,
+        "color": "#0891B2",
+        "description": "Finite and sampled Fourier analysis: the DFT, the FFT, and the sampling theorem."
+      },
+      {
+        "id": "applications",
+        "label": "Applications",
+        "order": 7,
+        "color": "#CA8A04",
+        "description": "Where it all pays off: PDEs, signal processing, number theory, and probability."
+      }
+    ],
+    "items": [
+      {
+        "id": "periodic_function",
+        "label": "Periodic Function",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A function repeating after a fixed period; equivalently a function on the circle.",
+        "formal_statement": "$f:\\mathbb{R}\\to\\mathbb{C}$ is periodic of period $T$ if $f(x+T)=f(x)$ for all $x$. We work with $2\\pi$-periodic functions, i.e. functions on the circle $\\mathbb{T}=\\mathbb{R}/2\\pi\\mathbb{Z}$.",
+        "definition": null,
+        "intuition": "The natural domain of Fourier series: gluing the ends of an interval into a loop.",
+        "proof": null,
+        "notation": "$f:\\mathbb{T}\\to\\mathbb{C}$",
+        "proof_dependencies": [],
+        "dependencies": {},
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "complex_exponential",
+        "label": "Complex Exponential",
+        "kind": "object",
+        "domain": "foundations",
+        "statement": "The pure harmonics $e^{inx}$ that serve as the building blocks of Fourier analysis.",
+        "formal_statement": "$e_n(x)=e^{inx}$, $n\\in\\mathbb{Z}$. By Euler's formula $e^{inx}=\\cos nx+i\\sin nx$.",
+        "definition": null,
+        "intuition": "Each $e_n$ is a single frequency; Fourier analysis writes every function as a superposition of these.",
+        "proof": null,
+        "notation": "$e_n(x)=e^{inx}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "periodic_function"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "periodic_function"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "inner_product_space",
+        "label": "Inner Product Space",
+        "kind": "structure",
+        "domain": "foundations",
+        "statement": "A vector space with an inner product, giving lengths and angles.",
+        "formal_statement": "A complex vector space $V$ with $\\langle\\cdot,\\cdot\\rangle:V\\times V\\to\\mathbb{C}$ that is linear, conjugate-symmetric, and positive-definite. For functions, $\\langle f,g\\rangle=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi} f\\overline{g}\\,dx$.",
+        "definition": null,
+        "intuition": "Provides the geometry — orthogonality and projection — behind Fourier coefficients.",
+        "proof": null,
+        "notation": "$\\langle f,g\\rangle$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "lebesgue_integral"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "orthonormal_system",
+        "label": "Orthonormal System",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A family of mutually orthogonal unit vectors; the exponentials $e^{inx}$ form one.",
+        "formal_statement": "$\\{\\varphi_k\\}$ with $\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk}$. The system $\\{e^{inx}\\}_{n\\in\\mathbb{Z}}$ is orthonormal on $\\mathbb{T}$.",
+        "definition": null,
+        "intuition": "An orthonormal basis lets you read off coordinates by projection — exactly what a Fourier coefficient is.",
+        "proof": null,
+        "notation": "$\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "inner_product_space",
+            "complex_exponential"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "inner_product_space",
+          "complex_exponential"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "lp_space",
+        "label": "L^p Space",
+        "kind": "structure",
+        "domain": "foundations",
+        "statement": "Functions whose $p$-th power is integrable, normed by the $L^p$ norm.",
+        "formal_statement": "$L^p(\\mathbb{T})=\\{f:\\|f\\|_p=(\\frac{1}{2\\pi}\\int|f|^p)^{1/p}<\\infty\\}$, $1\\le p\\le\\infty$.",
+        "definition": null,
+        "intuition": "The scale of spaces in which different convergence results live; $L^1$ and $L^2$ are the key cases.",
+        "proof": null,
+        "notation": "$\\|f\\|_p$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "lebesgue_integral"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "l1_space",
+        "label": "L^1 (Integrable Functions)",
+        "kind": "structure",
+        "domain": "foundations",
+        "statement": "Absolutely integrable functions — the minimal home where Fourier coefficients exist.",
+        "formal_statement": "$L^1(\\mathbb{T})=\\{f:\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi}|f|\\,dx<\\infty\\}$.",
+        "definition": null,
+        "intuition": "Integrability is all you need to define $\\hat f(n)$; convergence questions need more.",
+        "proof": null,
+        "notation": "$\\|f\\|_1<\\infty$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "lp_space",
+            "lebesgue_integral"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "lp_space"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "l2_space",
+        "label": "L^2 (Square-Integrable)",
+        "kind": "structure",
+        "domain": "foundations",
+        "statement": "The Hilbert space of finite-energy functions, where Fourier theory is cleanest.",
+        "formal_statement": "$L^2(\\mathbb{T})$ with $\\langle f,g\\rangle=\\frac{1}{2\\pi}\\int f\\overline g$ is a Hilbert space, and $\\{e^{inx}\\}$ is an orthonormal basis.",
+        "definition": null,
+        "intuition": "Square-integrability turns Fourier analysis into orthogonal geometry: Parseval and mean-square convergence hold here.",
+        "proof": null,
+        "notation": "$\\|f\\|_2^2=\\langle f,f\\rangle$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "lp_space",
+            "inner_product_space",
+            "hilbert_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "lp_space",
+          "inner_product_space"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "hilbert_space",
+        "label": "Hilbert Space",
+        "kind": "structure",
+        "domain": "foundations",
+        "statement": "A complete inner-product space — the abstract setting that makes $L^2$ work.",
+        "formal_statement": "An inner-product space that is complete in the induced norm. $L^2(\\mathbb{T})$ and $\\ell^2(\\mathbb{Z})$ are the central examples.",
+        "definition": null,
+        "intuition": "Completeness guarantees that orthogonal expansions actually converge to a limit in the space.",
+        "proof": null,
+        "notation": "$H$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "inner_product_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "inner_product_space"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "schwartz_space",
+        "label": "Schwartz Space",
+        "kind": "structure",
+        "domain": "foundations",
+        "statement": "Smooth functions that, with all derivatives, decay faster than any polynomial.",
+        "formal_statement": "$\\mathcal{S}(\\mathbb{R})=\\{f\\in C^\\infty:\\sup_x|x^\\alpha\\partial^\\beta f|<\\infty\\ \\forall\\alpha,\\beta\\}$.",
+        "definition": null,
+        "intuition": "The ideal playground for the Fourier transform: it maps $\\mathcal S$ to itself bijectively.",
+        "proof": null,
+        "notation": "$\\mathcal{S}(\\mathbb{R})$",
+        "proof_dependencies": [],
+        "dependencies": {},
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "convolution",
+        "label": "Convolution",
+        "kind": "construction",
+        "domain": "foundations",
+        "statement": "An averaging product of two functions that becomes multiplication after Fourier transform.",
+        "formal_statement": "$(f*g)(x)=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi} f(y)g(x-y)\\,dy$ (circle); on $\\mathbb{R}$, $(f*g)(x)=\\int f(y)g(x-y)\\,dy$.",
+        "definition": null,
+        "intuition": "Smoothing by a kernel; the operation Fourier analysis is built to diagonalize.",
+        "proof": null,
+        "notation": "$f*g$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "l1_space",
+            "fubini_tonelli"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fourier_coefficient",
+        "label": "Fourier Coefficient",
+        "kind": "definition",
+        "domain": "series",
+        "statement": "The amount of frequency $n$ present in $f$, obtained by projecting onto $e^{inx}$.",
+        "formal_statement": "$\\hat f(n)=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi} f(x)e^{-inx}\\,dx=\\langle f,e_n\\rangle$.",
+        "definition": null,
+        "intuition": "The coordinate of $f$ along the $n$-th harmonic — a single complex number per frequency.",
+        "proof": null,
+        "notation": "$\\hat f(n)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "complex_exponential",
+            "l1_space",
+            "inner_product_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "complex_exponential",
+          "inner_product_space"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fourier_series",
+        "label": "Fourier Series",
+        "kind": "object",
+        "domain": "series",
+        "statement": "The infinite sum of harmonics reconstructing a function from its coefficients.",
+        "formal_statement": "$f(x)\\sim\\sum_{n=-\\infty}^{\\infty}\\hat f(n)e^{inx}$.",
+        "definition": null,
+        "intuition": "The candidate reconstruction of $f$; whether it equals $f$ is the convergence question.",
+        "proof": null,
+        "notation": "$\\sum_n \\hat f(n)e^{inx}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_coefficient"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_coefficient"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "trigonometric_polynomial",
+        "label": "Trigonometric Polynomial",
+        "kind": "object",
+        "domain": "series",
+        "statement": "A finite sum of harmonics; the dense, well-behaved functions used for approximation.",
+        "formal_statement": "$p(x)=\\sum_{|n|\\le N} c_n e^{inx}$.",
+        "definition": null,
+        "intuition": "Finite Fourier series — the simple objects everything is approximated by.",
+        "proof": null,
+        "notation": "$\\sum_{|n|\\le N}c_n e^{inx}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "complex_exponential"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "complex_exponential"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "partial_sum",
+        "label": "Partial Sum",
+        "kind": "definition",
+        "domain": "series",
+        "statement": "The truncation of a Fourier series to frequencies $|n|\\le N$.",
+        "formal_statement": "$S_N f(x)=\\sum_{|n|\\le N}\\hat f(n)e^{inx}=(D_N*f)(x)$, where $D_N$ is the Dirichlet kernel.",
+        "definition": null,
+        "intuition": "The finite approximation whose limit (if any) defines convergence of the series.",
+        "proof": null,
+        "notation": "$S_N f$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_series",
+            "trigonometric_polynomial"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_series"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "bessel_inequality",
+        "label": "Bessel's Inequality",
+        "kind": "theorem",
+        "domain": "series",
+        "statement": "The energy of the Fourier coefficients never exceeds the energy of the function.",
+        "formal_statement": "$\\sum_{n}|\\hat f(n)|^2\\le\\|f\\|_2^2$ for $f\\in L^2(\\mathbb{T})$.",
+        "definition": null,
+        "intuition": "Projections can only lose energy; equality (Parseval) signals a complete basis.",
+        "proof": null,
+        "notation": "$\\sum|\\hat f(n)|^2\\le\\|f\\|_2^2$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_coefficient",
+            "orthonormal_system",
+            "l2_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "parseval_identity",
+        "label": "Parseval's Identity",
+        "kind": "theorem",
+        "domain": "series",
+        "statement": "Energy is exactly conserved between a function and its Fourier coefficients.",
+        "formal_statement": "$\\sum_{n}|\\hat f(n)|^2=\\|f\\|_2^2$, and $\\langle f,g\\rangle=\\sum_n\\hat f(n)\\overline{\\hat g(n)}$, for $f,g\\in L^2(\\mathbb{T})$.",
+        "definition": null,
+        "intuition": "Bessel becomes equality because $\\{e^{inx}\\}$ is a complete orthonormal basis — Fourier is an isometry.",
+        "proof": null,
+        "notation": "$\\sum|\\hat f(n)|^2=\\|f\\|_2^2$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "bessel_inequality",
+            "l2_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "bessel_inequality",
+          "plancherel_theorem"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "riemann_lebesgue",
+        "label": "Riemann–Lebesgue Lemma",
+        "kind": "theorem",
+        "domain": "series",
+        "statement": "Fourier coefficients of an integrable function vanish at high frequency.",
+        "formal_statement": "If $f\\in L^1(\\mathbb{T})$ then $\\hat f(n)\\to 0$ as $|n|\\to\\infty$.",
+        "definition": null,
+        "intuition": "Rapid oscillation averages out: no integrable signal has energy concentrated at infinitely high frequency.",
+        "proof": null,
+        "notation": "$\\hat f(n)\\to 0$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_coefficient",
+            "l1_space",
+            "dominated_convergence"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "uniqueness_series",
+        "label": "Uniqueness Theorem",
+        "kind": "theorem",
+        "domain": "series",
+        "statement": "A function is determined by its Fourier coefficients.",
+        "formal_statement": "If $f$ is continuous on $\\mathbb{T}$ and $\\hat f(n)=0$ for all $n$, then $f\\equiv 0$.",
+        "definition": null,
+        "intuition": "The Fourier transform loses no information — distinct functions have distinct spectra.",
+        "proof": null,
+        "notation": "$\\hat f\\equiv 0\\Rightarrow f\\equiv 0$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_coefficient"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "best_approximation",
+        "label": "Best Approximation Property",
+        "kind": "theorem",
+        "domain": "series",
+        "statement": "Among all trig polynomials of degree $N$, the partial sum is the closest in $L^2$.",
+        "formal_statement": "$\\|f-S_N f\\|_2=\\min\\{\\|f-p\\|_2:\\deg p\\le N\\}$; the error is orthogonal to the span of $\\{e^{inx}\\}_{|n|\\le N}$.",
+        "definition": null,
+        "intuition": "Truncating the Fourier series is exactly orthogonal projection onto the low frequencies.",
+        "proof": null,
+        "notation": "$\\|f-S_Nf\\|_2\\le\\|f-p\\|_2$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "partial_sum",
+            "orthonormal_system",
+            "l2_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "partial_sum",
+          "orthonormal_system"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "decay_smoothness",
+        "label": "Decay–Smoothness Duality",
+        "kind": "property",
+        "domain": "series",
+        "statement": "The smoother a function, the faster its Fourier coefficients decay.",
+        "formal_statement": "If $f\\in C^k(\\mathbb{T})$ then $\\hat f(n)=O(|n|^{-k})$; conversely fast decay forces smoothness.",
+        "definition": null,
+        "intuition": "Regularity in $x$ and decay in frequency are two sides of one coin — a recurring theme.",
+        "proof": null,
+        "notation": "$\\hat f(n)=O(|n|^{-k})$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_coefficient"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "good_kernel",
+        "label": "Good Kernel (Approximate Identity)",
+        "kind": "definition",
+        "domain": "convergence",
+        "statement": "A family of kernels concentrating at the origin, so convolution recovers $f$.",
+        "formal_statement": "$\\{K_n\\}$ with $\\frac{1}{2\\pi}\\int K_n=1$, $\\int|K_n|\\le M$, and $\\int_{|x|>\\delta}|K_n|\\to0$. Then $K_n*f\\to f$.",
+        "definition": null,
+        "intuition": "A sequence of smoothing bumps shrinking to a spike: convolving with them undoes the smoothing in the limit.",
+        "proof": null,
+        "notation": "$K_n*f\\to f$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "convolution"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "convolution"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dirichlet_kernel",
+        "label": "Dirichlet Kernel",
+        "kind": "object",
+        "domain": "convergence",
+        "statement": "The kernel of the partial-sum operator — and the source of convergence trouble.",
+        "formal_statement": "$D_N(x)=\\sum_{|n|\\le N}e^{inx}=\\dfrac{\\sin((N+\\tfrac12)x)}{\\sin(x/2)}$, so $S_N f=D_N*f$.",
+        "definition": null,
+        "intuition": "Not a good kernel: $\\|D_N\\|_1\\sim\\log N$ grows, which is why pointwise convergence can fail.",
+        "proof": null,
+        "notation": "$D_N(x)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "partial_sum"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "partial_sum"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fejer_kernel",
+        "label": "Fejér Kernel",
+        "kind": "object",
+        "domain": "convergence",
+        "statement": "The Cesàro average of Dirichlet kernels — a genuine good kernel.",
+        "formal_statement": "$F_N(x)=\\frac{1}{N+1}\\sum_{n=0}^{N}D_n(x)=\\frac{1}{N+1}\\left(\\frac{\\sin(\\frac{N+1}{2}x)}{\\sin(x/2)}\\right)^2\\ge0$.",
+        "definition": null,
+        "intuition": "Averaging tames the oscillation of $D_N$; non-negativity makes it an approximate identity.",
+        "proof": null,
+        "notation": "$F_N(x)\\ge 0$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "good_kernel",
+            "dirichlet_kernel",
+            "cesaro_summation"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "dirichlet_kernel",
+          "good_kernel"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "poisson_kernel",
+        "label": "Poisson Kernel",
+        "kind": "object",
+        "domain": "convergence",
+        "statement": "The good kernel behind Abel summation and harmonic extension to the disk.",
+        "formal_statement": "$P_r(\\theta)=\\sum_{n}r^{|n|}e^{in\\theta}=\\dfrac{1-r^2}{1-2r\\cos\\theta+r^2}$, $0\\le r<1$.",
+        "definition": null,
+        "intuition": "Solves the Dirichlet problem on the disk; as $r\\to1$ it recovers boundary data.",
+        "proof": null,
+        "notation": "$P_r(\\theta)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "good_kernel",
+            "abel_summation"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "good_kernel"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "cesaro_summation",
+        "label": "Cesàro Summation",
+        "kind": "method",
+        "domain": "convergence",
+        "statement": "Averaging partial sums to coax convergence out of a divergent series.",
+        "formal_statement": "$\\sigma_N f=\\frac{1}{N+1}\\sum_{n=0}^{N}S_n f=F_N*f$.",
+        "definition": null,
+        "intuition": "A gentler limit: many series that diverge converge once you average their partial sums.",
+        "proof": null,
+        "notation": "$\\sigma_N f$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "partial_sum"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "partial_sum"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "abel_summation",
+        "label": "Abel Summation",
+        "kind": "method",
+        "domain": "convergence",
+        "statement": "Summation by radial limits $r\\to1$, smoother still than Cesàro.",
+        "formal_statement": "$A_r f=\\sum_n r^{|n|}\\hat f(n)e^{inx}=P_r*f$.",
+        "definition": null,
+        "intuition": "Weights high frequencies by $r^{|n|}<1$, then lets $r\\to1$ — connects series to the disk.",
+        "proof": null,
+        "notation": "$A_r f$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "partial_sum"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "partial_sum"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fejer_theorem",
+        "label": "Fejér's Theorem",
+        "kind": "theorem",
+        "domain": "convergence",
+        "statement": "Cesàro means of the Fourier series of a continuous function converge uniformly.",
+        "formal_statement": "If $f$ is continuous on $\\mathbb{T}$, then $\\sigma_N f=F_N*f\\to f$ uniformly.",
+        "definition": null,
+        "intuition": "Even when the series itself misbehaves, its averages always reconstruct a continuous $f$ — and prove Weierstrass approximation.",
+        "proof": null,
+        "notation": "$\\sigma_N f\\to f$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fejer_kernel",
+            "good_kernel"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fejer_kernel",
+          "good_kernel"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "mean_square_convergence",
+        "label": "Mean-Square Convergence",
+        "kind": "theorem",
+        "domain": "convergence",
+        "statement": "Fourier series converge in $L^2$ for every square-integrable function.",
+        "formal_statement": "For $f\\in L^2(\\mathbb{T})$, $\\|f-S_N f\\|_2\\to 0$.",
+        "definition": null,
+        "intuition": "In the energy norm there is no subtlety: the series always converges — a direct consequence of completeness.",
+        "proof": null,
+        "notation": "$\\|f-S_N f\\|_2\\to0$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "parseval_identity",
+            "partial_sum"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "l2_space",
+          "parseval_identity"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "pointwise_convergence",
+        "label": "Pointwise Convergence Problem",
+        "kind": "property",
+        "domain": "convergence",
+        "statement": "Whether $S_N f(x)\\to f(x)$ at a point — delicate and not automatic.",
+        "formal_statement": "$S_N f(x_0)\\to f(x_0)$? True under regularity hypotheses; can fail for merely continuous $f$.",
+        "definition": null,
+        "intuition": "The hardest classical question: convergence at individual points needs local smoothness.",
+        "proof": null,
+        "notation": "$S_N f(x_0)\\to f(x_0)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "dirichlet_kernel"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "dirichlet_kernel"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dini_criterion",
+        "label": "Dini's Criterion",
+        "kind": "theorem",
+        "domain": "convergence",
+        "statement": "A local integrability condition guaranteeing pointwise convergence.",
+        "formal_statement": "If $\\int_{-\\pi}^{\\pi}\\left|\\frac{f(x_0+t)-f(x_0)}{t}\\right|dt<\\infty$, then $S_N f(x_0)\\to f(x_0)$.",
+        "definition": null,
+        "intuition": "Mild Hölder-type regularity at a point is enough to force the series to converge there.",
+        "proof": null,
+        "notation": null,
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "pointwise_convergence",
+            "localization_principle"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "pointwise_convergence"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dirichlet_conditions",
+        "label": "Dirichlet's Convergence Theorem",
+        "kind": "theorem",
+        "domain": "convergence",
+        "statement": "Piecewise-smooth functions converge to the midpoint of their jumps.",
+        "formal_statement": "If $f$ is piecewise $C^1$, then $S_N f(x)\\to\\tfrac12\\big(f(x^+)+f(x^-)\\big)$.",
+        "definition": null,
+        "intuition": "The classical sufficient condition: nice enough functions always converge, jumps splitting the difference.",
+        "proof": null,
+        "notation": "$S_N f\\to\\tfrac12(f(x^+)+f(x^-))$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "pointwise_convergence",
+            "localization_principle"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "pointwise_convergence"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "gibbs_phenomenon",
+        "label": "Gibbs Phenomenon",
+        "kind": "property",
+        "domain": "convergence",
+        "statement": "Persistent ~9% overshoot of partial sums near a jump discontinuity.",
+        "formal_statement": "Near a jump, $S_N f$ overshoots by a fixed fraction ($\\approx 0.0895$ of the jump) that does not vanish as $N\\to\\infty$.",
+        "definition": null,
+        "intuition": "The ringing you see truncating a square wave: the overshoot narrows but never shrinks.",
+        "proof": null,
+        "notation": null,
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "partial_sum",
+            "dirichlet_conditions"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "partial_sum",
+          "dirichlet_conditions"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "carleson_theorem",
+        "label": "Carleson's Theorem",
+        "kind": "theorem",
+        "domain": "convergence",
+        "statement": "Fourier series of $L^2$ functions converge almost everywhere.",
+        "formal_statement": "For $f\\in L^2(\\mathbb{T})$, $S_N f(x)\\to f(x)$ for almost every $x$.",
+        "definition": null,
+        "intuition": "The deep resolution of a 150-year-old question: a.e. pointwise convergence holds in $L^2$.",
+        "proof": null,
+        "notation": "$S_N f\\to f$ a.e.",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "pointwise_convergence",
+            "l2_space",
+            "almost_everywhere"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "pointwise_convergence",
+          "l2_space"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dubois_reymond",
+        "label": "Du Bois-Reymond Counterexample",
+        "kind": "counterexample",
+        "domain": "convergence",
+        "statement": "A continuous function whose Fourier series diverges at a point.",
+        "formal_statement": "There exists $f\\in C(\\mathbb{T})$ with $\\limsup_N|S_N f(0)|=\\infty$.",
+        "definition": null,
+        "intuition": "Continuity alone does not guarantee pointwise convergence — the reason Fejér/Cesàro averaging matters.",
+        "proof": null,
+        "notation": null,
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "pointwise_convergence",
+            "dirichlet_kernel"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "pointwise_convergence",
+          "dirichlet_kernel"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fourier_transform",
+        "label": "Fourier Transform",
+        "kind": "definition",
+        "domain": "transform",
+        "statement": "The continuous-frequency analogue of Fourier coefficients, for functions on $\\mathbb{R}$.",
+        "formal_statement": "$\\hat f(\\xi)=\\int_{-\\infty}^{\\infty} f(x)e^{-2\\pi i x\\xi}\\,dx$.",
+        "definition": null,
+        "intuition": "Replaces the discrete spectrum of a periodic function with a continuous one on the whole line.",
+        "proof": null,
+        "notation": "$\\hat f(\\xi)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "complex_exponential",
+            "l1_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_coefficient",
+          "fourier_series"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fourier_inversion",
+        "label": "Fourier Inversion Theorem",
+        "kind": "theorem",
+        "domain": "transform",
+        "statement": "The transform is invertible: $f$ is rebuilt from $\\hat f$ by the dual integral.",
+        "formal_statement": "For $f\\in\\mathcal{S}(\\mathbb{R})$, $f(x)=\\int_{-\\infty}^{\\infty}\\hat f(\\xi)e^{2\\pi i x\\xi}\\,d\\xi$.",
+        "definition": null,
+        "intuition": "Analysis and synthesis are symmetric — the inverse transform is the transform with a sign flip.",
+        "proof": null,
+        "notation": "$f=(\\hat f)^{\\vee}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "schwartz_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_transform",
+          "schwartz_space"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "convolution_theorem",
+        "label": "Convolution Theorem",
+        "kind": "theorem",
+        "domain": "transform",
+        "statement": "The Fourier transform turns convolution into pointwise multiplication.",
+        "formal_statement": "$\\widehat{f*g}=\\hat f\\cdot\\hat g$, and dually $\\widehat{fg}=\\hat f*\\hat g$.",
+        "definition": null,
+        "intuition": "Why Fourier methods work: hard convolution integrals become easy products in frequency.",
+        "proof": null,
+        "notation": "$\\widehat{f*g}=\\hat f\\,\\hat g$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "convolution"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "convolution",
+          "fourier_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "plancherel_theorem",
+        "label": "Plancherel's Theorem",
+        "kind": "theorem",
+        "domain": "transform",
+        "statement": "The Fourier transform is a unitary map on $L^2(\\mathbb{R})$ — energy is preserved.",
+        "formal_statement": "$\\|\\hat f\\|_{L^2}=\\|f\\|_{L^2}$, and the transform extends to a unitary operator on $L^2(\\mathbb{R})$.",
+        "definition": null,
+        "intuition": "The continuous counterpart of Parseval: Fourier is a rotation of the infinite-dimensional space $L^2$.",
+        "proof": null,
+        "notation": "$\\|\\hat f\\|_2=\\|f\\|_2$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "l2_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "l2_space",
+          "parseval_identity"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "gaussian_transform",
+        "label": "Gaussian (Self-Dual)",
+        "kind": "example",
+        "domain": "transform",
+        "statement": "The Gaussian is its own Fourier transform — the fixed point of the transform.",
+        "formal_statement": "If $f(x)=e^{-\\pi x^2}$ then $\\hat f(\\xi)=e^{-\\pi\\xi^2}$.",
+        "definition": null,
+        "intuition": "The extremal, perfectly balanced function: minimal uncertainty, invariant under Fourier.",
+        "proof": null,
+        "notation": "$\\widehat{e^{-\\pi x^2}}=e^{-\\pi\\xi^2}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "schwartz_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "schwartz_space",
+          "uncertainty_principle"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "uncertainty_principle",
+        "label": "Uncertainty Principle",
+        "kind": "theorem",
+        "domain": "transform",
+        "statement": "A function and its transform cannot both be sharply localized.",
+        "formal_statement": "$\\left(\\int x^2|f|^2\\right)\\left(\\int \\xi^2|\\hat f|^2\\right)\\ge\\frac{\\|f\\|_2^4}{16\\pi^2}$, with equality for Gaussians.",
+        "definition": null,
+        "intuition": "Concentration in time forces spread in frequency — the mathematics behind Heisenberg's principle.",
+        "proof": null,
+        "notation": "$\\Delta x\\,\\Delta\\xi\\ge\\frac{1}{4\\pi}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "gaussian_transform"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "gaussian_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "poisson_summation",
+        "label": "Poisson Summation Formula",
+        "kind": "theorem",
+        "domain": "transform",
+        "statement": "Summing a function over a lattice equals summing its transform over the dual lattice.",
+        "formal_statement": "$\\sum_{n\\in\\mathbb{Z}}f(n)=\\sum_{n\\in\\mathbb{Z}}\\hat f(n)$ (for nice $f$).",
+        "definition": null,
+        "intuition": "The bridge between the Fourier transform and Fourier series — periodization in $x$ is sampling in $\\xi$.",
+        "proof": null,
+        "notation": "$\\sum f(n)=\\sum\\hat f(n)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "fourier_series"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_series",
+          "fourier_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fourier_transform_rd",
+        "label": "Fourier Transform on R^d",
+        "kind": "definition",
+        "domain": "transform",
+        "statement": "The multivariable transform, built from the one-dimensional one coordinatewise.",
+        "formal_statement": "$\\hat f(\\xi)=\\int_{\\mathbb{R}^d} f(x)e^{-2\\pi i x\\cdot\\xi}\\,dx$, $x,\\xi\\in\\mathbb{R}^d$.",
+        "definition": null,
+        "intuition": "Same theory in higher dimensions; rotation-invariance makes radial functions especially clean.",
+        "proof": null,
+        "notation": "$\\hat f(\\xi),\\ \\xi\\in\\mathbb{R}^d$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "differentiation_rule",
+        "label": "Differentiation Rule",
+        "kind": "property",
+        "domain": "transform",
+        "statement": "Differentiation becomes multiplication by frequency under the transform.",
+        "formal_statement": "$\\widehat{f'}(\\xi)=2\\pi i\\xi\\,\\hat f(\\xi)$ and $\\widehat{xf}(\\xi)=\\frac{-1}{2\\pi i}\\frac{d}{d\\xi}\\hat f(\\xi)$.",
+        "definition": null,
+        "intuition": "Turns differential operators into algebra — the key to solving PDEs by Fourier methods.",
+        "proof": null,
+        "notation": "$\\widehat{f'}=2\\pi i\\xi\\,\\hat f$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "schwartz_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_transform",
+          "schwartz_space"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "tempered_distribution",
+        "label": "Tempered Distribution",
+        "kind": "structure",
+        "domain": "distributions",
+        "statement": "A continuous linear functional on Schwartz space — a generalized function.",
+        "formal_statement": "$T\\in\\mathcal{S}'(\\mathbb{R})$, the continuous dual of $\\mathcal{S}(\\mathbb{R})$; functions of moderate growth embed via $T_f(\\varphi)=\\int f\\varphi$.",
+        "definition": null,
+        "intuition": "Lets you Fourier-transform objects (like $1$, $\\delta$, polynomials) that aren't integrable.",
+        "proof": null,
+        "notation": "$\\mathcal{S}'(\\mathbb{R})$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "schwartz_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "schwartz_space"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "distributions"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dirac_delta",
+        "label": "Dirac Delta",
+        "kind": "object",
+        "domain": "distributions",
+        "statement": "The idealized unit spike: evaluation at a point, the identity for convolution.",
+        "formal_statement": "$\\delta(\\varphi)=\\varphi(0)$; $f*\\delta=f$ and $\\hat\\delta\\equiv 1$.",
+        "definition": null,
+        "intuition": "Not a function but a distribution — the limit of any approximate identity.",
+        "proof": null,
+        "notation": "$\\delta$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "tempered_distribution"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "tempered_distribution",
+          "good_kernel"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "distributions"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "weak_derivative",
+        "label": "Weak Derivative",
+        "kind": "definition",
+        "domain": "distributions",
+        "statement": "Differentiation defined by moving the derivative onto the test function.",
+        "formal_statement": "$T'(\\varphi)=-T(\\varphi')$, extending classical differentiation to all distributions.",
+        "definition": null,
+        "intuition": "Every distribution is infinitely differentiable — discontinuities and spikes included.",
+        "proof": null,
+        "notation": "$T'(\\varphi)=-T(\\varphi')$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "tempered_distribution",
+            "test_function"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "tempered_distribution"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "distributions"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "distributional_ft",
+        "label": "Fourier Transform of Distributions",
+        "kind": "theorem",
+        "domain": "distributions",
+        "statement": "The transform extends to all tempered distributions by duality.",
+        "formal_statement": "$\\hat T(\\varphi)=T(\\hat\\varphi)$ for $\\varphi\\in\\mathcal{S}$; consistent with the classical transform.",
+        "definition": null,
+        "intuition": "Gives meaning to $\\hat 1=\\delta$ and the transform of every polynomially-bounded object.",
+        "proof": null,
+        "notation": "$\\hat T(\\varphi)=T(\\hat\\varphi)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "tempered_distribution",
+            "fourier_transform"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "tempered_distribution",
+          "fourier_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "distributions"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "roots_of_unity",
+        "label": "Roots of Unity",
+        "kind": "object",
+        "domain": "discrete",
+        "statement": "The $N$ equally-spaced points on the unit circle — discrete harmonics.",
+        "formal_statement": "$\\omega_N=e^{2\\pi i/N}$; the characters of $\\mathbb{Z}/N\\mathbb{Z}$ are $k\\mapsto\\omega_N^{jk}$.",
+        "definition": null,
+        "intuition": "The finite analogue of $e^{inx}$: the building blocks of the discrete transform.",
+        "proof": null,
+        "notation": "$\\omega_N=e^{2\\pi i/N}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "complex_exponential"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "complex_exponential"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "finite_fourier",
+        "label": "Fourier Analysis on Z(N)",
+        "kind": "structure",
+        "domain": "discrete",
+        "statement": "Fourier theory on the cyclic group, where everything is a finite sum.",
+        "formal_statement": "Functions on $\\mathbb{Z}/N\\mathbb{Z}$ expand in the orthogonal characters $\\{\\omega_N^{jk}\\}$; the cleanest, fully finite Fourier theory.",
+        "definition": null,
+        "intuition": "A finite-dimensional model where convergence is trivial and structure is transparent.",
+        "proof": null,
+        "notation": "$L^2(\\mathbb{Z}/N\\mathbb{Z})$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "roots_of_unity",
+            "orthonormal_system"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "roots_of_unity",
+          "orthonormal_system"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dft",
+        "label": "Discrete Fourier Transform",
+        "kind": "definition",
+        "domain": "discrete",
+        "statement": "The Fourier transform of a length-$N$ sample vector.",
+        "formal_statement": "$\\hat a(k)=\\sum_{j=0}^{N-1} a_j\\,\\omega_N^{-jk}$, $\\omega_N=e^{2\\pi i/N}$.",
+        "definition": null,
+        "intuition": "What a computer actually evaluates: the finite, exact Fourier transform of sampled data.",
+        "proof": null,
+        "notation": "$\\hat a(k)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "finite_fourier"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "finite_fourier",
+          "roots_of_unity"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dtft",
+        "label": "Discrete-Time Fourier Transform",
+        "kind": "definition",
+        "domain": "discrete",
+        "statement": "The transform of an infinite sequence — a periodic function of frequency.",
+        "formal_statement": "$\\hat a(\\xi)=\\sum_{n\\in\\mathbb{Z}} a_n e^{-2\\pi i n\\xi}$, periodic in $\\xi$.",
+        "definition": null,
+        "intuition": "The dual of Fourier series: discrete in time, continuous and periodic in frequency.",
+        "proof": null,
+        "notation": "$\\hat a(\\xi)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_series"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_series"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fft",
+        "label": "Fast Fourier Transform",
+        "kind": "method",
+        "domain": "discrete",
+        "statement": "An $O(N\\log N)$ algorithm computing the DFT by recursive splitting.",
+        "formal_statement": "Cooley–Tukey factorizes the DFT of size $N$ into two of size $N/2$, giving $O(N\\log N)$ vs.\\ $O(N^2)$.",
+        "definition": null,
+        "intuition": "The algorithm that made Fourier methods computationally ubiquitous.",
+        "proof": null,
+        "notation": "$O(N\\log N)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "dft"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "dft"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "circular_convolution",
+        "label": "Circular Convolution",
+        "kind": "construction",
+        "domain": "discrete",
+        "statement": "Convolution on $\\mathbb{Z}/N\\mathbb{Z}$, diagonalized by the DFT.",
+        "formal_statement": "$(a\\circledast b)_k=\\sum_j a_j b_{k-j\\bmod N}$, and $\\widehat{a\\circledast b}=\\hat a\\cdot\\hat b$.",
+        "definition": null,
+        "intuition": "The discrete convolution theorem — why fast filtering goes through the FFT.",
+        "proof": null,
+        "notation": "$a\\circledast b$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "dft",
+            "convolution"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "dft",
+          "convolution"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "sampling_theorem",
+        "label": "Nyquist–Shannon Sampling",
+        "kind": "theorem",
+        "domain": "discrete",
+        "statement": "A band-limited signal is perfectly reconstructed from samples at twice its bandwidth.",
+        "formal_statement": "If $\\hat f$ is supported in $[-W,W]$, then $f(x)=\\sum_n f\\!\\left(\\tfrac{n}{2W}\\right)\\mathrm{sinc}(2Wx-n)$.",
+        "definition": null,
+        "intuition": "Bridges continuous and discrete: sampling fast enough loses nothing.",
+        "proof": null,
+        "notation": "$f_s\\ge 2W$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "fourier_inversion",
+            "band_limited",
+            "poisson_summation"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_transform",
+          "fourier_inversion"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "aliasing",
+        "label": "Aliasing",
+        "kind": "property",
+        "domain": "discrete",
+        "statement": "Undersampling makes high frequencies masquerade as low ones.",
+        "formal_statement": "Sampling below the Nyquist rate folds frequencies outside $[-f_s/2,f_s/2]$ back into that band.",
+        "definition": null,
+        "intuition": "The failure mode of sampling — why anti-alias filtering precedes digitization.",
+        "proof": null,
+        "notation": null,
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "sampling_theorem",
+            "band_limited"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "sampling_theorem"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "heat_equation",
+        "label": "Heat Equation",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "Fourier's original problem: diffusion solved by decaying harmonics.",
+        "formal_statement": "$u_t=u_{xx}$ with $u(x,0)=f(x)$ is solved by $u(x,t)=\\sum_n\\hat f(n)e^{-n^2 t}e^{inx}$.",
+        "definition": null,
+        "intuition": "Each harmonic decays at its own rate $e^{-n^2 t}$ — the problem that launched Fourier analysis.",
+        "proof": null,
+        "notation": "$u_t=u_{xx}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_series",
+            "good_kernel",
+            "separation_of_variables",
+            "heat_kernel_line"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_series",
+          "good_kernel"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "pde"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "wave_equation",
+        "label": "Wave Equation",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "Vibrating strings as superpositions of standing harmonic waves.",
+        "formal_statement": "$u_{tt}=u_{xx}$ solved by $u(x,t)=\\sum_n\\big(a_n\\cos nt+b_n\\sin nt\\big)e^{inx}$.",
+        "definition": null,
+        "intuition": "The physical origin of harmonics — d'Alembert and Bernoulli's standing waves.",
+        "proof": null,
+        "notation": "$u_{tt}=u_{xx}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_series",
+            "separation_of_variables"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_series"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "pde"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "isoperimetric",
+        "label": "Isoperimetric Inequality",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "Among curves of fixed length, the circle encloses the most area — via Parseval.",
+        "formal_statement": "For a simple closed curve of length $L$ enclosing area $A$: $A\\le\\frac{L^2}{4\\pi}$, equality iff a circle.",
+        "definition": null,
+        "intuition": "A geometry theorem proved by expanding the boundary curve in a Fourier series.",
+        "proof": null,
+        "notation": "$A\\le L^2/4\\pi$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "parseval_identity"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "parseval_identity",
+          "fourier_series"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "weyl_equidistribution",
+        "label": "Weyl Equidistribution",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "Irrational rotations fill the circle uniformly — detected by Fourier coefficients.",
+        "formal_statement": "$\\{n\\gamma\\bmod 1\\}$ is equidistributed iff $\\frac1N\\sum_{n\\le N}e^{2\\pi i k n\\gamma}\\to0$ for all $k\\ne0$ (Weyl's criterion).",
+        "definition": null,
+        "intuition": "A number-theory equidistribution test reduced to the decay of exponential sums.",
+        "proof": null,
+        "notation": "$\\frac1N\\sum e^{2\\pi i kn\\gamma}\\to0$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fejer_theorem",
+            "fourier_coefficient"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fejer_theorem",
+          "fourier_coefficient"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "number-theory"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "central_limit",
+        "label": "Central Limit Theorem (Fourier proof)",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "Sums of independent variables become Gaussian — convolution of densities seen in frequency.",
+        "formal_statement": "Characteristic functions $\\varphi(\\xi)=\\hat\\mu(\\xi)$ multiply under convolution; $\\varphi^n$ converges to the Gaussian transform $e^{-\\xi^2/2}$.",
+        "definition": null,
+        "intuition": "The Fourier transform diagonalizes convolution, turning the CLT into a limit of products.",
+        "proof": null,
+        "notation": "$\\hat\\mu^{\\,n}\\to e^{-\\xi^2/2}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "convolution_theorem",
+            "gaussian_transform"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "convolution_theorem",
+          "gaussian_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "probability"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "signal_filtering",
+        "label": "Filtering & Signal Processing",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "Designing systems that pass or reject frequency bands via multiplication of spectra.",
+        "formal_statement": "A linear time-invariant filter acts by $\\widehat{(h*x)}=\\hat h\\cdot\\hat x$; the transfer function $\\hat h$ shapes the spectrum.",
+        "definition": null,
+        "intuition": "All of audio/image processing: convolve in time = multiply in frequency, computed by the FFT.",
+        "proof": null,
+        "notation": "$\\hat y=\\hat h\\,\\hat x$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "convolution_theorem",
+            "fft",
+            "dct"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "convolution_theorem",
+          "fft",
+          "dft"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "signal"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dirichlet_primes",
+        "label": "Primes in Arithmetic Progressions",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "Infinitely many primes in each valid progression — proved with Fourier analysis on $(\\mathbb{Z}/q)^\\times$.",
+        "formal_statement": "If $\\gcd(a,q)=1$ there are infinitely many primes $\\equiv a\\pmod q$; the proof expands an indicator in Dirichlet characters and uses $L(1,\\chi)\\ne0$.",
+        "definition": null,
+        "intuition": "Finite Fourier analysis on a group of units, combined with $L$-functions, cracks a number-theory landmark.",
+        "proof": null,
+        "notation": "$p\\equiv a\\ (q)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "finite_fourier"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "finite_fourier"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "number-theory"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "lebesgue_integral",
+        "label": "Lebesgue Integral",
+        "kind": "structure",
+        "domain": "foundations",
+        "statement": "The integral that makes the Fourier function spaces complete.",
+        "formal_statement": "$\\int f\\,d\\mu$ defined for measurable $f$; limits behave well (unlike the Riemann integral), making $L^p$ complete.",
+        "definition": null,
+        "intuition": "The right notion of integration — without it $L^1$ and $L^2$ would have holes.",
+        "proof": null,
+        "notation": "$\\int f\\,d\\mu$",
+        "proof_dependencies": [],
+        "dependencies": {},
+        "outgoing_relations": [],
+        "related": [],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "almost_everywhere",
+        "label": "Almost Everywhere",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A property holding except on a set of measure zero.",
+        "formal_statement": "$P$ holds a.e. if $\\mu(\\{x:\\neg P(x)\\})=0$. Functions equal a.e. are identified in $L^p$.",
+        "definition": null,
+        "intuition": "The equivalence that lets us treat $L^p$ elements as functions; the natural mode of Fourier convergence (cf. Carleson).",
+        "proof": null,
+        "notation": "\\text{a.e.}",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "lebesgue_integral"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "lebesgue_integral"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dominated_convergence",
+        "label": "Dominated Convergence",
+        "kind": "theorem",
+        "domain": "foundations",
+        "statement": "Interchange of limit and integral under a dominating function.",
+        "formal_statement": "If $f_n\\to f$ a.e. and $|f_n|\\le g\\in L^1$, then $\\int f_n\\to\\int f$.",
+        "definition": null,
+        "intuition": "The workhorse that justifies swapping limits, sums, and integrals throughout Fourier analysis.",
+        "proof": null,
+        "notation": "$\\int f_n\\to\\int f$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "lebesgue_integral"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "lebesgue_integral"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fubini_tonelli",
+        "label": "Fubini–Tonelli Theorem",
+        "kind": "theorem",
+        "domain": "foundations",
+        "statement": "Iterated integrals may be swapped for (absolutely) integrable functions.",
+        "formal_statement": "$\\iint f(x,y)\\,dx\\,dy=\\iint f(x,y)\\,dy\\,dx$ when $f\\in L^1$ (Fubini) or $f\\ge0$ (Tonelli).",
+        "definition": null,
+        "intuition": "What makes convolution and the inversion formula well-defined — you reorder double integrals.",
+        "proof": null,
+        "notation": "$\\iint=\\iint$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "lebesgue_integral"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "lebesgue_integral"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "foundation"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "real_fourier_series",
+        "label": "Real (Sine–Cosine) Series",
+        "kind": "object",
+        "domain": "series",
+        "statement": "The classical $a_n\\cos+b_n\\sin$ form, equivalent to the complex series.",
+        "formal_statement": "$f(x)\\sim\\frac{a_0}{2}+\\sum_{n\\ge1}(a_n\\cos nx+b_n\\sin nx)$, with $a_n=\\frac1\\pi\\int f\\cos nx$, $b_n=\\frac1\\pi\\int f\\sin nx$.",
+        "definition": null,
+        "intuition": "The original 19th-century form; real and imaginary parts of the complex coefficients.",
+        "proof": null,
+        "notation": "$a_n\\cos nx+b_n\\sin nx$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_series"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_series"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "half_range_expansion",
+        "label": "Half-Range Expansions",
+        "kind": "construction",
+        "domain": "series",
+        "statement": "Expanding a function on $[0,L]$ in pure sines or pure cosines via even/odd extension.",
+        "formal_statement": "Extend $f$ on $[0,\\pi]$ evenly (cosine series) or oddly (sine series) to $[-\\pi,\\pi]$.",
+        "definition": null,
+        "intuition": "How boundary conditions pick sine vs. cosine series when solving PDEs on an interval.",
+        "proof": null,
+        "notation": null,
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "real_fourier_series"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "real_fourier_series"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "localization_principle",
+        "label": "Riemann Localization Principle",
+        "kind": "theorem",
+        "domain": "series",
+        "statement": "Convergence of a Fourier series at a point depends only on $f$ near that point.",
+        "formal_statement": "If $f=g$ on a neighborhood of $x_0$, then $S_N f(x_0)$ and $S_N g(x_0)$ converge or diverge together.",
+        "definition": null,
+        "intuition": "A striking fact: even though coefficients are global integrals, pointwise convergence is purely local.",
+        "proof": null,
+        "notation": null,
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "dirichlet_kernel",
+            "pointwise_convergence"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "dirichlet_kernel"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "term_differentiation",
+        "label": "Term-by-Term Differentiation",
+        "kind": "property",
+        "domain": "series",
+        "statement": "When the differentiated series still converges to the derivative.",
+        "formal_statement": "If $\\sum |n\\,\\hat f(n)|<\\infty$, then $f'(x)=\\sum_n in\\,\\hat f(n)e^{inx}$.",
+        "definition": null,
+        "intuition": "Smoothness (fast coefficient decay) is exactly what licenses differentiating a series term by term.",
+        "proof": null,
+        "notation": "$f'=\\sum in\\,\\hat f(n)e^{inx}$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "decay_smoothness",
+            "fourier_series"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "decay_smoothness"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "series"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "weierstrass_approximation",
+        "label": "Weierstrass Approximation",
+        "kind": "theorem",
+        "domain": "convergence",
+        "statement": "Every continuous periodic function is a uniform limit of trigonometric polynomials.",
+        "formal_statement": "Trigonometric polynomials are dense in $C(\\mathbb{T})$ — an immediate corollary of Fejér's theorem.",
+        "definition": null,
+        "intuition": "The density result underpinning completeness of the exponential basis; Fejér's payoff.",
+        "proof": null,
+        "notation": "\\overline{\\{\\text{trig polys}\\}}=C(\\mathbb{T})",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fejer_theorem",
+            "trigonometric_polynomial"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fejer_theorem",
+          "trigonometric_polynomial"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "abel_theorem",
+        "label": "Abel's Theorem",
+        "kind": "theorem",
+        "domain": "convergence",
+        "statement": "A convergent series is Abel summable to the same value — summability is consistent.",
+        "formal_statement": "If $\\sum a_n=s$ converges, then $\\lim_{r\\to1^-}\\sum a_n r^n=s$.",
+        "definition": null,
+        "intuition": "Guarantees the gentler summation methods don't change answers where ordinary convergence already holds.",
+        "proof": null,
+        "notation": "$\\lim_{r\\to1}\\sum a_n r^n=s$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "abel_summation"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "abel_summation"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "convergence"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "translation_modulation",
+        "label": "Translation & Modulation",
+        "kind": "property",
+        "domain": "transform",
+        "statement": "Shifting in time is modulation in frequency, and vice versa.",
+        "formal_statement": "$\\widehat{f(\\cdot-a)}(\\xi)=e^{-2\\pi ia\\xi}\\hat f(\\xi)$ and $\\widehat{e^{2\\pi ibx}f}(\\xi)=\\hat f(\\xi-b)$.",
+        "definition": null,
+        "intuition": "The symmetry making the transform translation-covariant — the basis of time-frequency analysis.",
+        "proof": null,
+        "notation": "$\\widehat{f(\\cdot-a)}=e^{-2\\pi ia\\xi}\\hat f$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "ft_continuity",
+        "label": "Transform of L^1 is Continuous & Decays",
+        "kind": "property",
+        "domain": "transform",
+        "statement": "The Fourier transform of an integrable function is continuous and vanishes at infinity.",
+        "formal_statement": "If $f\\in L^1(\\mathbb{R})$ then $\\hat f\\in C_0(\\mathbb{R})$: continuous with $\\hat f(\\xi)\\to0$ as $|\\xi|\\to\\infty$.",
+        "definition": null,
+        "intuition": "The Riemann–Lebesgue lemma on the line — integrability buys smoothness and decay of the spectrum.",
+        "proof": null,
+        "notation": "$\\hat f\\in C_0(\\mathbb{R})$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "l1_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_transform",
+          "riemann_lebesgue"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "band_limited",
+        "label": "Band-Limited Function",
+        "kind": "definition",
+        "domain": "transform",
+        "statement": "A function whose Fourier transform vanishes outside a bounded frequency band.",
+        "formal_statement": "$\\hat f$ supported in $[-W,W]$; equivalently $f$ contains no frequencies above $W$.",
+        "definition": null,
+        "intuition": "The signals that sampling reconstructs exactly — finite bandwidth, infinite smoothness.",
+        "proof": null,
+        "notation": "\\operatorname{supp}\\hat f\\subset[-W,W]",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform",
+            "signal"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "paley_wiener",
+        "label": "Paley–Wiener Theorem",
+        "kind": "theorem",
+        "domain": "transform",
+        "statement": "Band-limited functions are exactly restrictions of entire functions of exponential type.",
+        "formal_statement": "$f$ is band-limited to $[-W,W]$ iff $f$ extends to an entire function with $|f(z)|\\le Ce^{2\\pi W|z|}$.",
+        "definition": null,
+        "intuition": "Trades a support condition in frequency for a growth condition in the complex plane.",
+        "proof": null,
+        "notation": null,
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "band_limited",
+            "fourier_transform"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "band_limited"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "heat_kernel_line",
+        "label": "Heat Kernel on R",
+        "kind": "object",
+        "domain": "transform",
+        "statement": "The Gaussian semigroup solving the heat equation on the whole line.",
+        "formal_statement": "$H_t(x)=\\frac{1}{\\sqrt{4\\pi t}}e^{-x^2/4t}$, with $\\hat H_t(\\xi)=e^{-4\\pi^2 t\\xi^2}$; $u=H_t*f$ solves $u_t=u_{xx}$.",
+        "definition": null,
+        "intuition": "A good kernel that is also a Gaussian — convolving with it smooths data and solves diffusion.",
+        "proof": null,
+        "notation": "$H_t(x)$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "gaussian_transform",
+            "convolution_theorem"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "gaussian_transform",
+          "convolution_theorem"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "transform",
+            "pde"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "test_function",
+        "label": "Test Function",
+        "kind": "definition",
+        "domain": "distributions",
+        "statement": "A smooth, compactly supported function used to probe distributions.",
+        "formal_statement": "$\\varphi\\in C_c^\\infty(\\mathbb{R})$; the space $\\mathcal{D}$ of test functions sits inside $\\mathcal{S}$.",
+        "definition": null,
+        "intuition": "The 'measuring instruments' of distribution theory — you know a distribution by how it pairs with these.",
+        "proof": null,
+        "notation": "\\varphi\\in C_c^\\infty",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "schwartz_space"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "schwartz_space"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "distributions"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "convolution_distributions",
+        "label": "Convolution of Distributions",
+        "kind": "construction",
+        "domain": "distributions",
+        "statement": "Extending convolution to distributions, with the delta as identity.",
+        "formal_statement": "$(T*\\varphi)(x)=T(\\tau_x\\tilde\\varphi)$; $\\delta*T=T$ and $\\widehat{T*S}=\\hat T\\hat S$ under support conditions.",
+        "definition": null,
+        "intuition": "Lets you convolve spikes and generalized functions — essential for solving PDEs.",
+        "proof": null,
+        "notation": "$\\delta*T=T$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "dirac_delta",
+            "convolution"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "dirac_delta",
+          "convolution"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "distributions"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "fundamental_solution",
+        "label": "Fundamental Solution",
+        "kind": "construction",
+        "domain": "distributions",
+        "statement": "A distribution $E$ with $LE=\\delta$, giving solutions by convolution.",
+        "formal_statement": "For a constant-coefficient operator $L$, if $LE=\\delta$ then $u=E*f$ solves $Lu=f$.",
+        "definition": null,
+        "intuition": "The Fourier transform finds $E$ by dividing by the symbol — the master template for linear PDEs.",
+        "proof": null,
+        "notation": "$LE=\\delta$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "distributional_ft",
+            "convolution_distributions"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "distributional_ft",
+          "convolution_distributions"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "distributions",
+            "pde"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "parseval_dft",
+        "label": "Parseval for the DFT",
+        "kind": "property",
+        "domain": "discrete",
+        "statement": "Energy is conserved by the discrete transform, up to a factor of $N$.",
+        "formal_statement": "$\\sum_{j=0}^{N-1}|a_j|^2=\\frac1N\\sum_{k=0}^{N-1}|\\hat a(k)|^2$.",
+        "definition": null,
+        "intuition": "The DFT is (a scaling of) a unitary matrix — the finite Plancherel identity.",
+        "proof": null,
+        "notation": "$\\sum|a_j|^2=\\tfrac1N\\sum|\\hat a(k)|^2$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "dft"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "dft",
+          "parseval_identity"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dct",
+        "label": "Discrete Cosine Transform",
+        "kind": "definition",
+        "domain": "discrete",
+        "statement": "A real, cosine-only transform of sampled data — the engine of JPEG/MP3.",
+        "formal_statement": "$C_k=\\sum_{j=0}^{N-1} a_j\\cos\\!\\big[\\tfrac{\\pi}{N}(j+\\tfrac12)k\\big]$; a DFT of an even extension.",
+        "definition": null,
+        "intuition": "Concentrates energy in few coefficients, which is why it dominates lossy compression.",
+        "proof": null,
+        "notation": "$C_k$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "dft"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "dft",
+          "half_range_expansion"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "discrete",
+            "signal"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "separation_of_variables",
+        "label": "Separation of Variables",
+        "kind": "method",
+        "domain": "applications",
+        "statement": "Solving linear PDEs by expanding in eigenfunctions of the spatial operator.",
+        "formal_statement": "Seek $u(x,t)=\\sum_n c_n(t)e_n(x)$ where $e_n$ are eigenfunctions; the PDE decouples into ODEs for $c_n(t)$.",
+        "definition": null,
+        "intuition": "The technique that turns Fourier series into PDE solutions — Fourier's original method.",
+        "proof": null,
+        "notation": "u=\\sum_n c_n(t)e_n(x)",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_series"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_series"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "pde"
+          ],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "dirichlet_problem_disk",
+        "label": "Dirichlet Problem on the Disk",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "Harmonic extension of boundary data, solved by the Poisson kernel.",
+        "formal_statement": "$\\Delta u=0$ in the disk with $u=f$ on the boundary is solved by $u(r,\\theta)=(P_r*f)(\\theta)$.",
+        "definition": null,
+        "intuition": "Where the Poisson kernel earns its name — Abel summation is harmonic extension.",
+        "proof": null,
+        "notation": "u=P_r*f",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "poisson_kernel",
+            "abel_summation"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "poisson_kernel",
+          "abel_summation"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "pde"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "theta_function",
+        "label": "Theta Function & Functional Equation",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "The identity $\\theta(1/t)=\\sqrt{t}\\,\\theta(t)$, straight from Poisson summation.",
+        "formal_statement": "$\\theta(t)=\\sum_{n}e^{-\\pi n^2 t}$ satisfies $\\theta(1/t)=\\sqrt{t}\\,\\theta(t)$, via Poisson summation on the Gaussian.",
+        "definition": null,
+        "intuition": "A bridge to number theory (the Riemann zeta functional equation) built on Poisson summation.",
+        "proof": null,
+        "notation": "\\theta(1/t)=\\sqrt{t}\\,\\theta(t)",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "poisson_summation",
+            "gaussian_transform"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "poisson_summation",
+          "gaussian_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "number-theory"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "schrodinger_equation",
+        "label": "Free Schrödinger Equation",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "Quantum free evolution diagonalized by the Fourier transform.",
+        "formal_statement": "$i u_t=-u_{xx}$ solves via $\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2 t}\\hat u_0(\\xi)$ — multiplication in frequency.",
+        "definition": null,
+        "intuition": "Like the heat equation but with imaginary time: dispersion instead of diffusion.",
+        "proof": null,
+        "notation": "iu_t=-u_{xx}",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "differentiation_rule"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_transform",
+          "differentiation_rule"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "pde"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "diffraction",
+        "label": "Fraunhofer Diffraction",
+        "kind": "application",
+        "domain": "applications",
+        "statement": "The far-field light pattern of an aperture is the Fourier transform of its shape.",
+        "formal_statement": "Far-field amplitude $\\propto\\hat{\\mathbb{1}_A}(\\xi)$, the Fourier transform of the aperture indicator.",
+        "definition": null,
+        "intuition": "Optics computes Fourier transforms physically — a slit's pattern is a sinc, a circle's an Airy disk.",
+        "proof": null,
+        "notation": "\\propto\\widehat{\\mathbb{1}_A}",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform_rd"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "fourier_transform_rd",
+          "fourier_transform"
+        ],
+        "assumptions": [],
+        "metadata": {
+          "tags": [
+            "applications",
+            "optics"
+          ],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_complex_exponential__requires__periodic_function",
+        "source": "complex_exponential",
+        "target": "periodic_function",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_orthonormal_system__requires__inner_product_space",
+        "source": "orthonormal_system",
+        "target": "inner_product_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_orthonormal_system__requires__complex_exponential",
+        "source": "orthonormal_system",
+        "target": "complex_exponential",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_l1_space__instance_of__lp_space",
+        "source": "l1_space",
+        "target": "lp_space",
+        "type": "instance_of",
+        "dependency_class": "logical_dependency",
+        "label": "is an instance of",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_l2_space__instance_of__lp_space",
+        "source": "l2_space",
+        "target": "lp_space",
+        "type": "instance_of",
+        "dependency_class": "logical_dependency",
+        "label": "is an instance of",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_l2_space__requires__inner_product_space",
+        "source": "l2_space",
+        "target": "inner_product_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_l2_space__instance_of__hilbert_space",
+        "source": "l2_space",
+        "target": "hilbert_space",
+        "type": "instance_of",
+        "dependency_class": "logical_dependency",
+        "label": "is an instance of",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_hilbert_space__requires__inner_product_space",
+        "source": "hilbert_space",
+        "target": "inner_product_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_convolution__requires__l1_space",
+        "source": "convolution",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_coefficient__requires__complex_exponential",
+        "source": "fourier_coefficient",
+        "target": "complex_exponential",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_coefficient__requires__l1_space",
+        "source": "fourier_coefficient",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_coefficient__requires__inner_product_space",
+        "source": "fourier_coefficient",
+        "target": "inner_product_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_series__requires__fourier_coefficient",
+        "source": "fourier_series",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_trigonometric_polynomial__requires__complex_exponential",
+        "source": "trigonometric_polynomial",
+        "target": "complex_exponential",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_partial_sum__requires__fourier_series",
+        "source": "partial_sum",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_partial_sum__requires__trigonometric_polynomial",
+        "source": "partial_sum",
+        "target": "trigonometric_polynomial",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_bessel_inequality__requires__fourier_coefficient",
+        "source": "bessel_inequality",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_bessel_inequality__requires__orthonormal_system",
+        "source": "bessel_inequality",
+        "target": "orthonormal_system",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_bessel_inequality__requires__l2_space",
+        "source": "bessel_inequality",
+        "target": "l2_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_parseval_identity__requires__bessel_inequality",
+        "source": "parseval_identity",
+        "target": "bessel_inequality",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_parseval_identity__requires__l2_space",
+        "source": "parseval_identity",
+        "target": "l2_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_riemann_lebesgue__requires__fourier_coefficient",
+        "source": "riemann_lebesgue",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_riemann_lebesgue__requires__l1_space",
+        "source": "riemann_lebesgue",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_uniqueness_series__requires__fourier_coefficient",
+        "source": "uniqueness_series",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_best_approximation__requires__partial_sum",
+        "source": "best_approximation",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_best_approximation__requires__orthonormal_system",
+        "source": "best_approximation",
+        "target": "orthonormal_system",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_best_approximation__requires__l2_space",
+        "source": "best_approximation",
+        "target": "l2_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_decay_smoothness__requires__fourier_coefficient",
+        "source": "decay_smoothness",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_good_kernel__requires__convolution",
+        "source": "good_kernel",
+        "target": "convolution",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dirichlet_kernel__requires__partial_sum",
+        "source": "dirichlet_kernel",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fejer_kernel__instance_of__good_kernel",
+        "source": "fejer_kernel",
+        "target": "good_kernel",
+        "type": "instance_of",
+        "dependency_class": "logical_dependency",
+        "label": "is an instance of",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fejer_kernel__requires__dirichlet_kernel",
+        "source": "fejer_kernel",
+        "target": "dirichlet_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_poisson_kernel__instance_of__good_kernel",
+        "source": "poisson_kernel",
+        "target": "good_kernel",
+        "type": "instance_of",
+        "dependency_class": "logical_dependency",
+        "label": "is an instance of",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_cesaro_summation__requires__partial_sum",
+        "source": "cesaro_summation",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_abel_summation__requires__partial_sum",
+        "source": "abel_summation",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fejer_kernel__requires__cesaro_summation",
+        "source": "fejer_kernel",
+        "target": "cesaro_summation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_poisson_kernel__requires__abel_summation",
+        "source": "poisson_kernel",
+        "target": "abel_summation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fejer_theorem__requires__fejer_kernel",
+        "source": "fejer_theorem",
+        "target": "fejer_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fejer_theorem__requires__good_kernel",
+        "source": "fejer_theorem",
+        "target": "good_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_mean_square_convergence__requires__parseval_identity",
+        "source": "mean_square_convergence",
+        "target": "parseval_identity",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_mean_square_convergence__requires__partial_sum",
+        "source": "mean_square_convergence",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_pointwise_convergence__requires__dirichlet_kernel",
+        "source": "pointwise_convergence",
+        "target": "dirichlet_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dini_criterion__requires__pointwise_convergence",
+        "source": "dini_criterion",
+        "target": "pointwise_convergence",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dirichlet_conditions__requires__pointwise_convergence",
+        "source": "dirichlet_conditions",
+        "target": "pointwise_convergence",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_gibbs_phenomenon__requires__partial_sum",
+        "source": "gibbs_phenomenon",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_gibbs_phenomenon__requires__dirichlet_conditions",
+        "source": "gibbs_phenomenon",
+        "target": "dirichlet_conditions",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_carleson_theorem__requires__pointwise_convergence",
+        "source": "carleson_theorem",
+        "target": "pointwise_convergence",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_carleson_theorem__requires__l2_space",
+        "source": "carleson_theorem",
+        "target": "l2_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dubois_reymond__requires__pointwise_convergence",
+        "source": "dubois_reymond",
+        "target": "pointwise_convergence",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dubois_reymond__requires__dirichlet_kernel",
+        "source": "dubois_reymond",
+        "target": "dirichlet_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_transform__requires__complex_exponential",
+        "source": "fourier_transform",
+        "target": "complex_exponential",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_transform__requires__l1_space",
+        "source": "fourier_transform",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_inversion__requires__fourier_transform",
+        "source": "fourier_inversion",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_inversion__requires__schwartz_space",
+        "source": "fourier_inversion",
+        "target": "schwartz_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_convolution_theorem__requires__fourier_transform",
+        "source": "convolution_theorem",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_convolution_theorem__requires__convolution",
+        "source": "convolution_theorem",
+        "target": "convolution",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_plancherel_theorem__requires__fourier_transform",
+        "source": "plancherel_theorem",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_plancherel_theorem__requires__l2_space",
+        "source": "plancherel_theorem",
+        "target": "l2_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_gaussian_transform__requires__fourier_transform",
+        "source": "gaussian_transform",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_gaussian_transform__instance_of__schwartz_space",
+        "source": "gaussian_transform",
+        "target": "schwartz_space",
+        "type": "instance_of",
+        "dependency_class": "logical_dependency",
+        "label": "is an instance of",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_uncertainty_principle__requires__fourier_transform",
+        "source": "uncertainty_principle",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_uncertainty_principle__requires__gaussian_transform",
+        "source": "uncertainty_principle",
+        "target": "gaussian_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_poisson_summation__requires__fourier_transform",
+        "source": "poisson_summation",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_poisson_summation__requires__fourier_series",
+        "source": "poisson_summation",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_transform_rd__requires__fourier_transform",
+        "source": "fourier_transform_rd",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_differentiation_rule__requires__fourier_transform",
+        "source": "differentiation_rule",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_differentiation_rule__requires__schwartz_space",
+        "source": "differentiation_rule",
+        "target": "schwartz_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_tempered_distribution__requires__schwartz_space",
+        "source": "tempered_distribution",
+        "target": "schwartz_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dirac_delta__instance_of__tempered_distribution",
+        "source": "dirac_delta",
+        "target": "tempered_distribution",
+        "type": "instance_of",
+        "dependency_class": "logical_dependency",
+        "label": "is an instance of",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weak_derivative__requires__tempered_distribution",
+        "source": "weak_derivative",
+        "target": "tempered_distribution",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_distributional_ft__requires__tempered_distribution",
+        "source": "distributional_ft",
+        "target": "tempered_distribution",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_distributional_ft__requires__fourier_transform",
+        "source": "distributional_ft",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_roots_of_unity__requires__complex_exponential",
+        "source": "roots_of_unity",
+        "target": "complex_exponential",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_finite_fourier__requires__roots_of_unity",
+        "source": "finite_fourier",
+        "target": "roots_of_unity",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_finite_fourier__requires__orthonormal_system",
+        "source": "finite_fourier",
+        "target": "orthonormal_system",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dft__requires__finite_fourier",
+        "source": "dft",
+        "target": "finite_fourier",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dtft__requires__fourier_series",
+        "source": "dtft",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fft__requires__dft",
+        "source": "fft",
+        "target": "dft",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_circular_convolution__requires__dft",
+        "source": "circular_convolution",
+        "target": "dft",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_circular_convolution__requires__convolution",
+        "source": "circular_convolution",
+        "target": "convolution",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_sampling_theorem__requires__fourier_transform",
+        "source": "sampling_theorem",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_sampling_theorem__requires__fourier_inversion",
+        "source": "sampling_theorem",
+        "target": "fourier_inversion",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_aliasing__requires__sampling_theorem",
+        "source": "aliasing",
+        "target": "sampling_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_equation__requires__fourier_series",
+        "source": "heat_equation",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_equation__requires__good_kernel",
+        "source": "heat_equation",
+        "target": "good_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_wave_equation__requires__fourier_series",
+        "source": "wave_equation",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_isoperimetric__requires__parseval_identity",
+        "source": "isoperimetric",
+        "target": "parseval_identity",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weyl_equidistribution__requires__fejer_theorem",
+        "source": "weyl_equidistribution",
+        "target": "fejer_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weyl_equidistribution__requires__fourier_coefficient",
+        "source": "weyl_equidistribution",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_central_limit__requires__convolution_theorem",
+        "source": "central_limit",
+        "target": "convolution_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_central_limit__requires__gaussian_transform",
+        "source": "central_limit",
+        "target": "gaussian_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_signal_filtering__requires__convolution_theorem",
+        "source": "signal_filtering",
+        "target": "convolution_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_signal_filtering__requires__fft",
+        "source": "signal_filtering",
+        "target": "fft",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dirichlet_primes__requires__finite_fourier",
+        "source": "dirichlet_primes",
+        "target": "finite_fourier",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_l1_space__requires__lebesgue_integral",
+        "source": "l1_space",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_lp_space__requires__lebesgue_integral",
+        "source": "lp_space",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_almost_everywhere__requires__lebesgue_integral",
+        "source": "almost_everywhere",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dominated_convergence__requires__lebesgue_integral",
+        "source": "dominated_convergence",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fubini_tonelli__requires__lebesgue_integral",
+        "source": "fubini_tonelli",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_convolution__requires__fubini_tonelli",
+        "source": "convolution",
+        "target": "fubini_tonelli",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_carleson_theorem__requires__almost_everywhere",
+        "source": "carleson_theorem",
+        "target": "almost_everywhere",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_riemann_lebesgue__requires__dominated_convergence",
+        "source": "riemann_lebesgue",
+        "target": "dominated_convergence",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_real_fourier_series__requires__fourier_series",
+        "source": "real_fourier_series",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_half_range_expansion__requires__real_fourier_series",
+        "source": "half_range_expansion",
+        "target": "real_fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_localization_principle__requires__dirichlet_kernel",
+        "source": "localization_principle",
+        "target": "dirichlet_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_localization_principle__requires__pointwise_convergence",
+        "source": "localization_principle",
+        "target": "pointwise_convergence",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dirichlet_conditions__requires__localization_principle",
+        "source": "dirichlet_conditions",
+        "target": "localization_principle",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dini_criterion__requires__localization_principle",
+        "source": "dini_criterion",
+        "target": "localization_principle",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_term_differentiation__requires__decay_smoothness",
+        "source": "term_differentiation",
+        "target": "decay_smoothness",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_term_differentiation__requires__fourier_series",
+        "source": "term_differentiation",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weierstrass_approximation__requires__fejer_theorem",
+        "source": "weierstrass_approximation",
+        "target": "fejer_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weierstrass_approximation__requires__trigonometric_polynomial",
+        "source": "weierstrass_approximation",
+        "target": "trigonometric_polynomial",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_abel_theorem__requires__abel_summation",
+        "source": "abel_theorem",
+        "target": "abel_summation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_inner_product_space__requires__lebesgue_integral",
+        "source": "inner_product_space",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_translation_modulation__requires__fourier_transform",
+        "source": "translation_modulation",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_ft_continuity__requires__fourier_transform",
+        "source": "ft_continuity",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_ft_continuity__requires__l1_space",
+        "source": "ft_continuity",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_band_limited__requires__fourier_transform",
+        "source": "band_limited",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_paley_wiener__requires__band_limited",
+        "source": "paley_wiener",
+        "target": "band_limited",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_paley_wiener__requires__fourier_transform",
+        "source": "paley_wiener",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_kernel_line__requires__gaussian_transform",
+        "source": "heat_kernel_line",
+        "target": "gaussian_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_kernel_line__requires__convolution_theorem",
+        "source": "heat_kernel_line",
+        "target": "convolution_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_sampling_theorem__requires__band_limited",
+        "source": "sampling_theorem",
+        "target": "band_limited",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_sampling_theorem__requires__poisson_summation",
+        "source": "sampling_theorem",
+        "target": "poisson_summation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_aliasing__requires__band_limited",
+        "source": "aliasing",
+        "target": "band_limited",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_test_function__requires__schwartz_space",
+        "source": "test_function",
+        "target": "schwartz_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weak_derivative__requires__test_function",
+        "source": "weak_derivative",
+        "target": "test_function",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_convolution_distributions__requires__dirac_delta",
+        "source": "convolution_distributions",
+        "target": "dirac_delta",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_convolution_distributions__requires__convolution",
+        "source": "convolution_distributions",
+        "target": "convolution",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fundamental_solution__requires__distributional_ft",
+        "source": "fundamental_solution",
+        "target": "distributional_ft",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fundamental_solution__requires__convolution_distributions",
+        "source": "fundamental_solution",
+        "target": "convolution_distributions",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_parseval_dft__requires__dft",
+        "source": "parseval_dft",
+        "target": "dft",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dct__requires__dft",
+        "source": "dct",
+        "target": "dft",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_signal_filtering__requires__dct",
+        "source": "signal_filtering",
+        "target": "dct",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_separation_of_variables__requires__fourier_series",
+        "source": "separation_of_variables",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_equation__requires__separation_of_variables",
+        "source": "heat_equation",
+        "target": "separation_of_variables",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_wave_equation__requires__separation_of_variables",
+        "source": "wave_equation",
+        "target": "separation_of_variables",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_equation__requires__heat_kernel_line",
+        "source": "heat_equation",
+        "target": "heat_kernel_line",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dirichlet_problem_disk__requires__poisson_kernel",
+        "source": "dirichlet_problem_disk",
+        "target": "poisson_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dirichlet_problem_disk__requires__abel_summation",
+        "source": "dirichlet_problem_disk",
+        "target": "abel_summation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_theta_function__requires__poisson_summation",
+        "source": "theta_function",
+        "target": "poisson_summation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_theta_function__requires__gaussian_transform",
+        "source": "theta_function",
+        "target": "gaussian_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_schrodinger_equation__requires__fourier_transform",
+        "source": "schrodinger_equation",
+        "target": "fourier_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_schrodinger_equation__requires__differentiation_rule",
+        "source": "schrodinger_equation",
+        "target": "differentiation_rule",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_diffraction__requires__fourier_transform_rd",
+        "source": "diffraction",
+        "target": "fourier_transform_rd",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      }
+    ]
+  }
+}
