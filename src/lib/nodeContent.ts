@@ -25,7 +25,7 @@ export function nodeDefinition(node: GraphNode, seen: string[] = []): string {
 }
 
 export function nodeFormula(node: GraphNode, seen: string[] = []): string {
-  return distinct(node.formulaText, seen);
+  return distinct(node.formula, seen);
 }
 
 export function nodeAnswerText(node: GraphNode): string {
@@ -33,7 +33,7 @@ export function nodeAnswerText(node: GraphNode): string {
     nodeStatement(node) ||
     clean(node.gloss) ||
     nodeFormalStatement(node) ||
-    clean(node.formulaText) ||
+    clean(node.formula) ||
     clean(node.solution) ||
     clean(node.proof) ||
     clean(node.example)

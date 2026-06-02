@@ -18,6 +18,7 @@ import type { LoadedMap } from "../data";
 import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { getDomainTone, type DomainTone } from "../lib/colors";
 import { CATEGORY_META, categoryOf, kindAbbrev, railBackground } from "../lib/nodeCategory";
+import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
 import { KIND_LABEL, type GraphNode } from "../types";
 
 export function kindShortLabel(kind: string): string {
@@ -104,6 +105,165 @@ export function Facet({
         {children}
       </div>
     </div>
+  );
+}
+
+function ExactMathBlock({
+  text,
+  compact,
+}: {
+  text: string;
+  compact: boolean;
+}) {
+  return (
+    <div
+      className="block max-w-full overflow-x-auto rounded-[10px] border font-math text-ui-body leading-[1.6]"
+      style={{
+        background: "var(--surface-2)",
+        borderColor: "var(--border)",
+        color: "var(--fg-1)",
+        padding: compact ? "9px 12px" : "10px 14px",
+      }}
+    >
+      <MathText text={text} asBlock />
+    </div>
+  );
+}
+
+function FormulaBlock({
+  text,
+  tone,
+  compact,
+}: {
+  text: string;
+  tone: DomainTone;
+  compact: boolean;
+}) {
+  return <ExactMathBlock text={text} compact={compact} />;
+}
+
+export function SpecimenContentBlocks({
+  node,
+  tone,
+  compact = false,
+  wrapSection = false,
+}: {
+  node: GraphNode;
+  tone: DomainTone;
+  compact?: boolean;
+  wrapSection?: boolean;
+}) {
+  const statement = nodeStatement(node);
+  const formalStatement = nodeFormalStatement(node);
+  const formula = nodeFormula(node, [statement, formalStatement]);
+  const definition = nodeDefinition(node, [statement, formalStatement, formula]);
+  const gloss = node.gloss.trim();
+  const explanation = node.explanation.trim();
+  const example = node.example.trim();
+  const proof = node.proof.trim();
+  const solution = node.solution.trim();
+  const showGloss = gloss && gloss !== statement && gloss !== explanation;
+
+  const blocks: { id: string; content: ReactNode }[] = [];
+
+  if (statement) {
+    blocks.push({
+      id: "statement",
+      content: (
+        <Facet label={compact ? kindShortLabel(node.kind) : "Statement"} toneColor={tone.color}>
+          <Spine tone={tone} kind={node.kind} size={compact ? "dict" : "panel"}>
+            <MathText text={statement} asBlock />
+          </Spine>
+        </Facet>
+      ),
+    });
+  }
+  if (formula) {
+    blocks.push({
+      id: `formula-${node.id}`,
+      content: (
+        <Facet label="Formula" toneColor={tone.color}>
+          <FormulaBlock text={formula} tone={tone} compact={compact} />
+        </Facet>
+      ),
+    });
+  }
+  if (formalStatement && formalStatement !== statement) {
+    blocks.push({
+      id: "formal",
+      content: (
+        <Facet label="Formal statement" toneColor={tone.color} muted={compact}>
+          <ExactMathBlock text={formalStatement} compact={compact} />
+        </Facet>
+      ),
+    });
+  }
+  if (definition) {
+    blocks.push({
+      id: "definition",
+      content: (
+        <Facet label="Definition" toneColor={tone.color} muted={compact}>
+          <ExactMathBlock text={definition} compact={compact} />
+        </Facet>
+      ),
+    });
+  }
+  if (showGloss) {
+    blocks.push({
+      id: "inwords",
+      content: (
+        <Facet label="In words">
+          <MathProse text={gloss} asBlock={compact} />
+        </Facet>
+      ),
+    });
+  }
+  if (explanation && explanation !== statement) {
+    blocks.push({
+      id: "intuition",
+      content: (
+        <Facet label="Intuition">
+          <MathProse text={explanation} asBlock={compact} />
+        </Facet>
+      ),
+    });
+  }
+  if (example) {
+    blocks.push({
+      id: "example",
+      content: (
+        <Facet label="Example" muted>
+          <MathProse text={example} asBlock={compact} />
+        </Facet>
+      ),
+    });
+  }
+  if (proof) {
+    blocks.push({ id: "proof", content: <Proof text={proof} toneColor={tone.color} /> });
+  }
+  if (solution && solution !== statement) {
+    blocks.push({
+      id: "solution",
+      content: (
+        <Facet label="Solution">
+          <MathProse text={solution} asBlock={compact} />
+        </Facet>
+      ),
+    });
+  }
+
+  return (
+    <>
+      {blocks.map((block) =>
+        wrapSection ? (
+          <section key={block.id} id={`sec-${block.id}`}>
+            {block.content}
+          </section>
+        ) : (
+          <div key={block.id}>{block.content}</div>
+        ),
+      )}
+    </>
   );
 }
 

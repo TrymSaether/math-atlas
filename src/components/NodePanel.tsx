@@ -6,12 +6,11 @@ import { useStore } from "../store";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
-import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { ThemedDiagram } from "./ThemedDiagram";
 import { FIGURE_REGISTRY } from "./figures/registry";
-import { Spine, Facet, Proof, ConnectionChip, specimenMeta } from "./Specimen";
+import { Facet, ConnectionChip, SpecimenContentBlocks, specimenMeta } from "./Specimen";
 
 const USED_BY_INITIAL = 8;
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
@@ -103,18 +102,8 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const visibleUsed = showAllUsed ? usedBy : usedBy.slice(0, USED_BY_INITIAL);
   const hiddenUsedCount = usedBy.length - visibleUsed.length;
 
-  const statement = nodeStatement(node);
-  const formalStatement = nodeFormalStatement(node);
-  const definition = nodeDefinition(node, [statement, formalStatement]);
-  const formula = nodeFormula(node, [statement, formalStatement, definition]);
-  const explanation = node.explanation.trim();
-  const solution = node.solution.trim();
-  const proof = node.proof.trim();
-  const gloss = node.gloss.trim();
-  const example = node.example.trim();
   const diagramPath = node.diagramPath.trim();
   const InteractiveFigure = FIGURE_REGISTRY[node.id];
-  const showGloss = gloss && gloss !== explanation;
   const hasConnections =
     prereqIds.length > 0 || usedBy.length > 0 || examples.length > 0 || exercises.length > 0;
 
@@ -206,100 +195,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
           </section>
         ) : null}
 
-        {statement && (
-          <section id="sec-statement">
-            <Spine tone={tone} kind={node.kind} label="Statement">
-              <MathProse text={statement} />
-            </Spine>
-          </section>
-        )}
-
-        {formalStatement && formalStatement !== statement && (
-          <section id="sec-formal">
-            <Facet label="Formal statement" toneColor={tone.color}>
-              <div
-                className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-                style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
-              >
-                <MathText text={formalStatement} asBlock />
-              </div>
-            </Facet>
-          </section>
-        )}
-
-        {definition && (
-          <section id="sec-definition">
-            <Facet label="Definition" toneColor={tone.color}>
-              <div
-                className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-                style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
-              >
-                <MathText text={definition} asBlock />
-              </div>
-            </Facet>
-          </section>
-        )}
-
-        {formula && (
-          <section id={`sec-formula-${node.id}`} aria-label={`${node.title} formula`}>
-            <Facet label="Formula" toneColor={tone.color}>
-              <div
-                className="relative block max-w-full overflow-x-auto rounded-[10px] border px-4 py-3 font-math text-ui-body leading-[1.65]"
-                style={{
-                  background: tone.tint,
-                  borderColor: tone.border,
-                  color: "var(--fg-1)",
-                  boxShadow: `inset 3px 0 0 ${tone.color}`,
-                }}
-              >
-                <div className="mb-1.5 font-mono text-ui-tiny font-semibold uppercase tracking-label-wide" style={{ color: tone.color }}>
-                  Symbolic form
-                </div>
-                <div className="min-w-max">
-                  <MathText text={formula} asBlock />
-                </div>
-              </div>
-            </Facet>
-          </section>
-        )}
-
-        {explanation && (
-          <section id="sec-intuition">
-            <Facet label="Intuition">
-              <MathProse text={explanation} />
-            </Facet>
-          </section>
-        )}
-
-        {solution && (
-          <section id="sec-solution">
-            <Facet label="Solution">
-              <MathProse text={solution} />
-            </Facet>
-          </section>
-        )}
-
-        {proof && (
-          <section id="sec-proof">
-            <Proof text={proof} toneColor={tone.color} />
-          </section>
-        )}
-
-        {showGloss && (
-          <section id="sec-inwords">
-            <Facet label="In words">
-              <MathProse text={gloss} />
-            </Facet>
-          </section>
-        )}
-
-        {example && (
-          <section id="sec-example">
-            <Facet label="Example" muted>
-              <MathProse text={example} />
-            </Facet>
-          </section>
-        )}
+        <SpecimenContentBlocks node={node} tone={tone} wrapSection />
 
         {hasConnections && (
           <section id="sec-connections" className="space-y-3.5 border-t pt-4" style={{ borderColor: "var(--border-subtle)" }}>
