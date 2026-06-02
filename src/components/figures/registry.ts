@@ -28,6 +28,46 @@ export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<F
   sampling_theorem: lazy(() => import("./SamplingFigure")),
   aliasing: lazy(() => import("./SamplingFigure")),
   heat_equation: lazy(() => import("./HeatFigure")),
+
+  // --- Exercises & exam problems: reuse the figure that best illustrates them ---
+  // Fourier-series waveforms (triangle / sawtooth / square + partial sums).
+  exam2025_p1a: lazy(() => import("./SeriesFigure")),
+  exam2025_p1b: lazy(() => import("./SeriesFigure")),
+  exam2025_p1c: lazy(() => import("./SeriesFigure")),
+  ss2_6_ex3: lazy(() => import("./SeriesFigure")),
+  ss2_6_ex4: lazy(() => import("./SeriesFigure")),
+  ss2_6_ex5: lazy(() => import("./SeriesFigure")),
+  ss2_6_ex8: lazy(() => import("./SeriesFigure")),
+  // Summability kernels (Dirichlet / Fejér).
+  exam2025_p2: lazy(() => import("./KernelFigure")),
+  ss2_6_ex15: lazy(() => import("./KernelFigure")),
+  ss2_6_ex17b: lazy(() => import("./KernelFigure")),
+  ss2_7_prob2: lazy(() => import("./KernelFigure")),
+  // Coefficient decay ↔ smoothness, and transform pairs.
+  ss2_6_ex10: lazy(() => import("./SpectrumFigure")),
+  ss3_3_ex8: lazy(() => import("./SpectrumFigure")),
+  ss3_3_ex15: lazy(() => import("./SpectrumFigure")),
+  ss3_3_ex17: lazy(() => import("./SpectrumFigure")),
+  ss5_5_ex2: lazy(() => import("./SpectrumFigure")),
+  ss5_5_ex3a: lazy(() => import("./SpectrumFigure")),
+  // Gaussian & the uncertainty principle.
+  exam2025_p5: lazy(() => import("./GaussianFigure")),
+  ss5_5_ex6: lazy(() => import("./GaussianFigure")),
+  ss5_5_ex23: lazy(() => import("./GaussianFigure")),
+  ss6_6_ex6: lazy(() => import("./GaussianFigure")),
+  // Heat flow / approximate identity.
+  exam2025_p6: lazy(() => import("./HeatFigure")),
+  ss4_5_ex11: lazy(() => import("./HeatFigure")),
+  ss5_6_prob1: lazy(() => import("./HeatFigure")),
+  ss5_6_prob2: lazy(() => import("./HeatFigure")),
+  ss6_6_ex7: lazy(() => import("./HeatFigure")),
+  // Convolution.
+  ss5_5_ex7: lazy(() => import("./ConvolutionFigure")),
+  // Sampling / sinc / discrete reconstruction.
+  exam2025_p3a: lazy(() => import("./SamplingFigure")),
+  exam2025_p3b: lazy(() => import("./SamplingFigure")),
+  ss7_3_ex1: lazy(() => import("./SamplingFigure")),
+  ss7_3_ex3: lazy(() => import("./SamplingFigure")),
 };
 
 export function hasInteractiveFigure(nodeId: string): boolean {

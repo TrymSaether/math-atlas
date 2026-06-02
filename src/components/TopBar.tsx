@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
-import { Search, ChevronDown, Network, BookOpen, GraduationCap, Compass, Settings2, Sun, Moon, Check } from "lucide-react";
+import { Search, ChevronDown, Network, BookOpenText, Earth, Columns2, Zap, DraftingCompass, Compass, Settings2, Sun, Moon, LucideBookMarked, Check } from "lucide-react";
 import { useReactFlow } from "reactflow";
 import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
@@ -206,7 +206,7 @@ function AtlasButton() {
       label="Atlas map"
       title="Atlas map"
     >
-      <Network className="h-4 w-4" />
+      <Compass className="h-4 w-4" style={{ color: active ? "var(--accent)" : "var(--fg-2)" }} />
     </DockButton>
   );
 }
@@ -222,7 +222,7 @@ function DictionaryButton() {
       label="Topology Dictionary"
       title={active ? "Back to atlas" : "Topology Dictionary"}
     >
-      <BookOpen className="h-4 w-4" />
+      <BookOpenText className="h-4 w-4" style={{ color: active ? "var(--accent)" : "var(--fg-2)" }} />
     </DockButton>
   );
 }
@@ -238,7 +238,7 @@ function FlashcardsButton() {
       label="Flashcards"
       title={active ? "Back to atlas" : "Flashcards"}
     >
-      <GraduationCap className="h-4 w-4" />
+      <Zap className="h-4 w-4" style={{ color: active ? "var(--accent)" : "var(--fg-2)" }} />
     </DockButton>
   );
 }
@@ -254,7 +254,7 @@ function SandboxButton() {
       label="Sandbox"
       title={active ? "Back to atlas" : "Geometric sandbox"}
     >
-      <Compass className="h-4 w-4" />
+      <Earth className="h-4 w-4" />
     </DockButton>
   );
 }
