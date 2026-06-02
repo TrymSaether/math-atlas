@@ -1309,7 +1309,7 @@
           "source": null
         },
         "kind": "object",
-        "label": "set",
+        "label": "Set",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -1317,7 +1317,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "set",
+        "display_label": "Set"
       },
       {
         "id": "function",
@@ -1343,7 +1345,7 @@
           "source": null
         },
         "kind": "object",
-        "label": "function",
+        "label": "Function",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -1351,7 +1353,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "function",
+        "display_label": "Function"
       },
       {
         "id": "axiom_of_choice",
@@ -1377,7 +1381,7 @@
           "source": null
         },
         "kind": "axiom",
-        "label": "axiom of choice",
+        "label": "Axiom of Choice",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -1385,7 +1389,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "axiom of choice",
+        "display_label": "Axiom of Choice"
       },
       {
         "id": "hausdorff_assumption",
@@ -1413,7 +1419,7 @@
           "source": null
         },
         "kind": "assumption",
-        "label": "Hausdorff assumption",
+        "label": "Assume Hausdorff",
         "domain": "separation_countability",
         "related": ["hausdorff_property"],
         "status": {
@@ -1426,7 +1432,8 @@
         "mathematical_role": ["assumption", "theorem_hypothesis"],
         "convention_notes": [
           "This node represents a hypothesis in a theorem/proof context, not the property itself."
-        ]
+        ],
+        "canonical_label": "Hausdorff assumption"
       },
       {
         "id": "normality_assumption",
@@ -1452,7 +1459,7 @@
           "source": null
         },
         "kind": "assumption",
-        "label": "normality assumption",
+        "label": "Assume Normal",
         "domain": "separation_countability",
         "related": ["normality"],
         "status": {
@@ -1461,11 +1468,12 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
-        "display_label": "Assume normal",
+        "display_label": "Assume Normal",
         "mathematical_role": ["assumption", "theorem_hypothesis"],
         "convention_notes": [
           "This node represents a hypothesis in a theorem/proof context, not the property itself."
-        ]
+        ],
+        "canonical_label": "normality assumption"
       },
       {
         "id": "regularity_assumption",
@@ -1491,7 +1499,7 @@
           "source": null
         },
         "kind": "assumption",
-        "label": "regularity assumption",
+        "label": "Assume Regular",
         "domain": "separation_countability",
         "related": ["regularity"],
         "status": {
@@ -1500,11 +1508,12 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
-        "display_label": "Assume regular",
+        "display_label": "Assume Regular",
         "mathematical_role": ["assumption", "theorem_hypothesis"],
         "convention_notes": [
           "This node represents a hypothesis in a theorem/proof context, not the property itself."
-        ]
+        ],
+        "canonical_label": "regularity assumption"
       },
       {
         "id": "second_countability_assumption",
@@ -1532,7 +1541,7 @@
           "source": null
         },
         "kind": "assumption",
-        "label": "second-countability assumption",
+        "label": "Assume Second-Countable",
         "domain": "separation_countability",
         "related": ["second_countability"],
         "status": {
@@ -1541,11 +1550,12 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
-        "display_label": "Assume second-countable",
+        "display_label": "Assume Second-Countable",
         "mathematical_role": ["assumption", "theorem_hypothesis"],
         "convention_notes": [
           "This node represents a hypothesis in a theorem/proof context, not the property itself."
-        ]
+        ],
+        "canonical_label": "second-countability assumption"
       },
       {
         "id": "local_compactness_assumption",
@@ -1573,7 +1583,7 @@
           "source": null
         },
         "kind": "assumption",
-        "label": "local compactness assumption",
+        "label": "Assume Locally Compact",
         "domain": "compactness",
         "related": ["local_compactness"],
         "status": {
@@ -1582,11 +1592,12 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
-        "display_label": "Assume locally compact",
+        "display_label": "Assume Locally Compact",
         "mathematical_role": ["assumption", "theorem_hypothesis"],
         "convention_notes": [
           "This node represents a hypothesis in a theorem/proof context, not the property itself."
-        ]
+        ],
+        "canonical_label": "local compactness assumption"
       },
       {
         "id": "complete_metric_assumption",
@@ -1612,7 +1623,7 @@
           "source": null
         },
         "kind": "assumption",
-        "label": "complete metric assumption",
+        "label": "Assume Complete Metric",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -1621,11 +1632,12 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
-        "display_label": "Assume complete metric",
+        "display_label": "Assume Complete Metric",
         "mathematical_role": ["assumption", "theorem_hypothesis"],
         "convention_notes": [
           "This node represents a hypothesis in a theorem/proof context, not the property itself."
-        ]
+        ],
+        "canonical_label": "complete metric assumption"
       },
       {
         "id": "topological_space",
@@ -1654,7 +1666,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "topological space",
+        "label": "Topological Space",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Def. 3.1",
@@ -1673,7 +1685,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "topological space",
+        "display_label": "Topological Space"
       },
       {
         "id": "pseudometric_space",
@@ -1699,7 +1713,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "pseudometric space",
+        "label": "Pseudometric Space",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -1707,7 +1721,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "pseudometric space",
+        "display_label": "Pseudometric Space"
       },
       {
         "id": "metric_space",
@@ -1737,7 +1753,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "metric space",
+        "label": "Metric Space",
         "domain": "spaces_constructions",
         "chapter": "2",
         "ref": "Def. 2.1",
@@ -1755,7 +1771,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "metric space",
+        "display_label": "Metric Space"
       },
       {
         "id": "subspace",
@@ -1781,7 +1799,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "subspace",
+        "label": "Subspace",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -1789,7 +1807,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "subspace",
+        "display_label": "Subspace"
       },
       {
         "id": "product_space",
@@ -1815,7 +1835,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "product space",
+        "label": "Product Space",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -1823,7 +1843,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "product space",
+        "display_label": "Product Space"
       },
       {
         "id": "quotient_space",
@@ -1852,7 +1874,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "quotient space",
+        "label": "Quotient Space",
         "domain": "spaces_constructions",
         "chapter": "5",
         "ref": "Def. 5.16",
@@ -1870,7 +1892,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "quotient space",
+        "display_label": "Quotient Space"
       },
       {
         "id": "compact_space",
@@ -1900,7 +1924,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "compact space",
+        "label": "Compact Space",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Def. 6.29",
@@ -1922,7 +1946,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["structure", "space_class"]
+        "mathematical_role": ["structure", "space_class"],
+        "canonical_label": "compact space",
+        "display_label": "Compact Space"
       },
       {
         "id": "connected_space",
@@ -1952,7 +1978,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "connected space",
+        "label": "Connected Space",
         "domain": "connectedness",
         "chapter": "6",
         "ref": "Def. 6.1",
@@ -1973,7 +1999,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["structure", "space_class"]
+        "mathematical_role": ["structure", "space_class"],
+        "canonical_label": "connected space",
+        "display_label": "Connected Space"
       },
       {
         "id": "path_connected_space",
@@ -2003,7 +2031,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "path-connected space",
+        "label": "Path-Connected Space",
         "domain": "connectedness",
         "chapter": "6",
         "ref": "Def. 6.14",
@@ -2023,7 +2051,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["structure", "space_class"]
+        "mathematical_role": ["structure", "space_class"],
+        "canonical_label": "path-connected space",
+        "display_label": "Path-Connected Space"
       },
       {
         "id": "hausdorff_space",
@@ -2052,7 +2082,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "Hausdorff space",
+        "label": "Hausdorff Space",
         "domain": "separation_countability",
         "chapter": "6",
         "ref": "Def. 6.19",
@@ -2071,7 +2101,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["structure", "space_class"]
+        "mathematical_role": ["structure", "space_class"],
+        "canonical_label": "Hausdorff space",
+        "display_label": "Hausdorff Space"
       },
       {
         "id": "regular_space",
@@ -2100,7 +2132,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "regular space",
+        "label": "Regular Space",
         "domain": "separation_countability",
         "related": ["regularity"],
         "status": {
@@ -2125,7 +2157,9 @@
           ],
           "modeling_decision": "Keep regular_space --subtype_of--> hausdorff_space only under the selected T1/T3 convention; otherwise weaken/remove that edge.",
           "exam_warning": "If the course defines regular without T1, do not infer Hausdorff automatically."
-        }
+        },
+        "canonical_label": "regular space",
+        "display_label": "Regular Space"
       },
       {
         "id": "normal_space",
@@ -2154,7 +2188,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "normal space",
+        "label": "Normal Space",
         "domain": "separation_countability",
         "related": ["normality"],
         "status": {
@@ -2179,7 +2213,9 @@
           ],
           "modeling_decision": "Keep normal_space --subtype_of--> regular_space only under the selected convention and with the standard theorem available.",
           "exam_warning": "If normal does not include T1 in the course, normal does not automatically mean regular/Hausdorff without extra hypotheses."
-        }
+        },
+        "canonical_label": "normal space",
+        "display_label": "Normal Space"
       },
       {
         "id": "locally_compact_space",
@@ -2208,7 +2244,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "locally compact space",
+        "label": "Locally Compact Space",
         "domain": "compactness",
         "related": [
           "local_compactness",
@@ -2243,7 +2279,9 @@
           ],
           "modeling_decision": "Use compact-neighborhood as the default topological definition; add Hausdorff assumptions explicitly for theorems needing the compact-closure formulation.",
           "exam_warning": "In Hausdorff spaces these common formulations often align; outside Hausdorff settings they can diverge."
-        }
+        },
+        "canonical_label": "locally compact space",
+        "display_label": "Locally Compact Space"
       },
       {
         "id": "second_countable_space",
@@ -2272,7 +2310,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "second-countable space",
+        "label": "Second-Countable Space",
         "domain": "separation_countability",
         "related": ["second_countability"],
         "status": {
@@ -2281,7 +2319,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["structure", "space_class"]
+        "mathematical_role": ["structure", "space_class"],
+        "canonical_label": "second-countable space",
+        "display_label": "Second-Countable Space"
       },
       {
         "id": "manifold",
@@ -2311,7 +2351,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "manifold",
+        "label": "Manifold",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -2336,7 +2376,9 @@
           ],
           "modeling_decision": "Keep manifold as topological manifold without boundary; model dimension, boundary, and smooth structure as separate nodes when needed.",
           "exam_warning": "Never assume a manifold convention without checking whether Hausdorff, second-countable, dimension, and boundary are included."
-        }
+        },
+        "canonical_label": "manifold",
+        "display_label": "Manifold"
       },
       {
         "id": "compact_hausdorff_space",
@@ -2365,7 +2407,7 @@
           "source": null
         },
         "kind": "structure",
-        "label": "compact Hausdorff space",
+        "label": "Compact Hausdorff Space",
         "domain": "compactness",
         "related": [
           "compact_space",
@@ -2382,7 +2424,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "compact Hausdorff space",
+        "display_label": "Compact Hausdorff Space"
       },
       {
         "id": "topology",
@@ -2430,7 +2474,7 @@
         ],
         "non_examples": ["bare_set_without_topology"],
         "equivalent_definitions": ["closed-set formulation via complements"],
-        "label": "topology",
+        "label": "Topology",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -2438,7 +2482,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "topology",
+        "display_label": "Topology"
       },
       {
         "id": "open_set",
@@ -2473,7 +2519,7 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [],
-        "label": "open set",
+        "label": "Open Set",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -2481,7 +2527,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "open set",
+        "display_label": "Open Set"
       },
       {
         "id": "closed_set",
@@ -2523,7 +2571,7 @@
         "equivalent_definitions": [
           "member of the closed-set system dual to the topology"
         ],
-        "label": "closed set",
+        "label": "Closed Set",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Def. 3.24",
@@ -2541,7 +2589,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "closed set",
+        "display_label": "Closed Set"
       },
       {
         "id": "neighborhood",
@@ -2578,7 +2628,7 @@
         "equivalent_definitions": [
           "open neighborhood when the neighborhood itself is required to be open"
         ],
-        "label": "neighborhood",
+        "label": "Neighborhood",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Def. 3.9",
@@ -2613,7 +2663,9 @@
           ],
           "modeling_decision": "Keep neighborhood as broad; keep open_neighborhood as the strict open version; link open_neighborhood --specializes--> neighborhood.",
           "exam_warning": "When reading a course text, check whether 'neighborhood' is required to be open. If yes, use open_neighborhood in routes/proofs."
-        }
+        },
+        "canonical_label": "neighborhood",
+        "display_label": "Neighborhood"
       },
       {
         "id": "basis_for_topology",
@@ -2655,7 +2707,7 @@
         "equivalent_definitions": [
           "covers X and locally refines finite intersections"
         ],
-        "label": "basis for a topology",
+        "label": "Basis for a Topology",
         "domain": "spaces_constructions",
         "chapter": "4",
         "ref": "Def. 4.6",
@@ -2688,7 +2740,9 @@
           ],
           "modeling_decision": "Keep basis_for_topology for bases of existing topologies; use generated_topology for topology generated from a basis-like collection.",
           "exam_warning": "Do not confuse 'B is a basis for τ' with 'B is a collection satisfying basis axioms that generates τ' unless the context says so."
-        }
+        },
+        "canonical_label": "basis for a topology",
+        "display_label": "Basis for a Topology"
       },
       {
         "id": "subbasis",
@@ -2727,7 +2781,7 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": ["coarsest topology containing the subbasis"],
-        "label": "subbasis",
+        "label": "Subbasis",
         "domain": "spaces_constructions",
         "chapter": "4",
         "ref": "Def. 4.12",
@@ -2759,7 +2813,9 @@
           ],
           "modeling_decision": "State explicitly whether ⋃S=X is required or whether X appears as the empty finite intersection.",
           "exam_warning": "A subbasis element is not the same kind of local building block as a basis element; intersections happen before unions."
-        }
+        },
+        "canonical_label": "subbasis",
+        "display_label": "Subbasis"
       },
       {
         "id": "closure",
@@ -2793,7 +2849,7 @@
         "equivalent_definitions": [
           "$$x\\in\\overline A$$ iff every neighborhood of $$x$$ intersects $$A$$"
         ],
-        "label": "closure",
+        "label": "Closure",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Def. 3.29",
@@ -2806,11 +2862,13 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "closure",
+        "display_label": "Closure"
       },
       {
         "id": "interior",
-        "label": "interior",
+        "label": "Interior",
         "kind": "definition",
         "domain": "spaces_constructions",
         "chapter": "3",
@@ -2914,7 +2972,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "interior",
+        "display_label": "Interior"
       },
       {
         "id": "boundary",
@@ -2952,7 +3012,7 @@
           "$$\\partial_X A=\\overline A\\cap\\overline{X\\setminus A}$$",
           "every neighborhood meets both $$A$$ and $$X\\setminus A$$"
         ],
-        "label": "boundary",
+        "label": "Boundary",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -2960,7 +3020,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "boundary",
+        "display_label": "Boundary"
       },
       {
         "id": "dense_subset",
@@ -2994,7 +3056,7 @@
         "equivalent_definitions": [
           "every nonempty open set intersects the subset"
         ],
-        "label": "dense subset",
+        "label": "Dense Subset",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Def. 3.32",
@@ -3007,7 +3069,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "dense subset",
+        "display_label": "Dense Subset"
       },
       {
         "id": "continuity",
@@ -3050,7 +3114,7 @@
           "preimages of closed sets are closed",
           "neighborhood formulation at each point"
         ],
-        "label": "continuity",
+        "label": "Continuity",
         "domain": "continuity",
         "chapter": "3",
         "ref": "Def. 3.11",
@@ -3069,7 +3133,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "continuity",
+        "display_label": "Continuity"
       },
       {
         "id": "homeomorphism",
@@ -3104,7 +3170,7 @@
           "bijective open continuous map",
           "bijective closed continuous map"
         ],
-        "label": "homeomorphism",
+        "label": "Homeomorphism",
         "domain": "continuity",
         "chapter": "3",
         "ref": "Def. 3.19",
@@ -3123,7 +3189,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "homeomorphism",
+        "display_label": "Homeomorphism"
       },
       {
         "id": "convergence",
@@ -3157,7 +3225,7 @@
         "equivalent_definitions": [
           "sequence version when the directed set is $$\\mathbb N$$"
         ],
-        "label": "convergence",
+        "label": "Convergence",
         "domain": "continuity",
         "related": [],
         "status": {
@@ -3165,7 +3233,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "convergence",
+        "display_label": "Convergence"
       },
       {
         "id": "compactness",
@@ -3227,7 +3297,7 @@
           "open_interval"
         ],
         "equivalent_definitions": ["compactness_fip_characterization"],
-        "label": "compactness",
+        "label": "Compactness",
         "domain": "compactness",
         "related": [
           "cover",
@@ -3263,7 +3333,9 @@
           ],
           "modeling_decision": "Treat compactness semantically as a property even if the current schema stores the node kind as definition for compatibility.",
           "exam_warning": "Do not replace compactness by closed-and-bounded except in Euclidean contexts where Heine-Borel applies."
-        }
+        },
+        "canonical_label": "compactness",
+        "display_label": "Compactness"
       },
       {
         "id": "compactness_fip_characterization",
@@ -3298,7 +3370,7 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": ["open-cover definition of compactness"],
-        "label": "finite intersection property characterization",
+        "label": "Finite Intersection Property Characterization",
         "domain": "compactness",
         "related": [],
         "gloss": "The closed-set dual of compactness: shrinking closed sets that never disjointly vanish in finite batches must share a common point.",
@@ -3311,7 +3383,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "finite intersection property characterization",
+        "display_label": "Finite Intersection Property Characterization"
       },
       {
         "id": "sequential_compactness",
@@ -3346,7 +3420,7 @@
         "examples": ["cantor_set"],
         "non_examples": ["compact_non_sequentially_compact_space"],
         "equivalent_definitions": [],
-        "label": "sequential compactness",
+        "label": "Sequential Compactness",
         "domain": "compactness",
         "related": [],
         "gloss": "Every sequence has a subsequence settling down to a point of the space. Equivalent to compactness for metric spaces, but not in general.",
@@ -3359,7 +3433,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "sequential compactness",
+        "display_label": "Sequential Compactness"
       },
       {
         "id": "connectedness",
@@ -3398,7 +3474,7 @@
         "equivalent_definitions": [
           "only clopen subsets are $$\\varnothing$$ and $$X$$"
         ],
-        "label": "connectedness",
+        "label": "Connectedness",
         "domain": "connectedness",
         "related": [],
         "status": {
@@ -3407,7 +3483,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["property"]
+        "mathematical_role": ["property"],
+        "canonical_label": "connectedness",
+        "display_label": "Connectedness"
       },
       {
         "id": "path_connectedness",
@@ -3445,7 +3523,7 @@
         "examples": ["circle", "torus"],
         "non_examples": ["connected_not_path_connected_space"],
         "equivalent_definitions": ["there is a single path component"],
-        "label": "path connectedness",
+        "label": "Path-Connectedness",
         "domain": "connectedness",
         "related": [],
         "status": {
@@ -3454,7 +3532,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["property"]
+        "mathematical_role": ["property"],
+        "canonical_label": "path connectedness",
+        "display_label": "Path-Connectedness"
       },
       {
         "id": "separation_axioms",
@@ -3491,7 +3571,7 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [],
-        "label": "separation axioms",
+        "label": "Separation Axioms",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -3499,7 +3579,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "separation axioms",
+        "display_label": "Separation Axioms"
       },
       {
         "id": "hausdorff_property",
@@ -3543,7 +3625,7 @@
         "equivalent_definitions": [
           "the diagonal $$\\Delta_X\\subseteq X\\times X$$ is closed, when product topology is available"
         ],
-        "label": "Hausdorff property",
+        "label": "Hausdorff Property",
         "domain": "separation_countability",
         "related": ["hausdorff_space", "open_neighborhood"],
         "status": {
@@ -3556,7 +3638,9 @@
           "Hausdorff is also called the T2 separation axiom.",
           "The neighborhoods used in the definition must be open neighborhoods."
         ],
-        "mathematical_role": ["property", "separation_axiom"]
+        "mathematical_role": ["property", "separation_axiom"],
+        "canonical_label": "Hausdorff property",
+        "display_label": "Hausdorff Property"
       },
       {
         "id": "regularity",
@@ -3603,7 +3687,7 @@
         "equivalent_definitions": [
           "for every point x and neighborhood N of x, there is an open U with x∈U⊆cl(U)⊆N"
         ],
-        "label": "regularity",
+        "label": "Regularity",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -3612,7 +3696,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["property"]
+        "mathematical_role": ["property"],
+        "canonical_label": "regularity",
+        "display_label": "Regularity"
       },
       {
         "id": "normality",
@@ -3660,7 +3746,7 @@
         "equivalent_definitions": [
           "Urysohn-function separation for normal spaces, in the setting of Urysohn's lemma"
         ],
-        "label": "normality",
+        "label": "Normality",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -3669,7 +3755,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["property"]
+        "mathematical_role": ["property"],
+        "canonical_label": "normality",
+        "display_label": "Normality"
       },
       {
         "id": "countability_axioms",
@@ -3704,7 +3792,7 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [],
-        "label": "countability axioms",
+        "label": "Countability Axioms",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -3712,7 +3800,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "countability axioms",
+        "display_label": "Countability Axioms"
       },
       {
         "id": "first_countability",
@@ -3752,7 +3842,7 @@
         "examples": ["metric_space"],
         "non_examples": [],
         "equivalent_definitions": ["each point has a countable local base"],
-        "label": "first countability",
+        "label": "First Countability",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -3760,7 +3850,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "first countability",
+        "display_label": "First Countability"
       },
       {
         "id": "second_countability",
@@ -3800,7 +3892,7 @@
         "examples": ["euclidean_space"],
         "non_examples": ["long_line"],
         "equivalent_definitions": [],
-        "label": "second countability",
+        "label": "Second Countability",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -3809,7 +3901,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["property"]
+        "mathematical_role": ["property"],
+        "canonical_label": "second countability",
+        "display_label": "Second Countability"
       },
       {
         "id": "local_compactness",
@@ -3847,7 +3941,7 @@
         "equivalent_definitions": [
           "in Hausdorff spaces, each point has a neighborhood with compact closure"
         ],
-        "label": "local compactness",
+        "label": "Local Compactness",
         "domain": "compactness",
         "related": [],
         "gloss": "Compactness, but only locally: every point sits inside some compact neighborhood, even if the whole space runs off to infinity.",
@@ -3861,7 +3955,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["property"]
+        "mathematical_role": ["property"],
+        "canonical_label": "local compactness",
+        "display_label": "Local Compactness"
       },
       {
         "id": "subspace_topology",
@@ -3892,7 +3988,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "subspace topology",
+        "label": "Subspace Topology",
         "domain": "spaces_constructions",
         "chapter": "5",
         "ref": "Def. 5.1",
@@ -3905,7 +4001,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "subspace topology",
+        "display_label": "Subspace Topology"
       },
       {
         "id": "product_topology",
@@ -3940,7 +4038,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "product topology",
+        "label": "Product Topology",
         "domain": "spaces_constructions",
         "chapter": "5",
         "ref": "Def. 5.7",
@@ -3960,7 +4058,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "product topology",
+        "display_label": "Product Topology"
       },
       {
         "id": "quotient_topology",
@@ -3990,7 +4090,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "quotient topology",
+        "label": "Quotient Topology",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -4014,7 +4114,9 @@
           ],
           "modeling_decision": "Keep quotient_topology as a construction and quotient_space as the resulting structure; use final_topology for the more general construction.",
           "exam_warning": "Continuity of maps out of a quotient is checked via the quotient universal property, not by guessing open sets after gluing."
-        }
+        },
+        "canonical_label": "quotient topology",
+        "display_label": "Quotient Topology"
       },
       {
         "id": "metric_topology",
@@ -4044,7 +4146,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "metric topology",
+        "label": "Metric Topology",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Thm. 3.2",
@@ -4064,7 +4166,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "metric topology",
+        "display_label": "Metric Topology"
       },
       {
         "id": "order_topology",
@@ -4090,7 +4194,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "order topology",
+        "label": "Order Topology",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -4098,7 +4202,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "order topology",
+        "display_label": "Order Topology"
       },
       {
         "id": "one_point_compactification",
@@ -4127,7 +4233,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "one-point compactification",
+        "label": "One-Point Compactification",
         "domain": "compactness",
         "related": [
           "local_compactness",
@@ -4144,7 +4250,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "one-point compactification",
+        "display_label": "One-Point Compactification"
       },
       {
         "id": "stone_cech_compactification",
@@ -4178,7 +4286,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "Stone-Cech compactification",
+        "label": "Stone-Čech Compactification",
         "domain": "compactness",
         "related": ["compact_hausdorff_space", "one_point_compactification"],
         "gloss": "The universal compactification — bounded continuous functions on $X$ extend to $\\beta X$.",
@@ -4191,7 +4299,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Stone-Cech compactification",
+        "display_label": "Stone-Čech Compactification"
       },
       {
         "id": "disjoint_union_topology",
@@ -4220,7 +4330,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "disjoint union topology",
+        "label": "Disjoint Union Topology",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -4228,7 +4338,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "disjoint union topology",
+        "display_label": "Disjoint Union Topology"
       },
       {
         "id": "final_topology",
@@ -4258,7 +4370,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "final topology",
+        "label": "Final Topology",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -4266,7 +4378,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "final topology",
+        "display_label": "Final Topology"
       },
       {
         "id": "initial_topology",
@@ -4296,7 +4410,7 @@
           "source": null
         },
         "kind": "construction",
-        "label": "initial topology",
+        "label": "Initial Topology",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -4304,7 +4418,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "initial topology",
+        "display_label": "Initial Topology"
       },
       {
         "id": "open_cover_notation",
@@ -4333,7 +4449,7 @@
           "source": null
         },
         "kind": "notation",
-        "label": "open cover notation",
+        "label": "Open Cover Notation",
         "domain": "compactness",
         "related": [],
         "status": {
@@ -4341,7 +4457,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "open cover notation",
+        "display_label": "Open Cover Notation"
       },
       {
         "id": "open_cover_argument",
@@ -4367,7 +4485,7 @@
           "source": null
         },
         "kind": "proof_method",
-        "label": "open cover argument",
+        "label": "Open Cover Argument",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -4375,7 +4493,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "open cover argument",
+        "display_label": "Open Cover Argument"
       },
       {
         "id": "finite_subcover_argument",
@@ -4401,7 +4521,7 @@
           "source": null
         },
         "kind": "proof_method",
-        "label": "finite subcover argument",
+        "label": "Finite Subcover Argument",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -4409,7 +4529,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "finite subcover argument",
+        "display_label": "Finite Subcover Argument"
       },
       {
         "id": "separation_argument",
@@ -4435,7 +4557,7 @@
           "source": null
         },
         "kind": "proof_method",
-        "label": "separation argument",
+        "label": "Separation Argument",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -4443,7 +4565,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "separation argument",
+        "display_label": "Separation Argument"
       },
       {
         "id": "basis_argument",
@@ -4469,7 +4593,7 @@
           "source": null
         },
         "kind": "proof_method",
-        "label": "basis argument",
+        "label": "Basis Argument",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -4477,7 +4601,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "basis argument",
+        "display_label": "Basis Argument"
       },
       {
         "id": "zorns_lemma",
@@ -4503,7 +4629,7 @@
           "source": null
         },
         "kind": "lemma",
-        "label": "Zorn's lemma",
+        "label": "Zorn's Lemma",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -4511,7 +4637,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Zorn's lemma",
+        "display_label": "Zorn's Lemma"
       },
       {
         "id": "compact_subsets_of_hausdorff_are_closed",
@@ -4552,7 +4680,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "proposition",
-        "label": "compact subsets of Hausdorff spaces are closed",
+        "label": "Compact Subsets of Hausdorff Spaces Are Closed",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Thm. 6.36",
@@ -4571,7 +4699,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "compact subsets of Hausdorff spaces are closed",
+        "display_label": "Compact Subsets of Hausdorff Spaces Are Closed"
       },
       {
         "id": "poincare_conjecture",
@@ -4600,7 +4730,7 @@
           "source": null
         },
         "kind": "conjecture",
-        "label": "Poincare conjecture",
+        "label": "Poincaré Conjecture",
         "domain": "connectedness",
         "related": [],
         "status": {
@@ -4608,7 +4738,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Poincare conjecture",
+        "display_label": "Poincaré Conjecture"
       },
       {
         "id": "analysis_on_metric_spaces",
@@ -4646,7 +4778,7 @@
           "source": null
         },
         "kind": "application",
-        "label": "analysis on metric spaces",
+        "label": "Analysis on Metric Spaces",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -4654,7 +4786,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "analysis on metric spaces",
+        "display_label": "Analysis on Metric Spaces"
       },
       {
         "id": "algebraic_topology_examples",
@@ -4680,7 +4814,7 @@
           "source": null
         },
         "kind": "application",
-        "label": "algebraic topology examples",
+        "label": "Algebraic Topology Examples",
         "domain": "connectedness",
         "related": [],
         "status": {
@@ -4688,7 +4822,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "algebraic topology examples",
+        "display_label": "Algebraic Topology Examples"
       },
       {
         "id": "heine_borel_theorem",
@@ -4741,7 +4877,7 @@
             "conclusion": "K is compact iff K is closed and bounded."
           }
         ],
-        "label": "Heine-Borel theorem",
+        "label": "Heine-Borel Theorem",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Thm. 6.42",
@@ -4766,7 +4902,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Heine-Borel theorem",
+        "display_label": "Heine-Borel Theorem"
       },
       {
         "id": "bolzano_weierstrass_theorem",
@@ -4803,7 +4941,7 @@
         "examples": ["euclidean_space"],
         "applications": ["analysis_on_metric_spaces"],
         "variants": [],
-        "label": "Bolzano-Weierstrass theorem",
+        "label": "Bolzano-Weierstrass Theorem",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Thm. 6.29",
@@ -4820,7 +4958,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Bolzano-Weierstrass theorem",
+        "display_label": "Bolzano-Weierstrass Theorem"
       },
       {
         "id": "urysohn_lemma",
@@ -4859,7 +4999,7 @@
         "examples": ["compact_hausdorff_space"],
         "applications": [],
         "variants": [],
-        "label": "Urysohn lemma",
+        "label": "Urysohn Lemma",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -4867,7 +5007,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Urysohn lemma",
+        "display_label": "Urysohn Lemma"
       },
       {
         "id": "tietze_extension_theorem",
@@ -4907,7 +5049,7 @@
         "examples": ["compact_hausdorff_space"],
         "applications": ["analysis_on_metric_spaces"],
         "variants": [],
-        "label": "Tietze extension theorem",
+        "label": "Tietze Extension Theorem",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -4915,7 +5057,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Tietze extension theorem",
+        "display_label": "Tietze Extension Theorem"
       },
       {
         "id": "alexander_subbase_theorem",
@@ -4959,7 +5103,7 @@
         "examples": ["product_space"],
         "applications": ["tychonoff_theorem"],
         "variants": [],
-        "label": "Alexander's subbase lemma",
+        "label": "Alexander's Subbase Lemma",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Thm. 6.40",
@@ -4978,7 +5122,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Alexander's subbase lemma",
+        "display_label": "Alexander's Subbase Lemma"
       },
       {
         "id": "tychonoff_theorem",
@@ -5055,7 +5201,7 @@
             "conclusion": "product is compact"
           }
         ],
-        "label": "Tychonoff theorem",
+        "label": "Tychonoff Theorem",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Thm. 6.44",
@@ -5073,7 +5219,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Tychonoff theorem",
+        "display_label": "Tychonoff Theorem"
       },
       {
         "id": "baire_category_theorem",
@@ -5138,7 +5286,7 @@
             "conclusion": "X is a Baire space"
           }
         ],
-        "label": "Baire category theorem",
+        "label": "Baire Category Theorem",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -5146,7 +5294,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Baire category theorem",
+        "display_label": "Baire Category Theorem"
       },
       {
         "id": "urysohn_metrization_theorem",
@@ -5198,7 +5348,7 @@
         "examples": ["manifold"],
         "applications": ["analysis_on_metric_spaces"],
         "variants": [],
-        "label": "Urysohn metrization theorem",
+        "label": "Urysohn Metrization Theorem",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -5206,7 +5356,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Urysohn metrization theorem",
+        "display_label": "Urysohn Metrization Theorem"
       },
       {
         "id": "brouwer_fixed_point_theorem",
@@ -5248,7 +5400,7 @@
         "examples": ["euclidean_space"],
         "applications": [],
         "variants": [],
-        "label": "Brouwer fixed point theorem",
+        "label": "Brouwer Fixed Point Theorem",
         "domain": "spaces_constructions",
         "chapter": "8",
         "ref": "Thm. 1.1 / 8.17",
@@ -5263,7 +5415,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Brouwer fixed point theorem",
+        "display_label": "Brouwer Fixed Point Theorem"
       },
       {
         "id": "jordan_curve_theorem",
@@ -5306,7 +5460,7 @@
         "examples": ["circle"],
         "applications": ["algebraic_topology_examples"],
         "variants": [],
-        "label": "Jordan curve theorem",
+        "label": "Jordan Curve Theorem",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -5314,7 +5468,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Jordan curve theorem",
+        "display_label": "Jordan Curve Theorem"
       },
       {
         "id": "proof_tychonoff_via_alexander",
@@ -5357,7 +5513,7 @@
         ],
         "uses_results": ["alexander_subbase_theorem", "zorns_lemma"],
         "critical_assumptions": ["axiom_of_choice"],
-        "label": "Proof of Tychonoff via Alexander subbase theorem",
+        "label": "Proof of Tychonoff via Alexander Subbase Theorem",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -5365,7 +5521,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Proof of Tychonoff via Alexander subbase theorem",
+        "display_label": "Proof of Tychonoff via Alexander Subbase Theorem"
       },
       {
         "id": "proof_heine_borel_open_cover",
@@ -5407,7 +5565,7 @@
         "uses_methods": ["open_cover_argument", "finite_subcover_argument"],
         "uses_results": ["bolzano_weierstrass_theorem"],
         "critical_assumptions": [],
-        "label": "Proof of Heine-Borel by open covers",
+        "label": "Proof of Heine-Borel by Open Covers",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -5415,7 +5573,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Proof of Heine-Borel by open covers",
+        "display_label": "Proof of Heine-Borel by Open Covers"
       },
       {
         "id": "real_line_standard_topology",
@@ -5464,7 +5624,7 @@
         "violates": [],
         "demonstrates": ["metric_topology", "order_topology"],
         "related_theorems": ["heine_borel_theorem", "baire_category_theorem"],
-        "label": "real line with standard topology",
+        "label": "Real Line with Standard Topology",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -5472,7 +5632,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "real line with standard topology",
+        "display_label": "Real Line with Standard Topology"
       },
       {
         "id": "euclidean_space",
@@ -5525,7 +5687,7 @@
           "heine_borel_theorem",
           "brouwer_fixed_point_theorem"
         ],
-        "label": "Euclidean space",
+        "label": "Euclidean Space",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -5533,7 +5695,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Euclidean space",
+        "display_label": "Euclidean Space"
       },
       {
         "id": "discrete_space",
@@ -5568,7 +5732,7 @@
         "violates": [],
         "demonstrates": ["topology"],
         "related_theorems": [],
-        "label": "discrete space",
+        "label": "Discrete Space",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -5576,7 +5740,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "discrete space",
+        "display_label": "Discrete Space"
       },
       {
         "id": "indiscrete_space",
@@ -5606,7 +5772,7 @@
         "violates": ["hausdorff_property"],
         "demonstrates": ["topology"],
         "related_theorems": [],
-        "label": "indiscrete space",
+        "label": "Indiscrete Space",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -5614,7 +5780,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "indiscrete space",
+        "display_label": "Indiscrete Space"
       },
       {
         "id": "sierpinski_space",
@@ -5644,7 +5812,7 @@
         "violates": ["hausdorff_property"],
         "demonstrates": ["open_set"],
         "related_theorems": [],
-        "label": "Sierpinski space",
+        "label": "Sierpiński Space",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -5652,7 +5820,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Sierpinski space",
+        "display_label": "Sierpiński Space"
       },
       {
         "id": "cantor_set",
@@ -5682,7 +5852,7 @@
         "violates": [],
         "demonstrates": ["closed_set", "compactness"],
         "related_theorems": ["heine_borel_theorem", "tychonoff_theorem"],
-        "label": "Cantor set",
+        "label": "Cantor Set",
         "domain": "compactness",
         "related": ["compact_space", "sequential_compactness"],
         "gloss": "Compact, uncountable, totally disconnected, and homeomorphic to $\\{0,1\\}^{\\mathbb N}$.",
@@ -5695,7 +5865,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Cantor set",
+        "display_label": "Cantor Set"
       },
       {
         "id": "circle",
@@ -5741,7 +5913,7 @@
         "violates": [],
         "demonstrates": ["homeomorphism", "jordan_curve_theorem"],
         "related_theorems": ["jordan_curve_theorem"],
-        "label": "circle",
+        "label": "Circle",
         "domain": "connectedness",
         "related": [],
         "status": {
@@ -5749,7 +5921,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "circle",
+        "display_label": "Circle"
       },
       {
         "id": "torus",
@@ -5785,7 +5959,7 @@
         "violates": [],
         "demonstrates": ["product_topology", "quotient_topology"],
         "related_theorems": [],
-        "label": "torus",
+        "label": "Torus",
         "domain": "connectedness",
         "related": [],
         "status": {
@@ -5794,7 +5968,9 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "mathematical_role": ["example", "space"]
+        "mathematical_role": ["example", "space"],
+        "canonical_label": "torus",
+        "display_label": "Torus"
       },
       {
         "id": "rationals_with_subspace_topology",
@@ -5826,7 +6002,7 @@
         "violates": ["local_compactness", "connectedness"],
         "demonstrates": ["subspace_topology", "dense_subset"],
         "related_theorems": [],
-        "label": "rationals with subspace topology",
+        "label": "Rationals with Subspace Topology",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -5834,7 +6010,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "rationals with subspace topology",
+        "display_label": "Rationals with Subspace Topology"
       },
       {
         "id": "long_line",
@@ -5868,7 +6046,7 @@
         "violates": ["second_countability"],
         "demonstrates": ["order_topology"],
         "related_theorems": [],
-        "label": "long line",
+        "label": "Long Line",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -5876,7 +6054,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "long line",
+        "display_label": "Long Line"
       },
       {
         "id": "sorgenfrey_line",
@@ -5912,7 +6092,7 @@
         "violates": ["second_countability"],
         "demonstrates": ["basis_for_topology"],
         "related_theorems": [],
-        "label": "Sorgenfrey line",
+        "label": "Sorgenfrey Line",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -5920,7 +6100,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Sorgenfrey line",
+        "display_label": "Sorgenfrey Line"
       },
       {
         "id": "hawaiian_earring",
@@ -5950,7 +6132,7 @@
         "violates": [],
         "demonstrates": ["algebraic_topology_examples"],
         "related_theorems": [],
-        "label": "Hawaiian earring",
+        "label": "Hawaiian Earring",
         "domain": "connectedness",
         "related": [],
         "status": {
@@ -5958,7 +6140,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Hawaiian earring",
+        "display_label": "Hawaiian Earring"
       },
       {
         "id": "topologist_sine_curve",
@@ -5988,7 +6172,7 @@
         "violates": ["path_connectedness"],
         "demonstrates": ["connected_not_path_connected_space"],
         "related_theorems": [],
-        "label": "topologist's sine curve",
+        "label": "Topologist's Sine Curve",
         "domain": "connectedness",
         "related": [],
         "status": {
@@ -5996,7 +6180,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "topologist's sine curve",
+        "display_label": "Topologist's Sine Curve"
       },
       {
         "id": "quotient_space_examples",
@@ -6028,7 +6214,7 @@
         "violates": [],
         "demonstrates": ["quotient_topology"],
         "related_theorems": [],
-        "label": "quotient space examples",
+        "label": "Quotient Space Examples",
         "domain": "spaces_constructions",
         "related": [],
         "status": {
@@ -6036,7 +6222,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "quotient space examples",
+        "display_label": "Quotient Space Examples"
       },
       {
         "id": "bare_set_without_topology",
@@ -6066,7 +6254,7 @@
         "violates": ["topological_space"],
         "demonstrates": ["topology"],
         "related_theorems": [],
-        "label": "bare set without topology",
+        "label": "Bare Set Without Topology",
         "domain": "foundations",
         "related": [],
         "status": {
@@ -6074,7 +6262,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "bare set without topology",
+        "display_label": "Bare Set Without Topology"
       },
       {
         "id": "non_hausdorff_spaces_as_counterexamples",
@@ -6113,7 +6303,7 @@
         "violates": ["hausdorff_property", "hausdorff_assumption"],
         "demonstrates": ["compact_subsets_of_hausdorff_are_closed"],
         "related_theorems": ["compact_subsets_of_hausdorff_are_closed"],
-        "label": "non-Hausdorff spaces as counterexamples",
+        "label": "Non-Hausdorff Spaces as Counterexamples",
         "domain": "separation_countability",
         "related": [],
         "status": {
@@ -6121,7 +6311,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "non-Hausdorff spaces as counterexamples",
+        "display_label": "Non-Hausdorff Spaces as Counterexamples"
       },
       {
         "id": "compact_non_sequentially_compact_space",
@@ -6157,7 +6349,7 @@
         "violates": ["sequential_compactness", "first_countability"],
         "demonstrates": ["sequential_compactness"],
         "related_theorems": ["tychonoff_theorem"],
-        "label": "compact non-sequentially compact space",
+        "label": "Compact Non-Sequentially Compact Space",
         "domain": "compactness",
         "related": [
           "sequential_compactness",
@@ -6174,7 +6366,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "compact non-sequentially compact space",
+        "display_label": "Compact Non-Sequentially Compact Space"
       },
       {
         "id": "connected_not_path_connected_space",
@@ -6204,7 +6398,7 @@
         "violates": ["path_connectedness"],
         "demonstrates": ["path_connectedness"],
         "related_theorems": [],
-        "label": "connected not path-connected space",
+        "label": "Connected but Not Path-Connected Space",
         "domain": "connectedness",
         "related": [],
         "status": {
@@ -6212,7 +6406,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "connected not path-connected space",
+        "display_label": "Connected but Not Path-Connected Space"
       },
       {
         "id": "exercise_2_1",
@@ -6271,7 +6467,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 2.1",
+        "display_label": "Exercise 2.1"
       },
       {
         "id": "exercise_2_2",
@@ -6330,7 +6528,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 2.2",
+        "display_label": "Exercise 2.2"
       },
       {
         "id": "exercise_2_3",
@@ -6389,7 +6589,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 2.3",
+        "display_label": "Exercise 2.3"
       },
       {
         "id": "exercise_2_4",
@@ -6448,7 +6650,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 2.4",
+        "display_label": "Exercise 2.4"
       },
       {
         "id": "exercise_2_5",
@@ -6507,7 +6711,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 2.5",
+        "display_label": "Exercise 2.5"
       },
       {
         "id": "exercise_2_6",
@@ -6566,7 +6772,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 2.6",
+        "display_label": "Exercise 2.6"
       },
       {
         "id": "exercise_2_7",
@@ -6625,7 +6833,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 2.7",
+        "display_label": "Exercise 2.7"
       },
       {
         "id": "exercise_2_8",
@@ -6684,7 +6894,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 2.8",
+        "display_label": "Exercise 2.8"
       },
       {
         "id": "exercise_3_1",
@@ -6759,7 +6971,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 3.1",
+        "display_label": "Exercise 3.1"
       },
       {
         "id": "exercise_3_2",
@@ -6834,7 +7048,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 3.2",
+        "display_label": "Exercise 3.2"
       },
       {
         "id": "exercise_3_3",
@@ -6909,7 +7125,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 3.3",
+        "display_label": "Exercise 3.3"
       },
       {
         "id": "exercise_3_4",
@@ -6984,7 +7202,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 3.4",
+        "display_label": "Exercise 3.4"
       },
       {
         "id": "exercise_3_5",
@@ -7059,7 +7279,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 3.5",
+        "display_label": "Exercise 3.5"
       },
       {
         "id": "exercise_3_6",
@@ -7134,7 +7356,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 3.6",
+        "display_label": "Exercise 3.6"
       },
       {
         "id": "exercise_3_7",
@@ -7209,7 +7433,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 3.7",
+        "display_label": "Exercise 3.7"
       },
       {
         "id": "exercise_3_8",
@@ -7284,7 +7510,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 3.8",
+        "display_label": "Exercise 3.8"
       },
       {
         "id": "exercise_4_1",
@@ -7347,7 +7575,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 4.1",
+        "display_label": "Exercise 4.1"
       },
       {
         "id": "exercise_4_2",
@@ -7410,7 +7640,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 4.2",
+        "display_label": "Exercise 4.2"
       },
       {
         "id": "exercise_4_3",
@@ -7473,7 +7705,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 4.3",
+        "display_label": "Exercise 4.3"
       },
       {
         "id": "exercise_4_4",
@@ -7536,7 +7770,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 4.4",
+        "display_label": "Exercise 4.4"
       },
       {
         "id": "exercise_4_5",
@@ -7599,7 +7835,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 4.5",
+        "display_label": "Exercise 4.5"
       },
       {
         "id": "exercise_4_6",
@@ -7662,7 +7900,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 4.6",
+        "display_label": "Exercise 4.6"
       },
       {
         "id": "exercise_4_7",
@@ -7725,7 +7965,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 4.7",
+        "display_label": "Exercise 4.7"
       },
       {
         "id": "exercise_4_8",
@@ -7788,7 +8030,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 4.8",
+        "display_label": "Exercise 4.8"
       },
       {
         "id": "exercise_5_1",
@@ -7847,7 +8091,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 5.1",
+        "display_label": "Exercise 5.1"
       },
       {
         "id": "exercise_5_2",
@@ -7906,7 +8152,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 5.2",
+        "display_label": "Exercise 5.2"
       },
       {
         "id": "exercise_5_3",
@@ -7965,7 +8213,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 5.3",
+        "display_label": "Exercise 5.3"
       },
       {
         "id": "exercise_5_4",
@@ -8024,7 +8274,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 5.4",
+        "display_label": "Exercise 5.4"
       },
       {
         "id": "exercise_5_5",
@@ -8083,7 +8335,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 5.5",
+        "display_label": "Exercise 5.5"
       },
       {
         "id": "exercise_5_6",
@@ -8142,7 +8396,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 5.6",
+        "display_label": "Exercise 5.6"
       },
       {
         "id": "exercise_5_7",
@@ -8201,7 +8457,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 5.7",
+        "display_label": "Exercise 5.7"
       },
       {
         "id": "exercise_5_8",
@@ -8260,7 +8518,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 5.8",
+        "display_label": "Exercise 5.8"
       },
       {
         "id": "exercise_6_1",
@@ -8319,7 +8579,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 6.1",
+        "display_label": "Exercise 6.1"
       },
       {
         "id": "exercise_6_2",
@@ -8378,7 +8640,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 6.2",
+        "display_label": "Exercise 6.2"
       },
       {
         "id": "exercise_6_3",
@@ -8437,7 +8701,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 6.3",
+        "display_label": "Exercise 6.3"
       },
       {
         "id": "exercise_6_4",
@@ -8496,7 +8762,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 6.4",
+        "display_label": "Exercise 6.4"
       },
       {
         "id": "exercise_6_5",
@@ -8555,7 +8823,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 6.5",
+        "display_label": "Exercise 6.5"
       },
       {
         "id": "exercise_6_6",
@@ -8614,7 +8884,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 6.6",
+        "display_label": "Exercise 6.6"
       },
       {
         "id": "exercise_6_7",
@@ -8673,7 +8945,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 6.7",
+        "display_label": "Exercise 6.7"
       },
       {
         "id": "exercise_6_8",
@@ -8732,7 +9006,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 6.8",
+        "display_label": "Exercise 6.8"
       },
       {
         "id": "exercise_7_1",
@@ -8783,7 +9059,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 7.1",
+        "display_label": "Exercise 7.1"
       },
       {
         "id": "exercise_7_2",
@@ -8834,7 +9112,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 7.2",
+        "display_label": "Exercise 7.2"
       },
       {
         "id": "exercise_7_3",
@@ -8885,7 +9165,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 7.3",
+        "display_label": "Exercise 7.3"
       },
       {
         "id": "exercise_7_4",
@@ -8936,7 +9218,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 7.4",
+        "display_label": "Exercise 7.4"
       },
       {
         "id": "exercise_7_5",
@@ -8987,7 +9271,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 7.5",
+        "display_label": "Exercise 7.5"
       },
       {
         "id": "exercise_7_6",
@@ -9038,7 +9324,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 7.6",
+        "display_label": "Exercise 7.6"
       },
       {
         "id": "exercise_7_7",
@@ -9089,7 +9377,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 7.7",
+        "display_label": "Exercise 7.7"
       },
       {
         "id": "exercise_7_8",
@@ -9140,7 +9430,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 7.8",
+        "display_label": "Exercise 7.8"
       },
       {
         "id": "exercise_8_1",
@@ -9181,7 +9473,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 8.1",
+        "display_label": "Exercise 8.1"
       },
       {
         "id": "exercise_8_2",
@@ -9222,7 +9516,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 8.2",
+        "display_label": "Exercise 8.2"
       },
       {
         "id": "exercise_8_3",
@@ -9263,7 +9559,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 8.3",
+        "display_label": "Exercise 8.3"
       },
       {
         "id": "exercise_8_4",
@@ -9304,7 +9602,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 8.4",
+        "display_label": "Exercise 8.4"
       },
       {
         "id": "exercise_8_5",
@@ -9345,7 +9645,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 8.5",
+        "display_label": "Exercise 8.5"
       },
       {
         "id": "exercise_8_6",
@@ -9386,7 +9688,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 8.6",
+        "display_label": "Exercise 8.6"
       },
       {
         "id": "exercise_8_7",
@@ -9427,7 +9731,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 8.7",
+        "display_label": "Exercise 8.7"
       },
       {
         "id": "exercise_8_8",
@@ -9468,7 +9774,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Exercise 8.8",
+        "display_label": "Exercise 8.8"
       },
       {
         "id": "based_map",
@@ -9499,7 +9807,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Based map",
+        "label": "Based Map",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.21",
@@ -9522,7 +9830,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Based map",
+        "display_label": "Based Map"
       },
       {
         "id": "basepoint_independence",
@@ -9556,7 +9866,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Basepoint independence",
+        "label": "Basepoint Independence",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Thm. 7.19",
@@ -9577,7 +9887,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Basepoint independence",
+        "display_label": "Basepoint Independence"
       },
       {
         "id": "binary_operation",
@@ -9603,7 +9915,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Binary operation",
+        "label": "Binary Operation",
         "domain": "foundations",
         "chapter": "B",
         "ref": "Def. B.1",
@@ -9622,7 +9934,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Binary operation",
+        "display_label": "Binary Operation"
       },
       {
         "id": "bounded",
@@ -9648,7 +9962,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Bounded subset",
+        "label": "Bounded Subset",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Def. 6.41",
@@ -9667,7 +9981,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Bounded subset",
+        "display_label": "Bounded Subset"
       },
       {
         "id": "cartesian_product",
@@ -9695,7 +10011,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Cartesian product",
+        "label": "Cartesian Product",
         "domain": "foundations",
         "chapter": "A",
         "ref": "Def. A.5",
@@ -9714,7 +10030,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Cartesian product",
+        "display_label": "Cartesian Product"
       },
       {
         "id": "cofinite_topology",
@@ -9742,7 +10060,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "construction",
-        "label": "Cofinite topology",
+        "label": "Cofinite Topology",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Ex. 3.8",
@@ -9759,7 +10077,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Cofinite topology",
+        "display_label": "Cofinite Topology"
       },
       {
         "id": "compact_subspace",
@@ -9788,7 +10108,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Compact subspace",
+        "label": "Compact Subspace",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Def. 6.33",
@@ -9827,7 +10147,9 @@
           ],
           "modeling_decision": "Keep compact_subspace as definition/concept distinct from compact_space; link it to subspace_topology and compact_space.",
           "exam_warning": "Compact subset need not be closed unless the ambient space is Hausdorff."
-        }
+        },
+        "canonical_label": "Compact subspace",
+        "display_label": "Compact Subspace"
       },
       {
         "id": "comparable_topologies",
@@ -9855,7 +10177,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Comparable topologies (coarser / finer)",
+        "label": "Comparable Topologies (Coarser / Finer)",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Def. 3.7",
@@ -9878,7 +10200,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Comparable topologies (coarser / finer)",
+        "display_label": "Comparable Topologies (Coarser / Finer)"
       },
       {
         "id": "complement",
@@ -9923,7 +10247,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Complement",
+        "display_label": "Complement"
       },
       {
         "id": "homeomorphism_equivalence_relation",
@@ -9951,7 +10277,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Homeomorphism is an equivalence relation",
+        "label": "Homeomorphism Is an Equivalence Relation",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Thm. 3.23",
@@ -9972,7 +10298,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Homeomorphism is an equivalence relation",
+        "display_label": "Homeomorphism Is an Equivalence Relation"
       },
       {
         "id": "composition_continuous",
@@ -10001,7 +10329,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Composition of continuous maps",
+        "label": "Composition of Continuous Maps",
         "domain": "continuity",
         "chapter": "3",
         "ref": "Thm. 3.16",
@@ -10023,7 +10351,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Composition of continuous maps",
+        "display_label": "Composition of Continuous Maps"
       },
       {
         "id": "composition_maps",
@@ -10051,7 +10381,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Composition of maps",
+        "label": "Composition of Maps",
         "domain": "foundations",
         "chapter": "A",
         "ref": "Def. A.9",
@@ -10070,7 +10400,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Composition of maps",
+        "display_label": "Composition of Maps"
       },
       {
         "id": "continuity_point_metric",
@@ -10098,7 +10430,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Continuity at a point (nbhd form)",
+        "label": "Continuity at a Point (Nbhd Form)",
         "domain": "continuity",
         "chapter": "2",
         "ref": "Thm. 2.12",
@@ -10123,7 +10455,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Continuity at a point (nbhd form)",
+        "display_label": "Continuity at a Point (Nbhd Form)"
       },
       {
         "id": "continuity_point_top",
@@ -10152,7 +10486,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Continuity at a point (topological)",
+        "label": "Continuity at a Point (Topological)",
         "domain": "continuity",
         "chapter": "3",
         "ref": "Def. 3.17",
@@ -10171,7 +10505,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Continuity at a point (topological)",
+        "display_label": "Continuity at a Point (Topological)"
       },
       {
         "id": "continuity_basis",
@@ -10200,7 +10536,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Continuity via a (sub)basis",
+        "label": "Continuity via a (Sub)basis",
         "domain": "continuity",
         "chapter": "4",
         "ref": "Thm. 4.16",
@@ -10221,7 +10557,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Continuity via a (sub)basis",
+        "display_label": "Continuity via a (Sub)basis"
       },
       {
         "id": "continuity_preimage_metric",
@@ -10250,7 +10588,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Continuity via preimages of open sets",
+        "label": "Continuity via Preimages of Open Sets",
         "domain": "continuity",
         "chapter": "2",
         "ref": "Thm. 2.13",
@@ -10271,7 +10609,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Continuity via preimages of open sets",
+        "display_label": "Continuity via Preimages of Open Sets"
       },
       {
         "id": "compact_image",
@@ -10297,7 +10637,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Continuous image of a compact space",
+        "label": "Continuous Image of a Compact Space",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Thm. 6.37",
@@ -10323,7 +10663,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Continuous image of a compact space",
+        "display_label": "Continuous Image of a Compact Space"
       },
       {
         "id": "connected_image",
@@ -10349,7 +10691,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Continuous image of a connected space",
+        "label": "Continuous Image of a Connected Space",
         "domain": "connectedness",
         "chapter": "6",
         "ref": "Thm. 6.7",
@@ -10375,7 +10717,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Continuous image of a connected space",
+        "display_label": "Continuous Image of a Connected Space"
       },
       {
         "id": "continuous_map_metric",
@@ -10404,7 +10748,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Continuous map (metric)",
+        "label": "Continuous Map (Metric)",
         "domain": "continuity",
         "chapter": "2",
         "ref": "Def. 2.6",
@@ -10428,7 +10772,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Continuous map (metric)",
+        "display_label": "Continuous Map (Metric)"
       },
       {
         "id": "cover",
@@ -10454,7 +10800,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Cover of a space",
+        "label": "Cover of a Space",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Def. 6.27",
@@ -10473,7 +10819,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Cover of a space",
+        "display_label": "Cover of a Space"
       },
       {
         "id": "covering_space",
@@ -10499,7 +10847,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Covering space",
+        "label": "Covering Space",
         "domain": "algebraic_topology",
         "chapter": "8",
         "ref": "Def. 8.1",
@@ -10523,7 +10871,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Covering space",
+        "display_label": "Covering Space"
       },
       {
         "id": "cyclic_subgroup",
@@ -10552,7 +10902,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Cyclic subgroup",
+        "label": "Cyclic Subgroup",
         "domain": "foundations",
         "chapter": "B",
         "ref": "Thm. B.9",
@@ -10573,7 +10923,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Cyclic subgroup",
+        "display_label": "Cyclic Subgroup"
       },
       {
         "id": "deformation_retract",
@@ -10602,7 +10954,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Deformation retract",
+        "label": "Deformation Retract",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.31",
@@ -10621,7 +10973,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Deformation retract",
+        "display_label": "Deformation Retract"
       },
       {
         "id": "set_difference",
@@ -10647,7 +11001,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Difference of sets",
+        "label": "Difference of Sets",
         "domain": "foundations",
         "chapter": "A",
         "ref": "Def. A.3",
@@ -10666,7 +11020,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Difference of sets",
+        "display_label": "Difference of Sets"
       },
       {
         "id": "discrete_topology",
@@ -10694,7 +11050,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "construction",
-        "label": "Discrete topology",
+        "label": "Discrete Topology",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Ex. 3.4",
@@ -10711,7 +11067,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Discrete topology",
+        "display_label": "Discrete Topology"
       },
       {
         "id": "disjoint_union",
@@ -10737,7 +11095,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Disjoint union",
+        "label": "Disjoint Union",
         "domain": "foundations",
         "chapter": "A",
         "ref": "Def. A.14",
@@ -10756,7 +11114,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Disjoint union",
+        "display_label": "Disjoint Union"
       },
       {
         "id": "equivalence_class",
@@ -10786,7 +11146,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Equivalence class",
+        "label": "Equivalence Class",
         "domain": "spaces_constructions",
         "chapter": "5",
         "ref": "Def. 5.14",
@@ -10805,7 +11165,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Equivalence class",
+        "display_label": "Equivalence Class"
       },
       {
         "id": "functoriality",
@@ -10861,7 +11223,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Functoriality of π₁",
+        "display_label": "Functoriality of π₁"
       },
       {
         "id": "fundamental_group",
@@ -10894,7 +11258,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "object",
-        "label": "Fundamental group",
+        "label": "Fundamental Group",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.15",
@@ -10914,7 +11278,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Fundamental group",
+        "display_label": "Fundamental Group"
       },
       {
         "id": "fht",
@@ -10950,7 +11316,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Fundamental homomorphism theorem",
+        "label": "Fundamental Homomorphism Theorem",
         "domain": "foundations",
         "chapter": "B",
         "ref": "Thm. B.21",
@@ -10976,7 +11342,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Fundamental homomorphism theorem",
+        "display_label": "Fundamental Homomorphism Theorem"
       },
       {
         "id": "fta",
@@ -11002,7 +11370,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Fundamental theorem of algebra",
+        "label": "Fundamental Theorem of Algebra",
         "domain": "algebraic_topology",
         "chapter": "8",
         "ref": "Thm. 1.2",
@@ -11022,7 +11390,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Fundamental theorem of algebra",
+        "display_label": "Fundamental Theorem of Algebra"
       },
       {
         "id": "evt",
@@ -11048,7 +11418,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Generalized extreme value theorem",
+        "label": "Generalized Extreme Value Theorem",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Thm. 6.43",
@@ -11070,7 +11440,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Generalized extreme value theorem",
+        "display_label": "Generalized Extreme Value Theorem"
       },
       {
         "id": "ivt",
@@ -11096,7 +11468,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Generalized intermediate value theorem",
+        "label": "Generalized Intermediate Value Theorem",
         "domain": "connectedness",
         "chapter": "6",
         "ref": "Thm. 6.13",
@@ -11121,7 +11493,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Generalized intermediate value theorem",
+        "display_label": "Generalized Intermediate Value Theorem"
       },
       {
         "id": "group",
@@ -11171,7 +11545,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Group",
+        "display_label": "Group"
       },
       {
         "id": "homomorphism",
@@ -11197,7 +11573,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Group homomorphism",
+        "label": "Group Homomorphism",
         "domain": "foundations",
         "chapter": "B",
         "ref": "Def. B.15",
@@ -11222,7 +11598,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Group homomorphism",
+        "display_label": "Group Homomorphism"
       },
       {
         "id": "homeomorphism_open_closed",
@@ -11251,7 +11629,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Homeo ⇔ open ⇔ closed (bijective)",
+        "label": "Homeo ⇔ Open ⇔ Closed (Bijective)",
         "domain": "spaces_constructions",
         "chapter": "5",
         "ref": "Thm. 5.21",
@@ -11277,7 +11655,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Homeo ⇔ open ⇔ closed (bijective)",
+        "display_label": "Homeo ⇔ Open ⇔ Closed (Bijective)"
       },
       {
         "id": "homotopy",
@@ -11327,7 +11707,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Homotopy",
+        "display_label": "Homotopy"
       },
       {
         "id": "homotopy_classes",
@@ -11353,7 +11735,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "object",
-        "label": "Homotopy classes",
+        "label": "Homotopy Classes",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.5",
@@ -11366,7 +11748,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Homotopy classes",
+        "display_label": "Homotopy Classes"
       },
       {
         "id": "homotopy_equivalence",
@@ -11392,7 +11776,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Homotopy equivalence",
+        "label": "Homotopy Equivalence",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.34",
@@ -11416,7 +11800,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Homotopy equivalence",
+        "display_label": "Homotopy Equivalence"
       },
       {
         "id": "homotopy_equiv_iso",
@@ -11445,7 +11831,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Homotopy equivalence induces iso",
+        "label": "Homotopy Equivalence Induces Iso",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Thm. 7.38",
@@ -11471,7 +11857,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Homotopy equivalence induces iso",
+        "display_label": "Homotopy Equivalence Induces Iso"
       },
       {
         "id": "homotopy_lifting",
@@ -11500,7 +11888,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Homotopy lifting property",
+        "label": "Homotopy Lifting Property",
         "domain": "algebraic_topology",
         "chapter": "8",
         "ref": "Thm. 8.13",
@@ -11527,7 +11915,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Homotopy lifting property",
+        "display_label": "Homotopy Lifting Property"
       },
       {
         "id": "homotopy_type",
@@ -11553,7 +11943,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Homotopy type",
+        "label": "Homotopy Type",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.36",
@@ -11572,7 +11962,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Homotopy type",
+        "display_label": "Homotopy Type"
       },
       {
         "id": "image",
@@ -11598,7 +11990,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Image of a map",
+        "label": "Image of a Map",
         "domain": "foundations",
         "chapter": "A",
         "ref": "Def. A.6",
@@ -11617,7 +12009,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Image of a map",
+        "display_label": "Image of a Map"
       },
       {
         "id": "inclusion_map",
@@ -11643,7 +12037,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Inclusion map",
+        "label": "Inclusion Map",
         "domain": "foundations",
         "chapter": "A",
         "ref": "Def. A.13",
@@ -11662,7 +12056,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Inclusion map",
+        "display_label": "Inclusion Map"
       },
       {
         "id": "indiscrete_topology",
@@ -11690,7 +12086,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "construction",
-        "label": "Indiscrete topology",
+        "label": "Indiscrete Topology",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Ex. 3.5",
@@ -11707,7 +12103,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Indiscrete topology",
+        "display_label": "Indiscrete Topology"
       },
       {
         "id": "induced_homomorphism",
@@ -11736,7 +12134,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Induced homomorphism",
+        "label": "Induced Homomorphism",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.22",
@@ -11760,7 +12158,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Induced homomorphism",
+        "display_label": "Induced Homomorphism"
       },
       {
         "id": "intersection_union",
@@ -11786,7 +12186,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Intersection and union",
+        "label": "Intersection and Union",
         "domain": "foundations",
         "chapter": "A",
         "ref": "Def. A.2",
@@ -11805,7 +12205,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Intersection and union",
+        "display_label": "Intersection and Union"
       },
       {
         "id": "intersection_topologies",
@@ -11833,7 +12235,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Intersection of topologies",
+        "label": "Intersection of Topologies",
         "domain": "spaces_constructions",
         "chapter": "4",
         "ref": "Thm. 4.1",
@@ -11854,7 +12256,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Intersection of topologies",
+        "display_label": "Intersection of Topologies"
       },
       {
         "id": "isomorphism",
@@ -11899,7 +12303,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Isomorphism",
+        "display_label": "Isomorphism"
       },
       {
         "id": "lebesgue_number",
@@ -11925,7 +12331,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "lemma",
-        "label": "Lebesgue number lemma",
+        "label": "Lebesgue Number Lemma",
         "domain": "compactness",
         "chapter": "8",
         "ref": "Lemma 8.10",
@@ -11939,7 +12345,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Lebesgue number lemma",
+        "display_label": "Lebesgue Number Lemma"
       },
       {
         "id": "coset",
@@ -11965,7 +12373,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Left and right cosets",
+        "label": "Left and Right Cosets",
         "domain": "foundations",
         "chapter": "B",
         "ref": "Def. B.11",
@@ -11989,7 +12397,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Left and right cosets",
+        "display_label": "Left and Right Cosets"
       },
       {
         "id": "lifting",
@@ -12039,7 +12449,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Lifting",
+        "display_label": "Lifting"
       },
       {
         "id": "lifting_correspondence",
@@ -12068,7 +12480,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Lifting correspondence",
+        "label": "Lifting Correspondence",
         "domain": "algebraic_topology",
         "chapter": "8",
         "ref": "Def. 8.14",
@@ -12092,7 +12504,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Lifting correspondence",
+        "display_label": "Lifting Correspondence"
       },
       {
         "id": "local_homeomorphism",
@@ -12118,7 +12532,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Local homeomorphism",
+        "label": "Local Homeomorphism",
         "domain": "algebraic_topology",
         "chapter": "8",
         "ref": "Def. 8.4",
@@ -12137,58 +12551,95 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Local homeomorphism",
+        "display_label": "Local Homeomorphism"
       },
       {
         "id": "neighborhood_metric",
-        "statement": "Let $(X,d)$ be a metric space, let $x\\in X$, and let $A\\subseteq X$. Then $$\\begin{aligned} A \\text{ is a neighborhood of } x &\\iff \\exists \\varepsilon>0 \\text{ s.t. } B(x,\\varepsilon)\\subseteq A,\\ B(x,\\varepsilon) &= \\{y\\in X : d(x,y)<\\varepsilon\\}. \\end{aligned}$$ It is an \\textbf{open neighborhood} of $x$ if, in addition, $A$ is open.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "A set that surrounds $x$ with some breathing room. It need not be open itself; it only needs to contain an open ball centered at $x$.",
-        "notation": null,
+        "statement": "Let $(X,d)$ be a metric space, let $x\\in X$, and let $A\\subseteq X$. $A$ is a \\textbf{neighborhood} of $x$ if it contains some open ball centered at $x$. It is an \\textbf{open neighborhood} of $x$ if, in addition, $A$ is open.",
+        "formal_statement": "$$\\begin{aligned} A\\in\\mathcal N_X(x) &\\Longleftrightarrow \\exists\\varepsilon>0\\text{ such that }B_d(x,\\varepsilon)\\subseteq A,\\\\ B_d(x,\\varepsilon) &=\\{y\\in X\\mid d(x,y)<\\varepsilon\\}. \\end{aligned}$$",
+        "definition": "In a metric space $(X,d)$, a subset $A\\subseteq X$ is a neighborhood of $x\\in X$ if there exists $\\varepsilon>0$ such that the open ball $B_d(x,\\varepsilon)$ is contained in $A$.",
+        "intuition": "A neighborhood of $x$ is any set with positive metric breathing room around $x$. The set itself need not be open; it only has to contain a small open ball centered at $x$.",
+        "notation": "$$\\mathcal N_X(x),\\qquad B_d(x,\\varepsilon)\\subseteq A$$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["open_closed_ball"],
+          "definitional_dependency": [
+            "metric_space",
+            "open_closed_ball",
+            "neighborhood",
+            "open_neighborhood"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [],
+          "construction_dependency": ["metric_topology"],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
         "outgoing_relations": [
-          "e_neighborhood_metric_requires_open_closed_ball"
+          "e_neighborhood_metric_requires_open_closed_ball",
+          "e_neighborhood_metric_requires_metric_space",
+          "e_neighborhood_metric_requires_neighborhood",
+          "e_neighborhood_metric_requires_open_neighborhood",
+          "e_neighborhood_metric_constructed_from_metric_topology",
+          "e_neighborhood_metric_specializes_neighborhood"
         ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
+          "tags": [
+            "convention-sensitive",
+            "definition",
+            "metric",
+            "neighborhood"
+          ],
+          "syllabus_priority": "high",
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Neighborhood (metric)",
+        "label": "Neighborhood (Metric)",
         "domain": "continuity",
         "chapter": "2",
         "ref": "Def. 2.11",
-        "gloss": "A set that surrounds $x$ with some breathing room. It need not be open itself; it only needs to contain an open ball centered at $x$.",
-        "example": "In $\\mathbb{R}$, the interval $[-1,2]$ is a neighborhood of $0$ because $(-1/2,1/2)\\subseteq[-1,2]$, but it is not a neighborhood of the endpoint $2$.",
+        "gloss": "Metric version of the broad neighborhood convention: $A$ may be non-open, provided it contains some open ball around $x$. If $A$ itself is open, it is an open neighborhood.",
+        "example": "In $\\mathbb R$, $[-1,2]$ is a neighborhood of $0$ because $(-1/2,1/2)\\subseteq[-1,2]$. It is not a neighborhood of $2$, since no open interval centered at $2$ lies inside $[-1,2]$.",
         "diagram_path": "/atlas-assets/diagrams/neighborhood-metric.svg",
         "related": [
-          "open_closed_ball",
+          "continuity_point_metric",
+          "continuity_point_top",
+          "metric_space",
+          "metric_topology",
           "neighborhood",
-          "continuity_point_metric"
+          "open_closed_ball",
+          "open_neighborhood"
         ],
-        "introduced_object": null,
-        "genus": null,
-        "differentia": [],
-        "examples": [],
-        "non_examples": [],
-        "equivalent_definitions": [],
+        "introduced_object": "metric_neighborhood",
+        "genus": "subset_of_metric_space",
+        "differentia": ["contains_open_metric_ball_centered_at_point"],
+        "examples": ["closed_interval_as_neighborhood_of_interior_point"],
+        "non_examples": ["endpoint_of_closed_interval_in_real_line"],
+        "equivalent_definitions": [
+          "topological neighborhood in the topology induced by the metric"
+        ],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
-        }
+          "content": "polished",
+          "math_review": "checked",
+          "schema_review": "valid",
+          "pedagogy_review": "checked"
+        },
+        "mathematical_role": ["definition", "metric_characterization"],
+        "convention_notes": "Uses the broad neighborhood convention. Some texts reserve 'neighborhood' for open neighborhoods; in that stricter convention this node describes a set that contains an open neighborhood of the point.",
+        "convention_review": {
+          "risk_level": "medium",
+          "selected_convention": "broad_metric_neighborhood",
+          "selected_meaning": "A metric neighborhood of x is any subset A containing an open ball B_d(x,epsilon). A itself need not be open.",
+          "alternative_conventions": [
+            "Some authors require neighborhoods themselves to be open; then the broad version is called a neighborhood in the weak sense or a set containing an open neighborhood."
+          ],
+          "modeling_decision": "Keep this node as the metric characterization of the broad topological neighborhood and relate it to neighborhood and open_neighborhood.",
+          "exam_warning": "Check whether the course notes use 'neighborhood' broadly or mean 'open neighborhood'. State the convention if there is any doubt."
+        },
+        "canonical_label": "Neighborhood (metric)",
+        "display_label": "Neighborhood (Metric)"
       },
       {
         "id": "neighborhood_characterization_open",
@@ -12216,7 +12667,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Neighborhood characterization of open sets",
+        "label": "Neighborhood Characterization of Open Sets",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Thm. 3.10",
@@ -12242,7 +12693,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Neighborhood characterization of open sets",
+        "display_label": "Neighborhood Characterization of Open Sets"
       },
       {
         "id": "normal_subgroup",
@@ -12268,7 +12721,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Normal subgroup",
+        "label": "Normal Subgroup",
         "domain": "foundations",
         "chapter": "B",
         "ref": "Def. B.12",
@@ -12287,7 +12740,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Normal subgroup",
+        "display_label": "Normal Subgroup"
       },
       {
         "id": "nullhomotopic",
@@ -12313,7 +12768,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Nullhomotopic map",
+        "label": "Nullhomotopic Map",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "in 7.1",
@@ -12332,7 +12787,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Nullhomotopic map",
+        "display_label": "Nullhomotopic Map"
       },
       {
         "id": "open_closed_set_metric",
@@ -12360,7 +12817,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Open / closed set (metric)",
+        "label": "Open / Closed Set (Metric)",
         "domain": "continuity",
         "chapter": "2",
         "ref": "Def. 2.9",
@@ -12384,7 +12841,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Open / closed set (metric)",
+        "display_label": "Open / Closed Set (Metric)"
       },
       {
         "id": "open_closed_ball",
@@ -12410,7 +12869,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Open and closed balls",
+        "label": "Open and Closed Balls",
         "domain": "continuity",
         "chapter": "2",
         "ref": "Def. 2.7",
@@ -12433,7 +12892,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Open and closed balls",
+        "display_label": "Open and Closed Balls"
       },
       {
         "id": "open_closed_map",
@@ -12462,7 +12923,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Open and closed maps",
+        "label": "Open and Closed Maps",
         "domain": "spaces_constructions",
         "chapter": "5",
         "ref": "Def. 5.19",
@@ -12485,7 +12946,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Open and closed maps",
+        "display_label": "Open and Closed Maps"
       },
       {
         "id": "pasting_lemma",
@@ -12514,7 +12977,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "lemma",
-        "label": "Pasting lemma",
+        "label": "Pasting Lemma",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Lemma 7.3",
@@ -12528,7 +12991,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Pasting lemma",
+        "display_label": "Pasting Lemma"
       },
       {
         "id": "path_homotopy",
@@ -12554,7 +13019,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Path homotopy",
+        "label": "Path Homotopy",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.7",
@@ -12578,7 +13043,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Path homotopy",
+        "display_label": "Path Homotopy"
       },
       {
         "id": "path_homotopy_classes",
@@ -12606,7 +13073,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "object",
-        "label": "Path homotopy classes",
+        "label": "Path Homotopy Classes",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.11",
@@ -12619,7 +13086,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Path homotopy classes",
+        "display_label": "Path Homotopy Classes"
       },
       {
         "id": "path_implies_connected",
@@ -12648,7 +13117,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Path-connected ⇒ connected",
+        "label": "Path-Connected ⇒ Connected",
         "domain": "connectedness",
         "chapter": "6",
         "ref": "Thm. 6.17",
@@ -12669,7 +13138,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Path-connected ⇒ connected",
+        "display_label": "Path-Connected ⇒ Connected"
       },
       {
         "id": "product_compact",
@@ -12698,7 +13169,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Product of compact spaces is compact",
+        "label": "Product of Compact Spaces Is Compact",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Thm. 6.39",
@@ -12726,7 +13197,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Product of compact spaces is compact",
+        "display_label": "Product of Compact Spaces Is Compact"
       },
       {
         "id": "product_of_paths",
@@ -12755,7 +13228,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "construction",
-        "label": "Product of paths",
+        "label": "Product of Paths",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.12",
@@ -12773,7 +13246,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Product of paths",
+        "display_label": "Product of Paths"
       },
       {
         "id": "quotient_group",
@@ -12803,7 +13278,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Quotient (factor) group",
+        "label": "Quotient (Factor) Group",
         "domain": "foundations",
         "chapter": "B",
         "ref": "Thm. B.13",
@@ -12824,7 +13299,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Quotient (factor) group",
+        "display_label": "Quotient (Factor) Group"
       },
       {
         "id": "restriction",
@@ -12853,7 +13330,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Restriction of a map",
+        "label": "Restriction of a Map",
         "domain": "foundations",
         "chapter": "A",
         "ref": "Def. A.8",
@@ -12872,7 +13349,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Restriction of a map",
+        "display_label": "Restriction of a Map"
       },
       {
         "id": "retraction",
@@ -12921,7 +13400,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Retraction",
+        "display_label": "Retraction"
       },
       {
         "id": "simply_connected",
@@ -12947,7 +13428,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Simply connected space",
+        "label": "Simply Connected Space",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Def. 7.20",
@@ -12970,7 +13451,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Simply connected space",
+        "display_label": "Simply Connected Space"
       },
       {
         "id": "subgroup",
@@ -13015,7 +13498,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Subgroup",
+        "display_label": "Subgroup"
       },
       {
         "id": "subset",
@@ -13060,7 +13545,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Subset",
+        "display_label": "Subset"
       },
       {
         "id": "sij",
@@ -13089,7 +13576,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Surjective / injective / bijective",
+        "label": "Surjective / Injective / Bijective",
         "domain": "foundations",
         "chapter": "A",
         "ref": "Def. A.7",
@@ -13113,7 +13600,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Surjective / injective / bijective",
+        "display_label": "Surjective / Injective / Bijective"
       },
       {
         "id": "real_line_connected",
@@ -13141,7 +13630,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "The real numbers are connected",
+        "label": "The Real Numbers Are Connected",
         "domain": "connectedness",
         "chapter": "6",
         "ref": "Thm. 6.12",
@@ -13162,7 +13651,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "The real numbers are connected",
+        "display_label": "The Real Numbers Are Connected"
       },
       {
         "id": "topological_property",
@@ -13188,7 +13679,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "definition",
-        "label": "Topological property / invariant",
+        "label": "Topological Property / Invariant",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "near 3.19",
@@ -13212,7 +13703,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Topological property / invariant",
+        "display_label": "Topological Property / Invariant"
       },
       {
         "id": "generated_topology",
@@ -13241,7 +13734,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "construction",
-        "label": "Topology generated by a collection",
+        "label": "Topology Generated by a Collection",
         "domain": "spaces_constructions",
         "chapter": "4",
         "ref": "Def. 4.3",
@@ -13258,7 +13751,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Topology generated by a collection",
+        "display_label": "Topology Generated by a Collection"
       },
       {
         "id": "tube_lemma",
@@ -13287,7 +13782,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "lemma",
-        "label": "Tube lemma",
+        "label": "Tube Lemma",
         "domain": "compactness",
         "chapter": "6",
         "ref": "Lemma 6.38",
@@ -13301,7 +13796,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Tube lemma",
+        "display_label": "Tube Lemma"
       },
       {
         "id": "path_lifting",
@@ -13327,7 +13824,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Unique path lifting property",
+        "label": "Unique Path Lifting Property",
         "domain": "algebraic_topology",
         "chapter": "8",
         "ref": "Thm. 8.12",
@@ -13355,7 +13852,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Unique path lifting property",
+        "display_label": "Unique Path Lifting Property"
       },
       {
         "id": "quotient_universal",
@@ -13381,7 +13880,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "Universal property of the quotient",
+        "label": "Universal Property of the Quotient",
         "domain": "spaces_constructions",
         "chapter": "5",
         "ref": "Thm. 5.26",
@@ -13403,7 +13902,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "Universal property of the quotient",
+        "display_label": "Universal Property of the Quotient"
       },
       {
         "id": "pi1_invariant",
@@ -13433,7 +13934,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "corollary",
-        "label": "π₁ is a topological invariant",
+        "label": "π₁ Is a Topological Invariant",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Cor. 7.25",
@@ -13453,7 +13954,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "π₁ is a topological invariant",
+        "display_label": "π₁ Is a Topological Invariant"
       },
       {
         "id": "pi1_product",
@@ -13482,7 +13985,7 @@
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
         "kind": "theorem",
-        "label": "π₁ of a product",
+        "label": "π₁ of a Product",
         "domain": "algebraic_topology",
         "chapter": "7",
         "ref": "Thm. 7.26",
@@ -13503,7 +14006,9 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "π₁ of a product",
+        "display_label": "π₁ of a Product"
       },
       {
         "id": "pi1_circle",
@@ -13561,11 +14066,13 @@
           "math_review": "unchecked",
           "schema_review": "scaffolded",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "π₁(S¹) ≅ ℤ",
+        "display_label": "π₁(S¹) ≅ ℤ"
       },
       {
         "id": "arbitrary_union_of_open_sets_is_open",
-        "label": "arbitrary union of open sets is open",
+        "label": "Arbitrary Union of Open Sets Is Open",
         "kind": "axiom",
         "domain": "spaces_constructions",
         "statement": "In a topological space, any union of open sets is open.",
@@ -13595,7 +14102,9 @@
           "math_review": "unchecked",
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
-        }
+        },
+        "canonical_label": "arbitrary union of open sets is open",
+        "display_label": "Arbitrary Union of Open Sets Is Open"
       },
       {
         "id": "open_neighborhood",
@@ -13631,7 +14140,7 @@
         "examples": [],
         "non_examples": [],
         "equivalent_definitions": [],
-        "label": "open neighborhood",
+        "label": "Open Neighborhood",
         "domain": "spaces_constructions",
         "chapter": "3",
         "ref": "Def. 3.9",
@@ -13654,7 +14163,9 @@
           "Some authors call this simply a neighborhood.",
           "In this graph, open_neighborhood specializes neighborhood."
         ],
-        "mathematical_role": ["definition", "special_case"]
+        "mathematical_role": ["definition", "special_case"],
+        "canonical_label": "open neighborhood",
+        "display_label": "Open Neighborhood"
       }
     ],
     "edges": [
@@ -20290,6 +20801,61 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": "Added by content refinement pass to clarify near-duplicate roles."
+      },
+      {
+        "id": "e_neighborhood_metric_requires_metric_space",
+        "source": "neighborhood_metric",
+        "target": "metric_space",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "defined in a metric space",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "A metric neighborhood is defined relative to a metric space."
+      },
+      {
+        "id": "e_neighborhood_metric_requires_neighborhood",
+        "source": "neighborhood_metric",
+        "target": "neighborhood",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "metric characterization of neighborhood",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Connects the metric definition to the broad topological neighborhood convention."
+      },
+      {
+        "id": "e_neighborhood_metric_requires_open_neighborhood",
+        "source": "neighborhood_metric",
+        "target": "open_neighborhood",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "contrasts with open neighborhood",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The node explicitly distinguishes broad neighborhoods from open neighborhoods."
+      },
+      {
+        "id": "e_neighborhood_metric_constructed_from_metric_topology",
+        "source": "neighborhood_metric",
+        "target": "metric_topology",
+        "type": "requires",
+        "dependency_class": "construction_dependency",
+        "label": "agrees with metric topology",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Metric neighborhoods are exactly topological neighborhoods for the topology induced by the metric."
+      },
+      {
+        "id": "e_neighborhood_metric_specializes_neighborhood",
+        "source": "neighborhood_metric",
+        "target": "neighborhood",
+        "type": "specializes",
+        "dependency_class": "definitional_dependency",
+        "label": "metric-space version",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "In the metric topology, this is the ball-based characterization of a topological neighborhood."
       }
     ],
     "field": "topology_field",
@@ -20358,6 +20924,142 @@
       "locally_compact_space": "compact-neighborhood convention; add Hausdorff assumptions for compact-closure equivalences",
       "manifold": "Hausdorff, second-countable, topological manifold without boundary unless otherwise specified",
       "compactness": "open-cover compactness; not closed-and-bounded except in Euclidean Heine-Borel contexts"
+    },
+    "labeling": {
+      "policy": "Human-facing item labels use polished Title Case. Stable machine identity remains in id. Previous labels are preserved in canonical_label.",
+      "updated_fields": [
+        "items[].label",
+        "items[].display_label",
+        "items[].canonical_label"
+      ],
+      "changed_item_count": 176,
+      "changed_items_preview": [
+        {
+          "id": "set",
+          "old": "set",
+          "new": "Set"
+        },
+        {
+          "id": "function",
+          "old": "function",
+          "new": "Function"
+        },
+        {
+          "id": "axiom_of_choice",
+          "old": "axiom of choice",
+          "new": "Axiom of Choice"
+        },
+        {
+          "id": "hausdorff_assumption",
+          "old": "Hausdorff assumption",
+          "new": "Assume Hausdorff"
+        },
+        {
+          "id": "normality_assumption",
+          "old": "normality assumption",
+          "new": "Assume Normal"
+        },
+        {
+          "id": "regularity_assumption",
+          "old": "regularity assumption",
+          "new": "Assume Regular"
+        },
+        {
+          "id": "second_countability_assumption",
+          "old": "second-countability assumption",
+          "new": "Assume Second-Countable"
+        },
+        {
+          "id": "local_compactness_assumption",
+          "old": "local compactness assumption",
+          "new": "Assume Locally Compact"
+        },
+        {
+          "id": "complete_metric_assumption",
+          "old": "complete metric assumption",
+          "new": "Assume Complete Metric"
+        },
+        {
+          "id": "topological_space",
+          "old": "topological space",
+          "new": "Topological Space"
+        },
+        {
+          "id": "pseudometric_space",
+          "old": "pseudometric space",
+          "new": "Pseudometric Space"
+        },
+        {
+          "id": "metric_space",
+          "old": "metric space",
+          "new": "Metric Space"
+        },
+        {
+          "id": "subspace",
+          "old": "subspace",
+          "new": "Subspace"
+        },
+        {
+          "id": "product_space",
+          "old": "product space",
+          "new": "Product Space"
+        },
+        {
+          "id": "quotient_space",
+          "old": "quotient space",
+          "new": "Quotient Space"
+        },
+        {
+          "id": "compact_space",
+          "old": "compact space",
+          "new": "Compact Space"
+        },
+        {
+          "id": "connected_space",
+          "old": "connected space",
+          "new": "Connected Space"
+        },
+        {
+          "id": "path_connected_space",
+          "old": "path-connected space",
+          "new": "Path-Connected Space"
+        },
+        {
+          "id": "hausdorff_space",
+          "old": "Hausdorff space",
+          "new": "Hausdorff Space"
+        },
+        {
+          "id": "regular_space",
+          "old": "regular space",
+          "new": "Regular Space"
+        },
+        {
+          "id": "normal_space",
+          "old": "normal space",
+          "new": "Normal Space"
+        },
+        {
+          "id": "locally_compact_space",
+          "old": "locally compact space",
+          "new": "Locally Compact Space"
+        },
+        {
+          "id": "second_countable_space",
+          "old": "second-countable space",
+          "new": "Second-Countable Space"
+        },
+        {
+          "id": "manifold",
+          "old": "manifold",
+          "new": "Manifold"
+        },
+        {
+          "id": "compact_hausdorff_space",
+          "old": "compact Hausdorff space",
+          "new": "Compact Hausdorff Space"
+        }
+      ]
     }
   },
   "views": {
