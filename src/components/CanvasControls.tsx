@@ -341,15 +341,6 @@ function ModeTile({
           {hint}
         </span>
       </span>
-      {active && (
-        <span
-          className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full"
-          style={{ background: "var(--accent)", color: "var(--fg-on-color)" }}
-          aria-hidden
-        >
-          <Check className="h-2.5 w-2.5" strokeWidth={3.5} />
-        </span>
-      )}
     </button>
   );
 }
