@@ -99,9 +99,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -119,21 +117,15 @@
         "notation": "$e_n(x)=e^{inx}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "periodic_function"
-          ]
+          "logical_dependency": ["periodic_function"]
         },
         "outgoing_relations": [],
-        "related": [
-          "periodic_function"
-        ],
+        "related": ["periodic_function"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -152,9 +144,7 @@
         "notation": "$\\langle f,g\\rangle$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "lebesgue_integral"
-          ]
+          "logical_dependency": ["lebesgue_integral"]
         },
         "outgoing_relations": [],
         "related": [],
@@ -164,9 +154,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -184,23 +172,15 @@
         "notation": "$\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "inner_product_space",
-            "complex_exponential"
-          ]
+          "logical_dependency": ["inner_product_space", "complex_exponential"]
         },
         "outgoing_relations": [],
-        "related": [
-          "inner_product_space",
-          "complex_exponential"
-        ],
+        "related": ["inner_product_space", "complex_exponential"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -226,20 +206,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "l1_space",
-          "l2_space",
-          "essential_supremum"
-        ],
+        "related": ["l1_space", "l2_space", "essential_supremum"],
         "assumptions": [
           "Functions are identified up to equality almost everywhere."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -257,24 +231,17 @@
         "notation": "$L^1(\\mathbb T),\\ \\|f\\|_1<\\infty$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "lebesgue_integral",
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["lebesgue_integral", "almost_everywhere"]
         },
         "outgoing_relations": [],
-        "related": [
-          "lp_space"
-        ],
+        "related": ["lp_space"],
         "assumptions": [
           "Functions are identified up to equality almost everywhere."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -292,26 +259,17 @@
         "notation": "$L^2(\\mathbb T),\\ \\langle f,g\\rangle,\\ \\|f\\|_2$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "inner_product_space",
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["inner_product_space", "almost_everywhere"]
         },
         "outgoing_relations": [],
-        "related": [
-          "lp_space",
-          "inner_product_space",
-          "hilbert_space"
-        ],
+        "related": ["lp_space", "inner_product_space", "hilbert_space"],
         "assumptions": [
           "Functions are identified up to equality almost everywhere."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -329,21 +287,15 @@
         "notation": "$H$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "inner_product_space"
-          ]
+          "logical_dependency": ["inner_product_space"]
         },
         "outgoing_relations": [],
-        "related": [
-          "inner_product_space"
-        ],
+        "related": ["inner_product_space"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -369,15 +321,9 @@
           "This one-dimensional definition extends to $\\mathbb R^d$ using multi-indices."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Corollary 2.4; Ch.5 Proposition 1.1; Ch.5 Theorem 1.3",
-        "book_refs": [
-          "c5_cor_2_4",
-          "c5_prop_1_1",
-          "c5_thm_1_3"
-        ],
+        "book_refs": ["c5_cor_2_4", "c5_prop_1_1", "c5_thm_1_3"],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Corollary 2.4; Ch.5 Proposition 1.1; Ch.5 Theorem 1.3"
         }
@@ -395,10 +341,7 @@
         "notation": "$f*g$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "l1_space",
-            "fubini_tonelli"
-          ]
+          "logical_dependency": ["l1_space", "fubini_tonelli"]
         },
         "outgoing_relations": [],
         "related": [],
@@ -406,14 +349,9 @@
           "The normalization differs between the circle and the real line."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Lemma 3.2; Ch.2 Proposition 3.1",
-        "book_refs": [
-          "c2_lem_3_2",
-          "c2_prop_3_1"
-        ],
+        "book_refs": ["c2_lem_3_2", "c2_prop_3_1"],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.2 Lemma 3.2; Ch.2 Proposition 3.1"
         }
@@ -438,19 +376,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "complex_exponential",
-          "inner_product_space"
-        ],
+        "related": ["complex_exponential", "inner_product_space"],
         "assumptions": [
           "For $L^1$ functions the integral definition is primary; the projection interpretation is geometrically literal in $L^2$."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -468,23 +401,17 @@
         "notation": "$\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_coefficient"
-          ]
+          "logical_dependency": ["fourier_coefficient"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_coefficient"
-        ],
+        "related": ["fourier_coefficient"],
         "assumptions": [
           "The notation $f\\sim\\sum\\hat f(n)e^{inx}$ does not by itself assert convergence."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -502,21 +429,15 @@
         "notation": "$\\sum_{|n|\\le N}c_ne^{inx}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "complex_exponential"
-          ]
+          "logical_dependency": ["complex_exponential"]
         },
         "outgoing_relations": [],
-        "related": [
-          "complex_exponential"
-        ],
+        "related": ["complex_exponential"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -534,22 +455,15 @@
         "notation": "$S_Nf$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_series",
-            "trigonometric_polynomial"
-          ]
+          "logical_dependency": ["fourier_series", "trigonometric_polynomial"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_series"
-        ],
+        "related": ["fourier_series"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -582,9 +496,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -610,22 +522,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "bessel_inequality",
-          "plancherel_theorem"
-        ],
+        "related": ["bessel_inequality", "plancherel_theorem"],
         "assumptions": [
           "Equality uses completeness of the trigonometric system in $L^2(\\mathbb T)$."
         ],
         "ref": "Stein–Shakarchi: Ch.3 Lemma 1.5; Ch.3 Theorem 1.3",
-        "book_refs": [
-          "c3_lem_1_5",
-          "c3_thm_1_3"
-        ],
+        "book_refs": ["c3_lem_1_5", "c3_thm_1_3"],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.3 Lemma 1.5; Ch.3 Theorem 1.3"
         }
@@ -644,27 +548,17 @@
         "notation": "$\\hat f(n)\\to0$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_coefficient",
-            "l1_space"
-          ]
+          "logical_dependency": ["fourier_coefficient", "l1_space"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_coefficient",
-          "ft_continuity"
-        ],
+        "related": ["fourier_coefficient", "ft_continuity"],
         "assumptions": [
           "The function is understood as an $L^1(\\mathbb T)$ equivalence class; the conclusion concerns its Fourier coefficients."
         ],
         "ref": "Stein–Shakarchi: Ch.3 Theorem 1.4",
-        "book_refs": [
-          "c3_thm_1_4"
-        ],
+        "book_refs": ["c3_thm_1_4"],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.3 Theorem 1.4"
         }
@@ -691,24 +585,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_coefficient",
-          "fejer_theorem"
-        ],
+        "related": ["fourier_coefficient", "fejer_theorem"],
         "assumptions": [
           "For $L^1$ functions, equality is interpreted almost everywhere. For continuous representatives, it becomes pointwise equality."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Corollary 2.2; Ch.2 Corollary 2.3; Ch.2 Corollary 5.3; Ch.2 Theorem 2.1",
-        "book_refs": [
-          "c2_cor_2_2",
-          "c2_cor_2_3",
-          "c2_cor_5_3",
-          "c2_thm_2_1"
-        ],
+        "book_refs": ["c2_cor_2_2", "c2_cor_2_3", "c2_cor_5_3", "c2_thm_2_1"],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.2 Corollary 2.2; Ch.2 Corollary 2.3; Ch.2 Corollary 5.3; Ch.2 Theorem 2.1"
         }
@@ -744,13 +628,9 @@
           "The minimization is in the $L^2$-norm on $\\mathbb T$."
         ],
         "ref": "Stein–Shakarchi: Ch.3 Lemma 1.2",
-        "book_refs": [
-          "c3_lem_1_2"
-        ],
+        "book_refs": ["c3_lem_1_2"],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.3 Lemma 1.2"
         }
@@ -768,27 +648,17 @@
         "notation": "$\\widehat{f^{(k)}}(n)=(in)^k\\hat f(n)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_coefficient",
-            "fourier_series"
-          ]
+          "logical_dependency": ["fourier_coefficient", "fourier_series"]
         },
         "outgoing_relations": [],
-        "related": [
-          "term_differentiation",
-          "differentiation_rule"
-        ],
+        "related": ["term_differentiation", "differentiation_rule"],
         "assumptions": [
           "Periodic endpoint matching matters: derivatives are taken on the circle, not merely on an interval with unrelated endpoints."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Corollary 2.4",
-        "book_refs": [
-          "c2_cor_2_4"
-        ],
+        "book_refs": ["c2_cor_2_4"],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.2 Corollary 2.4"
         }
@@ -806,28 +676,17 @@
         "notation": "$K_n*f\\to f$ uniformly on $C(\\mathbb T)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "convolution",
-            "l1_space"
-          ]
+          "logical_dependency": ["convolution", "l1_space"]
         },
         "outgoing_relations": [],
-        "related": [
-          "convolution"
-        ],
+        "related": ["convolution"],
         "assumptions": [
           "Kernels are normalized using the circle measure $\\frac1{2\\pi}dx$."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Theorem 4.1; Ch.5 Corollary 1.7; Ch.5 Theorem 1.6",
-        "book_refs": [
-          "c2_thm_4_1",
-          "c5_cor_1_7",
-          "c5_thm_1_6"
-        ],
+        "book_refs": ["c2_thm_4_1", "c5_cor_1_7", "c5_thm_1_6"],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.2 Theorem 4.1; Ch.5 Corollary 1.7; Ch.5 Theorem 1.6"
         }
@@ -845,23 +704,15 @@
         "notation": "$D_N,\\ S_Nf=D_N*f$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "partial_sum",
-            "convolution",
-            "l1_space"
-          ]
+          "logical_dependency": ["partial_sum", "convolution", "l1_space"]
         },
         "outgoing_relations": [],
-        "related": [
-          "partial_sum"
-        ],
+        "related": ["partial_sum"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -879,25 +730,15 @@
         "notation": "$F_N,\\ \\sigma_Nf=F_N*f$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "dirichlet_kernel",
-            "cesaro_summation"
-          ]
+          "logical_dependency": ["dirichlet_kernel", "cesaro_summation"]
         },
         "outgoing_relations": [],
-        "related": [
-          "dirichlet_kernel",
-          "good_kernel"
-        ],
+        "related": ["dirichlet_kernel", "good_kernel"],
         "assumptions": [],
         "ref": "Stein–Shakarchi: Ch.2 Lemma 5.1",
-        "book_refs": [
-          "c2_lem_5_1"
-        ],
+        "book_refs": ["c2_lem_5_1"],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.2 Lemma 5.1"
         }
@@ -915,23 +756,15 @@
         "notation": "$P_r,\\ P_r*f\\to f$ as $r\\to1^-$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "abel_summation"
-          ]
+          "logical_dependency": ["abel_summation"]
         },
         "outgoing_relations": [],
-        "related": [
-          "good_kernel"
-        ],
+        "related": ["good_kernel"],
         "assumptions": [],
         "ref": "Stein–Shakarchi: Ch.2 Lemma 5.5",
-        "book_refs": [
-          "c2_lem_5_5"
-        ],
+        "book_refs": ["c2_lem_5_5"],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.2 Lemma 5.5"
         }
@@ -949,23 +782,15 @@
         "notation": "$\\sigma_Nf$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "partial_sum"
-          ]
+          "logical_dependency": ["partial_sum"]
         },
         "outgoing_relations": [],
-        "related": [
-          "partial_sum",
-          "fejer_kernel",
-          "fejer_theorem"
-        ],
+        "related": ["partial_sum", "fejer_kernel", "fejer_theorem"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -983,26 +808,15 @@
         "notation": "$A_rf,\\ r\\to1^-$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_series",
-            "fourier_coefficient"
-          ]
+          "logical_dependency": ["fourier_series", "fourier_coefficient"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_series",
-          "poisson_kernel"
-        ],
+        "related": ["fourier_series", "poisson_kernel"],
         "assumptions": [],
         "ref": "Stein–Shakarchi: Ch.2 Theorem 5.6; Ch.3 Lemma 2.3",
-        "book_refs": [
-          "c2_thm_5_6",
-          "c3_lem_2_3"
-        ],
+        "book_refs": ["c2_thm_5_6", "c3_lem_2_3"],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.2 Theorem 5.6; Ch.3 Lemma 2.3"
         }
@@ -1012,37 +826,52 @@
         "label": "Fejér's Theorem",
         "kind": "theorem",
         "domain": "convergence",
-        "statement": "Fejer means of a continuous periodic function converge uniformly to the function.",
-        "formal_statement": "If $f\\in C(\\mathbb T)$, then $\\sigma_Nf=F_N*f\\to f$ uniformly on $\\mathbb T$. More generally, if $f\\in L^1(\\mathbb T)$, then $\\sigma_Nf\\to f$ in $L^1$.",
+        "statement": "The Cesàro means of the Fourier series of a continuous periodic function converge uniformly to the function.",
+        "formal_statement": "If $f\\in C(\\mathbb T)$, then $\\sigma_N f=F_N*f\\to f$ uniformly on $\\mathbb T$. Equivalently, $\\|\\sigma_N f-f\\|_\\infty\\to0$. More generally, if $f\\in L^1(\\mathbb T)$, then $\\sigma_N f\\to f$ in $L^1$.",
         "definition": null,
-        "formula": "$$f\\in C(\\mathbb T)\\Longrightarrow \\|F_N*f-f\\|_\\infty\\to0.$$",
-        "intuition": "Averaging partial sums replaces the oscillatory Dirichlet kernel by the positive Fejer kernel. The result is a stable local average that sharpens into $f$.",
-        "proof": null,
-        "notation": "$\\sigma_Nf=F_N*f\\to f$",
-        "proof_dependencies": [],
+        "formula": "$$\\begin{aligned} f\\in C(\\mathbb T)&\\Longrightarrow \\|\\sigma_N f-f\\|_\\infty\\xrightarrow[N\\to\\infty]{}0,\\\\ \\sigma_N f&=\\frac1{N+1}\\sum_{k=0}^{N}S_k f=F_N*f. \\end{aligned}$$",
+        "intuition": "Ordinary Fourier partial sums use the oscillatory Dirichlet kernel, which can behave badly. Fejér averaging replaces it by the positive Fejér kernel, so reconstruction becomes a stable local average that sharpens into the original function.",
+        "proof": "Work on $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$, with normalized convolution $(f*g)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)g(t)\\,dt$. For $f\\in L^1(\\mathbb T)$, the $N$-th Fourier partial sum satisfies $S_N f=D_N*f$, where $D_N$ is the Dirichlet kernel. The Fejér mean is the arithmetic average of the first partial sums: $$\\sigma_N f=\\frac1{N+1}\\sum_{k=0}^{N}S_k f.$$ By linearity of convolution, $$\\sigma_N f=\\frac1{N+1}\\sum_{k=0}^{N}(D_k*f)=\\left(\\frac1{N+1}\\sum_{k=0}^{N}D_k\\right)*f=F_N*f.$$ Thus Fejér means are convolution averages against the Fejér kernel.\n\nThe Fejér kernel is $$F_N(t)=\\frac1{N+1}\\sum_{k=0}^{N}D_k(t)=\\frac1{N+1}\\left(\\frac{\\sin((N+1)t/2)}{\\sin(t/2)}\\right)^2,$$ with removable value $F_N(0)=N+1$. Hence $F_N(t)\\ge0$. Also, since $D_k$ has normalized integral $1$, averaging gives $$\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(t)\\,dt=1.$$ Finally, for each fixed $0<\\delta\\le\\pi$, the mass of $F_N$ away from $0$ tends to zero. Indeed, on $\\delta\\le |t|\\le\\pi$, we have $\\sin^2(t/2)\\ge m_\\delta>0$, so $$0\\le \\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}F_N(t)\\,dt\\le \\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}\\frac1{(N+1)m_\\delta}\\,dt\\xrightarrow[N\\to\\infty]{}0.$$ Therefore $\\{F_N\\}$ is a positive approximate identity.\n\nNow assume $f\\in C(\\mathbb T)$. Since $\\mathbb T$ is compact, $f$ is uniformly continuous and bounded. Let $\\varepsilon>0$. Choose $0<\\delta\\le\\pi$ such that $$|t|<\\delta\\Longrightarrow |f(x-t)-f(x)|<\\frac{\\varepsilon}{2}\\quad\\text{for all }x\\in\\mathbb T.$$ Let $M=\\|f\\|_\\infty$. Using $\\frac1{2\\pi}\\int F_N=1$, we write $$\\sigma_N f(x)-f(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}\\bigl(f(x-t)-f(x)\\bigr)F_N(t)\\,dt.$$ Since $F_N\\ge0$, $$|\\sigma_N f(x)-f(x)|\\le \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x-t)-f(x)|F_N(t)\\,dt.$$ Split the integral into $|t|<\\delta$ and $\\delta\\le |t|\\le\\pi$. On the near region, uniform continuity gives $$\\frac1{2\\pi}\\int_{|t|<\\delta}|f(x-t)-f(x)|F_N(t)\\,dt\\le \\frac{\\varepsilon}{2}\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(t)\\,dt=\\frac{\\varepsilon}{2}.$$ On the far region, boundedness gives $|f(x-t)-f(x)|\\le2M$, hence $$\\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}|f(x-t)-f(x)|F_N(t)\\,dt\\le 2M\\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}F_N(t)\\,dt.$$ By the tail property of $F_N$, choose $N_0$ such that for all $N\\ge N_0$, this far-region term is less than $\\varepsilon/2$. Therefore, for all $x\\in\\mathbb T$ and all $N\\ge N_0$, $$|\\sigma_N f(x)-f(x)|<\\varepsilon.$$ Hence $\\|\\sigma_N f-f\\|_\\infty\\to0$, proving the uniform convergence statement.\n\nFor the $L^1$ version, let $f\\in L^1(\\mathbb T)$, with $\\|h\\|_1=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|h(x)|\\,dx$. Since translations are continuous in $L^1$, for every $\\varepsilon>0$ there exists $\\delta>0$ such that $|t|<\\delta$ implies $\\|f(\\cdot-t)-f\\|_1<\\varepsilon/2$. Using positivity and normalization of $F_N$, $$\\|F_N*f-f\\|_1\\le \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}\\|f(\\cdot-t)-f\\|_1F_N(t)\\,dt.$$ Split again into $|t|<\\delta$ and $\\delta\\le |t|\\le\\pi$. The near part is at most $\\varepsilon/2$. The far part is bounded by $$2\\|f\\|_1\\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}F_N(t)\\,dt,$$ which tends to $0$. Hence $\\|F_N*f-f\\|_1\\to0$. Since $\\sigma_N f=F_N*f$, this proves $\\sigma_N f\\to f$ in $L^1(\\mathbb T)$.",
+        "notation": "$\\sigma_N f=F_N*f$, $\\|\\sigma_N f-f\\|_\\infty\\to0$",
+        "proof_dependencies": [
+          "partial_sum",
+          "dirichlet_kernel",
+          "fejer_kernel",
+          "cesaro_summation",
+          "convolution",
+          "good_kernel"
+        ],
         "dependencies": {
           "logical_dependency": [
+            "partial_sum",
+            "dirichlet_kernel",
             "fejer_kernel",
-            "good_kernel",
-            "cesaro_summation"
+            "cesaro_summation",
+            "convolution",
+            "good_kernel"
           ]
         },
-        "outgoing_relations": [],
         "related": [
           "fejer_kernel",
           "good_kernel",
-          "weierstrass_approximation"
+          "weierstrass_approximation",
+          "uniqueness_series",
+          "dirichlet_kernel"
         ],
         "assumptions": [
-          "Uniform convergence requires $f\\in C(\\mathbb T)$; the $L^1$ version has $L^1$-convergence."
+          "The circle is normalized with measure $\\frac1{2\\pi}dx$.",
+          "Uniform convergence requires $f\\in C(\\mathbb T)$.",
+          "The $L^1$ variant uses translation continuity in $L^1(\\mathbb T)$.",
+          "The conclusion concerns Cesàro means, not ordinary Fourier partial sums."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Theorem 5.2",
-        "book_refs": [
-          "c2_thm_5_2"
-        ],
+        "book_refs": ["c2_thm_5_2"],
         "metadata": {
           "tags": [
-            "convergence"
+            "convergence",
+            "summability",
+            "approximate-identity",
+            "fourier-series"
           ],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.2 Theorem 5.2"
@@ -1070,24 +899,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "l2_space",
-          "parseval_identity",
-          "best_approximation"
-        ],
+        "related": ["l2_space", "parseval_identity", "best_approximation"],
         "assumptions": [
           "Convergence is in the $L^2$-norm, not necessarily pointwise."
         ],
         "ref": "Stein–Shakarchi: Ch.3 Lemma 2.4; Ch.3 Lemma 3.2; Ch.3 Theorem 1.1",
-        "book_refs": [
-          "c3_lem_2_4",
-          "c3_lem_3_2",
-          "c3_thm_1_1"
-        ],
+        "book_refs": ["c3_lem_2_4", "c3_lem_3_2", "c3_thm_1_1"],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.3 Lemma 2.4; Ch.3 Lemma 3.2; Ch.3 Theorem 1.1"
         }
@@ -1105,11 +924,7 @@
         "notation": "$S_Nf(x_0)\\to L$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "dirichlet_kernel",
-            "partial_sum",
-            "l1_space"
-          ]
+          "logical_dependency": ["dirichlet_kernel", "partial_sum", "l1_space"]
         },
         "outgoing_relations": [],
         "related": [
@@ -1125,9 +940,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -1153,20 +966,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "pointwise_convergence"
-        ],
+        "related": ["pointwise_convergence"],
         "assumptions": [
           "The value $f(x_0)$ must be specified; the condition is local at $x_0$."
         ],
         "ref": "Stein–Shakarchi: Ch.3 Theorem 2.1",
-        "book_refs": [
-          "c3_thm_2_1"
-        ],
+        "book_refs": ["c3_thm_2_1"],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.3 Theorem 2.1"
         }
@@ -1192,18 +999,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "pointwise_convergence"
-        ],
+        "related": ["pointwise_convergence"],
         "assumptions": [
           "Uses a periodic piecewise $C^1$ convention with one-sided limits at jumps."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -1228,20 +1031,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "partial_sum",
-          "dirichlet_conditions",
-          "dirichlet_kernel"
-        ],
+        "related": ["partial_sum", "dirichlet_conditions", "dirichlet_kernel"],
         "assumptions": [
           "The standard statement concerns Fourier partial sums near a jump of a piecewise smooth function."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -1267,20 +1064,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "pointwise_convergence",
-          "l2_space",
-          "almost_everywhere"
-        ],
+        "related": ["pointwise_convergence", "l2_space", "almost_everywhere"],
         "assumptions": [
           "Almost everywhere is with respect to Lebesgue measure on $\\mathbb T$."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -1317,9 +1108,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -1344,19 +1133,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_coefficient",
-          "fourier_series"
-        ],
+        "related": ["fourier_coefficient", "fourier_series"],
         "assumptions": [
           "Convention: $\\hat f(\\xi)=\\int f(x)e^{-2\\pi i x\\xi}\\,dx$."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -1383,22 +1167,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform",
-          "schwartz_space"
-        ],
-        "assumptions": [
-          "Uses the graph's $2\\pi$-frequency convention."
-        ],
+        "related": ["fourier_transform", "schwartz_space"],
+        "assumptions": ["Uses the graph's $2\\pi$-frequency convention."],
         "ref": "Stein–Shakarchi: Ch.5 Corollary 1.10; Ch.5 Theorem 1.9",
-        "book_refs": [
-          "c5_cor_1_10",
-          "c5_thm_1_9"
-        ],
+        "book_refs": ["c5_cor_1_10", "c5_thm_1_9"],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Corollary 1.10; Ch.5 Theorem 1.9"
         }
@@ -1425,22 +1199,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "convolution",
-          "fourier_transform"
-        ],
+        "related": ["convolution", "fourier_transform"],
         "assumptions": [
           "Assumptions depend on the identity: $L^1$ is enough for convolution-to-product; Schwartz functions safely justify both identities."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Proposition 1.8; Ch.5 Proposition 1.11",
-        "book_refs": [
-          "c5_prop_1_8",
-          "c5_prop_1_11"
-        ],
+        "book_refs": ["c5_prop_1_8", "c5_prop_1_11"],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Proposition 1.8; Ch.5 Proposition 1.11"
         }
@@ -1467,21 +1233,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "l2_space_r",
-          "parseval_identity"
-        ],
+        "related": ["l2_space_r", "parseval_identity"],
         "assumptions": [
           "Fourier convention $e^{-2\\pi i x\\xi}$; $L^2$ is on $\\mathbb R$."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 1.12",
-        "book_refs": [
-          "c5_thm_1_12"
-        ],
+        "book_refs": ["c5_thm_1_12"],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Theorem 1.12"
         }
@@ -1506,21 +1265,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "schwartz_space",
-          "uncertainty_principle"
-        ],
-        "assumptions": [
-          "Uses the $e^{-2\\pi i x\\xi}$ convention."
-        ],
+        "related": ["schwartz_space", "uncertainty_principle"],
+        "assumptions": ["Uses the $e^{-2\\pi i x\\xi}$ convention."],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 1.4",
-        "book_refs": [
-          "c5_thm_1_4"
-        ],
+        "book_refs": ["c5_thm_1_4"],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Theorem 1.4"
         }
@@ -1548,20 +1298,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "gaussian_transform"
-        ],
+        "related": ["gaussian_transform"],
         "assumptions": [
           "Uses centered variances; equality occurs for Gaussian wave packets under the $2\\pi$-frequency convention."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 4.1",
-        "book_refs": [
-          "c5_thm_4_1"
-        ],
+        "book_refs": ["c5_thm_4_1"],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Theorem 4.1"
         }
@@ -1598,13 +1342,9 @@
           "Stated here for Schwartz functions to avoid convergence side quests. Other versions require explicit decay and regularity hypotheses."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 3.1",
-        "book_refs": [
-          "c5_thm_3_1"
-        ],
+        "book_refs": ["c5_thm_3_1"],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Theorem 3.1"
         },
@@ -1630,22 +1370,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform"
-        ],
+        "related": ["fourier_transform"],
         "assumptions": [
           "Uses the same $2\\pi$-frequency convention as the one-dimensional transform."
         ],
         "ref": "Stein–Shakarchi: Ch.6 Corollary 2.2; Ch.6 Corollary 2.3; Ch.6 Proposition 2.1",
-        "book_refs": [
-          "c6_cor_2_2",
-          "c6_cor_2_3",
-          "c6_prop_2_1"
-        ],
+        "book_refs": ["c6_cor_2_2", "c6_cor_2_3", "c6_prop_2_1"],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.6 Corollary 2.2; Ch.6 Corollary 2.3; Ch.6 Proposition 2.1"
         }
@@ -1670,19 +1402,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform",
-          "schwartz_space"
-        ],
+        "related": ["fourier_transform", "schwartz_space"],
         "assumptions": [
           "Schwartz hypotheses avoid boundary terms and justify integration by parts."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -1700,23 +1427,17 @@
         "notation": "$\\mathcal S'(\\mathbb R)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "schwartz_space"
-          ]
+          "logical_dependency": ["schwartz_space"]
         },
         "outgoing_relations": [],
-        "related": [
-          "schwartz_space"
-        ],
+        "related": ["schwartz_space"],
         "assumptions": [
           "Continuity is with respect to the Schwartz-space topology."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "distributions"
-          ],
+          "tags": ["distributions"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -1734,24 +1455,17 @@
         "notation": "$\\delta$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "test_function"
-          ]
+          "logical_dependency": ["test_function"]
         },
         "outgoing_relations": [],
-        "related": [
-          "tempered_distribution",
-          "good_kernel"
-        ],
+        "related": ["tempered_distribution", "good_kernel"],
         "assumptions": [
           "Convolution and Fourier transform identities are interpreted distributionally."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "distributions"
-          ],
+          "tags": ["distributions"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -1770,22 +1484,15 @@
         "notation": "$T'(\\varphi)=-T(\\varphi')$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "tempered_distribution",
-            "test_function"
-          ]
+          "logical_dependency": ["tempered_distribution", "test_function"]
         },
         "outgoing_relations": [],
-        "related": [
-          "tempered_distribution"
-        ],
+        "related": ["tempered_distribution"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "distributions"
-          ],
+          "tags": ["distributions"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -1812,19 +1519,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "tempered_distribution",
-          "fourier_transform"
-        ],
+        "related": ["tempered_distribution", "fourier_transform"],
         "assumptions": [
           "Uses bilinear distribution pairing and the $e^{-2\\pi i x\\xi}$ convention."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "distributions"
-          ],
+          "tags": ["distributions"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -1842,24 +1544,15 @@
         "notation": "$\\omega_N=e^{2\\pi i/N}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "complex_exponential",
-            "cyclic_group"
-          ]
+          "logical_dependency": ["complex_exponential", "cyclic_group"]
         },
         "outgoing_relations": [],
-        "related": [
-          "complex_exponential",
-          "cyclic_group",
-          "dft"
-        ],
+        "related": ["complex_exponential", "cyclic_group", "dft"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         },
@@ -1879,17 +1572,12 @@
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
-        "related": [
-          "roots_of_unity"
-        ],
+        "related": ["roots_of_unity"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete",
-            "group"
-          ],
+          "tags": ["discrete", "group"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -1909,18 +1597,12 @@
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
-        "related": [
-          "dual_group",
-          "characters_finite_abelian"
-        ],
+        "related": ["dual_group", "characters_finite_abelian"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete",
-            "group"
-          ],
+          "tags": ["discrete", "group"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -1938,25 +1620,15 @@
         "notation": "$\\chi:G\\to\\mathbb C^\\times$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "finite_abelian_group",
-            "roots_of_unity"
-          ]
+          "logical_dependency": ["finite_abelian_group", "roots_of_unity"]
         },
         "outgoing_relations": [],
-        "related": [
-          "dual_group",
-          "characters_finite_abelian"
-        ],
+        "related": ["dual_group", "characters_finite_abelian"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete",
-            "group",
-            "character"
-          ],
+          "tags": ["discrete", "group", "character"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -1981,22 +1653,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "roots_of_unity",
-          "orthonormal_system",
-          "dft"
-        ],
-        "assumptions": [
-          "The normalized inner product uses the factor $1/N$."
-        ],
+        "related": ["roots_of_unity", "orthonormal_system", "dft"],
+        "assumptions": ["The normalized inner product uses the factor $1/N$."],
         "ref": "Stein–Shakarchi: Ch.7 Lemma 1.1",
-        "book_refs": [
-          "c7_lem_1_1"
-        ],
+        "book_refs": ["c7_lem_1_1"],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.7 Lemma 1.1"
         },
@@ -2015,25 +1677,17 @@
         "notation": "$\\hat a(k),\\ \\omega_N=e^{2\\pi i/N}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "finite_fourier",
-            "roots_of_unity"
-          ]
+          "logical_dependency": ["finite_fourier", "roots_of_unity"]
         },
         "outgoing_relations": [],
-        "related": [
-          "finite_fourier",
-          "roots_of_unity"
-        ],
+        "related": ["finite_fourier", "roots_of_unity"],
         "assumptions": [
           "Normalization conventions vary; this graph puts the $1/N$ factor in the inverse transform."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -2058,18 +1712,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_series"
-        ],
+        "related": ["fourier_series"],
         "assumptions": [
           "Absolute summability gives a continuous periodic transform; weaker sequence spaces need weaker interpretations."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2087,27 +1737,17 @@
         "notation": "$O(N\\log N)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "dft",
-            "roots_of_unity"
-          ]
+          "logical_dependency": ["dft", "roots_of_unity"]
         },
         "outgoing_relations": [],
-        "related": [
-          "dft"
-        ],
+        "related": ["dft"],
         "assumptions": [
           "The cleanest radix-2 statement assumes $N$ is a power of two; other factorizations handle other composite sizes."
         ],
         "ref": "Stein–Shakarchi: Ch.7 Lemma 1.4; Ch.7 Theorem 1.3",
-        "book_refs": [
-          "c7_lem_1_4",
-          "c7_thm_1_3"
-        ],
+        "book_refs": ["c7_lem_1_4", "c7_thm_1_3"],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.7 Lemma 1.4; Ch.7 Theorem 1.3"
         },
@@ -2126,27 +1766,17 @@
         "notation": "$a\\circledast b$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "finite_fourier",
-            "dft",
-            "convolution"
-          ]
+          "logical_dependency": ["finite_fourier", "dft", "convolution"]
         },
         "outgoing_relations": [],
-        "related": [
-          "dft",
-          "convolution",
-          "fft"
-        ],
+        "related": ["dft", "convolution", "fft"],
         "assumptions": [
           "The exact constants depend on the DFT normalization. Here the DFT is unnormalized and the inverse carries the factor $1/N$."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2175,19 +1805,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform",
-          "fourier_inversion"
-        ],
+        "related": ["fourier_transform", "fourier_inversion"],
         "assumptions": [
           "Band-limited in the graph's Fourier-transform convention; convergence mode depends on regularity."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -2205,24 +1830,17 @@
         "notation": "$\\xi\\sim \\xi+kf_s$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "sampling_theorem",
-            "band_limited"
-          ]
+          "logical_dependency": ["sampling_theorem", "band_limited"]
         },
         "outgoing_relations": [],
-        "related": [
-          "sampling_theorem"
-        ],
+        "related": ["sampling_theorem"],
         "assumptions": [
           "The exact folding description uses ideal uniform sampling."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2249,24 +1867,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_series",
-          "good_kernel"
-        ],
+        "related": ["fourier_series", "good_kernel"],
         "assumptions": [
           "Constants depend on whether the circle basis is $e^{inx}$ or the real-line transform convention is used."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Corollary 2.2; Ch.5 Theorem 2.1; Ch.5 Theorem 2.3",
-        "book_refs": [
-          "c5_cor_2_2",
-          "c5_thm_2_1",
-          "c5_thm_2_3"
-        ],
+        "book_refs": ["c5_cor_2_2", "c5_thm_2_1", "c5_thm_2_3"],
         "metadata": {
-          "tags": [
-            "applications",
-            "pde"
-          ],
+          "tags": ["applications", "pde"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Corollary 2.2; Ch.5 Theorem 2.1; Ch.5 Theorem 2.3"
         }
@@ -2292,19 +1900,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_series"
-        ],
+        "related": ["fourier_series"],
         "assumptions": [
           "Boundary conditions determine whether sine series, cosine series, or complex Fourier series are appropriate."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "applications",
-            "pde"
-          ],
+          "tags": ["applications", "pde"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         },
@@ -2324,27 +1927,17 @@
         "notation": "$A\\le L^2/(4\\pi)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "parseval_identity",
-            "fourier_series"
-          ]
+          "logical_dependency": ["parseval_identity", "fourier_series"]
         },
         "outgoing_relations": [],
-        "related": [
-          "parseval_identity",
-          "fourier_series"
-        ],
+        "related": ["parseval_identity", "fourier_series"],
         "assumptions": [
           "Assume a regular simple closed curve, for example piecewise $C^1$, oriented positively."
         ],
         "ref": "Stein–Shakarchi: Ch.4 Theorem 1.1",
-        "book_refs": [
-          "c4_thm_1_1"
-        ],
+        "book_refs": ["c4_thm_1_1"],
         "metadata": {
-          "tags": [
-            "applications"
-          ],
+          "tags": ["applications"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.4 Theorem 1.1"
         }
@@ -2370,24 +1963,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "weierstrass_approximation",
-          "trigonometric_polynomial"
-        ],
+        "related": ["weierstrass_approximation", "trigonometric_polynomial"],
         "assumptions": [
           "The criterion is stated on the circle $\\mathbb R/\\mathbb Z$."
         ],
         "ref": "Stein–Shakarchi: Ch.4 Corollary 2.3; Ch.4 Lemma 2.2; Ch.4 Theorem 2.1",
-        "book_refs": [
-          "c4_cor_2_3",
-          "c4_lem_2_2",
-          "c4_thm_2_1"
-        ],
+        "book_refs": ["c4_cor_2_3", "c4_lem_2_2", "c4_thm_2_1"],
         "metadata": {
-          "tags": [
-            "applications",
-            "number-theory"
-          ],
+          "tags": ["applications", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.4 Corollary 2.3; Ch.4 Lemma 2.2; Ch.4 Theorem 2.1"
         }
@@ -2413,20 +1996,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "convolution_theorem",
-          "gaussian_transform"
-        ],
+        "related": ["convolution_theorem", "gaussian_transform"],
         "assumptions": [
           "Uses the probability convention $\\varphi_X(t)=\\mathbb E e^{itX}$, not the graph's $2\\pi$-Fourier transform convention."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "applications",
-            "probability"
-          ],
+          "tags": ["applications", "probability"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2445,27 +2022,17 @@
         "notation": "$\\hat y=\\hat h\\,\\hat x$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "convolution_theorem",
-            "fourier_transform"
-          ]
+          "logical_dependency": ["convolution_theorem", "fourier_transform"]
         },
         "outgoing_relations": [],
-        "related": [
-          "convolution_theorem",
-          "fft",
-          "dft"
-        ],
+        "related": ["convolution_theorem", "fft", "dft"],
         "assumptions": [
           "Precise hypotheses depend on whether signals are modeled in $L^1$, $L^2$, distributions, or discrete spaces."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "applications",
-            "signal"
-          ],
+          "tags": ["applications", "signal"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -2503,14 +2070,9 @@
           "The condition $\\gcd(a,q)=1$ is necessary: otherwise every number in the progression shares a fixed divisor with $q$."
         ],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 2.1",
-        "book_refs": [
-          "c8_thm_2_1"
-        ],
+        "book_refs": ["c8_thm_2_1"],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number-theory"
-          ],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.8 Theorem 2.1"
         }
@@ -2536,9 +2098,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -2556,21 +2116,15 @@
         "notation": "a.e.",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "lebesgue_integral"
-          ]
+          "logical_dependency": ["lebesgue_integral"]
         },
         "outgoing_relations": [],
-        "related": [
-          "lebesgue_integral"
-        ],
+        "related": ["lebesgue_integral"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2596,16 +2150,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "lebesgue_integral"
-        ],
+        "related": ["lebesgue_integral"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2624,24 +2174,17 @@
         "notation": "$\\int\\!\\int f(x,y)\\,dx\\,dy$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "lebesgue_integral",
-            "l1_space"
-          ]
+          "logical_dependency": ["lebesgue_integral", "l1_space"]
         },
         "outgoing_relations": [],
-        "related": [
-          "lebesgue_integral"
-        ],
+        "related": ["lebesgue_integral"],
         "assumptions": [
           "Tonelli handles nonnegative functions; Fubini handles absolutely integrable functions."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation"
-          ],
+          "tags": ["foundation"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2659,24 +2202,17 @@
         "notation": "$a_n\\cos(nx)+b_n\\sin(nx)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_series",
-            "complex_exponential"
-          ]
+          "logical_dependency": ["fourier_series", "complex_exponential"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_series"
-        ],
+        "related": ["fourier_series"],
         "assumptions": [
           "The displayed coefficients use the $2\\pi$-periodic interval $[-\\pi,\\pi]$."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2694,23 +2230,17 @@
         "notation": "sine series / cosine series",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "real_fourier_series"
-          ]
+          "logical_dependency": ["real_fourier_series"]
         },
         "outgoing_relations": [],
-        "related": [
-          "real_fourier_series"
-        ],
+        "related": ["real_fourier_series"],
         "assumptions": [
           "Endpoint behavior depends on the chosen extension and the regularity of the original function."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2736,20 +2266,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "dirichlet_kernel"
-        ],
-        "assumptions": [
-          "Usually stated for $L^1$ functions on the circle."
-        ],
+        "related": ["dirichlet_kernel"],
+        "assumptions": ["Usually stated for $L^1$ functions on the circle."],
         "ref": "Stein–Shakarchi: Ch.3 Theorem 2.2",
-        "book_refs": [
-          "c3_thm_2_2"
-        ],
+        "book_refs": ["c3_thm_2_2"],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.3 Theorem 2.2"
         }
@@ -2767,24 +2289,17 @@
         "notation": "$f'=\\sum_n in\\hat f(n)e^{inx}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_series",
-            "fourier_coefficient"
-          ]
+          "logical_dependency": ["fourier_series", "fourier_coefficient"]
         },
         "outgoing_relations": [],
-        "related": [
-          "decay_smoothness"
-        ],
+        "related": ["decay_smoothness"],
         "assumptions": [
           "The displayed sufficient condition is stronger than necessary but clean and safe."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2803,28 +2318,17 @@
         "notation": "$\\overline{\\mathrm{Trig}}^{\\|\\cdot\\|_\\infty}=C(\\mathbb T)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fejer_theorem",
-            "trigonometric_polynomial"
-          ]
+          "logical_dependency": ["fejer_theorem", "trigonometric_polynomial"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fejer_theorem",
-          "trigonometric_polynomial"
-        ],
+        "related": ["fejer_theorem", "trigonometric_polynomial"],
         "assumptions": [
           "This is the trigonometric version on the circle. Algebraic polynomial approximation on intervals is a related but different statement."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Corollary 5.4; Ch.5 Theorem 1.13",
-        "book_refs": [
-          "c2_cor_5_4",
-          "c5_thm_1_13"
-        ],
+        "book_refs": ["c2_cor_5_4", "c5_thm_1_13"],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.2 Corollary 5.4; Ch.5 Theorem 1.13"
         }
@@ -2843,23 +2347,17 @@
         "notation": "$\\lim_{r\\to1^-}\\sum a_nr^n=s$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "abel_summation"
-          ]
+          "logical_dependency": ["abel_summation"]
         },
         "outgoing_relations": [],
-        "related": [
-          "abel_summation"
-        ],
+        "related": ["abel_summation"],
         "assumptions": [
           "The displayed scalar form is one-sided in $r$, with $0\\le r<1$."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "convergence"
-          ],
+          "tags": ["convergence"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2883,20 +2381,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform"
-        ],
-        "assumptions": [
-          "Uses the graph's $2\\pi$-frequency convention."
-        ],
+        "related": ["fourier_transform"],
+        "assumptions": ["Uses the graph's $2\\pi$-frequency convention."],
         "ref": "Stein–Shakarchi: Ch.5 Proposition 1.2",
-        "book_refs": [
-          "c5_prop_1_2"
-        ],
+        "book_refs": ["c5_prop_1_2"],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.5 Proposition 1.2"
         },
@@ -2922,17 +2412,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform",
-          "riemann_lebesgue"
-        ],
+        "related": ["fourier_transform", "riemann_lebesgue"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -2950,25 +2435,17 @@
         "notation": "$\\operatorname{supp}\\hat f\\subset[-W,W]$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_transform",
-            "support_of_function"
-          ]
+          "logical_dependency": ["fourier_transform", "support_of_function"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform"
-        ],
+        "related": ["fourier_transform"],
         "assumptions": [
           "Support of $\\hat f$ is understood in the appropriate sense: ordinary support for continuous transforms, essential support for $L^2$ transforms."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "transform",
-            "signal"
-          ],
+          "tags": ["transform", "signal"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         },
@@ -2997,18 +2474,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "band_limited"
-        ],
+        "related": ["band_limited"],
         "assumptions": [
           "This is a schematic $L^2$ Paley-Wiener formulation; precise versions specify the exact growth and square-integrability condition."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "transform"
-          ],
+          "tags": ["transform"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -3034,24 +2507,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "gaussian_transform",
-          "convolution_theorem"
-        ],
+        "related": ["gaussian_transform", "convolution_theorem"],
         "assumptions": [
           "The initial-data interpretation depends on the function space, such as $L^p$, $C_0$, or distributions."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Corollary 1.5; Ch.5 Corollary 3.4; Ch.5 Theorem 3.3",
-        "book_refs": [
-          "c5_cor_1_5",
-          "c5_cor_3_4",
-          "c5_thm_3_3"
-        ],
+        "book_refs": ["c5_cor_1_5", "c5_cor_3_4", "c5_thm_3_3"],
         "metadata": {
-          "tags": [
-            "transform",
-            "pde"
-          ],
+          "tags": ["transform", "pde"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.5 Corollary 1.5; Ch.5 Corollary 3.4; Ch.5 Theorem 3.3"
         },
@@ -3070,21 +2533,15 @@
         "notation": "$\\varphi\\in C_c^\\infty(\\mathbb R)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "schwartz_space"
-          ]
+          "logical_dependency": ["schwartz_space"]
         },
         "outgoing_relations": [],
-        "related": [
-          "schwartz_space"
-        ],
+        "related": ["schwartz_space"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "distributions"
-          ],
+          "tags": ["distributions"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -3110,19 +2567,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "dirac_delta",
-          "convolution"
-        ],
+        "related": ["dirac_delta", "convolution"],
         "assumptions": [
           "Convolution of two arbitrary distributions is not always defined; support or regularity hypotheses are required."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "distributions"
-          ],
+          "tags": ["distributions"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -3148,20 +2600,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "distributional_ft",
-          "convolution_distributions"
-        ],
+        "related": ["distributional_ft", "convolution_distributions"],
         "assumptions": [
           "The formula $u=E*f$ requires convolution to be defined and $L$ to commute with convolution in the intended setting."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "distributions",
-            "pde"
-          ],
+          "tags": ["distributions", "pde"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -3179,26 +2625,15 @@
         "notation": "$\\sum|a_j|^2=\\frac1N\\sum|\\hat a(k)|^2$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "dft"
-          ]
+          "logical_dependency": ["dft"]
         },
         "outgoing_relations": [],
-        "related": [
-          "dft",
-          "parseval_identity"
-        ],
-        "assumptions": [
-          "Depends on the DFT normalization convention."
-        ],
+        "related": ["dft", "parseval_identity"],
+        "assumptions": ["Depends on the DFT normalization convention."],
         "ref": "Stein–Shakarchi: Ch.7 Theorem 1.2",
-        "book_refs": [
-          "c7_thm_1_2"
-        ],
+        "book_refs": ["c7_thm_1_2"],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.7 Theorem 1.2"
         }
@@ -3216,26 +2651,17 @@
         "notation": "$C_k$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "dft",
-            "half_range_expansion"
-          ]
+          "logical_dependency": ["dft", "half_range_expansion"]
         },
         "outgoing_relations": [],
-        "related": [
-          "dft",
-          "half_range_expansion"
-        ],
+        "related": ["dft", "half_range_expansion"],
         "assumptions": [
           "Several DCT normalizations and types exist; this item states the common DCT-II convention."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete",
-            "signal"
-          ],
+          "tags": ["discrete", "signal"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -3254,25 +2680,17 @@
         "notation": "$u(x,t)=\\sum_n c_n(t)e_n(x)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_series",
-            "orthonormal_system"
-          ]
+          "logical_dependency": ["fourier_series", "orthonormal_system"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_series"
-        ],
+        "related": ["fourier_series"],
         "assumptions": [
           "Requires a suitable eigenfunction expansion for the spatial problem."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "applications",
-            "pde"
-          ],
+          "tags": ["applications", "pde"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -3299,22 +2717,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "poisson_kernel",
-          "abel_summation"
-        ],
+        "related": ["poisson_kernel", "abel_summation"],
         "assumptions": [
           "Boundary convergence is stated for continuous boundary data; weaker data require weaker convergence modes."
         ],
         "ref": "Stein–Shakarchi: Ch.2 Theorem 5.7",
-        "book_refs": [
-          "c2_thm_5_7"
-        ],
+        "book_refs": ["c2_thm_5_7"],
         "metadata": {
-          "tags": [
-            "applications",
-            "pde"
-          ],
+          "tags": ["applications", "pde"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.2 Theorem 5.7"
         }
@@ -3340,22 +2750,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "poisson_summation",
-          "gaussian_transform"
-        ],
+        "related": ["poisson_summation", "gaussian_transform"],
         "assumptions": [
           "Uses the $2\\pi$-Fourier convention where $e^{-\\pi x^2}$ is self-dual."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 3.2",
-        "book_refs": [
-          "c5_thm_3_2"
-        ],
+        "book_refs": ["c5_thm_3_2"],
         "metadata": {
-          "tags": [
-            "applications",
-            "number-theory"
-          ],
+          "tags": ["applications", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.5 Theorem 3.2"
         }
@@ -3381,20 +2783,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform",
-          "differentiation_rule"
-        ],
+        "related": ["fourier_transform", "differentiation_rule"],
         "assumptions": [
           "Uses the Fourier convention $e^{-2\\pi ix\\xi}$. Regularity assumptions depend on whether one wants classical, $L^2$, or distributional solutions."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "applications",
-            "pde"
-          ],
+          "tags": ["applications", "pde"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -3413,26 +2809,17 @@
         "notation": "$I(\\xi)\\propto |\\widehat{\\mathbf 1_A}(\\xi)|^2$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_transform_rd",
-            "fourier_transform"
-          ]
+          "logical_dependency": ["fourier_transform_rd", "fourier_transform"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform_rd",
-          "fourier_transform"
-        ],
+        "related": ["fourier_transform_rd", "fourier_transform"],
         "assumptions": [
           "This is the scalar Fraunhofer approximation, not a full electromagnetic model."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "applications",
-            "optics"
-          ],
+          "tags": ["applications", "optics"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         },
@@ -3459,23 +2846,14 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_series",
-          "decay_smoothness"
-        ],
+        "related": ["fourier_series", "decay_smoothness"],
         "assumptions": [
           "The displayed condition is a classical sufficient condition, not the sharpest possible theorem."
         ],
         "ref": "Stein–Shakarchi: Ch.4 Lemma 3.2; Ch.4 Lemma 3.3; Ch.4 Theorem 3.1",
-        "book_refs": [
-          "c4_lem_3_2",
-          "c4_lem_3_3",
-          "c4_thm_3_1"
-        ],
+        "book_refs": ["c4_lem_3_2", "c4_lem_3_3", "c4_thm_3_1"],
         "metadata": {
-          "tags": [
-            "series"
-          ],
+          "tags": ["series"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.4 Lemma 3.2; Ch.4 Lemma 3.3; Ch.4 Theorem 3.1"
         }
@@ -3518,10 +2896,7 @@
           "c5_thm_3_5"
         ],
         "metadata": {
-          "tags": [
-            "transform",
-            "pde"
-          ],
+          "tags": ["transform", "pde"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.5 Lemma 2.4; Ch.5 Lemma 2.5; Ch.5 Lemma 2.8; Ch.5 Theorem 2.6; Ch.5 Theorem 2.7; Ch.5 Theorem 3.5"
         }
@@ -3547,10 +2922,7 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform_rd",
-          "wave_equation"
-        ],
+        "related": ["fourier_transform_rd", "wave_equation"],
         "assumptions": [
           "Formula uses the $2\\pi$-frequency convention and requires suitable data or distributional interpretation."
         ],
@@ -3566,10 +2938,7 @@
           "c6_thm_3_7"
         ],
         "metadata": {
-          "tags": [
-            "applications",
-            "pde"
-          ],
+          "tags": ["applications", "pde"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.6 Lemma 3.3; Ch.6 Lemma 3.4; Ch.6 Lemma 3.5; Ch.6 Theorem 2.4; Ch.6 Theorem 3.1; Ch.6 Theorem 3.2; Ch.6 Theorem 3.6; Ch.6 Theorem 3.7"
         }
@@ -3588,29 +2957,17 @@
         "notation": "$\\mathcal F_t(Rf)(s,\\gamma)=\\hat f(s\\gamma)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_transform_rd"
-          ]
+          "logical_dependency": ["fourier_transform_rd"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform_rd"
-        ],
+        "related": ["fourier_transform_rd"],
         "assumptions": [
           "Requires suitable decay or integrability so the hyperplane integrals and transforms are defined."
         ],
         "ref": "Stein–Shakarchi: Ch.6 Corollary 5.3; Ch.6 Lemma 5.2; Ch.6 Proposition 5.1; Ch.6 Theorem 5.4",
-        "book_refs": [
-          "c6_cor_5_3",
-          "c6_lem_5_2",
-          "c6_prop_5_1",
-          "c6_thm_5_4"
-        ],
+        "book_refs": ["c6_cor_5_3", "c6_lem_5_2", "c6_prop_5_1", "c6_thm_5_4"],
         "metadata": {
-          "tags": [
-            "applications",
-            "imaging"
-          ],
+          "tags": ["applications", "imaging"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.6 Corollary 5.3; Ch.6 Lemma 5.2; Ch.6 Proposition 5.1; Ch.6 Theorem 5.4"
         }
@@ -3628,10 +2985,7 @@
         "notation": "$\\widehat G$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "finite_abelian_group",
-            "group_character"
-          ]
+          "logical_dependency": ["finite_abelian_group", "group_character"]
         },
         "outgoing_relations": [],
         "related": [
@@ -3643,13 +2997,9 @@
           "For finite groups, characters take values among roots of unity."
         ],
         "ref": "Stein–Shakarchi: Ch.7 Lemma 2.1",
-        "book_refs": [
-          "c7_lem_2_1"
-        ],
+        "book_refs": ["c7_lem_2_1"],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.7 Lemma 2.1"
         }
@@ -3697,9 +3047,7 @@
           "c7_thm_2_8"
         ],
         "metadata": {
-          "tags": [
-            "discrete"
-          ],
+          "tags": ["discrete"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.7 Lemma 2.2; Ch.7 Lemma 2.4; Ch.7 Lemma 2.6; Ch.7 Theorem 2.3; Ch.7 Theorem 2.5; Ch.7 Theorem 2.7; Ch.7 Theorem 2.8"
         }
@@ -3719,25 +3067,12 @@
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
-        "related": [
-          "fundamental_arithmetic",
-          "euler_phi_function"
-        ],
-        "assumptions": [
-          "Usually stated for integers $a,b$, not both zero."
-        ],
+        "related": ["fundamental_arithmetic", "euler_phi_function"],
+        "assumptions": ["Usually stated for integers $a,b$, not both zero."],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 1.1; Ch.8 Theorem 1.2; Ch.8 Corollary 1.3; Ch.8 Corollary 1.4",
-        "book_refs": [
-          "c8_thm_1_1",
-          "c8_thm_1_2",
-          "c8_cor_1_3",
-          "c8_cor_1_4"
-        ],
+        "book_refs": ["c8_thm_1_1", "c8_thm_1_2", "c8_cor_1_3", "c8_cor_1_4"],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number-theory"
-          ],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Theorem 1.1; Ch.8 Theorem 1.2; Ch.8 Corollary 1.3; Ch.8 Corollary 1.4"
         }
@@ -3756,9 +3091,7 @@
         "notation": "$n=\\prod_{p}p^{\\alpha_p}$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "euclid_algorithm"
-          ]
+          "logical_dependency": ["euclid_algorithm"]
         },
         "outgoing_relations": [],
         "related": [
@@ -3770,15 +3103,9 @@
           "Units and ordering are ignored: uniqueness means the same primes occur with the same exponents."
         ],
         "ref": "Stein–Shakarchi: Ch.8 Corollary 1.5; Ch.8 Theorem 1.6",
-        "book_refs": [
-          "c8_cor_1_5",
-          "c8_thm_1_6"
-        ],
+        "book_refs": ["c8_cor_1_5", "c8_thm_1_6"],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number-theory"
-          ],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Corollary 1.5; Ch.8 Theorem 1.6"
         }
@@ -3797,9 +3124,7 @@
         "notation": "$|\\{p:p\\text{ prime}\\}|=\\infty$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fundamental_arithmetic"
-          ]
+          "logical_dependency": ["fundamental_arithmetic"]
         },
         "outgoing_relations": [],
         "related": [
@@ -3809,14 +3134,9 @@
         ],
         "assumptions": [],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 1.7",
-        "book_refs": [
-          "c8_thm_1_7"
-        ],
+        "book_refs": ["c8_thm_1_7"],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number-theory"
-          ],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Theorem 1.7"
         }
@@ -3857,10 +3177,7 @@
           "c8_prop_3_2"
         ],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number-theory"
-          ],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Lemma 1.8; Ch.8 Proposition 1.9; Ch.8 Theorem 1.10; Ch.8 Proposition 3.2"
         }
@@ -3879,29 +3196,17 @@
         "notation": "$\\sum_p 1/p=\\infty$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "euler_product",
-            "riemann_zeta_function"
-          ]
+          "logical_dependency": ["euler_product", "riemann_zeta_function"]
         },
         "outgoing_relations": [],
-        "related": [
-          "euler_product",
-          "infinitude_primes",
-          "dirichlet_primes"
-        ],
+        "related": ["euler_product", "infinitude_primes", "dirichlet_primes"],
         "assumptions": [
           "The theorem is stronger than Euclid’s infinitude of primes."
         ],
         "ref": "Stein–Shakarchi: Ch.8 Proposition 1.11",
-        "book_refs": [
-          "c8_prop_1_11"
-        ],
+        "book_refs": ["c8_prop_1_11"],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number-theory"
-          ],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Proposition 1.11"
         }
@@ -3920,18 +3225,12 @@
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
-        "related": [
-          "dirichlet_primes",
-          "dirichlet_character"
-        ],
+        "related": ["dirichlet_primes", "dirichlet_character"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number_theory"
-          ],
+          "tags": ["dirichlet", "number_theory"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -3949,23 +3248,15 @@
         "notation": "$\\varphi(q)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "residue_class_modulo",
-            "euclid_algorithm"
-          ]
+          "logical_dependency": ["residue_class_modulo", "euclid_algorithm"]
         },
         "outgoing_relations": [],
-        "related": [
-          "dirichlet_character"
-        ],
+        "related": ["dirichlet_character"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number_theory"
-          ],
+          "tags": ["dirichlet", "number_theory"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -3983,26 +3274,17 @@
         "notation": "$\\zeta(s)$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fundamental_arithmetic"
-          ]
+          "logical_dependency": ["fundamental_arithmetic"]
         },
         "outgoing_relations": [],
-        "related": [
-          "euler_product",
-          "primes_diverge"
-        ],
+        "related": ["euler_product", "primes_diverge"],
         "assumptions": [
           "The displayed Dirichlet series and Euler product are valid for $\\operatorname{Re}s>1$."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number_theory",
-            "zeta"
-          ],
+          "tags": ["dirichlet", "number_theory", "zeta"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -4036,15 +3318,9 @@
           "Characters are extended by zero away from integers coprime to $q$."
         ],
         "ref": "Stein–Shakarchi: Ch.8 Lemma 2.2; Ch.8 Proposition 3.3",
-        "book_refs": [
-          "c8_lem_2_2",
-          "c8_prop_3_3"
-        ],
+        "book_refs": ["c8_lem_2_2", "c8_prop_3_3"],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number-theory"
-          ],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Lemma 2.2; Ch.8 Proposition 3.3"
         }
@@ -4086,10 +3362,7 @@
           "c8_prop_3_6"
         ],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number-theory"
-          ],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.8 Theorem 2.4; Ch.8 Proposition 3.1; Ch.8 Proposition 3.4; Ch.8 Lemma 3.5; Ch.8 Proposition 3.6"
         }
@@ -4108,16 +3381,10 @@
         "notation": "$L(1,\\chi)\\ne0$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "dirichlet_l_function",
-            "dirichlet_character"
-          ]
+          "logical_dependency": ["dirichlet_l_function", "dirichlet_character"]
         },
         "outgoing_relations": [],
-        "related": [
-          "dirichlet_l_function",
-          "dirichlet_primes"
-        ],
+        "related": ["dirichlet_l_function", "dirichlet_primes"],
         "assumptions": [
           "The principal character is excluded; its $L$-function has a pole at $s=1$, not a finite nonzero value."
         ],
@@ -4135,10 +3402,7 @@
           "c8_lem_3_15"
         ],
         "metadata": {
-          "tags": [
-            "dirichlet",
-            "number-theory"
-          ],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.8 Theorem 3.7; Ch.8 Theorem 2.3; Ch.8 Lemma 3.8; Ch.8 Lemma 3.9; Ch.8 Proposition 3.10; Ch.8 Proposition 3.11; Ch.8 Proposition 3.13; Ch.8 Theorem 3.12; Ch.8 Lemma 3.14; Ch.8 Lemma 3.15"
         }
@@ -4156,24 +3420,15 @@
         "notation": "$\\operatorname*{ess\\,sup}|f|$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "almost_everywhere",
-            "lebesgue_integral"
-          ]
+          "logical_dependency": ["almost_everywhere", "lebesgue_integral"]
         },
         "outgoing_relations": [],
-        "related": [
-          "lp_space",
-          "almost_everywhere"
-        ],
+        "related": ["lp_space", "almost_everywhere"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation",
-            "measure"
-          ],
+          "tags": ["foundation", "measure"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -4191,26 +3446,17 @@
         "notation": "$L^1(\\mathbb R),\\ \\|f\\|_1$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "lebesgue_integral",
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["lebesgue_integral", "almost_everywhere"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform",
-          "lp_space"
-        ],
+        "related": ["fourier_transform", "lp_space"],
         "assumptions": [
           "Functions are identified up to equality almost everywhere."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation",
-            "transform"
-          ],
+          "tags": ["foundation", "transform"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -4228,26 +3474,17 @@
         "notation": "$L^2(\\mathbb R),\\ \\|f\\|_2,\\ \\langle f,g\\rangle$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "inner_product_space",
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["inner_product_space", "almost_everywhere"]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform",
-          "plancherel_theorem"
-        ],
+        "related": ["fourier_transform", "plancherel_theorem"],
         "assumptions": [
           "Functions are identified up to equality almost everywhere."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation",
-            "transform"
-          ],
+          "tags": ["foundation", "transform"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -4265,23 +3502,15 @@
         "notation": "$\\operatorname{supp}f$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["almost_everywhere"]
         },
         "outgoing_relations": [],
-        "related": [
-          "band_limited",
-          "paley_wiener"
-        ],
+        "related": ["band_limited", "paley_wiener"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "foundation",
-            "notation"
-          ],
+          "tags": ["foundation", "notation"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -4302,19 +3531,14 @@
           "logical_dependency": []
         },
         "outgoing_relations": [],
-        "related": [
-          "sampling_theorem"
-        ],
+        "related": ["sampling_theorem"],
         "assumptions": [
           "This graph uses the normalized sinc convention $\\operatorname{sinc}(t)=\\sin(\\pi t)/(\\pi t)$."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "discrete",
-            "sampling"
-          ],
+          "tags": ["discrete", "sampling"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         },
@@ -4336,19 +3560,14 @@
           "logical_dependency": []
         },
         "outgoing_relations": [],
-        "related": [
-          "paley_wiener"
-        ],
+        "related": ["paley_wiener"],
         "assumptions": [
           "This is a complex-analysis prerequisite used only where analytic continuation matters."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "transform",
-            "complex_analysis"
-          ],
+          "tags": ["transform", "complex_analysis"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -4366,9 +3585,7 @@
         "notation": "$\\hat f(\\xi)=\\int f(x)e^{-2\\pi i x\\xi}\\,dx$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "complex_exponential"
-          ]
+          "logical_dependency": ["complex_exponential"]
         },
         "outgoing_relations": [],
         "related": [
@@ -4380,10 +3597,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "transform",
-            "notation"
-          ],
+          "tags": ["transform", "notation"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -4402,22 +3616,15 @@
         "notation": "$\\Delta_x,\\ \\Delta_\\xi$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "l2_space_r"
-          ]
+          "logical_dependency": ["l2_space_r"]
         },
         "outgoing_relations": [],
-        "related": [
-          "uncertainty_principle"
-        ],
+        "related": ["uncertainty_principle"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": [
-            "transform",
-            "analysis"
-          ],
+          "tags": ["transform", "analysis"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -4441,9 +3648,7 @@
         ],
         "book_refs": [],
         "dependencies": {
-          "logical_dependency": [
-            "l1_space_r"
-          ]
+          "logical_dependency": ["l1_space_r"]
         },
         "outgoing_relations": [],
         "related": [
@@ -4456,10 +3661,7 @@
         "metadata": {
           "source": "Stein–Shakarchi: Ch.5 §1.1 (functions of moderate decrease)",
           "syllabus_priority": "core",
-          "tags": [
-            "foundation",
-            "transform"
-          ]
+          "tags": ["foundation", "transform"]
         }
       },
       {
@@ -4489,19 +3691,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "heat_equation",
-          "convolution",
-          "wave_equation_rd"
-        ],
+        "related": ["heat_equation", "convolution", "wave_equation_rd"],
         "ref": "Stein–Shakarchi: Ch.6 §2 (the heat kernel in R^d)",
         "metadata": {
           "source": "Stein–Shakarchi: Ch.6 §2 (the heat kernel in R^d)",
           "syllabus_priority": "medium",
-          "tags": [
-            "transform",
-            "pde"
-          ]
+          "tags": ["transform", "pde"]
         }
       },
       {
@@ -4538,10 +3733,7 @@
         "metadata": {
           "source": "Stein–Shakarchi: Ch.2 §1, Ch.2 Cor. 2.3–2.4 (Weierstrass M-test + uniqueness)",
           "syllabus_priority": "core",
-          "tags": [
-            "convergence",
-            "series"
-          ]
+          "tags": ["convergence", "series"]
         }
       },
       {
@@ -4568,18 +3760,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "real_fourier_series",
-          "decay_smoothness"
-        ],
+        "related": ["real_fourier_series", "decay_smoothness"],
         "ref": "TMA4170 Final Exam, 30 May 2025, Problem 1a",
         "metadata": {
           "source": "TMA4170 Final Exam, 30 May 2025, Problem 1a",
           "syllabus_priority": "core",
-          "tags": [
-            "exam",
-            "series"
-          ]
+          "tags": ["exam", "series"]
         }
       },
       {
@@ -4607,19 +3793,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "riemann_lebesgue",
-          "weierstrass_approximation"
-        ],
+        "related": ["riemann_lebesgue", "weierstrass_approximation"],
         "ref": "TMA4170 Final Exam, 30 May 2025, Problem 1b",
         "metadata": {
           "source": "TMA4170 Final Exam, 30 May 2025, Problem 1b",
           "syllabus_priority": "core",
-          "tags": [
-            "exam",
-            "series",
-            "convergence"
-          ]
+          "tags": ["exam", "series", "convergence"]
         }
       },
       {
@@ -4639,24 +3818,15 @@
         "assumptions": [],
         "book_refs": [],
         "dependencies": {
-          "logical_dependency": [
-            "parseval_identity",
-            "fourier_coefficient"
-          ]
+          "logical_dependency": ["parseval_identity", "fourier_coefficient"]
         },
         "outgoing_relations": [],
-        "related": [
-          "riemann_zeta_function",
-          "bessel_inequality"
-        ],
+        "related": ["riemann_zeta_function", "bessel_inequality"],
         "ref": "TMA4170 Final Exam, 30 May 2025, Problem 1c",
         "metadata": {
           "source": "TMA4170 Final Exam, 30 May 2025, Problem 1c",
           "syllabus_priority": "core",
-          "tags": [
-            "exam",
-            "series"
-          ]
+          "tags": ["exam", "series"]
         }
       },
       {
@@ -4686,19 +3856,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "dubois_reymond",
-          "dini_criterion",
-          "gibbs_phenomenon"
-        ],
+        "related": ["dubois_reymond", "dini_criterion", "gibbs_phenomenon"],
         "ref": "TMA4170 Final Exam, 30 May 2025, Problem 2",
         "metadata": {
           "source": "TMA4170 Final Exam, 30 May 2025, Problem 2",
           "syllabus_priority": "core",
-          "tags": [
-            "exam",
-            "convergence"
-          ]
+          "tags": ["exam", "convergence"]
         }
       },
       {
@@ -4727,18 +3890,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "fourier_transform_convention",
-          "band_limited"
-        ],
+        "related": ["fourier_transform_convention", "band_limited"],
         "ref": "TMA4170 Final Exam, 30 May 2025, Problem 3a",
         "metadata": {
           "source": "TMA4170 Final Exam, 30 May 2025, Problem 3a",
           "syllabus_priority": "core",
-          "tags": [
-            "exam",
-            "transform"
-          ]
+          "tags": ["exam", "transform"]
         }
       },
       {
@@ -4766,19 +3923,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "sampling_theorem",
-          "band_limited",
-          "paley_wiener"
-        ],
+        "related": ["sampling_theorem", "band_limited", "paley_wiener"],
         "ref": "TMA4170 Final Exam, 30 May 2025, Problem 3b",
         "metadata": {
           "source": "TMA4170 Final Exam, 30 May 2025, Problem 3b",
           "syllabus_priority": "core",
-          "tags": [
-            "exam",
-            "transform"
-          ]
+          "tags": ["exam", "transform"]
         }
       },
       {
@@ -4808,18 +3958,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "riemann_lebesgue",
-          "fourier_inversion"
-        ],
+        "related": ["riemann_lebesgue", "fourier_inversion"],
         "ref": "TMA4170 Final Exam, 30 May 2025, Problem 4",
         "metadata": {
           "source": "TMA4170 Final Exam, 30 May 2025, Problem 4",
           "syllabus_priority": "core",
-          "tags": [
-            "exam",
-            "transform"
-          ]
+          "tags": ["exam", "transform"]
         }
       },
       {
@@ -4847,18 +3991,12 @@
           ]
         },
         "outgoing_relations": [],
-        "related": [
-          "variance_standard_deviation",
-          "gaussian_transform"
-        ],
+        "related": ["variance_standard_deviation", "gaussian_transform"],
         "ref": "TMA4170 Final Exam, 30 May 2025, Problem 5",
         "metadata": {
           "source": "TMA4170 Final Exam, 30 May 2025, Problem 5",
           "syllabus_priority": "core",
-          "tags": [
-            "exam",
-            "transform"
-          ]
+          "tags": ["exam", "transform"]
         }
       },
       {
@@ -4895,11 +4033,7 @@
         "metadata": {
           "source": "TMA4170 Final Exam, 30 May 2025, Problem 6",
           "syllabus_priority": "core",
-          "tags": [
-            "exam",
-            "transform",
-            "pde"
-          ]
+          "tags": ["exam", "transform", "pde"]
         }
       },
       {
@@ -4926,19 +4060,12 @@
             "complex_exponential"
           ]
         },
-        "related": [
-          "periodic_function",
-          "fourier_series"
-        ],
+        "related": ["periodic_function", "fourier_series"],
         "ref": "Stein–Shakarchi 2.6, Exercise 2",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 2",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving1"
-          ]
+          "tags": ["exercise", "series", "oving1"]
         }
       },
       {
@@ -4965,19 +4092,12 @@
             "absolute_uniform_convergence"
           ]
         },
-        "related": [
-          "half_range_expansion",
-          "wave_equation"
-        ],
+        "related": ["half_range_expansion", "wave_equation"],
         "ref": "Stein–Shakarchi 2.6, Exercise 3",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 3",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving1"
-          ]
+          "tags": ["exercise", "series", "oving1"]
         }
       },
       {
@@ -5004,19 +4124,12 @@
             "absolute_uniform_convergence"
           ]
         },
-        "related": [
-          "decay_smoothness",
-          "ss2_6_ex2"
-        ],
+        "related": ["decay_smoothness", "ss2_6_ex2"],
         "ref": "Stein–Shakarchi 2.6, Exercise 4",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 4",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving1"
-          ]
+          "tags": ["exercise", "series", "oving1"]
         }
       },
       {
@@ -5043,19 +4156,12 @@
             "absolute_uniform_convergence"
           ]
         },
-        "related": [
-          "good_kernel",
-          "fejer_kernel"
-        ],
+        "related": ["good_kernel", "fejer_kernel"],
         "ref": "Stein–Shakarchi 2.6, Exercise 5",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 5",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving2"
-          ]
+          "tags": ["exercise", "series", "oving2"]
         }
       },
       {
@@ -5076,24 +4182,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "partial_sum"
-          ]
+          "logical_dependency": ["partial_sum"]
         },
-        "related": [
-          "abel_summation",
-          "dirichlet_conditions",
-          "ss2_6_ex8"
-        ],
+        "related": ["abel_summation", "dirichlet_conditions", "ss2_6_ex8"],
         "ref": "Stein–Shakarchi 2.6, Exercise 7",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 7",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving2"
-          ]
+          "tags": ["exercise", "convergence", "oving2"]
         }
       },
       {
@@ -5120,19 +4216,12 @@
             "pointwise_convergence"
           ]
         },
-        "related": [
-          "dirichlet_conditions",
-          "gibbs_phenomenon"
-        ],
+        "related": ["dirichlet_conditions", "gibbs_phenomenon"],
         "ref": "Stein–Shakarchi 2.6, Exercise 8",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 8",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving2"
-          ]
+          "tags": ["exercise", "convergence", "oving2"]
         }
       },
       {
@@ -5153,24 +4242,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_coefficient",
-            "decay_smoothness"
-          ]
+          "logical_dependency": ["fourier_coefficient", "decay_smoothness"]
         },
-        "related": [
-          "riemann_lebesgue",
-          "term_differentiation"
-        ],
+        "related": ["riemann_lebesgue", "term_differentiation"],
         "ref": "Stein–Shakarchi 2.6, Exercise 10",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 10",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving2"
-          ]
+          "tags": ["exercise", "series", "oving2"]
         }
       },
       {
@@ -5191,24 +4270,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_coefficient",
-            "l1_space"
-          ]
+          "logical_dependency": ["fourier_coefficient", "l1_space"]
         },
-        "related": [
-          "riemann_lebesgue",
-          "mean_square_convergence"
-        ],
+        "related": ["riemann_lebesgue", "mean_square_convergence"],
         "ref": "Stein–Shakarchi 2.6, Exercise 11",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 11",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving1"
-          ]
+          "tags": ["exercise", "series", "oving1"]
         }
       },
       {
@@ -5229,24 +4298,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "cesaro_summation",
-            "partial_sum"
-          ]
+          "logical_dependency": ["cesaro_summation", "partial_sum"]
         },
-        "related": [
-          "abel_theorem",
-          "dini_criterion"
-        ],
+        "related": ["abel_theorem", "dini_criterion"],
         "ref": "Stein–Shakarchi 2.6, Exercise 14a",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 14a",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving3"
-          ]
+          "tags": ["exercise", "convergence", "oving3"]
         }
       },
       {
@@ -5273,19 +4332,12 @@
             "cesaro_summation"
           ]
         },
-        "related": [
-          "good_kernel",
-          "fejer_theorem"
-        ],
+        "related": ["good_kernel", "fejer_theorem"],
         "ref": "Stein–Shakarchi 2.6, Exercise 15",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 15",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving3"
-          ]
+          "tags": ["exercise", "convergence", "oving3"]
         }
       },
       {
@@ -5306,24 +4358,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "fejer_theorem",
-            "trigonometric_polynomial"
-          ]
+          "logical_dependency": ["fejer_theorem", "trigonometric_polynomial"]
         },
-        "related": [
-          "weierstrass_approximation",
-          "ss2_6_ex15"
-        ],
+        "related": ["weierstrass_approximation", "ss2_6_ex15"],
         "ref": "Stein–Shakarchi 2.6, Exercise 16",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 16",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving3"
-          ]
+          "tags": ["exercise", "convergence", "oving3"]
         }
       },
       {
@@ -5351,20 +4393,12 @@
             "ss2_6_ex15"
           ]
         },
-        "related": [
-          "fejer_theorem",
-          "gibbs_phenomenon",
-          "ss2_6_ex8"
-        ],
+        "related": ["fejer_theorem", "gibbs_phenomenon", "ss2_6_ex8"],
         "ref": "Stein–Shakarchi 2.6, Exercise 17b",
         "metadata": {
           "source": "Stein–Shakarchi 2.6, Exercise 17b",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving3"
-          ]
+          "tags": ["exercise", "convergence", "oving3"]
         }
       },
       {
@@ -5385,24 +4419,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "lebesgue_integral",
-            "almost_everywhere"
-          ]
+          "logical_dependency": ["lebesgue_integral", "almost_everywhere"]
         },
-        "related": [
-          "dominated_convergence",
-          "weierstrass_function"
-        ],
+        "related": ["dominated_convergence", "weierstrass_function"],
         "ref": "Stein–Shakarchi 2.7, Problem 1",
         "metadata": {
           "source": "Stein–Shakarchi 2.7, Problem 1",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "foundations",
-            "oving1"
-          ]
+          "tags": ["exercise", "foundations", "oving1"]
         }
       },
       {
@@ -5429,20 +4453,12 @@
             "pointwise_convergence"
           ]
         },
-        "related": [
-          "dubois_reymond",
-          "fejer_kernel",
-          "good_kernel"
-        ],
+        "related": ["dubois_reymond", "fejer_kernel", "good_kernel"],
         "ref": "Stein–Shakarchi 2.7, Problem 2",
         "metadata": {
           "source": "Stein–Shakarchi 2.7, Problem 2",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving3"
-          ]
+          "tags": ["exercise", "convergence", "oving3"]
         }
       },
       {
@@ -5463,23 +4479,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "inner_product_space",
-            "hilbert_space"
-          ]
+          "logical_dependency": ["inner_product_space", "hilbert_space"]
         },
-        "related": [
-          "l2_space"
-        ],
+        "related": ["l2_space"],
         "ref": "Stein–Shakarchi 3.3, Exercise 1",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 1",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "foundations",
-            "oving3"
-          ]
+          "tags": ["exercise", "foundations", "oving3"]
         }
       },
       {
@@ -5500,24 +4507,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "l2_space",
-            "hilbert_space"
-          ]
+          "logical_dependency": ["l2_space", "hilbert_space"]
         },
-        "related": [
-          "inner_product_space",
-          "parseval_identity"
-        ],
+        "related": ["inner_product_space", "parseval_identity"],
         "ref": "Stein–Shakarchi 3.3, Exercise 2",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 2",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "foundations",
-            "oving3"
-          ]
+          "tags": ["exercise", "foundations", "oving3"]
         }
       },
       {
@@ -5538,24 +4535,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "mean_square_convergence",
-            "l2_space"
-          ]
+          "logical_dependency": ["mean_square_convergence", "l2_space"]
         },
-        "related": [
-          "pointwise_convergence",
-          "almost_everywhere"
-        ],
+        "related": ["pointwise_convergence", "almost_everywhere"],
         "ref": "Stein–Shakarchi 3.3, Exercise 3",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 3",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving4"
-          ]
+          "tags": ["exercise", "convergence", "oving4"]
         }
       },
       {
@@ -5582,18 +4569,12 @@
             "almost_everywhere"
           ]
         },
-        "related": [
-          "lebesgue_integral"
-        ],
+        "related": ["lebesgue_integral"],
         "ref": "Stein–Shakarchi 3.3, Exercise 4",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 4",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "foundations",
-            "oving4"
-          ]
+          "tags": ["exercise", "foundations", "oving4"]
         }
       },
       {
@@ -5614,25 +4595,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "parseval_identity",
-            "fourier_coefficient"
-          ]
+          "logical_dependency": ["parseval_identity", "fourier_coefficient"]
         },
-        "related": [
-          "riemann_zeta_function",
-          "ss2_6_ex4",
-          "exam2025_p1c"
-        ],
+        "related": ["riemann_zeta_function", "ss2_6_ex4", "exam2025_p1c"],
         "ref": "Stein–Shakarchi 3.3, Exercise 8",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 8",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving4"
-          ]
+          "tags": ["exercise", "series", "oving4"]
         }
       },
       {
@@ -5659,18 +4629,12 @@
             "complex_exponential"
           ]
         },
-        "related": [
-          "ss3_3_ex8"
-        ],
+        "related": ["ss3_3_ex8"],
         "ref": "Stein–Shakarchi 3.3, Exercise 9",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 9",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving5"
-          ]
+          "tags": ["exercise", "series", "oving5"]
         }
       },
       {
@@ -5691,24 +4655,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "dirichlet_kernel",
-            "riemann_lebesgue"
-          ]
+          "logical_dependency": ["dirichlet_kernel", "riemann_lebesgue"]
         },
-        "related": [
-          "good_kernel",
-          "fourier_inversion"
-        ],
+        "related": ["good_kernel", "fourier_inversion"],
         "ref": "Stein–Shakarchi 3.3, Exercise 12",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 12",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving5"
-          ]
+          "tags": ["exercise", "convergence", "oving5"]
         }
       },
       {
@@ -5729,24 +4683,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_coefficient",
-            "decay_smoothness"
-          ]
+          "logical_dependency": ["fourier_coefficient", "decay_smoothness"]
         },
-        "related": [
-          "ss2_6_ex10",
-          "riemann_lebesgue"
-        ],
+        "related": ["ss2_6_ex10", "riemann_lebesgue"],
         "ref": "Stein–Shakarchi 3.3, Exercise 15",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 15",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving5"
-          ]
+          "tags": ["exercise", "series", "oving5"]
         }
       },
       {
@@ -5773,20 +4717,12 @@
             "fourier_coefficient"
           ]
         },
-        "related": [
-          "ss3_3_ex15",
-          "decay_smoothness",
-          "ss2_6_ex16"
-        ],
+        "related": ["ss3_3_ex15", "decay_smoothness", "ss2_6_ex16"],
         "ref": "Stein–Shakarchi 3.3, Exercise 16",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 16",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "convergence",
-            "oving5"
-          ]
+          "tags": ["exercise", "convergence", "oving5"]
         }
       },
       {
@@ -5807,24 +4743,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_coefficient",
-            "ss2_6_ex7"
-          ]
+          "logical_dependency": ["fourier_coefficient", "ss2_6_ex7"]
         },
-        "related": [
-          "decay_smoothness",
-          "ss2_6_ex10"
-        ],
+        "related": ["decay_smoothness", "ss2_6_ex10"],
         "ref": "Stein–Shakarchi 3.3, Exercise 17",
         "metadata": {
           "source": "Stein–Shakarchi 3.3, Exercise 17",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "series",
-            "oving5"
-          ]
+          "tags": ["exercise", "series", "oving5"]
         }
       },
       {
@@ -5851,19 +4777,12 @@
             "best_approximation"
           ]
         },
-        "related": [
-          "hilbert_space",
-          "ss3_3_ex2"
-        ],
+        "related": ["hilbert_space", "ss3_3_ex2"],
         "ref": "Stein–Shakarchi 3.4, Problem 2",
         "metadata": {
           "source": "Stein–Shakarchi 3.4, Problem 2",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "foundations",
-            "oving4"
-          ]
+          "tags": ["exercise", "foundations", "oving4"]
         }
       },
       {
@@ -5884,22 +4803,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "weyl_equidistribution"
-          ]
+          "logical_dependency": ["weyl_equidistribution"]
         },
-        "related": [
-          "complex_exponential"
-        ],
+        "related": ["complex_exponential"],
         "ref": "Stein–Shakarchi 4.5, Exercise 5",
         "metadata": {
           "source": "Stein–Shakarchi 4.5, Exercise 5",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "applications",
-            "oving6"
-          ]
+          "tags": ["exercise", "applications", "oving6"]
         }
       },
       {
@@ -5920,23 +4831,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "weyl_equidistribution",
-            "complex_exponential"
-          ]
+          "logical_dependency": ["weyl_equidistribution", "complex_exponential"]
         },
-        "related": [
-          "trigonometric_polynomial"
-        ],
+        "related": ["trigonometric_polynomial"],
         "ref": "Stein–Shakarchi 4.5, Exercise 7",
         "metadata": {
           "source": "Stein–Shakarchi 4.5, Exercise 7",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "applications",
-            "oving6"
-          ]
+          "tags": ["exercise", "applications", "oving6"]
         }
       },
       {
@@ -5957,24 +4859,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "weyl_equidistribution",
-            "complex_exponential"
-          ]
+          "logical_dependency": ["weyl_equidistribution", "complex_exponential"]
         },
-        "related": [
-          "ss4_5_ex7",
-          "ss4_5_ex9"
-        ],
+        "related": ["ss4_5_ex7", "ss4_5_ex9"],
         "ref": "Stein–Shakarchi 4.5, Exercise 8",
         "metadata": {
           "source": "Stein–Shakarchi 4.5, Exercise 8",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "applications",
-            "oving6"
-          ]
+          "tags": ["exercise", "applications", "oving6"]
         }
       },
       {
@@ -5995,23 +4887,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "weyl_equidistribution",
-            "complex_exponential"
-          ]
+          "logical_dependency": ["weyl_equidistribution", "complex_exponential"]
         },
-        "related": [
-          "ss4_5_ex8"
-        ],
+        "related": ["ss4_5_ex8"],
         "ref": "Stein–Shakarchi 4.5, Exercise 9",
         "metadata": {
           "source": "Stein–Shakarchi 4.5, Exercise 9",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "applications",
-            "oving6"
-          ]
+          "tags": ["exercise", "applications", "oving6"]
         }
       },
       {
@@ -6038,19 +4921,12 @@
             "trigonometric_polynomial"
           ]
         },
-        "related": [
-          "ss4_5_ex7",
-          "fejer_theorem"
-        ],
+        "related": ["ss4_5_ex7", "fejer_theorem"],
         "ref": "Stein–Shakarchi 4.5, Exercise 10",
         "metadata": {
           "source": "Stein–Shakarchi 4.5, Exercise 10",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "applications",
-            "oving6"
-          ]
+          "tags": ["exercise", "applications", "oving6"]
         }
       },
       {
@@ -6086,11 +4962,7 @@
         "metadata": {
           "source": "Stein–Shakarchi 4.5, Exercise 11",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "applications",
-            "oving6"
-          ]
+          "tags": ["exercise", "applications", "oving6"]
         }
       },
       {
@@ -6111,24 +4983,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_transform",
-            "convolution_theorem"
-          ]
+          "logical_dependency": ["fourier_transform", "convolution_theorem"]
         },
-        "related": [
-          "sinc_function",
-          "ss2_6_ex5"
-        ],
+        "related": ["sinc_function", "ss2_6_ex5"],
         "ref": "Stein–Shakarchi 5.5, Exercise 2",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 2",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving7"
-          ]
+          "tags": ["exercise", "transform", "oving7"]
         }
       },
       {
@@ -6155,18 +5017,12 @@
             "decay_smoothness"
           ]
         },
-        "related": [
-          "ss3_3_ex15"
-        ],
+        "related": ["ss3_3_ex15"],
         "ref": "Stein–Shakarchi 5.5, Exercise 3a",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 3a",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving7"
-          ]
+          "tags": ["exercise", "transform", "oving7"]
         }
       },
       {
@@ -6187,23 +5043,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "schwartz_space",
-            "support_of_function"
-          ]
+          "logical_dependency": ["schwartz_space", "support_of_function"]
         },
-        "related": [
-          "test_function"
-        ],
+        "related": ["test_function"],
         "ref": "Stein–Shakarchi 5.5, Exercise 4",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 4",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "foundations",
-            "oving7"
-          ]
+          "tags": ["exercise", "foundations", "oving7"]
         }
       },
       {
@@ -6231,19 +5078,12 @@
             "schwartz_space"
           ]
         },
-        "related": [
-          "riemann_lebesgue",
-          "ss5_5_ex7"
-        ],
+        "related": ["riemann_lebesgue", "ss5_5_ex7"],
         "ref": "Stein–Shakarchi 5.5, Exercise 5",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 5",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving7"
-          ]
+          "tags": ["exercise", "transform", "oving7"]
         }
       },
       {
@@ -6270,18 +5110,12 @@
             "gaussian_transform"
           ]
         },
-        "related": [
-          "plancherel_theorem"
-        ],
+        "related": ["plancherel_theorem"],
         "ref": "Stein–Shakarchi 5.5, Exercise 6",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 6",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving8"
-          ]
+          "tags": ["exercise", "transform", "oving8"]
         }
       },
       {
@@ -6302,24 +5136,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "convolution",
-            "moderate_decrease"
-          ]
+          "logical_dependency": ["convolution", "moderate_decrease"]
         },
-        "related": [
-          "ss5_5_ex5",
-          "convolution_theorem"
-        ],
+        "related": ["ss5_5_ex5", "convolution_theorem"],
         "ref": "Stein–Shakarchi 5.5, Exercise 7",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 7",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving7"
-          ]
+          "tags": ["exercise", "transform", "oving7"]
         }
       },
       {
@@ -6340,24 +5164,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "poisson_summation",
-            "fourier_transform"
-          ]
+          "logical_dependency": ["poisson_summation", "fourier_transform"]
         },
-        "related": [
-          "ss3_3_ex9",
-          "ss5_5_ex2"
-        ],
+        "related": ["ss3_3_ex9", "ss5_5_ex2"],
         "ref": "Stein–Shakarchi 5.5, Exercise 15",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 15",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving10"
-          ]
+          "tags": ["exercise", "transform", "oving10"]
         }
       },
       {
@@ -6378,24 +5192,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "poisson_summation",
-            "dirichlet_kernel"
-          ]
+          "logical_dependency": ["poisson_summation", "dirichlet_kernel"]
         },
-        "related": [
-          "ss5_5_ex15",
-          "fourier_inversion"
-        ],
+        "related": ["ss5_5_ex15", "fourier_inversion"],
         "ref": "Stein–Shakarchi 5.5, Exercise 16",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 16",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving10"
-          ]
+          "tags": ["exercise", "transform", "oving10"]
         }
       },
       {
@@ -6416,23 +5220,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "lebesgue_integral"
-          ]
+          "logical_dependency": ["lebesgue_integral"]
         },
-        "related": [
-          "gaussian_transform",
-          "ss5_5_ex18"
-        ],
+        "related": ["gaussian_transform", "ss5_5_ex18"],
         "ref": "Stein–Shakarchi 5.5, Exercise 17",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 17",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "foundations",
-            "oving10"
-          ]
+          "tags": ["exercise", "foundations", "oving10"]
         }
       },
       {
@@ -6459,19 +5254,12 @@
             "ss5_5_ex17"
           ]
         },
-        "related": [
-          "poisson_summation",
-          "fubini_tonelli"
-        ],
+        "related": ["poisson_summation", "fubini_tonelli"],
         "ref": "Stein–Shakarchi 5.5, Exercise 18",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 18",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "dirichlet",
-            "oving10"
-          ]
+          "tags": ["exercise", "dirichlet", "oving10"]
         }
       },
       {
@@ -6498,19 +5286,12 @@
             "plancherel_theorem"
           ]
         },
-        "related": [
-          "exam2025_p5",
-          "differentiation_rule"
-        ],
+        "related": ["exam2025_p5", "differentiation_rule"],
         "ref": "Stein–Shakarchi 5.5, Exercise 23",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 23",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving10"
-          ]
+          "tags": ["exercise", "transform", "oving10"]
         }
       },
       {
@@ -6537,19 +5318,12 @@
             "gaussian_transform"
           ]
         },
-        "related": [
-          "heat_kernel_line",
-          "convolution"
-        ],
+        "related": ["heat_kernel_line", "convolution"],
         "ref": "Stein–Shakarchi 5.6, Problem 1",
         "metadata": {
           "source": "Stein–Shakarchi 5.6, Problem 1",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "applications",
-            "oving9"
-          ]
+          "tags": ["exercise", "applications", "oving9"]
         }
       },
       {
@@ -6576,19 +5350,12 @@
             "gaussian_transform"
           ]
         },
-        "related": [
-          "ss5_6_prob1",
-          "convolution"
-        ],
+        "related": ["ss5_6_prob1", "convolution"],
         "ref": "Stein–Shakarchi 5.6, Problem 2",
         "metadata": {
           "source": "Stein–Shakarchi 5.6, Problem 2",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "applications",
-            "oving9"
-          ]
+          "tags": ["exercise", "applications", "oving9"]
         }
       },
       {
@@ -6609,22 +5376,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "complex_exponential"
-          ]
+          "logical_dependency": ["complex_exponential"]
         },
-        "related": [
-          "fourier_transform_rd"
-        ],
+        "related": ["fourier_transform_rd"],
         "ref": "Stein–Shakarchi 6.6, Exercise 1",
         "metadata": {
           "source": "Stein–Shakarchi 6.6, Exercise 1",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving11"
-          ]
+          "tags": ["exercise", "transform", "oving11"]
         }
       },
       {
@@ -6645,23 +5404,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "complex_exponential",
-            "ss6_6_ex1"
-          ]
+          "logical_dependency": ["complex_exponential", "ss6_6_ex1"]
         },
-        "related": [
-          "fourier_transform_rd"
-        ],
+        "related": ["fourier_transform_rd"],
         "ref": "Stein–Shakarchi 6.6, Exercise 2",
         "metadata": {
           "source": "Stein–Shakarchi 6.6, Exercise 2",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving11"
-          ]
+          "tags": ["exercise", "transform", "oving11"]
         }
       },
       {
@@ -6682,23 +5432,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_transform_rd",
-            "ss6_6_ex1"
-          ]
+          "logical_dependency": ["fourier_transform_rd", "ss6_6_ex1"]
         },
-        "related": [
-          "ss6_6_ex4"
-        ],
+        "related": ["ss6_6_ex4"],
         "ref": "Stein–Shakarchi 6.6, Exercise 3",
         "metadata": {
           "source": "Stein–Shakarchi 6.6, Exercise 3",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving11"
-          ]
+          "tags": ["exercise", "transform", "oving11"]
         }
       },
       {
@@ -6719,24 +5460,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "gaussian_transform",
-            "ss5_5_ex17"
-          ]
+          "logical_dependency": ["gaussian_transform", "ss5_5_ex17"]
         },
-        "related": [
-          "fourier_transform_rd",
-          "ss6_6_ex3"
-        ],
+        "related": ["fourier_transform_rd", "ss6_6_ex3"],
         "ref": "Stein–Shakarchi 6.6, Exercise 4",
         "metadata": {
           "source": "Stein–Shakarchi 6.6, Exercise 4",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "foundations",
-            "oving11"
-          ]
+          "tags": ["exercise", "foundations", "oving11"]
         }
       },
       {
@@ -6757,23 +5488,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "gaussian_transform",
-            "ss6_6_ex1"
-          ]
+          "logical_dependency": ["gaussian_transform", "ss6_6_ex1"]
         },
-        "related": [
-          "fourier_transform_rd"
-        ],
+        "related": ["fourier_transform_rd"],
         "ref": "Stein–Shakarchi 6.6, Exercise 5",
         "metadata": {
           "source": "Stein–Shakarchi 6.6, Exercise 5",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving11"
-          ]
+          "tags": ["exercise", "transform", "oving11"]
         }
       },
       {
@@ -6800,19 +5522,12 @@
             "fourier_transform_rd"
           ]
         },
-        "related": [
-          "exam2025_p5",
-          "ss5_5_ex23"
-        ],
+        "related": ["exam2025_p5", "ss5_5_ex23"],
         "ref": "Stein–Shakarchi 6.6, Exercise 6",
         "metadata": {
           "source": "Stein–Shakarchi 6.6, Exercise 6",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving12"
-          ]
+          "tags": ["exercise", "transform", "oving12"]
         }
       },
       {
@@ -6839,20 +5554,12 @@
             "convolution"
           ]
         },
-        "related": [
-          "heat_equation",
-          "exam2025_p6",
-          "good_kernel"
-        ],
+        "related": ["heat_equation", "exam2025_p6", "good_kernel"],
         "ref": "Stein–Shakarchi 6.6, Exercise 7",
         "metadata": {
           "source": "Stein–Shakarchi 6.6, Exercise 7",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "transform",
-            "oving12"
-          ]
+          "tags": ["exercise", "transform", "oving12"]
         }
       },
       {
@@ -6873,24 +5580,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "wave_equation_rd",
-            "fourier_transform_rd"
-          ]
+          "logical_dependency": ["wave_equation_rd", "fourier_transform_rd"]
         },
-        "related": [
-          "ss6_6_ex3",
-          "schwartz_space"
-        ],
+        "related": ["ss6_6_ex3", "schwartz_space"],
         "ref": "Stein–Shakarchi 6.6, Exercise 9",
         "metadata": {
           "source": "Stein–Shakarchi 6.6, Exercise 9",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "applications",
-            "oving12"
-          ]
+          "tags": ["exercise", "applications", "oving12"]
         }
       },
       {
@@ -6911,25 +5608,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "dft",
-            "fourier_coefficient",
-            "finite_fourier"
-          ]
+          "logical_dependency": ["dft", "fourier_coefficient", "finite_fourier"]
         },
-        "related": [
-          "aliasing",
-          "roots_of_unity"
-        ],
+        "related": ["aliasing", "roots_of_unity"],
         "ref": "Stein–Shakarchi 7.3, Exercise 1",
         "metadata": {
           "source": "Stein–Shakarchi 7.3, Exercise 1",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "discrete",
-            "oving12"
-          ]
+          "tags": ["exercise", "discrete", "oving12"]
         }
       },
       {
@@ -6950,25 +5636,14 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "dft",
-            "finite_fourier",
-            "ss7_3_ex1"
-          ]
+          "logical_dependency": ["dft", "finite_fourier", "ss7_3_ex1"]
         },
-        "related": [
-          "decay_smoothness",
-          "ss3_3_ex15"
-        ],
+        "related": ["decay_smoothness", "ss3_3_ex15"],
         "ref": "Stein–Shakarchi 7.3, Exercise 2",
         "metadata": {
           "source": "Stein–Shakarchi 7.3, Exercise 2",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "discrete",
-            "oving12"
-          ]
+          "tags": ["exercise", "discrete", "oving12"]
         }
       },
       {
@@ -6989,11 +5664,7 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "dft",
-            "finite_fourier",
-            "ss7_3_ex2"
-          ]
+          "logical_dependency": ["dft", "finite_fourier", "ss7_3_ex2"]
         },
         "related": [
           "fourier_inversion",
@@ -7004,11 +5675,7 @@
         "metadata": {
           "source": "Stein–Shakarchi 7.3, Exercise 3",
           "syllabus_priority": "core",
-          "tags": [
-            "exercise",
-            "discrete",
-            "oving12"
-          ]
+          "tags": ["exercise", "discrete", "oving12"]
         }
       }
     ],
@@ -11982,6 +10649,39 @@
         "target": "ss7_3_ex2",
         "label": "requires",
         "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fejer_theorem__requires__partial_sum",
+        "source": "fejer_theorem",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fejer_theorem__requires__dirichlet_kernel",
+        "source": "fejer_theorem",
+        "target": "dirichlet_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fejer_theorem__requires__convolution",
+        "source": "fejer_theorem",
+        "target": "convolution",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
         "confidence": "high",
         "notes": ""
       }
