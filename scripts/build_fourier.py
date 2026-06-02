@@ -34,7 +34,9 @@ DOMAINS = [
     ("discrete", "Discrete & Computational", 6, "#0891B2",
      "Finite and sampled Fourier analysis: the DFT, the FFT, and the sampling theorem."),
     ("applications", "Applications", 7, "#CA8A04",
-     "Where it all pays off: PDEs, signal processing, number theory, and probability."),
+     "Where it all pays off: PDEs, signal processing, and probability."),
+    ("dirichlet", "Dirichlet's Theorem & Number Theory", 8, "#BE123C",
+     "Characters, L-functions, the Euler product, and primes in arithmetic progressions."),
 ]
 
 # Each node: id, label, kind, domain, statement, formal, intuition, notation, tags, priority, related
@@ -398,12 +400,12 @@ node("signal_filtering", "Filtering & Signal Processing", "application", "applic
      "All of audio/image processing: convolve in time = multiply in frequency, computed by the FFT.",
      r"$\hat y=\hat h\,\hat x$", ["applications", "signal"], "core",
      related=["convolution_theorem", "fft", "dft"])
-node("dirichlet_primes", "Primes in Arithmetic Progressions", "application", "applications",
+node("dirichlet_primes", "Primes in Arithmetic Progressions", "theorem", "dirichlet",
      "Infinitely many primes in each valid progression — proved with Fourier analysis on $(\\mathbb{Z}/q)^\\times$.",
      r"If $\gcd(a,q)=1$ there are infinitely many primes $\equiv a\pmod q$; the proof expands an indicator in Dirichlet characters and uses $L(1,\chi)\ne0$.",
      "Finite Fourier analysis on a group of units, combined with $L$-functions, cracks a number-theory landmark.",
-     r"$p\equiv a\ (q)$", ["applications", "number-theory"], "medium",
-     related=["finite_fourier"])
+     r"$p\equiv a\ (q)$", ["dirichlet", "number-theory"], "core",
+     related=["dirichlet_l_function", "characters_finite_abelian"])
 
 # =========================================================== deepening (v2.1)
 # Fills the hidden measure-theory roots, adds the real-form/half-range series
@@ -564,6 +566,103 @@ node("diffraction", "Fraunhofer Diffraction", "application", "applications",
      r"\propto\widehat{\mathbb{1}_A}", ["applications", "optics"], "medium",
      related=["fourier_transform_rd", "fourier_transform"])
 
+# ================================================= full book coverage (v3)
+# New nodes so every numbered Stein-Shakarchi result is represented (see
+# BOOK_REFS + the coverage check in build()).
+
+# -- series: the famous lacunary counterexample (SS Ch.4 §3)
+node("weierstrass_function", "Weierstrass Function (Nowhere Differentiable)", "example", "series",
+     "A continuous function with no derivative anywhere, built from a lacunary Fourier series.",
+     r"$f_\alpha(x)=\sum_{n\ge0}2^{-n\alpha}e^{i2^n x}$ is continuous but nowhere differentiable for $0<\alpha<1$.",
+     "Continuity does not imply differentiability — the gaps (lacunae) in the frequencies wreck smoothness everywhere.",
+     r"$f_\alpha(x)=\sum 2^{-n\alpha}e^{i2^n x}$", ["series"], "medium",
+     related=["fourier_series", "cesaro_summation"])
+
+# -- transform: the half-plane Poisson kernel / steady-state heat (SS Ch.5 §2)
+node("half_plane_poisson", "Poisson Kernel on the Half-Plane", "object", "transform",
+     "The kernel solving the steady-state heat (Dirichlet) problem on the upper half-plane.",
+     r"$P_y(x)=\frac{1}{\pi}\frac{y}{x^2+y^2}$, with $\hat P_y(\xi)=e^{-2\pi y|\xi|}$; $u=f*P_y$ is harmonic in $\mathbb{R}^2_+$ with boundary value $f$.",
+     "The continuous analogue of Abel summation: harmonic extension off the boundary line.",
+     r"$P_y(x)=\tfrac{1}{\pi}\tfrac{y}{x^2+y^2}$", ["transform", "pde"], "medium",
+     related=["fourier_transform", "good_kernel", "dirichlet_problem_disk"])
+
+# -- applications: R^d wave equation and the Radon transform (SS Ch.6)
+node("wave_equation_rd", "Wave Equation in R^d (Huygens, Kirchhoff)", "application", "applications",
+     "The d-dimensional wave equation solved by the Fourier transform, with energy conservation and Huygens' principle.",
+     r"$\partial_t^2 u=\Delta u$ is solved via $\hat u(\xi,t)=\cos(2\pi|\xi|t)\hat f(\xi)+\frac{\sin(2\pi|\xi|t)}{2\pi|\xi|}\hat g(\xi)$; in $\mathbb{R}^3$ this gives Kirchhoff's formula and the sharp Huygens principle.",
+     "Sound and light in space: in odd dimensions $\\ge3$ waves leave no wake — Huygens' principle.",
+     r"$\partial_t^2 u=\Delta u$", ["applications", "pde"], "medium",
+     related=["fourier_transform_rd", "wave_equation"])
+node("radon_transform", "Radon Transform & Tomography", "application", "applications",
+     "Reconstructing a function from its integrals over lines/planes — the math of CT scanning.",
+     r"$R(f)(t,\gamma)=\int_{x\cdot\gamma=t}f$; the Fourier slice theorem $\widehat{R(f)}(s,\gamma)=\hat f(s\gamma)$ inverts it, and $\Delta(R^*Rf)=-8\pi^2 f$ in $\mathbb{R}^3$.",
+     "X-ray projections are slices of the Fourier transform; inverting recovers the body's interior.",
+     r"$\widehat{R(f)}(s,\gamma)=\hat f(s\gamma)$", ["applications", "imaging"], "medium",
+     related=["fourier_transform_rd"])
+
+# -- discrete: character theory of finite abelian groups (SS Ch.7 §2)
+node("dual_group", "Dual Group", "structure", "discrete",
+     "The group of characters of a finite abelian group, isomorphic to the group itself.",
+     r"$\hat G=\operatorname{Hom}(G,\mathbb{C}^\times)$ with pointwise product; $\hat G\cong G$ for finite abelian $G$.",
+     "The frequencies of a finite abelian group — its characters form a group in their own right.",
+     r"$\hat G=\operatorname{Hom}(G,\mathbb{C}^\times)$", ["discrete"], "medium",
+     related=["roots_of_unity"])
+node("characters_finite_abelian", "Characters of Finite Abelian Groups", "theorem", "discrete",
+     "The characters form an orthonormal basis, giving Fourier analysis on any finite abelian group.",
+     r"The characters of $G$ are orthonormal and span all functions on $G$; hence Fourier inversion and Parseval hold on $G$.",
+     "The cleanest, most general finite Fourier theory — $Z(N)$ is just the cyclic case.",
+     r"$\{\chi\}$ an orthonormal basis of $L^2(G)$", ["discrete"], "medium",
+     related=["dual_group", "orthonormal_system", "finite_fourier"])
+
+# -- dirichlet: the number-theoretic machinery (SS Ch.8)
+node("euclid_algorithm", "Euclidean Algorithm & Bézout", "theorem", "dirichlet",
+     "Division with remainder, giving gcds as integer combinations $ax+by$.",
+     r"For $b>0$ there are unique $q,r$ with $a=qb+r$, $0\le r<b$; iterating yields $\gcd(a,b)=ax+by$.",
+     "The foundational algorithm of number theory — gcds are linear combinations.",
+     r"$\gcd(a,b)=ax+by$", ["dirichlet", "number-theory"], "medium")
+node("fundamental_arithmetic", "Fundamental Theorem of Arithmetic", "theorem", "dirichlet",
+     "Every integer $>1$ factors uniquely into primes.",
+     r"Each $n>1$ has a unique prime factorization $n=\prod p_i^{a_i}$.",
+     "Primes are the multiplicative atoms — uniqueness is what makes them useful.",
+     r"$n=\prod p_i^{a_i}$", ["dirichlet", "number-theory"], "medium",
+     related=["euclid_algorithm"])
+node("infinitude_primes", "Infinitude of Primes", "theorem", "dirichlet",
+     "There are infinitely many primes (Euclid).",
+     r"There is no largest prime: any finite list $p_1,\dots,p_k$ misses a prime dividing $p_1\cdots p_k+1$.",
+     "The starting point; Dirichlet's theorem is the deep refinement to progressions.",
+     r"$|\{\text{primes}\}|=\infty$", ["dirichlet", "number-theory"], "medium",
+     related=["fundamental_arithmetic"])
+node("euler_product", "Euler Product for the Zeta Function", "theorem", "dirichlet",
+     "The zeta function factors over primes — analysis meets unique factorization.",
+     r"$\zeta(s)=\sum_{n\ge1}n^{-s}=\prod_p(1-p^{-s})^{-1}$ for $s>1$.",
+     "Encodes the fundamental theorem of arithmetic analytically; the seed of analytic number theory.",
+     r"$\zeta(s)=\prod_p(1-p^{-s})^{-1}$", ["dirichlet", "number-theory"], "medium",
+     related=["fundamental_arithmetic"])
+node("primes_diverge", "Divergence of the Prime Sum", "theorem", "dirichlet",
+     "The sum of reciprocals of the primes diverges — a quantitative infinitude.",
+     r"$\sum_p \frac{1}{p}=\infty$, a consequence of $\zeta(s)\to\infty$ as $s\to1^+$.",
+     "Primes are 'dense' enough that their reciprocals still diverge — far stronger than mere infinitude.",
+     r"$\sum_p 1/p=\infty$", ["dirichlet", "number-theory"], "medium",
+     related=["euler_product"])
+node("dirichlet_character", "Dirichlet Character", "definition", "dirichlet",
+     "A multiplicative, $q$-periodic character used to sieve arithmetic progressions.",
+     r"$\chi:\mathbb{Z}\to\mathbb{C}$, $q$-periodic and completely multiplicative, induced by a character of $(\mathbb{Z}/q)^\times$; orthogonality gives $\frac{1}{\varphi(q)}\sum_\chi \bar\chi(\ell)\chi(m)=\delta_\ell(m)$.",
+     "The characters of the unit group — the 'frequencies' that detect a residue class mod $q$.",
+     r"$\chi \bmod q$", ["dirichlet", "number-theory"], "medium",
+     related=["characters_finite_abelian"])
+node("dirichlet_l_function", "Dirichlet L-Function", "structure", "dirichlet",
+     "The character-twisted zeta function whose behavior at $s=1$ controls the primes.",
+     r"$L(s,\chi)=\sum_{n\ge1}\frac{\chi(n)}{n^s}=\prod_p\big(1-\chi(p)p^{-s}\big)^{-1}$; for $\chi\ne\chi_0$ it extends past $s=1$.",
+     "Generalizes $\\zeta$ with a character; its non-vanishing at $1$ is the crux of Dirichlet's theorem.",
+     r"$L(s,\chi)$", ["dirichlet", "number-theory"], "core",
+     related=["dirichlet_character", "euler_product"])
+node("l_function_nonvanishing", "Non-Vanishing of L(1,χ)", "theorem", "dirichlet",
+     "The key analytic fact: $L(1,\\chi)\\ne0$ for every non-trivial character.",
+     r"If $\chi\ne\chi_0$ then $L(1,\chi)\ne0$; this prevents cancellation and forces $\sum_{p\equiv a}1/p=\infty$.",
+     "The hard heart of the proof — without it the primes could avoid a progression.",
+     r"$L(1,\chi)\ne0$", ["dirichlet", "number-theory"], "core",
+     related=["dirichlet_l_function"])
+
 # ----------------------------------------------------------------------- edges
 # (source, relation, target): requires => source depends on target;
 #                             instance_of => special case depends on general.
@@ -668,7 +767,6 @@ E = [
     ("central_limit", "requires", "gaussian_transform"),
     ("signal_filtering", "requires", "convolution_theorem"),
     ("signal_filtering", "requires", "fft"),
-    ("dirichlet_primes", "requires", "finite_fourier"),
     # --- deepening (v2.1) ---
     # measure-theoretic floor (removes hidden roots)
     ("l1_space", "requires", "lebesgue_integral"),
@@ -728,9 +826,133 @@ E = [
     ("schrodinger_equation", "requires", "fourier_transform"),
     ("schrodinger_equation", "requires", "differentiation_rule"),
     ("diffraction", "requires", "fourier_transform_rd"),
+    # --- full book coverage (v3) ---
+    ("weierstrass_function", "requires", "fourier_series"),
+    ("weierstrass_function", "requires", "cesaro_summation"),
+    ("half_plane_poisson", "requires", "fourier_transform"),
+    ("half_plane_poisson", "requires", "good_kernel"),
+    ("wave_equation_rd", "requires", "fourier_transform_rd"),
+    ("radon_transform", "requires", "fourier_transform_rd"),
+    ("diffraction", "requires", "fourier_transform"),
+    # character theory
+    ("dual_group", "requires", "roots_of_unity"),
+    ("characters_finite_abelian", "requires", "dual_group"),
+    ("characters_finite_abelian", "requires", "orthonormal_system"),
+    ("characters_finite_abelian", "requires", "finite_fourier"),
+    # number theory / Dirichlet
+    ("fundamental_arithmetic", "requires", "euclid_algorithm"),
+    ("infinitude_primes", "requires", "fundamental_arithmetic"),
+    ("euler_product", "requires", "fundamental_arithmetic"),
+    ("primes_diverge", "requires", "euler_product"),
+    ("dirichlet_character", "requires", "characters_finite_abelian"),
+    ("dirichlet_l_function", "requires", "dirichlet_character"),
+    ("dirichlet_l_function", "requires", "euler_product"),
+    ("l_function_nonvanishing", "requires", "dirichlet_l_function"),
+    ("dirichlet_primes", "requires", "l_function_nonvanishing"),
+    ("dirichlet_primes", "requires", "dirichlet_character"),
+    ("dirichlet_primes", "requires", "primes_diverge"),
 ]
 
 REL_LABEL = {"requires": "requires", "instance_of": "is an instance of"}
+
+# Every numbered Stein-Shakarchi result (content/ss_blocks.json) is claimed by
+# exactly one node here. build() asserts the union covers all 116 results.
+BOOK_REFS = {
+    # Ch.2
+    "uniqueness_series": ["c2_cor_2_2", "c2_cor_2_3", "c2_cor_5_3", "c2_thm_2_1"],
+    "decay_smoothness": ["c2_cor_2_4"],
+    "convolution": ["c2_lem_3_2", "c2_prop_3_1"],
+    "fejer_kernel": ["c2_lem_5_1"],
+    "poisson_kernel": ["c2_lem_5_5"],
+    "good_kernel": ["c2_thm_4_1", "c5_cor_1_7", "c5_thm_1_6"],
+    "fejer_theorem": ["c2_thm_5_2"],
+    "abel_summation": ["c2_thm_5_6", "c3_lem_2_3"],
+    "dirichlet_problem_disk": ["c2_thm_5_7"],
+    "weierstrass_approximation": ["c2_cor_5_4", "c5_thm_1_13"],
+    # Ch.3
+    "best_approximation": ["c3_lem_1_2"],
+    "parseval_identity": ["c3_lem_1_5", "c3_thm_1_3"],
+    "mean_square_convergence": ["c3_lem_2_4", "c3_lem_3_2", "c3_thm_1_1"],
+    "riemann_lebesgue": ["c3_thm_1_4"],
+    "dini_criterion": ["c3_thm_2_1"],
+    "localization_principle": ["c3_thm_2_2"],
+    # Ch.4
+    "weyl_equidistribution": ["c4_cor_2_3", "c4_lem_2_2", "c4_thm_2_1"],
+    "weierstrass_function": ["c4_lem_3_2", "c4_lem_3_3", "c4_thm_3_1"],
+    "isoperimetric": ["c4_thm_1_1"],
+    # Ch.5
+    "heat_kernel_line": ["c5_cor_1_5", "c5_cor_3_4", "c5_thm_3_3"],
+    "fourier_inversion": ["c5_cor_1_10", "c5_thm_1_9"],
+    "heat_equation": ["c5_cor_2_2", "c5_thm_2_1", "c5_thm_2_3"],
+    "schwartz_space": ["c5_cor_2_4", "c5_prop_1_1", "c5_thm_1_3"],
+    "half_plane_poisson": ["c5_lem_2_4", "c5_lem_2_5", "c5_lem_2_8", "c5_thm_2_6", "c5_thm_2_7", "c5_thm_3_5"],
+    "translation_modulation": ["c5_prop_1_2"],
+    "convolution_theorem": ["c5_prop_1_8", "c5_prop_1_11"],
+    "gaussian_transform": ["c5_thm_1_4"],
+    "plancherel_theorem": ["c5_thm_1_12"],
+    "poisson_summation": ["c5_thm_3_1"],
+    "theta_function": ["c5_thm_3_2"],
+    "uncertainty_principle": ["c5_thm_4_1"],
+    # Ch.6
+    "fourier_transform_rd": ["c6_cor_2_2", "c6_cor_2_3", "c6_prop_2_1"],
+    "wave_equation_rd": ["c6_lem_3_3", "c6_lem_3_4", "c6_lem_3_5", "c6_thm_2_4",
+                          "c6_thm_3_1", "c6_thm_3_2", "c6_thm_3_6", "c6_thm_3_7"],
+    "radon_transform": ["c6_cor_5_3", "c6_lem_5_2", "c6_prop_5_1", "c6_thm_5_4"],
+    # Ch.7
+    "finite_fourier": ["c7_lem_1_1"],
+    "fft": ["c7_lem_1_4", "c7_thm_1_3"],
+    "parseval_dft": ["c7_thm_1_2"],
+    "dual_group": ["c7_lem_2_1"],
+    "characters_finite_abelian": ["c7_lem_2_2", "c7_lem_2_4", "c7_lem_2_6",
+                                   "c7_thm_2_3", "c7_thm_2_5", "c7_thm_2_7", "c7_thm_2_8"],
+    # Ch.8
+    "euclid_algorithm": ["c8_thm_1_1", "c8_thm_1_2", "c8_cor_1_3", "c8_cor_1_4"],
+    "fundamental_arithmetic": ["c8_cor_1_5", "c8_thm_1_6"],
+    "infinitude_primes": ["c8_thm_1_7"],
+    "euler_product": ["c8_lem_1_8", "c8_prop_1_9", "c8_thm_1_10", "c8_prop_3_2"],
+    "primes_diverge": ["c8_prop_1_11"],
+    "dirichlet_character": ["c8_lem_2_2", "c8_prop_3_3"],
+    "dirichlet_l_function": ["c8_thm_2_4", "c8_prop_3_1", "c8_prop_3_4", "c8_lem_3_5", "c8_prop_3_6"],
+    "l_function_nonvanishing": ["c8_thm_3_7", "c8_thm_2_3", "c8_lem_3_8", "c8_lem_3_9",
+                                 "c8_prop_3_10", "c8_prop_3_11", "c8_prop_3_13",
+                                 "c8_thm_3_12", "c8_lem_3_14", "c8_lem_3_15"],
+    "dirichlet_primes": ["c8_thm_2_1"],
+}
+
+_SS_KIND = {"thm": "Theorem", "lem": "Lemma", "cor": "Corollary", "prop": "Proposition"}
+
+
+def format_ss_ref(ss_id: str) -> str:
+    # cN_kind_a_b -> "Ch.N Kind a.b"
+    chap, kind, a, b = ss_id.split("_")
+    return f"Ch.{chap[1:]} {_SS_KIND.get(kind, kind)} {a}.{b}"
+
+
+def check_book_coverage(node_ids: set[str]) -> None:
+    ss_path = ROOT / "content" / "ss_blocks.json"
+    if not ss_path.exists():
+        print("! content/ss_blocks.json missing — skipping coverage check")
+        return
+    all_ss = {b["node_id"] for b in json.loads(ss_path.read_text(encoding="utf-8"))}
+    claimed: dict[str, str] = {}
+    problems = []
+    for node_id, refs in BOOK_REFS.items():
+        if node_id not in node_ids:
+            problems.append(f"BOOK_REFS names unknown node '{node_id}'")
+        for r in refs:
+            if r not in all_ss:
+                problems.append(f"{node_id} claims unknown book result '{r}'")
+            elif r in claimed:
+                problems.append(f"{r} claimed by both {claimed[r]} and {node_id}")
+            else:
+                claimed[r] = node_id
+    unclaimed = sorted(all_ss - set(claimed))
+    if problems:
+        raise SystemExit("BOOK COVERAGE ERRORS:\n  " + "\n  ".join(problems))
+    if unclaimed:
+        raise SystemExit(f"BOOK COVERAGE INCOMPLETE: {len(unclaimed)} unclaimed results:\n  "
+                         + "\n  ".join(unclaimed))
+    print(f"Book coverage: {len(claimed)}/{len(all_ss)} numbered SS results claimed ✓")
 
 
 def build():
@@ -740,9 +962,13 @@ def build():
         for r in n["related"]:
             if r not in ids:
                 raise SystemExit(f"node {n['id']} related -> missing {r}")
+    check_book_coverage(ids)
     items = []
     for n in N:
         deps = [t for (s, rel, t) in E if s == n["id"] and rel in ("requires", "instance_of")]
+        book_refs = BOOK_REFS.get(n["id"], [])
+        ref = ("Stein–Shakarchi: " + "; ".join(format_ss_ref(r) for r in book_refs)
+               if book_refs else "")
         items.append({
             "id": n["id"], "label": n["label"], "kind": n["kind"], "domain": n["domain"],
             "statement": n["statement"], "formal_statement": n["formal"] or None,
@@ -751,8 +977,10 @@ def build():
             "proof_dependencies": [],
             "dependencies": {"logical_dependency": deps} if deps else {},
             "outgoing_relations": [], "related": n["related"], "assumptions": [],
+            "ref": ref,
+            "book_refs": book_refs,
             "metadata": {"tags": n["tags"], "syllabus_priority": n["priority"],
-                         "source": "Curated concept graph"},
+                         "source": ref or "Curated concept graph"},
         })
     edges = []
     seen = set()
