@@ -7,17 +7,14 @@ import type { GraphNode } from "../types";
 import { MathText, MathProse } from "../lib/katex";
 import { KIND_LABEL } from "../types";
 import { getDomainTone } from "../lib/colors";
-import { nodeDefinition, nodeFormula } from "../lib/nodeContent";
 import {
   KIND_ORDER,
   dictionaryEntries,
-  entryStatement,
-  entryFormalStatement,
   sectionFacet,
   type DictSortMode,
   type SectionFacet,
 } from "../lib/dictionary";
-import { Spine, Facet, Proof, specimenMeta } from "./Specimen";
+import { SpecimenContentBlocks, specimenMeta } from "./Specimen";
 import { ThemedDiagram } from "./ThemedDiagram";
 import "./DictionaryView.css";
 
@@ -168,7 +165,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                 </h2>
                 <div className="dict-cards">
                   {group.items.map((entry) => (
-                    <DictionaryCard key={entry.id} entry={entry} map={map} facet={facet} onOpen={select} />
+                    <DictionaryCard key={entry.id} entry={entry} map={map} onOpen={select} />
                   ))}
                 </div>
               </section>
@@ -183,29 +180,28 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 function DictionaryCard({
   entry,
   map,
-  facet,
   onOpen,
 }: {
   entry: GraphNode;
   map: LoadedMap;
-  facet: SectionFacet;
   onOpen: (id: string) => void;
 }) {
   const setSurface = useStore((s) => s.setSurface);
   const tone = getDomainTone(entry.domainId);
-  const statement = entryStatement(entry);
-  const formalStatement = entryFormalStatement(entry);
-  const definition = nodeDefinition(entry, [statement, formalStatement]);
-  const formula = nodeFormula(entry, [statement, formalStatement, definition]);
   const related = entry.related
     .map((id) => map.nodeById.get(id))
     .filter((n): n is GraphNode => Boolean(n));
-  const sectionValue = facet.valueOf(entry);
-
   // Content-driven density: an entry with only a short gloss becomes a compact
   // card, giving the page rhythm instead of 100+ identical blocks.
   const proof = entry.proof.trim();
-  const compact = !entry.diagramPath && !statement && !entry.example && !proof;
+  const compact =
+    !entry.diagramPath &&
+    !entry.originalText.trim() &&
+    !entry.formalStatement.trim() &&
+    !entry.definitionText.trim() &&
+    !entry.formula.trim() &&
+    !entry.example.trim() &&
+    !proof;
 
   const openInAtlas = () => {
     onOpen(entry.id);
@@ -245,40 +241,10 @@ function DictionaryCard({
           <h3 className="dict-term font-serif">
             <MathText text={entry.title} />
           </h3>
-          <span className="dict-ref" style={{ color: tone.color }}>{specimenMeta(entry)}</span>
+          <span className="dict-ref" style={{ color: tone.color }}>{KIND_LABEL[entry.kind]}</span>
         </div>
 
-        {statement && (
-          <Spine tone={tone} kind={entry.kind} label="Statement" size="dict">
-            <MathProse text={statement} asBlock />
-          </Spine>
-        )}
-        {formalStatement && formalStatement !== statement && (
-          <Facet label="Formal statement" muted>
-            <MathProse text={formalStatement} asBlock />
-          </Facet>
-        )}
-        {definition && (
-          <Facet label="Definition" muted>
-            <MathProse text={definition} asBlock />
-          </Facet>
-        )}
-        {formula && (
-          <Facet label="Formula" muted>
-            <MathProse text={formula} asBlock />
-          </Facet>
-        )}
-        {entry.gloss && (
-          <Facet label="In words">
-            <MathProse text={entry.gloss} asBlock />
-          </Facet>
-        )}
-        {entry.example && (
-          <Facet label="Example" muted>
-            <MathProse text={entry.example} asBlock />
-          </Facet>
-        )}
-        {proof && <Proof text={proof} toneColor={tone.color} />}
+        <SpecimenContentBlocks node={entry} tone={tone} compact />
 
         <div className="dict-cardfoot">
           {related.length > 0 && (

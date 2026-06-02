@@ -30,7 +30,7 @@ function definitionText(item: FieldItem): string {
   return item.definition ?? "";
 }
 
-function formulaText(item: FieldItem): string {
+function displayFormula(item: FieldItem): string {
   return item.formula ?? "";
 }
 
@@ -118,8 +118,8 @@ export function normalizeFieldGraph(input: FieldJson): GraphData {
       originalText: sourceText(item),
       formalStatement: formalText(item),
       definitionText: definitionText(item),
-      formulaText: formulaText(item),
-      mathematicalFormula: formulaFromNotation(item),
+      formula: displayFormula(item),
+      notationText: formulaFromNotation(item),
       explanation: item.intuition ?? "",
       solution: item.solution ?? "",
       proof: item.proof ?? "",

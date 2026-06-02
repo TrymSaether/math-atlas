@@ -1,6 +1,6 @@
 import type { LoadedMap } from "../data";
 import type { GraphNode } from "../types";
-import { nodeAnswerText, nodeFormalStatement, nodeStatement } from "./nodeContent";
+import { nodeAnswerText } from "./nodeContent";
 
 /**
  * The dictionary is a field-agnostic projection of the active atlas map: every
@@ -40,15 +40,6 @@ export function isDictionaryEntry(node: GraphNode): boolean {
 
 export function dictionaryEntries(map: LoadedMap): GraphNode[] {
   return map.data.nodes.filter(isDictionaryEntry);
-}
-
-/** The reading-view statement, falling back through the available text fields. */
-export function entryStatement(node: GraphNode): string {
-  return nodeStatement(node);
-}
-
-export function entryFormalStatement(node: GraphNode): string {
-  return nodeFormalStatement(node);
 }
 
 export function chapterLabel(chapter: string): string {
