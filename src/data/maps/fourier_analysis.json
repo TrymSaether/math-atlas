@@ -512,22 +512,20 @@
         "kind": "theorem",
         "domain": "series",
         "statement": "Fourier coefficients of an integrable function vanish at high frequency.",
-        "formal_statement": "If $f\\in L^1(\\mathbb{T})$ then $\\hat f(n)\\to 0$ as $|n|\\to\\infty$.",
+        "formal_statement": "If \\(f\\in L^1(\\mathbb T)\\), then \\(\\hat f(n)\\to0\\) as \\(|n|\\to\\infty\\). Equivalently, high-frequency oscillations average out against every \\(L^1\\) function on the circle.",
         "definition": null,
-        "intuition": "Rapid oscillation averages out: no integrable signal has energy concentrated at infinitely high frequency.",
+        "intuition": "The waves \\(e^{-inx}\\) oscillate faster and faster. Against an integrable function, their positive and negative swings cancel in the limit.",
         "proof": null,
-        "notation": "$\\hat f(n)\\to 0$",
+        "notation": "\\(\\hat f(n)\\to0\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_coefficient",
-            "l1_space",
-            "dominated_convergence"
-          ]
+          "logical_dependency": ["fourier_coefficient", "l1_space"]
         },
         "outgoing_relations": [],
-        "related": [],
-        "assumptions": [],
+        "related": ["fourier_coefficient", "ft_continuity"],
+        "assumptions": [
+          "The function is understood as an \\(L^1(\\mathbb T)\\) equivalence class; the conclusion concerns its Fourier coefficients."
+        ],
         "ref": "Stein–Shakarchi: Ch.3 Theorem 1.4",
         "book_refs": ["c3_thm_1_4"],
         "metadata": {
@@ -541,19 +539,26 @@
         "label": "Uniqueness Theorem",
         "kind": "theorem",
         "domain": "series",
-        "statement": "A function is determined by its Fourier coefficients.",
-        "formal_statement": "If $f$ is continuous on $\\mathbb{T}$ and $\\hat f(n)=0$ for all $n$, then $f\\equiv 0$.",
+        "statement": "An integrable function is determined, up to equality almost everywhere, by all of its Fourier coefficients.",
+        "formal_statement": "If \\(f\\in L^1(\\mathbb T)\\) and \\(\\hat f(n)=0\\) for every \\(n\\in\\mathbb Z\\), then \\(f=0\\) a.e. In particular, if \\(f\\in C(\\mathbb T)\\), then \\(f\\equiv0\\).",
         "definition": null,
-        "intuition": "The Fourier transform loses no information — distinct functions have distinct spectra.",
+        "intuition": "The full frequency spectrum contains all information about the function. For continuous functions this recovers pointwise equality; for \\(L^1\\) functions equality means equality almost everywhere.",
         "proof": null,
-        "notation": "$\\hat f\\equiv 0\\Rightarrow f\\equiv 0$",
+        "notation": "\\(\\hat f(n)=0\\ \forall n\\Rightarrow f=0\\text{ a.e.}\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_coefficient"]
+          "logical_dependency": [
+            "fourier_coefficient",
+            "l1_space",
+            "almost_everywhere",
+            "fejer_theorem"
+          ]
         },
         "outgoing_relations": [],
-        "related": [],
-        "assumptions": [],
+        "related": ["fourier_coefficient", "fejer_theorem"],
+        "assumptions": [
+          "For \\(L^1\\) functions, equality is interpreted almost everywhere. For continuous representatives, it becomes pointwise equality."
+        ],
         "ref": "Stein–Shakarchi: Ch.2 Corollary 2.2; Ch.2 Corollary 2.3; Ch.2 Corollary 5.3; Ch.2 Theorem 2.1",
         "book_refs": ["c2_cor_2_2", "c2_cor_2_3", "c2_cor_5_3", "c2_thm_2_1"],
         "metadata": {
@@ -567,23 +572,30 @@
         "label": "Best Approximation Property",
         "kind": "theorem",
         "domain": "series",
-        "statement": "Among all trig polynomials of degree $N$, the partial sum is the closest in $L^2$.",
-        "formal_statement": "$\\|f-S_N f\\|_2=\\min\\{\\|f-p\\|_2:\\deg p\\le N\\}$; the error is orthogonal to the span of $\\{e^{inx}\\}_{|n|\\le N}$.",
+        "statement": "The Fourier partial sum is the orthogonal projection onto the low-frequency trigonometric polynomials.",
+        "formal_statement": "For \\(f\\in L^2(\\mathbb T)\\), \\(S_Nf\\) is the unique element of \\(\\operatorname{span}\\{e^{inx}:|n|\\le N\\}\\) minimizing \\(\\|f-p\\|_2\\). Equivalently, \\(f-S_Nf\\) is orthogonal to every trigonometric polynomial of degree at most \\(N\\).",
         "definition": null,
-        "intuition": "Truncating the Fourier series is exactly orthogonal projection onto the low frequencies.",
+        "intuition": "Truncating a Fourier series is not a random cutoff. It is the closest low-frequency shadow of \\(f\\) in the geometry of \\(L^2\\).",
         "proof": null,
-        "notation": "$\\|f-S_Nf\\|_2\\le\\|f-p\\|_2$",
+        "notation": "\\(S_Nf=P_Nf\\)",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
             "partial_sum",
             "orthonormal_system",
-            "l2_space"
+            "l2_space",
+            "inner_product_space"
           ]
         },
         "outgoing_relations": [],
-        "related": ["partial_sum", "orthonormal_system"],
-        "assumptions": [],
+        "related": [
+          "partial_sum",
+          "orthonormal_system",
+          "mean_square_convergence"
+        ],
+        "assumptions": [
+          "The minimization is in the \\(L^2\\)-norm on \\(\\mathbb T\\)."
+        ],
         "ref": "Stein–Shakarchi: Ch.3 Lemma 1.2",
         "book_refs": ["c3_lem_1_2"],
         "metadata": {
@@ -597,19 +609,21 @@
         "label": "Decay–Smoothness Duality",
         "kind": "property",
         "domain": "series",
-        "statement": "The smoother a function, the faster its Fourier coefficients decay.",
-        "formal_statement": "If $f\\in C^k(\\mathbb{T})$ then $\\hat f(n)=O(|n|^{-k})$; conversely fast decay forces smoothness.",
+        "statement": "Smoothness of a periodic function forces decay of its Fourier coefficients; sufficiently fast coefficient decay forces smoothness.",
+        "formal_statement": "If \\(f\\) is \\(2\\pi\\)-periodic and \\(C^k\\) with matching periodic derivatives up to order \\(k\\), then \\(\\hat f(n)=o(|n|^{-k})\\). Conversely, if \\(\\sum_{n\\in\\mathbb Z}|n|^k|\\hat f(n)|<\\infty\\), then the Fourier series defines a \\(C^k\\) function.",
         "definition": null,
-        "intuition": "Regularity in $x$ and decay in frequency are two sides of one coin — a recurring theme.",
+        "intuition": "Differentiation multiplies the \\(n\\)-th Fourier coefficient by \\(in\\). So every derivative demands extra frequency decay, and extra decay buys differentiability back.",
         "proof": null,
-        "notation": "$\\hat f(n)=O(|n|^{-k})$",
+        "notation": "\\(\\widehat{f^{(k)}}(n)=(in)^k\\hat f(n)\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_coefficient"]
+          "logical_dependency": ["fourier_coefficient", "term_differentiation"]
         },
         "outgoing_relations": [],
-        "related": [],
-        "assumptions": [],
+        "related": ["term_differentiation", "differentiation_rule"],
+        "assumptions": [
+          "Periodic endpoint matching matters: derivatives are taken on the circle, not merely on an interval with unrelated endpoints."
+        ],
         "ref": "Stein–Shakarchi: Ch.2 Corollary 2.4",
         "book_refs": ["c2_cor_2_4"],
         "metadata": {
@@ -785,19 +799,25 @@
         "label": "Fejér's Theorem",
         "kind": "theorem",
         "domain": "convergence",
-        "statement": "Cesàro means of the Fourier series of a continuous function converge uniformly.",
-        "formal_statement": "If $f$ is continuous on $\\mathbb{T}$, then $\\sigma_N f=F_N*f\\to f$ uniformly.",
+        "statement": "Fejer means of a continuous periodic function converge uniformly to the function.",
+        "formal_statement": "If \\(f\\in C(\\mathbb T)\\), then \\(\\sigma_Nf=F_N*f\\to f\\) uniformly on \\(\\mathbb T\\). More generally, if \\(f\\in L^1(\\mathbb T)\\), then \\(\\sigma_Nf\\to f\\) in \\(L^1\\).",
         "definition": null,
-        "intuition": "Even when the series itself misbehaves, its averages always reconstruct a continuous $f$ — and prove Weierstrass approximation.",
+        "intuition": "Averaging partial sums replaces the oscillatory Dirichlet kernel by the positive Fejer kernel. The result is a stable local average that sharpens into \\(f\\).",
         "proof": null,
-        "notation": "$\\sigma_N f\\to f$",
+        "notation": "\\(\\sigma_Nf=F_N*f\\to f\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fejer_kernel", "good_kernel"]
+          "logical_dependency": [
+            "fejer_kernel",
+            "good_kernel",
+            "cesaro_summation"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["fejer_kernel", "good_kernel"],
-        "assumptions": [],
+        "related": ["fejer_kernel", "good_kernel", "weierstrass_approximation"],
+        "assumptions": [
+          "Uniform convergence requires \\(f\\in C(\\mathbb T)\\); the \\(L^1\\) version has \\(L^1\\)-convergence."
+        ],
         "ref": "Stein–Shakarchi: Ch.2 Theorem 5.2",
         "book_refs": ["c2_thm_5_2"],
         "metadata": {
@@ -811,19 +831,26 @@
         "label": "Mean-Square Convergence",
         "kind": "theorem",
         "domain": "convergence",
-        "statement": "Fourier series converge in $L^2$ for every square-integrable function.",
-        "formal_statement": "For $f\\in L^2(\\mathbb{T})$, $\\|f-S_N f\\|_2\\to 0$.",
+        "statement": "Fourier partial sums converge to every \\(L^2\\) function in mean square.",
+        "formal_statement": "For every \\(f\\in L^2(\\mathbb T)\\), \\(\\|f-S_Nf\\|_2\\to0\\) as \\(N\\to\\infty\\). Equivalently, the trigonometric system \\(\\{e^{inx}\\}_{n\\in\\mathbb Z}\\) is complete in \\(L^2(\\mathbb T)\\).",
         "definition": null,
-        "intuition": "In the energy norm there is no subtlety: the series always converges — a direct consequence of completeness.",
+        "intuition": "In \\(L^2\\), Fourier series are orthogonal projections onto larger and larger frequency subspaces. Completeness says those shadows converge back to the original object in energy.",
         "proof": null,
-        "notation": "$\\|f-S_N f\\|_2\\to0$",
+        "notation": "\\(\\|f-S_Nf\\|_2\\to0\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["parseval_identity", "partial_sum"]
+          "logical_dependency": [
+            "parseval_identity",
+            "partial_sum",
+            "l2_space",
+            "best_approximation"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["l2_space", "parseval_identity"],
-        "assumptions": [],
+        "related": ["l2_space", "parseval_identity", "best_approximation"],
+        "assumptions": [
+          "Convergence is in the \\(L^2\\)-norm, not necessarily pointwise."
+        ],
         "ref": "Stein–Shakarchi: Ch.3 Lemma 2.4; Ch.3 Lemma 3.2; Ch.3 Theorem 1.1",
         "book_refs": ["c3_lem_2_4", "c3_lem_3_2", "c3_thm_1_1"],
         "metadata": {
@@ -837,19 +864,27 @@
         "label": "Pointwise Convergence Problem",
         "kind": "property",
         "domain": "convergence",
-        "statement": "Whether $S_N f(x)\\to f(x)$ at a point — delicate and not automatic.",
-        "formal_statement": "$S_N f(x_0)\\to f(x_0)$? True under regularity hypotheses; can fail for merely continuous $f$.",
+        "statement": "The question whether Fourier partial sums converge at a specific point.",
+        "formal_statement": "Given \\(f\\in L^1(\\mathbb T)\\) and \\(x_0\\in\\mathbb T\\), ask whether \\(S_Nf(x_0)=(D_N*f)(x_0)\\) has a limit, and whether that limit equals \\(f(x_0)\\) or the jump average \\(\\frac12(f(x_0^+)+f(x_0^-))\\).",
         "definition": null,
-        "intuition": "The hardest classical question: convergence at individual points needs local smoothness.",
+        "intuition": "Pointwise convergence is delicate because the Dirichlet kernel is oscillatory and not a good approximate identity. Local regularity can tame it; mere continuity cannot.",
         "proof": null,
-        "notation": "$S_N f(x_0)\\to f(x_0)$",
+        "notation": "\\(S_Nf(x_0)\\to L\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["dirichlet_kernel"]
+          "logical_dependency": ["dirichlet_kernel", "partial_sum", "l1_space"]
         },
         "outgoing_relations": [],
-        "related": ["dirichlet_kernel"],
-        "assumptions": [],
+        "related": [
+          "dirichlet_kernel",
+          "dini_criterion",
+          "dirichlet_conditions",
+          "dubois_reymond",
+          "carleson_theorem"
+        ],
+        "assumptions": [
+          "The value \\(f(x_0)\\) must be meaningful; for discontinuities one usually compares with the average of one-sided limits."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -927,19 +962,25 @@
         "label": "Gibbs Phenomenon",
         "kind": "property",
         "domain": "convergence",
-        "statement": "Persistent ~9% overshoot of partial sums near a jump discontinuity.",
-        "formal_statement": "Near a jump, $S_N f$ overshoots by a fixed fraction ($\\approx 0.0895$ of the jump) that does not vanish as $N\\to\\infty$.",
+        "statement": "Fourier partial sums have a persistent overshoot near jump discontinuities.",
+        "formal_statement": "For a piecewise smooth function with a jump of size \\(J\\), the overshoot of \\(S_Nf\\) near the jump approaches \\(GJ\\), where \\(G=\\frac1\\pi\\int_0^\\pi\\frac{\\sin t}{t}\\,dt-\\frac12\\approx0.08949\\). The overshoot region narrows as \\(N\\to\\infty\\), but its height does not vanish.",
         "definition": null,
-        "intuition": "The ringing you see truncating a square wave: the overshoot narrows but never shrinks.",
+        "intuition": "Truncating frequencies cannot draw a sharp jump cleanly. The ringing gets squeezed toward the discontinuity, but the first overshoot keeps roughly nine percent of the jump.",
         "proof": null,
-        "notation": null,
+        "notation": "\\(G\\approx0.08949\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["partial_sum", "dirichlet_conditions"]
+          "logical_dependency": [
+            "partial_sum",
+            "dirichlet_conditions",
+            "dirichlet_kernel"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["partial_sum", "dirichlet_conditions"],
-        "assumptions": [],
+        "related": ["partial_sum", "dirichlet_conditions", "dirichlet_kernel"],
+        "assumptions": [
+          "The standard statement concerns Fourier partial sums near a jump of a piecewise smooth function."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -953,12 +994,12 @@
         "label": "Carleson's Theorem",
         "kind": "theorem",
         "domain": "convergence",
-        "statement": "Fourier series of $L^2$ functions converge almost everywhere.",
-        "formal_statement": "For $f\\in L^2(\\mathbb{T})$, $S_N f(x)\\to f(x)$ for almost every $x$.",
+        "statement": "Fourier series of \\(L^2\\) functions converge almost everywhere.",
+        "formal_statement": "If \\(f\\in L^2(\\mathbb T)\\), then \\(S_Nf(x)\\to f(x)\\) for almost every \\(x\\in\\mathbb T\\). Hunt extended this to \\(L^p(\\mathbb T)\\) for \\(1<p<\\infty\\).",
         "definition": null,
-        "intuition": "The deep resolution of a 150-year-old question: a.e. pointwise convergence holds in $L^2$.",
+        "intuition": "Despite bad kernels and possible pointwise chaos, square-integrability is still strong enough to force convergence at almost every point. The proof is deep; the statement is not a routine kernel argument.",
         "proof": null,
-        "notation": "$S_N f\\to f$ a.e.",
+        "notation": "\\(S_Nf\\to f\\text{ a.e.}\\)",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -968,8 +1009,10 @@
           ]
         },
         "outgoing_relations": [],
-        "related": ["pointwise_convergence", "l2_space"],
-        "assumptions": [],
+        "related": ["pointwise_convergence", "l2_space", "almost_everywhere"],
+        "assumptions": [
+          "Almost everywhere is with respect to Lebesgue measure on \\(\\mathbb T\\)."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -983,19 +1026,29 @@
         "label": "Du Bois-Reymond Counterexample",
         "kind": "counterexample",
         "domain": "convergence",
-        "statement": "A continuous function whose Fourier series diverges at a point.",
-        "formal_statement": "There exists $f\\in C(\\mathbb{T})$ with $\\limsup_N|S_N f(0)|=\\infty$.",
+        "statement": "There exists a continuous periodic function whose Fourier partial sums diverge at a point.",
+        "formal_statement": "There is \\(f\\in C(\\mathbb T)\\) such that the sequence \\(S_Nf(x_0)\\) diverges for some \\(x_0\\in\\mathbb T\\); in stronger versions, \\(\\sup_N|S_Nf(x_0)|=\\infty\\).",
         "definition": null,
-        "intuition": "Continuity alone does not guarantee pointwise convergence — the reason Fejér/Cesàro averaging matters.",
+        "intuition": "Continuity alone does not control the Dirichlet kernel strongly enough. This counterexample explains why Fejer averaging is not just a cosmetic improvement.",
         "proof": null,
-        "notation": null,
+        "notation": "\\(S_Nf(x_0)\\) diverges",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["pointwise_convergence", "dirichlet_kernel"]
+          "logical_dependency": [
+            "pointwise_convergence",
+            "dirichlet_kernel",
+            "partial_sum"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["pointwise_convergence", "dirichlet_kernel"],
-        "assumptions": [],
+        "related": [
+          "pointwise_convergence",
+          "dirichlet_kernel",
+          "fejer_theorem"
+        ],
+        "assumptions": [
+          "The counterexample concerns ordinary Fourier partial sums, not Cesaro or Abel means."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -1201,19 +1254,31 @@
         "label": "Poisson Summation Formula",
         "kind": "theorem",
         "domain": "transform",
-        "statement": "Summing a function over a lattice equals summing its transform over the dual lattice.",
-        "formal_statement": "$\\sum_{n\\in\\mathbb{Z}}f(n)=\\sum_{n\\in\\mathbb{Z}}\\hat f(n)$ (for nice $f$).",
+        "statement": "Periodizing a function in space corresponds to sampling its Fourier transform.",
+        "formal_statement": "For \\(f\\in\\mathcal S(\\mathbb R)\\), using \\(\\hat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx\\), one has \\(\\sum_{n\\in\\mathbb Z}f(n)=\\sum_{k\\in\\mathbb Z}\\hat f(k)\\).",
         "definition": null,
-        "intuition": "The bridge between the Fourier transform and Fourier series — periodization in $x$ is sampling in $\\xi$.",
+        "intuition": "The formula is the hinge between continuous and discrete Fourier analysis: adding copies of \\(f\\) at integer shifts turns into reading \\(\\hat f\\) at integer frequencies.",
         "proof": null,
-        "notation": "$\\sum f(n)=\\sum\\hat f(n)$",
+        "notation": "\\(\\sum_{n\\in\\mathbb Z}f(n)=\\sum_{k\\in\\mathbb Z}\\hat f(k)\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_transform", "fourier_series"]
+          "logical_dependency": [
+            "fourier_transform",
+            "fourier_series",
+            "schwartz_space",
+            "fourier_transform_convention"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["fourier_series", "fourier_transform"],
-        "assumptions": [],
+        "related": [
+          "fourier_series",
+          "fourier_transform",
+          "theta_function",
+          "sampling_theorem"
+        ],
+        "assumptions": [
+          "Stated here for Schwartz functions to avoid convergence side quests. Other versions require explicit decay and regularity hypotheses."
+        ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 3.1",
         "book_refs": ["c5_thm_3_1"],
         "metadata": {
@@ -1694,19 +1759,21 @@
         "label": "Isoperimetric Inequality",
         "kind": "application",
         "domain": "applications",
-        "statement": "Among curves of fixed length, the circle encloses the most area — via Parseval.",
-        "formal_statement": "For a simple closed curve of length $L$ enclosing area $A$: $A\\le\\frac{L^2}{4\\pi}$, equality iff a circle.",
+        "statement": "A simple closed plane curve of fixed length encloses maximal area exactly when it is a circle.",
+        "formal_statement": "If a sufficiently smooth simple closed plane curve has length \\(L\\) and encloses area \\(A\\), then \\(A\\le L^2/(4\\pi)\\), with equality exactly for circles.",
         "definition": null,
-        "intuition": "A geometry theorem proved by expanding the boundary curve in a Fourier series.",
+        "intuition": "Writing the boundary curve as a Fourier series turns area and length into coefficient sums. Parseval then becomes a geometric inequality.",
         "proof": null,
-        "notation": "$A\\le L^2/4\\pi$",
+        "notation": "\\(A\\le L^2/(4\\pi)\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["parseval_identity"]
+          "logical_dependency": ["parseval_identity", "fourier_series"]
         },
         "outgoing_relations": [],
         "related": ["parseval_identity", "fourier_series"],
-        "assumptions": [],
+        "assumptions": [
+          "Assume a regular simple closed curve, for example piecewise \\(C^1\\), oriented positively."
+        ],
         "ref": "Stein–Shakarchi: Ch.4 Theorem 1.1",
         "book_refs": ["c4_thm_1_1"],
         "metadata": {
@@ -1720,19 +1787,25 @@
         "label": "Weyl Equidistribution",
         "kind": "application",
         "domain": "applications",
-        "statement": "Irrational rotations fill the circle uniformly — detected by Fourier coefficients.",
-        "formal_statement": "$\\{n\\gamma\\bmod 1\\}$ is equidistributed iff $\\frac1N\\sum_{n\\le N}e^{2\\pi i k n\\gamma}\\to0$ for all $k\\ne0$ (Weyl's criterion).",
+        "statement": "Equidistribution can be tested by checking the decay of all nonzero exponential averages.",
+        "formal_statement": "A sequence \\((x_n)\\) in \\(\\mathbb R/\\mathbb Z\\) is equidistributed iff \\(\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0\\) for every nonzero \\(k\\in\\mathbb Z\\). In particular, \\(x_n=n\\alpha\\) is equidistributed when \\(\\alpha\\notin\\mathbb Q\\).",
         "definition": null,
-        "intuition": "A number-theory equidistribution test reduced to the decay of exponential sums.",
+        "intuition": "Intervals can be approximated by trigonometric polynomials, so uniform distribution of points is equivalent to cancellation against every nonzero frequency.",
         "proof": null,
-        "notation": "$\\frac1N\\sum e^{2\\pi i kn\\gamma}\\to0$",
+        "notation": "\\(\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fejer_theorem", "fourier_coefficient"]
+          "logical_dependency": [
+            "weierstrass_approximation",
+            "trigonometric_polynomial",
+            "fourier_coefficient"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["fejer_theorem", "fourier_coefficient"],
-        "assumptions": [],
+        "related": ["weierstrass_approximation", "trigonometric_polynomial"],
+        "assumptions": [
+          "The criterion is stated on the circle \\(\\mathbb R/\\mathbb Z\\)."
+        ],
         "ref": "Stein–Shakarchi: Ch.4 Corollary 2.3; Ch.4 Lemma 2.2; Ch.4 Theorem 2.1",
         "book_refs": ["c4_cor_2_3", "c4_lem_2_2", "c4_thm_2_1"],
         "metadata": {
@@ -1746,19 +1819,25 @@
         "label": "Central Limit Theorem (Fourier proof)",
         "kind": "application",
         "domain": "applications",
-        "statement": "Sums of independent variables become Gaussian — convolution of densities seen in frequency.",
-        "formal_statement": "Characteristic functions $\\varphi(\\xi)=\\hat\\mu(\\xi)$ multiply under convolution; $\\varphi^n$ converges to the Gaussian transform $e^{-\\xi^2/2}$.",
+        "statement": "Fourier methods prove that normalized sums of independent variables converge in distribution to a Gaussian.",
+        "formal_statement": "For i.i.d. random variables with mean \\(\\mu\\) and variance \\(\\sigma^2>0\\), the characteristic functions of \\((X_1+\\cdots+X_n-n\\mu)/(\\sigma\\sqrt n)\\) converge pointwise to \\(e^{-t^2/2}\\), the characteristic function of the standard normal law.",
         "definition": null,
-        "intuition": "The Fourier transform diagonalizes convolution, turning the CLT into a limit of products.",
+        "intuition": "Independence turns sums into products of characteristic functions. After normalization, those products converge to the Gaussian multiplier.",
         "proof": null,
-        "notation": "$\\hat\\mu^{\\,n}\\to e^{-\\xi^2/2}$",
+        "notation": "\\(\\varphi_n(t)\\to e^{-t^2/2}\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["convolution_theorem", "gaussian_transform"]
+          "logical_dependency": [
+            "convolution_theorem",
+            "gaussian_transform",
+            "variance_standard_deviation"
+          ]
         },
         "outgoing_relations": [],
         "related": ["convolution_theorem", "gaussian_transform"],
-        "assumptions": [],
+        "assumptions": [
+          "Uses the probability convention \\(\\varphi_X(t)=\\mathbb E e^{itX}\\), not the graph's \\(2\\pi\\)-Fourier transform convention."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -1798,23 +1877,30 @@
         "label": "Primes in Arithmetic Progressions",
         "kind": "theorem",
         "domain": "dirichlet",
-        "statement": "Infinitely many primes in each valid progression — proved with Fourier analysis on $(\\mathbb{Z}/q)^\\times$.",
-        "formal_statement": "If $\\gcd(a,q)=1$ there are infinitely many primes $\\equiv a\\pmod q$; the proof expands an indicator in Dirichlet characters and uses $L(1,\\chi)\\ne0$.",
+        "statement": "Every reduced arithmetic progression contains infinitely many primes.",
+        "formal_statement": "If \\(\\gcd(a,q)=1\\), then there are infinitely many primes \\(p\\) with \\(p\\equiv a\\pmod q\\). The proof decomposes residue-class indicators using Dirichlet characters and uses \\(L(1,\\chi)\\ne0\\) for nonprincipal characters.",
         "definition": null,
-        "intuition": "Finite Fourier analysis on a group of units, combined with $L$-functions, cracks a number-theory landmark.",
+        "intuition": "Finite Fourier analysis separates the residue classes; analytic information about the associated \\(L\\)-functions proves that no reduced class can run out of primes.",
         "proof": null,
-        "notation": "$p\\equiv a\\ (q)$",
+        "notation": "\\(p\\equiv a\\pmod q\\)",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
             "l_function_nonvanishing",
             "dirichlet_character",
+            "dirichlet_l_function",
             "primes_diverge"
           ]
         },
         "outgoing_relations": [],
-        "related": ["dirichlet_l_function", "characters_finite_abelian"],
-        "assumptions": [],
+        "related": [
+          "dirichlet_l_function",
+          "dirichlet_character",
+          "characters_finite_abelian"
+        ],
+        "assumptions": [
+          "The condition \\(\\gcd(a,q)=1\\) is necessary: otherwise every number in the progression shares a fixed divisor with \\(q\\)."
+        ],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 2.1",
         "book_refs": ["c8_thm_2_1"],
         "metadata": {
@@ -2014,19 +2100,25 @@
         "label": "Term-by-Term Differentiation",
         "kind": "property",
         "domain": "series",
-        "statement": "When the differentiated series still converges to the derivative.",
-        "formal_statement": "If $\\sum |n\\,\\hat f(n)|<\\infty$, then $f'(x)=\\sum_n in\\,\\hat f(n)e^{inx}$.",
+        "statement": "A Fourier series may be differentiated term by term when the differentiated series is sufficiently controlled.",
+        "formal_statement": "If \\(\\sum_{n\\in\\mathbb Z}|n\\hat f(n)|<\\infty\\), then \\(\\sum_n\\hat f(n)e^{inx}\\) defines a \\(C^1\\) function and \\(f'(x)=\\sum_{n\\in\\mathbb Z}in\\hat f(n)e^{inx}\\), with uniform convergence of the differentiated series.",
         "definition": null,
-        "intuition": "Smoothness (fast coefficient decay) is exactly what licenses differentiating a series term by term.",
+        "intuition": "Differentiating a frequency \\(e^{inx}\\) multiplies it by \\(in\\). Absolute summability after that multiplication is the safety check that prevents termwise differentiation from lying to you.",
         "proof": null,
-        "notation": "$f'=\\sum in\\,\\hat f(n)e^{inx}$",
+        "notation": "\\(f'=\\sum_n in\\hat f(n)e^{inx}\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["decay_smoothness", "fourier_series"]
+          "logical_dependency": [
+            "decay_smoothness",
+            "fourier_series",
+            "fourier_coefficient"
+          ]
         },
         "outgoing_relations": [],
         "related": ["decay_smoothness"],
-        "assumptions": [],
+        "assumptions": [
+          "The displayed sufficient condition is stronger than necessary but clean and safe."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -2040,19 +2132,21 @@
         "label": "Weierstrass Approximation",
         "kind": "theorem",
         "domain": "convergence",
-        "statement": "Every continuous periodic function is a uniform limit of trigonometric polynomials.",
-        "formal_statement": "Trigonometric polynomials are dense in $C(\\mathbb{T})$ — an immediate corollary of Fejér's theorem.",
+        "statement": "Continuous periodic functions can be uniformly approximated by trigonometric polynomials.",
+        "formal_statement": "For every \\(f\\in C(\\mathbb T)\\) and every \\(\\varepsilon>0\\), there exists a trigonometric polynomial \\(p\\) such that \\(\\|f-p\\|_\\infty<\\varepsilon\\). Equivalently, trigonometric polynomials are dense in \\(C(\\mathbb T)\\) in the uniform norm.",
         "definition": null,
-        "intuition": "The density result underpinning completeness of the exponential basis; Fejér's payoff.",
+        "intuition": "Fejer means are themselves trigonometric polynomials and converge uniformly to \\(f\\), so they provide explicit approximants rather than just existence magic.",
         "proof": null,
-        "notation": "\\overline{\\{\\text{trig polys}\\}}=C(\\mathbb{T})",
+        "notation": "\\(\\overline{\\mathrm{Trig}}^{\\|\\cdot\\|_\\infty}=C(\\mathbb T)\\)",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fejer_theorem", "trigonometric_polynomial"]
         },
         "outgoing_relations": [],
         "related": ["fejer_theorem", "trigonometric_polynomial"],
-        "assumptions": [],
+        "assumptions": [
+          "This is the trigonometric version on the circle. Algebraic polynomial approximation on intervals is a related but different statement."
+        ],
         "ref": "Stein–Shakarchi: Ch.2 Corollary 5.4; Ch.5 Theorem 1.13",
         "book_refs": ["c2_cor_5_4", "c5_thm_1_13"],
         "metadata": {
@@ -2066,19 +2160,21 @@
         "label": "Abel's Theorem",
         "kind": "theorem",
         "domain": "convergence",
-        "statement": "A convergent series is Abel summable to the same value — summability is consistent.",
-        "formal_statement": "If $\\sum a_n=s$ converges, then $\\lim_{r\\to1^-}\\sum a_n r^n=s$.",
+        "statement": "Ordinary convergence implies Abel summability to the same value.",
+        "formal_statement": "If \\(\\sum_{n=0}^\\infty a_n=s\\) converges, then \\(\\lim_{r\\to1^-}\\sum_{n=0}^\\infty a_nr^n=s\\). For Fourier series, Abel means agree with the ordinary limit wherever ordinary convergence is already valid.",
         "definition": null,
-        "intuition": "Guarantees the gentler summation methods don't change answers where ordinary convergence already holds.",
+        "intuition": "Abel summation is consistent: the gentler radial limiting process does not change answers that already converge honestly.",
         "proof": null,
-        "notation": "$\\lim_{r\\to1}\\sum a_n r^n=s$",
+        "notation": "\\(\\lim_{r\\to1^-}\\sum a_nr^n=s\\)",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["abel_summation"]
         },
         "outgoing_relations": [],
         "related": ["abel_summation"],
-        "assumptions": [],
+        "assumptions": [
+          "The displayed scalar form is one-sided in \\(r\\), with \\(0\\le r<1\\)."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -2450,19 +2546,25 @@
         "label": "Theta Function & Functional Equation",
         "kind": "application",
         "domain": "applications",
-        "statement": "The identity $\\theta(1/t)=\\sqrt{t}\\,\\theta(t)$, straight from Poisson summation.",
-        "formal_statement": "$\\theta(t)=\\sum_{n}e^{-\\pi n^2 t}$ satisfies $\\theta(1/t)=\\sqrt{t}\\,\\theta(t)$, via Poisson summation on the Gaussian.",
+        "statement": "Poisson summation applied to the Gaussian gives the modular identity for the theta function.",
+        "formal_statement": "For \\(t>0\\), \\(\\theta(t)=\\sum_{n\\in\\mathbb Z}e^{-\\pi n^2t}\\) satisfies \\(\\theta(1/t)=\\sqrt t\\,\\theta(t)\\).",
         "definition": null,
-        "intuition": "A bridge to number theory (the Riemann zeta functional equation) built on Poisson summation.",
+        "intuition": "The Gaussian is essentially fixed by the Fourier transform, so Poisson summation turns a sum at scale \\(t\\) into a sum at reciprocal scale \\(1/t\\).",
         "proof": null,
-        "notation": "\\theta(1/t)=\\sqrt{t}\\,\\theta(t)",
+        "notation": "\\(\\theta(1/t)=\\sqrt t\\,\\theta(t)\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["poisson_summation", "gaussian_transform"]
+          "logical_dependency": [
+            "poisson_summation",
+            "gaussian_transform",
+            "fourier_transform_convention"
+          ]
         },
         "outgoing_relations": [],
         "related": ["poisson_summation", "gaussian_transform"],
-        "assumptions": [],
+        "assumptions": [
+          "Uses the \\(2\\pi\\)-Fourier convention where \\(e^{-\\pi x^2}\\) is self-dual."
+        ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 3.2",
         "book_refs": ["c5_thm_3_2"],
         "metadata": {
@@ -2476,19 +2578,25 @@
         "label": "Free Schrödinger Equation",
         "kind": "application",
         "domain": "applications",
-        "statement": "Quantum free evolution diagonalized by the Fourier transform.",
-        "formal_statement": "$i u_t=-u_{xx}$ solves via $\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2 t}\\hat u_0(\\xi)$ — multiplication in frequency.",
+        "statement": "The free Schrödinger equation is solved by multiplying each Fourier mode by a dispersive phase.",
+        "formal_statement": "For \\(iu_t=-u_{xx}\\) on \\(\\mathbb R\\) with initial data \\(u_0\\), the Fourier transform satisfies \\(\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)\\).",
         "definition": null,
-        "intuition": "Like the heat equation but with imaginary time: dispersion instead of diffusion.",
+        "intuition": "The Fourier transform turns the spatial second derivative into multiplication by \\(-4\\pi^2\\xi^2\\). Unlike heat flow, the multiplier has modulus one, so waves disperse rather than decay.",
         "proof": null,
-        "notation": "iu_t=-u_{xx}",
+        "notation": "\\(\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_transform", "differentiation_rule"]
+          "logical_dependency": [
+            "fourier_transform",
+            "differentiation_rule",
+            "fourier_transform_convention"
+          ]
         },
         "outgoing_relations": [],
         "related": ["fourier_transform", "differentiation_rule"],
-        "assumptions": [],
+        "assumptions": [
+          "Uses the Fourier convention \\(e^{-2\\pi ix\\xi}\\). Regularity assumptions depend on whether one wants classical, \\(L^2\\), or distributional solutions."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -2502,19 +2610,21 @@
         "label": "Fraunhofer Diffraction",
         "kind": "application",
         "domain": "applications",
-        "statement": "The far-field light pattern of an aperture is the Fourier transform of its shape.",
-        "formal_statement": "Far-field amplitude $\\propto\\hat{\\mathbb{1}_A}(\\xi)$, the Fourier transform of the aperture indicator.",
+        "statement": "In the Fraunhofer far-field approximation, the diffraction amplitude is essentially the Fourier transform of the aperture.",
+        "formal_statement": "For an aperture indicator \\(\\mathbf 1_A\\) in the aperture plane, the far-field amplitude is proportional to \\(\\widehat{\\mathbf 1_A}(\\xi)\\), and the observed intensity is proportional to \\(|\\widehat{\\mathbf 1_A}(\\xi)|^2\\).",
         "definition": null,
-        "intuition": "Optics computes Fourier transforms physically — a slit's pattern is a sinc, a circle's an Airy disk.",
+        "intuition": "A lens or far-field propagation physically separates spatial frequencies. A slit produces a sinc pattern; a circular aperture produces an Airy-type pattern.",
         "proof": null,
-        "notation": "\\propto\\widehat{\\mathbb{1}_A}",
+        "notation": "\\(I(\\xi)\\propto |\\widehat{\\mathbf 1_A}(\\xi)|^2\\)",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_transform_rd", "fourier_transform"]
         },
         "outgoing_relations": [],
         "related": ["fourier_transform_rd", "fourier_transform"],
-        "assumptions": [],
+        "assumptions": [
+          "This is the scalar Fraunhofer approximation, not a full electromagnetic model."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -2528,19 +2638,25 @@
         "label": "Weierstrass Function (Nowhere Differentiable)",
         "kind": "example",
         "domain": "series",
-        "statement": "A continuous function with no derivative anywhere, built from a lacunary Fourier series.",
-        "formal_statement": "$f_\\alpha(x)=\\sum_{n\\ge0}2^{-n\\alpha}e^{i2^n x}$ is continuous but nowhere differentiable for $0<\\alpha<1$.",
+        "statement": "A continuous nowhere-differentiable periodic function can be built from a lacunary trigonometric series.",
+        "formal_statement": "A classical example is \\(W(x)=\\sum_{n=0}^\\infty a^n\\cos(b^n x)\\), where \\(0<a<1\\), \\(b\\) is an odd integer, and suitable conditions such as \\(ab>1+3\\pi/2\\) guarantee that \\(W\\) is continuous and nowhere differentiable.",
         "definition": null,
-        "intuition": "Continuity does not imply differentiability — the gaps (lacunae) in the frequencies wreck smoothness everywhere.",
+        "intuition": "The coefficients decay enough to give continuity, but the rapidly separated frequencies keep injecting small sharp oscillations at every scale.",
         "proof": null,
-        "notation": "$f_\\alpha(x)=\\sum 2^{-n\\alpha}e^{i2^n x}$",
+        "notation": "\\(W(x)=\\sum a^n\\cos(b^nx)\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_series", "cesaro_summation"]
+          "logical_dependency": [
+            "fourier_series",
+            "trigonometric_polynomial",
+            "decay_smoothness"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["fourier_series", "cesaro_summation"],
-        "assumptions": [],
+        "related": ["fourier_series", "decay_smoothness"],
+        "assumptions": [
+          "The displayed condition is a classical sufficient condition, not the sharpest possible theorem."
+        ],
         "ref": "Stein–Shakarchi: Ch.4 Lemma 3.2; Ch.4 Lemma 3.3; Ch.4 Theorem 3.1",
         "book_refs": ["c4_lem_3_2", "c4_lem_3_3", "c4_thm_3_1"],
         "metadata": {
@@ -2863,19 +2979,21 @@
         "label": "Dirichlet Character",
         "kind": "definition",
         "domain": "dirichlet",
-        "statement": "A multiplicative, $q$-periodic character used to sieve arithmetic progressions.",
-        "formal_statement": "$\\chi:\\mathbb{Z}\\to\\mathbb{C}$, $q$-periodic and completely multiplicative, induced by a character of $(\\mathbb{Z}/q)^\\times$; orthogonality gives $\\frac{1}{\\varphi(q)}\\sum_\\chi \\bar\\chi(\\ell)\\chi(m)=\\delta_\\ell(m)$.",
+        "statement": "A Dirichlet character is a periodic completely multiplicative function that acts like a finite Fourier frequency for residue classes.",
+        "formal_statement": "Modulo \\(q\\), a Dirichlet character \\(\\chi:\\mathbb Z\\to\\mathbb C\\) is \\(q\\)-periodic, completely multiplicative, agrees with a group character on \\((\\mathbb Z/q\\mathbb Z)^\\times\\), and satisfies \\(\\chi(n)=0\\) when \\(\\gcd(n,q)>1\\). Orthogonality gives \\(\\frac1{\\varphi(q)}\\sum_\\chi\\overline{\\chi(a)}\\chi(n)=1\\) if \\(n\\equiv a\\pmod q\\) with \\(\\gcd(a,q)=1\\), and \\(0\\) otherwise among reduced classes.",
         "definition": null,
-        "intuition": "The characters of the unit group — the 'frequencies' that detect a residue class mod $q$.",
+        "intuition": "Dirichlet characters are the frequency basis for arithmetic progressions. They let us decompose the condition \\(n\\equiv a\\pmod q\\) into multiplicative waves.",
         "proof": null,
-        "notation": "$\\chi \\bmod q$",
+        "notation": "\\(\\chi\\bmod q\\)",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["characters_finite_abelian"]
         },
         "outgoing_relations": [],
-        "related": ["characters_finite_abelian"],
-        "assumptions": [],
+        "related": ["characters_finite_abelian", "dirichlet_l_function"],
+        "assumptions": [
+          "Characters are extended by zero away from integers coprime to \\(q\\)."
+        ],
         "ref": "Stein–Shakarchi: Ch.8 Lemma 2.2; Ch.8 Proposition 3.3",
         "book_refs": ["c8_lem_2_2", "c8_prop_3_3"],
         "metadata": {
@@ -2889,19 +3007,25 @@
         "label": "Dirichlet L-Function",
         "kind": "structure",
         "domain": "dirichlet",
-        "statement": "The character-twisted zeta function whose behavior at $s=1$ controls the primes.",
-        "formal_statement": "$L(s,\\chi)=\\sum_{n\\ge1}\\frac{\\chi(n)}{n^s}=\\prod_p\\big(1-\\chi(p)p^{-s}\\big)^{-1}$; for $\\chi\\ne\\chi_0$ it extends past $s=1$.",
+        "statement": "A Dirichlet L-function is the zeta function twisted by a Dirichlet character.",
+        "formal_statement": "For \\(\\operatorname{Re}s>1\\), \\(L(s,\\chi)=\\sum_{n=1}^\\infty\\chi(n)n^{-s}=\\prod_p(1-\\chi(p)p^{-s})^{-1}\\). If \\(\\chi\\) is nonprincipal, the series has a finite value at \\(s=1\\) after continuation or Abel limiting.",
         "definition": null,
-        "intuition": "Generalizes $\\zeta$ with a character; its non-vanishing at $1$ is the crux of Dirichlet's theorem.",
+        "intuition": "The character twist separates primes by residue class. The behavior of \\(L(s,\\chi)\\) near \\(s=1\\) controls whether primes appear in each progression.",
         "proof": null,
-        "notation": "$L(s,\\chi)$",
+        "notation": "\\(L(s,\\chi)\\)",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["dirichlet_character", "euler_product"]
         },
         "outgoing_relations": [],
-        "related": ["dirichlet_character", "euler_product"],
-        "assumptions": [],
+        "related": [
+          "dirichlet_character",
+          "euler_product",
+          "l_function_nonvanishing"
+        ],
+        "assumptions": [
+          "Euler product identity is initially valid for \\(\\operatorname{Re}s>1\\). The principal character has a pole at \\(s=1\\)."
+        ],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 2.4; Ch.8 Proposition 3.1; Ch.8 Proposition 3.4; Ch.8 Lemma 3.5; Ch.8 Proposition 3.6",
         "book_refs": [
           "c8_thm_2_4",
@@ -2921,19 +3045,21 @@
         "label": "Non-Vanishing of L(1,χ)",
         "kind": "theorem",
         "domain": "dirichlet",
-        "statement": "The key analytic fact: $L(1,\\chi)\\ne0$ for every non-trivial character.",
-        "formal_statement": "If $\\chi\\ne\\chi_0$ then $L(1,\\chi)\\ne0$; this prevents cancellation and forces $\\sum_{p\\equiv a}1/p=\\infty$.",
+        "statement": "The key analytic input is that nonprincipal Dirichlet L-functions do not vanish at \\(s=1\\).",
+        "formal_statement": "If \\(\\chi\\) is a nonprincipal Dirichlet character modulo \\(q\\), then \\(L(1,\\chi)\\ne0\\).",
         "definition": null,
-        "intuition": "The hard heart of the proof — without it the primes could avoid a progression.",
+        "intuition": "If one of these values vanished, the character decomposition could allow total cancellation in a residue class. Non-vanishing prevents that escape route.",
         "proof": null,
-        "notation": "$L(1,\\chi)\\ne0$",
+        "notation": "\\(L(1,\\chi)\\ne0\\)",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["dirichlet_l_function"]
+          "logical_dependency": ["dirichlet_l_function", "dirichlet_character"]
         },
         "outgoing_relations": [],
-        "related": ["dirichlet_l_function"],
-        "assumptions": [],
+        "related": ["dirichlet_l_function", "dirichlet_primes"],
+        "assumptions": [
+          "The principal character is excluded; its \\(L\\)-function has a pole at \\(s=1\\), not a finite nonzero value."
+        ],
         "ref": "Stein–Shakarchi: Ch.8 Theorem 3.7; Ch.8 Theorem 2.3; Ch.8 Lemma 3.8; Ch.8 Lemma 3.9; Ch.8 Proposition 3.10; Ch.8 Proposition 3.11; Ch.8 Proposition 3.13; Ch.8 Theorem 3.12; Ch.8 Lemma 3.14; Ch.8 Lemma 3.15",
         "book_refs": [
           "c8_thm_3_7",
@@ -3413,44 +3539,44 @@
         "source": "riemann_lebesgue",
         "target": "fourier_coefficient",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Fourier coefficients must be defined before the statement makes sense."
       },
       {
         "id": "e_riemann_lebesgue__requires__l1_space",
         "source": "riemann_lebesgue",
         "target": "l1_space",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "assumption_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "The lemma is stated for integrable functions on the circle."
       },
       {
         "id": "e_uniqueness_series__requires__fourier_coefficient",
         "source": "uniqueness_series",
         "target": "fourier_coefficient",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_best_approximation__requires__partial_sum",
         "source": "best_approximation",
         "target": "partial_sum",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_best_approximation__requires__orthonormal_system",
@@ -3468,18 +3594,18 @@
         "source": "best_approximation",
         "target": "l2_space",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "assumption_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_decay_smoothness__requires__fourier_coefficient",
         "source": "decay_smoothness",
         "target": "fourier_coefficient",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
@@ -3552,17 +3678,6 @@
         "notes": ""
       },
       {
-        "id": "e_abel_summation__requires__partial_sum",
-        "source": "abel_summation",
-        "target": "partial_sum",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
         "id": "e_fejer_kernel__requires__cesaro_summation",
         "source": "fejer_kernel",
         "target": "cesaro_summation",
@@ -3622,11 +3737,11 @@
         "source": "mean_square_convergence",
         "target": "partial_sum",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_pointwise_convergence__requires__dirichlet_kernel",
@@ -3666,18 +3781,18 @@
         "source": "gibbs_phenomenon",
         "target": "partial_sum",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_gibbs_phenomenon__requires__dirichlet_conditions",
         "source": "gibbs_phenomenon",
         "target": "dirichlet_conditions",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "pedagogical_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
@@ -3688,33 +3803,33 @@
         "source": "carleson_theorem",
         "target": "pointwise_convergence",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_carleson_theorem__requires__l2_space",
         "source": "carleson_theorem",
         "target": "l2_space",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "assumption_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_dubois_reymond__requires__pointwise_convergence",
         "source": "dubois_reymond",
         "target": "pointwise_convergence",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_dubois_reymond__requires__dirichlet_kernel",
@@ -3731,17 +3846,6 @@
         "id": "e_fourier_transform__requires__complex_exponential",
         "source": "fourier_transform",
         "target": "complex_exponential",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_fourier_transform__requires__l1_space",
-        "source": "fourier_transform",
-        "target": "l1_space",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -3797,17 +3901,6 @@
         "id": "e_plancherel_theorem__requires__fourier_transform",
         "source": "plancherel_theorem",
         "target": "fourier_transform",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_plancherel_theorem__requires__l2_space",
-        "source": "plancherel_theorem",
-        "target": "l2_space",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -4135,17 +4228,6 @@
         "notes": ""
       },
       {
-        "id": "e_weyl_equidistribution__requires__fejer_theorem",
-        "source": "weyl_equidistribution",
-        "target": "fejer_theorem",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
         "id": "e_weyl_equidistribution__requires__fourier_coefficient",
         "source": "weyl_equidistribution",
         "target": "fourier_coefficient",
@@ -4271,22 +4353,11 @@
         "source": "carleson_theorem",
         "target": "almost_everywhere",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_riemann_lebesgue__requires__dominated_convergence",
-        "source": "riemann_lebesgue",
-        "target": "dominated_convergence",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_real_fourier_series__requires__fourier_series",
@@ -4392,7 +4463,7 @@
         "source": "weierstrass_approximation",
         "target": "trigonometric_polynomial",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
@@ -4403,7 +4474,7 @@
         "source": "abel_theorem",
         "target": "abel_summation",
         "type": "requires",
-        "dependency_class": "logical_dependency",
+        "dependency_class": "definitional_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
@@ -4435,17 +4506,6 @@
         "id": "e_ft_continuity__requires__fourier_transform",
         "source": "ft_continuity",
         "target": "fourier_transform",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_ft_continuity__requires__l1_space",
-        "source": "ft_continuity",
-        "target": "l1_space",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -4773,17 +4833,6 @@
         "notes": ""
       },
       {
-        "id": "e_weierstrass_function__requires__cesaro_summation",
-        "source": "weierstrass_function",
-        "target": "cesaro_summation",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
         "id": "e_half_plane_poisson__requires__fourier_transform",
         "source": "half_plane_poisson",
         "target": "fourier_transform",
@@ -4957,7 +5006,7 @@
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "Classified during convergence/application review."
       },
       {
         "id": "e_l_function_nonvanishing__requires__dirichlet_l_function",
@@ -5802,6 +5851,281 @@
         "type": "instance_of",
         "dependency_class": "logical_dependency",
         "label": "instance of",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_uniqueness_series__requires__l1_space",
+        "source": "uniqueness_series",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "assumption_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_uniqueness_series__requires__almost_everywhere",
+        "source": "uniqueness_series",
+        "target": "almost_everywhere",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Needed to state the L1 conclusion precisely."
+      },
+      {
+        "id": "e_uniqueness_series__requires__fejer_theorem",
+        "source": "uniqueness_series",
+        "target": "fejer_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "One standard proof uses Fejer means as an approximate identity."
+      },
+      {
+        "id": "e_best_approximation__requires__inner_product_space",
+        "source": "best_approximation",
+        "target": "inner_product_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_decay_smoothness__requires__term_differentiation",
+        "source": "decay_smoothness",
+        "target": "term_differentiation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The mechanism is the Fourier coefficient formula for derivatives."
+      },
+      {
+        "id": "e_fejer_theorem__requires__cesaro_summation",
+        "source": "fejer_theorem",
+        "target": "cesaro_summation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_mean_square_convergence__requires__l2_space",
+        "source": "mean_square_convergence",
+        "target": "l2_space",
+        "type": "requires",
+        "dependency_class": "assumption_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_mean_square_convergence__requires__best_approximation",
+        "source": "mean_square_convergence",
+        "target": "best_approximation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_pointwise_convergence__requires__partial_sum",
+        "source": "pointwise_convergence",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_pointwise_convergence__requires__l1_space",
+        "source": "pointwise_convergence",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "assumption_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_gibbs_phenomenon__requires__dirichlet_kernel",
+        "source": "gibbs_phenomenon",
+        "target": "dirichlet_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dubois_reymond__requires__partial_sum",
+        "source": "dubois_reymond",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_term_differentiation__requires__fourier_coefficient",
+        "source": "term_differentiation",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_poisson_summation__requires__schwartz_space",
+        "source": "poisson_summation",
+        "target": "schwartz_space",
+        "type": "requires",
+        "dependency_class": "assumption_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_poisson_summation__requires__fourier_transform_convention",
+        "source": "poisson_summation",
+        "target": "fourier_transform_convention",
+        "type": "requires",
+        "dependency_class": "notation_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_central_limit__requires__variance_standard_deviation",
+        "source": "central_limit",
+        "target": "variance_standard_deviation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_isoperimetric__requires__fourier_series",
+        "source": "isoperimetric",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "pedagogical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weyl_equidistribution__requires__weierstrass_approximation",
+        "source": "weyl_equidistribution",
+        "target": "weierstrass_approximation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weyl_equidistribution__requires__trigonometric_polynomial",
+        "source": "weyl_equidistribution",
+        "target": "trigonometric_polynomial",
+        "type": "requires",
+        "dependency_class": "pedagogical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weierstrass_function__requires__trigonometric_polynomial",
+        "source": "weierstrass_function",
+        "target": "trigonometric_polynomial",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weierstrass_function__requires__decay_smoothness",
+        "source": "weierstrass_function",
+        "target": "decay_smoothness",
+        "type": "requires",
+        "dependency_class": "pedagogical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Shows why decay rates encode regularity."
+      },
+      {
+        "id": "e_theta_function__requires__fourier_transform_convention",
+        "source": "theta_function",
+        "target": "fourier_transform_convention",
+        "type": "requires",
+        "dependency_class": "notation_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_schrodinger_equation__requires__fourier_transform_convention",
+        "source": "schrodinger_equation",
+        "target": "fourier_transform_convention",
+        "type": "requires",
+        "dependency_class": "notation_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Classified during convergence/application review."
+      },
+      {
+        "id": "e_l_function_nonvanishing__requires__dirichlet_character",
+        "source": "l_function_nonvanishing",
+        "target": "dirichlet_character",
+        "type": "requires",
+        "dependency_class": "assumption_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_dirichlet_primes__requires__dirichlet_l_function",
+        "source": "dirichlet_primes",
+        "target": "dirichlet_l_function",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
         "notes": ""
