@@ -606,7 +606,7 @@ function PanelDictionaryLinkGroup({
               key={node.id}
               type="button"
               onClick={() => onPick(node.id)}
-              className="inline-flex max-w-full items-center gap-1.5 rounded-full border px-2 py-1 text-left text-ui-xs leading-tight transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
+              className="inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] border px-2 py-1 text-left text-ui-xs leading-tight transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
               style={{ borderColor: nodeTone.border, color: "var(--fg-2)", background: "var(--surface)" }}
             >
               <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: nodeTone.color }} aria-hidden />

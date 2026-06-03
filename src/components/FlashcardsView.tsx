@@ -198,7 +198,7 @@ function FlashcardsBody({ map }: { map: LoadedMap }) {
           <button
             onClick={reshuffle}
             disabled={total === 0}
-            className="flex h-7 items-center gap-1.5 rounded-pill border px-2.5 text-ui-meta font-medium transition-colors hover:bg-[color:var(--surface-3)] disabled:opacity-40"
+            className="flex h-7 items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 text-ui-meta font-medium transition-colors hover:bg-[color:var(--surface-3)] disabled:opacity-40"
             style={{ borderColor: "var(--border)", color: "var(--fg-2)", background: "var(--surface)" }}
             title="Shuffle and restart"
           >
@@ -260,7 +260,7 @@ function FlashcardsBody({ map }: { map: LoadedMap }) {
                 ) : (
                   <button
                     onClick={flip}
-                    className="flex h-11 items-center gap-2 rounded-pill px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
+                    className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
                     style={{ background: "var(--accent)", color: "var(--surface)", boxShadow: "var(--shadow-2)" }}
                   >
                     Reveal answer
@@ -464,7 +464,7 @@ function SummaryCard({
         {againCount > 0 && (
           <button
             onClick={onReview}
-            className="flex h-11 items-center gap-2 rounded-pill px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
+            className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
             style={{ background: "var(--accent)", color: "var(--surface)", boxShadow: "var(--shadow-2)" }}
           >
             Review {againCount} missed
@@ -472,14 +472,14 @@ function SummaryCard({
         )}
         <button
           onClick={onRestart}
-          className="flex h-11 items-center gap-2 rounded-pill border px-5 text-ui-body font-medium transition-colors hover:bg-[color:var(--surface-3)]"
+          className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] border px-5 text-ui-body font-medium transition-colors hover:bg-[color:var(--surface-3)]"
           style={{ borderColor: "var(--border)", color: "var(--fg-1)", background: "var(--surface)" }}
         >
           <RotateCcw className="h-4 w-4" /> Restart deck
         </button>
         <button
           onClick={onClose}
-          className="h-11 rounded-pill px-5 text-ui-body font-medium transition-colors hover:bg-[color:var(--surface-3)]"
+          className="h-11 rounded-[var(--radius-sm)] px-5 text-ui-body font-medium transition-colors hover:bg-[color:var(--surface-3)]"
           style={{ color: "var(--fg-2)" }}
         >
           Back to atlas
@@ -503,7 +503,7 @@ function EmptyState({ onBack }: { onBack: () => void }) {
       </p>
       <button
         onClick={onBack}
-        className="mt-1 h-10 rounded-pill border px-5 text-ui-sm font-medium transition-colors hover:bg-[color:var(--surface-3)]"
+        className="mt-1 h-10 rounded-[var(--radius-sm)] border px-5 text-ui-sm font-medium transition-colors hover:bg-[color:var(--surface-3)]"
         style={{ borderColor: "var(--border)", color: "var(--fg-1)", background: "var(--surface)" }}
       >
         Back to atlas
@@ -550,7 +550,7 @@ function RateButton({
   return (
     <button
       onClick={onClick}
-      className="flex h-11 items-center gap-2 rounded-pill border px-5 text-ui-body font-semibold transition-transform active:scale-[0.98]"
+      className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] border px-5 text-ui-body font-semibold transition-transform active:scale-[0.98]"
       style={{
         background: got ? "var(--accent-soft)" : "var(--surface)",
         borderColor: got ? "var(--accent-border)" : "var(--border)",

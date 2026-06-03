@@ -31,7 +31,7 @@ export function RouteToast({
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-4 z-30 flex justify-center px-3">
       <div
-        className="pointer-events-auto flex max-w-full items-center gap-2.5 rounded-pill border py-1.5 pl-4 pr-1.5"
+        className="pointer-events-auto flex max-w-full items-center gap-2.5 rounded-[var(--radius-xl)] border py-1.5 pl-4 pr-1.5"
         style={{
           background: "var(--surface)",
           borderColor: "var(--border)",
@@ -112,7 +112,7 @@ function ToastButton({
     <button
       type="button"
       onClick={onClick}
-      className="flex h-7 w-7 items-center justify-center rounded-pill transition-colors hover:bg-[var(--surface-3)]"
+      className="flex h-7 w-7 items-center justify-center rounded-[var(--radius-sm)] transition-colors hover:bg-[var(--surface-3)]"
       style={{ color: "var(--fg-2)" }}
       title={label}
       aria-label={label}

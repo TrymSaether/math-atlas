@@ -308,7 +308,7 @@ export function ConnectionChip({
     <button
       onClick={onClick}
       title={`${node.title} · ${KIND_LABEL[node.kind]}`}
-      className="group inline-flex max-w-full items-center gap-1.5 rounded-full border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
+      className="group inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
     >
       <span
