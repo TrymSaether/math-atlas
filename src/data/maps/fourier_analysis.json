@@ -4478,35 +4478,87 @@
         "id": "moderate_decrease",
         "kind": "definition",
         "domain": "foundations",
-        "label": "Functions of Moderate Decrease",
-        "statement": "Continuous functions on the line that decay at least like $1/x^2$; the working class on which the Fourier transform is first built.",
-        "formal_statement": "A continuous $f:\\mathbb R\\to\\mathbb C$ has \\textbf{moderate decrease} if there is $A>0$ with $|f(x)|\\le \\dfrac{A}{1+x^2}$ for all $x$. The class is written $\\mathcal M(\\mathbb R)$.",
-        "definition": "$$f\\in\\mathcal M(\\mathbb R)\\iff f\\in C(\\mathbb R)\\ \\text{and}\\ \\exists A>0:\\ |f(x)|\\le \\frac{A}{1+x^2}\\ \\ (\\forall x\\in\\mathbb R).$$",
+        "label": "Moderate Decrease Class $\\mathcal M(\\mathbb R)$",
+        "statement": "Continuous functions on $\\mathbb R$ bounded by a constant multiple of $\\frac{1}{1+x^2}$; Stein--Shakarchi's basic decay class for defining improper integrals and Fourier transforms on the real line.",
+        "formal_statement": "A continuous function $f:\\mathbb R\\to\\mathbb C$ has \\textbf{moderate decrease} if there exists $A>0$ such that $|f(x)|\\le \\dfrac{A}{1+x^2}$ for every $x\\in\\mathbb R$. The class is denoted $\\mathcal M(\\mathbb R)$. In course notation, this is the same decay class as $C_2(\\mathbb R)$ when $C_2$ is defined using the bound $(1+|x|)^{-2}$.",
+        "definition": "$$\\mathcal M(\\mathbb R)=\\left\\{f\\in C(\\mathbb R):\\exists A>0\\ \\text{s.t.}\\ |f(x)|\\le \\frac{A}{1+x^2}\\ \\forall x\\in\\mathbb R\\right\\}.$$",
         "formula": null,
-        "notation": "$$\\mathcal M(\\mathbb R)$$",
-        "intuition": "Just enough decay to integrate freely: the integral, the Fourier transform, multiplication and translation all behave, yet no smoothness is assumed.",
+        "notation": "$$\\mathcal M(\\mathbb R),\\qquad C_2(\\mathbb R)\\ \\text{(equivalent course notation)}$$",
+        "intuition": "Moderate decrease is a concrete tail condition: the function may live on all of $\\mathbb R$, but far from the origin its size is dominated by a multiple of $1/x^2$. This is strong enough to make the improper integral and the Fourier transform integral well-defined in Stein--Shakarchi's elementary setup, while still allowing many non-smooth functions. The point is not smoothness; the point is that the tails are small enough not to leak infinite mass.",
         "solution": null,
         "proof": null,
         "proof_dependencies": [],
         "assumptions": [
-          "$\\mathcal M(\\mathbb R)\\subset L^1(\\mathbb R)\\cap L^2(\\mathbb R)$, since $1/(1+x^2)$ is both integrable and square-integrable."
+          "$$\\mathcal M(\\mathbb R)\\subset L^1(\\mathbb R)\\cap L^2(\\mathbb R),\\qquad (1+x^2)^{-1}\\in L^1(\\mathbb R)\\cap L^2(\\mathbb R).$$",
+          "$$1+x^2\\le (1+|x|)^2\\le 2(1+x^2)\\quad\\Longrightarrow\\quad \\mathcal M(\\mathbb R)=C_2(\\mathbb R)\\ \\text{as sets, up to equivalent constants}.$$"
         ],
         "book_refs": [],
         "dependencies": {
-          "logical_dependency": ["l1_space_real_line"]
+          "logical_dependency": [
+            "polynomial_decay",
+            "l1_space_real_line",
+            "l2_space_real_line"
+          ]
         },
         "outgoing_relations": [],
         "related": [
+          "polynomial_decay",
           "schwartz_space",
+          "l1_space_real_line",
           "l2_space_real_line",
           "fourier_transform_l1_continuity_decay",
           "riemann_lebesgue_lemma"
         ],
-        "ref": "Stein–Shakarchi: Ch.5 §1.1 (functions of moderate decrease)",
+        "ref": "Stein--Shakarchi: Ch.5 §1.1 (functions of moderate decrease)",
         "metadata": {
-          "source": "Stein–Shakarchi: Ch.5 §1.1 (functions of moderate decrease)",
+          "source": "Stein--Shakarchi: Ch.5 §1.1 (functions of moderate decrease)",
           "syllabus_priority": "core",
-          "tags": ["foundation", "transform"]
+          "tags": ["foundation", "transform", "decay"]
+        }
+      },
+      {
+        "id": "polynomial_decay",
+        "kind": "definition",
+        "domain": "foundations",
+        "label": "Polynomial Decay Class $C_m(\\mathbb R^d)$",
+        "statement": "For $m>0$, the class $C_m(\\mathbb R^d)$ consists of continuous functions whose magnitude is bounded by a constant multiple of $(1+|x|)^{-m}$.",
+        "formal_statement": "Let $d\\ge 1$ and $m>0$. The polynomial decay class $C_m(\\mathbb R^d)$ consists of continuous functions $f:\\mathbb R^d\\to\\mathbb C$ such that there exists $A>0$ with $|f(x)|\\le A(1+|x|)^{-m}$ for every $x\\in\\mathbb R^d$.",
+        "definition": "$$C_m(\\mathbb R^d)=\\left\\{f\\in C(\\mathbb R^d):\\exists A>0\\ \\text{s.t.}\\ |f(x)|\\le \\frac{A}{(1+|x|)^m}\\ \\forall x\\in\\mathbb R^d\\right\\}.$$",
+        "formula": null,
+        "notation": "$$C_m(\\mathbb R^d),\\qquad f(x)=O\\!\\left((1+|x|)^{-m}\\right)\\quad(|x|\\to\\infty)$$",
+        "intuition": "The class $C_m(\\mathbb R^d)$ measures polynomial tail decay. Larger $m$ means the function must fade faster at infinity. The class is useful because it gives quick thresholds for integrability: in $\\mathbb R^d$, decay faster than $|x|^{-d}$ gives $L^1$ control, and decay faster than $|x|^{-d/2}$ gives $L^2$ control. So $C_m(\\mathbb R^d)$ is a bookkeeping device for how much tail mass a function is allowed to carry, because apparently infinity was not already inconvenient enough.",
+        "solution": null,
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [
+          "$$m_2\\ge m_1>0\\quad\\Longrightarrow\\quad C_{m_2}(\\mathbb R^d)\\subset C_{m_1}(\\mathbb R^d).$$",
+          "$$m>0\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset C_0(\\mathbb R^d),\\quad \\text{where }C_0(\\mathbb R^d)\\text{ denotes continuous functions vanishing at infinity}.$$",
+          "$$m>d\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset L^1(\\mathbb R^d).$$",
+          "$$2m>d\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset L^2(\\mathbb R^d).$$",
+          "$$\\mathcal M(\\mathbb R)=C_2(\\mathbb R)\\ \\text{when }C_2(\\mathbb R)\\text{ is defined using }(1+|x|)^{-2}\\text{ decay}.$$"
+        ],
+        "book_refs": [],
+        "dependencies": {
+          "logical_dependency": [
+            "lebesgue_integral",
+            "l1_space_real_line",
+            "l2_space_real_line"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "moderate_decrease",
+          "schwartz_space",
+          "support_of_function",
+          "l1_space_real_line",
+          "l2_space_real_line",
+          "fourier_transform_l1_continuity_decay"
+        ],
+        "ref": "Course notation for polynomial decay classes; compare Stein--Shakarchi Ch.5 §1.1 functions of moderate decrease.",
+        "metadata": {
+          "source": "Course notation; Stein--Shakarchi Ch.5 §1.1 for the corresponding $d=1$, $m=2$ moderate decrease class",
+          "syllabus_priority": "support",
+          "tags": ["foundation", "decay", "function-space", "asymptotic"]
         }
       },
       {
@@ -4602,7 +4654,7 @@
             "id": "argument",
             "label": "Argument",
             "role": "argument",
-            "content": "$f$ is the \\textbf{triangular wave}: even, continuous (note $f(\\pm\\pi)=0$, so the periodic extension has no jumps), piecewise linear with corners at integer multiples of $\\pi$. Because $f$ is even and real, $\\hat f(n)=\\hat f(-n)\\in\\mathbb R$ and the sine part of $e^{-inx}$ drops out:\n$$\\hat f(n)=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi}\\Big(1-\\tfrac{|x|}{\\pi}\\Big)\\cos(nx)\\,dx=\\frac1\\pi\\int_0^\\pi\\Big(1-\\tfrac{x}{\\pi}\\Big)\\cos(nx)\\,dx,$$\nwhere evenness folds $[-\\pi,\\pi]$ onto $[0,\\pi]$. For $n\\neq0$, $\\int_0^\\pi\\cos(nx)\\,dx=\\frac{\\sin(n\\pi)}{n}=0$, and integration by parts gives\n$$\\int_0^\\pi x\\cos(nx)\\,dx=\\Big[\\tfrac{x\\sin(nx)}{n}\\Big]_0^\\pi-\\frac1n\\int_0^\\pi\\sin(nx)\\,dx=\\frac{1}{n^2}\\big[\\cos(nx)\\big]_0^\\pi=\\frac{(-1)^n-1}{n^2}.$$\nHence\n$$\\hat f(n)=\\frac1\\pi\\Big(0-\\frac1\\pi\\cdot\\frac{(-1)^n-1}{n^2}\\Big)=\\frac{1}{\\pi^2}\\cdot\\frac{1-(-1)^n}{n^2}.$$\nFor $n$ even, $1-(-1)^n=0\\Rightarrow\\hat f(n)=0$; for $n$ odd, $1-(-1)^n=2\\Rightarrow\\hat f(n)=\\dfrac{2}{\\pi^2 n^2}$. $\\blacksquare$",
+            "content": "$f$ is the \\textbf{triangular wave}: even, continuous (note $f(\\pm\\pi)=0$, so the periodic extension has no jumps), piecewise linear with corners at integer multiples of $\\pi$. Because $f$ is even and real, $\\hat f(n)=\\hat f(-n)\\in\\mathbb R$ and the sine part of $e^{-inx}$ drops out:\n$$\\hat f(n)=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi}\\Big(1-\\tfrac{|x|}{\\pi}\\Big)\\cos(nx)\\,dx=\\frac1\\pi\\int_0^\\pi\\Big(1-\\tfrac{x}{\\pi}\\Big)\\cos(nx)\\,dx,$$\nwhere evenness folds $[-\\pi,\\pi]$ onto $[0,\\pi]$. For $n\\neq0$, $\\int_0^\\pi\\cos(nx)\\,dx=\\frac{\\sin(n\\pi)}{n}=0$, and integration by parts gives\n$$\\int_0^\\pi x\\cos(nx)\\,dx=\\Big[\\tfrac{x\\sin(nx)}{n}\\Big]_0^\\pi-\\frac1n\\int_0^\\pi\\sin(nx)\\,dx=\\frac{1}{n^2}\\big[\\cos(nx)\\big]_0^\\pi=\\frac{(-1)^n-1}{n^2}.$$\nHence\n$$\\hat f(n)=\\frac1\\pi\\Big(0-\\frac1\\pi\\cdot\\frac{(-1)^n-1}{n^2}\\Big)=\\frac{1}{\\pi^2}\\cdot\\frac{1-(-1)^n}{n^2}.$$\nFor $n$ even, $1-(-1)^n=0\\Rightarrow\\hat f(n)=0$; for $n$ odd, $1-(-1)^n=2\\Rightarrow\\hat f(n)=\\dfrac{2}{\\pi^2 n^2}$.",
             "depends_on": []
           },
           {
@@ -4657,7 +4709,7 @@
             "id": "conclusion",
             "label": "Conclusion",
             "role": "conclusion",
-            "content": "To identify $g=f$: uniform convergence lets us integrate term by term, so for every $m$,\n$$\\hat g(m)=\\frac{1}{2\\pi}\\int_{-\\pi}^\\pi g(x)e^{-imx}\\,dx=\\sum_n\\hat f(n)\\cdot\\frac1{2\\pi}\\int_{-\\pi}^\\pi e^{i(n-m)x}\\,dx=\\hat f(m).$$\nThus $f$ and $g$ are both continuous with the same Fourier coefficients; by the uniqueness theorem (applied to $f-g$), $f\\equiv g$. Therefore $S_N[f]\\to f$ uniformly. $\\blacksquare$",
+            "content": "To identify $g=f$: uniform convergence lets us integrate term by term, so for every $m$,\n$$\\hat g(m)=\\frac{1}{2\\pi}\\int_{-\\pi}^\\pi g(x)e^{-imx}\\,dx=\\sum_n\\hat f(n)\\cdot\\frac1{2\\pi}\\int_{-\\pi}^\\pi e^{i(n-m)x}\\,dx=\\hat f(m).$$\nThus $f$ and $g$ are both continuous with the same Fourier coefficients; by the uniqueness theorem (applied to $f-g$), $f\\equiv g$. Therefore $S_N[f]\\to f$ uniformly.",
             "depends_on": []
           }
         ],
@@ -4730,7 +4782,7 @@
             "id": "check",
             "label": "Check",
             "role": "remark",
-            "content": "$\\zeta(4)=\\frac{\\pi^4}{90}$; odd/even split gives $S=\\zeta(4)-\\frac{1}{16}\\zeta(4)=\\frac{15}{16}\\cdot\\frac{\\pi^4}{90}=\\frac{\\pi^4}{96}$. $\\blacksquare$",
+            "content": "$\\zeta(4)=\\frac{\\pi^4}{90}$; odd/even split gives $S=\\zeta(4)-\\frac{1}{16}\\zeta(4)=\\frac{15}{16}\\cdot\\frac{\\pi^4}{90}=\\frac{\\pi^4}{96}$.",
             "depends_on": []
           }
         ],
@@ -4850,7 +4902,7 @@
             "id": "identify-hat-psi",
             "label": "Identify $\\hat\\psi$",
             "role": "claim",
-            "content": "Let $b:=\\chi_{[-1/2,1/2]}\\in L^1\\cap L^2$, even. Compute its transform directly:\n$$\\hat b(x)=\\int_{-1/2}^{1/2}e^{-2\\pi i x\\xi}\\,d\\xi=\\frac{e^{-\\pi ix}-e^{\\pi ix}}{-2\\pi ix}=\\frac{\\sin(\\pi x)}{\\pi x}=\\psi(x).$$\nSo $\\hat b=\\psi$. The Fourier transform extends to a \\textbf{unitary} map on $L^2$ with $\\mathcal F\\mathcal F\\,b=b(-\\,\\cdot)$ (double transform = reflection). Since $b$ is even, $b(-\\cdot)=b$, hence\n$$\\hat\\psi=\\mathcal F[\\hat b]=\\mathcal F\\mathcal F\\,b=b(-\\cdot)=b=\\chi_{[-1/2,1/2]}.\\qquad\\blacksquare$$\nEquivalently: $\\psi$ is the inverse transform of the unit box, so by inversion the forward transform of $\\psi$ is that box; membership $\\psi\\in L^2$ is exactly what makes Plancherel applicable despite $\\psi\\notin L^1$.",
+            "content": "Let $b:=\\chi_{[-1/2,1/2]}\\in L^1\\cap L^2$, even. Compute its transform directly:\n$$\\hat b(x)=\\int_{-1/2}^{1/2}e^{-2\\pi i x\\xi}\\,d\\xi=\\frac{e^{-\\pi ix}-e^{\\pi ix}}{-2\\pi ix}=\\frac{\\sin(\\pi x)}{\\pi x}=\\psi(x).$$\nSo $\\hat b=\\psi$. The Fourier transform extends to a \\textbf{unitary} map on $L^2$ with $\\mathcal F\\mathcal F\\,b=b(-\\,\\cdot)$ (double transform = reflection). Since $b$ is even, $b(-\\cdot)=b$, hence\n$$\\hat\\psi=\\mathcal F[\\hat b]=\\mathcal F\\mathcal F\\,b=b(-\\cdot)=b=\\chi_{[-1/2,1/2]}.$$\nEquivalently: $\\psi$ is the inverse transform of the unit box, so by inversion the forward transform of $\\psi$ is that box; membership $\\psi\\in L^2$ is exactly what makes Plancherel applicable despite $\\psi\\notin L^1$.",
             "depends_on": []
           }
         ],
@@ -4907,7 +4959,7 @@
             "id": "psi-k-orthonormal",
             "label": "$\\{\\psi_k\\}$ orthonormal",
             "role": "claim",
-            "content": "The Fourier transform is \\textbf{unitary} on $L^2$ (Plancherel), so it preserves inner products:\n$$\\langle\\psi_k,\\psi_\\ell\\rangle_{L^2}=\\langle\\hat\\psi_k,\\hat\\psi_\\ell\\rangle_{L^2}=\\delta_{k\\ell}.\\qquad\\blacksquare$$",
+            "content": "The Fourier transform is \\textbf{unitary} on $L^2$ (Plancherel), so it preserves inner products:\n$$\\langle\\psi_k,\\psi_\\ell\\rangle_{L^2}=\\langle\\hat\\psi_k,\\hat\\psi_\\ell\\rangle_{L^2}=\\delta_{k\\ell}.$$",
             "depends_on": []
           },
           {
@@ -5028,7 +5080,7 @@
             "id": "computation",
             "label": "Computation",
             "role": "calculation",
-            "content": "Differentiate $|\\phi|^2$: $\\ \\frac{d}{dx}|\\phi(x)|^2=\\phi'\\overline\\phi+\\phi\\overline{\\phi'}=2\\,\\mathrm{Re}\\big(\\overline{\\phi}\\,\\phi'\\big)$. Integrate $\\|\\phi\\|_2^2=\\int 1\\cdot|\\phi|^2$ by parts with $u=|\\phi|^2$, $v=x$:\n$$\\int_{\\mathbb R}|\\phi|^2\\,dx=\\Big[x|\\phi(x)|^2\\Big]_{-\\infty}^{\\infty}-\\int_{\\mathbb R}x\\,\\frac{d}{dx}|\\phi(x)|^2\\,dx.$$\nThe boundary term vanishes because $\\phi\\in\\mathcal S$ decays faster than any power, so $x|\\phi(x)|^2\\to0$. Therefore, using $-2\\,\\mathrm{Re}(z)\\le2|z|$ and then Cauchy–Schwarz on $|x\\phi|$ and $|\\phi'|$,\n$$\\|\\phi\\|_2^2=-2\\int_{\\mathbb R}x\\,\\mathrm{Re}\\big(\\overline\\phi\\,\\phi'\\big)\\,dx\\le 2\\int_{\\mathbb R}|x\\phi|\\,|\\phi'|\\,dx\\le 2\\,\\|x\\phi\\|_2\\,\\|\\phi'\\|_2.\\qquad\\blacksquare$$",
+            "content": "Differentiate $|\\phi|^2$: $\\ \\frac{d}{dx}|\\phi(x)|^2=\\phi'\\overline\\phi+\\phi\\overline{\\phi'}=2\\,\\mathrm{Re}\\big(\\overline{\\phi}\\,\\phi'\\big)$. Integrate $\\|\\phi\\|_2^2=\\int 1\\cdot|\\phi|^2$ by parts with $u=|\\phi|^2$, $v=x$:\n$$\\int_{\\mathbb R}|\\phi|^2\\,dx=\\Big[x|\\phi(x)|^2\\Big]_{-\\infty}^{\\infty}-\\int_{\\mathbb R}x\\,\\frac{d}{dx}|\\phi(x)|^2\\,dx.$$\nThe boundary term vanishes because $\\phi\\in\\mathcal S$ decays faster than any power, so $x|\\phi(x)|^2\\to0$. Therefore, using $-2\\,\\mathrm{Re}(z)\\le2|z|$ and then Cauchy–Schwarz on $|x\\phi|$ and $|\\phi'|$,\n$$\\|\\phi\\|_2^2=-2\\int_{\\mathbb R}x\\,\\mathrm{Re}\\big(\\overline\\phi\\,\\phi'\\big)\\,dx\\le 2\\int_{\\mathbb R}|x\\phi|\\,|\\phi'|\\,dx\\le 2\\,\\|x\\phi\\|_2\\,\\|\\phi'\\|_2.$$",
             "depends_on": []
           },
           {
@@ -5105,7 +5157,7 @@
             "id": "conclusion",
             "label": "Conclusion",
             "role": "conclusion",
-            "content": "Fix $x,\\ \\varepsilon>0$. Using (i),\n$$\\big(\\mathcal H_t^{(2)}*f\\big)(x)-f(x)=\\int_{\\mathbb R^2}\\mathcal H_t^{(2)}(y)\\big[f(x-y)-f(x)\\big]\\,dy.$$\n$f\\in\\mathcal S$ is bounded and uniformly continuous; choose $\\delta$ with $|f(x-y)-f(x)|<\\varepsilon$ for $|y|<\\delta$. Splitting and using $\\mathcal H_t^{(2)}\\ge0$,\n$$\\big|\\mathcal H_t^{(2)}*f(x)-f(x)\\big|\\le \\varepsilon\\cdot1+2\\|f\\|_\\infty\\int_{|y|\\ge\\delta}\\mathcal H_t^{(2)}(y)\\,dy.$$\nBy (iii) the second term $\\to0$, so $\\limsup_{t\\to0^+}|\\cdots|\\le\\varepsilon$ for all $\\varepsilon>0$; the limit is $0$. $\\blacksquare$",
+            "content": "Fix $x,\\ \\varepsilon>0$. Using (i),\n$$\\big(\\mathcal H_t^{(2)}*f\\big)(x)-f(x)=\\int_{\\mathbb R^2}\\mathcal H_t^{(2)}(y)\\big[f(x-y)-f(x)\\big]\\,dy.$$\n$f\\in\\mathcal S$ is bounded and uniformly continuous; choose $\\delta$ with $|f(x-y)-f(x)|<\\varepsilon$ for $|y|<\\delta$. Splitting and using $\\mathcal H_t^{(2)}\\ge0$,\n$$\\big|\\mathcal H_t^{(2)}*f(x)-f(x)\\big|\\le \\varepsilon\\cdot1+2\\|f\\|_\\infty\\int_{|y|\\ge\\delta}\\mathcal H_t^{(2)}(y)\\,dy.$$\nBy (iii) the second term $\\to0$, so $\\limsup_{t\\to0^+}|\\cdots|\\le\\varepsilon$ for all $\\varepsilon>0$; the limit is $0$.",
             "depends_on": []
           },
           {
@@ -5186,7 +5238,7 @@
             "id": "e",
             "label": "(e)",
             "role": "case",
-            "content": "$f$ is real $\\iff f=\\overline f$. Now $\\widehat{\\overline f}(n)=\\frac1{2\\pi}\\int\\overline{f}e^{-in\\theta}=\\overline{\\frac1{2\\pi}\\int f e^{in\\theta}}=\\overline{\\hat f(-n)}$. Matching coefficients, $f=\\overline f\\iff \\hat f(n)=\\overline{\\hat f(-n)}$, i.e. $\\hat f(-n)=\\overline{\\hat f(n)}$. $\\blacksquare$",
+            "content": "$f$ is real $\\iff f=\\overline f$. Now $\\widehat{\\overline f}(n)=\\frac1{2\\pi}\\int\\overline{f}e^{-in\\theta}=\\overline{\\frac1{2\\pi}\\int f e^{in\\theta}}=\\overline{\\hat f(-n)}$. Matching coefficients, $f=\\overline f\\iff \\hat f(n)=\\overline{\\hat f(-n)}$, i.e. $\\hat f(-n)=\\overline{\\hat f(n)}$.",
             "depends_on": []
           }
         ],
@@ -5234,7 +5286,7 @@
             "id": "conclusion",
             "label": "Conclusion",
             "role": "conclusion",
-            "content": "Two integrals (by parts):\n$$\\int_0^p x\\sin mx\\,dx=-\\frac{p\\cos mp}{m}+\\frac{\\sin mp}{m^2},\\qquad \\int_p^\\pi(\\pi-x)\\sin mx\\,dx=\\frac{(\\pi-p)\\cos mp}{m}+\\frac{\\sin mp}{m^2},$$\n(the second via $x\\mapsto\\pi-u$ and $\\sin(m\\pi-mu)=-(-1)^m\\sin mu$, with the powers of $(-1)^m$ cancelling). Therefore\n$$A_m=\\frac{2h}{\\pi}\\Big[\\frac1p\\Big(-\\frac{p\\cos mp}{m}+\\frac{\\sin mp}{m^2}\\Big)+\\frac1{\\pi-p}\\Big(\\frac{(\\pi-p)\\cos mp}{m}+\\frac{\\sin mp}{m^2}\\Big)\\Big].$$\nThe $\\cos mp/m$ terms cancel, leaving\n$$A_m=\\frac{2h}{\\pi}\\cdot\\frac{\\sin mp}{m^2}\\Big(\\frac1p+\\frac1{\\pi-p}\\Big)=\\frac{2h}{\\pi}\\cdot\\frac{\\sin mp}{m^2}\\cdot\\frac{\\pi}{p(\\pi-p)}=\\frac{2h\\sin mp}{m^2\\,p(\\pi-p)}.$$\nFinally $|A_m|\\le \\frac{2h}{p(\\pi-p)}\\,\\frac1{m^2}$, so $\\sum_m A_m\\sin mx$ converges absolutely and uniformly; $f$ is continuous (and odd), so it equals its sine series. $\\blacksquare$",
+            "content": "Two integrals (by parts):\n$$\\int_0^p x\\sin mx\\,dx=-\\frac{p\\cos mp}{m}+\\frac{\\sin mp}{m^2},\\qquad \\int_p^\\pi(\\pi-x)\\sin mx\\,dx=\\frac{(\\pi-p)\\cos mp}{m}+\\frac{\\sin mp}{m^2},$$\n(the second via $x\\mapsto\\pi-u$ and $\\sin(m\\pi-mu)=-(-1)^m\\sin mu$, with the powers of $(-1)^m$ cancelling). Therefore\n$$A_m=\\frac{2h}{\\pi}\\Big[\\frac1p\\Big(-\\frac{p\\cos mp}{m}+\\frac{\\sin mp}{m^2}\\Big)+\\frac1{\\pi-p}\\Big(\\frac{(\\pi-p)\\cos mp}{m}+\\frac{\\sin mp}{m^2}\\Big)\\Big].$$\nThe $\\cos mp/m$ terms cancel, leaving\n$$A_m=\\frac{2h}{\\pi}\\cdot\\frac{\\sin mp}{m^2}\\Big(\\frac1p+\\frac1{\\pi-p}\\Big)=\\frac{2h}{\\pi}\\cdot\\frac{\\sin mp}{m^2}\\cdot\\frac{\\pi}{p(\\pi-p)}=\\frac{2h\\sin mp}{m^2\\,p(\\pi-p)}.$$\nFinally $|A_m|\\le \\frac{2h}{p(\\pi-p)}\\,\\frac1{m^2}$, so $\\sum_m A_m\\sin mx$ converges absolutely and uniformly; $f$ is continuous (and odd), so it equals its sine series.",
             "depends_on": []
           }
         ],
@@ -5275,7 +5327,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Since $f$ is odd, $f(\\theta)=\\sum_{k\\ge1}b_k\\sin k\\theta$ with $b_k=\\frac2\\pi\\int_0^\\pi(\\pi\\theta-\\theta^2)\\sin k\\theta\\,d\\theta$. Compute the two pieces:\n$$\\int_0^\\pi\\theta\\sin k\\theta\\,d\\theta=-\\frac{\\pi(-1)^k}{k},\\qquad \\int_0^\\pi\\theta^2\\sin k\\theta\\,d\\theta=-\\frac{\\pi^2(-1)^k}{k}-\\frac{2\\big(1-(-1)^k\\big)}{k^3}.$$\nHence\n$$\\int_0^\\pi(\\pi\\theta-\\theta^2)\\sin k\\theta\\,d\\theta=\\pi\\Big(-\\frac{\\pi(-1)^k}{k}\\Big)-\\Big(-\\frac{\\pi^2(-1)^k}{k}-\\frac{2(1-(-1)^k)}{k^3}\\Big)=\\frac{2(1-(-1)^k)}{k^3}.$$\nSo $b_k=\\frac2\\pi\\cdot\\frac{2(1-(-1)^k)}{k^3}=\\frac{4(1-(-1)^k)}{\\pi k^3}$, which is $0$ for even $k$ and $\\frac{8}{\\pi k^3}$ for odd $k$. Thus\n$$f(\\theta)=\\frac8\\pi\\sum_{k\\ \\mathrm{odd}\\ge1}\\frac{\\sin k\\theta}{k^3}.$$\nThe $1/k^3$ decay gives absolute, uniform convergence; $f$ is continuous and odd, so equality holds pointwise. $\\blacksquare$",
+            "content": "Since $f$ is odd, $f(\\theta)=\\sum_{k\\ge1}b_k\\sin k\\theta$ with $b_k=\\frac2\\pi\\int_0^\\pi(\\pi\\theta-\\theta^2)\\sin k\\theta\\,d\\theta$. Compute the two pieces:\n$$\\int_0^\\pi\\theta\\sin k\\theta\\,d\\theta=-\\frac{\\pi(-1)^k}{k},\\qquad \\int_0^\\pi\\theta^2\\sin k\\theta\\,d\\theta=-\\frac{\\pi^2(-1)^k}{k}-\\frac{2\\big(1-(-1)^k\\big)}{k^3}.$$\nHence\n$$\\int_0^\\pi(\\pi\\theta-\\theta^2)\\sin k\\theta\\,d\\theta=\\pi\\Big(-\\frac{\\pi(-1)^k}{k}\\Big)-\\Big(-\\frac{\\pi^2(-1)^k}{k}-\\frac{2(1-(-1)^k)}{k^3}\\Big)=\\frac{2(1-(-1)^k)}{k^3}.$$\nSo $b_k=\\frac2\\pi\\cdot\\frac{2(1-(-1)^k)}{k^3}=\\frac{4(1-(-1)^k)}{\\pi k^3}$, which is $0$ for even $k$ and $\\frac{8}{\\pi k^3}$ for odd $k$. Thus\n$$f(\\theta)=\\frac8\\pi\\sum_{k\\ \\mathrm{odd}\\ge1}\\frac{\\sin k\\theta}{k^3}.$$\nThe $1/k^3$ decay gives absolute, uniform convergence; $f$ is continuous and odd, so equality holds pointwise.",
             "depends_on": []
           }
         ],
@@ -5316,7 +5368,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "$f$ is even and supported on $[-\\delta,\\delta]$. The mean is $\\hat f(0)=\\frac1{2\\pi}\\int_{-\\delta}^\\delta(1-|\\theta|/\\delta)\\,d\\theta=\\frac{1}{2\\pi}\\cdot\\delta=\\frac{\\delta}{2\\pi}$ (the tent has area $\\delta$). For $n\\neq0$, using evenness,\n$$\\hat f(n)=\\frac1\\pi\\int_0^\\delta\\Big(1-\\frac{\\theta}{\\delta}\\Big)\\cos n\\theta\\,d\\theta.$$\nNow $\\int_0^\\delta\\cos n\\theta\\,d\\theta=\\frac{\\sin n\\delta}{n}$ and, by parts,\n$$\\int_0^\\delta\\frac\\theta\\delta\\cos n\\theta\\,d\\theta=\\frac{\\sin n\\delta}{n}-\\frac{1-\\cos n\\delta}{\\delta n^2}.$$\nSubtracting, $\\int_0^\\delta(1-\\theta/\\delta)\\cos n\\theta\\,d\\theta=\\frac{1-\\cos n\\delta}{\\delta n^2}$, so $\\hat f(n)=\\frac{1-\\cos n\\delta}{\\pi\\delta n^2}$. Since $f$ is even, $\\hat f(n)=\\hat f(-n)$ and the real series is\n$$f(\\theta)=\\hat f(0)+2\\sum_{n\\ge1}\\hat f(n)\\cos n\\theta=\\frac{\\delta}{2\\pi}+2\\sum_{n\\ge1}\\frac{1-\\cos n\\delta}{n^2\\pi\\delta}\\cos n\\theta.$$\nCoefficients are $O(1/n^2)$, so convergence is uniform to the continuous $f$. $\\blacksquare$",
+            "content": "$f$ is even and supported on $[-\\delta,\\delta]$. The mean is $\\hat f(0)=\\frac1{2\\pi}\\int_{-\\delta}^\\delta(1-|\\theta|/\\delta)\\,d\\theta=\\frac{1}{2\\pi}\\cdot\\delta=\\frac{\\delta}{2\\pi}$ (the tent has area $\\delta$). For $n\\neq0$, using evenness,\n$$\\hat f(n)=\\frac1\\pi\\int_0^\\delta\\Big(1-\\frac{\\theta}{\\delta}\\Big)\\cos n\\theta\\,d\\theta.$$\nNow $\\int_0^\\delta\\cos n\\theta\\,d\\theta=\\frac{\\sin n\\delta}{n}$ and, by parts,\n$$\\int_0^\\delta\\frac\\theta\\delta\\cos n\\theta\\,d\\theta=\\frac{\\sin n\\delta}{n}-\\frac{1-\\cos n\\delta}{\\delta n^2}.$$\nSubtracting, $\\int_0^\\delta(1-\\theta/\\delta)\\cos n\\theta\\,d\\theta=\\frac{1-\\cos n\\delta}{\\delta n^2}$, so $\\hat f(n)=\\frac{1-\\cos n\\delta}{\\pi\\delta n^2}$. Since $f$ is even, $\\hat f(n)=\\hat f(-n)$ and the real series is\n$$f(\\theta)=\\hat f(0)+2\\sum_{n\\ge1}\\hat f(n)\\cos n\\theta=\\frac{\\delta}{2\\pi}+2\\sum_{n\\ge1}\\frac{1-\\cos n\\delta}{n^2\\pi\\delta}\\cos n\\theta.$$\nCoefficients are $O(1/n^2)$, so convergence is uniform to the continuous $f$.",
             "depends_on": []
           }
         ],
@@ -5364,7 +5416,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "Suppose $|B_k|\\le L$ for all $k$ and $a_n\\downarrow0$. In (a) with $M$ fixed and $N\\to\\infty$: the term $a_NB_N\\to0$ (since $a_N\\to0$, $|B_N|\\le L$). The series $\\sum_{n\\ge M}(a_{n+1}-a_n)B_n$ converges absolutely because\n$$\\sum_{n\\ge M}|a_{n+1}-a_n|\\,|B_n|\\le L\\sum_{n\\ge M}(a_n-a_{n+1})=L\\,a_M<\\infty$$\n(telescoping, using monotonicity $a_n\\ge a_{n+1}$). Therefore the partial sums $\\sum_{n=M}^N a_nb_n$ converge as $N\\to\\infty$, i.e. $\\sum a_nb_n$ converges. $\\blacksquare$",
+            "content": "Suppose $|B_k|\\le L$ for all $k$ and $a_n\\downarrow0$. In (a) with $M$ fixed and $N\\to\\infty$: the term $a_NB_N\\to0$ (since $a_N\\to0$, $|B_N|\\le L$). The series $\\sum_{n\\ge M}(a_{n+1}-a_n)B_n$ converges absolutely because\n$$\\sum_{n\\ge M}|a_{n+1}-a_n|\\,|B_n|\\le L\\sum_{n\\ge M}(a_n-a_{n+1})=L\\,a_M<\\infty$$\n(telescoping, using monotonicity $a_n\\ge a_{n+1}$). Therefore the partial sums $\\sum_{n=M}^N a_nb_n$ converge as $N\\to\\infty$, i.e. $\\sum a_nb_n$ converges.",
             "depends_on": []
           }
         ],
@@ -5419,7 +5471,7 @@
             "id": "conclusion",
             "label": "Conclusion",
             "role": "conclusion",
-            "content": "At $x=0$ the sum is $0$, which equals $\\tfrac12\\big(f(0^+)+f(0^-)\\big)=\\tfrac12(\\tfrac\\pi2-\\tfrac\\pi2)=0$ — the midpoint of the jump, as expected for a piecewise-$C^1$ function. $\\blacksquare$",
+            "content": "At $x=0$ the sum is $0$, which equals $\\tfrac12\\big(f(0^+)+f(0^-)\\big)=\\tfrac12(\\tfrac\\pi2-\\tfrac\\pi2)=0$ — the midpoint of the jump, as expected for a piecewise-$C^1$ function.",
             "depends_on": []
           }
         ],
@@ -5460,7 +5512,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Integrate by parts; periodicity kills every boundary term:\n$$\\hat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^\\pi f(\\theta)e^{-in\\theta}\\,d\\theta=\\frac1{2\\pi}\\,\\frac1{in}\\int_{-\\pi}^\\pi f'(\\theta)e^{-in\\theta}\\,d\\theta=\\frac1{in}\\,\\widehat{f'}(n).$$\nIterating $k$ times (valid since $f\\in C^k$),\n$$\\hat f(n)=\\frac{1}{(in)^k}\\,\\widehat{f^{(k)}}(n).$$\nBecause $f^{(k)}$ is continuous on the circle it is bounded, so $|\\widehat{f^{(k)}}(n)|\\le\\frac1{2\\pi}\\int_{-\\pi}^\\pi|f^{(k)}|=:C$ for all $n$. Therefore\n$$|\\hat f(n)|\\le\\frac{C}{|n|^k},\\qquad\\text{i.e. }\\hat f(n)=O(|n|^{-k}).\\qquad\\blacksquare$$\nThis is the quantitative half of the decay–smoothness duality: each derivative buys one power of $1/|n|$.",
+            "content": "Integrate by parts; periodicity kills every boundary term:\n$$\\hat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^\\pi f(\\theta)e^{-in\\theta}\\,d\\theta=\\frac1{2\\pi}\\,\\frac1{in}\\int_{-\\pi}^\\pi f'(\\theta)e^{-in\\theta}\\,d\\theta=\\frac1{in}\\,\\widehat{f'}(n).$$\nIterating $k$ times (valid since $f\\in C^k$),\n$$\\hat f(n)=\\frac{1}{(in)^k}\\,\\widehat{f^{(k)}}(n).$$\nBecause $f^{(k)}$ is continuous on the circle it is bounded, so $|\\widehat{f^{(k)}}(n)|\\le\\frac1{2\\pi}\\int_{-\\pi}^\\pi|f^{(k)}|=:C$ for all $n$. Therefore\n$$|\\hat f(n)|\\le\\frac{C}{|n|^k},\\qquad\\text{i.e. }\\hat f(n)=O(|n|^{-k}).$$\nThis is the quantitative half of the decay–smoothness duality: each derivative buys one power of $1/|n|$.",
             "depends_on": []
           }
         ],
@@ -5497,7 +5549,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "For every $n$,\n$$|\\hat f_k(n)-\\hat f(n)|=\\Big|\\int_0^1\\big(f_k(x)-f(x)\\big)e^{-2\\pi inx}\\,dx\\Big|\\le\\int_0^1|f_k(x)-f(x)|\\,|e^{-2\\pi inx}|\\,dx=\\int_0^1|f_k-f|\\,dx.$$\nThe right-hand side is independent of $n$ and tends to $0$. Hence\n$$\\sup_{n\\in\\mathbb Z}|\\hat f_k(n)-\\hat f(n)|\\le\\int_0^1|f_k-f|\\,dx\\xrightarrow[k\\to\\infty]{}0,$$\nwhich is exactly uniform convergence of the coefficients. $\\blacksquare$",
+            "content": "For every $n$,\n$$|\\hat f_k(n)-\\hat f(n)|=\\Big|\\int_0^1\\big(f_k(x)-f(x)\\big)e^{-2\\pi inx}\\,dx\\Big|\\le\\int_0^1|f_k(x)-f(x)|\\,|e^{-2\\pi inx}|\\,dx=\\int_0^1|f_k-f|\\,dx.$$\nThe right-hand side is independent of $n$ and tends to $0$. Hence\n$$\\sup_{n\\in\\mathbb Z}|\\hat f_k(n)-\\hat f(n)|\\le\\int_0^1|f_k-f|\\,dx\\xrightarrow[k\\to\\infty]{}0,$$\nwhich is exactly uniform convergence of the coefficients.",
             "depends_on": []
           }
         ],
@@ -5534,7 +5586,7 @@
             "id": "argument",
             "label": "Argument",
             "role": "argument",
-            "content": "Let $s_n=\\sum_{k=1}^n c_k$ and $\\sigma_n=\\frac1n\\sum_{k=1}^n s_k\\to\\sigma$. A direct computation rearranges the Cesàro mean:\n$$\\sigma_n=\\frac1n\\sum_{k=1}^n s_k=\\frac1n\\sum_{j=1}^n(n-j+1)c_j\\quad\\Longrightarrow\\quad s_n-\\sigma_n=\\frac1n\\sum_{j=1}^n(j-1)c_j.$$\nSet $a_j=(j-1)c_j$. By hypothesis $jc_j\\to0$, hence $a_j\\to0$. The Cesàro mean of a null sequence is null:\n$$\\frac1n\\sum_{j=1}^n a_j\\to0,$$\nso $s_n-\\sigma_n\\to0$. Since $\\sigma_n\\to\\sigma$, we conclude $s_n\\to\\sigma$, i.e. $\\sum c_n=\\sigma$. $\\blacksquare$",
+            "content": "Let $s_n=\\sum_{k=1}^n c_k$ and $\\sigma_n=\\frac1n\\sum_{k=1}^n s_k\\to\\sigma$. A direct computation rearranges the Cesàro mean:\n$$\\sigma_n=\\frac1n\\sum_{k=1}^n s_k=\\frac1n\\sum_{j=1}^n(n-j+1)c_j\\quad\\Longrightarrow\\quad s_n-\\sigma_n=\\frac1n\\sum_{j=1}^n(j-1)c_j.$$\nSet $a_j=(j-1)c_j$. By hypothesis $jc_j\\to0$, hence $a_j\\to0$. The Cesàro mean of a null sequence is null:\n$$\\frac1n\\sum_{j=1}^n a_j\\to0,$$\nso $s_n-\\sigma_n\\to0$. Since $\\sigma_n\\to\\sigma$, we conclude $s_n\\to\\sigma$, i.e. $\\sum c_n=\\sigma$.",
             "depends_on": []
           },
           {
@@ -5578,7 +5630,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "By definition $N F_N(x)=\\sum_{n=0}^{N-1}D_n(x)$ where $D_n(x)=\\sum_{k=-n}^n e^{ikx}=\\dfrac{\\sin((n+\\tfrac12)x)}{\\sin(x/2)}$. Hence\n$$N F_N(x)=\\frac1{\\sin(x/2)}\\sum_{n=0}^{N-1}\\sin\\big((n+\\tfrac12)x\\big).$$\nEvaluate the sum as an imaginary part of a geometric series ($\\omega=e^{ix}$):\n$$\\sum_{n=0}^{N-1}\\sin\\big((n+\\tfrac12)x\\big)=\\operatorname{Im}\\sum_{n=0}^{N-1}\\omega^{\\,n+1/2}=\\operatorname{Im}\\frac{\\omega^{1/2}(\\omega^N-1)}{\\omega-1}=\\operatorname{Im}\\frac{e^{iNx}-1}{e^{ix/2}-e^{-ix/2}}=\\frac{1-\\cos Nx}{2\\sin(x/2)}=\\frac{\\sin^2(Nx/2)}{\\sin(x/2)},$$\nusing $1-\\cos Nx=2\\sin^2(Nx/2)$. Therefore\n$$N F_N(x)=\\frac{\\sin^2(Nx/2)}{\\sin^2(x/2)},\\qquad F_N(x)=\\frac1N\\frac{\\sin^2(Nx/2)}{\\sin^2(x/2)}.$$\nIn particular $F_N\\ge0$, $\\frac1{2\\pi}\\int F_N=1$, and the mass concentrates at $0$ — the three properties making $\\{F_N\\}$ a good kernel. $\\blacksquare$",
+            "content": "By definition $N F_N(x)=\\sum_{n=0}^{N-1}D_n(x)$ where $D_n(x)=\\sum_{k=-n}^n e^{ikx}=\\dfrac{\\sin((n+\\tfrac12)x)}{\\sin(x/2)}$. Hence\n$$N F_N(x)=\\frac1{\\sin(x/2)}\\sum_{n=0}^{N-1}\\sin\\big((n+\\tfrac12)x\\big).$$\nEvaluate the sum as an imaginary part of a geometric series ($\\omega=e^{ix}$):\n$$\\sum_{n=0}^{N-1}\\sin\\big((n+\\tfrac12)x\\big)=\\operatorname{Im}\\sum_{n=0}^{N-1}\\omega^{\\,n+1/2}=\\operatorname{Im}\\frac{\\omega^{1/2}(\\omega^N-1)}{\\omega-1}=\\operatorname{Im}\\frac{e^{iNx}-1}{e^{ix/2}-e^{-ix/2}}=\\frac{1-\\cos Nx}{2\\sin(x/2)}=\\frac{\\sin^2(Nx/2)}{\\sin(x/2)},$$\nusing $1-\\cos Nx=2\\sin^2(Nx/2)$. Therefore\n$$N F_N(x)=\\frac{\\sin^2(Nx/2)}{\\sin^2(x/2)},\\qquad F_N(x)=\\frac1N\\frac{\\sin^2(Nx/2)}{\\sin^2(x/2)}.$$\nIn particular $F_N\\ge0$, $\\frac1{2\\pi}\\int F_N=1$, and the mass concentrates at $0$ — the three properties making $\\{F_N\\}$ a good kernel.",
             "depends_on": []
           }
         ],
@@ -5640,7 +5692,7 @@
             "id": "conclusion",
             "label": "Conclusion",
             "role": "conclusion",
-            "content": "On $[a,b]$, $|f-P|\\le|g-T|+|T-P|<\\varepsilon$. $\\blacksquare$",
+            "content": "On $[a,b]$, $|f-P|\\le|g-T|+|T-P|<\\varepsilon$.",
             "depends_on": []
           },
           {
@@ -5684,7 +5736,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "The Cesàro mean is $\\sigma_N(f)(\\theta)=(f*F_N)(\\theta)=\\frac1{2\\pi}\\int_{-\\pi}^\\pi f(\\theta-t)F_N(t)\\,dt$. Since $F_N$ is even and $\\frac1{2\\pi}\\int_{-\\pi}^\\pi F_N=1$, we have $\\frac1{2\\pi}\\int_0^\\pi F_N=\\frac1{2\\pi}\\int_{-\\pi}^0F_N=\\tfrac12$. Split the convolution into $t>0$ and $t<0$ (substituting $t\\mapsto-t$ in the latter):\n$$\\sigma_N(f)(\\theta)=\\frac1{2\\pi}\\int_0^\\pi F_N(t)\\big[f(\\theta-t)+f(\\theta+t)\\big]\\,dt.$$\nSubtract the target using the half-masses:\n$$\\sigma_N(f)(\\theta)-\\frac{f(\\theta^+)+f(\\theta^-)}2=\\frac1{2\\pi}\\int_0^\\pi F_N(t)\\Big[\\big(f(\\theta-t)-f(\\theta^-)\\big)+\\big(f(\\theta+t)-f(\\theta^+)\\big)\\Big]dt.$$\nFix $\\varepsilon>0$. By the one-sided limits choose $\\delta$ so the bracket is $<\\varepsilon$ for $0<t<\\delta$; that part contributes $\\le\\varepsilon\\cdot\\frac1{2\\pi}\\int_0^\\pi F_N\\le\\varepsilon$. On $\\delta\\le t\\le\\pi$, $F_N(t)=\\frac1N\\frac{\\sin^2(Nt/2)}{\\sin^2(t/2)}\\le\\frac1{N\\sin^2(\\delta/2)}\\to0$ uniformly, so (with $f$ integrable, hence the bracket integrable) that part $\\to0$. Thus $\\limsup_N|\\sigma_N(f)(\\theta)-\\tfrac12(f(\\theta^+)+f(\\theta^-))|\\le\\varepsilon$ for all $\\varepsilon$, giving the claim. $\\blacksquare$",
+            "content": "The Cesàro mean is $\\sigma_N(f)(\\theta)=(f*F_N)(\\theta)=\\frac1{2\\pi}\\int_{-\\pi}^\\pi f(\\theta-t)F_N(t)\\,dt$. Since $F_N$ is even and $\\frac1{2\\pi}\\int_{-\\pi}^\\pi F_N=1$, we have $\\frac1{2\\pi}\\int_0^\\pi F_N=\\frac1{2\\pi}\\int_{-\\pi}^0F_N=\\tfrac12$. Split the convolution into $t>0$ and $t<0$ (substituting $t\\mapsto-t$ in the latter):\n$$\\sigma_N(f)(\\theta)=\\frac1{2\\pi}\\int_0^\\pi F_N(t)\\big[f(\\theta-t)+f(\\theta+t)\\big]\\,dt.$$\nSubtract the target using the half-masses:\n$$\\sigma_N(f)(\\theta)-\\frac{f(\\theta^+)+f(\\theta^-)}2=\\frac1{2\\pi}\\int_0^\\pi F_N(t)\\Big[\\big(f(\\theta-t)-f(\\theta^-)\\big)+\\big(f(\\theta+t)-f(\\theta^+)\\big)\\Big]dt.$$\nFix $\\varepsilon>0$. By the one-sided limits choose $\\delta$ so the bracket is $<\\varepsilon$ for $0<t<\\delta$; that part contributes $\\le\\varepsilon\\cdot\\frac1{2\\pi}\\int_0^\\pi F_N\\le\\varepsilon$. On $\\delta\\le t\\le\\pi$, $F_N(t)=\\frac1N\\frac{\\sin^2(Nt/2)}{\\sin^2(t/2)}\\le\\frac1{N\\sin^2(\\delta/2)}\\to0$ uniformly, so (with $f$ integrable, hence the bracket integrable) that part $\\to0$. Thus $\\limsup_N|\\sigma_N(f)(\\theta)-\\tfrac12(f(\\theta^+)+f(\\theta^-))|\\le\\varepsilon$ for all $\\varepsilon$, giving the claim.",
             "depends_on": []
           }
         ],
@@ -5733,7 +5785,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "Now $g(x)=\\sin(1/x)$ is bounded ($|g|\\le1$) and continuous except at $0$, hence Riemann integrable on any interval; the series $\\sum_n3^{-n}g(x-r_n)$ converges uniformly, so $F$ is bounded and integrable. \\emph{Discontinuity at $r_m$:} as $x\\to r_m$, the $m$-th term $3^{-m}\\sin\\big(1/(x-r_m)\\big)$ oscillates with amplitude $3^{-m}$, while the remaining terms vary by at most $\\sum_{n\\neq m}3^{-n}|{\\Delta g}|$; using $3^{-m}>\\sum_{n>m}3^{-n}=\\tfrac12 3^{-m}$ and continuity of the other terms near $r_m$, the oscillation of the $m$-th term is not cancelled, so $\\limsup_{x\\to r_m}F-\\liminf_{x\\to r_m}F>0$: a genuine discontinuity. \\emph{No monotonicity:} every subinterval contains some $r_m$ (density), near which the $m$-th term oscillates up and down with un-cancelled amplitude, so $F$ cannot be monotone there. $\\blacksquare$",
+            "content": "Now $g(x)=\\sin(1/x)$ is bounded ($|g|\\le1$) and continuous except at $0$, hence Riemann integrable on any interval; the series $\\sum_n3^{-n}g(x-r_n)$ converges uniformly, so $F$ is bounded and integrable. \\emph{Discontinuity at $r_m$:} as $x\\to r_m$, the $m$-th term $3^{-m}\\sin\\big(1/(x-r_m)\\big)$ oscillates with amplitude $3^{-m}$, while the remaining terms vary by at most $\\sum_{n\\neq m}3^{-n}|{\\Delta g}|$; using $3^{-m}>\\sum_{n>m}3^{-n}=\\tfrac12 3^{-m}$ and continuity of the other terms near $r_m$, the oscillation of the $m$-th term is not cancelled, so $\\limsup_{x\\to r_m}F-\\liminf_{x\\to r_m}F>0$: a genuine discontinuity. \\emph{No monotonicity:} every subinterval contains some $r_m$ (density), near which the $m$-th term oscillates up and down with un-cancelled amplitude, so $F$ cannot be monotone there.",
             "depends_on": []
           }
         ],
@@ -5777,7 +5829,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "Note $S_n(f)(0)=(f*D_n)(0)=\\frac1{2\\pi}\\int_{-\\pi}^\\pi f(-\\theta)D_n(\\theta)\\,d\\theta$. The choice $g_n=\\operatorname{sgn}(D_n)$ gives $\\frac1{2\\pi}\\int g_nD_n=L_n\\ge c\\log n$, but $g_n$ is only piecewise constant. Approximate $g_n$ in the $L^1$ norm by continuous $h_k$ with $|h_k|\\le1$ (Lemma 3.2); since $|\\frac1{2\\pi}\\int(g_n-h_k)D_n|\\le\\|D_n\\|_\\infty\\|g_n-h_k\\|_1\\to0$, some $f_n:=h_k$ satisfies $|S_n(f_n)(0)|\\ge \\tfrac12 c\\log n=:c'\\log n$ with $|f_n|\\le1$. $\\blacksquare$",
+            "content": "Note $S_n(f)(0)=(f*D_n)(0)=\\frac1{2\\pi}\\int_{-\\pi}^\\pi f(-\\theta)D_n(\\theta)\\,d\\theta$. The choice $g_n=\\operatorname{sgn}(D_n)$ gives $\\frac1{2\\pi}\\int g_nD_n=L_n\\ge c\\log n$, but $g_n$ is only piecewise constant. Approximate $g_n$ in the $L^1$ norm by continuous $h_k$ with $|h_k|\\le1$ (Lemma 3.2); since $|\\frac1{2\\pi}\\int(g_n-h_k)D_n|\\le\\|D_n\\|_\\infty\\|g_n-h_k\\|_1\\to0$, some $f_n:=h_k$ satisfies $|S_n(f_n)(0)|\\ge \\tfrac12 c\\log n=:c'\\log n$ with $|f_n|\\le1$.",
             "depends_on": []
           },
           {
@@ -5829,7 +5881,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Let $(v_k)$ be a Cauchy sequence in $\\mathbb C^d$ (the case $\\mathbb R^d$ is identical), $v_k=(v_k^{(1)},\\dots,v_k^{(d)})$. For each coordinate $j$,\n$$|v_k^{(j)}-v_\\ell^{(j)}|\\le\\Big(\\sum_{i=1}^d|v_k^{(i)}-v_\\ell^{(i)}|^2\\Big)^{1/2}=\\|v_k-v_\\ell\\|,$$\nso $(v_k^{(j)})_k$ is Cauchy in $\\mathbb C$, which is complete; let $w^{(j)}=\\lim_k v_k^{(j)}$ and $w=(w^{(1)},\\dots,w^{(d)})$. Then\n$$\\|v_k-w\\|^2=\\sum_{j=1}^d|v_k^{(j)}-w^{(j)}|^2\\to0,$$\na finite sum of null sequences. Hence $v_k\\to w\\in\\mathbb C^d$: every Cauchy sequence converges, so the space is complete. $\\blacksquare$",
+            "content": "Let $(v_k)$ be a Cauchy sequence in $\\mathbb C^d$ (the case $\\mathbb R^d$ is identical), $v_k=(v_k^{(1)},\\dots,v_k^{(d)})$. For each coordinate $j$,\n$$|v_k^{(j)}-v_\\ell^{(j)}|\\le\\Big(\\sum_{i=1}^d|v_k^{(i)}-v_\\ell^{(i)}|^2\\Big)^{1/2}=\\|v_k-v_\\ell\\|,$$\nso $(v_k^{(j)})_k$ is Cauchy in $\\mathbb C$, which is complete; let $w^{(j)}=\\lim_k v_k^{(j)}$ and $w=(w^{(1)},\\dots,w^{(d)})$. Then\n$$\\|v_k-w\\|^2=\\sum_{j=1}^d|v_k^{(j)}-w^{(j)}|^2\\to0,$$\na finite sum of null sequences. Hence $v_k\\to w\\in\\mathbb C^d$: every Cauchy sequence converges, so the space is complete.",
             "depends_on": []
           }
         ],
@@ -5887,7 +5939,7 @@
             "id": "membership-of-the-limit",
             "label": "Membership of the limit",
             "role": "argument",
-            "content": "Since $A_K\\in\\ell^2(\\mathbb Z)$ and $B-A_K\\in\\ell^2(\\mathbb Z)$, we have $$\\|B\\|_{\\ell^2}\\le \\|B-A_K\\|_{\\ell^2}+\\|A_K\\|_{\\ell^2}<\\infty.$$ Hence $B\\in\\ell^2(\\mathbb Z)$. Therefore every Cauchy sequence in $\\ell^2(\\mathbb Z)$ converges in $\\ell^2(\\mathbb Z)$, so $\\ell^2(\\mathbb Z)$ is complete. $\\blacksquare$",
+            "content": "Since $A_K\\in\\ell^2(\\mathbb Z)$ and $B-A_K\\in\\ell^2(\\mathbb Z)$, we have $$\\|B\\|_{\\ell^2}\\le \\|B-A_K\\|_{\\ell^2}+\\|A_K\\|_{\\ell^2}<\\infty.$$ Hence $B\\in\\ell^2(\\mathbb Z)$. Therefore every Cauchy sequence in $\\ell^2(\\mathbb Z)$ converges in $\\ell^2(\\mathbb Z)$, so $\\ell^2(\\mathbb Z)$ is complete.",
             "depends_on": []
           }
         ],
@@ -5938,7 +5990,7 @@
             "id": "pointegralwise-divergence-everywhere",
             "label": "Pointwise divergence everywhere",
             "role": "argument",
-            "content": "Every $\\theta$ lies in exactly one block of each level $m$, hence in infinitely many $I_k$ (so $f_k(\\theta)=1$ infinitely often) and outside infinitely many (so $f_k(\\theta)=0$ infinitely often). Thus $\\limsup_k f_k(\\theta)=1\\neq0=\\liminf_k f_k(\\theta)$, and $\\lim_k f_k(\\theta)$ exists for no $\\theta$. $\\blacksquare$",
+            "content": "Every $\\theta$ lies in exactly one block of each level $m$, hence in infinitely many $I_k$ (so $f_k(\\theta)=1$ infinitely often) and outside infinitely many (so $f_k(\\theta)=0$ infinitely often). Thus $\\limsup_k f_k(\\theta)=1\\neq0=\\liminf_k f_k(\\theta)$, and $\\lim_k f_k(\\theta)$ exists for no $\\theta$.",
             "depends_on": []
           },
           {
@@ -5996,7 +6048,7 @@
             "id": "c",
             "label": "(c)",
             "role": "case",
-            "content": "A Riemann integrable function is continuous except on a set of measure zero. If $f$ vanishes at every continuity point, then $f=0$ off a measure-zero set, so $|f|^2=0$ off a measure-zero set; a (bounded) Riemann integrable function that is $0$ except on a measure-zero set has $\\int|f|^2=0$, i.e. $\\|f\\|=0$. $\\blacksquare$",
+            "content": "A Riemann integrable function is continuous except on a set of measure zero. If $f$ vanishes at every continuity point, then $f=0$ off a measure-zero set, so $|f|^2=0$ off a measure-zero set; a (bounded) Riemann integrable function that is $0$ except on a measure-zero set has $\\int|f|^2=0$, i.e. $\\|f\\|=0$.",
             "depends_on": []
           },
           {
@@ -6051,7 +6103,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "For the odd $f(\\theta)=\\theta(\\pi-\\theta)$, the sine coefficients are $b_k=\\frac{8}{\\pi k^3}$ ($k$ odd), $0$ otherwise (Ch.2 Ex.4). Parseval for a sine series, $\\|f\\|^2=\\frac12\\sum_k b_k^2$, and $\\|f\\|^2=\\frac1{2\\pi}\\int_{-\\pi}^\\pi f^2=\\frac1{2\\pi}\\cdot\\frac{\\pi^5}{15}=\\frac{\\pi^4}{30}$ (since $\\int_0^\\pi\\theta^2(\\pi-\\theta)^2d\\theta=\\frac{\\pi^5}{30}$). Hence\n$$\\frac12\\sum_{k\\ \\mathrm{odd}}\\frac{64}{\\pi^2k^6}=\\frac{\\pi^4}{30}\\ \\Rightarrow\\ \\sum_{k\\ \\mathrm{odd}}k^{-6}=\\frac{\\pi^6}{960}.$$\nSplitting, $\\zeta(6)=\\sum_{\\mathrm{odd}}+\\frac1{64}\\zeta(6)$, so $\\zeta(6)=\\frac{64}{63}\\cdot\\frac{\\pi^6}{960}=\\frac{\\pi^6}{945}$. $\\blacksquare$",
+            "content": "For the odd $f(\\theta)=\\theta(\\pi-\\theta)$, the sine coefficients are $b_k=\\frac{8}{\\pi k^3}$ ($k$ odd), $0$ otherwise (Ch.2 Ex.4). Parseval for a sine series, $\\|f\\|^2=\\frac12\\sum_k b_k^2$, and $\\|f\\|^2=\\frac1{2\\pi}\\int_{-\\pi}^\\pi f^2=\\frac1{2\\pi}\\cdot\\frac{\\pi^5}{15}=\\frac{\\pi^4}{30}$ (since $\\int_0^\\pi\\theta^2(\\pi-\\theta)^2d\\theta=\\frac{\\pi^5}{30}$). Hence\n$$\\frac12\\sum_{k\\ \\mathrm{odd}}\\frac{64}{\\pi^2k^6}=\\frac{\\pi^4}{30}\\ \\Rightarrow\\ \\sum_{k\\ \\mathrm{odd}}k^{-6}=\\frac{\\pi^6}{960}.$$\nSplitting, $\\zeta(6)=\\sum_{\\mathrm{odd}}+\\frac1{64}\\zeta(6)$, so $\\zeta(6)=\\frac{64}{63}\\cdot\\frac{\\pi^6}{960}=\\frac{\\pi^6}{945}$.",
             "depends_on": []
           }
         ],
@@ -6095,7 +6147,7 @@
             "id": "parseval",
             "label": "Parseval",
             "role": "argument",
-            "content": "$|g(x)|^2=\\frac{\\pi^2}{(\\sin\\pi\\alpha)^2}$ (the exponential has modulus $1$), so\n$$\\sum_{n}\\frac1{(n+\\alpha)^2}=\\sum_n|c_n|^2=\\frac1{2\\pi}\\int_0^{2\\pi}|g|^2\\,dx=\\frac{\\pi^2}{(\\sin\\pi\\alpha)^2}.\\qquad\\blacksquare$$\nThis is the partial-fractions identity for $\\pi^2/\\sin^2(\\pi\\alpha)$, recovered purely from orthonormality.",
+            "content": "$|g(x)|^2=\\frac{\\pi^2}{(\\sin\\pi\\alpha)^2}$ (the exponential has modulus $1$), so\n$$\\sum_{n}\\frac1{(n+\\alpha)^2}=\\sum_n|c_n|^2=\\frac1{2\\pi}\\int_0^{2\\pi}|g|^2\\,dx=\\frac{\\pi^2}{(\\sin\\pi\\alpha)^2}.$$\nThis is the partial-fractions identity for $\\pi^2/\\sin^2(\\pi\\alpha)$, recovered purely from orthonormality.",
             "depends_on": []
           }
         ],
@@ -6136,7 +6188,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Start from $\\frac1{2\\pi}\\int_{-\\pi}^\\pi D_N(\\theta)\\,d\\theta=1$, i.e. $\\int_{-\\pi}^\\pi\\frac{\\sin((N+\\frac12)\\theta)}{\\sin(\\theta/2)}\\,d\\theta=2\\pi$. Write\n$$\\frac{1}{\\sin(\\theta/2)}=\\frac{2}{\\theta}+\\Big(\\frac1{\\sin(\\theta/2)}-\\frac2\\theta\\Big),$$\nwhere the bracket extends to a continuous (hence integrable) function on $[-\\pi,\\pi]$. By the Riemann–Lebesgue lemma, $\\int_{-\\pi}^\\pi\\sin((N+\\tfrac12)\\theta)\\big(\\tfrac1{\\sin(\\theta/2)}-\\tfrac2\\theta\\big)d\\theta\\to0$. Therefore\n$$\\int_{-\\pi}^\\pi\\sin\\big((N+\\tfrac12)\\theta\\big)\\frac2\\theta\\,d\\theta\\to2\\pi\\ \\Longrightarrow\\ \\int_{-\\pi}^\\pi\\frac{\\sin((N+\\frac12)\\theta)}{\\theta}\\,d\\theta\\to\\pi.$$\nBy evenness this is $2\\int_0^\\pi\\frac{\\sin((N+\\frac12)\\theta)}\\theta d\\theta\\to\\pi$, so $\\int_0^\\pi\\frac{\\sin((N+\\frac12)\\theta)}\\theta d\\theta\\to\\frac\\pi2$. Substituting $x=(N+\\tfrac12)\\theta$ gives $\\int_0^{(N+\\frac12)\\pi}\\frac{\\sin x}{x}\\,dx\\to\\frac\\pi2$, i.e.\n$$\\int_0^\\infty\\frac{\\sin x}{x}\\,dx=\\frac\\pi2.\\qquad\\blacksquare$$",
+            "content": "Start from $\\frac1{2\\pi}\\int_{-\\pi}^\\pi D_N(\\theta)\\,d\\theta=1$, i.e. $\\int_{-\\pi}^\\pi\\frac{\\sin((N+\\frac12)\\theta)}{\\sin(\\theta/2)}\\,d\\theta=2\\pi$. Write\n$$\\frac{1}{\\sin(\\theta/2)}=\\frac{2}{\\theta}+\\Big(\\frac1{\\sin(\\theta/2)}-\\frac2\\theta\\Big),$$\nwhere the bracket extends to a continuous (hence integrable) function on $[-\\pi,\\pi]$. By the Riemann–Lebesgue lemma, $\\int_{-\\pi}^\\pi\\sin((N+\\tfrac12)\\theta)\\big(\\tfrac1{\\sin(\\theta/2)}-\\tfrac2\\theta\\big)d\\theta\\to0$. Therefore\n$$\\int_{-\\pi}^\\pi\\sin\\big((N+\\tfrac12)\\theta\\big)\\frac2\\theta\\,d\\theta\\to2\\pi\\ \\Longrightarrow\\ \\int_{-\\pi}^\\pi\\frac{\\sin((N+\\frac12)\\theta)}{\\theta}\\,d\\theta\\to\\pi.$$\nBy evenness this is $2\\int_0^\\pi\\frac{\\sin((N+\\frac12)\\theta)}\\theta d\\theta\\to\\pi$, so $\\int_0^\\pi\\frac{\\sin((N+\\frac12)\\theta)}\\theta d\\theta\\to\\frac\\pi2$. Substituting $x=(N+\\tfrac12)\\theta$ gives $\\int_0^{(N+\\frac12)\\pi}\\frac{\\sin x}{x}\\,dx\\to\\frac\\pi2$, i.e.\n$$\\int_0^\\infty\\frac{\\sin x}{x}\\,dx=\\frac\\pi2.$$",
             "depends_on": []
           }
         ],
@@ -6187,7 +6239,7 @@
             "id": "c",
             "label": "(c)",
             "role": "case",
-            "content": "For the lacunary series, only the term $k$ with $2^k=N$ contributes to $\\hat f(N)$, giving $\\hat f(2^k)=2^{-k\\alpha}=N^{-\\alpha}$ exactly. And $f$ is Hölder-$\\alpha$: splitting $f(x+h)-f(x)=\\sum_{2^k\\le1/|h|}+\\sum_{2^k>1/|h|}$, the first sum is $\\le\\sum_{2^k\\le1/|h|}2^{-k\\alpha}2^k|h|\\le C|h|^\\alpha$ (using $|1-e^{i\\theta}|\\le|\\theta|$), the second $\\le\\sum_{2^k>1/|h|}2\\cdot2^{-k\\alpha}\\le C|h|^\\alpha$ (geometric). So the decay rate $|n|^{-\\alpha}$ cannot be improved. $\\blacksquare$",
+            "content": "For the lacunary series, only the term $k$ with $2^k=N$ contributes to $\\hat f(N)$, giving $\\hat f(2^k)=2^{-k\\alpha}=N^{-\\alpha}$ exactly. And $f$ is Hölder-$\\alpha$: splitting $f(x+h)-f(x)=\\sum_{2^k\\le1/|h|}+\\sum_{2^k>1/|h|}$, the first sum is $\\le\\sum_{2^k\\le1/|h|}2^{-k\\alpha}2^k|h|\\le C|h|^\\alpha$ (using $|1-e^{i\\theta}|\\le|\\theta|$), the second $\\le\\sum_{2^k>1/|h|}2\\cdot2^{-k\\alpha}\\le C|h|^\\alpha$ (geometric). So the decay rate $|n|^{-\\alpha}$ cannot be improved.",
             "depends_on": []
           }
         ],
@@ -6238,7 +6290,7 @@
             "id": "c",
             "label": "(c)",
             "role": "case",
-            "content": "By Cauchy–Schwarz over the dyadic block (which has $\\le2^p$ terms),\n$$\\sum_{2^{p-1}<|n|\\le2^p}|\\hat f(n)|\\le(2^p)^{1/2}\\Big(\\frac{K^2\\pi^2}{2^{2p+1}}\\Big)^{1/2}=\\frac{K\\pi}{2^{(p+1)/2}}.$$\nSumming the geometric series over $p\\ge1$ (plus the $n=0$ term) gives $\\sum_n|\\hat f(n)|<\\infty$. By the Weierstrass $M$-test the Fourier series converges absolutely and uniformly (to $f$, by continuity). $\\blacksquare$",
+            "content": "By Cauchy–Schwarz over the dyadic block (which has $\\le2^p$ terms),\n$$\\sum_{2^{p-1}<|n|\\le2^p}|\\hat f(n)|\\le(2^p)^{1/2}\\Big(\\frac{K^2\\pi^2}{2^{2p+1}}\\Big)^{1/2}=\\frac{K\\pi}{2^{(p+1)/2}}.$$\nSumming the geometric series over $p\\ge1$ (plus the $n=0$ term) gives $\\sum_n|\\hat f(n)|<\\infty$. By the Weierstrass $M$-test the Fourier series converges absolutely and uniformly (to $f$, by continuity).",
             "depends_on": []
           },
           {
@@ -6286,7 +6338,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Assume $f$ increasing, $|f|\\le M$. First, the characteristic function of $[a,b]$ has\n$$\\widehat{\\chi_{[a,b]}}(n)=\\frac{e^{-ina}-e^{-inb}}{2\\pi in},\\qquad|\\widehat{\\chi_{[a,b]}}(n)|\\le\\frac1{\\pi|n|},$$\nso $O(1/|n|)$ with a constant independent of $a,b$. Next, a step function $s=\\sum_{k=1}^N\\alpha_k\\chi_{[a_k,a_{k+1}]}$ with $-\\pi=a_1<\\dots<a_{N+1}=\\pi$ and $-M\\le\\alpha_1\\le\\dots\\le\\alpha_N\\le M$: writing $\\chi_{[a_k,a_{k+1}]}=\\chi_{[a_k,\\pi]}-\\chi_{[a_{k+1},\\pi]}$ and summing by parts,\n$$\\hat s(n)=\\sum_{k}(\\alpha_k-\\alpha_{k-1})\\widehat{\\chi_{[a_k,\\pi]}}(n)+\\text{(endpoint)},$$\nso $|\\hat s(n)|\\le\\frac1{\\pi|n|}\\sum_k(\\alpha_k-\\alpha_{k-1})\\le\\frac{2M}{\\pi|n|}$ — \\emph{uniformly in $N$} (the increments telescope to $\\le2M$). Finally, an increasing bounded $f$ is the uniform/$L^1$ limit of such increasing step functions $s_N$; their coefficients converge to $\\hat f(n)$ while the bound $|\\hat s_N(n)|\\le\\frac{2M}{\\pi|n|}$ passes to the limit. Hence $\\hat f(n)=O(1/|n|)$. $\\blacksquare$",
+            "content": "Assume $f$ increasing, $|f|\\le M$. First, the characteristic function of $[a,b]$ has\n$$\\widehat{\\chi_{[a,b]}}(n)=\\frac{e^{-ina}-e^{-inb}}{2\\pi in},\\qquad|\\widehat{\\chi_{[a,b]}}(n)|\\le\\frac1{\\pi|n|},$$\nso $O(1/|n|)$ with a constant independent of $a,b$. Next, a step function $s=\\sum_{k=1}^N\\alpha_k\\chi_{[a_k,a_{k+1}]}$ with $-\\pi=a_1<\\dots<a_{N+1}=\\pi$ and $-M\\le\\alpha_1\\le\\dots\\le\\alpha_N\\le M$: writing $\\chi_{[a_k,a_{k+1}]}=\\chi_{[a_k,\\pi]}-\\chi_{[a_{k+1},\\pi]}$ and summing by parts,\n$$\\hat s(n)=\\sum_{k}(\\alpha_k-\\alpha_{k-1})\\widehat{\\chi_{[a_k,\\pi]}}(n)+\\text{(endpoint)},$$\nso $|\\hat s(n)|\\le\\frac1{\\pi|n|}\\sum_k(\\alpha_k-\\alpha_{k-1})\\le\\frac{2M}{\\pi|n|}$ — \\emph{uniformly in $N$} (the increments telescope to $\\le2M$). Finally, an increasing bounded $f$ is the uniform/$L^1$ limit of such increasing step functions $s_N$; their coefficients converge to $\\hat f(n)$ while the bound $|\\hat s_N(n)|\\le\\frac{2M}{\\pi|n|}$ passes to the limit. Hence $\\hat f(n)=O(1/|n|)$.",
             "depends_on": []
           }
         ],
@@ -6330,7 +6382,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "With $f=L_n$ (degree $n$, leading coefficient $\\frac{(2n)!}{n!}$), its $n$-th derivative is the constant $L_n^{(n)}=(2n)!$. So\n$$\\|L_n\\|^2=(-1)^n\\int_{-1}^1(x^2-1)^n L_n^{(n)}\\,dx=(2n)!\\int_{-1}^1(1-x^2)^n\\,dx.$$\nUsing $\\int_{-1}^1(1-x^2)^n dx=\\frac{2^{2n+1}(n!)^2}{(2n+1)!}$ (Beta integral), and $\\frac{(2n)!}{(2n+1)!}=\\frac1{2n+1}$,\n$$\\|L_n\\|^2=(2n)!\\cdot\\frac{2^{2n+1}(n!)^2}{(2n+1)!}=\\frac{(n!)^2\\,2^{2n+1}}{2n+1}.\\qquad\\blacksquare$$\nNormalising, $\\{\\sqrt{\\tfrac{2n+1}{2}}\\,\\frac{L_n}{2^n n!}\\}$ is an orthonormal basis of $L^2[-1,1]$ — a non-trigonometric complete orthonormal system.",
+            "content": "With $f=L_n$ (degree $n$, leading coefficient $\\frac{(2n)!}{n!}$), its $n$-th derivative is the constant $L_n^{(n)}=(2n)!$. So\n$$\\|L_n\\|^2=(-1)^n\\int_{-1}^1(x^2-1)^n L_n^{(n)}\\,dx=(2n)!\\int_{-1}^1(1-x^2)^n\\,dx.$$\nUsing $\\int_{-1}^1(1-x^2)^n dx=\\frac{2^{2n+1}(n!)^2}{(2n+1)!}$ (Beta integral), and $\\frac{(2n)!}{(2n+1)!}=\\frac1{2n+1}$,\n$$\\|L_n\\|^2=(2n)!\\cdot\\frac{2^{2n+1}(n!)^2}{(2n+1)!}=\\frac{(n!)^2\\,2^{2n+1}}{2n+1}.$$\nNormalising, $\\{\\sqrt{\\tfrac{2n+1}{2}}\\,\\frac{L_n}{2^n n!}\\}$ is an orthonormal basis of $L^2[-1,1]$ — a non-trigonometric complete orthonormal system.",
             "depends_on": []
           }
         ],
@@ -6371,7 +6423,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Let $\\varphi=\\frac{1+\\sqrt5}2$ and $\\psi=\\frac{1-\\sqrt5}2$, the roots of $x^2=x+1$. Then $U_n=\\varphi^n+\\psi^n$ satisfies $U_{r+1}=U_r+U_{r-1}$ with $U_0=2,\\ U_1=1$, so every $U_n$ is an \\emph{integer} (the Lucas numbers). Since $|\\psi|=\\frac{\\sqrt5-1}2\\approx0.618<1$, we have $\\psi^n\\to0$, and\n$$\\varphi^n=U_n-\\psi^n\\quad\\Longrightarrow\\quad \\langle\\varphi^n\\rangle=\\langle-\\psi^n\\rangle\\pmod1.$$\nNow $\\psi<0$, so $\\psi^n>0$ for even $n$ and $<0$ for odd $n$, both $\\to0$:\n$$n\\ \\text{even}:\\ \\langle\\varphi^n\\rangle=1-\\psi^n\\to1^-,\\qquad n\\ \\text{odd}:\\ \\langle\\varphi^n\\rangle=-\\psi^n=|\\psi|^n\\to0^+.$$\nThus the sequence accumulates only at the endpoints $0$ and $1$ and never enters, say, $[\\tfrac14,\\tfrac34]$ for large $n$. Hence it is far from equidistributed (the limiting proportion in $[\\tfrac14,\\tfrac34]$ is $0\\neq\\tfrac12$). $\\blacksquare$",
+            "content": "Let $\\varphi=\\frac{1+\\sqrt5}2$ and $\\psi=\\frac{1-\\sqrt5}2$, the roots of $x^2=x+1$. Then $U_n=\\varphi^n+\\psi^n$ satisfies $U_{r+1}=U_r+U_{r-1}$ with $U_0=2,\\ U_1=1$, so every $U_n$ is an \\emph{integer} (the Lucas numbers). Since $|\\psi|=\\frac{\\sqrt5-1}2\\approx0.618<1$, we have $\\psi^n\\to0$, and\n$$\\varphi^n=U_n-\\psi^n\\quad\\Longrightarrow\\quad \\langle\\varphi^n\\rangle=\\langle-\\psi^n\\rangle\\pmod1.$$\nNow $\\psi<0$, so $\\psi^n>0$ for even $n$ and $<0$ for odd $n$, both $\\to0$:\n$$n\\ \\text{even}:\\ \\langle\\varphi^n\\rangle=1-\\psi^n\\to1^-,\\qquad n\\ \\text{odd}:\\ \\langle\\varphi^n\\rangle=-\\psi^n=|\\psi|^n\\to0^+.$$\nThus the sequence accumulates only at the endpoints $0$ and $1$ and never enters, say, $[\\tfrac14,\\tfrac34]$ for large $n$. Hence it is far from equidistributed (the limiting proportion in $[\\tfrac14,\\tfrac34]$ is $0\\neq\\tfrac12$).",
             "depends_on": []
           }
         ],
@@ -6408,7 +6460,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Equidistribution means, for every subinterval $[a,b)\\subset[0,1)$,\n$$\\frac1N\\sum_{n=1}^N\\chi_{[a,b)}(\\xi_n)\\to b-a=\\int_0^1\\chi_{[a,b)}.$$\nBy linearity this extends to all step functions. Given a continuous $1$-periodic $f$ and $\\varepsilon>0$, choose step functions $s_-\\le f\\le s_+$ with $\\int_0^1(s_+-s_-)<\\varepsilon$ (uniform continuity). Then\n$$\\int_0^1 f-\\varepsilon\\le\\liminf_N\\frac1N\\sum f(\\xi_n)\\le\\limsup_N\\frac1N\\sum f(\\xi_n)\\le\\int_0^1 f+\\varepsilon,$$\nso $\\frac1N\\sum_{n\\le N}f(\\xi_n)\\to\\int_0^1 f$ for every continuous $f$. Applying this to the continuous function $f(x)=e^{2\\pi ikx}$, whose integral $\\int_0^1 e^{2\\pi ikx}dx=0$ for $k\\neq0$, gives\n$$\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\to0.\\qquad\\blacksquare$$",
+            "content": "Equidistribution means, for every subinterval $[a,b)\\subset[0,1)$,\n$$\\frac1N\\sum_{n=1}^N\\chi_{[a,b)}(\\xi_n)\\to b-a=\\int_0^1\\chi_{[a,b)}.$$\nBy linearity this extends to all step functions. Given a continuous $1$-periodic $f$ and $\\varepsilon>0$, choose step functions $s_-\\le f\\le s_+$ with $\\int_0^1(s_+-s_-)<\\varepsilon$ (uniform continuity). Then\n$$\\int_0^1 f-\\varepsilon\\le\\liminf_N\\frac1N\\sum f(\\xi_n)\\le\\limsup_N\\frac1N\\sum f(\\xi_n)\\le\\int_0^1 f+\\varepsilon,$$\nso $\\frac1N\\sum_{n\\le N}f(\\xi_n)\\to\\int_0^1 f$ for every continuous $f$. Applying this to the continuous function $f(x)=e^{2\\pi ikx}$, whose integral $\\int_0^1 e^{2\\pi ikx}dx=0$ for $k\\neq0$, gives\n$$\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\to0.$$",
             "depends_on": []
           }
         ],
@@ -6466,7 +6518,7 @@
             "id": "conclusion",
             "label": "Conclusion",
             "role": "conclusion",
-            "content": "Hence $\\sum_{n=1}^N e^{2\\pi ib n^\\sigma}=O(N^\\sigma)+O(N^{1-\\sigma})$. Both exponents are $<1$, so dividing by $N$ gives $\\to0$. By Weyl, $\\langle an^\\sigma\\rangle$ is equidistributed. $\\blacksquare$",
+            "content": "Hence $\\sum_{n=1}^N e^{2\\pi ib n^\\sigma}=O(N^\\sigma)+O(N^{1-\\sigma})$. Both exponents are $<1$, so dividing by $N$ gives $\\to0$. By Weyl, $\\langle an^\\sigma\\rangle$ is equidistributed.",
             "depends_on": []
           }
         ],
@@ -6503,7 +6555,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Test Weyl's criterion with $k=1$, so we examine $\\frac1N\\sum_{n=1}^N e^{2\\pi i a\\log n}=\\frac1N\\sum_{n=1}^N n^{2\\pi i a}$. Compare with the integral $\\int_1^N x^{2\\pi ia}\\,dx$; the difference is $O(\\sup|\\frac{d}{dx}x^{2\\pi ia}|\\cdot N)=O(1)$ relative error after dividing by $N$ — more precisely Euler–Maclaurin gives\n$$\\sum_{n=1}^N n^{2\\pi ia}=\\int_1^N x^{2\\pi ia}\\,dx+O(1)=\\frac{N^{1+2\\pi ia}-1}{1+2\\pi ia}+O(1).$$\nTherefore\n$$\\frac1N\\sum_{n=1}^N n^{2\\pi ia}=\\frac{N^{2\\pi ia}}{1+2\\pi ia}+o(1).$$\nThe factor $N^{2\\pi ia}=e^{2\\pi ia\\log N}$ has modulus $1$ and rotates around the circle as $N\\to\\infty$, so the right-hand side has modulus $\\to\\frac1{|1+2\\pi ia|}\\neq0$ and does \\emph{not} converge to $0$. Weyl's criterion fails, so $\\langle a\\log n\\rangle$ is not equidistributed. $\\blacksquare$",
+            "content": "Test Weyl's criterion with $k=1$, so we examine $\\frac1N\\sum_{n=1}^N e^{2\\pi i a\\log n}=\\frac1N\\sum_{n=1}^N n^{2\\pi i a}$. Compare with the integral $\\int_1^N x^{2\\pi ia}\\,dx$; the difference is $O(\\sup|\\frac{d}{dx}x^{2\\pi ia}|\\cdot N)=O(1)$ relative error after dividing by $N$ — more precisely Euler–Maclaurin gives\n$$\\sum_{n=1}^N n^{2\\pi ia}=\\int_1^N x^{2\\pi ia}\\,dx+O(1)=\\frac{N^{1+2\\pi ia}-1}{1+2\\pi ia}+O(1).$$\nTherefore\n$$\\frac1N\\sum_{n=1}^N n^{2\\pi ia}=\\frac{N^{2\\pi ia}}{1+2\\pi ia}+o(1).$$\nThe factor $N^{2\\pi ia}=e^{2\\pi ia\\log N}$ has modulus $1$ and rotates around the circle as $N\\to\\infty$, so the right-hand side has modulus $\\to\\frac1{|1+2\\pi ia|}\\neq0$ and does \\emph{not} converge to $0$. Weyl's criterion fails, so $\\langle a\\log n\\rangle$ is not equidistributed.",
             "depends_on": []
           }
         ],
@@ -6547,7 +6599,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "Let $g_N(x)=\\frac1N\\sum_{n=1}^N f(x+\\xi_n)$. Its $k$-th Fourier coefficient is $\\widehat{g_N}(k)=\\hat f(k)\\cdot\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}$. By Parseval,\n$$\\int_0^1|g_N|^2=\\sum_{k\\in\\mathbb Z}|\\hat f(k)|^2\\Big|\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\Big|^2.$$\nThe $k=0$ term vanishes ($\\hat f(0)=\\int f=0$). For $k\\neq0$ the bracket $\\to0$ (Exercise 7) and is $\\le1$; since $\\sum_k|\\hat f(k)|^2<\\infty$ (Bessel), dominated convergence gives $\\int_0^1|g_N|^2\\to0$. $\\blacksquare$",
+            "content": "Let $g_N(x)=\\frac1N\\sum_{n=1}^N f(x+\\xi_n)$. Its $k$-th Fourier coefficient is $\\widehat{g_N}(k)=\\hat f(k)\\cdot\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}$. By Parseval,\n$$\\int_0^1|g_N|^2=\\sum_{k\\in\\mathbb Z}|\\hat f(k)|^2\\Big|\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\Big|^2.$$\nThe $k=0$ term vanishes ($\\hat f(0)=\\int f=0$). For $k\\neq0$ the bracket $\\to0$ (Exercise 7) and is $\\le1$; since $\\sum_k|\\hat f(k)|^2<\\infty$ (Bessel), dominated convergence gives $\\int_0^1|g_N|^2\\to0$.",
             "depends_on": []
           }
         ],
@@ -6588,7 +6640,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "On the circle $H_t(x)=\\sum_{k}e^{-4\\pi^2k^2t}e^{2\\pi ikx}$, so convolution multiplies coefficients: $\\widehat{u(\\cdot,t)}(k)=\\hat f(k)\\,e^{-4\\pi^2k^2t}$. By Parseval,\n$$\\int_0^1|u(x,t)-f(x)|^2\\,dx=\\sum_{k\\in\\mathbb Z}|\\hat f(k)|^2\\,\\big|e^{-4\\pi^2k^2t}-1\\big|^2.$$\nFor each fixed $k$, $e^{-4\\pi^2k^2t}-1\\to0$ as $t\\to0^+$. Moreover $0<e^{-4\\pi^2k^2t}\\le1$ gives $|e^{-4\\pi^2k^2t}-1|^2\\le1$, so the summand is dominated by $|\\hat f(k)|^2$, which is summable (Bessel, since $f$ is Riemann integrable). By dominated convergence the series $\\to0$, i.e.\n$$\\int_0^1|u(x,t)-f(x)|^2\\,dx\\to0\\quad(t\\to0^+).\\qquad\\blacksquare$$\nSo the heat semigroup recovers the initial data in the mean-square sense for any integrable $f$ — even before pointwise statements (which need $f$ continuous and the good-kernel property).",
+            "content": "On the circle $H_t(x)=\\sum_{k}e^{-4\\pi^2k^2t}e^{2\\pi ikx}$, so convolution multiplies coefficients: $\\widehat{u(\\cdot,t)}(k)=\\hat f(k)\\,e^{-4\\pi^2k^2t}$. By Parseval,\n$$\\int_0^1|u(x,t)-f(x)|^2\\,dx=\\sum_{k\\in\\mathbb Z}|\\hat f(k)|^2\\,\\big|e^{-4\\pi^2k^2t}-1\\big|^2.$$\nFor each fixed $k$, $e^{-4\\pi^2k^2t}-1\\to0$ as $t\\to0^+$. Moreover $0<e^{-4\\pi^2k^2t}\\le1$ gives $|e^{-4\\pi^2k^2t}-1|^2\\le1$, so the summand is dominated by $|\\hat f(k)|^2$, which is summable (Bessel, since $f$ is Riemann integrable). By dominated convergence the series $\\to0$, i.e.\n$$\\int_0^1|u(x,t)-f(x)|^2\\,dx\\to0\\quad(t\\to0^+).$$\nSo the heat semigroup recovers the initial data in the mean-square sense for any integrable $f$ — even before pointwise statements (which need $f$ continuous and the good-kernel property).",
             "depends_on": []
           }
         ],
@@ -6640,7 +6692,7 @@
             "id": "triangle",
             "label": "Triangle",
             "role": "argument",
-            "content": "Since $g$ is even, $\\hat g(\\xi)=2\\int_0^1(1-x)\\cos(2\\pi\\xi x)\\,dx$. Using $\\int_0^1\\cos=\\frac{\\sin2\\pi\\xi}{2\\pi\\xi}$ and $\\int_0^1 x\\cos(2\\pi\\xi x)dx=\\frac{\\sin2\\pi\\xi}{2\\pi\\xi}+\\frac{\\cos2\\pi\\xi-1}{(2\\pi\\xi)^2}$, the $\\sin$ terms cancel and\n$$\\hat g(\\xi)=2\\cdot\\frac{1-\\cos2\\pi\\xi}{(2\\pi\\xi)^2}=\\frac{2\\cdot2\\sin^2\\pi\\xi}{4\\pi^2\\xi^2}=\\Big(\\frac{\\sin\\pi\\xi}{\\pi\\xi}\\Big)^2,$$\nwith $\\hat g(0)=1$. (Equivalently $g=\\chi_{[-1/2,1/2]}*\\chi_{[-1/2,1/2]}$, so $\\hat g=(\\widehat{\\chi_{[-1/2,1/2]}})^2$.) $\\blacksquare$",
+            "content": "Since $g$ is even, $\\hat g(\\xi)=2\\int_0^1(1-x)\\cos(2\\pi\\xi x)\\,dx$. Using $\\int_0^1\\cos=\\frac{\\sin2\\pi\\xi}{2\\pi\\xi}$ and $\\int_0^1 x\\cos(2\\pi\\xi x)dx=\\frac{\\sin2\\pi\\xi}{2\\pi\\xi}+\\frac{\\cos2\\pi\\xi-1}{(2\\pi\\xi)^2}$, the $\\sin$ terms cancel and\n$$\\hat g(\\xi)=2\\cdot\\frac{1-\\cos2\\pi\\xi}{(2\\pi\\xi)^2}=\\frac{2\\cdot2\\sin^2\\pi\\xi}{4\\pi^2\\xi^2}=\\Big(\\frac{\\sin\\pi\\xi}{\\pi\\xi}\\Big)^2,$$\nwith $\\hat g(0)=1$. (Equivalently $g=\\chi_{[-1/2,1/2]}*\\chi_{[-1/2,1/2]}$, so $\\hat g=(\\widehat{\\chi_{[-1/2,1/2]}})^2$.)",
             "depends_on": []
           }
         ],
@@ -6691,7 +6743,7 @@
             "id": "high-frequencies",
             "label": "High frequencies",
             "role": "argument",
-            "content": "$|\\xi|\\ge1/|h|$: with $|e^{2\\pi ih\\xi}-1|\\le2$,\n$$\\int_{|\\xi|\\ge1/|h|}2\\,|\\hat f|\\le 2C\\int_{|\\xi|\\ge1/|h|}|\\xi|^{-1-\\alpha}d\\xi=2C\\cdot\\frac2\\alpha|h|^{\\alpha}=C_2|h|^\\alpha.$$\nAdding, $|f(x+h)-f(x)|\\le(C_1+C_2)|h|^\\alpha$. $\\blacksquare$",
+            "content": "$|\\xi|\\ge1/|h|$: with $|e^{2\\pi ih\\xi}-1|\\le2$,\n$$\\int_{|\\xi|\\ge1/|h|}2\\,|\\hat f|\\le 2C\\int_{|\\xi|\\ge1/|h|}|\\xi|^{-1-\\alpha}d\\xi=2C\\cdot\\frac2\\alpha|h|^{\\alpha}=C_2|h|^\\alpha.$$\nAdding, $|f(x+h)-f(x)|\\le(C_1+C_2)|h|^\\alpha$.",
             "depends_on": []
           }
         ],
@@ -6746,7 +6798,7 @@
             "id": "c",
             "label": "(c)",
             "role": "case",
-            "content": "With $\\delta>0$ small ($a+\\delta<b-\\delta$), take $g(x)=F_{a,a+\\delta}(x)\\,\\big(1-F_{b-\\delta,b}(x)\\big)$ where $F_{p,q}$ is the part-(b) ramp on $[p,q]$. Then $g=0$ off $(a,b)$, $g\\equiv1$ on $[a+\\delta,b-\\delta]$, and $g$ is $C^\\infty$ and strictly monotone on the two transition zones. $\\blacksquare$",
+            "content": "With $\\delta>0$ small ($a+\\delta<b-\\delta$), take $g(x)=F_{a,a+\\delta}(x)\\,\\big(1-F_{b-\\delta,b}(x)\\big)$ where $F_{p,q}$ is the part-(b) ramp on $[p,q]$. Then $g=0$ off $(a,b)$, $g\\equiv1$ on $[a+\\delta,b-\\delta]$, and $g$ is $C^\\infty$ and strictly monotone on the two transition zones.",
             "depends_on": []
           }
         ],
@@ -6790,7 +6842,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "The multiplication formula $\\int_{\\mathbb R}f(x)\\hat g(x)\\,dx=\\int_{\\mathbb R}\\hat f(y)g(y)\\,dy$ holds for $g\\in\\mathcal S$ (Fubini). If $\\hat f\\equiv0$ then $\\int f\\hat g=0$ for all $g\\in\\mathcal S$. But $\\{\\hat g:g\\in\\mathcal S\\}=\\mathcal S$, which is rich enough (e.g. approximate identities) to force $f=0$ at every point of continuity; since $f$ is continuous, $f\\equiv0$. $\\blacksquare$",
+            "content": "The multiplication formula $\\int_{\\mathbb R}f(x)\\hat g(x)\\,dx=\\int_{\\mathbb R}\\hat f(y)g(y)\\,dy$ holds for $g\\in\\mathcal S$ (Fubini). If $\\hat f\\equiv0$ then $\\int f\\hat g=0$ for all $g\\in\\mathcal S$. But $\\{\\hat g:g\\in\\mathcal S\\}=\\mathcal S$, which is rich enough (e.g. approximate identities) to force $f=0$ at every point of continuity; since $f$ is continuous, $f\\equiv0$.",
             "depends_on": []
           }
         ],
@@ -6846,7 +6898,7 @@
             "id": "eigenfunctions",
             "label": "Eigenfunctions",
             "role": "argument",
-            "content": "The Gaussian $h_0=e^{-\\pi x^2}$ has $\\mathcal F h_0=h_0$ ($\\lambda=1$). The raising operator $(x-\\frac1{2\\pi}\\frac{d}{dx})$ generates the Hermite functions $h_n$, and one checks $\\mathcal F h_n=(-i)^n h_n$. Thus eigenvalue $1$ is hit by $h_0,h_4,\\dots$; eigenvalue $-1$ by $h_2,h_6,\\dots$, etc. Concretely $\\big(x^2-\\frac1{4\\pi^2}\\big)e^{-\\pi x^2}$-type combinations are self-dual up to sign. $\\blacksquare$",
+            "content": "The Gaussian $h_0=e^{-\\pi x^2}$ has $\\mathcal F h_0=h_0$ ($\\lambda=1$). The raising operator $(x-\\frac1{2\\pi}\\frac{d}{dx})$ generates the Hermite functions $h_n$, and one checks $\\mathcal F h_n=(-i)^n h_n$. Thus eigenvalue $1$ is hit by $h_0,h_4,\\dots$; eigenvalue $-1$ by $h_2,h_6,\\dots$, etc. Concretely $\\big(x^2-\\frac1{4\\pi^2}\\big)e^{-\\pi x^2}$-type combinations are self-dual up to sign.",
             "depends_on": []
           }
         ],
@@ -6901,7 +6953,7 @@
             "id": "second-integralegral",
             "label": "Second integral:",
             "role": "calculation",
-            "content": "$|y|\\ge|x|/2\\Rightarrow|g(y)|\\le\\frac{A}{1+(x/2)^2}=O\\big(\\frac1{1+x^2}\\big)$, so likewise $\\big|\\int_{|y|\\ge|x|/2}\\big|\\le O(\\frac1{1+x^2})\\int|f|$. Hence $(f*g)(x)=O(1/(1+x^2))$; continuity of $f*g$ is standard (dominated convergence). So $f*g$ has moderate decrease. $\\blacksquare$",
+            "content": "$|y|\\ge|x|/2\\Rightarrow|g(y)|\\le\\frac{A}{1+(x/2)^2}=O\\big(\\frac1{1+x^2}\\big)$, so likewise $\\big|\\int_{|y|\\ge|x|/2}\\big|\\le O(\\frac1{1+x^2})\\int|f|$. Hence $(f*g)(x)=O(1/(1+x^2))$; continuity of $f*g$ is standard (dominated convergence). So $f*g$ has moderate decrease.",
             "depends_on": []
           }
         ],
@@ -6945,7 +6997,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "The function $\\alpha\\mapsto\\pi\\cot\\pi\\alpha$ satisfies $\\frac{d}{d\\alpha}(\\pi\\cot\\pi\\alpha)=-\\frac{\\pi^2}{\\sin^2\\pi\\alpha}=-\\sum_n\\frac1{(n+\\alpha)^2}=\\frac{d}{d\\alpha}\\sum_n\\frac{-1}{n+\\alpha}$ (differentiating the symmetric sum termwise). Both sides agree up to a constant; matching the odd symmetry about $\\alpha=\\tfrac12$ (or evaluating at $\\alpha=\\tfrac12$, where both vanish) fixes the constant to $0$:\n$$\\sum_{n=-\\infty}^\\infty\\frac1{n+\\alpha}=\\pi\\cot\\pi\\alpha=\\frac{\\pi}{\\tan\\pi\\alpha}\\qquad(\\text{summed symmetrically}).\\qquad\\blacksquare$$",
+            "content": "The function $\\alpha\\mapsto\\pi\\cot\\pi\\alpha$ satisfies $\\frac{d}{d\\alpha}(\\pi\\cot\\pi\\alpha)=-\\frac{\\pi^2}{\\sin^2\\pi\\alpha}=-\\sum_n\\frac1{(n+\\alpha)^2}=\\frac{d}{d\\alpha}\\sum_n\\frac{-1}{n+\\alpha}$ (differentiating the symmetric sum termwise). Both sides agree up to a constant; matching the odd symmetry about $\\alpha=\\tfrac12$ (or evaluating at $\\alpha=\\tfrac12$, where both vanish) fixes the constant to $0$:\n$$\\sum_{n=-\\infty}^\\infty\\frac1{n+\\alpha}=\\pi\\cot\\pi\\alpha=\\frac{\\pi}{\\tan\\pi\\alpha}\\qquad(\\text{summed symmetrically}).$$",
             "depends_on": []
           }
         ],
@@ -6985,7 +7037,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "$D_R$ is the inverse transform of $\\chi_{[-R,R]}$: indeed $\\int_{-R}^R e^{2\\pi ix\\xi}d\\xi=\\frac{\\sin2\\pi Rx}{\\pi x}=D_R(x)$, so $\\widehat{D_R}=\\chi_{[-R,R]}$. Poisson summation gives\n$$\\sum_{n}D_N(x+n)=\\sum_{k}\\widehat{D_N}(k)\\,e^{2\\pi ikx}=\\sum_{k}\\chi_{[-N,N]}(k)\\,e^{2\\pi ikx}.$$\nFor integer $N$ the indicator $\\chi_{[-N,N]}$ equals $1$ at the interior integers $|k|\\le N-1$ and takes the boundary value at $k=\\pm N$. Summing the defining integral symmetrically assigns each endpoint weight $\\tfrac12$ (the value of a jump indicator at its discontinuity), so\n$$\\sum_n D_N(x+n)=\\sum_{|k|\\le N-1}e^{2\\pi ikx}+\\tfrac12\\big(e^{-2\\pi iNx}+e^{2\\pi iNx}\\big)=D_N^*(x).\\qquad\\blacksquare$$",
+            "content": "$D_R$ is the inverse transform of $\\chi_{[-R,R]}$: indeed $\\int_{-R}^R e^{2\\pi ix\\xi}d\\xi=\\frac{\\sin2\\pi Rx}{\\pi x}=D_R(x)$, so $\\widehat{D_R}=\\chi_{[-R,R]}$. Poisson summation gives\n$$\\sum_{n}D_N(x+n)=\\sum_{k}\\widehat{D_N}(k)\\,e^{2\\pi ikx}=\\sum_{k}\\chi_{[-N,N]}(k)\\,e^{2\\pi ikx}.$$\nFor integer $N$ the indicator $\\chi_{[-N,N]}$ equals $1$ at the interior integers $|k|\\le N-1$ and takes the boundary value at $k=\\pm N$. Summing the defining integral symmetrically assigns each endpoint weight $\\tfrac12$ (the value of a jump indicator at its discontinuity), so\n$$\\sum_n D_N(x+n)=\\sum_{|k|\\le N-1}e^{2\\pi ikx}+\\tfrac12\\big(e^{-2\\pi iNx}+e^{2\\pi iNx}\\big)=D_N^*(x).$$",
             "depends_on": []
           }
         ],
@@ -7039,7 +7091,7 @@
             "id": "c",
             "label": "(c)",
             "role": "case",
-            "content": "Substituting $x=\\pi u^2$ ($dx=2\\pi u\\,du$),\n$$\\Gamma(\\tfrac12)=\\int_0^\\infty e^{-x}x^{-1/2}dx=\\int_0^\\infty e^{-\\pi u^2}\\frac{2\\pi u}{\\sqrt{\\pi}u}\\,du=2\\sqrt\\pi\\int_0^\\infty e^{-\\pi u^2}du=2\\sqrt\\pi\\cdot\\tfrac12=\\sqrt\\pi,$$\nusing $\\int_{-\\infty}^\\infty e^{-\\pi u^2}du=1$. Then $\\Gamma(\\tfrac32)=\\tfrac12\\Gamma(\\tfrac12)=\\frac{\\sqrt\\pi}2$. $\\blacksquare$",
+            "content": "Substituting $x=\\pi u^2$ ($dx=2\\pi u\\,du$),\n$$\\Gamma(\\tfrac12)=\\int_0^\\infty e^{-x}x^{-1/2}dx=\\int_0^\\infty e^{-\\pi u^2}\\frac{2\\pi u}{\\sqrt{\\pi}u}\\,du=2\\sqrt\\pi\\int_0^\\infty e^{-\\pi u^2}du=2\\sqrt\\pi\\cdot\\tfrac12=\\sqrt\\pi,$$\nusing $\\int_{-\\infty}^\\infty e^{-\\pi u^2}du=1$. Then $\\Gamma(\\tfrac32)=\\tfrac12\\Gamma(\\tfrac12)=\\frac{\\sqrt\\pi}2$.",
             "depends_on": []
           }
         ],
@@ -7076,7 +7128,7 @@
             "id": "computation",
             "label": "Computation",
             "role": "calculation",
-            "content": "For each $n\\ge1$ substitute $u=\\pi n^2 t$ in the Gamma integral:\n$$\\int_0^\\infty t^{s/2-1}e^{-\\pi n^2 t}\\,dt=(\\pi n^2)^{-s/2}\\int_0^\\infty u^{s/2-1}e^{-u}\\,du=\\pi^{-s/2}\\Gamma(\\tfrac s2)\\,n^{-s}.$$\nNow $\\vartheta(t)-1=2\\sum_{n\\ge1}e^{-\\pi n^2 t}$, so\n$$\\frac12\\int_0^\\infty t^{s/2-1}(\\vartheta(t)-1)\\,dt=\\sum_{n\\ge1}\\int_0^\\infty t^{s/2-1}e^{-\\pi n^2 t}\\,dt=\\pi^{-s/2}\\Gamma(\\tfrac s2)\\sum_{n\\ge1}n^{-s}=\\pi^{-s/2}\\Gamma(\\tfrac s2)\\zeta(s).$$\nInterchanging sum and integral is justified for $s>1$ by Tonelli (all terms positive, total finite). $\\blacksquare$",
+            "content": "For each $n\\ge1$ substitute $u=\\pi n^2 t$ in the Gamma integral:\n$$\\int_0^\\infty t^{s/2-1}e^{-\\pi n^2 t}\\,dt=(\\pi n^2)^{-s/2}\\int_0^\\infty u^{s/2-1}e^{-u}\\,du=\\pi^{-s/2}\\Gamma(\\tfrac s2)\\,n^{-s}.$$\nNow $\\vartheta(t)-1=2\\sum_{n\\ge1}e^{-\\pi n^2 t}$, so\n$$\\frac12\\int_0^\\infty t^{s/2-1}(\\vartheta(t)-1)\\,dt=\\sum_{n\\ge1}\\int_0^\\infty t^{s/2-1}e^{-\\pi n^2 t}\\,dt=\\pi^{-s/2}\\Gamma(\\tfrac s2)\\sum_{n\\ge1}n^{-s}=\\pi^{-s/2}\\Gamma(\\tfrac s2)\\zeta(s).$$\nInterchanging sum and integral is justified for $s>1$ by Tonelli (all terms positive, total finite).",
             "depends_on": []
           },
           {
@@ -7138,7 +7190,7 @@
             "id": "c",
             "label": "(c)",
             "role": "case",
-            "content": "For real $t$, $0\\le\\|A_tf\\|_2^2=\\int|f'+txf|^2=\\|f'\\|_2^2+t^2\\|xf\\|_2^2+t\\int x(|f|^2)'$. Since $\\int x(|f|^2)'=-\\int|f|^2=-\\|f\\|_2^2$ (parts), this is the quadratic in $t$\n$$q(t)=\\|xf\\|_2^2\\,t^2-\\|f\\|_2^2\\,t+\\|f'\\|_2^2\\ge0\\quad\\forall t.$$\nA nonnegative quadratic has discriminant $\\le0$: $\\|f\\|_2^4\\le4\\|xf\\|_2^2\\|f'\\|_2^2$. With $\\|f\\|_2=1$, $\\|xf\\|_2^2\\|f'\\|_2^2\\ge\\frac14$, and via $\\|f'\\|_2=2\\pi\\|\\xi\\hat f\\|_2$ this is the Heisenberg uncertainty bound $\\ge\\frac1{16\\pi^2}$. $\\blacksquare$",
+            "content": "For real $t$, $0\\le\\|A_tf\\|_2^2=\\int|f'+txf|^2=\\|f'\\|_2^2+t^2\\|xf\\|_2^2+t\\int x(|f|^2)'$. Since $\\int x(|f|^2)'=-\\int|f|^2=-\\|f\\|_2^2$ (parts), this is the quadratic in $t$\n$$q(t)=\\|xf\\|_2^2\\,t^2-\\|f\\|_2^2\\,t+\\|f'\\|_2^2\\ge0\\quad\\forall t.$$\nA nonnegative quadratic has discriminant $\\le0$: $\\|f\\|_2^4\\le4\\|xf\\|_2^2\\|f'\\|_2^2$. With $\\|f\\|_2=1$, $\\|xf\\|_2^2\\|f'\\|_2^2\\ge\\frac14$, and via $\\|f'\\|_2=2\\pi\\|\\xi\\hat f\\|_2$ this is the Heisenberg uncertainty bound $\\ge\\frac1{16\\pi^2}$.",
             "depends_on": []
           }
         ],
@@ -7193,7 +7245,7 @@
             "id": "back-substitute",
             "label": "Back-substitute",
             "role": "argument",
-            "content": "$y=-\\log x$, $F(y-y')=f(e^{-(y-y')})=f(x e^{y'})$, and set $v=xe^{y'}$ so $y'=\\log(v/x)$, $dy'=dv/v$:\n$$u(x,t)=\\frac1{(4\\pi t)^{1/2}}\\int_0^\\infty e^{-(\\log(v/x)+(1-a)t)^2/(4t)}f(v)\\,\\frac{dv}{v}.\\qquad\\blacksquare$$",
+            "content": "$y=-\\log x$, $F(y-y')=f(e^{-(y-y')})=f(x e^{y'})$, and set $v=xe^{y'}$ so $y'=\\log(v/x)$, $dy'=dv/v$:\n$$u(x,t)=\\frac1{(4\\pi t)^{1/2}}\\int_0^\\infty e^{-(\\log(v/x)+(1-a)t)^2/(4t)}f(v)\\,\\frac{dv}{v}.$$",
             "depends_on": []
           }
         ],
@@ -7241,7 +7293,7 @@
             "id": "solve-and-invert",
             "label": "Solve and invert",
             "role": "argument",
-            "content": "The heat solution is $U(x,\\tau)=\\frac1{\\sqrt{4\\pi\\tau}}\\int_{\\mathbb R}e^{-(x-x')^2/(4\\tau)}e^{-ax'}F(e^{x'})\\,dx'$. Undoing the substitutions ($x=\\log s$, $4\\tau=2\\sigma^2(T-t)$, $s^*=e^{x'}$, $dx'=ds^*/s^*$) and simplifying the exponential prefactors gives\n$$V(s,t)=\\frac{e^{-r(T-t)}}{\\sqrt{2\\pi\\sigma^2(T-t)}}\\int_0^\\infty e^{-\\big(\\log(s/s^*)+(r-\\sigma^2/2)(T-t)\\big)^2/\\big(2\\sigma^2(T-t)\\big)}\\,F(s^*)\\,ds^*.\\qquad\\blacksquare$$\nThe kernel is log-normal: the discounted ($e^{-r(T-t)}$) expectation of the payoff $F$ under the risk-neutral price distribution.",
+            "content": "The heat solution is $U(x,\\tau)=\\frac1{\\sqrt{4\\pi\\tau}}\\int_{\\mathbb R}e^{-(x-x')^2/(4\\tau)}e^{-ax'}F(e^{x'})\\,dx'$. Undoing the substitutions ($x=\\log s$, $4\\tau=2\\sigma^2(T-t)$, $s^*=e^{x'}$, $dx'=ds^*/s^*$) and simplifying the exponential prefactors gives\n$$V(s,t)=\\frac{e^{-r(T-t)}}{\\sqrt{2\\pi\\sigma^2(T-t)}}\\int_0^\\infty e^{-\\big(\\log(s/s^*)+(r-\\sigma^2/2)(T-t)\\big)^2/\\big(2\\sigma^2(T-t)\\big)}\\,F(s^*)\\,ds^*.$$\nThe kernel is log-normal: the discounted ($e^{-r(T-t)}$) expectation of the payoff $F$ under the risk-neutral price distribution.",
             "depends_on": []
           }
         ],
@@ -7296,7 +7348,7 @@
             "id": "c",
             "label": "(c)",
             "role": "case",
-            "content": "\\emph{Proper} ($\\det=+1$): the conditions force $d=a$, $c=-b$ with $a^2+b^2=1$. Identifying $(x,y)\\leftrightarrow z=x+iy$, $R$ acts by\n$$(ax+by)+i(-bx+ay)=(a-ib)(x+iy)=e^{i\\varphi}z,$$\na rotation by complex multiplication with $|e^{i\\varphi}|=1$. \\emph{Improper} ($\\det=-1$): then $d=-a$, $c=b$, and $R$ acts as $z\\mapsto e^{i\\varphi}\\bar z$ — a reflection. $\\blacksquare$",
+            "content": "\\emph{Proper} ($\\det=+1$): the conditions force $d=a$, $c=-b$ with $a^2+b^2=1$. Identifying $(x,y)\\leftrightarrow z=x+iy$, $R$ acts by\n$$(ax+by)+i(-bx+ay)=(a-ib)(x+iy)=e^{i\\varphi}z,$$\na rotation by complex multiplication with $|e^{i\\varphi}|=1$. \\emph{Improper} ($\\det=-1$): then $d=-a$, $c=b$, and $R$ acts as $z\\mapsto e^{i\\varphi}\\bar z$ — a reflection.",
             "depends_on": []
           }
         ],
@@ -7340,7 +7392,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "If $v\\perp\\gamma$ then $\\langle Rv,\\gamma\\rangle=\\langle Rv,R\\gamma\\rangle=\\langle v,\\gamma\\rangle=0$ (orthogonality of $R$), so $Rv\\in P$: $R$ maps $P=\\gamma^\\perp$ to itself. The restriction $R|_P$ is orthogonal with $\\det(R|_P)=\\det R/1=1$, hence a planar rotation (Exercise 1). $\\blacksquare$",
+            "content": "If $v\\perp\\gamma$ then $\\langle Rv,\\gamma\\rangle=\\langle Rv,R\\gamma\\rangle=\\langle v,\\gamma\\rangle=0$ (orthogonality of $R$), so $Rv\\in P$: $R$ maps $P=\\gamma^\\perp$ to itself. The restriction $R|_P$ is orthogonal with $\\det(R|_P)=\\det R/1=1$, hence a planar rotation (Exercise 1).",
             "depends_on": []
           }
         ],
@@ -7377,7 +7429,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Apply the polar formula to $F(x)=g(|x|)f(x/|x|)$ for a fixed radial profile $g\\ge0$ with $0<\\int_0^\\infty g(r)r^{d-1}dr<\\infty$:\n$$\\int_{\\mathbb R^d}g(|x|)f(x/|x|)\\,dx=\\Big(\\int_0^\\infty g(r)r^{d-1}dr\\Big)\\Big(\\int_{S^{d-1}}f(\\gamma)\\,d\\sigma(\\gamma)\\Big).$$\nLebesgue measure on $\\mathbb R^d$ is rotation invariant, and $|Rx|=|x|$, $(Rx)/|Rx|=R(x/|x|)$, so replacing $x\\mapsto R^{-1}x$ shows the left side is unchanged if $f$ is replaced by $f\\circ R$. The radial factor $\\int_0^\\infty g\\,r^{d-1}dr$ is the same and nonzero, so cancelling it gives\n$$\\int_{S^{d-1}}f(R\\gamma)\\,d\\sigma(\\gamma)=\\int_{S^{d-1}}f(\\gamma)\\,d\\sigma(\\gamma).\\qquad\\blacksquare$$",
+            "content": "Apply the polar formula to $F(x)=g(|x|)f(x/|x|)$ for a fixed radial profile $g\\ge0$ with $0<\\int_0^\\infty g(r)r^{d-1}dr<\\infty$:\n$$\\int_{\\mathbb R^d}g(|x|)f(x/|x|)\\,dx=\\Big(\\int_0^\\infty g(r)r^{d-1}dr\\Big)\\Big(\\int_{S^{d-1}}f(\\gamma)\\,d\\sigma(\\gamma)\\Big).$$\nLebesgue measure on $\\mathbb R^d$ is rotation invariant, and $|Rx|=|x|$, $(Rx)/|Rx|=R(x/|x|)$, so replacing $x\\mapsto R^{-1}x$ shows the left side is unchanged if $f$ is replaced by $f\\circ R$. The radial factor $\\int_0^\\infty g\\,r^{d-1}dr$ is the same and nonzero, so cancelling it gives\n$$\\int_{S^{d-1}}f(R\\gamma)\\,d\\sigma(\\gamma)=\\int_{S^{d-1}}f(\\gamma)\\,d\\sigma(\\gamma).$$",
             "depends_on": []
           }
         ],
@@ -7424,7 +7476,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "$V_d=\\int_0^1 A_d r^{d-1}dr=\\dfrac{A_d}{d}$, and $d\\,\\Gamma(d/2)=2\\Gamma(d/2+1)$ gives\n$$V_d=\\frac{2\\pi^{d/2}}{d\\,\\Gamma(d/2)}=\\frac{\\pi^{d/2}}{\\Gamma(d/2+1)}\\quad(V_2=\\pi,\\ V_3=\\tfrac{4\\pi}3).\\qquad\\blacksquare$$",
+            "content": "$V_d=\\int_0^1 A_d r^{d-1}dr=\\dfrac{A_d}{d}$, and $d\\,\\Gamma(d/2)=2\\Gamma(d/2+1)$ gives\n$$V_d=\\frac{2\\pi^{d/2}}{d\\,\\Gamma(d/2)}=\\frac{\\pi^{d/2}}{\\Gamma(d/2+1)}\\quad(V_2=\\pi,\\ V_3=\\tfrac{4\\pi}3).$$",
             "depends_on": []
           }
         ],
@@ -7461,7 +7513,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "By the spectral theorem write $A=RDR^t$ with $R$ a rotation and $D=\\operatorname{diag}(\\lambda_1,\\dots,\\lambda_d)$, $\\lambda_i>0$ the eigenvalues. Substitute $y=R^tx$ (Jacobian $|\\det R|=1$); since $(x,Ax)=(R^tx,DR^tx)=(y,Dy)=\\sum_i\\lambda_i y_i^2$, the integral factorises:\n$$\\int_{\\mathbb R^d}e^{-\\pi(x,Ax)}dx=\\prod_{i=1}^d\\int_{\\mathbb R}e^{-\\pi\\lambda_i y_i^2}\\,dy_i=\\prod_{i=1}^d\\lambda_i^{-1/2}=\\Big(\\prod_i\\lambda_i\\Big)^{-1/2}=(\\det A)^{-1/2},$$\nusing $\\int_{\\mathbb R}e^{-\\pi\\lambda y^2}dy=\\lambda^{-1/2}$ and $\\det A=\\prod_i\\lambda_i$. $\\blacksquare$",
+            "content": "By the spectral theorem write $A=RDR^t$ with $R$ a rotation and $D=\\operatorname{diag}(\\lambda_1,\\dots,\\lambda_d)$, $\\lambda_i>0$ the eigenvalues. Substitute $y=R^tx$ (Jacobian $|\\det R|=1$); since $(x,Ax)=(R^tx,DR^tx)=(y,Dy)=\\sum_i\\lambda_i y_i^2$, the integral factorises:\n$$\\int_{\\mathbb R^d}e^{-\\pi(x,Ax)}dx=\\prod_{i=1}^d\\int_{\\mathbb R}e^{-\\pi\\lambda_i y_i^2}\\,dy_i=\\prod_{i=1}^d\\lambda_i^{-1/2}=\\Big(\\prod_i\\lambda_i\\Big)^{-1/2}=(\\det A)^{-1/2},$$\nusing $\\int_{\\mathbb R}e^{-\\pi\\lambda y^2}dy=\\lambda^{-1/2}$ and $\\det A=\\prod_i\\lambda_i$.",
             "depends_on": []
           }
         ],
@@ -7498,7 +7550,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Since $\\operatorname{div}(x|\\psi|^2)=d|\\psi|^2+x\\cdot\\nabla|\\psi|^2$ integrates to $0$ (Schwartz decay),\n$$d=d\\int|\\psi|^2=-\\int x\\cdot\\nabla|\\psi|^2\\,dx=-2\\operatorname{Re}\\int(x\\cdot\\nabla\\psi)\\,\\overline\\psi\\,dx.$$\nBy Cauchy–Schwarz (and $|x\\cdot\\nabla\\psi|\\le|x|\\,|\\nabla\\psi|$),\n$$d\\le2\\Big(\\int|x|^2|\\psi|^2\\Big)^{1/2}\\Big(\\int|\\nabla\\psi|^2\\Big)^{1/2}.$$\nPlancherel coordinate-by-coordinate gives $\\int|\\nabla\\psi|^2=\\sum_j\\int|\\partial_j\\psi|^2=\\sum_j4\\pi^2\\int\\xi_j^2|\\hat\\psi|^2=4\\pi^2\\int|\\xi|^2|\\hat\\psi|^2$. Substituting,\n$$d\\le2\\Big(\\int|x|^2|\\psi|^2\\Big)^{1/2}\\cdot2\\pi\\Big(\\int|\\xi|^2|\\hat\\psi|^2\\Big)^{1/2}\\ \\Longrightarrow\\ \\Big(\\int|x|^2|\\psi|^2\\Big)\\Big(\\int|\\xi|^2|\\hat\\psi|^2\\Big)\\ge\\frac{d^2}{16\\pi^2}.\\qquad\\blacksquare$$",
+            "content": "Since $\\operatorname{div}(x|\\psi|^2)=d|\\psi|^2+x\\cdot\\nabla|\\psi|^2$ integrates to $0$ (Schwartz decay),\n$$d=d\\int|\\psi|^2=-\\int x\\cdot\\nabla|\\psi|^2\\,dx=-2\\operatorname{Re}\\int(x\\cdot\\nabla\\psi)\\,\\overline\\psi\\,dx.$$\nBy Cauchy–Schwarz (and $|x\\cdot\\nabla\\psi|\\le|x|\\,|\\nabla\\psi|$),\n$$d\\le2\\Big(\\int|x|^2|\\psi|^2\\Big)^{1/2}\\Big(\\int|\\nabla\\psi|^2\\Big)^{1/2}.$$\nPlancherel coordinate-by-coordinate gives $\\int|\\nabla\\psi|^2=\\sum_j\\int|\\partial_j\\psi|^2=\\sum_j4\\pi^2\\int\\xi_j^2|\\hat\\psi|^2=4\\pi^2\\int|\\xi|^2|\\hat\\psi|^2$. Substituting,\n$$d\\le2\\Big(\\int|x|^2|\\psi|^2\\Big)^{1/2}\\cdot2\\pi\\Big(\\int|\\xi|^2|\\hat\\psi|^2\\Big)^{1/2}\\ \\Longrightarrow\\ \\Big(\\int|x|^2|\\psi|^2\\Big)\\Big(\\int|\\xi|^2|\\hat\\psi|^2\\Big)\\ge\\frac{d^2}{16\\pi^2}.$$",
             "depends_on": []
           }
         ],
@@ -7560,7 +7612,7 @@
             "id": "boundary-value",
             "label": "Boundary value",
             "role": "argument",
-            "content": "As $t\\to0^+$, $\\hat u(\\xi,t)\\to\\hat f(\\xi)$ pointwise with $|\\hat u|\\le|\\hat f|\\in L^1$; by dominated convergence in the inversion formula $u(x,t)\\to f(x)$ uniformly. So $u$ is continuous up to $t=0$ with $u(\\cdot,0)=f$. $\\blacksquare$",
+            "content": "As $t\\to0^+$, $\\hat u(\\xi,t)\\to\\hat f(\\xi)$ pointwise with $|\\hat u|\\le|\\hat f|\\in L^1$; by dominated convergence in the inversion formula $u(x,t)\\to f(x)$ uniformly. So $u$ is continuous up to $t=0$ with $u(\\cdot,0)=f$.",
             "depends_on": []
           },
           {
@@ -7622,7 +7674,7 @@
             "id": "implies",
             "label": "($\\Rightarrow$)",
             "role": "argument",
-            "content": "If $u(\\cdot,t)$ is radial for all $t$, then so is $\\hat u(\\cdot,t)$. Setting $t=0$ gives $\\hat f=\\hat u(\\cdot,0)$ radial; differentiating at $t=0$ gives $\\hat g=\\partial_t\\hat u(\\cdot,0)$ radial. Hence $f,g$ are radial. $\\blacksquare$",
+            "content": "If $u(\\cdot,t)$ is radial for all $t$, then so is $\\hat u(\\cdot,t)$. Setting $t=0$ gives $\\hat f=\\hat u(\\cdot,0)$ radial; differentiating at $t=0$ gives $\\hat g=\\partial_t\\hat u(\\cdot,0)$ radial. Hence $f,g$ are radial.",
             "depends_on": []
           },
           {
@@ -7676,7 +7728,7 @@
             "id": "b",
             "label": "(b)",
             "role": "case",
-            "content": "Fix $n$. The quantity $a_N(n)=\\frac1N\\sum_{k=1}^N\\Phi(k/N)$ is precisely the right-endpoint Riemann sum, over the uniform partition of $[0,1]$ into $N$ pieces, of $\\Phi(x)=f(e^{2\\pi ix})e^{-2\\pi inx}$. As $f$ is continuous, $\\Phi$ is continuous on the compact circle, hence (uniformly continuous) its Riemann sums converge:\n$$a_N(n)\\to\\int_0^1 f(e^{2\\pi ix})e^{-2\\pi inx}\\,dx=a(n).\\qquad\\blacksquare$$",
+            "content": "Fix $n$. The quantity $a_N(n)=\\frac1N\\sum_{k=1}^N\\Phi(k/N)$ is precisely the right-endpoint Riemann sum, over the uniform partition of $[0,1]$ into $N$ pieces, of $\\Phi(x)=f(e^{2\\pi ix})e^{-2\\pi inx}$. As $f$ is continuous, $\\Phi$ is continuous on the compact circle, hence (uniformly continuous) its Riemann sums converge:\n$$a_N(n)\\to\\int_0^1 f(e^{2\\pi ix})e^{-2\\pi inx}\\,dx=a(n).$$",
             "depends_on": []
           }
         ],
@@ -7713,7 +7765,7 @@
             "id": "solution",
             "label": "Solution",
             "role": "argument",
-            "content": "Shift the summation index by $\\ell$: since the sum is over a full period mod $N$,\n$$a_N(n)\\big[1-e^{2\\pi i\\ell n/N}\\big]=\\frac1N\\sum_{k=1}^N\\big[f(e^{2\\pi ik/N})-f(e^{2\\pi i(k+\\ell)/N})\\big]e^{-2\\pi ikn/N}.$$\nFor $0<|n|\\le N/2$ choose the integer $\\ell\\approx N/(2n)$ so that $\\ell n/N$ is as close to $\\tfrac12$ as possible; then $|1-e^{2\\pi i\\ell n/N}|\\ge c_0>0$ (bounded away from $0$). Because $f\\in C^1$, $|f(e^{2\\pi ik/N})-f(e^{2\\pi i(k+\\ell)/N})|\\le \\|f'\\|_\\infty\\cdot\\frac{2\\pi\\ell}{N}\\le C\\,\\frac{\\ell}{N}\\le \\frac{C'}{|n|}$. Averaging,\n$$|a_N(n)|\\,c_0\\le\\frac{C'}{|n|}\\ \\Longrightarrow\\ |a_N(n)|\\le\\frac{c}{|n|}.\\qquad\\blacksquare$$",
+            "content": "Shift the summation index by $\\ell$: since the sum is over a full period mod $N$,\n$$a_N(n)\\big[1-e^{2\\pi i\\ell n/N}\\big]=\\frac1N\\sum_{k=1}^N\\big[f(e^{2\\pi ik/N})-f(e^{2\\pi i(k+\\ell)/N})\\big]e^{-2\\pi ikn/N}.$$\nFor $0<|n|\\le N/2$ choose the integer $\\ell\\approx N/(2n)$ so that $\\ell n/N$ is as close to $\\tfrac12$ as possible; then $|1-e^{2\\pi i\\ell n/N}|\\ge c_0>0$ (bounded away from $0$). Because $f\\in C^1$, $|f(e^{2\\pi ik/N})-f(e^{2\\pi i(k+\\ell)/N})|\\le \\|f'\\|_\\infty\\cdot\\frac{2\\pi\\ell}{N}\\le C\\,\\frac{\\ell}{N}\\le \\frac{C'}{|n|}$. Averaging,\n$$|a_N(n)|\\,c_0\\le\\frac{C'}{|n|}\\ \\Longrightarrow\\ |a_N(n)|\\le\\frac{c}{|n|}.$$",
             "depends_on": []
           }
         ],
@@ -7757,7 +7809,7 @@
             "id": "inversion",
             "label": "Inversion",
             "role": "argument",
-            "content": "The finite Fourier inversion on $\\mathbb Z(N)$ (take $N$ odd) reads\n$$f(e^{2\\pi ik/N})=\\sum_{|n|<N/2}a_N(n)\\,e^{2\\pi ikn/N}.$$\nBy Exercise 1, $a_N(n)\\to a(n)$; by the bound $|a_N(n)|\\le c/|n|^2$ (uniform in $N$) the tails are uniformly small, so letting $N\\to\\infty$ (dominated convergence on the summation) yields\n$$f(e^{2\\pi ix})=\\sum_{n=-\\infty}^\\infty a(n)\\,e^{2\\pi inx},$$\nthe classical Fourier inversion recovered as a limit of the discrete one. $\\blacksquare$",
+            "content": "The finite Fourier inversion on $\\mathbb Z(N)$ (take $N$ odd) reads\n$$f(e^{2\\pi ik/N})=\\sum_{|n|<N/2}a_N(n)\\,e^{2\\pi ikn/N}.$$\nBy Exercise 1, $a_N(n)\\to a(n)$; by the bound $|a_N(n)|\\le c/|n|^2$ (uniform in $N$) the tails are uniformly small, so letting $N\\to\\infty$ (dominated convergence on the summation) yields\n$$f(e^{2\\pi ix})=\\sum_{n=-\\infty}^\\infty a(n)\\,e^{2\\pi inx},$$\nthe classical Fourier inversion recovered as a limit of the discrete one.",
             "depends_on": []
           }
         ],
@@ -13172,6 +13224,72 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": "Poisson kernels form a good kernel family"
+      },
+      {
+        "id": "e_polynomial_decay__requires__lebesgue_integral",
+        "source": "polynomial_decay",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Used to state the L^1 and L^2 consequences of polynomial decay."
+      },
+      {
+        "id": "e_polynomial_decay__requires__l1_space_real_line",
+        "source": "polynomial_decay",
+        "target": "l1_space_real_line",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "If m>d, then C_m(R^d) is contained in L^1(R^d)."
+      },
+      {
+        "id": "e_polynomial_decay__requires__l2_space_real_line",
+        "source": "polynomial_decay",
+        "target": "l2_space_real_line",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "If 2m>d, then C_m(R^d) is contained in L^2(R^d)."
+      },
+      {
+        "id": "e_moderate_decrease__instance_of__polynomial_decay",
+        "source": "moderate_decrease",
+        "target": "polynomial_decay",
+        "type": "instance_of",
+        "dependency_class": "logical_dependency",
+        "label": "is a special case of",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Functions of moderate decrease on R satisfy a decay bound comparable to polynomial decay of order 2."
+      },
+      {
+        "id": "e_schwartz_space__instance_of__polynomial_decay",
+        "source": "schwartz_space",
+        "target": "polynomial_decay",
+        "type": "instance_of",
+        "dependency_class": "logical_dependency",
+        "label": "has every polynomial decay order",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Schwartz functions decay faster than every polynomial, so they satisfy every C_m decay bound."
+      },
+      {
+        "id": "e_moderate_decrease__requires__l2_space_real_line",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "moderate_decrease",
+        "target": "l2_space_real_line",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": "Moderate decrease implies square-integrability on R."
       }
     ]
   }

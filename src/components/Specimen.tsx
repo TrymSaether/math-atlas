@@ -313,7 +313,7 @@ export function Steps({
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
               {step.label && (
                 <span className="font-math text-ui-lead" style={{ color: "var(--fg-1)", fontWeight: 600 }}>
-                  {step.label}
+                  <MathProse text={step.label} />
                 </span>
               )}
               {role && (

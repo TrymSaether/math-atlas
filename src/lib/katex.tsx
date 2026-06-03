@@ -101,40 +101,65 @@ export function splitMathSegments(text: string): MathSegment[] {
   let index = 0;
 
   while (index < text.length) {
-    const displayStart = text.indexOf("$$", index);
-    const inlineStart = text.indexOf("$", index);
+    const next = findNextMathStart(text, index);
 
-    let start = -1;
-    let display = false;
-
-    if (displayStart !== -1 && (inlineStart === -1 || displayStart <= inlineStart)) {
-      start = displayStart;
-      display = true;
-    } else if (inlineStart !== -1) {
-      start = inlineStart;
-    }
-
-    if (start === -1) {
+    if (!next) {
       segments.push({ type: "text", value: text.slice(index) });
       break;
     }
 
-    if (start > index) {
-      segments.push({ type: "text", value: text.slice(index, start) });
+    if (next.start > index) {
+      segments.push({ type: "text", value: text.slice(index, next.start) });
     }
 
-    const delimiter = display ? "$$" : "$";
-    const end = text.indexOf(delimiter, start + delimiter.length);
+    const contentStart = next.start + next.open.length;
+    const end = findMathEnd(text, contentStart, next.close);
     if (end === -1) {
-      segments.push({ type: "text", value: text.slice(start) });
+      segments.push({ type: "text", value: text.slice(next.start) });
       break;
     }
 
-    segments.push({ type: "math", value: text.slice(start + delimiter.length, end), display });
-    index = end + delimiter.length;
+    segments.push({ type: "math", value: text.slice(contentStart, end), display: next.display });
+    index = end + next.close.length;
   }
 
   return segments;
+}
+
+function isEscaped(text: string, index: number): boolean {
+  let slashCount = 0;
+  for (let i = index - 1; i >= 0 && text[i] === "\\"; i--) slashCount += 1;
+  return slashCount % 2 === 1;
+}
+
+function findNextMathStart(
+  text: string,
+  from: number,
+): { start: number; open: string; close: string; display: boolean } | null {
+  for (let i = from; i < text.length; i += 1) {
+    if (text.startsWith("$$", i) && !isEscaped(text, i)) {
+      return { start: i, open: "$$", close: "$$", display: true };
+    }
+    if (text[i] === "$" && !isEscaped(text, i)) {
+      return { start: i, open: "$", close: "$", display: false };
+    }
+    if (text.startsWith("\\(", i)) {
+      return { start: i, open: "\\(", close: "\\)", display: false };
+    }
+    if (text.startsWith("\\[", i)) {
+      return { start: i, open: "\\[", close: "\\]", display: true };
+    }
+  }
+  return null;
+}
+
+function findMathEnd(text: string, from: number, close: string): number {
+  if (close !== "$" && close !== "$$") return text.indexOf(close, from);
+
+  for (let i = from; i < text.length; i += 1) {
+    if (text.startsWith(close, i) && !isEscaped(text, i)) return i;
+  }
+  return -1;
 }
 
 export function renderMathInString(text: string): string {
