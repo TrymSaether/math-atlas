@@ -256,6 +256,31 @@ function DetailPane({
   const formula = nodeFormula(entry, [statement, formalStatement, definition]);
   const proof = entry.proof.trim();
   const solution = entry.solution.trim();
+  const prereqIds = [...new Set([...entry.statementDependencies, ...entry.proofDependencies])];
+  const usedByIds = [
+    ...new Set((map.outgoingEdgesByNodeId.get(entry.id) ?? []).map((edge) => edge.to)),
+  ].filter((id) => {
+    const node = map.nodeById.get(id);
+    return node && !RELATED_CASE_KINDS.has(node.kind) && node.kind !== "exercise";
+  });
+  const relatedCaseIds = (() => {
+    const ids = new Set<string>();
+    for (const edge of map.outgoingEdgesByNodeId.get(entry.id) ?? []) {
+      if (edge.relation === "has_example" || edge.relation === "has_counterexample") ids.add(edge.to);
+    }
+    for (const edge of map.incomingEdgesByNodeId.get(entry.id) ?? []) {
+      if (edge.relation === "has_property" || edge.relation === "motivates") ids.add(edge.from);
+    }
+    return [...ids].filter((id) => {
+      const node = map.nodeById.get(id);
+      return node && RELATED_CASE_KINDS.has(node.kind);
+    });
+  })();
+  const exerciseIds = (map.outgoingEdgesByNodeId.get(entry.id) ?? [])
+    .filter((edge) => edge.relation === "requires")
+    .map((edge) => edge.to)
+    .filter((id, index, ids) => ids.indexOf(id) === index)
+    .filter((id) => map.nodeById.get(id)?.kind === "exercise");
   const related = entry.related
     .map((id) => map.nodeById.get(id))
     .filter((n): n is GraphNode => Boolean(n));
@@ -365,6 +390,10 @@ function DetailPane({
         </div>
 
         <footer className="dict-doc-foot">
+          <DictionaryLinkGroup label="Depends on" ids={prereqIds} map={map} onPick={onPickRelated} />
+          <DictionaryLinkGroup label="Used by" ids={usedByIds} map={map} onPick={onPickRelated} />
+          <DictionaryLinkGroup label="Related cases" ids={relatedCaseIds} map={map} onPick={onPickRelated} />
+          <DictionaryLinkGroup label="Exercises" ids={exerciseIds} map={map} onPick={onPickRelated} />
           {related.length > 0 && (
             <div className="dict-related">
               <span className="dict-related-lab">See also</span>
@@ -408,6 +437,49 @@ function StepLabel({ label, toneColor }: { label: string; toneColor: string }) {
         className="h-px flex-1"
         style={{ background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)`, opacity: 0.5 }}
       />
+    </div>
+  );
+}
+
+const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
+
+function DictionaryLinkGroup({
+  label,
+  ids,
+  map,
+  onPick,
+}: {
+  label: string;
+  ids: string[];
+  map: LoadedMap;
+  onPick: (id: string) => void;
+}) {
+  const nodes = ids
+    .map((id) => map.nodeById.get(id))
+    .filter((node): node is GraphNode => Boolean(node));
+
+  if (nodes.length === 0) return null;
+
+  return (
+    <div className="dict-related">
+      <span className="dict-related-lab">{label}</span>
+      <div className="dict-related-chips">
+        {nodes.map((node) => {
+          const tone = getDomainTone(node.domainId);
+          return (
+            <button
+              key={node.id}
+              type="button"
+              className="dict-related-chip"
+              onClick={() => onPick(node.id)}
+              style={{ borderColor: tone.border }}
+            >
+              <span className="dict-related-dot" style={{ background: tone.color }} aria-hidden />
+              <MathText text={node.title} />
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

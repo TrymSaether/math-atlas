@@ -5,11 +5,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"IBM Plex Sans"', "Aptos", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
-        display: ['"Newsreader"', '"STIX Two Text"', "Georgia", "serif"],
-        serif: ['"Newsreader"', '"STIX Two Text"', "Georgia", "serif"],
+        sans: ['"Inter"', "Aptos", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "system-ui", "sans-serif"],
+        display: ['"DM Serif Display"', '"Cormorant Garamond"', '"Iowan Old Style"', "Georgia", "serif"],
+        serif: ['"DM Serif Display"', '"Cormorant Garamond"', '"Iowan Old Style"', "Georgia", "serif"],
         math: ['"STIX Two Text"', '"STIX Two Math"', "Georgia", "serif"],
-        mono: ['"IBM Plex Mono"', '"SF Mono"', "ui-monospace", "monospace"],
+        mono: ['"JetBrains Mono"', '"SF Mono"', "ui-monospace", "Menlo", "monospace"],
       },
       fontSize: {
         "edge-label": ["var(--type-edge-label)", { lineHeight: "1.1" }],

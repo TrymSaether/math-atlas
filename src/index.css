@@ -1313,22 +1313,22 @@
   --type-ui-xs: 12px;
   --type-ui-control: 12.5px;
   --type-ui-sm: 13px;
-  --type-ui-copy: 13.5px;
+  --type-ui-copy: 14.25px;
   --type-ui-body: 14px;
   --type-ui-lead: 15px;
   --type-atlas-brand: 17px;
   --type-dict-compact-title: 18px;
   --type-atlas-card: 20px;
   --type-dict-term: 24px;
-  --type-node-panel-title: 24px;
+  --type-node-panel-title: 25px;
   --type-atlas-panel: 27px;
   --type-atlas-summary: 28px;
   --type-atlas-display: 34px;
 
   --tracking-label: 0.13em;
   --tracking-label-wide: 0.14em;
-  --tracking-label-tight: 0.08em;
-  --tracking-kicker: 0.22em;
+  --tracking-label-tight: 0.06em;
+  --tracking-kicker: 0.16em;
   --tracking-code: 0.02em;
 
   --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);

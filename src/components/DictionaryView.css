@@ -30,13 +30,14 @@
   flex-direction: column;
   min-height: 0;
   border-right: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--surface-2);
 }
 
 .dictionary-view .dict-index-head {
   flex-shrink: 0;
   padding: 16px 18px 12px;
   border-bottom: 1px solid var(--border);
+  background: var(--surface);
 }
 
 .dictionary-view .dict-kicker {
@@ -57,10 +58,11 @@
 
 .dictionary-view .dict-title {
   margin: 4px 0 0;
-  font-size: var(--type-atlas-panel);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.015em;
+  font-family: var(--font-serif);
+  font-size: var(--type-dict-term);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: 0;
   color: var(--fg-1);
 }
 
@@ -271,14 +273,14 @@
 }
 
 .dictionary-view .dict-row:hover {
-  background: var(--surface-2);
+  background: var(--chrome-hover);
 }
 
 .dictionary-view .dict-row-rail {
   position: absolute;
   inset-block: 6px;
   left: 0;
-  width: 2.5px;
+  width: 3px;
   border-radius: 999px;
 }
 
@@ -296,17 +298,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: var(--type-ui-body);
-  line-height: 1.25;
+  font-family: var(--font-sans);
+  font-size: var(--type-ui-copy);
+  line-height: 1.35;
+  font-weight: 450;
   color: var(--fg-1);
 }
 
 .dictionary-view .dict-row-meta {
   flex-shrink: 0;
   font-family: var(--font-mono);
-  font-size: var(--type-ui-tiny);
+  font-size: var(--type-ui-caption);
   letter-spacing: var(--tracking-code);
-  color: var(--fg-4);
+  color: var(--fg-3);
+}
+
+.dictionary-view .dict-row--active {
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
 }
 
 .dictionary-view .dict-row--active .dict-row-term {
@@ -361,10 +369,11 @@
 
 .dictionary-view .dict-doc-term {
   margin: 0;
+  font-family: var(--font-serif);
   font-size: var(--type-atlas-display);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.08;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   color: var(--fg-1);
 }
 

@@ -66,7 +66,7 @@ export function Spine({
       )}
       <div
         className="font-math leading-[1.6]"
-        style={{ color: "var(--fg-1)", fontSize: size === "dict" ? "14px" : "15px" }}
+        style={{ color: "var(--fg-1)", fontSize: size === "dict" ? "15px" : "15.5px" }}
       >
         {children}
       </div>
