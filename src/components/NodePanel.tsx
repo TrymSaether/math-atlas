@@ -53,7 +53,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const domainGlyphId = getDomainGlyphId(node.domainId);
   const [tab, setTab] = useState<TabId>("overview");
   const [showAllUsed, setShowAllUsed] = useState(false);
-  const [overviewLinksOpen, setOverviewLinksOpen] = useState(false);
+  const [overviewLinksOpen, setOverviewLinksOpen] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const prereqIds = useMemo(
@@ -140,7 +140,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   useEffect(() => {
     setTab("overview");
     setShowAllUsed(false);
-    setOverviewLinksOpen(false);
+    setOverviewLinksOpen(true);
     scrollRef.current?.scrollTo({ top: 0 });
   }, [node.id]);
 
