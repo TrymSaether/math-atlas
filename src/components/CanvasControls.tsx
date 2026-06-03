@@ -190,9 +190,9 @@ function DepthPicker({ value, onChange }: { value: number; onChange: (value: num
               active && "is-active",
             )}
             style={{
-              background: active ? "var(--chrome-active)" : "transparent",
-              color: active ? "var(--fg-1)" : "var(--fg-2)",
-              boxShadow: active ? "inset 0 0 0 1px color-mix(in srgb, var(--border) 70%, transparent)" : "none",
+              background: active ? "var(--accent-soft)" : "transparent",
+              color: active ? "var(--accent)" : "var(--fg-2)",
+              boxShadow: active ? "inset 0 0 0 1px var(--accent-border)" : "none",
             }}
             aria-label={`Focus depth ${depth}`}
             aria-pressed={active}

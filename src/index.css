@@ -1207,6 +1207,190 @@
   --dia-muted-fill: var(--border-strong);
 }
 
+/* Lemma — warm cream paper with a vermilion annotation accent.
+   Light: a quiet reading room. Ink near-black, paper cream, accent sparing. */
+:root[data-theme="lemma"] {
+  color-scheme: light;
+
+  --bg: #F4EFE0;
+  --bg-deep: #EFE9D7;
+  --surface: #FFFDF8;
+  --surface-2: #FBF8F1;
+  --surface-3: #F0EAD8;
+
+  --fg-1: #1A1814;
+  --fg-2: #4A453E;
+  --fg-3: #8C8678;
+  --fg-4: #C8BFA7;
+  --fg-on-color: #FFFDF8;
+
+  --border: #D8D0BC;
+  --border-strong: #C8BFA7;
+  --border-subtle: #ECE5D8;
+  --hairline: #D8D0BC;
+
+  /* Warm domain hues — same family as manuscript */
+  --blue: #2457C5;
+  --green: #26844A;
+  --purple: #7C3AED;
+  --red: #A8431D;
+  --teal: #0D9488;
+  --orange: #C56A24;
+  --pink: #B83280;
+  --gold: #B89418;
+
+  --blue-50: #DCE8FF;
+  --green-50: #E8F5EC;
+  --purple-50: #F1EAFE;
+  --red-50: #F3E4DA;
+  --teal-50: #EAF7F5;
+  --orange-50: #F7E7DA;
+  --pink-50: #F7E8F0;
+  --gold-50: #F6EFD2;
+
+  --blue-200: #AFC7F7;
+  --green-200: #B9D8C1;
+  --purple-200: #D8C8FB;
+  --red-200: #E3C3B2;
+  --teal-200: #B8DDD6;
+  --orange-200: #E6C5AA;
+  --pink-200: #E7BED2;
+  --gold-200: #DDCB82;
+
+  /* Vermilion — the single brand accent. Used like a red pen: annotations,
+     active states, focus rings. Never large fills or primary call-to-action. */
+  --accent: #C2410C;
+  --accent-soft: rgba(194, 65, 12, 0.08);
+  --accent-border: rgba(194, 65, 12, 0.28);
+
+  --selection: rgba(194, 65, 12, 0.12);
+
+  --edge-ink: #8C8678;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(26, 24, 20, 0.04), 0 1px 0 rgba(26, 24, 20, 0.02);
+  --shadow-2: 0 4px 14px rgba(26, 24, 20, 0.07), 0 1px 2px rgba(26, 24, 20, 0.04);
+  --shadow-3: 0 14px 40px rgba(26, 24, 20, 0.10), 0 2px 6px rgba(26, 24, 20, 0.05);
+
+  --grid-dot: #D8D0BC;
+  --grid-major: rgba(26, 24, 20, 0.05);
+  --grid-minor: rgba(26, 24, 20, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: #EDE3CE;
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: rgba(194, 65, 12, 0.08);
+  --dia-int: rgba(194, 65, 12, 0.08);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Lemma Dark — an ink-black study lamp, not a paper inversion.
+   Warm near-black bg, paper-cream text, lifted vermilion accent. */
+:root[data-theme="lemma-dark"] {
+  color-scheme: dark;
+
+  --bg: #15130F;
+  --bg-deep: #100D0A;
+  --surface: #1C1A15;
+  --surface-2: #24211B;
+  --surface-3: #2E2A22;
+
+  --fg-1: #F0EAD8;
+  --fg-2: #B5AE9B;
+  --fg-3: #7A7262;
+  --fg-4: #4A4338;
+  --fg-on-color: #15130F;
+
+  --border: rgba(240, 234, 216, 0.10);
+  --border-strong: rgba(240, 234, 216, 0.18);
+  --border-subtle: rgba(240, 234, 216, 0.05);
+  --hairline: rgba(240, 234, 216, 0.10);
+
+  /* Lifted warm hues for contrast on near-black */
+  --blue: #6FB6C9;
+  --green: #9FC279;
+  --purple: #C0A0DA;
+  --red: #F0795F;
+  --teal: #66CDB8;
+  --orange: #E0A05A;
+  --pink: #D96FA8;
+  --gold: #E6C45A;
+
+  --blue-50: rgba(111, 182, 201, 0.13);
+  --green-50: rgba(159, 194, 121, 0.13);
+  --purple-50: rgba(192, 160, 218, 0.14);
+  --red-50: rgba(240, 121, 95, 0.13);
+  --teal-50: rgba(102, 205, 184, 0.13);
+  --orange-50: rgba(224, 160, 90, 0.13);
+  --pink-50: rgba(217, 111, 168, 0.13);
+  --gold-50: rgba(230, 196, 90, 0.13);
+
+  --blue-200: rgba(111, 182, 201, 0.36);
+  --green-200: rgba(159, 194, 121, 0.36);
+  --purple-200: rgba(192, 160, 218, 0.36);
+  --red-200: rgba(240, 121, 95, 0.36);
+  --teal-200: rgba(102, 205, 184, 0.36);
+  --orange-200: rgba(224, 160, 90, 0.36);
+  --pink-200: rgba(217, 111, 168, 0.36);
+  --gold-200: rgba(230, 196, 90, 0.36);
+
+  --accent: #E26B30;
+  --accent-soft: rgba(226, 107, 48, 0.12);
+  --accent-border: rgba(226, 107, 48, 0.36);
+
+  --selection: rgba(226, 107, 48, 0.24);
+
+  --edge-ink: #7A7262;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.60);
+
+  --grid-dot: rgba(240, 234, 216, 0.08);
+  --grid-major: rgba(240, 234, 216, 0.05);
+  --grid-minor: rgba(240, 234, 216, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-fil2: var(--dia-fill2);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-int-fill: var(--dia-int);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-border: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-mut: var(--fg-3);
+  --dia-muted: var(--dia-mut);
+  --dia-muted-fill: var(--border-strong);
+}
+
 /* Seminar — academic dark. Sibling of Journal: a warm charcoal reader with a
    lifted, muted palette and a soft slate-blue accent. */
 :root[data-theme="seminar"] {
@@ -1331,6 +1515,15 @@
   --tracking-kicker: 0.16em;
   --tracking-code: 0.02em;
 
+  /* Radius scale — restrained, editorial feel */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+  --radius-pill: 999px;
+
   --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
   --dur-micro: 120ms;
   --dur-std: 220ms;
@@ -1353,7 +1546,8 @@
 :root[data-theme="deepsea"],
 :root[data-theme="aubergine"],
 :root[data-theme="neon"],
-:root[data-theme="seminar"] {
+:root[data-theme="seminar"],
+:root[data-theme="lemma-dark"] {
   --chrome-bg: color-mix(in srgb, var(--surface) 82%, transparent);
   --chrome-bg-strong: color-mix(in srgb, var(--surface) 92%, transparent);
   --chrome-hover: color-mix(in srgb, var(--fg-1) 10%, transparent);
@@ -1388,6 +1582,21 @@ body {
 
 button {
   font-family: inherit;
+}
+
+/* Accent-colored keyboard focus ring — consistent across all themes. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Suppress the default outline for elements that have their own focus style. */
+.map-icon-button:focus-visible,
+.map-text-button:focus-visible,
+.map-field-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: inherit;
 }
 
 ::selection {

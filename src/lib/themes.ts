@@ -169,6 +169,30 @@ export const THEMES: ThemeDef[] = [
     },
   },
   {
+    id: "lemma",
+    label: "Lemma",
+    scheme: "light",
+    family: "lemma",
+    preview: {
+      bg: "#F4EFE0",
+      surface: "#FFFDF8",
+      ink: "#1A1814",
+      accent: "#C2410C",
+    },
+  },
+  {
+    id: "lemma-dark",
+    label: "Lemma Dark",
+    scheme: "dark",
+    family: "lemma",
+    preview: {
+      bg: "#15130F",
+      surface: "#1C1A15",
+      ink: "#F0EAD8",
+      accent: "#E26B30",
+    },
+  },
+  {
     id: "journal",
     label: "Journal",
     scheme: "light",
