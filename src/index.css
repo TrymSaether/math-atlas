@@ -114,10 +114,14 @@
 
   /* Sandbox fact-status glyph colors (★ ✓ ≅ ○). Alias theme vars so they
      retune across every theme — no per-theme block needed. */
-  --fact-computed: var(--green); /* ✓ machine-verified */
-  --fact-recognized: var(--blue); /* ≅ matched a known pattern */
-  --fact-user: var(--gold); /* ★ user-asserted, unverified */
-  --fact-pending: var(--fg-3); /* ○ no input yet */
+  --fact-computed: var(--green);
+  /* ✓ machine-verified */
+  --fact-recognized: var(--blue);
+  /* ≅ matched a known pattern */
+  --fact-user: var(--gold);
+  /* ★ user-asserted, unverified */
+  --fact-pending: var(--fg-3);
+  /* ○ no input yet */
 }
 
 :root[data-theme="chalkboard"] {
@@ -1500,7 +1504,7 @@
   --type-ui-copy: 14.25px;
   --type-ui-body: 14px;
   --type-ui-lead: 15px;
-  --type-atlas-brand: 17px;
+  --type-atlas-brand: 20px;
   --type-dict-compact-title: 18px;
   --type-atlas-card: 20px;
   --type-dict-term: 24px;
@@ -1516,12 +1520,18 @@
   --tracking-code: 0.02em;
 
   /* Radius scale — restrained, editorial feel */
-  --radius-xs: 4px;    /* kbd, tags, tiny chips */
-  --radius-sm: 8px;    /* compact icon buttons, depth picker */
-  --radius-md: 12px;   /* segmented controls, small cards */
-  --radius-lg: 16px;   /* panels, node cards, tiles */
-  --radius-xl: 18px;   /* pill chrome wrappers, search bar */
-  --radius-2xl: 22px;  /* popovers, map panel */
+  --radius-xs: 4px;
+  /* kbd, tags, tiny chips */
+  --radius-sm: 8px;
+  /* compact icon buttons, depth picker */
+  --radius-md: 12px;
+  /* segmented controls, small cards */
+  --radius-lg: 16px;
+  /* panels, node cards, tiles */
+  --radius-xl: 18px;
+  /* pill chrome wrappers, search bar */
+  --radius-2xl: 22px;
+  /* popovers, map panel */
   --radius-pill: 999px;
 
   --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -1651,6 +1661,10 @@ a:focus-visible,
     transform var(--dur-micro) var(--ease-standard);
 }
 
+.map-field-button {
+  box-shadow: inset 0 0 0 1px var(--chrome-border);
+}
+
 .map-icon-button {
   display: inline-flex;
   align-items: center;
@@ -1684,7 +1698,7 @@ a:focus-visible,
   border-radius: var(--radius-md);
 }
 
-.canvas-dock .map-icon-button + .map-icon-button {
+.canvas-dock .map-icon-button+.map-icon-button {
   margin-top: 2px;
 }
 
@@ -1702,11 +1716,11 @@ a:focus-visible,
   color: var(--fg-1);
 }
 
-.top-tools .map-icon-button + .map-icon-button,
-.top-tools .map-text-button + .map-icon-button,
-.top-tools .relative + .relative,
-.top-tools .relative + .map-icon-button,
-.top-tools .map-icon-button + .relative {
+.top-tools .map-icon-button+.map-icon-button,
+.top-tools .map-text-button+.map-icon-button,
+.top-tools .relative+.relative,
+.top-tools .relative+.map-icon-button,
+.top-tools .map-icon-button+.relative {
   margin-left: 1px;
 }
 
@@ -1752,6 +1766,7 @@ a:focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .map-icon-button,
   .map-text-button,
   .map-field-button {

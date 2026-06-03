@@ -5,6 +5,7 @@ import {
   type GraphEdge,
 } from "../types";
 import { computeSwimlaneLayout, type DomainBounds, type Position } from "../lib/atlasLayout";
+import { registerDomainTones, type DomainTone } from "../lib/colors";
 import { computeGraphMetrics, type GraphMetrics } from "../lib/graphMetrics";
 import { DEFAULT_MAP_ID, MAPS, loadRawMap, type MapId } from "./mapRegistry";
 import { normalizeFieldGraph } from "./normalizeFieldGraph";
@@ -47,6 +48,8 @@ export interface LoadedMap {
   data: GraphData;
   nodeById: Map<string, GraphData["nodes"][number]>;
   domainById: Map<string, GraphDomain>;
+  /** Resolved palette tone per domain id (single source of truth for color). */
+  domainTones: Map<string, DomainTone>;
   edgeById: Map<string, GraphEdge>;
   incomingEdgesByNodeId: Map<string, GraphEdge[]>;
   outgoingEdgesByNodeId: Map<string, GraphEdge[]>;
@@ -70,6 +73,7 @@ function buildLoadedMap(data: GraphData): LoadedMap {
     data,
     nodeById: new Map(data.nodes.map((node) => [node.id, node])),
     domainById: new Map(data.domains.map((domain) => [domain.id, domain])),
+    domainTones: registerDomainTones(data.domains),
     edgeById: new Map(data.edges.map((edge) => [edge.id, edge])),
     incomingEdgesByNodeId: groupEdges(data.edges, "to"),
     outgoingEdgesByNodeId: groupEdges(data.edges, "from"),

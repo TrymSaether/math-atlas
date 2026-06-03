@@ -44,7 +44,9 @@ Math Atlas is a React + ReactFlow application that renders mathematical knowledg
 
 ### Theming
 
-CSS variables in `src/index.css` define light ("paper") and dark ("chalkboard") themes via `[data-theme]` on `<html>`. Domain colors are assigned dynamically at runtime by `src/lib/colors.ts` (`assignDomainTones` / `getDomainTone`) using an 8-color palette. Theme is persisted to `localStorage` under the key `math-map-theme`.
+CSS variables in `src/index.css` define light ("paper") and dark ("chalkboard") themes via `[data-theme]` on `<html>`. Theme is persisted to `localStorage` under the key `math-map-theme`.
+
+Domain hues are resolved by `src/lib/colors.ts` from the 8-color palette (`--blue`, `--green`, …), which is the single source of truth — every tone is a CSS variable, so hues retune automatically across all themes. A domain's hue comes from its authored data, not its array position: `resolveDomainTones(domains)` pins an explicit `palette` key first, then snaps each authored hex `color` to its nearest palette anchor, keeping hues distinct. The result is published to a bare-id registry (`registerDomainTones`, called from `buildLoadedMap` and `App.tsx`) that `getDomainTone(domainId)` reads. `DomainTone` carries `color` / `tint` / `border` plus `text` (a theme-adaptive ink for text on `tint`). The domains' JSON `tint` / `border` fields are legacy/advisory and no longer rendered.
 
 ### Data pipeline scripts (`scripts/`)
 

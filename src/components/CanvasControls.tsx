@@ -451,7 +451,7 @@ function MapPanel({
                     className="rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition"
                     style={
                       active
-                        ? { background: tone.tint, borderColor: tone.border, color: tone.color }
+                        ? { background: tone.tint, borderColor: tone.border, color: tone.text }
                         : { background: "var(--surface)", borderColor: "var(--border)", color: "var(--fg-3)" }
                     }
                   >

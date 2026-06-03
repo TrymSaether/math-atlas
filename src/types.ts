@@ -32,7 +32,14 @@ export const GraphDomainSchema = z.object({
   id: IdSchema,
   label: RequiredTextSchema,
   order: z.number().int().nonnegative(),
+  /** Authored hex hue; snapped to the nearest palette key at render time. */
   color: RequiredTextSchema,
+  /**
+   * Optional explicit palette key (blue/green/purple/red/teal/orange/pink/gold).
+   * Overrides `color` snapping when an author wants to pin a domain's hue.
+   */
+  palette: OptionalTextSchema,
+  /** Legacy advisory fields — rendering now derives tones from the palette. */
   tint: OptionalTextSchema,
   border: OptionalTextSchema,
 });

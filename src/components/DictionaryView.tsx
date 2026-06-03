@@ -4,7 +4,7 @@ import { ArrowUpRight, ArrowLeft, MagnifyingGlass } from "@phosphor-icons/react"
 import { useStore } from "../store";
 import { MAPS, type LoadedMap, type MapId } from "../data";
 import type { GraphNode } from "../types";
-import { MathText, MathProse, tidyMathText } from "../lib/katex";
+import { MathText, MathProse } from "../lib/katex";
 import { KIND_LABEL } from "../types";
 import { getDomainTone } from "../lib/colors";
 import { nodeDefinition, nodeFormula } from "../lib/nodeContent";
@@ -18,7 +18,7 @@ import {
   type DictSortMode,
   type SectionFacet,
 } from "../lib/dictionary";
-import { Spine, Facet, MathBox, Proof, Steps, specimenMeta } from "./Specimen";
+import { Spine, Facet, MathBox, Proof, Steps, StepLabel, specimenMeta } from "./Specimen";
 import { hasNodeVisual, NodeVisual } from "./NodeVisual";
 import "./DictionaryView.css";
 
@@ -141,7 +141,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                       className="dict-facet"
                       aria-pressed={active}
                       onClick={() => toggleTopic(d.id)}
-                      style={active ? { background: tone.tint, borderColor: tone.border, color: tone.color } : undefined}
+                      style={active ? { background: tone.tint, borderColor: tone.border, color: tone.text } : undefined}
                       title={d.label}
                     >
                       <span className="dict-facet-dot" style={{ background: tone.color }} />
@@ -339,7 +339,7 @@ function DetailPane({
             </Facet>
           )}
           {formalStatement && formalStatement !== statement && (
-            <Facet label="Formal statement" muted>
+            <Facet label="Formal statement">
               <MathProse text={formalStatement} asBlock />
             </Facet>
           )}
@@ -380,9 +380,7 @@ function DetailPane({
               <Steps steps={entry.solutionSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
             </div>
           ) : solution ? (
-            <Facet label="Solution">
-              <MathProse text={tidyMathText(solution)} asBlock />
-            </Facet>
+            <Proof text={solution} toneColor={tone.color} label="Solution" defaultOpen />
           ) : null}
           {entry.proofSteps.length > 0 ? (
             <div>
@@ -427,22 +425,6 @@ function DetailPane({
         </footer>
       </div>
     </article>
-  );
-}
-
-/** Mono micro-label heading a multi-step Proof / Solution block in the detail pane. */
-function StepLabel({ label, toneColor }: { label: string; toneColor: string }) {
-  return (
-    <div className="mb-3 flex items-center gap-2">
-      <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
-        {label}
-      </span>
-      <span
-        aria-hidden
-        className="h-px flex-1"
-        style={{ background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)`, opacity: 0.5 }}
-      />
-    </div>
   );
 }
 

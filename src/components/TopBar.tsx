@@ -122,7 +122,7 @@ function MapBrandSelector() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "map-field-button flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 text-ui-control font-semibold sm:px-3",
+          "map-field-button flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 text-ui-control font-sans sm:px-3.5",
           open && "is-active",
         )}
         style={!open ? { color: "var(--fg-1)" } : undefined}
@@ -153,7 +153,7 @@ function MapBrandSelector() {
                   setOpen(false);
                 }}
                 className={cn(
-                  "map-text-button flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2.5 text-left text-ui-control font-semibold",
+                  "map-text-button flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2.5 text-left text-ui-control",
                   active && "is-active",
                 )}
                 style={!active ? { color: "var(--fg-2)" } : undefined}

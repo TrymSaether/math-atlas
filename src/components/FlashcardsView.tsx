@@ -381,8 +381,8 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
           </Spine>
         )}
         {formal && formal !== lead && (
-          <Facet label="Formal statement" toneColor={tone.color}>
-            <MathBox text={formal} />
+          <Facet label="Formal statement">
+            <MathProse text={formal} asBlock />
           </Facet>
         )}
         {definition && (
@@ -409,16 +409,14 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
           </Facet>
         )}
         {solution && solution !== lead && (
-          <Facet label="Solution">
-            <MathProse text={solution} />
-          </Facet>
+          <Proof text={solution} toneColor={tone.color} label="Solution" defaultOpen />
         )}
         {example && (
           <Facet label="Example" muted>
             <MathProse text={example} />
           </Facet>
         )}
-        {proof && <Proof text={proof} toneColor={tone.color} />}
+        {proof && <Proof text={proof} toneColor={tone.color} defaultOpen />}
       </div>
     </CardShell>
   );

@@ -8,6 +8,6 @@
     <path d="M5 24 L24 20.5 L21 24 L24 27.5 Z" fill="currentColor" opacity="0.55"></path>
     <circle cx="24" cy="24" r="1.8" fill="currentColor"></circle>
   </g>
-  <text x="58" y="34" font-family="DM Serif Display, Georgia, serif" font-size="30" fill="currentColor"
+  <text x="58" y="34" font-family="DM Serif Display, Georgia, serif" font-size="var(--font-size-3)" fill="currentColor"
     letter-spacing="-0.5">Math Atlas</text>
 </svg>

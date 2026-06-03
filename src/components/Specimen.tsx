@@ -121,20 +121,67 @@ export function MathBox({ text }: { text: string }) {
 }
 
 /**
- * A proof: the rigorous spine of a result. Treated distinctly from a Facet —
- * proofs run long and are read deliberately, so they're collapsible and carry a
- * "manuscript" texture: a dotted derivation rail in the domain tone, a mono
- * PROOF label that doubles as the fold toggle, and the classic ∎ tombstone
- * closing the argument. Shared by the panel and the dictionary.
+ * Mono micro-label with a dashed derivation rule — heads a Proof / Solution
+ * block (or the panel's Proof / Solution tab). The static, always-shown sibling
+ * of the collapsible {@link Proof} header.
  */
-export function Proof({
-  text,
+export function StepLabel({ label, toneColor }: { label: string; toneColor: string }) {
+  return (
+    <div className="mb-3 flex items-center gap-2">
+      <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
+        {label}
+      </span>
+      <span
+        aria-hidden
+        className="h-px flex-1"
+        style={{
+          background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)`,
+          opacity: 0.5,
+        }}
+      />
+    </div>
+  );
+}
+
+/**
+ * The body of a prose (non-stepped) argument: a dotted derivation rail in the
+ * domain tone and the classic ∎ tombstone closing it. Shared by the panel's
+ * Proof / Solution tabs (under a static {@link StepLabel}) and the collapsible
+ * {@link Proof} so the manuscript texture is identical everywhere.
+ */
+export function Argument({ text, toneColor }: { text: string; toneColor: string }) {
+  return (
+    <div
+      className="font-math pl-3.5 text-ui-copy leading-[1.7]"
+      style={{
+        color: "var(--fg-1)",
+        borderLeft: `1.5px dotted color-mix(in srgb, ${toneColor} 55%, transparent)`,
+      }}
+    >
+      <MathProse text={tidyMathText(text)} asBlock />
+      <span aria-hidden className="mt-1.5 block text-right text-ui-sm" style={{ color: toneColor }}>
+        ∎
+      </span>
+    </div>
+  );
+}
+
+/**
+ * A foldable section under a domain-toned dashed derivation rule: a caret toggle
+ * and, optionally, a mono micro-label that doubles as the rule's caption. Omit
+ * `label` where context already names the block (the panel's Proof / Solution
+ * tab) — you get the same fold affordance without a redundant heading.
+ */
+export function Collapsible({
   toneColor,
+  label,
   defaultOpen = false,
+  children,
 }: {
-  text: string;
   toneColor: string;
+  label?: string;
   defaultOpen?: boolean;
+  children: ReactNode;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const reduceMotion = useReducedMotion();
@@ -144,19 +191,22 @@ export function Proof({
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="group flex w-full items-center gap-1.5 focus:outline-none"
+        aria-label={label ? undefined : open ? "Collapse" : "Expand"}
+        className="group mb-1 flex w-full items-center gap-1.5 focus:outline-none"
       >
         <CaretRight
           className="h-3 w-3 shrink-0 transition-transform duration-200"
           style={{ color: toneColor, transform: open ? "rotate(90deg)" : "none" }}
           aria-hidden
         />
-        <span
-          className="font-mono text-ui-2xs uppercase tracking-label"
-          style={{ color: toneColor }}
-        >
-          Proof
-        </span>
+        {label && (
+          <span
+            className="font-mono text-ui-2xs uppercase tracking-label"
+            style={{ color: toneColor }}
+          >
+            {label}
+          </span>
+        )}
         <span
           aria-hidden
           className="h-px flex-1 opacity-50 transition-opacity group-hover:opacity-100"
@@ -166,33 +216,42 @@ export function Proof({
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
-            key="proof-body"
+            key="collapsible-body"
             initial={reduceMotion ? false : { height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.2, 0.7, 0.2, 1] }}
             className="overflow-hidden"
           >
-            <div
-              className="font-math mt-2 pl-3.5 text-ui-copy leading-[1.7]"
-              style={{
-                color: "var(--fg-1)",
-                borderLeft: `1.5px dotted color-mix(in srgb, ${toneColor} 55%, transparent)`,
-              }}
-            >
-              <MathProse text={tidyMathText(text)} asBlock />
-              <span
-                aria-hidden
-                className="mt-1.5 block text-right text-ui-sm"
-                style={{ color: toneColor }}
-              >
-                ∎
-              </span>
-            </div>
+            <div className="mt-2">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+/**
+ * A prose proof or worked solution as a collapsible "manuscript" — a labeled
+ * {@link Collapsible} over an {@link Argument} body. Used where the block is one
+ * section among many (dictionary, flashcard back); the panel's dedicated tabs
+ * wrap their content in a label-less Collapsible instead.
+ */
+export function Proof({
+  text,
+  toneColor,
+  label = "Proof",
+  defaultOpen = false,
+}: {
+  text: string;
+  toneColor: string;
+  label?: string;
+  defaultOpen?: boolean;
+}) {
+  return (
+    <Collapsible toneColor={toneColor} label={label} defaultOpen={defaultOpen}>
+      <Argument text={text} toneColor={toneColor} />
+    </Collapsible>
   );
 }
 
@@ -253,7 +312,7 @@ export function Steps({
             </span>
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
               {step.label && (
-                <span className="font-serif text-ui-lead" style={{ color: "var(--fg-1)", fontWeight: 600 }}>
+                <span className="font-math text-ui-lead" style={{ color: "var(--fg-1)", fontWeight: 600 }}>
                   {step.label}
                 </span>
               )}

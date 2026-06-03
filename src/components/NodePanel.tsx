@@ -4,14 +4,14 @@ import { XIcon, CaretUpIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon } from "
 
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
-import { MathText, MathProse, tidyMathText } from "../lib/katex";
+import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
 import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
 import { compactNodeRef, nodeSourceCitation } from "../lib/nodeMeta";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { hasNodeVisual, NodeVisual } from "./NodeVisual";
-import { Spine, Facet, MathBox, ConnectionChip, Steps } from "./Specimen";
+import { Spine, Facet, MathBox, ConnectionChip, Steps, Collapsible, Argument } from "./Specimen";
 
 const USED_BY_INITIAL = 8;
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
@@ -243,7 +243,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
                     className="rounded-full px-1.5 py-px text-ui-2xs leading-none"
                     style={{
                       background: active ? tone.tint : "var(--surface-3)",
-                      color: active ? tone.color : "var(--fg-3)",
+                      color: active ? tone.text : "var(--fg-3)",
                     }}
                   >
                     {t.badge}
@@ -379,23 +379,25 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
 
         {activeTab === "proof" && (
           <section id="sec-proof">
-            <StepHeading label="Proof" toneColor={tone.color} />
-            {node.proofSteps.length > 0 ? (
-              <Steps steps={node.proofSteps} toneColor={tone.color} map={map} onSelect={select} />
-            ) : (
-              <ProseArgument text={proof} toneColor={tone.color} />
-            )}
+            <Collapsible toneColor={tone.color} defaultOpen>
+              {node.proofSteps.length > 0 ? (
+                <Steps steps={node.proofSteps} toneColor={tone.color} map={map} onSelect={select} />
+              ) : (
+                <Argument text={proof} toneColor={tone.color} />
+              )}
+            </Collapsible>
           </section>
         )}
 
         {activeTab === "solution" && (
           <section id="sec-solution">
-            <StepHeading label="Solution" toneColor={tone.color} />
-            {node.solutionSteps.length > 0 ? (
-              <Steps steps={node.solutionSteps} toneColor={tone.color} map={map} onSelect={select} />
-            ) : (
-              <ProseArgument text={solution} toneColor={tone.color} />
-            )}
+            <Collapsible toneColor={tone.color} defaultOpen>
+              {node.solutionSteps.length > 0 ? (
+                <Steps steps={node.solutionSteps} toneColor={tone.color} map={map} onSelect={select} />
+              ) : (
+                <Argument text={solution} toneColor={tone.color} />
+              )}
+            </Collapsible>
           </section>
         )}
 
@@ -493,37 +495,6 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
         )}
       </div>
     </>
-  );
-}
-
-/** Mono micro-label with a dashed derivation rule, heading the Proof/Solution tabs. */
-function StepHeading({ label, toneColor }: { label: string; toneColor: string }) {
-  return (
-    <div className="mb-3 flex items-center gap-2">
-      <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
-        {label}
-      </span>
-      <span
-        aria-hidden
-        className="h-px flex-1"
-        style={{ background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)`, opacity: 0.5 }}
-      />
-    </div>
-  );
-}
-
-/** Fallback renderer for legacy single-string proofs/solutions (non-stepped data). */
-function ProseArgument({ text, toneColor }: { text: string; toneColor: string }) {
-  return (
-    <div
-      className="font-math pl-3.5 text-ui-copy leading-[1.7]"
-      style={{ color: "var(--fg-1)", borderLeft: `1.5px dotted color-mix(in srgb, ${toneColor} 55%, transparent)` }}
-    >
-      <MathProse text={tidyMathText(text)} asBlock />
-      <span aria-hidden className="mt-1.5 block text-right text-ui-sm" style={{ color: toneColor }}>
-        ∎
-      </span>
-    </div>
   );
 }
 

@@ -10,7 +10,7 @@ import { SandboxView } from "./components/sandbox/SandboxView";
 import { CommandPalette } from "./components/CommandPalette";
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
 import { useStore } from "./store";
-import { assignDomainTones } from "./lib/colors";
+import { registerDomainTones } from "./lib/colors";
 
 export default function App() {
   useKeyboardNav();
@@ -25,12 +25,12 @@ export default function App() {
     void ensureMapLoaded(mapId);
   }, [ensureMapLoaded, mapId]);
 
-  // Assign domain tones during render (not in an effect) so the ordered palette
-  // is in the cache before GraphCanvas builds its region nodes. Otherwise the
-  // region tones get baked from getDomainTone's hash fallback on first paint —
-  // producing duplicate/colliding hues that never match the nodes or minimap.
+  // Publish the active map's domain tones during render (not in an effect) so
+  // the registry is primed before GraphCanvas builds its region nodes, and so a
+  // map switch re-points shared domain ids (e.g. "foundations") at the active
+  // map's resolved hues. Resolution is deterministic, so this is idempotent.
   useMemo(() => {
-    if (map) assignDomainTones(map.data.domains.map((d) => d.id));
+    if (map) registerDomainTones(map.data.domains);
   }, [map]);
 
   return (
