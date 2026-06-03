@@ -631,7 +631,8 @@
           "tags": ["series"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
-        }
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/fourier-coefficient-truncation.svg"
       },
       {
         "id": "bessel_inequality",
@@ -694,7 +695,8 @@
               "orthonormal_system",
               "inner_product_space",
               "l2_space"
-            ]
+            ],
+            "diagram_path": "/atlas-assets/fourier/diagrams/minimum-contour.svg"
           },
           {
             "id": "pass-to-all-frequencies",
@@ -978,7 +980,8 @@
             "label": "Identify the finite-dimensional subspace",
             "role": "setup",
             "content": "Let $$V_N=\\operatorname{span}\\{e^{inx}:|n|\\le N\\}\\subset L^2(\\mathbb T).$$ The Fourier partial sum $$S_Nf=\\sum_{|n|\\le N}\\widehat f(n)e^{inx}$$ belongs to $V_N$. The goal is to prove that it is the closest element of $V_N$ to $f$ in the $L^2$ norm.",
-            "depends_on": ["partial_sum", "orthonormal_system", "l2_space"]
+            "depends_on": ["partial_sum", "orthonormal_system", "l2_space"],
+            "diagram_path": "/atlas-assets/fourier/diagrams/subspace-basis.svg"
           },
           {
             "id": "orthogonal-error",
@@ -990,16 +993,19 @@
               "partial_sum",
               "orthonormal_system",
               "inner_product_space"
-            ]
+            ],
+            "diagram_path": "/atlas-assets/fourier/diagrams/orthogonal-projection.svg"
           },
           {
             "id": "minimization-by-pythagoras",
             "label": "Derive the minimization property",
             "role": "argument",
             "content": "Let $p\\in V_N$. Then $$f-p=(f-S_Nf)+(S_Nf-p),$$ where $f-S_Nf\\perp V_N$ and $S_Nf-p\\in V_N$. Therefore the two summands are orthogonal. Hence $$\\|f-p\\|_2^2=\\|f-S_Nf\\|_2^2+\\|S_Nf-p\\|_2^2\\ge \\|f-S_Nf\\|_2^2.$$ Equality holds exactly when $p=S_Nf$. Thus $$S_Nf=\\operatorname*{arg\\,min}_{p\\in V_N}\\|f-p\\|_2.$$",
-            "depends_on": ["l2_space", "inner_product_space", "partial_sum"]
+            "depends_on": ["l2_space", "inner_product_space", "partial_sum"],
+            "diagram_path": "/atlas-assets/fourier/diagrams/pythagorean-error.svg"
           }
-        ]
+        ],
+        "diagram_path": "/atlas-assets/fourier/diagrams/best-approximation.svg"
       },
       {
         "id": "decay_smoothness",
