@@ -18,6 +18,7 @@ import { useStore, type EdgeStyle, type ViewMode } from "../store";
 import { cn } from "../lib/utils";
 import { getDomainTone } from "../lib/colors";
 import { CATEGORY_META, kindsByCategory } from "../lib/nodeCategory";
+import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { Pill, DockButton } from "./chrome/Pill";
 
 interface PanelPosition {
@@ -444,17 +445,23 @@ function MapPanel({
               {map.data.domains.map((d) => {
                 const active = topics.size === 0 || topics.has(d.id);
                 const tone = getDomainTone(d.id);
+                const glyphId = getDomainGlyphId({ mapId, domainId: d.id });
                 return (
                   <button
                     key={d.id}
                     onClick={() => toggleTopic(d.id)}
-                    className="rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition"
+                    className="inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition"
                     style={
                       active
                         ? { background: tone.tint, borderColor: tone.border, color: tone.text }
                         : { background: "var(--surface)", borderColor: "var(--border)", color: "var(--fg-3)" }
                     }
                   >
+                    {glyphId ? (
+                      <DomainGlyph id={glyphId} size={12} />
+                    ) : (
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "currentColor" }} />
+                    )}
                     {d.label}
                   </button>
                 );

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import ReactFlow, { useReactFlow, useViewport, type Edge, type Node } from "reactflow";
-import type { LoadedMap } from "../data";
+import type { LoadedMap, MapId } from "../data";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout } from "../lib/atlasLayout";
 import { getDomainTone } from "../lib/colors";
 import { bfsPath } from "../lib/graph";
@@ -58,10 +58,10 @@ function InnerGraph() {
   const mapId = useStore((s) => s.mapId);
   const map = useStore((s) => s.loadedMaps[mapId]);
   if (!map) return null;
-  return <LoadedGraph map={map} key={mapId} />;
+  return <LoadedGraph map={map} mapId={mapId} key={mapId} />;
 }
 
-function LoadedGraph({ map }: { map: LoadedMap }) {
+function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const view = useStore((s) => s.view);
   const search = useStore((s) => s.search).toLowerCase().trim();
   const searchScope = useStore((s) => s.searchScope);
@@ -260,6 +260,7 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
         zIndex: -10,
         data: {
           domainId,
+          mapId,
           label: domain?.label ?? domainId,
           count,
           width: bounds.width,
@@ -277,7 +278,7 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
       });
     }
     return nodes;
-  }, [activeLayout.domainBounds, visibleDomainCounts, map.domainById, showRegions]);
+  }, [activeLayout.domainBounds, map.domainById, mapId, showRegions, visibleDomainCounts]);
 
   // Stable per-node data refs: only allocate a new data object when something
   // material changed for that specific node. Keeps React Flow's per-node memo

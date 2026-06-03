@@ -7,19 +7,19 @@ export interface Position {
   y: number;
 }
 
-const NODE_WIDTH = 264;
-const NODE_HEIGHT = 100;
-const RANK_SEP = 92;
-const NODE_SEP = 36;
-const CLUSTER_PAD = 40;
+const NODE_WIDTH = 236;
+const NODE_HEIGHT = 84;
+const RANK_SEP = 84;
+const NODE_SEP = 28;
+const CLUSTER_PAD = 36;
 
 // Swimlane layout geometry.
-const ROW_GAP = 28; // vertical gap between stacked nodes
-const COL_GAP_INNER = 24; // gap between sub-columns inside one depth cell
-const DEPTH_GAP = 104; // gap between adjacent depth cells (reads as "next level")
-const LANE_GAP = 96; // vertical gap between domain lanes
-const LANE_PAD_Y = 56; // inner vertical padding inside a lane band
-const LANE_PAD_X = 48; // inner horizontal padding at lane ends
+const ROW_GAP = 20; // vertical gap between stacked nodes
+const COL_GAP_INNER = 20; // gap between sub-columns inside one depth cell
+const DEPTH_GAP = 88; // gap between adjacent depth cells (reads as "next level")
+const LANE_GAP = 72; // vertical gap between domain lanes
+const LANE_PAD_Y = 44; // inner vertical padding inside a lane band
+const LANE_PAD_X = 40; // inner horizontal padding at lane ends
 const MAX_ROWS_PER_CELL = 7; // a depth cell wraps into a grid block past this height
 
 /** A single domain lane laid out relative to its own top-left, before stacking. */
@@ -93,7 +93,10 @@ export function computeAtlasLayout(data: GraphData): AtlasLayout {
 
   // Cluster (compound) parents per domain.
   for (const domainId of domainOrder) {
-    g.setNode(`cluster::${domainId}`, { label: domainId, clusterLabelPos: "top" });
+    g.setNode(`cluster::${domainId}`, {
+      label: domainId,
+      clusterLabelPos: "top",
+    });
   }
 
   const domainByNodeId = new Map<string, string>();
@@ -107,7 +110,8 @@ export function computeAtlasLayout(data: GraphData): AtlasLayout {
     if (!nodeIds.has(edge.from) || !nodeIds.has(edge.to)) continue;
     // Weight intra-domain edges higher so dagre keeps cluster members close.
     // Cross-domain edges get minlen=0 so they don't stretch ranks vertically.
-    const sameDomain = domainByNodeId.get(edge.from) === domainByNodeId.get(edge.to);
+    const sameDomain =
+      domainByNodeId.get(edge.from) === domainByNodeId.get(edge.to);
     g.setEdge(edge.from, edge.to, {
       weight: sameDomain ? 4 : 1,
       minlen: 1,
@@ -118,14 +122,18 @@ export function computeAtlasLayout(data: GraphData): AtlasLayout {
 
   for (const node of data.nodes) {
     const laid = g.node(node.id);
-    positions.set(node.id, { x: laid.x - NODE_WIDTH / 2, y: laid.y - NODE_HEIGHT / 2 });
+    positions.set(node.id, {
+      x: laid.x - NODE_WIDTH / 2,
+      y: laid.y - NODE_HEIGHT / 2,
+    });
   }
 
   for (const domainId of domainOrder) {
     const cluster = g.node(`cluster::${domainId}`) as unknown as
       | { x: number; y: number; width: number; height: number }
       | undefined;
-    if (!cluster || !Number.isFinite(cluster.width) || cluster.width === 0) continue;
+    if (!cluster || !Number.isFinite(cluster.width) || cluster.width === 0)
+      continue;
     domainBounds.set(domainId, {
       x: cluster.x - cluster.width / 2 - CLUSTER_PAD,
       y: cluster.y - cluster.height / 2 - CLUSTER_PAD,
@@ -197,7 +205,8 @@ export function computeSwimlaneLayout(
     // Sort each cell most-impactful first.
     for (const list of byDepth.values()) {
       list.sort((a, b) => {
-        const diff = (impactByNodeId.get(b.id) ?? 0) - (impactByNodeId.get(a.id) ?? 0);
+        const diff =
+          (impactByNodeId.get(b.id) ?? 0) - (impactByNodeId.get(a.id) ?? 0);
         if (diff !== 0) return diff;
         return compareNodeOrder(a, b);
       });
@@ -209,9 +218,13 @@ export function computeSwimlaneLayout(
     // sets the lane height.
     const cellRows = (n: number) => Math.min(n, MAX_ROWS_PER_CELL);
     let maxRows = 0;
-    for (const depth of usedDepths) maxRows = Math.max(maxRows, cellRows(byDepth.get(depth)!.length));
+    for (const depth of usedDepths)
+      maxRows = Math.max(maxRows, cellRows(byDepth.get(depth)!.length));
 
-    const laneHeight = LANE_PAD_Y * 2 + maxRows * NODE_HEIGHT + Math.max(0, maxRows - 1) * ROW_GAP;
+    const laneHeight =
+      LANE_PAD_Y * 2 +
+      maxRows * NODE_HEIGHT +
+      Math.max(0, maxRows - 1) * ROW_GAP;
     const laneMidY = laneHeight / 2;
 
     const rel = new Map<string, Position>();
@@ -243,7 +256,10 @@ export function computeSwimlaneLayout(
   // (top → bottom). All bands are normalized to the widest lane and share the
   // left edge, so they read as aligned geography and depth-0 lines up across
   // every lane for a clean vertical "same-depth" scan.
-  const maxLaneWidth = lanes.reduce((max, lane) => Math.max(max, lane.width), 0);
+  const maxLaneWidth = lanes.reduce(
+    (max, lane) => Math.max(max, lane.width),
+    0,
+  );
   let laneTop = 0;
   for (const lane of lanes) {
     for (const [id, p] of lane.rel) {
@@ -291,14 +307,16 @@ export function computeClusterLayout(
   domainIds.forEach((domainId, domainIndex) => {
     const members = [...(nodesByDomain.get(domainId) ?? [])].sort((a, b) => {
       if (degreeByNodeId) {
-        const diff = (degreeByNodeId.get(b.id) ?? 0) - (degreeByNodeId.get(a.id) ?? 0);
+        const diff =
+          (degreeByNodeId.get(b.id) ?? 0) - (degreeByNodeId.get(a.id) ?? 0);
         if (diff !== 0) return diff;
       }
       return compareNodeOrder(a, b);
     });
-    const domainAngle = domainCount === 1
-      ? 0
-      : -Math.PI / 2 + (domainIndex / domainCount) * Math.PI * 2;
+    const domainAngle =
+      domainCount === 1
+        ? 0
+        : -Math.PI / 2 + (domainIndex / domainCount) * Math.PI * 2;
     const cx = Math.cos(domainAngle) * domainRing;
     const cy = Math.sin(domainAngle) * domainRing;
     const itemRing = Math.max(132, 88 + Math.sqrt(members.length) * 56);
@@ -310,12 +328,11 @@ export function computeClusterLayout(
 
     members.forEach((node, itemIndex) => {
       const rand = seeded(hashString(`${domainId}:${node.id}`));
-      const angle = members.length === 1
-        ? 0
-        : -Math.PI / 2 + (itemIndex / members.length) * Math.PI * 2;
-      const radius = members.length === 1
-        ? 0
-        : itemRing + (rand() - 0.5) * 24;
+      const angle =
+        members.length === 1
+          ? 0
+          : -Math.PI / 2 + (itemIndex / members.length) * Math.PI * 2;
+      const radius = members.length === 1 ? 0 : itemRing + (rand() - 0.5) * 24;
       const x = cx + Math.cos(angle) * radius - NODE_WIDTH / 2;
       const y = cy + Math.sin(angle) * radius - NODE_HEIGHT / 2;
       positions.set(node.id, { x, y });

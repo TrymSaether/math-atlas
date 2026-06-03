@@ -3,7 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { XIcon, CaretUpIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
-import type { LoadedMap } from "../data";
+import type { LoadedMap, MapId } from "../data";
 import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
 import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
@@ -38,19 +38,29 @@ export function NodePanel() {
           className="pointer-events-auto absolute left-3 right-3 top-[68px] bottom-3 z-20 flex flex-col overflow-hidden rounded-[var(--radius-lg)] border sm:right-auto sm:w-[min(560px,calc(100vw-24px))]"
           style={{ background: "var(--surface)", borderColor: "var(--border)", boxShadow: "var(--shadow-3)" }}
         >
-          <PanelContent node={node} map={map} onClose={() => select(null)} />
+          <PanelContent node={node} map={map} mapId={mapId} onClose={() => select(null)} />
         </motion.aside>
       )}
     </AnimatePresence>
   );
 }
 
-function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap; onClose: () => void }) {
+function PanelContent({
+  node,
+  map,
+  mapId,
+  onClose,
+}: {
+  node: GraphNode;
+  map: LoadedMap;
+  mapId: MapId;
+  onClose: () => void;
+}) {
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
   const domain = map.domainById.get(node.domainId);
   const tone = getDomainTone(node.domainId);
-  const domainGlyphId = getDomainGlyphId(node.domainId);
+  const domainGlyphId = getDomainGlyphId({ mapId, domainId: node.domainId });
   const [tab, setTab] = useState<TabId>("overview");
   const [showAllUsed, setShowAllUsed] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);

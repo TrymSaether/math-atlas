@@ -1,8 +1,10 @@
 import type { NodeProps } from "reactflow";
+import type { MapId } from "../data";
 
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 
 interface Data {
+  mapId?: MapId;
   domainId?: string;
   label: string;
   count: number;
@@ -16,7 +18,9 @@ interface Data {
 
 export function DomainRegionNode({ data }: NodeProps<Data>) {
   const isCircle = data.shape === "circle";
-  const glyphId = data.domainId ? getDomainGlyphId(data.domainId) : null;
+  const glyphId = data.domainId
+    ? getDomainGlyphId({ mapId: data.mapId, domainId: data.domainId })
+    : null;
 
   // Watermark title: large enough to label the territory when the cards
   // themselves become unreadable on zoom-out. Sized to the band so it never
