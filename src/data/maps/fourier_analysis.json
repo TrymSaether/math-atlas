@@ -88,13 +88,15 @@
         "statement": "A function whose values repeat after a fixed nonzero period; $2\\pi$-periodic functions are functions on the circle.",
         "formal_statement": "A function $f:\\mathbb R\\to\\mathbb C$ is periodic with period $T>0$ if $f(x+T)=f(x)$ for every $x\\in\\mathbb R$. In Fourier series, the standard convention is $T=2\\pi$, so functions are viewed on $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$.",
         "definition": "$$\\begin{aligned} f:\\mathbb R\\to\\mathbb C,\\quad T>0,\\quad f(x+T)&=f(x)\\quad(\\forall x\\in\\mathbb R),\\\\ \\mathbb T&=\\mathbb R/2\\pi\\mathbb Z. \\end{aligned}$$",
-        "intuition": "A periodic function lives on a loop: moving by one full period brings you back to the same value.",
+        "intuition": "A periodic function lives on a loop: moving by one full period returns to the same point on $\\mathbb T$ and therefore to the same value.",
         "proof": null,
         "notation": "$$f:\\mathbb T\\to\\mathbb C$$",
         "proof_dependencies": [],
-        "dependencies": {},
+        "dependencies": {
+          "logical_dependency": ["torus_circle"]
+        },
         "outgoing_relations": [],
-        "related": [],
+        "related": ["torus_circle"],
         "assumptions": [
           "Periods are taken positive; a $2\\pi$-periodic function may be identified with a function on the circle."
         ],
@@ -189,14 +191,126 @@
         "diagram_path": "/atlas-assets/fourier/diagrams/orthonormal-system.svg"
       },
       {
+        "id": "equivalence_relation",
+        "label": "Equivalence Relation",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A rule that groups objects into classes of objects considered the same for a chosen purpose.",
+        "formal_statement": "A relation $\\sim$ on a set $X$ is an equivalence relation if it is reflexive, symmetric, and transitive.",
+        "definition": "$$\\begin{aligned} x&\\sim x,\\\\ x\\sim y&\\Longrightarrow y\\sim x,\\\\ x\\sim y\\ \\text{ and }\\ y\\sim z&\\Longrightarrow x\\sim z. \\end{aligned}$$",
+        "intuition": "An equivalence relation is controlled forgetting: it says which differences we ignore. Same remainder modulo $q$, same point modulo $2\\pi$ on the circle, and equality almost everywhere in $L^p$ are all examples.",
+        "proof": null,
+        "notation": "$$\\sim$$",
+        "proof_dependencies": [],
+        "dependencies": {},
+        "outgoing_relations": [],
+        "related": [
+          "equivalence_class",
+          "quotient_set",
+          "torus_circle",
+          "almost_everywhere"
+        ],
+        "assumptions": [],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation"],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "equivalence_class",
+        "label": "Equivalence Class",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "The set of all objects equivalent to a given object.",
+        "formal_statement": "Given an equivalence relation $\\sim$ on $X$, the equivalence class of $x\\in X$ is $[x]=\\{y\\in X:y\\sim x\\}$.",
+        "definition": "$$[x]=\\{y\\in X:y\\sim x\\}.$$",
+        "intuition": "An equivalence class is the whole group represented by one object. In $L^p$, $[f]$ contains all functions equal to $f$ almost everywhere, even though people usually write $f$ instead of $[f]$.",
+        "proof": null,
+        "notation": "$$[x]$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["equivalence_relation"]
+        },
+        "outgoing_relations": [],
+        "related": ["equivalence_relation", "quotient_set", "lp_space"],
+        "assumptions": [],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation"],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "quotient_set",
+        "label": "Quotient Set",
+        "kind": "construction",
+        "domain": "foundations",
+        "statement": "The set obtained by replacing elements of a set by their equivalence classes.",
+        "formal_statement": "If $\\sim$ is an equivalence relation on $X$, then $X/\\sim=\\{[x]:x\\in X\\}$.",
+        "definition": "$$X/\\sim=\\{[x]:x\\in X\\}.$$",
+        "intuition": "A quotient set is a grouped version of $X$: objects connected by $\\sim$ are treated as one object. In $L^p$, this groups functions that agree almost everywhere.",
+        "proof": null,
+        "notation": "$$X/\\sim$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["equivalence_relation", "equivalence_class"]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "equivalence_relation",
+          "equivalence_class",
+          "lp_space",
+          "torus_circle"
+        ],
+        "assumptions": [],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation"],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "torus_circle",
+        "label": "Circle $\\mathbb T$",
+        "kind": "structure",
+        "domain": "foundations",
+        "statement": "The circle used as the domain for $2\\pi$-periodic Fourier analysis.",
+        "formal_statement": "$\\mathbb T$ may be identified with $\\mathbb R/2\\pi\\mathbb Z$, so $x$ and $y$ represent the same point iff $x-y\\in2\\pi\\mathbb Z$.",
+        "definition": "$$\\mathbb T=\\mathbb R/2\\pi\\mathbb Z.$$",
+        "intuition": "The real line is wrapped into a circle by identifying $x$ with $x+2\\pi$. A function on $\\mathbb T$ is therefore the same thing as a $2\\pi$-periodic function on $\\mathbb R$.",
+        "proof": null,
+        "notation": "$$\\mathbb T$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["quotient_set"]
+        },
+        "outgoing_relations": [],
+        "related": ["periodic_function", "quotient_set", "fourier_coefficient"],
+        "assumptions": [],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation"],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
         "id": "lp_space",
         "label": "$L^p$ Space",
         "kind": "structure",
         "domain": "foundations",
         "statement": "Equivalence classes of measurable functions whose size is finite in an $L^p$ norm.",
-        "formal_statement": "On $\\mathbb T$, for $1\\le p<\\infty$, $L^p(\\mathbb T)=\\{f:\\|f\\|_p=(\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|^p\\,dx)^{1/p}<\\infty\\}$, with functions identified if they agree a.e.; for $p=\\infty$, $\\|f\\|_\\infty=\\operatorname*{ess\\,sup}_{x\\in\\mathbb T}|f(x)|$.",
+        "formal_statement": "For $1\\le p<\\infty$, $L^p(\\mathbb T)=\\{f:\\mathbb T\\to\\mathbb C\\text{ measurable}:\\|f\\|_p<\\infty\\}/\\sim$, where $f\\sim g$ iff $f=g$ a.e. and $\\|f\\|_p=(\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|^p\\,dx)^{1/p}$. For $p=\\infty$, $\\|f\\|_\\infty=\\operatorname*{ess\\,sup}_{x\\in\\mathbb T}|f(x)|$.",
         "definition": "$$\\begin{aligned} L^p(\\mathbb T)&=\\left\\{f:\\mathbb T\\to\\mathbb C\\ \\text{measurable}:\\ \\|f\\|_p<\\infty\\right\\}/\\sim,\\qquad 1\\le p\\le\\infty,\\\\ f\\sim g&\\Longleftrightarrow f=g\\ \\text{a.e.},\\\\ \\|f\\|_p&=\\left(\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|^p\\,dx\\right)^{1/p},\\qquad 1\\le p<\\infty,\\\\ \\|f\\|_\\infty&=\\operatorname*{ess\\,sup}_{x\\in\\mathbb T}|f(x)|. \\end{aligned}$$",
-        "intuition": "$L^p$ measures average size. Small $p$ tolerates spikes more easily; large $p$ controls peaks more strongly.",
+        "intuition": "An $L^p$ element is a function as integration sees it: its average $p$-power size is finite, and changing values on a measure-zero set does not change the element. This is why Fourier coefficients, norms, and convergence results naturally live on equivalence classes rather than pointwise functions.",
         "proof": null,
         "notation": "$$L^p(\\mathbb T),\\ \\|f\\|_p<\\infty$$",
         "proof_dependencies": [],
@@ -204,14 +318,51 @@
           "logical_dependency": [
             "lebesgue_integral",
             "almost_everywhere",
-            "essential_supremum"
+            "essential_supremum",
+            "quotient_set",
+            "equivalence_class",
+            "torus_circle"
           ]
         },
         "outgoing_relations": [],
-        "related": ["l1_space", "l2_space", "essential_supremum"],
+        "related": [
+          "l1_space",
+          "l2_space",
+          "essential_supremum",
+          "quotient_set",
+          "equivalence_class",
+          "torus_circle",
+          "ae_equal_one_point_spike"
+        ],
         "assumptions": [
           "Functions are identified up to equality almost everywhere."
         ],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation"],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "ae_equal_one_point_spike",
+        "label": "One-Point Spike Equals Zero a.e.",
+        "kind": "example",
+        "domain": "foundations",
+        "statement": "A function that differs from zero at one point represents the same $L^p$ element as the zero function.",
+        "formal_statement": "Let $f=0$ and $g=\\mathbf 1_{\\{0\\}}$ on $\\mathbb T$. Then $f\\ne g$ pointwise, but $f=g$ a.e., so $[f]=[g]$ in $L^p(\\mathbb T)$.",
+        "definition": "$$g(x)=\\mathbf 1_{\\{0\\}}(x),\\qquad g=0\\ \\text{a.e.},\\qquad [g]=[0]\\in L^p(\\mathbb T).$$",
+        "intuition": "A single-point change is invisible to integration, so $L^p$ treats the spike and the zero function as the same object.",
+        "proof": null,
+        "notation": "$$\\mathbf 1_{\\{0\\}}=0\\ \\text{a.e.}$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["almost_everywhere", "lp_space"]
+        },
+        "outgoing_relations": [],
+        "related": ["almost_everywhere", "lp_space"],
+        "assumptions": [],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -233,7 +384,12 @@
         "notation": "$$L^1(\\mathbb T),\\ \\|f\\|_1<\\infty$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["lebesgue_integral", "almost_everywhere"]
+          "logical_dependency": [
+            "lebesgue_integral",
+            "almost_everywhere",
+            "lp_space",
+            "quotient_set"
+          ]
         },
         "outgoing_relations": [],
         "related": ["lp_space"],
@@ -261,7 +417,12 @@
         "notation": "$$L^2(\\mathbb T),\\ \\langle f,g\\rangle,\\ \\|f\\|_2$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["inner_product_space", "almost_everywhere"]
+          "logical_dependency": [
+            "inner_product_space",
+            "almost_everywhere",
+            "lp_space",
+            "quotient_set"
+          ]
         },
         "outgoing_relations": [],
         "related": ["lp_space", "inner_product_space", "hilbert_space"],
@@ -366,7 +527,7 @@
         "statement": "The coordinate of a periodic function at frequency $n$.",
         "formal_statement": "For $f\\in L^1(\\mathbb T)$, $\\hat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx=\\langle f,e_n\\rangle$ when the inner product notation is justified.",
         "definition": "$$\\widehat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx,\\qquad n\\in\\mathbb Z.$$",
-        "intuition": "The coefficient $\\hat f(n)$ measures alignment with the $n$-th rotating wave. Large alignment means that frequency is strongly present.",
+        "intuition": "The coefficient $\\hat f(n)$ measures alignment with the $n$-th rotating wave. Because it is defined by an integral, it depends only on the $L^1$ equivalence class of $f$, not on pointwise changes on null sets.",
         "proof": null,
         "notation": "$$\\hat f(n)$$",
         "proof_dependencies": [],
@@ -374,7 +535,9 @@
           "logical_dependency": [
             "complex_exponential",
             "l1_space",
-            "inner_product_space"
+            "inner_product_space",
+            "torus_circle",
+            "almost_everywhere"
           ]
         },
         "outgoing_relations": [],
@@ -950,7 +1113,7 @@
           "poisson_kernel",
           "convolution",
           "good_kernel",
-          "dirichlet_problem"
+          "dirichlet_problem_disk"
         ],
         "assumptions": [
           "The circle is normalized with measure $\\frac1{2\\pi}dx$.",
@@ -2308,7 +2471,7 @@
         "statement": "A property that fails only on a set of measure zero.",
         "formal_statement": "A property $P(x)$ holds almost everywhere if $\\mu(\\{x:\\neg P(x)\\})=0$. In $L^p$ spaces, functions that agree almost everywhere represent the same element.",
         "definition": "$$P\\ \\text{a.e.}\\Longleftrightarrow \\mu(\\{x:\\neg P(x)\\})=0.$$",
-        "intuition": "Fourier analysis often ignores changes on negligible sets. This is why $L^p$ objects are equivalence classes, not pointwise functions.",
+        "intuition": "Almost everywhere means ignoring sets of measure zero. This is the natural equality notion for integration: if two functions differ only on a null set, their integrals, $L^p$ norms, and Fourier coefficients are unchanged.",
         "proof": null,
         "notation": "a.e.",
         "proof_dependencies": [],
@@ -2316,7 +2479,12 @@
           "logical_dependency": ["lebesgue_integral"]
         },
         "outgoing_relations": [],
-        "related": ["lebesgue_integral"],
+        "related": [
+          "lebesgue_integral",
+          "lp_space",
+          "quotient_set",
+          "ae_equal_one_point_spike"
+        ],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
@@ -12145,6 +12313,237 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": ""
+      },
+      {
+        "id": "e_periodic_function__requires__torus_circle",
+        "source": "periodic_function",
+        "target": "torus_circle",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "periodic functions are functions on the circle"
+      },
+      {
+        "id": "e_equivalence_class__requires__equivalence_relation",
+        "source": "equivalence_class",
+        "target": "equivalence_relation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "equivalence classes come from an equivalence relation"
+      },
+      {
+        "id": "e_quotient_set__requires__equivalence_relation",
+        "source": "quotient_set",
+        "target": "equivalence_relation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "a quotient set requires an equivalence relation"
+      },
+      {
+        "id": "e_quotient_set__requires__equivalence_class",
+        "source": "quotient_set",
+        "target": "equivalence_class",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "a quotient set is a set of equivalence classes"
+      },
+      {
+        "id": "e_torus_circle__requires__quotient_set",
+        "source": "torus_circle",
+        "target": "quotient_set",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the circle is modeled as a quotient of the real line"
+      },
+      {
+        "id": "e_lp_space__requires__quotient_set",
+        "source": "lp_space",
+        "target": "quotient_set",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "L^p is formed by quotienting raw functions by a.e. equality"
+      },
+      {
+        "id": "e_lp_space__requires__equivalence_class",
+        "source": "lp_space",
+        "target": "equivalence_class",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "elements of L^p are equivalence classes of functions"
+      },
+      {
+        "id": "e_lp_space__requires__torus_circle",
+        "source": "lp_space",
+        "target": "torus_circle",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "L^p(T) uses the circle as periodic domain"
+      },
+      {
+        "id": "e_ae_equal_one_point_spike__requires__almost_everywhere",
+        "source": "ae_equal_one_point_spike",
+        "target": "almost_everywhere",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the example uses equality almost everywhere"
+      },
+      {
+        "id": "e_ae_equal_one_point_spike__requires__lp_space",
+        "source": "ae_equal_one_point_spike",
+        "target": "lp_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the example explains equality inside L^p"
+      },
+      {
+        "id": "e_l1_space__requires__quotient_set",
+        "source": "l1_space",
+        "target": "quotient_set",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "L^1 identifies functions equal almost everywhere"
+      },
+      {
+        "id": "e_l2_space__requires__quotient_set",
+        "source": "l2_space",
+        "target": "quotient_set",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "L^2 identifies functions equal almost everywhere"
+      },
+      {
+        "id": "e_fourier_coefficient__requires__torus_circle",
+        "source": "fourier_coefficient",
+        "target": "torus_circle",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Fourier coefficients on T integrate over one period"
+      },
+      {
+        "id": "e_fourier_coefficient__requires__almost_everywhere",
+        "source": "fourier_coefficient",
+        "target": "almost_everywhere",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Fourier coefficients are unchanged under a.e. equality"
+      },
+      {
+        "id": "e_cesaro_summation__requires__fourier_series",
+        "source": "cesaro_summation",
+        "target": "fourier_series",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Cesaro summation averages Fourier partial sums"
+      },
+      {
+        "id": "e_cesaro_summation__requires__dirichlet_kernel",
+        "source": "cesaro_summation",
+        "target": "dirichlet_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Cesaro means average Dirichlet kernels"
+      },
+      {
+        "id": "e_cesaro_summation__requires__fejer_kernel",
+        "source": "cesaro_summation",
+        "target": "fejer_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Cesaro means are convolution with the Fejer kernel"
+      },
+      {
+        "id": "e_cesaro_summation__requires__convolution",
+        "source": "cesaro_summation",
+        "target": "convolution",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Cesaro means use the convolution form"
+      },
+      {
+        "id": "e_abel_summation__requires__poisson_kernel",
+        "source": "abel_summation",
+        "target": "poisson_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Abel means use the Poisson kernel"
+      },
+      {
+        "id": "e_abel_summation__requires__convolution",
+        "source": "abel_summation",
+        "target": "convolution",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Abel means use the convolution form"
+      },
+      {
+        "id": "e_abel_summation__requires__good_kernel",
+        "source": "abel_summation",
+        "target": "good_kernel",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Poisson kernels form a good kernel family"
       }
     ]
   }
