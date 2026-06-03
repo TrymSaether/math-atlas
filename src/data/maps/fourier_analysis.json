@@ -780,24 +780,91 @@
         "kind": "construction",
         "domain": "convergence",
         "statement": "A summability process that replaces partial sums by their arithmetic averages.",
-        "formal_statement": "For Fourier series, $\\sigma_Nf(x)=\\frac1{N+1}\\sum_{n=0}^{N}S_nf(x)$. Equivalently, $\\sigma_Nf=F_N*f$.",
+        "formal_statement": "For a Fourier series with partial sums $S_N f$, the Cesàro means are $\\sigma_N f(x)=\\frac1{N+1}\\sum_{n=0}^{N}S_n f(x)$. Equivalently, $\\sigma_N f=F_N*f$, where $F_N$ is the Fejér kernel.",
         "definition": "$$\\sigma_Nf(x)=\\frac1{N+1}\\sum_{n=0}^{N}S_nf(x)=(F_N*f)(x).$$",
-        "intuition": "Instead of trusting the last partial sum, Cesàro summation averages all earlier partial sums. This damps oscillation and leads to Fejér's theorem.",
+        "formula": "$$\\begin{aligned} \\sigma_N f(x)&=\\frac1{N+1}\\sum_{n=0}^{N}S_n f(x),\\\\ S_n f&=D_n*f,\\\\ \\sigma_N f&=F_N*f,\\\\ F_N&=\\frac1{N+1}\\sum_{n=0}^{N}D_n. \\end{aligned}$$",
+        "intuition": "Instead of trusting the last partial sum, Cesàro summation averages all earlier partial sums. This damps oscillation and replaces the unstable Dirichlet kernel by the positive Fejér kernel.",
         "proof": null,
-        "notation": "$$\\sigma_Nf$$",
-        "proof_dependencies": [],
+        "proof_steps": [
+          {
+            "id": "define-cesaro-mean",
+            "label": "Define the Cesàro mean",
+            "role": "setup",
+            "content": "Let $S_N f$ denote the $N$-th Fourier partial sum of $f$. The Cesàro mean is the arithmetic average of the first $N+1$ partial sums: $$\\sigma_N f(x)=\\frac1{N+1}\\sum_{n=0}^{N}S_n f(x).$$ Thus Cesàro summation does not inspect only the final partial sum $S_N f$; it averages the whole initial sequence $S_0 f,S_1 f,\\dots,S_N f$.",
+            "depends_on": ["partial_sum", "fourier_series"]
+          },
+          {
+            "id": "derive-fejer-kernel-identity",
+            "label": "Derive the Fejér kernel identity",
+            "role": "argument",
+            "content": "Work on $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$ with normalized convolution $$(f*g)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)g(t)\\,dt.$$ Since Fourier partial sums satisfy $$S_n f=D_n*f,$$ where $D_n$ is the Dirichlet kernel, linearity gives $$\\sigma_N f=\\frac1{N+1}\\sum_{n=0}^{N}(D_n*f)=\\left(\\frac1{N+1}\\sum_{n=0}^{N}D_n\\right)*f.$$ Define the Fejér kernel by $$F_N=\\frac1{N+1}\\sum_{n=0}^{N}D_n.$$ Therefore $$\\sigma_N f=F_N*f.$$",
+            "depends_on": [
+              "partial_sum",
+              "dirichlet_kernel",
+              "fejer_kernel",
+              "convolution"
+            ]
+          },
+          {
+            "id": "ordinary-convergence-implies-cesaro-convergence",
+            "label": "Ordinary convergence implies Cesàro convergence",
+            "role": "claim",
+            "content": "Let $(s_N)$ be a sequence with $s_N\\to L$, and define $$a_N=\\frac1{N+1}\\sum_{n=0}^{N}s_n.$$ Then $$a_N-L=\\frac1{N+1}\\sum_{n=0}^{N}(s_n-L).$$ Given $\\varepsilon>0$, choose $K$ such that $|s_n-L|<\\varepsilon/2$ for all $n\\ge K$. Then $$|a_N-L|\\le \\frac1{N+1}\\sum_{n=0}^{K-1}|s_n-L|+\\frac1{N+1}\\sum_{n=K}^{N}|s_n-L|.$$ The first term tends to $0$ because it is a fixed finite sum divided by $N+1$, while the second term is at most $\\varepsilon/2$ for all large $N$. Hence $a_N\\to L$. Therefore ordinary convergence implies Cesàro convergence.",
+            "depends_on": []
+          },
+          {
+            "id": "fourier-meaning",
+            "label": "Fourier meaning",
+            "role": "explanation",
+            "content": "For Fourier series, ordinary partial sums use the Dirichlet kernel $D_N$, which oscillates and does not form a positive approximate identity. Cesàro summation replaces $D_N$ by the Fejér kernel $$F_N(t)=\\frac1{N+1}\\left(\\frac{\\sin((N+1)t/2)}{\\sin(t/2)}\\right)^2.$$ This kernel satisfies $$F_N(t)\\ge0,\\qquad \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(t)\\,dt=1,$$ and its mass concentrates near $0$ as $N\\to\\infty$. Thus $F_N*f$ behaves like a stable local average of $f$, which is the mechanism behind Fejér's theorem.",
+            "depends_on": ["fejer_kernel", "good_kernel", "fejer_theorem"]
+          }
+        ],
+        "notation": "$$\\sigma_N f$$",
+        "proof_dependencies": [
+          "partial_sum",
+          "fourier_series",
+          "dirichlet_kernel",
+          "fejer_kernel",
+          "convolution",
+          "good_kernel"
+        ],
         "dependencies": {
-          "logical_dependency": ["partial_sum"]
+          "logical_dependency": [
+            "partial_sum",
+            "fourier_series",
+            "dirichlet_kernel",
+            "fejer_kernel",
+            "convolution"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["partial_sum", "fejer_kernel", "fejer_theorem"],
-        "assumptions": [],
-        "ref": "",
-        "book_refs": [],
+        "related": [
+          "partial_sum",
+          "fourier_series",
+          "dirichlet_kernel",
+          "fejer_kernel",
+          "fejer_theorem",
+          "good_kernel"
+        ],
+        "assumptions": [
+          "The circle is normalized with measure $\\frac1{2\\pi}dx$.",
+          "The convolution identity uses $S_Nf=D_N*f$.",
+          "Cesàro summability is weaker than ordinary convergence: ordinary convergence implies Cesàro convergence, but not conversely.",
+          "Fejér's theorem gives the main Fourier convergence result for Cesàro means."
+        ],
+        "ref": "Stein–Shakarchi: Ch.2 Theorem 5.2",
+        "book_refs": ["c2_thm_5_2"],
         "metadata": {
-          "tags": ["convergence"],
+          "tags": [
+            "convergence",
+            "summability",
+            "cesaro",
+            "fourier-series",
+            "fejer-kernel"
+          ],
           "syllabus_priority": "medium",
-          "source": "Curated concept graph"
+          "source": "Stein–Shakarchi: Ch.2 Theorem 5.2"
         }
       },
       {
@@ -806,22 +873,104 @@
         "kind": "construction",
         "domain": "convergence",
         "statement": "A summability process that damps high frequencies by $r^{|n|}$, then lets $r\\to1^-$.",
-        "formal_statement": "For a Fourier series $\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$, its Abel means are $A_rf(x)=\\sum_{n\\in\\mathbb Z}r^{|n|}\\hat f(n)e^{inx}$, $0\\le r<1$. Abel summability asks whether $A_rf(x)\\to L$ as $r\\to1^-$.",
+        "formal_statement": "For a Fourier series $\\sum_{n\\in\\mathbb Z}\\widehat f(n)e^{inx}$, its Abel means are $A_rf(x)=\\sum_{n\\in\\mathbb Z}r^{|n|}\\widehat f(n)e^{inx}$, where $0\\le r<1$. Equivalently, $A_rf=P_r*f$, where $P_r$ is the Poisson kernel. Abel summability asks whether $A_rf(x)\\to L$ as $r\\to1^-$.",
         "definition": "$$A_rf(x)=\\sum_{n\\in\\mathbb Z}r^{|n|}\\widehat f(n)e^{inx}=(P_r*f)(x),\\qquad 0\\le r<1.$$",
-        "intuition": "Abel summation approaches the Fourier series from inside the unit disk. The factor $r^{|n|}$ suppresses high frequencies first, then gradually releases them.",
+        "formula": "$$\\begin{aligned} A_r f(x)&=\\sum_{n\\in\\mathbb Z}r^{|n|}\\widehat f(n)e^{inx},\\qquad 0\\le r<1,\\\\ P_r(t)&=\\sum_{n\\in\\mathbb Z}r^{|n|}e^{int}=\\frac{1-r^2}{1-2r\\cos t+r^2},\\\\ A_r f&=P_r*f. \\end{aligned}$$",
+        "intuition": "Abel summation approaches the Fourier series from inside the unit disk. The factor $r^{|n|}$ suppresses high frequencies first, then gradually releases them as $r\\to1^-$.",
         "proof": null,
-        "notation": "$$A_rf,\\ r\\to1^-$$",
-        "proof_dependencies": [],
+        "proof_steps": [
+          {
+            "id": "define-abel-mean",
+            "label": "Define the Abel mean",
+            "role": "setup",
+            "content": "Let $$f(x)\\sim\\sum_{n\\in\\mathbb Z}\\widehat f(n)e^{inx}$$ be the Fourier series of $f$. For $0\\le r<1$, define $$A_r f(x)=\\sum_{n\\in\\mathbb Z}r^{|n|}\\widehat f(n)e^{inx}.$$ The factor $r^{|n|}$ decays geometrically, so the Abel mean is usually better behaved than the raw Fourier series. Abel summability asks whether $$\\lim_{r\\to1^-}A_r f(x)$$ exists.",
+            "depends_on": ["fourier_series", "fourier_coefficient"]
+          },
+          {
+            "id": "derive-poisson-kernel",
+            "label": "Derive the Poisson kernel",
+            "role": "claim",
+            "content": "For $0\\le r<1$, define $$P_r(t)=\\sum_{n\\in\\mathbb Z}r^{|n|}e^{int}.$$ Splitting positive and negative frequencies gives $$P_r(t)=1+\\sum_{n=1}^{\\infty}r^n e^{int}+\\sum_{n=1}^{\\infty}r^n e^{-int}=1+2\\sum_{n=1}^{\\infty}r^n\\cos(nt).$$ Summing the geometric series yields $$P_r(t)=\\frac{1-r^2}{1-2r\\cos t+r^2}.$$ Hence $P_r(t)>0$, and its normalized integral is $$\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}P_r(t)\\,dt=1.$$",
+            "depends_on": ["poisson_kernel"]
+          },
+          {
+            "id": "derive-convolution-identity",
+            "label": "Derive the convolution identity",
+            "role": "argument",
+            "content": "Using normalized convolution, $$(P_r*f)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}P_r(t)f(x-t)\\,dt.$$ The Fourier coefficients of the Poisson kernel are $$\\widehat{P_r}(n)=r^{|n|}.$$ Since convolution multiplies Fourier coefficients, $$\\widehat{P_r*f}(n)=\\widehat{P_r}(n)\\widehat f(n)=r^{|n|}\\widehat f(n).$$ Therefore the Fourier series of $P_r*f$ is $$\\sum_{n\\in\\mathbb Z}r^{|n|}\\widehat f(n)e^{inx},$$ so $$A_r f=P_r*f.$$",
+            "depends_on": [
+              "poisson_kernel",
+              "convolution",
+              "fourier_coefficient"
+            ]
+          },
+          {
+            "id": "poisson-kernel-good-kernel",
+            "label": "Poisson kernel as a good kernel",
+            "role": "claim",
+            "content": "The Poisson kernels form a positive approximate identity as $r\\to1^-$. First, $$P_r(t)\\ge0.$$ Second, $$\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}P_r(t)\\,dt=1.$$ Third, for every fixed $0<\\delta\\le\\pi$, the mass away from $0$ tends to zero. Indeed, on $\\delta\\le |t|\\le\\pi$, the denominator $$1-2r\\cos t+r^2$$ stays bounded below by a positive constant as $r\\to1^-$, while the numerator $1-r^2$ tends to $0$. Hence $$\\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}P_r(t)\\,dt\\xrightarrow[r\\to1^-]{}0.$$ Thus $P_r$ is a good kernel.",
+            "depends_on": ["poisson_kernel", "good_kernel"]
+          },
+          {
+            "id": "uniform-convergence-for-continuous-functions",
+            "label": "Uniform convergence for continuous functions",
+            "role": "argument",
+            "content": "Assume $f\\in C(\\mathbb T)$. Since $\\mathbb T$ is compact, $f$ is uniformly continuous and bounded. By normalization of $P_r$, $$A_r f(x)-f(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}\\bigl(f(x-t)-f(x)\\bigr)P_r(t)\\,dt.$$ Let $\\varepsilon>0$. Choose $0<\\delta\\le\\pi$ such that $$|t|<\\delta\\Longrightarrow |f(x-t)-f(x)|<\\frac{\\varepsilon}{2}\\quad\\text{for all }x\\in\\mathbb T.$$ Let $M=\\|f\\|_\\infty$. Since $P_r\\ge0$, split the integral into $|t|<\\delta$ and $\\delta\\le |t|\\le\\pi$. The near part is at most $\\varepsilon/2$. The far part is bounded by $$2M\\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}P_r(t)\\,dt,$$ which tends to $0$ as $r\\to1^-$. Therefore $$\\|A_r f-f\\|_\\infty\\xrightarrow[r\\to1^-]{}0.$$",
+            "depends_on": ["poisson_kernel", "good_kernel"]
+          },
+          {
+            "id": "ordinary-convergence-implies-abel-convergence",
+            "label": "Ordinary convergence implies Abel convergence",
+            "role": "claim",
+            "content": "Let $\\sum_{n=0}^{\\infty}a_n$ converge to $S$, and let $$s_N=\\sum_{n=0}^{N}a_n.$$ For $0\\le r<1$, Abel's summation identity gives $$\\sum_{n=0}^{\\infty}a_n r^n=(1-r)\\sum_{N=0}^{\\infty}s_N r^N.$$ Since $s_N\\to S$, write $$s_N=S+(s_N-S).$$ Then $$(1-r)\\sum_{N=0}^{\\infty}s_N r^N=S+(1-r)\\sum_{N=0}^{\\infty}(s_N-S)r^N.$$ The second term tends to $0$ as $r\\to1^-$ by a finite-tail argument: first choose $K$ so that $|s_N-S|$ is small for $N\\ge K$, then absorb the finite part $N<K$ using the factor $1-r$. Hence $$\\sum_{n=0}^{\\infty}a_n r^n\\xrightarrow[r\\to1^-]{}S.$$ Therefore Abel summability agrees with ordinary convergence whenever the original series converges.",
+            "depends_on": []
+          }
+        ],
+        "notation": "$$A_rf,\\qquad r\\to1^-$$",
+        "proof_dependencies": [
+          "fourier_series",
+          "fourier_coefficient",
+          "poisson_kernel",
+          "convolution",
+          "good_kernel"
+        ],
         "dependencies": {
-          "logical_dependency": ["fourier_series", "fourier_coefficient"]
+          "logical_dependency": [
+            "fourier_series",
+            "fourier_coefficient",
+            "poisson_kernel",
+            "convolution",
+            "good_kernel"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["fourier_series", "poisson_kernel"],
-        "assumptions": [],
+        "related": [
+          "fourier_series",
+          "fourier_coefficient",
+          "poisson_kernel",
+          "convolution",
+          "good_kernel",
+          "dirichlet_problem"
+        ],
+        "assumptions": [
+          "The circle is normalized with measure $\\frac1{2\\pi}dx$.",
+          "The Abel parameter satisfies $0\\le r<1$ and the limiting process is $r\\to1^-$.",
+          "The identity $A_rf=P_r*f$ uses the Fourier coefficients $\\widehat{P_r}(n)=r^{|n|}$.",
+          "Uniform convergence of $A_rf\\to f$ requires $f\\in C(\\mathbb T)$.",
+          "Abel summability agrees with ordinary convergence whenever the original series converges."
+        ],
         "ref": "Stein–Shakarchi: Ch.2 Theorem 5.6; Ch.3 Lemma 2.3",
         "book_refs": ["c2_thm_5_6", "c3_lem_2_3"],
         "metadata": {
-          "tags": ["convergence"],
+          "tags": [
+            "convergence",
+            "summability",
+            "abel",
+            "abel-poisson",
+            "fourier-series",
+            "poisson-kernel",
+            "approximate-identity"
+          ],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.2 Theorem 5.6; Ch.3 Lemma 2.3"
         }
