@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { XIcon, CaretUpIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon } from "@phosphor-icons/react";
+import { XIcon, CaretUpIcon, CaretDownIcon, CaretRightIcon, BookOpenTextIcon, CardsIcon } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
@@ -53,6 +53,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const domainGlyphId = getDomainGlyphId(node.domainId);
   const [tab, setTab] = useState<TabId>("overview");
   const [showAllUsed, setShowAllUsed] = useState(false);
+  const [overviewLinksOpen, setOverviewLinksOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const prereqIds = useMemo(
@@ -139,6 +140,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   useEffect(() => {
     setTab("overview");
     setShowAllUsed(false);
+    setOverviewLinksOpen(false);
     scrollRef.current?.scrollTo({ top: 0 });
   }, [node.id]);
 
@@ -295,7 +297,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
 
             {statement && (
               <section id="sec-statement">
-                <Spine tone={tone} kind={node.kind} label="Statement">
+                <Spine tone={tone} kind={node.kind}>
                   <MathProse text={statement} />
                 </Spine>
               </section>
@@ -340,7 +342,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
               </section>
             )}
 
-            {notation.length > 0 && (
+            {/* {notation.length > 0 && (
               <section id="sec-notation">
                 <Facet label="Notation" muted>
                   <div className="flex flex-wrap justify-center gap-x-3 gap-y-1.5">
@@ -352,7 +354,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
                   </div>
                 </Facet>
               </section>
-            )}
+            )} */}
 
             {explanation && (
               <section id="sec-intuition">
@@ -378,8 +380,26 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
               </section>
             )}
 
+            {linkCount > 0 && (
+              <section id="sec-overview-links">
+                <OverviewLinks
+                  toneColor={tone.color}
+                  map={map}
+                  onSelect={select}
+                  open={overviewLinksOpen}
+                  onToggle={() => setOverviewLinksOpen((open) => !open)}
+                  groups={[
+                    { label: "Depends on", ids: prereqIds },
+                    { label: "Used by", ids: usedBy },
+                    { label: "Related cases", ids: examples },
+                    { label: "Exercises", ids: exercises },
+                  ]}
+                />
+              </section>
+            )}
+
             {!statement && !explanation && !definition && !formalStatement && !showGloss && !example &&
-              assumptions.length === 0 && notation.length === 0 && (
+              assumptions.length === 0 && notation.length === 0 && linkCount === 0 && (
                 <p className="text-ui-sm italic" style={{ color: "var(--fg-3)" }}>
                   No written content recorded for this concept yet.
                 </p>
@@ -588,6 +608,122 @@ function ChipGroup({
         </span>
       </div>
       <div className="flex flex-wrap gap-1.5">{children}</div>
+    </div>
+  );
+}
+
+function OverviewLinks({
+  toneColor,
+  map,
+  groups,
+  onSelect,
+  open,
+  onToggle,
+}: {
+  toneColor: string;
+  map: LoadedMap;
+  groups: { label: string; ids: string[] }[];
+  onSelect: (id: string) => void;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const visibleGroups = groups.filter((group) => group.ids.length > 0);
+  const linkCount = visibleGroups.reduce((count, group) => count + group.ids.length, 0);
+
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={open}
+          className="group flex min-w-0 flex-1 items-center gap-2 text-left focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
+        >
+          <CaretRightIcon
+            className="h-3.5 w-3.5 shrink-0 transition-transform duration-200"
+            style={{ color: toneColor, transform: open ? "rotate(90deg)" : "none" }}
+            aria-hidden
+          />
+          <span
+            className="font-mono text-ui-2xs uppercase tracking-label"
+            style={{ color: toneColor }}
+          >
+            Links
+          </span>
+          <span className="font-mono text-ui-2xs tabular-nums" style={{ color: "var(--fg-4)" }}>
+            {linkCount}
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={open}
+          className="font-mono text-ui-2xs uppercase tracking-label transition-colors hover:underline focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
+          style={{ color: "var(--fg-3)" }}
+        >
+          {open ? "Hide" : "Show"}
+        </button>
+      </div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="overview-links-body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.18, ease: [0.2, 0.7, 0.2, 1] }}
+            className="overflow-hidden"
+          >
+            <div
+              className="grid gap-2 rounded-[12px] border p-2 sm:grid-cols-2"
+              style={{
+                background: `linear-gradient(135deg, color-mix(in srgb, ${toneColor} 7%, var(--surface-2)), var(--surface))`,
+                borderColor: "var(--border-subtle)",
+              }}
+            >
+              {visibleGroups.map((group) => (
+                <OverviewLinkGroup
+                  key={group.label}
+                  group={group}
+                  map={map}
+                  onSelect={onSelect}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function OverviewLinkGroup({
+  group,
+  map,
+  onSelect,
+}: {
+  group: { label: string; ids: string[] };
+  map: LoadedMap;
+  onSelect: (id: string) => void;
+}) {
+  return (
+    <div
+      className="min-w-0 rounded-[9px] border px-2.5 py-2"
+      style={{ background: "color-mix(in srgb, var(--surface) 88%, transparent)", borderColor: "var(--border-subtle)" }}
+    >
+      <div className="mb-1.5 flex items-center justify-between gap-2">
+        <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--fg-3)" }}>
+          {group.label}
+        </span>
+        <span className="font-mono text-ui-2xs tabular-nums" style={{ color: "var(--fg-4)" }}>
+          {group.ids.length}
+        </span>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {group.ids.map((rid) => (
+          <ConnectionChip key={rid} id={rid} map={map} onClick={() => onSelect(rid)} />
+        ))}
+      </div>
     </div>
   );
 }
