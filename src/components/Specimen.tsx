@@ -46,7 +46,7 @@ export function Spine({
   const texture = CATEGORY_META[categoryOf(kind)].rail;
   return (
     <div
-      className="relative overflow-hidden rounded-[12px] pl-4 pr-4"
+      className="relative overflow-hidden rounded-[var(--radius-md)] pl-4 pr-4"
       style={{
         background: `color-mix(in srgb, ${tone.tint} 60%, var(--surface))`,
         paddingBlock: size === "dict" ? "12px" : "11px",
@@ -112,7 +112,7 @@ export function Facet({
 export function MathBox({ text }: { text: string }) {
   return (
     <div
-      className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
+      className="block max-w-full overflow-x-auto rounded-[var(--radius-sm)] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
       style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
     >
       <MathText text={text} asBlock />

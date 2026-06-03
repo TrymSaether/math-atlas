@@ -291,7 +291,7 @@ function CardShell({
 }) {
   return (
     <div
-      className="flex h-full flex-col overflow-hidden rounded-[20px] border"
+      className="flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] border"
       style={{ background: "var(--surface)", borderColor: "var(--border)", boxShadow: "var(--shadow-2)" }}
     >
       <span aria-hidden className="h-1 w-full shrink-0" style={{ background: tone }} />
@@ -442,7 +442,7 @@ function SummaryCard({
   const pct = Math.round((gotCount / total) * 100);
   return (
     <div
-      className="flex flex-1 flex-col items-center justify-center gap-6 rounded-[20px] border px-8 py-12 text-center"
+      className="flex flex-1 flex-col items-center justify-center gap-6 rounded-[var(--radius-2xl)] border px-8 py-12 text-center"
       style={{ background: "var(--surface)", borderColor: "var(--border)", boxShadow: "var(--shadow-2)" }}
     >
       <div
@@ -492,7 +492,7 @@ function SummaryCard({
 function EmptyState({ onBack }: { onBack: () => void }) {
   return (
     <div
-      className="flex flex-1 flex-col items-center justify-center gap-4 rounded-[20px] border px-8 py-12 text-center"
+      className="flex flex-1 flex-col items-center justify-center gap-4 rounded-[var(--radius-2xl)] border px-8 py-12 text-center"
       style={{ background: "var(--surface)", borderColor: "var(--border)" }}
     >
       <p className="text-ui-lead" style={{ color: "var(--fg-1)" }}>

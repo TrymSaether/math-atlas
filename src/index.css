@@ -1516,12 +1516,12 @@
   --tracking-code: 0.02em;
 
   /* Radius scale — restrained, editorial feel */
-  --radius-xs: 3px;
-  --radius-sm: 5px;
-  --radius-md: 8px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
-  --radius-2xl: 22px;
+  --radius-xs: 4px;    /* kbd, tags, tiny chips */
+  --radius-sm: 8px;    /* compact icon buttons, depth picker */
+  --radius-md: 12px;   /* segmented controls, small cards */
+  --radius-lg: 16px;   /* panels, node cards, tiles */
+  --radius-xl: 18px;   /* pill chrome wrappers, search bar */
+  --radius-2xl: 22px;  /* popovers, map panel */
   --radius-pill: 999px;
 
   --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -1658,20 +1658,20 @@ button {
   justify-content: center;
   width: 42px;
   height: 42px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   color: var(--fg-2);
 }
 
 .map-control-button {
   width: 44px;
   height: 44px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .top-tools .map-icon-button {
   width: 38px;
   height: 36px;
-  border-radius: 18px;
+  border-radius: var(--radius-xl);
 }
 
 .top-tools .map-text-button {
@@ -1682,7 +1682,7 @@ button {
 .canvas-dock .map-icon-button {
   width: 32px;
   height: 32px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .canvas-dock .map-icon-button + .map-icon-button {
@@ -1793,7 +1793,7 @@ button {
 .atlas-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: calc(var(--radius-2xl) + 2px);
   box-shadow: var(--shadow-3);
   color: var(--fg-1);
 }
@@ -1802,7 +1802,7 @@ button {
 .atlas-panel {
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: var(--radius-xl);
 }
 
 .entry-kicker,
@@ -1833,14 +1833,14 @@ button {
   font-family: var(--font-mono);
   background: var(--surface-3);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   color: var(--fg-1);
 }
 
 .themed-diagram {
   background: var(--dia-space);
   border: 1px solid var(--dia-line);
-  border-radius: 18px;
+  border-radius: var(--radius-xl);
   color: var(--dia-ink);
   overflow: hidden;
   box-shadow: var(--shadow-1);
@@ -1960,7 +1960,7 @@ button {
 .react-flow__minimap {
   background: color-mix(in srgb, var(--surface) 92%, transparent) !important;
   border: 1px solid var(--border) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-md) !important;
   overflow: hidden;
   box-shadow: var(--shadow-2);
 }
@@ -1968,7 +1968,7 @@ button {
 .react-flow__controls {
   background: color-mix(in srgb, var(--surface) 96%, transparent) !important;
   border: 1px solid var(--border) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-md) !important;
   overflow: hidden;
   box-shadow: var(--shadow-2);
 }

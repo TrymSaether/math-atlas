@@ -91,7 +91,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       tabIndex={0}
       aria-label={`${KIND_LABEL[node.kind]}: ${node.title}`}
       className={cn(
-        "group relative flex min-h-[80px] w-[252px] cursor-pointer flex-col overflow-hidden rounded-[14px] border pl-3.5 pr-3.5 py-2.5 outline-none transition-all duration-150",
+        "group relative flex min-h-[80px] w-[252px] cursor-pointer flex-col overflow-hidden rounded-[var(--radius-lg)] border pl-3.5 pr-3.5 py-2.5 outline-none transition-all duration-150",
         "focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
         "hover:-translate-y-px",
         dim && "opacity-30",

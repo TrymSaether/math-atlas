@@ -18,7 +18,7 @@ export function NodeVisual({
 }) {
   const InteractiveFigure = FIGURE_REGISTRY[node.id];
   const diagramPath = node.diagramPath.trim();
-  const frameClassName = cn("block w-full rounded-[12px] border p-3", className);
+  const frameClassName = cn("block w-full rounded-[var(--radius-md)] border p-3", className);
 
   if (InteractiveFigure) {
     return (

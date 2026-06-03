@@ -93,12 +93,12 @@ function MapBrandSelector() {
   return (
     <div
       ref={ref}
-      className="map-chrome-soft relative flex h-11 min-w-0 max-w-[calc(100vw-224px)] items-center gap-1 rounded-[18px] p-1 sm:max-w-none"
+      className="map-chrome-soft relative flex h-11 min-w-0 max-w-[calc(100vw-224px)] items-center gap-1 rounded-[var(--radius-xl)] p-1 sm:max-w-none"
     >
       <button
         type="button"
         onClick={goHome}
-        className="map-text-button group flex min-w-0 items-center gap-2.5 rounded-[14px] py-1 pl-1.5 pr-1 sm:pl-2 sm:pr-2.5"
+        className="map-text-button group flex min-w-0 items-center gap-2.5 rounded-[var(--radius-lg)] py-1 pl-1.5 pr-1 sm:pl-2 sm:pr-2.5"
         aria-label="Math Atlas — back to map"
         title="Back to map"
       >
@@ -122,7 +122,7 @@ function MapBrandSelector() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "map-field-button flex h-9 min-w-0 items-center gap-2 rounded-[14px] px-2.5 text-ui-control font-semibold sm:px-3",
+          "map-field-button flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 text-ui-control font-semibold sm:px-3",
           open && "is-active",
         )}
         style={!open ? { color: "var(--fg-1)" } : undefined}
@@ -140,7 +140,7 @@ function MapBrandSelector() {
       </button>
       {open && (
         <div
-          className="map-popover absolute left-0 top-[52px] w-[min(300px,calc(100vw-24px))] overflow-hidden rounded-[20px] p-1.5 sm:w-[260px]"
+          className="map-popover absolute left-0 top-[52px] w-[min(300px,calc(100vw-24px))] overflow-hidden rounded-[var(--radius-2xl)] p-1.5 sm:w-[260px]"
         >
           {(Object.keys(MAPS) as MapId[]).map((id) => {
             const active = id === mapId;
@@ -153,7 +153,7 @@ function MapBrandSelector() {
                   setOpen(false);
                 }}
                 className={cn(
-                  "map-text-button flex w-full items-center gap-2 rounded-[14px] px-3 py-2.5 text-left text-ui-control font-semibold",
+                  "map-text-button flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2.5 text-left text-ui-control font-semibold",
                   active && "is-active",
                 )}
                 style={!active ? { color: "var(--fg-2)" } : undefined}
@@ -175,14 +175,14 @@ function SearchBox() {
     <button
       type="button"
       onClick={() => setPaletteOpen(true)}
-      className="map-text-button flex h-9 min-w-9 items-center gap-2 rounded-[18px] px-2.5 text-ui-control md:min-w-[190px] md:px-3.5"
+      className="map-text-button flex h-9 min-w-9 items-center gap-2 rounded-[var(--radius-xl)] px-2.5 text-ui-control md:min-w-[190px] md:px-3.5"
       style={{ color: "var(--fg-2)" }}
       aria-label="Open search"
     >
       <MagnifyingGlassIcon className="h-4 w-4 shrink-0" style={{ color: "var(--fg-3)" }} />
       <span className="hidden md:inline">Search the atlas</span>
       <kbd
-        className="ml-auto hidden h-5 items-center rounded-[7px] border px-1.5 font-mono text-ui-2xs md:inline-flex"
+        className="ml-auto hidden h-5 items-center rounded-[var(--radius-xs)] border px-1.5 font-mono text-ui-2xs md:inline-flex"
         style={{
           background: "var(--chrome-hover)",
           borderColor: "var(--chrome-border)",
@@ -347,7 +347,7 @@ function DisplayPopover({
   return createPortal(
     <div
       ref={popoverRef}
-      className="map-popover pointer-events-auto fixed z-50 w-[min(260px,calc(100vw-24px))] rounded-[20px] p-4"
+      className="map-popover pointer-events-auto fixed z-50 w-[min(260px,calc(100vw-24px))] rounded-[var(--radius-2xl)] p-4"
       style={{ top: position.top, right: position.right }}
     >
       <div className="mb-2.5 flex items-baseline justify-between">

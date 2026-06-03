@@ -166,7 +166,7 @@ function ZoomReadout() {
     <button
       type="button"
       onClick={() => rf.zoomTo(1, { duration: 180 })}
-      className="zoom-readout pointer-events-auto flex items-center justify-center rounded-[10px] font-semibold tabular-nums transition-colors"
+      className="zoom-readout pointer-events-auto flex items-center justify-center rounded-[var(--radius-sm)] font-semibold tabular-nums transition-colors"
       aria-label="Reset zoom to 100%"
       title="Reset zoom to 100%"
     >
@@ -186,7 +186,7 @@ function DepthPicker({ value, onChange }: { value: number; onChange: (value: num
             type="button"
             onClick={() => onChange(depth)}
             className={cn(
-              "flex h-6 w-6 items-center justify-center rounded-[8px] text-ui-2xs font-semibold tabular-nums transition",
+              "flex h-6 w-6 items-center justify-center rounded-[var(--radius-sm)] text-ui-2xs font-semibold tabular-nums transition",
               active && "is-active",
             )}
             style={{
@@ -246,7 +246,7 @@ function Segmented<T extends string>({
 }) {
   return (
     <div
-      className="grid w-full gap-0.5 rounded-[12px] p-0.5"
+      className="grid w-full gap-0.5 rounded-[var(--radius-md)] p-0.5"
       style={{
         gridTemplateColumns: `repeat(${options.length}, 1fr)`,
         background: "var(--surface-2)",
@@ -259,7 +259,7 @@ function Segmented<T extends string>({
           <button
             key={o.value}
             onClick={() => onChange(o.value)}
-            className="rounded-[10px] px-2 py-1.5 text-ui-meta font-semibold transition-colors"
+            className="rounded-[var(--radius-sm)] px-2 py-1.5 text-ui-meta font-semibold transition-colors"
             style={{
               background: active ? "var(--accent)" : "transparent",
               color: active ? "var(--fg-on-color)" : "var(--fg-2)",
@@ -312,7 +312,7 @@ function ModeTile({
     <button
       type="button"
       onClick={onClick}
-      className="group relative flex flex-col gap-2 rounded-[16px] border p-2 text-left transition"
+      className="group relative flex flex-col gap-2 rounded-[var(--radius-lg)] border p-2 text-left transition"
       style={{
         borderColor: active ? "var(--accent)" : "var(--border)",
         background: active ? "var(--accent-soft)" : "var(--surface)",
@@ -321,7 +321,7 @@ function ModeTile({
       aria-pressed={active}
     >
       <span
-        className="flex h-14 w-full items-center justify-center rounded-[11px]"
+        className="flex h-14 w-full items-center justify-center rounded-[var(--radius-md)]"
         style={{
           background: active ? "var(--accent)" : "var(--surface-2)",
           color: active ? "var(--fg-on-color)" : "var(--fg-2)",
@@ -383,7 +383,7 @@ function MapPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-50 flex w-[min(320px,calc(100vw-24px))] flex-col gap-4 overflow-y-auto rounded-[22px] p-4"
+      className="map-popover pointer-events-auto fixed z-50 flex w-[min(320px,calc(100vw-24px))] flex-col gap-4 overflow-y-auto rounded-[var(--radius-2xl)] p-4"
       style={{
         top: position.top,
         right: position.right,
