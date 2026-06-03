@@ -645,26 +645,65 @@
         "intuition": "Projecting onto orthonormal directions cannot create energy. Equality requires that the chosen directions are complete.",
         "proof": null,
         "notation": "$$\\sum_n|\\hat f(n)|^2\\le\\|f\\|_2^2$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "fourier_coefficient",
+          "orthonormal_system",
+          "inner_product_space",
+          "l2_space"
+        ],
         "dependencies": {
           "logical_dependency": [
             "fourier_coefficient",
             "orthonormal_system",
-            "l2_space"
+            "l2_space",
+            "inner_product_space"
           ]
         },
         "outgoing_relations": [],
         "related": [],
         "assumptions": [
-          "This is an $L^2$ statement; it uses the normalized inner product on $\\mathbb T$."
+          "This is an $L^2$ statement; it uses the normalized inner product on $\\mathbb T$.",
+          "This is an $L^2$ statement with the normalized inner product on $\\mathbb T$.",
+          "The proof only needs finite orthogonal projections before passing to the monotone limit over frequencies."
         ],
-        "ref": "",
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.3; UCI lecture notes on Bessel inequality and Parseval identity",
         "book_refs": [],
         "metadata": {
           "tags": ["series"],
           "syllabus_priority": "core",
-          "source": "Curated concept graph"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.3; UCI lecture notes on Bessel inequality and Parseval identity"
+        },
+        "proof_steps": [
+          {
+            "id": "finite-projection-setup",
+            "label": "Reduce to a finite orthonormal family",
+            "role": "setup",
+            "content": "Let $f\\in L^2(\\mathbb T)$, and fix a finite set $F\\subset\\mathbb Z$. Put $$p_F=\\sum_{n\\in F}\\widehat f(n)e^{inx}.$$ The functions $e_n(x)=e^{inx}$ form an orthonormal system in $L^2(\\mathbb T)$ with the normalized inner product $$\\langle f,g\\rangle=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)\\overline{g(x)}\\,dx.$$ Hence $p_F$ is the orthogonal projection of $f$ onto the finite-dimensional span of \\(\\{e_n:n\\in F\\}\\).",
+            "depends_on": [
+              "fourier_coefficient",
+              "orthonormal_system",
+              "l2_space"
+            ]
+          },
+          {
+            "id": "pythagorean-decomposition",
+            "label": "Use orthogonality",
+            "role": "argument",
+            "content": "For every $m\\in F$, $$\\langle f-p_F,e_m\\rangle=\\widehat f(m)-\\sum_{n\\in F}\\widehat f(n)\\langle e_n,e_m\\rangle=\\widehat f(m)-\\widehat f(m)=0.$$ Thus $f-p_F$ is orthogonal to $p_F$. By the Pythagorean identity, $$\\|f\\|_2^2=\\|p_F\\|_2^2+\\|f-p_F\\|_2^2\\ge \\|p_F\\|_2^2.$$ Since the $e_n$ are orthonormal, $$\\|p_F\\|_2^2=\\sum_{n\\in F}|\\widehat f(n)|^2.$$ Therefore $$\\sum_{n\\in F}|\\widehat f(n)|^2\\le \\|f\\|_2^2.$$",
+            "depends_on": [
+              "orthonormal_system",
+              "inner_product_space",
+              "l2_space"
+            ]
+          },
+          {
+            "id": "pass-to-all-frequencies",
+            "label": "Pass from finite sets to all frequencies",
+            "role": "conclusion",
+            "content": "Apply the finite estimate to $F_N=\\{-N,-N+1,\\dots,N\\}$. Then $$\\sum_{|n|\\le N}|\\widehat f(n)|^2\\le \\|f\\|_2^2\\qquad(N\\ge0).$$ The left-hand side is increasing in $N$, so taking the limit gives $$\\sum_{n\\in\\mathbb Z}|\\widehat f(n)|^2\\le \\|f\\|_2^2.$$ This is Bessel's inequality for Fourier coefficients.",
+            "depends_on": ["fourier_coefficient", "l2_space"]
+          }
+        ]
       },
       {
         "id": "parseval_identity",
@@ -678,26 +717,68 @@
         "intuition": "Fourier analysis is an isometry in $L^2$: functions and their coefficient sequences carry the same geometric information.",
         "proof": null,
         "notation": "$$\\sum_n|\\hat f(n)|^2=\\|f\\|_2^2$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "bessel_inequality",
+          "partial_sum",
+          "orthonormal_system",
+          "l2_space",
+          "hilbert_space",
+          "mean_square_convergence",
+          "fourier_coefficient"
+        ],
         "dependencies": {
           "logical_dependency": [
             "bessel_inequality",
             "l2_space",
-            "orthonormal_system"
+            "orthonormal_system",
+            "partial_sum",
+            "hilbert_space",
+            "mean_square_convergence",
+            "fourier_coefficient"
           ]
         },
         "outgoing_relations": [],
         "related": ["bessel_inequality", "plancherel_theorem"],
         "assumptions": [
-          "Equality uses completeness of the trigonometric system in $L^2(\\mathbb T)$."
+          "Equality uses completeness of the trigonometric system in $L^2(\\mathbb T)$.",
+          "Equality uses completeness of the trigonometric system in $L^2(\\mathbb T)$, not merely orthogonality.",
+          "The mixed inner-product identity follows from the norm identity by polarization."
         ],
-        "ref": "Stein–Shakarchi: Ch.3 Lemma 1.5; Ch.3 Theorem 1.3",
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.3 Lemma 1.5 and Theorem 1.3; UCI lecture notes on Bessel inequality and Parseval identity",
         "book_refs": ["c3_lem_1_5", "c3_thm_1_3"],
         "metadata": {
           "tags": ["series"],
           "syllabus_priority": "core",
-          "source": "Stein–Shakarchi: Ch.3 Lemma 1.5; Ch.3 Theorem 1.3"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.3 Lemma 1.5 and Theorem 1.3; UCI lecture notes on Bessel inequality and Parseval identity"
+        },
+        "proof_steps": [
+          {
+            "id": "start-from-projection-error",
+            "label": "Start from the projection error",
+            "role": "setup",
+            "content": "Let $$S_Nf=\\sum_{|n|\\le N}\\widehat f(n)e^{inx}.$$ By orthogonality, $$\\|f\\|_2^2=\\|S_Nf\\|_2^2+\\|f-S_Nf\\|_2^2.$$ Since the exponentials are orthonormal, $$\\|S_Nf\\|_2^2=\\sum_{|n|\\le N}|\\widehat f(n)|^2.$$ Therefore $$\\|f\\|_2^2=\\sum_{|n|\\le N}|\\widehat f(n)|^2+\\|f-S_Nf\\|_2^2.$$",
+            "depends_on": [
+              "partial_sum",
+              "orthonormal_system",
+              "l2_space",
+              "bessel_inequality"
+            ]
+          },
+          {
+            "id": "use-mean-square-convergence",
+            "label": "Use completeness of the trigonometric system",
+            "role": "argument",
+            "content": "The missing input is that the trigonometric system is complete in $L^2(\\mathbb T)$, equivalently that $$\\|S_Nf-f\\|_2\\xrightarrow[N\\to\\infty]{}0.$$ This is the mean-square convergence theorem for Fourier series. Letting $N\\to\\infty$ in the projection identity gives $$\\|f\\|_2^2=\\sum_{n\\in\\mathbb Z}|\\widehat f(n)|^2.$$",
+            "depends_on": ["mean_square_convergence", "partial_sum", "l2_space"]
+          },
+          {
+            "id": "polarization-identity",
+            "label": "Recover the inner-product form",
+            "role": "conclusion",
+            "content": "For the mixed identity, apply the norm identity to $f+g$, $f-g$, $f+ig$, and $f-ig$, or equivalently use polarization in the Hilbert space $L^2(\\mathbb T)$. This yields $$\\langle f,g\\rangle=\\sum_{n\\in\\mathbb Z}\\widehat f(n)\\overline{\\widehat g(n)}.$$ Thus Fourier coefficients preserve both norm and inner product in $L^2(\\mathbb T)$.",
+            "depends_on": ["hilbert_space", "l2_space", "fourier_coefficient"]
+          }
+        ]
       },
       {
         "id": "riemann_lebesgue_lemma",
@@ -711,9 +792,17 @@
         "intuition": "The waves $e^{-inx}$ oscillate faster and faster. Against an integrable function, their positive and negative swings cancel in the limit.",
         "proof": null,
         "notation": "$$\\hat f(n)\\to0$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "fourier_coefficient",
+          "l1_space",
+          "lebesgue_integral"
+        ],
         "dependencies": {
-          "logical_dependency": ["fourier_coefficient", "l1_space"]
+          "logical_dependency": [
+            "fourier_coefficient",
+            "l1_space",
+            "lebesgue_integral"
+          ]
         },
         "outgoing_relations": [],
         "related": [
@@ -721,15 +810,44 @@
           "fourier_transform_l1_continuity_decay"
         ],
         "assumptions": [
-          "The function is understood as an $L^1(\\mathbb T)$ equivalence class; the conclusion concerns its Fourier coefficients."
+          "The function is understood as an $L^1(\\mathbb T)$ equivalence class; the conclusion concerns its Fourier coefficients.",
+          "The proof uses density of step functions in $L^1(\\mathbb T)$.",
+          "The conclusion is decay of the coefficient sequence as $|n|\\to\\infty$."
         ],
-        "ref": "Stein–Shakarchi: Ch.3 Theorem 1.4",
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.3 Theorem 1.4; NTNU note on the Riemann–Lebesgue lemma; M.T. Nair Fourier analysis notes",
         "book_refs": ["c3_thm_1_4"],
         "metadata": {
           "tags": ["series"],
           "syllabus_priority": "core",
-          "source": "Stein–Shakarchi: Ch.3 Theorem 1.4"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.3 Theorem 1.4; NTNU note on the Riemann–Lebesgue lemma; M.T. Nair Fourier analysis notes"
+        },
+        "proof_steps": [
+          {
+            "id": "prove-for-step-functions",
+            "label": "Prove the result for interval indicators",
+            "role": "setup",
+            "content": "First consider the indicator function $\\mathbf 1_{[a,b]}$ on $[-\\pi,\\pi]$. For $n\\ne0$, its Fourier coefficient is $$\\widehat{\\mathbf 1_{[a,b]}}(n)=\\frac1{2\\pi}\\int_a^b e^{-inx}\\,dx=\\frac{e^{-ina}-e^{-inb}}{2\\pi in}.$$ Hence $$\\widehat{\\mathbf 1_{[a,b]}}(n)\\to0\\qquad(|n|\\to\\infty).$$ By linearity, the same holds for every step function.",
+            "depends_on": ["fourier_coefficient", "l1_space"]
+          },
+          {
+            "id": "approximate-by-step-functions",
+            "label": "Approximate an $L^1$ function",
+            "role": "argument",
+            "content": "Let $f\\in L^1(\\mathbb T)$ and let $\\varepsilon>0$. Choose a step function $s$ such that $$\\|f-s\\|_1<\\varepsilon.$$ For every $n\\in\\mathbb Z$, $$|\\widehat f(n)-\\widehat s(n)|=|\\widehat{f-s}(n)|\\le \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)-s(x)|\\,dx=\\|f-s\\|_1<\\varepsilon.$$",
+            "depends_on": [
+              "fourier_coefficient",
+              "l1_space",
+              "lebesgue_integral"
+            ]
+          },
+          {
+            "id": "take-the-limit",
+            "label": "Pass the decay from step functions to $L^1$",
+            "role": "conclusion",
+            "content": "Since $\\widehat s(n)\\to0$, there exists $N$ such that $|\\widehat s(n)|<\\varepsilon$ for $|n|\\ge N$. Therefore, for $|n|\\ge N$, $$|\\widehat f(n)|\\le |\\widehat f(n)-\\widehat s(n)|+|\\widehat s(n)|<2\\varepsilon.$$ Because $\\varepsilon>0$ was arbitrary, $$\\widehat f(n)\\xrightarrow[|n|\\to\\infty]{}0.$$",
+            "depends_on": ["fourier_coefficient", "l1_space"]
+          }
+        ]
       },
       {
         "id": "fourier_series_uniqueness_theorem",
@@ -743,27 +861,70 @@
         "intuition": "The full frequency spectrum contains all information about the function. For continuous functions this recovers pointwise equality; for $L^1$ functions equality means equality almost everywhere.",
         "proof": null,
         "notation": "$$\\hat f(n)=0\\ \\forall n\\Rightarrow f=0\\text{ a.e.}$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "fourier_coefficient",
+          "partial_sum",
+          "cesaro_summation",
+          "fejer_theorem",
+          "l1_space",
+          "almost_everywhere"
+        ],
         "dependencies": {
           "logical_dependency": [
             "fourier_coefficient",
             "l1_space",
             "almost_everywhere",
-            "fejer_theorem"
+            "fejer_theorem",
+            "partial_sum",
+            "cesaro_summation"
           ]
         },
         "outgoing_relations": [],
         "related": ["fourier_coefficient", "fejer_theorem"],
         "assumptions": [
-          "For $L^1$ functions, equality is interpreted almost everywhere. For continuous representatives, it becomes pointwise equality."
+          "For $L^1$ functions, equality is interpreted almost everywhere. For continuous representatives, it becomes pointwise equality.",
+          "The $L^1$ version uses convergence of Fejér means to $f$ in $L^1(\\mathbb T)$.",
+          "For continuous representatives, equality almost everywhere upgrades to pointwise equality."
         ],
-        "ref": "Stein–Shakarchi: Ch.2 Corollary 2.2; Ch.2 Corollary 2.3; Ch.2 Corollary 5.3; Ch.2 Theorem 2.1",
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.2 Theorem 5.2 and Ch.2 uniqueness corollaries",
         "book_refs": ["c2_cor_2_2", "c2_cor_2_3", "c2_cor_5_3", "c2_thm_2_1"],
         "metadata": {
           "tags": ["series"],
           "syllabus_priority": "medium",
-          "source": "Stein–Shakarchi: Ch.2 Corollary 2.2; Ch.2 Corollary 2.3; Ch.2 Corollary 5.3; Ch.2 Theorem 2.1"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.2 Theorem 5.2 and Ch.2 uniqueness corollaries"
+        },
+        "proof_steps": [
+          {
+            "id": "zero-coefficients-force-zero-fejer-means",
+            "label": "Zero coefficients give zero Fejér means",
+            "role": "setup",
+            "content": "Assume $f\\in L^1(\\mathbb T)$ and $$\\widehat f(n)=0\\qquad(\\forall n\\in\\mathbb Z).$$ Every Fourier partial sum is therefore zero: $$S_Nf(x)=\\sum_{|n|\\le N}\\widehat f(n)e^{inx}=0.$$ Hence every Cesàro mean is also zero: $$\\sigma_Nf=\\frac1{N+1}\\sum_{k=0}^{N}S_kf=0.$$",
+            "depends_on": [
+              "fourier_coefficient",
+              "partial_sum",
+              "cesaro_summation"
+            ]
+          },
+          {
+            "id": "use-fejer-l1-convergence",
+            "label": "Use Fejér convergence in $L^1$",
+            "role": "argument",
+            "content": "Fejér's theorem gives $$\\sigma_Nf\\xrightarrow[N\\to\\infty]{}f\\qquad\\text{in }L^1(\\mathbb T).$$ But $\\sigma_Nf=0$ for every $N$, so $$\\|f\\|_1=\\|f-\\sigma_Nf\\|_1\\xrightarrow[N\\to\\infty]{}0.$$ Therefore $$f=0\\quad\\text{a.e.}$$",
+            "depends_on": [
+              "fejer_theorem",
+              "l1_space",
+              "almost_everywhere",
+              "cesaro_summation"
+            ]
+          },
+          {
+            "id": "continuous-case",
+            "label": "Recover pointwise equality for continuous functions",
+            "role": "conclusion",
+            "content": "If in addition $f\\in C(\\mathbb T)$, then $f=0$ a.e. implies $f\\equiv0$. Indeed, if $f(x_0)\\ne0$, continuity gives an open arc around $x_0$ on which $|f|$ is bounded away from $0$, contradicting equality to zero almost everywhere. Thus continuous functions are determined pointwise by their Fourier coefficients.",
+            "depends_on": ["almost_everywhere", "fejer_theorem"]
+          }
+        ]
       },
       {
         "id": "best_approximation",
@@ -777,13 +938,20 @@
         "intuition": "Truncating a Fourier series is not a random cutoff. It is the closest low-frequency shadow of $f$ in the geometry of $L^2$.",
         "proof": null,
         "notation": "$$S_Nf=P_Nf$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "partial_sum",
+          "fourier_coefficient",
+          "orthonormal_system",
+          "l2_space",
+          "inner_product_space"
+        ],
         "dependencies": {
           "logical_dependency": [
             "partial_sum",
             "orthonormal_system",
             "l2_space",
-            "inner_product_space"
+            "inner_product_space",
+            "fourier_coefficient"
           ]
         },
         "outgoing_relations": [],
@@ -793,15 +961,45 @@
           "mean_square_convergence"
         ],
         "assumptions": [
-          "The minimization is in the $L^2$-norm on $\\mathbb T$."
+          "The minimization is in the $L^2$-norm on $\\mathbb T$.",
+          "The minimization is over the finite-dimensional space of trigonometric polynomials with frequencies $|n|\\le N$.",
+          "The proof uses only finite-dimensional orthogonal projection in $L^2(\\mathbb T)$."
         ],
-        "ref": "Stein–Shakarchi: Ch.3 Lemma 1.2",
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.3 Lemma 1.2; University of Oslo Fourier analysis notes",
         "book_refs": ["c3_lem_1_2"],
         "metadata": {
           "tags": ["series"],
           "syllabus_priority": "medium",
-          "source": "Stein–Shakarchi: Ch.3 Lemma 1.2"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.3 Lemma 1.2; University of Oslo Fourier analysis notes"
+        },
+        "proof_steps": [
+          {
+            "id": "projection-space",
+            "label": "Identify the finite-dimensional subspace",
+            "role": "setup",
+            "content": "Let $$V_N=\\operatorname{span}\\{e^{inx}:|n|\\le N\\}\\subset L^2(\\mathbb T).$$ The Fourier partial sum $$S_Nf=\\sum_{|n|\\le N}\\widehat f(n)e^{inx}$$ belongs to $V_N$. The goal is to prove that it is the closest element of $V_N$ to $f$ in the $L^2$ norm.",
+            "depends_on": ["partial_sum", "orthonormal_system", "l2_space"]
+          },
+          {
+            "id": "orthogonal-error",
+            "label": "Show the error is orthogonal to the approximation space",
+            "role": "claim",
+            "content": "For every basis vector $e_m$ with $|m|\\le N$, $$\\langle f-S_Nf,e_m\\rangle=\\widehat f(m)-\\sum_{|n|\\le N}\\widehat f(n)\\langle e_n,e_m\\rangle=0.$$ Since the $e_m$ span $V_N$, it follows that $$f-S_Nf\\perp V_N.$$ Thus $S_Nf$ is the orthogonal projection of $f$ onto $V_N$.",
+            "depends_on": [
+              "fourier_coefficient",
+              "partial_sum",
+              "orthonormal_system",
+              "inner_product_space"
+            ]
+          },
+          {
+            "id": "minimization-by-pythagoras",
+            "label": "Derive the minimization property",
+            "role": "argument",
+            "content": "Let $p\\in V_N$. Then $$f-p=(f-S_Nf)+(S_Nf-p),$$ where $f-S_Nf\\perp V_N$ and $S_Nf-p\\in V_N$. Therefore the two summands are orthogonal. Hence $$\\|f-p\\|_2^2=\\|f-S_Nf\\|_2^2+\\|S_Nf-p\\|_2^2\\ge \\|f-S_Nf\\|_2^2.$$ Equality holds exactly when $p=S_Nf$. Thus $$S_Nf=\\operatorname*{arg\\,min}_{p\\in V_N}\\|f-p\\|_2.$$",
+            "depends_on": ["l2_space", "inner_product_space", "partial_sum"]
+          }
+        ]
       },
       {
         "id": "decay_smoothness",
@@ -1515,24 +1713,88 @@
         "intuition": "Analysis and synthesis are symmetric: the inverse transform recombines continuous waves with the sign reversed.",
         "proof": null,
         "notation": "$$f=(\\hat f)^\\vee$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "fourier_transform",
+          "fourier_transform_convention",
+          "schwartz_space",
+          "gaussian_transform",
+          "convolution_theorem",
+          "convolution",
+          "lebesgue_integral"
+        ],
         "dependencies": {
           "logical_dependency": [
             "fourier_transform",
             "schwartz_space",
-            "fourier_transform_convention"
+            "fourier_transform_convention",
+            "gaussian_transform",
+            "convolution_theorem"
           ]
         },
         "outgoing_relations": [],
         "related": ["fourier_transform", "schwartz_space"],
-        "assumptions": ["Uses the graph's $2\\pi$-frequency convention."],
-        "ref": "Stein–Shakarchi: Ch.5 Corollary 1.10; Ch.5 Theorem 1.9",
+        "assumptions": [
+          "Uses the graph's $2\\pi$-frequency convention.",
+          "This proof uses Gaussian regularization and dominated convergence.",
+          "For Schwartz functions, inversion is pointwise and the inverse integral is absolutely convergent."
+        ],
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.5 Theorem 1.9 and Corollary 1.10; UC Davis notes on the Fourier transform and Schwartz functions",
         "book_refs": ["c5_cor_1_10", "c5_thm_1_9"],
         "metadata": {
           "tags": ["transform"],
           "syllabus_priority": "core",
-          "source": "Stein–Shakarchi: Ch.5 Corollary 1.10; Ch.5 Theorem 1.9"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.5 Theorem 1.9 and Corollary 1.10; UC Davis notes on the Fourier transform and Schwartz functions"
+        },
+        "proof_steps": [
+          {
+            "id": "setup-schwartz-and-regularization",
+            "label": "Setup and Gaussian regularization",
+            "role": "setup",
+            "content": "Let $f\\in\\mathcal S(\\mathbb R)$ and use $$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx.$$ Since the Fourier transform maps Schwartz functions to Schwartz functions, $\\widehat f\\in\\mathcal S(\\mathbb R)\\subset L^1(\\mathbb R)$. For $\\varepsilon>0$, define the Gaussian multiplier $$m_\\varepsilon(\\xi)=e^{-\\pi\\varepsilon^2\\xi^2}.$$ Then $$I_\\varepsilon(x)=\\int_{\\mathbb R}\\widehat f(\\xi)m_\\varepsilon(\\xi)e^{2\\pi i x\\xi}\\,d\\xi$$ is absolutely convergent.",
+            "depends_on": [
+              "fourier_transform",
+              "schwartz_space",
+              "fourier_transform_convention",
+              "gaussian_transform"
+            ]
+          },
+          {
+            "id": "identify-regularized-inverse",
+            "label": "Identify the regularized inverse",
+            "role": "argument",
+            "content": "Let $$\\phi_\\varepsilon(x)=\\varepsilon^{-1}e^{-\\pi(x/\\varepsilon)^2}.$$ The Gaussian transform identity gives $$\\widehat{\\phi_\\varepsilon}(\\xi)=e^{-\\pi\\varepsilon^2\\xi^2}=m_\\varepsilon(\\xi).$$ By the convolution theorem, $$\\widehat{f*\\phi_\\varepsilon}(\\xi)=\\widehat f(\\xi)m_\\varepsilon(\\xi).$$ Hence the regularized inverse integral equals the Gaussian convolution: $$I_\\varepsilon(x)=(f*\\phi_\\varepsilon)(x).$$",
+            "depends_on": [
+              "gaussian_transform",
+              "convolution_theorem",
+              "convolution"
+            ]
+          },
+          {
+            "id": "gaussian-approximate-identity",
+            "label": "Gaussian approximate identity",
+            "role": "claim",
+            "content": "The kernels $\\phi_\\varepsilon$ have unit mass and concentrate at $0$: $$\\int_{\\mathbb R}\\phi_\\varepsilon(t)\\,dt=1,$$ and for every $\\delta>0$, $$\\int_{|t|\\ge\\delta}\\phi_\\varepsilon(t)\\,dt\\xrightarrow[\\varepsilon\\to0^+]{}0.$$ Since $f\\in\\mathcal S(\\mathbb R)$ is uniformly continuous and bounded, the standard approximate-identity estimate gives $$\\|f*\\phi_\\varepsilon-f\\|_\\infty\\xrightarrow[\\varepsilon\\to0^+]{}0.$$ Therefore $$I_\\varepsilon(x)\\to f(x)$$ uniformly in $x$.",
+            "depends_on": ["schwartz_space", "convolution"]
+          },
+          {
+            "id": "remove-regularization",
+            "label": "Remove the regularization",
+            "role": "argument",
+            "content": "For each fixed $x$, the functions $$\\widehat f(\\xi)e^{-\\pi\\varepsilon^2\\xi^2}e^{2\\pi i x\\xi}$$ converge pointwise to $$\\widehat f(\\xi)e^{2\\pi i x\\xi}$$ as $\\varepsilon\\to0^+$. Also, $$\\left|\\widehat f(\\xi)e^{-\\pi\\varepsilon^2\\xi^2}e^{2\\pi i x\\xi}\\right|\\le |\\widehat f(\\xi)|,$$ and $\\widehat f\\in L^1(\\mathbb R)$. Dominated convergence gives $$\\lim_{\\varepsilon\\to0^+}I_\\varepsilon(x)=\\int_{\\mathbb R}\\widehat f(\\xi)e^{2\\pi i x\\xi}\\,d\\xi.$$ Combining this with $I_\\varepsilon(x)\to f(x)$ yields $$f(x)=\\int_{\\mathbb R}\\widehat f(\\xi)e^{2\\pi i x\\xi}\\,d\\xi.$$",
+            "depends_on": [
+              "fourier_transform",
+              "schwartz_space",
+              "lebesgue_integral"
+            ]
+          },
+          {
+            "id": "conclude-inversion",
+            "label": "Conclusion",
+            "role": "conclusion",
+            "content": "Thus, for every $f\\in\\mathcal S(\\mathbb R)$, Fourier analysis followed by synthesis recovers the original function pointwise: $$\\mathcal F^{-1}\\mathcal F f=f.$$ Under the graph convention, the inverse transform uses the opposite sign and no extra constant.",
+            "depends_on": ["fourier_transform_convention"]
+          }
+        ]
       },
       {
         "id": "convolution_theorem",
@@ -1546,27 +1808,72 @@
         "intuition": "Fourier waves diagonalize translation-invariant averaging. That is why convolution, which mixes nearby values, becomes pointwise multiplication in frequency.",
         "proof": null,
         "notation": "$$\\widehat{f*g}=\\hat f\\,\\hat g$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "fourier_transform",
+          "fourier_transform_convention",
+          "convolution",
+          "l1_space_real_line",
+          "schwartz_space",
+          "fubini_tonelli",
+          "fourier_inversion"
+        ],
         "dependencies": {
           "logical_dependency": [
             "fourier_transform",
             "convolution",
             "l1_space_real_line",
-            "schwartz_space"
+            "schwartz_space",
+            "fubini_tonelli"
           ]
         },
         "outgoing_relations": [],
         "related": ["convolution", "fourier_transform"],
         "assumptions": [
-          "Assumptions depend on the identity: $L^1$ is enough for convolution-to-product; Schwartz functions safely justify both identities."
+          "Assumptions depend on the identity: $L^1$ is enough for convolution-to-product; Schwartz functions safely justify both identities.",
+          "The identity $\\widehat{f*g}=\\widehat f\\widehat g$ holds for $f,g\\in L^1(\\mathbb R)$.",
+          "The identity $\\widehat{fg}=\\widehat f*\\widehat g$ is stated here under Schwartz hypotheses to justify inversion and Fubini cleanly."
         ],
-        "ref": "Stein–Shakarchi: Ch.5 Proposition 1.8; Ch.5 Proposition 1.11",
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.5 Proposition 1.8 and Proposition 1.11; UC Davis notes on the Fourier transform and Schwartz functions",
         "book_refs": ["c5_prop_1_8", "c5_prop_1_11"],
         "metadata": {
           "tags": ["transform"],
           "syllabus_priority": "core",
-          "source": "Stein–Shakarchi: Ch.5 Proposition 1.8; Ch.5 Proposition 1.11"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.5 Proposition 1.8 and Proposition 1.11; UC Davis notes on the Fourier transform and Schwartz functions"
+        },
+        "proof_steps": [
+          {
+            "id": "setup-conventions-and-hypotheses",
+            "label": "Setup and convention",
+            "role": "setup",
+            "content": "Use the graph convention $$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx.$$ For the convolution-to-product identity, assume $f,g\\in L^1(\\mathbb R)$. Then $f*g\\in L^1(\\mathbb R)$, where $$(f*g)(x)=\\int_{\\mathbb R}f(y)g(x-y)\\,dy.$$ The absolute integrability needed below follows from Fubini--Tonelli: $$\\int_{\\mathbb R}\\int_{\\mathbb R}|f(y)|\\,|g(x-y)|\\,dy\\,dx=\\|f\\|_1\\|g\\|_1<\\infty.$$",
+            "depends_on": [
+              "fourier_transform",
+              "convolution",
+              "l1_space_real_line",
+              "fubini_tonelli",
+              "fourier_transform_convention"
+            ]
+          },
+          {
+            "id": "derive-convolution-to-product",
+            "label": "Convolution becomes multiplication",
+            "role": "argument",
+            "content": "Compute directly and use Fubini to change the order of integration: $$\\begin{aligned} \\widehat{f*g}(\\xi)&=\\int_{\\mathbb R}\\int_{\\mathbb R}f(y)g(x-y)e^{-2\\pi i x\\xi}\\,dy\\,dx. \\end{aligned}$$ Put $u=x-y$, so $x=u+y$. Then $$\\begin{aligned} \\widehat{f*g}(\\xi)&=\\int_{\\mathbb R}f(y)e^{-2\\pi i y\\xi}\\left(\\int_{\\mathbb R}g(u)e^{-2\\pi i u\\xi}\\,du\\right)dy\\\\ &=\\widehat f(\\xi)\\widehat g(\\xi). \\end{aligned}$$ Thus $$\\widehat{f*g}=\\widehat f\\,\\widehat g.$$",
+            "depends_on": ["fourier_transform", "convolution", "fubini_tonelli"]
+          },
+          {
+            "id": "derive-product-to-convolution",
+            "label": "Product becomes convolution",
+            "role": "argument",
+            "content": "For $f,g\\in\\mathcal S(\\mathbb R)$, the functions and their Fourier transforms are rapidly decreasing, so all integrals below are absolutely justified. By Fourier inversion, $$g(x)=\\int_{\\mathbb R}\\widehat g(\\eta)e^{2\\pi i x\\eta}\\,d\\eta.$$ Hence $$\\begin{aligned} \\widehat{fg}(\\xi)&=\\int_{\\mathbb R}f(x)g(x)e^{-2\\pi i x\\xi}\\,dx\\\\ &=\\int_{\\mathbb R}\\widehat g(\\eta)\\left(\\int_{\\mathbb R}f(x)e^{-2\\pi i x(\\xi-\\eta)}\\,dx\\right)d\\eta\\\\ &=\\int_{\\mathbb R}\\widehat f(\\xi-\\eta)\\widehat g(\\eta)\\,d\\eta=(\\widehat f*\\widehat g)(\\xi). \\end{aligned}$$ Therefore multiplication in physical space becomes convolution in frequency space under Schwartz hypotheses.",
+            "depends_on": [
+              "schwartz_space",
+              "fourier_inversion",
+              "convolution",
+              "fubini_tonelli"
+            ]
+          }
+        ]
       },
       {
         "id": "plancherel_theorem",
@@ -1580,27 +1887,93 @@
         "intuition": "The Fourier transform preserves energy. In $L^2$, it is not a lossy change of representation but a rotation of Hilbert space.",
         "proof": null,
         "notation": "$$\\|\\hat f\\|_2=\\|f\\|_2$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "fourier_transform",
+          "fourier_transform_convention",
+          "schwartz_space",
+          "fourier_inversion",
+          "fubini_tonelli",
+          "l2_space_real_line",
+          "hilbert_space"
+        ],
         "dependencies": {
           "logical_dependency": [
             "fourier_transform",
             "l2_space_real_line",
             "schwartz_space",
-            "fourier_transform_convention"
+            "fourier_transform_convention",
+            "fourier_inversion",
+            "fubini_tonelli"
           ]
         },
         "outgoing_relations": [],
         "related": ["l2_space_real_line", "parseval_identity"],
         "assumptions": [
-          "Fourier convention $e^{-2\\pi i x\\xi}$; $L^2$ is on $\\mathbb R$."
+          "Fourier convention $e^{-2\\pi i x\\xi}$; $L^2$ is on $\\mathbb R$.",
+          "The proof first establishes Plancherel on $\\mathcal S(\\mathbb R)$ and then extends by density to $L^2(\\mathbb R)$.",
+          "The graph convention $e^{-2\\pi i x\\xi}$ makes the Fourier transform unitary without extra constants."
         ],
-        "ref": "Stein–Shakarchi: Ch.5 Theorem 1.12",
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.5 Theorem 1.12; UC Davis notes on Fourier transform on Schwartz functions and $L^2$",
         "book_refs": ["c5_thm_1_12"],
         "metadata": {
           "tags": ["transform"],
           "syllabus_priority": "core",
-          "source": "Stein–Shakarchi: Ch.5 Theorem 1.12"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.5 Theorem 1.12; UC Davis notes on Fourier transform on Schwartz functions and $L^2$"
+        },
+        "proof_steps": [
+          {
+            "id": "setup-schwartz-inner-product",
+            "label": "Start on Schwartz functions",
+            "role": "setup",
+            "content": "First prove the identity for $f,g\\in\\mathcal S(\\mathbb R)$. With the graph convention, $$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx.$$ Since $f,g,\\widehat f,\\widehat g$ are Schwartz functions, the integrals below are absolutely justified.",
+            "depends_on": [
+              "fourier_transform",
+              "schwartz_space",
+              "fourier_transform_convention"
+            ]
+          },
+          {
+            "id": "prove-inner-product-identity",
+            "label": "Prove the inner-product identity",
+            "role": "argument",
+            "content": "Use Fubini and Fourier inversion for $g$: $$\\begin{aligned} \\langle \\widehat f,\\widehat g\\rangle_{L^2}&=\\int_{\\mathbb R}\\widehat f(\\xi)\\overline{\\widehat g(\\xi)}\\,d\\xi\\\\ &=\\int_{\\mathbb R}\\left(\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx\\right)\\overline{\\widehat g(\\xi)}\\,d\\xi\\\\ &=\\int_{\\mathbb R}f(x)\\left(\\int_{\\mathbb R}e^{-2\\pi i x\\xi}\\overline{\\widehat g(\\xi)}\\,d\\xi\\right)dx. \\end{aligned}$$ Since $$\\overline{g(x)}=\\int_{\\mathbb R}\\overline{\\widehat g(\\xi)}e^{-2\\pi i x\\xi}\\,d\\xi,$$ the last expression becomes $$\\int_{\\mathbb R}f(x)\\overline{g(x)}\\,dx=\\langle f,g\\rangle_{L^2}.$$ Hence $$\\langle \\widehat f,\\widehat g\\rangle=\\langle f,g\\rangle$$ for Schwartz functions.",
+            "depends_on": [
+              "fourier_inversion",
+              "fubini_tonelli",
+              "schwartz_space",
+              "l2_space_real_line"
+            ]
+          },
+          {
+            "id": "derive-norm-preservation",
+            "label": "Energy preservation",
+            "role": "claim",
+            "content": "Taking $g=f$ in the inner-product identity gives $$\\|\\widehat f\\|_2^2=\\langle \\widehat f,\\widehat f\\rangle=\\langle f,f\\rangle=\\|f\\|_2^2.$$ Thus the Fourier transform preserves the $L^2$ norm on $\\mathcal S(\\mathbb R)$.",
+            "depends_on": ["l2_space_real_line", "schwartz_space"]
+          },
+          {
+            "id": "extend-by-density",
+            "label": "Extend to \\(L^2\\)",
+            "role": "argument",
+            "content": "The Schwartz space is dense in $L^2(\\mathbb R)$. If $f\\in L^2(\\mathbb R)$ and $f_k\\in\\mathcal S(\\mathbb R)$ with $f_k\\to f$ in $L^2$, then $$\\|\\widehat{f_k}-\\widehat{f_j}\\|_2=\\|f_k-f_j\\|_2.$$ Hence $(\\widehat{f_k})$ is Cauchy in $L^2(\\mathbb R)$, so it has an $L^2$ limit. Define $\\mathcal F f$ to be this limit. The definition is independent of the approximating Schwartz sequence by the same norm identity.",
+            "depends_on": [
+              "schwartz_space",
+              "l2_space_real_line",
+              "hilbert_space"
+            ]
+          },
+          {
+            "id": "conclude-unitarity",
+            "label": "Conclusion",
+            "role": "conclusion",
+            "content": "The extension satisfies $$\\|\\mathcal F f\\|_2=\\|f\\|_2$$ for every $f\\in L^2(\\mathbb R)$. Applying the same construction to the inverse transform gives surjectivity and $$\\langle \\mathcal Ff,\\mathcal Fg\\rangle=\\langle f,g\\rangle.$$ Therefore the Fourier transform extends uniquely to a unitary operator on $L^2(\\mathbb R)$.",
+            "depends_on": [
+              "fourier_inversion",
+              "l2_space_real_line",
+              "hilbert_space"
+            ]
+          }
+        ]
       },
       {
         "id": "gaussian_transform",
@@ -1750,7 +2123,11 @@
         "intuition": "The Fourier transform turns differential operators into algebraic multipliers, which is why linear constant-coefficient PDEs become solvable in frequency space.",
         "proof": null,
         "notation": "$$\\widehat{f'}=2\\pi i\\xi\\,\\hat f$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "fourier_transform",
+          "fourier_transform_convention",
+          "schwartz_space"
+        ],
         "dependencies": {
           "logical_dependency": [
             "fourier_transform",
@@ -1761,15 +2138,39 @@
         "outgoing_relations": [],
         "related": ["fourier_transform", "schwartz_space"],
         "assumptions": [
-          "Schwartz hypotheses avoid boundary terms and justify integration by parts."
+          "Schwartz hypotheses avoid boundary terms and justify integration by parts.",
+          "Schwartz hypotheses justify integration by parts and differentiation under the integral sign."
         ],
-        "ref": "",
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.5 Proposition 1.1 and Proposition 1.2; UC Davis notes on the Fourier transform and Schwartz functions",
         "book_refs": [],
         "metadata": {
           "tags": ["transform"],
           "syllabus_priority": "medium",
-          "source": "Curated concept graph"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.5 Proposition 1.1 and Proposition 1.2; UC Davis notes on the Fourier transform and Schwartz functions"
+        },
+        "proof_steps": [
+          {
+            "id": "setup-schwartz-boundary-terms",
+            "label": "Setup",
+            "role": "setup",
+            "content": "Let $f\\in\\mathcal S(\\mathbb R)$. The rapid decay of $f$ and its derivatives implies that integration by parts has no boundary contribution: $$\\lim_{R\\to\\infty}f(R)e^{-2\\pi iR\\xi}=\\lim_{R\\to\\infty}f(-R)e^{2\\pi iR\\xi}=0.$$",
+            "depends_on": ["schwartz_space", "fourier_transform_convention"]
+          },
+          {
+            "id": "differentiate-in-space",
+            "label": "Derivative becomes multiplier",
+            "role": "argument",
+            "content": "Using integration by parts, $$\\begin{aligned} \\widehat{f'}(\\xi)&=\\int_{\\mathbb R}f'(x)e^{-2\\pi i x\\xi}\\,dx\\\\ &=\\left[f(x)e^{-2\\pi i x\\xi}\\right]_{-\\infty}^{\\infty}+2\\pi i\\xi\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx\\\\ &=2\\pi i\\xi\\widehat f(\\xi). \\end{aligned}$$ Thus differentiation in $x$ becomes multiplication by $2\\pi i\\xi$ in frequency.",
+            "depends_on": ["fourier_transform", "schwartz_space"]
+          },
+          {
+            "id": "multiply-by-x",
+            "label": "Multiplication becomes frequency differentiation",
+            "role": "argument",
+            "content": "Differentiate under the integral sign, justified by the rapid decay of $xf(x)$: $$\\frac{d}{d\\xi}\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)(-2\\pi i x)e^{-2\\pi i x\\xi}\\,dx=-2\\pi i\\widehat{xf}(\\xi).$$ Therefore $$\\widehat{xf}(\\xi)=-\\frac1{2\\pi i}\\frac{d}{d\\xi}\\widehat f(\\xi).$$",
+            "depends_on": ["fourier_transform", "schwartz_space"]
+          }
+        ]
       },
       {
         "id": "tempered_distribution",
@@ -2738,7 +3139,10 @@
         "intuition": "Moving a signal changes phases but not frequency magnitudes; multiplying by a pure wave shifts the frequency content.",
         "proof": null,
         "notation": "$$\\widehat{f(\\cdot-a)}=e^{-2\\pi ia\\xi}\\hat f$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "fourier_transform",
+          "fourier_transform_convention"
+        ],
         "dependencies": {
           "logical_dependency": [
             "fourier_transform",
@@ -2747,15 +3151,41 @@
         },
         "outgoing_relations": [],
         "related": ["fourier_transform"],
-        "assumptions": ["Uses the graph's $2\\pi$-frequency convention."],
-        "ref": "Stein–Shakarchi: Ch.5 Proposition 1.2",
+        "assumptions": [
+          "Uses the graph's $2\\pi$-frequency convention.",
+          "The formulas hold for $L^1$ functions; Schwartz functions give a safe default setting."
+        ],
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.5 Proposition 1.2; UC Davis notes on Fourier transform properties",
         "book_refs": ["c5_prop_1_2"],
         "metadata": {
           "tags": ["transform"],
           "syllabus_priority": "medium",
-          "source": "Stein–Shakarchi: Ch.5 Proposition 1.2"
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.5 Proposition 1.2; UC Davis notes on Fourier transform properties"
         },
-        "diagram_path": "/atlas-assets/fourier/diagrams/translation-modulation.svg"
+        "diagram_path": "/atlas-assets/fourier/diagrams/translation-modulation.svg",
+        "proof_steps": [
+          {
+            "id": "setup-translation-modulation",
+            "label": "Setup",
+            "role": "setup",
+            "content": "Let $f$ be integrable, or take $f\\in\\mathcal S(\\mathbb R)$ for a safe proof. Use $$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx.$$",
+            "depends_on": ["fourier_transform", "fourier_transform_convention"]
+          },
+          {
+            "id": "prove-translation-rule",
+            "label": "Translation rule",
+            "role": "argument",
+            "content": "For $a\\in\\mathbb R$, compute with $u=x-a$: $$\\begin{aligned} \\widehat{f(\\cdot-a)}(\\xi)&=\\int_{\\mathbb R}f(x-a)e^{-2\\pi i x\\xi}\\,dx\\\\ &=\\int_{\\mathbb R}f(u)e^{-2\\pi i(u+a)\\xi}\\,du\\\\ &=e^{-2\\pi ia\\xi}\\widehat f(\\xi). \\end{aligned}$$ Thus spatial translation changes phase in frequency.",
+            "depends_on": ["fourier_transform"]
+          },
+          {
+            "id": "prove-modulation-rule",
+            "label": "Modulation rule",
+            "role": "argument",
+            "content": "For $b\\in\\mathbb R$, compute directly: $$\\begin{aligned} \\widehat{e^{2\\pi ibx}f(x)}(\\xi)&=\\int_{\\mathbb R}e^{2\\pi ibx}f(x)e^{-2\\pi i x\\xi}\\,dx\\\\ &=\\int_{\\mathbb R}f(x)e^{-2\\pi i x(\\xi-b)}\\,dx=\\widehat f(\\xi-b). \\end{aligned}$$ Thus multiplying by a pure frequency shifts the Fourier transform.",
+            "depends_on": ["fourier_transform"]
+          }
+        ]
       },
       {
         "id": "fourier_transform_l1_continuity_decay",
@@ -2768,7 +3198,12 @@
         "intuition": "Integrability makes high-frequency oscillations average out. This is the Riemann-Lebesgue lemma on the line.",
         "proof": null,
         "notation": "$$\\hat f\\in C_0(\\mathbb R)$$",
-        "proof_dependencies": [],
+        "proof_dependencies": [
+          "fourier_transform",
+          "l1_space_real_line",
+          "lebesgue_integral",
+          "riemann_lebesgue_lemma"
+        ],
         "dependencies": {
           "logical_dependency": [
             "fourier_transform",
@@ -2778,14 +3213,53 @@
         },
         "outgoing_relations": [],
         "related": ["fourier_transform", "riemann_lebesgue_lemma"],
-        "assumptions": [],
-        "ref": "",
+        "assumptions": [
+          "The proof uses dominated convergence for continuity and $L^1$ approximation by step functions for decay."
+        ],
+        "ref": "Stein–Shakarchi: Fourier Analysis, Ch.5 Proposition 1.4; UC Davis notes on Fourier transform on $L^1$",
         "book_refs": [],
         "metadata": {
           "tags": ["transform"],
           "syllabus_priority": "medium",
-          "source": "Curated concept graph"
-        }
+          "source": "Stein–Shakarchi: Fourier Analysis, Ch.5 Proposition 1.4; UC Davis notes on Fourier transform on $L^1$"
+        },
+        "proof_steps": [
+          {
+            "id": "setup-l1-transform",
+            "label": "Setup",
+            "role": "setup",
+            "content": "Let $f\\in L^1(\\mathbb R)$ and define $$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx.$$ The integral is absolutely convergent for every $\\xi$, and $$|\\widehat f(\\xi)|\\le\\|f\\|_1.$$",
+            "depends_on": ["fourier_transform", "l1_space_real_line"]
+          },
+          {
+            "id": "prove-continuity",
+            "label": "Continuity",
+            "role": "argument",
+            "content": "If $\\xi_k\\to\\xi$, then for every $x$, $$f(x)e^{-2\\pi i x\\xi_k}\\to f(x)e^{-2\\pi i x\\xi}.$$ Also, $$|f(x)e^{-2\\pi i x\\xi_k}|=|f(x)|,$$ and $f\\in L^1(\\mathbb R)$. Dominated convergence gives $$\\widehat f(\\xi_k)\\to\\widehat f(\\xi).$$ Hence $\\widehat f$ is continuous.",
+            "depends_on": ["lebesgue_integral", "l1_space_real_line"]
+          },
+          {
+            "id": "prove-decay-for-step-functions",
+            "label": "Decay for simple intervals",
+            "role": "claim",
+            "content": "For an interval indicator, direct integration gives $$\\widehat{\\mathbf 1_{[a,b]}}(\\xi)=\\int_a^b e^{-2\\pi i x\\xi}\\,dx=\\frac{e^{-2\\pi ia\\xi}-e^{-2\\pi ib\\xi}}{2\\pi i\\xi},\\qquad \\xi\\ne0,$$ so $$\\widehat{\\mathbf 1_{[a,b]}}(\\xi)\\to0$$ as $|\\xi|\\to\\infty$. By linearity, the same holds for finite linear combinations of interval indicators.",
+            "depends_on": ["fourier_transform"]
+          },
+          {
+            "id": "extend-decay-to-l1",
+            "label": "Approximate in \\(L^1\\)",
+            "role": "argument",
+            "content": "Choose a simple interval step function $s$ with $$\\|f-s\\|_1<\\varepsilon.$$ Then $$|\\widehat f(\\xi)|\\le |\\widehat{s}(\\xi)|+|\\widehat{f-s}(\\xi)|\\le |\\widehat{s}(\\xi)|+\\|f-s\\|_1.$$ Since $\\widehat{s}(\\xi)\to0$, for large $|\\xi|$ we get $$|\\widehat f(\\xi)|<2\\varepsilon.$$ Therefore $$\\widehat f(\\xi)\\xrightarrow[|\\xi|\\to\\infty]{}0.$$",
+            "depends_on": ["l1_space_real_line", "fourier_transform"]
+          },
+          {
+            "id": "conclude-c0",
+            "label": "Conclusion",
+            "role": "conclusion",
+            "content": "The Fourier transform maps $L^1(\\mathbb R)$ into continuous functions vanishing at infinity: $$f\\in L^1(\\mathbb R)\\Longrightarrow \\widehat f\\in C_0(\\mathbb R).$$ This is the real-line Riemann--Lebesgue lemma.",
+            "depends_on": ["riemann_lebesgue_lemma"]
+          }
+        ]
       },
       {
         "id": "band_limited",
@@ -12313,6 +12787,160 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": ""
+      },
+      {
+        "id": "e_convolution_theorem__requires__fubini_tonelli",
+        "source": "convolution_theorem",
+        "target": "fubini_tonelli",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The proof of the convolution theorem interchanges integrals using Fubini/Tonelli."
+      },
+      {
+        "id": "e_plancherel_theorem__requires__fourier_inversion",
+        "source": "plancherel_theorem",
+        "target": "fourier_inversion",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The proof first proves the inner-product identity on Schwartz functions using Fourier inversion."
+      },
+      {
+        "id": "e_plancherel_theorem__requires__fubini_tonelli",
+        "source": "plancherel_theorem",
+        "target": "fubini_tonelli",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The Schwartz-class proof interchanges absolutely convergent integrals."
+      },
+      {
+        "id": "e_fourier_inversion__requires__gaussian_transform",
+        "source": "fourier_inversion",
+        "target": "gaussian_transform",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Gaussian regularization is used to prove inversion on the Schwartz class."
+      },
+      {
+        "id": "e_fourier_inversion__requires__convolution_theorem",
+        "source": "fourier_inversion",
+        "target": "convolution_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The regularized inverse transform is identified as a Gaussian convolution."
+      },
+      {
+        "id": "e_bessel_inequality__requires__inner_product_space",
+        "source": "bessel_inequality",
+        "target": "inner_product_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Proof uses finite orthogonal projections and the Pythagorean identity."
+      },
+      {
+        "id": "e_best_approximation__requires__fourier_coefficient",
+        "source": "best_approximation",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Proof identifies coefficients as projection coordinates."
+      },
+      {
+        "id": "e_parseval_identity__requires__partial_sum",
+        "source": "parseval_identity",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Projection identity is written for Fourier partial sums."
+      },
+      {
+        "id": "e_parseval_identity__requires__hilbert_space",
+        "source": "parseval_identity",
+        "target": "hilbert_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Polarization and norm preservation are Hilbert-space arguments."
+      },
+      {
+        "id": "e_parseval_identity__requires__mean_square_convergence",
+        "source": "parseval_identity",
+        "target": "mean_square_convergence",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Equality requires completeness / convergence in $L^2$."
+      },
+      {
+        "id": "e_parseval_identity__requires__fourier_coefficient",
+        "source": "parseval_identity",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Identity is stated in terms of Fourier coefficients."
+      },
+      {
+        "id": "e_riemann_lebesgue_lemma__requires__lebesgue_integral",
+        "source": "riemann_lebesgue_lemma",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Proof uses $L^1$ approximation and integral estimates."
+      },
+      {
+        "id": "e_fourier_series_uniqueness_theorem__requires__partial_sum",
+        "source": "fourier_series_uniqueness_theorem",
+        "target": "partial_sum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Zero Fourier coefficients force all partial sums to vanish."
+      },
+      {
+        "id": "e_fourier_series_uniqueness_theorem__requires__cesaro_summation",
+        "source": "fourier_series_uniqueness_theorem",
+        "target": "cesaro_summation",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Proof passes from zero partial sums to zero Fejér means."
       },
       {
         "id": "e_periodic_function__requires__torus_circle",
