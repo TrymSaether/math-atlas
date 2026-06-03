@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
-import { MagnifyingGlassIcon, CaretDownIcon, BookOpenTextIcon, LightningIcon, CompassToolIcon, CompassIcon, SlidersHorizontalIcon, SunIcon, MoonIcon, CheckIcon, BookmarkSimple, Globe, Stack } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon, CompassToolIcon, CompassIcon, SlidersHorizontalIcon, SunIcon, MoonIcon, CheckIcon, BookmarkSimple, Globe, Stack } from "@phosphor-icons/react";
 import { useReactFlow } from "reactflow";
 import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
@@ -238,7 +238,7 @@ function FlashcardsButton() {
       label="Flashcards"
       title={active ? "Back to atlas" : "Flashcards"}
     >
-      <LightningIcon className="h-4 w-4" weight="regular" />
+      <CardsIcon className="h-4 w-4" />
     </DockButton>
   );
 }

@@ -8,7 +8,6 @@ import {
   FlaskIcon,
   SealCheckIcon,
   type Icon,
-  PencilLine,
 } from "@phosphor-icons/react";
 
 /**
@@ -135,7 +134,7 @@ export const CATEGORY_META: Record<NodeCategory, CategoryMeta> = {
   exercise: {
     id: "exercise",
     label: "Exercise",
-    icon: PencilLine,
+    icon: PencilLineIcon,
     rail: "dotted",
     glyphFilled: false,
   },
