@@ -90,7 +90,7 @@
         "definition": "$$\\begin{aligned} f:\\mathbb R\\to\\mathbb C,\\quad T>0,\\quad f(x+T)&=f(x)\\quad(\\forall x\\in\\mathbb R),\\\\ \\mathbb T&=\\mathbb R/2\\pi\\mathbb Z. \\end{aligned}$$",
         "intuition": "A periodic function lives on a loop: moving by one full period brings you back to the same value.",
         "proof": null,
-        "notation": "$f:\\mathbb T\\to\\mathbb C$",
+        "notation": "$$f:\\mathbb T\\to\\mathbb C$$",
         "proof_dependencies": [],
         "dependencies": {},
         "outgoing_relations": [],
@@ -116,7 +116,7 @@
         "definition": "$$e_n(x)=e^{inx}=\\cos(nx)+i\\sin(nx),\\qquad n\\in\\mathbb Z.$$",
         "intuition": "Each $e_n$ is one pure frequency. Fourier analysis decomposes a signal by measuring how much it aligns with each of these rotating waves.",
         "proof": null,
-        "notation": "$e_n(x)=e^{inx}$",
+        "notation": "$$e_n(x)=e^{inx}$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["periodic_function"]
@@ -143,7 +143,7 @@
         "definition": "$$\\begin{aligned} \\langle ax+by,z\\rangle&=a\\langle x,z\\rangle+b\\langle y,z\\rangle,\\\\ \\langle x,ay+bz\\rangle&=\\overline a\\langle x,y\\rangle+\\overline b\\langle x,z\\rangle,\\\\ \\langle x,y\\rangle&=\\overline{\\langle y,x\\rangle},\\\\ \\langle x,x\\rangle&\\ge0,\\\\ \\langle x,x\\rangle=0&\\Longleftrightarrow x=0. \\end{aligned}$$",
         "intuition": "This is the geometry behind Fourier coefficients: coefficients are projections, and different frequencies are perpendicular directions.",
         "proof": null,
-        "notation": "$\\langle f,g\\rangle$",
+        "notation": "$$\\langle f,g\\rangle$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["lebesgue_integral"]
@@ -171,7 +171,7 @@
         "definition": "$$\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk},\\qquad j,k\\in I.$$",
         "intuition": "An orthonormal system gives independent directions. Fourier coefficients are coordinates along those directions.",
         "proof": null,
-        "notation": "$\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk}$",
+        "notation": "$$\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk}$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["inner_product_space", "complex_exponential"]
@@ -198,7 +198,7 @@
         "definition": "$$\\begin{aligned} L^p(\\mathbb T)&=\\left\\{f:\\mathbb T\\to\\mathbb C\\ \\text{measurable}:\\ \\|f\\|_p<\\infty\\right\\}/\\sim,\\qquad 1\\le p\\le\\infty,\\\\ f\\sim g&\\Longleftrightarrow f=g\\ \\text{a.e.},\\\\ \\|f\\|_p&=\\left(\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|^p\\,dx\\right)^{1/p},\\qquad 1\\le p<\\infty,\\\\ \\|f\\|_\\infty&=\\operatorname*{ess\\,sup}_{x\\in\\mathbb T}|f(x)|. \\end{aligned}$$",
         "intuition": "$L^p$ measures average size. Small $p$ tolerates spikes more easily; large $p$ controls peaks more strongly.",
         "proof": null,
-        "notation": "$L^p(\\mathbb T),\\ \\|f\\|_p$",
+        "notation": "$$L^p(\\mathbb T),\\ \\|f\\|_p<\\infty$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -230,7 +230,7 @@
         "definition": "$$\\begin{aligned} L^1(\\mathbb T)&=\\left\\{f:\\mathbb T\\to\\mathbb C\\ \\text{measurable}:\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|\\,dx<\\infty\\right\\}/\\sim,\\\\ f\\sim g&\\Longleftrightarrow f=g\\ \\text{a.e.} \\end{aligned}$$",
         "intuition": "Integrability is enough to define $\\hat f(n)$. Convergence of the Fourier series requires extra structure.",
         "proof": null,
-        "notation": "$L^1(\\mathbb T),\\ \\|f\\|_1<\\infty$",
+        "notation": "$$L^1(\\mathbb T),\\ \\|f\\|_1<\\infty$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["lebesgue_integral", "almost_everywhere"]
@@ -258,7 +258,7 @@
         "definition": "$$\\begin{aligned} L^2(\\mathbb T)&=\\left\\{f:\\mathbb T\\to\\mathbb C\\ \\text{measurable}:\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|^2\\,dx<\\infty\\right\\}/\\sim,\\\\ f\\sim g&\\Longleftrightarrow f=g\\ \\text{a.e.},\\\\ \\langle f,g\\rangle&=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)\\overline{g(x)}\\,dx. \\end{aligned}$$",
         "intuition": "In $L^2$, Fourier coefficients are coordinates, partial sums are orthogonal projections, and convergence means convergence in energy.",
         "proof": null,
-        "notation": "$L^2(\\mathbb T),\\ \\langle f,g\\rangle,\\ \\|f\\|_2$",
+        "notation": "$$L^2(\\mathbb T),\\ \\langle f,g\\rangle,\\ \\|f\\|_2$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["inner_product_space", "almost_everywhere"]
@@ -286,7 +286,7 @@
         "definition": "$$\\begin{aligned} \\|x\\|&=\\sqrt{\\langle x,x\\rangle},\\\\ \\left(\\forall\\varepsilon>0\\ \\exists N\\ \\forall m,n\\ge N:\\ \\|x_m-x_n\\|<\\varepsilon\\right)&\\Longrightarrow \\exists x\\in H:\\ \\|x_n-x\\|\\to0. \\end{aligned}$$",
         "intuition": "Completeness means Cauchy sequences of approximations have a limit inside the space, so infinite orthogonal expansions have somewhere to land.",
         "proof": null,
-        "notation": "$H$",
+        "notation": "$$H$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["inner_product_space"]
@@ -312,7 +312,7 @@
         "definition": "$$\\mathcal S(\\mathbb R)=\\left\\{f\\in C^\\infty(\\mathbb R):\\sup_{x\\in\\mathbb R}|x^\\alpha f^{(\\beta)}(x)|<\\infty\\quad(\\forall \\alpha,\\beta\\in\\mathbb N_0)\\right\\}.$$",
         "intuition": "Schwartz functions are the safest playground for the Fourier transform: decay, smoothness, differentiation, and inversion all work cleanly.",
         "proof": null,
-        "notation": "$\\mathcal S(\\mathbb R)$",
+        "notation": "$$\\mathcal S(\\mathbb R)$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": []
@@ -340,7 +340,7 @@
         "definition": "$$\\begin{aligned} (f*g)_{\\mathbb T}(x)&=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(y)g(x-y)\\,dy,\\\\ (f*g)_{\\mathbb R}(x)&=\\int_{\\mathbb R}f(y)g(x-y)\\,dy. \\end{aligned}$$",
         "intuition": "Convolution blends nearby values according to a kernel. Fourier analysis is powerful because it turns this averaging operation into multiplication.",
         "proof": null,
-        "notation": "$f*g$",
+        "notation": "$$f*g$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["l1_space", "fubini_tonelli"]
@@ -368,7 +368,7 @@
         "definition": "$$\\widehat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx,\\qquad n\\in\\mathbb Z.$$",
         "intuition": "The coefficient $\\hat f(n)$ measures alignment with the $n$-th rotating wave. Large alignment means that frequency is strongly present.",
         "proof": null,
-        "notation": "$\\hat f(n)$",
+        "notation": "$$\\hat f(n)$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -400,7 +400,7 @@
         "definition": "$$f(x)\\sim\\sum_{n\\in\\mathbb Z}\\widehat f(n)e^{inx}.$$",
         "intuition": "The series is a candidate reconstruction. Much of Fourier analysis asks in what sense these candidate sums converge back to $f$.",
         "proof": null,
-        "notation": "$\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$",
+        "notation": "$$\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_coefficient"]
@@ -428,7 +428,7 @@
         "definition": "$$\\mathcal T_N=\\left\\{p(x)=\\sum_{|n|\\le N}c_ne^{inx}:c_n\\in\\mathbb C\\right\\}.$$",
         "intuition": "These are finite Fourier series: simple, smooth, periodic building blocks used to approximate more complicated functions.",
         "proof": null,
-        "notation": "$\\sum_{|n|\\le N}c_ne^{inx}$",
+        "notation": "$$\\sum_{|n|\\le N}c_ne^{inx}$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["complex_exponential"]
@@ -454,7 +454,7 @@
         "definition": "$$S_Nf(x)=\\sum_{|n|\\le N}\\widehat f(n)e^{inx}.$$",
         "intuition": "A partial sum is the low-frequency shadow of $f$. Whether these shadows converge to the original function is subtle.",
         "proof": null,
-        "notation": "$S_Nf$",
+        "notation": "$$S_Nf$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["fourier_series", "trigonometric_polynomial"]
@@ -481,7 +481,7 @@
         "formula": "$$f\\in L^2(\\mathbb T)\\Longrightarrow \\sum_{n\\in\\mathbb Z}|\\widehat f(n)|^2\\le \\|f\\|_2^2.$$",
         "intuition": "Projecting onto orthonormal directions cannot create energy. Equality requires that the chosen directions are complete.",
         "proof": null,
-        "notation": "$\\sum_n|\\hat f(n)|^2\\le\\|f\\|_2^2$",
+        "notation": "$$\\sum_n|\\hat f(n)|^2\\le\\|f\\|_2^2$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [

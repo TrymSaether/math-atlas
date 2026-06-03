@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { X, CaretUp, CaretDown, BookOpen } from "@phosphor-icons/react";
+import { XIcon, CaretUpIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
@@ -151,6 +151,11 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
     setSurface("dictionary");
   };
 
+  const openInFlashcards = () => {
+    select(node.id);
+    setSurface("flashcards");
+  }
+
   return (
     <>
       {/* Sticky header */}
@@ -161,10 +166,10 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
         <div className="mb-2.5 flex items-center justify-between">
           <div className="flex items-center gap-0.5">
             <IconButton label="Previous in domain" disabled={!prev} onClick={() => prev && select(prev.id)}>
-              <CaretUp className="h-4 w-4" />
+              <CaretUpIcon className="h-4 w-4" />
             </IconButton>
             <IconButton label="Next in domain" disabled={!next} onClick={() => next && select(next.id)}>
-              <CaretDown className="h-4 w-4" />
+              <CaretDownIcon className="h-4 w-4" />
             </IconButton>
             {peerIdx >= 0 && (
               <span className="ml-1.5 font-mono text-ui-meta" style={{ color: "var(--fg-3)" }}>
@@ -174,10 +179,13 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
           </div>
           <div className="flex items-center gap-0.5">
             <IconButton label="Open in dictionary" onClick={openInDictionary}>
-              <BookOpen className="h-4 w-4" />
+              <BookOpenTextIcon className="h-4 w-4" />
+            </IconButton>
+            <IconButton label="Open in flashcards" onClick={openInFlashcards}>
+              <CardsIcon className="h-4 w-4" />
             </IconButton>
             <IconButton label="Close" onClick={onClose}>
-              <X className="h-4 w-4" />
+              <XIcon className="h-4 w-4" />
             </IconButton>
           </div>
         </div>
@@ -310,8 +318,8 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
 
             {formalStatement && formalStatement !== statement && (
               <section id="sec-formal">
-                <Facet label="Formal statement" toneColor={tone.color}>
-                  <MathBox text={formalStatement} />
+                <Facet label="Formal statement">
+                  <MathProse text={formalStatement} />
                 </Facet>
               </section>
             )}
@@ -334,7 +342,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
 
             {notation.length > 0 && (
               <section id="sec-notation">
-                <Facet label="Notation" toneColor={tone.color}>
+                <Facet label="Notation" muted>
                   <div className="flex flex-wrap gap-x-3 gap-y-1.5">
                     {notation.map((n, i) => (
                       <span key={i} className="font-math text-ui-body" style={{ color: "var(--fg-1)" }}>
