@@ -1,72 +1,41 @@
 /*
- * Dictionary reading view. Uses the atlas design tokens and fonts (src/index.css)
- * — no separate palette or typeface — so it reads as the same product as the
- * graph. Statement / In words / Example blocks reuse the shared Specimen
- * primitives (Spine, Facet), so a concept looks the same here as in the
- * NodePanel. This file styles only the dictionary chrome: a faceted header, a
- * sticky A–Z rail, grouped per-section masonry, and the card frame.
+ * Dictionary reading view — a master/detail layout. A dense, scannable index
+ * column on the left lists every curated entry (grouped by chapter / letter /
+ * kind); the right pane renders the selected entry as a full "specimen document"
+ * reusing the shared Specimen primitives (Spine, Facet, Proof) so a concept
+ * looks identical here and in the NodePanel. Uses the atlas design tokens and
+ * fonts — no separate palette — so it reads as the same product as the graph.
  * All rules are scoped under .dictionary-view.
  */
 
 .dictionary-view {
   position: absolute;
   inset: 0;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
-/* ---- Sticky A–Z rail (wide screens) -------------------------------- */
-.dictionary-view .dict-azrail {
-  position: fixed;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-}
-
-.dictionary-view .dict-azrail a,
-.dictionary-view .dict-azrail span {
-  font-family: var(--font-mono);
-  font-size: var(--type-ui-2xs);
-  line-height: 1;
-  padding: 2px 5px;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-.dictionary-view .dict-azrail a {
-  color: var(--fg-3);
-}
-
-.dictionary-view .dict-azrail a:hover {
-  background: var(--surface-2);
-  color: var(--accent);
-}
-
-.dictionary-view .dict-azrail span {
-  color: var(--fg-4);
-  opacity: 0.5;
-}
-
-@media (min-width: 1240px) {
-  .dictionary-view .dict-azrail {
-    display: flex;
-  }
-}
-
-/* ---- Layout -------------------------------------------------------- */
+/* ---- Master/detail frame ------------------------------------------- */
 /* Clears the floating TopBar (top: 12px, ~40px tall). */
-.dictionary-view .dict-wrap {
-  max-width: 940px;
-  margin-inline: auto;
-  padding: 72px 28px 0;
+.dictionary-view .dict-md {
+  position: absolute;
+  inset: 60px 0 0;
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  height: calc(100% - 60px);
 }
 
-.dictionary-view .dict-header {
-  padding-block: 8px 16px;
+/* ---- Index column -------------------------------------------------- */
+.dictionary-view .dict-index {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.dictionary-view .dict-index-head {
+  flex-shrink: 0;
+  padding: 16px 18px 12px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -83,12 +52,12 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 }
 
 .dictionary-view .dict-title {
-  margin: 6px 0 0;
-  font-size: var(--type-atlas-display);
+  margin: 4px 0 0;
+  font-size: var(--type-atlas-panel);
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.015em;
@@ -103,35 +72,67 @@
   white-space: nowrap;
 }
 
-.dictionary-view .dict-sub {
-  margin: 8px 0 0;
-  max-width: 64ch;
-  color: var(--fg-2);
-  font-size: var(--type-ui-copy);
-  line-height: 1.5;
+/* ---- Search box ---------------------------------------------------- */
+.dictionary-view .dict-search {
+  position: relative;
+  margin-top: 12px;
 }
 
-/* ---- Domain facet rail --------------------------------------------- */
+.dictionary-view .dict-search-icon {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  transform: translateY(-50%);
+  color: var(--fg-4);
+  pointer-events: none;
+}
+
+.dictionary-view .dict-search input {
+  width: 100%;
+  padding: 7px 10px 7px 28px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-2);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--type-ui-sm);
+  outline: none;
+  transition: border-color 0.12s ease, background-color 0.12s ease;
+}
+
+.dictionary-view .dict-search input::placeholder {
+  color: var(--fg-4);
+}
+
+.dictionary-view .dict-search input:focus {
+  border-color: var(--accent-border);
+  background: var(--surface);
+}
+
+/* ---- Domain facets ------------------------------------------------- */
 .dictionary-view .dict-facets {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
-  margin-top: 16px;
+  gap: 5px;
+  margin-top: 10px;
 }
 
 .dictionary-view .dict-facet {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  max-width: 100%;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface);
   color: var(--fg-3);
   cursor: pointer;
-  font-size: var(--type-ui-xs);
+  font-size: var(--type-ui-2xs);
   font-weight: 500;
-  padding: 4px 10px 4px 9px;
+  padding: 3px 8px 3px 7px;
   transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 
@@ -139,15 +140,23 @@
   border-color: var(--border-strong);
 }
 
+.dictionary-view .dict-facet-lab {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 12ch;
+}
+
 .dictionary-view .dict-facet-dot {
-  width: 7px;
-  height: 7px;
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
   border-radius: 999px;
 }
 
 .dictionary-view .dict-facet-n {
   font-family: var(--font-mono);
-  font-size: var(--type-ui-2xs);
+  font-size: var(--type-ui-tiny);
   opacity: 0.7;
 }
 
@@ -156,8 +165,8 @@
   background: none;
   color: var(--accent);
   cursor: pointer;
-  font-size: var(--type-ui-xs);
-  padding: 4px 6px;
+  font-size: var(--type-ui-2xs);
+  padding: 3px 5px;
 }
 
 .dictionary-view .dict-facet-reset:hover {
@@ -168,8 +177,8 @@
 .dictionary-view .dict-controls {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 14px;
+  gap: 5px;
+  margin-top: 10px;
 }
 
 .dictionary-view .dict-controls-lab {
@@ -188,9 +197,9 @@
   background: var(--surface);
   color: var(--fg-2);
   font-family: var(--font-mono);
-  font-size: var(--type-ui-hint);
+  font-size: var(--type-ui-tiny);
   letter-spacing: var(--tracking-code);
-  padding: 4px 10px;
+  padding: 3px 9px;
   transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 
@@ -205,183 +214,221 @@
   color: var(--surface);
 }
 
-/* ---- Groups + masonry ---------------------------------------------- */
-.dictionary-view .dict-list {
-  padding-block: 8px 96px;
+/* ---- Index rows ---------------------------------------------------- */
+.dictionary-view .dict-rows {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 6px 8px 40px;
 }
 
-.dictionary-view .dict-group {
-  margin-top: 28px;
+.dictionary-view .dict-rowgroup {
+  margin-top: 10px;
 }
 
-.dictionary-view .dict-letter-head {
+.dictionary-view .dict-rowgroup:first-child {
+  margin-top: 2px;
+}
+
+.dictionary-view .dict-grouphead {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  margin: 0 0 12px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--border);
-  color: var(--fg-2);
+  gap: 6px;
+  margin: 0;
+  padding: 6px 10px 4px;
+  color: var(--fg-3);
   font-family: var(--font-mono);
-  font-size: var(--type-ui-xs);
+  font-size: var(--type-ui-2xs);
   font-weight: 600;
   letter-spacing: var(--tracking-label-tight);
   text-transform: uppercase;
-  scroll-margin-top: 78px;
+  position: sticky;
+  top: 0;
+  background: linear-gradient(var(--surface) 70%, transparent);
+  z-index: 1;
 }
 
-.dictionary-view .dict-letter-n {
+.dictionary-view .dict-group-n {
   color: var(--fg-4);
-  font-size: var(--type-ui-2xs);
+  font-size: var(--type-ui-tiny);
   font-weight: 500;
 }
 
-/* Single elegant reading column — entries stack vertically. */
-.dictionary-view .dict-cards {
-  display: flex;
-  flex-direction: column;
-}
-
-/* ---- Card ---------------------------------------------------------- */
-.dictionary-view .dict-card {
+.dictionary-view .dict-row {
   position: relative;
-  margin: 0 0 18px;
-  padding: 22px 26px 20px 28px;
-  overflow: hidden;
-  scroll-margin-top: 86px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface);
-}
-
-/* Cards that carry a diagram place it to the right of the entry; text-only
-   cards stay single column, so there are no empty gutters. */
-.dictionary-view .dict-card--media {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
-  align-items: start;
-  gap: 22px;
-}
-
-/* The domain-colored card rail carries the specimen's identity (color = domain),
-   matching the NodePanel's spine. */
-.dictionary-view .dict-card-rail {
-  position: absolute;
-  inset-block: 0;
-  left: 0;
-  width: 3.5px;
-}
-
-.dictionary-view .dict-card.dict-flash {
-  animation: dict-flash 1.4s ease;
-}
-
-@keyframes dict-flash {
-  0% {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dictionary-view .dict-card.dict-flash {
-    animation: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
-  }
-}
-
-.dictionary-view .dict-cardhead {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 7px 10px 7px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  scroll-margin: 48px 0;
+  transition: background-color 0.1s ease;
 }
 
-.dictionary-view .dict-term {
-  margin: 0;
-  font-size: var(--type-dict-term);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.015em;
+.dictionary-view .dict-row:hover {
+  background: var(--surface-2);
+}
+
+.dictionary-view .dict-row-rail {
+  position: absolute;
+  inset-block: 6px;
+  left: 0;
+  width: 2.5px;
+  border-radius: 999px;
+}
+
+.dictionary-view .dict-row-glyph {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+}
+
+.dictionary-view .dict-row-term {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--type-ui-body);
+  line-height: 1.25;
   color: var(--fg-1);
 }
 
-.dictionary-view .dict-ref {
+.dictionary-view .dict-row-meta {
   flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-ui-tiny);
+  letter-spacing: var(--tracking-code);
+  color: var(--fg-4);
+}
+
+.dictionary-view .dict-row--active .dict-row-term {
+  font-weight: 600;
+}
+
+.dictionary-view .dict-row--active .dict-row-glyph {
+  opacity: 1;
+}
+
+/* ---- Detail pane --------------------------------------------------- */
+.dictionary-view .dict-detail {
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--bg);
+}
+
+.dictionary-view .dict-doc-inner {
+  max-width: 760px;
+  margin-inline: auto;
+  padding: 40px 40px 96px;
+}
+
+.dictionary-view .dict-back {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 16px;
+  border: none;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--type-ui-xs);
+  padding: 0;
+}
+
+.dictionary-view .dict-doc-head {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 24px;
+}
+
+.dictionary-view .dict-doc-rail {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3.5px;
+  border-radius: 999px;
+}
+
+.dictionary-view .dict-doc-term {
+  margin: 0;
+  font-size: var(--type-atlas-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--fg-1);
+}
+
+.dictionary-view .dict-doc-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 8px;
   font-family: var(--font-mono);
   font-size: var(--type-ui-caption);
   letter-spacing: var(--tracking-code);
-  white-space: nowrap;
-}
-
-/* The diagram column (right of the entry). Stays a supporting figure. */
-.dictionary-view .dict-dia {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.dictionary-view .dict-dia .themed-diagram,
-.dictionary-view .dict-dia img {
-  display: block;
-  width: 100%;
-  max-width: 360px;
-  height: auto;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface-2);
-  padding: 8px;
-}
-
-.dictionary-view .dict-dia .themed-diagram svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-@media (max-width: 640px) {
-  .dictionary-view .dict-card--media {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-  .dictionary-view .dict-dia {
-    order: -1;
-    max-width: min(100%, 320px);
-    justify-self: start;
-  }
-}
-
-/* Spine + Facet (from Specimen.tsx) supply statement / in-words / example.
-   Spacing is scoped to the content column so grid items keep their gap. */
-.dictionary-view .dict-cardmain>*+* {
-  margin-top: 12px;
-}
-
-.dictionary-view .dict-cardfoot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px dashed var(--border);
-}
-
-.dictionary-view .dict-related {
-  flex: 1 1 60%;
-  min-width: 0;
-  font-size: var(--type-ui-control);
-  line-height: 1.5;
   color: var(--fg-3);
 }
 
+.dictionary-view .dict-doc-domain {
+  font-weight: 600;
+}
+
+.dictionary-view .dict-doc-sep {
+  color: var(--fg-4);
+}
+
+.dictionary-view .dict-doc-dia {
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.dictionary-view .dict-doc-dia .themed-diagram,
+.dictionary-view .dict-doc-dia img {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 14px;
+}
+
+.dictionary-view .dict-doc-dia .themed-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.dictionary-view .dict-doc-body > * + * {
+  margin-top: 18px;
+}
+
+/* ---- Detail footer ------------------------------------------------- */
+.dictionary-view .dict-doc-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--border);
+}
+
 .dictionary-view .dict-related-lab {
-  margin-right: 6px;
+  display: block;
+  margin-bottom: 8px;
   font-family: var(--font-mono);
   font-size: var(--type-ui-2xs);
   letter-spacing: var(--tracking-label-tight);
@@ -389,76 +436,99 @@
   color: var(--fg-3);
 }
 
-.dictionary-view .dict-related-sep {
-  margin: 0 5px;
-  color: var(--fg-4);
+.dictionary-view .dict-related-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.dictionary-view .dict-related a {
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
+.dictionary-view .dict-related-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg-1);
+  cursor: pointer;
+  font-size: var(--type-ui-control);
+  padding: 4px 11px 4px 9px;
+  transition: background-color 0.12s ease;
 }
 
-.dictionary-view .dict-related a:hover {
-  border-color: currentColor;
+.dictionary-view .dict-related-chip:hover {
+  background: var(--surface-2);
+}
+
+.dictionary-view .dict-related-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
 }
 
 .dictionary-view .dict-open {
+  align-self: flex-start;
   display: inline-flex;
-  flex-shrink: 0;
   align-items: center;
-  gap: 3px;
-  margin-left: auto;
-  border: 1px solid transparent;
+  gap: 4px;
+  border: 1px solid var(--accent-border);
   border-radius: 999px;
-  background: transparent;
+  background: var(--accent-soft);
   color: var(--accent);
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: var(--type-ui-caption);
-  padding: 3px 8px;
+  padding: 5px 12px;
+  transition: background-color 0.12s ease;
 }
 
 .dictionary-view .dict-open:hover {
-  border-color: var(--accent-border);
-  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
 }
 
-/* ---- Compact card (gloss-only entries) ----------------------------- */
-.dictionary-view .dict-card--compact {
-  padding: 13px 16px 13px 18px;
-}
-
-.dictionary-view .dict-card--compact .dict-cardhead {
-  margin-bottom: 6px;
-}
-
-.dictionary-view .dict-card--compact .dict-term {
-  font-size: var(--type-dict-compact-title);
-}
-
-.dictionary-view .dict-compact-gloss {
-  font-size: var(--type-ui-sm);
-  line-height: 1.5;
-  color: var(--fg-2);
-}
-
-.dictionary-view .dict-card--compact .dict-open {
-  margin-top: 8px;
-  padding-left: 0;
-}
-
-.dictionary-view .dict-card--compact>*+* {
-  margin-top: 6px;
-}
-
-.dictionary-view .dict-card--compact>.dict-card-rail+* {
-  margin-top: 0;
-}
-
+.dictionary-view .dict-detail-empty,
 .dictionary-view .dict-empty {
-  padding-block: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 64px 24px;
   color: var(--fg-3);
   font-style: italic;
   text-align: center;
+}
+
+.dictionary-view .dict-empty {
+  height: auto;
+}
+
+/* ---- Responsive: collapse to a single column ----------------------- */
+@media (max-width: 860px) {
+  .dictionary-view .dict-md {
+    grid-template-columns: 1fr;
+  }
+
+  .dictionary-view .dict-detail {
+    display: none;
+  }
+
+  .dictionary-view .dict-md--detail .dict-index {
+    display: none;
+  }
+
+  .dictionary-view .dict-md--detail .dict-detail {
+    display: block;
+  }
+
+  .dictionary-view .dict-back {
+    display: inline-flex;
+  }
+
+  .dictionary-view .dict-doc-inner {
+    padding: 24px 22px 80px;
+  }
+
+  .dictionary-view .dict-doc-term {
+    font-size: var(--type-atlas-summary);
+  }
 }

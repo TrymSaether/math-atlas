@@ -6,7 +6,26 @@ import {
   type GraphDomain,
   type GraphEdge,
   type GraphNode,
+  type ProofStep,
 } from "../types";
+
+/** Map a source step array (proof_steps / solution_steps) to internal steps. */
+function toSteps(steps: FieldItem["proof_steps"]): ProofStep[] {
+  return (steps ?? []).map((step) => ({
+    id: step.id ?? "",
+    label: step.label ?? "",
+    role: step.role ?? "",
+    content: step.content ?? "",
+    dependsOn: step.depends_on ?? [],
+  }));
+}
+
+/** Notation may be a single string or a list; normalize to a string array. */
+function notationList(item: FieldItem): string[] {
+  const notation = item.notation;
+  if (!notation) return [];
+  return (Array.isArray(notation) ? notation : [notation]).map((n) => n.trim()).filter(Boolean);
+}
 
 function confidenceToNumber(value: "high" | "medium" | "low"): number {
   if (value === "high") return 1;
@@ -123,6 +142,11 @@ export function normalizeFieldGraph(input: FieldJson): GraphData {
       explanation: item.intuition ?? "",
       solution: item.solution ?? "",
       proof: item.proof ?? "",
+      proofSteps: toSteps(item.proof_steps),
+      solutionSteps: toSteps(item.solution_steps),
+      assumptions: (item.assumptions ?? []).map((a) => a.trim()).filter(Boolean),
+      notation: notationList(item),
+      bookRefs: item.book_refs ?? [],
       statementDependencies: deps,
       proofDependencies: (item.proof_dependencies ?? []).filter((id) => nodeIds.has(id)),
       tags: item.metadata?.tags ?? [],

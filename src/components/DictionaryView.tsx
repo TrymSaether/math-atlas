@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight, ArrowLeft, MagnifyingGlass } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import { MAPS, type LoadedMap, type MapId } from "../data";
 import type { GraphNode } from "../types";
-import { MathText, MathProse } from "../lib/katex";
+import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { KIND_LABEL } from "../types";
 import { getDomainTone } from "../lib/colors";
 import { nodeDefinition, nodeFormula } from "../lib/nodeContent";
+import { CATEGORY_META, categoryOf, kindAbbrev } from "../lib/nodeCategory";
 import {
   KIND_ORDER,
   dictionaryEntries,
@@ -17,7 +18,7 @@ import {
   type DictSortMode,
   type SectionFacet,
 } from "../lib/dictionary";
-import { Spine, Facet, Proof, specimenMeta } from "./Specimen";
+import { Spine, Facet, Proof, Steps, specimenMeta } from "./Specimen";
 import { ThemedDiagram } from "./ThemedDiagram";
 import "./DictionaryView.css";
 
@@ -30,20 +31,21 @@ export function DictionaryView() {
 
 function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const select = useStore((s) => s.select);
-  // Shared filter state, driven by the TopBar's search palette and the header facets.
   const kinds = useStore((s) => s.kinds);
   const topics = useStore((s) => s.topics);
   const toggleTopic = useStore((s) => s.toggleTopic);
   const resetTopics = useStore((s) => s.resetTopics);
   const selectedId = useStore((s) => s.selectedId);
   const meta = MAPS[mapId];
-  const listRef = useRef<HTMLElement>(null);
+  const indexRef = useRef<HTMLDivElement>(null);
 
   const entries = useMemo(() => dictionaryEntries(map), [map]);
   const facet = useMemo(() => sectionFacet(map, entries), [map, entries]);
   const [sortBy, setSortBy] = useState<DictSortMode>("alpha");
+  const [query, setQuery] = useState("");
+  const [activeId, setActiveId] = useState<string | null>(selectedId);
+  const [mobileDetail, setMobileDetail] = useState(false);
 
-  // Domain facet counts power the header rail.
   const domainCounts = useMemo(() => {
     const counts = new Map<string, number>();
     for (const e of entries) counts.set(e.domainId, (counts.get(e.domainId) ?? 0) + 1);
@@ -53,126 +55,155 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   }, [entries, map]);
 
   const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
     const items = entries.filter((e) => {
       if (kinds.size > 0 && !kinds.has(e.kind)) return false;
       if (topics.size > 0 && !topics.has(e.domainId)) return false;
+      if (q && !e.title.toLowerCase().includes(q) && !(e.ref ?? "").toLowerCase().includes(q)) return false;
       return true;
     });
     return items.sort((a, b) => compareEntries(a, b, sortBy, facet));
-  }, [entries, facet, kinds, topics, sortBy]);
+  }, [entries, facet, kinds, topics, sortBy, query]);
 
   const groups = useMemo(() => groupEntries(filtered, sortBy, facet), [filtered, sortBy, facet]);
-  const lettersPresent = useMemo(
-    () => (sortBy === "alpha" ? new Set(filtered.map((e) => e.title[0]?.toUpperCase()).filter(Boolean)) : null),
-    [filtered, sortBy],
-  );
 
-  // The shared ⌘K palette selects a concept by id; reveal it here in the list.
+  // Keep a valid selection: honor an external (⌘K) selection, else fall back to
+  // the first entry that survives the current filters.
   useEffect(() => {
-    if (!selectedId) return;
-    const el = listRef.current?.querySelector<HTMLElement>(`#dict-entry-${CSS.escape(selectedId)}`);
-    if (!el) return;
-    el.scrollIntoView({
+    if (selectedId && entries.some((e) => e.id === selectedId)) {
+      setActiveId(selectedId);
+      setMobileDetail(true);
+    }
+  }, [selectedId, entries]);
+
+  useEffect(() => {
+    if (filtered.length === 0) return;
+    if (!activeId || !filtered.some((e) => e.id === activeId)) {
+      setActiveId(filtered[0].id);
+    }
+  }, [filtered, activeId]);
+
+  // Reveal the active row in the index list.
+  useEffect(() => {
+    if (!activeId) return;
+    const el = indexRef.current?.querySelector<HTMLElement>(`#dict-row-${CSS.escape(activeId)}`);
+    el?.scrollIntoView({
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-      block: "center",
+      block: "nearest",
     });
-    el.classList.remove("dict-flash");
-    void el.offsetWidth;
-    el.classList.add("dict-flash");
-  }, [selectedId, filtered]);
+  }, [activeId]);
+
+  const activeEntry = activeId ? map.nodeById.get(activeId) ?? null : null;
+
+  const openRow = (id: string) => {
+    setActiveId(id);
+    select(id);
+    setMobileDetail(true);
+  };
 
   return (
     <div className="dictionary-view" style={{ background: "var(--bg)", color: "var(--fg-1)" }}>
-      {lettersPresent && lettersPresent.size > 1 && (
-        <nav className="dict-azrail" aria-label="Jump to letter">
-          {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) =>
-            lettersPresent.has(letter) ? (
-              <a key={letter} href={`#dict-L-${letter}`}>
-                {letter}
-              </a>
-            ) : (
-              <span key={letter} aria-hidden>
-                {letter}
-              </span>
-            ),
-          )}
-        </nav>
-      )}
-
-      <div className="dict-wrap">
-        <header className="dict-header">
-          <p className="dict-kicker">{meta.label} · Dictionary</p>
-          <div className="dict-headrow">
-            <h1 className="dict-title font-serif">{meta.label}</h1>
-            <span className="dict-count">{filtered.length} of {entries.length} entries</span>
-          </div>
-          <p className="dict-sub">{meta.description}</p>
-
-          {domainCounts.length > 1 && (
-            <div className="dict-facets" role="group" aria-label="Filter by domain">
-              {domainCounts.map((d) => {
-                const tone = getDomainTone(d.id);
-                const active = topics.size === 0 || topics.has(d.id);
-                return (
-                  <button
-                    key={d.id}
-                    type="button"
-                    className="dict-facet"
-                    aria-pressed={topics.has(d.id)}
-                    onClick={() => toggleTopic(d.id)}
-                    style={
-                      active
-                        ? { background: tone.tint, borderColor: tone.border, color: tone.color }
-                        : undefined
-                    }
-                  >
-                    <span className="dict-facet-dot" style={{ background: active ? tone.color : "var(--fg-4)" }} />
-                    {d.label}
-                    <span className="dict-facet-n">{d.count}</span>
-                  </button>
-                );
-              })}
-              {topics.size > 0 && (
-                <button type="button" className="dict-facet-reset" onClick={resetTopics}>
-                  Clear
-                </button>
-              )}
+      <div className={`dict-md${mobileDetail ? " dict-md--detail" : ""}`}>
+        {/* ---- Index column ---- */}
+        <aside className="dict-index" aria-label="Dictionary index">
+          <header className="dict-index-head">
+            <p className="dict-kicker">{meta.label} · Dictionary</p>
+            <div className="dict-headrow">
+              <h1 className="dict-title font-serif">{meta.label}</h1>
+              <span className="dict-count">{filtered.length}/{entries.length}</span>
             </div>
-          )}
 
-          <div className="dict-controls">
-            <span className="dict-controls-lab">Sort</span>
-            <Chip label="A–Z" active={sortBy === "alpha"} onClick={() => setSortBy("alpha")} />
-            <Chip
-              label={facet.mode === "chapter" ? "Chapter" : "Domain"}
-              active={sortBy === "section"}
-              onClick={() => setSortBy("section")}
-            />
-            <Chip label="Kind" active={sortBy === "kind"} onClick={() => setSortBy("kind")} />
-          </div>
-        </header>
+            <div className="dict-search">
+              <MagnifyingGlass className="dict-search-icon" aria-hidden />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Filter entries…"
+                aria-label="Filter entries"
+              />
+            </div>
 
-        <main className="dict-list" ref={listRef}>
-          {entries.length === 0 ? (
-            <p className="dict-empty">
-              No dictionary entries for {meta.label} yet. Entries appear here once nodes carry a gloss or diagram.
-            </p>
-          ) : groups.length === 0 ? (
-            <p className="dict-empty">No entries match the current filters.</p>
-          ) : (
-            groups.map((group) => (
-              <section key={group.id} className="dict-group">
-                <h2 className="dict-letter-head" id={group.id}>
-                  {group.label}
-                  <span className="dict-letter-n">{group.items.length}</span>
-                </h2>
-                <div className="dict-cards">
+            {domainCounts.length > 1 && (
+              <div className="dict-facets" role="group" aria-label="Filter by domain">
+                {domainCounts.map((d) => {
+                  const tone = getDomainTone(d.id);
+                  const active = topics.has(d.id);
+                  return (
+                    <button
+                      key={d.id}
+                      type="button"
+                      className="dict-facet"
+                      aria-pressed={active}
+                      onClick={() => toggleTopic(d.id)}
+                      style={active ? { background: tone.tint, borderColor: tone.border, color: tone.color } : undefined}
+                      title={d.label}
+                    >
+                      <span className="dict-facet-dot" style={{ background: tone.color }} />
+                      <span className="dict-facet-lab">{d.label}</span>
+                      <span className="dict-facet-n">{d.count}</span>
+                    </button>
+                  );
+                })}
+                {topics.size > 0 && (
+                  <button type="button" className="dict-facet-reset" onClick={resetTopics}>
+                    Clear
+                  </button>
+                )}
+              </div>
+            )}
+
+            <div className="dict-controls">
+              <span className="dict-controls-lab">Sort</span>
+              <Chip label="A–Z" active={sortBy === "alpha"} onClick={() => setSortBy("alpha")} />
+              <Chip
+                label={facet.mode === "chapter" ? "Chapter" : "Domain"}
+                active={sortBy === "section"}
+                onClick={() => setSortBy("section")}
+              />
+              <Chip label="Kind" active={sortBy === "kind"} onClick={() => setSortBy("kind")} />
+            </div>
+          </header>
+
+          <div className="dict-rows" ref={indexRef}>
+            {entries.length === 0 ? (
+              <p className="dict-empty">No dictionary entries for {meta.label} yet.</p>
+            ) : groups.length === 0 ? (
+              <p className="dict-empty">No entries match the current filters.</p>
+            ) : (
+              groups.map((group) => (
+                <section key={group.id} className="dict-rowgroup">
+                  <h2 className="dict-grouphead">
+                    {group.label}
+                    <span className="dict-group-n">{group.items.length}</span>
+                  </h2>
                   {group.items.map((entry) => (
-                    <DictionaryCard key={entry.id} entry={entry} map={map} facet={facet} onOpen={select} />
+                    <IndexRow
+                      key={entry.id}
+                      entry={entry}
+                      active={entry.id === activeId}
+                      onClick={() => openRow(entry.id)}
+                    />
                   ))}
-                </div>
-              </section>
-            ))
+                </section>
+              ))
+            )}
+          </div>
+        </aside>
+
+        {/* ---- Detail pane ---- */}
+        <main className="dict-detail">
+          {activeEntry ? (
+            <DetailPane
+              entry={activeEntry}
+              map={map}
+              onBack={() => setMobileDetail(false)}
+              onPickRelated={openRow}
+            />
+          ) : (
+            <div className="dict-detail-empty">
+              <p>Select an entry to read its definition.</p>
+            </div>
           )}
         </main>
       </div>
@@ -180,132 +211,204 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   );
 }
 
-function DictionaryCard({
+function IndexRow({ entry, active, onClick }: { entry: GraphNode; active: boolean; onClick: () => void }) {
+  const tone = getDomainTone(entry.domainId);
+  const Icon = CATEGORY_META[categoryOf(entry.kind)].icon;
+  return (
+    <button
+      type="button"
+      id={`dict-row-${entry.id}`}
+      className={`dict-row${active ? " dict-row--active" : ""}`}
+      onClick={onClick}
+      aria-current={active}
+      style={active ? { background: tone.tint } : undefined}
+    >
+      <span className="dict-row-rail" style={{ background: active ? tone.color : "transparent" }} aria-hidden />
+      <span className="dict-row-glyph" style={{ color: tone.color }}>
+        <Icon className="h-3.5 w-3.5" aria-hidden />
+      </span>
+      <span className="dict-row-term font-serif">
+        <MathText text={entry.title} />
+      </span>
+      <span className="dict-row-meta">{kindAbbrev(entry.kind)}</span>
+    </button>
+  );
+}
+
+function DetailPane({
   entry,
   map,
-  facet,
-  onOpen,
+  onBack,
+  onPickRelated,
 }: {
   entry: GraphNode;
   map: LoadedMap;
-  facet: SectionFacet;
-  onOpen: (id: string) => void;
+  onBack: () => void;
+  onPickRelated: (id: string) => void;
 }) {
+  const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
   const tone = getDomainTone(entry.domainId);
+  const domain = map.domainById.get(entry.domainId);
   const statement = entryStatement(entry);
   const formalStatement = entryFormalStatement(entry);
   const definition = nodeDefinition(entry, [statement, formalStatement]);
   const formula = nodeFormula(entry, [statement, formalStatement, definition]);
+  const proof = entry.proof.trim();
+  const solution = entry.solution.trim();
   const related = entry.related
     .map((id) => map.nodeById.get(id))
     .filter((n): n is GraphNode => Boolean(n));
-  const sectionValue = facet.valueOf(entry);
-
-  // Content-driven density: an entry with only a short gloss becomes a compact
-  // card, giving the page rhythm instead of 100+ identical blocks.
-  const proof = entry.proof.trim();
-  const compact = !entry.diagramPath && !statement && !entry.example && !proof;
 
   const openInAtlas = () => {
-    onOpen(entry.id);
+    select(entry.id);
     setSurface("atlas");
   };
 
-  if (compact) {
-    return (
-      <article className={`dict-card dict-card--compact`} id={`dict-entry-${entry.id}`}>
-        <span className="dict-card-rail" style={{ background: tone.color }} aria-hidden />
-        <div className="dict-cardhead">
-          <h3 className="dict-term font-serif">
+  return (
+    <article className="dict-doc" key={entry.id}>
+      <div className="dict-doc-inner">
+        <button type="button" className="dict-back" onClick={onBack}>
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden /> All entries
+        </button>
+
+        <header className="dict-doc-head">
+          <span className="dict-doc-rail" style={{ background: tone.color }} aria-hidden />
+          <h2 className="dict-doc-term font-serif">
             <MathText text={entry.title} />
-          </h3>
-          <span className="dict-ref" style={{ color: tone.color }}>{specimenMeta(entry)}</span>
-        </div>
-        {entry.gloss && (
-          <div className="dict-compact-gloss">
-            <MathProse text={entry.gloss} asBlock />
+          </h2>
+          <div className="dict-doc-meta">
+            <span className="dict-doc-domain" style={{ color: tone.color }}>{domain?.label ?? entry.topicCluster}</span>
+            <span className="dict-doc-sep" aria-hidden>·</span>
+            <span>{specimenMeta(entry)}</span>
+          </div>
+        </header>
+
+        {entry.diagramPath && (
+          <div className="dict-doc-dia">
+            <ThemedDiagram src={entry.diagramPath} alt={`Diagram for ${entry.title}`} />
           </div>
         )}
-        <button type="button" className="dict-open" onClick={openInAtlas}>
-          Open <ArrowUpRight className="h-3 w-3" aria-hidden />
-        </button>
-      </article>
-    );
-  }
 
-  return (
-    <article
-      className={`dict-card${entry.diagramPath ? " dict-card--media" : ""}`}
-      id={`dict-entry-${entry.id}`}
-    >
-      <span className="dict-card-rail" style={{ background: tone.color }} aria-hidden />
-      <div className="dict-cardmain">
-        <div className="dict-cardhead">
-          <h3 className="dict-term font-serif">
-            <MathText text={entry.title} />
-          </h3>
-          <span className="dict-ref" style={{ color: tone.color }}>{specimenMeta(entry)}</span>
+        <div className="dict-doc-body">
+          {statement && (
+            <Spine tone={tone} kind={entry.kind} label="Statement" size="dict">
+              <MathProse text={statement} asBlock />
+            </Spine>
+          )}
+          {entry.assumptions.length > 0 && (
+            <Facet label="Assumptions">
+              <ul className="m-0 space-y-1.5 p-0">
+                {entry.assumptions.map((a, i) => (
+                  <li key={i} className="flex gap-2">
+                    <span aria-hidden className="mt-[7px] h-1 w-1 shrink-0 rounded-full" style={{ background: tone.color }} />
+                    <span><MathProse text={a} /></span>
+                  </li>
+                ))}
+              </ul>
+            </Facet>
+          )}
+          {formalStatement && formalStatement !== statement && (
+            <Facet label="Formal statement" muted>
+              <MathProse text={formalStatement} asBlock />
+            </Facet>
+          )}
+          {definition && (
+            <Facet label="Definition" muted>
+              <MathProse text={definition} asBlock />
+            </Facet>
+          )}
+          {formula && (
+            <Facet label="Formula" muted>
+              <MathProse text={formula} asBlock />
+            </Facet>
+          )}
+          {entry.notation.length > 0 && (
+            <Facet label="Notation" muted>
+              <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+                {entry.notation.map((n, i) => (
+                  <span key={i} className="font-math" style={{ color: "var(--fg-1)" }}>
+                    <MathText text={n} />
+                  </span>
+                ))}
+              </div>
+            </Facet>
+          )}
+          {entry.gloss && (
+            <Facet label="In words">
+              <MathProse text={entry.gloss} asBlock />
+            </Facet>
+          )}
+          {entry.example && (
+            <Facet label="Example" muted>
+              <MathProse text={entry.example} asBlock />
+            </Facet>
+          )}
+          {entry.solutionSteps.length > 0 ? (
+            <div>
+              <StepLabel label="Solution" toneColor={tone.color} />
+              <Steps steps={entry.solutionSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
+            </div>
+          ) : solution ? (
+            <Facet label="Solution">
+              <MathProse text={tidyMathText(solution)} asBlock />
+            </Facet>
+          ) : null}
+          {entry.proofSteps.length > 0 ? (
+            <div>
+              <StepLabel label="Proof" toneColor={tone.color} />
+              <Steps steps={entry.proofSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
+            </div>
+          ) : proof ? (
+            <Proof text={proof} toneColor={tone.color} defaultOpen />
+          ) : null}
         </div>
 
-        {statement && (
-          <Spine tone={tone} kind={entry.kind} label="Statement" size="dict">
-            <MathProse text={statement} asBlock />
-          </Spine>
-        )}
-        {formalStatement && formalStatement !== statement && (
-          <Facet label="Formal statement" muted>
-            <MathProse text={formalStatement} asBlock />
-          </Facet>
-        )}
-        {definition && (
-          <Facet label="Definition" muted>
-            <MathProse text={definition} asBlock />
-          </Facet>
-        )}
-        {formula && (
-          <Facet label="Formula" muted>
-            <MathProse text={formula} asBlock />
-          </Facet>
-        )}
-        {entry.gloss && (
-          <Facet label="In words">
-            <MathProse text={entry.gloss} asBlock />
-          </Facet>
-        )}
-        {entry.example && (
-          <Facet label="Example" muted>
-            <MathProse text={entry.example} asBlock />
-          </Facet>
-        )}
-        {proof && <Proof text={proof} toneColor={tone.color} />}
-
-        <div className="dict-cardfoot">
+        <footer className="dict-doc-foot">
           {related.length > 0 && (
             <div className="dict-related">
               <span className="dict-related-lab">See also</span>
-              {related.map((n, i) => (
-                <span key={n.id}>
-                  {i > 0 && <span className="dict-related-sep">·</span>}
-                  <a href={`#dict-entry-${n.id}`} style={{ color: tone.color }}>
-                    <MathProse text={n.title} />
-                  </a>
-                </span>
-              ))}
+              <div className="dict-related-chips">
+                {related.map((n) => {
+                  const rtone = getDomainTone(n.domainId);
+                  return (
+                    <button
+                      key={n.id}
+                      type="button"
+                      className="dict-related-chip"
+                      onClick={() => onPickRelated(n.id)}
+                      style={{ borderColor: rtone.border }}
+                    >
+                      <span className="dict-related-dot" style={{ background: rtone.color }} aria-hidden />
+                      <MathText text={n.title} />
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
           <button type="button" className="dict-open" onClick={openInAtlas}>
-            Open <ArrowUpRight className="h-3 w-3" aria-hidden />
+            Show in atlas <ArrowUpRight className="h-3 w-3" aria-hidden />
           </button>
-        </div>
+        </footer>
       </div>
-
-      {entry.diagramPath && (
-        <div className="dict-dia">
-          <ThemedDiagram src={entry.diagramPath} alt={`Diagram for ${entry.title}`} />
-        </div>
-      )}
     </article>
+  );
+}
+
+/** Mono micro-label heading a multi-step Proof / Solution block in the detail pane. */
+function StepLabel({ label, toneColor }: { label: string; toneColor: string }) {
+  return (
+    <div className="mb-3 flex items-center gap-2">
+      <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
+        {label}
+      </span>
+      <span
+        aria-hidden
+        className="h-px flex-1"
+        style={{ background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)`, opacity: 0.5 }}
+      />
+    </div>
   );
 }
 
@@ -318,7 +421,9 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
 }
 
 function compareEntries(a: GraphNode, b: GraphNode, sortBy: DictSortMode, facet: SectionFacet): number {
-  const alpha = a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+  const alpha = dictionarySortTitle(a.title).localeCompare(dictionarySortTitle(b.title), undefined, {
+    sensitivity: "base",
+  });
   if (sortBy === "section") {
     const order = facet.values;
     return order.indexOf(facet.valueOf(a)) - order.indexOf(facet.valueOf(b)) || alpha;
@@ -327,6 +432,20 @@ function compareEntries(a: GraphNode, b: GraphNode, sortBy: DictSortMode, facet:
     return (KIND_ORDER[a.kind] ?? 99) - (KIND_ORDER[b.kind] ?? 99) || alpha;
   }
   return alpha;
+}
+
+function dictionarySortTitle(title: string): string {
+  return title
+    .trim()
+    .replace(/^(\${1,2}|\\\(|\\\[)\s*/, "")
+    .replace(/^\\(?:mathrm|mathbf|mathbb|mathcal|operatorname|text)\{([^{}]+)\}/, "$1")
+    .replace(/^\\ell\b/, "L")
+    .replace(/^\\([A-Za-z]+)\b/, "$1");
+}
+
+function dictionaryLetter(title: string): string {
+  const match = dictionarySortTitle(title).match(/[A-Za-z0-9]/);
+  return match ? match[0].toUpperCase() : "#";
 }
 
 interface Group {
@@ -349,7 +468,7 @@ function groupEntries(items: GraphNode[], sortBy: DictSortMode, facet: SectionFa
       label = `${KIND_LABEL[entry.kind]}s`;
       id = `dict-kind-${entry.kind}`;
     } else {
-      const letter = entry.title[0]?.toUpperCase() || "#";
+      const letter = dictionaryLetter(entry.title);
       label = letter;
       id = `dict-L-${letter}`;
     }

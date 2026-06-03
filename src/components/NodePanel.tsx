@@ -4,17 +4,19 @@ import { X, CaretUp, CaretDown, BookOpen } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
-import { MathText, MathProse } from "../lib/katex";
+import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
 import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { ThemedDiagram } from "./ThemedDiagram";
 import { FIGURE_REGISTRY } from "./figures/registry";
-import { Spine, Facet, Proof, ConnectionChip, specimenMeta } from "./Specimen";
+import { Spine, Facet, ConnectionChip, Steps } from "./Specimen";
 
 const USED_BY_INITIAL = 8;
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
+
+type TabId = "overview" | "proof" | "solution" | "links" | "source";
 
 export function NodePanel() {
   const mapId = useStore((s) => s.mapId);
@@ -49,6 +51,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const domain = map.domainById.get(node.domainId);
   const tone = getDomainTone(node.domainId);
   const domainGlyphId = getDomainGlyphId(node.domainId);
+  const [tab, setTab] = useState<TabId>("overview");
   const [showAllUsed, setShowAllUsed] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -113,15 +116,35 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const gloss = node.gloss.trim();
   const example = node.example.trim();
   const diagramPath = node.diagramPath.trim();
+  const assumptions = node.assumptions;
+  const notation = node.notation;
   const InteractiveFigure = FIGURE_REGISTRY[node.id];
   const showGloss = gloss && gloss !== explanation;
-  const hasConnections =
-    prereqIds.length > 0 || usedBy.length > 0 || examples.length > 0 || exercises.length > 0;
+  const linkCount = prereqIds.length + usedBy.length + examples.length + exercises.length;
+  const hasProof = node.proofSteps.length > 0 || Boolean(proof);
+  const hasSolution = node.solutionSteps.length > 0 || Boolean(solution);
+
+  // Tabs are content-driven: a tab only appears when it has something to show.
+  const tabs = useMemo(() => {
+    const t: { id: TabId; label: string; badge?: number }[] = [{ id: "overview", label: "Overview" }];
+    if (hasProof) t.push({ id: "proof", label: "Proof" });
+    if (hasSolution) t.push({ id: "solution", label: "Solution" });
+    if (linkCount > 0) t.push({ id: "links", label: "Links", badge: linkCount });
+    t.push({ id: "source", label: "Source" });
+    return t;
+  }, [hasProof, hasSolution, linkCount]);
+
+  const activeTab = tabs.some((t) => t.id === tab) ? tab : "overview";
 
   useEffect(() => {
+    setTab("overview");
     setShowAllUsed(false);
     scrollRef.current?.scrollTo({ top: 0 });
   }, [node.id]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [activeTab]);
 
   const openInDictionary = () => {
     select(node.id);
@@ -132,8 +155,8 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
     <>
       {/* Sticky header */}
       <header
-        className="relative shrink-0 border-b px-5 pb-4 pt-3"
-        style={{ borderColor: "var(--border-subtle)", background: "var(--surface)" }}
+        className="relative shrink-0 px-5 pt-3"
+        style={{ background: "var(--surface)" }}
       >
         <div className="mb-2.5 flex items-center justify-between">
           <div className="flex items-center gap-0.5">
@@ -158,141 +181,228 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
             </IconButton>
           </div>
         </div>
-        <h2
-          className="font-serif text-node-panel-title"
-          style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.015em" }}
-        >
-          <MathText text={node.title} />
-        </h2>
-        <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-ui-meta">
-          <span className="inline-flex items-center gap-1.5 font-medium" style={{ color: tone.color }}>
-            {domainGlyphId ? (
-              <DomainGlyph id={domainGlyphId} size={14} />
-            ) : (
-              <span className="h-2 w-2 rounded-full" style={{ background: tone.color }} />
-            )}
-            {domain?.label ?? node.topicCluster}
-          </span>
-          <span aria-hidden style={{ color: "var(--fg-4)" }}>·</span>
-          <span style={{ color: "var(--fg-2)" }}>{KIND_LABEL[node.kind]}</span>
+
+        <div className="flex items-start gap-2.5">
+          <span
+            aria-hidden
+            className="mt-[7px] h-9 w-[3px] shrink-0 rounded-full"
+            style={{ background: tone.color }}
+          />
+          <div className="min-w-0">
+            <h2
+              className="font-serif text-node-panel-title"
+              style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.015em" }}
+            >
+              <MathText text={node.title} />
+            </h2>
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-ui-meta">
+              <span className="inline-flex items-center gap-1.5 font-medium" style={{ color: tone.color }}>
+                {domainGlyphId ? (
+                  <DomainGlyph id={domainGlyphId} size={14} />
+                ) : (
+                  <span className="h-2 w-2 rounded-full" style={{ background: tone.color }} />
+                )}
+                {domain?.label ?? node.topicCluster}
+              </span>
+              <span aria-hidden style={{ color: "var(--fg-4)" }}>·</span>
+              <span style={{ color: "var(--fg-2)" }}>{KIND_LABEL[node.kind]}</span>
+              {node.ref && (
+                <>
+                  <span aria-hidden style={{ color: "var(--fg-4)" }}>·</span>
+                  <span className="font-mono text-ui-hint" style={{ color: "var(--fg-3)" }}>{node.ref}</span>
+                </>
+              )}
+            </div>
+          </div>
         </div>
+
+        {/* Tab strip */}
+        <div role="tablist" className="mt-3.5 flex items-center gap-0.5">
+          {tabs.map((t) => {
+            const active = t.id === activeTab;
+            return (
+              <button
+                key={t.id}
+                role="tab"
+                aria-selected={active}
+                onClick={() => setTab(t.id)}
+                className="relative flex items-center gap-1.5 rounded-t-[7px] px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors focus:outline-none"
+                style={{ color: active ? "var(--fg-1)" : "var(--fg-3)" }}
+              >
+                {t.label}
+                {t.badge != null && (
+                  <span
+                    className="rounded-full px-1.5 py-px text-ui-2xs leading-none"
+                    style={{
+                      background: active ? tone.tint : "var(--surface-3)",
+                      color: active ? tone.color : "var(--fg-3)",
+                    }}
+                  >
+                    {t.badge}
+                  </span>
+                )}
+                {active && (
+                  <motion.span
+                    layoutId="panel-tab-underline"
+                    className="absolute inset-x-2 -bottom-px h-[2px] rounded-full"
+                    style={{ background: tone.color }}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
+        <div className="-mx-5 border-b" style={{ borderColor: "var(--border-subtle)" }} />
       </header>
 
       <div ref={scrollRef} className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
-        {InteractiveFigure ? (
-          <section id="sec-diagram">
-            <div
-              className="block w-full rounded-[12px] border p-3"
-              style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
-            >
-              <Suspense
-                fallback={
-                  <div className="py-8 text-center text-ui-meta" style={{ color: "var(--fg-3)" }}>
-                    Loading figure…
+        {activeTab === "overview" && (
+          <>
+            {InteractiveFigure ? (
+              <section id="sec-diagram">
+                <div
+                  className="block w-full rounded-[12px] border p-3"
+                  style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+                >
+                  <Suspense
+                    fallback={
+                      <div className="py-8 text-center text-ui-meta" style={{ color: "var(--fg-3)" }}>
+                        Loading figure…
+                      </div>
+                    }
+                  >
+                    <InteractiveFigure nodeId={node.id} />
+                  </Suspense>
+                </div>
+              </section>
+            ) : diagramPath ? (
+              <section id="sec-diagram">
+                <ThemedDiagram
+                  src={diagramPath}
+                  alt={`Diagram for ${node.title}`}
+                  className="block w-full rounded-[12px] border p-3"
+                />
+              </section>
+            ) : null}
+
+            {statement && (
+              <section id="sec-statement">
+                <Spine tone={tone} kind={node.kind} label="Statement">
+                  <MathProse text={statement} />
+                </Spine>
+              </section>
+            )}
+
+            {assumptions.length > 0 && (
+              <section id="sec-assumptions">
+                <Facet label="Assumptions">
+                  <ul className="m-0 space-y-1.5 p-0">
+                    {assumptions.map((a, i) => (
+                      <li key={i} className="flex gap-2">
+                        <span aria-hidden className="mt-[7px] h-1 w-1 shrink-0 rounded-full" style={{ background: tone.color }} />
+                        <span><MathProse text={a} /></span>
+                      </li>
+                    ))}
+                  </ul>
+                </Facet>
+              </section>
+            )}
+
+            {formalStatement && formalStatement !== statement && (
+              <section id="sec-formal">
+                <Facet label="Formal statement" toneColor={tone.color}>
+                  <MathBox text={formalStatement} />
+                </Facet>
+              </section>
+            )}
+
+            {definition && (
+              <section id="sec-definition">
+                <Facet label="Definition" toneColor={tone.color}>
+                  <MathBox text={definition} />
+                </Facet>
+              </section>
+            )}
+
+            {formula && (
+              <section id="sec-formula">
+                <Facet label="Formula" toneColor={tone.color}>
+                  <MathBox text={formula} />
+                </Facet>
+              </section>
+            )}
+
+            {notation.length > 0 && (
+              <section id="sec-notation">
+                <Facet label="Notation" toneColor={tone.color}>
+                  <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+                    {notation.map((n, i) => (
+                      <span key={i} className="font-math text-ui-body" style={{ color: "var(--fg-1)" }}>
+                        <MathText text={n} />
+                      </span>
+                    ))}
                   </div>
-                }
-              >
-                <InteractiveFigure nodeId={node.id} />
-              </Suspense>
-            </div>
-          </section>
-        ) : diagramPath ? (
-          <section id="sec-diagram">
-            <ThemedDiagram
-              src={diagramPath}
-              alt={`Diagram for ${node.title}`}
-              className="block w-full rounded-[12px] border p-3"
-            />
-          </section>
-        ) : null}
+                </Facet>
+              </section>
+            )}
 
-        {statement && (
-          <section id="sec-statement">
-            <Spine tone={tone} kind={node.kind} label="Statement">
-              <MathProse text={statement} />
-            </Spine>
-          </section>
+            {explanation && (
+              <section id="sec-intuition">
+                <Facet label="Intuition">
+                  <MathProse text={explanation} />
+                </Facet>
+              </section>
+            )}
+
+            {showGloss && (
+              <section id="sec-inwords">
+                <Facet label="In words">
+                  <MathProse text={gloss} />
+                </Facet>
+              </section>
+            )}
+
+            {example && (
+              <section id="sec-example">
+                <Facet label="Example" muted>
+                  <MathProse text={example} />
+                </Facet>
+              </section>
+            )}
+
+            {!statement && !explanation && !definition && !formalStatement && !showGloss && !example &&
+              assumptions.length === 0 && notation.length === 0 && (
+                <p className="text-ui-sm italic" style={{ color: "var(--fg-3)" }}>
+                  No written content recorded for this concept yet.
+                </p>
+              )}
+          </>
         )}
 
-        {formalStatement && formalStatement !== statement && (
-          <section id="sec-formal">
-            <Facet label="Formal statement" toneColor={tone.color}>
-              <div
-                className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-                style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
-              >
-                <MathText text={formalStatement} asBlock />
-              </div>
-            </Facet>
-          </section>
-        )}
-
-        {definition && (
-          <section id="sec-definition">
-            <Facet label="Definition" toneColor={tone.color}>
-              <div
-                className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-                style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
-              >
-                <MathText text={definition} asBlock />
-              </div>
-            </Facet>
-          </section>
-        )}
-
-        {formula && (
-          <section id="sec-formula">
-            <Facet label="Formula" toneColor={tone.color}>
-              <div
-                className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-                style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
-              >
-                <MathText text={formula} asBlock />
-              </div>
-            </Facet>
-          </section>
-        )}
-
-        {explanation && (
-          <section id="sec-intuition">
-            <Facet label="Intuition">
-              <MathProse text={explanation} />
-            </Facet>
-          </section>
-        )}
-
-        {solution && (
-          <section id="sec-solution">
-            <Facet label="Solution">
-              <MathProse text={solution} />
-            </Facet>
-          </section>
-        )}
-
-        {proof && (
+        {activeTab === "proof" && (
           <section id="sec-proof">
-            <Proof text={proof} toneColor={tone.color} />
+            <StepHeading label="Proof" toneColor={tone.color} />
+            {node.proofSteps.length > 0 ? (
+              <Steps steps={node.proofSteps} toneColor={tone.color} map={map} onSelect={select} />
+            ) : (
+              <ProseArgument text={proof} toneColor={tone.color} />
+            )}
           </section>
         )}
 
-        {showGloss && (
-          <section id="sec-inwords">
-            <Facet label="In words">
-              <MathProse text={gloss} />
-            </Facet>
+        {activeTab === "solution" && (
+          <section id="sec-solution">
+            <StepHeading label="Solution" toneColor={tone.color} />
+            {node.solutionSteps.length > 0 ? (
+              <Steps steps={node.solutionSteps} toneColor={tone.color} map={map} onSelect={select} />
+            ) : (
+              <ProseArgument text={solution} toneColor={tone.color} />
+            )}
           </section>
         )}
 
-        {example && (
-          <section id="sec-example">
-            <Facet label="Example" muted>
-              <MathProse text={example} />
-            </Facet>
-          </section>
-        )}
-
-        {hasConnections && (
-          <section id="sec-connections" className="space-y-3.5 border-t pt-4" style={{ borderColor: "var(--border-subtle)" }}>
+        {activeTab === "links" && (
+          <section id="sec-connections" className="space-y-4">
             {prereqIds.length > 0 && (
               <ChipGroup label="Depends on" count={prereqIds.length}>
                 {prereqIds.map((rid) => (
@@ -333,9 +443,9 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
           </section>
         )}
 
-        <section id="sec-metadata" className="border-t pt-4" style={{ borderColor: "var(--border-subtle)" }}>
-          <Facet label="Metadata">
-            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-ui-xs">
+        {activeTab === "source" && (
+          <section id="sec-metadata">
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-ui-xs">
               <dt style={{ color: "var(--fg-3)" }}>Tags</dt>
               <dd style={{ color: "var(--fg-2)" }}>
                 {node.tags.length > 0 ? node.tags.join(", ") : "No tags recorded."}
@@ -354,15 +464,74 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
                   <dd style={{ color: "var(--fg-2)" }}>{node.ref}</dd>
                 </>
               )}
+              {node.bookRefs.length > 0 && (
+                <>
+                  <dt style={{ color: "var(--fg-3)" }}>Textbook</dt>
+                  <dd className="flex flex-wrap gap-1" style={{ color: "var(--fg-2)" }}>
+                    {node.bookRefs.map((r) => (
+                      <span
+                        key={r}
+                        className="rounded font-mono text-ui-2xs"
+                        style={{ background: "var(--surface-3)", color: "var(--fg-3)", padding: "1px 5px" }}
+                      >
+                        {r}
+                      </span>
+                    ))}
+                  </dd>
+                </>
+              )}
               <dt style={{ color: "var(--fg-3)" }}>ID</dt>
               <dd className="truncate font-mono text-ui-hint" style={{ color: "var(--fg-2)" }} title={node.id}>
                 {node.id}
               </dd>
             </dl>
-          </Facet>
-        </section>
+          </section>
+        )}
       </div>
     </>
+  );
+}
+
+/** Mono micro-label with a dashed derivation rule, heading the Proof/Solution tabs. */
+function StepHeading({ label, toneColor }: { label: string; toneColor: string }) {
+  return (
+    <div className="mb-3 flex items-center gap-2">
+      <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
+        {label}
+      </span>
+      <span
+        aria-hidden
+        className="h-px flex-1"
+        style={{ background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)`, opacity: 0.5 }}
+      />
+    </div>
+  );
+}
+
+/** Fallback renderer for legacy single-string proofs/solutions (non-stepped data). */
+function ProseArgument({ text, toneColor }: { text: string; toneColor: string }) {
+  return (
+    <div
+      className="font-math pl-3.5 text-ui-copy leading-[1.7]"
+      style={{ color: "var(--fg-1)", borderLeft: `1.5px dotted color-mix(in srgb, ${toneColor} 55%, transparent)` }}
+    >
+      <MathProse text={tidyMathText(text)} asBlock />
+      <span aria-hidden className="mt-1.5 block text-right text-ui-sm" style={{ color: toneColor }}>
+        ∎
+      </span>
+    </div>
+  );
+}
+
+/** A boxed math block used for formal statement / definition / formula facets. */
+function MathBox({ text }: { text: string }) {
+  return (
+    <div
+      className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
+      style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
+    >
+      <MathText text={text} asBlock />
+    </div>
   );
 }
 

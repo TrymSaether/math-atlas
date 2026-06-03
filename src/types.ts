@@ -39,6 +39,23 @@ export const GraphDomainSchema = z.object({
 
 export type GraphDomain = z.infer<typeof GraphDomainSchema>;
 
+/**
+ * A single step of a multi-step proof or worked solution. The source carries
+ * these as `proof_steps` / `solution_steps` arrays (see fourier_analysis), each
+ * with a human `label`, a semantic `role` (setup / claim / calculation / case /
+ * argument / conclusion / remark), prose+TeX `content`, and the node ids the
+ * step leans on.
+ */
+export const ProofStepSchema = z.object({
+  id: OptionalTextSchema,
+  label: OptionalTextSchema,
+  role: OptionalTextSchema,
+  content: OptionalTextSchema,
+  dependsOn: StringArraySchema,
+});
+
+export type ProofStep = z.infer<typeof ProofStepSchema>;
+
 export const TopoNodeSchema = z.object({
   id: IdSchema,
   kind: z.string().trim().min(1),
@@ -57,6 +74,13 @@ export const TopoNodeSchema = z.object({
   explanation: OptionalTextSchema,
   solution: OptionalTextSchema,
   proof: OptionalTextSchema,
+  // Structured multi-step proof / worked solution (the canonical fourier shape).
+  proofSteps: z.array(ProofStepSchema).default([]),
+  solutionSteps: z.array(ProofStepSchema).default([]),
+  // Stated hypotheses, symbolic notation, and external textbook citations.
+  assumptions: StringArraySchema,
+  notation: StringArraySchema,
+  bookRefs: StringArraySchema,
   statementDependencies: StringArraySchema,
   proofDependencies: StringArraySchema,
   tags: StringArraySchema,
@@ -161,6 +185,17 @@ export const TopoDataSchema = z
 export type TopoData = z.infer<typeof TopoDataSchema>;
 export type GraphData = TopoData;
 
+/** Raw step shape in the source JSON (`proof_steps` / `solution_steps`). */
+export const FieldStepSchema = z
+  .object({
+    id: z.string().default(""),
+    label: z.string().default(""),
+    role: z.string().default(""),
+    content: z.string().default(""),
+    depends_on: z.array(z.string()).default([]),
+  })
+  .passthrough();
+
 export const FieldItemSchema = z
   .object({
     id: IdSchema,
@@ -174,6 +209,9 @@ export const FieldItemSchema = z
     intuition: z.string().nullable().optional(),
     solution: z.string().nullable().optional(),
     proof: z.string().nullable().optional(),
+    proof_steps: z.array(FieldStepSchema).default([]),
+    solution_steps: z.array(FieldStepSchema).default([]),
+    book_refs: z.array(z.string()).default([]),
     proof_dependencies: z.array(z.string()).default([]),
     notation: z
       .union([z.string(), z.array(z.string())])

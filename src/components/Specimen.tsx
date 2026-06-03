@@ -18,7 +18,7 @@ import type { LoadedMap } from "../data";
 import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { getDomainTone, type DomainTone } from "../lib/colors";
 import { CATEGORY_META, categoryOf, kindAbbrev, railBackground } from "../lib/nodeCategory";
-import { KIND_LABEL, type GraphNode } from "../types";
+import { KIND_LABEL, type GraphNode, type ProofStep } from "../types";
 
 export function kindShortLabel(kind: string): string {
   return kindAbbrev(kind) || KIND_LABEL[kind];
@@ -180,6 +180,97 @@ export function Proof({
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+/** Semantic role → short uppercase tag shown beside a step's heading. */
+const ROLE_LABEL: Record<string, string> = {
+  setup: "Setup",
+  claim: "Claim",
+  calculation: "Calculation",
+  case: "Case",
+  argument: "Argument",
+  conclusion: "Conclusion",
+  remark: "Remark",
+};
+
+/**
+ * A multi-step proof or worked solution. Each step is a numbered node on a
+ * domain-toned derivation rail, carrying its heading, a role tag, the prose+TeX
+ * body, and chips for the prior results it leans on. Shared by the panel's
+ * Proof / Solution tabs and the dictionary detail pane.
+ */
+export function Steps({
+  steps,
+  toneColor,
+  map,
+  onSelect,
+}: {
+  steps: ProofStep[];
+  toneColor: string;
+  map?: LoadedMap;
+  onSelect?: (id: string) => void;
+}) {
+  return (
+    <ol className="m-0 list-none space-y-0 p-0">
+      {steps.map((step, i) => {
+        const last = i === steps.length - 1;
+        const role = ROLE_LABEL[step.role] ?? (step.role ? step.role : "");
+        const deps = map ? step.dependsOn.filter((id) => map.nodeById.has(id)) : [];
+        return (
+          <li key={step.id || i} className="relative pb-5 pl-7 last:pb-0">
+            {/* derivation rail + node marker */}
+            {!last && (
+              <span
+                aria-hidden
+                className="absolute left-[10px] top-6 bottom-0 w-px"
+                style={{ background: `color-mix(in srgb, ${toneColor} 45%, transparent)` }}
+              />
+            )}
+            <span
+              aria-hidden
+              className="absolute left-0 top-1 flex h-[21px] w-[21px] items-center justify-center rounded-full font-mono text-ui-2xs"
+              style={{
+                background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
+                color: toneColor,
+                border: `1px solid color-mix(in srgb, ${toneColor} 40%, transparent)`,
+              }}
+            >
+              {i + 1}
+            </span>
+            <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              {step.label && (
+                <span className="font-serif text-ui-lead" style={{ color: "var(--fg-1)", fontWeight: 600 }}>
+                  {step.label}
+                </span>
+              )}
+              {role && (
+                <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
+                  {role}
+                </span>
+              )}
+            </div>
+            {step.content && (
+              <div className="font-math mt-1.5 text-ui-copy leading-[1.7]" style={{ color: "var(--fg-1)" }}>
+                <MathProse text={step.content} asBlock />
+              </div>
+            )}
+            {deps.length > 0 && onSelect && (
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {deps.map((id) => (
+                  <ConnectionChip key={id} id={id} map={map!} onClick={() => onSelect(id)} />
+                ))}
+              </div>
+            )}
+            {last && (
+              <span aria-hidden className="mt-2 block text-ui-sm" style={{ color: toneColor }}>
+                ∎
+              </span>
+            )}
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
