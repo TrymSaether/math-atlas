@@ -2,11 +2,11 @@ import {
   CircleIcon,
   DiamondIcon,
   CompassToolIcon,
-  StackIcon,
+  CubeIcon,
   PencilLineIcon,
   ScrollIcon,
   FlaskIcon,
-  SealCheckIcon,
+  TagIcon,
   type Icon,
 } from "@phosphor-icons/react";
 
@@ -87,14 +87,14 @@ export const CATEGORY_META: Record<NodeCategory, CategoryMeta> = {
     label: "Definition",
     icon: CircleIcon,
     rail: "solid",
-    glyphFilled: false,
+    glyphFilled: true,
   },
   structure: {
     id: "structure",
     label: "Structure",
-    icon: StackIcon,
+    icon: CubeIcon,
     rail: "solid",
-    glyphFilled: false,
+    glyphFilled: true,
   },
   theorem: {
     id: "theorem",
@@ -106,7 +106,7 @@ export const CATEGORY_META: Record<NodeCategory, CategoryMeta> = {
   property: {
     id: "property",
     label: "Property",
-    icon: SealCheckIcon,
+    icon: TagIcon,
     rail: "solid",
     glyphFilled: false,
   },

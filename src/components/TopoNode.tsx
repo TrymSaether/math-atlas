@@ -91,7 +91,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       tabIndex={0}
       aria-label={`${KIND_LABEL[node.kind]}: ${node.title}`}
       className={cn(
-        "group relative flex min-h-[66px] w-[210px] cursor-pointer flex-col overflow-hidden rounded-[12px] border pl-3 pr-3 py-2 outline-none transition-all duration-150",
+        "group relative flex min-h-[80px] w-[252px] cursor-pointer flex-col overflow-hidden rounded-[14px] border pl-3.5 pr-3.5 py-2.5 outline-none transition-all duration-150",
         "focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
         "hover:-translate-y-px",
         dim && "opacity-30",
@@ -146,16 +146,26 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
               aria-hidden
             />
           )}
-          {/* One quiet identity label — abbrev + reference number read as
-              "Thm 2.3", so the number is never a cryptic bare digit. */}
+          {/* Short kind pill (THM / DEF / …) + reference number. */}
           <span
-            className="min-w-0 truncate text-ui-caption font-medium tabular-nums"
-            style={{ color: "var(--fg-3)" }}
-            title={node.id}
+            className="inline-flex h-[18px] shrink-0 items-center rounded-md border px-1.5 text-ui-tiny font-bold uppercase tracking-label-tight"
+            style={{
+              background: "var(--surface-2)",
+              borderColor: "var(--border)",
+              color: "var(--fg-2)",
+            }}
           >
             {kindAbbrev(node.kind)}
-            {node.number ? ` ${node.number}` : ""}
           </span>
+          {node.number && (
+            <span
+              className="min-w-0 truncate font-mono text-ui-caption font-semibold tabular-nums"
+              style={{ color: "var(--fg-3)" }}
+              title={node.id}
+            >
+              {node.number}
+            </span>
+          )}
           {isLandmark && (
             <span
               className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full"

@@ -7,8 +7,8 @@ export interface Position {
   y: number;
 }
 
-const NODE_WIDTH = 220;
-const NODE_HEIGHT = 84;
+const NODE_WIDTH = 264;
+const NODE_HEIGHT = 100;
 const RANK_SEP = 92;
 const NODE_SEP = 36;
 const CLUSTER_PAD = 40;
@@ -21,6 +21,14 @@ const LANE_GAP = 96; // vertical gap between domain lanes
 const LANE_PAD_Y = 56; // inner vertical padding inside a lane band
 const LANE_PAD_X = 48; // inner horizontal padding at lane ends
 const MAX_ROWS_PER_CELL = 7; // a depth cell wraps into a grid block past this height
+
+/** A single domain lane laid out relative to its own top-left, before stacking. */
+interface LaneLayout {
+  domainId: string;
+  width: number;
+  height: number;
+  rel: Map<string, Position>;
+}
 
 // Deterministic seeded PRNG (mulberry32).
 function seeded(seed: number): () => number {
@@ -166,7 +174,9 @@ export function computeSwimlaneLayout(
     nodesByDomain.set(node.domainId, list);
   }
 
-  let laneTop = 0;
+  // Pass 1 — lay out each lane relative to its own top-left (0,0) and record its
+  // box. Absolute placement is deferred so lanes can be shelf-packed into columns.
+  const lanes: LaneLayout[] = [];
   for (const domainId of laneOrder) {
     const members = nodesByDomain.get(domainId);
     if (!members || members.length === 0) continue;
@@ -202,8 +212,9 @@ export function computeSwimlaneLayout(
     for (const depth of usedDepths) maxRows = Math.max(maxRows, cellRows(byDepth.get(depth)!.length));
 
     const laneHeight = LANE_PAD_Y * 2 + maxRows * NODE_HEIGHT + Math.max(0, maxRows - 1) * ROW_GAP;
-    const laneMidY = laneTop + laneHeight / 2;
+    const laneMidY = laneHeight / 2;
 
+    const rel = new Map<string, Position>();
     let cursorX = LANE_PAD_X;
     for (const depth of usedDepths) {
       const list = byDepth.get(depth)!;
@@ -215,7 +226,7 @@ export function computeSwimlaneLayout(
       list.forEach((node, i) => {
         const col = i % cols;
         const row = Math.floor(i / cols);
-        positions.set(node.id, {
+        rel.set(node.id, {
           x: cursorX + col * (NODE_WIDTH + COL_GAP_INNER),
           y: blockTop + row * (NODE_HEIGHT + ROW_GAP),
         });
@@ -225,21 +236,28 @@ export function computeSwimlaneLayout(
     }
 
     const laneWidth = cursorX - DEPTH_GAP + LANE_PAD_X;
-    domainBounds.set(domainId, {
-      x: 0,
-      y: laneTop,
-      width: laneWidth,
-      height: laneHeight,
-      shape: "rect",
-    });
-
-    laneTop += laneHeight + LANE_GAP;
+    lanes.push({ domainId, width: laneWidth, height: laneHeight, rel });
   }
 
-  // Each band is only as wide as its own content. Bands share a left edge (x:0)
-  // where the watermark label lives, so they still read as aligned geography —
-  // but sparse lanes no longer stretch to the widest lane, which otherwise left
-  // most bands 40%+ empty and forced an unreadable fit-all zoom.
+  // Pass 2 — stack every lane in a single vertical column, in domain order
+  // (top → bottom). All bands are normalized to the widest lane and share the
+  // left edge, so they read as aligned geography and depth-0 lines up across
+  // every lane for a clean vertical "same-depth" scan.
+  const maxLaneWidth = lanes.reduce((max, lane) => Math.max(max, lane.width), 0);
+  let laneTop = 0;
+  for (const lane of lanes) {
+    for (const [id, p] of lane.rel) {
+      positions.set(id, { x: p.x, y: laneTop + p.y });
+    }
+    domainBounds.set(lane.domainId, {
+      x: 0,
+      y: laneTop,
+      width: maxLaneWidth,
+      height: lane.height,
+      shape: "rect",
+    });
+    laneTop += lane.height + LANE_GAP;
+  }
 
   return { positions, domainBounds };
 }
