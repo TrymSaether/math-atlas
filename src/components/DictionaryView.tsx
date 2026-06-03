@@ -18,8 +18,8 @@ import {
   type DictSortMode,
   type SectionFacet,
 } from "../lib/dictionary";
-import { Spine, Facet, Proof, Steps, specimenMeta } from "./Specimen";
-import { ThemedDiagram } from "./ThemedDiagram";
+import { Spine, Facet, MathBox, Proof, Steps, specimenMeta } from "./Specimen";
+import { hasNodeVisual, NodeVisual } from "./NodeVisual";
 import "./DictionaryView.css";
 
 export function DictionaryView() {
@@ -39,7 +39,12 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const meta = MAPS[mapId];
   const indexRef = useRef<HTMLDivElement>(null);
 
-  const entries = useMemo(() => dictionaryEntries(map), [map]);
+  const entries = useMemo(() => {
+    const base = dictionaryEntries(map);
+    const seen = new Set(base.map((node) => node.id));
+    const visualOnly = map.data.nodes.filter((node) => !seen.has(node.id) && hasNodeVisual(node));
+    return [...base, ...visualOnly];
+  }, [map]);
   const facet = useMemo(() => sectionFacet(map, entries), [map, entries]);
   const [sortBy, setSortBy] = useState<DictSortMode>("alpha");
   const [query, setQuery] = useState("");
@@ -309,9 +314,9 @@ function DetailPane({
           </div>
         </header>
 
-        {entry.diagramPath && (
+        {hasNodeVisual(entry) && (
           <div className="dict-doc-dia">
-            <ThemedDiagram src={entry.diagramPath} alt={`Diagram for ${entry.title}`} />
+            <NodeVisual node={entry} className="dict-doc-visual" />
           </div>
         )}
 
@@ -339,13 +344,13 @@ function DetailPane({
             </Facet>
           )}
           {definition && (
-            <Facet label="Definition" muted>
-              <MathProse text={definition} asBlock />
+            <Facet label="Definition" toneColor={tone.color}>
+              <MathBox text={definition} />
             </Facet>
           )}
           {formula && (
-            <Facet label="Formula" muted>
-              <MathProse text={formula} asBlock />
+            <Facet label="Formula" toneColor={tone.color}>
+              <MathBox text={formula} />
             </Facet>
           )}
           {entry.notation.length > 0 && (

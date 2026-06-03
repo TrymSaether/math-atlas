@@ -8,8 +8,8 @@ import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
 import { nodeAnswerText, nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
 import type { GraphNode } from "../types";
-import { Spine, Facet, Proof, specimenMeta } from "./Specimen";
-import { ThemedDiagram } from "./ThemedDiagram";
+import { Spine, Facet, MathBox, Proof, specimenMeta } from "./Specimen";
+import { hasNodeVisual, NodeVisual } from "./NodeVisual";
 
 /** A node carries enough to drill if it has a title and at least one answer-side facet. */
 function answerText(n: GraphNode): string {
@@ -107,7 +107,7 @@ function FlashcardsBody({ map }: { map: LoadedMap }) {
       map.data.nodes.filter((n) => {
         if (kinds.size > 0 && !kinds.has(n.kind)) return false;
         if (topics.size > 0 && !topics.has(n.domainId)) return false;
-        return Boolean(answerText(n));
+        return Boolean(answerText(n) || hasNodeVisual(n));
       }),
     [map, kinds, topics],
   );
@@ -353,7 +353,6 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
   const showGloss = gloss && gloss !== explanation && gloss !== statement;
   // When there is no formal statement block, lead with the best plain answer.
   const lead = statement || formal || gloss || explanation || solution;
-  const diagramPath = node.diagramPath.trim();
 
   return (
     <CardShell
@@ -383,33 +382,21 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
         )}
         {formal && formal !== lead && (
           <Facet label="Formal statement" toneColor={tone.color}>
-            <div
-              className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-              style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
-            >
-              <MathText text={formal} asBlock />
-            </div>
+            <MathBox text={formal} />
           </Facet>
         )}
         {definition && (
           <Facet label="Definition" toneColor={tone.color}>
-            <div
-              className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-              style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
-            >
-              <MathText text={definition} asBlock />
-            </div>
+            <MathBox text={definition} />
           </Facet>
         )}
         {formula && (
           <Facet label="Formula" toneColor={tone.color}>
-            <div
-              className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-              style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
-            >
-              <MathText text={formula} asBlock />
-            </div>
+            <MathBox text={formula} />
           </Facet>
+        )}
+        {hasNodeVisual(node) && (
+          <NodeVisual node={node} className="max-h-none" />
         )}
         {showGloss && (
           <Facet label="In words">
@@ -430,9 +417,6 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
           <Facet label="Example" muted>
             <MathProse text={example} />
           </Facet>
-        )}
-        {diagramPath && (
-          <ThemedDiagram src={diagramPath} alt={`Diagram for ${node.title}`} />
         )}
         {proof && <Proof text={proof} toneColor={tone.color} />}
       </div>

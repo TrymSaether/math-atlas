@@ -107,6 +107,18 @@ export function Facet({
   );
 }
 
+/** A boxed math block used for formal statement / definition / formula facets. */
+export function MathBox({ text }: { text: string }) {
+  return (
+    <div
+      className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
+      style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
+    >
+      <MathText text={text} asBlock />
+    </div>
+  );
+}
+
 /**
  * A proof: the rigorous spine of a result. Treated distinctly from a Facet —
  * proofs run long and are read deliberately, so they're collapsible and carry a

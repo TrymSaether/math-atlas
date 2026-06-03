@@ -1,6 +1,6 @@
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { XIcon, CaretUpIcon, CaretDownIcon, CaretRightIcon, BookOpenTextIcon, CardsIcon } from "@phosphor-icons/react";
+import { XIcon, CaretUpIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
@@ -9,9 +9,8 @@ import { getDomainTone } from "../lib/colors";
 import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
-import { ThemedDiagram } from "./ThemedDiagram";
-import { FIGURE_REGISTRY } from "./figures/registry";
-import { Spine, Facet, ConnectionChip, Steps } from "./Specimen";
+import { hasNodeVisual, NodeVisual } from "./NodeVisual";
+import { Spine, Facet, MathBox, ConnectionChip, Steps } from "./Specimen";
 
 const USED_BY_INITIAL = 8;
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
@@ -53,7 +52,6 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const domainGlyphId = getDomainGlyphId(node.domainId);
   const [tab, setTab] = useState<TabId>("overview");
   const [showAllUsed, setShowAllUsed] = useState(false);
-  const [overviewLinksOpen, setOverviewLinksOpen] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const prereqIds = useMemo(
@@ -116,10 +114,8 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const proof = node.proof.trim();
   const gloss = node.gloss.trim();
   const example = node.example.trim();
-  const diagramPath = node.diagramPath.trim();
   const assumptions = node.assumptions;
   const notation = node.notation;
-  const InteractiveFigure = FIGURE_REGISTRY[node.id];
   const showGloss = gloss && gloss !== explanation;
   const linkCount = prereqIds.length + usedBy.length + examples.length + exercises.length;
   const hasProof = node.proofSteps.length > 0 || Boolean(proof);
@@ -140,7 +136,6 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   useEffect(() => {
     setTab("overview");
     setShowAllUsed(false);
-    setOverviewLinksOpen(true);
     scrollRef.current?.scrollTo({ top: 0 });
   }, [node.id]);
 
@@ -268,30 +263,9 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
       <div ref={scrollRef} className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
         {activeTab === "overview" && (
           <>
-            {InteractiveFigure ? (
+            {hasNodeVisual(node) ? (
               <section id="sec-diagram">
-                <div
-                  className="block w-full rounded-[12px] border p-3"
-                  style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
-                >
-                  <Suspense
-                    fallback={
-                      <div className="py-8 text-center text-ui-meta" style={{ color: "var(--fg-3)" }}>
-                        Loading figure…
-                      </div>
-                    }
-                  >
-                    <InteractiveFigure nodeId={node.id} />
-                  </Suspense>
-                </div>
-              </section>
-            ) : diagramPath ? (
-              <section id="sec-diagram">
-                <ThemedDiagram
-                  src={diagramPath}
-                  alt={`Diagram for ${node.title}`}
-                  className="block w-full rounded-[12px] border p-3"
-                />
+                <NodeVisual node={node} />
               </section>
             ) : null}
 
@@ -382,19 +356,12 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
 
             {linkCount > 0 && (
               <section id="sec-overview-links">
-                <OverviewLinks
-                  toneColor={tone.color}
-                  map={map}
-                  onSelect={select}
-                  open={overviewLinksOpen}
-                  onToggle={() => setOverviewLinksOpen((open) => !open)}
-                  groups={[
-                    { label: "Depends on", ids: prereqIds },
-                    { label: "Used by", ids: usedBy },
-                    { label: "Related cases", ids: examples },
-                    { label: "Exercises", ids: exercises },
-                  ]}
-                />
+                <div className="space-y-3">
+                  <PanelDictionaryLinkGroup label="Depends on" ids={prereqIds} map={map} onPick={select} />
+                  <PanelDictionaryLinkGroup label="Used by" ids={usedBy} map={map} onPick={select} />
+                  <PanelDictionaryLinkGroup label="Related cases" ids={examples} map={map} onPick={select} />
+                  <PanelDictionaryLinkGroup label="Exercises" ids={exercises} map={map} onPick={select} />
+                </div>
               </section>
             )}
 
@@ -551,18 +518,6 @@ function ProseArgument({ text, toneColor }: { text: string; toneColor: string })
   );
 }
 
-/** A boxed math block used for formal statement / definition / formula facets. */
-function MathBox({ text }: { text: string }) {
-  return (
-    <div
-      className="block max-w-full overflow-x-auto rounded-[10px] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-      style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
-    >
-      <MathText text={text} asBlock />
-    </div>
-  );
-}
-
 function IconButton({
   label,
   onClick,
@@ -612,117 +567,46 @@ function ChipGroup({
   );
 }
 
-function OverviewLinks({
-  toneColor,
+function PanelDictionaryLinkGroup({
+  label,
+  ids,
   map,
-  groups,
-  onSelect,
-  open,
-  onToggle,
+  onPick,
 }: {
-  toneColor: string;
+  label: string;
+  ids: string[];
   map: LoadedMap;
-  groups: { label: string; ids: string[] }[];
-  onSelect: (id: string) => void;
-  open: boolean;
-  onToggle: () => void;
+  onPick: (id: string) => void;
 }) {
-  const visibleGroups = groups.filter((group) => group.ids.length > 0);
-  const linkCount = visibleGroups.reduce((count, group) => count + group.ids.length, 0);
+  const nodes = ids
+    .map((id) => map.nodeById.get(id))
+    .filter((node): node is GraphNode => Boolean(node));
+
+  if (nodes.length === 0) return null;
 
   return (
     <div>
-      <div className="mb-2 flex items-center justify-between gap-3">
-        <button
-          type="button"
-          onClick={onToggle}
-          aria-expanded={open}
-          className="group flex min-w-0 flex-1 items-center gap-2 text-left focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
-        >
-          <CaretRightIcon
-            className="h-3.5 w-3.5 shrink-0 transition-transform duration-200"
-            style={{ color: toneColor, transform: open ? "rotate(90deg)" : "none" }}
-            aria-hidden
-          />
-          <span
-            className="font-mono text-ui-2xs uppercase tracking-label"
-            style={{ color: toneColor }}
-          >
-            Links
-          </span>
-          <span className="font-mono text-ui-2xs tabular-nums" style={{ color: "var(--fg-4)" }}>
-            {linkCount}
-          </span>
-        </button>
-        <button
-          type="button"
-          onClick={onToggle}
-          aria-expanded={open}
-          className="font-mono text-ui-2xs uppercase tracking-label transition-colors hover:underline focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
-          style={{ color: "var(--fg-3)" }}
-        >
-          {open ? "Hide" : "Show"}
-        </button>
-      </div>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="overview-links-body"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.18, ease: [0.2, 0.7, 0.2, 1] }}
-            className="overflow-hidden"
-          >
-            <div
-              className="grid gap-2 rounded-[12px] border p-2 sm:grid-cols-2"
-              style={{
-                background: `linear-gradient(135deg, color-mix(in srgb, ${toneColor} 7%, var(--surface-2)), var(--surface))`,
-                borderColor: "var(--border-subtle)",
-              }}
-            >
-              {visibleGroups.map((group) => (
-                <OverviewLinkGroup
-                  key={group.label}
-                  group={group}
-                  map={map}
-                  onSelect={onSelect}
-                />
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-function OverviewLinkGroup({
-  group,
-  map,
-  onSelect,
-}: {
-  group: { label: string; ids: string[] };
-  map: LoadedMap;
-  onSelect: (id: string) => void;
-}) {
-  return (
-    <div
-      className="min-w-0 rounded-[9px] border px-2.5 py-2"
-      style={{ background: "color-mix(in srgb, var(--surface) 88%, transparent)", borderColor: "var(--border-subtle)" }}
-    >
-      <div className="mb-1.5 flex items-center justify-between gap-2">
-        <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--fg-3)" }}>
-          {group.label}
-        </span>
-        <span className="font-mono text-ui-2xs tabular-nums" style={{ color: "var(--fg-4)" }}>
-          {group.ids.length}
-        </span>
-      </div>
+      <span className="mb-1.5 block font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--fg-3)" }}>
+        {label}
+      </span>
       <div className="flex flex-wrap gap-1.5">
-        {group.ids.map((rid) => (
-          <ConnectionChip key={rid} id={rid} map={map} onClick={() => onSelect(rid)} />
-        ))}
+        {nodes.map((node) => {
+          const nodeTone = getDomainTone(node.domainId);
+          return (
+            <button
+              key={node.id}
+              type="button"
+              onClick={() => onPick(node.id)}
+              className="inline-flex max-w-full items-center gap-1.5 rounded-full border px-2 py-1 text-left text-ui-xs leading-tight transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
+              style={{ borderColor: nodeTone.border, color: "var(--fg-2)", background: "var(--surface)" }}
+            >
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: nodeTone.color }} aria-hidden />
+              <span className="min-w-0 truncate">
+                <MathText text={node.title} />
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
