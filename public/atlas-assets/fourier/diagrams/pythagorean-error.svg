@@ -1,0 +1,36 @@
+<svg viewBox="0 0 520 420" role="img" aria-label="Pythagorean error diagram">
+    <defs>
+        <marker id="arrowInk" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M2 2 L10 6 L2 10 Z" fill="#1d1d1f" />
+        </marker>
+        <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M2 2 L10 6 L2 10 Z" fill="#3f8f68" />
+        </marker>
+        <marker id="arrowGold" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M2 2 L10 6 L2 10 Z" fill="#c79732" />
+        </marker>
+    </defs>
+
+    <rect width="520" height="420" fill="#fffdf8" />
+
+    <path d="M68 306 L345 222 L462 296 L184 378 Z" fill="#efe7d8" stroke="#d5cab8" stroke-width="2" />
+
+    <circle cx="230" cy="115" r="7" class="dot-blue" />
+    <circle cx="230" cy="303" r="7" class="dot-green" />
+    <circle cx="372" cy="273" r="7" class="dot-gold" />
+
+    <path d="M230 303 L230 115" class="stroke blue" marker-end="url(#arrowInk)" />
+    <path d="M230 303 L372 273" class="stroke gold" marker-end="url(#arrowGold)" />
+    <path d="M372 273 L230 115" class="stroke red dash" />
+
+    <path d="M230 303 L250 299 L250 279 L230 284 Z" fill="none" stroke="#3f8f68" stroke-width="2" />
+
+    <text x="241" y="113" class="label math">f</text>
+    <text x="185" y="324" class="label math">Sₙf</text>
+    <text x="385" y="272" class="label math">p</text>
+    <text x="226" y="207" class="tiny math">e</text>
+    <text x="300" y="295" class="tiny math">q</text>
+    <text x="311" y="178" class="tiny math">d</text>
+    <text x="105" y="358" class="label math">Vₙ</text>
+    <text x="252" y="286" class="tiny">⊥</text>
+</svg>

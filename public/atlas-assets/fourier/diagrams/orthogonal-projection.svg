@@ -1,0 +1,46 @@
+<svg viewBox="0 0 1080 500" role="img" aria-label="Orthogonal projection diagram">
+    <defs>
+        <linearGradient id="planeGrad" x1="0" x2="1">
+            <stop offset="0" stop-color="#f2eadb" />
+            <stop offset="1" stop-color="#e4dac8" />
+        </linearGradient>
+        <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#241b0d" flood-opacity="0.14" />
+        </filter>
+        <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M2 2 L10 6 L2 10 Z" fill="#2f6fed" />
+        </marker>
+        <marker id="arrowRed" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M2 2 L10 6 L2 10 Z" fill="#d85b4a" />
+        </marker>
+    </defs>
+
+    <rect width="1080" height="500" fill="#fffdf8" />
+
+    <path d="M165 350 L715 235 L925 350 L375 455 Z" fill="url(#planeGrad)" stroke="#d5cab8" stroke-width="2"
+        filter="url(#softShadow)" />
+
+    <path d="M232 361 C365 323 566 281 830 327" class="stroke soft" opacity="0.75" />
+    <path d="M314 420 C474 382 661 338 873 354" class="stroke soft" opacity="0.75" />
+    <path d="M299 330 L512 438" class="stroke soft" opacity="0.55" />
+    <path d="M492 287 L705 392" class="stroke soft" opacity="0.55" />
+    <path d="M676 249 L879 351" class="stroke soft" opacity="0.55" />
+
+    <circle cx="552" cy="150" r="7" class="dot-blue" />
+    <circle cx="553" cy="344" r="7" class="dot-green" />
+    <circle cx="725" cy="316" r="7" class="dot-red" />
+
+    <path d="M552 150 L553 344" class="stroke blue" marker-end="url(#arrowBlue)" />
+    <path d="M552 150 L725 316" class="stroke red dash" marker-end="url(#arrowRed)" />
+
+    <path d="M553 344 L725 316" class="stroke gold" />
+
+    <path d="M553 344 L575 339 L574 319 L552 324 Z" fill="none" stroke="#3f8f68" stroke-width="2.2" />
+
+    <text x="560" y="135" class="label math">f</text>
+    <text x="565" y="369" class="label math">Sₙf</text>
+    <text x="739" y="310" class="label math">p</text>
+    <text x="268" y="418" class="label math">Vₙ</text>
+    <text x="520" y="253" class="tiny">⊥</text>
+    <text x="642" y="238" class="tiny">L²</text>
+</svg>

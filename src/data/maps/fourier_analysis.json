@@ -1039,7 +1039,7 @@
         "definition": "$$\\begin{aligned} \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(x)\\,dx&=1,\\\\ \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(x)|\\,dx&\\le M,\\\\ \\forall\\delta>0:\\quad \\frac1{2\\pi}\\int_{\\delta\\le |x|\\le\\pi}|K_n(x)|\\,dx&\\xrightarrow[n\\to\\infty]{}0. \\end{aligned}$$",
         "intuition": "A good kernel is a controlled bump whose mass collapses to the origin. Convolution replaces $f(x)$ by a weighted local average near $x$, and the average becomes exact in the limit.",
         "proof": null,
-        "notation": "$$K_n*f\\to f$ uniformly on $C(\\mathbb T)$$",
+        "notation": "$K_n*f\\to f$ uniformly on $C(\\mathbb T)$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["convolution", "l1_space"]
@@ -1119,7 +1119,7 @@
         "definition": "$$P_r(\\theta)=\\sum_{n\\in\\mathbb Z}r^{|n|}e^{in\\theta}=\\frac{1-r^2}{1-2r\\cos\\theta+r^2},\\qquad 0\\le r<1.$$",
         "intuition": "$P_r*f$ is the harmonic extension of boundary data into the disk. Letting $r\\to1^-$ approaches the boundary from inside, smoothing first and recovering later.",
         "proof": null,
-        "notation": "$$P_r,\\ P_r*f\\to f$ as $r\\to1^-$$",
+        "notation": "$P_r,\\ P_r*f\\to f$ as $r\\to1^-$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["abel_summation"]
@@ -1383,7 +1383,7 @@
             "depends_on": ["fejer_kernel", "good_kernel", "l1_space"]
           }
         ],
-        "notation": "$$\\sigma_N f=F_N*f$, $\\|\\sigma_N f-f\\|_\\infty\\to0$$",
+        "notation": "$\\sigma_N f=F_N*f$, $\\|\\sigma_N f-f\\|_\\infty\\to0$",
         "proof_dependencies": [
           "partial_sum",
           "dirichlet_kernel",
@@ -6405,7 +6405,7 @@
         "domain": "foundations",
         "label": "SS 3.4.2 — Legendre polynomials: an orthogonal basis",
         "statement": "Legendre polynomials as an orthogonal (complete) basis of $L^2[-1,1]$.",
-        "formal_statement": "An important fact proved in Chapter 3 is that the family $\\{e^{inx}\\}_{n\\in\\mathbb Z}$ is orthonormal in $\\mathcal R$ and complete in the sense that the Fourier series of $f$ converges to $f$ in the norm. In this problem, consider another family with the same properties. On $[-1,1]$, define\n$$L_n(x)=\frac{d^n}{dx^n}(x^2-1)^n,\\qquad n=0,1,2,\\dots.$$\nThen $L_n$ is a polynomial of degree $n$, called the $n$th Legendre polynomial.\n\n\textbf{(a)} Show that if $f$ is indefinitely differentiable on $[-1,1]$, then\n$$\\int_{-1}^{1}L_n(x)f(x)\\,dx=(-1)^n\\int_{-1}^{1}(x^2-1)^n f^{(n)}(x)\\,dx.$$\nIn particular, show that $L_n$ is orthogonal to $x^m$ whenever $m<n$. Hence $\\{L_n\\}_{n=0}^{\\infty}$ is an orthogonal family.\n\n\textbf{(b)} Show that\n$$\\|L_n\\|^2=\\int_{-1}^{1}|L_n(x)|^2\\,dx=\\frac{(n!)^2 2^{2n+1}}{2n+1}.$$\nHint: First note that\n$$\\|L_n\\|^2=(-1)^n(2n)!\\int_{-1}^{1}(x^2-1)^n\\,dx.$$\nWrite $(x^2-1)^n=(x-1)^n(x+1)^n$ and integrate by parts $n$ times to calculate this last integral.\n\n\textbf{(c)} Prove that any polynomial of degree $n$ that is orthogonal to $1,x,x^2,\\dots,x^{n-1}$ is a constant multiple of $L_n$.\n\n\textbf{(d)} Let $\\widetilde L_n=L_n/\\|L_n\\|$ be the normalized Legendre polynomials. Prove that $\\{\\widetilde L_n\\}$ is the family obtained by applying the Gram--Schmidt process to $\\{1,x,\\dots,x^n,\\dots\\}$, and conclude that every Riemann integrable function $f$ on $[-1,1]$ has a Legendre expansion\n$$\\sum_{n=0}^{\\infty}\\langle f,\\widetilde L_n\\rangle \\widetilde L_n$$\nwhich converges to $f$ in the mean-square sense.",
+        "formal_statement": "An important fact proved in Chapter 3 is that the family $\\{e^{inx}\\}_{n\\in\\mathbb Z}$ is orthonormal in $\\mathcal R$ and complete in the sense that the Fourier series of $f$ converges to $f$ in the norm. In this problem, consider another family with the same properties. On $[-1,1]$, define\n$$L_n(x)=\f\\frac{d^n}{dx^n}(x^2-1)^n,\\qquad n=0,1,2,\\dots.$$\nThen $L_n$ is a polynomial of degree $n$, called the $n$th Legendre polynomial.\n\n\textbf{(a)} Show that if $f$ is indefinitely differentiable on $[-1,1]$, then\n$$\\int_{-1}^{1}L_n(x)f(x)\\,dx=(-1)^n\\int_{-1}^{1}(x^2-1)^n f^{(n)}(x)\\,dx.$$\nIn particular, show that $L_n$ is orthogonal to $x^m$ whenever $m<n$. Hence $\\{L_n\\}_{n=0}^{\\infty}$ is an orthogonal family.\n\n\textbf{(b)} Show that\n$$\\|L_n\\|^2=\\int_{-1}^{1}|L_n(x)|^2\\,dx=\\frac{(n!)^2 2^{2n+1}}{2n+1}.$$\nHint: First note that\n$$\\|L_n\\|^2=(-1)^n(2n)!\\int_{-1}^{1}(x^2-1)^n\\,dx.$$\nWrite $(x^2-1)^n=(x-1)^n(x+1)^n$ and integrate by parts $n$ times to calculate this last integral.\n\n\textbf{(c)} Prove that any polynomial of degree $n$ that is orthogonal to $1,x,x^2,\\dots,x^{n-1}$ is a constant multiple of $L_n$.\n\n\textbf{(d)} Let $\\widetilde L_n=L_n/\\|L_n\\|$ be the normalized Legendre polynomials. Prove that $\\{\\widetilde L_n\\}$ is the family obtained by applying the Gram--Schmidt process to $\\{1,x,\\dots,x^n,\\dots\\}$, and conclude that every Riemann integrable function $f$ on $[-1,1]$ has a Legendre expansion\n$$\\sum_{n=0}^{\\infty}\\langle f,\\widetilde L_n\\rangle \\widetilde L_n$$\nwhich converges to $f$ in the mean-square sense.",
         "definition": null,
         "formula": null,
         "notation": null,
@@ -6453,7 +6453,7 @@
         "domain": "applications",
         "label": "SS 4.5.5 — Powers of the golden ratio aren't equidistributed",
         "statement": "The golden-ratio powers cluster at $0$ and $1$, so they are not equidistributed.",
-        "formal_statement": "Prove that the sequence $\\{\\gamma_n\\}_{n=1}^{\\infty}$, where $\\gamma_n$ is the fractional part of\n$$\\left(\frac{1+\\sqrt5}{2}\\right)^n,$$\nis not equidistributed in $[0,1]$.\n\nHint: Show that, $$U_n=\\left(\\frac{1+\\sqrt5}{2}\\right)^n + \\left(\\frac{1-\\sqrt5}{2}\\right)^n$$ is the solution of the difference equation $$U_{r+1}=U_r+U_{r-1} \\text{ with } \\begin{cases} U_0=2 \\\\ U_1=1 \\end{cases}$$. The $U_n$ satisfy the same difference equation as the Fibonacci numbers.",
+        "formal_statement": "Prove that the sequence $\\{\\gamma_n\\}_{n=1}^{\\infty}$, where $\\gamma_n$ is the fractional part of\n$$\\left(\f\\frac{1+\\sqrt5}{2}\\right)^n,$$\nis not equidistributed in $[0,1]$.\n\nHint: Show that, $$U_n=\\left(\\frac{1+\\sqrt5}{2}\\right)^n + \\left(\\frac{1-\\sqrt5}{2}\\right)^n$$ is the solution of the difference equation $$U_{r+1}=U_r+U_{r-1} \\text{ with } \\begin{cases} U_0=2 \\\\ U_1=1 \\end{cases}$$. The $U_n$ satisfy the same difference equation as the Fibonacci numbers.",
         "definition": null,
         "formula": null,
         "notation": null,
@@ -7872,6 +7872,875 @@
           "source": "Stein–Shakarchi 7.3, Exercise 3",
           "syllabus_priority": "medium",
           "tags": ["exercise", "discrete", "oving12"]
+        }
+      },
+      {
+        "id": "oving1_p1",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 1 · P1 — Modulus of continuity of C¹ functions",
+        "statement": "Bound the modulus of continuity of a $C^1$ function by $\\sup|f'|\\cdot r$.",
+        "formal_statement": "For $f\\in C^1(\\mathbb R)$ and $[a,b]$, with $\\omega_{f,[a,b]}(r):=\\sup\\{|f(x)-f(y)|:x,y\\in[a,b],\\,|x-y|<r\\}$, show $\\omega_{f,[a,b]}(r)\\le\\big(\\sup_{x\\in[a,b]}|f'(x)|\\big)\\,r$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "A bound on the derivative is a Lipschitz bound: the FTC turns $\\sup|f'|$ directly into a linear modulus of continuity.",
+        "solution": "Let $M=\\sup_{[a,b]}|f'|$ (finite, since $f'$ is continuous on the compact $[a,b]$). For any $x,y\\in[a,b]$ with $|x-y|<r$, the fundamental theorem of calculus gives\n$$|f(x)-f(y)|=\\Big|\\int_y^x f'(t)\\,dt\\Big|\\le M\\,|x-y|<M\\,r.$$\nTaking the supremum over all such pairs, $\\omega_{f,[a,b]}(r)\\le M\\,r=\\big(\\sup_{[a,b]}|f'|\\big)r$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["absolute_uniform_convergence"]
+        },
+        "related": ["oving1_p4"],
+        "ref": "TMA4170 Øving 1, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 1, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving1", "custom"]
+        }
+      },
+      {
+        "id": "oving1_p2",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 1 · P2 — Uniform continuity via P1",
+        "statement": "Deduce uniform continuity of $x^2$ and $1/x$ from the derivative bound.",
+        "formal_statement": "Use P1 to show $f$ is uniformly continuous on $[a,b]$ when (i) $f(x)=x^2$ (any $a,b\\in\\mathbb R$); (ii) $f(x)=1/x$ (any $a,b$ with $0\\notin[a,b]$, including $a=-\\infty$, $b=\\infty$).",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Uniform continuity reduces to a bounded derivative on the set; once $\\sup|f'|<\\infty$, P1 delivers a modulus independent of location.",
+        "solution": "\\textbf{(i)} On a bounded $[a,b]$, $f(x)=x^2$ has $|f'(x)|=2|x|\\le 2\\max(|a|,|b|)=:M<\\infty$. By P1, $\\omega_f(r)\\le Mr\\to0$ as $r\\to0$, which is exactly uniform continuity.\n\n\\textbf{(ii)} If $0\\notin[a,b]$, let $d=\\operatorname{dist}(0,[a,b])>0$. Then $|f'(x)|=1/x^2\\le 1/d^2$ on $[a,b]$ (this stays valid on unbounded intervals like $[a,\\infty)$ with $a>0$, where $\\sup|f'|=1/a^2<\\infty$). By P1, $\\omega_f(r)\\le r/d^2\\to0$: uniformly continuous. $\\blacksquare$\n\n(Note: on all of $\\mathbb R$, $x^2$ is \\emph{not} uniformly continuous, and $1/x$ fails near $0$ — the boundedness of $f'$ on the chosen set is precisely what P1 needs.)",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["oving1_p1"]
+        },
+        "related": ["oving1_p4"],
+        "ref": "TMA4170 Øving 1, Problem P2",
+        "metadata": {
+          "source": "TMA4170 Øving 1, Problem P2",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving1", "custom"]
+        }
+      },
+      {
+        "id": "oving1_p3",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 1 · P3 — Computing moduli of continuity",
+        "statement": "Compute $\\omega_f$ for $\\sqrt{1+x^2}$ (linear) and $\\sqrt x$ (Hölder-½).",
+        "formal_statement": "Find $\\omega_f$ when (i) $f(x)=\\sqrt{1+x^2}$ on $\\mathbb R$; (ii) $f(x)=x^{1/2}$ on $[0,1]$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "A bounded derivative gives a linear modulus ($\\sqrt{1+x^2}$); an unbounded one near a point gives a genuine Hölder modulus ($\\sqrt x$ has $\\omega_f(r)=\\sqrt r$).",
+        "solution": "\\textbf{(i)} $f'(x)=\\dfrac{x}{\\sqrt{1+x^2}}$, so $|f'|<1$ with $\\sup_{\\mathbb R}|f'|=1$ (approached as $x\\to\\pm\\infty$). By P1, $\\omega_f(r)\\le r$. The bound is attained in the limit: for large $x$, $f(x)\\approx|x|$, so $f(x+r)-f(x)\\to r$. Hence $\\omega_f(r)=r$ — $f$ is Lipschitz with constant $1$.\n\n\\textbf{(ii)} For $0\\le y\\le x\\le1$, $\\sqrt x-\\sqrt y\\le\\sqrt{x-y}$ (square: $x\\le y+(x-y)+2\\sqrt{y(x-y)}$, true). The largest gap with $|x-y|<r$ is at $y=0$, $x\\to r^-$, giving $\\sqrt r$. Thus $\\omega_f(r)=\\sqrt r$: $f$ is Hölder-$\\tfrac12$ but not Lipschitz (the modulus is not $O(r)$ because $f'(x)=\\tfrac1{2\\sqrt x}\\to\\infty$ at $0$). $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["oving1_p1", "decay_smoothness"]
+        },
+        "related": ["ss3_3_ex15"],
+        "ref": "TMA4170 Øving 1, Problem P3",
+        "metadata": {
+          "source": "TMA4170 Øving 1, Problem P3",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving1", "custom"]
+        }
+      },
+      {
+        "id": "oving1_p4",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 1 · P4 — Continuous on [a,b] ⟹ uniformly continuous",
+        "statement": "Heine–Cantor: continuity on a compact interval is uniform continuity.",
+        "formal_statement": "Show that a continuous function on a closed bounded interval $[a,b]$ is uniformly continuous (Heine–Cantor).",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Compactness upgrades pointwise continuity to uniform: a failing pair of sequences must accumulate, where continuity contradicts the gap.",
+        "solution": "Suppose, for contradiction, $f$ is continuous but not uniformly continuous. Then there is $\\varepsilon>0$ and sequences $x_n,y_n\\in[a,b]$ with $|x_n-y_n|<\\tfrac1n$ but $|f(x_n)-f(y_n)|\\ge\\varepsilon$. By Bolzano–Weierstrass (compactness of $[a,b]$), a subsequence $x_{n_k}\\to x^*\\in[a,b]$; since $|x_{n_k}-y_{n_k}|\\to0$, also $y_{n_k}\\to x^*$. Continuity of $f$ at $x^*$ gives $f(x_{n_k})\\to f(x^*)$ and $f(y_{n_k})\\to f(x^*)$, so $|f(x_{n_k})-f(y_{n_k})|\\to0$, contradicting $\\ge\\varepsilon$. Hence $f$ is uniformly continuous.\n\n\\emph{(Open-cover version: }for each $x$ pick $\\delta_x$ with $\\operatorname{osc}<\\varepsilon$ on $B(x,\\delta_x)$; the balls $B(x,\\delta_x/2)$ cover $[a,b]$; extract a finite subcover and take $\\delta$ = the smallest radius — a Lebesgue number.$)$ $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["essential_supremum"]
+        },
+        "related": ["oving1_p1", "oving1_p2"],
+        "ref": "TMA4170 Øving 1, Problem P4",
+        "metadata": {
+          "source": "TMA4170 Øving 1, Problem P4",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving1", "custom"]
+        }
+      },
+      {
+        "id": "oving2_p1",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 2 · P1 — Which Lᵖ contain x^{-α}?",
+        "statement": "Determine the $L^p(0,1)$ range of the singular power $x^{-\\alpha}$.",
+        "formal_statement": "For $f(x)=1/x^\\alpha$ on $(0,1)$, $\\alpha\\in(0,1)$, determine for which $p\\ge1$ we have $f\\in L^p(0,1)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Integrability of a power singularity is a single inequality $\\alpha p<1$ — raising the power $p$ eventually fails once it overtakes the singularity.",
+        "solution": "$\\displaystyle\\int_0^1 |f(x)|^p\\,dx=\\int_0^1 x^{-\\alpha p}\\,dx$ converges iff the exponent satisfies $\\alpha p<1$, i.e. $p<1/\\alpha$ (for $\\alpha p\\ge1$ the integral diverges at $0$). Therefore\n$$f\\in L^p(0,1)\\iff 1\\le p<\\tfrac1\\alpha.$$\nAt the borderline $p=1/\\alpha$ the integral is $\\int_0^1 x^{-1}dx=\\infty$, so $f\\notin L^{1/\\alpha}$. $\\blacksquare$\n\nIn particular a mild singularity ($\\alpha$ small) lies in many $L^p$; as $\\alpha\\uparrow1$ the admissible range shrinks toward $p=1$ only.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["lp_space", "lebesgue_integral"]
+        },
+        "related": ["oving4_p2"],
+        "ref": "TMA4170 Øving 2, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 2, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving2", "custom"]
+        }
+      },
+      {
+        "id": "oving2_p2",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 2 · P2 — Convolution with a box is averaging",
+        "statement": "Convolution with a normalized box kernel is local averaging.",
+        "formal_statement": "For $f,g\\in C(\\mathbb S)$ with $g(x)=\\frac{2\\pi}{2h}\\chi_{[-h,h]}(x)$ ($h<\\pi$), show $(f*g)(x)=\\frac1{2h}\\int_{-h}^h f(x+y)\\,dy$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "A normalized indicator kernel is a moving-average operator; convolving against it smooths $f$ by local averaging — the prototype of a good kernel.",
+        "solution": "With the circle convolution $(f*g)(x)=\\frac1{2\\pi}\\int_{-\\pi}^\\pi f(x-y)g(y)\\,dy$ and $g=\\frac{\\pi}{h}\\chi_{[-h,h]}$,\n$$(f*g)(x)=\\frac1{2\\pi}\\int_{-h}^h f(x-y)\\,\\frac{\\pi}{h}\\,dy=\\frac1{2h}\\int_{-h}^h f(x-y)\\,dy.$$\nSubstituting $y\\mapsto-y$ (the window is symmetric) gives $(f*g)(x)=\\frac1{2h}\\int_{-h}^h f(x+y)\\,dy$ — the running average of $f$ over a window of width $2h$ centered at $x$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["convolution", "good_kernel"]
+        },
+        "related": ["fejer_kernel"],
+        "ref": "TMA4170 Øving 2, Problem P2",
+        "metadata": {
+          "source": "TMA4170 Øving 2, Problem P2",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving2", "custom"]
+        }
+      },
+      {
+        "id": "oving2_p3",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 2 · P3 — Associativity of convolution",
+        "statement": "Convolution is associative (Fubini) for continuous and for Riemann-integrable data.",
+        "formal_statement": "Show $(f*g)*h=f*(g*h)$ when (a) $f,g,h\\in C(\\mathbb S)$; (b) $f,g,h$ are periodic and Riemann integrable.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Convolution is multiplication of Fourier coefficients, which is associative; directly, it is just Fubini on the torus.",
+        "solution": "Both sides are double integrals; associativity is a change of order (Fubini). Writing all factors of $\\frac1{2\\pi}$,\n$$\\big((f*g)*h\\big)(x)=\\frac1{(2\\pi)^2}\\int_{-\\pi}^\\pi\\!\\!\\int_{-\\pi}^\\pi f(x-y-z)\\,g(z)\\,h(y)\\,dz\\,dy.$$\nThe integrand is bounded and (jointly) Riemann integrable on the compact torus $[-\\pi,\\pi]^2$ — in case (a) it is continuous, in case (b) a product of Riemann-integrable factors composed with continuous shifts, hence integrable. By Fubini's theorem we may interchange the order of integration; substituting $w=y+z$ symmetrizes the expression and reproduces\n$$\\frac1{(2\\pi)^2}\\int\\!\\!\\int f(x-w)\\,g(w-y)\\,h(y)\\,dy\\,dw=\\big(f*(g*h)\\big)(x).$$\nThus $(f*g)*h=f*(g*h)$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["convolution", "fubini_tonelli"]
+        },
+        "related": ["oving2_p4", "convolution_theorem"],
+        "ref": "TMA4170 Øving 2, Problem P3",
+        "metadata": {
+          "source": "TMA4170 Øving 2, Problem P3",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving2", "custom"]
+        }
+      },
+      {
+        "id": "oving2_p4",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 2 · P4 — Young-type convolution inequalities",
+        "statement": "Young-type bounds for convolution and continuity in the $L^1$ factor.",
+        "formal_statement": "For $f,g\\in C(\\mathbb S)$ show (a) $\\|f*g\\|_\\infty\\le\\frac1{2\\pi}\\|f\\|_\\infty\\|g\\|_1$; (b) $\\|f*g\\|_1\\le\\frac1{2\\pi}\\|f\\|_1\\|g\\|_1$; (c) $f_k\\to f$ in $L^1(\\mathbb S)$ $\\Rightarrow$ $f_k*g\\to f*g$ in $C(\\mathbb S)$ and in $L^1(\\mathbb S)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Convolution is bounded on every $L^p$ by the $L^1$ size of the kernel (Young); so $L^1$-perturbations of one factor produce uniformly/$L^1$-small perturbations of the convolution.",
+        "solution": "Throughout $\\|u\\|_1=\\frac1{2\\pi}\\int_{-\\pi}^\\pi|u|$ and $(f*g)(x)=\\frac1{2\\pi}\\int f(x-y)g(y)\\,dy$.\n\n\\textbf{(a)} $\\displaystyle|(f*g)(x)|\\le\\frac1{2\\pi}\\int_{-\\pi}^\\pi|f(x-y)|\\,|g(y)|\\,dy\\le\\frac1{2\\pi}\\|f\\|_\\infty\\int_{-\\pi}^\\pi|g|=\\frac1{2\\pi}\\|f\\|_\\infty\\,\\big(2\\pi\\|g\\|_1\\big)\\cdot\\tfrac1{2\\pi}$; cleanly, $\\le\\frac1{2\\pi}\\|f\\|_\\infty\\|g\\|_1$ taking the sup over $x$ (here $\\|g\\|_1=\\frac1{2\\pi}\\int|g|$).\n\n\\textbf{(b)} By Fubini and translation invariance,\n$$\\|f*g\\|_1=\\frac1{2\\pi}\\int\\Big|\\frac1{2\\pi}\\int f(x-y)g(y)\\,dy\\Big|dx\\le\\frac1{2\\pi}\\int|g(y)|\\Big(\\frac1{2\\pi}\\int|f(x-y)|\\,dx\\Big)dy=\\|g\\|_1\\|f\\|_1\\cdot\\tfrac1{2\\pi}\\cdot 2\\pi,$$\ni.e. $\\|f*g\\|_1\\le\\frac1{2\\pi}\\|f\\|_1\\|g\\|_1$.\n\n\\textbf{(c)} By linearity $f_k*g-f*g=(f_k-f)*g$. Using commutativity and (a), $\\|(f_k-f)*g\\|_\\infty=\\|g*(f_k-f)\\|_\\infty\\le\\frac1{2\\pi}\\|g\\|_\\infty\\|f_k-f\\|_1\\to0$, giving uniform (hence $C(\\mathbb S)$) convergence; and (b) gives $\\|(f_k-f)*g\\|_1\\le\\frac1{2\\pi}\\|f_k-f\\|_1\\|g\\|_1\\to0$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["convolution", "l1_space"]
+        },
+        "related": ["oving2_p3", "ss2_6_ex11", "mean_square_convergence"],
+        "ref": "TMA4170 Øving 2, Problem P4",
+        "metadata": {
+          "source": "TMA4170 Øving 2, Problem P4",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving2", "custom"]
+        }
+      },
+      {
+        "id": "oving3_p1",
+        "kind": "exercise",
+        "domain": "series",
+        "label": "Øving 3 · P1 — A continuous trigonometric sum",
+        "statement": "An absolutely summable trigonometric series sums to a continuous function.",
+        "formal_statement": "Show that $\\sum_{n\\neq0}\\frac1n\\sin\\!\\big(\\tfrac5n\\big)e^{i2nx}$ converges and that its sum is continuous on $\\mathbb S$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "The inner $\\sin(5/n)\\approx5/n$ gives the coefficients an extra power of decay ($1/n^2$), so the Weierstrass $M$-test forces absolute, uniform, continuous convergence.",
+        "solution": "The coefficient of $e^{i2nx}$ is $c_n=\\frac1n\\sin(5/n)$. Using $|\\sin t|\\le|t|$,\n$$|c_n|=\\frac1{|n|}\\Big|\\sin\\frac5n\\Big|\\le\\frac1{|n|}\\cdot\\frac{5}{|n|}=\\frac{5}{n^2}.$$\nHence $\\sum_{n\\neq0}|c_n|\\le 10\\sum_{n\\ge1}\\frac5{n^2}<\\infty$: the coefficients are absolutely summable. Each term satisfies $|c_n e^{i2nx}|=|c_n|$, so by the Weierstrass $M$-test the series converges absolutely and uniformly on $\\mathbb S$. A uniform limit of continuous trigonometric terms is continuous, so the sum is continuous. $\\blacksquare$\n\n(With the literal coefficient $\\frac1n\\sin(5n)$ one only has $|c_n|\\le1/|n|$, which gives conditional convergence to a step function via Dirichlet's test — not continuity; the $\\sin(5/n)$ reading is the one consistent with the claim.)",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "absolute_uniform_convergence",
+            "fourier_series"
+          ]
+        },
+        "related": ["decay_smoothness", "ss2_6_ex8"],
+        "ref": "TMA4170 Øving 3, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 3, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "series", "oving3", "custom"]
+        }
+      },
+      {
+        "id": "oving3_p2",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 3 · P2 — The ℓ²(ℤ) inner product",
+        "statement": "Verify the inner-product axioms on $\\ell^2(\\mathbb Z)$.",
+        "formal_statement": "Show that $\\langle x,y\\rangle=\\sum_{i=-\\infty}^\\infty x_i\\overline{y_i}$ is an inner product on $\\ell^2(\\mathbb Z)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "The defining series converges by Cauchy–Schwarz, and the three axioms are immediate — making $\\ell^2$ the model separable Hilbert space dual to Fourier coefficients.",
+        "solution": "\\textbf{Well-defined.} By Cauchy–Schwarz for finite sums and a limit, $\\sum_i|x_i\\overline{y_i}|\\le\\big(\\sum|x_i|^2\\big)^{1/2}\\big(\\sum|y_i|^2\\big)^{1/2}=\\|x\\|\\,\\|y\\|<\\infty$, so the series converges absolutely for $x,y\\in\\ell^2$.\n\n\\textbf{Axioms.} (i) \\emph{Linearity in the first slot}: $\\langle ax+bz,y\\rangle=\\sum(ax_i+bz_i)\\overline{y_i}=a\\langle x,y\\rangle+b\\langle z,y\\rangle$. (ii) \\emph{Conjugate symmetry}: $\\langle y,x\\rangle=\\sum y_i\\overline{x_i}=\\overline{\\sum x_i\\overline{y_i}}=\\overline{\\langle x,y\\rangle}$. (iii) \\emph{Positive-definiteness}: $\\langle x,x\\rangle=\\sum|x_i|^2\\ge0$, with equality iff every $x_i=0$, i.e. $x=0$. Hence $\\langle\\cdot,\\cdot\\rangle$ is an inner product. $\\blacksquare$ (Together with completeness — SS 3.3.2 — $\\ell^2(\\mathbb Z)$ is a Hilbert space.)",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["l2_space", "inner_product_space"]
+        },
+        "related": ["ss3_3_ex2", "hilbert_space"],
+        "ref": "TMA4170 Øving 3, Problem P2",
+        "metadata": {
+          "source": "TMA4170 Øving 3, Problem P2",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving3", "custom"]
+        }
+      },
+      {
+        "id": "oving4_p1",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 4 · P1 — The integral inner product",
+        "statement": "Conjugate symmetry and linearity of the $L^2$ integral form on $\\mathcal R(a,b)$.",
+        "formal_statement": "Check that $(f,g)=\\int_a^b f(x)\\overline{g(x)}\\,dx$ has conjugate symmetry and is linear in the first argument on $\\mathcal R(a,b)$ (Riemann-integrable $f:(a,b)\\to\\mathbb C$).",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "The Hermitian form $\\int f\\bar g$ inherits its algebra from the integral; only definiteness is subtle, which is exactly why $L^2$ is built from equivalence classes.",
+        "solution": "\\textbf{Linearity (first slot).} For $\\alpha,\\beta\\in\\mathbb C$ and $f_1,f_2,g\\in\\mathcal R(a,b)$ (products of Riemann-integrable functions are Riemann-integrable, so all integrals exist),\n$$(\\alpha f_1+\\beta f_2,g)=\\int_a^b(\\alpha f_1+\\beta f_2)\\overline g=\\alpha\\!\\int_a^b f_1\\overline g+\\beta\\!\\int_a^b f_2\\overline g=\\alpha(f_1,g)+\\beta(f_2,g),$$\nby linearity of the integral. \\textbf{Conjugate symmetry.}\n$$(g,f)=\\int_a^b g\\overline f=\\int_a^b\\overline{\\overline g f}=\\overline{\\int_a^b f\\overline g}=\\overline{(f,g)}.$$\n$\\blacksquare$ (Positive semidefiniteness also holds, but $(f,f)=0$ only forces $f=0$ at continuity points — see SS 3.3.4 — so this is a \\emph{semi-}inner product on $\\mathcal R$.)",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["inner_product_space"]
+        },
+        "related": ["ss3_3_ex4", "oving4_p3"],
+        "ref": "TMA4170 Øving 4, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 4, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving4", "custom"]
+        }
+      },
+      {
+        "id": "oving4_p2",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 4 · P2 — Incompleteness of (𝓡(0,1),‖·‖₂)",
+        "statement": "Riemann-integrable functions are not $L^2$-complete (the $x^{-1/4}$ example).",
+        "formal_statement": "For $f_n(x)=x^{-1/4}\\chi_{(1/n,1)}(x)$, show $\\int_0^1|f_n(x)-x^{-1/4}|^2dx\\to0$, and conclude $(\\mathcal R(0,1),\\|\\cdot\\|_2)$ is not complete.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "A Cauchy sequence of honest (bounded) functions chases an unbounded target: Riemann integrability is not closed under $L^2$-limits, which is why we pass to $L^2$.",
+        "solution": "$\\displaystyle\\int_0^1|f_n-x^{-1/4}|^2\\,dx=\\int_0^{1/n}x^{-1/2}\\,dx=\\big[2\\sqrt x\\big]_0^{1/n}=\\frac{2}{\\sqrt n}\\to0.$\n\nEach $f_n$ is bounded and Riemann integrable, so $f_n\\in\\mathcal R(0,1)$. Since $f_n\\to x^{-1/4}$ in $\\|\\cdot\\|_2$, the sequence is $\\|\\cdot\\|_2$-Cauchy: $\\|f_n-f_m\\|_2\\le\\|f_n-x^{-1/4}\\|_2+\\|f_m-x^{-1/4}\\|_2\\to0$. But its only possible $L^2$-limit is $x^{-1/4}$, which is \\emph{unbounded} near $0$ and therefore not Riemann integrable on $[0,1]$ — so no limit exists \\emph{within} $\\mathcal R(0,1)$. (If some $g\\in\\mathcal R(0,1)$ were the limit, then $g=x^{-1/4}$ a.e., contradicting boundedness of $g$.) Hence $(\\mathcal R(0,1),\\|\\cdot\\|_2)$ is not complete; its completion is $L^2(0,1)$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "l2_space",
+            "lebesgue_integral",
+            "hilbert_space"
+          ]
+        },
+        "related": ["oving2_p1", "ss3_3_ex4"],
+        "ref": "TMA4170 Øving 4, Problem P2",
+        "metadata": {
+          "source": "TMA4170 Øving 4, Problem P2",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving4", "custom"]
+        }
+      },
+      {
+        "id": "oving4_p3",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 4 · P3 — Real orthonormal trig bases",
+        "statement": "The sine/cosine and half-range systems are orthonormal bases.",
+        "formal_statement": "(a) Show $\\{\\sqrt2\\sin nx\\}_{n\\ge1}\\cup\\{\\sqrt2\\cos nx\\}_{n\\ge0}$ is an orthonormal set and a basis in $\\mathcal R(-\\pi,\\pi)$. (b) Show $\\{\\sqrt2\\sin nx\\}_{n\\ge1}$ and $\\{\\sqrt2\\cos nx\\}_{n\\ge0}$ are orthonormal sets and bases in $\\mathcal R(0,\\pi)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Sine/cosine systems are the real and half-range repackagings of $\\{e^{inx}\\}$; completeness is inherited from mean-square convergence via odd/even extension.",
+        "solution": "Use the normalized inner product $\\langle u,v\\rangle=\\frac1\\pi\\int u\\overline v$ on the relevant interval.\n\n\\textbf{Orthogonality.} For integers $m,n$, the product-to-sum identities give $\\int_{-\\pi}^\\pi\\sin mx\\sin nx=\\pi\\delta_{mn}$, $\\int_{-\\pi}^\\pi\\cos mx\\cos nx=\\pi\\delta_{mn}$ (for $n\\ge1$; $2\\pi$ for $n=0$), and $\\int_{-\\pi}^\\pi\\sin mx\\cos nx=0$. Dividing by $\\pi$, $\\{\\sqrt2\\sin nx,\\sqrt2\\cos nx\\}$ have unit norm and are mutually orthogonal — an orthonormal system (the constant $\\sqrt2\\cos0=\\sqrt2$ is rescaled to norm $1$ appropriately).\n\n\\textbf{Completeness on $(-\\pi,\\pi)$.} This system is the real form of $\\{e^{inx}\\}_{n\\in\\mathbb Z}$ via $e^{\\pm inx}=\\cos nx\\pm i\\sin nx$; since $\\{e^{inx}\\}$ is complete in $\\mathcal R(-\\pi,\\pi)$ (mean-square convergence of Fourier series), so is the real system: every $f$ equals its sine–cosine series in $\\|\\cdot\\|_2$, i.e. it is a basis.\n\n\\textbf{Half-range on $(0,\\pi)$.} Extending $f\\in\\mathcal R(0,\\pi)$ \\emph{oddly} to $(-\\pi,\\pi)$ shows $\\{\\sqrt2\\sin nx\\}_{n\\ge1}$ alone is complete (the odd extension's series uses only sines); extending \\emph{evenly} shows $\\{\\sqrt2\\cos nx\\}_{n\\ge0}$ alone is complete. Orthonormality on $(0,\\pi)$ follows from $\\int_0^\\pi\\sin mx\\sin nx=\\tfrac\\pi2\\delta_{mn}=\\int_0^\\pi\\cos mx\\cos nx$ (so $\\sqrt2$ normalizes with $\\frac1\\pi\\int_0^\\pi\\cdot 2=1$). $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "orthonormal_system",
+            "real_fourier_series",
+            "mean_square_convergence"
+          ]
+        },
+        "related": ["half_range_expansion", "best_approximation"],
+        "ref": "TMA4170 Øving 4, Problem P3",
+        "metadata": {
+          "source": "TMA4170 Øving 4, Problem P3",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving4", "custom"]
+        }
+      },
+      {
+        "id": "oving5_p1",
+        "kind": "exercise",
+        "domain": "series",
+        "label": "Øving 5 · P1 — Fourier series of x²",
+        "statement": "Full analysis of the Fourier series of $x^2$ (regularity, convergence, $\\zeta(2)$).",
+        "formal_statement": "Let $f(x)=x^2$ on $[-\\pi,\\pi]$. (a) Show $f\\sim\\frac{\\pi^2}3+2\\sum_{n\\neq0}\\frac{(-1)^n}{n^2}e^{inx}$. (b) It converges to $f$ in $L^2$. (c) Show $f\\in C^\\infty(-\\pi,\\pi)$, $f$ Lipschitz on $\\mathbb S$, one-sided derivatives exist everywhere, but $f\\notin C^1(\\mathbb S)$. (d) Pointwise convergence on $\\mathbb S$. (e) Absolute and uniform convergence on $\\mathbb S$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "A parabola, periodized, is continuous with only a corner in its derivative — exactly the regularity ($1/n^2$ decay) that makes the series converge uniformly and yields $\\zeta(2)$.",
+        "solution": "\\textbf{(a)} $\\hat f(0)=\\frac1{2\\pi}\\int_{-\\pi}^\\pi x^2dx=\\frac{\\pi^2}3$, and for $n\\neq0$, two integrations by parts give $\\hat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^\\pi x^2e^{-inx}dx=\\frac{2(-1)^n}{n^2}$. Hence $f\\sim\\frac{\\pi^2}3+\\sum_{n\\neq0}\\frac{2(-1)^n}{n^2}e^{inx}$.\n\n\\textbf{(b)} $f$ is continuous (hence Riemann integrable) on the circle, so its Fourier series converges to $f$ in $L^2$ (mean-square convergence).\n\n\\textbf{(c)} On the open interval $f=x^2\\in C^\\infty(-\\pi,\\pi)$. The periodic extension is continuous ($f(-\\pi)=f(\\pi)=\\pi^2$) and piecewise $C^1$ with $|f'(x)|=|2x|\\le2\\pi$, so $f$ is Lipschitz on $\\mathbb S$. At the join $x=\\pi$ the one-sided derivatives are $f'(\\pi^-)=2\\pi$ and $f'(\\pi^+)=-2\\pi$ (from the next period) — both exist but differ, so $f\\notin C^1(\\mathbb S)$.\n\n\\textbf{(d)} $f$ is continuous and at every point either differentiable or possessing one-sided derivatives (a Dini/Dirichlet condition), so $S_N f\\to f$ pointwise everywhere.\n\n\\textbf{(e)} $|\\hat f(n)|=2/n^2$ is summable, so by the Weierstrass $M$-test the series converges absolutely and uniformly; the limit is the continuous $f$. $\\blacksquare$\n\n\\emph{Byproduct.} Evaluating at $x=\\pi$: $\\pi^2=\\frac{\\pi^2}3+2\\sum_{n\\ge1}\\frac1{n^2}$, giving $\\sum 1/n^2=\\pi^2/6$.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_coefficient",
+            "mean_square_convergence",
+            "absolute_uniform_convergence"
+          ]
+        },
+        "related": ["parseval_identity", "decay_smoothness", "ss3_3_ex8"],
+        "ref": "TMA4170 Øving 5, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 5, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "series", "oving5", "custom"]
+        }
+      },
+      {
+        "id": "oving5_p2",
+        "kind": "exercise",
+        "domain": "series",
+        "label": "Øving 5 · P2 — Coefficient decay ⟹ smoothness",
+        "statement": "Coefficient decay rates control the smoothness class of $f$.",
+        "formal_statement": "Let $f$ be Riemann integrable on $\\mathbb S$. (a) Show $|\\hat f(n)|\\le C/n^2$ implies $f\\in C(\\mathbb S)$. (b) Show $|\\hat f(n)|\\le e^{-|n|}$ implies $f\\in C^\\infty(\\mathbb S)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Decay of $\\hat f$ is smoothness of $f$: polynomial decay $1/n^2$ buys continuity, exponential decay buys infinite differentiability — each derivative needs one more power summable.",
+        "solution": "\\textbf{(a)} If $|\\hat f(n)|\\le C/n^2$ then $\\sum_n|\\hat f(n)|\\le|\\hat f(0)|+2C\\sum_{n\\ge1}n^{-2}<\\infty$. By the Weierstrass $M$-test $g(x)=\\sum_n\\hat f(n)e^{inx}$ converges uniformly to a continuous function $g$, and $\\hat g(n)=\\hat f(n)$ for all $n$. A Riemann-integrable function and a continuous function with the same Fourier coefficients agree (the continuous representative), so $f\\in C(\\mathbb S)$.\n\n\\textbf{(b)} If $|\\hat f(n)|\\le e^{-|n|}$ then for every $k\\ge0$, $\\sum_n |n|^k|\\hat f(n)|\\le\\sum_n|n|^k e^{-|n|}<\\infty$. Thus the series differentiated term by term $k$ times, $\\sum_n(in)^k\\hat f(n)e^{inx}$, converges uniformly; so $f\\in C^k$ for every $k$, i.e. $f\\in C^\\infty(\\mathbb S)$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "decay_smoothness",
+            "absolute_uniform_convergence",
+            "term_differentiation"
+          ]
+        },
+        "related": ["ss2_6_ex10", "ss3_3_ex15"],
+        "ref": "TMA4170 Øving 5, Problem P2",
+        "metadata": {
+          "source": "TMA4170 Øving 5, Problem P2",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "series", "oving5", "custom"]
+        }
+      },
+      {
+        "id": "oving6_p1",
+        "kind": "exercise",
+        "domain": "applications",
+        "label": "Øving 6 · P1 — A heat equation with a decay term",
+        "statement": "A damped heat equation solved mode-by-mode via Fourier series.",
+        "formal_statement": "For $u(x,t)=\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{-ct-\\sigma^2n^2t}e^{inx}$: (a) show $u\\in C^\\infty((0,2\\pi)\\times(0,T))$; (b) show $u_t+cu-\\sigma^2u_{xx}=0$ in $(0,2\\pi)\\times(0,T)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "The Gaussian damping $e^{-\\sigma^2n^2t}$ smooths instantly (super-polynomial decay), and the PDE is just the eigenvalue relation $\\partial_t=\\sigma^2\\partial_{xx}-c$ acting mode-by-mode.",
+        "solution": "The coefficients $\\hat f(n)$ are bounded, $|\\hat f(n)|\\le\\|f\\|_{L^1}$.\n\n\\textbf{(a)} Fix $t_0\\in(0,T)$. For $t\\ge t_0$ the factor $e^{-\\sigma^2n^2t}\\le e^{-\\sigma^2n^2t_0}$ decays faster than any power of $n$, so for all $j,m$,\n$$\\sum_n\\big|\\hat f(n)\\big|\\,|n|^{j}\\,(c+\\sigma^2n^2)^{m}\\,e^{-ct-\\sigma^2n^2t}<\\infty\\quad\\text{uniformly on }[t_0,T),$$\nwhich dominates every term-by-term $x$- and $t$-derivative. Hence the series and all its partial derivatives converge uniformly on $(0,2\\pi)\\times[t_0,T)$, so $u\\in C^\\infty((0,2\\pi)\\times(0,T))$.\n\n\\textbf{(b)} Differentiating term by term (justified by (a)): $\\partial_t$ brings down $(-c-\\sigma^2n^2)$ and $\\partial_{xx}$ brings down $(in)^2=-n^2$. The operator applied to the $n$-th term gives the factor\n$$(-c-\\sigma^2n^2)+c-\\sigma^2(-n^2)=-c-\\sigma^2n^2+c+\\sigma^2n^2=0.$$\nEvery term vanishes, so $u_t+cu-\\sigma^2u_{xx}=0$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "heat_equation",
+            "fourier_series",
+            "term_differentiation"
+          ]
+        },
+        "related": ["ss4_5_ex11", "heat_kernel_line"],
+        "ref": "TMA4170 Øving 6, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 6, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "applications", "oving6", "custom"]
+        }
+      },
+      {
+        "id": "oving7_p1",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 7 · P1 — Scaling of the integral (SS Prop 1.1 iii)",
+        "statement": "Dilation/scaling property of the integral on moderate-decrease functions.",
+        "formal_statement": "Prove property (iii) of SS Proposition 1.1 (§5.1.1): for $f\\in\\mathcal M(\\mathbb R)$ (moderate decrease) and $\\delta>0$, $\\;\\delta\\int_{-\\infty}^\\infty f(\\delta x)\\,dx=\\int_{-\\infty}^\\infty f(x)\\,dx$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Stretching the variable by $\\delta$ rescales the integral by $1/\\delta$ — the change of variables that becomes the Fourier scaling law.",
+        "solution": "Both integrals exist because $f$ has moderate decrease ($|f(x)|\\le A/(1+x^2)$). For finite $N$, substitute $u=\\delta x$ ($du=\\delta\\,dx$):\n$$\\delta\\int_{-N}^N f(\\delta x)\\,dx=\\int_{-\\delta N}^{\\delta N}f(u)\\,du.$$\nLetting $N\\to\\infty$, the right side converges to $\\int_{-\\infty}^\\infty f(u)\\,du$ (the limit defining the integral of a moderate-decrease function), so\n$$\\delta\\int_{-\\infty}^\\infty f(\\delta x)\\,dx=\\int_{-\\infty}^\\infty f(x)\\,dx.\\qquad\\blacksquare$$\nThis dilation rule underlies the scaling law $f(\\delta x)\\to\\delta^{-1}\\hat f(\\delta^{-1}\\xi)$ of the Fourier transform.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["moderate_decrease"]
+        },
+        "related": ["ss5_5_ex2", "fourier_transform"],
+        "ref": "TMA4170 Øving 7, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 7, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving7", "custom"]
+        }
+      },
+      {
+        "id": "oving7_p2",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 7 · P2 — Continuity of translation in L¹ (SS Prop 1.1 iv)",
+        "statement": "$L^1$-continuity of translation for moderate-decrease and $L^1$ functions.",
+        "formal_statement": "Show property (iv) of SS Proposition 1.1, $\\int_{-\\infty}^\\infty|f(x-h)-f(x)|\\,dx\\to0$ as $h\\to0$, holds for (a) $f\\in\\mathcal R_m(\\mathbb R)$ (Riemann-integrable, moderate decrease); (b) $f\\in L^1(\\mathbb R)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Translation is continuous in $L^1$: trivially true for smooth bumps, then transported to all of $L^1$ (and to moderate decrease) by density and the translation isometry.",
+        "solution": "\\textbf{Continuous compactly supported core.} If $g\\in C_c(\\mathbb R)$, then $g$ is uniformly continuous and supported in some $[-R,R]$; for $|h|\\le1$, $|g(x-h)-g(x)|<\\varepsilon$ uniformly and the integrand is supported in $[-R-1,R+1]$, so $\\int|g(\\cdot-h)-g|\\le\\varepsilon\\,(2R+2)\\to0$.\n\n\\textbf{(b) $f\\in L^1$.} $C_c(\\mathbb R)$ is dense in $L^1$: pick $g\\in C_c$ with $\\|f-g\\|_{L^1}<\\varepsilon$. Translation is an $L^1$-isometry, so\n$$\\int|f(\\cdot-h)-f|\\le\\int|f(\\cdot-h)-g(\\cdot-h)|+\\int|g(\\cdot-h)-g|+\\int|g-f|=2\\|f-g\\|_{L^1}+\\int|g(\\cdot-h)-g|<3\\varepsilon$$\nfor $|h|$ small. Hence the limit is $0$.\n\n\\textbf{(a) $f\\in\\mathcal R_m(\\mathbb R)$.} A Riemann-integrable function of moderate decrease lies in $L^1$ and is approximable in $L^1$ by continuous compactly supported functions (truncate the tails using $|f|\\le A/(1+x^2)$, then approximate the bounded RI piece by continuous functions). The same three-term estimate applies, giving $\\int|f(\\cdot-h)-f|\\to0$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["moderate_decrease", "l1_space_real_line"]
+        },
+        "related": ["oving7_p1", "ss6_6_ex7", "oving8_p6"],
+        "ref": "TMA4170 Øving 7, Problem P2",
+        "metadata": {
+          "source": "TMA4170 Øving 7, Problem P2",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving7", "custom"]
+        }
+      },
+      {
+        "id": "oving8_p1",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Øving 8 · P1 — Transform of the rescaled Gaussian",
+        "statement": "Fourier transform of the unit-mass Gaussian family (self-dual at $\\delta=1$).",
+        "formal_statement": "Let $K(x)=e^{-\\pi x^2}$ and $K_\\delta(x)=\\delta^{-1/2}K(\\delta^{-1/2}x)$. Compute $\\hat K_\\delta$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Scaling a Gaussian narrows it in space and widens it in frequency; the unit-mass family $K_\\delta$ maps to the spreading multiplier $e^{-\\pi\\delta\\xi^2}\\to1$.",
+        "solution": "Start from the self-duality $\\hat K=K$ (the Gaussian $e^{-\\pi x^2}$ is its own transform) and the scaling law $\\widehat{f(ax)}(\\xi)=a^{-1}\\hat f(a^{-1}\\xi)$ for $a>0$. With $a=\\delta^{-1/2}$,\n$$\\widehat{K(\\delta^{-1/2}x)}(\\xi)=\\delta^{1/2}K(\\delta^{1/2}\\xi)=\\delta^{1/2}e^{-\\pi\\delta\\xi^2}.$$\nTherefore $\\hat K_\\delta(\\xi)=\\delta^{-1/2}\\cdot\\delta^{1/2}e^{-\\pi\\delta\\xi^2}=e^{-\\pi\\delta\\xi^2}$. In particular at $\\delta=1$ this recovers $\\hat K=K$ — the Gaussian is exactly self-dual — while for general $\\delta$ the unit-mass family $K_\\delta$ (with $\\int K_\\delta=1$) transforms to $e^{-\\pi\\delta\\xi^2}$. $\\blacksquare$\n(This $\\hat K_\\delta(\\xi)=e^{-\\pi\\delta\\xi^2}$ is precisely the multiplier used in P2.)",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["gaussian_transform", "fourier_transform"]
+        },
+        "related": ["oving8_p2", "good_kernel"],
+        "ref": "TMA4170 Øving 8, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 8, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "transform", "oving8", "custom"]
+        }
+      },
+      {
+        "id": "oving8_p2",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Øving 8 · P2 — Gaussian multiplier and Fourier inversion",
+        "statement": "Gaussian regularization and the limit underlying Fourier inversion.",
+        "formal_statement": "(a) Show $\\hat K_\\delta(\\xi)=e^{-\\pi\\delta\\xi^2}\\to1$ locally uniformly as $\\delta\\to0$. (b) For $f\\in\\mathcal S(\\mathbb R)$, show $\\int_{\\mathbb R}\\hat f(\\xi)\\hat K_\\delta(\\xi)\\,d\\xi\\to\\int_{\\mathbb R}\\hat f(\\xi)\\,d\\xi$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "The spreading Gaussian multiplier $\\to1$ boundedly, so it can be inserted and removed under the integral by dominated convergence — the analytic heart of Fourier inversion.",
+        "solution": "\\textbf{(a)} On a compact set $|\\xi|\\le R$, $0\\le 1-e^{-\\pi\\delta\\xi^2}\\le\\pi\\delta R^2\\to0$ as $\\delta\\to0$, so $\\hat K_\\delta\\to1$ uniformly on $[-R,R]$ (locally uniformly).\n\n\\textbf{(b)} For $f\\in\\mathcal S$, $\\hat f\\in\\mathcal S\\subset L^1$. The integrands $\\hat f(\\xi)\\hat K_\\delta(\\xi)$ converge pointwise to $\\hat f(\\xi)$ and are dominated by $|\\hat f(\\xi)|\\in L^1$ (since $0<\\hat K_\\delta\\le1$). By dominated convergence,\n$$\\int_{\\mathbb R}\\hat f(\\xi)\\hat K_\\delta(\\xi)\\,d\\xi\\to\\int_{\\mathbb R}\\hat f(\\xi)\\,d\\xi.\\qquad\\blacksquare$$\nCombined with the multiplication formula $\\int\\hat f K_\\delta=\\int f\\hat K_\\delta$ and $\\hat K_\\delta=K_\\delta$-type approximate identity, this is the standard route to the Fourier inversion theorem (the Gaussian regularization).",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "gaussian_transform",
+            "fourier_inversion",
+            "schwartz_space",
+            "dominated_convergence_theorem"
+          ]
+        },
+        "related": ["oving8_p1", "good_kernel"],
+        "ref": "TMA4170 Øving 8, Problem P2",
+        "metadata": {
+          "source": "TMA4170 Øving 8, Problem P2",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "transform", "oving8", "custom"]
+        }
+      },
+      {
+        "id": "oving8_p3",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Øving 8 · P3 — Transform of 1/(a²+x²)",
+        "statement": "Fourier transform of the Lorentzian $1/(a^2+x^2)$.",
+        "formal_statement": "Show $\\mathcal F\\!\\big[\\tfrac1{a^2+x^2}\\big](\\xi)=\\tfrac\\pi a e^{-2\\pi a|\\xi|}$ for $a>0$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "The Lorentzian and the two-sided exponential are a Fourier pair (the line Poisson kernel); compute the easy direction and invert.",
+        "solution": "First compute the transform of the (even) two-sided exponential:\n$$\\mathcal F[e^{-2\\pi a|x|}](\\xi)=\\int_{\\mathbb R}e^{-2\\pi a|x|}e^{-2\\pi ix\\xi}\\,dx=2\\int_0^\\infty e^{-2\\pi ax}\\cos(2\\pi\\xi x)\\,dx=\\frac{2\\cdot2\\pi a}{(2\\pi a)^2+(2\\pi\\xi)^2}=\\frac{a/\\pi}{a^2+\\xi^2}.$$\nSo $\\mathcal F[e^{-2\\pi a|x|}](\\xi)=\\dfrac{a}{\\pi(a^2+\\xi^2)}$. Both functions are even and nice (moderate decrease / $L^1$), so Fourier inversion applies: applying $\\mathcal F$ again (which reflects, but these are even) gives\n$$\\mathcal F\\Big[\\frac{a}{\\pi(a^2+x^2)}\\Big](\\xi)=e^{-2\\pi a|\\xi|}\\quad\\Longrightarrow\\quad \\mathcal F\\Big[\\frac1{a^2+x^2}\\Big](\\xi)=\\frac\\pi a\\,e^{-2\\pi a|\\xi|}.\\qquad\\blacksquare$$\n(The pair $(\\text{Lorentzian},\\text{exponential})$ is the Poisson-kernel pair on the line.)",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["fourier_transform", "fourier_inversion"]
+        },
+        "related": ["poisson_kernel_half_plane", "ss6_6_ex9"],
+        "ref": "TMA4170 Øving 8, Problem P3",
+        "metadata": {
+          "source": "TMA4170 Øving 8, Problem P3",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "transform", "oving8", "custom"]
+        }
+      },
+      {
+        "id": "oving8_p4",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 8 · P4 — Moderate decrease ⟹ uniformly continuous",
+        "statement": "Continuous moderate-decrease functions are uniformly continuous.",
+        "formal_statement": "Show every $f\\in C_m(\\mathbb R)$ (continuous, moderate decrease) is uniformly continuous on $\\mathbb R$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Decay tames the non-compact tails (values are tiny there), while compactness handles the middle — together giving a single $\\delta$ that works everywhere.",
+        "solution": "Let $\\varepsilon>0$. By moderate decrease choose $N$ with $|f(x)|<\\varepsilon/2$ for $|x|>N$. On the compact $[-N-1,N+1]$, $f$ is uniformly continuous (Heine–Cantor), so there is $0<\\delta<1$ with $|f(x)-f(y)|<\\varepsilon$ whenever $x,y\\in[-N-1,N+1]$ and $|x-y|<\\delta$. Now take any $x,y$ with $|x-y|<\\delta$: if both lie in $[-N-1,N+1]$ we are done; otherwise at least one of them has modulus $>N$ and (since $|x-y|<1$) both do, giving $|f(x)-f(y)|\\le|f(x)|+|f(y)|<\\varepsilon$. Hence $f$ is uniformly continuous on all of $\\mathbb R$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": ["moderate_decrease"]
+        },
+        "related": ["oving1_p4", "ss5_5_ex5"],
+        "ref": "TMA4170 Øving 8, Problem P4",
+        "metadata": {
+          "source": "TMA4170 Øving 8, Problem P4",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving8", "custom"]
+        }
+      },
+      {
+        "id": "oving8_p5",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Øving 8 · P5 — Differentiating a convolution",
+        "statement": "The derivative of a convolution falls on either factor.",
+        "formal_statement": "For $f,g\\in\\mathcal S(\\mathbb R)$ show $\\frac{d}{dx}(f*g)(x)=(f*g')(x)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Convolution is smoothing by sliding $g$; differentiating the output just differentiates the moving copy of $g$, justified by dominated convergence.",
+        "solution": "Write $(f*g)(x)=\\int_{\\mathbb R}f(y)g(x-y)\\,dy$. The difference quotient is\n$$\\frac{(f*g)(x+h)-(f*g)(x)}h=\\int_{\\mathbb R}f(y)\\,\\frac{g(x+h-y)-g(x-y)}h\\,dy.$$\nAs $h\\to0$ the inner quotient $\\to g'(x-y)$ pointwise, and by the mean value theorem it equals $g'(x+\\theta h-y)$ for some $|\\theta|\\le1$; since $g'\\in\\mathcal S$ is bounded and $f\\in\\mathcal S\\subset L^1$, the integrand is dominated by $|f(y)|\\,\\|g'\\|_\\infty\\in L^1$. Dominated convergence lets us pass the limit inside:\n$$\\frac{d}{dx}(f*g)(x)=\\int_{\\mathbb R}f(y)g'(x-y)\\,dy=(f*g')(x).\\qquad\\blacksquare$$\n(By symmetry it also equals $(f'*g)(x)$ — derivatives may be placed on either factor.)",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "convolution",
+            "schwartz_space",
+            "differentiation_rule"
+          ]
+        },
+        "related": ["convolution_theorem"],
+        "ref": "TMA4170 Øving 8, Problem P5",
+        "metadata": {
+          "source": "TMA4170 Øving 8, Problem P5",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "transform", "oving8", "custom"]
+        }
+      },
+      {
+        "id": "oving8_p6",
+        "kind": "exercise",
+        "domain": "foundations",
+        "label": "Øving 8 · P6 — L¹ approximation by moderate-decrease functions",
+        "statement": "Moderate-decrease functions are $L^1$-dense.",
+        "formal_statement": "For $f\\in L^1(\\mathbb R)$, show there exist $f_n\\in C_m(\\mathbb R)$ with $\\|f-f_n\\|_{L^1(\\mathbb R)}<1/n$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Compactly supported continuous functions are both $L^1$-dense and trivially of moderate decrease, so $C_m$ is dense in $L^1$.",
+        "solution": "Continuous compactly supported functions are dense in $L^1(\\mathbb R)$: given $f\\in L^1$, there is $f_n\\in C_c(\\mathbb R)$ with $\\|f-f_n\\|_{L^1}<1/n$ (standard approximation — truncate, then mollify). Any $f_n\\in C_c(\\mathbb R)$ has moderate decrease: it is continuous and vanishes outside a compact $[-R,R]$, so $|f_n(x)|\\le \\|f_n\\|_\\infty\\le \\frac{A}{1+x^2}$ for a suitable $A$ (take $A=\\|f_n\\|_\\infty(1+R^2)$). Hence $f_n\\in C_m(\\mathbb R)$ and $\\|f-f_n\\|_{L^1}<1/n$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "moderate_decrease",
+            "l1_space_real_line",
+            "support_of_function"
+          ]
+        },
+        "related": ["oving7_p2"],
+        "ref": "TMA4170 Øving 8, Problem P6",
+        "metadata": {
+          "source": "TMA4170 Øving 8, Problem P6",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "foundations", "oving8", "custom"]
+        }
+      },
+      {
+        "id": "oving9_p1",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Øving 9 · P1 — Three Fourier transforms",
+        "statement": "Transforms of a parabolic bump, a Hermite-type Gaussian, and $x e^{-\\pi a^2x^2}$.",
+        "formal_statement": "Find the Fourier transforms of (a) $f_1(x)=(1-x^2)\\chi_{[-1,1]}(x)$; (b) $f_2(x)=(1-x^2)e^{-\\pi x^2}$; (c) $f_3(x)=x\\,e^{-\\pi a^2x^2}$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Multiplication by $x$ and $x^2$ becomes differentiation on the transform side; combined with the self-dual Gaussian and the box, every transform here is a short calculation.",
+        "solution": "\\textbf{(a)} With $\\omega=2\\pi\\xi$ and the function even, $\\hat f_1(\\xi)=2\\int_0^1(1-x^2)\\cos(\\omega x)\\,dx=\\frac{4}{\\omega^3}(\\sin\\omega-\\omega\\cos\\omega)$, i.e.\n$$\\hat f_1(\\xi)=\\frac{\\sin(2\\pi\\xi)-2\\pi\\xi\\cos(2\\pi\\xi)}{2\\pi^3\\xi^3}.$$\n\n\\textbf{(b)} Use $\\hat g=g$ for $g(x)=e^{-\\pi x^2}$ and the rule $\\mathcal F[x^2g]=-\\frac1{4\\pi^2}\\hat g''$. Since $\\hat g''=(4\\pi^2\\xi^2-2\\pi)e^{-\\pi\\xi^2}$, $\\mathcal F[x^2g]=(-\\xi^2+\\tfrac1{2\\pi})e^{-\\pi\\xi^2}$, so\n$$\\hat f_2(\\xi)=\\hat g-\\mathcal F[x^2g]=\\Big(1-\\tfrac1{2\\pi}+\\xi^2\\Big)e^{-\\pi\\xi^2}.$$\n\n\\textbf{(c)} For $g_a(x)=e^{-\\pi a^2x^2}$, scaling gives $\\hat g_a(\\xi)=a^{-1}e^{-\\pi\\xi^2/a^2}$. Using $\\mathcal F[xg]=\\frac{i}{2\\pi}\\hat g'$,\n$$\\hat f_3(\\xi)=\\frac{i}{2\\pi}\\frac{d}{d\\xi}\\big(a^{-1}e^{-\\pi\\xi^2/a^2}\\big)=-\\frac{i\\,\\xi}{a^3}\\,e^{-\\pi\\xi^2/a^2}.$$\n$\\blacksquare$ (Even real inputs give even real transforms; the odd input $f_3$ gives an odd, purely imaginary transform.)",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "gaussian_transform",
+            "differentiation_rule"
+          ]
+        },
+        "related": ["ss5_5_ex2"],
+        "ref": "TMA4170 Øving 9, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 9, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "transform", "oving9", "custom"]
+        }
+      },
+      {
+        "id": "oving9_p2",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Øving 9 · P2 — L¹/L² membership and inverse transforms",
+        "statement": "Classify sinc-type tails in $L^1/L^2$ and evaluate the inverse transform at $0,1$.",
+        "formal_statement": "For (i) $f=\\frac{\\sin2\\pi x}{x}\\chi_{[0,\\infty)}$, (ii) $f=\\frac1x\\chi_{[1,\\infty)}$, (iii) $f=\\frac{\\sin2\\pi x}{x^2}\\chi_{[1,\\infty)}$: decide $L^1$/$L^2$ membership; describe $g=\\mathcal F^{-1}[\\hat f]$ and $g(0),g(1)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Membership is decided by tail decay ($1/x$ fails $L^1$ but passes $L^2$); inversion returns $f$ a.e., and at a jump the symmetric inverse lands on the midpoint.",
+        "solution": "\\textbf{Membership.} (i) near $0$, $\\frac{\\sin2\\pi x}{x}\\to2\\pi$ (bounded); at $\\infty$, $|f|\\sim\\frac1x\\notin L^1$ but $|f|^2\\sim\\frac1{x^2}\\in L^1$: so $f\\in L^2\\setminus L^1$. (ii) $\\int_1^\\infty\\frac1x=\\infty$, $\\int_1^\\infty\\frac1{x^2}<\\infty$: $f\\in L^2\\setminus L^1$. (iii) $|f|\\le\\frac1{x^2}$ on $[1,\\infty)$: $f\\in L^1\\cap L^2$.\n\n\\textbf{Inverse transform.} On $L^2$ the transform is invertible, so in every case $g=\\mathcal F^{-1}\\hat f=f$ as an $L^2$ element (a.e.). Pointwise (symmetric inversion of a piecewise-smooth $f$) the value is the average of one-sided limits, $g(x_0)=\\tfrac12\\big(f(x_0^+)+f(x_0^-)\\big)$:\n- (i) $f(0^-)=0,\\ f(0^+)=2\\pi\\Rightarrow g(0)=\\pi$; $f$ continuous at $1$ ($\\sin2\\pi=0$) $\\Rightarrow g(1)=0$.\n- (ii) $f$ is $0$ near $0$ $\\Rightarrow g(0)=0$; jump at $1$: $f(1^-)=0,f(1^+)=1\\Rightarrow g(1)=\\tfrac12$.\n- (iii) $f\\in L^1\\cap L^2$, continuous (value $0$ at $1$) $\\Rightarrow$ inversion holds pointwise, $g(0)=0,\\ g(1)=0$. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "fourier_inversion",
+            "plancherel_theorem",
+            "l2_space_real_line"
+          ]
+        },
+        "related": ["sinc_function", "ss5_5_ex2"],
+        "ref": "TMA4170 Øving 9, Problem P2",
+        "metadata": {
+          "source": "TMA4170 Øving 9, Problem P2",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "transform", "oving9", "custom"]
+        }
+      },
+      {
+        "id": "oving9_p3",
+        "kind": "exercise",
+        "domain": "applications",
+        "label": "Øving 9 · P3 — Wave equation and d'Alembert",
+        "statement": "Solve the 1-D wave equation by Fourier methods and derive d'Alembert's formula.",
+        "formal_statement": "For $f\\in\\mathcal S(\\mathbb R)$, $c\\in\\mathbb R$, let $u(x,t)=\\mathcal F^{-1}\\big[\\hat f(\\xi)\\cos(2\\pi c|\\xi|t)\\big](x)$. (a) Show $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$ and $u_{tt}=c^2u_{xx}$. (b) Show $u\\to f$, $u_t\\to0$ as $t\\to0^+$. (c) Show $u(x,t)=\\tfrac12\\big(f(x+ct)+f(x-ct)\\big)$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "On the Fourier side the wave equation is the oscillator $\\partial_{tt}=-(2\\pi c\\xi)^2$; the cosine multiplier splits into two translations, giving left- and right-moving copies of the data.",
+        "solution": "\\textbf{(a)} $\\hat u(\\xi,t)=\\hat f(\\xi)\\cos(2\\pi c|\\xi|t)$. Since $\\cos(2\\pi c|\\xi|t)$ is even and smooth in $\\xi$ and bounded by $1$, while $\\hat f\\in\\mathcal S$, the product and all its $x,t$-derivatives are Schwartz in $\\xi$ uniformly on $t$-compacts, so $u\\in C^\\infty$. Computing symbols: $\\partial_{tt}\\hat u=-(2\\pi c|\\xi|)^2\\hat u=-4\\pi^2c^2\\xi^2\\hat u$, while $\\widehat{c^2u_{xx}}=c^2(2\\pi i\\xi)^2\\hat u=-4\\pi^2c^2\\xi^2\\hat u$. Equal, so $u_{tt}=c^2u_{xx}$.\n\n\\textbf{(b)} As $t\\to0^+$, $\\cos(2\\pi c|\\xi|t)\\to1$ so $\\hat u\\to\\hat f$, hence $u\\to f$ (dominated convergence, $\\hat f\\in L^1$); and $\\hat{u_t}=-2\\pi c|\\xi|\\sin(2\\pi c|\\xi|t)\\hat f\\to0$, so $u_t\\to0$.\n\n\\textbf{(c)} Write $\\cos(2\\pi c\\xi t)=\\tfrac12(e^{2\\pi ic\\xi t}+e^{-2\\pi ic\\xi t})$ (even, so $|\\xi|\\to\\xi$ is harmless). Since $\\mathcal F^{-1}[\\hat f(\\xi)e^{2\\pi ic\\xi t}](x)=f(x+ct)$,\n$$u(x,t)=\\tfrac12\\big(f(x+ct)+f(x-ct)\\big),$$\nd'Alembert's formula. $\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "wave_equation",
+            "fourier_transform",
+            "fourier_inversion",
+            "schwartz_space"
+          ]
+        },
+        "related": ["ss6_6_ex9", "translation_modulation"],
+        "ref": "TMA4170 Øving 9, Problem P3",
+        "metadata": {
+          "source": "TMA4170 Øving 9, Problem P3",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "applications", "oving9", "custom"]
+        }
+      },
+      {
+        "id": "oving10_p1",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Øving 10 · P1 — Heisenberg for non-normalized f",
+        "statement": "The scale-free form of the Heisenberg inequality.",
+        "formal_statement": "Show Heisenberg's uncertainty principle can be written, for arbitrary $f$ (not assuming $\\|f\\|_2=1$), as $\\|xf\\|_2\\,\\|2\\pi\\xi\\hat f\\|_2=\\|xf\\|_2\\,\\|f'\\|_2\\ge\\tfrac12\\|f\\|_2^2$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Stripping the normalization shows uncertainty is a homogeneous inequality: the product of spreads is bounded below by $\\tfrac12\\|f\\|_2^2$, scaling correctly under $f\\mapsto\\lambda f$.",
+        "solution": "Plancherel applied to $f'$ gives $\\|f'\\|_2=\\|\\widehat{f'}\\|_2=\\|2\\pi i\\xi\\hat f\\|_2=\\|2\\pi\\xi\\hat f\\|_2$, which is the first equality. For the inequality, integrate $\\|f\\|_2^2=\\int|f|^2$ by parts (boundary term vanishes for Schwartz $f$, as $x|f|^2\\to0$):\n$$\\|f\\|_2^2=-\\int_{\\mathbb R}x\\,\\frac{d}{dx}|f|^2\\,dx=-2\\,\\mathrm{Re}\\int_{\\mathbb R}x\\,\\overline f\\,f'\\,dx\\le 2\\int_{\\mathbb R}|xf|\\,|f'|\\,dx\\le 2\\,\\|xf\\|_2\\,\\|f'\\|_2$$\n(Cauchy–Schwarz). Dividing by $2$,\n$$\\|xf\\|_2\\,\\|f'\\|_2\\ge\\tfrac12\\|f\\|_2^2,\\qquad\\text{equivalently}\\qquad \\|xf\\|_2\\,\\|2\\pi\\xi\\hat f\\|_2\\ge\\tfrac12\\|f\\|_2^2.$$\n$\\blacksquare$ Normalizing $\\|f\\|_2=1$ recovers $\\|xf\\|_2^2\\|\\xi\\hat f\\|_2^2\\ge\\frac1{16\\pi^2}$.",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "uncertainty_principle",
+            "plancherel_theorem",
+            "schwartz_space"
+          ]
+        },
+        "related": ["exam2025_p5", "ss5_5_ex23"],
+        "ref": "TMA4170 Øving 10, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 10, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "transform", "oving10", "custom"]
+        }
+      },
+      {
+        "id": "oving11_p1",
+        "kind": "exercise",
+        "domain": "transform",
+        "label": "Øving 11 · P1 — Fourier transforms in ℝ³",
+        "statement": "Compute 3-D Fourier transforms of a separable and a radial function.",
+        "formal_statement": "Find $\\hat f$ in $\\mathbb R^3$ for (i) $f(x)=\\dfrac1{(1+x_1^2)(1+x_2^2)(1+x_3^2)}$; (ii) $f(x)=e^{-|x|}=e^{-\\sqrt{x_1^2+x_2^2+x_3^2}}$.",
+        "definition": null,
+        "formula": null,
+        "notation": null,
+        "intuition": "Product functions transform coordinate-wise (Lorentzian → exponential per axis); radial functions reduce to a single sine integral, turning $e^{-|x|}$ into a squared-Lorentzian.",
+        "solution": "\\textbf{(i) Separable (tensor) function.} Since $f(x)=\\prod_{j=1}^3\\frac1{1+x_j^2}$ and $e^{-2\\pi ix\\cdot\\xi}=\\prod_j e^{-2\\pi ix_j\\xi_j}$, the transform factorizes into one-dimensional transforms. By Øving 8 P3 (with $a=1$), $\\mathcal F\\big[\\tfrac1{1+x^2}\\big](\\eta)=\\pi e^{-2\\pi|\\eta|}$, so\n$$\\hat f(\\xi)=\\prod_{j=1}^3\\pi e^{-2\\pi|\\xi_j|}=\\pi^3\\,e^{-2\\pi(|\\xi_1|+|\\xi_2|+|\\xi_3|)}.$$\n\n\\textbf{(ii) Radial function.} For radial $f$ in $\\mathbb R^3$, the transform is radial with $\\hat f(\\xi)=\\frac{2}{\\rho}\\int_0^\\infty f(r)\\,r\\sin(2\\pi r\\rho)\\,dr$, $\\rho=|\\xi|$ (from $\\int_{S^2}e^{-2\\pi ir\\rho\\cos\\theta}\\,d\\sigma=\\frac{2\\sin(2\\pi r\\rho)}{r\\rho}$). With $f(r)=e^{-r}$ and $b=2\\pi\\rho$, $\\int_0^\\infty e^{-r}r\\sin(br)\\,dr=\\frac{2b}{(1+b^2)^2}$, so\n$$\\hat f(\\xi)=\\frac2\\rho\\cdot\\frac{2b}{(1+b^2)^2}=\\frac{8\\pi}{(1+4\\pi^2|\\xi|^2)^2}.$$\n$\\blacksquare$",
+        "proof": null,
+        "proof_dependencies": [],
+        "assumptions": [],
+        "book_refs": [],
+        "outgoing_relations": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform_euclidean_space",
+            "oving8_p3"
+          ]
+        },
+        "related": ["ss6_6_ex3", "ss6_6_ex4"],
+        "ref": "TMA4170 Øving 11, Problem P1",
+        "metadata": {
+          "source": "TMA4170 Øving 11, Problem P1",
+          "syllabus_priority": "core",
+          "tags": ["exercise", "transform", "oving11", "custom"]
         }
       }
     ],
@@ -13331,6 +14200,743 @@
         "dependency_class": "logical_dependency",
         "confidence": "high",
         "notes": "Moderate decrease implies square-integrability on R."
+      },
+      {
+        "id": "e_oving1_p1__requires__absolute_uniform_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving1_p1",
+        "target": "absolute_uniform_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving1_p2__requires__oving1_p1",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving1_p2",
+        "target": "oving1_p1",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving1_p3__requires__oving1_p1",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving1_p3",
+        "target": "oving1_p1",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving1_p3__requires__decay_smoothness",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving1_p3",
+        "target": "decay_smoothness",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving1_p4__requires__essential_supremum",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving1_p4",
+        "target": "essential_supremum",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving2_p1__requires__lp_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving2_p1",
+        "target": "lp_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving2_p1__requires__lebesgue_integral",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving2_p1",
+        "target": "lebesgue_integral",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving2_p2__requires__convolution",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving2_p2",
+        "target": "convolution",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving2_p2__requires__good_kernel",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving2_p2",
+        "target": "good_kernel",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving2_p3__requires__convolution",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving2_p3",
+        "target": "convolution",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving2_p3__requires__fubini_tonelli",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving2_p3",
+        "target": "fubini_tonelli",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving2_p4__requires__convolution",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving2_p4",
+        "target": "convolution",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving2_p4__requires__l1_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving2_p4",
+        "target": "l1_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving3_p1__requires__absolute_uniform_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving3_p1",
+        "target": "absolute_uniform_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving3_p1__requires__fourier_series",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving3_p1",
+        "target": "fourier_series",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving3_p2__requires__l2_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving3_p2",
+        "target": "l2_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving3_p2__requires__inner_product_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving3_p2",
+        "target": "inner_product_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving4_p1__requires__inner_product_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving4_p1",
+        "target": "inner_product_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving4_p2__requires__l2_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving4_p2",
+        "target": "l2_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving4_p2__requires__lebesgue_integral",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving4_p2",
+        "target": "lebesgue_integral",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving4_p2__requires__hilbert_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving4_p2",
+        "target": "hilbert_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving4_p3__requires__orthonormal_system",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving4_p3",
+        "target": "orthonormal_system",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving4_p3__requires__real_fourier_series",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving4_p3",
+        "target": "real_fourier_series",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving4_p3__requires__mean_square_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving4_p3",
+        "target": "mean_square_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving5_p1__requires__fourier_coefficient",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving5_p1",
+        "target": "fourier_coefficient",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving5_p1__requires__mean_square_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving5_p1",
+        "target": "mean_square_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving5_p1__requires__absolute_uniform_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving5_p1",
+        "target": "absolute_uniform_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving5_p2__requires__decay_smoothness",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving5_p2",
+        "target": "decay_smoothness",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving5_p2__requires__absolute_uniform_convergence",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving5_p2",
+        "target": "absolute_uniform_convergence",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving5_p2__requires__term_differentiation",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving5_p2",
+        "target": "term_differentiation",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving6_p1__requires__heat_equation",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving6_p1",
+        "target": "heat_equation",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving6_p1__requires__fourier_series",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving6_p1",
+        "target": "fourier_series",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving6_p1__requires__term_differentiation",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving6_p1",
+        "target": "term_differentiation",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving7_p1__requires__moderate_decrease",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving7_p1",
+        "target": "moderate_decrease",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving7_p2__requires__moderate_decrease",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving7_p2",
+        "target": "moderate_decrease",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving7_p2__requires__l1_space_real_line",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving7_p2",
+        "target": "l1_space_real_line",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p1__requires__gaussian_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p1",
+        "target": "gaussian_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p1__requires__fourier_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p1",
+        "target": "fourier_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p2__requires__gaussian_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p2",
+        "target": "gaussian_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p2__requires__fourier_inversion",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p2",
+        "target": "fourier_inversion",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p2__requires__schwartz_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p2",
+        "target": "schwartz_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p2__requires__dominated_convergence_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p2",
+        "target": "dominated_convergence_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p3__requires__fourier_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p3",
+        "target": "fourier_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p3__requires__fourier_inversion",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p3",
+        "target": "fourier_inversion",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p4__requires__moderate_decrease",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p4",
+        "target": "moderate_decrease",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p5__requires__convolution",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p5",
+        "target": "convolution",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p5__requires__schwartz_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p5",
+        "target": "schwartz_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p5__requires__differentiation_rule",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p5",
+        "target": "differentiation_rule",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p6__requires__moderate_decrease",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p6",
+        "target": "moderate_decrease",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p6__requires__l1_space_real_line",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p6",
+        "target": "l1_space_real_line",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p6__requires__support_of_function",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p6",
+        "target": "support_of_function",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p1__requires__fourier_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p1",
+        "target": "fourier_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p1__requires__gaussian_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p1",
+        "target": "gaussian_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p1__requires__differentiation_rule",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p1",
+        "target": "differentiation_rule",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p2__requires__fourier_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p2",
+        "target": "fourier_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p2__requires__fourier_inversion",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p2",
+        "target": "fourier_inversion",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p2__requires__plancherel_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p2",
+        "target": "plancherel_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p2__requires__l2_space_real_line",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p2",
+        "target": "l2_space_real_line",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p3__requires__wave_equation",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p3",
+        "target": "wave_equation",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p3__requires__fourier_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p3",
+        "target": "fourier_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p3__requires__fourier_inversion",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p3",
+        "target": "fourier_inversion",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving9_p3__requires__schwartz_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving9_p3",
+        "target": "schwartz_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving10_p1__requires__uncertainty_principle",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving10_p1",
+        "target": "uncertainty_principle",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving10_p1__requires__plancherel_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving10_p1",
+        "target": "plancherel_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving10_p1__requires__schwartz_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving10_p1",
+        "target": "schwartz_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving11_p1__requires__fourier_transform_euclidean_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving11_p1",
+        "target": "fourier_transform_euclidean_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving11_p1__requires__oving8_p3",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving11_p1",
+        "target": "oving8_p3",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
       }
     ]
   }

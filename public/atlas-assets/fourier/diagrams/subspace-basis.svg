@@ -1,0 +1,20 @@
+<svg viewBox="0 0 520 420" role="img" aria-label="Subspace basis diagram">
+    <rect width="520" height="420" fill="#fffdf8" />
+
+    <path d="M60 290 L335 198 L466 280 L188 374 Z" fill="#efe7d8" stroke="#d5cab8" stroke-width="2" />
+
+    <path d="M158 326 L378 257" class="stroke blue" />
+    <path d="M204 349 L276 222" class="stroke gold" />
+
+    <circle cx="250" cy="290" r="7" class="dot-green" />
+    <circle cx="250" cy="110" r="7" class="dot-blue" />
+
+    <path d="M250 110 L250 290" class="stroke green" />
+
+    <text x="263" y="110" class="label math">f</text>
+    <text x="205" y="315" class="label math">Sₙf</text>
+    <text x="372" y="250" class="label math">eₙ</text>
+    <text x="278" y="225" class="label math">eₘ</text>
+    <text x="112" y="350" class="label math">Vₙ</text>
+    <text x="258" y="205" class="tiny">⊥</text>
+</svg>

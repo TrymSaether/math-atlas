@@ -1,0 +1,25 @@
+<svg viewBox="0 0 520 420" role="img" aria-label="Minimum contour diagram">
+    <rect width="520" height="420" fill="#fffdf8" />
+
+    <path d="M60 295 L340 200 L470 282 L188 376 Z" fill="#efe7d8" stroke="#d5cab8" stroke-width="2" />
+
+    <ellipse cx="260" cy="292" rx="52" ry="19" fill="none" stroke="#c79732" stroke-width="2" opacity="0.95"
+        transform="rotate(-18 260 292)" />
+    <ellipse cx="260" cy="292" rx="92" ry="34" fill="none" stroke="#c79732" stroke-width="2" opacity="0.55"
+        transform="rotate(-18 260 292)" />
+    <ellipse cx="260" cy="292" rx="132" ry="49" fill="none" stroke="#c79732" stroke-width="2" opacity="0.32"
+        transform="rotate(-18 260 292)" />
+
+    <circle cx="260" cy="292" r="7" class="dot-green" />
+    <circle cx="366" cy="263" r="7" class="dot-red" />
+    <circle cx="260" cy="116" r="7" class="dot-blue" />
+
+    <path d="M260 116 L260 292" class="stroke blue" />
+    <path d="M260 116 L366 263" class="stroke red dash" />
+
+    <text x="273" y="115" class="label math">f</text>
+    <text x="218" y="317" class="label math">Sₙf</text>
+    <text x="379" y="263" class="label math">p</text>
+    <text x="238" y="268" class="tiny">min</text>
+    <text x="112" y="354" class="label math">Vₙ</text>
+</svg>
