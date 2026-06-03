@@ -4638,6 +4638,47 @@
         }
       },
       {
+        "id": "lacunary_function",
+        "kind": "definition",
+        "domain": "convergence",
+        "label": "Lacunary Function / Series",
+        "statement": "A power series or Fourier series whose nonzero terms occur only at a sparse sequence of exponents or frequencies.",
+        "formal_statement": "A lacunary series is a series whose active exponents or frequencies form a strictly increasing sequence with large gaps. In the standard Hadamard-gap case, the frequencies satisfy $$\\lambda_1<\\lambda_2<\\cdots,\\qquad \\frac{\\lambda_{k+1}}{\\lambda_k}\\ge q>1.$$ For Fourier analysis, the typical form is $$\\sum_{k=1}^{\\infty} a_k e^{i\\lambda_k x}$$ or its real trigonometric version.",
+        "definition": "$$f(z)=\\sum_{k=1}^{\\infty} a_k z^{\\lambda_k},\\qquad \\lambda_1<\\lambda_2<\\cdots,\\qquad \\frac{\\lambda_{k+1}}{\\lambda_k}\\ge q>1.$$",
+        "intuition": "A lacunary series is a series with most of its possible terms missing. Instead of using every frequency, it jumps through a sparse list such as $$1,2,4,8,16,\\ldots$$. These gaps make the series behave less like an ordinary Fourier series and more like a sum of weakly independent oscillations. In complex analysis, the gaps can force a natural boundary; in Fourier analysis, they strongly affect almost everywhere convergence and probabilistic behavior.",
+        "proof": null,
+        "notation": "$$\\sum_{k=1}^{\\infty} a_k z^{\\lambda_k},\\qquad \\sum_{k=1}^{\\infty} a_k e^{i\\lambda_k x},\\qquad \\lambda_{k+1}/\\lambda_k\\ge q>1.$$",
+        "assumptions": [
+          "$$\\lambda_k\\in\\mathbb N,\\qquad \\lambda_1<\\lambda_2<\\cdots.$$",
+          "$$\\exists q>1\\ \\text{ such that }\\ \\lambda_{k+1}/\\lambda_k\\ge q\\ \\text{ for all }k.$$"
+        ],
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_series",
+            "fourier_coefficient",
+            "almost_everywhere"
+          ],
+          "used_by": []
+        },
+        "related": [
+          "trigonometric_series",
+          "power_series",
+          "radius_of_convergence",
+          "analytic_continuation",
+          "l2_space",
+          "pointwise_convergence"
+        ],
+        "metadata": {
+          "aliases": [
+            "Lacunary Series",
+            "Hadamard Gap Series",
+            "Lacunary Trigonometric Series"
+          ],
+          "warning": "In Fourier analysis, the more precise label is usually lacunary series rather than lacunary function."
+        }
+      },
+      {
         "id": "exam2025_p1a",
         "kind": "exercise",
         "domain": "series",
@@ -6214,7 +6255,7 @@
         "domain": "series",
         "label": "SS 3.3.15 — Hölder regularity $\\Rightarrow$ $O(1/|n|^\\alpha)$ decay",
         "statement": "Hölder continuity of order $\\alpha$ gives sharp $O(|n|^{-\\alpha})$ coefficient decay.",
-        "formal_statement": "For $f$ $2\\pi$-periodic and integrable:\n\n \\textbf{(a)} show $$\\hat f(n)=\\frac1{4\\pi}\\int_{-\\pi}^\\pi[f(x)-f(x+\\pi/n)]e^{-inx}dx$$ \n\n \\textbf{(b)} if $f$ is Hölder-$\\alpha$, $$|f(x+h)-f(x)|\\le C|h|^\\alpha$$ deduce $$\\hat f(n)=O(1/|n|^\\alpha).$$\n\n \\textbf{(c)} the lacunary $$f=\\sum_k2^{-k\\alpha}e^{i2^kx}$$ shows this is sharp.",
+        "formal_statement": "Let $f$ be $2\\pi$-periodic and Riemann integrable on $[-\\pi,\\pi]$.\n\n\\textbf{(a)} For $n\\in\\mathbb Z\\setminus\\{0\\}$, show that\n$$\\widehat f(n)=-\\frac1{2\\pi}\\int_{-\\pi}^{\\pi} f\\!\\left(x+\\frac{\\pi}{n}\\right)e^{-inx}\\,dx,$$\nhence\n$$\\widehat f(n)=\\frac1{4\\pi}\\int_{-\\pi}^{\\pi}\\left[f(x)-f\\!\\left(x+\\frac{\\pi}{n}\\right)\\right]e^{-inx}\\,dx.$$\n\n\\textbf{(b)} Now assume that $f$ satisfies a Hölder condition of order $\\alpha$, namely\n$$|f(x+h)-f(x)|\\le C|h|^\\alpha$$\nfor some $0<\\alpha\\le1$, some $C>0$, and all $x,h$. Use part (a) to show that\n$$\\widehat f(n)=O\\!\\left(\\frac1{|n|^\\alpha}\\right).$$\n\n\\textbf{(c)} Prove that the above result cannot be improved by showing that\n$$f(x)=\\sum_{k=0}^{\\infty}2^{-k\\alpha}e^{i2^kx},\\qquad 0<\\alpha<1,$$\nsatisfies\n$$|f(x+h)-f(x)|\\le C|h|^\\alpha,$$\nand\n$$\\widehat f(N)=\\frac1{N^\\alpha}\\qquad\\text{whenever }N=2^k.$$\n\n\\textbf{Hint.} For (c), break up the sum $f(x+h)-f(x)$ into the parts $2^k\\le1/|h|$ and $2^k>1/|h|$. To estimate the first sum, use $|1-e^{i\\theta}|\\le|\\theta|$ whenever $\\theta$ is small. To estimate the second sum, use $|e^{ix}-e^{iy}|\\le2$.",
         "definition": null,
         "formula": null,
         "notation": null,
@@ -6867,6 +6908,7 @@
           "tags": ["exercise", "transform", "oving7"]
         }
       },
+
       {
         "id": "ss5_5_ex6",
         "kind": "exercise",
