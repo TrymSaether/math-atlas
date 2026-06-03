@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
-import { Search, ChevronDown, BookOpenText, Zap, DraftingCompass, Compass, Settings2, Sun, Moon, Check, LucideBookMarked, Network, Earth, Columns2 } from "lucide-react";
+import { MagnifyingGlassIcon, CaretDownIcon, BookOpenTextIcon, LightningIcon, CompassToolIcon, CompassIcon, SlidersHorizontalIcon, SunIcon, MoonIcon, CheckIcon, BookmarkSimple, Globe, Stack } from "@phosphor-icons/react";
 import { useReactFlow } from "reactflow";
 import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
@@ -130,7 +130,7 @@ function MapBrandSelector() {
         aria-expanded={open}
       >
         <span className="min-w-0 truncate">{currentLabel}</span>
-        <ChevronDown
+        <CaretDownIcon
           className="h-3.5 w-3.5 shrink-0 transition-transform duration-150"
           style={{
             color: open ? "var(--accent)" : "var(--fg-2)",
@@ -159,7 +159,7 @@ function MapBrandSelector() {
                 style={!active ? { color: "var(--fg-2)" } : undefined}
               >
                 <span className="block min-w-0 flex-1 truncate">{MAPS[id].label}</span>
-                {active && <Check className="h-4 w-4 shrink-0" strokeWidth={2.5} />}
+                {active && <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />}
               </button>
             );
           })}
@@ -179,7 +179,7 @@ function SearchBox() {
       style={{ color: "var(--fg-2)" }}
       aria-label="Open search"
     >
-      <Search className="h-4 w-4 shrink-0" style={{ color: "var(--fg-3)" }} />
+      <MagnifyingGlassIcon className="h-4 w-4 shrink-0" style={{ color: "var(--fg-3)" }} />
       <span className="hidden md:inline">Search the atlas</span>
       <kbd
         className="ml-auto hidden h-5 items-center rounded-[7px] border px-1.5 font-mono text-ui-2xs md:inline-flex"
@@ -206,7 +206,7 @@ function AtlasButton() {
       label="Atlas map"
       title="Atlas map"
     >
-      <Compass className="h-4 w-4" />
+      <CompassIcon className="h-4 w-4" weight="regular" />
     </DockButton>
   );
 }
@@ -219,10 +219,10 @@ function DictionaryButton() {
     <DockButton
       onClick={() => setSurface(active ? "atlas" : "dictionary")}
       active={active}
-      label="Topology Dictionary"
-      title={active ? "Back to atlas" : "Topology Dictionary"}
+      label="Dictionary"
+      title={active ? "Back to atlas" : "Mathematical dictionary"}
     >
-      <BookOpenText className="h-4 w-4" />
+      <BookOpenTextIcon className="h-4 w-4" weight="regular" />
     </DockButton>
   );
 }
@@ -238,7 +238,7 @@ function FlashcardsButton() {
       label="Flashcards"
       title={active ? "Back to atlas" : "Flashcards"}
     >
-      <Zap className="h-4 w-4" />
+      <LightningIcon className="h-4 w-4" weight="regular" />
     </DockButton>
   );
 }
@@ -254,7 +254,7 @@ function SandboxButton() {
       label="Sandbox"
       title={active ? "Back to atlas" : "Geometric sandbox"}
     >
-      <DraftingCompass className="h-4 w-4" />
+      <CompassToolIcon className="h-4 w-4" weight="regular" />
     </DockButton>
   );
 }
@@ -306,7 +306,7 @@ function DisplayButton() {
         label="Display settings"
         title="Display"
       >
-        <Settings2 className="h-4 w-4" />
+        <SlidersHorizontalIcon className="h-4 w-4" weight="regular" />
       </DockButton>
       {open && position && <DisplayPopover popoverRef={popoverRef} position={position} />}
     </div>
@@ -382,7 +382,7 @@ function SchemeToggle() {
       label={isDark ? "Switch to light scheme" : "Switch to dark scheme"}
       title={isDark ? "Light" : "Dark"}
     >
-      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      {isDark ? <SunIcon className="h-4 w-4" weight="regular" /> : <MoonIcon className="h-4 w-4" weight="regular" />}
     </DockButton>
   );
 }

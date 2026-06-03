@@ -11,6 +11,8 @@
     "merge": "python3 scripts/merge.py"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "lucide-react": "^0.460.0",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.4",
     "clsx": "^2.1.1",
@@ -18,7 +20,6 @@
     "dagre": "^0.8.5",
     "framer-motion": "^11.11.17",
     "katex": "^0.16.11",
-    "lucide-react": "^0.460.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "reactflow": "^11.11.4",

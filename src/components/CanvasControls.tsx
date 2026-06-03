@@ -3,16 +3,16 @@ import { createPortal } from "react-dom";
 import {
   Check,
   Crosshair,
-  Layers,
-  Map,
-  Maximize,
+  Stack,
+  MapTrifold,
+  CornersOut,
   Minus,
-  Network,
   Plus,
   Shapes,
-  Waypoints,
-  type LucideIcon,
-} from "lucide-react";
+  Path,
+  Graph,
+  type Icon,
+} from "@phosphor-icons/react";
 import { useReactFlow, useViewport } from "reactflow";
 import { useStore, type EdgeStyle, type ViewMode } from "../store";
 import { cn } from "../lib/utils";
@@ -99,7 +99,7 @@ export function CanvasControls() {
               setMapPanelOpen((o) => !o);
             }}
           >
-            <Layers className="h-[17px] w-[17px]" strokeWidth={2} />
+            <Stack className="h-[17px] w-[17px]" weight="regular" />
           </DockButton>
         </Pill>
       </div>
@@ -111,10 +111,10 @@ export function CanvasControls() {
           active={routeActive}
           onClick={toggleRouteMode}
         >
-          <Waypoints className="h-[17px] w-[17px]" strokeWidth={2} />
+          <Path className="h-[17px] w-[17px]" weight="regular" />
         </DockButton>
         <DockButton label="Focus neighborhood" active={focusMode} onClick={toggleFocusMode}>
-          <Crosshair className="h-[17px] w-[17px]" strokeWidth={2} />
+          <Crosshair className="h-[17px] w-[17px]" weight="regular" />
         </DockButton>
         {focusMode && <DepthPicker value={focusDepth} onChange={setFocusDepth} />}
       </Pill>
@@ -126,18 +126,18 @@ export function CanvasControls() {
           active={showMinimap}
           onClick={toggleMinimap}
         >
-          <Map className="h-[17px] w-[17px]" strokeWidth={2} />
+          <MapTrifold className="h-[17px] w-[17px]" weight="regular" />
         </DockButton>
       </Pill>
 
       {/* Zoom */}
       <Pill orientation="vertical" className="canvas-dock">
         <DockButton label="Zoom in" onClick={() => rf.zoomIn({ duration: 180 })}>
-          <Plus className="h-[17px] w-[17px]" strokeWidth={2} />
+          <Plus className="h-[17px] w-[17px]" weight="regular" />
         </DockButton>
         <ZoomReadout />
         <DockButton label="Zoom out" onClick={() => rf.zoomOut({ duration: 180 })}>
-          <Minus className="h-[17px] w-[17px]" strokeWidth={2} />
+          <Minus className="h-[17px] w-[17px]" weight="regular" />
         </DockButton>
       </Pill>
 
@@ -147,7 +147,7 @@ export function CanvasControls() {
           label="Fit view"
           onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}
         >
-          <Maximize className="h-[17px] w-[17px]" strokeWidth={2} />
+          <CornersOut className="h-[17px] w-[17px]" weight="regular" />
         </DockButton>
       </Pill>
 
@@ -290,8 +290,8 @@ function PanelSection({ title, children }: { title: string; children: ReactNode 
   );
 }
 
-const MODES: { id: ViewMode; label: string; hint: string; icon: LucideIcon }[] = [
-  { id: "dependency", label: "Dependency", hint: "Logical graph", icon: Network },
+const MODES: { id: ViewMode; label: string; hint: string; icon: Icon }[] = [
+  { id: "dependency", label: "Dependency", hint: "Logical graph", icon: Graph },
   { id: "cluster", label: "Regions", hint: "Domain clusters", icon: Shapes },
 ];
 
@@ -299,13 +299,13 @@ function ModeTile({
   active,
   label,
   hint,
-  icon: Icon,
+  icon: IconComponent,
   onClick,
 }: {
   active: boolean;
   label: string;
   hint: string;
-  icon: LucideIcon;
+  icon: Icon;
   onClick: () => void;
 }) {
   return (
@@ -328,8 +328,9 @@ function ModeTile({
         }}
         aria-hidden
       >
-        <Icon className="h-6 w-6" strokeWidth={1.9} />
+        <IconComponent className="h-6 w-6" weight={active ? "bold" : "regular"} />
       </span>
+
       <span className="px-0.5">
         <span
           className="block text-ui-control font-semibold leading-tight"

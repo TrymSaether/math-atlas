@@ -1,14 +1,15 @@
 import {
-  BadgeCheck,
-  Circle,
-  Diamond,
-  DraftingCompass,
-  Layers,
+  CircleIcon,
+  DiamondIcon,
+  CompassToolIcon,
+  StackIcon,
+  PencilLineIcon,
+  ScrollIcon,
+  FlaskIcon,
+  SealCheckIcon,
+  type Icon,
   PencilLine,
-  ScrollText,
-  TestTubeDiagonal,
-  type LucideIcon,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 
 /**
  * The raw data carries 20+ `kind` values with a long singleton tail. For visual
@@ -76,7 +77,7 @@ export type RailTexture = "solid" | "dashed" | "dotted";
 export interface CategoryMeta {
   id: NodeCategory;
   label: string;
-  icon: LucideIcon;
+  icon: Icon;
   rail: RailTexture;
   glyphFilled: boolean;
 }
@@ -85,49 +86,49 @@ export const CATEGORY_META: Record<NodeCategory, CategoryMeta> = {
   definition: {
     id: "definition",
     label: "Definition",
-    icon: Circle,
+    icon: CircleIcon,
     rail: "solid",
     glyphFilled: false,
   },
   structure: {
     id: "structure",
     label: "Structure",
-    icon: Layers,
+    icon: StackIcon,
     rail: "solid",
     glyphFilled: false,
   },
   theorem: {
     id: "theorem",
     label: "Theorem",
-    icon: Diamond,
+    icon: DiamondIcon,
     rail: "solid",
     glyphFilled: true,
   },
   property: {
     id: "property",
     label: "Property",
-    icon: BadgeCheck,
+    icon: SealCheckIcon,
     rail: "solid",
     glyphFilled: false,
   },
   construction: {
     id: "construction",
     label: "Construction",
-    icon: DraftingCompass,
+    icon: CompassToolIcon,
     rail: "solid",
     glyphFilled: false,
   },
   example: {
     id: "example",
     label: "Example",
-    icon: TestTubeDiagonal,
+    icon: FlaskIcon,
     rail: "dashed",
     glyphFilled: false,
   },
   proof: {
     id: "proof",
     label: "Proof",
-    icon: ScrollText,
+    icon: ScrollIcon,
     rail: "dotted",
     glyphFilled: false,
   },
@@ -192,7 +193,10 @@ export const KIND_ABBREV: Record<string, string> = {
 };
 
 export function kindAbbrev(kind: string): string {
-  return KIND_ABBREV[kind] ?? kind.slice(0, 3).replace(/^\w/, (char) => char.toUpperCase());
+  return (
+    KIND_ABBREV[kind] ??
+    kind.slice(0, 3).replace(/^\w/, (char) => char.toUpperCase())
+  );
 }
 
 export function isExerciseKind(kind: string): boolean {
