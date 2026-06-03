@@ -944,7 +944,7 @@
         "assumptions": [
           "Convergence is in the $L^2$-norm, not necessarily pointwise."
         ],
-        "ref": "Stein-Shakarchi",
+        "ref": "Stein–Shakarchi: Ch.3 Lemma 2.4; Ch.3 Lemma 3.2; Ch.3 Theorem 1.1",
         "book_refs": ["c3_lem_2_4", "c3_lem_3_2", "c3_thm_1_1"],
         "metadata": {
           "tags": ["convergence"],
@@ -1214,7 +1214,7 @@
         "outgoing_relations": [],
         "related": ["fourier_transform", "schwartz_space"],
         "assumptions": ["Uses the graph's $2\\pi$-frequency convention."],
-        "ref": "",
+        "ref": "Stein–Shakarchi: Ch.5 Corollary 1.10; Ch.5 Theorem 1.9",
         "book_refs": ["c5_cor_1_10", "c5_thm_1_9"],
         "metadata": {
           "tags": ["transform"],
@@ -1386,7 +1386,7 @@
         "assumptions": [
           "Stated here for Schwartz functions to avoid convergence side quests. Other versions require explicit decay and regularity hypotheses."
         ],
-        "ref": "",
+        "ref": "Stein–Shakarchi: Ch.5 Theorem 3.1",
         "book_refs": ["c5_thm_3_1"],
         "metadata": {
           "tags": ["transform"],
@@ -3787,7 +3787,7 @@
           "dini_criterion",
           "weierstrass_approximation_theorem"
         ],
-        "ref": "",
+        "ref": "Stein–Shakarchi: Ch.2 §1, Ch.2 Cor. 2.3–2.4 (Weierstrass M-test + uniqueness)",
         "metadata": {
           "source": "Stein–Shakarchi: Ch.2 §1, Ch.2 Cor. 2.3–2.4 (Weierstrass M-test + uniqueness)",
           "syllabus_priority": "core",

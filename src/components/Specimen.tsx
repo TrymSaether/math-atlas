@@ -18,6 +18,7 @@ import type { LoadedMap } from "../data";
 import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { getDomainTone, type DomainTone } from "../lib/colors";
 import { CATEGORY_META, categoryOf, kindAbbrev, railBackground } from "../lib/nodeCategory";
+import { compactNodeRef } from "../lib/nodeMeta";
 import { KIND_LABEL, type GraphNode, type ProofStep } from "../types";
 
 export function kindShortLabel(kind: string): string {
@@ -325,7 +326,7 @@ export function ConnectionChip({
 
 /** Single-line "kind · ref" caption used in card/panel headers. */
 export function specimenMeta(node: GraphNode): string {
-  const ref = node.ref?.trim();
+  const ref = compactNodeRef(node);
   return ref ? `${KIND_LABEL[node.kind]} · ${ref}` : KIND_LABEL[node.kind];
 }
 

@@ -133,6 +133,7 @@ export function normalizeFieldGraph(input: FieldJson): GraphData {
       chapter: item.domain,
       section: item.metadata?.syllabus_priority ?? "",
       sectionTitle: source || domain.label,
+      sourceCitation: source,
       topicCluster: domain.label,
       originalText: sourceText(item),
       formalStatement: formalText(item),

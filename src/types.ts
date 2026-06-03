@@ -65,6 +65,7 @@ export const TopoNodeSchema = z.object({
   chapter: OptionalTextSchema,
   section: OptionalTextSchema,
   sectionTitle: OptionalTextSchema,
+  sourceCitation: OptionalTextSchema,
   topicCluster: RequiredTextSchema,
   originalText: OptionalTextSchema,
   formalStatement: OptionalTextSchema,

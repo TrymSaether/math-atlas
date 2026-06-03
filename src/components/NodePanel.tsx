@@ -7,6 +7,7 @@ import type { LoadedMap } from "../data";
 import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
 import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
+import { compactNodeRef, nodeSourceCitation } from "../lib/nodeMeta";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { hasNodeVisual, NodeVisual } from "./NodeVisual";
@@ -116,6 +117,8 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
   const example = node.example.trim();
   const assumptions = node.assumptions;
   const notation = node.notation;
+  const compactRef = compactNodeRef(node);
+  const sourceCitation = nodeSourceCitation(node);
   const showGloss = gloss && gloss !== explanation;
   const linkCount = prereqIds.length + usedBy.length + examples.length + exercises.length;
   const hasProof = node.proofSteps.length > 0 || Boolean(proof);
@@ -211,10 +214,10 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
               </span>
               <span aria-hidden style={{ color: "var(--fg-4)" }}>·</span>
               <span style={{ color: "var(--fg-2)" }}>{KIND_LABEL[node.kind]}</span>
-              {node.ref && (
+              {compactRef && (
                 <>
                   <span aria-hidden style={{ color: "var(--fg-4)" }}>·</span>
-                  <span className="font-mono text-ui-hint" style={{ color: "var(--fg-3)" }}>{node.ref}</span>
+                  <span className="font-mono text-ui-hint" style={{ color: "var(--fg-3)" }}>{compactRef}</span>
                 </>
               )}
             </div>
@@ -449,14 +452,20 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
               <dd style={{ color: "var(--fg-2)" }}>{domain?.label ?? node.topicCluster}</dd>
               <dt style={{ color: "var(--fg-3)" }}>Kind</dt>
               <dd style={{ color: "var(--fg-2)" }}>{KIND_LABEL[node.kind]}</dd>
-              <dt style={{ color: "var(--fg-3)" }}>Source</dt>
+              <dt style={{ color: "var(--fg-3)" }}>Map position</dt>
               <dd style={{ color: "var(--fg-2)" }}>
                 {node.chapter} · {node.section || "unranked"} · #{node.number}
               </dd>
-              {node.ref && (
+              {compactRef && (
                 <>
                   <dt style={{ color: "var(--fg-3)" }}>Reference</dt>
-                  <dd style={{ color: "var(--fg-2)" }}>{node.ref}</dd>
+                  <dd style={{ color: "var(--fg-2)" }}>{compactRef}</dd>
+                </>
+              )}
+              {sourceCitation && (
+                <>
+                  <dt style={{ color: "var(--fg-3)" }}>Citation</dt>
+                  <dd style={{ color: "var(--fg-2)" }}>{sourceCitation}</dd>
                 </>
               )}
               {node.bookRefs.length > 0 && (
