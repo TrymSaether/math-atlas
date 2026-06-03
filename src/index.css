@@ -1584,19 +1584,18 @@ button {
   font-family: inherit;
 }
 
-/* Accent-colored keyboard focus ring — consistent across all themes. */
-:focus-visible {
+/* Accent-colored keyboard focus ring — scoped to interactive elements only
+   so focusable container divs (e.g. cmdk) don't get an outline. */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible,
+[role="tab"]:focus-visible,
+[role="radio"]:focus-visible,
+[role="switch"]:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-}
-
-/* Suppress the default outline for elements that have their own focus style. */
-.map-icon-button:focus-visible,
-.map-text-button:focus-visible,
-.map-field-button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: inherit;
 }
 
 ::selection {

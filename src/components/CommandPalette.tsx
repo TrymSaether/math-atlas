@@ -74,13 +74,13 @@ export function CommandPalette() {
                   >
                     <div
                       className="border-b px-4 py-3"
-                      style={{ borderColor: "var(--border-subtle)" }}
+                      style={{ borderColor: "var(--border)" }}
                     >
                       <Command.Input
                         value={query}
                         onValueChange={setQuery}
                         placeholder="Search concepts, definitions, theorems…"
-                        className="w-full bg-transparent text-ui-body outline-none"
+                        className="w-full bg-transparent text-ui-body outline-none focus-visible:outline-none placeholder:text-[color:var(--fg-3)]"
                         style={{ color: "var(--fg-1)" }}
                       />
                     </div>
