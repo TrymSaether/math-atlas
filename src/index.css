@@ -1845,6 +1845,7 @@ button {
 
 .katex-display {
   margin: 0.4em 0;
+  text-align: center;
 }
 
 /* Canvas backdrops */

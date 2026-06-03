@@ -343,7 +343,7 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
             {notation.length > 0 && (
               <section id="sec-notation">
                 <Facet label="Notation" muted>
-                  <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+                  <div className="flex flex-wrap justify-center gap-x-3 gap-y-1.5">
                     {notation.map((n, i) => (
                       <span key={i} className="font-math text-ui-body" style={{ color: "var(--fg-1)" }}>
                         <MathText text={n} />
