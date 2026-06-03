@@ -448,7 +448,7 @@ function MapPanel({
                   <button
                     key={d.id}
                     onClick={() => toggleTopic(d.id)}
-                    className="rounded-pill border px-2.5 py-1 text-ui-meta font-medium transition"
+                    className="rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition"
                     style={
                       active
                         ? { background: tone.tint, borderColor: tone.border, color: tone.color }
@@ -483,7 +483,7 @@ function MapPanel({
                   <button
                     key={category}
                     onClick={() => groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))}
-                    className="flex items-center gap-1.5 rounded-pill border px-2.5 py-1 text-ui-meta font-medium transition"
+                    className="flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition"
                     style={
                       active
                         ? {

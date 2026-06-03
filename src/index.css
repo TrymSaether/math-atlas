@@ -1671,7 +1671,7 @@ button {
 .top-tools .map-icon-button {
   width: 38px;
   height: 36px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-md);
 }
 
 .top-tools .map-text-button {
