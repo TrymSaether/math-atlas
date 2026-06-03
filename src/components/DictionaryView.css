@@ -425,6 +425,66 @@
   margin-top: 18px;
 }
 
+.dictionary-view .dict-section-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dictionary-view .dict-fold {
+  border-top: 1px dashed var(--border);
+  padding-top: 12px;
+}
+
+.dictionary-view .dict-fold-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--type-ui-2xs);
+  letter-spacing: var(--tracking-label-tight);
+  text-transform: uppercase;
+  color: var(--fg-3);
+  list-style: none;
+}
+
+.dictionary-view .dict-fold-head::-webkit-details-marker {
+  display: none;
+}
+
+.dictionary-view .dict-fold-head::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-block: 4px solid transparent;
+  border-left: 6px solid currentColor;
+  transition: transform 0.16s ease;
+}
+
+.dictionary-view .dict-fold[open] > .dict-fold-head::before {
+  transform: rotate(90deg);
+}
+
+.dictionary-view .dict-fold-count {
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--fg-2);
+  font-size: var(--type-ui-tiny);
+  letter-spacing: var(--tracking-code);
+  padding: 1px 6px;
+}
+
+.dictionary-view .dict-fold-body {
+  margin-top: 12px;
+}
+
+.dictionary-view .dict-doc-missing {
+  margin: 0;
+  color: var(--fg-3);
+  font-style: italic;
+}
+
 /* ---- Detail footer ------------------------------------------------- */
 .dictionary-view .dict-doc-foot {
   display: flex;

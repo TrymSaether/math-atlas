@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ArrowUpRight, ArrowLeft, MagnifyingGlass } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
@@ -284,6 +284,16 @@ function DetailPane({
   const related = entry.related
     .map((id) => map.nodeById.get(id))
     .filter((n): n is GraphNode => Boolean(n));
+  const hasFormalDetails =
+    entry.assumptions.length > 0 ||
+    (formalStatement && formalStatement !== statement) ||
+    definition ||
+    formula ||
+    entry.notation.length > 0;
+  const hasSolution = entry.solutionSteps.length > 0 || Boolean(solution);
+  const hasStepProof = entry.proofSteps.length > 0;
+  const hasProof = hasStepProof || Boolean(proof);
+  const connectionCount = prereqIds.length + usedByIds.length + relatedCaseIds.length + exerciseIds.length;
 
   const openInAtlas = () => {
     select(entry.id);
@@ -316,105 +326,111 @@ function DetailPane({
         )}
 
         <div className="dict-doc-body">
-          {statement && (
-            <Spine tone={tone} kind={entry.kind} label="Statement" size="dict">
-              <MathProse text={statement} asBlock />
-            </Spine>
-          )}
-          {entry.assumptions.length > 0 && (
-            <Facet label="Assumptions">
-              <ul className="m-0 space-y-1.5 p-0">
-                {entry.assumptions.map((a, i) => (
-                  <li key={i} className="flex gap-2">
-                    <span aria-hidden className="mt-[7px] h-1 w-1 shrink-0 rounded-full" style={{ background: tone.color }} />
-                    <span><MathProse text={a} /></span>
-                  </li>
-                ))}
-              </ul>
-            </Facet>
-          )}
-          {formalStatement && formalStatement !== statement && (
-            <Facet label="Formal statement" muted>
-              <MathProse text={formalStatement} asBlock />
-            </Facet>
-          )}
-          {definition && (
-            <Facet label="Definition" muted>
-              <MathProse text={definition} asBlock />
-            </Facet>
-          )}
-          {formula && (
-            <Facet label="Formula" muted>
-              <MathProse text={formula} asBlock />
-            </Facet>
-          )}
-          {entry.notation.length > 0 && (
-            <Facet label="Notation" muted>
-              <div className="flex flex-wrap gap-x-3 gap-y-1.5">
-                {entry.notation.map((n, i) => (
-                  <span key={i} className="font-math" style={{ color: "var(--fg-1)" }}>
-                    <MathText text={n} />
-                  </span>
-                ))}
-              </div>
-            </Facet>
-          )}
           {entry.gloss && (
             <Facet label="In words">
               <MathProse text={entry.gloss} asBlock />
             </Facet>
+          )}
+          {statement && (
+            <Spine tone={tone} kind={entry.kind} label="Statement" size="dict">
+              <MathProse text={statement} asBlock />
+            </Spine>
           )}
           {entry.example && (
             <Facet label="Example" muted>
               <MathProse text={entry.example} asBlock />
             </Facet>
           )}
-          {entry.solutionSteps.length > 0 ? (
-            <div>
-              <StepLabel label="Solution" toneColor={tone.color} />
-              <Steps steps={entry.solutionSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
-            </div>
-          ) : solution ? (
-            <Facet label="Solution">
-              <MathProse text={tidyMathText(solution)} asBlock />
-            </Facet>
-          ) : null}
-          {entry.proofSteps.length > 0 ? (
-            <div>
-              <StepLabel label="Proof" toneColor={tone.color} />
+
+          {hasFormalDetails && (
+            <CollapsibleSection label="Formal details" count={detailCount([
+              entry.assumptions.length,
+              formalStatement && formalStatement !== statement,
+              definition,
+              formula,
+              entry.notation.length,
+            ])} defaultOpen={!statement && !entry.gloss}>
+              <div className="dict-section-stack">
+                {entry.assumptions.length > 0 && (
+                  <Facet label="Assumptions">
+                    <ul className="m-0 space-y-1.5 p-0">
+                      {entry.assumptions.map((a, i) => (
+                        <li key={i} className="flex gap-2">
+                          <span aria-hidden className="mt-[7px] h-1 w-1 shrink-0 rounded-full" style={{ background: tone.color }} />
+                          <span><MathProse text={a} /></span>
+                        </li>
+                      ))}
+                    </ul>
+                  </Facet>
+                )}
+                {formalStatement && formalStatement !== statement && (
+                  <Facet label="Formal statement" muted>
+                    <MathProse text={formalStatement} asBlock />
+                  </Facet>
+                )}
+                {definition && (
+                  <Facet label="Definition" muted>
+                    <MathProse text={definition} asBlock />
+                  </Facet>
+                )}
+                {formula && (
+                  <Facet label="Formula" muted>
+                    <MathProse text={formula} asBlock />
+                  </Facet>
+                )}
+                {entry.notation.length > 0 && (
+                  <Facet label="Notation" muted>
+                    <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+                      {entry.notation.map((n, i) => (
+                        <span key={i} className="font-math" style={{ color: "var(--fg-1)" }}>
+                          <MathText text={n} />
+                        </span>
+                      ))}
+                    </div>
+                  </Facet>
+                )}
+              </div>
+            </CollapsibleSection>
+          )}
+
+          {hasSolution && (
+            <CollapsibleSection label="Solution" defaultOpen={entry.kind === "exercise"}>
+              {entry.solutionSteps.length > 0 ? (
+                <Steps steps={entry.solutionSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
+              ) : (
+                <MathProse text={tidyMathText(solution)} asBlock />
+              )}
+            </CollapsibleSection>
+          )}
+
+          {hasStepProof ? (
+            <CollapsibleSection label="Proof">
               <Steps steps={entry.proofSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
-            </div>
+            </CollapsibleSection>
           ) : proof ? (
-            <Proof text={proof} toneColor={tone.color} defaultOpen />
+            <Proof text={proof} toneColor={tone.color} defaultOpen={entry.kind === "theorem"} />
           ) : null}
+
+          {!entry.gloss && !statement && !entry.example && !hasFormalDetails && !hasProof && !hasSolution && (
+            <p className="dict-doc-missing">No written content recorded for this entry yet.</p>
+          )}
         </div>
 
         <footer className="dict-doc-foot">
-          <DictionaryLinkGroup label="Depends on" ids={prereqIds} map={map} onPick={onPickRelated} />
-          <DictionaryLinkGroup label="Used by" ids={usedByIds} map={map} onPick={onPickRelated} />
-          <DictionaryLinkGroup label="Related cases" ids={relatedCaseIds} map={map} onPick={onPickRelated} />
-          <DictionaryLinkGroup label="Exercises" ids={exerciseIds} map={map} onPick={onPickRelated} />
-          {related.length > 0 && (
-            <div className="dict-related">
-              <span className="dict-related-lab">See also</span>
-              <div className="dict-related-chips">
-                {related.map((n) => {
-                  const rtone = getDomainTone(n.domainId);
-                  return (
-                    <button
-                      key={n.id}
-                      type="button"
-                      className="dict-related-chip"
-                      onClick={() => onPickRelated(n.id)}
-                      style={{ borderColor: rtone.border }}
-                    >
-                      <span className="dict-related-dot" style={{ background: rtone.color }} aria-hidden />
-                      <MathText text={n.title} />
-                    </button>
-                  );
-                })}
+          {connectionCount > 0 && (
+            <CollapsibleSection label="Connections" count={connectionCount} defaultOpen={connectionCount <= 8}>
+              <div className="dict-section-stack">
+                <DictionaryLinkGroup label="Depends on" ids={prereqIds} map={map} onPick={onPickRelated} />
+                <DictionaryLinkGroup label="Used by" ids={usedByIds} map={map} onPick={onPickRelated} />
+                <DictionaryLinkGroup label="Related cases" ids={relatedCaseIds} map={map} onPick={onPickRelated} />
+                <DictionaryLinkGroup label="Exercises" ids={exerciseIds} map={map} onPick={onPickRelated} />
               </div>
-            </div>
+            </CollapsibleSection>
+          )}
+          {related.length > 0 && (
+            <CollapsibleSection label="See also" count={related.length} defaultOpen={related.length <= 4}>
+              <DictionaryNodeChips nodes={related} onPick={onPickRelated} />
+            </CollapsibleSection>
           )}
           <button type="button" className="dict-open" onClick={openInAtlas}>
             Show in atlas <ArrowUpRight className="h-3 w-3" aria-hidden />
@@ -425,20 +441,30 @@ function DetailPane({
   );
 }
 
-/** Mono micro-label heading a multi-step Proof / Solution block in the detail pane. */
-function StepLabel({ label, toneColor }: { label: string; toneColor: string }) {
+function CollapsibleSection({
+  label,
+  count,
+  defaultOpen = false,
+  children,
+}: {
+  label: string;
+  count?: number;
+  defaultOpen?: boolean;
+  children: ReactNode;
+}) {
   return (
-    <div className="mb-3 flex items-center gap-2">
-      <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
-        {label}
-      </span>
-      <span
-        aria-hidden
-        className="h-px flex-1"
-        style={{ background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)`, opacity: 0.5 }}
-      />
-    </div>
+    <details className="dict-fold" open={defaultOpen}>
+      <summary className="dict-fold-head">
+        <span>{label}</span>
+        {count != null && <span className="dict-fold-count">{count}</span>}
+      </summary>
+      <div className="dict-fold-body">{children}</div>
+    </details>
   );
+}
+
+function detailCount(parts: Array<unknown>): number {
+  return parts.reduce<number>((count, part) => count + (part ? 1 : 0), 0);
 }
 
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
@@ -463,23 +489,29 @@ function DictionaryLinkGroup({
   return (
     <div className="dict-related">
       <span className="dict-related-lab">{label}</span>
-      <div className="dict-related-chips">
-        {nodes.map((node) => {
-          const tone = getDomainTone(node.domainId);
-          return (
-            <button
-              key={node.id}
-              type="button"
-              className="dict-related-chip"
-              onClick={() => onPick(node.id)}
-              style={{ borderColor: tone.border }}
-            >
-              <span className="dict-related-dot" style={{ background: tone.color }} aria-hidden />
-              <MathText text={node.title} />
-            </button>
-          );
-        })}
-      </div>
+      <DictionaryNodeChips nodes={nodes} onPick={onPick} />
+    </div>
+  );
+}
+
+function DictionaryNodeChips({ nodes, onPick }: { nodes: GraphNode[]; onPick: (id: string) => void }) {
+  return (
+    <div className="dict-related-chips">
+      {nodes.map((node) => {
+        const tone = getDomainTone(node.domainId);
+        return (
+          <button
+            key={node.id}
+            type="button"
+            className="dict-related-chip"
+            onClick={() => onPick(node.id)}
+            style={{ borderColor: tone.border }}
+          >
+            <span className="dict-related-dot" style={{ background: tone.color }} aria-hidden />
+            <MathText text={node.title} />
+          </button>
+        );
+      })}
     </div>
   );
 }
