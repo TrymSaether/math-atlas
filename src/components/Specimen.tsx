@@ -13,7 +13,7 @@
  */
 import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+import { CaretRight } from "@phosphor-icons/react";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { getDomainTone, type DomainTone } from "../lib/colors";
@@ -133,7 +133,7 @@ export function Proof({
         aria-expanded={open}
         className="group flex w-full items-center gap-1.5 focus:outline-none"
       >
-        <ChevronRight
+        <CaretRight
           className="h-3 w-3 shrink-0 transition-transform duration-200"
           style={{ color: toneColor, transform: open ? "rotate(90deg)" : "none" }}
           aria-hidden

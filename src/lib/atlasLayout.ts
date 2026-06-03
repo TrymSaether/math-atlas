@@ -167,7 +167,6 @@ export function computeSwimlaneLayout(
   }
 
   let laneTop = 0;
-  let maxLaneWidth = 0;
   for (const domainId of laneOrder) {
     const members = nodesByDomain.get(domainId);
     if (!members || members.length === 0) continue;
@@ -226,7 +225,6 @@ export function computeSwimlaneLayout(
     }
 
     const laneWidth = cursorX - DEPTH_GAP + LANE_PAD_X;
-    maxLaneWidth = Math.max(maxLaneWidth, laneWidth);
     domainBounds.set(domainId, {
       x: 0,
       y: laneTop,
@@ -238,8 +236,10 @@ export function computeSwimlaneLayout(
     laneTop += laneHeight + LANE_GAP;
   }
 
-  // Normalize every band to the widest lane so they read as aligned geography.
-  for (const bounds of domainBounds.values()) bounds.width = maxLaneWidth;
+  // Each band is only as wide as its own content. Bands share a left edge (x:0)
+  // where the watermark label lives, so they still read as aligned geography —
+  // but sparse lanes no longer stretch to the widest lane, which otherwise left
+  // most bands 40%+ empty and forced an unreadable fit-all zoom.
 
   return { positions, domainBounds };
 }

@@ -67,7 +67,6 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
 
   const lod = data.lod ?? "near";
   const showMeta = lod === "near" || lod === "mid";
-  const showFooter = lod === "near";
   // At distance the card is just a label — let the title grow and use more lines.
   const titleClass =
     lod === "far"
@@ -129,43 +128,34 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
         <div className="flex min-w-0 items-center gap-1.5">
           {categoryMeta.glyphFilled ? (
             <span
-              className="flex h-[17px] w-[17px] shrink-0 items-center justify-center rounded-full"
+              className="flex h-[16px] w-[16px] shrink-0 items-center justify-center rounded-full"
               style={{ background: tone.color }}
               aria-hidden
             >
               <CategoryIcon
                 className="h-[10px] w-[10px]"
-                strokeWidth={2.75}
+                weight="bold"
                 style={{ color: "var(--fg-on-color)" }}
               />
             </span>
           ) : (
             <CategoryIcon
               className="h-[13px] w-[13px] shrink-0"
-              strokeWidth={2.25}
+              weight="regular"
               style={{ color: "var(--fg-3)" }}
               aria-hidden
             />
           )}
+          {/* One quiet identity label — abbrev + reference number read as
+              "Thm 2.3", so the number is never a cryptic bare digit. */}
           <span
-            className="inline-flex h-[18px] shrink-0 items-center rounded-[5px] border px-1.5 text-ui-tiny font-bold uppercase tracking-wide"
-            style={{
-              background: "var(--surface-2)",
-              borderColor: "var(--border)",
-              color: "var(--fg-2)",
-            }}
+            className="min-w-0 truncate text-ui-caption font-medium tabular-nums"
+            style={{ color: "var(--fg-3)" }}
+            title={node.id}
           >
             {kindAbbrev(node.kind)}
+            {node.number ? ` ${node.number}` : ""}
           </span>
-          {node.number && (
-            <span
-              className="min-w-0 truncate font-mono text-ui-caption font-semibold tabular-nums"
-              style={{ color: tone.color }}
-              title={node.id}
-            >
-              {node.number}
-            </span>
-          )}
           {isLandmark && (
             <span
               className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full"
@@ -191,14 +181,6 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       >
         <MathText text={node.title} />
       </div>
-
-      {showFooter && (
-        <div className="mt-auto flex items-center gap-1.5 pt-2">
-          <span className="min-w-0 truncate text-ui-caption font-medium" style={{ color: "var(--fg-3)" }}>
-            {node.topicCluster}
-          </span>
-        </div>
-      )}
 
       {hasOutgoing && (
         <Handle

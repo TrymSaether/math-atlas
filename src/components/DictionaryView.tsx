@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import { MAPS, type LoadedMap, type MapId } from "../data";

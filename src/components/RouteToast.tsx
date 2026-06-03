@@ -1,4 +1,4 @@
-import { ArrowRight, RotateCcw, X } from "lucide-react";
+import { ArrowRight, ArrowCounterClockwise as RotateCcw, X } from "@phosphor-icons/react";
 import { useStore } from "../store";
 
 /**

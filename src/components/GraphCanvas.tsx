@@ -387,8 +387,14 @@ function LoadedGraph({ map }: { map: LoadedMap }) {
     return out;
   }, [filteredEdges, highlightedEdgeIds, focusSet, selectedId, visibleIds, edgeLODHidden, view, map.metrics.reducedEdgeIds, routeViz, routeRunKey]);
 
+  // Default view shows the entire map. The swimlane layout is built to be
+  // compact (bands hug their content) so fit-all reads as a legible overview
+  // rather than a sliver lost in dead space.
   useEffect(() => {
-    const timeout = window.setTimeout(() => rf.fitView({ padding: 0.18, duration: view === "cluster" ? 520 : 0 }), 40);
+    const timeout = window.setTimeout(
+      () => rf.fitView({ padding: 0.12, duration: view === "cluster" ? 520 : 0 }),
+      40,
+    );
     return () => window.clearTimeout(timeout);
   }, [rf, map.data.id, view]);
 

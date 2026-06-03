@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useReducer } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Check, ChevronLeft, ChevronRight, RotateCcw, Shuffle, Sparkles, X } from "lucide-react";
+import { Check, CaretLeft as ChevronLeft, CaretRight as ChevronRight, ArrowCounterClockwise as RotateCcw, Shuffle, Sparkle as Sparkles, X } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";

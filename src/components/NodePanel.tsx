@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { X, ChevronUp, ChevronDown, BookOpen } from "lucide-react";
+import { X, CaretUp, CaretDown, BookOpen } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import type { LoadedMap } from "../data";
@@ -138,10 +138,10 @@ function PanelContent({ node, map, onClose }: { node: GraphNode; map: LoadedMap;
         <div className="mb-2.5 flex items-center justify-between">
           <div className="flex items-center gap-0.5">
             <IconButton label="Previous in domain" disabled={!prev} onClick={() => prev && select(prev.id)}>
-              <ChevronUp className="h-4 w-4" />
+              <CaretUp className="h-4 w-4" />
             </IconButton>
             <IconButton label="Next in domain" disabled={!next} onClick={() => next && select(next.id)}>
-              <ChevronDown className="h-4 w-4" />
+              <CaretDown className="h-4 w-4" />
             </IconButton>
             {peerIdx >= 0 && (
               <span className="ml-1.5 font-mono text-ui-meta" style={{ color: "var(--fg-3)" }}>
