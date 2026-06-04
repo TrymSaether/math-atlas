@@ -11,6 +11,10 @@ import { type FigureProps } from "./types";
  * falling back to the static `ThemedDiagram`.
  */
 export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<FigureProps>>> = {
+  parseval_identity: lazy(() => import("./ParsevalFigure")),
+  plancherel_theorem: lazy(() => import("./ParsevalFigure")),
+  riemann_lebesgue_lemma: lazy(() => import("./RiemannLebesgueFigure")),
+  mean_square_convergence: lazy(() => import("./L2ConvergenceFigure")),
   convolution: lazy(() => import("./ConvolutionFigure")),
   convolution_theorem: lazy(() => import("./ConvolutionFigure")),
   circular_convolution: lazy(() => import("./ConvolutionFigure")),
