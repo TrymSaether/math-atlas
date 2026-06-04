@@ -8,10 +8,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev        # Start Vite dev server
 npm run build      # Type-check + production build (tsc -b && vite build)
 npm run preview    # Preview the production build locally
-
-# Data pipeline (Python scripts)
-npm run extract    # Extract nodes from raw text + merge → data/topology.raw.json
-npm run merge      # Re-merge only (python3 scripts/merge.py)
 ```
 
 No test suite is configured. Type-check via `tsc --noEmit` or `npm run build`.
@@ -47,10 +43,3 @@ Math Atlas is a React + ReactFlow application that renders mathematical knowledg
 CSS variables in `src/index.css` define light ("paper") and dark ("chalkboard") themes via `[data-theme]` on `<html>`. Theme is persisted to `localStorage` under the key `math-map-theme`.
 
 Domain hues are resolved by `src/lib/colors.ts` from the 8-color palette (`--blue`, `--green`, …), which is the single source of truth — every tone is a CSS variable, so hues retune automatically across all themes. A domain's hue comes from its authored data, not its array position: `resolveDomainTones(domains)` pins an explicit `palette` key first, then snaps each authored hex `color` to its nearest palette anchor, keeping hues distinct. The result is published to a bare-id registry (`registerDomainTones`, called from `buildLoadedMap` and `App.tsx`) that `getDomainTone(domainId)` reads. `DomainTone` carries `color` / `tint` / `border` plus `text` (a theme-adaptive ink for text on `tint`). The domains' JSON `tint` / `border` fields are legacy/advisory and no longer rendered.
-
-### Data pipeline scripts (`scripts/`)
-
-Python scripts for extracting graph data from PDF lecture notes:
-- `extract.py` — parses `content/topology.raw.txt` (produced by `pdftotext -layout`) into `data/topology.raw.json`
-- `llm_extract.py` — LLM-assisted extraction
-- `merge.py` — merges raw extracted data with manually verified data (`data/topology.verified.json`)

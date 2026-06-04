@@ -8,10 +8,6 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 npm run dev        # Start Vite dev server
 npm run build      # Type-check + production build (tsc -b && vite build)
 npm run preview    # Preview the production build locally
-
-# Data pipeline (Python scripts)
-npm run extract    # Extract nodes from raw text + merge → data/topology.raw.json
-npm run merge      # Re-merge only (python3 scripts/merge.py)
 ```
 
 No test suite is configured. Type-check via `tsc --noEmit` or `npm run build`.
@@ -45,10 +41,3 @@ Math Atlas is a React + ReactFlow application that renders mathematical knowledg
 ### Theming
 
 CSS variables in `src/index.css` define light ("paper") and dark ("chalkboard") themes via `[data-theme]` on `<html>`. Domain colors are assigned dynamically at runtime by `src/lib/colors.ts` (`assignDomainTones` / `getDomainTone`) using an 8-color palette. Theme is persisted to `localStorage` under the key `math-map-theme`.
-
-### Data pipeline scripts (`scripts/`)
-
-Python scripts for extracting graph data from PDF lecture notes:
-- `extract.py` — parses `content/topology.raw.txt` (produced by `pdftotext -layout`) into `data/topology.raw.json`
-- `llm_extract.py` — LLM-assisted extraction
-- `merge.py` — merges raw extracted data with manually verified data (`data/topology.verified.json`)
