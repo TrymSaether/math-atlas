@@ -176,7 +176,7 @@
         "notation": "$$\\langle\\varphi_j,\\varphi_k\\rangle=\\delta_{jk}$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["inner_product_space", "complex_exponential"]
+          "logical_dependency": ["inner_product_space"]
         },
         "outgoing_relations": [],
         "related": ["inner_product_space", "complex_exponential"],
@@ -299,6 +299,34 @@
         "metadata": {
           "tags": ["foundation"],
           "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
+        "id": "continuous_functions_torus",
+        "label": "Continuous Functions on $\\mathbb T$",
+        "kind": "structure",
+        "domain": "foundations",
+        "statement": "Continuous $2\\pi$-periodic functions with the uniform norm.",
+        "formal_statement": "$C(\\mathbb T)$ is the space of continuous complex-valued functions on $\\mathbb T$, equivalently continuous $2\\pi$-periodic functions on $\\mathbb R$. Its norm is $\\|f\\|_\\infty=\\sup_{x\\in\\mathbb T}|f(x)|$.",
+        "definition": "$$C(\\mathbb T)=\\{f:\\mathbb T\\to\\mathbb C: f\\ \\text{continuous}\\},\\qquad \\|f\\|_\\infty=\\sup_{x\\in\\mathbb T}|f(x)|.$$",
+        "intuition": "This is the natural setting for uniform Fourier approximation. Compactness of $\\mathbb T$ turns continuity into uniform continuity, which is exactly what good kernels exploit.",
+        "proof": null,
+        "notation": "$$C(\\mathbb T),\\ \\|f\\|_\\infty$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["torus_circle", "periodic_function"]
+        },
+        "outgoing_relations": [],
+        "related": ["torus_circle", "fejer_theorem", "weierstrass_approximation_theorem"],
+        "assumptions": [
+          "The topology is the usual compact topology on $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$."
+        ],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation"],
+          "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
       },
@@ -489,6 +517,62 @@
           "tags": ["foundation"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Corollary 2.4; Ch.5 Proposition 1.1; Ch.5 Theorem 1.3"
+        }
+      },
+      {
+        "id": "holder_lipschitz_continuity",
+        "label": "Hölder and Lipschitz Continuity",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A quantitative continuity condition controlling how fast function values can change.",
+        "formal_statement": "A function $f$ is Hölder continuous of order $0<\\alpha\\le 1$ if there is $C>0$ such that $|f(x)-f(y)|\\le C|x-y|^\\alpha$ for all $x,y$. The case $\\alpha=1$ is the Lipschitz condition.",
+        "definition": "$$|f(x)-f(y)|\\le C|x-y|^\\alpha,\\qquad 0<\\alpha\\le1.$$",
+        "intuition": "Hölder regularity turns smoothness into a usable numerical bound. In Fourier series, this bound directly controls coefficient decay and, for large enough exponent, absolute convergence.",
+        "proof": null,
+        "notation": "$$C^{0,\\alpha},\\ \\operatorname{Lip}(C)$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["continuous_functions_torus"]
+        },
+        "outgoing_relations": [],
+        "related": ["decay_smoothness", "ss3_3_ex15", "ss3_3_ex16"],
+        "assumptions": [
+          "The displayed condition is metric-dependent; in the periodic setting distances are taken on $\\mathbb T$ or on a chosen period interval with periodic extension."
+        ],
+        "ref": "Stein–Shakarchi: Ch.3 Exercise 15 and Exercise 16",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation"],
+          "syllabus_priority": "medium",
+          "source": "Stein–Shakarchi: Ch.3 Exercise 15 and Exercise 16"
+        }
+      },
+      {
+        "id": "schwartz_density",
+        "label": "Schwartz Functions Are Dense",
+        "kind": "theorem",
+        "domain": "foundations",
+        "statement": "Schwartz functions approximate $L^p$ functions on $\\mathbb R$ in norm.",
+        "formal_statement": "For $1\\le p<\\infty$, $\\mathcal S(\\mathbb R)$ is dense in $L^p(\\mathbb R)$. In particular, every $f\\in L^2(\\mathbb R)$ has $f_k\\in\\mathcal S(\\mathbb R)$ with $\\|f_k-f\\|_2\\to0$.",
+        "formula": "$$\\overline{\\mathcal S(\\mathbb R)}^{\\|\\cdot\\|_p}=L^p(\\mathbb R),\\qquad 1\\le p<\\infty.$$",
+        "intuition": "Many Fourier-transform proofs are first done for rapidly decreasing smooth functions. Density is the bridge that lets those identities extend to rougher $L^p$ data by approximation.",
+        "proof": null,
+        "notation": "$$\\mathcal S(\\mathbb R)\\text{ dense in }L^p(\\mathbb R)$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["schwartz_space", "l1_space_real_line", "l2_space_real_line"]
+        },
+        "outgoing_relations": [],
+        "related": ["plancherel_theorem", "fourier_inversion", "schwartz_space"],
+        "assumptions": [
+          "The statement is for finite $p$; $\\mathcal S(\\mathbb R)$ is not dense in $L^\\infty$ in the essential-supremum norm."
+        ],
+        "ref": "Stein–Shakarchi: Ch.5 Theorem 1.12",
+        "book_refs": ["c5_thm_1_12"],
+        "metadata": {
+          "tags": ["foundation", "transform"],
+          "syllabus_priority": "medium",
+          "source": "Stein–Shakarchi: Ch.5 Theorem 1.12"
         }
       },
       {
@@ -736,14 +820,15 @@
             "partial_sum",
             "hilbert_space",
             "mean_square_convergence",
-            "fourier_coefficient"
+            "fourier_coefficient",
+            "trigonometric_system_complete"
           ]
         },
         "outgoing_relations": [],
         "related": ["bessel_inequality", "plancherel_theorem"],
         "assumptions": [
           "Equality uses completeness of the trigonometric system in $L^2(\\mathbb T)$.",
-          "Equality uses completeness of the trigonometric system in $L^2(\\mathbb T)$, not merely orthogonality.",
+          "Completeness, not merely orthogonality, is the input that upgrades Bessel's inequality to equality.",
           "The mixed inner-product identity follows from the norm identity by polarization."
         ],
         "ref": "Stein–Shakarchi: Fourier Analysis, Ch.3 Lemma 1.5 and Theorem 1.3; UCI lecture notes on Bessel inequality and Parseval identity",
@@ -1036,16 +1121,50 @@
         }
       },
       {
+        "id": "trigonometric_system_complete",
+        "label": "Completeness of the Trigonometric System",
+        "kind": "theorem",
+        "domain": "series",
+        "statement": "The exponentials $e^{inx}$ form a complete orthonormal system in $L^2(\\mathbb T)$.",
+        "formal_statement": "If $f\\in L^2(\\mathbb T)$ and $\\langle f,e^{inx}\\rangle=0$ for every $n\\in\\mathbb Z$, then $f=0$ in $L^2(\\mathbb T)$. Equivalently, the closed linear span of $\\{e^{inx}:n\\in\\mathbb Z\\}$ is all of $L^2(\\mathbb T)$.",
+        "formula": "$$\\overline{\\operatorname{span}\\{e^{inx}:n\\in\\mathbb Z\\}}^{\\|\\cdot\\|_2}=L^2(\\mathbb T).$$",
+        "intuition": "Orthogonality alone only says Fourier coefficients are coordinates in some directions. Completeness says there are no hidden $L^2$ directions left over after all trigonometric frequencies are included.",
+        "proof": null,
+        "notation": "$$\\{e^{inx}\\}_{n\\in\\mathbb Z}\\text{ complete in }L^2(\\mathbb T)$$",
+        "proof_dependencies": ["fejer_theorem", "best_approximation", "l2_space"],
+        "dependencies": {
+          "logical_dependency": [
+            "orthonormal_system",
+            "l2_space",
+            "trigonometric_polynomial",
+            "fejer_theorem",
+            "best_approximation"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["mean_square_convergence", "parseval_identity", "best_approximation"],
+        "assumptions": [
+          "Completeness is an $L^2$ norm statement; it does not assert pointwise convergence of ordinary partial sums."
+        ],
+        "ref": "Stein–Shakarchi: Ch.3 Theorem 1.1 and Lemma 3.2",
+        "book_refs": ["c3_thm_1_1", "c3_lem_3_2"],
+        "metadata": {
+          "tags": ["series"],
+          "syllabus_priority": "core",
+          "source": "Stein–Shakarchi: Ch.3 Theorem 1.1 and Lemma 3.2"
+        }
+      },
+      {
         "id": "good_kernel",
         "label": "Good Kernel (Approximate Identity)",
         "kind": "definition",
         "domain": "convergence",
         "statement": "A normalized family of kernels whose mass concentrates near $0$, so convolution approximates the identity.",
-        "formal_statement": "A family $\\{K_n\\}$ on $\\mathbb T$ is a good kernel if $\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(x)\\,dx=1$, $\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(x)|\\,dx\\le M$, and for every $\\delta>0$, $\\frac1{2\\pi}\\int_{\\delta\\le |x|\\le\\pi}|K_n(x)|\\,dx\\to0$. Then $K_n*f\\to f$ uniformly for $f\\in C(\\mathbb T)$.",
+        "formal_statement": "A family $\\{K_n\\}$ on $\\mathbb T$ is a good kernel if $\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(x)\\,dx=1$, $\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(x)|\\,dx\\le M$, and for every $\\delta>0$, $\\frac1{2\\pi}\\int_{\\delta\\le |x|\\le\\pi}|K_n(x)|\\,dx\\to0$.",
         "definition": "$$\\begin{aligned} \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(x)\\,dx&=1,\\\\ \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(x)|\\,dx&\\le M,\\\\ \\forall\\delta>0:\\quad \\frac1{2\\pi}\\int_{\\delta\\le |x|\\le\\pi}|K_n(x)|\\,dx&\\xrightarrow[n\\to\\infty]{}0. \\end{aligned}$$",
         "intuition": "A good kernel is a controlled bump whose mass collapses to the origin. Convolution replaces $f(x)$ by a weighted local average near $x$, and the average becomes exact in the limit.",
         "proof": null,
-        "notation": "$K_n*f\\to f$ uniformly on $C(\\mathbb T)$",
+        "notation": "$$\\{K_n\\}_{n\\ge 1}$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": ["convolution", "l1_space"]
@@ -1235,6 +1354,34 @@
         }
       },
       {
+        "id": "summation_by_parts",
+        "label": "Summation by Parts",
+        "kind": "method",
+        "domain": "convergence",
+        "statement": "The discrete integration-by-parts identity used to control oscillatory sums.",
+        "formal_statement": "Let $B_k=\\sum_{n=M}^{k}b_n$. Then $$\\sum_{n=M}^{N}a_nb_n=a_NB_N-a_MB_{M-1}-\\sum_{n=M}^{N-1}(a_{n+1}-a_n)B_n,$$ with the usual convention for the lower partial sum. In particular, bounded partial sums of $\\sum b_n$ combined with monotone $a_n\\to0$ give Dirichlet's test.",
+        "formula": "$$\\sum_{n=M}^{N}a_nb_n=a_NB_N-a_MB_{M-1}-\\sum_{n=M}^{N-1}(a_{n+1}-a_n)B_n.$$",
+        "intuition": "Summation by parts transfers difficulty from an oscillatory factor to its partial sums. If those partial sums stay bounded and the other factor decreases, the oscillations force convergence.",
+        "proof": null,
+        "notation": "$$B_k=\\sum_{n=M}^{k}b_n$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["partial_sum"]
+        },
+        "outgoing_relations": [],
+        "related": ["dirichlet_convergence_theorem", "ss2_6_ex7", "ss3_3_ex17"],
+        "assumptions": [
+          "The displayed identity is finite; convergence conclusions require separate boundedness and monotonicity hypotheses."
+        ],
+        "ref": "Stein–Shakarchi: Ch.2 Exercise 7",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["convergence"],
+          "syllabus_priority": "medium",
+          "source": "Stein–Shakarchi: Ch.2 Exercise 7"
+        }
+      },
+      {
         "id": "abel_summation",
         "label": "Abel Summation",
         "kind": "construction",
@@ -1405,12 +1552,14 @@
             "fejer_kernel",
             "cesaro_summation",
             "convolution",
-            "good_kernel"
+            "good_kernel",
+            "continuous_functions_torus"
           ]
         },
         "related": [
           "fejer_kernel",
           "good_kernel",
+          "continuous_functions_torus",
           "weierstrass_approximation_theorem",
           "fourier_series_uniqueness_theorem",
           "dirichlet_kernel"
@@ -1452,11 +1601,17 @@
             "parseval_identity",
             "partial_sum",
             "l2_space",
-            "best_approximation"
+            "best_approximation",
+            "trigonometric_system_complete"
           ]
         },
         "outgoing_relations": [],
-        "related": ["l2_space", "parseval_identity", "best_approximation"],
+        "related": [
+          "l2_space",
+          "parseval_identity",
+          "best_approximation",
+          "trigonometric_system_complete"
+        ],
         "assumptions": [
           "Convergence is in the $L^2$-norm, not necessarily pointwise."
         ],
@@ -1648,7 +1803,7 @@
         "formula": "$$\\exists f\\in C(\\mathbb T),\\ \\exists x_0\\in\\mathbb T:\\quad \\nexists\\lim_{N\\to\\infty}S_Nf(x_0).$$",
         "intuition": "Continuity alone does not control the Dirichlet kernel strongly enough. This counterexample explains why Fejer averaging is not just a cosmetic improvement.",
         "proof": null,
-        "notation": "$$S_Nf(x_0)$ diverges",
+        "notation": "$$S_Nf(x_0)\\ \\text{diverges}$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1684,7 +1839,7 @@
         "definition": "$$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx.$$",
         "intuition": "Fourier coefficients measure alignment with discrete waves on the circle; the Fourier transform does the same with a continuum of waves on the line.",
         "proof": null,
-        "notation": "$\\hat f(\\xi)=\\mathcal Ff(\\xi)$$",
+        "notation": "$$\\hat f(\\xi)=\\mathcal Ff(\\xi)$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
@@ -1900,7 +2055,8 @@
           "fourier_inversion",
           "fubini_tonelli",
           "l2_space_real_line",
-          "hilbert_space"
+          "hilbert_space",
+          "schwartz_density"
         ],
         "dependencies": {
           "logical_dependency": [
@@ -1909,7 +2065,8 @@
             "schwartz_space",
             "fourier_transform_convention",
             "fourier_inversion",
-            "fubini_tonelli"
+            "fubini_tonelli",
+            "schwartz_density"
           ]
         },
         "outgoing_relations": [],
@@ -2102,13 +2259,14 @@
           "logical_dependency": [
             "fourier_transform",
             "fourier_transform_convention",
-            "l1_space_real_line"
+            "lebesgue_integral"
           ]
         },
         "outgoing_relations": [],
         "related": ["fourier_transform"],
         "assumptions": [
-          "Uses the same $2\\pi$-frequency convention as the one-dimensional transform."
+          "Uses the same $2\\pi$-frequency convention as the one-dimensional transform.",
+          "$L^1(\\mathbb R^d)$ means Lebesgue integrability on $\\mathbb R^d$."
         ],
         "ref": "Stein–Shakarchi: Ch.6 Corollary 2.2; Ch.6 Corollary 2.3; Ch.6 Proposition 2.1",
         "book_refs": ["c6_cor_2_2", "c6_cor_2_3", "c6_prop_2_1"],
@@ -2610,6 +2768,38 @@
         }
       },
       {
+        "id": "laplacian",
+        "label": "Laplacian",
+        "kind": "operator",
+        "domain": "applications",
+        "statement": "The second-order spatial differential operator diagonalized by the Fourier transform.",
+        "formal_statement": "On $\\mathbb R^d$, $\\Delta f=\\sum_{j=1}^{d}\\partial_{x_j}^2f$. With the graph's Fourier convention, $\\widehat{\\Delta f}(\\xi)=-4\\pi^2|\\xi|^2\\hat f(\\xi)$ for Schwartz functions.",
+        "definition": "$$\\Delta f=\\sum_{j=1}^{d}\\frac{\\partial^2 f}{\\partial x_j^2},\\qquad \\widehat{\\Delta f}(\\xi)=-4\\pi^2|\\xi|^2\\widehat f(\\xi).$$",
+        "intuition": "The Laplacian measures curvature or diffusion pressure. Fourier transform turns it into multiplication by $-4\\pi^2|\\xi|^2$, which is why heat, wave, and Schrödinger equations reduce to scalar frequency equations.",
+        "proof": null,
+        "notation": "$$\\Delta,\\ -4\\pi^2|\\xi|^2$$",
+        "proof_dependencies": ["differentiation_rule", "fourier_transform_euclidean_space"],
+        "dependencies": {
+          "logical_dependency": [
+            "differentiation_rule",
+            "fourier_transform_euclidean_space",
+            "fourier_transform_convention"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["heat_equation", "wave_equation", "schrodinger_equation"],
+        "assumptions": [
+          "The multiplier identity is stated first for Schwartz functions; weaker solution theories use density or distributions."
+        ],
+        "ref": "Stein–Shakarchi: Ch.5 and Ch.6 Fourier transform applications to PDE",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["applications", "pde"],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
         "id": "heat_equation",
         "label": "Heat Equation",
         "kind": "application",
@@ -2627,11 +2817,12 @@
             "fourier_series",
             "good_kernel",
             "separation_of_variables",
-            "heat_kernel_real_line"
+            "heat_kernel_real_line",
+            "laplacian"
           ]
         },
         "outgoing_relations": [],
-        "related": ["fourier_series", "good_kernel"],
+        "related": ["fourier_series", "good_kernel", "laplacian"],
         "assumptions": [
           "Constants depend on whether the circle basis is $e^{inx}$ or the real-line transform convention is used."
         ],
@@ -2660,11 +2851,12 @@
           "logical_dependency": [
             "fourier_series",
             "separation_of_variables",
-            "complex_exponential"
+            "complex_exponential",
+            "laplacian"
           ]
         },
         "outgoing_relations": [],
-        "related": ["fourier_series"],
+        "related": ["fourier_series", "laplacian"],
         "assumptions": [
           "Boundary conditions determine whether sine series, cosine series, or complex Fourier series are appropriate."
         ],
@@ -3090,7 +3282,11 @@
         "notation": "$$\\overline{\\mathrm{Trig}}^{\\|\\cdot\\|_\\infty}=C(\\mathbb T)$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fejer_theorem", "trigonometric_polynomial"]
+          "logical_dependency": [
+            "fejer_theorem",
+            "trigonometric_polynomial",
+            "continuous_functions_torus"
+          ]
         },
         "outgoing_relations": [],
         "related": ["fejer_theorem", "trigonometric_polynomial"],
@@ -3268,6 +3464,69 @@
         ]
       },
       {
+        "id": "fourier_scaling_rule",
+        "label": "Scaling Rule",
+        "kind": "property",
+        "domain": "transform",
+        "statement": "Dilation in physical space produces inverse dilation in frequency.",
+        "formal_statement": "For $a\\ne0$ and suitable $f$, if $g(x)=f(ax)$, then $\\widehat g(\\xi)=|a|^{-1}\\hat f(\\xi/a)$. More generally, if $g(x)=|a|^{-1}f(x/a)$, then $\\widehat g(\\xi)=\\hat f(a\\xi)$.",
+        "definition": "$$\\widehat{f(a\\cdot)}(\\xi)=|a|^{-1}\\widehat f(\\xi/a),\\qquad \\widehat{|a|^{-1}f(\\cdot/a)}(\\xi)=\\widehat f(a\\xi).$$",
+        "intuition": "Squeezing a function in space spreads its transform in frequency, while spreading in space concentrates frequency. This is the calculation behind rescaled Gaussians and approximate identities.",
+        "proof": null,
+        "notation": "$$f(x)\\mapsto f(ax)$$",
+        "proof_dependencies": ["fourier_transform", "fourier_transform_convention"],
+        "dependencies": {
+          "logical_dependency": ["fourier_transform", "fourier_transform_convention"]
+        },
+        "outgoing_relations": [],
+        "related": ["gaussian_transform", "heat_kernel_real_line", "sampling_theorem"],
+        "assumptions": [
+          "The formulas use the graph's $e^{-2\\pi i x\\xi}$ convention and hold first for $L^1$ or Schwartz functions."
+        ],
+        "ref": "Stein–Shakarchi: Ch.5 Proposition 1.2",
+        "book_refs": ["c5_prop_1_2"],
+        "metadata": {
+          "tags": ["transform"],
+          "syllabus_priority": "medium",
+          "source": "Stein–Shakarchi: Ch.5 Proposition 1.2"
+        }
+      },
+      {
+        "id": "hausdorff_young_inequality",
+        "label": "Hausdorff–Young Inequality",
+        "kind": "theorem",
+        "domain": "transform",
+        "statement": "The Fourier transform maps $L^p$ into $L^{p'}$ for $1\\le p\\le2$.",
+        "formal_statement": "With the graph's Fourier convention, if $1\\le p\\le2$ and $p'=p/(p-1)$, then $\\|\\hat f\\|_{p'}\\le\\|f\\|_p$ for $f\\in L^p(\\mathbb R)$, with the endpoint $p=1$ interpreted as $\\|\\hat f\\|_\\infty\\le\\|f\\|_1$.",
+        "formula": "$$1\\le p\\le2,\\quad \\frac1p+\\frac1{p'}=1\\quad\\Longrightarrow\\quad \\|\\widehat f\\|_{p'}\\le\\|f\\|_p.$$",
+        "intuition": "Hausdorff-Young interpolates between the obvious $L^1\\to L^\\infty$ bound and Plancherel's $L^2\\to L^2$ isometry. It is the standard $L^p$ mapping theorem before the transform stops improving integrability past $p=2$.",
+        "proof": null,
+        "notation": "$$\\mathcal F:L^p\\to L^{p'}$$",
+        "proof_dependencies": ["fourier_transform", "fourier_transform_l1_continuity_decay", "plancherel_theorem"],
+        "dependencies": {
+          "logical_dependency": [
+            "fourier_transform",
+            "l1_space_real_line",
+            "l2_space_real_line",
+            "fourier_transform_l1_continuity_decay",
+            "plancherel_theorem"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["plancherel_theorem", "fourier_transform_l1_continuity_decay"],
+        "assumptions": [
+          "The constant is convention-dependent; for the normalized $2\\pi$ convention the standard interpolation form has constant at most $1$.",
+          "The statement is for $1\\le p\\le2$; for $p>2$ the Fourier transform is not generally defined as an $L^{p'}$ function."
+        ],
+        "ref": "Stein–Shakarchi: Ch.5 and standard Riesz-Thorin interpolation consequence",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["transform"],
+          "syllabus_priority": "medium",
+          "source": "Curated concept graph"
+        }
+      },
+      {
         "id": "band_limited",
         "label": "Band-Limited Function",
         "kind": "definition",
@@ -3348,7 +3607,8 @@
             "gaussian_transform",
             "convolution_theorem",
             "good_kernel",
-            "fourier_transform_convention"
+            "fourier_transform_convention",
+            "fourier_scaling_rule"
           ]
         },
         "outgoing_relations": [],
@@ -3378,7 +3638,7 @@
         "notation": "$$\\varphi\\in C_c^\\infty(\\mathbb R)$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["schwartz_space"]
+          "logical_dependency": ["support_of_function"]
         },
         "outgoing_relations": [],
         "related": ["schwartz_space"],
@@ -3627,11 +3887,12 @@
           "logical_dependency": [
             "fourier_transform",
             "differentiation_rule",
-            "fourier_transform_convention"
+            "fourier_transform_convention",
+            "laplacian"
           ]
         },
         "outgoing_relations": [],
-        "related": ["fourier_transform", "differentiation_rule"],
+        "related": ["fourier_transform", "differentiation_rule", "laplacian"],
         "assumptions": [
           "Uses the Fourier convention $e^{-2\\pi ix\\xi}$. Regularity assumptions depend on whether one wants classical, $L^2$, or distributional solutions."
         ],
@@ -4081,7 +4342,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["dirichlet", "number_theory"],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -4107,7 +4368,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["dirichlet", "number_theory"],
+          "tags": ["dirichlet", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -4135,7 +4396,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["dirichlet", "number_theory", "zeta"],
+          "tags": ["dirichlet", "number-theory", "zeta"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -4418,7 +4679,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["transform", "complex_analysis"],
+          "tags": ["transform", "complex-analysis"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -4460,8 +4721,8 @@
         "kind": "definition",
         "domain": "transform",
         "statement": "The centered second moment measuring spread.",
-        "formal_statement": "For a normalized density $\\rho$, $\\mu=\\int x\\rho(x)\\,dx$ and $\\Delta_x^2=\\int (x-\\mu)^2\\rho(x)\\,dx$. In uncertainty estimates, $\\rho(x)=|f(x)|^2/\\|f\\|_2^2$.",
-        "definition": "$$\\mu=\\int x\\rho(x)\\,dx,\\qquad \\Delta_x^2=\\int (x-\\mu)^2\\rho(x)\\,dx.$$",
+        "formal_statement": "For a nonnegative normalized density $\\rho$ on $\\mathbb R$ with finite second moment, $\\mu=\\int_{\\mathbb R} x\\rho(x)\\,dx$ and $\\Delta_x^2=\\int_{\\mathbb R}(x-\\mu)^2\\rho(x)\\,dx$. In uncertainty estimates for nonzero $f\\in L^2(\\mathbb R)$, $\\rho(x)=|f(x)|^2/\\|f\\|_2^2$ when the relevant moments are finite.",
+        "definition": "$$\\rho\\ge0,\\quad \\int_{\\mathbb R}\\rho(x)\\,dx=1,\\quad \\mu=\\int_{\\mathbb R}x\\rho(x)\\,dx,\\quad \\Delta_x^2=\\int_{\\mathbb R}(x-\\mu)^2\\rho(x)\\,dx.$$",
         "intuition": "The uncertainty principle is about spread around the center of mass, not just raw distance from zero.",
         "proof": null,
         "notation": "$$\\Delta_x,\\ \\Delta_\\xi$$",
@@ -4471,7 +4732,10 @@
         },
         "outgoing_relations": [],
         "related": ["uncertainty_principle"],
-        "assumptions": [],
+        "assumptions": [
+          "$\\rho$ has finite first and second moments.",
+          "For uncertainty estimates, $f\\ne0$ and the position and frequency variances are finite."
+        ],
         "ref": "",
         "book_refs": [],
         "metadata": {
@@ -4532,7 +4796,7 @@
         "definition": "$$C_m(\\mathbb R^d)=\\left\\{f\\in C(\\mathbb R^d):\\exists A>0\\ \\text{s.t.}\\ |f(x)|\\le \\frac{A}{(1+|x|)^m}\\ \\forall x\\in\\mathbb R^d\\right\\}.$$",
         "formula": null,
         "notation": "$$C_m(\\mathbb R^d),\\qquad f(x)=O\\!\\left((1+|x|)^{-m}\\right)\\quad(|x|\\to\\infty)$$",
-        "intuition": "The class $C_m(\\mathbb R^d)$ measures polynomial tail decay. Larger $m$ means the function must fade faster at infinity. The class is useful because it gives quick thresholds for integrability: in $\\mathbb R^d$, decay faster than $|x|^{-d}$ gives $L^1$ control, and decay faster than $|x|^{-d/2}$ gives $L^2$ control. So $C_m(\\mathbb R^d)$ is a bookkeeping device for how much tail mass a function is allowed to carry, because apparently infinity was not already inconvenient enough.",
+        "intuition": "The class $C_m(\\mathbb R^d)$ measures polynomial tail decay. Larger $m$ means the function must fade faster at infinity. The class is useful because it gives quick thresholds for integrability: in $\\mathbb R^d$, decay faster than $|x|^{-d}$ gives $L^1$ control, and decay faster than $|x|^{-d/2}$ gives $L^2$ control.",
         "solution": null,
         "proof": null,
         "proof_dependencies": [],
@@ -4545,11 +4809,7 @@
         ],
         "book_refs": [],
         "dependencies": {
-          "logical_dependency": [
-            "lebesgue_integral",
-            "l1_space_real_line",
-            "l2_space_real_line"
-          ]
+          "logical_dependency": ["lebesgue_integral"]
         },
         "outgoing_relations": [],
         "related": [
@@ -4647,10 +4907,10 @@
         "id": "lacunary_function",
         "kind": "definition",
         "domain": "convergence",
-        "label": "Lacunary Function / Series",
+        "label": "Lacunary Series",
         "statement": "A power series or Fourier series whose nonzero terms occur only at a sparse sequence of exponents or frequencies.",
         "formal_statement": "A lacunary series is a series whose active exponents or frequencies form a strictly increasing sequence with large gaps. In the standard Hadamard-gap case, the frequencies satisfy $$\\lambda_1<\\lambda_2<\\cdots,\\qquad \\frac{\\lambda_{k+1}}{\\lambda_k}\\ge q>1.$$ For Fourier analysis, the typical form is $$\\sum_{k=1}^{\\infty} a_k e^{i\\lambda_k x}$$ or its real trigonometric version.",
-        "definition": "$$f(z)=\\sum_{k=1}^{\\infty} a_k z^{\\lambda_k},\\qquad \\lambda_1<\\lambda_2<\\cdots,\\qquad \\frac{\\lambda_{k+1}}{\\lambda_k}\\ge q>1.$$",
+        "definition": "$$\\lambda_1<\\lambda_2<\\cdots,\\qquad \\frac{\\lambda_{k+1}}{\\lambda_k}\\ge q>1,\\qquad \\sum_{k=1}^{\\infty}a_k z^{\\lambda_k}\\ \\text{or}\\ \\sum_{k=1}^{\\infty}a_k e^{i\\lambda_k x}.$$",
         "intuition": "A lacunary series is a series with most of its possible terms missing. Instead of using every frequency, it jumps through a sparse list such as $$1,2,4,8,16,\\ldots$$. These gaps make the series behave less like an ordinary Fourier series and more like a sum of weakly independent oscillations. In complex analysis, the gaps can force a natural boundary; in Fourier analysis, they strongly affect almost everywhere convergence and probabilistic behavior.",
         "proof": null,
         "notation": "$$\\sum_{k=1}^{\\infty} a_k z^{\\lambda_k},\\qquad \\sum_{k=1}^{\\infty} a_k e^{i\\lambda_k x},\\qquad \\lambda_{k+1}/\\lambda_k\\ge q>1.$$",
@@ -4662,18 +4922,13 @@
         "dependencies": {
           "logical_dependency": [
             "fourier_series",
-            "fourier_coefficient",
-            "almost_everywhere"
-          ],
-          "used_by": []
+            "fourier_coefficient"
+          ]
         },
         "related": [
-          "trigonometric_series",
-          "power_series",
-          "radius_of_convergence",
-          "analytic_continuation",
           "l2_space",
-          "pointwise_convergence"
+          "pointwise_convergence",
+          "almost_everywhere"
         ],
         "metadata": {
           "aliases": [
@@ -5096,6 +5351,7 @@
             "fourier_transform",
             "fourier_transform_l1_continuity_decay",
             "plancherel_theorem",
+            "hausdorff_young_inequality",
             "schwartz_space",
             "moderate_decrease",
             "decay_smoothness"
@@ -5473,7 +5729,7 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": ["partial_sum"]
+          "logical_dependency": ["partial_sum", "summation_by_parts"]
         },
         "related": [
           "abel_summation",
@@ -5569,7 +5825,10 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": ["fourier_coefficient", "decay_smoothness"]
+          "logical_dependency": [
+            "fourier_coefficient",
+            "decay_smoothness"
+          ]
         },
         "related": ["riemann_lebesgue_lemma", "term_differentiation"],
         "ref": "Stein–Shakarchi 2.6, Exercise 10",
@@ -6296,7 +6555,12 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": ["fourier_coefficient", "decay_smoothness"]
+          "logical_dependency": [
+            "fourier_coefficient",
+            "decay_smoothness",
+            "holder_lipschitz_continuity",
+            "lacunary_function"
+          ]
         },
         "related": ["ss2_6_ex10", "riemann_lebesgue_lemma"],
         "ref": "Stein–Shakarchi 3.3, Exercise 15",
@@ -6357,7 +6621,8 @@
           "logical_dependency": [
             "parseval_identity",
             "absolute_uniform_convergence",
-            "fourier_coefficient"
+            "fourier_coefficient",
+            "holder_lipschitz_continuity"
           ]
         },
         "related": ["ss3_3_ex15", "decay_smoothness", "ss2_6_ex16"],
@@ -6395,7 +6660,11 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": ["fourier_coefficient", "ss2_6_ex7"]
+          "logical_dependency": [
+            "fourier_coefficient",
+            "ss2_6_ex7",
+            "summation_by_parts"
+          ]
         },
         "related": ["decay_smoothness", "ss2_6_ex10"],
         "ref": "Stein–Shakarchi 3.3, Exercise 17",
@@ -8343,7 +8612,7 @@
             "term_differentiation"
           ]
         },
-        "related": ["ss4_5_ex11", "heat_kernel_line"],
+        "related": ["ss4_5_ex11", "heat_kernel_real_line"],
         "ref": "TMA4170 Øving 6, Problem P1",
         "metadata": {
           "source": "TMA4170 Øving 6, Problem P1",
@@ -8425,7 +8694,11 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": ["gaussian_transform", "fourier_transform"]
+          "logical_dependency": [
+            "gaussian_transform",
+            "fourier_transform",
+            "fourier_scaling_rule"
+          ]
         },
         "related": ["oving8_p2", "good_kernel"],
         "ref": "TMA4170 Øving 8, Problem P1",
@@ -8876,17 +9149,6 @@
         "id": "e_orthonormal_system__requires__inner_product_space",
         "source": "orthonormal_system",
         "target": "inner_product_space",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": ""
-      },
-      {
-        "id": "e_orthonormal_system__requires__complex_exponential",
-        "source": "orthonormal_system",
-        "target": "complex_exponential",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -9973,15 +10235,15 @@
         "notes": ""
       },
       {
-        "id": "e_fourier_transform_euclidean_space__requires__l1_space_real_line",
+        "id": "e_fourier_transform_euclidean_space__requires__lebesgue_integral",
         "source": "fourier_transform_euclidean_space",
-        "target": "l1_space_real_line",
+        "target": "lebesgue_integral",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "The integral defining the Fourier transform on $\\mathbb R^d$ is a Lebesgue integral."
       },
       {
         "id": "e_differentiation_rule__requires__fourier_transform",
@@ -10974,15 +11236,15 @@
         "notes": ""
       },
       {
-        "id": "e_test_function__requires__schwartz_space",
+        "id": "e_test_function__requires__support_of_function",
         "source": "test_function",
-        "target": "schwartz_space",
+        "target": "support_of_function",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": ""
+        "notes": "The definition uses compact support."
       },
       {
         "id": "e_convolution_distributions__requires__dirac_delta",
@@ -14153,28 +14415,6 @@
         "notes": "Used to state the L^1 and L^2 consequences of polynomial decay."
       },
       {
-        "id": "e_polynomial_decay__requires__l1_space_real_line",
-        "source": "polynomial_decay",
-        "target": "l1_space_real_line",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "If m>d, then C_m(R^d) is contained in L^1(R^d)."
-      },
-      {
-        "id": "e_polynomial_decay__requires__l2_space_real_line",
-        "source": "polynomial_decay",
-        "target": "l2_space_real_line",
-        "type": "requires",
-        "dependency_class": "logical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "If 2m>d, then C_m(R^d) is contained in L^2(R^d)."
-      },
-      {
         "id": "e_moderate_decrease__instance_of__polynomial_decay",
         "source": "moderate_decrease",
         "target": "polynomial_decay",
@@ -14939,6 +15179,446 @@
         "direction": "source_to_target",
         "source": "oving11_p1",
         "target": "oving8_p3",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_continuous_functions_torus__requires__torus_circle",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "continuous_functions_torus",
+        "target": "torus_circle",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_continuous_functions_torus__requires__periodic_function",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "continuous_functions_torus",
+        "target": "periodic_function",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_holder_lipschitz_continuity__requires__continuous_functions_torus",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "holder_lipschitz_continuity",
+        "target": "continuous_functions_torus",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_schwartz_density__requires__schwartz_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "schwartz_density",
+        "target": "schwartz_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_schwartz_density__requires__l1_space_real_line",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "schwartz_density",
+        "target": "l1_space_real_line",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_schwartz_density__requires__l2_space_real_line",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "schwartz_density",
+        "target": "l2_space_real_line",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_trigonometric_system_complete__requires__orthonormal_system",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "trigonometric_system_complete",
+        "target": "orthonormal_system",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_trigonometric_system_complete__requires__l2_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "trigonometric_system_complete",
+        "target": "l2_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_trigonometric_system_complete__requires__trigonometric_polynomial",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "trigonometric_system_complete",
+        "target": "trigonometric_polynomial",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_trigonometric_system_complete__requires__fejer_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "trigonometric_system_complete",
+        "target": "fejer_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_trigonometric_system_complete__requires__best_approximation",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "trigonometric_system_complete",
+        "target": "best_approximation",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_summation_by_parts__requires__partial_sum",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "summation_by_parts",
+        "target": "partial_sum",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_scaling_rule__requires__fourier_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "fourier_scaling_rule",
+        "target": "fourier_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fourier_scaling_rule__requires__fourier_transform_convention",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "fourier_scaling_rule",
+        "target": "fourier_transform_convention",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_hausdorff_young_inequality__requires__fourier_transform",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "hausdorff_young_inequality",
+        "target": "fourier_transform",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_hausdorff_young_inequality__requires__l1_space_real_line",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "hausdorff_young_inequality",
+        "target": "l1_space_real_line",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_hausdorff_young_inequality__requires__l2_space_real_line",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "hausdorff_young_inequality",
+        "target": "l2_space_real_line",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_hausdorff_young_inequality__requires__fourier_transform_l1_continuity_decay",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "hausdorff_young_inequality",
+        "target": "fourier_transform_l1_continuity_decay",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_hausdorff_young_inequality__requires__plancherel_theorem",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "hausdorff_young_inequality",
+        "target": "plancherel_theorem",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_laplacian__requires__differentiation_rule",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "laplacian",
+        "target": "differentiation_rule",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_laplacian__requires__fourier_transform_euclidean_space",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "laplacian",
+        "target": "fourier_transform_euclidean_space",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_laplacian__requires__fourier_transform_convention",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "laplacian",
+        "target": "fourier_transform_convention",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_parseval_identity__requires__trigonometric_system_complete",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "parseval_identity",
+        "target": "trigonometric_system_complete",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_mean_square_convergence__requires__trigonometric_system_complete",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "mean_square_convergence",
+        "target": "trigonometric_system_complete",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_fejer_theorem__requires__continuous_functions_torus",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "fejer_theorem",
+        "target": "continuous_functions_torus",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_weierstrass_approximation_theorem__requires__continuous_functions_torus",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "weierstrass_approximation_theorem",
+        "target": "continuous_functions_torus",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_plancherel_theorem__requires__schwartz_density",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "plancherel_theorem",
+        "target": "schwartz_density",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_ss3_3_ex15__requires__holder_lipschitz_continuity",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "ss3_3_ex15",
+        "target": "holder_lipschitz_continuity",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_ss3_3_ex15__requires__lacunary_function",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "ss3_3_ex15",
+        "target": "lacunary_function",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_ss3_3_ex16__requires__holder_lipschitz_continuity",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "ss3_3_ex16",
+        "target": "holder_lipschitz_continuity",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_ss2_6_ex7__requires__summation_by_parts",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "ss2_6_ex7",
+        "target": "summation_by_parts",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_ss3_3_ex17__requires__summation_by_parts",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "ss3_3_ex17",
+        "target": "summation_by_parts",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_oving8_p1__requires__fourier_scaling_rule",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "oving8_p1",
+        "target": "fourier_scaling_rule",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_equation__requires__laplacian",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "heat_equation",
+        "target": "laplacian",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_wave_equation__requires__laplacian",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "wave_equation",
+        "target": "laplacian",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_schrodinger_equation__requires__laplacian",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "schrodinger_equation",
+        "target": "laplacian",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_heat_kernel_real_line__requires__fourier_scaling_rule",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "heat_kernel_real_line",
+        "target": "fourier_scaling_rule",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_exam2025_p4__requires__hausdorff_young_inequality",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "exam2025_p4",
+        "target": "hausdorff_young_inequality",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_lacunary_function__requires__fourier_series",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "lacunary_function",
+        "target": "fourier_series",
+        "label": "requires",
+        "dependency_class": "logical_dependency",
+        "confidence": "high",
+        "notes": ""
+      },
+      {
+        "id": "e_lacunary_function__requires__fourier_coefficient",
+        "type": "requires",
+        "direction": "source_to_target",
+        "source": "lacunary_function",
+        "target": "fourier_coefficient",
         "label": "requires",
         "dependency_class": "logical_dependency",
         "confidence": "high",
