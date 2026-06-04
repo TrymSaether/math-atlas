@@ -3333,7 +3333,7 @@
       },
       {
         "id": "heat_kernel_real_line",
-        "label": "Heat Kernel on R",
+        "label": "Heat Kernel on $\\mathbb R$",
         "kind": "object",
         "domain": "transform",
         "statement": "The Gaussian convolution kernel solving the heat equation on the real line.",
@@ -4929,7 +4929,7 @@
         "id": "exam2025_p3a",
         "kind": "exercise",
         "domain": "transform",
-        "label": "Exam 2025 · 3a — sinc ∈ L² with box transform",
+        "label": "Exam 2025 · 3a — sinc ∈ $L^2$ with box transform",
         "statement": "Show the sinc function lies in $L^2(\\mathbb R)$ and has Fourier transform $\\chi_{[-1/2,1/2]}$.",
         "formal_statement": "For $\\psi(x)=\\frac{\\sin(\\pi x)}{\\pi x}$ ($\\psi(0)=1$), show $\\psi\\in L^2(\\mathbb R)$ and $\\hat\\psi(\\xi)=\\chi_{[-1/2,1/2]}(\\xi)$ (transform convention $\\hat f(\\xi)=\\int f(x)e^{-2\\pi i x\\xi}dx$).",
         "definition": null,
@@ -5048,7 +5048,7 @@
         "definition": null,
         "formula": null,
         "notation": null,
-        "intuition": "L¹ buys continuity-and-decay (A); L² buys L² (E); rapid decay of $\\hat f$ (B, C, D) is bought only by smoothness of $f$ — a jump caps decay at $1/|\\xi|$.",
+        "intuition": "L¹ buys continuity-and-decay (A); $L^2$ buys $L^2$ (E); rapid decay of $\\hat f$ (B, C, D) is bought only by smoothness of $f$ — a jump caps decay at $1/|\\xi|$.",
         "solution": null,
         "solution_steps": [
           {
@@ -6010,7 +6010,7 @@
         "id": "ss3_3_ex3",
         "kind": "exercise",
         "domain": "convergence",
-        "label": "SS 3.3.3 — L²-null but everywhere-divergent",
+        "label": "SS 3.3.3 — $L^2$-null but everywhere-divergent",
         "statement": "An $L^2$-null sequence that diverges at every single point.",
         "formal_statement": "Construct a sequence of integrable functions $\\{f_k\\}$ on $[0,2\\pi]$ such that $$\\lim_{k\\to\\infty}\\frac1{2\\pi}\\int_0^{2\\pi}|f_k(\\theta)|^2\\,d\\theta=0,$$ but $\\lim_{k\\to\\infty}f_k(\\theta)$ fails to exist for every $\\theta$. Hint: choose intervals $I_k\\subset[0,2\\pi]$ whose lengths tend to $0$ and such that every point belongs to infinitely many of them; then take $f_k=\\chi_{I_k}$.",
         "definition": null,
@@ -6068,7 +6068,7 @@
         "id": "ss3_3_ex4",
         "kind": "exercise",
         "domain": "foundations",
-        "label": "SS 3.3.4 — The L²-norm is only a seminorm on R",
+        "label": "SS 3.3.4 — The $L^2$-norm is only a seminorm on $\\mathbb R$",
         "statement": "Why the integral $L^2$-norm is only a seminorm on Riemann-integrable functions.",
         "formal_statement": "Recall the vector space $\\mathcal R$ of integrable functions with norm $$\\|f\\|=\\left(\\frac1{2\\pi}\\int_0^{2\\pi}|f(x)|^2\\,dx\\right)^{1/2}.$$ (a) Show that there exist nonzero integrable functions $f$ for which $\\|f\\|=0$. (b) Show that if $f\\in\\mathcal R$ and $\\|f\\|=0$, then $f(x)=0$ whenever $f$ is continuous at $x$. (c) Conversely, show that if $f\\in\\mathcal R$ vanishes at all of its points of continuity, then $\\|f\\|=0$.",
         "definition": null,
@@ -6674,7 +6674,7 @@
         "id": "ss4_5_ex11",
         "kind": "exercise",
         "domain": "applications",
-        "label": "SS 4.5.11 — Heat flow converges to its data in L²",
+        "label": "SS 4.5.11 — Heat flow converges to its data in $L^2$",
         "statement": "Heat-kernel smoothing converges to the initial data in $L^2$.",
         "formal_statement": "Show that if $u(x,t)=(f*H_t)(x)$, where $H_t$ is the heat kernel and $f$ is Riemann integrable, then\n$$\\int_0^1 |u(x,t)-f(x)|^2\\,dx\\to0\\qquad\\text{as }t\\to0.$$",
         "definition": null,
@@ -8624,7 +8624,7 @@
         "id": "oving9_p2",
         "kind": "exercise",
         "domain": "transform",
-        "label": "Øving 9 · P2 — L¹/L² membership and inverse transforms",
+        "label": "Øving 9 · P2 — L¹/$L^2$ membership and inverse transforms",
         "statement": "Classify sinc-type tails in $L^1/L^2$ and evaluate the inverse transform at $0,1$.",
         "formal_statement": "For (i) $f=\\frac{\\sin2\\pi x}{x}\\chi_{[0,\\infty)}$, (ii) $f=\\frac1x\\chi_{[1,\\infty)}$, (iii) $f=\\frac{\\sin2\\pi x}{x^2}\\chi_{[1,\\infty)}$: decide $L^1$/$L^2$ membership; describe $g=\\mathcal F^{-1}[\\hat f]$ and $g(0),g(1)$.",
         "definition": null,
@@ -14183,7 +14183,7 @@
         "label": "is a special case of",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": "Functions of moderate decrease on R satisfy a decay bound comparable to polynomial decay of order 2."
+        "notes": "Functions of moderate decrease on $\\mathbb R$ satisfy a decay bound comparable to polynomial decay of order 2."
       },
       {
         "id": "e_schwartz_space__instance_of__polynomial_decay",
@@ -14205,7 +14205,7 @@
         "label": "requires",
         "dependency_class": "logical_dependency",
         "confidence": "high",
-        "notes": "Moderate decrease implies square-integrability on R."
+        "notes": "Moderate decrease implies square-integrability on $\\mathbb R$."
       },
       {
         "id": "e_oving1_p1__requires__absolute_uniform_convergence",
