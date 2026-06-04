@@ -94,22 +94,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 
   /* Sandbox fact-status glyph colors (★ ✓ ≅ ○). Alias theme vars so they
@@ -197,22 +195,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -287,22 +283,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -377,22 +371,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -471,22 +463,20 @@
   --dia-panel: var(--surface);
   --dia-fill: #E7DDC9;
   --dia-fill2: #F4EFE6;
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: #DCE8FF;
   --dia-int: #DCE8FF;
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: #A8431D;
   --dia-ext: #8F8678;
   --dia-ok: #26844A;
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: #2457C5;
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -563,22 +553,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -653,22 +641,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -743,22 +729,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -832,22 +816,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -922,22 +904,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -1012,22 +992,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -1102,22 +1080,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -1192,22 +1168,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -1285,22 +1259,20 @@
   --dia-panel: var(--surface);
   --dia-fill: #EDE3CE;
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: rgba(194, 65, 12, 0.08);
   --dia-int: rgba(194, 65, 12, 0.08);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -1376,22 +1348,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 
@@ -1466,22 +1436,20 @@
   --dia-panel: var(--surface);
   --dia-fill: var(--surface-2);
   --dia-fill2: var(--surface-3);
-  --dia-fil2: var(--dia-fill2);
   --dia-domain: var(--dia-fill);
   --dia-open: var(--accent-soft);
   --dia-int: var(--accent-soft);
-  --dia-int-fill: var(--dia-int);
   --dia-set: var(--dia-fill);
   --dia-boundary: var(--red);
   --dia-ext: var(--fg-3);
   --dia-ok: var(--green);
   --dia-line: var(--border);
-  --dia-border: var(--border);
   --dia-ink: var(--fg-1);
   --dia-acc: var(--accent);
   --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
   --dia-mut: var(--fg-3);
-  --dia-muted: var(--dia-mut);
   --dia-muted-fill: var(--border-strong);
 }
 

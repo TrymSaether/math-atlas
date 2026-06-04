@@ -1,10 +1,10 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
   <title>Heat kernel on the line as a widening Gaussian</title>
-  <line x1="34" y1="126" x2="286" y2="126" stroke="var(--dia-ink,#2a2520)" stroke-width="1"/>
-  <path d="M55 126 C93 126 106 54 128 54 C150 54 163 126 201 126" fill="none" stroke="var(--dia-acc,#a8431d)" stroke-width="1.9"/>
-  <path d="M61 126 C100 126 122 84 160 84 C198 84 220 126 259 126" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.5" stroke-dasharray="5 3"/>
-  <path d="M45 126 C96 126 125 103 160 103 C195 103 224 126 275 126" fill="none" stroke="var(--dia-mut,#9a8f7d)" stroke-width="1.4"/>
-  <g class="latex-svg" data-tex="t\downarrow0" fill="var(--dia-acc,#a8431d)" transform="translate(102.44 38.00) scale(0.7800)">
+  <line x1="34" y1="126" x2="286" y2="126" stroke="var(--dia-ink,#27221d)" stroke-width="1"/>
+  <path d="M55 126 C93 126 106 54 128 54 C150 54 163 126 201 126" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.9"/>
+  <path d="M61 126 C100 126 122 84 160 84 C198 84 220 126 259 126" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <path d="M45 126 C96 126 125 103 160 103 C195 103 224 126 275 126" fill="none" stroke="var(--dia-mut,#8c8274)" stroke-width="1.4"/>
+  <g class="latex-svg" data-tex="t\downarrow0" fill="var(--dia-acc,#2457c5)" transform="translate(102.44 38.00) scale(0.7800)">
 <g transform="translate(71.7370 71.9947)">
 <defs>
 <path id='ltx-heat-kernel-line-1-g0-35' d='M3.227895-7.866501C3.227895-8.081694 3.227895-8.296887 2.988792-8.296887S2.749689-8.081694 2.749689-7.866501V.657534C2.462765 .203238 2.12802-.131507 1.829141-.358655C1.099875-.908593 .37061-1.028144 .3467-1.028144C.203238-1.028144 .203238-.896638 .203238-.800996C.203238-.609714 .215193-.597758 .478207-.514072C1.291158-.286924 1.75741 .143462 2.032379 .442341C2.642092 1.099875 2.785554 1.817186 2.857285 2.187796C2.86924 2.247572 2.905106 2.307347 2.988792 2.307347C3.096389 2.307347 3.108344 2.223661 3.132254 2.116065C3.395268 .765131 4.25604-.167372 5.571108-.537983C5.750436-.597758 5.774346-.597758 5.774346-.800996C5.774346-.896638 5.774346-1.028144 5.630884-1.028144C5.595019-1.028144 4.889664-.896638 4.208219-.406476C3.813699-.107597 3.490909 .251059 3.227895 .657534V-7.866501Z'/>
@@ -18,7 +18,7 @@
 </g>
 </g>
 </g>
-  <g class="latex-svg" data-tex="t&gt;0" fill="var(--dia-ink,#2a2520)" transform="translate(212.22 75.00) scale(0.7800)">
+  <g class="latex-svg" data-tex="t&gt;0" fill="var(--dia-ink,#27221d)" transform="translate(212.22 75.00) scale(0.7800)">
 <g transform="translate(71.7370 72.2458)">
 <defs>
 <path id='ltx-heat-kernel-line-2-g0-62' d='M7.878456-2.725778C8.105604-2.833375 8.117559-2.905106 8.117559-2.988792C8.117559-3.060523 8.093649-3.144209 7.878456-3.239851L1.41071-6.216687C1.255293-6.288418 1.231382-6.300374 1.207472-6.300374C1.06401-6.300374 .980324-6.180822 .980324-6.085181C.980324-5.941719 1.075965-5.893898 1.231382-5.822167L7.376339-2.988792L1.219427-.143462C.980324-.035866 .980324 .047821 .980324 .119552C.980324 .215193 1.06401 .334745 1.207472 .334745C1.231382 .334745 1.243337 .32279 1.41071 .251059L7.878456-2.725778Z'/>
@@ -32,5 +32,5 @@
 </g>
 </g>
 </g>
-  <text x="160" y="160" font-size="10.5" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">convolution with H_t smooths and spreads mass over time</text>
+  <text x="160" y="160" font-size="10.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">convolution with H_t smooths and spreads mass over time</text>
 </svg>

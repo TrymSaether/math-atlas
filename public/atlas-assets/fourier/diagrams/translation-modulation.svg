@@ -2,16 +2,16 @@
   <title>Translation and modulation under the Fourier transform</title>
   <defs>
     <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#2a2520)"/>
+      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)"/>
     </marker>
   </defs>
   <g fill="none" stroke-width="1.6">
-    <path d="M28 70 C42 48 58 48 72 70 S100 92 114 70" stroke="var(--dia-mut,#9a8f7d)"/>
-    <path d="M48 70 C62 48 78 48 92 70 S120 92 134 70" stroke="var(--dia-acc,#a8431d)"/>
-    <path d="M186 70 C200 48 216 48 230 70 S258 92 272 70" stroke="var(--dia-acc,#a8431d)" stroke-dasharray="4 3"/>
+    <path d="M28 70 C42 48 58 48 72 70 S100 92 114 70" stroke="var(--dia-mut,#8c8274)"/>
+    <path d="M48 70 C62 48 78 48 92 70 S120 92 134 70" stroke="var(--dia-acc,#2457c5)"/>
+    <path d="M186 70 C200 48 216 48 230 70 S258 92 272 70" stroke="var(--dia-acc,#2457c5)" stroke-dasharray="4 3"/>
   </g>
-  <path d="M140 67 L174 67" stroke="var(--dia-ink,#2a2520)" stroke-width="1.4" marker-end="url(#arrow)"/>
-  <g class="latex-svg" data-tex="x\mapsto x-a" fill="var(--dia-ink,#2a2520)" transform="translate(140.51 45.00) scale(0.7500)">
+  <path d="M140 67 L174 67" stroke="var(--dia-ink,#27221d)" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <g class="latex-svg" data-tex="x\mapsto x-a" fill="var(--dia-ink,#27221d)" transform="translate(140.51 45.00) scale(0.7500)">
 <g transform="translate(71.6653 71.1352)">
 <defs>
 <path id='ltx-translation-modulation-1-g0-0' d='M7.878456-2.749689C8.081694-2.749689 8.296887-2.749689 8.296887-2.988792S8.081694-3.227895 7.878456-3.227895H1.41071C1.207472-3.227895 .992279-3.227895 .992279-2.988792S1.207472-2.749689 1.41071-2.749689H7.878456Z'/>
@@ -30,13 +30,13 @@
 </g>
 </g>
 </g>
-  <g stroke="var(--dia-ink,#2a2520)" stroke-width="1.2" fill="none">
+  <g stroke="var(--dia-ink,#27221d)" stroke-width="1.2" fill="none">
     <line x1="34" y1="123" x2="134" y2="123"/>
     <line x1="199" y1="123" x2="281" y2="123"/>
-    <path d="M208 123 C218 101 230 101 240 123 S260 145 270 123" stroke="var(--dia-acc,#a8431d)"/>
+    <path d="M208 123 C218 101 230 101 240 123 S260 145 270 123" stroke="var(--dia-acc,#2457c5)"/>
   </g>
-  <path d="M140 120 L174 120" stroke="var(--dia-ink,#2a2520)" stroke-width="1.4" marker-end="url(#arrow)"/>
-  <g class="latex-svg" data-tex="e^{2\pi ibx}f(x)" fill="var(--dia-ink,#2a2520)" transform="translate(142.13 101.00) scale(0.7500)">
+  <path d="M140 120 L174 120" stroke="var(--dia-ink,#27221d)" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <g class="latex-svg" data-tex="e^{2\pi ibx}f(x)" fill="var(--dia-ink,#27221d)" transform="translate(142.13 101.00) scale(0.7500)">
 <g transform="translate(71.4620 71.9965)">
 <defs>
 <path id='ltx-translation-modulation-2-g0-25' d='M2.263512-2.909091H3.180075C3.012702-2.183811 2.86924-1.594022 2.86924-1.004234C2.86924-.948443 2.86924-.605729 2.956912-.318804C3.060523 .01594 3.140224 .079701 3.283686 .079701C3.459029 .079701 3.642341-.071731 3.642341-.263014C3.642341-.318804 3.634371-.334745 3.602491-.406476C3.435118-.773101 3.315567-1.155666 3.315567-1.809215C3.315567-1.992528 3.315567-2.327273 3.435118-2.909091H4.399502C4.527024-2.909091 4.614695-2.909091 4.694396-2.972852C4.790037-3.060523 4.813948-3.164134 4.813948-3.211955C4.813948-3.435118 4.614695-3.435118 4.479203-3.435118H1.601993C1.43462-3.435118 1.131756-3.435118 .74122-3.052553C.454296-2.765629 .231133-2.399004 .231133-2.343213C.231133-2.271482 .286924-2.247572 .350685-2.247572C.430386-2.247572 .446326-2.271482 .494147-2.335243C.884682-2.909091 1.354919-2.909091 1.538232-2.909091H2.000498C1.769365-2.064259 1.346949-1.099875 1.052055-.518057C.996264-.398506 .916563-.239103 .916563-.167372C.916563 0 1.052055 .079701 1.179577 .079701C1.482441 .079701 1.562142-.223163 1.729514-.876712L2.263512-2.909091Z'/>
@@ -64,5 +64,5 @@
 </g>
 </g>
 </g>
-  <text x="160" y="162" font-size="10.5" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">time shift becomes frequency phase; modulation shifts the spectrum</text>
+  <text x="160" y="162" font-size="10.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">time shift becomes frequency phase; modulation shifts the spectrum</text>
 </svg>

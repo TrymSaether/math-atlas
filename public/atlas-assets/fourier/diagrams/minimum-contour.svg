@@ -6,15 +6,15 @@
       <path d="M0,0 L7,3 L0,6 Z" fill="var(--blue,#2563EB)"/>
     </marker>
     <marker id="mc-arr-acc" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#a8431d)"/>
+      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)"/>
     </marker>
   </defs>
 
-  <rect width="360" height="280" fill="var(--dia-paper,#f4efe6)"/>
+  <rect width="360" height="280" fill="var(--dia-paper,#fffdf8)"/>
 
   <!-- subspace plane Vₙ -->
   <path d="M30,195 L230,138 L330,198 L130,255 Z"
-        fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-line,#c5b89a)" stroke-width="1.5"/>
+        fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-line,#d8d0c2)" stroke-width="1.5"/>
 
   <!-- level-set contours centered at Sₙf (172,195), ellipses in the plane -->
   <!-- tilt matches the plane slant: rotate(-15 172 195) -->
@@ -34,7 +34,7 @@
 
   <!-- dashed line: f → p (a suboptimal point on a larger contour) -->
   <line x1="172" y1="72" x2="250" y2="170"
-        stroke="var(--dia-acc,#a8431d)" stroke-width="1.6" stroke-dasharray="5,4"
+        stroke="var(--dia-acc,#2457c5)" stroke-width="1.6" stroke-dasharray="5,4"
         marker-end="url(#mc-arr-acc)" opacity="0.8"/>
 
   <!-- right angle marker at Sₙf -->
@@ -44,17 +44,17 @@
   <!-- dots -->
   <circle cx="172" cy="62" r="5.5" fill="var(--blue,#2563EB)"/>
   <circle cx="172" cy="195" r="5.5" fill="var(--green,#16A34A)"/>
-  <circle cx="258" cy="178" r="5.5" fill="var(--dia-acc,#a8431d)"/>
+  <circle cx="258" cy="178" r="5.5" fill="var(--dia-acc,#2457c5)"/>
 
   <!-- minimum label near Sₙf -->
   <text x="154" y="185" font-size="8.5" fill="var(--gold,#EAB308)" text-anchor="middle">min</text>
 
   <!-- labels -->
-  <text x="182" y="61" font-size="14" font-style="italic" fill="var(--dia-ink,#2a2520)">f</text>
-  <text x="142" y="218" font-size="12" font-style="italic" fill="var(--dia-ink,#2a2520)">S<tspan dy="3.5" font-size="9">N</tspan><tspan dy="-3.5">f</tspan></text>
-  <text x="267" y="180" font-size="12" font-style="italic" fill="var(--dia-ink,#2a2520)">p</text>
-  <text x="44" y="248" font-size="12" font-style="italic" fill="var(--dia-mut,#9a8f7d)">V<tspan dy="3.5" font-size="9">N</tspan></text>
+  <text x="182" y="61" font-size="14" font-style="italic" fill="var(--dia-ink,#27221d)">f</text>
+  <text x="142" y="218" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">S<tspan dy="3.5" font-size="9">N</tspan><tspan dy="-3.5">f</tspan></text>
+  <text x="267" y="180" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">p</text>
+  <text x="44" y="248" font-size="12" font-style="italic" fill="var(--dia-mut,#8c8274)">V<tspan dy="3.5" font-size="9">N</tspan></text>
 
   <!-- caption -->
-  <text x="180" y="270" font-size="9.5" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">level sets of q ↦ ‖f − q‖ on V<tspan dy="2.5" font-size="7">N</tspan></text>
+  <text x="180" y="270" font-size="9.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">level sets of q ↦ ‖f − q‖ on V<tspan dy="2.5" font-size="7">N</tspan></text>
 </svg>

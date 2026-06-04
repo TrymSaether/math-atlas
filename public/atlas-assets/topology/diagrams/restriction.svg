@@ -2,70 +2,70 @@
     <defs>
         <marker id="arrow-black" viewBox="0 0 6 6" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"
             markerUnits="strokeWidth">
-            <path d="M0,0 L6,3 L0,6 Z" fill="var(--dia-ink,#2a2520)" />
+            <path d="M0,0 L6,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
         </marker>
 
         <marker id="arrow-red" viewBox="0 0 6 6" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"
             markerUnits="strokeWidth">
-            <path d="M0,0 L6,3 L0,6 Z" fill="var(--dia-acc,#a8431d)" />
+            <path d="M0,0 L6,3 L0,6 Z" fill="var(--dia-acc,#2457c5)" />
         </marker>
     </defs>
 
     <g stroke-linecap="round" stroke-linejoin="round">
-        <ellipse cx="76" cy="94" rx="54" ry="62" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#2a2520)"
+        <ellipse cx="76" cy="94" rx="54" ry="62" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
             stroke-width="1.45" />
-        <ellipse cx="248" cy="94" rx="54" ry="62" fill="var(--dia-fill2,#cbb98f)" stroke="var(--dia-ink,#2a2520)"
+        <ellipse cx="248" cy="94" rx="54" ry="62" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-ink,#27221d)"
             stroke-width="1.45" />
 
-        <ellipse cx="72" cy="109" rx="31" ry="27" fill="var(--dia-acc,#a8431d)" fill-opacity=".12"
-            stroke="var(--dia-acc,#a8431d)" stroke-width="1.15" />
+        <ellipse cx="72" cy="109" rx="31" ry="27" fill="var(--dia-acc,#2457c5)" fill-opacity=".12"
+            stroke="var(--dia-acc,#2457c5)" stroke-width="1.15" />
 
-        <path d="M78,62 C132,55 188,60 246,76" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.15"
+        <path d="M78,62 C132,55 188,60 246,76" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.15"
             stroke-dasharray="3 4.2" opacity=".5" marker-end="url(#arrow-black)" />
 
-        <path d="M74.4,100 C130,94 188,94 245.6,99" fill="none" stroke="var(--dia-acc,#a8431d)" stroke-width="1.15"
+        <path d="M74.4,100 C130,94 188,94 245.6,99" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.15"
             marker-end="url(#arrow-red)" />
-        <path d="M74.4,118 C130,123 188,120 245.6,113" fill="none" stroke="var(--dia-acc,#a8431d)" stroke-width="1.15"
+        <path d="M74.4,118 C130,123 188,120 245.6,113" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.15"
             marker-end="url(#arrow-red)" />
     </g>
 
-    <g fill="var(--dia-ink,#2a2520)" font-style="italic" text-anchor="middle">
+    <g fill="var(--dia-ink,#27221d)" font-style="italic" text-anchor="middle">
         <text x="76" y="25" font-size="14">A</text>
         <text x="248" y="25" font-size="14">B</text>
         <text x="160" y="51" font-size="11" opacity=".65">f</text>
     </g>
 
-    <text x="72" y="92" font-size="12" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">R</text>
+    <text x="72" y="92" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">R</text>
 
-    <g fill="var(--dia-ink,#2a2520)" opacity=".55">
+    <g fill="var(--dia-ink,#27221d)" opacity=".55">
         <circle cx="76" cy="62" r="2" />
         <circle cx="248" cy="76" r="2" />
     </g>
 
-    <g fill="var(--dia-ink,#2a2520)" font-style="italic" opacity=".65">
+    <g fill="var(--dia-ink,#27221d)" font-style="italic" opacity=".65">
         <text x="63" y="66" font-size="10" text-anchor="middle">x</text>
         <text x="265" y="80" font-size="10" text-anchor="middle">f(x)</text>
     </g>
 
-    <g fill="var(--dia-acc,#a8431d)">
+    <g fill="var(--dia-acc,#2457c5)">
         <circle cx="72" cy="100" r="2.4" />
         <circle cx="72" cy="118" r="2.4" />
         <circle cx="248" cy="99" r="2.4" />
         <circle cx="248" cy="113" r="2.4" />
     </g>
 
-    <g fill="var(--dia-acc,#a8431d)" font-style="italic">
+    <g fill="var(--dia-acc,#2457c5)" font-style="italic">
         <text x="58" y="103" font-size="10" text-anchor="middle">r₁</text>
         <text x="58" y="122" font-size="10" text-anchor="middle">r₂</text>
         <text x="268" y="102" font-size="10" text-anchor="middle">f(r₁)</text>
         <text x="268" y="117" font-size="10" text-anchor="middle">f(r₂)</text>
     </g>
 
-    <text x="160" y="110" font-size="12" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">
+    <text x="160" y="110" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">
         f|<tspan baseline-shift="sub" font-size="9">R</tspan>
     </text>
 
-    <text x="160" y="170" font-size="10" fill="var(--dia-acc,#a8431d)" text-anchor="middle">
+    <text x="160" y="170" font-size="10" fill="var(--dia-acc,#2457c5)" text-anchor="middle">
         f|<tspan baseline-shift="sub" font-size="7">R</tspan> = f with domain restricted to R
     </text>
 </svg>

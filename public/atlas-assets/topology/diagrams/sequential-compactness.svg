@@ -1,25 +1,25 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
   <defs>
-    <marker id="sqa" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#a8431d)"/></marker>
+    <marker id="sqa" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)"/></marker>
   </defs>
   <!-- space X -->
-  <rect x="24" y="34" width="272" height="116" rx="8" fill="var(--dia-paper,#f4efe6)" stroke="var(--dia-ink,#2a2520)" stroke-width="1.5"/>
-  <text x="284" y="50" font-size="13" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">X</text>
+  <rect x="24" y="34" width="272" height="116" rx="8" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)" stroke-width="1.5"/>
+  <text x="284" y="50" font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">X</text>
   <!-- scattered sequence points (muted) -->
-  <circle cx="58" cy="60" r="2.4" fill="var(--dia-mut,#9a8f7d)"/>
-  <circle cx="92" cy="118" r="2.4" fill="var(--dia-mut,#9a8f7d)"/>
-  <circle cx="76" cy="86" r="2.4" fill="var(--dia-mut,#9a8f7d)"/>
-  <circle cx="130" cy="56" r="2.4" fill="var(--dia-mut,#9a8f7d)"/>
+  <circle cx="58" cy="60" r="2.4" fill="var(--dia-mut,#8c8274)"/>
+  <circle cx="92" cy="118" r="2.4" fill="var(--dia-mut,#8c8274)"/>
+  <circle cx="76" cy="86" r="2.4" fill="var(--dia-mut,#8c8274)"/>
+  <circle cx="130" cy="56" r="2.4" fill="var(--dia-mut,#8c8274)"/>
   <!-- convergent subsequence spiralling onto limit -->
-  <circle cx="200" cy="64" r="2.8" fill="var(--dia-acc,#a8431d)"/>
-  <circle cx="226" cy="118" r="2.8" fill="var(--dia-acc,#a8431d)"/>
-  <circle cx="246" cy="78" r="2.8" fill="var(--dia-acc,#a8431d)"/>
-  <circle cx="232" cy="96" r="2.8" fill="var(--dia-acc,#a8431d)"/>
-  <circle cx="244" cy="100" r="2.6" fill="var(--dia-acc,#a8431d)"/>
-  <path d="M200,64 Q252,62 246,78 Q260,100 232,96 Q236,104 244,100" fill="none" stroke="var(--dia-acc,#a8431d)" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#sqa)"/>
+  <circle cx="200" cy="64" r="2.8" fill="var(--dia-acc,#2457c5)"/>
+  <circle cx="226" cy="118" r="2.8" fill="var(--dia-acc,#2457c5)"/>
+  <circle cx="246" cy="78" r="2.8" fill="var(--dia-acc,#2457c5)"/>
+  <circle cx="232" cy="96" r="2.8" fill="var(--dia-acc,#2457c5)"/>
+  <circle cx="244" cy="100" r="2.6" fill="var(--dia-acc,#2457c5)"/>
+  <path d="M200,64 Q252,62 246,78 Q260,100 232,96 Q236,104 244,100" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#sqa)"/>
   <!-- limit point -->
-  <circle cx="240" cy="98" r="4" fill="none" stroke="var(--dia-acc,#a8431d)" stroke-width="1.4"/>
-  <circle cx="240" cy="98" r="2" fill="var(--dia-acc,#a8431d)"/>
-  <text x="254" y="98" font-size="11" fill="var(--dia-acc,#a8431d)" font-style="italic">L</text>
-  <text x="160" y="170" font-size="10" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle" font-style="italic">some subsequence x_{n_k} → L ∈ X</text>
+  <circle cx="240" cy="98" r="4" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.4"/>
+  <circle cx="240" cy="98" r="2" fill="var(--dia-acc,#2457c5)"/>
+  <text x="254" y="98" font-size="11" fill="var(--dia-acc,#2457c5)" font-style="italic">L</text>
+  <text x="160" y="170" font-size="10" fill="var(--dia-mut,#8c8274)" text-anchor="middle" font-style="italic">some subsequence x_{n_k} → L ∈ X</text>
 </svg>

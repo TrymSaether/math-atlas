@@ -1,30 +1,30 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
     <defs>
         <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#2a2520)" />
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
         </marker>
     </defs>
-    <ellipse cx="76" cy="95" rx="57" ry="67" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#2a2520)"
-        stroke-width="1.6" /><text x="76" y="27" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle"
+    <ellipse cx="76" cy="95" rx="57" ry="67" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
+        stroke-width="1.6" /><text x="76" y="27" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle"
         font-style="italic">X</text>
     <path d="M48,64 C66,52 96,58 104,74 C112,90 108,118 94,130 C80,142 58,136 48,120 C38,104 30,76 48,64Z"
-        fill="var(--dia-acc,#a8431d)" fill-opacity="0.13" stroke="var(--dia-acc,#a8431d)" stroke-width="1.3"
-        stroke-dasharray="4,3" /><text x="68" y="150" font-size="10" fill="var(--dia-acc,#a8431d)"
+        fill="var(--dia-acc,#2457c5)" fill-opacity="0.13" stroke="var(--dia-acc,#2457c5)" stroke-width="1.3"
+        stroke-dasharray="4,3" /><text x="68" y="150" font-size="10" fill="var(--dia-acc,#2457c5)"
         text-anchor="middle">f&#x207B;&#xB9;(V) open</text>
-    <circle cx="70" cy="90" r="2.5" fill="var(--dia-ink,#2a2520)" />
-    <circle cx="80" cy="112" r="2.5" fill="var(--dia-ink,#2a2520)" />
-    <ellipse cx="244" cy="95" rx="57" ry="67" fill="var(--dia-fil2,#d6c9a8)" stroke="var(--dia-ink,#2a2520)"
-        stroke-width="1.6" /><text x="244" y="27" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle"
+    <circle cx="70" cy="90" r="2.5" fill="var(--dia-ink,#27221d)" />
+    <circle cx="80" cy="112" r="2.5" fill="var(--dia-ink,#27221d)" />
+    <ellipse cx="244" cy="95" rx="57" ry="67" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-ink,#27221d)"
+        stroke-width="1.6" /><text x="244" y="27" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle"
         font-style="italic">Y</text>
     <path d="M224,68 C240,56 264,60 272,76 C280,92 274,118 260,128 C246,138 226,132 218,116 C210,100 208,80 224,68Z"
-        fill="var(--dia-acc,#a8431d)" fill-opacity="0.18" stroke="var(--dia-acc,#a8431d)" stroke-width="1.4"
-        stroke-dasharray="4,3" /><text x="248" y="62" font-size="12" fill="var(--dia-acc,#a8431d)"
-        font-style="italic">V</text><text x="248" y="74" font-size="9" fill="var(--dia-acc,#a8431d)">(open)</text>
-    <circle cx="244" cy="92" r="2.5" fill="var(--dia-acc,#a8431d)" />
-    <circle cx="252" cy="112" r="2.5" fill="var(--dia-acc,#a8431d)" />
-    <path d="M73,90 C120,82 186,86 241,92" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.3"
+        fill="var(--dia-acc,#2457c5)" fill-opacity="0.18" stroke="var(--dia-acc,#2457c5)" stroke-width="1.4"
+        stroke-dasharray="4,3" /><text x="248" y="62" font-size="12" fill="var(--dia-acc,#2457c5)"
+        font-style="italic">V</text><text x="248" y="74" font-size="9" fill="var(--dia-acc,#2457c5)">(open)</text>
+    <circle cx="244" cy="92" r="2.5" fill="var(--dia-acc,#2457c5)" />
+    <circle cx="252" cy="112" r="2.5" fill="var(--dia-acc,#2457c5)" />
+    <path d="M73,90 C120,82 186,86 241,92" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.3"
         marker-end="url(#ar)" />
-    <path d="M83,112 C126,110 190,110 249,112" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.3"
-        marker-end="url(#ar)" /><text x="160" y="73" font-size="13" fill="var(--dia-ink,#2a2520)" text-anchor="middle"
+    <path d="M83,112 C126,110 190,110 249,112" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.3"
+        marker-end="url(#ar)" /><text x="160" y="73" font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="middle"
         font-style="italic">f</text>
 </svg>

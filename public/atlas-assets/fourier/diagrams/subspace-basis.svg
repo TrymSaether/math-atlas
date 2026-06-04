@@ -3,36 +3,36 @@
   <title>Vₙ spanned by orthonormal exponentials; Sₙf is the projection of f onto that span</title>
   <defs>
     <marker id="sb-arr-ink" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#2a2520)"/>
+      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)"/>
     </marker>
     <marker id="sb-arr-acc" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#a8431d)"/>
+      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)"/>
     </marker>
     <marker id="sb-arr-blue" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
       <path d="M0,0 L7,3 L0,6 Z" fill="var(--blue,#2563EB)"/>
     </marker>
   </defs>
 
-  <rect width="360" height="280" fill="var(--dia-paper,#f4efe6)"/>
+  <rect width="360" height="280" fill="var(--dia-paper,#fffdf8)"/>
 
   <!-- subspace plane Vₙ -->
   <path d="M30,195 L230,138 L330,198 L130,255 Z"
-        fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-line,#c5b89a)" stroke-width="1.5"/>
+        fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-line,#d8d0c2)" stroke-width="1.5"/>
 
   <!-- origin for basis vectors (bottom-left region of plane) -->
-  <circle cx="110" cy="228" r="3" fill="var(--dia-ink,#2a2520)"/>
+  <circle cx="110" cy="228" r="3" fill="var(--dia-ink,#27221d)"/>
 
   <!-- basis vector eₙ: rightward along plane -->
   <line x1="110" y1="228" x2="195" y2="204"
-        stroke="var(--dia-ink,#2a2520)" stroke-width="2" marker-end="url(#sb-arr-ink)"/>
+        stroke="var(--dia-ink,#27221d)" stroke-width="2" marker-end="url(#sb-arr-ink)"/>
 
   <!-- basis vector eₘ: upward along plane other direction -->
   <line x1="110" y1="228" x2="150" y2="180"
-        stroke="var(--dia-acc,#a8431d)" stroke-width="2" marker-end="url(#sb-arr-acc)"/>
+        stroke="var(--dia-acc,#2457c5)" stroke-width="2" marker-end="url(#sb-arr-acc)"/>
 
   <!-- orthogonality mark between eₙ and eₘ at origin -->
   <path d="M110,228 L118,222 L112,214 L104,221 Z"
-        fill="none" stroke="var(--dia-mut,#9a8f7d)" stroke-width="1.2"/>
+        fill="none" stroke="var(--dia-mut,#8c8274)" stroke-width="1.2"/>
 
   <!-- Sₙf: projection foot (separate from origin, upper-right of plane) -->
   <circle cx="248" cy="178" r="5.5" fill="var(--green,#16A34A)"/>
@@ -50,12 +50,12 @@
         fill="none" stroke="var(--green,#16A34A)" stroke-width="1.4"/>
 
   <!-- labels -->
-  <text x="258" y="64" font-size="14" font-style="italic" fill="var(--dia-ink,#2a2520)">f</text>
-  <text x="255" y="198" font-size="12" font-style="italic" fill="var(--dia-ink,#2a2520)">S<tspan dy="3.5" font-size="9">N</tspan><tspan dy="-3.5">f</tspan></text>
-  <text x="203" y="200" font-size="12" font-style="italic" fill="var(--dia-ink,#2a2520)">e<tspan dy="3.5" font-size="9">n</tspan></text>
-  <text x="152" y="174" font-size="12" font-style="italic" fill="var(--dia-acc,#a8431d)">e<tspan dy="3.5" font-size="9">m</tspan></text>
-  <text x="44" y="248" font-size="12" font-style="italic" fill="var(--dia-mut,#9a8f7d)">V<tspan dy="3.5" font-size="9">N</tspan></text>
+  <text x="258" y="64" font-size="14" font-style="italic" fill="var(--dia-ink,#27221d)">f</text>
+  <text x="255" y="198" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">S<tspan dy="3.5" font-size="9">N</tspan><tspan dy="-3.5">f</tspan></text>
+  <text x="203" y="200" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">e<tspan dy="3.5" font-size="9">n</tspan></text>
+  <text x="152" y="174" font-size="12" font-style="italic" fill="var(--dia-acc,#2457c5)">e<tspan dy="3.5" font-size="9">m</tspan></text>
+  <text x="44" y="248" font-size="12" font-style="italic" fill="var(--dia-mut,#8c8274)">V<tspan dy="3.5" font-size="9">N</tspan></text>
 
   <!-- caption -->
-  <text x="180" y="270" font-size="9.5" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">V<tspan dy="2.5" font-size="7">N</tspan><tspan dy="-2.5"> = span{e</tspan><tspan dy="2.5" font-size="7">inx</tspan><tspan dy="-2.5"> : |n| ≤ N},  e</tspan><tspan dy="2.5" font-size="7">n</tspan><tspan dy="-2.5"> ⊥ e</tspan><tspan dy="2.5" font-size="7">m</tspan></text>
+  <text x="180" y="270" font-size="9.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">V<tspan dy="2.5" font-size="7">N</tspan><tspan dy="-2.5"> = span{e</tspan><tspan dy="2.5" font-size="7">inx</tspan><tspan dy="-2.5"> : |n| ≤ N},  e</tspan><tspan dy="2.5" font-size="7">n</tspan><tspan dy="-2.5"> ⊥ e</tspan><tspan dy="2.5" font-size="7">m</tspan></text>
 </svg>

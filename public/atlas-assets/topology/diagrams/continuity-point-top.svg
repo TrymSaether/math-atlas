@@ -1,70 +1,70 @@
 <svg viewBox="0 0 430 230" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader', Georgia, serif" role="img">
     <defs>
         <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#2a2520)" />
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
         </marker>
     </defs>
 
     <!-- spaces -->
-    <ellipse cx="125" cy="100" rx="74" ry="64" fill="var(--dia-domain,#f7f0df)" stroke="var(--dia-ink,#2a2520)"
+    <ellipse cx="125" cy="100" rx="74" ry="64" fill="var(--dia-domain,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.7" />
 
-    <ellipse cx="315" cy="100" rx="74" ry="64" fill="var(--dia-domain,#f7f0df)" stroke="var(--dia-ink,#2a2520)"
+    <ellipse cx="315" cy="100" rx="74" ry="64" fill="var(--dia-domain,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.7" />
 
     <!-- open neighborhoods -->
-    <circle cx="125" cy="102" r="29" fill="var(--dia-open,#ead8b8)" fill-opacity="0.64" stroke="var(--dia-acc,#a8431d)"
+    <circle cx="125" cy="102" r="29" fill="var(--dia-open,#dce8ff)" fill-opacity="0.64" stroke="var(--dia-acc,#2457c5)"
         stroke-width="1.55" stroke-dasharray="5 4" />
 
-    <circle cx="315" cy="102" r="41" fill="var(--dia-open,#ead8b8)" fill-opacity="0.64" stroke="var(--dia-acc,#a8431d)"
+    <circle cx="315" cy="102" r="41" fill="var(--dia-open,#dce8ff)" fill-opacity="0.64" stroke="var(--dia-acc,#2457c5)"
         stroke-width="1.55" stroke-dasharray="5 4" />
 
     <!-- image f(U), not necessarily open -->
-    <ellipse cx="303" cy="105" rx="24" ry="17" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.15"
+    <ellipse cx="303" cy="105" rx="24" ry="17" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.15"
         stroke-dasharray="3 3" opacity="0.85" />
 
     <!-- points -->
-    <circle cx="125" cy="102" r="3.6" fill="var(--dia-ink,#2a2520)" />
+    <circle cx="125" cy="102" r="3.6" fill="var(--dia-ink,#27221d)" />
 
-    <circle cx="303" cy="105" r="3.6" fill="var(--dia-ink,#2a2520)" />
+    <circle cx="303" cy="105" r="3.6" fill="var(--dia-ink,#27221d)" />
 
     <!-- point-to-point map arrow -->
-    <path d="M132,101 C185,68 247,70 296,103" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.55"
+    <path d="M132,101 C185,68 247,70 296,103" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.55"
         marker-end="url(#arrow)" />
 
     <!-- space labels -->
-    <text x="125" y="26" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">X</text>
+    <text x="125" y="26" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">X</text>
 
-    <text x="315" y="26" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">Y</text>
+    <text x="315" y="26" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Y</text>
 
     <!-- map label -->
-    <text x="220" y="69" font-size="13" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">f</text>
+    <text x="220" y="69" font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">f</text>
 
     <!-- point labels -->
-    <text x="113" y="94" font-size="12" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">x</text>
+    <text x="113" y="94" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">x</text>
 
-    <text x="335" y="94" font-size="12" fill="var(--dia-ink,#2a2520)" text-anchor="middle"
+    <text x="335" y="94" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle"
         font-style="italic">f(x)</text>
 
     <!-- neighborhood labels -->
-    <text x="125" y="142" font-size="13" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">U</text>
+    <text x="125" y="142" font-size="13" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">U</text>
 
-    <text x="315" y="154" font-size="13" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">V</text>
+    <text x="315" y="154" font-size="13" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">V</text>
 
-    <text x="303" y="127" font-size="11" fill="var(--dia-ink,#2a2520)" text-anchor="middle"
+    <text x="303" y="127" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle"
         font-style="italic">f(U)</text>
 
     <!-- neighborhood annotations -->
-    <text x="125" y="178" font-size="12" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">U ∈
+    <text x="125" y="178" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">U ∈
         𝒩ₓ(x)</text>
 
-    <text x="315" y="178" font-size="12" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">V ∈
+    <text x="315" y="178" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">V ∈
         𝒩ᵧ(f(x))</text>
 
     <!-- subset annotations -->
-    <text x="125" y="205" font-size="12" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">x ∈ U ⊆
+    <text x="125" y="205" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">x ∈ U ⊆
         X</text>
 
-    <text x="315" y="205" font-size="12" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">f(x) ∈
+    <text x="315" y="205" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">f(x) ∈
         f(U) ⊆ V ⊆ Y</text>
 </svg>

@@ -1,11 +1,11 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
-    <ellipse cx="160" cy="95" rx="130" ry="70" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#2a2520)"
+    <ellipse cx="160" cy="95" rx="130" ry="70" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.6" />
-    <circle cx="150" cy="95" r="38" fill="var(--dia-paper,#f4efe6)" stroke="var(--dia-acc,#a8431d)" stroke-width="2"
+    <circle cx="150" cy="95" r="38" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-acc,#2457c5)" stroke-width="2"
         stroke-dasharray="5 4" />
-    <circle cx="150" cy="95" r="3.2" fill="var(--dia-ink,#2a2520)" /><text x="150" y="110" font-size="13"
-        fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-weight="normal" font-style="italic">x</text><text
-        x="150" y="64" font-size="12" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-weight="normal"
-        font-style="italic">B(x;r)</text><text x="262" y="40" font-size="16" fill="var(--dia-ink,#2a2520)"
+    <circle cx="150" cy="95" r="3.2" fill="var(--dia-ink,#27221d)" /><text x="150" y="110" font-size="13"
+        fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal" font-style="italic">x</text><text
+        x="150" y="64" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal"
+        font-style="italic">B(x;r)</text><text x="262" y="40" font-size="16" fill="var(--dia-ink,#27221d)"
         text-anchor="middle" font-weight="normal" font-style="italic">X</text>
 </svg>

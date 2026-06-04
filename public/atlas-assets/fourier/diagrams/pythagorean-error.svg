@@ -9,15 +9,15 @@
       <path d="M0,0 L7,3 L0,6 Z" fill="var(--gold,#EAB308)"/>
     </marker>
     <marker id="pe-arr-acc" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#a8431d)"/>
+      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)"/>
     </marker>
   </defs>
 
-  <rect width="360" height="280" fill="var(--dia-paper,#f4efe6)"/>
+  <rect width="360" height="280" fill="var(--dia-paper,#fffdf8)"/>
 
   <!-- subspace plane Vₙ -->
   <path d="M30,195 L230,138 L330,198 L130,255 Z"
-        fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-line,#c5b89a)" stroke-width="1.5"/>
+        fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-line,#d8d0c2)" stroke-width="1.5"/>
 
   <!-- side e: f → Sₙf (perpendicular leg, blue) -->
   <line x1="172" y1="72" x2="172" y2="186"
@@ -29,7 +29,7 @@
 
   <!-- side d: f → p (hypotenuse, dashed accent) -->
   <line x1="172" y1="72" x2="252" y2="172"
-        stroke="var(--dia-acc,#a8431d)" stroke-width="2" stroke-dasharray="5,4"
+        stroke="var(--dia-acc,#2457c5)" stroke-width="2" stroke-dasharray="5,4"
         marker-end="url(#pe-arr-acc)"/>
 
   <!-- right angle marker at Sₙf (172, 195) -->
@@ -39,7 +39,7 @@
   <!-- dots -->
   <circle cx="172" cy="62" r="5.5" fill="var(--blue,#2563EB)"/>
   <circle cx="172" cy="195" r="5.5" fill="var(--green,#16A34A)"/>
-  <circle cx="258" cy="178" r="5.5" fill="var(--dia-acc,#a8431d)"/>
+  <circle cx="258" cy="178" r="5.5" fill="var(--dia-acc,#2457c5)"/>
 
   <!-- side labels -->
   <!-- e: along the blue leg, left side -->
@@ -49,14 +49,14 @@
   <text x="218" y="202" font-size="11" font-style="italic" fill="var(--gold,#EAB308)" text-anchor="middle">q</text>
 
   <!-- d: along the hypotenuse, right side -->
-  <text x="230" y="115" font-size="11" font-style="italic" fill="var(--dia-acc,#a8431d)" text-anchor="middle">d</text>
+  <text x="230" y="115" font-size="11" font-style="italic" fill="var(--dia-acc,#2457c5)" text-anchor="middle">d</text>
 
   <!-- node labels -->
-  <text x="182" y="61" font-size="14" font-style="italic" fill="var(--dia-ink,#2a2520)">f</text>
-  <text x="142" y="218" font-size="12" font-style="italic" fill="var(--dia-ink,#2a2520)">S<tspan dy="3.5" font-size="9">N</tspan><tspan dy="-3.5">f</tspan></text>
-  <text x="267" y="180" font-size="12" font-style="italic" fill="var(--dia-ink,#2a2520)">p</text>
-  <text x="44" y="248" font-size="12" font-style="italic" fill="var(--dia-mut,#9a8f7d)">V<tspan dy="3.5" font-size="9">N</tspan></text>
+  <text x="182" y="61" font-size="14" font-style="italic" fill="var(--dia-ink,#27221d)">f</text>
+  <text x="142" y="218" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">S<tspan dy="3.5" font-size="9">N</tspan><tspan dy="-3.5">f</tspan></text>
+  <text x="267" y="180" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">p</text>
+  <text x="44" y="248" font-size="12" font-style="italic" fill="var(--dia-mut,#8c8274)">V<tspan dy="3.5" font-size="9">N</tspan></text>
 
   <!-- Pythagorean caption -->
-  <text x="180" y="270" font-size="9.5" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">d² = e² + q²</text>
+  <text x="180" y="270" font-size="9.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">d² = e² + q²</text>
 </svg>

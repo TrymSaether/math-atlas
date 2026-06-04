@@ -1,66 +1,66 @@
 <svg viewBox="0 0 360 190" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader', Georgia, serif" role="img">
     <defs>
         <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#2a2520)" />
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
         </marker>
         <marker id="arrowAcc" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#a8431d)" />
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)" />
         </marker>
     </defs>
 
     <!-- spaces -->
-    <ellipse cx="70" cy="98" rx="46" ry="58" fill="var(--dia-paper,#f4efe6)" stroke="var(--dia-ink,#2a2520)"
+    <ellipse cx="70" cy="98" rx="46" ry="58" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.45" />
 
-    <ellipse cx="180" cy="98" rx="46" ry="58" fill="var(--dia-paper,#f4efe6)" stroke="var(--dia-ink,#2a2520)"
+    <ellipse cx="180" cy="98" rx="46" ry="58" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.45" />
 
-    <ellipse cx="290" cy="98" rx="46" ry="58" fill="var(--dia-paper,#f4efe6)" stroke="var(--dia-ink,#2a2520)"
+    <ellipse cx="290" cy="98" rx="46" ry="58" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.45" />
 
     <!-- open sets / preimages -->
-    <circle cx="70" cy="101" r="21" fill="var(--dia-fill,#e7ddc9)" fill-opacity="0.42" stroke="var(--dia-acc,#a8431d)"
+    <circle cx="70" cy="101" r="21" fill="var(--dia-fill,#e7ddc9)" fill-opacity="0.42" stroke="var(--dia-acc,#2457c5)"
         stroke-width="1.25" stroke-dasharray="4 4" />
 
-    <circle cx="180" cy="101" r="21" fill="var(--dia-fill,#e7ddc9)" fill-opacity="0.42" stroke="var(--dia-acc,#a8431d)"
+    <circle cx="180" cy="101" r="21" fill="var(--dia-fill,#e7ddc9)" fill-opacity="0.42" stroke="var(--dia-acc,#2457c5)"
         stroke-width="1.25" stroke-dasharray="4 4" />
 
-    <circle cx="290" cy="101" r="21" fill="var(--dia-fill,#e7ddc9)" fill-opacity="0.42" stroke="var(--dia-acc,#a8431d)"
+    <circle cx="290" cy="101" r="21" fill="var(--dia-fill,#e7ddc9)" fill-opacity="0.42" stroke="var(--dia-acc,#2457c5)"
         stroke-width="1.25" stroke-dasharray="4 4" />
 
     <!-- maps -->
-    <path d="M118,96 C134,83 151,83 166,96" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.5"
+    <path d="M118,96 C134,83 151,83 166,96" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.5"
         marker-end="url(#arrow)" />
 
-    <path d="M228,96 C244,83 261,83 276,96" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1.5"
+    <path d="M228,96 C244,83 261,83 276,96" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.5"
         marker-end="url(#arrow)" />
 
     <!-- composite map -->
-    <path d="M78,40 C132,14 228,14 282,40" fill="none" stroke="var(--dia-acc,#a8431d)" stroke-width="1.45"
+    <path d="M78,40 C132,14 228,14 282,40" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.45"
         stroke-dasharray="5 5" marker-end="url(#arrowAcc)" />
 
     <!-- space labels -->
-    <text x="70" y="31" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">X</text>
+    <text x="70" y="31" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">X</text>
 
-    <text x="180" y="31" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">Y</text>
+    <text x="180" y="31" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Y</text>
 
-    <text x="290" y="31" font-size="15" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">Z</text>
+    <text x="290" y="31" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Z</text>
 
     <!-- map labels -->
-    <text x="142" y="78" font-size="13" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">f</text>
+    <text x="142" y="78" font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">f</text>
 
-    <text x="252" y="78" font-size="13" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">g</text>
+    <text x="252" y="78" font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">g</text>
 
-    <text x="180" y="23" font-size="13" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">g ∘
+    <text x="180" y="23" font-size="13" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">g ∘
         f</text>
 
     <!-- set labels, placed below open circles -->
-    <text x="70" y="139" font-size="10.5" fill="var(--dia-acc,#a8431d)" text-anchor="middle"
+    <text x="70" y="139" font-size="10.5" fill="var(--dia-acc,#2457c5)" text-anchor="middle"
         font-style="italic">(g∘f)⁻¹(W)</text>
 
-    <text x="180" y="139" font-size="11.5" fill="var(--dia-acc,#a8431d)" text-anchor="middle"
+    <text x="180" y="139" font-size="11.5" fill="var(--dia-acc,#2457c5)" text-anchor="middle"
         font-style="italic">g⁻¹(W)</text>
 
-    <text x="290" y="139" font-size="12.5" fill="var(--dia-acc,#a8431d)" text-anchor="middle"
+    <text x="290" y="139" font-size="12.5" fill="var(--dia-acc,#2457c5)" text-anchor="middle"
         font-style="italic">W</text>
 </svg>

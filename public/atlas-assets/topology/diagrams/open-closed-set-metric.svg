@@ -1,33 +1,33 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
     <!-- Left: open set U — every point has a ball fitting inside -->
-    <ellipse cx="78" cy="90" rx="56" ry="60" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc,#a8431d)"
+    <ellipse cx="78" cy="90" rx="56" ry="60" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc,#2457c5)"
         stroke-width="1.8" stroke-dasharray="5,4" />
-    <text x="78" y="24" font-size="12" fill="var(--dia-acc,#a8431d)" text-anchor="middle" font-style="italic">U
+    <text x="78" y="24" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">U
         (open)</text>
     <!-- interior point with small ball fitting inside -->
-    <circle cx="78" cy="92" r="20" fill="none" stroke="var(--dia-ink,#2a2520)" stroke-width="1"
+    <circle cx="78" cy="92" r="20" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1"
         stroke-dasharray="3,2" />
-    <circle cx="78" cy="92" r="3" fill="var(--dia-ink,#2a2520)" />
-    <text x="78" y="109" font-size="10" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">x</text>
-    <text x="78" y="164" font-size="9" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">∀ x ∈ U, ∃ B(x;r) ⊆ U</text>
+    <circle cx="78" cy="92" r="3" fill="var(--dia-ink,#27221d)" />
+    <text x="78" y="109" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">x</text>
+    <text x="78" y="164" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">∀ x ∈ U, ∃ B(x;r) ⊆ U</text>
 
     <!-- divider -->
-    <line x1="160" y1="18" x2="160" y2="172" stroke="var(--dia-mut,#9a8f7d)" stroke-width="0.6"
+    <line x1="160" y1="18" x2="160" y2="172" stroke="var(--dia-mut,#8c8274)" stroke-width="0.6"
         stroke-dasharray="3,3" />
 
     <!-- Right: closed set C — contains all limit points -->
-    <ellipse cx="242" cy="90" rx="56" ry="60" fill="var(--dia-fil2,#d6c9a8)" stroke="var(--dia-ink,#2a2520)"
+    <ellipse cx="242" cy="90" rx="56" ry="60" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-ink,#27221d)"
         stroke-width="2.2" />
-    <text x="242" y="24" font-size="12" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-style="italic">C
+    <text x="242" y="24" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">C
         (closed)</text>
     <!-- sequence converging to a boundary limit point -->
-    <circle cx="252" cy="88" r="2.5" fill="var(--dia-ink,#2a2520)" />
-    <circle cx="264" cy="84" r="2" fill="var(--dia-mut,#9a8f7d)" />
-    <circle cx="274" cy="81" r="1.7" fill="var(--dia-mut,#9a8f7d)" />
-    <circle cx="282" cy="79" r="1.4" fill="var(--dia-mut,#9a8f7d)" />
+    <circle cx="252" cy="88" r="2.5" fill="var(--dia-ink,#27221d)" />
+    <circle cx="264" cy="84" r="2" fill="var(--dia-mut,#8c8274)" />
+    <circle cx="274" cy="81" r="1.7" fill="var(--dia-mut,#8c8274)" />
+    <circle cx="282" cy="79" r="1.4" fill="var(--dia-mut,#8c8274)" />
     <!-- limit point on boundary, inside C -->
-    <circle cx="296" cy="76" r="2.5" fill="var(--dia-acc,#a8431d)" />
-    <text x="274" y="68" font-size="9" fill="var(--dia-acc,#a8431d)">limit pt ∈ C</text>
-    <text x="242" y="164" font-size="9" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">contains all limit
+    <circle cx="296" cy="76" r="2.5" fill="var(--dia-acc,#2457c5)" />
+    <text x="274" y="68" font-size="9" fill="var(--dia-acc,#2457c5)">limit pt ∈ C</text>
+    <text x="242" y="164" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">contains all limit
         points</text>
 </svg>

@@ -2,40 +2,40 @@
      font-family="'Newsreader',Georgia,serif" role="img">
   <title>Partial sum Sₙf keeps only coefficients with |n| ≤ N, discarding the rest</title>
 
-  <rect width="360" height="210" fill="var(--dia-paper,#f4efe6)"/>
+  <rect width="360" height="210" fill="var(--dia-paper,#fffdf8)"/>
 
   <!-- axis -->
   <line x1="38" y1="158" x2="328" y2="158"
-        stroke="var(--dia-ink,#2a2520)" stroke-width="1.2"/>
+        stroke="var(--dia-ink,#27221d)" stroke-width="1.2"/>
 
   <!-- frequency labels on axis -->
   <!-- positions: n = -4,-3,-2,-1,0,1,2,3,4 at x = 56,88,120,152,184,216,248,280,312 -->
-  <text x="56"  y="172" font-size="9" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">−4</text>
-  <text x="88"  y="172" font-size="9" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">−3</text>
-  <text x="120" y="172" font-size="9" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-weight="500">−2</text>
-  <text x="152" y="172" font-size="9" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-weight="500">−1</text>
-  <text x="184" y="172" font-size="9" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-weight="500">0</text>
-  <text x="216" y="172" font-size="9" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-weight="500">1</text>
-  <text x="248" y="172" font-size="9" fill="var(--dia-ink,#2a2520)" text-anchor="middle" font-weight="500">2</text>
-  <text x="280" y="172" font-size="9" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">3</text>
-  <text x="312" y="172" font-size="9" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">4</text>
+  <text x="56"  y="172" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">−4</text>
+  <text x="88"  y="172" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">−3</text>
+  <text x="120" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">−2</text>
+  <text x="152" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">−1</text>
+  <text x="184" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">0</text>
+  <text x="216" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">1</text>
+  <text x="248" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">2</text>
+  <text x="280" y="172" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">3</text>
+  <text x="312" y="172" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">4</text>
 
   <!-- axis label -->
-  <text x="322" y="161" font-size="10" font-style="italic" fill="var(--dia-ink,#2a2520)">n</text>
+  <text x="322" y="161" font-size="10" font-style="italic" fill="var(--dia-ink,#27221d)">n</text>
 
   <!-- truncated bars (|n| > N = 2): muted -->
   <!-- n = -4 at x=56, height=18 -->
   <rect x="46" y="140" width="20" height="18" rx="2"
-        fill="var(--dia-mut,#9a8f7d)" opacity="0.45"/>
+        fill="var(--dia-mut,#8c8274)" opacity="0.45"/>
   <!-- n = -3 at x=88, height=30 -->
   <rect x="78" y="128" width="20" height="30" rx="2"
-        fill="var(--dia-mut,#9a8f7d)" opacity="0.45"/>
+        fill="var(--dia-mut,#8c8274)" opacity="0.45"/>
   <!-- n = 3 at x=280, height=30 -->
   <rect x="270" y="128" width="20" height="30" rx="2"
-        fill="var(--dia-mut,#9a8f7d)" opacity="0.45"/>
+        fill="var(--dia-mut,#8c8274)" opacity="0.45"/>
   <!-- n = 4 at x=312, height=18 -->
   <rect x="302" y="140" width="20" height="18" rx="2"
-        fill="var(--dia-mut,#9a8f7d)" opacity="0.45"/>
+        fill="var(--dia-mut,#8c8274)" opacity="0.45"/>
 
   <!-- kept bars (|n| ≤ N = 2): blue -->
   <!-- n = -2 at x=120, height=52 -->
@@ -56,13 +56,13 @@
 
   <!-- cutoff lines at x = 104 (between n=-3 and n=-2) and x = 264 (between n=2 and n=3) -->
   <line x1="104" y1="42" x2="104" y2="162"
-        stroke="var(--dia-ink,#2a2520)" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.55"/>
+        stroke="var(--dia-ink,#27221d)" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.55"/>
   <line x1="264" y1="42" x2="264" y2="162"
-        stroke="var(--dia-ink,#2a2520)" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.55"/>
+        stroke="var(--dia-ink,#27221d)" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.55"/>
 
   <!-- N labels at cutoffs -->
-  <text x="104" y="36" font-size="9.5" fill="var(--dia-ink,#2a2520)" text-anchor="middle">−N</text>
-  <text x="264" y="36" font-size="9.5" fill="var(--dia-ink,#2a2520)" text-anchor="middle">N</text>
+  <text x="104" y="36" font-size="9.5" fill="var(--dia-ink,#27221d)" text-anchor="middle">−N</text>
+  <text x="264" y="36" font-size="9.5" fill="var(--dia-ink,#27221d)" text-anchor="middle">N</text>
 
   <!-- shaded kept region (subtle) -->
   <rect x="104" y="44" width="160" height="114" rx="0"
@@ -70,15 +70,15 @@
 
   <!-- region labels -->
   <text x="184" y="50" font-size="8.5" fill="var(--blue,#2563EB)" text-anchor="middle">kept</text>
-  <text x="60" y="50" font-size="8.5" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle" opacity="0.7">dropped</text>
-  <text x="308" y="50" font-size="8.5" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle" opacity="0.7">dropped</text>
+  <text x="60" y="50" font-size="8.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle" opacity="0.7">dropped</text>
+  <text x="308" y="50" font-size="8.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle" opacity="0.7">dropped</text>
 
   <!-- y-axis label -->
-  <text x="34" y="110" font-size="9.5" font-style="italic" fill="var(--dia-mut,#9a8f7d)"
+  <text x="34" y="110" font-size="9.5" font-style="italic" fill="var(--dia-mut,#8c8274)"
         text-anchor="middle" transform="rotate(-90 34 110)">|f̂(n)|</text>
 
   <!-- caption -->
-  <text x="184" y="200" font-size="9.5" fill="var(--dia-mut,#9a8f7d)" text-anchor="middle">
+  <text x="184" y="200" font-size="9.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">
     S<tspan dy="2.5" font-size="7">N</tspan><tspan dy="-2.5">f uses only f̂(n) for |n| ≤ N</tspan>
   </text>
 </svg>
