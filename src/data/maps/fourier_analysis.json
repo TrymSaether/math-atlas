@@ -109,6 +109,35 @@
         }
       },
       {
+        "id": "integer_frequency",
+        "label": "Integer Frequency",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "The integer index $n\\in\\mathbb Z$ that labels a pure harmonic on the $2\\pi$-periodic circle.",
+        "formal_statement": "A function $x\\mapsto e^{i\\lambda x}$ descends to a well-defined function on $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$ exactly when $e^{i\\lambda(x+2\\pi)}=e^{i\\lambda x}$ for all $x$, equivalently $\\lambda\\in\\mathbb Z$.",
+        "definition": "$$n\\in\\mathbb Z,\\qquad x\\mapsto e^{inx}\\quad\\text{on }\\mathbb T.$$",
+        "intuition": "Wrapping the line into a circle quantizes frequency. Only integer numbers of oscillations fit consistently around a $2\\pi$ loop.",
+        "proof": null,
+        "notation": "$$n\\in\\mathbb Z$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["torus_circle"]
+        },
+        "outgoing_relations": [],
+        "related": ["torus_circle", "complex_exponential"],
+        "assumptions": [
+          "This node uses the $2\\pi$-periodic convention; period-$1$ conventions use $e^{2\\pi inx}$ instead."
+        ],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation", "fourier-series"],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/integer-frequency.svg"
+      },
+      {
         "id": "complex_exponential",
         "label": "Complex Exponential",
         "kind": "object",
@@ -121,10 +150,10 @@
         "notation": "$$e_n(x)=e^{inx}$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["periodic_function"]
+          "logical_dependency": ["periodic_function", "integer_frequency"]
         },
         "outgoing_relations": [],
-        "related": ["periodic_function"],
+        "related": ["periodic_function", "integer_frequency"],
         "assumptions": [],
         "ref": "",
         "book_refs": [],
@@ -189,6 +218,41 @@
           "source": "Curated concept graph"
         },
         "diagram_path": "/atlas-assets/fourier/diagrams/orthonormal-system.svg"
+      },
+      {
+        "id": "orthogonality_of_exponentials",
+        "label": "Orthogonality of Exponentials",
+        "kind": "property",
+        "domain": "foundations",
+        "statement": "Different integer harmonics on the circle are perpendicular in $L^2(\\mathbb T)$.",
+        "formal_statement": "With normalized inner product $\\langle f,g\\rangle=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)\\overline{g(x)}\\,dx$, the exponentials $e_n(x)=e^{inx}$ satisfy $\\langle e_n,e_m\\rangle=\\delta_{nm}$ for all $m,n\\in\\mathbb Z$.",
+        "definition": "$$\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}e^{inx}\\overline{e^{imx}}\\,dx=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}e^{i(n-m)x}\\,dx=\\delta_{nm}.$$",
+        "intuition": "A full number of nonzero oscillations averages to zero around the circle. This single cancellation fact is what makes Fourier coefficients independent coordinates.",
+        "proof": null,
+        "notation": "$$\\langle e_n,e_m\\rangle=\\delta_{nm}$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "complex_exponential",
+            "inner_product_space",
+            "torus_circle",
+            "normalized_circle_measure"
+          ],
+          "notation_dependency": ["integer_frequency"]
+        },
+        "outgoing_relations": [],
+        "related": ["orthonormal_system", "fourier_coefficient", "l2_space"],
+        "assumptions": [
+          "The inner product is normalized by $\\frac1{2\\pi}$ on one full period."
+        ],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation", "orthogonality", "fourier-series"],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/exponential-orthogonality.svg"
       },
       {
         "id": "equivalence_relation",
@@ -301,6 +365,35 @@
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
+      },
+      {
+        "id": "normalized_circle_measure",
+        "label": "Normalized Circle Measure",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "The probability normalization $\\frac1{2\\pi}dx$ used for integrals on the $2\\pi$-periodic circle.",
+        "formal_statement": "On $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$, Fourier series in this graph use the normalized integral $$\\int_{\\mathbb T}f\\,dm=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)\\,dx,$$ so $m(\\mathbb T)=1$.",
+        "definition": "$$dm(x)=\\frac{dx}{2\\pi},\\qquad \\int_{\\mathbb T}f\\,dm=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)\\,dx.$$",
+        "intuition": "This convention removes stray factors of $2\\pi$: constants have average value equal to their coefficient, and the waves $e^{inx}$ have norm $1$.",
+        "proof": null,
+        "notation": "$$dm=\\frac{dx}{2\\pi}$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["torus_circle", "lebesgue_integral"]
+        },
+        "outgoing_relations": [],
+        "related": ["l1_space", "l2_space", "fourier_coefficient", "convolution"],
+        "assumptions": [
+          "All circle formulas in this map use the $2\\pi$-periodic normalization unless a node explicitly says otherwise."
+        ],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["foundation", "normalization", "fourier-series"],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        },
+        "diagram_path": "/atlas-assets/fourier/diagrams/normalized-circle-measure.svg"
       },
       {
         "id": "continuous_functions_torus",
@@ -608,10 +701,10 @@
         "label": "Fourier Coefficient",
         "kind": "definition",
         "domain": "series",
-        "statement": "The coordinate of a periodic function at frequency $n$.",
-        "formal_statement": "For $f\\in L^1(\\mathbb T)$, $\\hat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx=\\langle f,e_n\\rangle$ when the inner product notation is justified.",
+        "statement": "The $n$-th coordinate of a periodic function against the harmonic $e^{inx}$.",
+        "formal_statement": "For $f\\in L^1(\\mathbb T)$ and $n\\in\\mathbb Z$, $$\\widehat f(n)=\\int_{\\mathbb T}f(x)e^{-inx}\\,dm(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx.$$ If $f\\in L^2(\\mathbb T)$, then $\\widehat f(n)=\\langle f,e_n\\rangle$ with $e_n(x)=e^{inx}$.",
         "definition": "$$\\widehat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx,\\qquad n\\in\\mathbb Z.$$",
-        "intuition": "The coefficient $\\hat f(n)$ measures alignment with the $n$-th rotating wave. Because it is defined by an integral, it depends only on the $L^1$ equivalence class of $f$, not on pointwise changes on null sets.",
+        "intuition": "The coefficient $\\hat f(n)$ measures the average alignment of $f$ with the $n$-th rotating wave. In $L^2$ this is literally an orthogonal coordinate; in $L^1$ the same integral still makes sense and ignores changes on null sets.",
         "proof": null,
         "notation": "$$\\hat f(n)$$",
         "proof_dependencies": [],
@@ -621,11 +714,16 @@
             "l1_space",
             "inner_product_space",
             "torus_circle",
+            "integer_frequency",
+            "normalized_circle_measure",
             "almost_everywhere"
+          ],
+          "pedagogical_dependency": [
+            "orthogonality_of_exponentials"
           ]
         },
         "outgoing_relations": [],
-        "related": ["complex_exponential", "inner_product_space"],
+        "related": ["complex_exponential", "inner_product_space", "fourier_spectrum"],
         "assumptions": [
           "For $L^1$ functions the integral definition is primary; the projection interpretation is geometrically literal in $L^2$."
         ],
@@ -638,22 +736,50 @@
         }
       },
       {
+        "id": "fourier_spectrum",
+        "label": "Fourier Spectrum",
+        "kind": "object",
+        "domain": "series",
+        "statement": "The full indexed sequence of Fourier coefficients of a periodic function.",
+        "formal_statement": "For $f\\in L^1(\\mathbb T)$, its Fourier spectrum is the two-sided sequence $\\{\\widehat f(n)\\}_{n\\in\\mathbb Z}$. The coefficient at $n=0$ is the normalized average of $f$: $$\\widehat f(0)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)\\,dx.$$",
+        "definition": "$$\\widehat f=\\{\\widehat f(n)\\}_{n\\in\\mathbb Z}.$$",
+        "intuition": "The spectrum is the frequency-side fingerprint of $f$: low indices record coarse oscillation and large $|n|$ records fine oscillation.",
+        "proof": null,
+        "notation": "$$\\{\\widehat f(n)\\}_{n\\in\\mathbb Z}$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["fourier_coefficient", "integer_frequency"]
+        },
+        "outgoing_relations": [],
+        "related": ["fourier_coefficient", "fourier_series", "riemann_lebesgue_lemma"],
+        "assumptions": [
+          "The spectrum is a sequence indexed by integer frequencies for functions on $\\mathbb T$."
+        ],
+        "ref": "",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["series", "fourier-series", "coefficients"],
+          "syllabus_priority": "core",
+          "source": "Curated concept graph"
+        }
+      },
+      {
         "id": "fourier_series",
         "label": "Fourier Series",
         "kind": "object",
         "domain": "series",
         "statement": "The formal reconstruction of a periodic function from all its Fourier coefficients.",
-        "formal_statement": "For $f\\in L^1(\\mathbb T)$, its Fourier series is written $f(x)\\sim\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$. The symbol $\\sim$ means “has Fourier series,” not automatic pointwise equality.",
+        "formal_statement": "For $f\\in L^1(\\mathbb T)$, its Fourier series is written $$f(x)\\sim\\sum_{n\\in\\mathbb Z}\\widehat f(n)e^{inx}.$$ The symbol $\\sim$ means \"has Fourier series,\" not automatic pointwise equality or convergence.",
         "definition": "$$f(x)\\sim\\sum_{n\\in\\mathbb Z}\\widehat f(n)e^{inx}.$$",
-        "intuition": "The series is a candidate reconstruction. Much of Fourier analysis asks in what sense these candidate sums converge back to $f$.",
+        "intuition": "The series turns the spectrum back into a signal by putting each coefficient on its harmonic. Much of Fourier analysis asks when this formal reconstruction converges back to $f$, and in which sense.",
         "proof": null,
         "notation": "$$\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_coefficient"]
+          "logical_dependency": ["fourier_coefficient", "fourier_spectrum", "complex_exponential"]
         },
         "outgoing_relations": [],
-        "related": ["fourier_coefficient"],
+        "related": ["fourier_coefficient", "fourier_spectrum", "real_fourier_series"],
         "assumptions": [
           "The notation $f\\sim\\sum\\hat f(n)e^{inx}$ does not by itself assert convergence."
         ],
@@ -3155,29 +3281,30 @@
       },
       {
         "id": "real_fourier_series",
-        "label": "Real (Sine–Cosine) Series",
+        "label": "Real Sine-Cosine Fourier Series",
         "kind": "object",
         "domain": "series",
-        "statement": "The sine-cosine form of a Fourier series, equivalent to the complex exponential form.",
-        "formal_statement": "For a real-valued $2\\pi$-periodic $f$, $f(x)\\sim\\frac{a_0}{2}+\\sum_{n\\ge1}(a_n\\cos nx+b_n\\sin nx)$, where $a_n=\\frac1\\pi\\int_{-\\pi}^{\\pi}f(x)\\cos(nx)\\,dx$ and $b_n=\\frac1\\pi\\int_{-\\pi}^{\\pi}f(x)\\sin(nx)\\,dx$.",
-        "definition": "$$f(x)\\sim\\frac{a_0}{2}+\\sum_{n\\ge1}\\bigl(a_n\\cos(nx)+b_n\\sin(nx)\\bigr).$$",
-        "intuition": "This is the classical form. The complex exponential notation packages the same information more compactly.",
+        "statement": "The classical real form of a Fourier series using cosines and sines instead of complex exponentials.",
+        "formal_statement": "For a real-valued integrable $2\\pi$-periodic function, the Fourier series may be written $$\\frac{a_0}{2}+\\sum_{n\\ge1}\\bigl(a_n\\cos nx+b_n\\sin nx\\bigr),$$ where $$a_n=\\frac1\\pi\\int_{-\\pi}^{\\pi}f(x)\\cos nx\\,dx,\\qquad b_n=\\frac1\\pi\\int_{-\\pi}^{\\pi}f(x)\\sin nx\\,dx.$$ This is equivalent to the complex form by Euler's formula.",
+        "definition": "$$f(x)\\sim\\frac{a_0}{2}+\\sum_{n\\ge1}\\bigl(a_n\\cos nx+b_n\\sin nx\\bigr).$$",
+        "intuition": "The sine-cosine form is the same decomposition written in real waves. It is often the first form seen in applications, while the complex form keeps algebra and convolution cleaner.",
         "proof": null,
-        "notation": "$$a_n\\cos(nx)+b_n\\sin(nx)$$",
+        "notation": "$$a_n,\\ b_n$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_series", "complex_exponential"]
+          "logical_dependency": ["fourier_series", "complex_exponential"],
+          "notation_dependency": ["integer_frequency"]
         },
         "outgoing_relations": [],
-        "related": ["fourier_series"],
+        "related": ["fourier_series", "trigonometric_polynomial", "complex_exponential"],
         "assumptions": [
-          "The displayed coefficients use the $2\\pi$-periodic interval $[-\\pi,\\pi]$."
+          "The displayed sine-cosine coefficients use the standard unnormalized $a_n,b_n$ convention on $[-\\pi,\\pi]."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["series"],
-          "syllabus_priority": "medium",
+          "tags": ["series", "fourier-series", "real-form"],
+          "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
       },
@@ -9135,6 +9262,28 @@
         "notes": ""
       },
       {
+        "id": "e_integer_frequency__requires__torus_circle",
+        "source": "integer_frequency",
+        "target": "torus_circle",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "integer frequencies are the well-defined harmonics on the quotient circle"
+      },
+      {
+        "id": "e_complex_exponential__requires__integer_frequency",
+        "source": "complex_exponential",
+        "target": "integer_frequency",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the Fourier-series harmonics are indexed by integer frequencies"
+      },
+      {
         "id": "e_inner_product_space__requires__lebesgue_integral",
         "source": "inner_product_space",
         "target": "lebesgue_integral",
@@ -9155,6 +9304,50 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": ""
+      },
+      {
+        "id": "e_orthogonality_of_exponentials__requires__complex_exponential",
+        "source": "orthogonality_of_exponentials",
+        "target": "complex_exponential",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "orthogonality is the integral identity for the harmonics e^{inx}"
+      },
+      {
+        "id": "e_orthogonality_of_exponentials__requires__inner_product_space",
+        "source": "orthogonality_of_exponentials",
+        "target": "inner_product_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the statement is expressed as an inner-product computation"
+      },
+      {
+        "id": "e_orthogonality_of_exponentials__requires__torus_circle",
+        "source": "orthogonality_of_exponentials",
+        "target": "torus_circle",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the averaging is over one full period on the circle"
+      },
+      {
+        "id": "e_orthogonality_of_exponentials__requires__normalized_circle_measure",
+        "source": "orthogonality_of_exponentials",
+        "target": "normalized_circle_measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the delta identity uses the normalized circle integral"
       },
       {
         "id": "e_lp_space__requires__lebesgue_integral",
@@ -9245,6 +9438,28 @@
         "notes": ""
       },
       {
+        "id": "e_normalized_circle_measure__requires__torus_circle",
+        "source": "normalized_circle_measure",
+        "target": "torus_circle",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the normalized measure is the standard measure on T scaled to total mass one"
+      },
+      {
+        "id": "e_normalized_circle_measure__requires__lebesgue_integral",
+        "source": "normalized_circle_measure",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "circle integrals are Lebesgue integrals over one period"
+      },
+      {
         "id": "e_convolution__requires__l1_space",
         "source": "convolution",
         "target": "l1_space",
@@ -9300,6 +9515,39 @@
         "notes": ""
       },
       {
+        "id": "e_fourier_coefficient__requires__integer_frequency",
+        "source": "fourier_coefficient",
+        "target": "integer_frequency",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "coefficients are indexed by n in Z"
+      },
+      {
+        "id": "e_fourier_coefficient__requires__normalized_circle_measure",
+        "source": "fourier_coefficient",
+        "target": "normalized_circle_measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the coefficient formula uses the normalized circle integral"
+      },
+      {
+        "id": "e_fourier_coefficient__requires__orthogonality_of_exponentials",
+        "source": "fourier_coefficient",
+        "target": "orthogonality_of_exponentials",
+        "type": "requires",
+        "dependency_class": "pedagogical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "orthogonality explains why coefficients act as independent coordinates"
+      },
+      {
         "id": "e_fourier_series__requires__fourier_coefficient",
         "source": "fourier_series",
         "target": "fourier_coefficient",
@@ -9309,6 +9557,61 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": ""
+      },
+      {
+        "id": "e_fourier_spectrum__requires__fourier_coefficient",
+        "source": "fourier_spectrum",
+        "target": "fourier_coefficient",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the spectrum is the full coefficient sequence"
+      },
+      {
+        "id": "e_fourier_spectrum__requires__integer_frequency",
+        "source": "fourier_spectrum",
+        "target": "integer_frequency",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the spectrum is indexed by integer frequencies"
+      },
+      {
+        "id": "e_fourier_series__requires__fourier_spectrum",
+        "source": "fourier_series",
+        "target": "fourier_spectrum",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the Fourier series reconstructs from the full spectrum"
+      },
+      {
+        "id": "e_fourier_series__requires__complex_exponential",
+        "source": "fourier_series",
+        "target": "complex_exponential",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the series is expanded in complex exponential harmonics"
+      },
+      {
+        "id": "e_real_fourier_series__requires__integer_frequency",
+        "source": "real_fourier_series",
+        "target": "integer_frequency",
+        "type": "requires",
+        "dependency_class": "notation_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "the sine-cosine form uses the same integer frequency index"
       },
       {
         "id": "e_trigonometric_polynomial__requires__complex_exponential",

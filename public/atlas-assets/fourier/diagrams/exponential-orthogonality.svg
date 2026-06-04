@@ -1,0 +1,20 @@
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
+  <title>Orthogonality of exponentials</title>
+  <rect x="28" y="36" width="264" height="108" rx="6" fill="var(--dia-paper,#fffdf8)"
+    stroke="var(--dia-ink,#27221d)" stroke-width="1.4" />
+  <line x1="48" y1="90" x2="272" y2="90" stroke="var(--dia-mut,#8c8274)" stroke-width="1" />
+  <path d="M48 90 C62 58 76 58 90 90 S118 122 132 90 S160 58 174 90 S202 122 216 90 S244 58 272 90"
+    fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2" />
+  <path d="M48 90 C76 122 104 122 132 90 S188 58 216 90 S244 122 272 90"
+    fill="none" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.8" stroke-dasharray="5 4" />
+  <path d="M62 90 C76 75 90 75 104 90 C118 105 132 105 146 90 C160 75 174 75 188 90"
+    fill="none" stroke="var(--dia-boundary,#dc2626)" stroke-width="1.2" opacity="0.9" />
+  <text x="160" y="24" font-size="12" text-anchor="middle" fill="var(--dia-mut,#8c8274)">
+    average over one full period
+  </text>
+  <text x="52" y="57" font-size="11" fill="var(--dia-acc,#2457c5)">e_n</text>
+  <text x="52" y="127" font-size="11" fill="var(--dia-acc2,#0d9488)">e_m</text>
+  <text x="160" y="163" font-size="12" text-anchor="middle" fill="var(--dia-ink,#27221d)">
+    &lt;e_n,e_m&gt; = delta_nm
+  </text>
+</svg>

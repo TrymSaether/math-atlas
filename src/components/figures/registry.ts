@@ -19,6 +19,7 @@ export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<F
   convolution_theorem: lazy(() => import("./ConvolutionFigure")),
   circular_convolution: lazy(() => import("./ConvolutionFigure")),
   fourier_coefficient: lazy(() => import("./SpectrumFigure")),
+  fourier_spectrum: lazy(() => import("./SpectrumFigure")),
   fourier_series: lazy(() => import("./SeriesFigure")),
   partial_sum: lazy(() => import("./SeriesFigure")),
   real_fourier_series: lazy(() => import("./SeriesFigure")),
