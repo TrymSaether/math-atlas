@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-  
+
   <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="2"></circle>
   <circle cx="24" cy="24" r="15" stroke="currentColor" stroke-width="1.2" opacity="0.45"></circle>
-  
+
   <path d="M24 5 L27.5 24 L24 21 L20.5 24 Z" fill="currentColor"></path>
   <path d="M24 43 L20.5 24 L24 27 L27.5 24 Z" fill="currentColor" opacity="0.55"></path>
-  
+
   <path d="M43 24 L24 27.5 L27 24 L24 20.5 Z" fill="currentColor" opacity="0.85"></path>
   <path d="M5 24 L24 20.5 L21 24 L24 27.5 Z" fill="currentColor" opacity="0.55"></path>
-  
+
   <circle cx="24" cy="24" r="1.8" fill="currentColor"></circle>
 </svg>

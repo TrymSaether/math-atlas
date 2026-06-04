@@ -1,1 +1,14 @@
-<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img"><rect x="58" y="30" width="244" height="118" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)" stroke-width="1.4"/><rect x="120" y="30" width="60" height="118" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-acc,#2457c5)" stroke-width="1.8"/><line x1="150" y1="30" x2="150" y2="148" stroke="var(--dia-acc,#2457c5)" stroke-width="2.2"/><text x="150" y="24" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal" font-style="italic">{x}×Y</text><text x="150" y="165" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal" font-style="italic">W×Y  (tube)</text><text x="70" y="96" font-size="14" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal" font-style="italic">U</text><text x="312" y="96" font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="start" font-weight="normal" font-style="italic">Y</text><text x="180" y="178" font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal" font-style="italic">X</text></svg>
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
+    <rect x="58" y="30" width="244" height="118" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
+        stroke-width="1.4" />
+    <rect x="120" y="30" width="60" height="118" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-acc,#2457c5)"
+        stroke-width="1.8" />
+    <line x1="150" y1="30" x2="150" y2="148" stroke="var(--dia-acc,#2457c5)" stroke-width="2.2" /><text x="150" y="24"
+        font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal"
+        font-style="italic">{x}×Y</text><text x="150" y="165" font-size="12" fill="var(--dia-acc,#2457c5)"
+        text-anchor="middle" font-weight="normal" font-style="italic">W×Y (tube)</text><text x="70" y="96"
+        font-size="14" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal"
+        font-style="italic">U</text><text x="312" y="96" font-size="13" fill="var(--dia-ink,#27221d)"
+        text-anchor="start" font-weight="normal" font-style="italic">Y</text><text x="180" y="178" font-size="13"
+        fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal" font-style="italic">X</text>
+</svg>

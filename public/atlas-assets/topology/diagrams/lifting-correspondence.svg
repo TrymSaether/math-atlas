@@ -1,1 +1,24 @@
-<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img"><ellipse cx="160" cy="150" rx="70" ry="16" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.6"/><text x="244" y="154" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal" font-style="italic">B = S¹</text><path d="M95,34 C120,25 200,25 225,34 C200,43 120,43 95,34 Z" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)" stroke-width="1.2"/><path d="M95,70 C120,61 200,61 225,70 C200,79 120,79 95,70 Z" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)" stroke-width="1.2"/><path d="M95,106 C120,97 200,97 225,106 C200,115 120,115 95,106 Z" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)" stroke-width="1.2"/><text x="248" y="70" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="start" font-weight="normal" font-style="italic">E = ℝ</text><defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)"/></marker><marker id="ara" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)"/></marker></defs><line x1="160" y1="120" x2="160" y2="134" stroke="var(--dia-acc,#2457c5)" stroke-width="1.6" marker-end="url(#ara)"/><text x="172" y="128" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="start" font-weight="normal" font-style="italic">p</text><circle cx="160" cy="150" r="3" fill="var(--dia-acc,#2457c5)"/></svg>
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
+    <ellipse cx="160" cy="150" rx="70" ry="16" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.6" /><text
+        x="244" y="154" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal"
+        font-style="italic">B = S¹</text>
+    <path d="M95,34 C120,25 200,25 225,34 C200,43 120,43 95,34 Z" fill="var(--dia-fill,#e7ddc9)"
+        stroke="var(--dia-ink,#27221d)" stroke-width="1.2" />
+    <path d="M95,70 C120,61 200,61 225,70 C200,79 120,79 95,70 Z" fill="var(--dia-fill,#e7ddc9)"
+        stroke="var(--dia-ink,#27221d)" stroke-width="1.2" />
+    <path d="M95,106 C120,97 200,97 225,106 C200,115 120,115 95,106 Z" fill="var(--dia-fill,#e7ddc9)"
+        stroke="var(--dia-ink,#27221d)" stroke-width="1.2" /><text x="248" y="70" font-size="12"
+        fill="var(--dia-ink,#27221d)" text-anchor="start" font-weight="normal" font-style="italic">E = ℝ</text>
+    <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
+        </marker>
+        <marker id="ara" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)" />
+        </marker>
+    </defs>
+    <line x1="160" y1="120" x2="160" y2="134" stroke="var(--dia-acc,#2457c5)" stroke-width="1.6"
+        marker-end="url(#ara)" /><text x="172" y="128" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="start"
+        font-weight="normal" font-style="italic">p</text>
+    <circle cx="160" cy="150" r="3" fill="var(--dia-acc,#2457c5)" />
+</svg>

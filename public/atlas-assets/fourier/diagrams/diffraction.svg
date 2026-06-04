@@ -2,19 +2,22 @@
   <title>Fraunhofer diffraction as a Fourier transform of an aperture</title>
   <defs>
     <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)"/>
+      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
     </marker>
   </defs>
-  <rect x="52" y="40" width="26" height="100" fill="var(--dia-ink,#27221d)" opacity="0.22"/>
-  <rect x="61" y="76" width="8" height="28" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)" stroke-width="1"/>
+  <rect x="52" y="40" width="26" height="100" fill="var(--dia-ink,#27221d)" opacity="0.22" />
+  <rect x="61" y="76" width="8" height="28" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)"
+    stroke-width="1" />
   <g stroke="var(--dia-mut,#8c8274)" stroke-width="1">
-    <path d="M26 90 L55 83"/>
-    <path d="M26 90 L55 90"/>
-    <path d="M26 90 L55 97"/>
+    <path d="M26 90 L55 83" />
+    <path d="M26 90 L55 90" />
+    <path d="M26 90 L55 97" />
   </g>
-  <path d="M82 90 C118 70 142 70 174 90" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.4" marker-end="url(#arrow)"/>
-  <path d="M197 126 C214 126 218 68 228 68 C238 68 242 126 259 126 C270 126 275 113 280 126" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.9"/>
-  <line x1="190" y1="126" x2="288" y2="126" stroke="var(--dia-ink,#27221d)" stroke-width="1"/>
+  <path d="M82 90 C118 70 142 70 174 90" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.4"
+    marker-end="url(#arrow)" />
+  <path d="M197 126 C214 126 218 68 228 68 C238 68 242 126 259 126 C270 126 275 113 280 126" fill="none"
+    stroke="var(--dia-acc,#2457c5)" stroke-width="1.9" />
+  <line x1="190" y1="126" x2="288" y2="126" stroke="var(--dia-ink,#27221d)" stroke-width="1" />
   <text x="65" y="157" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle">aperture</text>
   <text x="239" y="157" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle">far-field intensity</text>
 </svg>

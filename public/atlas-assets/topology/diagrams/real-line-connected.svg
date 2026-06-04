@@ -1,1 +1,21 @@
-<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img"><defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)"/></marker><marker id="ara" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)"/></marker></defs><line x1="40" y1="150" x2="300" y2="150" stroke="var(--dia-ink,#27221d)" stroke-width="1.2"/><line x1="50" y1="30" x2="50" y2="160" stroke="var(--dia-ink,#27221d)" stroke-width="1.2"/><path d="M60,120 C120,40 180,150 270,60" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2"/><line x1="50" y1="95" x2="285" y2="95" stroke="var(--dia-acc2,#0d9488)" stroke-width="1" stroke-dasharray="4 3"/><text x="40" y="99" font-size="11" fill="var(--dia-acc2,#0d9488)" text-anchor="end" font-weight="normal" font-style="italic">r</text><circle cx="150" cy="95" r="3.4" fill="var(--dia-acc,#2457c5)"/><text x="150" y="168" font-size="11" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal" font-style="italic">f(c)=r</text><text x="70" y="124" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal" font-style="italic">f(a)</text><text x="270" y="52" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal" font-style="italic">f(b)</text></svg>
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
+    <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
+        </marker>
+        <marker id="ara" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)" />
+        </marker>
+    </defs>
+    <line x1="40" y1="150" x2="300" y2="150" stroke="var(--dia-ink,#27221d)" stroke-width="1.2" />
+    <line x1="50" y1="30" x2="50" y2="160" stroke="var(--dia-ink,#27221d)" stroke-width="1.2" />
+    <path d="M60,120 C120,40 180,150 270,60" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2" />
+    <line x1="50" y1="95" x2="285" y2="95" stroke="var(--dia-acc2,#0d9488)" stroke-width="1" stroke-dasharray="4 3" />
+    <text x="40" y="99" font-size="11" fill="var(--dia-acc2,#0d9488)" text-anchor="end" font-weight="normal"
+        font-style="italic">r</text>
+    <circle cx="150" cy="95" r="3.4" fill="var(--dia-acc,#2457c5)" /><text x="150" y="168" font-size="11"
+        fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal" font-style="italic">f(c)=r</text><text
+        x="70" y="124" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal"
+        font-style="italic">f(a)</text><text x="270" y="52" font-size="10" fill="var(--dia-ink,#27221d)"
+        text-anchor="middle" font-weight="normal" font-style="italic">f(b)</text>
+</svg>

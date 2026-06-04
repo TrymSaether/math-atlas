@@ -1,1 +1,7 @@
-<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img"><circle cx="70" cy="95" r="3.4" fill="var(--dia-acc,#2457c5)"/><text x="60" y="99" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal" font-style="italic">x₀</text><path d="M70,95 C150,30 260,30 260,95 C260,160 150,160 70,95 Z" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.8"/><text x="165" y="25" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal" font-style="italic">f  (loop)</text></svg>
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
+    <circle cx="70" cy="95" r="3.4" fill="var(--dia-acc,#2457c5)" /><text x="60" y="99" font-size="12"
+        fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal" font-style="italic">x₀</text>
+    <path d="M70,95 C150,30 260,30 260,95 C260,160 150,160 70,95 Z" fill="none" stroke="var(--dia-acc,#2457c5)"
+        stroke-width="1.8" /><text x="165" y="25" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle"
+        font-weight="normal" font-style="italic">f (loop)</text>
+</svg>

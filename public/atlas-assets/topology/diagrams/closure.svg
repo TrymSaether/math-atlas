@@ -1,11 +1,11 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
     <!-- Closure Ā (dashed, larger) -->
-    <ellipse cx="160" cy="92" rx="118" ry="62" fill="var(--dia-paper,#fffdf8)"
-        stroke="var(--dia-ink,#27221d)" stroke-width="1.6" stroke-dasharray="6,4" />
+    <ellipse cx="160" cy="92" rx="118" ry="62" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)"
+        stroke-width="1.6" stroke-dasharray="6,4" />
     <text x="258" y="46" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Ā</text>
     <!-- Set A (solid boundary) -->
-    <ellipse cx="155" cy="92" rx="72" ry="40" fill="var(--dia-fill,#e7ddc9)"
-        stroke="var(--dia-acc,#2457c5)" stroke-width="1.6" />
+    <ellipse cx="155" cy="92" rx="72" ry="40" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc,#2457c5)"
+        stroke-width="1.6" />
     <text x="155" y="97" font-size="14" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">A</text>
     <!-- limit points outside A but inside Ā -->
     <circle cx="238" cy="85" r="2.5" fill="var(--dia-ink,#27221d)" />
@@ -14,5 +14,6 @@
     <circle cx="68" cy="88" r="2.5" fill="var(--dia-ink,#27221d)" />
     <circle cx="62" cy="103" r="2.5" fill="var(--dia-ink,#27221d)" />
     <!-- caption -->
-    <text x="160" y="172" font-size="10" fill="var(--dia-mut,#8c8274)" text-anchor="middle">Ā = smallest closed set ⊇ A</text>
+    <text x="160" y="172" font-size="10" fill="var(--dia-mut,#8c8274)" text-anchor="middle">Ā = smallest closed set ⊇
+        A</text>
 </svg>

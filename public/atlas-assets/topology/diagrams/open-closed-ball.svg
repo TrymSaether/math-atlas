@@ -1,22 +1,29 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
     <!-- Left: open ball B(a;r) — dashed boundary -->
-    <circle cx="82" cy="90" r="50" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc,#2457c5)" stroke-width="1.8" stroke-dasharray="5,4" />
+    <circle cx="82" cy="90" r="50" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc,#2457c5)" stroke-width="1.8"
+        stroke-dasharray="5,4" />
     <circle cx="82" cy="90" r="3" fill="var(--dia-ink,#27221d)" />
     <text x="82" y="107" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">a</text>
     <line x1="82" y1="90" x2="128" y2="78" stroke="var(--dia-acc,#2457c5)" stroke-width="1" />
     <text x="108" y="76" font-size="11" fill="var(--dia-acc,#2457c5)" font-style="italic">r</text>
-    <text x="82" y="152" font-size="11" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">B(a; r)</text>
-    <text x="82" y="166" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">open — boundary excluded</text>
+    <text x="82" y="152" font-size="11" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">B(a;
+        r)</text>
+    <text x="82" y="166" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">open — boundary
+        excluded</text>
 
     <!-- divider -->
-    <line x1="160" y1="18" x2="160" y2="172" stroke="var(--dia-mut,#8c8274)" stroke-width="0.6" stroke-dasharray="3,3" />
+    <line x1="160" y1="18" x2="160" y2="172" stroke="var(--dia-mut,#8c8274)" stroke-width="0.6"
+        stroke-dasharray="3,3" />
 
     <!-- Right: closed ball B̄(a;r) — solid boundary -->
-    <circle cx="238" cy="90" r="50" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-ink,#27221d)" stroke-width="2.4" />
+    <circle cx="238" cy="90" r="50" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-ink,#27221d)"
+        stroke-width="2.4" />
     <circle cx="238" cy="90" r="3" fill="var(--dia-ink,#27221d)" />
     <text x="238" y="107" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">a</text>
     <line x1="238" y1="90" x2="284" y2="78" stroke="var(--dia-ink,#27221d)" stroke-width="1" />
     <text x="264" y="76" font-size="11" fill="var(--dia-ink,#27221d)" font-style="italic">r</text>
-    <text x="238" y="152" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">B̄(a; r)</text>
-    <text x="238" y="166" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">closed — boundary included</text>
+    <text x="238" y="152" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">B̄(a;
+        r)</text>
+    <text x="238" y="166" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">closed — boundary
+        included</text>
 </svg>

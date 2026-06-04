@@ -25,16 +25,16 @@
     <text x="62" y="75" font-size="24" class="svg-label" fill="var(--dia-ink,#27221d)">X</text>
 
     <!-- A -->
-    <ellipse cx="350" cy="188" rx="230" ry="108" fill="var(--dia-set,#e7ddc9)"
-        stroke="var(--dia-ink,#27221d)" stroke-width="12" stroke-opacity="0.13" filter="url(#interior-shadow)" />
+    <ellipse cx="350" cy="188" rx="230" ry="108" fill="var(--dia-set,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
+        stroke-width="12" stroke-opacity="0.13" filter="url(#interior-shadow)" />
 
     <ellipse cx="350" cy="188" rx="230" ry="108" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="2.2" />
 
     <text x="563" y="125" font-size="26" class="svg-label" fill="var(--dia-ink,#27221d)">A</text>
 
     <!-- A° -->
-    <ellipse cx="350" cy="188" rx="158" ry="70" fill="var(--dia-int,#dce8ff)"
-        stroke="var(--dia-acc,#2457c5)" stroke-width="2.2" stroke-dasharray="8 7" />
+    <ellipse cx="350" cy="188" rx="158" ry="70" fill="var(--dia-int,#dce8ff)" stroke="var(--dia-acc,#2457c5)"
+        stroke-width="2.2" stroke-dasharray="8 7" />
 
     <text x="350" y="197" font-size="24" class="svg-acc svg-symbol" fill="var(--dia-acc,#2457c5)"
         text-anchor="middle">A°</text>
