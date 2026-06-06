@@ -29,13 +29,14 @@
     "**/out": true,
     "**/public": true,
     "**/assets": true,
-    "**/playwright-cli": true,
+    "**/.playwright*": true,
     "**/playwright.config.ts": true,
     "**/tsconfig.json": true,
     "**/tsconfig.*.json": true,
     "**/eslint.config.js": true,
     "**/.eslintrc": true,
     "**/.prettier*": true,
-    "**/tsconfig*": true
+    "**/tsconfig*": true,
+    "**/.cache": true
   }
 }
