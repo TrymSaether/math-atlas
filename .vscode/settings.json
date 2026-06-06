@@ -1,0 +1,41 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always"
+  },
+  "eslint.options": {
+    "extensions": [".js", ".jsx", ".ts", ".tsx"]
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.git": true,
+    "**/.vscode": true,
+    "**/.DS_Store": true,
+    "**/coverage": true,
+    "**/build": true,
+    "**/out": true,
+    "**/public": true,
+    "**/assets": true,
+    "**/playwright-cli": true,
+    "**/playwright.config.ts": true,
+    "**/tsconfig.json": true,
+    "**/tsconfig.*.json": true,
+    "**/eslint.config.js": true,
+    "**/.eslintrc": true,
+    "**/.prettier*": true,
+    "**/tsconfig*": true
+  }
+}
