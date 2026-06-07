@@ -1,110 +1,96 @@
 import { useMemo, useState } from "react";
+import { Mafs, Line, Plot, Point, Polygon } from "mafs";
 
 import { boxConvolution } from "../../lib/figures/fourierMath";
-import { linearScale, linspace } from "../../lib/figures/plot";
+import { MathText } from "../../lib/katex";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
-const W = 320;
-const H = 210;
-const PAD = 14;
 const X_DOMAIN: [number, number] = [-4, 4];
-const sx = linearScale(X_DOMAIN, [PAD, W - PAD]);
 
-// Top panel: the two pulses sliding past each other.
-const TOP_BASE = 96; // baseline (value 0)
-const TOP_TOP = 24; // value 1
-// Bottom panel: the convolution curve f*g.
-const BOT_BASE = 196;
-const BOT_TOP = 124; // value 2 (peak of the triangle)
-
-const SCONV = linspace(X_DOMAIN[0], X_DOMAIN[1], 240);
-const CONV_PATH = (() => {
-  let d = "";
-  for (let i = 0; i < SCONV.length; i++) {
-    const s = SCONV[i];
-    const y = BOT_BASE - (boxConvolution(s) / 2) * (BOT_BASE - BOT_TOP);
-    d += `${i === 0 ? "M" : "L"}${sx(s).toFixed(2)} ${y.toFixed(2)} `;
-  }
-  return d.trim();
-})();
-
-/** A filled rectangle pulse on the top panel, half-width 1, centered at `c`. */
-function pulseRect(c: number, fill: string, opacity: number) {
-  const x0 = sx(c - 1);
-  const x1 = sx(c + 1);
-  return (
-    <rect x={x0} y={TOP_TOP} width={x1 - x0} height={TOP_BASE - TOP_TOP} fill={fill} opacity={opacity} />
-  );
+function boxPoints(center: number, height = 1): [number, number][] {
+  return [
+    [center - 1, 0],
+    [center - 1, height],
+    [center + 1, height],
+    [center + 1, 0],
+  ];
 }
 
-/**
- * Convolution as a sliding overlap. Top: a fixed pulse f and a moving (flipped)
- * pulse g centered at the shift s, with their overlap shaded. Bottom: the
- * convolution (f∗g)(s) — a triangle — traced with a marker at the current s.
- * The shaded overlap area equals the marker's height.
- */
+function overlapPoints(s: number): [number, number][] | null {
+  const lo = Math.max(-1, s - 1);
+  const hi = Math.min(1, s + 1);
+
+  if (hi <= lo) return null;
+
+  return [
+    [lo, 0],
+    [lo, 1],
+    [hi, 1],
+    [hi, 0],
+  ];
+}
+
 export default function ConvolutionFigure(_: FigureProps) {
-  // slider -40..40 → s in [-4, 4]
   const [raw, setRaw] = useState(-12);
   const s = raw / 10;
 
-  const overlap = useMemo(() => {
-    const lo = Math.max(-1, s - 1);
-    const hi = Math.min(1, s + 1);
-    return hi > lo ? [lo, hi] : null;
-  }, [s]);
-
-  const markerY = BOT_BASE - (boxConvolution(s) / 2) * (BOT_BASE - BOT_TOP);
+  const overlap = useMemo(() => overlapPoints(s), [s]);
+  const value = boxConvolution(s);
 
   return (
     <figure className="m-0">
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        role="img"
-        style={{ width: "100%", height: "auto", display: "block" }}
-      >
-        {/* top baseline */}
-        <line x1={PAD} y1={TOP_BASE} x2={W - PAD} y2={TOP_BASE} stroke="var(--fg-4)" strokeWidth={1} />
-        {/* fixed pulse f and sliding pulse g */}
-        {pulseRect(0, "var(--fg-3)", 0.28)}
-        {pulseRect(s, "var(--accent)", 0.22)}
-        {/* shaded overlap = the integrand's support */}
-        {overlap && (
-          <rect
-            x={sx(overlap[0])}
-            y={TOP_TOP}
-            width={sx(overlap[1]) - sx(overlap[0])}
-            height={TOP_BASE - TOP_TOP}
-            fill="var(--accent)"
-            opacity={0.55}
-          />
-        )}
-        <text x={sx(0)} y={TOP_TOP - 6} textAnchor="middle" fontSize={8} fill="var(--fg-3)">
-          f
-        </text>
-        <text x={sx(s)} y={TOP_TOP - 6} textAnchor="middle" fontSize={8} fill="var(--accent)">
-          g(s − ·)
-        </text>
+      <div className="space-y-2">
+        <section
+          className="relative overflow-hidden rounded-xl border"
+          style={{ borderColor: "var(--border)", background: "var(--bg)" }}
+        >
+          <div className="absolute left-3 top-2 z-10 text-ui-meta" style={{ color: "var(--fg-2)" }}>
+            <MathText text={`$f(t)$ fixed, $g(s-t)$ sliding`} />
+          </div>
 
-        {/* bottom: the convolution curve */}
-        <line x1={PAD} y1={BOT_BASE} x2={W - PAD} y2={BOT_BASE} stroke="var(--fg-4)" strokeWidth={1} />
-        <path d={CONV_PATH} fill="none" stroke="var(--accent)" strokeWidth={1.8} />
-        {/* drop line + marker at current s */}
-        <line
-          x1={sx(s)}
-          y1={markerY}
-          x2={sx(s)}
-          y2={BOT_BASE}
-          stroke="var(--fg-4)"
-          strokeWidth={1}
-          strokeDasharray="3 3"
-        />
-        <circle cx={sx(s)} cy={markerY} r={3.2} fill="var(--accent)" />
-        <text x={sx(s)} y={BOT_BASE + 9} textAnchor="middle" fontSize={8} fill="var(--fg-3)">
-          (f∗g)(s)
-        </text>
-      </svg>
+          <Mafs height={150} viewBox={{ x: X_DOMAIN, y: [-0.25, 1.45] }} pan={false} zoom={false}>
+            <Line.Segment point1={[-4, 0]} point2={[4, 0]} color="var(--fg-4)" />
+
+            <Polygon points={boxPoints(0)} color="var(--fg-3)" />
+            <Polygon points={boxPoints(s)} color="var(--accent)" />
+            {overlap && <Polygon points={overlap} color="var(--accent)" />}
+
+            <Line.Segment point1={[-1, 0]} point2={[-1, 1]} color="var(--fg-3)" />
+            <Line.Segment point1={[1, 0]} point2={[1, 1]} color="var(--fg-3)" />
+
+            <Line.Segment point1={[s - 1, 0]} point2={[s - 1, 1]} color="var(--accent)" />
+            <Line.Segment point1={[s + 1, 0]} point2={[s + 1, 1]} color="var(--accent)" />
+          </Mafs>
+
+          <div className="absolute bottom-2 left-3 rounded-md px-2 py-1 text-ui-meta">
+            <MathText text={`$s=${s.toFixed(1)},\\quad \\operatorname{overlap}=${value.toFixed(2)}$`} />
+          </div>
+        </section>
+
+        <section
+          className="relative overflow-hidden rounded-xl border"
+          style={{ borderColor: "var(--border)", background: "var(--bg)" }}
+        >
+          <div className="absolute left-3 top-2 z-10 text-ui-meta" style={{ color: "var(--fg-2)" }}>
+            <MathText text={`$(f*g)(s)=\\int_{-\\infty}^{\\infty} f(t)g(s-t)\\,dt$`} />
+          </div>
+
+          <Mafs height={150} viewBox={{ x: X_DOMAIN, y: [-0.35, 2.35] }} pan={false} zoom={false}>
+            <Line.Segment point1={[-4, 0]} point2={[4, 0]} color="var(--fg-4)" />
+            <Line.Segment point1={[s, 0]} point2={[s, value]} color="var(--fg-4)" />
+
+            <Plot.OfX y={boxConvolution} domain={[-2, 2]} color="var(--accent)" weight={2} />
+
+            <Point x={s} y={value} color="var(--accent)" />
+          </Mafs>
+
+          <div className="absolute bottom-2 left-3 rounded-md px-2 py-1 text-ui-meta">
+            <MathText text={`$s=${s.toFixed(1)},\\quad (f*g)(s)=${value.toFixed(2)}$`} />
+          </div>
+        </section>
+      </div>
+
       <RangeControl
         min={-40}
         max={40}
@@ -113,9 +99,10 @@ export default function ConvolutionFigure(_: FigureProps) {
         label={`s = ${s.toFixed(1)}`}
         ariaLabel="Convolution shift s"
       />
+
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        Slide one pulse across the other; the shaded overlap area is the convolution at that shift —
-        here two boxes give a triangle.
+        Slide one box across the other. The overlap area in the top panel is the value marked on the
+        convolution curve below.
       </figcaption>
     </figure>
   );

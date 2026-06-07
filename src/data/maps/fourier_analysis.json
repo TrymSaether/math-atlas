@@ -72,7 +72,7 @@
         "description": "Where it all pays off: PDEs, signal processing, and probability."
       },
       {
-        "id": "dirichlet",
+        "id": "number_theory",
         "label": "Number Theory",
         "order": 8,
         "color": "#BE123C",
@@ -103,7 +103,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -131,7 +131,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation", "fourier-series"],
+          "tags": ["foundations", "fourier-series"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -158,7 +158,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -187,7 +187,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -213,7 +213,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -248,7 +248,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation", "orthogonality", "fourier-series"],
+          "tags": ["foundations", "orthogonality", "fourier-series"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -278,7 +278,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -304,7 +304,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -335,7 +335,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -361,7 +361,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -382,14 +382,19 @@
           "logical_dependency": ["torus_circle", "lebesgue_integral"]
         },
         "outgoing_relations": [],
-        "related": ["l1_space", "l2_space", "fourier_coefficient", "convolution"],
+        "related": [
+          "l1_space",
+          "l2_space",
+          "fourier_coefficient",
+          "convolution"
+        ],
         "assumptions": [
           "All circle formulas in this map use the $2\\pi$-periodic normalization unless a node explicitly says otherwise."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation", "normalization", "fourier-series"],
+          "tags": ["foundations", "normalization", "fourier-series"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         },
@@ -411,14 +416,18 @@
           "logical_dependency": ["torus_circle", "periodic_function"]
         },
         "outgoing_relations": [],
-        "related": ["torus_circle", "fejer_theorem", "weierstrass_approximation_theorem"],
+        "related": [
+          "torus_circle",
+          "fejer_theorem",
+          "weierstrass_approximation_theorem"
+        ],
         "assumptions": [
           "The topology is the usual compact topology on $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$."
         ],
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -461,7 +470,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -487,7 +496,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -495,35 +504,46 @@
       {
         "id": "l1_space",
         "label": "$L^1$ Space",
-        "kind": "structure",
+        "kind": "definition",
         "domain": "foundations",
-        "statement": "Absolutely integrable functions on the circle, the minimal setting where Fourier coefficients are defined.",
-        "formal_statement": "$L^1(\\mathbb T)=\\{f:\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|\\,dx<\\infty\\}$, modulo equality almost everywhere.",
-        "definition": "$$\\begin{aligned} L^1(\\mathbb T)&=\\left\\{f:\\mathbb T\\to\\mathbb C\\ \\text{measurable}:\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f(x)|\\,dx<\\infty\\right\\}/\\sim,\\\\ f\\sim g&\\Longleftrightarrow f=g\\ \\text{a.e.} \\end{aligned}$$",
-        "intuition": "Integrability is enough to define $\\hat f(n)$. Convergence of the Fourier series requires extra structure.",
+        "statement": "$L^1$ is the space of integrable measurable functions modulo equality almost everywhere.",
+        "formal_statement": "Let $(X,\\mathcal A,\\mu)$ be a measure space. The space $L^1(X,\\mu)$ consists of equivalence classes of measurable functions $f:X\\to\\mathbb C$ such that $$\\|f\\|_1=\\int_X |f|\\,d\\mu<\\infty,$$ where functions equal almost everywhere are identified.",
+        "definition": "$L^1(X,\\mu)$ is the space of absolutely integrable functions on a measure space.",
+        "formula": "$$L^1(X,\\mu)=\\left\\{f:\\int_X |f|\\,d\\mu<\\infty\\right\\}/\\text{a.e. equality},\\qquad \\|f\\|_1=\\int_X |f|\\,d\\mu.$$",
+        "intuition": "$L^1$ functions have finite total absolute mass. On a product space, that absolute-integrability condition is what makes Fubini's interchange of integrals valid.",
         "proof": null,
-        "notation": "$$L^1(\\mathbb T),\\ \\|f\\|_1<\\infty$$",
+        "notation": "$$L^1(X),\\quad L^1(X,\\mu),\\quad \\|f\\|_1$$",
         "proof_dependencies": [],
         "dependencies": {
           "logical_dependency": [
             "lebesgue_integral",
-            "almost_everywhere",
-            "lp_space",
-            "quotient_set"
+            "measurable_function",
+            "measure_space"
           ]
         },
         "outgoing_relations": [],
-        "related": ["lp_space"],
-        "assumptions": [
-          "Functions are identified up to equality almost everywhere."
+        "related": [
+          "lebesgue_integral",
+          "measurable_function",
+          "fubini_theorem"
         ],
-        "ref": "",
+        "assumptions": [
+          "Functions equal almost everywhere represent the same element of $L^1$.",
+          "The norm is finite exactly when $|f|$ is integrable."
+        ],
+        "ref": "Wikipedia: Lp space",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": [
+            "measure-theory",
+            "functional-analysis",
+            "foundations",
+            "lp-space"
+          ],
           "syllabus_priority": "core",
-          "source": "Curated concept graph"
-        }
+          "source": "Wikipedia: Lp space"
+        },
+        "proof_steps": []
       },
       {
         "id": "l2_space",
@@ -553,7 +573,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -579,7 +599,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -607,7 +627,7 @@
         "ref": "Stein–Shakarchi: Ch.5 Corollary 2.4; Ch.5 Proposition 1.1; Ch.5 Theorem 1.3",
         "book_refs": ["c5_cor_2_4", "c5_prop_1_1", "c5_thm_1_3"],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.5 Corollary 2.4; Ch.5 Proposition 1.1; Ch.5 Theorem 1.3"
         }
@@ -635,7 +655,7 @@
         "ref": "Stein–Shakarchi: Ch.3 Exercise 15 and Exercise 16",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.3 Exercise 15 and Exercise 16"
         }
@@ -653,17 +673,25 @@
         "notation": "$$\\mathcal S(\\mathbb R)\\text{ dense in }L^p(\\mathbb R)$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["schwartz_space", "l1_space_real_line", "l2_space_real_line"]
+          "logical_dependency": [
+            "schwartz_space",
+            "l1_space_real_line",
+            "l2_space_real_line"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["plancherel_theorem", "fourier_inversion", "schwartz_space"],
+        "related": [
+          "plancherel_theorem",
+          "fourier_inversion",
+          "schwartz_space"
+        ],
         "assumptions": [
           "The statement is for finite $p$; $\\mathcal S(\\mathbb R)$ is not dense in $L^\\infty$ in the essential-supremum norm."
         ],
         "ref": "Stein–Shakarchi: Ch.5 Theorem 1.12",
         "book_refs": ["c5_thm_1_12"],
         "metadata": {
-          "tags": ["foundation", "transform"],
+          "tags": ["foundations", "transform"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.5 Theorem 1.12"
         }
@@ -681,7 +709,7 @@
         "notation": "$$f*g$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["l1_space", "fubini_tonelli"]
+          "logical_dependency": ["l1_space", "fubini_theorem"]
         },
         "outgoing_relations": [],
         "related": [],
@@ -691,7 +719,7 @@
         "ref": "Stein–Shakarchi: Ch.2 Lemma 3.2; Ch.2 Proposition 3.1",
         "book_refs": ["c2_lem_3_2", "c2_prop_3_1"],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.2 Lemma 3.2; Ch.2 Proposition 3.1"
         }
@@ -718,12 +746,14 @@
             "normalized_circle_measure",
             "almost_everywhere"
           ],
-          "pedagogical_dependency": [
-            "orthogonality_of_exponentials"
-          ]
+          "pedagogical_dependency": ["orthogonality_of_exponentials"]
         },
         "outgoing_relations": [],
-        "related": ["complex_exponential", "inner_product_space", "fourier_spectrum"],
+        "related": [
+          "complex_exponential",
+          "inner_product_space",
+          "fourier_spectrum"
+        ],
         "assumptions": [
           "For $L^1$ functions the integral definition is primary; the projection interpretation is geometrically literal in $L^2$."
         ],
@@ -751,7 +781,11 @@
           "logical_dependency": ["fourier_coefficient", "integer_frequency"]
         },
         "outgoing_relations": [],
-        "related": ["fourier_coefficient", "fourier_series", "riemann_lebesgue_lemma"],
+        "related": [
+          "fourier_coefficient",
+          "fourier_series",
+          "riemann_lebesgue_lemma"
+        ],
         "assumptions": [
           "The spectrum is a sequence indexed by integer frequencies for functions on $\\mathbb T$."
         ],
@@ -776,10 +810,18 @@
         "notation": "$$\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": ["fourier_coefficient", "fourier_spectrum", "complex_exponential"]
+          "logical_dependency": [
+            "fourier_coefficient",
+            "fourier_spectrum",
+            "complex_exponential"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["fourier_coefficient", "fourier_spectrum", "real_fourier_series"],
+        "related": [
+          "fourier_coefficient",
+          "fourier_spectrum",
+          "real_fourier_series"
+        ],
         "assumptions": [
           "The notation $f\\sim\\sum\\hat f(n)e^{inx}$ does not by itself assert convergence."
         ],
@@ -1257,7 +1299,11 @@
         "intuition": "Orthogonality alone only says Fourier coefficients are coordinates in some directions. Completeness says there are no hidden $L^2$ directions left over after all trigonometric frequencies are included.",
         "proof": null,
         "notation": "$$\\{e^{inx}\\}_{n\\in\\mathbb Z}\\text{ complete in }L^2(\\mathbb T)$$",
-        "proof_dependencies": ["fejer_theorem", "best_approximation", "l2_space"],
+        "proof_dependencies": [
+          "fejer_theorem",
+          "best_approximation",
+          "l2_space"
+        ],
         "dependencies": {
           "logical_dependency": [
             "orthonormal_system",
@@ -1268,7 +1314,11 @@
           ]
         },
         "outgoing_relations": [],
-        "related": ["mean_square_convergence", "parseval_identity", "best_approximation"],
+        "related": [
+          "mean_square_convergence",
+          "parseval_identity",
+          "best_approximation"
+        ],
         "assumptions": [
           "Completeness is an $L^2$ norm statement; it does not assert pointwise convergence of ordinary partial sums."
         ],
@@ -2101,7 +2151,7 @@
           "convolution",
           "l1_space_real_line",
           "schwartz_space",
-          "fubini_tonelli",
+          "fubini_theorem",
           "fourier_inversion"
         ],
         "dependencies": {
@@ -2110,7 +2160,7 @@
             "convolution",
             "l1_space_real_line",
             "schwartz_space",
-            "fubini_tonelli"
+            "fubini_theorem"
           ]
         },
         "outgoing_relations": [],
@@ -2137,7 +2187,7 @@
               "fourier_transform",
               "convolution",
               "l1_space_real_line",
-              "fubini_tonelli",
+              "fubini_theorem",
               "fourier_transform_convention"
             ]
           },
@@ -2146,7 +2196,7 @@
             "label": "Convolution becomes multiplication",
             "role": "argument",
             "content": "Compute directly and use Fubini to change the order of integration: $$\\begin{aligned} \\widehat{f*g}(\\xi)&=\\int_{\\mathbb R}\\int_{\\mathbb R}f(y)g(x-y)e^{-2\\pi i x\\xi}\\,dy\\,dx. \\end{aligned}$$ Put $u=x-y$, so $x=u+y$. Then $$\\begin{aligned} \\widehat{f*g}(\\xi)&=\\int_{\\mathbb R}f(y)e^{-2\\pi i y\\xi}\\left(\\int_{\\mathbb R}g(u)e^{-2\\pi i u\\xi}\\,du\\right)dy\\\\ &=\\widehat f(\\xi)\\widehat g(\\xi). \\end{aligned}$$ Thus $$\\widehat{f*g}=\\widehat f\\,\\widehat g.$$",
-            "depends_on": ["fourier_transform", "convolution", "fubini_tonelli"]
+            "depends_on": ["fourier_transform", "convolution", "fubini_theorem"]
           },
           {
             "id": "derive-product-to-convolution",
@@ -2157,7 +2207,7 @@
               "schwartz_space",
               "fourier_inversion",
               "convolution",
-              "fubini_tonelli"
+              "fubini_theorem"
             ]
           }
         ]
@@ -2179,7 +2229,7 @@
           "fourier_transform_convention",
           "schwartz_space",
           "fourier_inversion",
-          "fubini_tonelli",
+          "fubini_theorem",
           "l2_space_real_line",
           "hilbert_space",
           "schwartz_density"
@@ -2191,7 +2241,7 @@
             "schwartz_space",
             "fourier_transform_convention",
             "fourier_inversion",
-            "fubini_tonelli",
+            "fubini_theorem",
             "schwartz_density"
           ]
         },
@@ -2228,7 +2278,7 @@
             "content": "Use Fubini and Fourier inversion for $g$: $$\\begin{aligned} \\langle \\widehat f,\\widehat g\\rangle_{L^2}&=\\int_{\\mathbb R}\\widehat f(\\xi)\\overline{\\widehat g(\\xi)}\\,d\\xi\\\\ &=\\int_{\\mathbb R}\\left(\\int_{\\mathbb R}f(x)e^{-2\\pi i x\\xi}\\,dx\\right)\\overline{\\widehat g(\\xi)}\\,d\\xi\\\\ &=\\int_{\\mathbb R}f(x)\\left(\\int_{\\mathbb R}e^{-2\\pi i x\\xi}\\overline{\\widehat g(\\xi)}\\,d\\xi\\right)dx. \\end{aligned}$$ Since $$\\overline{g(x)}=\\int_{\\mathbb R}\\overline{\\widehat g(\\xi)}e^{-2\\pi i x\\xi}\\,d\\xi,$$ the last expression becomes $$\\int_{\\mathbb R}f(x)\\overline{g(x)}\\,dx=\\langle f,g\\rangle_{L^2}.$$ Hence $$\\langle \\widehat f,\\widehat g\\rangle=\\langle f,g\\rangle$$ for Schwartz functions.",
             "depends_on": [
               "fourier_inversion",
-              "fubini_tonelli",
+              "fubini_theorem",
               "schwartz_space",
               "l2_space_real_line"
             ]
@@ -2904,7 +2954,10 @@
         "intuition": "The Laplacian measures curvature or diffusion pressure. Fourier transform turns it into multiplication by $-4\\pi^2|\\xi|^2$, which is why heat, wave, and Schrödinger equations reduce to scalar frequency equations.",
         "proof": null,
         "notation": "$$\\Delta,\\ -4\\pi^2|\\xi|^2$$",
-        "proof_dependencies": ["differentiation_rule", "fourier_transform_euclidean_space"],
+        "proof_dependencies": [
+          "differentiation_rule",
+          "fourier_transform_euclidean_space"
+        ],
         "dependencies": {
           "logical_dependency": [
             "differentiation_rule",
@@ -3126,7 +3179,7 @@
         "id": "dirichlet_primes",
         "label": "Primes in Arithmetic Progressions",
         "kind": "theorem",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "Every reduced arithmetic progression contains infinitely many primes.",
         "formal_statement": "If $q\\ge2$ and $\\gcd(a,q)=1$, then infinitely many primes $p$ satisfy $p\\equiv a\\pmod q$. The proof expands residue-class indicators using Dirichlet characters and uses $L(1,\\chi)\\ne0$ for nonprincipal characters.",
         "definition": null,
@@ -3157,36 +3210,76 @@
         "ref": "Stein–Shakarchi: Ch.8 Theorem 2.1",
         "book_refs": ["c8_thm_2_1"],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number-theory"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.8 Theorem 2.1"
         }
       },
       {
-        "id": "lebesgue_integral",
-        "label": "Lebesgue Integral",
-        "kind": "structure",
+        "id": "measure_space",
+        "label": "Measure Space",
+        "kind": "definition",
         "domain": "foundations",
-        "statement": "The integration theory underlying $L^p$ spaces and modern Fourier analysis.",
-        "formal_statement": "The Lebesgue integral $\\int f\\,d\\mu$ is defined for measurable functions on a measure space. It has strong limit theorems, such as dominated convergence and monotone convergence, that make $L^p$ spaces complete.",
-        "definition": "$$\\int f\\,d\\mu=\\int f^+\\,d\\mu-\\int f^-\\,d\\mu,\\qquad \\min\\left\\{\\int f^+\\,d\\mu,\\int f^-\\,d\\mu\\right\\}<\\infty.$$",
-        "intuition": "Lebesgue integration measures functions by size on sets rather than by partitions of the domain. That is what makes limits of functions behave properly.",
+        "statement": "A measure space is a set equipped with a sigma-algebra of measurable subsets and a measure assigning sizes to those subsets.",
+        "formal_statement": "A measure space is a triple $(X,\\mathcal A,\\mu)$ where $X$ is a set, $\\mathcal A\\subseteq\\mathcal P(X)$ is a $\\sigma$-algebra, and $\\mu:\\mathcal A\\to[0,\\infty]$ is a measure.",
+        "definition": "A measure space is a triple $(X,\\mathcal A,\\mu)$ such that: $X$ is a set; $\\mathcal A$ is a $\\sigma$-algebra on $X$; and $\\mu$ is a countably additive map from $\\mathcal A$ to $[0,\\infty]$ satisfying $\\mu(\\varnothing)=0$.",
+        "formula": "$$\\begin{aligned} (X,\\mathcal A,\\mu)&=\\text{measure space},\\\\ \\mathcal A&\\subseteq\\mathcal P(X),\\\\ \\varnothing,X&\\in\\mathcal A,\\\\ A\\in\\mathcal A&\\Longrightarrow X\\setminus A\\in\\mathcal A,\\\\ A_n\\in\\mathcal A&\\Longrightarrow \\bigcup_{n=1}^{\\infty}A_n\\in\\mathcal A,\\\\ \\mu:\\mathcal A&\\to[0,\\infty],\\\\ \\mu\\left(\\bigcup_{n=1}^{\\infty}A_n\\right)&=\\sum_{n=1}^{\\infty}\\mu(A_n)\\quad\\text{for pairwise disjoint }A_n. \\end{aligned}$$",
+        "intuition": "A measure space is the setting where integration can be done. The set $X$ is the universe, the sigma-algebra $\\mathcal A$ specifies which subsets are measurable, and the measure $\\mu$ assigns a size, mass, probability, length, area, or volume to each measurable set.",
+        "examples": [
+          "$(\\mathbb R,\\mathcal B(\\mathbb R),\\lambda)$, where $\\mathcal B(\\mathbb R)$ is the Borel sigma-algebra and $\\lambda$ is Lebesgue measure restricted to Borel sets.",
+          "$(\\mathbb R,\\mathcal L(\\mathbb R),\\lambda)$, where $\\mathcal L(\\mathbb R)$ is the Lebesgue sigma-algebra and $\\lambda$ is Lebesgue measure.",
+          "$(\\mathbb N,\\mathcal P(\\mathbb N),\\#)$, where $\\#$ is counting measure.",
+          "$(\\Omega,\\mathcal F,\\mathbb P)$, where $\\mathbb P$ is a probability measure with $\\mathbb P(\\Omega)=1$."
+        ],
+        "non_examples": [
+          "A function defined on all subsets of $X$ is not automatically a measure; it must be countably additive and satisfy $\\mu(\\varnothing)=0$.",
+          "A collection of subsets is not automatically a sigma-algebra; it must be closed under complements and countable unions.",
+          "Lebesgue measure cannot be consistently assigned to every subset of $\\mathbb R$ while preserving the usual measure properties."
+        ],
+        "consequences": [
+          "Measurable functions are defined relative to a measure space.",
+          "Lebesgue integration is defined by combining measurable functions with a measure.",
+          "Statements such as 'almost everywhere' depend on the measure $\\mu$.",
+          "The space $L^p(X)$ depends on the underlying measure space $(X,\\mathcal A,\\mu)$."
+        ],
+        "common_pitfalls": [
+          "Do not confuse the set $X$ with the sigma-algebra $\\mathcal A$. The measure is defined on measurable subsets $A\\in\\mathcal A$, not directly on points of $X$.",
+          "Not every subset of $X$ has to be measurable.",
+          "A measure may take the value $+\\infty$.",
+          "A probability space is a special case of a measure space, not a different kind of object.",
+          "The same set $X$ can carry different sigma-algebras and different measures."
+        ],
         "proof": null,
-        "notation": "$$\\int f\\,d\\mu$$",
+        "notation": "$$(X,\\mathcal A,\\mu),\\qquad \\mu(A),\\ A\\in\\mathcal A.$$",
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": []
+          "logical_dependency": ["sigma_algebra", "measure"]
         },
         "outgoing_relations": [],
-        "related": [],
-        "assumptions": [],
-        "ref": "",
-        "book_refs": [],
+        "related": [
+          "sigma_algebra",
+          "measure",
+          "measurable_function",
+          "product_measure"
+        ],
+        "assumptions": [
+          "The measure is only required to be defined on the sigma-algebra $\\mathcal A$, not on all subsets of $X$.",
+          "The measure takes values in $[0,\\infty]$, so infinite measure is allowed.",
+          "Countable additivity is required only for pairwise disjoint measurable sets.",
+          "Some authors write $(X,\\Sigma,\\mu)$ instead of $(X,\\mathcal A,\\mu)$."
+        ],
+        "ref": "Folland: Real Analysis, Ch.1; Stein–Shakarchi: Real Analysis, Ch.1; Axler: Measure, Integration & Real Analysis, Ch.2",
+        "book_refs": [
+          "folland_ch1_measure_spaces",
+          "stein_shakarchi_real_analysis_ch1",
+          "axler_measure_integration_ch2"
+        ],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["measure-theory", "foundations", "sigma-algebra", "measure"],
           "syllabus_priority": "core",
-          "source": "Curated concept graph"
-        }
+          "source": "Folland: Real Analysis, Ch.1; Stein–Shakarchi: Real Analysis, Ch.1; Axler: Measure, Integration & Real Analysis, Ch.2"
+        },
+        "proof_steps": []
       },
       {
         "id": "almost_everywhere",
@@ -3214,7 +3307,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -3245,10 +3338,158 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
+      },
+      {
+        "id": "fubini_theorem",
+        "label": "Fubini's Theorem",
+        "kind": "theorem",
+        "domain": "foundations",
+        "statement": "An absolutely integrable function on a product measure space may be integrated in either order.",
+        "formal_statement": "Let $(X,\\mathcal A,\\mu)$ and $(Y,\\mathcal B,\\nu)$ be $\\sigma$-finite measure spaces, and let $f:X\\times Y\\to\\mathbb C$ be measurable. If $f\\in L^1(X\\times Y,\\mu\\times\\nu)$, then for almost every $x\\in X$, $f(x,\\cdot)\\in L^1(Y)$; for almost every $y\\in Y$, $f(\\cdot,y)\\in L^1(X)$; the functions $x\\mapsto\\int_Y f(x,y)\\,d\\nu(y)$ and $y\\mapsto\\int_X f(x,y)\\,d\\mu(x)$ are integrable; and $$\\int_{X\\times Y}f\\,d(\\mu\\times\\nu)=\\int_X\\left(\\int_Y f(x,y)\\,d\\nu(y)\\right)d\\mu(x)=\\int_Y\\left(\\int_X f(x,y)\\,d\\mu(x)\\right)d\\nu(y).$$",
+        "definition": null,
+        "formula": "$$\\begin{aligned} f\\in L^1(X\\times Y)&\\Longrightarrow \\\\ \\int_{X\\times Y}f(x,y)\\,d(\\mu\\times\\nu)(x,y)&=\\int_X\\int_Y f(x,y)\\,d\\nu(y)\\,d\\mu(x) \\\\ &=\\int_Y\\int_X f(x,y)\\,d\\mu(x)\\,d\\nu(y). \\end{aligned}$$",
+        "intuition": "Fubini's theorem says that absolute integrability prevents hidden cancellation. If the total absolute mass is finite, then the integral can be computed by sweeping first in the $Y$-direction and then in the $X$-direction, or the other way around.",
+        "distinction": "Tonelli applies to nonnegative measurable functions and allows the value $+\\infty$. Fubini applies to absolutely integrable functions, $f\\in L^1$, and guarantees finite iterated integrals that agree.",
+        "analogy": "Fubini's theorem is the integral analogue of absolute convergence for double series: $$\\sum_{m,n}|a_{m,n}|<\\infty\\Longrightarrow \\sum_m\\sum_n a_{m,n}=\\sum_n\\sum_m a_{m,n}=\\sum_{m,n}a_{m,n}.$$",
+        "practical_test": [
+          "If $f\\ge0$, use Tonelli.",
+          "If $\\int_{X\\times Y}|f|\\,d(\\mu\\times\\nu)<\\infty$, use Fubini.",
+          "If neither nonnegativity nor absolute integrability is known, changing the order of integration may be invalid."
+        ],
+        "counterexample": "The function $$f(x,y)=\\frac{x^2-y^2}{(x^2+y^2)^2}$$ on $(0,1)^2$ is not absolutely integrable. Its two iterated integrals exist but satisfy $$\\int_0^1\\int_0^1 f(x,y)\\,dy\\,dx=\\frac{\\pi}{4},\\qquad \\int_0^1\\int_0^1 f(x,y)\\,dx\\,dy=-\\frac{\\pi}{4}.$$ Thus the order of integration cannot be exchanged without the hypotheses of Fubini's theorem.",
+        "consequences": [
+          "For almost every $x$, the section $f(x,\\cdot)$ belongs to $L^1(Y)$.",
+          "For almost every $y$, the section $f(\\cdot,y)$ belongs to $L^1(X)$.",
+          "The partial integral functions are measurable and integrable.",
+          "The product integral and both iterated integrals have the same finite value."
+        ],
+        "applications": [
+          "Changing order of integration",
+          "Fourier inversion",
+          "Plancherel theorem",
+          "Parseval identity",
+          "Convolution theorem",
+          "Interchanging sums and integrals",
+          "Integral kernels and operator identities"
+        ],
+        "proof": null,
+        "notation": "$$\\int_X\\int_Y f(x,y)\\,d\\nu(y)\\,d\\mu(x)=\\int_Y\\int_X f(x,y)\\,d\\mu(x)\\,d\\nu(y).$$",
+        "proof_dependencies": [
+          "measure_space",
+          "sigma_finite_measure",
+          "product_measure",
+          "measurable_function",
+          "lebesgue_integral",
+          "l1_space",
+          "tonelli_theorem"
+        ],
+        "dependencies": {
+          "logical_dependency": [
+            "measure_space",
+            "sigma_finite_measure",
+            "product_measure",
+            "measurable_function",
+            "lebesgue_integral",
+            "l1_space",
+            "tonelli_theorem"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "tonelli_theorem",
+          "product_measure",
+          "lebesgue_integral",
+          "l1_space"
+        ],
+        "assumptions": [
+          "The measure spaces $(X,\\mathcal A,\\mu)$ and $(Y,\\mathcal B,\\nu)$ are $\\sigma$-finite.",
+          "The product space is equipped with the product measure $\\mu\\times\\nu$ on $\\mathcal A\\otimes\\mathcal B$.",
+          "The function $f$ is measurable on $X\\times Y$.",
+          "The function is absolutely integrable: $\\int_{X\\times Y}|f|\\,d(\\mu\\times\\nu)<\\infty$.",
+          "The inner integrals may fail to be defined on null sets; this does not affect the outer integrals."
+        ],
+        "ref": "Folland: Real Analysis, Ch.2 Fubini-Tonelli Theorem; Stein–Shakarchi: Real Analysis, Ch.2; Wikipedia: Fubini's theorem",
+        "book_refs": [
+          "folland_ch2_fubini_theorem",
+          "stein_shakarchi_real_analysis_ch2"
+        ],
+        "metadata": {
+          "tags": [
+            "foundations",
+            "measure-theory",
+            "product-measure",
+            "iterated-integrals",
+            "absolute-integrability"
+          ],
+          "syllabus_priority": "core",
+          "source": "Folland: Real Analysis, Ch.2 Fubini-Tonelli Theorem; Stein–Shakarchi: Real Analysis, Ch.2"
+        },
+        "proof_steps": [
+          {
+            "id": "setup-product-space",
+            "label": "Set up the product space",
+            "role": "setup",
+            "content": "Let $(X,\\mathcal A,\\mu)$ and $(Y,\\mathcal B,\\nu)$ be $\\sigma$-finite measure spaces. Then the product measure $\\mu\\times\\nu$ is well-defined on $(X\\times Y,\\mathcal A\\otimes\\mathcal B)$.",
+            "depends_on": [
+              "measure_space",
+              "sigma_finite_measure",
+              "product_measure"
+            ]
+          },
+          {
+            "id": "assume-l1",
+            "label": "Assume absolute integrability",
+            "role": "assumption",
+            "content": "Let $f:X\\times Y\\to\\mathbb C$ be measurable and assume $$\\int_{X\\times Y}|f(x,y)|\\,d(\\mu\\times\\nu)(x,y)<\\infty.$$ This is the essential Fubini hypothesis.",
+            "depends_on": [
+              "measurable_function",
+              "l1_space",
+              "lebesgue_integral"
+            ]
+          },
+          {
+            "id": "apply-tonelli-to-absolute-value",
+            "label": "Apply Tonelli to \\(|f|\\)",
+            "role": "argument",
+            "content": "Since $|f|\\ge0$ is measurable, Tonelli's theorem gives $$\\int_X\\int_Y |f(x,y)|\\,d\\nu(y)\\,d\\mu(x)=\\int_Y\\int_X |f(x,y)|\\,d\\mu(x)\\,d\\nu(y)=\\int_{X\\times Y}|f|\\,d(\\mu\\times\\nu)<\\infty.$$ Hence $f(x,\\cdot)\\in L^1(Y)$ for almost every $x$, and $f(\\cdot,y)\\in L^1(X)$ for almost every $y$.",
+            "depends_on": [
+              "tonelli_theorem",
+              "l1_space"
+            ]
+          },
+          {
+            "id": "decompose-real-function",
+            "label": "Split into positive and negative parts",
+            "role": "argument",
+            "content": "For real-valued $f$, write $$f=f^+-f^-,$$ where $f^+,f^-\\ge0$ and $|f|=f^++f^-$. Since $f\\in L^1$, both $f^+$ and $f^-$ have finite integral. For complex-valued $f$, apply the same argument to $\\operatorname{Re}f$ and $\\operatorname{Im}f$.",
+            "depends_on": ["lebesgue_integral"]
+          },
+          {
+            "id": "apply-tonelli-to-parts",
+            "label": "Apply Tonelli to each part",
+            "role": "argument",
+            "content": "By Tonelli's theorem applied to $f^+$ and $f^-$, $$\\int_{X\\times Y}f^\\pm\\,d(\\mu\\times\\nu)=\\int_X\\int_Y f^\\pm(x,y)\\,d\\nu(y)\\,d\\mu(x)=\\int_Y\\int_X f^\\pm(x,y)\\,d\\mu(x)\\,d\\nu(y).$$ Subtracting the two identities gives the result for real-valued $f$.",
+            "depends_on": ["tonelli_theorem", "lebesgue_integral"]
+          },
+          {
+            "id": "extend-to-complex-functions",
+            "label": "Extend to complex-valued functions",
+            "role": "argument",
+            "content": "If $f$ is complex-valued, write $$f=\\operatorname{Re}f+i\\operatorname{Im}f.$$ Applying the real-valued result to $\\operatorname{Re}f$ and $\\operatorname{Im}f$ gives the identity for $f$.",
+            "depends_on": ["lebesgue_integral", "l1_space"]
+          },
+          {
+            "id": "conclude-fubini",
+            "label": "Conclusion",
+            "role": "conclusion",
+            "content": "Therefore the partial integral functions are integrable and $$\\int_{X\\times Y}f\\,d(\\mu\\times\\nu)=\\int_X\\left(\\int_Y f(x,y)\\,d\\nu(y)\\right)d\\mu(x)=\\int_Y\\left(\\int_X f(x,y)\\,d\\mu(x)\\right)d\\nu(y).$$ Thus the order of integration may be exchanged for $L^1$ functions.",
+            "depends_on": ["lebesgue_integral", "l1_space", "product_measure"]
+          }
+        ]
       },
       {
         "id": "fubini_tonelli",
@@ -3274,10 +3515,286 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundations"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
+      },
+      {
+        "id": "sigma_algebra",
+        "label": "Sigma-Algebra",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A sigma-algebra is a collection of subsets closed under complements and countable unions.",
+        "formal_statement": "Let $X$ be a set. A $\\sigma$-algebra on $X$ is a collection $\\mathcal A\\subseteq\\mathcal P(X)$ such that $X\\in\\mathcal A$, if $A\\in\\mathcal A$ then $X\\setminus A\\in\\mathcal A$, and if $(A_n)_{n\\ge1}\\subseteq\\mathcal A$, then $\\bigcup_{n=1}^{\\infty}A_n\\in\\mathcal A$.",
+        "definition": "A $\\sigma$-algebra specifies which subsets of $X$ are measurable.",
+        "formula": "$$X\\in\\mathcal A,\\quad A\\in\\mathcal A\\Rightarrow X\\setminus A\\in\\mathcal A,\\quad A_n\\in\\mathcal A\\Rightarrow \\bigcup_{n=1}^{\\infty}A_n\\in\\mathcal A.$$",
+        "intuition": "A sigma-algebra is the allowed collection of sets on which size, probability, or volume can be consistently defined.",
+        "proof": null,
+        "notation": "$$\\mathcal A\\subseteq\\mathcal P(X)$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": []
+        },
+        "outgoing_relations": [],
+        "related": ["measure", "measure_space", "measurable_function"],
+        "assumptions": [
+          "The underlying object $X$ is a set.",
+          "Closure under countable intersections follows from complements and countable unions by De Morgan's laws."
+        ],
+        "ref": "Wikipedia: Sigma-algebra",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["measure-theory", "sets", "measurability"],
+          "syllabus_priority": "core",
+          "source": "Wikipedia: Sigma-algebra"
+        },
+        "proof_steps": []
+      },
+      {
+        "id": "measure",
+        "label": "Measure",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A measure assigns nonnegative sizes to measurable sets in a countably additive way.",
+        "formal_statement": "Let $(X,\\mathcal A)$ be a measurable space. A measure is a function $\\mu:\\mathcal A\\to[0,\\infty]$ such that $\\mu(\\varnothing)=0$ and, for every pairwise disjoint sequence $(A_n)_{n\\ge1}\\subseteq\\mathcal A$, $$\\mu\\left(\\bigcup_{n=1}^{\\infty}A_n\\right)=\\sum_{n=1}^{\\infty}\\mu(A_n).$$",
+        "definition": "A measure is a countably additive size function on a sigma-algebra.",
+        "formula": "$$\\mu:\\mathcal A\\to[0,\\infty],\\qquad \\mu(\\varnothing)=0,\\qquad \\mu\\left(\\bigcup_{n=1}^{\\infty}A_n\\right)=\\sum_{n=1}^{\\infty}\\mu(A_n).$$",
+        "intuition": "A measure generalizes length, area, volume, mass, probability, and counting.",
+        "proof": null,
+        "notation": "$$\\mu(A),\\quad A\\in\\mathcal A$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["sigma_algebra"]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "sigma_algebra",
+          "measure_space",
+          "sigma_finite_measure",
+          "product_measure"
+        ],
+        "assumptions": [
+          "The measure is defined only on measurable sets $A\\in\\mathcal A$.",
+          "The value $+\\infty$ is allowed.",
+          "Countable additivity is required for pairwise disjoint measurable sets."
+        ],
+        "ref": "Wikipedia: Measure",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["measure-theory", "size", "countable-additivity"],
+          "syllabus_priority": "core",
+          "source": "Wikipedia: Measure"
+        },
+        "proof_steps": []
+      },
+      {
+        "id": "measurable_function",
+        "label": "Measurable Function",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A measurable function is a function whose preimages of measurable sets are measurable.",
+        "formal_statement": "Let $(X,\\mathcal A)$ and $(Y,\\mathcal B)$ be measurable spaces. A function $f:X\\to Y$ is measurable if for every $B\\in\\mathcal B$, one has $f^{-1}(B)\\in\\mathcal A$.",
+        "definition": "A measurable function preserves measurable structure by preimage.",
+        "formula": "$$B\\in\\mathcal B\\Longrightarrow f^{-1}(B)\\in\\mathcal A.$$",
+        "intuition": "Measurable functions are to measure spaces what continuous functions are to topological spaces: the relevant structure is preserved by preimages.",
+        "proof": null,
+        "notation": "$$f:(X,\\mathcal A)\\to(Y,\\mathcal B),\\qquad f^{-1}(B)\\in\\mathcal A.$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["sigma_algebra", "measure_space"]
+        },
+        "outgoing_relations": [],
+        "related": ["sigma_algebra", "measure_space", "lebesgue_integral"],
+        "assumptions": [
+          "Measurability is defined using preimages, not images.",
+          "For real-valued functions, it is often enough to check sets of the form $(-\\infty,a)$ or $(a,\\infty)$."
+        ],
+        "ref": "Wikipedia: Measurable function",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["measure-theory", "functions", "measurability"],
+          "syllabus_priority": "core",
+          "source": "Wikipedia: Measurable function"
+        },
+        "proof_steps": []
+      },
+      {
+        "id": "sigma_finite_measure",
+        "label": "Sigma-Finite Measure",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A measure is sigma-finite if the whole space can be covered by countably many measurable sets of finite measure.",
+        "formal_statement": "A measure space $(X,\\mathcal A,\\mu)$ is $\\sigma$-finite if there exist sets $A_1,A_2,\\ldots\\in\\mathcal A$ such that $X=\\bigcup_{n=1}^{\\infty}A_n$ and $\\mu(A_n)<\\infty$ for every $n$.",
+        "definition": "Sigma-finiteness means the space may be decomposed into countably many finite-measure pieces.",
+        "formula": "$$X=\\bigcup_{n=1}^{\\infty}A_n,\\qquad A_n\\in\\mathcal A,\\qquad \\mu(A_n)<\\infty.$$",
+        "intuition": "Sigma-finiteness rules out measure spaces that are too large to build product measures and iterated integrals in the standard way.",
+        "proof": null,
+        "notation": "$$\\sigma\\text{-finite}$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["measure_space"]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "measure_space",
+          "product_measure",
+          "tonelli_theorem",
+          "fubini_theorem"
+        ],
+        "assumptions": [
+          "Every finite measure is sigma-finite.",
+          "Lebesgue measure on $\\mathbb R^n$ is sigma-finite.",
+          "Counting measure on an uncountable set is not sigma-finite."
+        ],
+        "ref": "Wikipedia: Sigma-finite measure",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["measure-theory", "sigma-finiteness"],
+          "syllabus_priority": "core",
+          "source": "Wikipedia: Sigma-finite measure"
+        },
+        "proof_steps": []
+      },
+      {
+        "id": "product_measure",
+        "label": "Product Measure",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A product measure is the natural measure on a Cartesian product, determined by products of measurable rectangles.",
+        "formal_statement": "Let $(X,\\mathcal A,\\mu)$ and $(Y,\\mathcal B,\\nu)$ be $\\sigma$-finite measure spaces. The product measure $\\mu\\times\\nu$ is the unique measure on $(X\\times Y,\\mathcal A\\otimes\\mathcal B)$ satisfying $$(\\mu\\times\\nu)(A\\times B)=\\mu(A)\\nu(B)$$ for all $A\\in\\mathcal A$ and $B\\in\\mathcal B$.",
+        "definition": "The product measure measures rectangles by multiplying their side measures and extends this rule to the product sigma-algebra.",
+        "formula": "$$(\\mu\\times\\nu)(A\\times B)=\\mu(A)\\nu(B).$$",
+        "intuition": "Product measure is the measure-theoretic version of area equals length times width.",
+        "proof": null,
+        "notation": "$$(X\\times Y,\\mathcal A\\otimes\\mathcal B,\\mu\\times\\nu)$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": ["measure_space", "sigma_finite_measure"]
+        },
+        "outgoing_relations": [],
+        "related": [
+          "measure_space",
+          "sigma_finite_measure",
+          "tonelli_theorem",
+          "fubini_theorem"
+        ],
+        "assumptions": [
+          "The product sigma-algebra $\\mathcal A\\otimes\\mathcal B$ is generated by measurable rectangles $A\\times B$.",
+          "Sigma-finiteness gives uniqueness of the standard product measure.",
+          "The product of complete measure spaces need not be complete."
+        ],
+        "ref": "Wikipedia: Fubini's theorem, Product measures section",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["measure-theory", "product-measure", "foundations"],
+          "syllabus_priority": "core",
+          "source": "Wikipedia: Fubini's theorem"
+        },
+        "proof_steps": []
+      },
+      {
+        "id": "lebesgue_integral",
+        "label": "Lebesgue Integral",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "The Lebesgue integral integrates measurable functions with respect to a measure.",
+        "formal_statement": "Let $(X,\\mathcal A,\\mu)$ be a measure space. The Lebesgue integral is first defined for nonnegative measurable functions by approximation from below by nonnegative simple functions, and then extended to integrable real or complex functions by decomposing into positive and negative, or real and imaginary, parts.",
+        "definition": "The Lebesgue integral is the measure-theoretic integral associated to a measure space.",
+        "formula": "$$\\int_X f\\,d\\mu,$$",
+        "intuition": "The Lebesgue integral measures the size of the values of a function by grouping according to measurable level sets rather than by slicing only along the input axis.",
+        "proof": null,
+        "notation": "$$\\int_X f\\,d\\mu,\\qquad \\int f\\,d\\mu.$$",
+        "proof_dependencies": [],
+        "dependencies": {
+          "logical_dependency": [
+            "measure_space",
+            "measurable_function",
+            "measure"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["measure_space", "measurable_function", "l1_space"],
+        "assumptions": [
+          "The function must be measurable.",
+          "For signed or complex functions, integrability requires finite integral of the absolute value.",
+          "Lebesgue integrals respect equality almost everywhere."
+        ],
+        "ref": "Wikipedia: Lebesgue integral",
+        "book_refs": [],
+        "metadata": {
+          "tags": ["measure-theory", "foundations", "lebesgue-integral"],
+          "syllabus_priority": "core",
+          "source": "Wikipedia: Lebesgue integral"
+        },
+        "proof_steps": []
+      },
+      {
+        "id": "tonelli_theorem",
+        "label": "Tonelli's Theorem",
+        "kind": "theorem",
+        "domain": "foundations",
+        "statement": "A nonnegative measurable function on a product measure space may be integrated in either order, possibly with value $+\\infty$.",
+        "formal_statement": "Let $(X,\\mathcal A,\\mu)$ and $(Y,\\mathcal B,\\nu)$ be $\\sigma$-finite measure spaces, and let $f:X\\times Y\\to[0,\\infty]$ be measurable. Then $$\\int_{X\\times Y}f\\,d(\\mu\\times\\nu)=\\int_X\\left(\\int_Y f(x,y)\\,d\\nu(y)\\right)d\\mu(x)=\\int_Y\\left(\\int_X f(x,y)\\,d\\mu(x)\\right)d\\nu(y),$$ with equality allowed in $[0,\\infty]$.",
+        "definition": null,
+        "formula": "$$f\\ge0\\Longrightarrow \\int_{X\\times Y}f\\,d(\\mu\\times\\nu)=\\int_X\\int_Y f\\,d\\nu\\,d\\mu=\\int_Y\\int_X f\\,d\\mu\\,d\\nu.$$",
+        "intuition": "Nonnegative mass cannot cancel. Therefore summing or integrating it in different orders gives the same extended value.",
+        "proof": null,
+        "notation": "$$\\int_X\\int_Y f(x,y)\\,d\\nu(y)\\,d\\mu(x).$$",
+        "proof_dependencies": [
+          "product_measure",
+          "measurable_function",
+          "lebesgue_integral"
+        ],
+        "dependencies": {
+          "logical_dependency": [
+            "product_measure",
+            "measurable_function",
+            "lebesgue_integral"
+          ]
+        },
+        "outgoing_relations": [],
+        "related": ["fubini_theorem", "product_measure", "lebesgue_integral"],
+        "assumptions": [
+          "The measure spaces are sigma-finite.",
+          "The function is measurable on the product space.",
+          "The function is nonnegative, so the integral may be infinite."
+        ],
+        "ref": "Wikipedia: Fubini's theorem, Tonelli's theorem section",
+        "book_refs": [],
+        "metadata": {
+          "tags": [
+            "measure-theory",
+            "foundations",
+            "product-measure",
+            "nonnegative-functions"
+          ],
+          "syllabus_priority": "core",
+          "source": "Wikipedia: Fubini's theorem"
+        },
+        "proof_steps": [
+          {
+            "id": "prove-for-rectangles",
+            "label": "Start with rectangles",
+            "role": "setup",
+            "content": "First prove the identity for indicator functions $1_{A\\times B}$, where $A\\in\\mathcal A$ and $B\\in\\mathcal B$. This follows from $(\\mu\\times\\nu)(A\\times B)=\\mu(A)\\nu(B)$.",
+            "depends_on": ["product_measure"]
+          },
+          {
+            "id": "extend-to-simple-functions",
+            "label": "Extend to simple functions",
+            "role": "argument",
+            "content": "By finite linearity, the identity holds for nonnegative simple functions.",
+            "depends_on": ["lebesgue_integral"]
+          },
+          {
+            "id": "monotone-approximation",
+            "label": "Use monotone approximation",
+            "role": "argument",
+            "content": "Approximate a nonnegative measurable function $f$ from below by nonnegative simple functions $s_n\\uparrow f$. Apply monotone convergence to pass the identity to the limit.",
+            "depends_on": ["measurable_function", "lebesgue_integral"]
+          }
+        ]
       },
       {
         "id": "real_fourier_series",
@@ -3296,7 +3813,11 @@
           "notation_dependency": ["integer_frequency"]
         },
         "outgoing_relations": [],
-        "related": ["fourier_series", "trigonometric_polynomial", "complex_exponential"],
+        "related": [
+          "fourier_series",
+          "trigonometric_polynomial",
+          "complex_exponential"
+        ],
         "assumptions": [
           "The displayed sine-cosine coefficients use the standard unnormalized $a_n,b_n$ convention on $[-\\pi,\\pi]."
         ],
@@ -3601,12 +4122,22 @@
         "intuition": "Squeezing a function in space spreads its transform in frequency, while spreading in space concentrates frequency. This is the calculation behind rescaled Gaussians and approximate identities.",
         "proof": null,
         "notation": "$$f(x)\\mapsto f(ax)$$",
-        "proof_dependencies": ["fourier_transform", "fourier_transform_convention"],
+        "proof_dependencies": [
+          "fourier_transform",
+          "fourier_transform_convention"
+        ],
         "dependencies": {
-          "logical_dependency": ["fourier_transform", "fourier_transform_convention"]
+          "logical_dependency": [
+            "fourier_transform",
+            "fourier_transform_convention"
+          ]
         },
         "outgoing_relations": [],
-        "related": ["gaussian_transform", "heat_kernel_real_line", "sampling_theorem"],
+        "related": [
+          "gaussian_transform",
+          "heat_kernel_real_line",
+          "sampling_theorem"
+        ],
         "assumptions": [
           "The formulas use the graph's $e^{-2\\pi i x\\xi}$ convention and hold first for $L^1$ or Schwartz functions."
         ],
@@ -3629,7 +4160,11 @@
         "intuition": "Hausdorff-Young interpolates between the obvious $L^1\\to L^\\infty$ bound and Plancherel's $L^2\\to L^2$ isometry. It is the standard $L^p$ mapping theorem before the transform stops improving integrability past $p=2$.",
         "proof": null,
         "notation": "$$\\mathcal F:L^p\\to L^{p'}$$",
-        "proof_dependencies": ["fourier_transform", "fourier_transform_l1_continuity_decay", "plancherel_theorem"],
+        "proof_dependencies": [
+          "fourier_transform",
+          "fourier_transform_l1_continuity_decay",
+          "plancherel_theorem"
+        ],
         "dependencies": {
           "logical_dependency": [
             "fourier_transform",
@@ -3640,7 +4175,10 @@
           ]
         },
         "outgoing_relations": [],
-        "related": ["plancherel_theorem", "fourier_transform_l1_continuity_decay"],
+        "related": [
+          "plancherel_theorem",
+          "fourier_transform_l1_continuity_decay"
+        ],
         "assumptions": [
           "The constant is convention-dependent; for the normalized $2\\pi$ convention the standard interpolation form has constant at most $1$.",
           "The statement is for $1\\le p\\le2$; for $p>2$ the Fourier transform is not generally defined as an $L^{p'}$ function."
@@ -4295,7 +4833,7 @@
         "id": "euclid_algorithm",
         "label": "Euclidean Algorithm & Bézout",
         "kind": "theorem",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "The Euclidean algorithm computes greatest common divisors and gives Bézout identities.",
         "formal_statement": "For integers $a,b$ with $b>0$, there are unique integers $q,r$ such that $a=qb+r$ and $0\\le r<b$. Iterating division gives $\\gcd(a,b)$, and there exist integers $m,n$ such that $\\gcd(a,b)=ma+nb$.",
         "definition": null,
@@ -4311,7 +4849,7 @@
         "ref": "Stein–Shakarchi: Ch.8 Theorem 1.1; Ch.8 Theorem 1.2; Ch.8 Corollary 1.3; Ch.8 Corollary 1.4",
         "book_refs": ["c8_thm_1_1", "c8_thm_1_2", "c8_cor_1_3", "c8_cor_1_4"],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Theorem 1.1; Ch.8 Theorem 1.2; Ch.8 Corollary 1.3; Ch.8 Corollary 1.4"
         }
@@ -4320,7 +4858,7 @@
         "id": "fundamental_arithmetic",
         "label": "Fundamental Theorem of Arithmetic",
         "kind": "theorem",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "Every integer greater than $1$ factors uniquely into primes.",
         "formal_statement": "For every integer $n>1$, there exist primes $p_1<\\cdots<p_k$ and positive integers $\\alpha_1,\\dots,\\alpha_k$ such that $n=p_1^{\\alpha_1}\\cdots p_k^{\\alpha_k}$. This factorization is unique.",
         "definition": null,
@@ -4344,7 +4882,7 @@
         "ref": "Stein–Shakarchi: Ch.8 Corollary 1.5; Ch.8 Theorem 1.6",
         "book_refs": ["c8_cor_1_5", "c8_thm_1_6"],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Corollary 1.5; Ch.8 Theorem 1.6"
         }
@@ -4353,7 +4891,7 @@
         "id": "infinitude_primes",
         "label": "Infinitude of Primes",
         "kind": "theorem",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "There are infinitely many primes.",
         "formal_statement": "If $p_1,\\dots,p_k$ are finitely many primes, then any prime divisor of $p_1\\cdots p_k+1$ is not among $p_1,\\dots,p_k$. Hence no finite list contains all primes.",
         "definition": null,
@@ -4375,7 +4913,7 @@
         "ref": "Stein–Shakarchi: Ch.8 Theorem 1.7",
         "book_refs": ["c8_thm_1_7"],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Theorem 1.7"
         }
@@ -4384,7 +4922,7 @@
         "id": "euler_product",
         "label": "Euler Product for the Zeta Function",
         "kind": "theorem",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "The zeta function factors into local contributions from each prime.",
         "formal_statement": "For $\\operatorname{Re}s>1$, $\\zeta(s)=\\sum_{n=1}^{\\infty}n^{-s}=\\prod_{p}(1-p^{-s})^{-1}$, with absolute convergence justifying the rearrangement.",
         "definition": null,
@@ -4416,7 +4954,7 @@
           "c8_prop_3_2"
         ],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Lemma 1.8; Ch.8 Proposition 1.9; Ch.8 Theorem 1.10; Ch.8 Proposition 3.2"
         }
@@ -4425,7 +4963,7 @@
         "id": "primes_diverge",
         "label": "Divergence of the Prime Sum",
         "kind": "theorem",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "The reciprocal sum over the primes diverges.",
         "formal_statement": "$\\sum_p\\frac1p=\\infty$. One proof takes logarithms of the Euler product and compares $\\log\\zeta(s)$ as $s\\to1^+$.",
         "definition": null,
@@ -4445,7 +4983,7 @@
         "ref": "Stein–Shakarchi: Ch.8 Proposition 1.11",
         "book_refs": ["c8_prop_1_11"],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Proposition 1.11"
         }
@@ -4454,7 +4992,7 @@
         "id": "residue_class_modulo",
         "label": "Residue Class Modulo q",
         "kind": "definition",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "Integers are grouped by having the same remainder modulo $q$.",
         "formal_statement": "For $q\\ge2$, $a\\equiv b\\pmod q$ means $q\\mid(a-b)$. The residue class of $a$ is $[a]_q=\\{n\\in\\mathbb Z:n\\equiv a\\pmod q\\}$.",
         "definition": "$$a\\equiv b\\pmod q\\Longleftrightarrow q\\mid(a-b),\\qquad [a]_q=\\{n\\in\\mathbb Z:n\\equiv a\\pmod q\\}.$$",
@@ -4469,7 +5007,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -4478,7 +5016,7 @@
         "id": "euler_phi_function",
         "label": "Euler Phi Function",
         "kind": "definition",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "Euler’s phi function counts the invertible residue classes modulo $q$.",
         "formal_statement": "$\\varphi(q)=| (\\mathbb Z/q\\mathbb Z)^\\times |=|\\{1\\le a\\le q:\\gcd(a,q)=1\\}|$.",
         "definition": "$$\\varphi(q)=|(\\mathbb Z/q\\mathbb Z)^\\times|=\\#\\{1\\le a\\le q:\\gcd(a,q)=1\\}.$$",
@@ -4495,7 +5033,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -4504,7 +5042,7 @@
         "id": "riemann_zeta_function",
         "label": "Riemann Zeta Function",
         "kind": "structure",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "The Dirichlet series whose Euler product encodes the primes.",
         "formal_statement": "For $\\operatorname{Re}s>1$, $\\zeta(s)=\\sum_{n=1}^{\\infty}n^{-s}$. It has Euler product $\\zeta(s)=\\prod_p(1-p^{-s})^{-1}$.",
         "definition": "$$\\zeta(s)=\\sum_{n=1}^{\\infty}n^{-s},\\qquad \\operatorname{Re}s>1.$$",
@@ -4523,7 +5061,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["dirichlet", "number-theory", "zeta"],
+          "tags": ["number_theory", "number-theory", "zeta"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -4532,7 +5070,7 @@
         "id": "dirichlet_character",
         "label": "Dirichlet Character",
         "kind": "definition",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "A Dirichlet character is a group character modulo $q$, extended by zero on non-coprime integers.",
         "formal_statement": "Modulo $q$, a Dirichlet character $\\chi:\\mathbb Z\\to\\mathbb C$ is $q$-periodic, completely multiplicative, agrees with a character on $(\\mathbb Z/q\\mathbb Z)^\\times$, and satisfies $\\chi(n)=0$ when $\\gcd(n,q)>1$. For $\\gcd(a,q)=1$, $\\frac1{\\varphi(q)}\\sum_{\\chi\\bmod q}\\overline{\\chi(a)}\\chi(n)$ detects the reduced residue class $n\\equiv a\\pmod q$.",
         "definition": "$$\\begin{aligned} \\chi_0:(\\mathbb Z/q\\mathbb Z)^\\times&\\to\\mathbb C^\\times,\\\\ \\chi_0(ab)&=\\chi_0(a)\\chi_0(b),\\\\ \\chi(n)&=\\begin{cases}\\chi_0([n]_q),&\\gcd(n,q)=1,\\\\0,&\\gcd(n,q)>1.\\end{cases} \\end{aligned}$$",
@@ -4559,7 +5097,7 @@
         "ref": "Stein–Shakarchi: Ch.8 Lemma 2.2; Ch.8 Proposition 3.3",
         "book_refs": ["c8_lem_2_2", "c8_prop_3_3"],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "medium",
           "source": "Stein–Shakarchi: Ch.8 Lemma 2.2; Ch.8 Proposition 3.3"
         }
@@ -4568,7 +5106,7 @@
         "id": "dirichlet_l_function",
         "label": "Dirichlet L-Function",
         "kind": "structure",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "A Dirichlet L-function is the zeta function twisted by a Dirichlet character.",
         "formal_statement": "For $\\operatorname{Re}s>1$, $L(s,\\chi)=\\sum_{n=1}^{\\infty}\\chi(n)n^{-s}=\\prod_p(1-\\chi(p)p^{-s})^{-1}$. For a nonprincipal character, $L(s,\\chi)$ has a finite value at $s=1$ by analytic continuation or Abel limiting.",
         "definition": "$$L(s,\\chi)=\\sum_{n=1}^{\\infty}\\chi(n)n^{-s}=\\prod_{p\\in\\mathbb P}(1-\\chi(p)p^{-s})^{-1},\\qquad \\operatorname{Re}s>1.$$",
@@ -4601,7 +5139,7 @@
           "c8_prop_3_6"
         ],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.8 Theorem 2.4; Ch.8 Proposition 3.1; Ch.8 Proposition 3.4; Ch.8 Lemma 3.5; Ch.8 Proposition 3.6"
         }
@@ -4610,7 +5148,7 @@
         "id": "l_function_nonvanishing",
         "label": "Non-Vanishing of $L(1,\\chi)$",
         "kind": "theorem",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "statement": "Nonprincipal Dirichlet L-functions do not vanish at $s=1$.",
         "formal_statement": "If $\\chi$ is a nonprincipal Dirichlet character modulo $q$, then $L(1,\\chi)\\ne0$.",
         "definition": null,
@@ -4641,7 +5179,7 @@
           "c8_lem_3_15"
         ],
         "metadata": {
-          "tags": ["dirichlet", "number-theory"],
+          "tags": ["number_theory", "number-theory"],
           "syllabus_priority": "core",
           "source": "Stein–Shakarchi: Ch.8 Theorem 3.7; Ch.8 Theorem 2.3; Ch.8 Lemma 3.8; Ch.8 Lemma 3.9; Ch.8 Proposition 3.10; Ch.8 Proposition 3.11; Ch.8 Proposition 3.13; Ch.8 Theorem 3.12; Ch.8 Lemma 3.14; Ch.8 Lemma 3.15"
         }
@@ -4667,7 +5205,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation", "measure"],
+          "tags": ["foundations", "measure"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -4695,7 +5233,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation", "transform"],
+          "tags": ["foundations", "transform"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -4723,7 +5261,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation", "transform"],
+          "tags": ["foundations", "transform"],
           "syllabus_priority": "core",
           "source": "Curated concept graph"
         }
@@ -4749,7 +5287,7 @@
         "ref": "",
         "book_refs": [],
         "metadata": {
-          "tags": ["foundation", "notation"],
+          "tags": ["foundations", "notation"],
           "syllabus_priority": "medium",
           "source": "Curated concept graph"
         }
@@ -4910,7 +5448,7 @@
         "metadata": {
           "source": "Stein--Shakarchi: Ch.5 §1.1 (functions of moderate decrease)",
           "syllabus_priority": "core",
-          "tags": ["foundation", "transform", "decay"]
+          "tags": ["foundations", "transform", "decay"]
         }
       },
       {
@@ -4951,7 +5489,7 @@
         "metadata": {
           "source": "Course notation; Stein--Shakarchi Ch.5 §1.1 for the corresponding $d=1$, $m=2$ moderate decrease class",
           "syllabus_priority": "support",
-          "tags": ["foundation", "decay", "function-space", "asymptotic"]
+          "tags": ["foundations", "decay", "function-space", "asymptotic"]
         }
       },
       {
@@ -5047,16 +5585,9 @@
         ],
         "proof_dependencies": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_series",
-            "fourier_coefficient"
-          ]
+          "logical_dependency": ["fourier_series", "fourier_coefficient"]
         },
-        "related": [
-          "l2_space",
-          "pointwise_convergence",
-          "almost_everywhere"
-        ],
+        "related": ["l2_space", "pointwise_convergence", "almost_everywhere"],
         "metadata": {
           "aliases": [
             "Lacunary Series",
@@ -5952,10 +6483,7 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": [
-            "fourier_coefficient",
-            "decay_smoothness"
-          ]
+          "logical_dependency": ["fourier_coefficient", "decay_smoothness"]
         },
         "related": ["riemann_lebesgue_lemma", "term_differentiation"],
         "ref": "Stein–Shakarchi 2.6, Exercise 10",
@@ -7557,7 +8085,7 @@
       {
         "id": "ss5_5_ex18",
         "kind": "exercise",
-        "domain": "dirichlet",
+        "domain": "number_theory",
         "label": "SS 5.5.18 — The Riemann $\\zeta$–$\\theta$–$\\Gamma$ integral identity",
         "statement": "The Mellin-transform identity linking $\\zeta$, $\\vartheta$, and $\\Gamma$.",
         "formal_statement": "The zeta function is defined for $s>1$ by $$\\zeta(s)=\\sum_{n=1}^{\\infty}\\frac1{n^s}.$$ Verify the identity $$\\pi^{-s/2}\\Gamma(s/2)\\zeta(s)=\\frac12\\int_0^\\infty t^{s/2-1}(\\vartheta(t)-1)\\,dt\\qquad(s>1),$$ where $\\Gamma$ and $\\vartheta$ are the gamma and theta functions, respectively: $$\\Gamma(s)=\\int_0^\\infty e^{-t}t^{s-1}\\,dt,\\qquad \\vartheta(t)=\\sum_{n=-\\infty}^{\\infty}e^{-\\pi n^2t}.$$",
@@ -7594,12 +8122,12 @@
             "ss5_5_ex17"
           ]
         },
-        "related": ["poisson_summation_formula", "fubini_tonelli"],
+        "related": ["poisson_summation_formula", "fubini_theorem"],
         "ref": "Stein–Shakarchi 5.5, Exercise 18",
         "metadata": {
           "source": "Stein–Shakarchi 5.5, Exercise 18",
           "syllabus_priority": "medium",
-          "tags": ["exercise", "dirichlet", "oving10"]
+          "tags": ["exercise", "number_theory", "oving10"]
         }
       },
       {
@@ -8462,7 +8990,7 @@
         "book_refs": [],
         "outgoing_relations": [],
         "dependencies": {
-          "logical_dependency": ["convolution", "fubini_tonelli"]
+          "logical_dependency": ["convolution", "fubini_theorem"]
         },
         "related": ["oving2_p4", "convolution_theorem"],
         "ref": "TMA4170 Øving 2, Problem P3",
@@ -9471,9 +9999,9 @@
         "notes": ""
       },
       {
-        "id": "e_convolution__requires__fubini_tonelli",
+        "id": "e_convolution__requires__fubini_theorem",
         "source": "convolution",
-        "target": "fubini_tonelli",
+        "target": "fubini_theorem",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -11220,8 +11748,8 @@
         "notes": ""
       },
       {
-        "id": "e_fubini_tonelli__requires__lebesgue_integral",
-        "source": "fubini_tonelli",
+        "id": "e_fubini_theorem__requires__lebesgue_integral",
+        "source": "fubini_theorem",
         "target": "lebesgue_integral",
         "type": "requires",
         "dependency_class": "logical_dependency",
@@ -11231,8 +11759,8 @@
         "notes": ""
       },
       {
-        "id": "e_fubini_tonelli__requires__l1_space",
-        "source": "fubini_tonelli",
+        "id": "e_fubini_theorem__requires__l1_space",
+        "source": "fubini_theorem",
         "target": "l1_space",
         "type": "requires",
         "dependency_class": "logical_dependency",
@@ -14322,9 +14850,9 @@
         "notes": ""
       },
       {
-        "id": "e_convolution_theorem__requires__fubini_tonelli",
+        "id": "e_convolution_theorem__requires__fubini_theorem",
         "source": "convolution_theorem",
-        "target": "fubini_tonelli",
+        "target": "fubini_theorem",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -14344,9 +14872,9 @@
         "notes": "The proof first proves the inner-product identity on Schwartz functions using Fourier inversion."
       },
       {
-        "id": "e_plancherel_theorem__requires__fubini_tonelli",
+        "id": "e_plancherel_theorem__requires__fubini_theorem",
         "source": "plancherel_theorem",
-        "target": "fubini_tonelli",
+        "target": "fubini_theorem",
         "type": "requires",
         "dependency_class": "logical_dependency",
         "label": "requires",
@@ -14861,11 +15389,11 @@
         "notes": ""
       },
       {
-        "id": "e_oving2_p3__requires__fubini_tonelli",
+        "id": "e_oving2_p3__requires__fubini_theorem",
         "type": "requires",
         "direction": "source_to_target",
         "source": "oving2_p3",
-        "target": "fubini_tonelli",
+        "target": "fubini_theorem",
         "label": "requires",
         "dependency_class": "logical_dependency",
         "confidence": "high",

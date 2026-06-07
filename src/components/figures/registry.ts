@@ -10,7 +10,10 @@ import { type FigureProps } from "./types";
  * `FigureProps`, then add an entry here. NodePanel consults this map before
  * falling back to the static `ThemedDiagram`.
  */
-export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<FigureProps>>> = {
+export const FIGURE_REGISTRY: Record<
+  string,
+  LazyExoticComponent<ComponentType<FigureProps>>
+> = {
   parseval_identity: lazy(() => import("./ParsevalFigure")),
   plancherel_theorem: lazy(() => import("./ParsevalFigure")),
   riemann_lebesgue_lemma: lazy(() => import("./RiemannLebesgueFigure")),
@@ -37,8 +40,6 @@ export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<F
   // --- Exercises & exam problems: reuse the figure that best illustrates them ---
   // Fourier-series waveforms (triangle / sawtooth / square + partial sums).
   exam2025_p1a: lazy(() => import("./SeriesFigure")),
-  exam2025_p1b: lazy(() => import("./SeriesFigure")),
-  exam2025_p1c: lazy(() => import("./SeriesFigure")),
   ss2_6_ex3: lazy(() => import("./SeriesFigure")),
   ss2_6_ex4: lazy(() => import("./SeriesFigure")),
   ss2_6_ex5: lazy(() => import("./SeriesFigure")),
