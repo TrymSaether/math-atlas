@@ -1675,7 +1675,7 @@ a:focus-visible,
   height: 22px;
   margin: 1px 0;
   font-size: 10px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   color: var(--fg-2);
 }
 
@@ -2061,17 +2061,331 @@ a:focus-visible,
    ======================================================================== */
 
 :root {
+  --sandbox-bg: var(--bg);
+  --sandbox-stage: var(--bg);
+  --sandbox-rail: var(--chrome-bg);
+  --sandbox-rail-border: var(--chrome-border);
+  --sandbox-row: transparent;
+  --sandbox-row-hover: color-mix(in srgb, var(--fg-1) 5%, transparent);
+  --sandbox-row-selected: color-mix(in srgb, var(--accent-soft) 42%, transparent);
+  --sandbox-row-selected-border: color-mix(in srgb, var(--accent-border) 70%, transparent);
+  --sandbox-field: color-mix(in srgb, var(--surface) 58%, transparent);
+  --sandbox-field-focus: color-mix(in srgb, var(--accent-soft) 28%, var(--surface) 72%);
+  --sandbox-field-border: color-mix(in srgb, var(--border) 54%, transparent);
+  --sandbox-control: color-mix(in srgb, var(--fg-1) 6%, transparent);
+  --sandbox-control-hover: color-mix(in srgb, var(--fg-1) 10%, transparent);
+  --sandbox-danger-soft: color-mix(in srgb, var(--red) 11%, transparent);
+
   /* Plane ink: subtle grid, readable axes. Derived from theme tokens so every
      scheme retunes automatically. */
-  --plane-grid: color-mix(in srgb, var(--fg-1) 7%, transparent);
-  --plane-axis: color-mix(in srgb, var(--fg-1) 26%, transparent);
+  --plane-grid-minor: var(--grid-minor);
+  --plane-grid-major: var(--grid-major);
+  --plane-axis: color-mix(in srgb, var(--edge-ink) 42%, transparent);
   --plane-label: var(--fg-3);
+}
+
+.sandbox-shell {
+  background: var(--sandbox-bg);
+  color: var(--fg-1);
+}
+
+.sandbox-sidebar {
+  background: var(--sandbox-rail);
+  border: 1px solid var(--sandbox-rail-border);
+  box-shadow: var(--chrome-shadow), inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(170%) blur(18px);
+  -webkit-backdrop-filter: saturate(170%) blur(18px);
+}
+
+.sandbox-sidebar-header {
+  border-bottom: 1px solid var(--sandbox-rail-border);
+}
+
+.sandbox-stage {
+  background:
+    var(--sandbox-stage);
+}
+
+.sandbox-workspace-button {
+  border-radius: var(--radius-sm);
+  color: var(--fg-1);
+  padding: 5px 7px;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-workspace-button:hover {
+  background: var(--sandbox-control);
+}
+
+.sandbox-workspace-button[aria-expanded="true"] {
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.sandbox-workspace-button svg {
+  color: var(--fg-3);
+}
+
+.sandbox-workspace-button[aria-expanded="true"] svg {
+  color: var(--accent);
+}
+
+.sandbox-workspace-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--sandbox-control);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 72%, transparent);
+}
+
+.sandbox-workspace-meta {
+  color: var(--fg-3);
+}
+
+.sandbox-workspace-popover {
+  background: var(--chrome-bg-strong);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--chrome-shadow-popover), inset 0 1px 0 var(--chrome-highlight);
+  color: var(--fg-4);
+  backdrop-filter: saturate(170%) blur(20px);
+  -webkit-backdrop-filter: saturate(170%) blur(20px);
+}
+
+.sandbox-workspace-option {
+  border-radius: var(--radius-md);
+  color: var(--fg-2);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-workspace-option svg {
+  color: var(--fg-4);
+}
+
+.sandbox-workspace-option:hover {
+  background: var(--chrome-hover);
+  color: var(--fg-1);
+}
+
+.sandbox-workspace-option.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.sandbox-workspace-option.is-active svg {
+  color: var(--accent);
+}
+
+.sandbox-menu-divider {
+  background: var(--chrome-divider);
+}
+
+.sandbox-expression-panel {
+  min-height: 0;
+}
+
+.sandbox-expression-list {
+  scrollbar-color: color-mix(in srgb, var(--fg-1) 18%, transparent) transparent;
+}
+
+.sandbox-expression-row {
+  margin-bottom: 2px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--sandbox-row);
+  box-shadow:
+    inset 2px 0 0 transparent;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-expression-row:hover {
+  background: var(--sandbox-row-hover);
+  border-color: color-mix(in srgb, var(--border) 64%, transparent);
+}
+
+.sandbox-expression-row[data-selected="true"] {
+  background: var(--sandbox-row-selected);
+  border-color: var(--sandbox-row-selected-border);
+  box-shadow:
+    inset 2px 0 0 var(--accent);
+}
+
+.sandbox-row-gutter {
+  color: var(--fg-3);
+  background: transparent;
+}
+
+.sandbox-color-button {
+  color: var(--fg-3);
+}
+
+.sandbox-color-button:hover .sandbox-color-swatch {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px currentColor;
+}
+
+.sandbox-color-swatch {
+  display: block;
+  width: 10px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--fg-1) 16%, transparent),
+    0 1px 2px color-mix(in srgb, var(--fg-1) 10%, transparent);
+  transition:
+    transform var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-body {
+  color: var(--fg-1);
+}
+
+.sandbox-field-frame {
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--fg-1);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-expression-row:hover .sandbox-field-frame,
+.sandbox-expression-row[data-selected="true"] .sandbox-field-frame {
+  background: transparent;
+  border-color: var(--sandbox-field-border);
+}
+
+.sandbox-expression-row:focus-within .sandbox-field-frame {
+  background: var(--sandbox-field-focus);
+  border-color: var(--accent-border);
+}
+
+.sandbox-row-readout {
+  min-width: 0;
+  color: var(--fg-3);
+}
+
+.sandbox-row-readout svg,
+.sandbox-deps svg {
+  flex-shrink: 0;
+  color: var(--fg-4);
+}
+
+.sandbox-row-error {
+  display: inline-flex;
+  max-width: 100%;
+  border-radius: var(--radius-xs);
+  background: var(--sandbox-danger-soft);
+  color: var(--red);
+  padding: 2px 6px;
+}
+
+.sandbox-param-slider {
+  color: var(--fg-3);
+}
+
+.sandbox-num-box {
+  border: 1px solid var(--sandbox-field-border);
+  border-radius: var(--radius-xs);
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  color: var(--fg-3);
+  transition:
+    border-color var(--dur-micro) var(--ease-standard),
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-num-box:focus {
+  border-color: var(--accent-border);
+  background: var(--surface);
+  color: var(--fg-1);
+}
+
+.sandbox-row-meta {
+  color: var(--fg-4);
+}
+
+.sandbox-status-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 0 1px color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.sandbox-note {
+  min-width: 0;
+  max-width: 132px;
+  color: var(--fg-4);
+}
+
+.sandbox-deps {
+  max-width: 118px;
+}
+
+.sandbox-row-controls {
+  color: var(--fg-3);
+  opacity: 0.52;
+  transition: opacity var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-expression-row:hover .sandbox-row-controls,
+.sandbox-expression-row:focus-within .sandbox-row-controls,
+.sandbox-expression-row[data-selected="true"] .sandbox-row-controls {
+  opacity: 1;
+}
+
+.sandbox-row-controls button {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-controls button:hover {
+  background: var(--sandbox-control-hover);
+  color: var(--fg-1);
+}
+
+.sandbox-add-expression {
+  border-top: 1px solid var(--sandbox-rail-border);
+  color: var(--fg-2);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-add-expression:hover {
+  background: var(--sandbox-control);
+  color: var(--fg-1);
 }
 
 /* MathLive field — inherit the panel's ink and strip its chrome. */
 .mf-host math-field {
   color: var(--fg-1);
   font-family: var(--font-math);
+  min-height: 26px;
+  padding: 3px 5px;
   --selection-background-color: var(--selection);
   --caret-color: var(--accent);
   --primary: var(--accent);
@@ -2088,21 +2402,21 @@ a:focus-visible,
   height: 3px;
   cursor: pointer;
   appearance: none;
-  background: var(--border);
+  background: color-mix(in srgb, currentColor 22%, var(--border) 78%);
   border-radius: var(--radius-pill);
 }
 .ws-slider::-webkit-slider-thumb {
   appearance: none;
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: var(--radius-pill);
   background: currentColor;
   border: 2px solid var(--surface);
-  box-shadow: var(--shadow-1);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--fg-1) 18%, transparent);
 }
 .ws-slider::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border: 2px solid var(--surface);
   border-radius: var(--radius-pill);
   background: currentColor;
@@ -2117,12 +2431,16 @@ a:focus-visible,
 .sandbox-plane .MafsView {
   --mafs-bg: transparent;
   --mafs-fg: var(--plane-axis);
-  --mafs-line-color: var(--plane-grid);
+  --mafs-line-color: var(--plane-grid-major);
+  --grid-line-subdivision-color: var(--plane-grid-minor);
   --mafs-origin-color: var(--plane-axis);
+  --mafs-axis-stroke-width: 1px;
   font-family: var(--font-sans);
 }
+
 /* Axis number labels — smaller and quieter than the Mafs default. */
 .sandbox-plane .MafsView text {
   fill: var(--plane-label);
-  font-size: 11px;
+  fill-opacity: 0.68;
+  font-size: 10px;
 }

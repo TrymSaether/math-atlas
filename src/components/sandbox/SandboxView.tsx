@@ -4,9 +4,8 @@
  * dependent objects, geometry, views, marks, provenance), evaluated by mathjs
  * and drawn with Mafs.
  *
- * Layout mirrors the rest of the atlas: an opaque left rail (the expression
- * list, headed by a brand-style workspace menu) and a full-bleed plane behind
- * the floating chrome, with a glass view-dock on the right rail. Atlas-linked
+ * Layout mirrors the rest of the atlas map: a full-bleed plane behind floating
+ * chrome, with a compact expression panel and glass view-dock. Atlas-linked
  * mode (`loadById`) is driven programmatically by nodes; the standalone surface
  * exposes prepared workspaces through the workspace menu only.
  */
@@ -50,20 +49,9 @@ export function SandboxView() {
   }, []);
 
   return (
-    <div className="sandbox-shell absolute inset-0 flex">
-      {/* Expression rail */}
-      <aside className="sandbox-sidebar flex w-[360px] shrink-0 flex-col">
-        <div className="sandbox-sidebar-spacer h-[60px] shrink-0" />
-        <div className="sandbox-sidebar-header flex items-center gap-1 px-3 pb-3 pt-1">
-          <WorkspaceMenu />
-        </div>
-        <div className="min-h-0 flex-1">
-          <ExpressionPanel />
-        </div>
-      </aside>
-
+    <div className="sandbox-shell absolute inset-0">
       {/* Plane */}
-      <main className="sandbox-stage relative min-w-0 flex-1">
+      <main className="sandbox-stage absolute inset-0 min-w-0">
         <PlaneView
           rows={ws.rows}
           compiled={compiled}
@@ -114,6 +102,16 @@ export function SandboxView() {
           </Pill>
         </div>
       </main>
+
+      {/* Floating expression panel */}
+      <aside className="sandbox-sidebar pointer-events-auto absolute bottom-3 left-3 top-[68px] z-20 flex w-[min(328px,calc(100vw-24px))] flex-col overflow-hidden rounded-[var(--radius-lg)]">
+        <div className="sandbox-sidebar-header flex items-center gap-1 px-2.5 py-2">
+          <WorkspaceMenu />
+        </div>
+        <div className="min-h-0 flex-1">
+          <ExpressionPanel />
+        </div>
+      </aside>
     </div>
   );
 }
@@ -152,9 +150,9 @@ function WorkspaceMenu() {
           <FolderSimple className="h-4 w-4" weight="duotone" />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block truncate font-serif text-atlas-card">{ws.title}</span>
+          <span className="block truncate text-ui-sm font-semibold">{ws.title}</span>
           <span className="sandbox-workspace-meta block truncate font-mono text-ui-2xs uppercase tracking-label-tight">
-            {ws.rows.length} rows
+            {ws.rows.length} expressions
           </span>
         </span>
         <CaretDown
