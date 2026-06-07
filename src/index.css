@@ -2055,3 +2055,74 @@ a:focus-visible,
     linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px);
   background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
 }
+
+/* ========================================================================
+   Workspace sandbox — tuned to the atlas token system
+   ======================================================================== */
+
+:root {
+  /* Plane ink: subtle grid, readable axes. Derived from theme tokens so every
+     scheme retunes automatically. */
+  --plane-grid: color-mix(in srgb, var(--fg-1) 7%, transparent);
+  --plane-axis: color-mix(in srgb, var(--fg-1) 26%, transparent);
+  --plane-label: var(--fg-3);
+}
+
+/* MathLive field — inherit the panel's ink and strip its chrome. */
+.mf-host math-field {
+  color: var(--fg-1);
+  font-family: var(--font-math);
+  --selection-background-color: var(--selection);
+  --caret-color: var(--accent);
+  --primary: var(--accent);
+  --placeholder-color: var(--fg-4);
+  --smart-fence-color: var(--fg-3);
+}
+.mf-host math-field::part(virtual-keyboard-toggle),
+.mf-host math-field::part(menu-toggle) {
+  display: none;
+}
+
+/* Expression-row range slider, tinted to the row's object color (currentColor). */
+.ws-slider {
+  height: 3px;
+  cursor: pointer;
+  appearance: none;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+}
+.ws-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  border: 2px solid var(--surface);
+  box-shadow: var(--shadow-1);
+}
+.ws-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--surface);
+  border-radius: var(--radius-pill);
+  background: currentColor;
+}
+
+/* The Mafs plane: fill the pane, theme axes/grid from plane tokens. */
+.sandbox-plane,
+.sandbox-plane .MafsView {
+  width: 100% !important;
+  height: 100%;
+}
+.sandbox-plane .MafsView {
+  --mafs-bg: transparent;
+  --mafs-fg: var(--plane-axis);
+  --mafs-line-color: var(--plane-grid);
+  --mafs-origin-color: var(--plane-axis);
+  font-family: var(--font-sans);
+}
+/* Axis number labels — smaller and quieter than the Mafs default. */
+.sandbox-plane .MafsView text {
+  fill: var(--plane-label);
+  font-size: 11px;
+}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { lazy, Suspense, useEffect, useMemo } from "react";
 import { ReactFlowProvider } from "reactflow";
 import { Background } from "./components/Background";
 import { TopBar } from "./components/TopBar";
@@ -6,8 +6,13 @@ import { GraphCanvas } from "./components/GraphCanvas";
 import { NodePanel } from "./components/NodePanel";
 import { DictionaryView } from "./components/DictionaryView";
 import { FlashcardsView } from "./components/FlashcardsView";
-import { SandboxView } from "./components/sandbox/SandboxView";
 import { CommandPalette } from "./components/CommandPalette";
+
+// The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
+// atlas's initial bundle stays light.
+const SandboxView = lazy(() =>
+  import("./components/sandbox/SandboxView").then((m) => ({ default: m.SandboxView })),
+);
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
 import { useStore } from "./store";
 import { registerDomainTones } from "./lib/colors";
@@ -47,7 +52,15 @@ export default function App() {
             ) : surface === "flashcards" ? (
               <FlashcardsView />
             ) : surface === "sandbox" ? (
-              <SandboxView />
+              <Suspense
+                fallback={
+                  <div className="flex h-full items-center justify-center text-sm" style={{ color: "var(--fg-3)" }}>
+                    Loading sandbox…
+                  </div>
+                }
+              >
+                <SandboxView />
+              </Suspense>
             ) : (
               <>
                 <GraphCanvas />
