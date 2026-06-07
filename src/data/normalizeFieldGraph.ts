@@ -23,7 +23,9 @@ function toSteps(steps: FieldItem["proof_steps"]): ProofStep[] {
 function notationList(item: FieldItem): string[] {
   const notation = item.notation;
   if (!notation) return [];
-  return (Array.isArray(notation) ? notation : [notation]).map((n) => n.trim()).filter(Boolean);
+  return (Array.isArray(notation) ? notation : [notation])
+    .map((n) => n.trim())
+    .filter(Boolean);
 }
 
 function confidenceToNumber(value: "high" | "medium" | "low"): number {
@@ -37,7 +39,13 @@ function flattenDependencies(dependencies: Record<string, string[]>): string[] {
 }
 
 function sourceText(item: FieldItem): string {
-  return item.statement ?? item.definition ?? item.formal_statement ?? item.intuition ?? "";
+  return (
+    item.statement ??
+    item.definition ??
+    item.formal_statement ??
+    item.intuition ??
+    ""
+  );
 }
 
 function formalText(item: FieldItem): string {
@@ -71,7 +79,11 @@ export function normalizeFieldGraph(input: FieldJson): GraphData {
   for (const item of input.graph.items) {
     dependencyIdsByItem.set(
       item.id,
-      new Set(flattenDependencies(item.dependencies ?? {}).filter((id) => nodeIds.has(id))),
+      new Set(
+        flattenDependencies(item.dependencies ?? {}).filter((id) =>
+          nodeIds.has(id),
+        ),
+      ),
     );
   }
 
@@ -102,7 +114,10 @@ export function normalizeFieldGraph(input: FieldJson): GraphData {
     const deps = [...(dependencyIdsByItem.get(item.id) ?? [])];
     const source = item.metadata?.source ?? "";
     const domain = domainById.get(item.domain);
-    if (!domain) throw new Error(`Item ${item.id} references missing domain ${item.domain}`);
+    if (!domain)
+      throw new Error(
+        `Item ${item.id} references missing domain ${item.domain}`,
+      );
 
     const idx = (domainCounters.get(item.domain) ?? 0) + 1;
     domainCounters.set(item.domain, idx);
@@ -128,11 +143,15 @@ export function normalizeFieldGraph(input: FieldJson): GraphData {
       proof: item.proof ?? "",
       proofSteps: toSteps(item.proof_steps),
       solutionSteps: toSteps(item.solution_steps),
-      assumptions: (item.assumptions ?? []).map((a) => a.trim()).filter(Boolean),
+      assumptions: (item.assumptions ?? [])
+        .map((a) => a.trim())
+        .filter(Boolean),
       notation: notationList(item),
       bookRefs: item.book_refs ?? [],
       statementDependencies: deps,
-      proofDependencies: (item.proof_dependencies ?? []).filter((id) => nodeIds.has(id)),
+      proofDependencies: (item.proof_dependencies ?? []).filter((id) =>
+        nodeIds.has(id),
+      ),
       tags: item.metadata?.tags ?? [],
       qualityFlags: [],
       gloss: item.gloss ?? "",

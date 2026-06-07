@@ -4,7 +4,11 @@ import {
   type GraphDomain,
   type GraphEdge,
 } from "../types";
-import { computeSwimlaneLayout, type DomainBounds, type Position } from "../lib/atlasLayout";
+import {
+  computeSwimlaneLayout,
+  type DomainBounds,
+  type Position,
+} from "../lib/atlasLayout";
 import { registerDomainTones, type DomainTone } from "../lib/colors";
 import { computeGraphMetrics, type GraphMetrics } from "../lib/graphMetrics";
 import { DEFAULT_MAP_ID, MAPS, loadRawMap, type MapId } from "./mapRegistry";
@@ -107,7 +111,9 @@ export function loadMap(mapId: MapId = DEFAULT_MAP_ID): Promise<LoadedMap> {
 
 export async function loadRegisteredMaps(): Promise<Record<MapId, LoadedMap>> {
   const entries = await Promise.all(
-    (Object.keys(MAPS) as MapId[]).map(async (mapId) => [mapId, await loadMap(mapId)] as const),
+    (Object.keys(MAPS) as MapId[]).map(
+      async (mapId) => [mapId, await loadMap(mapId)] as const,
+    ),
   );
   return Object.fromEntries(entries) as Record<MapId, LoadedMap>;
 }
