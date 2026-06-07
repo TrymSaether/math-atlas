@@ -2109,7 +2109,7 @@ a:focus-visible,
 .sandbox-workspace-button {
   border-radius: var(--radius-sm);
   color: var(--fg-1);
-  padding: 5px 7px;
+  padding: 4px 6px;
   transition:
     background-color var(--dur-micro) var(--ease-standard),
     box-shadow var(--dur-micro) var(--ease-standard),
@@ -2196,7 +2196,7 @@ a:focus-visible,
 }
 
 .sandbox-expression-row {
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   overflow: hidden;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
@@ -2240,7 +2240,7 @@ a:focus-visible,
 .sandbox-color-swatch {
   display: block;
   width: 10px;
-  height: 28px;
+  height: 26px;
   border-radius: var(--radius-pill);
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--fg-1) 16%, transparent),
@@ -2296,18 +2296,34 @@ a:focus-visible,
 }
 
 .sandbox-param-slider {
+  --slider-color: currentColor;
+  --slider-progress: 50%;
   color: var(--fg-3);
 }
 
 .sandbox-num-box {
-  border: 1px solid var(--sandbox-field-border);
-  border-radius: var(--radius-xs);
-  background: color-mix(in srgb, var(--surface) 58%, transparent);
-  color: var(--fg-3);
+  appearance: textfield;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--surface) 28%, transparent);
+  color: var(--fg-4);
+  line-height: 1.1;
   transition:
     border-color var(--dur-micro) var(--ease-standard),
     background-color var(--dur-micro) var(--ease-standard),
     color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-num-box::-webkit-outer-spin-button,
+.sandbox-num-box::-webkit-inner-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.sandbox-num-box:hover {
+  border-color: var(--sandbox-field-border);
+  background: color-mix(in srgb, var(--surface) 62%, transparent);
+  color: var(--fg-3);
 }
 
 .sandbox-num-box:focus {
@@ -2384,8 +2400,8 @@ a:focus-visible,
 .mf-host math-field {
   color: var(--fg-1);
   font-family: var(--font-math);
-  min-height: 26px;
-  padding: 3px 5px;
+  min-height: 24px;
+  padding: 2px 5px;
   --selection-background-color: var(--selection);
   --caret-color: var(--accent);
   --primary: var(--accent);
@@ -2399,27 +2415,68 @@ a:focus-visible,
 
 /* Expression-row range slider, tinted to the row's object color (currentColor). */
 .ws-slider {
-  height: 3px;
+  height: 14px;
   cursor: pointer;
   appearance: none;
-  background: color-mix(in srgb, currentColor 22%, var(--border) 78%);
+  background: transparent;
   border-radius: var(--radius-pill);
 }
+
+.ws-slider::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background:
+    linear-gradient(
+      to right,
+      var(--slider-color) 0%,
+      var(--slider-color) var(--slider-progress),
+      color-mix(in srgb, var(--fg-1) 10%, transparent) var(--slider-progress),
+      color-mix(in srgb, var(--fg-1) 10%, transparent) 100%
+    );
+}
+
 .ws-slider::-webkit-slider-thumb {
   appearance: none;
-  width: 11px;
-  height: 11px;
+  width: 12px;
+  height: 12px;
+  margin-top: -4.5px;
   border-radius: var(--radius-pill);
-  background: currentColor;
+  background: var(--surface);
+  border: 2px solid var(--slider-color);
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--fg-1) 18%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--slider-color) 10%, transparent);
+}
+
+.ws-slider::-moz-range-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--fg-1) 10%, transparent);
+}
+
+.ws-slider::-moz-range-progress {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--slider-color);
+}
+
+.ws-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
   border: 2px solid var(--surface);
+  border-radius: var(--radius-pill);
+  background: var(--slider-color);
   box-shadow: 0 1px 4px color-mix(in srgb, var(--fg-1) 18%, transparent);
 }
-.ws-slider::-moz-range-thumb {
-  width: 11px;
-  height: 11px;
-  border: 2px solid var(--surface);
-  border-radius: var(--radius-pill);
-  background: currentColor;
+
+.ws-slider:focus-visible {
+  outline: none;
+}
+
+.ws-slider:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--fg-1) 18%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--slider-color) 18%, transparent);
 }
 
 /* The Mafs plane: fill the pane, theme axes/grid from plane tokens. */

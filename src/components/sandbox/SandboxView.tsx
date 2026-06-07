@@ -104,8 +104,8 @@ export function SandboxView() {
       </main>
 
       {/* Floating expression panel */}
-      <aside className="sandbox-sidebar pointer-events-auto absolute bottom-3 left-3 top-[68px] z-20 flex w-[min(328px,calc(100vw-24px))] flex-col overflow-hidden rounded-[var(--radius-lg)]">
-        <div className="sandbox-sidebar-header flex items-center gap-1 px-2.5 py-2">
+      <aside className="sandbox-sidebar pointer-events-auto absolute bottom-3 left-3 top-[68px] z-20 flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-[var(--radius-lg)] sm:left-4 sm:w-[340px]">
+        <div className="sandbox-sidebar-header flex items-center gap-1 px-2 py-2">
           <WorkspaceMenu />
         </div>
         <div className="min-h-0 flex-1">

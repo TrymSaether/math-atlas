@@ -7,7 +7,7 @@
  * readouts) so the sandbox reads as part of the same product.
  */
 
-import { useMemo } from "react";
+import { useMemo, type CSSProperties } from "react";
 import {
   Calculator,
   Eye,
@@ -33,7 +33,7 @@ export function ExpressionPanel() {
 
   return (
     <div className="sandbox-expression-panel flex h-full flex-col">
-      <div className="sandbox-expression-list flex-1 overflow-y-auto px-1.5 pb-1.5 pt-1.5">
+      <div className="sandbox-expression-list flex-1 overflow-y-auto px-1.5 pb-1.5 pt-1">
         {ws.rows.map((row, i) => (
           <ExpressionRow key={row.id} row={row} index={i + 1} computed={compiled.byId[row.id]} />
         ))}
@@ -78,10 +78,10 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
       data-selected={selected ? "true" : undefined}
       data-status={status}
     >
-      <div className="flex min-h-[58px] items-stretch">
+      <div className="flex min-h-[52px] items-stretch">
         {/* Index gutter */}
         <div
-          className="sandbox-row-gutter flex w-7 items-center justify-center py-2 font-mono text-ui-2xs tabular-nums"
+          className="sandbox-row-gutter flex w-7 items-center justify-center py-1.5 font-mono text-ui-2xs tabular-nums"
           title={statusTitle(status)}
         >
           <span>{index}</span>
@@ -96,7 +96,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
         </button>
 
         {/* Editor + readout */}
-        <div className="sandbox-row-body min-w-0 flex-1 py-1.5 pr-1">
+        <div className="sandbox-row-body min-w-0 flex-1 py-1 pr-1">
           <div className="sandbox-field-frame">
             <MathField
               value={row.source}
@@ -114,7 +114,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
               {computed.error}
             </div>
           ) : readout ? (
-            <div className="sandbox-row-readout mt-1 flex items-center gap-1 font-mono text-ui-2xs">
+            <div className="sandbox-row-readout mt-0.5 flex items-center gap-1 font-mono text-ui-2xs">
               <RowTypeIcon kind={rowType} />
               {readout}
             </div>
@@ -153,9 +153,16 @@ function ParamSlider({
   onConfig: (s: { min: number; max: number; step: number }) => void;
 }) {
   const slider = row.slider ?? DEFAULT_SLIDER;
+  const progress = sliderProgress(value, slider.min, slider.max);
+  const sliderStyle = {
+    color: row.color,
+    "--slider-color": row.color,
+    "--slider-progress": `${progress}%`,
+  } as CSSProperties;
+
   return (
-    <div className="sandbox-param-slider mt-1.5 flex items-center gap-1.5">
-      <NumBox value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
+    <div className="sandbox-param-slider mt-1 flex items-center gap-1.5">
+      <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
       <input
         type="range"
         min={slider.min}
@@ -164,20 +171,21 @@ function ParamSlider({
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         className="ws-slider min-w-0 flex-1"
-        style={{ color: row.color }}
+        style={sliderStyle}
       />
-      <NumBox value={slider.max} onChange={(max) => onConfig({ ...slider, max })} />
+      <NumBox label="Maximum value" value={slider.max} onChange={(max) => onConfig({ ...slider, max })} />
     </div>
   );
 }
 
-function NumBox({ value, onChange }: { value: number; onChange: (v: number) => void }) {
+function NumBox({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
   return (
     <input
+      aria-label={label}
       type="number"
       value={value}
       onChange={(e) => onChange(Number(e.target.value))}
-      className="sandbox-num-box w-11 px-1 py-0.5 text-center font-mono text-ui-2xs tabular-nums outline-none"
+      className="sandbox-num-box w-9 px-1 py-0.5 text-center font-mono text-ui-2xs tabular-nums outline-none"
     />
   );
 }
@@ -193,7 +201,7 @@ function RowMeta({
 }) {
   if (!note && deps.length === 0 && status !== "error") return null;
   return (
-    <div className="sandbox-row-meta mt-1.5 flex items-center gap-1.5 text-ui-2xs">
+    <div className="sandbox-row-meta mt-1 flex items-center gap-1.5 text-ui-2xs">
       <span className="sandbox-status-indicator flex items-center gap-1" title={statusTitle(status)}>
         <StatusIcon status={status} />
       </span>
@@ -306,3 +314,8 @@ function statusTitle(status: FactStatus | "error"): string {
 }
 
 const asNumber = (v: unknown): number => (typeof v === "number" ? v : 0);
+
+function sliderProgress(value: number, min: number, max: number): number {
+  if (max <= min) return 0;
+  return Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100));
+}
