@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { Mafs, Line, Plot, Point, Polygon } from "mafs";
 
 import { boxConvolution } from "../../lib/figures/fourierMath";
 import { MathText } from "../../lib/katex";
+import { FigureFrame, FunctionCurve, Line, Point, Polygon } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
@@ -49,7 +49,7 @@ export default function ConvolutionFigure(_: FigureProps) {
             <MathText text={`$f(t)$ fixed, $g(s-t)$ sliding`} />
           </div>
 
-          <Mafs height={150} viewBox={{ x: X_DOMAIN, y: [-0.25, 1.45] }} pan={false} zoom={false}>
+          <FigureFrame xDomain={X_DOMAIN} yDomain={[-0.25, 1.45]} height={150} axes={false} grid>
             <Line.Segment point1={[-4, 0]} point2={[4, 0]} color="var(--fg-4)" />
 
             <Polygon points={boxPoints(0)} color="var(--fg-3)" />
@@ -61,7 +61,7 @@ export default function ConvolutionFigure(_: FigureProps) {
 
             <Line.Segment point1={[s - 1, 0]} point2={[s - 1, 1]} color="var(--accent)" />
             <Line.Segment point1={[s + 1, 0]} point2={[s + 1, 1]} color="var(--accent)" />
-          </Mafs>
+          </FigureFrame>
 
           <div className="absolute bottom-2 left-3 rounded-md px-2 py-1 text-ui-meta">
             <MathText text={`$s=${s.toFixed(1)},\\quad \\operatorname{overlap}=${value.toFixed(2)}$`} />
@@ -76,14 +76,14 @@ export default function ConvolutionFigure(_: FigureProps) {
             <MathText text={`$(f*g)(s)=\\int_{-\\infty}^{\\infty} f(t)g(s-t)\\,dt$`} />
           </div>
 
-          <Mafs height={150} viewBox={{ x: X_DOMAIN, y: [-0.35, 2.35] }} pan={false} zoom={false}>
+          <FigureFrame xDomain={X_DOMAIN} yDomain={[-0.35, 2.35]} height={150} axes={false} grid>
             <Line.Segment point1={[-4, 0]} point2={[4, 0]} color="var(--fg-4)" />
             <Line.Segment point1={[s, 0]} point2={[s, value]} color="var(--fg-4)" />
 
-            <Plot.OfX y={boxConvolution} domain={[-2, 2]} color="var(--accent)" weight={2} />
+            <FunctionCurve y={boxConvolution} domain={[-2, 2]} color="var(--accent)" weight={2.1} />
 
             <Point x={s} y={value} color="var(--accent)" />
-          </Mafs>
+          </FigureFrame>
 
           <div className="absolute bottom-2 left-3 rounded-md px-2 py-1 text-ui-meta">
             <MathText text={`$s=${s.toFixed(1)},\\quad (f*g)(s)=${value.toFixed(2)}$`} />

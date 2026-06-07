@@ -1,13 +1,11 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
-import { linspace, linearScale } from "../../lib/figures/plot";
 import { type WaveKind, waveCoeff, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
-import { FigureFrame } from "./FigureFrame";
+import { FigureFrame, FunctionCurve, Line, Plot, Polygon } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
 import { type FigureProps } from "./types";
 
-const XS = linspace(-Math.PI, Math.PI, 600);
 const N_MAX = 50;
 const TAIL = 2000; // harmonics to approximate total energy
 
@@ -50,19 +48,11 @@ const CAPTIONS: Record<WaveKind, string> = {
   triangle: "Triangle is continuous — coefficients decay like 1/n², so the error collapses much faster.",
 };
 
-// Error bar panel dimensions
-const W = 320;
-const BAR_PAD = 14;
-const BAR_H = 14;
 const NS_BAR = Array.from({ length: N_MAX + 1 }, (_, i) => i);
-const SX_BAR = linearScale([0, N_MAX], [BAR_PAD, W - BAR_PAD]);
 
 export default function L2ConvergenceFigure(_: FigureProps) {
   const [kind, setKind] = useState<WaveKind>("square");
   const [N, setN] = useState(5);
-
-  const target = useMemo(() => XS.map((x) => waveTarget(kind, x)), [kind]);
-  const approx = useMemo(() => XS.map((x) => wavePartialSum(kind, x, N)), [kind, N]);
 
   const errors = ERROR_CURVES[kind];
   const total = TOTAL[kind];
@@ -70,51 +60,35 @@ export default function L2ConvergenceFigure(_: FigureProps) {
   const maxErr = errors[0];
 
   // Normalize for the error bar display
-  const errFraction = maxErr > 0 ? currentErr / maxErr : 0;
   const errPct = total > 0 ? ((currentErr / total) * 100).toFixed(1) : "0";
 
-  // Error decay curve — log scale, rendered as a small SVG bar chart
-  const BAR_SVG_H = 48;
-  const SY_ERR = linearScale([0, maxErr], [BAR_SVG_H - 4, 4]);
+  const top = (x: number) => Math.max(waveTarget(kind, x), wavePartialSum(kind, x, N));
+  const bottom = (x: number) => Math.min(waveTarget(kind, x), wavePartialSum(kind, x, N));
 
   return (
     <figure className="m-0">
-      {/* Waveform: target vs partial sum */}
-      <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={Y_DOMAIN[kind]}>
-        {({ path, sx, sy }) => {
-          // Shade the error region between f and S_N f
-          const errorFill = XS.map((x, i) => {
-            const diff = Math.abs(approx[i] - target[i]);
-            return diff;
-          });
-          const topYs = XS.map((_, i) => Math.max(target[i], approx[i]));
-          const botYs = XS.map((_, i) => Math.min(target[i], approx[i]));
-
-          // Build a filled band between the two curves
-          const topPath = XS.map((x, i) => `${i === 0 ? "M" : "L"}${sx(x).toFixed(1)},${sy(topYs[i]).toFixed(1)}`).join(" ");
-          const botPathRev = [...XS].reverse().map((x, ri) => {
-            const i = XS.length - 1 - ri;
-            return `L${sx(x).toFixed(1)},${sy(botYs[i]).toFixed(1)}`;
-          }).join(" ");
-
-          return (
-            <>
-              {/* Error band */}
-              <path
-                d={`${topPath} ${botPathRev} Z`}
-                fill="var(--red)"
-                opacity={0.12}
-              />
-              {/* f(x) dashed */}
-              <path d={path(XS, target)} fill="none" stroke="var(--fg-3)" strokeWidth={1.4} strokeDasharray="4 3" />
-              {/* S_N f */}
-              <path d={path(XS, approx)} fill="none" stroke="var(--accent)" strokeWidth={1.8} />
-            </>
-          );
-        }}
+      <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={Y_DOMAIN[kind]} grid>
+        <Plot.Inequality
+          y={{ "<=": top, ">=": bottom }}
+          fillColor="var(--red)"
+          fillOpacity={0.12}
+          strokeOpacity={0}
+        />
+        <FunctionCurve
+          y={(x) => waveTarget(kind, x)}
+          domain={[-Math.PI, Math.PI]}
+          color="var(--fg-3)"
+          weight={1.5}
+          style="dashed"
+        />
+        <FunctionCurve
+          y={(x) => wavePartialSum(kind, x, N)}
+          domain={[-Math.PI, Math.PI]}
+          color="var(--accent)"
+          weight={2.1}
+        />
       </FigureFrame>
 
-      {/* Error decay bar chart (simple horizontal bars per N) */}
       <div className="mt-2 px-1">
         <div className="mb-1 flex items-baseline justify-between text-ui-hint" style={{ color: "var(--fg-3)" }}>
           <span>L² error ‖S<sub>N</sub>f − f‖²</span>
@@ -122,29 +96,29 @@ export default function L2ConvergenceFigure(_: FigureProps) {
             {errPct}% of ‖f‖²
           </span>
         </div>
-        {/* Mini bar chart: one bar per N */}
-        <svg viewBox={`0 0 ${W} ${BAR_SVG_H}`} style={{ width: "100%", height: "auto", display: "block" }}>
+        <FigureFrame xDomain={[0, N_MAX + 1]} yDomain={[0, maxErr * 1.08]} height={56} axes={false}>
           {NS_BAR.map((n) => {
             if (n === 0) return null;
-            const bx = SX_BAR(n - 1);
-            const bw = Math.max((W - 2 * BAR_PAD) / N_MAX - 0.5, 1);
-            const bh = BAR_SVG_H - 4 - SY_ERR(errors[n]);
             const active = n === N;
+            const x0 = n - 0.42;
+            const x1 = n + 0.42;
             return (
-              <rect
+              <Polygon
                 key={n}
-                x={bx}
-                y={SY_ERR(errors[n])}
-                width={bw}
-                height={Math.max(bh, 0)}
-                fill={active ? "var(--accent)" : "var(--fg-4)"}
-                opacity={active ? 1 : 0.5}
+                points={[
+                  [x0, 0],
+                  [x0, errors[n]],
+                  [x1, errors[n]],
+                  [x1, 0],
+                ]}
+                color={active ? "var(--accent)" : "var(--fg-4)"}
+                fillOpacity={active ? 0.95 : 0.45}
+                strokeOpacity={0}
               />
             );
           })}
-          {/* baseline */}
-          <line x1={BAR_PAD} y1={BAR_SVG_H - 4} x2={W - BAR_PAD} y2={BAR_SVG_H - 4} stroke="var(--fg-4)" strokeWidth={1} />
-        </svg>
+          <Line.Segment point1={[0, 0]} point2={[N_MAX + 1, 0]} color="var(--fg-4)" weight={1} />
+        </FigureFrame>
       </div>
 
       <WaveSelect value={kind} onChange={(k) => { setKind(k); setN(5); }} />

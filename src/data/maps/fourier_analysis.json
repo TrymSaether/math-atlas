@@ -3255,7 +3255,10 @@
         "dependencies": {
           "logical_dependency": ["sigma_algebra", "measure"]
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_measure_space__requires__sigma_algebra",
+          "e_measure_space__requires__measure"
+        ],
         "related": [
           "sigma_algebra",
           "measure",
@@ -3398,7 +3401,15 @@
             "tonelli_theorem"
           ]
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_fubini_theorem__requires__measure_space",
+          "e_fubini_theorem__requires__sigma_finite_measure",
+          "e_fubini_theorem__requires__product_measure",
+          "e_fubini_theorem__requires__measurable_function",
+          "e_fubini_theorem__requires__lebesgue_integral",
+          "e_fubini_theorem__requires__l1_space",
+          "e_fubini_theorem__requires__tonelli_theorem"
+        ],
         "related": [
           "tonelli_theorem",
           "product_measure",
@@ -3496,29 +3507,85 @@
         "label": "Fubini–Tonelli Theorem",
         "kind": "theorem",
         "domain": "foundations",
-        "statement": "Theorems that justify changing the order of integration.",
-        "formal_statement": "Tonelli applies to nonnegative measurable functions; Fubini applies when $f\\in L^1(X\\times Y)$. Under these hypotheses, iterated integrals agree with the integral over the product space.",
+        "statement": "The Fubini-Tonelli package gives the two main hypotheses under which product integrals can be computed by iterated integrals: nonnegativity for Tonelli, absolute integrability for Fubini.",
+        "formal_statement": "Let $(X,\\mathcal A,\\mu)$ and $(Y,\\mathcal B,\\nu)$ be $\\sigma$-finite measure spaces and let $f$ be measurable on $X\\times Y$. If $f\\ge0$, Tonelli gives equality of the product integral and both iterated integrals in $[0,\\infty]$. If $f\\in L^1(X\\times Y,\\mu\\times\\nu)$, Fubini gives equality as finite integrals.",
         "definition": null,
         "formula": "$$f\\ge0\\ \\lor\\ f\\in L^1(X\\times Y)\\Longrightarrow \\int_{X\\times Y}f\\,d(\\mu\\times\\nu)=\\int_X\\left(\\int_Y f(x,y)\\,d\\nu(y)\\right)d\\mu(x)=\\int_Y\\left(\\int_X f(x,y)\\,d\\mu(x)\\right)d\\nu(y).$$",
-        "intuition": "Convolution, Fourier inversion, and many kernel identities require moving integrals past each other. Fubini and Tonelli say when that move is legal.",
+        "intuition": "Convolution, Fourier inversion, and many kernel identities require moving integrals past each other. Tonelli says nonnegative mass can be summed in any order; Fubini says signed or complex mass can be reordered once absolute integrability prevents cancellation pathologies.",
         "proof": null,
         "notation": "$$\\int\\!\\int f(x,y)\\,dx\\,dy$$",
-        "proof_dependencies": [],
+        "proof_dependencies": ["tonelli_theorem", "fubini_theorem"],
         "dependencies": {
-          "logical_dependency": ["lebesgue_integral", "l1_space"]
+          "logical_dependency": [
+            "measure_space",
+            "sigma_finite_measure",
+            "product_measure",
+            "measurable_function",
+            "lebesgue_integral",
+            "l1_space",
+            "tonelli_theorem",
+            "fubini_theorem"
+          ]
         },
-        "outgoing_relations": [],
-        "related": ["lebesgue_integral"],
-        "assumptions": [
-          "Tonelli handles nonnegative functions; Fubini handles absolutely integrable functions."
+        "outgoing_relations": [
+          "e_fubini_tonelli__requires__measure_space",
+          "e_fubini_tonelli__requires__sigma_finite_measure",
+          "e_fubini_tonelli__requires__product_measure",
+          "e_fubini_tonelli__requires__measurable_function",
+          "e_fubini_tonelli__requires__lebesgue_integral",
+          "e_fubini_tonelli__requires__l1_space",
+          "e_fubini_tonelli__requires__tonelli_theorem",
+          "e_fubini_tonelli__requires__fubini_theorem"
         ],
-        "ref": "",
-        "book_refs": [],
+        "related": [
+          "tonelli_theorem",
+          "fubini_theorem",
+          "product_measure",
+          "lebesgue_integral",
+          "l1_space"
+        ],
+        "assumptions": [
+          "Tonelli handles nonnegative measurable functions and may return $+\\infty$.",
+          "Fubini handles absolutely integrable functions and returns finite iterated integrals.",
+          "The standard product-measure formulation assumes $\\sigma$-finite measure spaces."
+        ],
+        "ref": "Folland: Real Analysis, Ch.2 Fubini-Tonelli Theorem; Stein-Shakarchi: Real Analysis, Ch.2",
+        "book_refs": [
+          "folland_ch2_fubini_theorem",
+          "stein_shakarchi_real_analysis_ch2"
+        ],
         "metadata": {
-          "tags": ["foundations"],
-          "syllabus_priority": "medium",
-          "source": "Curated concept graph"
-        }
+          "tags": [
+            "measure-theory",
+            "product-measure",
+            "iterated-integrals"
+          ],
+          "syllabus_priority": "core",
+          "source": "Folland: Real Analysis, Ch.2 Fubini-Tonelli Theorem; Stein-Shakarchi: Real Analysis, Ch.2"
+        },
+        "proof_steps": [
+          {
+            "id": "tonelli-case",
+            "label": "Nonnegative Case",
+            "role": "argument",
+            "content": "For $f\\ge0$, apply Tonelli's theorem to identify the product integral with both iterated integrals, allowing the common value to be $+\\infty$.",
+            "depends_on": ["tonelli_theorem", "product_measure"]
+          },
+          {
+            "id": "fubini-case",
+            "label": "Absolutely Integrable Case",
+            "role": "argument",
+            "content": "For signed or complex $f\\in L^1(X\\times Y)$, apply Fubini's theorem. Absolute integrability ensures the sections are integrable almost everywhere and the iterated integrals are finite.",
+            "depends_on": ["fubini_theorem", "l1_space"]
+          },
+          {
+            "id": "choose-hypothesis",
+            "label": "Choose the Right Tool",
+            "role": "conclusion",
+            "content": "Thus changing the order of integration is justified either by nonnegativity via Tonelli or by absolute integrability via Fubini; without one of these hypotheses, iterated integrals can disagree.",
+            "depends_on": ["tonelli_theorem", "fubini_theorem"]
+          }
+        ]
       },
       {
         "id": "sigma_algebra",
@@ -3567,7 +3634,7 @@
         "dependencies": {
           "logical_dependency": ["sigma_algebra"]
         },
-        "outgoing_relations": [],
+        "outgoing_relations": ["e_measure__requires__sigma_algebra"],
         "related": [
           "sigma_algebra",
           "measure_space",
@@ -3604,7 +3671,10 @@
         "dependencies": {
           "logical_dependency": ["sigma_algebra", "measure_space"]
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_measurable_function__requires__sigma_algebra",
+          "e_measurable_function__requires__measure_space"
+        ],
         "related": ["sigma_algebra", "measure_space", "lebesgue_integral"],
         "assumptions": [
           "Measurability is defined using preimages, not images.",
@@ -3635,7 +3705,9 @@
         "dependencies": {
           "logical_dependency": ["measure_space"]
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_sigma_finite_measure__requires__measure_space"
+        ],
         "related": [
           "measure_space",
           "product_measure",
@@ -3672,7 +3744,10 @@
         "dependencies": {
           "logical_dependency": ["measure_space", "sigma_finite_measure"]
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_product_measure__requires__measure_space",
+          "e_product_measure__requires__sigma_finite_measure"
+        ],
         "related": [
           "measure_space",
           "sigma_finite_measure",
@@ -3742,18 +3817,25 @@
         "proof": null,
         "notation": "$$\\int_X\\int_Y f(x,y)\\,d\\nu(y)\\,d\\mu(x).$$",
         "proof_dependencies": [
+          "sigma_finite_measure",
           "product_measure",
           "measurable_function",
           "lebesgue_integral"
         ],
         "dependencies": {
           "logical_dependency": [
+            "sigma_finite_measure",
             "product_measure",
             "measurable_function",
             "lebesgue_integral"
           ]
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_tonelli_theorem__requires__sigma_finite_measure",
+          "e_tonelli_theorem__requires__product_measure",
+          "e_tonelli_theorem__requires__measurable_function",
+          "e_tonelli_theorem__requires__lebesgue_integral"
+        ],
         "related": ["fubini_theorem", "product_measure", "lebesgue_integral"],
         "assumptions": [
           "The measure spaces are sigma-finite.",
@@ -11768,6 +11850,281 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": ""
+      },
+      {
+        "id": "e_measure_space__requires__sigma_algebra",
+        "source": "measure_space",
+        "target": "sigma_algebra",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "A measure space includes a sigma-algebra of measurable sets."
+      },
+      {
+        "id": "e_measure_space__requires__measure",
+        "source": "measure_space",
+        "target": "measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "A measure space includes a measure on the sigma-algebra."
+      },
+      {
+        "id": "e_measure__requires__sigma_algebra",
+        "source": "measure",
+        "target": "sigma_algebra",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "A measure is defined on a sigma-algebra."
+      },
+      {
+        "id": "e_measurable_function__requires__sigma_algebra",
+        "source": "measurable_function",
+        "target": "sigma_algebra",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Measurability is defined by preimages of sets in sigma-algebras."
+      },
+      {
+        "id": "e_measurable_function__requires__measure_space",
+        "source": "measurable_function",
+        "target": "measure_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The node is stated for measurable spaces, represented here through measure spaces."
+      },
+      {
+        "id": "e_sigma_finite_measure__requires__measure_space",
+        "source": "sigma_finite_measure",
+        "target": "measure_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Sigma-finiteness is a property of a measure space."
+      },
+      {
+        "id": "e_product_measure__requires__measure_space",
+        "source": "product_measure",
+        "target": "measure_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Product measures are formed from measure spaces."
+      },
+      {
+        "id": "e_product_measure__requires__sigma_finite_measure",
+        "source": "product_measure",
+        "target": "sigma_finite_measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Sigma-finiteness gives the standard uniqueness/existence framework used by Fubini-Tonelli."
+      },
+      {
+        "id": "e_tonelli_theorem__requires__sigma_finite_measure",
+        "source": "tonelli_theorem",
+        "target": "sigma_finite_measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The standard product-measure statement assumes sigma-finite measure spaces."
+      },
+      {
+        "id": "e_tonelli_theorem__requires__product_measure",
+        "source": "tonelli_theorem",
+        "target": "product_measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Tonelli compares product and iterated integrals."
+      },
+      {
+        "id": "e_tonelli_theorem__requires__measurable_function",
+        "source": "tonelli_theorem",
+        "target": "measurable_function",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Tonelli applies to nonnegative measurable functions."
+      },
+      {
+        "id": "e_tonelli_theorem__requires__lebesgue_integral",
+        "source": "tonelli_theorem",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The theorem is an identity of Lebesgue integrals."
+      },
+      {
+        "id": "e_fubini_theorem__requires__measure_space",
+        "source": "fubini_theorem",
+        "target": "measure_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Fubini is stated for product measure spaces."
+      },
+      {
+        "id": "e_fubini_theorem__requires__sigma_finite_measure",
+        "source": "fubini_theorem",
+        "target": "sigma_finite_measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The standard product-measure statement assumes sigma-finite measure spaces."
+      },
+      {
+        "id": "e_fubini_theorem__requires__product_measure",
+        "source": "fubini_theorem",
+        "target": "product_measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Fubini compares product and iterated integrals."
+      },
+      {
+        "id": "e_fubini_theorem__requires__measurable_function",
+        "source": "fubini_theorem",
+        "target": "measurable_function",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Fubini applies to measurable functions with absolute integrability."
+      },
+      {
+        "id": "e_fubini_theorem__requires__tonelli_theorem",
+        "source": "fubini_theorem",
+        "target": "tonelli_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The proof uses Tonelli on absolute values and positive/negative parts."
+      },
+      {
+        "id": "e_fubini_tonelli__requires__measure_space",
+        "source": "fubini_tonelli",
+        "target": "measure_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The theorem package is stated for measure spaces."
+      },
+      {
+        "id": "e_fubini_tonelli__requires__sigma_finite_measure",
+        "source": "fubini_tonelli",
+        "target": "sigma_finite_measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The standard product-measure formulation assumes sigma-finiteness."
+      },
+      {
+        "id": "e_fubini_tonelli__requires__product_measure",
+        "source": "fubini_tonelli",
+        "target": "product_measure",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The result compares product integrals with iterated integrals."
+      },
+      {
+        "id": "e_fubini_tonelli__requires__measurable_function",
+        "source": "fubini_tonelli",
+        "target": "measurable_function",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Both Tonelli and Fubini require measurability."
+      },
+      {
+        "id": "e_fubini_tonelli__requires__lebesgue_integral",
+        "source": "fubini_tonelli",
+        "target": "lebesgue_integral",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The result is an identity of Lebesgue integrals."
+      },
+      {
+        "id": "e_fubini_tonelli__requires__l1_space",
+        "source": "fubini_tonelli",
+        "target": "l1_space",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The Fubini branch uses absolute integrability."
+      },
+      {
+        "id": "e_fubini_tonelli__requires__tonelli_theorem",
+        "source": "fubini_tonelli",
+        "target": "tonelli_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The package includes Tonelli's theorem."
+      },
+      {
+        "id": "e_fubini_tonelli__requires__fubini_theorem",
+        "source": "fubini_tonelli",
+        "target": "fubini_theorem",
+        "type": "requires",
+        "dependency_class": "logical_dependency",
+        "label": "requires",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The package includes Fubini's theorem."
       },
       {
         "id": "e_real_fourier_series__requires__fourier_series",

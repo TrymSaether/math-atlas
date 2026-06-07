@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
-import { VIEW } from "../../lib/figures/plot";
 import { type WaveKind, waveCoeff } from "../../lib/figures/fourierMath";
+import { FigureFrame, Line, Polygon, Text } from "./FigureFrame";
 import { WaveSelect } from "./WaveSelect";
 import { type FigureProps } from "./types";
 
@@ -25,60 +25,39 @@ export default function SpectrumFigure(_: FigureProps) {
     return vals.map((v) => v / max);
   }, [kind]);
 
-  const { w, h, padX, padY } = VIEW;
-  const innerW = w - 2 * padX;
-  const innerH = h - 2 * padY;
-  const slot = innerW / N;
-  const barW = slot * 0.6;
-  const baseline = h - padY;
-
   return (
     <figure className="m-0">
-      <svg
-        viewBox={`0 0 ${w} ${h}`}
-        role="img"
-        style={{ width: "100%", height: "auto", display: "block" }}
-      >
-        <line
-          x1={padX}
-          y1={baseline}
-          x2={w - padX}
-          y2={baseline}
-          stroke="var(--fg-4)"
-          strokeWidth={1}
-        />
+      <FigureFrame xDomain={[0.25, N + 0.75]} yDomain={[-0.14, 1.08]} grid={false}>
+        <Line.Segment point1={[0.5, 0]} point2={[N + 0.5, 0]} color="var(--fg-4)" weight={1} />
         {bars.map((v, i) => {
-          const cx = padX + slot * (i + 0.5);
-          const bh = v * innerH;
+          const k = i + 1;
+          const x0 = k - 0.28;
+          const x1 = k + 0.28;
           const zero = v < 1e-6;
           return (
             <g key={i}>
               {!zero && (
-                <rect
-                  x={cx - barW / 2}
-                  y={baseline - bh}
-                  width={barW}
-                  height={bh}
-                  rx={1.5}
-                  fill="var(--accent)"
+                <Polygon
+                  points={[
+                    [x0, 0],
+                    [x0, v],
+                    [x1, v],
+                    [x1, 0],
+                  ]}
+                  color="var(--accent)"
+                  fillOpacity={0.92}
+                  strokeOpacity={0}
                 />
               )}
-              {/* faint tick + harmonic index */}
-              {(i + 1) % 2 === 1 && (
-                <text
-                  x={cx}
-                  y={baseline + 9}
-                  textAnchor="middle"
-                  fontSize={7}
-                  fill="var(--fg-3)"
-                >
-                  {i + 1}
-                </text>
+              {k % 2 === 1 && (
+                <Text x={k} y={-0.08} color="var(--fg-3)" size={10}>
+                  {k}
+                </Text>
               )}
             </g>
           );
         })}
-      </svg>
+      </FigureFrame>
       <WaveSelect value={kind} onChange={setKind} />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         {CAPTION[kind]}

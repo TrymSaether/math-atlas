@@ -1,36 +1,30 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
-import { linspace } from "../../lib/figures/plot";
 import { squareWave, squareWavePartialSum } from "../../lib/figures/fourierMath";
-import { FigureFrame } from "./FigureFrame";
+import { FigureFrame, FunctionCurve } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
-
-const XS = linspace(-Math.PI, Math.PI, 600);
-const TARGET = XS.map(squareWave);
 
 /** Square wave + its Fourier partial sum S_N, with a slider on the number of harmonics. */
 export default function GibbsFigure(_: FigureProps) {
   const [terms, setTerms] = useState(8);
-  const approx = useMemo(() => XS.map((x) => squareWavePartialSum(x, terms)), [terms]);
 
   return (
     <figure className="m-0">
-      <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={[-1.35, 1.35]}>
-        {({ path }) => (
-          <>
-            {/* the ideal square wave (target) */}
-            <path
-              d={path(XS, TARGET)}
-              fill="none"
-              stroke="var(--fg-3)"
-              strokeWidth={1.4}
-              strokeDasharray="4 3"
-            />
-            {/* the partial-sum approximation (the accent curve) */}
-            <path d={path(XS, approx)} fill="none" stroke="var(--accent)" strokeWidth={1.8} />
-          </>
-        )}
+      <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={[-1.35, 1.35]} grid>
+        <FunctionCurve
+          y={squareWave}
+          domain={[-Math.PI, Math.PI]}
+          color="var(--fg-3)"
+          weight={1.5}
+          style="dashed"
+        />
+        <FunctionCurve
+          y={(x) => squareWavePartialSum(x, terms)}
+          domain={[-Math.PI, Math.PI]}
+          color="var(--accent)"
+          weight={2.1}
+        />
       </FigureFrame>
       <RangeControl
         min={1}

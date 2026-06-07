@@ -1405,10 +1405,10 @@
       },
       {
         "id": "inverse_of_a_function",
-        "statement": "The inverse of a function $f:X\\to Y$ is the relation that reverses the direction of $f$.",
+        "statement": "The inverse relation of a function $f:X\\to Y$ reverses the ordered pairs of $f$. It is a function $Y\\to X$ exactly when $f$ is bijective.",
         "formal_statement": "$f^{-1} = \\{(y,x) : (x,y)\\in f\\}$",
         "definition": "The relation obtained by swapping the inputs and outputs of a function.",
-        "intuition": "The function that goes backwards: it takes outputs of $f$ and gives you back the inputs.",
+        "intuition": "This records the backward relation. Extra hypotheses such as bijectivity are needed before it becomes a genuine inverse function.",
         "notation": "$f^{-1}$",
         "assumptions": [],
         "dependencies": {
@@ -1483,10 +1483,10 @@
       },
       {
         "id": "preimage_of_function",
-        "statement": "The preimage of a function $f:X\\to Y$ is the relation that gives you the inputs that map to each output.",
-        "formal_statement": "$f^{-1} = \\{(x,y) : (y,x)\\in f\\}$",
-        "definition": "The relation obtained by swapping the inputs and outputs of a function.",
-        "intuition": "The function that goes backwards: it takes outputs of $f$ and gives you back the inputs.",
+        "statement": "The preimage relation of a function $f:X\\to Y$ records which inputs map to each output.",
+        "formal_statement": "$f^{-1}=\\{(y,x):(x,y)\\in f\\}\\subseteq Y\\times X$.",
+        "definition": "The inverse relation associated to a function.",
+        "intuition": "This relation is the pointwise data behind set preimages $f^{-1}(B)$, but it need not itself be single-valued.",
         "notation": "$f^{-1}$",
         "assumptions": [],
         "dependencies": {
@@ -1538,8 +1538,8 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
-          "e_inverse_of_a_function_requires_function",
-          "e_inverse_of_a_function_requires_relation"
+          "e_inverse_of_function_requires_function",
+          "e_inverse_of_function_requires_relation"
         ],
         "metadata": {
           "tags": ["foundation", "functions"],
@@ -4395,7 +4395,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["topology", "open_closed_ball"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": ["metric_space", "basis_for_topology"],
@@ -4404,6 +4404,8 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
+          "e_metric_topology_requires_topology",
+          "e_metric_topology_requires_open_closed_ball",
           "e_metric_topology_constructed_from_metric_space",
           "e_metric_topology_constructed_from_basis",
           "e_metric_topology_induces_topological_space"
@@ -4429,6 +4431,36 @@
           "basis_for_topology"
         ],
         "proof": "Clearly, $\\varnothing \\in \\mathcal{T}_d$. To show that $X \\in \\mathcal{T}_d$, note that for any $x \\in X, \\mathsf{B}(x; 1) \\subseteq X$. Hence, $X \\in \\mathcal{T}_d$. Thus T1 is satisfied. $\\bigcup$ Let $\\{U_\\lambda \\}\\lambda\\in\\Lambda$ be any subcollection of $\\mathcal{T}_d$. We need to prove that $V = \\lambda\\in\\Lambda U_\\lambda \\in \\mathcal{T}_d$. Let $x \\in V. \\bigcup$ From $V = \\lambda\\in\\Lambda U_\\lambda$ there is $\\lambda \\in \\Lambda$ such that $x \\in U_\\lambda$. By the property of $U_\\lambda$ satisfied by the $U_\\lambda$ in $\\mathcal{T}_d$ there is an $r > 0$ such that $\\mathsf{B}(x; r) \\subseteq U_\\lambda$. Hence, $\\mathsf{B}(x; r) \\subseteq V$. Thus $V \\in \\mathcal{T}_d$, and T2 is satisfied. We prove that the intersection of the elements of any finite subcollection of $\\mathcal{T}_d$ is also an element of $\\mathcal{T}_d$. Let $U_1, U_2, \\ldots, U_n \\in \\mathcal{T}_d$. We need to prove that $U_1 \\cap U_2 \\cap \\cdots \\cap U_n \\in \\mathcal{T}_d$. Let $x \\in U_1 \\cap U_2 \\cap \\cdots \\cap U_n$. Since $U_1 \\cap U_2 \\cap \\cdots \\cap U_n \\subseteq U_i$, we have that $x \\in U_i$ for $i = 1, 2, \\ldots, n$. By the defining property of $\\mathcal{T}_d$ there is an $r_i > 0$ such that $\\mathsf{B}(x; r_i ) \\subseteq U_i$ for $i = 1, 2, \\ldots, n$. Let $r =$ min$\\{r_1, r_2, \\ldots, r_n \\}$. Then $\\mathsf{B}(x; r) \\subseteq \\mathsf{B}(x; r_i ) \\subseteq U_i$ for $i = 1, 2, \\ldots, n$. Thus $\\mathsf{B}(x; r) \\subseteq U_1 \\cap U_2 \\cap\\cdots\\cap U_n$, and so $U_1 \\cap U_2 \\cap\\cdots\\cap U_n \\in \\mathcal{T}_d$. Hence, T3 is satisfied.",
+        "proof_steps": [
+          {
+            "id": "contains_empty_and_total",
+            "label": "Contains Empty Set and Whole Space",
+            "role": "argument",
+            "content": "Clearly $\\varnothing\\in\\mathcal{T}_d$. Also $X\\in\\mathcal{T}_d$ because every $x\\in X$ has a metric ball contained in $X$.",
+            "depends_on": ["metric_space", "topology"]
+          },
+          {
+            "id": "closed_under_unions",
+            "label": "Closed Under Arbitrary Unions",
+            "role": "argument",
+            "content": "If $V=\\bigcup_{\\lambda\\in\\Lambda}U_\\lambda$ with each $U_\\lambda\\in\\mathcal{T}_d$ and $x\\in V$, then $x\\in U_\\lambda$ for some $\\lambda$. A ball around $x$ contained in $U_\\lambda$ is also contained in $V$.",
+            "depends_on": ["metric_space", "topology"]
+          },
+          {
+            "id": "closed_under_finite_intersections",
+            "label": "Closed Under Finite Intersections",
+            "role": "argument",
+            "content": "If $x\\in U_1\\cap\\cdots\\cap U_n$, choose radii $r_i>0$ with $\\mathsf{B}(x;r_i)\\subseteq U_i$. Taking $r=\\min_i r_i$ gives $\\mathsf{B}(x;r)\\subseteq U_1\\cap\\cdots\\cap U_n$.",
+            "depends_on": ["metric_space", "topology"]
+          },
+          {
+            "id": "conclusion",
+            "label": "Conclusion",
+            "role": "conclusion",
+            "content": "The metric-open subsets satisfy the topology axioms, so they define the metric topology $\\mathcal{T}_d$.",
+            "depends_on": ["topology", "metric_space"]
+          }
+        ],
         "status": {
           "content": "draft",
           "math_review": "unchecked",
@@ -4447,7 +4479,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["continuity", "neighborhood_metric"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": ["basis_for_topology"],
@@ -4973,6 +5005,36 @@
           "heine_borel_theorem"
         ],
         "proof": "We show that $K^{c} = X \\setminus K$ is open in $X$. Let $x \\in K^{c}$. Then for each $y \\in K$ there are neighborhoods $U_y$ and $V_y$ of $x$ and $y$, respectively, such that $U_y \\cap V_y = \\varnothing$, since $X$ is assumed to be Hausdorff and $x \\neq y$. The collection $\\mathcal{C} = \\{V_y \\mid y \\in K\\}$ of open subsets of $X$ covers $K$ since $\\bigcup K\\subseteq V_y. y\\in K$ Since $K$ is assumed to be compact there must be a finite subcollection $\\{V_{y 1}, V_{y 2}, \\ldots, V_{y n} \\}$ that covers $K$. Let $V = V_{y 1} \\cup V_{y 2} \\cup \\cdots \\cup V_{y n}$, and let $U = U_{y 1} \\cap U_{y 2} \\cap \\cdots \\cap U_{y n}$. Then $U$ is open in $X, x \\in U$ and $U \\cap V = \\varnothing$. Furthermore, $U \\subseteq X \\setminus V \\subseteq X \\setminus K = K^{c}$. Hence, $K^{c}$ is open in $X$.",
+        "proof_steps": [
+          {
+            "id": "show_complement_open",
+            "label": "Show the Complement Is Open",
+            "role": "setup",
+            "content": "To prove $K$ is closed, show $K^c=X\\setminus K$ is open. Fix $x\\in K^c$.",
+            "depends_on": ["closed_set", "complement"]
+          },
+          {
+            "id": "separate_point_from_each_k",
+            "label": "Separate from Each Point of K",
+            "role": "argument",
+            "content": "For each $y\\in K$, Hausdorffness gives disjoint neighborhoods $U_y$ of $x$ and $V_y$ of $y$.",
+            "depends_on": ["hausdorff_space", "neighborhood"]
+          },
+          {
+            "id": "finite_cover_of_k",
+            "label": "Use Compactness of K",
+            "role": "argument",
+            "content": "The family $\\{V_y:y\\in K\\}$ covers $K$, so compactness gives finitely many $V_{y_1},\\ldots,V_{y_n}$ covering $K$.",
+            "depends_on": ["compact_space", "finite_subcover"]
+          },
+          {
+            "id": "construct_neighborhood_in_complement",
+            "label": "Construct a Neighborhood in the Complement",
+            "role": "conclusion",
+            "content": "Let $U=U_{y_1}\\cap\\cdots\\cap U_{y_n}$. Then $U$ is an open neighborhood of $x$ disjoint from the finite union covering $K$, so $U\\subseteq K^c$. Hence $K^c$ is open.",
+            "depends_on": ["open_set", "closed_set"]
+          }
+        ],
         "status": {
           "content": "draft",
           "math_review": "unchecked",
@@ -5118,7 +5180,9 @@
             "euclidean_space",
             "compactness",
             "closed_set",
-            "bounded"
+            "bounded",
+            "cover",
+            "open_closed_ball"
           ],
           "logical_dependency": ["bolzano_weierstrass_theorem"],
           "assumption_dependency": [],
@@ -5134,7 +5198,9 @@
           "e_heine_uses_bolzano",
           "e_heine_uses_open_cover_argument",
           "e_heine_uses_finite_subcover_argument",
-          "e_heine_borel_theorem_requires_bounded"
+          "e_heine_borel_theorem_requires_bounded",
+          "e_heine_borel_theorem_requires_cover",
+          "e_heine_borel_theorem_requires_open_closed_ball"
         ],
         "metadata": {
           "tags": [],
@@ -5171,6 +5237,39 @@
           "evt"
         ],
         "proof": "Assume that $A$ is compact. By Theorem 6.22, $\\mathbb{R}^n$ is Hausdorff, and so, by Theorem 6.36 $A$ is closed in $\\mathbb{R}^n$. We must show that $A$ is also bounded. Let $\\mathcal{A} = \\{\\mathsf{B}(0; n) \\mid n \\in \\mathbb{Z}^{+} \\}$, i.e., a collection of open balls centered at the origin in $\\mathbb{R}^n$. Then $\\mathcal{A}$ is a cover of $A$ by open subsets of $\\mathbb{R}^n$. Since $A$ is compact there must be a finite subcollection of $\\mathcal{A}$ that covers $A$. Thus there is an $N \\in \\mathbb{Z}^{+}$ such that $A \\subseteq \\mathsf{B}(0; N)$. Hence, for all $a_1, a_2 \\in A$ we have $d(a_1, a_2 ) < 2N$. Thus $A$ is bounded. Now assume that $A$ is bounded and closed in $\\mathbb{R}^n$. Let $p = (p_1, p_2, \\ldots, p_n ) \\in A$. Since $A$ is bounded there is an $M \\in \\mathbb{R}$ such that $d(a_1, a_2 ) \\leq M$ for all $a_1, a_2 \\in A$. Then $A$ is contained in the product space $P = [p_1 - M, p_1 + M] \\times [p_2 - M, p_2 + M] \\times \\cdots \\times [p_n - M, p_n + M]$ which by Theorem 6.40 and Theorem 6.39 is compact. Since $A$ is closed in $\\mathbb{R}^n$ and a subset of $P$, it follows by extending Theorem 6.35 to our setting that $A$ is compact. Specifically, let $\\mathcal{C}$ be a cover of $A$ by open subsets of $\\mathbb{R}^n$. Since $A$ is closed in $\\mathbb{R}^n, A^{c} = \\mathbb{R}^n \\setminus A$ is open in $\\mathbb{R}^n$. Thus $\\mathcal{A} = \\mathcal{C} \\cup \\{A^{c} \\}$ is an open cover of $\\mathbb{R}^n$, and thus it is also an open cover of $P$ in the subspace topology. Since $P$ is compact there must be a finite subcover of $\\mathcal{A}$ that covers $P$. This implies that there is a finite subcover of $\\mathcal{C}$ that covers $A$. Thus $A$ is compact.",
+        "proof_steps": [
+          {
+            "id": "compact_implies_closed",
+            "label": "Compact Implies Closed in Euclidean Space",
+            "role": "argument",
+            "content": "If $A$ is compact, then $\\mathbb{R}^n$ is Hausdorff, so compact subsets of $\\mathbb{R}^n$ are closed.",
+            "depends_on": [
+              "compact_subsets_of_hausdorff_are_closed",
+              "hausdorff_space"
+            ]
+          },
+          {
+            "id": "compact_implies_bounded",
+            "label": "Compact Implies Bounded",
+            "role": "argument",
+            "content": "Cover $A$ by centered balls $\\mathsf{B}(0;n)$. A finite subcover gives $A\\subseteq\\mathsf{B}(0;N)$ for some $N$, so $A$ is bounded.",
+            "depends_on": ["compact_space", "finite_subcover"]
+          },
+          {
+            "id": "closed_bounded_inside_box",
+            "label": "Put a Closed Bounded Set in a Compact Box",
+            "role": "setup",
+            "content": "If $A$ is closed and bounded, then $A$ lies in a product of closed bounded intervals, which is compact.",
+            "depends_on": ["product_compact", "compact_space"]
+          },
+          {
+            "id": "closed_subset_compact",
+            "label": "Closed Subset of Compact Is Compact",
+            "role": "conclusion",
+            "content": "An open cover of $A$ can be enlarged by $A^c$ to cover the compact box. A finite subcover restricts to a finite subcover of $A$, so $A$ is compact.",
+            "depends_on": ["closed_set", "finite_subcover"]
+          }
+        ],
         "proof_dependencies": [
           "compact_subsets_of_hausdorff_are_closed",
           "product_compact",
@@ -5349,7 +5448,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["subbasis", "compactness"],
+          "definitional_dependency": ["subbasis", "compactness", "cover"],
           "logical_dependency": ["zorns_lemma"],
           "assumption_dependency": ["axiom_of_choice"],
           "construction_dependency": [],
@@ -5360,6 +5459,7 @@
         "outgoing_relations": [
           "e_alexander_requires_subbasis",
           "e_alexander_requires_compactness",
+          "e_alexander_requires_cover",
           "e_alexander_uses_zorn",
           "e_alexander_assumes_choice",
           "e_alexander_prerequisite_for_tychonoff"
@@ -5396,6 +5496,36 @@
         ],
         "diagram_path": "/atlas-assets/topology/diagrams/alexander-subbase.svg",
         "proof": "The forward direction (compact $\\Rightarrow$ finite subbasic subcover) follows by definition since subbasic covers are open covers. For the converse: assume $K$ is not compact yet every subbasic cover of $K$ has a finite subcover. Let $\\mathcal{C}$ be a maximal open cover of $K$ with no finite subcover (using Zorn's lemma). We claim $\\mathcal{C} \\cap \\mathcal{S} \\neq \\mathcal{C}$; otherwise by hypothesis there is a finite subcover of $K$ by elements of $\\mathcal{S}$, contradicting $\\mathcal{C}$ having no finite subcover. Thus there exists $x \\in K$ not covered by $\\mathcal{C} \\cap \\mathcal{S}$. Since $\\mathcal{C}$ covers $K$, some $U \\in \\mathcal{C}$ contains $x$. Since $U$ is open, $U$ is a union of basic sets, which are intersections of finitely many subbasic sets $S_1, \\ldots, S_n$. For each $i$, none of $S_i$ lie in $\\mathcal{C}$ (else $x$ would be in $\\mathcal{C} \\cap \\mathcal{S}$). By maximality of $\\mathcal{C}$, adding any $S_i$ to $\\mathcal{C}$ creates a finite subcover. Combining these finite covers yields a finite subcover of $\\mathcal{C}$ itself, contradiction.",
+        "proof_steps": [
+          {
+            "id": "forward_direction",
+            "label": "Forward Direction",
+            "role": "argument",
+            "content": "If $K$ is compact, then every subbasic cover is an open cover, so it has a finite subcover.",
+            "depends_on": ["compact_space", "subbasis"]
+          },
+          {
+            "id": "maximal_bad_cover",
+            "label": "Assume a Maximal Bad Cover",
+            "role": "setup",
+            "content": "Conversely, assume every subbasic cover has a finite subcover but $K$ is not compact. Use Zorn's lemma to choose a maximal open cover $\\mathcal{C}$ of $K$ with no finite subcover.",
+            "depends_on": ["zorns_lemma", "cover"]
+          },
+          {
+            "id": "find_subbasic_pieces",
+            "label": "Inspect a Basic Neighborhood",
+            "role": "argument",
+            "content": "Since $\\mathcal{C}$ covers $K$ but $\\mathcal{C}\\cap\\mathcal{S}$ cannot already cover $K$, choose $x$ and then an open $U\\in\\mathcal{C}$ containing $x$, represented using finitely many subbasic sets.",
+            "depends_on": ["basis_for_topology", "subbasis"]
+          },
+          {
+            "id": "derive_contradiction",
+            "label": "Contradict Maximality",
+            "role": "conclusion",
+            "content": "Adding any missing subbasic piece to $\\mathcal{C}$ creates a finite subcover by maximality. Combining finitely many such covers gives a finite subcover from $\\mathcal{C}$, contradiction.",
+            "depends_on": ["finite_subcover"]
+          }
+        ],
         "status": {
           "content": "draft",
           "math_review": "unchecked",
@@ -7192,12 +7322,7 @@
           "definitional_dependency": [
             "topology",
             "topological_space",
-            "open_set",
-            "closed_set",
-            "closure",
-            "dense_subset",
-            "continuity",
-            "homeomorphism"
+            "open_set"
           ],
           "logical_dependency": [],
           "assumption_dependency": [],
@@ -7206,71 +7331,52 @@
           "pedagogical_dependency": [
             "topology",
             "topological_space",
-            "open_set",
-            "closed_set",
-            "closure",
-            "dense_subset",
-            "continuity",
-            "homeomorphism"
+            "open_set"
           ],
           "historical_dependency": []
         },
         "outgoing_relations": [
           "e_exercise_3_1_requires_topology",
           "e_exercise_3_1_requires_topological_space",
-          "e_exercise_3_1_requires_open_set",
-          "e_exercise_3_1_requires_closed_set",
-          "e_exercise_3_1_requires_closure",
-          "e_exercise_3_1_requires_dense_subset",
-          "e_exercise_3_1_requires_continuity",
-          "e_exercise_3_1_requires_homeomorphism"
+          "e_exercise_3_1_requires_open_set"
         ],
         "metadata": {
-          "tags": ["exercise", "topological-spaces", "closed-sets", "closure"],
+          "tags": ["exercise", "topological-spaces"],
           "syllabus_priority": "medium",
           "source": "Thaule, Introduction to Topology, Exercise 3.1",
           "exercise_refs": ["3.1"],
           "proof_required": true
         },
         "exercise_number": "3.1",
-        "related_concepts": [
-          "topology",
-          "topological_space",
-          "open_set",
-          "closed_set",
-          "closure",
-          "dense_subset",
-          "continuity",
-          "homeomorphism"
-        ],
+        "related_concepts": ["topology", "topological_space", "open_set"],
         "solution_steps": [
           {
             "id": "argument",
             "label": "Argument",
             "role": "argument",
             "content": "To show that $\\mathcal{T}$ is not a topology, we need to check if it satisfies the \\textit{three axioms of a topology}. $$\\begin{aligned} \\emptyset \\in \\mathcal{T} & \\text{ and } X \\in \\mathcal{T} \\\\ \\bigcup_{\\alpha} U_\\alpha \\in \\mathcal{T} & \\text{ for any collection } \\{U_\\alpha\\} \\subseteq \\mathcal{T} \\\\ \\bigcap_{i=1}^n U_i \\in \\mathcal{T} & \\text{ for any finite collection } U_1, U_2, \\ldots, U_n \\in \\mathcal{T} \\end{aligned}$$",
-            "depends_on": []
+            "depends_on": ["topology"]
           },
           {
             "id": "violation",
             "label": "Violation of T3",
             "role": "argument",
             "content": "We can check that $\\mathcal{T}$ satisfies T1 and T2, but it fails T3. For example, consider the sets $U_1 = \\{a, b\\}$ and $U_2 = \\{b, c, d\\}$, both of which are in $\\mathcal{T}$. The intersection $U_1 \\cap U_2 = \\{b\\}$ is not in $\\mathcal{T}$, which violates T3. Therefore, $\\mathcal{T}$ is not a topology on $X$.",
-            "depends_on": ["argument"]
+            "depends_on": ["topology"]
           },
           {
             "id": "refinement",
             "label": "Refinement to a Topology",
             "role": "argument",
-            "content": "To find a topology $\\mathcal{T}'$ such that $\\mathcal{T} \\subseteq \\mathcal{T}'$, we can add the missing set $\\{b\\}$ to $\\mathcal{T}$. Define $$\\mathcal{T}' = \\{\\emptyset, \\{a\\}, \\{a, b\\}, \\{a, b, c\\}, \\{b, c, d\\}, X, \\{b\\}\\}.$$ We can verify that $\\mathcal{T}'$ satisfies the axioms of a topology. It contains $\\emptyset$ and $X$, it is closed under arbitrary unions, and it is closed under finite intersections. Therefore, $\\mathcal{T}'$ is a topology on $X$ that contains $\\mathcal{T}$ as a subset.",
-            "depends_on": ["violation"]
+            "content": "To find a topology $\\mathcal{T}'$ such that $\\mathcal{T} \\subseteq \\mathcal{T}'$, close the displayed family under the missing finite intersections. Since $\\{a,b\\}\\cap\\{b,c,d\\}=\\{b\\}$ and $\\{a,b,c\\}\\cap\\{b,c,d\\}=\\{b,c\\}$, define $$\\mathcal{T}'=\\{\\emptyset,\\{a\\},\\{b\\},\\{a,b\\},\\{b,c\\},\\{a,b,c\\},\\{b,c,d\\},X\\}.$$ This family contains $\\emptyset$ and $X$, is closed under arbitrary unions, and is closed under finite intersections, so it is a topology on $X$ containing $\\mathcal{T}$.",
+            "depends_on": ["topology"]
           },
           {
             "id": "conclusion",
             "label": "Conclusion",
             "role": "conclusion",
-            "content": "In conclusion, we have shown that $\\mathcal{T}$ is not a topology on $X$ due to the violation of T3, and we have constructed a topology $\\mathcal{T}'$ that contains $\\mathcal{T}$ as a subset.",
-            "depends_on": ["refinement"]
+            "content": "Thus $\\mathcal{T}$ is not a topology because it fails finite-intersection closure, while the enlarged family $\\mathcal{T}'$ above is a non-discrete topology containing $\\mathcal{T}$.",
+            "depends_on": ["topology"]
           }
         ],
         "related": [],
@@ -10602,6 +10708,22 @@
         "diagram_path": "/atlas-assets/topology/diagrams/homeomorphism-equivalence-relation.svg",
         "related": ["homeomorphism", "topological_property"],
         "proof": "The identity map id $: X \\to X$ (where the domain and the codomain are equipped with the same topology) is clearly continuous and bijective. As the identity map is its own inverse, then it is also a homeomorphism. Hence, $X \\cong X$ and so $\\cong$ satisfies the reflexivity condition for an equivalence relation. If $f: X \\to Y$ is a homeomorphism, then $f^{-1}: Y \\to X$ is also a homeomorphism: $f^{-1}$ is a continuous bijection with continuous inverse $(f^{-1} )^{-1} = f: X \\to Y$. Hence, $X \\cong Y$ if and only if $Y \\cong X$. Thus $\\cong$ satisfies the symmetry condition for an equivalence relation.",
+        "proof_steps": [
+          {
+            "id": "reflexivity",
+            "label": "Reflexivity",
+            "role": "claim",
+            "content": "The identity map $\\operatorname{id}_X:X\\to X$ is continuous, bijective, and its own inverse. Hence $\\operatorname{id}_X$ is a homeomorphism and $X\\cong X$.",
+            "depends_on": ["homeomorphism"]
+          },
+          {
+            "id": "symmetry",
+            "label": "Symmetry",
+            "role": "argument",
+            "content": "If $f:X\\to Y$ is a homeomorphism, then $f^{-1}:Y\\to X$ is continuous and bijective with inverse $f$. Hence $X\\cong Y$ implies $Y\\cong X$.",
+            "depends_on": ["homeomorphism"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -10654,6 +10776,29 @@
         "diagram_path": "/atlas-assets/topology/diagrams/composition-continuous-maps.svg",
         "related": ["continuity", "homeomorphism", "composition_maps"],
         "proof": "Let $W \\subseteq Z$ be open in $Z$. We need to prove that $(g\\circ f )^{-1} (W )$ is open in $X$. Since $(g\\circ f )^{-1} (W ) = \\{x \\in X \\mid g(f (x)) \\in W \\} = \\{x \\in X \\mid f (x) \\in g^{-1} (W )\\} = \\{x \\in X \\mid x \\in f^{-1} (g^{-1} (W ))\\} = f^{-1} (g^{-1} (W ))$ and that $g^{-1} (W )$ is open in $Y$ and $f^{-1} (g^{-1} (W ))$ is open in $X$ (by continuity of $g$ and $f )$, it follows that $(g\\circ f )^{-1} (W )$ is open in $X$. Hence, $g\\circ f$ is continuous. We can express continuity at a point for maps between topological spaces using neighborhoods. (See Theorem 2.12 for the case of metric spaces.)",
+        "proof_steps": [
+          {
+            "id": "pull_back_open_set",
+            "label": "Pull Back an Open Set",
+            "role": "setup",
+            "content": "Let $W\\subseteq Z$ be open. To prove $g\\circ f$ is continuous, it is enough to show that $(g\\circ f)^{-1}(W)$ is open in $X$.",
+            "depends_on": ["continuity", "composition_maps"]
+          },
+          {
+            "id": "preimage_identity",
+            "label": "Compute the Preimage",
+            "role": "calculation",
+            "content": "The preimage satisfies $(g\\circ f)^{-1}(W)=f^{-1}(g^{-1}(W))$.",
+            "depends_on": ["preimage", "composition_maps"]
+          },
+          {
+            "id": "apply_continuity",
+            "label": "Apply Continuity Twice",
+            "role": "conclusion",
+            "content": "Since $g$ is continuous, $g^{-1}(W)$ is open in $Y$; since $f$ is continuous, $f^{-1}(g^{-1}(W))$ is open in $X$. Hence $g\\circ f$ is continuous.",
+            "depends_on": ["continuity"]
+          }
+        ],
         "proof_dependencies": ["continuity_point_metric"],
         "hypotheses": [],
         "conclusion": null,
@@ -10738,6 +10883,8 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
+          "e_continuity_point_metric_requires_continuity",
+          "e_continuity_point_metric_requires_neighborhood_metric",
           "e_continuity_point_metric_see_also_continuous_map_metric"
         ],
         "metadata": {
@@ -10759,6 +10906,29 @@
           "continuity_point_top"
         ],
         "proof": "Assume that $f$ is continuous at $p$. If $B$ is a neighborhood of $f (p)$, then, by definition, there is an open ball $\\mathsf{B}_Y (f (p); \\varepsilon)$ about $f (p)$ that is contained in $B$. Since $f$ is continuous at $p$, there is a $\\delta > 0$ such that if $d_X (p, q) < \\delta$, then $d_Y (f (p), f (q)) < \\varepsilon$. Hence, $f (\\mathsf{B}_X (p; \\delta)) \\subseteq \\mathsf{B}_Y (f (p); \\varepsilon) \\subseteq B$. That is, if we let $A = \\mathsf{B}_X (p, \\delta)$, then for all neighborhoods $B$ of $f (p)$, we have that $f (A) \\subseteq B$ where $A$ is a neighborhood of $p$. Assume that for all neighborhoods $B$ of $f (p)$, there is a neighborhood $A$ of $p$ such that $f (A) \\subseteq B$. We need to prove that for all $\\varepsilon > 0$, there is a $\\delta > 0$ such that if $d_X (p, q) < \\delta$, then $d_Y (f (p), f (q)) < \\varepsilon$. By utilizing the fact that $B = \\mathsf{B}_Y (f (p); \\varepsilon)$ is a neighborhood of $f (p)$, then, by assumption, there must be a neighborhood $A$ of $p$ such that $f (A) \\subseteq B$. Since $A$ is a neighborhood of $p$, there is an open ball $\\mathsf{B}_X (p; \\delta)$ about $p$ that is contained in $A$. Now assume that $d_X (p, p' ) < \\delta$. Then $p' \\in \\mathsf{B}_X (p; \\delta) \\subseteq A$. Thus $f (p' ) \\in B = \\mathsf{B}_Y (f (p); \\varepsilon)$, and hence, $d_Y (f (p), f (p' )) < \\varepsilon$. Thus $f$ is continuous at $p$.",
+        "proof_steps": [
+          {
+            "id": "epsilon_delta_to_neighborhood",
+            "label": "From Epsilon-Delta to Neighborhoods",
+            "role": "argument",
+            "content": "Assume $f$ is continuous at $p$. Given a neighborhood $B$ of $f(p)$, choose an open ball around $f(p)$ inside $B$, then use the $\\varepsilon$-$\\delta$ condition to find a neighborhood of $p$ mapped into $B$.",
+            "depends_on": ["continuity", "neighborhood_metric"]
+          },
+          {
+            "id": "neighborhood_to_epsilon_delta",
+            "label": "From Neighborhoods to Epsilon-Delta",
+            "role": "argument",
+            "content": "Conversely, take $B=\\mathsf{B}_Y(f(p);\\varepsilon)$. The neighborhood condition gives a neighborhood $A$ of $p$ mapped into $B$, and an open ball around $p$ inside $A$ supplies $\\delta$.",
+            "depends_on": ["continuity", "neighborhood_metric"]
+          },
+          {
+            "id": "conclusion",
+            "label": "Conclusion",
+            "role": "conclusion",
+            "content": "The neighborhood formulation and the metric $\\varepsilon$-$\\delta$ formulation of continuity at $p$ are equivalent.",
+            "depends_on": ["continuity"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -10834,7 +11004,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["continuity", "preimage"],
           "logical_dependency": ["basis_for_topology", "subbasis"],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -10843,6 +11013,8 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
+          "e_continuity_basis_requires_continuity",
+          "e_continuity_basis_requires_preimage",
           "e_continuity_basis_uses_basis_for_topology",
           "e_continuity_basis_uses_subbasis"
         ],
@@ -10861,6 +11033,29 @@
         "diagram_path": "/atlas-assets/topology/diagrams/continuity-basis.svg",
         "related": ["basis_for_topology", "subbasis", "continuity"],
         "proof": "We prove the statement about basis. Assume that $f$ is continuous. Since each basis element $B \\in \\mathcal{B}$ is open in $Y$, then by continuity $f^{-1} (B)$ is open in $X$. Assume that for each $B \\in \\mathcal{B}$ the preimage $f^{-1} (B)$ is open in $X$. Let $\\mathcal{T}_Y$ be the topology on $Y. \\bigcup$ Since every $V \\in \\mathcal{T}_Y$ is a union $V = \\lambda\\in\\Lambda B_\\lambda$ of basis elements $B_\\lambda \\in \\mathcal{B}$, we have $\\bigcup f^{-1} (V ) = f^{-1} (B_\\lambda ). \\lambda\\in\\Lambda$ Thus if each $f^{-1} (B_\\lambda )$ is open in $X$, so is $f^{-1} (V )$.",
+        "proof_steps": [
+          {
+            "id": "continuous_implies_basis_preimages",
+            "label": "Continuous Maps Pull Back Basis Elements",
+            "role": "argument",
+            "content": "If $f$ is continuous and $B\\in\\mathcal{B}$ is a basis element of $Y$, then $B$ is open and $f^{-1}(B)$ is open in $X$.",
+            "depends_on": ["continuity", "basis_for_topology"]
+          },
+          {
+            "id": "basis_preimages_imply_continuity",
+            "label": "Basis Elements Generate All Open Sets",
+            "role": "argument",
+            "content": "Conversely, every open $V\\subseteq Y$ is a union of basis elements. Since preimages commute with unions, $f^{-1}(V)$ is a union of open sets when every basis-element preimage is open.",
+            "depends_on": ["basis_for_topology", "preimage"]
+          },
+          {
+            "id": "subbasis_variant",
+            "label": "Subbasis Variant",
+            "role": "remark",
+            "content": "The same reduction applies to subbases by first passing from subbasis elements to finite intersections and then to arbitrary unions.",
+            "depends_on": ["subbasis", "basis_for_topology"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -10913,6 +11108,29 @@
         "diagram_path": "/atlas-assets/topology/diagrams/continuity-preimage-metric.svg",
         "related": ["continuity", "open_closed_set_metric", "continuity_basis"],
         "proof": "Assume that $f$ is continuous. For $B \\subseteq Y$ open in $Y$, we have to prove that $f^{-1} (B) \\subseteq X$ is open in $X$. Let $a \\in f^{-1} (B)$. We want to prove that there is an open ball about $a$ in $X$ that is contained in $f^{-1} (B)$. By assumption, $B \\subseteq Y$ is open in $Y$. Hence, there is an $\\varepsilon > 0$ such that $\\mathsf{B}_Y (f (a); \\varepsilon) \\subseteq B$. From the assumption that $f$ is continuous there is a $\\delta > 0$ such that $\\mathsf{B}_X (a; \\delta) \\subseteq f^{-1} (\\mathsf{B}_Y (f (a); \\varepsilon)) \\subseteq f^{-1} (B)$. We now prove the opposite implication. Assume that for every subset $B \\subseteq Y$ open in $Y$, the preimage $f^{-1} (B)$ of $B$ under $f$ is open in $X$. Let $a \\in X$ and $\\varepsilon > 0$ be a real number. From the first assumption it follows that $f^{-1} (\\mathsf{B}_Y (f (a); \\varepsilon)) \\subseteq X$ is open in $X$. As $f^{-1} (\\mathsf{B}_Y (f (a); \\varepsilon))$ is open and contains $a$, there is a $\\delta > 0$ such that $\\mathsf{B}_X (a; \\delta) \\subseteq f^{-1} (\\mathsf{B}_Y (f (a); \\varepsilon))$. Thus $x \\in \\mathsf{B}_X (a; \\delta)$ implies that $f (x) \\in \\mathsf{B}_Y (f (a); \\varepsilon)$. Hence, $f: X \\to Y$ is continuous. Let $A$ and $B$ be sets, and let $f: A \\to B$. Then $f^{-1} (B)$ will always exist even if there is no inverse map. In the cases where $f$ has an inverse there is no ambiguity. If $U$ and $V$ are both subsets of $B$ then $f^{-1} (U \\cup V ) = f^{-1} (U ) \\cup f^{-1} (V )$ and $f^{-1} (U \\cap V ) = f^{-1} (U ) \\cap f^{-1} (V )$, and furthermore, if $U \\subseteq V$ then $f^{-1} (U ) \\subseteq f^{-1} (V )$. Let $U \\subseteq A$ and $V \\subseteq B$, then ( ) $U \\subseteq f^{-1} (f (U ))$ and $f f^{-1} (V ) \\subseteq V$. We also note that if $U$ is a subset of $B$ then $f^{-1} (B \\setminus U ) = f^{-1} (U^{c} ) = (f^{-1} (U ))c = A \\setminus f^{-1} (U )$.",
+        "proof_steps": [
+          {
+            "id": "continuous_implies_open_preimages",
+            "label": "Continuous Implies Open Preimages",
+            "role": "argument",
+            "content": "Assume $f$ is continuous and $B\\subseteq Y$ is open. For $a\\in f^{-1}(B)$, choose an open ball around $f(a)$ inside $B$ and then use continuity to find a ball around $a$ mapped into it.",
+            "depends_on": ["continuity", "preimage", "open_set"]
+          },
+          {
+            "id": "open_preimages_imply_continuity",
+            "label": "Open Preimages Imply Continuity",
+            "role": "argument",
+            "content": "Conversely, if every open $B\\subseteq Y$ has open preimage, apply this to $\\mathsf{B}_Y(f(a);\\varepsilon)$ and use openness of its preimage to get a suitable $\\delta$.",
+            "depends_on": ["preimage", "open_set"]
+          },
+          {
+            "id": "preimage_rules",
+            "label": "Record Set-Theoretic Rules",
+            "role": "remark",
+            "content": "The proof also uses basic preimage rules: preimages commute with unions, intersections, complements, and preserve inclusions. These rules do not require an inverse map.",
+            "depends_on": ["preimage", "set"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -10938,15 +11156,20 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["compact_space"],
-          "logical_dependency": [],
+          "definitional_dependency": ["compact_space", "cover"],
+          "logical_dependency": ["continuity", "finite_subcover"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_compact_image_requires_compact_space"],
+        "outgoing_relations": [
+          "e_compact_image_requires_compact_space",
+          "e_compact_image_requires_cover",
+          "e_compact_image_uses_continuity",
+          "e_compact_image_uses_finite_subcover"
+        ],
         "metadata": {
           "tags": [],
           "syllabus_priority": "high",
@@ -10967,6 +11190,29 @@
           "homeomorphism_open_closed"
         ],
         "proof": "Let $\\mathcal{C} = \\{U_\\lambda \\}\\lambda\\in\\Lambda$ be an open cover of $Y$. Then $\\mathcal{A} = \\{f^{-1} (U_\\lambda )\\}\\lambda\\in\\Lambda$ is an open cover of $X$. Since $X$ is compact there must be a finite subcover $\\mathcal{A}' = \\{f^{-1} (U_{\\lambda 1} ), f^{-1} (U_{\\lambda 2} ), \\ldots, f^{-1} (U_{\\lambda n} )\\}$ of $\\mathcal{A}$. Then $\\mathcal{C} ' = \\{U_{\\lambda 1}, U_{\\lambda 2}, \\ldots, U_{\\lambda n} \\}$ is a finite subcover of $\\mathcal{C}$. Hence, $Y$ is compact.",
+        "proof_steps": [
+          {
+            "id": "pull_back_cover",
+            "label": "Pull Back the Cover",
+            "role": "setup",
+            "content": "Let $\\mathcal{C}=\\{U_\\lambda\\}_{\\lambda\\in\\Lambda}$ be an open cover of $Y$. The family $\\{f^{-1}(U_\\lambda)\\}_{\\lambda\\in\\Lambda}$ is an open cover of $X$ by continuity.",
+            "depends_on": ["continuity", "cover"]
+          },
+          {
+            "id": "use_compactness",
+            "label": "Use Compactness of the Domain",
+            "role": "argument",
+            "content": "Since $X$ is compact, finitely many pulled-back sets $f^{-1}(U_{\\lambda_1}),\\ldots,f^{-1}(U_{\\lambda_n})$ cover $X$.",
+            "depends_on": ["compact_space", "finite_subcover"]
+          },
+          {
+            "id": "push_forward_subcover",
+            "label": "Push the Subcover Forward",
+            "role": "conclusion",
+            "content": "The corresponding sets $U_{\\lambda_1},\\ldots,U_{\\lambda_n}$ cover $Y$, so the original cover has a finite subcover. Thus $Y$ is compact.",
+            "depends_on": ["compact_space"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -11021,6 +11267,29 @@
           "topological_property"
         ],
         "proof": "We prove the equivalent statement that if $f: X \\to Y$ is a surjective continuous map and $Y$ is disconnected then $X$ is disconnected. Assume that $Y$ is disconnected, i.e., there is a separation of $Y$. Let the pair $U$ and $V$ be a separation of $Y$. Then $f^{-1} (U )$ and $f^{-1} (V )$ are non-empty subsets of $X$ which are open in $X$ as $f$ is a surjective continuous map. Furthermore, $f^{-1} (U ) \\cap f^{-1} (V ) = f^{-1} (U \\cap V ) = \\varnothing$ and $f^{-1} (U ) \\cup f^{-1} (V ) = f^{-1} (U \\cup V ) = X$. Hence, the pair $f^{-1} (U )$ and $f^{-1} (V )$ is a separation of $X$. Thus $X$ is disconnected.",
+        "proof_steps": [
+          {
+            "id": "contrapositive",
+            "label": "Use the Contrapositive",
+            "role": "setup",
+            "content": "Prove the equivalent statement: if $f:X\\to Y$ is surjective and continuous and $Y$ is disconnected, then $X$ is disconnected.",
+            "depends_on": ["connected_space", "continuity"]
+          },
+          {
+            "id": "pull_back_separation",
+            "label": "Pull Back a Separation",
+            "role": "argument",
+            "content": "Let $U,V$ be a separation of $Y$. Then $f^{-1}(U)$ and $f^{-1}(V)$ are nonempty open subsets of $X$ because $f$ is surjective and continuous.",
+            "depends_on": ["preimage", "continuity"]
+          },
+          {
+            "id": "separation_of_domain",
+            "label": "Separate the Domain",
+            "role": "conclusion",
+            "content": "The preimages are disjoint and their union is $X$, so they form a separation of $X$. Hence connectedness of $X$ forces connectedness of $Y$.",
+            "depends_on": ["connected_space"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -11532,6 +11801,29 @@
           "homomorphism"
         ],
         "proof": "Assume that $f: I \\to X$ is a loop in $X$ based at $x_0$. Then $(h_2 \\circ h_1 )* ([f ]) = [(h_2 \\circ h_1 )\\circ f ]$ and ( ) $(h_2 )* (h_1 )* ([f ]) = [h_2 \\circ(h_1 \\circ f )]$. Since composition of continuous maps is associative, i.e., $(h_2 \\circ h_1 )\\circ f = h_2 \\circ(h_1 \\circ f )$, these path homotopy classes must be equal. Hence, $(h_2 \\circ h_1 )* = (h_2 )* \\circ(h_1 )*$. If id$X: X \\to X$ is the identity map, then id$X \\circ f = f$, and so, (id$X )* ([f ]) =$ [id$X \\circ f ] = [f ]$. Hence, (id$X )*$ is the identity automorphism of $\\pi_1 (X, x_0 )$.",
+        "proof_steps": [
+          {
+            "id": "composition_on_loops",
+            "label": "Composition on Loops",
+            "role": "calculation",
+            "content": "For a loop $f$ based at $x_0$, $(h_2\\circ h_1)_*([f])=[(h_2\\circ h_1)\\circ f]$.",
+            "depends_on": ["induced_homomorphism", "composition_continuous"]
+          },
+          {
+            "id": "associativity",
+            "label": "Use Associativity of Composition",
+            "role": "argument",
+            "content": "Associativity gives $(h_2\\circ h_1)\\circ f=h_2\\circ(h_1\\circ f)$, so $(h_2\\circ h_1)_*=h_{2*}\\circ h_{1*}$.",
+            "depends_on": ["composition_maps", "composition_continuous"]
+          },
+          {
+            "id": "identity",
+            "label": "Identity Map Acts as Identity",
+            "role": "conclusion",
+            "content": "For the identity map, $(\\operatorname{id}_X)_*([f])=[\\operatorname{id}_X\\circ f]=[f]$, so the induced map is the identity automorphism of $\\pi_1(X,x_0)$.",
+            "depends_on": ["identity_map", "fundamental_group"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -11725,14 +12017,26 @@
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [],
-          "logical_dependency": ["compact_space"],
+          "logical_dependency": [
+            "compact_space",
+            "compact_image",
+            "heine_borel_theorem",
+            "closed_set",
+            "supremum"
+          ],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_evt_uses_compact_space"],
+        "outgoing_relations": [
+          "e_evt_uses_compact_space",
+          "e_evt_uses_compact_image",
+          "e_evt_uses_heine_borel_theorem",
+          "e_evt_uses_closed_set",
+          "e_evt_uses_supremum"
+        ],
         "metadata": {
           "tags": [],
           "syllabus_priority": "high",
@@ -11748,7 +12052,42 @@
         "diagram_path": "/atlas-assets/topology/diagrams/evt.svg",
         "related": ["compact_image", "heine_borel_theorem", "compact_space"],
         "proof": "By Theorem 6.37, $f (X)$ is compact. We must show that $f (X)$ contains its supremum and its infimum. If it does, then by setting $f (m) =$ inf $f (X)$ and $f (M) =$ sup $f (X)$ the theorem follows. We prove that $f (X)$ contains its supremum. The proof for the infimum is similar. Since $f (X)$ is compact, it is closed and bounded by Theorem 6.42. In particular, $f (X)$ is bounded above. Hence, the set $f (X)$ has a least upper bound; $s =$ sup $f (X)$. Thus $p \\leq s$ for all $p \\in f (X)$. We must show that $s \\in f (X)$. Assume that $s \\notin f (X)$. Since $f (X)$ is closed, i.e., $f (X)c = \\mathbb{R}\\setminus f (X)$ is open, it follows that there is a real number $\\varepsilon > 0$ such that $(s - \\varepsilon, s + \\varepsilon) \\subseteq f (X)c$, and so, $(s - \\varepsilon, s + \\varepsilon) \\cap f (X) = \\varnothing$. Hence, there is a real number $y$ such that $y$ is an upper bound of $f (X)$ and $s - \\varepsilon < y < s$. This is a contradiction to the fact that $s$ is the least upper bound of $f (X)$. Hence, $s =$ sup $f (X) \\in f (X)$.",
-        "proof_dependencies": ["compact_image", "heine_borel_theorem"],
+        "proof_steps": [
+          {
+            "id": "compact_image",
+            "label": "Compact Image",
+            "role": "setup",
+            "content": "By compactness preservation, $f(X)$ is compact in $\\mathbb{R}$.",
+            "depends_on": ["compact_image", "compact_space"]
+          },
+          {
+            "id": "closed_and_bounded",
+            "label": "Closed and Bounded Image",
+            "role": "argument",
+            "content": "By Heine-Borel in $\\mathbb{R}$, $f(X)$ is closed and bounded, so it has a supremum and an infimum.",
+            "depends_on": ["heine_borel_theorem"]
+          },
+          {
+            "id": "supremum_is_attained",
+            "label": "Supremum Is Attained",
+            "role": "argument",
+            "content": "If $s=\\sup f(X)$ were not in $f(X)$, closedness of $f(X)$ would give a neighborhood of $s$ disjoint from $f(X)$, producing a smaller upper bound and a contradiction.",
+            "depends_on": ["closed_set"]
+          },
+          {
+            "id": "infimum_is_attained",
+            "label": "Infimum Is Attained",
+            "role": "conclusion",
+            "content": "The infimum is handled similarly. Thus $f$ attains both a minimum and a maximum on $X$.",
+            "depends_on": ["compact_space"]
+          }
+        ],
+        "proof_dependencies": [
+          "compact_image",
+          "heine_borel_theorem",
+          "closed_set",
+          "supremum"
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -11764,6 +12103,47 @@
         },
         "canonical_label": "Generalized extreme value theorem",
         "display_label": "Generalized Extreme Value Theorem"
+      },
+      {
+        "id": "supremum",
+        "label": "Supremum (Least Upper Bound)",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "For $A\\subseteq\\mathbb{R}$, a number $s$ is the \\textbf{supremum} of $A$ if $s$ is an upper bound for $A$ and every upper bound $u$ of $A$ satisfies $s\\leq u$.",
+        "formal_statement": "$$s=\\sup A\\Longleftrightarrow (\\forall a\\in A,\\ a\\leq s)\\text{ and }(\\forall u,\\ (\\forall a\\in A,\\ a\\leq u)\\Rightarrow s\\leq u).$$",
+        "definition": "The least upper bound of a subset of $\\mathbb{R}$.",
+        "intuition": "The supremum is the smallest ceiling above a set. In compactness arguments, closedness can force this ceiling to lie inside the set, turning a bound into an attained maximum.",
+        "notation": "$\\sup A$",
+        "assumptions": [
+          "$A\\subseteq\\mathbb{R}$ is nonempty and bounded above when existence is asserted."
+        ],
+        "dependencies": {
+          "definitional_dependency": ["real_line_standard_topology", "subset"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_supremum_requires_real_line_standard_topology",
+          "e_supremum_requires_subset"
+        ],
+        "metadata": {
+          "tags": ["order", "real-analysis"],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "related": ["evt", "bounded"],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "supremum",
+        "display_label": "Supremum (Least Upper Bound)"
       },
       {
         "id": "ivt",
@@ -11802,6 +12182,29 @@
           "real_line_connected"
         ],
         "proof": "Assume that $r \\notin f (X)$. We will show that this contradicts the assumption that $X$ is connected. By the assumption that $r \\notin f (X)$, i.e., $f (X) \\subseteq \\mathbb{R} \\setminus \\{r\\} = (-\\infty, r) \\cup (r, \\infty)$, we have a separation of $X: U = f^{-1} ((-\\infty, r))$ and $V = f^{-1} ((r, \\infty))$ are disjoint non-empty open subsets of $X$ whose union equals $X$. Thus they are a separation of $X$. This contradicts the assumption that $X$ is connected. Hence, $r \\in f (X)$. In other words, there is a $c \\in X$ such that $f (c) = r$.",
+        "proof_steps": [
+          {
+            "id": "assume_missing_value",
+            "label": "Assume the Value Is Missing",
+            "role": "setup",
+            "content": "Assume $r\\notin f(X)$. Then $f(X)\\subseteq (-\\infty,r)\\cup(r,\\infty)$.",
+            "depends_on": ["connected_space"]
+          },
+          {
+            "id": "pull_back_rays",
+            "label": "Pull Back the Two Rays",
+            "role": "argument",
+            "content": "Set $U=f^{-1}((-\\infty,r))$ and $V=f^{-1}((r,\\infty))$. These are disjoint nonempty open sets whose union is $X$.",
+            "depends_on": ["continuity", "preimage"]
+          },
+          {
+            "id": "contradict_connectedness",
+            "label": "Contradict Connectedness",
+            "role": "conclusion",
+            "content": "The pair $U,V$ separates $X$, contradicting connectedness. Hence $r\\in f(X)$, so $f(c)=r$ for some $c\\in X$.",
+            "depends_on": ["connected_space"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -11938,7 +12341,14 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["homeomorphism", "open_closed_map"],
+          "definitional_dependency": [
+            "homeomorphism",
+            "open_closed_map",
+            "bijective",
+            "continuity",
+            "open_set",
+            "closed_set"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -11948,7 +12358,11 @@
         },
         "outgoing_relations": [
           "e_homeomorphism_open_closed_requires_homeomorphism",
-          "e_homeomorphism_open_closed_requires_open_closed_map"
+          "e_homeomorphism_open_closed_requires_open_closed_map",
+          "e_homeomorphism_open_closed_requires_bijective",
+          "e_homeomorphism_open_closed_requires_continuity",
+          "e_homeomorphism_open_closed_requires_open_set",
+          "e_homeomorphism_open_closed_requires_closed_set"
         ],
         "metadata": {
           "tags": [],
@@ -11970,6 +12384,29 @@
           "compact_subsets_of_hausdorff_are_closed"
         ],
         "proof": "We will show that (1) is equivalent to (2) and that (2) is equivalent to (3). Since $f$ is a bijection, we have ( $-1 )^{-1} f (U ) = f (U )$ for any subset $U$ of $X$. In particular, if $U$ is an open subset of $X$ and if we assume that $f$ is a homeomorphism then $f (U )$ must be open in $Y$ as $f^{-1}$ is continuous. Hence, $f$ is an open map. Furthermore, if we assume that $f$ is open instead of being a homeomorphism then $f (U )$ is open in $Y$ for $U$ an open subset of $X$. Hence, $f^{-1}: Y \\to X$ is continuous. Thus $f$ is a homeomorphism. Hence, (1) is equivalent to (2). Assume that $f$ is an open map. Since $f$ is a bijection, we have $f (X \\setminus U ) = f (U^{c} ) = f (U )c = Y \\setminus f (U )$. Thus $f$ is closed: $X \\setminus U$ is closed and $Y \\setminus f (U )$ is closed. The opposite implication follows by a completely analogous argument. Hence, (2) is equivalent to (3). This completes the proof.",
+        "proof_steps": [
+          {
+            "id": "homeomorphism_implies_open",
+            "label": "Homeomorphism Implies Open",
+            "role": "argument",
+            "content": "If $f$ is a homeomorphism and $U\\subseteq X$ is open, then $f(U)=(f^{-1})^{-1}(U)$ is open in $Y$ because $f^{-1}$ is continuous.",
+            "depends_on": ["homeomorphism", "open_set", "continuity"]
+          },
+          {
+            "id": "open_implies_homeomorphism",
+            "label": "Open Bijection Implies Homeomorphism",
+            "role": "argument",
+            "content": "If $f$ is a bijective open continuous map, then for every open $U\\subseteq X$, $f(U)$ is open, which says $f^{-1}:Y\\to X$ is continuous. Hence $f$ is a homeomorphism.",
+            "depends_on": ["bijective", "open_set", "homeomorphism"]
+          },
+          {
+            "id": "open_closed_equivalence",
+            "label": "Open and Closed Are Equivalent for Bijections",
+            "role": "conclusion",
+            "content": "For a bijection, $f(X\\setminus U)=Y\\setminus f(U)$. Therefore preserving open sets is equivalent to preserving closed sets.",
+            "depends_on": ["bijective", "closed_set", "open_set"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -13021,6 +13458,29 @@
           "basis_for_topology"
         ],
         "proof": "Assume that $U$ is open in $X$. Then for every $x \\in U, U$ is a neighborhood of $x$ that is contained in $U$. We prove the other implication. Assume that for every $x \\in U$ there is a $U_x \\in \\mathcal{T}$ such that $x \\in U_x \\subseteq U$, i.e., that $U_x$ is a neighborhood of $x$ such that $U_x \\subseteq U$. To prove that $U \\in \\mathcal{T}$, we will $\\bigcup \\bigcup$ prove that $U = x\\in U U_x$. Assume that $x' \\in U_x'$. Then $x' \\in U_x' \\subseteq x\\in U U_x$. Furthermore, any $\\bigcup$ point in $x\\in U U_x$ is in $U_x$ for some $x \\in U$ so by assumption, $U_x \\subseteq U$ and $x \\in U_x \\subseteq U$. Hence, $\\bigcup U = x\\in U U_x$. As $U$ is the union of open sets it must be an open set as well by T2.",
+        "proof_steps": [
+          {
+            "id": "open_sets_are_neighborhoods",
+            "label": "Open Sets Give Neighborhoods",
+            "role": "argument",
+            "content": "If $U$ is open and $x\\in U$, then $U$ itself is an open neighborhood of $x$ contained in $U$.",
+            "depends_on": ["open_set", "neighborhood"]
+          },
+          {
+            "id": "neighborhoods_cover_u",
+            "label": "Neighborhoods Cover U",
+            "role": "argument",
+            "content": "Conversely, if every $x\\in U$ lies in an open set $U_x\\subseteq U$, then $U=\\bigcup_{x\\in U}U_x$.",
+            "depends_on": ["open_set"]
+          },
+          {
+            "id": "union_is_open",
+            "label": "Union Is Open",
+            "role": "conclusion",
+            "content": "Since arbitrary unions of open sets are open, $U$ is open.",
+            "depends_on": ["topology", "open_set"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -13329,6 +13789,29 @@
         "diagram_path": "/atlas-assets/topology/diagrams/pasting-lemma.svg",
         "related": ["product_of_paths", "closed_set", "homotopy"],
         "proof": "We will prove that the preimage of a closed subset of $Y$ under $h$ is closed in $X$. Let $C$ be a closed subset of $Y$. Then $h^{-1} (C) = f^{-1} (C) \\cup g^{-1} (C)$. Since $f$ is continuous, it follows that $f^{-1} (C)$ is closed in $A$, and so, it is closed in $X$. Similarly, $g^{-1} (C)$ is closed in $B$, and so, it is closed in $X$. Hence, $h^{-1} (C) = f^{-1} (C) \\cup g^{-1} (C)$ is closed in $X$ as it is the union of two closed subsets of $X$. Thus $h$ is continuous.",
+        "proof_steps": [
+          {
+            "id": "closed_set_test",
+            "label": "Use Closed-Set Continuity",
+            "role": "setup",
+            "content": "To prove $h$ is continuous, test preimages of closed subsets of $Y$. Let $C\\subseteq Y$ be closed.",
+            "depends_on": ["closed_set", "continuity"]
+          },
+          {
+            "id": "split_preimage",
+            "label": "Split the Preimage",
+            "role": "calculation",
+            "content": "Because $h$ restricts to $f$ on $A$ and to $g$ on $B$, one has $h^{-1}(C)=f^{-1}(C)\\cup g^{-1}(C)$.",
+            "depends_on": ["preimage"]
+          },
+          {
+            "id": "closed_union",
+            "label": "Use Closed Pieces",
+            "role": "conclusion",
+            "content": "The sets $f^{-1}(C)$ and $g^{-1}(C)$ are closed in the closed pieces $A$ and $B$, hence closed in $X$. Their finite union is closed, so $h$ is continuous.",
+            "depends_on": ["closed_set", "continuity"]
+          }
+        ],
         "status": {
           "content": "draft",
           "math_review": "unchecked",
@@ -13469,6 +13952,29 @@
         "diagram_path": "/atlas-assets/topology/diagrams/path-implies-connected.svg",
         "related": ["path_connected_space", "connected_space"],
         "proof": "Assume that $X$ is path-connected but that $X$ is disconnected, i.e., there is a separation of $X$. Let $U$ and $V$ be a separation of $X$. Let $f: [a, b] \\to X$ be a path from $x \\in U$ to $y \\in V$. Then $f^{-1} (U )$ and $f^{-1} (V )$ are disjoint non-empty open subsets of $[a, b]$ whose union is equal to $[a, b]$. Thus they are a separation of $[a, b]$. This is a contradiction to the fact that $[a, b]$ is a connected space.",
+        "proof_steps": [
+          {
+            "id": "assume_separation",
+            "label": "Assume a Separation",
+            "role": "setup",
+            "content": "Assume $X$ is path-connected but disconnected, and let $U,V$ be a separation of $X$.",
+            "depends_on": ["path_connected_space", "connected_space"]
+          },
+          {
+            "id": "choose_path",
+            "label": "Choose a Path Across the Separation",
+            "role": "argument",
+            "content": "Pick $x\\in U$ and $y\\in V$. Path-connectedness gives a path $f:[a,b]\\to X$ from $x$ to $y$.",
+            "depends_on": ["path_connected_space"]
+          },
+          {
+            "id": "pull_back_interval_separation",
+            "label": "Separate the Interval",
+            "role": "conclusion",
+            "content": "The sets $f^{-1}(U)$ and $f^{-1}(V)$ are disjoint nonempty open subsets whose union is $[a,b]$, contradicting connectedness of intervals.",
+            "depends_on": ["connected_space", "preimage"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -13494,8 +14000,13 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["compact_space", "product_topology"],
-          "logical_dependency": [],
+          "definitional_dependency": [
+            "compact_space",
+            "product_topology",
+            "product_space",
+            "cover"
+          ],
+          "logical_dependency": ["tube_lemma", "finite_subcover"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -13504,7 +14015,11 @@
         },
         "outgoing_relations": [
           "e_product_compact_requires_compact_space",
-          "e_product_compact_requires_product_topology"
+          "e_product_compact_requires_product_topology",
+          "e_product_compact_requires_product_space",
+          "e_product_compact_requires_cover",
+          "e_product_compact_uses_tube_lemma",
+          "e_product_compact_uses_finite_subcover"
         ],
         "metadata": {
           "tags": [],
@@ -13527,6 +14042,36 @@
           "tychonoff_theorem"
         ],
         "proof": "We prove the statement for the product of two compact spaces. The general result then follows by an inductive argument. Let $X$ and $Y$ be compact spaces. Let $\\mathcal{A}$ be an open cover of $X \\times Y$. We must show that there is a finite subcover $\\mathcal{A}'$ of $\\mathcal{A}$. For each $x \\in X, \\{x\\} \\times Y$ is compact as it is homeomorphic to $Y$ which is assumed to be compact. Thus there is a finite subcollection $\\mathcal{A}_x$ of $\\mathcal{A}$ that covers $\\{x\\} \\times Y$. Let $\\bigcup U_x = A_x \\in\\mathcal{A}_x A_x$. Then $U_x$ is open in $X \\times Y$ and contains $\\{x\\} \\times Y$. Thus by Lemma 6.38 for each $x \\in X$ there is a neighborhood $W_x \\subseteq X$ such that $x \\in W_x$ and $W_x \\times Y \\subseteq U_x$. Furthermore, $\\mathcal{A}_x$ covers $W_x \\times Y$. Now let $x \\in X$ vary. The collection $\\{W_x \\}x\\in X$ is then an open cover of $X$. Since $X$ is compact, there must be a finite subcover $\\{W_{x 1}, W_{x 2}, \\ldots, W_{x n} \\}$ of $\\{W_x \\}x\\in X$. For each 1 $\\leq i \\leq n$ the subspace $W_{x i} \\times Y$ is covered by the finite subcollection $\\mathcal{A}_{x i}$ of $\\mathcal{A}$. Hence, $n \\bigcup X\\times Y = W_x i \\times Y i=1 \\bigcup n$ is covered by the subcollection $\\mathcal{A}' = i=1 \\mathcal{A}_{x i}$ of $\\mathcal{A}$. Thus $X \\times Y$ is compact.",
+        "proof_steps": [
+          {
+            "id": "reduce_to_two_factors",
+            "label": "Reduce to Two Factors",
+            "role": "setup",
+            "content": "It suffices to prove the two-factor case; the finite product case follows by induction.",
+            "depends_on": ["product_space", "compact_space"]
+          },
+          {
+            "id": "finite_cover_each_slice",
+            "label": "Cover Each Vertical Slice",
+            "role": "argument",
+            "content": "For an open cover of $X\\times Y$, each slice $\\{x\\}\\times Y$ is compact and therefore is covered by finitely many cover elements.",
+            "depends_on": ["compact_space", "product_space"]
+          },
+          {
+            "id": "use_tube_lemma",
+            "label": "Thicken the Slice",
+            "role": "argument",
+            "content": "The tube lemma gives a neighborhood $W_x$ of $x$ such that $W_x\\times Y$ is covered by the same finite subcollection.",
+            "depends_on": ["tube_lemma"]
+          },
+          {
+            "id": "finite_cover_of_base",
+            "label": "Use Compactness of X",
+            "role": "conclusion",
+            "content": "The neighborhoods $W_x$ cover $X$. Choose finitely many using compactness of $X$; the corresponding finite cover elements cover all of $X\\times Y$.",
+            "depends_on": ["finite_subcover", "compact_space"]
+          }
+        ],
         "proof_dependencies": ["tube_lemma"],
         "hypotheses": [],
         "conclusion": null,
@@ -14001,7 +14546,7 @@
       {
         "id": "bijective",
         "statement": "A function $f:X\\to Y$ is bijective if it is both injective and surjective.",
-        "formal_statement": "Bijective: injective and surjective.",
+        "formal_statement": "$f:X\\to Y$ is bijective iff for every $y\\in Y$ there exists a unique $x\\in X$ such that $f(x)=y$.",
         "definition": "A function that is both injective and surjective: a perfect one-to-one correspondence between the domain and codomain.",
         "intuition": "Every point in the codomain gets hit by exactly one point in the domain.",
         "notation": "bijective",
@@ -14017,6 +14562,8 @@
         },
         "outgoing_relations": [
           "e_bijective_requires_function",
+          "e_bijective_requires_injective",
+          "e_bijective_requires_surjective",
           "e_bijective_prerequisite_for_isomorphism"
         ],
         "metadata": {
@@ -14133,6 +14680,36 @@
         "diagram_path": "/atlas-assets/topology/diagrams/real-line-connected.svg",
         "related": ["connected_space", "ivt", "path_connected_space"],
         "proof": "Assume that $\\mathbb{R}$ is disconnected, i.e., that there is a separation of $\\mathbb{R}$. Let $U$ and $V$ be a separation of $\\mathbb{R}$, and choose $a \\in U$ and $b \\in V$. We may assume without loss of generality that $a < b$. Let $A = [a, b] \\cap U$ and $B = [a, b] \\cap V$. Then the pair $A$ and $B$ is a separation of $[a, b]$, with $a \\in A$ and $b \\in B$. Also note that $A$ is bounded above by $b$. Hence, by the least upper bound property $A$ has a least upper bound; $c =$ sup $A$. Thus $a \\leq c \\leq b$. We will show that $c$ belongs neither to $A$ nor to $B$ thus contradicting the fact that $A$ and $B$ is a separation of $[a, b]$. Assume that $c \\in B$. Since $a \\notin B$ and $B$ is open in $[a, b]$, it follows that there is a real number $d$ such that $a < d < c$ and $(d, c] \\subseteq B$. This implies that $d$ is an upper bound of $A$ and that $d$ is less than the least upper bound $c$. That is a contradiction, and so, $c \\notin B$. Now assume that $c \\in A$. Since $A$ is open in $[a, b]$ and $b \\notin A$, there is a real number $d$ such that $[c, d) \\subseteq A$. For any $e \\in (c, d)$ it follows that $e \\in A$ and $e > c$. That is a contradiction to the fact that $c$ is an upper bound of $A$. Thus $c \\notin A$. Hence, $c \\notin A$ and $c \\notin B$. This is a contradiction to the fact that $c \\in [a, b]$ and that $A$ and $B$ is a separation of $[a, b]$. Thus $\\mathbb{R}$ must be connected.",
+        "proof_steps": [
+          {
+            "id": "assume_separation",
+            "label": "Assume a Separation",
+            "role": "setup",
+            "content": "Assume $\\mathbb{R}$ is separated by nonempty disjoint open sets $U$ and $V$, and choose $a\\in U$, $b\\in V$ with $a<b$.",
+            "depends_on": ["connected_space"]
+          },
+          {
+            "id": "restrict_to_interval",
+            "label": "Restrict to an Interval",
+            "role": "argument",
+            "content": "The sets $A=[a,b]\\cap U$ and $B=[a,b]\\cap V$ separate $[a,b]$, with $a\\in A$ and $b\\in B$.",
+            "depends_on": ["subspace"]
+          },
+          {
+            "id": "least_upper_bound",
+            "label": "Use the Least Upper Bound",
+            "role": "argument",
+            "content": "Let $c=\\sup A$. Openness of $B$ rules out $c\\in B$, and openness of $A$ rules out $c\\in A$.",
+            "depends_on": ["open_set"]
+          },
+          {
+            "id": "contradiction",
+            "label": "Contradiction",
+            "role": "conclusion",
+            "content": "Since $c\\in[a,b]$ but $c$ belongs to neither side of the separation, contradiction. Therefore $\\mathbb{R}$ is connected.",
+            "depends_on": ["connected_space"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -14258,8 +14835,14 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["compact_space", "product_topology"],
-          "logical_dependency": [],
+          "definitional_dependency": [
+            "compact_space",
+            "product_topology",
+            "product_space",
+            "open_set",
+            "cover"
+          ],
+          "logical_dependency": ["finite_subcover"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -14268,7 +14851,11 @@
         },
         "outgoing_relations": [
           "e_tube_lemma_requires_compact_space",
-          "e_tube_lemma_requires_product_topology"
+          "e_tube_lemma_requires_product_topology",
+          "e_tube_lemma_requires_product_space",
+          "e_tube_lemma_requires_open_set",
+          "e_tube_lemma_requires_cover",
+          "e_tube_lemma_uses_finite_subcover"
         ],
         "metadata": {
           "tags": [],
@@ -14285,6 +14872,29 @@
         "diagram_path": "/atlas-assets/topology/diagrams/tube-lemma.svg",
         "related": ["product_compact", "compact_space", "product_topology"],
         "proof": "As $U$ is open in $X \\times Y$ and $(x, y) \\in \\{x\\} \\times Y \\subseteq U$ for all $y \\in Y$, there is a basis element $W_y \\times V_y \\subseteq U$ for the product topology on $X \\times Y$ such that $(x, y) \\in W_y \\times V_y$. The collection $\\{V_y \\}y\\in Y$ is an open cover of $Y$. Since $Y$ is compact there must be a finite subcover of $\\{V_y \\}y\\in Y$, say, $\\{V_{y 1}, V_{y 2}, \\ldots, V_{y n} \\}$. Let $n \\bigcap W = W_{y i}. i=1$ Then $W$ is open in $X$, and it must contain $x$. Clearly, $n ( ) \\bigcup W \\times Y \\subseteq W_{y i} \\times V_{y i} \\subseteq U. i=1$ Thus $\\{x\\} \\times Y \\subseteq W \\times Y$ and $W \\times Y \\subseteq U$. The lemma is not true if we remove the assumption that $Y$ is compact; the open set $U = \\{(x, y) \\in \\mathbb{R} \\times \\mathbb{R} \\mid |x_y| < 1\\} \\subseteq \\mathbb{R} \\times \\mathbb{R}$ does contain {0} $\\times \\mathbb{R}$ but does not contain any tube $W \\times \\mathbb{R}$ containing {0} $\\times \\mathbb{R}.$ (Here we have assumed that $\\mathbb{R}$ is given the standard topology, and hence, it is not compact, cf. Example 6.32.)",
+        "proof_steps": [
+          {
+            "id": "local_product_neighborhoods",
+            "label": "Choose Product Neighborhoods",
+            "role": "setup",
+            "content": "For each $y\\in Y$, choose a basic product neighborhood $W_y\\times V_y\\subseteq U$ containing $(x,y)$.",
+            "depends_on": ["product_topology", "open_set"]
+          },
+          {
+            "id": "finite_cover_of_y",
+            "label": "Use Compactness of Y",
+            "role": "argument",
+            "content": "The sets $V_y$ cover $Y$, so compactness gives a finite subcover $V_{y_1},\\ldots,V_{y_n}$.",
+            "depends_on": ["compact_space", "finite_subcover"]
+          },
+          {
+            "id": "intersect_x_neighborhoods",
+            "label": "Intersect the X-Neighborhoods",
+            "role": "conclusion",
+            "content": "Let $W=W_{y_1}\\cap\\cdots\\cap W_{y_n}$. Then $W$ is a neighborhood of $x$ and $W\\times Y\\subseteq U$.",
+            "depends_on": ["open_set", "product_space"]
+          }
+        ],
         "status": {
           "content": "draft",
           "math_review": "unchecked",
@@ -14359,15 +14969,26 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["quotient_space"],
-          "logical_dependency": [],
+          "definitional_dependency": [
+            "quotient_space",
+            "quotient_topology",
+            "preimage",
+            "identity_map"
+          ],
+          "logical_dependency": ["composition_continuous"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_quotient_universal_requires_quotient_space"],
+        "outgoing_relations": [
+          "e_quotient_universal_requires_quotient_space",
+          "e_quotient_universal_requires_quotient_topology",
+          "e_quotient_universal_requires_preimage",
+          "e_quotient_universal_requires_identity_map",
+          "e_quotient_universal_uses_composition_continuous"
+        ],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -14383,7 +15004,35 @@
         "diagram_path": "/atlas-assets/topology/diagrams/quotient-universal.svg",
         "related": ["quotient_space", "composition_continuous"],
         "proof": "We follow the arguments for the proofs of Theorem 5.6 and Theorem 5.13 and adapt them to our current setting. We first prove that the quotient topology $\\mathcal{T} \\pi$ has the universal property that for every topological space $Y$ and every map $f: A \\to Y, f$ is continuous if and only if $f \\circ\\pi: X \\to Y$ is continuous. Let $A$ be given the quotient topology induced by $\\pi$, and assume that $f: A \\to Y$ is continuous. By definition of the quotient topology $\\pi^{-1} (U )$ is open in $X$ if and only if $U$ is open in $A$. Hence, $\\pi$ is continuous. Thus by Theorem 3.16 $f \\circ\\pi: X \\to Y$ is continuous. Now assume that $f \\circ\\pi: X \\to Y$ is continuous. Let $V$ be an open set in $Y$. Since $\\pi$ is a quotient map and $(f \\circ\\pi)^{-1} (V ) = \\pi^{-1} (f^{-1} (V ))$ is open in $X$ by assumption of continuity of $f \\circ\\pi$, it follows that $f^{-1} (V )$ is open in $A$. Thus $f$ is continuous. Let $\\mathcal{T} '$ be a topology on $A$ with the universal property that for every topological space $Y$ and every map $f: A \\to Y, f$ is continuous if and only if $f \\circ\\pi: X \\to Y$ is continuous. We must show that $\\mathcal{T} ' = \\mathcal{T} \\pi$. Let $\\mathcal{T}$ be the topology on $X$, and let $A$ be given the topology $\\mathcal{T} '$. First let $Y = A$ with the quotient topology induced by $f \\circ\\pi$. Then for $f =$ id $: (A, \\mathcal{T} ' ) \\to (A, \\mathcal{T} \\pi )$, we have id $\\circ\\pi = \\pi: (X, \\mathcal{T} ) \\to (A, \\mathcal{T} \\pi )$ which is continuous. Hence, by the universal property id is continuous.",
-        "proof_dependencies": ["composition_continuous"],
+        "proof_steps": [
+          {
+            "id": "quotient_topology_direction",
+            "label": "Quotient Topology Gives the Universal Property",
+            "role": "argument",
+            "content": "If $A$ has the quotient topology induced by $\\pi:X\\to A$ and $f:A\\to Y$ is continuous, then $f\\circ\\pi$ is continuous by composition.",
+            "depends_on": ["quotient_topology", "composition_continuous"]
+          },
+          {
+            "id": "pull_back_open_sets",
+            "label": "Use the Defining Pullback Test",
+            "role": "argument",
+            "content": "Conversely, if $f\\circ\\pi$ is continuous and $V\\subseteq Y$ is open, then $(f\\circ\\pi)^{-1}(V)=\\pi^{-1}(f^{-1}(V))$ is open in $X$. By the quotient topology, $f^{-1}(V)$ is open in $A$.",
+            "depends_on": ["quotient_topology", "preimage", "continuity"]
+          },
+          {
+            "id": "uniqueness",
+            "label": "Uniqueness of the Topology",
+            "role": "conclusion",
+            "content": "Any topology on $A$ with this universal property has the same open sets as the quotient topology, by applying the property to the identity maps between the two candidate topologies.",
+            "depends_on": ["quotient_topology", "identity_map"]
+          }
+        ],
+        "proof_dependencies": [
+          "composition_continuous",
+          "quotient_topology",
+          "preimage",
+          "identity_map"
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -14442,6 +15091,29 @@
           "pi1_circle"
         ],
         "proof": "We must show that $h*$ is bijective. Let $k: Y \\to X$ be the inverse homemorphism of $h$ such that $k(y_0 ) = x_0$. Then, by Theorem 7.24, $k* \\circ h* = (k\\circ h)* =$ (id$X )*$, and $h* \\circ k* = (h\\circ k)* =$ (id$Y )*$. Hence, $k* = (h* )^{-1}$.",
+        "proof_steps": [
+          {
+            "id": "choose_inverse_homeomorphism",
+            "label": "Choose the Inverse Homeomorphism",
+            "role": "setup",
+            "content": "Let $k:Y\\to X$ be the inverse homeomorphism of $h:X\\to Y$.",
+            "depends_on": ["homeomorphism"]
+          },
+          {
+            "id": "apply_functoriality",
+            "label": "Apply Functoriality",
+            "role": "argument",
+            "content": "Functoriality gives $k_*\\circ h_*=(k\\circ h)_*=(\\operatorname{id}_X)_*$ and $h_*\\circ k_*=(h\\circ k)_*=(\\operatorname{id}_Y)_*$.",
+            "depends_on": ["functoriality"]
+          },
+          {
+            "id": "identify_inverse",
+            "label": "Identify the Inverse",
+            "role": "conclusion",
+            "content": "Thus $k_*$ is the inverse of $h_*$, so $h_*$ is bijective and the fundamental group is a topological invariant.",
+            "depends_on": ["bijective"]
+          }
+        ],
         "proof_dependencies": ["functoriality"],
         "status": {
           "content": "draft",
@@ -14461,8 +15133,19 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["fundamental_group", "product_topology"],
-          "logical_dependency": [],
+          "definitional_dependency": [
+            "fundamental_group",
+            "product_topology",
+            "product_space",
+            "induced_homomorphism"
+          ],
+          "logical_dependency": [
+            "homomorphism",
+            "path_homotopy",
+            "injective",
+            "surjective",
+            "isomorphism"
+          ],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -14471,7 +15154,14 @@
         },
         "outgoing_relations": [
           "e_pi1_product_requires_fundamental_group",
-          "e_pi1_product_requires_product_topology"
+          "e_pi1_product_requires_product_topology",
+          "e_pi1_product_requires_product_space",
+          "e_pi1_product_requires_induced_homomorphism",
+          "e_pi1_product_uses_homomorphism",
+          "e_pi1_product_uses_path_homotopy",
+          "e_pi1_product_uses_injective",
+          "e_pi1_product_uses_surjective",
+          "e_pi1_product_uses_isomorphism"
         ],
         "metadata": {
           "tags": [],
@@ -14488,6 +15178,40 @@
         "diagram_path": "/atlas-assets/topology/diagrams/pi1-product.svg",
         "related": ["fundamental_group", "product_topology", "pi1_circle"],
         "proof": "Let pr 1 $: X \\times Y \\to X$ and pr 2 $: X \\times Y \\to Y$ be the projection maps onto the first and second factor, respectively. Define the map $\\phi: \\pi_1 (X \\times Y, (x_0, y_0 )) \\to \\pi_1 (X, x_0 ) \\times \\pi_1 (Y, y_0 )$ by ( ) ( ) $\\phi([h]) =$ (pr 1 )$* ([h]),$ (pr 2 )$* ([h]) =$ [pr 1 $\\circ h],$ [pr 2 $\\circ h]$. Note that $\\pi_1 (X, x_0 ) \\times \\pi_1 (Y, y_o )$ is a group with binary operation given by $([f ], [g]) * ([f ' ], [g ' ]) = ([f ] * [f ' ], [g] * [g ' ])$ for $[f ], [f ' ] \\in \\pi_1 (X, x_0 )$ and $[g], [g ' ] \\in \\pi_1 (Y, y_0 )$. We will show that $\\phi$ is an isomorphism. It is a homomorphism since (pr 1 )$*$ and (pr 2 )$*$ are homomorphisms: ( ) $\\phi([h] * [k]) =$ (pr 1 )$* ([h] * [k]),$ (pr 2 )$* ([h] * [k]) ( ) =$ (pr 1 )$* ([h]) *$ (pr 1 )$* ([k]),$ (pr 2 )$* ([h]) *$ (pr 2 )$* ([k]) ( ) ( ) =$ (pr 1 )$* ([h]),$ (pr 2 )$* ([h]) *$ (pr 1 )$* ([k]),$ (pr 2 )$* ([k]) = \\phi([h]) * \\phi([k])$ for $[h], [k] \\in \\pi_1 (X \\times Y, (x_0, y_0 ))$. Let $f: I \\to X$ be a loop in $X$ based at $x_0$, and let $g: I \\to Y$ be a loop in $Y$ based at $y_0$. Define the map $h: I \\to X \\times Y$ by $h(s) = (f (s), g(s))$. Then $h$ is a loop in $X \\times Y$ based at $(x_0, y_0 )$, and ( ) ( ) $\\phi([h]) =$ (pr 1 )$* ([h]),$ (pr 2 )$* ([h]) =$ [pr 1 $\\circ h],$ [pr 2 $\\circ h] = ([f ], [g])$. Hence, $\\phi$ is surjective. To show that $\\phi$ is injective, assume that $\\phi([h]) = \\phi([k])$ for $[h], [k] \\in \\pi_1 (X \\times Y, (x_0, y_0 ))$. Then there is a path homotopy $H_1: I \\times I \\to X$ from pr 1 $\\circ h$ to pr 1 $\\circ k$ and a path homotopy $H_2: I \\times I \\to Y$ from pr 2 $\\circ h$ to pr 2 $\\circ k$. Define the map $H: I \\times I \\to X \\times Y$ by ( ) $H(s, t) = H_1 (s, t), H_2 (s, t)$. Then $H$ is a path homotopy from $h =$ (pr 1 $\\circ h$, pr 2 $\\circ h)$ to $k =$ (pr 1 $\\circ k$, pr 2 $\\circ k)$. Hence, $[h] = [k]$, and so, $\\phi$ is injective. Thus $\\phi$ is an isomorphism.",
+        "proof_steps": [
+          {
+            "id": "define_projection_map",
+            "label": "Define the Projection-Induced Map",
+            "role": "setup",
+            "content": "Define $\\phi:\\pi_1(X\\times Y,(x_0,y_0))\\to\\pi_1(X,x_0)\\times\\pi_1(Y,y_0)$ by applying the two projection-induced homomorphisms.",
+            "depends_on": [
+              "fundamental_group",
+              "product_space",
+              "induced_homomorphism"
+            ]
+          },
+          {
+            "id": "homomorphism",
+            "label": "It Is a Homomorphism",
+            "role": "argument",
+            "content": "The map $\\phi$ is a homomorphism because each projection-induced map is a homomorphism and the product group operation is coordinatewise.",
+            "depends_on": ["homomorphism", "induced_homomorphism"]
+          },
+          {
+            "id": "surjectivity",
+            "label": "Surjectivity",
+            "role": "argument",
+            "content": "Given loops $f$ in $X$ and $g$ in $Y$, the loop $h(s)=(f(s),g(s))$ in $X\\times Y$ maps to $([f],[g])$, so $\\phi$ is surjective.",
+            "depends_on": ["product_space", "surjective"]
+          },
+          {
+            "id": "injectivity",
+            "label": "Injectivity",
+            "role": "conclusion",
+            "content": "If two loops have path-homotopic projections in both coordinates, combine those homotopies coordinatewise to get a path homotopy in $X\\times Y$. Hence $\\phi$ is injective and therefore an isomorphism.",
+            "depends_on": ["path_homotopy", "injective", "isomorphism"]
+          }
+        ],
         "hypotheses": [],
         "conclusion": null,
         "proof_methods": [],
@@ -18035,61 +18759,6 @@
         "notes": "Exercise 3.1 is attached to the chapter-level concept open_set."
       },
       {
-        "id": "e_exercise_3_1_requires_closed_set",
-        "source": "exercise_3_1",
-        "target": "closed_set",
-        "type": "requires",
-        "dependency_class": "pedagogical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "Exercise 3.1 is attached to the chapter-level concept closed_set."
-      },
-      {
-        "id": "e_exercise_3_1_requires_closure",
-        "source": "exercise_3_1",
-        "target": "closure",
-        "type": "requires",
-        "dependency_class": "pedagogical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "Exercise 3.1 is attached to the chapter-level concept closure."
-      },
-      {
-        "id": "e_exercise_3_1_requires_dense_subset",
-        "source": "exercise_3_1",
-        "target": "dense_subset",
-        "type": "requires",
-        "dependency_class": "pedagogical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "Exercise 3.1 is attached to the chapter-level concept dense_subset."
-      },
-      {
-        "id": "e_exercise_3_1_requires_continuity",
-        "source": "exercise_3_1",
-        "target": "continuity",
-        "type": "requires",
-        "dependency_class": "pedagogical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "Exercise 3.1 is attached to the chapter-level concept continuity."
-      },
-      {
-        "id": "e_exercise_3_1_requires_homeomorphism",
-        "source": "exercise_3_1",
-        "target": "homeomorphism",
-        "type": "requires",
-        "dependency_class": "pedagogical_dependency",
-        "label": "requires",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "Exercise 3.1 is attached to the chapter-level concept homeomorphism."
-      },
-      {
         "id": "e_exercise_3_2_requires_topology",
         "source": "exercise_3_2",
         "target": "topology",
@@ -21071,6 +21740,28 @@
         "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
       },
       {
+        "id": "e_injective_prerequisite_for_isomorphism",
+        "source": "injective",
+        "target": "isomorphism",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "Isomorphisms are injective structure-preserving maps",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_surjective_prerequisite_for_isomorphism",
+        "source": "surjective",
+        "target": "isomorphism",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "Isomorphisms are surjective structure-preserving maps",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
         "id": "e_bijective_requires_function",
         "source": "bijective",
         "target": "function",
@@ -21102,6 +21793,17 @@
         "direction": "source_to_target",
         "confidence": "medium",
         "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_bijective_prerequisite_for_isomorphism",
+        "source": "bijective",
+        "target": "isomorphism",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "An isomorphism is a bijective structure-preserving map",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
       },
       {
         "id": "e_image_of_function_requires_function",
@@ -22182,6 +22884,94 @@
         "notes": null
       },
       {
+        "id": "e_inverse_image_requires_set",
+        "source": "inverse_image",
+        "target": "set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Inverse images are taken of sets in the codomain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_inverse_of_a_function_requires_function",
+        "source": "inverse_of_a_function",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Inverse relations start from functions",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_inverse_of_a_function_requires_relation",
+        "source": "inverse_of_a_function",
+        "target": "relation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The inverse of a function is first an inverse relation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_image_of_function_requires_set",
+        "source": "image_of_function",
+        "target": "set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Images are sets of output values",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_preimage_of_function_requires_relation",
+        "source": "preimage_of_function",
+        "target": "relation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The preimage relation reverses the graph of a function",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_inverse_of_function_requires_relation",
+        "source": "inverse_of_function",
+        "target": "relation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The inverse of a function is first an inverse relation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_restriction_of_function_requires_set",
+        "source": "restriction_of_function",
+        "target": "set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Restrictions are made to subsets of the domain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_restriction_of_function_requires_subset",
+        "source": "restriction_of_function",
+        "target": "subset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A restriction chooses a subset of the domain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
         "id": "e_image_requires_subset",
         "source": "image",
         "target": "subset",
@@ -22639,6 +23429,457 @@
         "type": "requires",
         "dependency_class": "definitional_dependency",
         "label": "A subgroup is a subset with inherited structure",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_metric_topology_requires_topology",
+        "source": "metric_topology",
+        "target": "topology",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Metric topology is verified against the topology axioms",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_metric_topology_requires_open_closed_ball",
+        "source": "metric_topology",
+        "target": "open_closed_ball",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Metric-open sets are defined using open balls",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_continuity_point_metric_requires_continuity",
+        "source": "continuity_point_metric",
+        "target": "continuity",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The theorem reformulates continuity at a point",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_continuity_point_metric_requires_neighborhood_metric",
+        "source": "continuity_point_metric",
+        "target": "neighborhood_metric",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The neighborhood criterion uses metric neighborhoods",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_continuity_basis_requires_continuity",
+        "source": "continuity_basis",
+        "target": "continuity",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The criterion characterizes continuity",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_continuity_basis_requires_preimage",
+        "source": "continuity_basis",
+        "target": "preimage",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The criterion is stated using preimages",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_compact_image_requires_cover",
+        "source": "compact_image",
+        "target": "cover",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The proof starts with an open cover",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_compact_image_uses_continuity",
+        "source": "compact_image",
+        "target": "continuity",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Continuity pulls the cover back to the compact domain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_compact_image_uses_finite_subcover",
+        "source": "compact_image",
+        "target": "finite_subcover",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Compactness gives a finite subcover",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_evt_uses_compact_image",
+        "source": "evt",
+        "target": "compact_image",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "The proof first shows the image is compact",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_evt_uses_heine_borel_theorem",
+        "source": "evt",
+        "target": "heine_borel_theorem",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Heine-Borel turns compactness in R into closed and bounded",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_evt_uses_closed_set",
+        "source": "evt",
+        "target": "closed_set",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Closedness forces the supremum into the image",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_evt_uses_supremum",
+        "source": "evt",
+        "target": "supremum",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "The proof uses least upper bounds",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_homeomorphism_open_closed_requires_bijective",
+        "source": "homeomorphism_open_closed",
+        "target": "bijective",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The equivalence is for continuous bijections",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_homeomorphism_open_closed_requires_continuity",
+        "source": "homeomorphism_open_closed",
+        "target": "continuity",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The theorem assumes a continuous map",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_homeomorphism_open_closed_requires_open_set",
+        "source": "homeomorphism_open_closed",
+        "target": "open_set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Open maps are tested on open sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_homeomorphism_open_closed_requires_closed_set",
+        "source": "homeomorphism_open_closed",
+        "target": "closed_set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Closed maps are tested on closed sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_product_compact_requires_product_space",
+        "source": "product_compact",
+        "target": "product_space",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The theorem is about product spaces",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_product_compact_requires_cover",
+        "source": "product_compact",
+        "target": "cover",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The proof starts with an open cover of the product",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_product_compact_uses_tube_lemma",
+        "source": "product_compact",
+        "target": "tube_lemma",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "The proof thickens compact slices using the tube lemma",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_product_compact_uses_finite_subcover",
+        "source": "product_compact",
+        "target": "finite_subcover",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "The proof extracts finite subcovers twice",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_tube_lemma_requires_product_space",
+        "source": "tube_lemma",
+        "target": "product_space",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The lemma is stated in a product space",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_tube_lemma_requires_open_set",
+        "source": "tube_lemma",
+        "target": "open_set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The tube starts from an open set containing a slice",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_tube_lemma_requires_cover",
+        "source": "tube_lemma",
+        "target": "cover",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The proof covers the compact slice",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_tube_lemma_uses_finite_subcover",
+        "source": "tube_lemma",
+        "target": "finite_subcover",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Compactness supplies a finite subcover of the slice",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_alexander_requires_cover",
+        "source": "alexander_subbase_theorem",
+        "target": "cover",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Alexander's lemma is stated in terms of covers",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_heine_borel_theorem_requires_cover",
+        "source": "heine_borel_theorem",
+        "target": "cover",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The open-cover proof uses covers",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_heine_borel_theorem_requires_open_closed_ball",
+        "source": "heine_borel_theorem",
+        "target": "open_closed_ball",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The compact-implies-bounded proof uses metric balls",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_quotient_universal_requires_quotient_topology",
+        "source": "quotient_universal",
+        "target": "quotient_topology",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The universal property characterizes the quotient topology",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_quotient_universal_requires_preimage",
+        "source": "quotient_universal",
+        "target": "preimage",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The proof compares preimages of open sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_quotient_universal_requires_identity_map",
+        "source": "quotient_universal",
+        "target": "identity_map",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Uniqueness is checked using identity maps",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_quotient_universal_uses_composition_continuous",
+        "source": "quotient_universal",
+        "target": "composition_continuous",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "One implication uses continuity of composites",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_pi1_product_requires_product_space",
+        "source": "pi1_product",
+        "target": "product_space",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The theorem is about loops in a product space",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_pi1_product_requires_induced_homomorphism",
+        "source": "pi1_product",
+        "target": "induced_homomorphism",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The comparison map is built from induced homomorphisms",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_pi1_product_uses_homomorphism",
+        "source": "pi1_product",
+        "target": "homomorphism",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "The proof verifies the comparison map is a homomorphism",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_pi1_product_uses_path_homotopy",
+        "source": "pi1_product",
+        "target": "path_homotopy",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Injectivity combines coordinate path homotopies",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_pi1_product_uses_injective",
+        "source": "pi1_product",
+        "target": "injective",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "The proof establishes injectivity",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_pi1_product_uses_surjective",
+        "source": "pi1_product",
+        "target": "surjective",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "The proof establishes surjectivity",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_pi1_product_uses_isomorphism",
+        "source": "pi1_product",
+        "target": "isomorphism",
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Bijective homomorphism gives the isomorphism",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_supremum_requires_real_line_standard_topology",
+        "source": "supremum",
+        "target": "real_line_standard_topology",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Suprema are taken in the ordered real line",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_supremum_requires_subset",
+        "source": "supremum",
+        "target": "subset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The definition applies to subsets of the real line",
         "direction": "source_to_target",
         "confidence": "high",
         "notes": null

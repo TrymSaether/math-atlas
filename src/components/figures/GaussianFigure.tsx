@@ -1,12 +1,9 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
-import { linspace } from "../../lib/figures/plot";
 import { gaussian } from "../../lib/figures/fourierMath";
-import { FigureFrame } from "./FigureFrame";
+import { FigureFrame, FunctionCurve } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
-
-const XS = linspace(-6, 6, 400);
 
 const CAPTION: Record<string, string> = {
   gaussian_transform:
@@ -26,27 +23,24 @@ export default function GaussianFigure({ nodeId }: FigureProps) {
   const [raw, setRaw] = useState(100);
   const sigma = raw / 100;
   const freqSigma = 1 / sigma; // width of the transform
-
-  const space = useMemo(() => XS.map((x) => gaussian(x, sigma)), [sigma]);
-  const freq = useMemo(() => XS.map((x) => gaussian(x, freqSigma)), [freqSigma]);
-
   const caption = CAPTION[nodeId] ?? CAPTION.gaussian_transform;
 
   return (
     <figure className="m-0">
-      <FigureFrame xDomain={[-6, 6]} yDomain={[-0.08, 1.12]}>
-        {({ path }) => (
-          <>
-            <path
-              d={path(XS, freq)}
-              fill="none"
-              stroke="var(--fg-3)"
-              strokeWidth={1.5}
-              strokeDasharray="4 3"
-            />
-            <path d={path(XS, space)} fill="none" stroke="var(--accent)" strokeWidth={1.8} />
-          </>
-        )}
+      <FigureFrame xDomain={[-6, 6]} yDomain={[-0.08, 1.12]} grid>
+        <FunctionCurve
+          y={(x) => gaussian(x, freqSigma)}
+          domain={[-6, 6]}
+          color="var(--fg-3)"
+          weight={1.6}
+          style="dashed"
+        />
+        <FunctionCurve
+          y={(x) => gaussian(x, sigma)}
+          domain={[-6, 6]}
+          color="var(--accent)"
+          weight={2.1}
+        />
       </FigureFrame>
       <RangeControl
         min={20}

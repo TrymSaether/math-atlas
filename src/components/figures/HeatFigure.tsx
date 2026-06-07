@@ -1,13 +1,10 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
-import { linspace } from "../../lib/figures/plot";
 import { heatProfile, squareWave } from "../../lib/figures/fourierMath";
-import { FigureFrame } from "./FigureFrame";
+import { FigureFrame, FunctionCurve } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
-const XS = linspace(-Math.PI, Math.PI, 600);
-const INITIAL = XS.map(squareWave);
 const TERMS = 40;
 
 /**
@@ -20,23 +17,22 @@ export default function HeatFigure(_: FigureProps) {
   const [raw, setRaw] = useState(0);
   const t = (raw / 100) ** 2 * 0.5;
 
-  const profile = useMemo(() => XS.map((x) => heatProfile(x, t, TERMS)), [t]);
-
   return (
     <figure className="m-0">
-      <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={[-1.35, 1.35]}>
-        {({ path }) => (
-          <>
-            <path
-              d={path(XS, INITIAL)}
-              fill="none"
-              stroke="var(--fg-3)"
-              strokeWidth={1.4}
-              strokeDasharray="4 3"
-            />
-            <path d={path(XS, profile)} fill="none" stroke="var(--accent)" strokeWidth={1.8} />
-          </>
-        )}
+      <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={[-1.35, 1.35]} grid>
+        <FunctionCurve
+          y={squareWave}
+          domain={[-Math.PI, Math.PI]}
+          color="var(--fg-3)"
+          weight={1.5}
+          style="dashed"
+        />
+        <FunctionCurve
+          y={(x) => heatProfile(x, t, TERMS)}
+          domain={[-Math.PI, Math.PI]}
+          color="var(--accent)"
+          weight={2.1}
+        />
       </FigureFrame>
       <RangeControl
         min={0}

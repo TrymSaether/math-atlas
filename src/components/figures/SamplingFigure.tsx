@@ -1,13 +1,11 @@
 import { useMemo, useState } from "react";
 
 import { aliasFrequency } from "../../lib/figures/fourierMath";
-import { linspace } from "../../lib/figures/plot";
-import { FigureFrame } from "./FigureFrame";
+import { FigureFrame, FunctionCurve, Line, SamplePoints } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
 const T_MAX = 4; // seconds shown
-const XS = linspace(0, T_MAX, 600);
 const SIGNAL_HZ = 3; // the true tone frequency
 
 /**
@@ -22,15 +20,11 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
   const fs = raw / 10;
   const nyquistOk = fs >= 2 * SIGNAL_HZ;
   const aliasHz = aliasFrequency(SIGNAL_HZ, fs);
-
-  const original = useMemo(() => XS.map((t) => Math.sin(2 * Math.PI * SIGNAL_HZ * t)), []);
-  const alias = useMemo(() => XS.map((t) => Math.sin(2 * Math.PI * aliasHz * t)), [aliasHz]);
-
   const samples = useMemo(() => {
     const dt = 1 / fs;
-    const pts: { t: number; y: number }[] = [];
+    const pts: [number, number][] = [];
     for (let t = 0; t <= T_MAX + 1e-9; t += dt) {
-      pts.push({ t, y: Math.sin(2 * Math.PI * SIGNAL_HZ * t) });
+      pts.push([t, Math.sin(2 * Math.PI * SIGNAL_HZ * t)]);
     }
     return pts;
   }, [fs]);
@@ -39,34 +33,25 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
 
   return (
     <figure className="m-0">
-      <FigureFrame xDomain={[0, T_MAX]} yDomain={[-1.25, 1.25]} axes={false}>
-        {({ path, sx, sy }) => (
-          <>
-            <line x1={0} y1={sy(0)} x2={320} y2={sy(0)} stroke="var(--fg-4)" strokeWidth={1} />
-            {/* true signal, faint */}
-            <path
-              d={path(XS, original)}
-              fill="none"
-              stroke="var(--fg-3)"
-              strokeWidth={1.3}
-              opacity={nyquistOk ? 0.45 : 0.7}
-            />
-            {/* alias only matters when undersampled */}
-            {!nyquistOk && (
-              <path
-                d={path(XS, alias)}
-                fill="none"
-                stroke="var(--accent)"
-                strokeWidth={1.8}
-                strokeDasharray="5 3"
-              />
-            )}
-            {/* sample points */}
-            {samples.map((p, i) => (
-              <circle key={i} cx={sx(p.t)} cy={sy(p.y)} r={2.4} fill="var(--accent)" />
-            ))}
-          </>
+      <FigureFrame xDomain={[0, T_MAX]} yDomain={[-1.25, 1.25]} grid>
+        <Line.Segment point1={[0, 0]} point2={[T_MAX, 0]} color="var(--fg-4)" weight={1} />
+        <FunctionCurve
+          y={(t) => Math.sin(2 * Math.PI * SIGNAL_HZ * t)}
+          domain={[0, T_MAX]}
+          color="var(--fg-3)"
+          weight={1.5}
+          opacity={nyquistOk ? 0.45 : 0.7}
+        />
+        {!nyquistOk && (
+          <FunctionCurve
+            y={(t) => Math.sin(2 * Math.PI * aliasHz * t)}
+            domain={[0, T_MAX]}
+            color="var(--accent)"
+            weight={2.1}
+            style="dashed"
+          />
         )}
+        <SamplePoints points={samples} radius={2.7} />
       </FigureFrame>
       <RangeControl
         min={20}
