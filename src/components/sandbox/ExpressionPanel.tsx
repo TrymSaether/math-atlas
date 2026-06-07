@@ -30,12 +30,26 @@ export function ExpressionPanel() {
   const ws = useSandbox((s) => s.ws);
   const compiled = useSandbox((s) => s.compiled);
   const addRow = useSandbox((s) => s.addRow);
+  const sections = useMemo(() => groupRows(ws.rows, compiled.byId), [compiled.byId, ws.rows]);
 
   return (
     <div className="sandbox-expression-panel flex h-full flex-col">
       <div className="sandbox-expression-list flex-1 overflow-y-auto px-1.5 pb-1.5 pt-1">
-        {ws.rows.map((row, i) => (
-          <ExpressionRow key={row.id} row={row} index={i + 1} computed={compiled.byId[row.id]} />
+        {sections.map((section) => (
+          <section key={section.id} className="sandbox-section">
+            <div className="sandbox-section-header flex items-center gap-1.5 px-2 pb-1.5 pt-2">
+              <span className="sandbox-section-icon flex items-center justify-center">
+                <SectionIcon id={section.id} />
+              </span>
+              <span className="min-w-0 flex-1 truncate">{section.title}</span>
+              <span className="font-mono tabular-nums">{section.rows.length}</span>
+            </div>
+            <div className="sandbox-section-rows">
+              {section.rows.map(({ row, index, computed }) => (
+                <ExpressionRow key={row.id} row={row} index={index} computed={computed} />
+              ))}
+            </div>
+          </section>
         ))}
       </div>
       <button
@@ -48,6 +62,59 @@ export function ExpressionPanel() {
       </button>
     </div>
   );
+}
+
+type SectionId = "inputs" | "definitions" | "objects" | "issues";
+
+interface RowEntry {
+  row: Row;
+  index: number;
+  computed?: Computed;
+}
+
+interface RowSection {
+  id: SectionId;
+  title: string;
+  rows: RowEntry[];
+}
+
+function groupRows(rows: Row[], byId: Record<string, Computed | undefined>): RowSection[] {
+  const sections: RowSection[] = [
+    { id: "inputs", title: "Inputs", rows: [] },
+    { id: "definitions", title: "Definitions", rows: [] },
+    { id: "objects", title: "Objects", rows: [] },
+    { id: "issues", title: "Needs attention", rows: [] },
+  ];
+  const bySection = Object.fromEntries(sections.map((section) => [section.id, section])) as Record<SectionId, RowSection>;
+
+  rows.forEach((row, i) => {
+    const computed = byId[row.id];
+    const entry = { row, index: i + 1, computed };
+    if (computed?.error || computed?.kind === "invalid") {
+      bySection.issues.rows.push(entry);
+      return;
+    }
+    const rowType = rowTypeFor(computed);
+    if (rowType === "slider") bySection.inputs.rows.push(entry);
+    else if (rowType === "function" || rowType === "value" || rowType === "blank") bySection.definitions.rows.push(entry);
+    else bySection.objects.rows.push(entry);
+  });
+
+  return sections.filter((section) => section.rows.length > 0);
+}
+
+function SectionIcon({ id }: { id: SectionId }) {
+  const props = { size: 12, weight: "bold" as const };
+  switch (id) {
+    case "inputs":
+      return <SlidersHorizontal {...props} />;
+    case "definitions":
+      return <FunctionIcon {...props} />;
+    case "objects":
+      return <Graph {...props} />;
+    case "issues":
+      return <WarningCircle {...props} />;
+  }
 }
 
 function ExpressionRow({ row, index, computed }: { row: Row; index: number; computed?: Computed }) {

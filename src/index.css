@@ -2195,11 +2195,36 @@ a:focus-visible,
   scrollbar-color: color-mix(in srgb, var(--fg-1) 18%, transparent) transparent;
 }
 
+.sandbox-section + .sandbox-section {
+  margin-top: 4px;
+}
+
+.sandbox-section-header {
+  color: var(--fg-3);
+  font-size: var(--type-ui-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label-tight);
+  text-transform: uppercase;
+}
+
+.sandbox-section-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-xs);
+  background: color-mix(in srgb, var(--fg-1) 5%, transparent);
+  color: var(--fg-3);
+}
+
+.sandbox-section-rows {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
 .sandbox-expression-row {
   margin-bottom: 1px;
   overflow: hidden;
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   background: var(--sandbox-row);
   box-shadow:
     inset 2px 0 0 transparent;
@@ -2211,12 +2236,12 @@ a:focus-visible,
 
 .sandbox-expression-row:hover {
   background: var(--sandbox-row-hover);
-  border-color: color-mix(in srgb, var(--border) 64%, transparent);
+  border-color: transparent;
 }
 
 .sandbox-expression-row[data-selected="true"] {
   background: var(--sandbox-row-selected);
-  border-color: var(--sandbox-row-selected-border);
+  border-color: transparent;
   box-shadow:
     inset 2px 0 0 var(--accent);
 }
@@ -2356,13 +2381,12 @@ a:focus-visible,
 
 .sandbox-row-controls {
   color: var(--fg-3);
-  opacity: 0.52;
+  opacity: 0;
   transition: opacity var(--dur-micro) var(--ease-standard);
 }
 
 .sandbox-expression-row:hover .sandbox-row-controls,
-.sandbox-expression-row:focus-within .sandbox-row-controls,
-.sandbox-expression-row[data-selected="true"] .sandbox-row-controls {
+.sandbox-expression-row:focus-within .sandbox-row-controls {
   opacity: 1;
 }
 
