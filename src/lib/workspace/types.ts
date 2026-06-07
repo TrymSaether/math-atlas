@@ -67,12 +67,21 @@ export interface ViewRect {
 }
 
 /** Distributive `Omit` so unions keep their per-member shape. */
-export type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+export type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
+  ? Omit<T, K>
+  : never;
 
 /** An annotation layered on the plane. */
 export type Mark =
   | { id: string; kind: "label"; at: Vec2; text: string; color?: string }
-  | { id: string; kind: "segment"; a: Vec2; b: Vec2; text?: string; color?: string }
+  | {
+      id: string;
+      kind: "segment";
+      a: Vec2;
+      b: Vec2;
+      text?: string;
+      color?: string;
+    }
   | { id: string; kind: "vline"; x: number; text?: string; color?: string }
   | { id: string; kind: "hline"; y: number; text?: string; color?: string };
 
@@ -130,5 +139,7 @@ export interface Computed {
   deps: string[];
   /** Human label of what the row is, for the panel readout. */
   label?: string;
+  /** Evaluated/substituted display form for selected expression rows. */
+  evaluatedTex?: string;
   error?: string;
 }

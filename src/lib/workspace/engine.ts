@@ -60,17 +60,22 @@ const nodeType = (n: MathNode) => (n as unknown as { type: string }).type;
 /** A numeric literal, including a signed one like `-1` (unary-minus of a const). */
 const isNumericLiteral = (n: MathNode): boolean => {
   const t = nodeType(n);
-  if (t === "ConstantNode") return typeof (n as unknown as { value: unknown }).value === "number";
+  if (t === "ConstantNode")
+    return typeof (n as unknown as { value: unknown }).value === "number";
   if (t === "OperatorNode") {
     const o = n as unknown as { fn: string; args: MathNode[] };
-    if ((o.fn === "unaryMinus" || o.fn === "unaryPlus") && o.args.length === 1) {
+    if (
+      (o.fn === "unaryMinus" || o.fn === "unaryPlus") &&
+      o.args.length === 1
+    ) {
       return isNumericLiteral(o.args[0]);
     }
   }
   return false;
 };
 const isArray2 = (n: MathNode): n is MathNode & { items: MathNode[] } =>
-  nodeType(n) === "ArrayNode" && (n as unknown as { items: MathNode[] }).items.length === 2;
+  nodeType(n) === "ArrayNode" &&
+  (n as unknown as { items: MathNode[] }).items.length === 2;
 
 /**
  * Shallow pass: identify which defined names are functions vs scalars/points,
@@ -85,7 +90,8 @@ function collectNameKinds(sources: string[]): { multNames: Set<string> } {
       const node = parseSource(src);
       const type = nodeType(node);
       if (type === "AssignmentNode") {
-        const name = (node as unknown as { object: { name: string } }).object.name;
+        const name = (node as unknown as { object: { name: string } }).object
+          .name;
         if (name !== "y") multNames.add(name);
       }
       // FunctionAssignmentNode names are callable — deliberately excluded.
@@ -96,7 +102,11 @@ function collectNameKinds(sources: string[]): { multNames: Set<string> } {
   return { multNames };
 }
 
-function parseRow(source: string, id: string, multNames: Set<string>): ParsedRow {
+function parseRow(
+  source: string,
+  id: string,
+  multNames: Set<string>,
+): ParsedRow {
   const src = source.trim();
   if (!src) return { id, kind: "blank", deps: [] };
 
@@ -106,7 +116,11 @@ function parseRow(source: string, id: string, multNames: Set<string>): ParsedRow
 
     // f(x) = … → function definition
     if (type === "FunctionAssignmentNode") {
-      const fn = node as unknown as { name: string; params: string[]; expr: MathNode };
+      const fn = node as unknown as {
+        name: string;
+        params: string[];
+        expr: MathNode;
+      };
       return {
         id,
         kind: "function",
@@ -119,7 +133,10 @@ function parseRow(source: string, id: string, multNames: Set<string>): ParsedRow
 
     // name = … → assignment
     if (type === "AssignmentNode") {
-      const as = node as unknown as { object: { name: string }; value: MathNode };
+      const as = node as unknown as {
+        object: { name: string };
+        value: MathNode;
+      };
       const name = as.object.name;
       const value = as.value;
 
@@ -138,12 +155,25 @@ function parseRow(source: string, id: string, multNames: Set<string>): ParsedRow
 
       // y = <expr in x> → explicit-form curve
       if (name === "y") {
-        return { id, kind: "function", name: "y", expr: value, params: ["x"], deps: symbolDeps(value, new Set(["x"])) };
+        return {
+          id,
+          kind: "function",
+          name: "y",
+          expr: value,
+          params: ["x"],
+          deps: symbolDeps(value, new Set(["x"])),
+        };
       }
       // name = (a, b) → point; free (draggable) iff both components literal
       if (isArray2(value)) {
         const literal = value.items.every(isNumericLiteral);
-        return { id, kind: literal ? "freePoint" : "point", name, expr: value, deps: symbolDeps(value) };
+        return {
+          id,
+          kind: literal ? "freePoint" : "point",
+          name,
+          expr: value,
+          deps: symbolDeps(value),
+        };
       }
       // name = <number literal> → free slider parameter
       if (isNumericLiteral(value)) {
@@ -168,7 +198,13 @@ function parseRow(source: string, id: string, multNames: Set<string>): ParsedRow
     // Bare expression
     const deps = symbolDeps(node);
     if (deps.includes("x")) {
-      return { id, kind: "function", expr: node, params: ["x"], deps: deps.filter((d) => d !== "x") };
+      return {
+        id,
+        kind: "function",
+        expr: node,
+        params: ["x"],
+        deps: deps.filter((d) => d !== "x"),
+      };
     }
     return { id, kind: "value", expr: node, deps };
   } catch (e) {
@@ -202,7 +238,13 @@ const KIND_LABEL: Record<ObjKind, string> = {
   invalid: "error",
 };
 
-const GEOM_KINDS = new Set<ObjKind>(["segment", "line", "circle", "polygon", "vector"]);
+const GEOM_KINDS = new Set<ObjKind>([
+  "segment",
+  "line",
+  "circle",
+  "polygon",
+  "vector",
+]);
 
 /** Build a drawable shape from a geometry constructor and its evaluated args. */
 function buildGeom(ctor: string, vals: Value[]): GeomShape {
@@ -213,21 +255,35 @@ function buildGeom(ctor: string, vals: Value[]): GeomShape {
   };
   switch (ctor) {
     case "Segment":
-      return { kind: "segment", a: pt(vals[0], "Segment"), b: pt(vals[1], "Segment") };
+      return {
+        kind: "segment",
+        a: pt(vals[0], "Segment"),
+        b: pt(vals[1], "Segment"),
+      };
     case "Line":
       return { kind: "line", a: pt(vals[0], "Line"), b: pt(vals[1], "Line") };
     case "Circle": {
       const c = pt(vals[0], "Circle");
       const r = isNum(vals[1])
         ? vals[1]
-        : Math.hypot(pt(vals[1], "Circle")[0] - c[0], pt(vals[1], "Circle")[1] - c[1]);
+        : Math.hypot(
+            pt(vals[1], "Circle")[0] - c[0],
+            pt(vals[1], "Circle")[1] - c[1],
+          );
       return { kind: "circle", c, r };
     }
     case "Polygon":
-      return { kind: "polygon", pts: vals.map((v, i) => pt(v, `Polygon vertex ${i + 1}`)) };
+      return {
+        kind: "polygon",
+        pts: vals.map((v, i) => pt(v, `Polygon vertex ${i + 1}`)),
+      };
     case "Vector":
       return vals.length >= 2
-        ? { kind: "vector", tail: pt(vals[0], "Vector"), tip: pt(vals[1], "Vector") }
+        ? {
+            kind: "vector",
+            tail: pt(vals[0], "Vector"),
+            tip: pt(vals[1], "Vector"),
+          }
         : { kind: "vector", tail: [0, 0], tip: pt(vals[0], "Vector") };
     default:
       throw new Error(`unknown construction "${ctor}"`);
@@ -247,9 +303,16 @@ export function compile(ws: Workspace): CompiledWorkspace {
 
   const evalRow = (p: ParsedRow): Computed => {
     if (p.kind === "blank") return { id: p.id, kind: "blank", deps: [] };
-    if (p.kind === "invalid") return { id: p.id, kind: "invalid", deps: [], error: p.error };
+    if (p.kind === "invalid")
+      return { id: p.id, kind: "invalid", deps: [], error: p.error };
 
-    const base: Computed = { id: p.id, kind: p.kind, name: p.name, deps: p.deps, label: KIND_LABEL[p.kind] };
+    const base: Computed = {
+      id: p.id,
+      kind: p.kind,
+      name: p.name,
+      deps: p.deps,
+      label: KIND_LABEL[p.kind],
+    };
 
     try {
       if (p.kind === "parameter" || p.kind === "freePoint") {
@@ -304,7 +367,10 @@ export function compile(ws: Workspace): CompiledWorkspace {
 }
 
 /** Kahn topological sort; rows left in a cycle are appended so they self-report. */
-function topoOrder(parsed: ParsedRow[], definer: Record<string, string>): string[] {
+function topoOrder(
+  parsed: ParsedRow[],
+  definer: Record<string, string>,
+): string[] {
   const ids = parsed.map((p) => p.id);
   const indeg: Record<string, number> = {};
   const adj: Record<string, string[]> = {};
