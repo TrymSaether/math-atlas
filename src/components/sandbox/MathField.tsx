@@ -59,7 +59,7 @@ export function MathField({
     mf.style.border = "none";
     mf.style.outline = "none";
     mf.style.background = "transparent";
-    mf.style.fontSize = "14px";
+    mf.style.fontSize = "13.25px";
     mf.style.setProperty("--contains-highlight-background-color", "transparent");
 
     mf.setValue(value, { format: "ascii-math" });

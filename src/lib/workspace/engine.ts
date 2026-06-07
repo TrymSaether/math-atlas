@@ -17,6 +17,7 @@ import {
   GEOMETRY,
   isNum,
   isVec,
+  math,
   parseSource,
   symbolDeps,
   type Scope,
@@ -217,6 +218,74 @@ function cleanError(e: unknown): string {
   return msg.replace(/\s*\(char \d+\)/, "");
 }
 
+function texForName(name: string): string {
+  return /^[A-Za-z]+$/.test(name)
+    ? name
+    : String.raw`\mathrm{${name.replace(/_/g, String.raw`\_`)}}`;
+}
+
+function texForValue(v: Value | undefined): string {
+  if (v === undefined) return "";
+  if (isNum(v)) return formatValue(v).replace(/-/g, "{-}");
+  if (isVec(v))
+    return String.raw`\left(${v.map((x) => texForValue(x)).join(", ")}\right)`;
+  return String(v);
+}
+
+function substituteScalars(
+  node: MathNode,
+  scope: Scope,
+  bound: Set<string>,
+): MathNode {
+  const substituted = node.transform((n) => {
+    if (nodeType(n) !== "SymbolNode") return n;
+    const name = (n as unknown as { name: string }).name;
+    const value = scope[name];
+    if (bound.has(name) || typeof value !== "number" || !Number.isFinite(value))
+      return n;
+    return math.parse(formatValue(value));
+  });
+
+  try {
+    return math.simplify(substituted);
+  } catch {
+    return substituted;
+  }
+}
+
+function texForExpression(
+  node: MathNode,
+  scope: Scope,
+  bound: Set<string> = new Set(),
+): string {
+  return substituteScalars(node, scope, bound).toTex({ parenthesis: "auto" });
+}
+
+function evaluatedTexFor(
+  p: ParsedRow,
+  computed: Computed,
+  scope: Scope,
+): string | undefined {
+  if (computed.error || computed.kind === "blank" || computed.kind === "invalid")
+    return undefined;
+
+  if (p.kind === "function" && p.expr) {
+    const params = p.params ?? ["x"];
+    const lhs =
+      p.name && p.name !== "y"
+        ? String.raw`${texForName(p.name)}\left(${params.map(texForName).join(", ")}\right)`
+        : "y";
+    return `${lhs}=${texForExpression(p.expr, scope, new Set(params))}`;
+  }
+
+  if (computed.value !== undefined) {
+    const lhs = p.name ? `${texForName(p.name)}=` : "";
+    return `${lhs}${texForValue(computed.value)}`;
+  }
+
+  return undefined;
+}
+
 export interface CompiledWorkspace {
   computed: Computed[];
   byId: Record<string, Computed>;
@@ -319,7 +388,11 @@ export function compile(ws: Workspace): CompiledWorkspace {
         const stored = ws.values[p.id];
         const value = stored !== undefined ? stored : evalNode(p.expr!, scope);
         if (p.name) scope[p.name] = value as unknown;
-        return { ...base, value };
+        const computed = { ...base, value };
+        return {
+          ...computed,
+          evaluatedTex: evaluatedTexFor(p, computed, scope),
+        };
       }
 
       if (p.kind === "function") {
@@ -343,7 +416,11 @@ export function compile(ws: Workspace): CompiledWorkspace {
             return NaN;
           }
         };
-        return { ...base, sample };
+        const computed = { ...base, sample };
+        return {
+          ...computed,
+          evaluatedTex: evaluatedTexFor(p, computed, scope),
+        };
       }
 
       if (GEOM_KINDS.has(p.kind)) {
@@ -355,7 +432,11 @@ export function compile(ws: Workspace): CompiledWorkspace {
       // value | dependent point
       const value = evalNode(p.expr!, scope);
       if (p.name) scope[p.name] = value as unknown;
-      return { ...base, value };
+      const computed = { ...base, value };
+      return {
+        ...computed,
+        evaluatedTex: evaluatedTexFor(p, computed, scope),
+      };
     } catch (e) {
       return { ...base, error: cleanError(e) };
     }

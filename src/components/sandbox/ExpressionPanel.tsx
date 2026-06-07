@@ -25,6 +25,7 @@ import { useSandbox, DEFAULT_SLIDER } from "../../lib/workspace/store";
 import { formatValue } from "../../lib/workspace/engine";
 import { PALETTE } from "../../lib/workspace/library";
 import type { Computed, FactStatus, GeomShape, Row } from "../../lib/workspace/types";
+import { MathText } from "../../lib/katex";
 import { MathField } from "./MathField";
 
 export function ExpressionPanel() {
@@ -143,6 +144,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
   const readout = useMemo(() => readoutFor(computed), [computed]);
   const rowType = useMemo(() => rowTypeFor(computed), [computed]);
   const summary = useMemo(() => selectedSummaryFor(computed, readout), [computed, readout]);
+  const evaluatedTex = useMemo(() => evaluatedTexFor(computed, rowType), [computed, rowType]);
 
   const cycleColor = () => {
     const i = PALETTE.indexOf(row.color as (typeof PALETTE)[number]);
@@ -155,18 +157,19 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
       className="sandbox-expression-row group relative"
       data-selected={selected ? "true" : undefined}
       data-status={status}
+      data-row-type={rowType}
     >
-      <div className="flex min-h-[52px] items-stretch">
+      <div className="flex min-h-[44px] items-stretch">
         {/* Index gutter */}
         <div
-          className="sandbox-row-gutter flex w-7 items-center justify-center py-1.5 font-mono text-ui-2xs tabular-nums"
+          className="sandbox-row-gutter flex w-6 items-center justify-center py-1 font-mono text-ui-2xs tabular-nums"
           title={statusTitle(status)}
         >
           <span>{index}</span>
         </div>
 
         {/* Color swatch */}
-        <button type="button" onClick={cycleColor} title="Cycle color" className="sandbox-color-button flex w-6 items-center justify-center">
+        <button type="button" onClick={cycleColor} title="Cycle color" className="sandbox-color-button flex w-5 items-center justify-center">
           <span
             className="sandbox-color-swatch"
             style={{ background: row.color }}
@@ -174,7 +177,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
         </button>
 
         {/* Editor + readout */}
-        <div className="sandbox-row-body min-w-0 flex-1 py-1 pr-1">
+        <div className="sandbox-row-body min-w-0 flex-1 py-0.5 pr-1">
           <div className="sandbox-field-frame">
             <MathField
               value={row.source}
@@ -191,10 +194,16 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
               <WarningCircle size={12} weight="bold" />
               {computed.error}
             </div>
-          ) : selected && summary ? (
+          ) : selected && (evaluatedTex || summary) ? (
             <div className="sandbox-row-readout mt-0.5 flex items-center gap-1 font-mono text-ui-2xs">
-              <RowTypeIcon kind={rowType} />
-              {summary}
+              {evaluatedTex ? (
+                <MathText text={`$${evaluatedTex}$`} />
+              ) : (
+                <>
+                  <RowTypeIcon kind={rowType} />
+                  {summary}
+                </>
+              )}
             </div>
           ) : null}
 
@@ -202,11 +211,11 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
             <ParamSlider row={row} value={asNumber(computed?.value)} onChange={(v) => setScalarValue(row.id, v)} onConfig={(s) => setSlider(row.id, s)} />
           )}
 
-          {selected && <RowMeta deps={computed?.deps ?? []} status={status} note={row.provenance.note} name={computed?.name} />}
+          {selected && <RowMeta row={row} computed={computed} status={status} />}
         </div>
 
         {/* Controls */}
-        <div className="sandbox-row-controls flex w-7 flex-col items-center justify-center gap-1">
+        <div className="sandbox-row-controls flex w-6 flex-col items-center justify-center gap-0.5">
           <button type="button" onClick={() => toggleVisible(row.id)} title={row.visible ? "Hide" : "Show"}>
             {row.visible ? <Eye size={14} /> : <EyeSlash size={14} />}
           </button>
@@ -276,31 +285,62 @@ function NumBox({ label, value, onChange }: { label: string; value: number; onCh
 }
 
 function RowMeta({
-  deps,
+  row,
+  computed,
   status,
-  note,
-  name,
 }: {
-  deps: string[];
+  row: Row;
+  computed?: Computed;
   status: FactStatus | "error";
-  note?: string;
-  name?: string;
 }) {
-  if (!note && deps.length === 0 && status !== "error") return null;
-  const depNotation = deps.length > 0 ? `${name ?? "row"}←${deps.join(",")}` : "";
+  const [open, setOpen] = useState(false);
+  const deps = computed?.deps ?? [];
+  const depNotation = deps.length > 0 ? `${computed?.name ?? "row"}←${deps.join(",")}` : "";
+  const details = [
+    computed?.label ? { label: "Type", value: computed.label } : null,
+    { label: "State", value: statusLabel(status) },
+    computed?.name ? { label: "Name", value: computed.name } : null,
+    deps.length > 0 ? { label: "Depends on", value: deps.join(", ") } : null,
+    { label: "Source", value: row.provenance.source },
+    row.provenance.origin ? { label: "Origin", value: row.provenance.origin } : null,
+    row.provenance.note ? { label: "Note", value: row.provenance.note } : null,
+    { label: "Visible", value: row.visible ? "yes" : "no" },
+  ].filter(Boolean) as { label: string; value: string }[];
+
+  if (details.length === 0 && status !== "error") return null;
+
   return (
-    <div className="sandbox-row-meta mt-1 flex items-center gap-1.5 text-ui-2xs">
-      {status === "error" && <WarningCircle className="shrink-0" size={12} weight="bold" />}
-      {note && (
-        <span className="sandbox-note truncate" title={note}>
-          {note}
-        </span>
-      )}
-      {deps.length > 0 && (
-        <span className="sandbox-deps flex min-w-0 items-center gap-1 font-mono" title={`depends on ${deps.join(", ")}`}>
-          <LinkSimple size={11} />
-          <span className="truncate">{depNotation}</span>
-        </span>
+    <div className="sandbox-row-meta mt-1.5 text-ui-2xs">
+      <button
+        type="button"
+        className="sandbox-row-meta-toggle flex max-w-full items-center gap-1.5"
+        aria-expanded={open}
+        onMouseDown={(e) => e.stopPropagation()}
+        onClick={() => setOpen((next) => !next)}
+      >
+        <CaretDown className="sandbox-row-meta-caret h-3 w-3 shrink-0" weight="bold" />
+        <span className="sandbox-row-meta-title">Details</span>
+        {status === "error" && <WarningCircle className="shrink-0" size={12} weight="bold" />}
+        {depNotation && (
+          <span className="sandbox-deps flex min-w-0 items-center gap-1 font-mono">
+            <LinkSimple size={11} />
+            <span className="truncate">{depNotation}</span>
+          </span>
+        )}
+        {row.provenance.note && !depNotation && (
+          <span className="sandbox-note truncate">{row.provenance.note}</span>
+        )}
+      </button>
+
+      {open && (
+        <dl className="sandbox-row-meta-grid mt-1.5 grid gap-x-2 gap-y-1">
+          {details.map((detail) => (
+            <div key={detail.label} className="contents">
+              <dt>{detail.label}</dt>
+              <dd title={detail.value}>{detail.value}</dd>
+            </div>
+          ))}
+        </dl>
       )}
     </div>
   );
@@ -337,6 +377,11 @@ function readoutFor(computed?: Computed): string {
 function selectedSummaryFor(computed: Computed | undefined, readout: string): string {
   if (!computed || computed.kind === "parameter") return "";
   return readout;
+}
+
+function evaluatedTexFor(computed: Computed | undefined, rowType: RowType): string {
+  if (!computed?.evaluatedTex || rowType === "slider" || rowType === "blank") return "";
+  return computed.evaluatedTex;
 }
 
 function geomReadout(g: GeomShape): string {
@@ -388,6 +433,16 @@ function statusTitle(status: FactStatus | "error"): string {
     user: "★ free input — you control this value",
     pending: "○ empty",
     error: "⚠ error",
+  }[status];
+}
+
+function statusLabel(status: FactStatus | "error"): string {
+  return {
+    computed: "evaluated from inputs",
+    recognized: "loaded from atlas",
+    user: "direct input",
+    pending: "pending",
+    error: "error",
   }[status];
 }
 
