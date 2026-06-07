@@ -1287,14 +1287,14 @@
     "items": [
       {
         "id": "set",
-        "statement": "A collection of elements treated as one object.",
-        "formal_statement": null,
-        "definition": "A collection of elements treated as one object.",
-        "intuition": null,
-        "notation": "X",
+        "statement": "A set is a mathematical collection of objects, called elements.",
+        "formal_statement": "Set theory treats membership $x\\in A$ as the primitive relation between an object $x$ and a set $A$.",
+        "definition": "A collection considered as a single mathematical object.",
+        "intuition": "The raw substrate of topology: a space starts as a set before any open sets are chosen.",
+        "notation": "$x\\in A$, $A=\\{\\dots\\}$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["membership"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -1302,9 +1302,12 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_set_prerequisite_for_topology"],
+        "outgoing_relations": [
+          "e_set_prerequisite_for_topology",
+          "e_set_requires_membership"
+        ],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundation", "set-theory"],
           "syllabus_priority": "core",
           "source": null
         },
@@ -1313,24 +1316,24 @@
         "domain": "foundations",
         "related": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "set",
         "display_label": "Set"
       },
       {
         "id": "function",
-        "statement": "A rule assigning each input exactly one output.",
-        "formal_statement": null,
-        "definition": "A rule assigning each input exactly one output.",
-        "intuition": null,
-        "notation": "f: X -> Y",
+        "statement": "A function $f:X\\to Y$ assigns each element of its domain $X$ exactly one element of its codomain $Y$.",
+        "formal_statement": "$f\\subseteq X\\times Y$ and for every $x\\in X$ there exists a unique $y\\in Y$ with $(x,y)\\in f$.",
+        "definition": "A single-valued, total relation from a domain to a codomain.",
+        "intuition": "A rule with no ambiguity: every input has exactly one output.",
+        "notation": "$f:X\\to Y$, $x\\mapsto f(x)$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["set", "relation", "domain", "codomain"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -1338,9 +1341,13 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_function_requires_domain",
+          "e_function_requires_codomain",
+          "e_function_requires_relation"
+        ],
         "metadata": {
-          "tags": ["foundation"],
+          "tags": ["foundation", "functions"],
           "syllabus_priority": "core",
           "source": null
         },
@@ -1349,24 +1356,24 @@
         "domain": "foundations",
         "related": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "function",
         "display_label": "Function"
       },
       {
-        "id": "axiom_of_choice",
-        "statement": "Every family of nonempty sets has a choice function.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": null,
-        "notation": null,
+        "id": "inverse_image",
+        "statement": "The inverse image of a set $B$ under a function $f:X\\to Y$ is the set of all elements in $X$ that map into $B$.",
+        "formal_statement": "$f^{-1}(B)=\\{x\\in X : f(x)\\in B\\}$",
+        "definition": "The preimage of a set under a function.",
+        "intuition": "The set of inputs that land in a given set under the function.",
+        "notation": "$f^{-1}(B)$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["function", "set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -1374,7 +1381,250 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_inverse_image_requires_function",
+          "e_inverse_image_requires_set"
+        ],
+        "metadata": {
+          "tags": ["foundation", "functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "kind": "object",
+        "label": "Inverse Image",
+        "domain": "foundations",
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "inverse image",
+        "display_label": "Inverse Image"
+      },
+      {
+        "id": "inverse_of_a_function",
+        "statement": "The inverse of a function $f:X\\to Y$ is the relation that reverses the direction of $f$.",
+        "formal_statement": "$f^{-1} = \\{(y,x) : (x,y)\\in f\\}$",
+        "definition": "The relation obtained by swapping the inputs and outputs of a function.",
+        "intuition": "The function that goes backwards: it takes outputs of $f$ and gives you back the inputs.",
+        "notation": "$f^{-1}$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "relation"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_inverse_of_a_function_requires_function",
+          "e_inverse_of_a_function_requires_relation"
+        ],
+        "metadata": {
+          "tags": ["foundation", "functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "kind": "object",
+        "label": "Inverse of a Function",
+        "domain": "foundations",
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "inverse of a function",
+        "display_label": "Inverse of a Function"
+      },
+      {
+        "id": "image_of_function",
+        "statement": "The image of a function $f:X\\to Y$ is the set of all outputs of $f$.",
+        "formal_statement": "$f(X)=\\{f(x) : x\\in X\\}$",
+        "definition": "The set of outputs of a function.",
+        "intuition": "The set of values that the function actually takes on.",
+        "notation": "$f(X)$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "set"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_image_of_function_requires_function",
+          "e_image_of_function_requires_set"
+        ],
+        "metadata": {
+          "tags": ["foundation", "functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "kind": "object",
+        "label": "Image of a Function",
+        "domain": "foundations",
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "image of a function",
+        "display_label": "Image of a Function"
+      },
+      {
+        "id": "preimage_of_function",
+        "statement": "The preimage of a function $f:X\\to Y$ is the relation that gives you the inputs that map to each output.",
+        "formal_statement": "$f^{-1} = \\{(x,y) : (y,x)\\in f\\}$",
+        "definition": "The relation obtained by swapping the inputs and outputs of a function.",
+        "intuition": "The function that goes backwards: it takes outputs of $f$ and gives you back the inputs.",
+        "notation": "$f^{-1}$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "relation"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_preimage_of_function_requires_function",
+          "e_preimage_of_function_requires_relation"
+        ],
+        "metadata": {
+          "tags": ["foundation", "functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "kind": "object",
+        "label": "Preimage of a Function",
+        "domain": "foundations",
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "preimage of a function",
+        "display_label": "Preimage of a Function"
+      },
+      {
+        "id": "inverse_of_function",
+        "statement": "The inverse of a function $f:X\\to Y$ is the relation that reverses the direction of $f$.",
+        "formal_statement": "$f^{-1} = \\{(y,x) : (x,y)\\in f\\}$",
+        "definition": "The relation obtained by swapping the inputs and outputs of a function.",
+        "intuition": "The function that goes backwards: it takes outputs of $f$ and gives you back the inputs.",
+        "notation": "$f^{-1}$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "relation"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_inverse_of_a_function_requires_function",
+          "e_inverse_of_a_function_requires_relation"
+        ],
+        "metadata": {
+          "tags": ["foundation", "functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "kind": "object",
+        "label": "Inverse of a Function",
+        "domain": "foundations",
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "inverse of a function",
+        "display_label": "Inverse of a Function"
+      },
+      {
+        "id": "restriction_of_function",
+        "statement": "The restriction of a function $f:X\\to Y$ to a subset $A\\subseteq X$ is the function obtained by limiting the domain of $f$ to $A$.",
+        "formal_statement": "$f|_A : A \\to Y$ defined by $f|_A(a) = f(a)$ for all $a\\in A$.",
+        "definition": "The function obtained by limiting the domain of a function to a subset.",
+        "intuition": "The same rule as the original function, but only applied to a smaller set of inputs.",
+        "notation": "$f|_A$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "set", "subset"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_restriction_of_function_requires_function",
+          "e_restriction_of_function_requires_set",
+          "e_restriction_of_function_requires_subset"
+        ],
+        "metadata": {
+          "tags": ["foundation", "functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "kind": "object",
+        "label": "Restriction of a Function",
+        "domain": "foundations",
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "restriction of a function",
+        "display_label": "Restriction of a Function"
+      },
+
+      {
+        "id": "axiom_of_choice",
+        "statement": "Every indexed family of nonempty sets has a choice function.",
+        "formal_statement": "If $(A_i)_{i\\in I}$ and $A_i\\ne\\varnothing$ for all $i$, then there exists $c:I\\to\\bigcup_{i\\in I}A_i$ such that $c(i)\\in A_i$ for all $i$.",
+        "definition": null,
+        "intuition": "You may choose one element from each set in a family, even when there is no explicit rule for making the choices.",
+        "notation": "AC",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "indexed_family",
+            "choice_function",
+            "empty_set"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_axiom_of_choice_requires_choice_function",
+          "e_axiom_of_choice_requires_indexed_family"
+        ],
         "metadata": {
           "tags": ["choice"],
           "syllabus_priority": "high",
@@ -1385,10 +1635,10 @@
         "domain": "foundations",
         "related": [],
         "status": {
-          "content": "stub",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "axiom of choice",
         "display_label": "Axiom of Choice"
@@ -1859,14 +2109,19 @@
           "definitional_dependency": [],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": ["equivalence_class"],
+          "construction_dependency": [
+            "equivalence_class",
+            "equivalence_relation",
+            "quotient_topology"
+          ],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
         "outgoing_relations": [
           "e_quotient_space_subtype_topological",
-          "e_quotient_space_constructed_from_equivalence_class"
+          "e_quotient_space_constructed_from_equivalence_class",
+          "e_quotient_space_requires_equivalence_relation"
         ],
         "metadata": {
           "tags": [],
@@ -2437,7 +2692,13 @@
         "notation": "$$\\tau\\subseteq\\mathcal P(X)$$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["set"],
+          "definitional_dependency": [
+            "set",
+            "power_set",
+            "empty_set",
+            "intersection_union",
+            "indexed_family"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -2452,7 +2713,11 @@
           "e_topology_field_introduces_connectedness",
           "e_topology_prerequisite_for_open_set",
           "e_topology_requires_set",
-          "e_topology_has_counterexample_bare_set_without_topology"
+          "e_topology_has_counterexample_bare_set_without_topology",
+          "e_topology_requires_power_set",
+          "e_topology_requires_empty_set",
+          "e_topology_requires_intersection_union",
+          "e_topology_requires_indexed_family"
         ],
         "metadata": {
           "tags": ["definition", "field"],
@@ -3085,7 +3350,8 @@
           "definitional_dependency": [
             "function",
             "open_set",
-            "topological_space"
+            "topological_space",
+            "preimage"
           ],
           "logical_dependency": [],
           "assumption_dependency": [],
@@ -3097,7 +3363,8 @@
         "outgoing_relations": [
           "e_continuity_requires_function",
           "e_continuity_requires_open_set",
-          "e_continuity_requires_topological_space"
+          "e_continuity_requires_topological_space",
+          "e_continuity_requires_preimage"
         ],
         "metadata": {
           "tags": [],
@@ -4071,7 +4338,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["preimage", "sij"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": ["topological_space", "continuity"],
@@ -4082,7 +4349,8 @@
         "outgoing_relations": [
           "e_quotient_topology_constructed_from_topological_space",
           "e_quotient_topology_constructed_from_continuity",
-          "e_quotient_topology_induces_quotient_space"
+          "e_quotient_topology_induces_quotient_space",
+          "e_quotient_topology_requires_preimage"
         ],
         "metadata": {
           "tags": ["convention-reviewed"],
@@ -4463,14 +4731,14 @@
       },
       {
         "id": "open_cover_argument",
-        "statement": "Start with an arbitrary open cover and extract finite or local information.",
+        "statement": "A proof method that begins with an arbitrary open cover and uses the topology of the space to extract a useful subcover or local refinement.",
         "formal_statement": null,
-        "definition": "Start with an arbitrary open cover and extract finite or local information.",
-        "intuition": null,
+        "definition": "A compactness-style proof pattern based on arbitrary open covers.",
+        "intuition": "To prove compactness, never choose a convenient cover; start with an arbitrary one and force a finite subcover.",
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["cover", "open_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -4478,10 +4746,13 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_open_cover_argument_requires_cover",
+          "e_open_cover_argument_requires_open_set"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
+          "tags": ["proof-method", "compactness"],
+          "syllabus_priority": "high",
           "source": null
         },
         "kind": "proof_method",
@@ -4489,24 +4760,24 @@
         "domain": "foundations",
         "related": [],
         "status": {
-          "content": "stub",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "open cover argument",
         "display_label": "Open Cover Argument"
       },
       {
         "id": "finite_subcover_argument",
-        "statement": "Show a cover has a finite subcover.",
+        "statement": "A proof method that shows finitely many sets from a cover still cover the object of interest.",
         "formal_statement": null,
-        "definition": "Show a cover has a finite subcover.",
-        "intuition": null,
+        "definition": "The standard finite-extraction step in compactness arguments.",
+        "intuition": "This is the moment where compactness converts infinite-looking data into finite data.",
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["finite_subcover"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -4514,10 +4785,12 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_finite_subcover_argument_requires_finite_subcover"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
+          "tags": ["proof-method", "compactness"],
+          "syllabus_priority": "high",
           "source": null
         },
         "kind": "proof_method",
@@ -4525,24 +4798,24 @@
         "domain": "foundations",
         "related": [],
         "status": {
-          "content": "stub",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "finite subcover argument",
         "display_label": "Finite Subcover Argument"
       },
       {
         "id": "separation_argument",
-        "statement": "Separate points or closed sets by open sets or functions.",
+        "statement": "A proof method that separates points, closed sets, or compact sets using open neighborhoods or continuous functions.",
         "formal_statement": null,
-        "definition": "Separate points or closed sets by open sets or functions.",
-        "intuition": null,
+        "definition": "The standard proof pattern for separation axioms and Urysohn/Tietze-type results.",
+        "intuition": "Show two objects can be insulated from each other by open sets or functions.",
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["open_set", "closed_set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -4550,10 +4823,13 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_separation_argument_requires_open_set",
+          "e_separation_argument_requires_closed_set"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
+          "tags": ["proof-method", "separation"],
+          "syllabus_priority": "high",
           "source": null
         },
         "kind": "proof_method",
@@ -4561,24 +4837,24 @@
         "domain": "foundations",
         "related": [],
         "status": {
-          "content": "stub",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "separation argument",
         "display_label": "Separation Argument"
       },
       {
         "id": "basis_argument",
-        "statement": "Prove statements on a basis or subbasis.",
+        "statement": "A proof method that reduces an open-set statement to basis or subbasis elements.",
         "formal_statement": null,
-        "definition": "Prove statements on a basis or subbasis.",
-        "intuition": null,
+        "definition": "A topology proof pattern using basis/subbasis generators instead of arbitrary open sets.",
+        "intuition": "Prove the claim on small generating pieces, then extend by unions and finite intersections.",
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["basis_for_topology", "subbasis"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -4586,10 +4862,13 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_basis_argument_requires_basis",
+          "e_basis_argument_requires_subbasis"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
+          "tags": ["proof-method", "bases"],
+          "syllabus_priority": "high",
           "source": null
         },
         "kind": "proof_method",
@@ -4597,34 +4876,34 @@
         "domain": "foundations",
         "related": [],
         "status": {
-          "content": "stub",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "basis argument",
         "display_label": "Basis Argument"
       },
       {
         "id": "zorns_lemma",
-        "statement": "If every chain has an upper bound, then a maximal element exists.",
-        "formal_statement": null,
+        "statement": "If every chain in a partially ordered set has an upper bound, then the poset has a maximal element.",
+        "formal_statement": "For a poset $(P,\\le)$, if every chain $C\\subseteq P$ has an upper bound in $P$, then $P$ contains a maximal element.",
         "definition": null,
-        "intuition": null,
-        "notation": null,
+        "intuition": "A maximality principle equivalent to the Axiom of Choice; often used to build maximal covers, bases, ideals, or filters.",
+        "notation": "Zorn's Lemma",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [],
-          "logical_dependency": [],
+          "logical_dependency": ["axiom_of_choice"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [],
+        "outgoing_relations": ["e_zorns_lemma_see_also_choice"],
         "metadata": {
-          "tags": ["choice", "proof_tool"],
+          "tags": ["choice", "maximality"],
           "syllabus_priority": "high",
           "source": null
         },
@@ -4633,12 +4912,12 @@
         "domain": "foundations",
         "related": [],
         "status": {
-          "content": "stub",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Zorn's lemma",
+        "canonical_label": "zorn's lemma",
         "display_label": "Zorn's Lemma"
       },
       {
@@ -6228,10 +6507,10 @@
       },
       {
         "id": "bare_set_without_topology",
-        "statement": "A set considered without a specified topology.",
+        "statement": "A bare set $X$ without a specified topology is not yet a topological space.",
         "formal_statement": null,
-        "definition": "A set considered without a specified topology.",
-        "intuition": null,
+        "definition": "A set considered without choosing which subsets are open.",
+        "intuition": "Topology is extra structure; the same set can carry many different topologies.",
         "notation": null,
         "assumptions": [],
         "dependencies": {
@@ -6245,8 +6524,8 @@
         },
         "outgoing_relations": [],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
+          "tags": ["non-example", "topology-prerequisite"],
+          "syllabus_priority": "high",
           "source": null
         },
         "kind": "non_example",
@@ -6258,10 +6537,10 @@
         "domain": "foundations",
         "related": [],
         "status": {
-          "content": "stub",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "bare set without topology",
         "display_label": "Bare Set Without Topology"
@@ -9929,7 +10208,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["function", "cartesian_product", "set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -9937,7 +10216,11 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_binary_operation_prerequisite_for_group"],
+        "outgoing_relations": [
+          "e_binary_operation_prerequisite_for_group",
+          "e_binary_operation_requires_function",
+          "e_binary_operation_requires_cartesian_product"
+        ],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -10016,14 +10299,14 @@
       },
       {
         "id": "cartesian_product",
-        "statement": "$A\\times B=\\{(x,y)\\mid x\\in A,\\ y\\in B\\}$, the set of ordered pairs.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "All pairings of an element of $A$ with an element of $B$ — the set underlying the product topology.",
-        "notation": null,
+        "statement": "$A\\times B=\\{(a,b)\\mid a\\in A,\\ b\\in B\\}$, the set of ordered pairs with first coordinate in $A$ and second in $B$.",
+        "formal_statement": "$A\\times B=\\{(a,b):a\\in A\\land b\\in B\\}$.",
+        "definition": "A construction combining two sets into the set of all ordered pairs.",
+        "intuition": "The set underlying product spaces and the ambient set for binary relations.",
+        "notation": "$A\\times B$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["set", "ordered_pair", "membership"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -10032,12 +10315,13 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
-          "e_cartesian_product_prerequisite_for_product_topology"
+          "e_cartesian_product_prerequisite_for_product_topology",
+          "e_cartesian_product_requires_ordered_pair"
         ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["set-theory", "products"],
+          "syllabus_priority": "core",
+          "source": null
         },
         "kind": "definition",
         "label": "Cartesian Product",
@@ -10047,7 +10331,7 @@
         "gloss": "All pairings of an element of $A$ with an element of $B$ — the set underlying the product topology.",
         "example": "$\\mathbb{R}^2=\\mathbb{R}\\times\\mathbb{R}$; the torus is $S^1\\times S^1$.",
         "diagram_path": "/atlas-assets/topology/diagrams/cartesian-product.svg",
-        "related": ["product_topology", "disjoint_union"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -10055,12 +10339,12 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Cartesian product",
+        "canonical_label": "cartesian product",
         "display_label": "Cartesian Product"
       },
       {
@@ -10235,14 +10519,14 @@
       },
       {
         "id": "complement",
-        "statement": "For $B\\subseteq A$, the \\textbf{complement} of $B$ in $A$ is $B^c=A\\setminus B$.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "The difference of $A$ and $B$ when an ambient set $A$ is understood. Openness and closedness in topology are dual via complements.",
-        "notation": null,
+        "statement": "For $B\\subseteq X$, the complement of $B$ in $X$ is $X\\setminus B$.",
+        "formal_statement": "$B^c=X\\setminus B=\\{x\\in X\\mid x\\notin B\\}$.",
+        "definition": "The part of the ambient set outside a given subset.",
+        "intuition": "The operation linking open and closed sets.",
+        "notation": "$B^c$, $X\\setminus B$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["set_difference"],
+          "definitional_dependency": ["set_difference", "subset"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -10250,11 +10534,14 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_complement_requires_set_difference"],
+        "outgoing_relations": [
+          "e_complement_requires_set_difference",
+          "e_complement_prerequisite_for_closed_set"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["set-theory", "topology-prerequisite"],
+          "syllabus_priority": "core",
+          "source": null
         },
         "kind": "definition",
         "label": "Complement",
@@ -10264,7 +10551,7 @@
         "gloss": "The difference of $A$ and $B$ when an ambient set $A$ is understood. Openness and closedness in topology are dual via complements.",
         "example": "In a topological space, $K$ is closed iff $K^c$ is open.",
         "diagram_path": "/atlas-assets/topology/diagrams/complement.svg",
-        "related": ["set_difference", "closed_set", "intersection_union"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -10272,12 +10559,12 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Complement",
+        "canonical_label": "complement",
         "display_label": "Complement"
       },
       {
@@ -10386,14 +10673,14 @@
       },
       {
         "id": "composition_maps",
-        "statement": "For $f\\colon A\\to B$ and $g\\colon B\\to C$, the \\textbf{composition} $g\\circ f\\colon A\\to C$ is $(g\\circ f)(x)=g(f(x))$.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "Apply $f$, then $g$. Composition is associative and the identity acts as a unit — the backbone of categorical thinking in topology.",
-        "notation": null,
+        "statement": "For $f:X\\to Y$ and $g:Y\\to Z$, the composition $g\\circ f:X\\to Z$ is defined by $(g\\circ f)(x)=g(f(x))$.",
+        "formal_statement": "$(g\\circ f)(x)=g(f(x))$ whenever $\\operatorname{cod}(f)=\\operatorname{dom}(g)$.",
+        "definition": "The operation of applying one function after another.",
+        "intuition": "Do $f$ first, then $g$. This is the backbone of continuity and functoriality.",
+        "notation": "$g\\circ f$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["function", "domain", "codomain"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -10405,9 +10692,9 @@
           "e_composition_maps_see_also_composition_continuous"
         ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["functions"],
+          "syllabus_priority": "core",
+          "source": null
         },
         "kind": "definition",
         "label": "Composition of Maps",
@@ -10417,7 +10704,7 @@
         "gloss": "Apply $f$, then $g$. Composition is associative and the identity acts as a unit — the backbone of categorical thinking in topology.",
         "example": "$\\mathrm{id}_B\\circ f=f=f\\circ\\mathrm{id}_A$; continuity and homomorphism properties are preserved under composition.",
         "diagram_path": "/atlas-assets/topology/diagrams/composition-maps.svg",
-        "related": ["composition_continuous", "homomorphism", "image"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -10425,12 +10712,12 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Composition of maps",
+        "canonical_label": "composition of maps",
         "display_label": "Composition of Maps"
       },
       {
@@ -11008,14 +11295,14 @@
       },
       {
         "id": "set_difference",
-        "statement": "For $B\\subseteq A$, the \\textbf{difference} is $A\\setminus B=\\{x\\in A\\mid x\\notin B\\}$.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "What remains of $A$ after removing $B$. Disjoint from $B$, with $(A\\setminus B)\\cup B=A\\cup B$.",
-        "notation": null,
+        "statement": "The difference $A\\setminus B$ is the set of elements of $A$ that are not elements of $B$.",
+        "formal_statement": "$A\\setminus B=\\{x\\in A\\mid x\\notin B\\}$.",
+        "definition": "The operation of removing one set from another.",
+        "intuition": "What remains of $A$ after excluding $B$. Complements are relative set differences.",
+        "notation": "$A\\setminus B$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["subset"],
+          "definitional_dependency": ["set", "subset", "membership"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -11025,9 +11312,9 @@
         },
         "outgoing_relations": ["e_set_difference_requires_subset"],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["set-theory"],
+          "syllabus_priority": "high",
+          "source": null
         },
         "kind": "definition",
         "label": "Difference of Sets",
@@ -11037,7 +11324,7 @@
         "gloss": "What remains of $A$ after removing $B$. Disjoint from $B$, with $(A\\setminus B)\\cup B=A\\cup B$.",
         "example": "$\\{1,2,3\\}\\setminus\\{2\\}=\\{1,3\\}$.",
         "diagram_path": "/atlas-assets/topology/diagrams/set-difference.svg",
-        "related": ["complement", "intersection_union", "subset"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -11045,12 +11332,12 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Difference of sets",
+        "canonical_label": "difference of sets",
         "display_label": "Difference of Sets"
       },
       {
@@ -11102,14 +11389,14 @@
       },
       {
         "id": "disjoint_union",
-        "statement": "For a family $\\{A_i\\}_{i\\in I}$, the \\textbf{disjoint union} is $\\bigsqcup_{i\\in I}A_i=\\bigcup_{i\\in I}\\{(x,i)\\mid x\\in A_i\\}$ — elements are tagged pairs $(x,i)$.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "Combine sets while keeping track of which piece each element came from, so copies never merge. Used to describe $p^{-1}(U)$ for covering maps.",
-        "notation": null,
+        "statement": "For a family $(A_i)_{i\\in I}$, the disjoint union is $\\bigsqcup_{i\\in I}A_i=\\bigcup_{i\\in I}(A_i\\times\\{i\\})$.",
+        "formal_statement": "$\\bigsqcup_{i\\in I}A_i=\\{(a,i)\\mid i\\in I,\\ a\\in A_i\\}$.",
+        "definition": "A union whose elements are tagged by their index so pieces remain distinct.",
+        "intuition": "Copies of the same point from different pieces do not accidentally merge.",
+        "notation": "$\\bigsqcup_{i\\in I}A_i$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["indexed_family", "cartesian_product"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -11117,13 +11404,17 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_disjoint_union_see_also_cartesian_product"],
+        "outgoing_relations": [
+          "e_disjoint_union_see_also_cartesian_product",
+          "e_disjoint_union_requires_indexed_family",
+          "e_disjoint_union_requires_cartesian_product"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["set-theory", "constructions"],
+          "syllabus_priority": "high",
+          "source": null
         },
-        "kind": "definition",
+        "kind": "construction",
         "label": "Disjoint Union",
         "domain": "foundations",
         "chapter": "A",
@@ -11131,7 +11422,7 @@
         "gloss": "Combine sets while keeping track of which piece each element came from, so copies never merge. Used to describe $p^{-1}(U)$ for covering maps.",
         "example": "The preimage of an evenly covered set is a disjoint union of homeomorphic sheets (Def. 8.1).",
         "diagram_path": "/atlas-assets/topology/diagrams/disjoint-union.svg",
-        "related": ["cartesian_product", "covering_space"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -11139,12 +11430,12 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Disjoint union",
+        "canonical_label": "disjoint union",
         "display_label": "Disjoint Union"
       },
       {
@@ -11156,7 +11447,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["equivalence_relation", "set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -11167,7 +11458,8 @@
         "outgoing_relations": [
           "e_equivalence_class_prerequisite_for_quotient_space",
           "e_equivalence_class_prerequisite_for_homotopy_classes",
-          "e_equivalence_class_prerequisite_for_coset"
+          "e_equivalence_class_prerequisite_for_coset",
+          "e_equivalence_class_requires_equivalence_relation"
         ],
         "metadata": {
           "tags": [],
@@ -11535,7 +11827,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["set", "binary_operation"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -11543,7 +11835,10 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_group_requires_set",
+          "e_group_requires_binary_operation"
+        ],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -11587,7 +11882,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["group"],
+          "definitional_dependency": ["group", "function"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -11595,7 +11890,10 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_homomorphism_requires_group"],
+        "outgoing_relations": [
+          "e_homomorphism_requires_group",
+          "e_homomorphism_requires_function"
+        ],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -11997,14 +12295,14 @@
       },
       {
         "id": "image",
-        "statement": "For $f\\colon A\\to B$, the \\textbf{image} is $f(A)=\\{f(x)\\in B\\mid x\\in A\\}\\subseteq B$.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "All values actually attained by $f$. $f$ is surjective exactly when $f(A)=B$.",
-        "notation": null,
+        "statement": "For $f:X\\to Y$ and $A\\subseteq X$, the image of $A$ is $f(A)=\\{f(x)\\mid x\\in A\\}$. The image of $f$ is $f(X)$.",
+        "formal_statement": "$f(A)=\\{y\\in Y:\\exists x\\in A,\\ f(x)=y\\}$.",
+        "definition": "The subset of the codomain attained by applying a function to a subset of the domain.",
+        "intuition": "What the function actually hits.",
+        "notation": "$f(A)$, $\\operatorname{im}(f)$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["function"],
+          "definitional_dependency": ["function", "subset"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -12012,11 +12310,14 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_image_requires_function"],
+        "outgoing_relations": [
+          "e_image_requires_function",
+          "e_image_requires_subset"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["functions"],
+          "syllabus_priority": "core",
+          "source": null
         },
         "kind": "definition",
         "label": "Image of a Map",
@@ -12026,7 +12327,7 @@
         "gloss": "All values actually attained by $f$. $f$ is surjective exactly when $f(A)=B$.",
         "example": "For $f\\colon\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x^2$, the image is $[0,\\infty)$.",
         "diagram_path": "/atlas-assets/topology/diagrams/image.svg",
-        "related": ["sij", "restriction", "composition_maps"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -12034,24 +12335,24 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Image of a map",
+        "canonical_label": "image of a map",
         "display_label": "Image of a Map"
       },
       {
         "id": "inclusion_map",
-        "statement": "For $R\\subseteq A$, the \\textbf{inclusion} $i\\colon R\\to A$ is $i(x)=x$.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "The map that views a subset as sitting inside the ambient set. Composing with it recovers a restriction: $f\\circ i=f|_R$.",
-        "notation": null,
+        "statement": "For $A\\subseteq X$, the inclusion map $i:A\\hookrightarrow X$ is $i(a)=a$.",
+        "formal_statement": "$i:A\\to X$, $i(a)=a$.",
+        "definition": "The canonical function viewing a subset as part of its ambient set.",
+        "intuition": "It does nothing to points; it only changes the ambient viewpoint.",
+        "notation": "$i:A\\hookrightarrow X$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["subspace_topology"],
+          "definitional_dependency": ["function", "subset"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -12059,11 +12360,15 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_inclusion_map_requires_subspace_topology"],
+        "outgoing_relations": [
+          "e_inclusion_map_see_also_subspace_topology",
+          "e_inclusion_map_requires_subset",
+          "e_inclusion_map_requires_function"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["functions", "topology-prerequisite"],
+          "syllabus_priority": "high",
+          "source": null
         },
         "kind": "definition",
         "label": "Inclusion Map",
@@ -12073,7 +12378,7 @@
         "gloss": "The map that views a subset as sitting inside the ambient set. Composing with it recovers a restriction: $f\\circ i=f|_R$.",
         "example": "The inclusion of a subspace is continuous for the subspace topology.",
         "diagram_path": "/atlas-assets/topology/diagrams/inclusion-map.svg",
-        "related": ["restriction", "subspace_topology", "composition_maps"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -12081,12 +12386,12 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Inclusion map",
+        "canonical_label": "inclusion map",
         "display_label": "Inclusion Map"
       },
       {
@@ -12193,14 +12498,14 @@
       },
       {
         "id": "intersection_union",
-        "statement": "$A\\cap B=\\{x\\mid x\\in A\\ \\text{and}\\ x\\in B\\}$ and $A\\cup B=\\{x\\mid x\\in A\\ \\text{or}\\ x\\in B\\}$ (inclusive “or”).",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "Intersection keeps common elements; union pools both. They are commutative, associative, and distribute over each other.",
-        "notation": null,
+        "statement": "$A\\cap B=\\{x\\mid x\\in A\\text{ and }x\\in B\\}$ and $A\\cup B=\\{x\\mid x\\in A\\text{ or }x\\in B\\}$. Arbitrary unions and finite intersections are part of the definition of a topology.",
+        "formal_statement": "$\\bigcup_{i\\in I}A_i=\\{x:\\exists i\\in I, x\\in A_i\\}$ and $\\bigcap_{i\\in I}A_i=\\{x:\\forall i\\in I, x\\in A_i\\}$.",
+        "definition": "Set operations that combine collections by pooling elements or retaining common elements.",
+        "intuition": "Union glues open pieces together; intersection checks simultaneous membership.",
+        "notation": "$A\\cup B$, $A\\cap B$, $\\bigcup_i A_i$, $\\bigcap_i A_i$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["subset"],
+          "definitional_dependency": ["set", "membership", "indexed_family"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -12208,11 +12513,14 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_intersection_union_requires_subset"],
+        "outgoing_relations": [
+          "e_intersection_union_requires_subset",
+          "e_intersection_union_requires_indexed_family"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["set-theory"],
+          "syllabus_priority": "core",
+          "source": null
         },
         "kind": "definition",
         "label": "Intersection and Union",
@@ -12222,7 +12530,7 @@
         "gloss": "Intersection keeps common elements; union pools both. They are commutative, associative, and distribute over each other.",
         "example": "$A,B$ are \\emph{disjoint} when $A\\cap B=\\varnothing$. Always $A\\cap B\\subseteq A\\subseteq A\\cup B$.",
         "diagram_path": "/atlas-assets/topology/diagrams/intersection-union.svg",
-        "related": ["subset", "set_difference", "complement"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -12230,12 +12538,12 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Intersection and union",
+        "canonical_label": "intersection and union",
         "display_label": "Intersection and Union"
       },
       {
@@ -12298,7 +12606,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["homomorphism"],
+          "definitional_dependency": ["homomorphism", "sij"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -12306,7 +12614,10 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_isomorphism_requires_homomorphism"],
+        "outgoing_relations": [
+          "e_isomorphism_requires_homomorphism",
+          "e_isomorphism_requires_sij"
+        ],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -12387,7 +12698,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["subgroup"],
+          "definitional_dependency": ["subgroup", "set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -12735,7 +13046,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["subgroup"],
+          "definitional_dependency": ["subgroup", "coset"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -12743,7 +13054,10 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_normal_subgroup_requires_subgroup"],
+        "outgoing_relations": [
+          "e_normal_subgroup_requires_subgroup",
+          "e_normal_subgroup_requires_coset"
+        ],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -13334,14 +13648,14 @@
       },
       {
         "id": "restriction",
-        "statement": "For $f\\colon A\\to B$ and $R\\subseteq A$, the \\textbf{restriction} $f|_R\\colon R\\to B$ is $f|_R(x)=f(x)$ for $x\\in R$.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "Use the same rule on a smaller domain. Restrictions appear constantly, e.g. $p|_{V_\\lambda}$ in covering maps.",
-        "notation": null,
+        "statement": "For $f:X\\to Y$ and $A\\subseteq X$, the restriction $f|_A:A\\to Y$ is the same rule as $f$ but with domain reduced to $A$.",
+        "formal_statement": "$f|_A(a)=f(a)$ for every $a\\in A$.",
+        "definition": "A function obtained by limiting the domain of another function.",
+        "intuition": "Use the same map on a smaller input set.",
+        "notation": "$f|_A$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["function"],
+          "definitional_dependency": ["function", "subset"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -13354,9 +13668,9 @@
           "e_restriction_prerequisite_for_composition_maps"
         ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["functions"],
+          "syllabus_priority": "high",
+          "source": null
         },
         "kind": "definition",
         "label": "Restriction of a Map",
@@ -13366,7 +13680,7 @@
         "gloss": "Use the same rule on a smaller domain. Restrictions appear constantly, e.g. $p|_{V_\\lambda}$ in covering maps.",
         "example": "If $f|_R$ is injective, then $f|_R\\colon R\\to f(R)$ is a bijection.",
         "diagram_path": "/atlas-assets/topology/diagrams/restriction.svg",
-        "related": ["inclusion_map", "image", "composition_maps"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -13374,12 +13688,12 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Restriction of a map",
+        "canonical_label": "restriction of a map",
         "display_label": "Restriction of a Map"
       },
       {
@@ -13493,7 +13807,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["group"],
+          "definitional_dependency": ["group", "subset"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -13501,7 +13815,10 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_subgroup_requires_group"],
+        "outgoing_relations": [
+          "e_subgroup_requires_group",
+          "e_subgroup_requires_subset"
+        ],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -13533,14 +13850,14 @@
       },
       {
         "id": "subset",
-        "statement": "$B$ is a \\textbf{subset} of $A$ ($B\\subseteq A$) if every element of $B$ is an element of $A$. If also $A\\neq B$, then $B$ is a \\textbf{proper subset}, $B\\subsetneq A$.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "Everything in $B$ is already in $A$. Sets are equal iff each is a subset of the other.",
-        "notation": null,
+        "statement": "$B$ is a subset of $A$, written $B\\subseteq A$, if every element of $B$ is an element of $A$. If $B\\subseteq A$ and $B\\ne A$, then $B$ is a proper subset of $A$.",
+        "formal_statement": "$B\\subseteq A\\Longleftrightarrow \\forall x\\,(x\\in B\\Rightarrow x\\in A)$.",
+        "definition": "The inclusion relation between sets.",
+        "intuition": "All points of the smaller set are already inside the larger set.",
+        "notation": "$B\\subseteq A$, $B\\subsetneq A$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["set", "membership"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -13548,11 +13865,14 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [],
+        "outgoing_relations": [
+          "e_subset_requires_set",
+          "e_subset_requires_membership"
+        ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["set-theory"],
+          "syllabus_priority": "core",
+          "source": null
         },
         "kind": "definition",
         "label": "Subset",
@@ -13562,7 +13882,7 @@
         "gloss": "Everything in $B$ is already in $A$. Sets are equal iff each is a subset of the other.",
         "example": "$\\{1,2\\}\\subsetneq\\{1,2,3\\}$ and $\\mathbb{Z}\\subseteq\\mathbb{R}$.",
         "diagram_path": "/atlas-assets/topology/diagrams/subset.svg",
-        "related": ["intersection_union", "set_difference", "complement"],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -13570,24 +13890,174 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Subset",
+        "canonical_label": "subset",
         "display_label": "Subset"
       },
       {
-        "id": "sij",
-        "statement": "$f\\colon A\\to B$ is \\textbf{surjective} if every $b\\in B$ equals $f(a)$ for some $a$; \\textbf{injective} if $f(a_1)=f(a_2)\\Rightarrow a_1=a_2$; \\textbf{bijective} if both.",
-        "formal_statement": null,
-        "definition": null,
-        "intuition": "Surjective hits everything, injective never collides, bijective is a perfect one-to-one matching. A bijection has an inverse $f^{-1}$.",
-        "notation": null,
+        "id": "injective",
+        "statement": "A function $f:X\\to Y$ is injective if distinct inputs have distinct outputs.",
+        "formal_statement": "$f(x_1)=f(x_2)\\Rightarrow x_1=x_2$.",
+        "definition": "A function with no collisions: different inputs map to different outputs.",
+        "intuition": "No two distinct points in the domain get sent to the same point in the codomain.",
+        "notation": "injective",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["function"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_injective_requires_function",
+          "e_injective_prerequisite_for_isomorphism"
+        ],
+        "metadata": {
+          "tags": ["functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "kind": "definition",
+        "label": "Injective",
+        "domain": "foundations",
+        "chapter": "A",
+        "ref": "Def. A.7",
+        "gloss": "No two distinct points in the domain get sent to the same point in the codomain.",
+        "example": "$f(x)=2x$ is injective, but $f(x)=x^2$ is not.",
+        "diagram_path": "/atlas-assets/topology/diagrams/injective.svg",
+        "related": ["function", "surjective", "bijective"],
+        "introduced_object": null,
+        "genus": null,
+        "differentia": [],
+        "examples": [],
+        "non_examples": [],
+        "equivalent_definitions": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "injective",
+        "display_label": "Injective"
+      },
+      {
+        "id": "surjective",
+        "statement": "A function $f:X\\to Y$ is surjective if every element of $Y$ is hit.",
+        "formal_statement": "$\\forall y\\in Y\\,\\exists x\\in X:f(x)=y$.",
+        "definition": "A function with no missed targets: every point in the codomain has a preimage.",
+        "intuition": "Every point in the codomain gets hit by at least one point in the domain.",
+        "notation": "surjective",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_surjective_requires_function",
+          "e_surjective_prerequisite_for_isomorphism"
+        ],
+        "metadata": {
+          "tags": ["functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "kind": "definition",
+        "label": "Surjective",
+        "domain": "foundations",
+        "chapter": "A",
+        "ref": "Def. A.7",
+        "gloss": "Every point in the codomain gets hit by at least one point in the domain.",
+        "example": "$f(x)=x$ is surjective, but $f(x)=x^2$ is not.",
+        "diagram_path": "/atlas-assets/topology/diagrams/surjective.svg",
+        "related": ["function", "injective", "bijective"],
+        "introduced_object": null,
+        "genus": null,
+        "differentia": [],
+        "examples": [],
+        "non_examples": [],
+        "equivalent_definitions": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "surjective",
+        "display_label": "Surjective"
+      },
+      {
+        "id": "bijective",
+        "statement": "A function $f:X\\to Y$ is bijective if it is both injective and surjective.",
+        "formal_statement": "Bijective: injective and surjective.",
+        "definition": "A function that is both injective and surjective: a perfect one-to-one correspondence between the domain and codomain.",
+        "intuition": "Every point in the codomain gets hit by exactly one point in the domain.",
+        "notation": "bijective",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "injective", "surjective"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_bijective_requires_function",
+          "e_bijective_prerequisite_for_isomorphism"
+        ],
+        "metadata": {
+          "tags": ["functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "kind": "definition",
+        "label": "Bijective",
+        "domain": "foundations",
+        "chapter": "A",
+        "ref": "Def. A.7",
+        "gloss": "A function that is both injective and surjective: a perfect one-to-one correspondence between the domain and codomain.",
+        "example": "$f(x)=x$ is bijective, but $f(x)=x^2$ is not.",
+        "diagram_path": "/atlas-assets/topology/diagrams/bijective.svg",
+        "related": ["function", "injective", "surjective"],
+        "introduced_object": null,
+        "genus": null,
+        "differentia": [],
+        "examples": [],
+        "non_examples": [],
+        "equivalent_definitions": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "bijective",
+        "display_label": "Bijective"
+      },
+      {
+        "id": "sij",
+        "statement": "A function $f:X\\to Y$ is injective if distinct inputs have distinct outputs, surjective if every element of $Y$ is hit, and bijective if both hold.",
+        "formal_statement": "Injective: $f(x_1)=f(x_2)\\Rightarrow x_1=x_2$. Surjective: $\\forall y\\in Y\\,\\exists x\\in X:f(x)=y$. Bijective: injective and surjective.",
+        "definition": "The standard one-to-one, onto, and one-to-one-correspondence properties of functions.",
+        "intuition": "Injective means no collisions; surjective means no missed targets; bijective means perfect pairing.",
+        "notation": "injective, surjective, bijective",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "image"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -13600,9 +14070,9 @@
           "e_sij_prerequisite_for_isomorphism"
         ],
         "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": "Thaule, Introduction to Topology (TMA4190)"
+          "tags": ["functions"],
+          "syllabus_priority": "core",
+          "source": null
         },
         "kind": "definition",
         "label": "Surjective / Injective / Bijective",
@@ -13612,12 +14082,7 @@
         "gloss": "Surjective hits everything, injective never collides, bijective is a perfect one-to-one matching. A bijection has an inverse $f^{-1}$.",
         "example": "$f$ is bijective iff there is $g$ with $g\\circ f=\\mathrm{id}_A$ and $f\\circ g=\\mathrm{id}_B$ (Thm. A.10).",
         "diagram_path": "/atlas-assets/topology/diagrams/sij.svg",
-        "related": [
-          "image",
-          "homeomorphism",
-          "isomorphism",
-          "composition_maps"
-        ],
+        "related": [],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -13625,12 +14090,12 @@
         "non_examples": [],
         "equivalent_definitions": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
-        "canonical_label": "Surjective / injective / bijective",
+        "canonical_label": "surjective / injective / bijective",
         "display_label": "Surjective / Injective / Bijective"
       },
       {
@@ -14195,6 +14660,539 @@
         "mathematical_role": ["definition", "special_case"],
         "canonical_label": "open neighborhood",
         "display_label": "Open Neighborhood"
+      },
+      {
+        "id": "membership",
+        "label": "Membership Relation",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "$x\\in A$ means that $x$ is an element/member of the set $A$.",
+        "formal_statement": "$\\in$ is the primitive relation between objects and sets used to express elementhood.",
+        "definition": "The relation expressing that an object belongs to a set.",
+        "intuition": "The atomic “is in” relation from which subset, union, intersection, and most set constructions are phrased.",
+        "notation": "$x\\in A$, $x\\notin A$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [],
+        "metadata": {
+          "tags": ["set-theory"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "membership relation",
+        "display_label": "Membership Relation"
+      },
+      {
+        "id": "empty_set",
+        "label": "Empty Set",
+        "kind": "object",
+        "domain": "foundations",
+        "statement": "The empty set is the unique set with no elements.",
+        "formal_statement": "$\\varnothing=\\{x\\mid x\\ne x\\}$; equivalently, $\\forall x\\,(x\\notin\\varnothing)$.",
+        "definition": "The unique set containing no elements.",
+        "intuition": "The smallest set and the mandatory open set in every topology.",
+        "notation": "$\\varnothing$, $\\{\\}$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["set", "membership"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": ["e_empty_set_requires_set"],
+        "metadata": {
+          "tags": ["set-theory"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "empty set",
+        "display_label": "Empty Set"
+      },
+      {
+        "id": "power_set",
+        "label": "Power Set",
+        "kind": "construction",
+        "domain": "foundations",
+        "statement": "The power set of $X$ is the set of all subsets of $X$.",
+        "formal_statement": "$\\mathcal P(X)=\\{A\\mid A\\subseteq X\\}$.",
+        "definition": "A construction sending a set to the set of all of its subsets.",
+        "intuition": "A topology on $X$ is not just any object; it is a selected subcollection of $\\mathcal P(X)$.",
+        "notation": "$\\mathcal P(X)$, $2^X$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["set", "subset"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_power_set_requires_set",
+          "e_power_set_requires_subset"
+        ],
+        "metadata": {
+          "tags": ["set-theory"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "power set",
+        "display_label": "Power Set"
+      },
+      {
+        "id": "ordered_pair",
+        "label": "Ordered Pair",
+        "kind": "object",
+        "domain": "foundations",
+        "statement": "An ordered pair $(a,b)$ records two objects in order; $(a,b)=(c,d)$ exactly when $a=c$ and $b=d$.",
+        "formal_statement": "$(a,b)=(c,d)\\Longleftrightarrow a=c\\land b=d$.",
+        "definition": "A two-entry ordered object used to define products and relations.",
+        "intuition": "Unlike sets, order matters: $(a,b)$ and $(b,a)$ need not be the same.",
+        "notation": "$(a,b)$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["set"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_ordered_pair_prerequisite_for_cartesian_product"
+        ],
+        "metadata": {
+          "tags": ["set-theory"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "ordered pair",
+        "display_label": "Ordered Pair"
+      },
+      {
+        "id": "relation",
+        "label": "Relation",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A relation from $A$ to $B$ is a subset of $A\\times B$; a relation on $A$ is a subset of $A\\times A$.",
+        "formal_statement": "$R\\subseteq A\\times B$; write $aRb$ when $(a,b)\\in R$.",
+        "definition": "A set of ordered pairs.",
+        "intuition": "A relation records which pairs of elements are linked. Functions, orders, and equivalence relations are special relations.",
+        "notation": "$R\\subseteq A\\times B$, $aRb$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["cartesian_product", "subset"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_relation_requires_cartesian_product",
+          "e_relation_requires_subset"
+        ],
+        "metadata": {
+          "tags": ["set-theory"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "relation",
+        "display_label": "Relation"
+      },
+      {
+        "id": "equivalence_relation",
+        "label": "Equivalence Relation",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "An equivalence relation on $X$ is a relation $\\sim$ that is reflexive, symmetric, and transitive.",
+        "formal_statement": "$\\forall x\\,x\\sim x$; $x\\sim y\\Rightarrow y\\sim x$; $(x\\sim y\\land y\\sim z)\\Rightarrow x\\sim z$.",
+        "definition": "A relation that partitions a set into equivalence classes.",
+        "intuition": "It formalizes “same for the purpose at hand” and is the set-theoretic input for quotient constructions.",
+        "notation": "$x\\sim y$, $X/{\\sim}$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["relation", "set"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_equivalence_relation_requires_relation",
+          "e_equivalence_relation_induces_equivalence_class"
+        ],
+        "metadata": {
+          "tags": ["set-theory", "quotients"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "equivalence relation",
+        "display_label": "Equivalence Relation"
+      },
+      {
+        "id": "domain",
+        "label": "Domain",
+        "kind": "object",
+        "domain": "foundations",
+        "statement": "The domain of a function is the set of inputs on which the function is defined.",
+        "formal_statement": "For $f:X\\to Y$, $\\operatorname{dom}(f)=X$.",
+        "definition": "The input set of a function.",
+        "intuition": "The side where function evaluation starts.",
+        "notation": "$\\operatorname{dom}(f)$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [],
+        "metadata": {
+          "tags": ["functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "domain",
+        "display_label": "Domain"
+      },
+      {
+        "id": "codomain",
+        "label": "Codomain",
+        "kind": "object",
+        "domain": "foundations",
+        "statement": "The codomain of a function is the declared target set of its outputs.",
+        "formal_statement": "For $f:X\\to Y$, $\\operatorname{cod}(f)=Y$.",
+        "definition": "The target set specified as part of a function.",
+        "intuition": "The set a function is allowed to land in; the image may be smaller.",
+        "notation": "$\\operatorname{cod}(f)$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [],
+        "metadata": {
+          "tags": ["functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "codomain",
+        "display_label": "Codomain"
+      },
+      {
+        "id": "preimage",
+        "label": "Preimage / Inverse Image",
+        "kind": "construction",
+        "domain": "foundations",
+        "statement": "For $f:X\\to Y$ and $B\\subseteq Y$, the preimage of $B$ is $f^{-1}(B)=\\{x\\in X\\mid f(x)\\in B\\}$.",
+        "formal_statement": "$f^{-1}(B)=\\{x\\in X: f(x)\\in B\\}$.",
+        "definition": "The subset of the domain whose values lie in a given subset of the codomain.",
+        "intuition": "Continuity in topology is naturally expressed by pulling open sets backward.",
+        "notation": "$f^{-1}(B)$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "subset"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_preimage_requires_function",
+          "e_preimage_requires_subset",
+          "e_preimage_prerequisite_for_continuity"
+        ],
+        "metadata": {
+          "tags": ["functions", "topology-prerequisite"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "preimage / inverse image",
+        "display_label": "Preimage / Inverse Image"
+      },
+      {
+        "id": "identity_map",
+        "label": "Identity Map",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "The identity map on $X$ is the function $\\operatorname{id}_X:X\\to X$ given by $\\operatorname{id}_X(x)=x$.",
+        "formal_statement": "$\\operatorname{id}_X(x)=x$ for every $x\\in X$.",
+        "definition": "The function that leaves every element fixed.",
+        "intuition": "The neutral element for composition of maps.",
+        "notation": "$\\operatorname{id}_X$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "set"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_identity_map_requires_function",
+          "e_identity_map_prerequisite_for_composition_maps"
+        ],
+        "metadata": {
+          "tags": ["functions"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "identity map",
+        "display_label": "Identity Map"
+      },
+      {
+        "id": "indexed_family",
+        "label": "Indexed Family",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "An indexed family $(A_i)_{i\\in I}$ is a function assigning to each index $i\\in I$ an object $A_i$.",
+        "formal_statement": "An indexed family over $I$ is a function $A:I\\to\\mathcal U$, usually written $i\\mapsto A_i$.",
+        "definition": "A collection whose members are labeled by an index set.",
+        "intuition": "Used for arbitrary unions, open covers, products, and choice functions.",
+        "notation": "$(A_i)_{i\\in I}$, $\\{A_i\\}_{i\\in I}$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "set"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_indexed_family_requires_function",
+          "e_indexed_family_prerequisite_for_topology"
+        ],
+        "metadata": {
+          "tags": ["set-theory"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "indexed family",
+        "display_label": "Indexed Family"
+      },
+      {
+        "id": "choice_function",
+        "label": "Choice Function",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "For a family of nonempty sets $(A_i)_{i\\in I}$, a choice function is a function $c:I\\to\\bigcup_{i\\in I}A_i$ with $c(i)\\in A_i$ for every $i$.",
+        "formal_statement": "$\\forall i\\in I,\\ A_i\\ne\\varnothing$ and $c(i)\\in A_i$.",
+        "definition": "A function selecting one element from each set in a family.",
+        "intuition": "The concrete object whose existence is asserted by the Axiom of Choice.",
+        "notation": "$c(i)\\in A_i$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["function", "indexed_family"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": ["e_choice_function_requires_indexed_family"],
+        "metadata": {
+          "tags": ["choice", "functions"],
+          "syllabus_priority": "high",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "choice function",
+        "display_label": "Choice Function"
+      },
+      {
+        "id": "finite_set",
+        "label": "Finite Set",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A set is finite if it has exactly $n$ elements for some natural number $n$.",
+        "formal_statement": "$A$ is finite if $A\\cong\\{1,\\dots,n\\}$ for some $n\\in\\mathbb N$, with $n=0$ corresponding to $\\varnothing$.",
+        "definition": "A set bijective with an initial segment of the natural numbers.",
+        "intuition": "The set-theoretic notion behind finite subcovers and finite intersections.",
+        "notation": "$|A|<\\infty$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["set", "sij"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": ["e_finite_set_requires_sij"],
+        "metadata": {
+          "tags": ["set-theory"],
+          "syllabus_priority": "high",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "finite set",
+        "display_label": "Finite Set"
+      },
+      {
+        "id": "finite_subcover",
+        "label": "Finite Subcover",
+        "kind": "definition",
+        "domain": "foundations",
+        "statement": "A finite subcover is a finite subcollection of a cover that still covers the same space or set.",
+        "formal_statement": "If $(U_i)_{i\\in I}$ covers $X$, a finite subcover is $U_{i_1},\\dots,U_{i_n}$ with $X\\subseteq\\bigcup_{k=1}^n U_{i_k}$.",
+        "definition": "A finite subfamily of a cover whose union still contains the covered object.",
+        "intuition": "The key finite extraction demanded by compactness.",
+        "notation": "$U_{i_1},\\dots,U_{i_n}$",
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": [
+            "cover",
+            "finite_set",
+            "intersection_union"
+          ],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": [
+          "e_finite_subcover_requires_cover",
+          "e_finite_subcover_requires_finite_set",
+          "e_finite_subcover_prerequisite_for_compactness"
+        ],
+        "metadata": {
+          "tags": ["covers", "compactness-prerequisite"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "related": [],
+        "status": {
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
+        },
+        "canonical_label": "finite subcover",
+        "display_label": "Finite Subcover"
       }
     ],
     "edges": [
@@ -20029,9 +21027,119 @@
         "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
       },
       {
-        "id": "e_inclusion_map_requires_subspace_topology",
-        "source": "inclusion_map",
-        "target": "subspace_topology",
+        "id": "e_preimage_requires_function",
+        "source": "preimage",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_inverse_image_requires_function",
+        "source": "inverse_image",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_injective_requires_function",
+        "source": "injective",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_surjective_requires_function",
+        "source": "surjective",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_bijective_requires_function",
+        "source": "bijective",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_bijective_requires_injective",
+        "source": "bijective",
+        "target": "injective",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_bijective_requires_surjective",
+        "source": "bijective",
+        "target": "surjective",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_image_of_function_requires_function",
+        "source": "image_of_function",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_preimage_of_function_requires_function",
+        "source": "preimage_of_function",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_restriction_of_function_requires_function",
+        "source": "restriction_of_function",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "",
+        "direction": "source_to_target",
+        "confidence": "medium",
+        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+      },
+      {
+        "id": "e_inverse_of_function_requires_function",
+        "source": "inverse_of_function",
+        "target": "function",
         "type": "requires",
         "dependency_class": "definitional_dependency",
         "label": "",
@@ -20885,6 +21993,666 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": "In the metric topology, this is the ball-based characterization of a topological neighborhood."
+      },
+      {
+        "id": "e_inclusion_map_see_also_subspace_topology",
+        "source": "inclusion_map",
+        "target": "subspace_topology",
+        "type": "see_also",
+        "dependency_class": "pedagogical_dependency",
+        "label": "Inclusion maps become canonical continuous maps for subspace topologies",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Foundational inclusion maps only require a subset; continuity uses the subspace topology."
+      },
+      {
+        "id": "e_set_requires_membership",
+        "source": "set",
+        "target": "membership",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Sets are described using membership",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_subset_requires_set",
+        "source": "subset",
+        "target": "set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Subset is a relation between sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_subset_requires_membership",
+        "source": "subset",
+        "target": "membership",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Subset is defined pointwise by membership",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_empty_set_requires_set",
+        "source": "empty_set",
+        "target": "set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The empty set is a set",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_power_set_requires_set",
+        "source": "power_set",
+        "target": "set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Power sets are formed from sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_power_set_requires_subset",
+        "source": "power_set",
+        "target": "subset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Power sets collect all subsets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_ordered_pair_prerequisite_for_cartesian_product",
+        "source": "ordered_pair",
+        "target": "cartesian_product",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "Cartesian products are sets of ordered pairs",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_cartesian_product_requires_ordered_pair",
+        "source": "cartesian_product",
+        "target": "ordered_pair",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Cartesian products use ordered pairs",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_relation_requires_cartesian_product",
+        "source": "relation",
+        "target": "cartesian_product",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Relations are subsets of Cartesian products",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_relation_requires_subset",
+        "source": "relation",
+        "target": "subset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A relation is a subset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_equivalence_relation_requires_relation",
+        "source": "equivalence_relation",
+        "target": "relation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Equivalence relations are special relations",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_equivalence_relation_induces_equivalence_class",
+        "source": "equivalence_relation",
+        "target": "equivalence_class",
+        "type": "induces",
+        "dependency_class": "construction_dependency",
+        "label": "An equivalence relation induces equivalence classes",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_equivalence_class_requires_equivalence_relation",
+        "source": "equivalence_class",
+        "target": "equivalence_relation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Equivalence classes are defined from equivalence relations",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_function_requires_domain",
+        "source": "function",
+        "target": "domain",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A function includes a domain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_function_requires_codomain",
+        "source": "function",
+        "target": "codomain",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A function includes a codomain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_function_requires_relation",
+        "source": "function",
+        "target": "relation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Set-theoretically a function is a relation with uniqueness",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_image_requires_subset",
+        "source": "image",
+        "target": "subset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Images are taken of subsets of the domain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_preimage_requires_subset",
+        "source": "preimage",
+        "target": "subset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Preimages pull back subsets of the codomain",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_preimage_prerequisite_for_continuity",
+        "source": "preimage",
+        "target": "continuity",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "Continuity is defined by preimages of open sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_continuity_requires_preimage",
+        "source": "continuity",
+        "target": "preimage",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Continuity uses inverse images of open sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_identity_map_requires_function",
+        "source": "identity_map",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Identity maps are functions",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_identity_map_prerequisite_for_composition_maps",
+        "source": "identity_map",
+        "target": "composition_maps",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "Identity maps are units for composition",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_indexed_family_requires_function",
+        "source": "indexed_family",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Indexed families are functions from an index set",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_indexed_family_prerequisite_for_topology",
+        "source": "indexed_family",
+        "target": "topology",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "Arbitrary unions in topology are indexed by families",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_choice_function_requires_indexed_family",
+        "source": "choice_function",
+        "target": "indexed_family",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Choice functions choose from indexed families",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_axiom_of_choice_requires_choice_function",
+        "source": "axiom_of_choice",
+        "target": "choice_function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "AC asserts existence of choice functions",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_axiom_of_choice_requires_indexed_family",
+        "source": "axiom_of_choice",
+        "target": "indexed_family",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "AC is stated for indexed families",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_zorns_lemma_see_also_choice",
+        "source": "zorns_lemma",
+        "target": "axiom_of_choice",
+        "type": "see_also",
+        "dependency_class": "logical_dependency",
+        "label": "Zorn’s lemma is choice-equivalent to the Axiom of Choice in standard set theory",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_topology_requires_power_set",
+        "source": "topology",
+        "target": "power_set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A topology is a subcollection of the power set",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_topology_requires_empty_set",
+        "source": "topology",
+        "target": "empty_set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A topology must contain the empty set",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_topology_requires_intersection_union",
+        "source": "topology",
+        "target": "intersection_union",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Topologies are closed under arbitrary unions and finite intersections",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_topology_requires_indexed_family",
+        "source": "topology",
+        "target": "indexed_family",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Arbitrary unions are expressed by indexed families",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_intersection_union_requires_indexed_family",
+        "source": "intersection_union",
+        "target": "indexed_family",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Arbitrary unions/intersections use indexed families",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_complement_prerequisite_for_closed_set",
+        "source": "complement",
+        "target": "closed_set",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "Closed sets are defined via complements of open sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_inclusion_map_requires_subset",
+        "source": "inclusion_map",
+        "target": "subset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "An inclusion map starts from a subset",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_inclusion_map_requires_function",
+        "source": "inclusion_map",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "An inclusion map is a function",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_disjoint_union_requires_indexed_family",
+        "source": "disjoint_union",
+        "target": "indexed_family",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Disjoint unions are usually indexed by a family",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_disjoint_union_requires_cartesian_product",
+        "source": "disjoint_union",
+        "target": "cartesian_product",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Tags in disjoint unions use ordered-pair/product notation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_finite_set_requires_sij",
+        "source": "finite_set",
+        "target": "sij",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Finiteness is characterized by bijection with an initial segment",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_finite_subcover_requires_cover",
+        "source": "finite_subcover",
+        "target": "cover",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A finite subcover is a subcover of a cover",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_finite_subcover_requires_finite_set",
+        "source": "finite_subcover",
+        "target": "finite_set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A finite subcover contains finitely many cover elements",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_finite_subcover_prerequisite_for_compactness",
+        "source": "finite_subcover",
+        "target": "compactness",
+        "type": "prerequisite_for",
+        "dependency_class": "pedagogical_dependency",
+        "label": "Compactness is stated using finite subcovers",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_finite_subcover_argument_requires_finite_subcover",
+        "source": "finite_subcover_argument",
+        "target": "finite_subcover",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The proof method targets finite subcovers",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_open_cover_argument_requires_cover",
+        "source": "open_cover_argument",
+        "target": "cover",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Open cover arguments start with covers",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_open_cover_argument_requires_open_set",
+        "source": "open_cover_argument",
+        "target": "open_set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Open cover arguments use open sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_basis_argument_requires_basis",
+        "source": "basis_argument",
+        "target": "basis_for_topology",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Basis arguments use bases",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_basis_argument_requires_subbasis",
+        "source": "basis_argument",
+        "target": "subbasis",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Subbasis arguments use subbases",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_separation_argument_requires_open_set",
+        "source": "separation_argument",
+        "target": "open_set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Separation arguments separate with open sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_separation_argument_requires_closed_set",
+        "source": "separation_argument",
+        "target": "closed_set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Many separation arguments separate closed sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_quotient_space_requires_equivalence_relation",
+        "source": "quotient_space",
+        "target": "equivalence_relation",
+        "type": "requires",
+        "dependency_class": "construction_dependency",
+        "label": "Quotient spaces are often constructed from equivalence relations",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_quotient_topology_requires_preimage",
+        "source": "quotient_topology",
+        "target": "preimage",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Quotient topology is defined by preimages of open sets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_binary_operation_requires_function",
+        "source": "binary_operation",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A binary operation is a function",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_binary_operation_requires_cartesian_product",
+        "source": "binary_operation",
+        "target": "cartesian_product",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Its domain is a Cartesian product",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_group_requires_set",
+        "source": "group",
+        "target": "set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A group has an underlying set",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_group_requires_binary_operation",
+        "source": "group",
+        "target": "binary_operation",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A group has a binary operation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_homomorphism_requires_function",
+        "source": "homomorphism",
+        "target": "function",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A homomorphism is a structure-preserving function",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_isomorphism_requires_sij",
+        "source": "isomorphism",
+        "target": "sij",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A group isomorphism is bijective",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_subgroup_requires_subset",
+        "source": "subgroup",
+        "target": "subset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "A subgroup is a subset with inherited structure",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
+      },
+      {
+        "id": "e_normal_subgroup_requires_coset",
+        "source": "normal_subgroup",
+        "target": "coset",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Normality can be characterized by equality of left and right cosets",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": null
       }
     ],
     "field": "topology_field",
