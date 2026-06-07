@@ -40,6 +40,7 @@ interface SandboxState {
 
   // --- free inputs --------------------------------------------------------
   setValue: (id: string, value: Value) => void;
+  setScalarValue: (id: string, value: number) => void;
   setPoint: (id: string, p: [number, number]) => void;
 
   // --- views --------------------------------------------------------------
@@ -56,6 +57,18 @@ interface SandboxState {
 const recompile = (ws: Workspace) => ({ ws, compiled: compile(ws) });
 
 const DEFAULT_SLIDER: SliderSpec = { min: -10, max: 10, step: 0.1 };
+
+function formatScalarSourceValue(value: number): string {
+  if (!Number.isFinite(value)) return "0";
+  const rounded = Math.round(value * 1e6) / 1e6;
+  return Object.is(rounded, -0) ? "0" : `${rounded}`;
+}
+
+function syncScalarAssignmentSource(source: string, value: number): string {
+  const match = source.match(/^(\s*[A-Za-z]\w*\s*=\s*)(.*?)(\s*)$/);
+  if (!match) return source;
+  return `${match[1]}${formatScalarSourceValue(value)}${match[3]}`;
+}
 
 export const useSandbox = create<SandboxState>((set, get) => {
   const initial = emptyWorkspace();
@@ -135,6 +148,14 @@ export const useSandbox = create<SandboxState>((set, get) => {
 
     setValue: (id, value) =>
       set((s) => recompile({ ...s.ws, values: { ...s.ws.values, [id]: value } })),
+
+    setScalarValue: (id, value) =>
+      set((s) => {
+        const rows = s.ws.rows.map((r) =>
+          r.id === id ? { ...r, source: syncScalarAssignmentSource(r.source, value) } : r,
+        );
+        return recompile({ ...s.ws, rows, values: { ...s.ws.values, [id]: value } });
+      }),
 
     setPoint: (id, p) =>
       set((s) => recompile({ ...s.ws, values: { ...s.ws.values, [id]: p } })),

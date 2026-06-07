@@ -119,10 +119,12 @@ export function SandboxView() {
 /** Brand-style title + dropdown of prepared workspaces (atlas examples). */
 function WorkspaceMenu() {
   const ws = useSandbox((s) => s.ws);
+  const compiled = useSandbox((s) => s.compiled);
   const loadById = useSandbox((s) => s.loadById);
   const reset = useSandbox((s) => s.reset);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const issueCount = compiled.computed.filter((c) => c?.error || c?.kind === "invalid").length;
 
   useEffect(() => {
     if (!open) return;
@@ -152,7 +154,7 @@ function WorkspaceMenu() {
         <span className="min-w-0 flex-1">
           <span className="block truncate text-ui-sm font-semibold">{ws.title}</span>
           <span className="sandbox-workspace-meta block truncate font-mono text-ui-2xs uppercase tracking-label-tight">
-            {ws.rows.length} expressions
+            {ws.rows.length} expressions · {issueCount > 0 ? `${issueCount} issue${issueCount === 1 ? "" : "s"}` : "ready"}
           </span>
         </span>
         <CaretDown

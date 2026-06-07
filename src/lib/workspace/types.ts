@@ -39,8 +39,9 @@ export interface SliderSpec {
 /**
  * A row is what the user types and edits. It owns presentation (color,
  * visibility), provenance, and — for free inputs — its slider spec. The
- * *current* free value lives in `Workspace.values`, keyed by row id, so that
- * dragging/sliding never rewrites source text.
+ * *current* free value lives in `Workspace.values`, keyed by row id. Scalar
+ * slider edits also rewrite simple assignment source text so the notebook,
+ * controls, and evaluated output stay synchronized.
  */
 export interface Row {
   id: string;

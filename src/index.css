@@ -2195,29 +2195,52 @@ a:focus-visible,
   scrollbar-color: color-mix(in srgb, var(--fg-1) 18%, transparent) transparent;
 }
 
+.sandbox-section {
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface) 28%, transparent);
+}
+
 .sandbox-section + .sandbox-section {
-  margin-top: 4px;
+  margin-top: 7px;
 }
 
 .sandbox-section-header {
-  color: var(--fg-3);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 54%, transparent);
+  color: var(--fg-2);
   font-size: var(--type-ui-2xs);
   font-weight: 700;
   letter-spacing: var(--tracking-label-tight);
   text-transform: uppercase;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-section-header:hover {
+  background: color-mix(in srgb, var(--fg-1) 4%, transparent);
+  color: var(--fg-1);
 }
 
 .sandbox-section-icon {
   width: 16px;
   height: 16px;
   border-radius: var(--radius-xs);
-  background: color-mix(in srgb, var(--fg-1) 5%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
   color: var(--fg-3);
+}
+
+.sandbox-section-caret {
+  color: var(--fg-4);
+  transition: transform var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-section-header[aria-expanded="false"] .sandbox-section-caret {
+  transform: rotate(-90deg);
 }
 
 .sandbox-section-rows {
   overflow: hidden;
-  border-radius: var(--radius-md);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
 
 .sandbox-expression-row {
@@ -2289,13 +2312,7 @@ a:focus-visible,
     border-color var(--dur-micro) var(--ease-standard);
 }
 
-.sandbox-expression-row:hover .sandbox-field-frame,
-.sandbox-expression-row[data-selected="true"] .sandbox-field-frame {
-  background: transparent;
-  border-color: var(--sandbox-field-border);
-}
-
-.sandbox-expression-row:focus-within .sandbox-field-frame {
+.sandbox-field-frame:focus-within {
   background: var(--sandbox-field-focus);
   border-color: var(--accent-border);
 }
@@ -2324,6 +2341,34 @@ a:focus-visible,
   --slider-color: currentColor;
   --slider-progress: 50%;
   color: var(--fg-3);
+  padding-right: 1px;
+}
+
+.sandbox-slider-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 18px;
+}
+
+.sandbox-slider-bubble {
+  position: absolute;
+  left: var(--slider-progress);
+  bottom: 16px;
+  z-index: 1;
+  min-width: 28px;
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in srgb, var(--slider-color) 28%, transparent);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow:
+    0 4px 10px color-mix(in srgb, var(--fg-1) 12%, transparent);
+  color: var(--fg-1);
+  font-size: 10px;
+  line-height: 1;
+  padding: 4px 6px;
+  pointer-events: none;
+  text-align: center;
 }
 
 .sandbox-num-box {
@@ -2361,22 +2406,15 @@ a:focus-visible,
   color: var(--fg-4);
 }
 
-.sandbox-status-dot {
-  width: 6px;
-  height: 6px;
-  flex-shrink: 0;
-  border-radius: var(--radius-pill);
-  box-shadow: 0 0 0 1px color-mix(in srgb, currentColor 18%, transparent);
-}
-
 .sandbox-note {
   min-width: 0;
-  max-width: 132px;
+  max-width: 116px;
   color: var(--fg-4);
 }
 
 .sandbox-deps {
-  max-width: 118px;
+  max-width: 168px;
+  color: var(--fg-4);
 }
 
 .sandbox-row-controls {
@@ -2387,6 +2425,15 @@ a:focus-visible,
 
 .sandbox-expression-row:hover .sandbox-row-controls,
 .sandbox-expression-row:focus-within .sandbox-row-controls {
+  opacity: 1;
+}
+
+.sandbox-expression-row[data-selected="true"] .sandbox-row-controls {
+  opacity: 0.64;
+}
+
+.sandbox-expression-row[data-selected="true"]:hover .sandbox-row-controls,
+.sandbox-expression-row[data-selected="true"]:focus-within .sandbox-row-controls {
   opacity: 1;
 }
 
@@ -2444,6 +2491,7 @@ a:focus-visible,
   appearance: none;
   background: transparent;
   border-radius: var(--radius-pill);
+  display: block;
 }
 
 .ws-slider::-webkit-slider-runnable-track {

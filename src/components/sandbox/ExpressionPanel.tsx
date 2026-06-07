@@ -7,9 +7,10 @@
  * readouts) so the sandbox reads as part of the same product.
  */
 
-import { useMemo, type CSSProperties } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import {
   Calculator,
+  CaretDown,
   Eye,
   EyeSlash,
   Function as FunctionIcon,
@@ -31,24 +32,33 @@ export function ExpressionPanel() {
   const compiled = useSandbox((s) => s.compiled);
   const addRow = useSandbox((s) => s.addRow);
   const sections = useMemo(() => groupRows(ws.rows, compiled.byId), [compiled.byId, ws.rows]);
+  const [collapsed, setCollapsed] = useState<Partial<Record<SectionId, boolean>>>({});
 
   return (
     <div className="sandbox-expression-panel flex h-full flex-col">
       <div className="sandbox-expression-list flex-1 overflow-y-auto px-1.5 pb-1.5 pt-1">
         {sections.map((section) => (
           <section key={section.id} className="sandbox-section">
-            <div className="sandbox-section-header flex items-center gap-1.5 px-2 pb-1.5 pt-2">
+            <button
+              type="button"
+              className="sandbox-section-header flex w-full items-center gap-1.5 px-2 pb-1.5 pt-2 text-left"
+              aria-expanded={!collapsed[section.id]}
+              onClick={() => setCollapsed((next) => ({ ...next, [section.id]: !next[section.id] }))}
+            >
               <span className="sandbox-section-icon flex items-center justify-center">
                 <SectionIcon id={section.id} />
               </span>
               <span className="min-w-0 flex-1 truncate">{section.title}</span>
               <span className="font-mono tabular-nums">{section.rows.length}</span>
-            </div>
-            <div className="sandbox-section-rows">
-              {section.rows.map(({ row, index, computed }) => (
-                <ExpressionRow key={row.id} row={row} index={index} computed={computed} />
-              ))}
-            </div>
+              <CaretDown className="sandbox-section-caret h-3 w-3 shrink-0" weight="bold" />
+            </button>
+            {!collapsed[section.id] && (
+              <div className="sandbox-section-rows">
+                {section.rows.map(({ row, index, computed }) => (
+                  <ExpressionRow key={row.id} row={row} index={index} computed={computed} />
+                ))}
+              </div>
+            )}
           </section>
         ))}
       </div>
@@ -123,7 +133,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
   const setColor = useSandbox((s) => s.setRowColor);
   const toggleVisible = useSandbox((s) => s.toggleRowVisible);
   const setSlider = useSandbox((s) => s.setRowSlider);
-  const setValue = useSandbox((s) => s.setValue);
+  const setScalarValue = useSandbox((s) => s.setScalarValue);
   const selectRow = useSandbox((s) => s.selectRow);
   const selected = useSandbox((s) => s.selectedRowId === row.id);
   const addRow = useSandbox((s) => s.addRow);
@@ -132,6 +142,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
   const isParam = computed?.kind === "parameter";
   const readout = useMemo(() => readoutFor(computed), [computed]);
   const rowType = useMemo(() => rowTypeFor(computed), [computed]);
+  const summary = useMemo(() => selectedSummaryFor(computed, readout), [computed, readout]);
 
   const cycleColor = () => {
     const i = PALETTE.indexOf(row.color as (typeof PALETTE)[number]);
@@ -180,18 +191,18 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
               <WarningCircle size={12} weight="bold" />
               {computed.error}
             </div>
-          ) : readout ? (
+          ) : selected && summary ? (
             <div className="sandbox-row-readout mt-0.5 flex items-center gap-1 font-mono text-ui-2xs">
               <RowTypeIcon kind={rowType} />
-              {readout}
+              {summary}
             </div>
           ) : null}
 
           {isParam && (
-            <ParamSlider row={row} value={asNumber(computed?.value)} onChange={(v) => setValue(row.id, v)} onConfig={(s) => setSlider(row.id, s)} />
+            <ParamSlider row={row} value={asNumber(computed?.value)} onChange={(v) => setScalarValue(row.id, v)} onConfig={(s) => setSlider(row.id, s)} />
           )}
 
-          <RowMeta deps={computed?.deps ?? []} status={status} note={row.provenance.note} />
+          {selected && <RowMeta deps={computed?.deps ?? []} status={status} note={row.provenance.note} name={computed?.name} />}
         </div>
 
         {/* Controls */}
@@ -219,6 +230,7 @@ function ParamSlider({
   onChange: (v: number) => void;
   onConfig: (s: { min: number; max: number; step: number }) => void;
 }) {
+  const [dragging, setDragging] = useState(false);
   const slider = row.slider ?? DEFAULT_SLIDER;
   const progress = sliderProgress(value, slider.min, slider.max);
   const sliderStyle = {
@@ -228,18 +240,24 @@ function ParamSlider({
   } as CSSProperties;
 
   return (
-    <div className="sandbox-param-slider mt-1 flex items-center gap-1.5">
+    <div className="sandbox-param-slider mt-1 flex items-center gap-1.5" style={sliderStyle}>
       <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
-      <input
-        type="range"
-        min={slider.min}
-        max={slider.max}
-        step={slider.step}
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        className="ws-slider min-w-0 flex-1"
-        style={sliderStyle}
-      />
+      <div className="sandbox-slider-track min-w-0 flex-1">
+        {dragging && <span className="sandbox-slider-bubble font-mono tabular-nums">{formatValue(value)}</span>}
+        <input
+          type="range"
+          min={slider.min}
+          max={slider.max}
+          step={slider.step}
+          value={value}
+          onBlur={() => setDragging(false)}
+          onChange={(e) => onChange(Number(e.target.value))}
+          onPointerCancel={() => setDragging(false)}
+          onPointerDown={() => setDragging(true)}
+          onPointerUp={() => setDragging(false)}
+          className="ws-slider w-full"
+        />
+      </div>
       <NumBox label="Maximum value" value={slider.max} onChange={(max) => onConfig({ ...slider, max })} />
     </div>
   );
@@ -261,44 +279,32 @@ function RowMeta({
   deps,
   status,
   note,
+  name,
 }: {
   deps: string[];
   status: FactStatus | "error";
   note?: string;
+  name?: string;
 }) {
   if (!note && deps.length === 0 && status !== "error") return null;
+  const depNotation = deps.length > 0 ? `${name ?? "row"}←${deps.join(",")}` : "";
   return (
     <div className="sandbox-row-meta mt-1 flex items-center gap-1.5 text-ui-2xs">
-      <span className="sandbox-status-indicator flex items-center gap-1" title={statusTitle(status)}>
-        <StatusIcon status={status} />
-      </span>
+      {status === "error" && <WarningCircle className="shrink-0" size={12} weight="bold" />}
       {note && (
         <span className="sandbox-note truncate" title={note}>
           {note}
         </span>
       )}
       {deps.length > 0 && (
-        <span className="sandbox-deps flex min-w-0 items-center gap-1 truncate font-mono" title={`depends on ${deps.join(", ")}`}>
+        <span className="sandbox-deps flex min-w-0 items-center gap-1 font-mono" title={`depends on ${deps.join(", ")}`}>
           <LinkSimple size={11} />
-          <span className="truncate">{deps.join(", ")}</span>
+          <span className="truncate">{depNotation}</span>
         </span>
       )}
     </div>
   );
 }
-
-function StatusIcon({ status }: { status: FactStatus | "error" }) {
-  const color = STATUS_COLOR[status];
-  return <span className="sandbox-status-dot" style={{ background: `var(${color})` }} />;
-}
-
-const STATUS_COLOR: Record<FactStatus | "error", string> = {
-  computed: "--fact-computed",
-  recognized: "--fact-recognized",
-  user: "--fact-user",
-  pending: "--fact-pending",
-  error: "--red",
-};
 
 type RowType = "slider" | "function" | "graph" | "value" | "blank";
 
@@ -326,6 +332,11 @@ function readoutFor(computed?: Computed): string {
     return `${computed.name ? `${computed.name} = ` : ""}${formatValue(computed.value)}`;
   }
   return "";
+}
+
+function selectedSummaryFor(computed: Computed | undefined, readout: string): string {
+  if (!computed || computed.kind === "parameter") return "";
+  return readout;
 }
 
 function geomReadout(g: GeomShape): string {
