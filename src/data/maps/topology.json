@@ -2263,9 +2263,9 @@
       },
       {
         "id": "regular_space",
-        "statement": "Under the atlas default convention, a regular space is a T1 topological space in which points and disjoint closed sets can be separated by disjoint open neighborhoods.",
+        "statement": "A regular space is a T1 topological space in which points and disjoint closed sets can be separated by disjoint open neighborhoods.",
         "formal_statement": "$$(X,\\tau)\\text{ regular}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall x\\in X\\ \\forall F\\subseteq X,\\ (F\\text{ closed}\\land x\\notin F)\\Rightarrow \\exists U,V\\in\\tau\\ (x\\in U,\\ F\\subseteq V,\\ U\\cap V=\\varnothing).$$",
-        "definition": "Using the atlas default T1 convention, a topological space is regular if singletons are closed and every point can be separated from every closed set not containing it by disjoint open sets.",
+        "definition": "A topological space is regular if singletons are closed and every point can be separated from every closed set not containing it by disjoint open sets.",
         "intuition": "Regularity says a point and a closed obstacle can be pulled apart topologically.",
         "notation": "$$T_3$$ under the T1 convention",
         "assumptions": [],
@@ -2319,9 +2319,9 @@
       },
       {
         "id": "normal_space",
-        "statement": "Under the atlas default convention, a normal space is a T1 topological space in which disjoint closed sets can be separated by disjoint open neighborhoods.",
+        "statement": "A normal space is a T1 topological space in which disjoint closed sets can be separated by disjoint open neighborhoods.",
         "formal_statement": "$$(X,\\tau)\\text{ normal}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall F,G\\subseteq X,\\ (F,G\\text{ closed}\\land F\\cap G=\\varnothing)\\Rightarrow \\exists U,V\\in\\tau\\ (F\\subseteq U,\\ G\\subseteq V,\\ U\\cap V=\\varnothing).$$",
-        "definition": "Using the atlas default T1 convention, a topological space is normal if singletons are closed and every pair of disjoint closed subsets can be separated by disjoint open neighborhoods.",
+        "definition": "A topological space is normal if singletons are closed and every pair of disjoint closed subsets can be separated by disjoint open neighborhoods.",
         "intuition": "Normality is closed-set separation: two closed pieces can be insulated from one another by open regions.",
         "notation": "$$T_4$$ under the T1 convention",
         "assumptions": [],
@@ -2481,7 +2481,7 @@
       },
       {
         "id": "manifold",
-        "statement": "Under the atlas default convention, an $n$-manifold is a Hausdorff, second-countable topological space locally homeomorphic to $\\mathbb R^n$.",
+        "statement": "An $n$-manifold is a Hausdorff, second-countable topological space locally homeomorphic to $\\mathbb R^n$.",
         "formal_statement": "$$X\\text{ is an }n\\text{-manifold}\\Longleftrightarrow X\\text{ is Hausdorff and second-countable, and }\\forall x\\in X\\ \\exists U\\ni x\\ \\exists V\\subseteq\\mathbb R^n\\text{ open with }U\\cong V.$$",
         "definition": "A topological manifold without boundary is a Hausdorff, second-countable topological space such that every point has an open neighborhood homeomorphic to an open subset of $\\mathbb R^n$.",
         "intuition": "A manifold is a space that may be globally curved or glued, but locally looks like ordinary Euclidean space.",
