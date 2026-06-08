@@ -89,9 +89,9 @@ function propertyText(kind: MappingKind, raw: number): string {
 }
 
 function controlLabel(kind: MappingKind, raw: number): string {
-  if (kind === "bijective") return raw % 4 === 0 ? "\\text{identity}" : "\\text{a permutation}";
-  if (kind === "surjective") return raw >= 5 ? "\\text{onto}" : "\\text{misses a target}";
-  return raw >= 6 ? "\\text{a collision}" : "\\text{no collisions}";
+  if (kind === "bijective") return raw % 4 === 0 ? "identity" : "a permutation";
+  if (kind === "surjective") return raw >= 5 ? "onto" : "misses a target";
+  return raw >= 6 ? "a collision" : "no collisions";
 }
 
 function MappingPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
@@ -139,8 +139,10 @@ function MappingPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
         ))}
 
       {model.targets.map((target, i) => {
+        // The map itself is a neutral connector; color is reserved for the sets
+        // (endpoint dots) and for a collision, which is the thing worth flagging.
         const collision = hitCounts[target] > 1;
-        const color = collision && kind !== "surjective" ? DIA.alert : DIA.accent;
+        const color = collision && kind !== "surjective" ? DIA.alert : DIA.ink;
         return (
           <Arrow key={`${i}:${target}`} from={left[i]} to={right[target]} color={color} weight={STROKE.mark} />
         );

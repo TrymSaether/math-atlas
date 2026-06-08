@@ -1,7 +1,7 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
   <defs>
     <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)" />
+      <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
     </marker>
   </defs>
   <text x="160" y="22" font-size="13" text-anchor="middle" fill="var(--dia-ink,#27221d)">c(i) ∈ Aᵢ</text>
@@ -17,8 +17,8 @@
   <text x="88" y="44" font-size="10" text-anchor="middle" fill="var(--dia-acc,#2457c5)">A₁</text>
   <text x="160" y="82" font-size="10" text-anchor="middle" fill="var(--dia-acc2,#0d9488)">A₂</text>
   <text x="234" y="122" font-size="10" text-anchor="middle" fill="var(--dia-boundary,#dc2626)">A₃</text>
-  <path d="M40,146 C54,116 63,84 76,61" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.2" marker-end="url(#arrow)" />
-  <path d="M73,151 C101,127 125,111 150,100" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.2" marker-end="url(#arrow)" />
-  <path d="M106,153 C150,151 190,144 222,135" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.2" marker-end="url(#arrow)" />
+  <path d="M40,146 C54,116 63,84 76,61" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.2" marker-end="url(#arrow)" />
+  <path d="M73,151 C101,127 125,111 150,100" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.2" marker-end="url(#arrow)" />
+  <path d="M106,153 C150,151 190,144 222,135" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.2" marker-end="url(#arrow)" />
   <text x="68" y="164" font-size="10.5" text-anchor="middle" fill="var(--dia-mut,#8c8274)">one selected point per set</text>
 </svg>

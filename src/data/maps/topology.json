@@ -15379,7 +15379,7 @@
         "statement": "The power set of $X$ is the set of all subsets of $X$.",
         "formal_statement": "$\\mathcal P(X)=\\{A\\mid A\\subseteq X\\}$.",
         "definition": "A construction sending a set to the set of all of its subsets.",
-        "intuition": "A topology on $X$ is not just any object; it is a selected subcollection of $\\mathcal P(X)$.",
+        "intuition": "A topology on $X$ is not just any object. It is a selected subcollection of $\\mathcal P(X)$.",
         "notation": "$\\mathcal P(X)$, $2^X$",
         "assumptions": [],
         "dependencies": {

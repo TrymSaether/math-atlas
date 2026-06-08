@@ -23,9 +23,9 @@
         <path d="M78,62 C132,55 188,60 246,76" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.15"
             stroke-dasharray="3 4.2" opacity=".5" marker-end="url(#arrow-black)" />
 
-        <path d="M74.4,100 C130,94 188,94 245.6,99" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.15"
+        <path d="M74.4,100 C130,94 188,94 245.6,99" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.15"
             marker-end="url(#arrow-red)" />
-        <path d="M74.4,118 C130,123 188,120 245.6,113" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.15"
+        <path d="M74.4,118 C130,123 188,120 245.6,113" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.15"
             marker-end="url(#arrow-red)" />
     </g>
 

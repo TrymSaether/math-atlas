@@ -281,7 +281,9 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
         const inactive =
           kind === "restriction_of_function" && activeLeft.length > 0 && !activeLeft.includes(i);
         const duplicate = kind === "function" && choice === "multi" && i === 2;
-        const color = inactive ? MUTED_COLOR : duplicate ? SELECTED_COLOR : DOMAIN_COLOR;
+        // Neutral connector by default; color only when the arrow is dropped
+        // (restriction) or is the one breaking single-valuedness (two outputs).
+        const color = inactive ? MUTED_COLOR : duplicate ? SELECTED_COLOR : DIA.ink;
         return (
           <Arrow
             key={`arrow:${i}:${target}`}
