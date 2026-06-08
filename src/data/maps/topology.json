@@ -735,13 +735,26 @@
       "view_rule": "trees are extracted views, not the underlying graph"
     }
   },
+  "version": "1.1.0",
+  "last_updated": "2026-06-08",
   "graph": {
     "id": "topology_knowledge_graph_mini",
     "label": "Topology mathematical knowledge graph mini-graph",
     "model": "directed_typed_multigraph",
     "materialization_notes": {
-      "outgoing_relations": "Empty lists in item templates are a compact cache placeholder; materialize outgoing_relations from graph.edges by grouping on source when loading.",
-      "content_refinement": "Applied neighborhood/open_neighborhood split, convention notes, mathematical_role metadata, assumption display labels, selected role edges, and regenerated outgoing_relations."
+      "outgoing_relations": "Derived cache: regenerate from graph.edges by grouping edge ids on edge.source after every structural edit.",
+      "content_refinement": "Applied neighborhood/open_neighborhood split, convention notes, mathematical_role metadata, assumption display labels, selected role edges, and regenerated outgoing_relations.",
+      "last_cleanup": "2026-06-08: merged inverse/preimage duplicates, promoted selected see_also repair edges, fixed tag/label hygiene, enriched high-priority theorem nodes, and regenerated outgoing_relations.",
+      "merged_item_ids": {
+        "inverse_image": "preimage",
+        "inverse_of_a_function": "inverse_of_function",
+        "preimage_of_function": "inverse_of_function"
+      },
+      "schema_extension_recommendations": [
+        "Add optional item.status.completeness_score in [0,1] for prioritizing draft/stub cleanup.",
+        "Add optional item.difficulty with values introductory/intermediate/advanced.",
+        "Add optional proof_steps[].claim and proof_steps[].justification fields for richer proof verification."
+      ]
     },
     "templates": {
       "item": {
@@ -1365,84 +1378,6 @@
         "display_label": "Function"
       },
       {
-        "id": "inverse_image",
-        "statement": "The inverse image of a set $B$ under a function $f:X\\to Y$ is the set of all elements in $X$ that map into $B$.",
-        "formal_statement": "$f^{-1}(B)=\\{x\\in X : f(x)\\in B\\}$",
-        "definition": "The preimage of a set under a function.",
-        "intuition": "The set of inputs that land in a given set under the function.",
-        "notation": "$f^{-1}(B)$",
-        "assumptions": [],
-        "dependencies": {
-          "definitional_dependency": ["function", "set"],
-          "logical_dependency": [],
-          "assumption_dependency": [],
-          "construction_dependency": [],
-          "notation_dependency": [],
-          "pedagogical_dependency": [],
-          "historical_dependency": []
-        },
-        "outgoing_relations": [
-          "e_inverse_image_requires_function",
-          "e_inverse_image_requires_set"
-        ],
-        "metadata": {
-          "tags": ["foundation", "functions"],
-          "syllabus_priority": "core",
-          "source": null
-        },
-        "kind": "object",
-        "label": "Inverse Image",
-        "domain": "foundations",
-        "related": [],
-        "status": {
-          "content": "usable",
-          "math_review": "reviewed",
-          "schema_review": "valid_shape",
-          "pedagogy_review": "usable"
-        },
-        "canonical_label": "inverse image",
-        "display_label": "Inverse Image"
-      },
-      {
-        "id": "inverse_of_a_function",
-        "statement": "The inverse relation of a function $f:X\\to Y$ reverses the ordered pairs of $f$. It is a function $Y\\to X$ exactly when $f$ is bijective.",
-        "formal_statement": "$f^{-1} = \\{(y,x) : (x,y)\\in f\\}$",
-        "definition": "The relation obtained by swapping the inputs and outputs of a function.",
-        "intuition": "This records the backward relation. Extra hypotheses such as bijectivity are needed before it becomes a genuine inverse function.",
-        "notation": "$f^{-1}$",
-        "assumptions": [],
-        "dependencies": {
-          "definitional_dependency": ["function", "relation"],
-          "logical_dependency": [],
-          "assumption_dependency": [],
-          "construction_dependency": [],
-          "notation_dependency": [],
-          "pedagogical_dependency": [],
-          "historical_dependency": []
-        },
-        "outgoing_relations": [
-          "e_inverse_of_a_function_requires_function",
-          "e_inverse_of_a_function_requires_relation"
-        ],
-        "metadata": {
-          "tags": ["foundation", "functions"],
-          "syllabus_priority": "core",
-          "source": null
-        },
-        "kind": "object",
-        "label": "Inverse of a Function",
-        "domain": "foundations",
-        "related": [],
-        "status": {
-          "content": "usable",
-          "math_review": "reviewed",
-          "schema_review": "valid_shape",
-          "pedagogy_review": "usable"
-        },
-        "canonical_label": "inverse of a function",
-        "display_label": "Inverse of a Function"
-      },
-      {
         "id": "image_of_function",
         "statement": "The image of a function $f:X\\to Y$ is the set of all outputs of $f$.",
         "formal_statement": "$f(X)=\\{f(x) : x\\in X\\}$",
@@ -1482,50 +1417,11 @@
         "display_label": "Image of a Function"
       },
       {
-        "id": "preimage_of_function",
-        "statement": "The preimage relation of a function $f:X\\to Y$ records which inputs map to each output.",
-        "formal_statement": "$f^{-1}=\\{(y,x):(x,y)\\in f\\}\\subseteq Y\\times X$.",
-        "definition": "The inverse relation associated to a function.",
-        "intuition": "This relation is the pointwise data behind set preimages $f^{-1}(B)$, but it need not itself be single-valued.",
-        "notation": "$f^{-1}$",
-        "assumptions": [],
-        "dependencies": {
-          "definitional_dependency": ["function", "relation"],
-          "logical_dependency": [],
-          "assumption_dependency": [],
-          "construction_dependency": [],
-          "notation_dependency": [],
-          "pedagogical_dependency": [],
-          "historical_dependency": []
-        },
-        "outgoing_relations": [
-          "e_preimage_of_function_requires_function",
-          "e_preimage_of_function_requires_relation"
-        ],
-        "metadata": {
-          "tags": ["foundation", "functions"],
-          "syllabus_priority": "core",
-          "source": null
-        },
-        "kind": "object",
-        "label": "Preimage of a Function",
-        "domain": "foundations",
-        "related": [],
-        "status": {
-          "content": "usable",
-          "math_review": "reviewed",
-          "schema_review": "valid_shape",
-          "pedagogy_review": "usable"
-        },
-        "canonical_label": "preimage of a function",
-        "display_label": "Preimage of a Function"
-      },
-      {
         "id": "inverse_of_function",
-        "statement": "The inverse of a function $f:X\\to Y$ is the relation that reverses the direction of $f$.",
-        "formal_statement": "$f^{-1} = \\{(y,x) : (x,y)\\in f\\}$",
-        "definition": "The relation obtained by swapping the inputs and outputs of a function.",
-        "intuition": "The function that goes backwards: it takes outputs of $f$ and gives you back the inputs.",
+        "statement": "The inverse of a function $f:X\\to Y$ is the relation that reverses the ordered pairs of $f$. It is a function $Y\\to X$ exactly when $f$ is bijective.",
+        "formal_statement": "$f^{-1}=\\{(y,x)\\in Y\\times X : (x,y)\\in f\\}.$",
+        "definition": "The inverse relation obtained by swapping the inputs and outputs of a function; it becomes a genuine inverse function precisely for bijections.",
+        "intuition": "The inverse relation records how to move backward through $f$. Without bijectivity, one output may have no input or several inputs, so the backward relation need not be a function.",
         "notation": "$f^{-1}$",
         "assumptions": [],
         "dependencies": {
@@ -1534,7 +1430,7 @@
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": ["bijective"],
           "historical_dependency": []
         },
         "outgoing_relations": [
@@ -1542,22 +1438,26 @@
           "e_inverse_of_function_requires_relation"
         ],
         "metadata": {
-          "tags": ["foundation", "functions"],
+          "tags": ["functions", "relations", "inverse"],
           "syllabus_priority": "core",
-          "source": null
+          "source": null,
+          "legacy_ids": ["inverse_of_a_function", "preimage_of_function"],
+          "aliases": ["inverse relation", "preimage relation of a function"]
         },
         "kind": "object",
         "label": "Inverse of a Function",
         "domain": "foundations",
-        "related": [],
+        "related": ["preimage", "bijective", "injective", "surjective"],
         "status": {
           "content": "usable",
           "math_review": "reviewed",
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
-        "canonical_label": "inverse of a function",
-        "display_label": "Inverse of a Function"
+        "canonical_label": "Inverse of a Function",
+        "display_label": "Inverse of a Function",
+        "gloss": "Do not confuse this inverse relation with the set preimage $f^{-1}(B)$; the same notation is overloaded by context.",
+        "example": "If $f:\\mathbb R\\to\\mathbb R$ is $f(x)=x+1$, then $f^{-1}(y)=y-1$. If $f(x)=x^2$, the inverse relation is not a function $\\mathbb R\\to\\mathbb R$."
       },
       {
         "id": "restriction_of_function",
@@ -1599,7 +1499,6 @@
         "canonical_label": "restriction of a function",
         "display_label": "Restriction of a Function"
       },
-
       {
         "id": "axiom_of_choice",
         "statement": "Every indexed family of nonempty sets has a choice function.",
@@ -1664,7 +1563,7 @@
           "e_hausdorff_assumption_requires_hausdorff_property"
         ],
         "metadata": {
-          "tags": [],
+          "tags": ["assumption", "hypothesis"],
           "syllabus_priority": "medium",
           "source": null
         },
@@ -1674,7 +1573,7 @@
         "related": ["hausdorff_property"],
         "status": {
           "content": "usable",
-          "math_review": "unchecked",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
@@ -1704,7 +1603,7 @@
         },
         "outgoing_relations": ["e_normality_assumption_requires_normality"],
         "metadata": {
-          "tags": [],
+          "tags": ["assumption", "hypothesis"],
           "syllabus_priority": "medium",
           "source": null
         },
@@ -1714,7 +1613,7 @@
         "related": ["normality"],
         "status": {
           "content": "usable",
-          "math_review": "unchecked",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
@@ -1744,7 +1643,7 @@
         },
         "outgoing_relations": ["e_regularity_assumption_requires_regularity"],
         "metadata": {
-          "tags": [],
+          "tags": ["assumption", "hypothesis"],
           "syllabus_priority": "medium",
           "source": null
         },
@@ -1754,7 +1653,7 @@
         "related": ["regularity"],
         "status": {
           "content": "usable",
-          "math_review": "unchecked",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
@@ -1786,7 +1685,7 @@
           "e_second_countability_assumption_requires_second_countability"
         ],
         "metadata": {
-          "tags": [],
+          "tags": ["assumption", "hypothesis"],
           "syllabus_priority": "medium",
           "source": null
         },
@@ -1796,7 +1695,7 @@
         "related": ["second_countability"],
         "status": {
           "content": "usable",
-          "math_review": "unchecked",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
@@ -1828,7 +1727,7 @@
           "e_local_compactness_assumption_requires_local_compactness"
         ],
         "metadata": {
-          "tags": [],
+          "tags": ["assumption", "hypothesis"],
           "syllabus_priority": "medium",
           "source": null
         },
@@ -1838,7 +1737,7 @@
         "related": ["local_compactness"],
         "status": {
           "content": "usable",
-          "math_review": "unchecked",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
@@ -1868,7 +1767,7 @@
         },
         "outgoing_relations": [],
         "metadata": {
-          "tags": [],
+          "tags": ["assumption", "hypothesis"],
           "syllabus_priority": "medium",
           "source": null
         },
@@ -1878,7 +1777,7 @@
         "related": [],
         "status": {
           "content": "usable",
-          "math_review": "unchecked",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
@@ -3540,9 +3439,9 @@
         ],
         "metadata": {
           "tags": [
-            "topological_property",
-            "open_cover",
-            "finite_subcover",
+            "topological-property",
+            "open-cover",
+            "finite-subcover",
             "convention-reviewed"
           ],
           "syllabus_priority": "high",
@@ -3879,7 +3778,7 @@
           "e_hausdorff_has_counterexample_sierpinski"
         ],
         "metadata": {
-          "tags": [],
+          "tags": ["separation-axioms", "hausdorff"],
           "syllabus_priority": "medium",
           "source": null
         },
@@ -3897,7 +3796,7 @@
         "related": ["hausdorff_space", "open_neighborhood"],
         "status": {
           "content": "usable",
-          "math_review": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
@@ -3938,7 +3837,7 @@
           "e_regularity_defines_regular_space"
         ],
         "metadata": {
-          "tags": [],
+          "tags": ["separation-axioms", "convention-reviewed"],
           "syllabus_priority": "medium",
           "source": null
         },
@@ -3959,13 +3858,16 @@
         "related": [],
         "status": {
           "content": "usable",
-          "math_review": "unchecked",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "mathematical_role": ["property"],
         "canonical_label": "regularity",
-        "display_label": "Regularity"
+        "display_label": "Regularity",
+        "convention_notes": [
+          "This node uses the T1-included convention; under non-T1 conventions the implication to Hausdorff/regularity must be checked separately."
+        ]
       },
       {
         "id": "normality",
@@ -3997,7 +3899,7 @@
           "e_normality_prerequisite_for_tietze"
         ],
         "metadata": {
-          "tags": [],
+          "tags": ["separation-axioms", "convention-reviewed"],
           "syllabus_priority": "medium",
           "source": null
         },
@@ -4018,13 +3920,16 @@
         "related": [],
         "status": {
           "content": "usable",
-          "math_review": "unchecked",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "mathematical_role": ["property"],
         "canonical_label": "normality",
-        "display_label": "Normality"
+        "display_label": "Normality",
+        "convention_notes": [
+          "This node uses the T1-included convention; under non-T1 conventions the implication to Hausdorff/regularity must be checked separately."
+        ]
       },
       {
         "id": "countability_axioms",
@@ -4404,11 +4309,11 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
-          "e_metric_topology_requires_topology",
-          "e_metric_topology_requires_open_closed_ball",
           "e_metric_topology_constructed_from_metric_space",
           "e_metric_topology_constructed_from_basis",
-          "e_metric_topology_induces_topological_space"
+          "e_metric_topology_induces_topological_space",
+          "e_metric_topology_requires_topology",
+          "e_metric_topology_requires_open_closed_ball"
         ],
         "metadata": {
           "tags": [],
@@ -5170,9 +5075,9 @@
       {
         "id": "heine_borel_theorem",
         "statement": "A subset $A\\subseteq\\mathbb{R}^n$ (Euclidean) is compact iff it is closed and bounded.",
-        "formal_statement": null,
+        "formal_statement": "For $A\\subseteq\\mathbb R^n$ with the Euclidean topology, $A$ is compact if and only if $A$ is closed and bounded.",
         "definition": null,
-        "intuition": null,
+        "intuition": "Heine-Borel identifies abstract open-cover compactness in Euclidean space with the geometric condition of fitting inside a finite box and containing all limit points.",
         "notation": null,
         "assumptions": [],
         "dependencies": {
@@ -5203,7 +5108,12 @@
           "e_heine_borel_theorem_requires_open_closed_ball"
         ],
         "metadata": {
-          "tags": [],
+          "tags": [
+            "compactness",
+            "euclidean-space",
+            "closed-bounded",
+            "open-covers"
+          ],
           "syllabus_priority": "high",
           "source": null
         },
@@ -5227,7 +5137,7 @@
         "chapter": "6",
         "ref": "Thm. 6.42",
         "gloss": "In Euclidean space, the abstract notion of compactness coincides exactly with the concrete “closed and bounded.” One of the cornerstones of analysis.",
-        "example": "$[0,1]$, $S^n$, and closed balls are compact; open or unbounded sets are not.",
+        "example": "Closed intervals $[a,b]$, closed balls, and spheres in $\\mathbb R^n$ are compact; $(0,1)$ is bounded but not compact, and $\\mathbb R$ is closed but not compact.",
         "diagram_path": "/atlas-assets/topology/diagrams/heine-borel.svg",
         "related": [
           "compact_space",
@@ -5273,13 +5183,14 @@
         "proof_dependencies": [
           "compact_subsets_of_hausdorff_are_closed",
           "product_compact",
-          "compact_hausdorff_space"
+          "compact_hausdorff_space",
+          "finite_subcover"
         ],
         "status": {
-          "content": "stub",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "Heine-Borel theorem",
         "display_label": "Heine-Borel Theorem"
@@ -5459,10 +5370,10 @@
         "outgoing_relations": [
           "e_alexander_requires_subbasis",
           "e_alexander_requires_compactness",
-          "e_alexander_requires_cover",
           "e_alexander_uses_zorn",
           "e_alexander_assumes_choice",
-          "e_alexander_prerequisite_for_tychonoff"
+          "e_alexander_prerequisite_for_tychonoff",
+          "e_alexander_requires_cover"
         ],
         "metadata": {
           "tags": ["compactness", "subbasis", "choice"],
@@ -5571,7 +5482,7 @@
           "e_tychonoff_uses_basis_argument"
         ],
         "metadata": {
-          "tags": ["compactness", "product", "choice"],
+          "tags": ["compactness", "product-topology", "choice", "subbasis"],
           "syllabus_priority": "high",
           "source": null
         },
@@ -5624,13 +5535,53 @@
         ],
         "diagram_path": "/atlas-assets/topology/diagrams/tychonoff.svg",
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
+          "content": "usable",
+          "math_review": "reviewed",
           "schema_review": "valid_shape",
-          "pedagogy_review": "unchecked"
+          "pedagogy_review": "usable"
         },
         "canonical_label": "Tychonoff theorem",
-        "display_label": "Tychonoff Theorem"
+        "display_label": "Tychonoff Theorem",
+        "proof": "Using Alexander's subbase lemma, it is enough to check covers by subbasic opens in the product topology. A subbasic cover with no finite subcover would force, for some coordinate, a cover of a compact factor with no finite subcover, contradicting compactness; the standard maximal-cover argument uses Zorn's lemma and hence the Axiom of Choice.",
+        "proof_steps": [
+          {
+            "id": "reduce_to_subbasis",
+            "label": "Reduce to Subbasic Covers",
+            "role": "setup",
+            "content": "Apply Alexander's subbase lemma to the canonical subbasis of the product topology.",
+            "depends_on": [
+              "alexander_subbase_theorem",
+              "product_topology",
+              "subbasis"
+            ]
+          },
+          {
+            "id": "use_maximal_bad_cover",
+            "label": "Use a Maximal Bad Cover",
+            "role": "argument",
+            "content": "If compactness failed, Zorn's lemma supplies a maximal open cover with no finite subcover.",
+            "depends_on": ["zorns_lemma", "axiom_of_choice", "cover"]
+          },
+          {
+            "id": "project_to_factor",
+            "label": "Project to a Compact Factor",
+            "role": "argument",
+            "content": "Subbasic sets constrain one coordinate at a time; failure of a finite subcover would induce an open cover of a compact factor with no finite subcover.",
+            "depends_on": ["product_topology", "compact_space"]
+          },
+          {
+            "id": "contradict_factor_compactness",
+            "label": "Contradict Compactness",
+            "role": "conclusion",
+            "content": "Compactness of each factor gives the needed finite subcover, contradicting the maximal bad cover.",
+            "depends_on": ["finite_subcover", "compactness"]
+          }
+        ],
+        "proof_dependencies": [
+          "alexander_subbase_theorem",
+          "zorns_lemma",
+          "axiom_of_choice"
+        ]
       },
       {
         "id": "baire_category_theorem",
@@ -7386,8 +7337,8 @@
           "schema_review": "valid_shape",
           "pedagogy_review": "unchecked"
         },
-        "canonical_label": "Exercise 3.1",
-        "display_label": "Exercise 3.1"
+        "canonical_label": "Exercise 3.1 - Not a Topology",
+        "display_label": "Exercise 3.1 - Not a Topology"
       },
       {
         "id": "exercise_3_2",
@@ -10833,9 +10784,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": [
-          "e_composition_maps_see_also_composition_continuous"
-        ],
+        "outgoing_relations": [],
         "metadata": {
           "tags": ["functions"],
           "syllabus_priority": "core",
@@ -10883,9 +10832,9 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
+          "e_continuity_point_metric_see_also_continuous_map_metric",
           "e_continuity_point_metric_requires_continuity",
-          "e_continuity_point_metric_requires_neighborhood_metric",
-          "e_continuity_point_metric_see_also_continuous_map_metric"
+          "e_continuity_point_metric_requires_neighborhood_metric"
         ],
         "metadata": {
           "tags": [],
@@ -11013,10 +10962,10 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
-          "e_continuity_basis_requires_continuity",
-          "e_continuity_basis_requires_preimage",
           "e_continuity_basis_uses_basis_for_topology",
-          "e_continuity_basis_uses_subbasis"
+          "e_continuity_basis_uses_subbasis",
+          "e_continuity_basis_requires_continuity",
+          "e_continuity_basis_requires_preimage"
         ],
         "metadata": {
           "tags": [],
@@ -11149,14 +11098,14 @@
       },
       {
         "id": "compact_image",
-        "statement": "If $X$ is compact and $f\\colon X\\to Y$ is a surjective continuous map, then $Y$ is compact. Hence $f(X)$ is compact for any continuous $f$.",
-        "formal_statement": null,
+        "statement": "If $X$ is compact and $f:X\\to Y$ is continuous, then $f(X)$ is compact; if $f$ is also surjective, then $Y$ is compact.",
+        "formal_statement": "If $f:X\\to Y$ is continuous and $X$ is compact, then $f(X)$ is compact. In particular, if $f$ is surjective, then $Y$ is compact.",
         "definition": null,
         "intuition": "Continuity preserves compactness, just as it preserves connectedness. A key step toward the extreme value theorem.",
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["compact_space", "cover"],
+          "definitional_dependency": ["compact_space", "cover", "preimage"],
           "logical_dependency": ["continuity", "finite_subcover"],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -11171,7 +11120,7 @@
           "e_compact_image_uses_finite_subcover"
         ],
         "metadata": {
-          "tags": [],
+          "tags": ["compactness", "continuous-maps", "open-covers"],
           "syllabus_priority": "high",
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
@@ -11189,7 +11138,7 @@
           "evt",
           "homeomorphism_open_closed"
         ],
-        "proof": "Let $\\mathcal{C} = \\{U_\\lambda \\}\\lambda\\in\\Lambda$ be an open cover of $Y$. Then $\\mathcal{A} = \\{f^{-1} (U_\\lambda )\\}\\lambda\\in\\Lambda$ is an open cover of $X$. Since $X$ is compact there must be a finite subcover $\\mathcal{A}' = \\{f^{-1} (U_{\\lambda 1} ), f^{-1} (U_{\\lambda 2} ), \\ldots, f^{-1} (U_{\\lambda n} )\\}$ of $\\mathcal{A}$. Then $\\mathcal{C} ' = \\{U_{\\lambda 1}, U_{\\lambda 2}, \\ldots, U_{\\lambda n} \\}$ is a finite subcover of $\\mathcal{C}$. Hence, $Y$ is compact.",
+        "proof": "Let $\\{U_\\lambda\\}_{\\lambda\\in\\Lambda}$ be an open cover of $f(X)$. The preimages $f^{-1}(U_\\lambda)$ form an open cover of $X$ by continuity. Compactness gives finitely many whose preimages cover $X$, and the corresponding $U_\\lambda$ cover $f(X)$.",
         "proof_steps": [
           {
             "id": "pull_back_cover",
@@ -11221,13 +11170,19 @@
         "applications": [],
         "variants": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
         "canonical_label": "Continuous image of a compact space",
-        "display_label": "Continuous Image of a Compact Space"
+        "display_label": "Continuous Image of a Compact Space",
+        "proof_dependencies": [
+          "continuity",
+          "compact_space",
+          "finite_subcover",
+          "preimage"
+        ]
       },
       {
         "id": "connected_image",
@@ -12010,7 +11965,7 @@
       {
         "id": "evt",
         "statement": "If $X$ is compact and $f\\colon X\\to\\mathbb{R}$ is continuous, then there exist $m,M\\in X$ with $f(m)\\le f(x)\\le f(M)$ for all $x\\in X$.",
-        "formal_statement": null,
+        "formal_statement": "If $X$ is compact and $f:X\\to\\mathbb R$ is continuous, then there exist $m,M\\in X$ such that $f(m)\\le f(x)\\le f(M)$ for all $x\\in X$.",
         "definition": null,
         "intuition": "A continuous real function on a compact space attains its maximum and minimum. The image is compact, hence closed and bounded, hence contains its sup and inf.",
         "notation": null,
@@ -12038,7 +11993,12 @@
           "e_evt_uses_supremum"
         ],
         "metadata": {
-          "tags": [],
+          "tags": [
+            "compactness",
+            "real-analysis",
+            "continuous-maps",
+            "extreme-values"
+          ],
           "syllabus_priority": "high",
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
@@ -12096,10 +12056,10 @@
         "applications": [],
         "variants": [],
         "status": {
-          "content": "draft",
-          "math_review": "unchecked",
-          "schema_review": "scaffolded",
-          "pedagogy_review": "unchecked"
+          "content": "usable",
+          "math_review": "reviewed",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "usable"
         },
         "canonical_label": "Generalized extreme value theorem",
         "display_label": "Generalized Extreme Value Theorem"
@@ -12577,7 +12537,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["homotopy_equivalence"],
           "logical_dependency": ["pi1_invariant"],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -12586,7 +12546,7 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
-          "e_homotopy_equiv_iso_see_also_homotopy_equivalence",
+          "e_homotopy_equiv_iso_requires_homotopy_equivalence",
           "e_homotopy_equiv_iso_uses_pi1_invariant"
         ],
         "metadata": {
@@ -12692,7 +12652,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["homotopy_equivalence"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -12700,7 +12660,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_homotopy_type_see_also_homotopy_equivalence"],
+        "outgoing_relations": ["e_homotopy_type_requires_homotopy_equivalence"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -13094,14 +13054,14 @@
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [],
-          "logical_dependency": [],
+          "logical_dependency": ["compact_space"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_lebesgue_number_see_also_compact_space"],
+        "outgoing_relations": ["e_lebesgue_number_uses_compact_space"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -13240,7 +13200,7 @@
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["fundamental_group"],
-          "logical_dependency": [],
+          "logical_dependency": ["path_lifting"],
           "assumption_dependency": [],
           "construction_dependency": [],
           "notation_dependency": [],
@@ -13248,7 +13208,7 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
-          "e_lifting_correspondence_see_also_path_lifting",
+          "e_lifting_correspondence_uses_path_lifting",
           "e_lifting_correspondence_requires_fundamental_group"
         ],
         "metadata": {
@@ -13427,7 +13387,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["neighborhood"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -13436,7 +13396,7 @@
           "historical_dependency": []
         },
         "outgoing_relations": [
-          "e_neighborhood_characterization_open_see_also_neighborhood"
+          "e_neighborhood_characterization_open_requires_neighborhood"
         ],
         "metadata": {
           "tags": [],
@@ -13556,7 +13516,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["homotopy"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -13564,7 +13524,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_nullhomotopic_see_also_homotopy"],
+        "outgoing_relations": ["e_nullhomotopic_requires_homotopy"],
         "metadata": {
           "tags": [],
           "syllabus_priority": "medium",
@@ -15347,7 +15307,7 @@
         },
         "outgoing_relations": ["e_open_neighborhood_specializes_neighborhood"],
         "metadata": {
-          "tags": ["definition", "neighborhood", "open_set"],
+          "tags": ["definition", "neighborhood", "open-set"],
           "syllabus_priority": "core",
           "source": "Thaule, Introduction to Topology (TMA4190)"
         },
@@ -15689,14 +15649,14 @@
         "label": "Preimage / Inverse Image",
         "kind": "construction",
         "domain": "foundations",
-        "statement": "For $f:X\\to Y$ and $B\\subseteq Y$, the preimage of $B$ is $f^{-1}(B)=\\{x\\in X\\mid f(x)\\in B\\}$.",
-        "formal_statement": "$f^{-1}(B)=\\{x\\in X: f(x)\\in B\\}$.",
+        "statement": "For a function $f:X\\to Y$ and a subset $B\\subseteq Y$, the preimage (or inverse image) of $B$ is the set of all inputs whose values land in $B$.",
+        "formal_statement": "$f^{-1}(B)=\\{x\\in X : f(x)\\in B\\}$.",
         "definition": "The subset of the domain whose values lie in a given subset of the codomain.",
-        "intuition": "Continuity in topology is naturally expressed by pulling open sets backward.",
+        "intuition": "Preimages pull questions about subsets of the codomain back to subsets of the domain. This is why continuity is naturally stated using preimages of open sets.",
         "notation": "$f^{-1}(B)$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["function", "subset"],
+          "definitional_dependency": ["function", "subset", "set"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -15706,23 +15666,28 @@
         },
         "outgoing_relations": [
           "e_preimage_requires_function",
+          "e_preimage_requires_set",
           "e_preimage_requires_subset",
           "e_preimage_prerequisite_for_continuity"
         ],
         "metadata": {
-          "tags": ["functions", "topology-prerequisite"],
+          "tags": ["functions", "preimage", "topology-prerequisite"],
           "syllabus_priority": "core",
-          "source": null
+          "source": null,
+          "legacy_ids": ["inverse_image"],
+          "aliases": ["inverse image"]
         },
-        "related": [],
+        "related": ["inverse_of_function", "continuity_preimage_metric"],
         "status": {
           "content": "usable",
           "math_review": "reviewed",
           "schema_review": "valid_shape",
           "pedagogy_review": "usable"
         },
-        "canonical_label": "preimage / inverse image",
-        "display_label": "Preimage / Inverse Image"
+        "canonical_label": "Preimage / Inverse Image",
+        "display_label": "Preimage / Inverse Image",
+        "gloss": "Also called the inverse image of $B$ under $f$; this is a set, not the inverse relation $f^{-1}\\subseteq Y\\times X$.",
+        "example": "For $f:\\mathbb R\\to\\mathbb R$ with $f(x)=x^2$, the preimage of $[0,1]$ is $[-1,1]$."
       },
       {
         "id": "identity_map",
@@ -21707,17 +21672,6 @@
         "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
       },
       {
-        "id": "e_inverse_image_requires_function",
-        "source": "inverse_image",
-        "target": "function",
-        "type": "requires",
-        "dependency_class": "definitional_dependency",
-        "label": "",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
-      },
-      {
         "id": "e_injective_requires_function",
         "source": "injective",
         "target": "function",
@@ -21817,30 +21771,19 @@
         "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
       },
       {
-        "id": "e_preimage_of_function_requires_function",
-        "source": "preimage_of_function",
+        "id": "e_inverse_of_function_requires_function",
+        "source": "inverse_of_function",
         "target": "function",
         "type": "requires",
         "dependency_class": "definitional_dependency",
-        "label": "",
+        "label": "Inverse relations start from functions",
         "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
+        "confidence": "high",
+        "notes": "Merged duplicate inverse-function nodes."
       },
       {
         "id": "e_restriction_of_function_requires_function",
         "source": "restriction_of_function",
-        "target": "function",
-        "type": "requires",
-        "dependency_class": "definitional_dependency",
-        "label": "",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
-      },
-      {
-        "id": "e_inverse_of_function_requires_function",
-        "source": "inverse_of_function",
         "target": "function",
         "type": "requires",
         "dependency_class": "definitional_dependency",
@@ -21872,15 +21815,15 @@
         "notes": "Conservative orphan repair from curated dictionary related[]; not asserted as a dependency."
       },
       {
-        "id": "e_composition_maps_see_also_composition_continuous",
-        "source": "composition_maps",
-        "target": "composition_continuous",
-        "type": "see_also",
-        "dependency_class": "pedagogical_dependency",
-        "label": "",
-        "direction": "bidirectional",
-        "confidence": "medium",
-        "notes": "Conservative orphan repair from curated dictionary related[]; not asserted as a dependency."
+        "id": "e_composition_continuous_requires_composition_maps",
+        "source": "composition_continuous",
+        "target": "composition_maps",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Composition of continuous maps uses ordinary composition of maps",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Promoted from see_also during topology cleanup."
       },
       {
         "id": "e_continuity_point_metric_see_also_continuous_map_metric",
@@ -21916,70 +21859,70 @@
         "notes": "Conservative orphan repair from curated dictionary related[]; not asserted as a dependency."
       },
       {
-        "id": "e_homotopy_equiv_iso_see_also_homotopy_equivalence",
+        "id": "e_homotopy_equiv_iso_requires_homotopy_equivalence",
         "source": "homotopy_equiv_iso",
         "target": "homotopy_equivalence",
-        "type": "see_also",
-        "dependency_class": "pedagogical_dependency",
-        "label": "",
-        "direction": "bidirectional",
-        "confidence": "medium",
-        "notes": "Conservative orphan repair from curated dictionary related[]; not asserted as a dependency."
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The induced-isomorphism theorem is stated for homotopy equivalences",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Promoted from see_also during topology cleanup."
       },
       {
-        "id": "e_homotopy_type_see_also_homotopy_equivalence",
+        "id": "e_homotopy_type_requires_homotopy_equivalence",
         "source": "homotopy_type",
         "target": "homotopy_equivalence",
-        "type": "see_also",
-        "dependency_class": "pedagogical_dependency",
-        "label": "",
-        "direction": "bidirectional",
-        "confidence": "medium",
-        "notes": "Conservative orphan repair from curated dictionary related[]; not asserted as a dependency."
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Homotopy type is organized by homotopy equivalence",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Promoted from see_also during topology cleanup."
       },
       {
-        "id": "e_lebesgue_number_see_also_compact_space",
+        "id": "e_lebesgue_number_uses_compact_space",
         "source": "lebesgue_number",
         "target": "compact_space",
-        "type": "see_also",
-        "dependency_class": "pedagogical_dependency",
-        "label": "",
-        "direction": "bidirectional",
-        "confidence": "medium",
-        "notes": "Conservative orphan repair from curated dictionary related[]; not asserted as a dependency."
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "Lebesgue number lemma uses compactness of the space",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Promoted from see_also during topology cleanup."
       },
       {
-        "id": "e_lifting_correspondence_see_also_path_lifting",
+        "id": "e_lifting_correspondence_uses_path_lifting",
         "source": "lifting_correspondence",
         "target": "path_lifting",
-        "type": "see_also",
-        "dependency_class": "pedagogical_dependency",
-        "label": "",
-        "direction": "bidirectional",
-        "confidence": "medium",
-        "notes": "Conservative orphan repair from curated dictionary related[]; not asserted as a dependency."
+        "type": "uses",
+        "dependency_class": "logical_dependency",
+        "label": "The lifting correspondence relies on path lifting",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Promoted from see_also during topology cleanup."
       },
       {
-        "id": "e_neighborhood_characterization_open_see_also_neighborhood",
+        "id": "e_neighborhood_characterization_open_requires_neighborhood",
         "source": "neighborhood_characterization_open",
         "target": "neighborhood",
-        "type": "see_also",
-        "dependency_class": "pedagogical_dependency",
-        "label": "",
-        "direction": "bidirectional",
-        "confidence": "medium",
-        "notes": "Conservative orphan repair from curated dictionary related[]; not asserted as a dependency."
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "The characterization is stated in terms of neighborhoods",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Promoted from see_also during topology cleanup."
       },
       {
-        "id": "e_nullhomotopic_see_also_homotopy",
+        "id": "e_nullhomotopic_requires_homotopy",
         "source": "nullhomotopic",
         "target": "homotopy",
-        "type": "see_also",
-        "dependency_class": "pedagogical_dependency",
-        "label": "",
-        "direction": "bidirectional",
-        "confidence": "medium",
-        "notes": "Conservative orphan repair from curated dictionary related[]; not asserted as a dependency."
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Nullhomotopy is defined using homotopy to a constant map",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Promoted from see_also during topology cleanup."
       },
       {
         "id": "e_rationals_with_subspace_topology_instance_of_subspace_topology",
@@ -22130,17 +22073,6 @@
         "target": "functoriality",
         "type": "prerequisite_for",
         "dependency_class": "pedagogical_dependency",
-        "label": "",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": "Promoted from curated dictionary related[] during continued review."
-      },
-      {
-        "id": "e_composition_continuous_requires_composition_maps",
-        "source": "composition_continuous",
-        "target": "composition_maps",
-        "type": "requires",
-        "dependency_class": "definitional_dependency",
         "label": "",
         "direction": "source_to_target",
         "confidence": "high",
@@ -22884,59 +22816,15 @@
         "notes": null
       },
       {
-        "id": "e_inverse_image_requires_set",
-        "source": "inverse_image",
+        "id": "e_preimage_requires_set",
+        "source": "preimage",
         "target": "set",
         "type": "requires",
         "dependency_class": "definitional_dependency",
-        "label": "Inverse images are taken of sets in the codomain",
+        "label": "Preimages are subsets of the domain determined by sets in the codomain",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": null
-      },
-      {
-        "id": "e_inverse_of_a_function_requires_function",
-        "source": "inverse_of_a_function",
-        "target": "function",
-        "type": "requires",
-        "dependency_class": "definitional_dependency",
-        "label": "Inverse relations start from functions",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": null
-      },
-      {
-        "id": "e_inverse_of_a_function_requires_relation",
-        "source": "inverse_of_a_function",
-        "target": "relation",
-        "type": "requires",
-        "dependency_class": "definitional_dependency",
-        "label": "The inverse of a function is first an inverse relation",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": null
-      },
-      {
-        "id": "e_image_of_function_requires_set",
-        "source": "image_of_function",
-        "target": "set",
-        "type": "requires",
-        "dependency_class": "definitional_dependency",
-        "label": "Images are sets of output values",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": null
-      },
-      {
-        "id": "e_preimage_of_function_requires_relation",
-        "source": "preimage_of_function",
-        "target": "relation",
-        "type": "requires",
-        "dependency_class": "definitional_dependency",
-        "label": "The preimage relation reverses the graph of a function",
-        "direction": "source_to_target",
-        "confidence": "high",
-        "notes": null
+        "notes": "Merged from inverse_image during duplicate cleanup."
       },
       {
         "id": "e_inverse_of_function_requires_relation",
@@ -22945,6 +22833,17 @@
         "type": "requires",
         "dependency_class": "definitional_dependency",
         "label": "The inverse of a function is first an inverse relation",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "Merged duplicate inverse-function nodes."
+      },
+      {
+        "id": "e_image_of_function_requires_set",
+        "source": "image_of_function",
+        "target": "set",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "Images are sets of output values",
         "direction": "source_to_target",
         "confidence": "high",
         "notes": null

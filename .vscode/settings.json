@@ -27,7 +27,7 @@
     "**/coverage": true,
     "**/build": true,
     "**/out": true,
-    "**/public": true,
+    "**/public": false,
     "**/assets": true,
     "**/.playwright*": true,
     "**/playwright.config.ts": true,
