@@ -52,9 +52,9 @@
     <circle cx="304" cy="184" r="39" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2"
         stroke-dasharray="5 5" />
 
-    <text x="255" y="158" font-size="19" class="svg-acc svg-symbol" fill="var(--dia-acc,#2457c5)">x</text>
+    <text x="255" y="158" font-size="18" class="svg-acc svg-symbol" fill="var(--dia-acc,#2457c5)">x</text>
 
-    <text x="275" y="236" font-size="17" class="svg-acc svg-symbol" fill="var(--dia-acc,#2457c5)">U⊆A</text>
+    <text x="275" y="236" font-size="16" class="svg-acc svg-symbol" fill="var(--dia-acc,#2457c5)">U⊆A</text>
 
     <path d="M269 229 C247 220 237 201 247 181" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.8"
         marker-end="url(#interior-arrow-blue)" />
@@ -65,9 +65,9 @@
     <circle cx="556" cy="214" r="44" fill="none" stroke="var(--dia-boundary,#dc2626)" stroke-width="2"
         stroke-dasharray="5 5" />
 
-    <text x="576" y="198" font-size="19" class="svg-bound svg-symbol" fill="var(--dia-boundary,#dc2626)">∂A</text>
+    <text x="576" y="198" font-size="18" class="svg-bound svg-symbol" fill="var(--dia-boundary,#dc2626)">∂A</text>
 
-    <text x="604" y="268" font-size="17" class="svg-bound svg-symbol" fill="var(--dia-boundary,#dc2626)">U⊄A</text>
+    <text x="604" y="268" font-size="16" class="svg-bound svg-symbol" fill="var(--dia-boundary,#dc2626)">U⊄A</text>
 
     <path d="M595 258 C624 247 626 222 608 201" fill="none" stroke="var(--dia-boundary,#dc2626)" stroke-width="1.8"
         marker-end="url(#interior-arrow-red)" />

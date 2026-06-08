@@ -2,7 +2,7 @@
     <!-- Space X -->
     <rect x="30" y="55" width="260" height="80" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.4" />
-    <text x="292" y="75" font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">X</text>
+    <text x="292" y="75" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">X</text>
     <!-- large open cover (muted, many strips) -->
     <rect x="32" y="46" width="60" height="22" rx="2" fill="var(--dia-mut,#8c8274)" opacity="0.3"
         stroke="var(--dia-mut,#8c8274)" stroke-width="0.8" />

@@ -67,7 +67,7 @@
       <!-- f inverse arrow -->
       <path d="M295,170 C270,198 250,198 225,170" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.7"
             marker-end="url(#arrow)" />
-      <text x="260" y="218" font-size="17" text-anchor="middle" fill="var(--dia-ink,#27221d)"
+      <text x="260" y="218" font-size="16" text-anchor="middle" fill="var(--dia-ink,#27221d)"
             font-style="italic">f⁻¹</text>
 
       <!-- g arrow Y to Z -->
@@ -79,7 +79,7 @@
       <!-- g inverse arrow -->
       <path d="M520,170 C495,198 470,198 445,170" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.7"
             marker-end="url(#arrow)" />
-      <text x="482" y="218" font-size="17" text-anchor="middle" fill="var(--dia-ink,#27221d)"
+      <text x="482" y="218" font-size="16" text-anchor="middle" fill="var(--dia-ink,#27221d)"
             font-style="italic">g⁻¹</text>
 
       <!-- identity loop -->

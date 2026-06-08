@@ -8,7 +8,7 @@
         font-style="italic">{x}×Y</text><text x="150" y="165" font-size="12" fill="var(--dia-acc,#2457c5)"
         text-anchor="middle" font-weight="normal" font-style="italic">W×Y (tube)</text><text x="70" y="96"
         font-size="14" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal"
-        font-style="italic">U</text><text x="312" y="96" font-size="13" fill="var(--dia-ink,#27221d)"
-        text-anchor="start" font-weight="normal" font-style="italic">Y</text><text x="180" y="178" font-size="13"
+        font-style="italic">U</text><text x="312" y="96" font-size="12" fill="var(--dia-ink,#27221d)"
+        text-anchor="start" font-weight="normal" font-style="italic">Y</text><text x="180" y="178" font-size="12"
         fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal" font-style="italic">X</text>
 </svg>

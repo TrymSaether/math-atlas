@@ -11,7 +11,7 @@
     <path d="M214 42 Q201 42 201 55 L201 126 Q201 139 214 139" />
     <path d="M270 42 Q283 42 283 55 L283 126 Q283 139 270 139" />
   </g>
-  <g font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="middle">
+  <g font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle">
     <g class="latex-svg" data-tex="a_0" fill="var(--dia-ink,#27221d)" transform="translate(63.89 57.00) scale(0.8600)">
       <g transform="translate(71.5218 72.1249)">
         <defs>
@@ -109,6 +109,6 @@
       </g>
     </g>
   </g>
-  <text x="160" y="161" font-size="10.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">multiply by the character
+  <text x="160" y="161" font-size="10" fill="var(--dia-mut,#8c8274)" text-anchor="middle">multiply by the character
     matrix to get frequency coefficients</text>
 </svg>

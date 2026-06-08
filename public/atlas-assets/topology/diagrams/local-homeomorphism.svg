@@ -10,7 +10,7 @@
     <ellipse cx="78" cy="92" rx="48" ry="56" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.6" />
     <circle cx="78" cy="92" r="22" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-acc,#2457c5)" stroke-width="1.8" />
-    <text x="78" y="96" font-size="11" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal"
+    <text x="78" y="96" font-size="10" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal"
         font-style="italic">U</text><text x="78" y="28" font-size="14" fill="var(--dia-ink,#27221d)"
         text-anchor="middle" font-weight="normal" font-style="italic">X</text>
     <ellipse cx="244" cy="92" rx="48" ry="56" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-ink,#27221d)"

@@ -10,11 +10,11 @@
     <!-- Space X -->
     <ellipse cx="68" cy="95" rx="48" ry="58" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.6" />
-    <text x="68" y="30" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">X</text>
+    <text x="68" y="30" font-size="14" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">X</text>
     <!-- Space Y -->
     <ellipse cx="252" cy="95" rx="48" ry="58" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.6" />
-    <text x="252" y="30" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Y</text>
+    <text x="252" y="30" font-size="14" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Y</text>
     <!-- f₀: upper arc (accent) -->
     <path d="M116,78 C155,44 195,44 204,78" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2"
         marker-end="url(#ara)" />

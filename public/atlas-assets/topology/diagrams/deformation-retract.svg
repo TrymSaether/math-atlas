@@ -14,7 +14,7 @@
         stroke-dasharray="3,3" />
     <!-- t=1: retract A (solid, accent) -->
     <circle cx="160" cy="92" r="28" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc,#2457c5)" stroke-width="2" />
-    <text x="160" y="96" font-size="13" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">A</text>
+    <text x="160" y="96" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">A</text>
     <!-- inward arrows showing deformation -->
     <line x1="222" y1="92" x2="192" y2="92" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.2" marker-end="url(#ar)" />
     <line x1="195" y1="143" x2="175" y2="120" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.2"

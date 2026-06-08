@@ -15,6 +15,6 @@
         font-weight="normal" font-style="italic">G</text>
     <line x1="162" y1="90" x2="208" y2="90" stroke="var(--dia-acc,#2457c5)" stroke-width="1.5" marker-end="url(#ara)" />
     <text x="185" y="82" font-size="14" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-weight="normal"
-        font-style="italic">∗</text><text x="100" y="156" font-size="10.5" fill="var(--dia-mut,#8c8274)"
+        font-style="italic">∗</text><text x="100" y="156" font-size="10" fill="var(--dia-mut,#8c8274)"
         text-anchor="middle" font-weight="normal" font-style="italic">assoc · id · inverse</text>
 </svg>

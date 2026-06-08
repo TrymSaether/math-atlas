@@ -8,15 +8,15 @@
 
       <!-- frequency labels on axis -->
       <!-- positions: n = -4,-3,-2,-1,0,1,2,3,4 at x = 56,88,120,152,184,216,248,280,312 -->
-      <text x="56" y="172" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">−4</text>
-      <text x="88" y="172" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">−3</text>
-      <text x="120" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">−2</text>
-      <text x="152" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">−1</text>
-      <text x="184" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">0</text>
-      <text x="216" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">1</text>
-      <text x="248" y="172" font-size="9" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">2</text>
-      <text x="280" y="172" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">3</text>
-      <text x="312" y="172" font-size="9" fill="var(--dia-mut,#8c8274)" text-anchor="middle">4</text>
+      <text x="56" y="172" font-size="8" fill="var(--dia-mut,#8c8274)" text-anchor="middle">−4</text>
+      <text x="88" y="172" font-size="8" fill="var(--dia-mut,#8c8274)" text-anchor="middle">−3</text>
+      <text x="120" y="172" font-size="8" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">−2</text>
+      <text x="152" y="172" font-size="8" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">−1</text>
+      <text x="184" y="172" font-size="8" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">0</text>
+      <text x="216" y="172" font-size="8" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">1</text>
+      <text x="248" y="172" font-size="8" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="500">2</text>
+      <text x="280" y="172" font-size="8" fill="var(--dia-mut,#8c8274)" text-anchor="middle">3</text>
+      <text x="312" y="172" font-size="8" fill="var(--dia-mut,#8c8274)" text-anchor="middle">4</text>
 
       <!-- axis label -->
       <text x="322" y="161" font-size="10" font-style="italic" fill="var(--dia-ink,#27221d)">n</text>
@@ -50,26 +50,26 @@
             opacity="0.55" />
 
       <!-- N labels at cutoffs -->
-      <text x="104" y="36" font-size="9.5" fill="var(--dia-ink,#27221d)" text-anchor="middle">−N</text>
-      <text x="264" y="36" font-size="9.5" fill="var(--dia-ink,#27221d)" text-anchor="middle">N</text>
+      <text x="104" y="36" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle">−N</text>
+      <text x="264" y="36" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle">N</text>
 
       <!-- shaded kept region (subtle) -->
       <rect x="104" y="44" width="160" height="114" rx="0" fill="var(--blue,#2563EB)" opacity="0.055" />
 
       <!-- region labels -->
-      <text x="184" y="50" font-size="8.5" fill="var(--blue,#2563EB)" text-anchor="middle">kept</text>
-      <text x="60" y="50" font-size="8.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle"
+      <text x="184" y="50" font-size="8" fill="var(--blue,#2563EB)" text-anchor="middle">kept</text>
+      <text x="60" y="50" font-size="8" fill="var(--dia-mut,#8c8274)" text-anchor="middle"
             opacity="0.7">dropped</text>
-      <text x="308" y="50" font-size="8.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle"
+      <text x="308" y="50" font-size="8" fill="var(--dia-mut,#8c8274)" text-anchor="middle"
             opacity="0.7">dropped</text>
 
       <!-- y-axis label -->
-      <text x="34" y="110" font-size="9.5" font-style="italic" fill="var(--dia-mut,#8c8274)" text-anchor="middle"
+      <text x="34" y="110" font-size="10" font-style="italic" fill="var(--dia-mut,#8c8274)" text-anchor="middle"
             transform="rotate(-90 34 110)">|f̂(n)|</text>
 
       <!-- caption -->
-      <text x="184" y="200" font-size="9.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">
-            S<tspan dy="2.5" font-size="7">N</tspan>
+      <text x="184" y="200" font-size="10" fill="var(--dia-mut,#8c8274)" text-anchor="middle">
+            S<tspan dy="2.5" font-size="6">N</tspan>
             <tspan dy="-2.5">f uses only f̂(n) for |n| ≤ N</tspan>
       </text>
 </svg>

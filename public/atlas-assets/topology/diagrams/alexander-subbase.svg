@@ -1,8 +1,8 @@
 <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-serif,'Newsreader',Georgia,serif)" role="img">
   <title>Subbasic cover to finite subcover</title>
 
-  <text x="96" y="28" font-size="11.5" fill="var(--atlas-ink,#27221d)" text-anchor="middle" font-style="italic">1. subbasic cover</text>
-  <text x="284" y="28" font-size="11.5" fill="var(--atlas-ink,#27221d)" text-anchor="middle" font-style="italic">2. finite subcover</text>
+  <text x="96" y="28" font-size="12" fill="var(--atlas-ink,#27221d)" text-anchor="middle" font-style="italic">1. subbasic cover</text>
+  <text x="284" y="28" font-size="12" fill="var(--atlas-ink,#27221d)" text-anchor="middle" font-style="italic">2. finite subcover</text>
 
   <path d="M176 84 H204" stroke="var(--atlas-muted-strong,#6f675d)" stroke-width="1.4" fill="none" stroke-linecap="round" />
   <path d="M204 84 L198 79 M204 84 L198 89" stroke="var(--atlas-muted-strong,#6f675d)" stroke-width="1.4" fill="none" stroke-linecap="round" />
@@ -29,8 +29,8 @@
     <rect x="304" y="50" width="52" height="68" rx="9" fill="var(--atlas-accent-soft,#dbeafe)" stroke="var(--atlas-accent,#2457c5)" />
   </g>
 
-  <text x="96" y="140" font-size="10.5" fill="var(--atlas-ink,#27221d)" text-anchor="middle">many sets cover X</text>
-  <text x="284" y="140" font-size="10.5" fill="var(--atlas-ink,#27221d)" text-anchor="middle">same colored sets still cover X</text>
+  <text x="96" y="140" font-size="10" fill="var(--atlas-ink,#27221d)" text-anchor="middle">many sets cover X</text>
+  <text x="284" y="140" font-size="10" fill="var(--atlas-ink,#27221d)" text-anchor="middle">same colored sets still cover X</text>
 
-  <text x="190" y="164" font-size="10.5" fill="var(--atlas-ink,#27221d)" text-anchor="middle">Alexander test: enough to check subbasic covers</text>
+  <text x="190" y="164" font-size="10" fill="var(--atlas-ink,#27221d)" text-anchor="middle">Alexander test: enough to check subbasic covers</text>
 </svg>

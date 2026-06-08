@@ -9,7 +9,7 @@
     <path d="M70,96 C82,50 128,38 168,50 C218,64 250,102 226,132 C202,162 136,154 96,136 C70,124 62,110 70,96 Z"
         fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-acc,#2457c5)" stroke-width="1.8" />
 
-    <text x="232" y="126" font-size="13" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">U</text>
+    <text x="232" y="126" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">U</text>
 
     <!-- local neighborhoods U_x -->
     <ellipse cx="120" cy="91" rx="27" ry="21" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc,#2457c5)"

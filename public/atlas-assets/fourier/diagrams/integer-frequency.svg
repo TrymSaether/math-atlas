@@ -16,12 +16,12 @@
   <line x1="184" y1="52" x2="286" y2="52" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.2" />
   <line x1="184" y1="86" x2="286" y2="86" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.2" />
   <line x1="184" y1="120" x2="286" y2="120" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.2" />
-  <text x="184" y="39" font-size="11" fill="var(--dia-mut,#8c8274)">allowed harmonics</text>
+  <text x="184" y="39" font-size="10" fill="var(--dia-mut,#8c8274)">allowed harmonics</text>
   <text x="184" y="56" font-size="12" fill="var(--dia-ink,#27221d)">n = 0, ±1, ±2, ...</text>
   <text x="184" y="91" font-size="12" fill="var(--dia-ink,#27221d)">
     <tspan>e</tspan><tspan baseline-shift="super" font-size="8">in(x+2π)</tspan><tspan> = e</tspan><tspan
       baseline-shift="super" font-size="8">inx</tspan>
   </text>
   <text x="184" y="125" font-size="12" fill="var(--dia-boundary,#dc2626)">λ ∉ ℤ: phase mismatch</text>
-  <text x="104" y="160" font-size="11" fill="var(--dia-mut,#8c8274)" text-anchor="middle">integer turns close on T</text>
+  <text x="104" y="160" font-size="10" fill="var(--dia-mut,#8c8274)" text-anchor="middle">integer turns close on T</text>
 </svg>

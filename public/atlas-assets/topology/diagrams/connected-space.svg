@@ -5,6 +5,6 @@
         stroke-width="1.6" /><text x="95" y="100" font-size="16" fill="var(--dia-ink,#27221d)" text-anchor="middle"
         font-weight="normal" font-style="italic">U</text><text x="232" y="100" font-size="16"
         fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal" font-style="italic">V</text><text
-        x="160" y="172" font-size="13" fill="var(--dia-mut,#8c8274)" text-anchor="middle" font-weight="normal"
+        x="160" y="172" font-size="12" fill="var(--dia-mut,#8c8274)" text-anchor="middle" font-weight="normal"
         font-style="italic">X = U ⊔ V</text>
 </svg>

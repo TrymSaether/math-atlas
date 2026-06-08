@@ -41,19 +41,19 @@
       <circle cx="258" cy="178" r="5.5" fill="var(--dia-acc,#2457c5)" />
 
       <!-- minimum label near Sₙf -->
-      <text x="154" y="185" font-size="8.5" fill="var(--gold,#EAB308)" text-anchor="middle">min</text>
+      <text x="154" y="185" font-size="8" fill="var(--gold,#EAB308)" text-anchor="middle">min</text>
 
       <!-- labels -->
       <text x="182" y="61" font-size="14" font-style="italic" fill="var(--dia-ink,#27221d)">f</text>
       <text x="142" y="218" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">S<tspan dy="3.5"
-                  font-size="9">N</tspan>
+                  font-size="8">N</tspan>
             <tspan dy="-3.5">f</tspan>
       </text>
       <text x="267" y="180" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">p</text>
       <text x="44" y="248" font-size="12" font-style="italic" fill="var(--dia-mut,#8c8274)">V<tspan dy="3.5"
-                  font-size="9">N</tspan></text>
+                  font-size="8">N</tspan></text>
 
       <!-- caption -->
-      <text x="180" y="270" font-size="9.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">level sets of q ↦ ‖f − q‖
-            on V<tspan dy="2.5" font-size="7">N</tspan></text>
+      <text x="180" y="270" font-size="10" fill="var(--dia-mut,#8c8274)" text-anchor="middle">level sets of q ↦ ‖f − q‖
+            on V<tspan dy="2.5" font-size="6">N</tspan></text>
 </svg>

@@ -48,24 +48,24 @@
       <!-- labels -->
       <text x="258" y="64" font-size="14" font-style="italic" fill="var(--dia-ink,#27221d)">f</text>
       <text x="255" y="198" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">S<tspan dy="3.5"
-                  font-size="9">N</tspan>
+                  font-size="8">N</tspan>
             <tspan dy="-3.5">f</tspan>
       </text>
       <text x="203" y="200" font-size="12" font-style="italic" fill="var(--dia-ink,#27221d)">e<tspan dy="3.5"
-                  font-size="9">n</tspan></text>
+                  font-size="8">n</tspan></text>
       <text x="152" y="174" font-size="12" font-style="italic" fill="var(--dia-acc,#2457c5)">e<tspan dy="3.5"
-                  font-size="9">m</tspan></text>
+                  font-size="8">m</tspan></text>
       <text x="44" y="248" font-size="12" font-style="italic" fill="var(--dia-mut,#8c8274)">V<tspan dy="3.5"
-                  font-size="9">N</tspan></text>
+                  font-size="8">N</tspan></text>
 
       <!-- caption -->
-      <text x="180" y="270" font-size="9.5" fill="var(--dia-mut,#8c8274)" text-anchor="middle">V<tspan dy="2.5"
-                  font-size="7">N</tspan>
+      <text x="180" y="270" font-size="10" fill="var(--dia-mut,#8c8274)" text-anchor="middle">V<tspan dy="2.5"
+                  font-size="6">N</tspan>
             <tspan dy="-2.5"> = span{e</tspan>
-            <tspan dy="2.5" font-size="7">inx</tspan>
+            <tspan dy="2.5" font-size="6">inx</tspan>
             <tspan dy="-2.5"> : |n| ≤ N}, e</tspan>
-            <tspan dy="2.5" font-size="7">n</tspan>
+            <tspan dy="2.5" font-size="6">n</tspan>
             <tspan dy="-2.5"> ⊥ e</tspan>
-            <tspan dy="2.5" font-size="7">m</tspan>
+            <tspan dy="2.5" font-size="6">m</tspan>
       </text>
 </svg>

@@ -33,12 +33,12 @@
         marker-end="url(#arrow)" />
 
     <!-- space labels -->
-    <text x="125" y="26" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">X</text>
+    <text x="125" y="26" font-size="14" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">X</text>
 
-    <text x="315" y="26" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Y</text>
+    <text x="315" y="26" font-size="14" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Y</text>
 
     <!-- map label -->
-    <text x="220" y="69" font-size="13" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">f</text>
+    <text x="220" y="69" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">f</text>
 
     <!-- point labels -->
     <text x="113" y="94" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">x</text>
@@ -47,11 +47,11 @@
         font-style="italic">f(x)</text>
 
     <!-- neighborhood labels -->
-    <text x="125" y="142" font-size="13" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">U</text>
+    <text x="125" y="142" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">U</text>
 
-    <text x="315" y="154" font-size="13" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">V</text>
+    <text x="315" y="154" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">V</text>
 
-    <text x="303" y="127" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle"
+    <text x="303" y="127" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle"
         font-style="italic">f(U)</text>
 
     <!-- neighborhood annotations -->

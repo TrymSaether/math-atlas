@@ -18,6 +18,6 @@
   <path d="M197 126 C214 126 218 68 228 68 C238 68 242 126 259 126 C270 126 275 113 280 126" fill="none"
     stroke="var(--dia-acc,#2457c5)" stroke-width="1.9" />
   <line x1="190" y1="126" x2="288" y2="126" stroke="var(--dia-ink,#27221d)" stroke-width="1" />
-  <text x="65" y="157" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle">aperture</text>
-  <text x="239" y="157" font-size="11" fill="var(--dia-ink,#27221d)" text-anchor="middle">far-field intensity</text>
+  <text x="65" y="157" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle">aperture</text>
+  <text x="239" y="157" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle">far-field intensity</text>
 </svg>

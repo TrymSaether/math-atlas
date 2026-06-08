@@ -1,9 +1,9 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
     <circle cx="120" cy="92" r="56" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.6" />
-    <circle cx="176" cy="92" r="3.4" fill="var(--dia-acc,#2457c5)" /><text x="184" y="96" font-size="11"
+    <circle cx="176" cy="92" r="3.4" fill="var(--dia-acc,#2457c5)" /><text x="184" y="96" font-size="10"
         fill="var(--dia-acc,#2457c5)" text-anchor="start" font-weight="normal" font-style="italic">s₀</text>
     <path d="M176,92 C176,40 64,40 64,92 C64,150 176,150 176,92" fill="none" stroke="var(--dia-acc,#2457c5)"
         stroke-width="1.6" /><text x="120" y="92" font-size="16" fill="var(--dia-acc2,#0d9488)" text-anchor="middle"
-        font-weight="normal" font-style="italic">↻ n</text><text x="255" y="96" font-size="13"
+        font-weight="normal" font-style="italic">↻ n</text><text x="255" y="96" font-size="12"
         fill="var(--dia-ink,#27221d)" text-anchor="middle" font-weight="normal" font-style="italic">π₁(S¹) ≅ ℤ</text>
 </svg>

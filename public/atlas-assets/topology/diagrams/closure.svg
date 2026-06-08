@@ -2,7 +2,7 @@
     <!-- Closure Ā (dashed, larger) -->
     <ellipse cx="160" cy="92" rx="118" ry="62" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)"
         stroke-width="1.6" stroke-dasharray="6,4" />
-    <text x="258" y="46" font-size="15" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Ā</text>
+    <text x="258" y="46" font-size="14" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">Ā</text>
     <!-- Set A (solid boundary) -->
     <ellipse cx="155" cy="92" rx="72" ry="40" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc,#2457c5)"
         stroke-width="1.6" />
