@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, ArrowLeft, MagnifyingGlass } from "@phosphor-icons/react";
+import { ArrowUpRightIcon, ArrowLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import { MAPS, type LoadedMap, type MapId } from "../data";
@@ -119,7 +119,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
             </div>
 
             <div className="dict-search">
-              <MagnifyingGlass className="dict-search-icon" aria-hidden />
+              <MagnifyingGlassIcon className="dict-search-icon" aria-hidden />
               <input
                 type="text"
                 value={query}
@@ -299,7 +299,7 @@ function DetailPane({
     <article className="dict-doc" key={entry.id}>
       <div className="dict-doc-inner">
         <button type="button" className="dict-back" onClick={onBack}>
-          <ArrowLeft className="h-3.5 w-3.5" aria-hidden /> All entries
+          <ArrowLeftIcon className="h-3.5 w-3.5" aria-hidden /> All entries
         </button>
 
         <header className="dict-doc-head">
@@ -420,7 +420,7 @@ function DetailPane({
             </div>
           )}
           <button type="button" className="dict-open" onClick={openInAtlas}>
-            Show in atlas <ArrowUpRight className="h-3 w-3" aria-hidden />
+            Show in atlas <ArrowUpRightIcon className="h-3 w-3" aria-hidden />
           </button>
         </footer>
       </div>
