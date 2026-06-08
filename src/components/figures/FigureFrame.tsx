@@ -1,5 +1,23 @@
 import { type ReactNode } from "react";
-import { Coordinates, Mafs, Plot, Line, Point, Polygon, Polyline, Text } from "mafs";
+import {
+  Circle,
+  Coordinates,
+  Ellipse,
+  LaTeX,
+  Mafs,
+  Plot,
+  Line,
+  Point,
+  Polygon,
+  Polyline,
+  Text,
+  Theme,
+  Transform,
+  Vector,
+  useMovablePoint,
+  useStopwatch,
+  vec,
+} from "mafs";
 
 import "mafs/core.css";
 
@@ -130,4 +148,20 @@ export function SamplePoints({
   );
 }
 
-export { Line, Plot, Point, Polygon, Polyline, Text };
+export {
+  Circle,
+  Ellipse,
+  LaTeX,
+  Line,
+  Plot,
+  Point,
+  Polygon,
+  Polyline,
+  Text,
+  Theme,
+  Transform,
+  Vector,
+  useMovablePoint,
+  useStopwatch,
+  vec,
+};

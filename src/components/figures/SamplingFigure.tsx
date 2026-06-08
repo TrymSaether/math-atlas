@@ -1,12 +1,38 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { aliasFrequency } from "../../lib/figures/fourierMath";
-import { FigureFrame, FunctionCurve, Line, SamplePoints } from "./FigureFrame";
-import { RangeControl } from "./RangeControl";
+import { MathText } from "../../lib/katex";
+import {
+  FigureFrame,
+  FunctionCurve,
+  Line,
+  SamplePoints,
+  Text,
+  Vector,
+  useMovablePoint,
+} from "./FigureFrame";
+import { DIA } from "./tokens";
 import { type FigureProps } from "./types";
 
 const T_MAX = 4; // seconds shown
 const SIGNAL_HZ = 3; // the true tone frequency
+const MIN_FS = 2;
+const MAX_FS = 16;
+const HANDLE_MIN = 0.45;
+const HANDLE_MAX = 3.65;
+
+function fsFromHandle(x: number): number {
+  const t = (x - HANDLE_MIN) / (HANDLE_MAX - HANDLE_MIN);
+  return MIN_FS + Math.min(1, Math.max(0, t)) * (MAX_FS - MIN_FS);
+}
+
+function handleFromFs(fs: number): number {
+  const t = (fs - MIN_FS) / (MAX_FS - MIN_FS);
+  return HANDLE_MIN + t * (HANDLE_MAX - HANDLE_MIN);
+}
+
+const NYQUIST_HZ = 2 * SIGNAL_HZ; // the critical rate
+const NYQUIST_HANDLE_X = handleFromFs(NYQUIST_HZ);
 
 /**
  * A pure tone (solid faint) sampled at rate fs (dots), with the lowest-frequency
@@ -15,9 +41,12 @@ const SIGNAL_HZ = 3; // the true tone frequency
  * different tune. Serves the sampling theorem and aliasing nodes.
  */
 export default function SamplingFigure({ nodeId }: FigureProps) {
-  // slider 20..160 → fs in 2.0..16.0 Hz
-  const [raw, setRaw] = useState(40);
-  const fs = raw / 10;
+  const rate = useMovablePoint([0.9, 1.08], {
+    color: "var(--accent)",
+    constrain: ([x]) => [Math.min(HANDLE_MAX, Math.max(HANDLE_MIN, x)), 1.08],
+  });
+  const fs = fsFromHandle(rate.x);
+  const dt = 1 / fs;
   const nyquistOk = fs >= 2 * SIGNAL_HZ;
   const aliasHz = aliasFrequency(SIGNAL_HZ, fs);
   const samples = useMemo(() => {
@@ -34,11 +63,31 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[0, T_MAX]} yDomain={[-1.25, 1.25]} grid>
-        <Line.Segment point1={[0, 0]} point2={[T_MAX, 0]} color="var(--fg-4)" weight={1} />
+        <Line.Segment point1={[0, 0]} point2={[T_MAX, 0]} color={DIA.muted} weight={1} />
+        <Line.Segment point1={[HANDLE_MIN, 1.08]} point2={[HANDLE_MAX, 1.08]} color={DIA.muted} weight={1} style="dashed" />
+        {/* The critical (Nyquist) rate: a tick on the rate track shows why 2·f is
+            the threshold, instead of leaving the user to discover it by dragging. */}
+        <Line.Segment
+          point1={[NYQUIST_HANDLE_X, 1.0]}
+          point2={[NYQUIST_HANDLE_X, 1.16]}
+          color={nyquistOk ? DIA.codomain : DIA.alert}
+          weight={1.3}
+        />
+        <Text x={NYQUIST_HANDLE_X} y={1.22} color={nyquistOk ? DIA.codomain : DIA.alert} size={9}>
+          2f
+        </Text>
+        <Vector tail={[HANDLE_MIN, 1.08]} tip={[rate.x, 1.08]} color={DIA.accent} weight={1.4} />
+        <Text x={Math.min(rate.x, NYQUIST_HANDLE_X - 0.28)} y={0.94} color={DIA.accent} size={10}>
+          f_s
+        </Text>
+        <Vector tail={[0, -1.08]} tip={[dt, -1.08]} color={DIA.codomain} weight={1.2} />
+        <Text x={Math.max(0.35, dt + 0.22)} y={-1.08} color={DIA.codomain} size={10}>
+          Δt
+        </Text>
         <FunctionCurve
           y={(t) => Math.sin(2 * Math.PI * SIGNAL_HZ * t)}
           domain={[0, T_MAX]}
-          color="var(--fg-3)"
+          color={DIA.faint}
           weight={1.5}
           opacity={nyquistOk ? 0.45 : 0.7}
         />
@@ -46,26 +95,23 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
           <FunctionCurve
             y={(t) => Math.sin(2 * Math.PI * aliasHz * t)}
             domain={[0, T_MAX]}
-            color="var(--accent)"
+            color={DIA.alert}
             weight={2.1}
             style="dashed"
           />
         )}
         <SamplePoints points={samples} radius={2.7} />
+        {rate.element}
       </FigureFrame>
-      <RangeControl
-        min={20}
-        max={160}
-        value={raw}
-        onChange={setRaw}
-        label={`f_s = ${fs.toFixed(1)}`}
-        ariaLabel="Sampling rate fs"
-      />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        {nyquistOk
-          ? `f_s ≥ 2·${SIGNAL_HZ} Hz: the ${SIGNAL_HZ} Hz tone is captured faithfully.`
-          : `Undersampled — the dots also fit a phantom ${aliasHz.toFixed(1)} Hz sine (dashed).` +
-            (focusAlias ? " That impostor is the alias." : "")}
+        <MathText
+          text={
+            nyquistOk
+              ? `Drag the sampling-rate handle. $f_s \\ge 2 \\cdot ${SIGNAL_HZ}\\,\\text{Hz}$: the ${SIGNAL_HZ} Hz tone is captured faithfully.`
+              : `Drag the sampling-rate handle. Undersampled — the dots also fit a phantom $${aliasHz.toFixed(1)}\\,\\text{Hz}$ sine (dashed).` +
+                (focusAlias ? " That impostor is the alias." : "")
+          }
+        />
       </figcaption>
     </figure>
   );

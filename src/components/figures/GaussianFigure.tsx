@@ -1,8 +1,6 @@
-import { useState } from "react";
-
 import { gaussian } from "../../lib/figures/fourierMath";
-import { FigureFrame, FunctionCurve } from "./FigureFrame";
-import { RangeControl } from "./RangeControl";
+import { FigureFrame, FunctionCurve, Line, Text, Vector, useMovablePoint } from "./FigureFrame";
+import { DIA } from "./tokens";
 import { type FigureProps } from "./types";
 
 const CAPTION: Record<string, string> = {
@@ -19,39 +17,47 @@ const CAPTION: Record<string, string> = {
  * and the uncertainty principle.
  */
 export default function GaussianFigure({ nodeId }: FigureProps) {
-  // slider 20..200 → σ in 0.2..2.0
-  const [raw, setRaw] = useState(100);
-  const sigma = raw / 100;
+  // Start away from σ = 1 (where the Gaussian and its transform coincide and the
+  // dashed curve hides under the solid one). At σ ≈ 0.62 the two curves are
+  // clearly separated, so the space–frequency trade-off reads before any drag.
+  const width = useMovablePoint([0.62, 1.06], {
+    color: "var(--accent)",
+    constrain: ([x]) => [Math.min(2.2, Math.max(0.25, x)), 1.06],
+  });
+  const sigma = width.x;
   const freqSigma = 1 / sigma; // width of the transform
   const caption = CAPTION[nodeId] ?? CAPTION.gaussian_transform;
 
   return (
     <figure className="m-0">
-      <FigureFrame xDomain={[-6, 6]} yDomain={[-0.08, 1.12]} grid>
+      <FigureFrame xDomain={[-6, 6]} yDomain={[-0.08, 1.18]} grid>
+        <Line.Segment point1={[0, 1.06]} point2={[2.2, 1.06]} color={DIA.muted} weight={1} style="dashed" />
+        <Vector tail={[0, 1.06]} tip={[sigma, 1.06]} color={DIA.accent} weight={1.5} />
+        <Text x={sigma + 0.34} y={1.08} color={DIA.accent} size={10}>
+          σ
+        </Text>
+        <Vector tail={[0, 0.88]} tip={[-freqSigma, 0.88]} color={DIA.codomain} weight={1.3} />
+        <Text x={-freqSigma - 0.5} y={0.9} color={DIA.codomain} size={10}>
+          1/σ
+        </Text>
         <FunctionCurve
           y={(x) => gaussian(x, freqSigma)}
           domain={[-6, 6]}
-          color="var(--fg-3)"
-          weight={1.6}
+          color={DIA.codomain}
+          weight={1.7}
           style="dashed"
         />
         <FunctionCurve
           y={(x) => gaussian(x, sigma)}
           domain={[-6, 6]}
-          color="var(--accent)"
+          color={DIA.accent}
           weight={2.1}
         />
+        {width.element}
       </FigureFrame>
-      <RangeControl
-        min={20}
-        max={200}
-        value={raw}
-        onChange={setRaw}
-        label={`\\sigma = ${sigma.toFixed(2)}`}
-        ariaLabel="Gaussian width sigma"
-      />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        {caption}
+        Drag the handle on the width marker: σ = {sigma.toFixed(2)}, so the transform width is{" "}
+        {freqSigma.toFixed(2)}. {caption}
       </figcaption>
     </figure>
   );

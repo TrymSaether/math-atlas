@@ -1,9 +1,19 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { boxConvolution } from "../../lib/figures/fourierMath";
 import { MathText } from "../../lib/katex";
-import { FigureFrame, FunctionCurve, Line, Point, Polygon } from "./FigureFrame";
-import { RangeControl } from "./RangeControl";
+import {
+  FigureFrame,
+  FunctionCurve,
+  Line,
+  Point,
+  Polygon,
+  Text,
+  Transform,
+  Vector,
+  useMovablePoint,
+} from "./FigureFrame";
+import { DIA } from "./tokens";
 import { type FigureProps } from "./types";
 
 const X_DOMAIN: [number, number] = [-4, 4];
@@ -32,8 +42,11 @@ function overlapPoints(s: number): [number, number][] | null {
 }
 
 export default function ConvolutionFigure(_: FigureProps) {
-  const [raw, setRaw] = useState(-12);
-  const s = raw / 10;
+  const shift = useMovablePoint([-1.2, 1.2], {
+    color: "var(--accent)",
+    constrain: ([x]) => [Math.min(3, Math.max(-3, x)), 1.2],
+  });
+  const s = shift.x;
 
   const overlap = useMemo(() => overlapPoints(s), [s]);
   const value = boxConvolution(s);
@@ -45,25 +58,41 @@ export default function ConvolutionFigure(_: FigureProps) {
           className="relative overflow-hidden rounded-xl border"
           style={{ borderColor: "var(--border)", background: "var(--bg)" }}
         >
-          <div className="absolute left-3 top-2 z-10 text-ui-meta" style={{ color: "var(--fg-2)" }}>
+          <div
+            className="absolute left-3 top-2 z-10 rounded-md px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
+            style={{ color: "var(--fg-2)", background: "color-mix(in srgb, var(--surface) 78%, transparent)" }}
+          >
             <MathText text={`$f(t)$ fixed, $g(s-t)$ sliding`} />
           </div>
 
           <FigureFrame xDomain={X_DOMAIN} yDomain={[-0.25, 1.45]} height={150} axes={false} grid>
-            <Line.Segment point1={[-4, 0]} point2={[4, 0]} color="var(--fg-4)" />
+            <Line.Segment point1={[-4, 0]} point2={[4, 0]} color={DIA.muted} />
 
-            <Polygon points={boxPoints(0)} color="var(--fg-3)" />
-            <Polygon points={boxPoints(s)} color="var(--accent)" />
-            {overlap && <Polygon points={overlap} color="var(--accent)" />}
+            <Polygon points={boxPoints(0)} color={DIA.faint} />
+            <Transform translate={[s, 0]}>
+              <Polygon points={boxPoints(0)} color={DIA.accent} />
+              <Line.Segment point1={[-1, 0]} point2={[-1, 1]} color={DIA.accent} />
+              <Line.Segment point1={[1, 0]} point2={[1, 1]} color={DIA.accent} />
+            </Transform>
+            {overlap && (
+              <Polygon points={overlap} color={DIA.alert} fillOpacity={0.38} strokeOpacity={0.95} weight={1.4} />
+            )}
 
-            <Line.Segment point1={[-1, 0]} point2={[-1, 1]} color="var(--fg-3)" />
-            <Line.Segment point1={[1, 0]} point2={[1, 1]} color="var(--fg-3)" />
+            <Line.Segment point1={[-1, 0]} point2={[-1, 1]} color={DIA.faint} />
+            <Line.Segment point1={[1, 0]} point2={[1, 1]} color={DIA.faint} />
 
-            <Line.Segment point1={[s - 1, 0]} point2={[s - 1, 1]} color="var(--accent)" />
-            <Line.Segment point1={[s + 1, 0]} point2={[s + 1, 1]} color="var(--accent)" />
+            <Line.Segment point1={[-3, 1.2]} point2={[3, 1.2]} color={DIA.muted} weight={1} style="dashed" />
+            <Vector tail={[0, 1.2]} tip={[s, 1.2]} color={DIA.accent} weight={1.4} />
+            <Text x={s} y={1.35} color={DIA.accent} size={10}>
+              s
+            </Text>
+            {shift.element}
           </FigureFrame>
 
-          <div className="absolute bottom-2 left-3 rounded-md px-2 py-1 text-ui-meta">
+          <div
+            className="absolute bottom-2 left-3 rounded-md px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
+            style={{ background: "color-mix(in srgb, var(--surface) 78%, transparent)" }}
+          >
             <MathText text={`$s=${s.toFixed(1)},\\quad \\operatorname{overlap}=${value.toFixed(2)}$`} />
           </div>
         </section>
@@ -72,36 +101,34 @@ export default function ConvolutionFigure(_: FigureProps) {
           className="relative overflow-hidden rounded-xl border"
           style={{ borderColor: "var(--border)", background: "var(--bg)" }}
         >
-          <div className="absolute left-3 top-2 z-10 text-ui-meta" style={{ color: "var(--fg-2)" }}>
+          <div
+            className="absolute left-3 top-2 z-10 rounded-md px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
+            style={{ color: "var(--fg-2)", background: "color-mix(in srgb, var(--surface) 78%, transparent)" }}
+          >
             <MathText text={`$(f*g)(s)=\\int_{-\\infty}^{\\infty} f(t)g(s-t)\\,dt$`} />
           </div>
 
           <FigureFrame xDomain={X_DOMAIN} yDomain={[-0.35, 2.35]} height={150} axes={false} grid>
-            <Line.Segment point1={[-4, 0]} point2={[4, 0]} color="var(--fg-4)" />
-            <Line.Segment point1={[s, 0]} point2={[s, value]} color="var(--fg-4)" />
+            <Line.Segment point1={[-4, 0]} point2={[4, 0]} color={DIA.muted} />
+            <Line.Segment point1={[s, 0]} point2={[s, value]} color={DIA.muted} />
 
-            <FunctionCurve y={boxConvolution} domain={[-2, 2]} color="var(--accent)" weight={2.1} />
+            <FunctionCurve y={boxConvolution} domain={[-2, 2]} color={DIA.accent} weight={2.1} />
 
-            <Point x={s} y={value} color="var(--accent)" />
+            <Point x={s} y={value} color={DIA.alert} />
+            <Vector tail={[s, 0]} tip={[s, value]} color={DIA.alert} weight={1.2} />
           </FigureFrame>
 
-          <div className="absolute bottom-2 left-3 rounded-md px-2 py-1 text-ui-meta">
+          <div
+            className="absolute bottom-2 left-3 rounded-md px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
+            style={{ background: "color-mix(in srgb, var(--surface) 78%, transparent)" }}
+          >
             <MathText text={`$s=${s.toFixed(1)},\\quad (f*g)(s)=${value.toFixed(2)}$`} />
           </div>
         </section>
       </div>
 
-      <RangeControl
-        min={-40}
-        max={40}
-        value={raw}
-        onChange={setRaw}
-        label={`s = ${s.toFixed(1)}`}
-        ariaLabel="Convolution shift s"
-      />
-
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        Slide one box across the other. The overlap area in the top panel is the value marked on the
+        Drag the shift handle. The overlap area in the top panel is the value marked on the
         convolution curve below.
       </figcaption>
     </figure>

@@ -14,6 +14,18 @@ export const FIGURE_REGISTRY: Record<
   string,
   LazyExoticComponent<ComponentType<FigureProps>>
 > = {
+  function: lazy(() => import("./FunctionSetFigure")),
+  domain: lazy(() => import("./FunctionSetFigure")),
+  codomain: lazy(() => import("./FunctionSetFigure")),
+  image_of_function: lazy(() => import("./FunctionSetFigure")),
+  preimage: lazy(() => import("./FunctionSetFigure")),
+  inverse_of_function: lazy(() => import("./FunctionSetFigure")),
+  restriction_of_function: lazy(() => import("./FunctionSetFigure")),
+
+  injective: lazy(() => import("./MappingPropertyFigure")),
+  surjective: lazy(() => import("./MappingPropertyFigure")),
+  bijective: lazy(() => import("./MappingPropertyFigure")),
+
   parseval_identity: lazy(() => import("./ParsevalFigure")),
   plancherel_theorem: lazy(() => import("./ParsevalFigure")),
   riemann_lebesgue_lemma: lazy(() => import("./RiemannLebesgueFigure")),

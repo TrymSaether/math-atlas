@@ -754,7 +754,8 @@
         "Add optional item.status.completeness_score in [0,1] for prioritizing draft/stub cleanup.",
         "Add optional item.difficulty with values introductory/intermediate/advanced.",
         "Add optional proof_steps[].claim and proof_steps[].justification fields for richer proof verification."
-      ]
+      ],
+      "function_property_cleanup": "2026-06-08: removed overview node sij; retained injective, surjective, and bijective as atomic property nodes; retargeted precise dependencies to bijective."
     },
     "templates": {
       "item": {
@@ -1533,6 +1534,7 @@
         "label": "Axiom of Choice",
         "domain": "foundations",
         "related": [],
+        "diagram_path": "/atlas-assets/topology/diagrams/axiom-of-choice.svg",
         "status": {
           "content": "usable",
           "math_review": "reviewed",
@@ -2641,6 +2643,7 @@
         "label": "Topology",
         "domain": "spaces_constructions",
         "related": [],
+        "diagram_path": "/atlas-assets/topology/diagrams/topology.svg",
         "status": {
           "content": "usable",
           "math_review": "unchecked",
@@ -2686,6 +2689,7 @@
         "label": "Open Set",
         "domain": "spaces_constructions",
         "related": [],
+        "diagram_path": "/atlas-assets/topology/diagrams/open-set.svg",
         "status": {
           "content": "usable",
           "math_review": "unchecked",
@@ -4243,7 +4247,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["preimage", "sij"],
+          "definitional_dependency": ["preimage", "bijective"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": ["topological_space", "continuity"],
@@ -13003,7 +13007,7 @@
         "notation": null,
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["homomorphism", "sij"],
+          "definitional_dependency": ["homomorphism", "bijective"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -13013,7 +13017,7 @@
         },
         "outgoing_relations": [
           "e_isomorphism_requires_homomorphism",
-          "e_isomorphism_requires_sij"
+          "e_isomorphism_requires_bijective"
         ],
         "metadata": {
           "tags": [],
@@ -13028,7 +13032,7 @@
         "gloss": "A perfect structural match between groups: same group, relabelled. Isomorphic groups are interchangeable for all group-theoretic purposes.",
         "example": "$\\Phi\\colon\\pi_1(S^1)\\to\\mathbb{Z}$ is an isomorphism (Thm. 8.16).",
         "diagram_path": "/atlas-assets/topology/diagrams/isomorphism.svg",
-        "related": ["homomorphism", "sij", "pi1_circle", "fht"],
+        "related": ["homomorphism", "bijective", "pi1_circle", "fht"],
         "introduced_object": null,
         "genus": null,
         "differentia": [],
@@ -14556,56 +14560,6 @@
         "display_label": "Bijective"
       },
       {
-        "id": "sij",
-        "statement": "A function $f:X\\to Y$ is injective if distinct inputs have distinct outputs, surjective if every element of $Y$ is hit, and bijective if both hold.",
-        "formal_statement": "Injective: $f(x_1)=f(x_2)\\Rightarrow x_1=x_2$. Surjective: $\\forall y\\in Y\\,\\exists x\\in X:f(x)=y$. Bijective: injective and surjective.",
-        "definition": "The standard one-to-one, onto, and one-to-one-correspondence properties of functions.",
-        "intuition": "Injective means no collisions; surjective means no missed targets; bijective means perfect pairing.",
-        "notation": "injective, surjective, bijective",
-        "assumptions": [],
-        "dependencies": {
-          "definitional_dependency": ["function", "image"],
-          "logical_dependency": [],
-          "assumption_dependency": [],
-          "construction_dependency": [],
-          "notation_dependency": [],
-          "pedagogical_dependency": [],
-          "historical_dependency": []
-        },
-        "outgoing_relations": [
-          "e_sij_requires_function",
-          "e_sij_prerequisite_for_isomorphism"
-        ],
-        "metadata": {
-          "tags": ["functions"],
-          "syllabus_priority": "core",
-          "source": null
-        },
-        "kind": "definition",
-        "label": "Surjective / Injective / Bijective",
-        "domain": "foundations",
-        "chapter": "A",
-        "ref": "Def. A.7",
-        "gloss": "Surjective hits everything, injective never collides, bijective is a perfect one-to-one matching. A bijection has an inverse $f^{-1}$.",
-        "example": "$f$ is bijective iff there is $g$ with $g\\circ f=\\mathrm{id}_A$ and $f\\circ g=\\mathrm{id}_B$ (Thm. A.10).",
-        "diagram_path": "/atlas-assets/topology/diagrams/sij.svg",
-        "related": [],
-        "introduced_object": null,
-        "genus": null,
-        "differentia": [],
-        "examples": [],
-        "non_examples": [],
-        "equivalent_definitions": [],
-        "status": {
-          "content": "usable",
-          "math_review": "reviewed",
-          "schema_review": "valid_shape",
-          "pedagogy_review": "usable"
-        },
-        "canonical_label": "surjective / injective / bijective",
-        "display_label": "Surjective / Injective / Bijective"
-      },
-      {
         "id": "real_line_connected",
         "statement": "$\\mathbb{R}$ with the standard topology is connected.",
         "formal_statement": null,
@@ -15524,6 +15478,7 @@
           "source": null
         },
         "related": [],
+        "diagram_path": "/atlas-assets/topology/diagrams/relation.svg",
         "status": {
           "content": "usable",
           "math_review": "reviewed",
@@ -15563,6 +15518,7 @@
           "source": null
         },
         "related": [],
+        "diagram_path": "/atlas-assets/topology/diagrams/equivalence-relation.svg",
         "status": {
           "content": "usable",
           "math_review": "reviewed",
@@ -15758,6 +15714,7 @@
           "source": null
         },
         "related": [],
+        "diagram_path": "/atlas-assets/topology/diagrams/indexed-family.svg",
         "status": {
           "content": "usable",
           "math_review": "reviewed",
@@ -15794,6 +15751,7 @@
           "source": null
         },
         "related": [],
+        "diagram_path": "/atlas-assets/topology/diagrams/choice-function.svg",
         "status": {
           "content": "usable",
           "math_review": "reviewed",
@@ -15815,7 +15773,7 @@
         "notation": "$|A|<\\infty$",
         "assumptions": [],
         "dependencies": {
-          "definitional_dependency": ["set", "sij"],
+          "definitional_dependency": ["set", "bijective"],
           "logical_dependency": [],
           "assumption_dependency": [],
           "construction_dependency": [],
@@ -15823,7 +15781,7 @@
           "pedagogical_dependency": [],
           "historical_dependency": []
         },
-        "outgoing_relations": ["e_finite_set_requires_sij"],
+        "outgoing_relations": ["e_finite_set_requires_bijective"],
         "metadata": {
           "tags": ["set-theory"],
           "syllabus_priority": "high",
@@ -15874,6 +15832,7 @@
           "source": null
         },
         "related": [],
+        "diagram_path": "/atlas-assets/topology/diagrams/finite-subcover.svg",
         "status": {
           "content": "usable",
           "math_review": "reviewed",
@@ -21793,17 +21752,6 @@
         "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
       },
       {
-        "id": "e_sij_requires_function",
-        "source": "sij",
-        "target": "function",
-        "type": "requires",
-        "dependency_class": "definitional_dependency",
-        "label": "",
-        "direction": "source_to_target",
-        "confidence": "medium",
-        "notes": "Promoted from curated dictionary related[] during duplicate/orphan repair."
-      },
-      {
         "id": "e_comparable_topologies_see_also_discrete_topology",
         "source": "comparable_topologies",
         "target": "discrete_topology",
@@ -22307,17 +22255,6 @@
         "label": "",
         "direction": "source_to_target",
         "confidence": "medium",
-        "notes": "Promoted from curated dictionary related[] during continued review."
-      },
-      {
-        "id": "e_sij_prerequisite_for_isomorphism",
-        "source": "sij",
-        "target": "isomorphism",
-        "type": "prerequisite_for",
-        "dependency_class": "pedagogical_dependency",
-        "label": "",
-        "direction": "source_to_target",
-        "confidence": "high",
         "notes": "Promoted from curated dictionary related[] during continued review."
       },
       {
@@ -23113,15 +23050,15 @@
         "notes": null
       },
       {
-        "id": "e_finite_set_requires_sij",
+        "id": "e_finite_set_requires_bijective",
         "source": "finite_set",
-        "target": "sij",
+        "target": "bijective",
         "type": "requires",
         "dependency_class": "definitional_dependency",
         "label": "Finiteness is characterized by bijection with an initial segment",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": null
+        "notes": "Retargeted from removed overview node sij during function-property cleanup."
       },
       {
         "id": "e_finite_subcover_requires_cover",
@@ -23311,15 +23248,15 @@
         "notes": null
       },
       {
-        "id": "e_isomorphism_requires_sij",
+        "id": "e_isomorphism_requires_bijective",
         "source": "isomorphism",
-        "target": "sij",
+        "target": "bijective",
         "type": "requires",
         "dependency_class": "definitional_dependency",
-        "label": "A group isomorphism is bijective",
+        "label": "A group isomorphism is a bijective homomorphism",
         "direction": "source_to_target",
         "confidence": "high",
-        "notes": null
+        "notes": "Retargeted from removed overview node sij during function-property cleanup."
       },
       {
         "id": "e_subgroup_requires_subset",
