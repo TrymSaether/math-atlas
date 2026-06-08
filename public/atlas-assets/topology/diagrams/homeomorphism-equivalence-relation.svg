@@ -1,101 +1,37 @@
-<svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader', Georgia, serif" role="img">
-      <defs>
-            <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-                  <path d="M0,0 L8,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
-            </marker>
+<svg width="100%" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader', Georgia, serif" role="img">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
 
-            <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-                  <path d="M0,0 L8,3 L0,6 Z" fill="var(--dia-acc,#2457c5)" />
-            </marker>
+  <ellipse cx="145" cy="158" rx="72" ry="54" fill="var(--color-background-secondary)" stroke="var(--color-text-primary)" stroke-width="1.7" stroke-opacity="0.5" style="fill:rgb(245, 244, 237);stroke:rgb(20, 20, 19);color:rgb(0, 0, 0);stroke-width:1.7px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <ellipse cx="370" cy="158" rx="72" ry="54" fill="var(--color-background-secondary)" stroke="var(--color-text-primary)" stroke-width="1.7" stroke-opacity="0.5" style="fill:rgb(245, 244, 237);stroke:rgb(20, 20, 19);color:rgb(0, 0, 0);stroke-width:1.7px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <ellipse cx="590" cy="158" rx="72" ry="54" fill="var(--color-background-secondary)" stroke="var(--color-text-primary)" stroke-width="1.7" stroke-opacity="0.5" style="fill:rgb(245, 244, 237);stroke:rgb(20, 20, 19);color:rgb(0, 0, 0);stroke-width:1.7px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-            <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.12" />
-            </filter>
-      </defs>
+  <text x="145" y="70" font-size="24" text-anchor="middle" fill="var(--color-text-primary)" font-style="italic" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:24px;font-weight:400;font-style:italic;text-anchor:middle;dominant-baseline:auto">X</text>
+  <text x="370" y="70" font-size="24" text-anchor="middle" fill="var(--color-text-primary)" font-style="italic" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:24px;font-weight:400;font-style:italic;text-anchor:middle;dominant-baseline:auto">Y</text>
+  <text x="590" y="70" font-size="24" text-anchor="middle" fill="var(--color-text-primary)" font-style="italic" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:24px;font-weight:400;font-style:italic;text-anchor:middle;dominant-baseline:auto">Z</text>
 
-      <!-- background -->
-      <rect width="720" height="300" rx="22" fill="var(--dia-paper,#fffdf8)" />
+  <!-- f: X→Y, start/end on ellipse boundary at y=128 -->
+  <path d="M205,128 C232,88 283,88 310,128" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2" marker-end="url(#arr)" style="fill:none;stroke:rgb(36, 87, 197);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="258" y="82" font-size="18" text-anchor="middle" fill="var(--dia-acc,#2457c5)" font-style="italic" style="fill:rgb(36, 87, 197);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:18px;font-weight:400;font-style:italic;text-anchor:middle;dominant-baseline:auto">f</text>
 
-      <!-- X shape -->
-      <path d="M75,145
-           C70,95 105,60 155,68
-           C205,76 225,108 210,150
-           C195,195 150,218 110,200
-           C82,188 80,170 75,145 Z" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)" stroke-width="1.8"
-            filter="url(#softShadow)" />
+  <!-- f⁻¹: Y→X -->
+  <path d="M310,188 C283,228 232,228 205,188" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" marker-end="url(#arr)" style="fill:none;stroke:rgb(61, 61, 58);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="258" y="244" font-size="16" text-anchor="middle" fill="var(--color-text-secondary)" font-style="italic" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;font-style:italic;text-anchor:middle;dominant-baseline:auto">f ⁻¹</text>
 
-      <!-- Y shape -->
-      <path d="M295,145
-           C300,96 335,67 382,75
-           C430,83 456,118 438,160
-           C420,202 375,215 335,195
-           C305,180 292,165 295,145 Z" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
-            stroke-width="1.8" filter="url(#softShadow)" />
+  <!-- g: Y→Z -->
+  <path d="M430,128 C452,88 503,88 530,128" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2" marker-end="url(#arr)" style="fill:none;stroke:rgb(36, 87, 197);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="478" y="82" font-size="18" text-anchor="middle" fill="var(--dia-acc,#2457c5)" font-style="italic" style="fill:rgb(36, 87, 197);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:18px;font-weight:400;font-style:italic;text-anchor:middle;dominant-baseline:auto">g</text>
 
-      <!-- Z shape -->
-      <path d="M520,145
-           C512,105 545,70 595,70
-           C645,70 674,105 660,150
-           C646,195 600,220 560,198
-           C532,183 526,165 520,145 Z" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)"
-            stroke-width="1.8" filter="url(#softShadow)" />
+  <!-- g⁻¹: Z→Y -->
+  <path d="M530,188 C503,228 452,228 430,188" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" marker-end="url(#arr)" style="fill:none;stroke:rgb(61, 61, 58);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="478" y="244" font-size="16" text-anchor="middle" fill="var(--color-text-secondary)" font-style="italic" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;font-style:italic;text-anchor:middle;dominant-baseline:auto">g ⁻¹</text>
 
-      <!-- internal open-set-like marks -->
-      <ellipse cx="145" cy="132" rx="34" ry="22" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.5"
-            stroke-dasharray="4 4" />
+  <!-- g∘f: X→Z, start/end on ellipse at y=120 -->
+  <path d="M196,120 C248,12,486,12 539,120" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2.2" marker-end="url(#arr)" style="fill:none;stroke:rgb(36, 87, 197);color:rgb(0, 0, 0);stroke-width:2.2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="368" y="34" font-size="18" text-anchor="middle" fill="var(--dia-acc,#2457c5)" font-style="italic" style="fill:rgb(36, 87, 197);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Newsreader, Georgia, serif;font-size:18px;font-weight:400;font-style:italic;text-anchor:middle;dominant-baseline:auto">g ∘ f</text>
 
-      <ellipse cx="372" cy="137" rx="34" ry="23" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.5"
-            stroke-dasharray="4 4" />
-
-      <ellipse cx="590" cy="135" rx="35" ry="22" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.5"
-            stroke-dasharray="4 4" />
-
-      <!-- labels -->
-      <text x="145" y="45" font-size="24" text-anchor="middle" fill="var(--dia-ink,#27221d)"
-            font-style="italic">X</text>
-      <text x="370" y="45" font-size="24" text-anchor="middle" fill="var(--dia-ink,#27221d)"
-            font-style="italic">Y</text>
-      <text x="590" y="45" font-size="24" text-anchor="middle" fill="var(--dia-ink,#27221d)"
-            font-style="italic">Z</text>
-
-      <!-- f arrow X to Y -->
-      <path d="M225,132 C250,105 270,105 295,132" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2"
-            marker-end="url(#arrowAccent)" />
-      <text x="260" y="94" font-size="18" text-anchor="middle" fill="var(--dia-acc,#2457c5)"
-            font-style="italic">f</text>
-
-      <!-- f inverse arrow -->
-      <path d="M295,170 C270,198 250,198 225,170" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.7"
-            marker-end="url(#arrow)" />
-      <text x="260" y="218" font-size="16" text-anchor="middle" fill="var(--dia-ink,#27221d)"
-            font-style="italic">f⁻¹</text>
-
-      <!-- g arrow Y to Z -->
-      <path d="M445,132 C470,105 495,105 520,132" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2"
-            marker-end="url(#arrowAccent)" />
-      <text x="482" y="94" font-size="18" text-anchor="middle" fill="var(--dia-acc,#2457c5)"
-            font-style="italic">g</text>
-
-      <!-- g inverse arrow -->
-      <path d="M520,170 C495,198 470,198 445,170" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.7"
-            marker-end="url(#arrow)" />
-      <text x="482" y="218" font-size="16" text-anchor="middle" fill="var(--dia-ink,#27221d)"
-            font-style="italic">g⁻¹</text>
-
-      <!-- identity loop -->
-      <path d="M96,82
-           C60,62 55,105 83,106" fill="none" stroke="var(--dia-ink,#27221d)" stroke-width="1.5"
-            marker-end="url(#arrow)" />
-      <text x="58" y="72" font-size="16" fill="var(--dia-ink,#27221d)" font-style="italic">id</text>
-
-      <!-- composite arrow -->
-      <path d="M155,250 C260,285 475,285 585,250" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2.2"
-            marker-end="url(#arrowAccent)" />
-      <text x="370" y="278" font-size="18" text-anchor="middle" fill="var(--dia-acc,#2457c5)" font-style="italic">g ∘
-            f</text>
-
-      <!-- theorem summary -->
-      <text x="360" y="248" font-size="16" text-anchor="middle" fill="var(--dia-mut,#8c8274)">
-            X ≅ Y and Y ≅ Z ⇒ X ≅ Z
-      </text>
+  <text x="360" y="278" font-size="14" text-anchor="middle" font-family="var(--font-sans)" fill="var(--color-text-tertiary)" style="fill:rgb(115, 114, 108);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, sans-serif;font-size:14px;font-weight:400;text-anchor:middle;dominant-baseline:auto">X ≅ Y and Y ≅ Z  ⟹  X ≅ Z</text>
 </svg>

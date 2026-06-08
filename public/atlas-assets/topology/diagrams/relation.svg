@@ -1,6 +1,6 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
   <defs>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto">
       <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-ink,#27221d)" />
     </marker>
   </defs>

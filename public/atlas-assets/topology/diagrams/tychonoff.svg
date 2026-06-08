@@ -1,6 +1,6 @@
 <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img">
   <defs>
-    <marker id="tya" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+    <marker id="tya" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto">
       <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)" />
     </marker>
   </defs>
@@ -18,7 +18,7 @@
     compact</text>
   <text x="56" y="172" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle">⋮</text>
   <!-- product arrow -->
-  <line x1="92" y1="104" x2="150" y2="104" stroke="var(--dia-acc,#2457c5)" stroke-width="1.5" marker-end="url(#tya)" />
+  <line x1="90" y1="104" x2="150" y2="104" stroke="var(--dia-acc,#2457c5)" stroke-width="1.5" marker-end="url(#tya)" />
   <text x="120" y="96" font-size="12" fill="var(--dia-acc,#2457c5)" text-anchor="middle" font-style="italic">∏</text>
   <!-- product space, still compact -->
   <rect x="162" y="58" width="126" height="92" rx="8" fill="var(--dia-fill2,#f4efe6)" stroke="var(--dia-ink,#27221d)"
