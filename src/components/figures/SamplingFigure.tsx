@@ -3,15 +3,18 @@ import { useMemo } from "react";
 import { aliasFrequency } from "../../lib/figures/fourierMath";
 import { MathText } from "../../lib/katex";
 import {
+  DIA,
+  DOT,
+  FONT,
   FigureFrame,
   FunctionCurve,
   Line,
   SamplePoints,
+  STROKE,
   Text,
   Vector,
   useMovablePoint,
 } from "./FigureFrame";
-import { DIA } from "./tokens";
 import { type FigureProps } from "./types";
 
 const T_MAX = 4; // seconds shown
@@ -63,32 +66,32 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[0, T_MAX]} yDomain={[-1.25, 1.25]} grid>
-        <Line.Segment point1={[0, 0]} point2={[T_MAX, 0]} color={DIA.muted} weight={1} />
-        <Line.Segment point1={[HANDLE_MIN, 1.08]} point2={[HANDLE_MAX, 1.08]} color={DIA.muted} weight={1} style="dashed" />
+        <Line.Segment point1={[0, 0]} point2={[T_MAX, 0]} color={DIA.muted} weight={STROKE.guide} />
+        <Line.Segment point1={[HANDLE_MIN, 1.08]} point2={[HANDLE_MAX, 1.08]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
         {/* The critical (Nyquist) rate: a tick on the rate track shows why 2·f is
             the threshold, instead of leaving the user to discover it by dragging. */}
         <Line.Segment
           point1={[NYQUIST_HANDLE_X, 1.0]}
           point2={[NYQUIST_HANDLE_X, 1.16]}
           color={nyquistOk ? DIA.codomain : DIA.alert}
-          weight={1.3}
+          weight={STROKE.mark}
         />
-        <Text x={NYQUIST_HANDLE_X} y={1.22} color={nyquistOk ? DIA.codomain : DIA.alert} size={9}>
+        <Text x={NYQUIST_HANDLE_X} y={1.22} color={nyquistOk ? DIA.codomain : DIA.alert} size={FONT.hint}>
           2f
         </Text>
-        <Vector tail={[HANDLE_MIN, 1.08]} tip={[rate.x, 1.08]} color={DIA.accent} weight={1.4} />
-        <Text x={Math.min(rate.x, NYQUIST_HANDLE_X - 0.28)} y={0.94} color={DIA.accent} size={10}>
+        <Vector tail={[HANDLE_MIN, 1.08]} tip={[rate.x, 1.08]} color={DIA.accent} weight={STROKE.mark} />
+        <Text x={Math.min(rate.x, NYQUIST_HANDLE_X - 0.28)} y={0.94} color={DIA.accent} size={FONT.tick}>
           f_s
         </Text>
-        <Vector tail={[0, -1.08]} tip={[dt, -1.08]} color={DIA.codomain} weight={1.2} />
-        <Text x={Math.max(0.35, dt + 0.22)} y={-1.08} color={DIA.codomain} size={10}>
+        <Vector tail={[0, -1.08]} tip={[dt, -1.08]} color={DIA.codomain} weight={STROKE.mark} />
+        <Text x={Math.max(0.35, dt + 0.22)} y={-1.08} color={DIA.codomain} size={FONT.tick}>
           Δt
         </Text>
         <FunctionCurve
           y={(t) => Math.sin(2 * Math.PI * SIGNAL_HZ * t)}
           domain={[0, T_MAX]}
           color={DIA.faint}
-          weight={1.5}
+          weight={STROKE.ref}
           opacity={nyquistOk ? 0.45 : 0.7}
         />
         {!nyquistOk && (
@@ -96,11 +99,11 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
             y={(t) => Math.sin(2 * Math.PI * aliasHz * t)}
             domain={[0, T_MAX]}
             color={DIA.alert}
-            weight={2.1}
+            weight={STROKE.curve}
             style="dashed"
           />
         )}
-        <SamplePoints points={samples} radius={2.7} />
+        <SamplePoints points={samples} radius={DOT.sample} />
         {rate.element}
       </FigureFrame>
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>

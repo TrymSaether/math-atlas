@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { type WaveKind, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
-import { FigureFrame, FunctionCurve } from "./FigureFrame";
+import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
 import { type FigureProps } from "./types";
@@ -33,15 +33,15 @@ export default function SeriesFigure(_: FigureProps) {
         <FunctionCurve
           y={(x) => waveTarget(kind, x)}
           domain={[-Math.PI, Math.PI]}
-          color="var(--fg-3)"
-          weight={1.5}
+          color={DIA.ref}
+          weight={STROKE.ref}
           style="dashed"
         />
         <FunctionCurve
           y={(x) => wavePartialSum(kind, x, terms)}
           domain={[-Math.PI, Math.PI]}
-          color="var(--accent)"
-          weight={2.1}
+          color={DIA.accent}
+          weight={STROKE.curve}
         />
       </FigureFrame>
       <WaveSelect value={kind} onChange={setKind} />

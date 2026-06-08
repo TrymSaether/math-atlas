@@ -1,7 +1,19 @@
 import { useMemo, useState } from "react";
 
-import { Ellipse, FigureFrame, LaTeX, Line, Point, Polygon, Text, type Vec2 } from "./FigureFrame";
-import { DIA } from "./tokens";
+import {
+  Arrow,
+  DIA,
+  DOT,
+  Ellipse,
+  FONT,
+  FigureFrame,
+  LaTeX,
+  Line,
+  Point,
+  STROKE,
+  Text,
+  type Vec2,
+} from "./FigureFrame";
 import { type FigureProps } from "./types";
 
 type FunctionNode =
@@ -79,22 +91,6 @@ function points(count: number, x: number): Vec2[] {
   return Array.from({ length: count }, (_, i) => [x, ((count - 1) / 2 - i) * 0.68]);
 }
 
-function arrowHead(from: Vec2, to: Vec2): Vec2[] {
-  const angle = Math.atan2(to[1] - from[1], to[0] - from[0]);
-  const ux = Math.cos(angle);
-  const uy = Math.sin(angle);
-  const px = -uy;
-  const py = ux;
-  const tip: Vec2 = [to[0] - 0.13 * ux, to[1] - 0.13 * uy];
-  const base: Vec2 = [to[0] - 0.34 * ux, to[1] - 0.34 * uy];
-
-  return [
-    tip,
-    [base[0] + 0.11 * px, base[1] + 0.11 * py],
-    [base[0] - 0.11 * px, base[1] - 0.11 * py],
-  ];
-}
-
 function SetOval({
   x,
   label,
@@ -112,7 +108,7 @@ function SetOval({
         color={color}
         fillOpacity={0.1}
         strokeOpacity={1}
-        weight={2.2}
+        weight={STROKE.ref}
       />
       <LaTeX at={[x, 1.58]} tex={label} color={INK_COLOR} />
     </>
@@ -146,7 +142,7 @@ function SelectionBlob({
         color={color}
         fillOpacity={0.16}
         strokeOpacity={0.95}
-        weight={1.7}
+        weight={STROKE.mark}
       />
       {label && (
         <LaTeX
@@ -266,36 +262,40 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
         />
       )}
 
+      {/* The inverse relation reverses each arrow; drawn first so the forward
+          arrows sit on top of it. */}
+      {kind === "inverse_of_function" &&
+        targets.map((target, i) => (
+          <Line.Segment
+            key={`inv:${i}:${target}`}
+            point1={[right[target][0], right[target][1] - 0.12]}
+            point2={[left[i][0], left[i][1] - 0.12]}
+            color={CODOMAIN_COLOR}
+            weight={STROKE.guide}
+            style="dashed"
+          />
+        ))}
+
       {targets.map((target, i) => {
         if (omitted.has(i)) return null;
-        const from = left[i];
-        const to = right[target];
         const inactive =
           kind === "restriction_of_function" && activeLeft.length > 0 && !activeLeft.includes(i);
         const duplicate = kind === "function" && choice === "multi" && i === 2;
         const color = inactive ? MUTED_COLOR : duplicate ? SELECTED_COLOR : DOMAIN_COLOR;
         return (
-          <g key={`arrow:${i}:${target}`}>
-            <Line.Segment point1={from} point2={to} color={color} weight={inactive ? 0.9 : 1.5} opacity={inactive ? 0.5 : 1} />
-            <Polygon points={arrowHead(from, to)} color={color} />
-            {kind === "inverse_of_function" && (
-              <Line.Segment
-                point1={[to[0], to[1] - 0.12]}
-                point2={[from[0], from[1] - 0.12]}
-                color={CODOMAIN_COLOR}
-                weight={1}
-                style="dashed"
-              />
-            )}
-          </g>
+          <Arrow
+            key={`arrow:${i}:${target}`}
+            from={left[i]}
+            to={right[target]}
+            color={color}
+            weight={inactive ? STROKE.hair : STROKE.mark}
+            opacity={inactive ? 0.5 : 1}
+          />
         );
       })}
 
       {choice === "multi" && (
-        <>
-          <Line.Segment point1={left[2]} point2={right[0]} color={SELECTED_COLOR} weight={1.5} />
-          <Polygon points={arrowHead(left[2], right[0])} color={SELECTED_COLOR} />
-        </>
+        <Arrow from={left[2]} to={right[0]} color={SELECTED_COLOR} weight={STROKE.mark} />
       )}
 
       {left.map(([x, y], i) => (
@@ -304,9 +304,9 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
             x={x}
             y={y}
             color={omitted.has(i) ? SELECTED_COLOR : highlightedLeft.includes(i) ? DOMAIN_COLOR : INK_COLOR}
-            svgCircleProps={{ r: highlightedLeft.includes(i) ? 4.2 : 3.6 }}
+            svgCircleProps={{ r: highlightedLeft.includes(i) ? DOT.hub : DOT.base }}
           />
-          <Text x={x - 0.42} y={y + 0.02} color={INK_COLOR} size={10}>
+          <Text x={x - 0.42} y={y + 0.02} color={INK_COLOR} size={FONT.tick}>
             {["a", "b", "c", "d"][i]}
           </Text>
         </g>
@@ -318,9 +318,9 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
             x={x}
             y={y}
             color={highlightedRight.includes(i) ? CODOMAIN_COLOR : hitCounts[i] === 0 ? MUTED_COLOR : INK_COLOR}
-            svgCircleProps={{ r: highlightedRight.includes(i) ? 4.2 : hitCounts[i] === 0 ? 3 : 3.6 }}
+            svgCircleProps={{ r: highlightedRight.includes(i) ? DOT.hub : hitCounts[i] === 0 ? DOT.small : DOT.base }}
           />
-          <Text x={x + 0.42} y={y + 0.02} color={INK_COLOR} size={10}>
+          <Text x={x + 0.42} y={y + 0.02} color={INK_COLOR} size={FONT.tick}>
             {["u", "v", "w", "z"][i]}
           </Text>
         </g>

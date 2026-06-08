@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 
 import { linspace } from "../../lib/figures/plot";
 import { type WaveKind, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
-import { FigureFrame, FunctionCurve } from "./FigureFrame";
+import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
 import { type FigureProps } from "./types";
@@ -38,15 +38,15 @@ export default function ParsevalFigure(_: FigureProps) {
         <FunctionCurve
           y={(x) => waveTarget(kind, x)}
           domain={[-Math.PI, Math.PI]}
-          color="var(--fg-3)"
-          weight={1.5}
+          color={DIA.ref}
+          weight={STROKE.ref}
           style="dashed"
         />
         <FunctionCurve
           y={(x) => wavePartialSum(kind, x, N)}
           domain={[-Math.PI, Math.PI]}
-          color="var(--accent)"
-          weight={2.1}
+          color={DIA.accent}
+          weight={STROKE.curve}
         />
       </FigureFrame>
 
@@ -54,7 +54,7 @@ export default function ParsevalFigure(_: FigureProps) {
       <div className="mt-2.5 px-1">
         <div className="mb-1.5 flex items-baseline justify-between text-ui-hint" style={{ color: "var(--fg-3)" }}>
           <span>Energy captured by {N} harmonic{N !== 1 ? "s" : ""}</span>
-          <span className="font-mono" style={{ color: fraction > 0.95 ? "var(--green)" : "var(--fg-2)" }}>
+          <span className="font-mono" style={{ color: fraction > 0.95 ? DIA.ok : DIA.text }}>
             {pct}%
           </span>
         </div>

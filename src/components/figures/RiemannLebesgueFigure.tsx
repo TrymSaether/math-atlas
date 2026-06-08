@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { linspace } from "../../lib/figures/plot";
-import { FigureFrame, FunctionCurve, Line, Polygon, type Vec2 } from "./FigureFrame";
+import { DIA, FigureFrame, FunctionCurve, Line, Polygon, STROKE, type Vec2 } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
@@ -66,23 +66,23 @@ export default function RiemannLebesgueFigure(_: FigureProps) {
     <figure className="m-0">
       <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={Y_DOMAIN} grid>
         {positiveLobes.map((points, i) => (
-          <Polygon key={`pos-${i}`} points={points} color="var(--accent)" fillOpacity={0.16} strokeOpacity={0} />
+          <Polygon key={`pos-${i}`} points={points} color={DIA.accent} fillOpacity={0.16} strokeOpacity={0} />
         ))}
         {negativeLobes.map((points, i) => (
-          <Polygon key={`neg-${i}`} points={points} color="var(--red)" fillOpacity={0.16} strokeOpacity={0} />
+          <Polygon key={`neg-${i}`} points={points} color={DIA.alert} fillOpacity={0.16} strokeOpacity={0} />
         ))}
         <FunctionCurve
           y={testFn}
           domain={[-Math.PI, Math.PI]}
-          color="var(--fg-3)"
-          weight={1.5}
+          color={DIA.ref}
+          weight={STROKE.ref}
           style="dashed"
         />
         <FunctionCurve
           y={(x) => testFn(x) * Math.cos(n * x)}
           domain={[-Math.PI, Math.PI]}
-          color="var(--accent)"
-          weight={2.1}
+          color={DIA.accent}
+          weight={STROKE.curve}
         />
       </FigureFrame>
 
@@ -106,14 +106,14 @@ export default function RiemannLebesgueFigure(_: FigureProps) {
                   [k + 0.28, height],
                   [k + 0.28, 0],
                 ]}
-                color={active ? "var(--accent)" : "var(--fg-4)"}
+                color={active ? DIA.accent : DIA.muted}
                 fillOpacity={active ? 0.95 : 0.42}
                 strokeOpacity={0}
               />
             );
           })}
-          <Line.Segment point1={[0.5, 0]} point2={[20.5, 0]} color="var(--fg-4)" weight={1} />
-          <Line.Segment point1={[n, 0]} point2={[n, 1.05]} color="var(--accent)" weight={1.2} style="dashed" />
+          <Line.Segment point1={[0.5, 0]} point2={[20.5, 0]} color={DIA.muted} weight={STROKE.guide} />
+          <Line.Segment point1={[n, 0]} point2={[n, 1.05]} color={DIA.accent} weight={STROKE.mark} style="dashed" />
         </FigureFrame>
       </div>
 

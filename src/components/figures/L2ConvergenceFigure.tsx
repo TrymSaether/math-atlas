@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { type WaveKind, waveCoeff, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
-import { FigureFrame, FunctionCurve, Line, Plot, Polygon } from "./FigureFrame";
+import { DIA, FigureFrame, FunctionCurve, Line, Plot, Polygon, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
 import { type FigureProps } from "./types";
@@ -70,22 +70,22 @@ export default function L2ConvergenceFigure(_: FigureProps) {
       <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={Y_DOMAIN[kind]} grid>
         <Plot.Inequality
           y={{ "<=": top, ">=": bottom }}
-          fillColor="var(--red)"
+          fillColor={DIA.alert}
           fillOpacity={0.12}
           strokeOpacity={0}
         />
         <FunctionCurve
           y={(x) => waveTarget(kind, x)}
           domain={[-Math.PI, Math.PI]}
-          color="var(--fg-3)"
-          weight={1.5}
+          color={DIA.ref}
+          weight={STROKE.ref}
           style="dashed"
         />
         <FunctionCurve
           y={(x) => wavePartialSum(kind, x, N)}
           domain={[-Math.PI, Math.PI]}
-          color="var(--accent)"
-          weight={2.1}
+          color={DIA.accent}
+          weight={STROKE.curve}
         />
       </FigureFrame>
 
@@ -111,13 +111,13 @@ export default function L2ConvergenceFigure(_: FigureProps) {
                   [x1, errors[n]],
                   [x1, 0],
                 ]}
-                color={active ? "var(--accent)" : "var(--fg-4)"}
+                color={active ? DIA.accent : DIA.muted}
                 fillOpacity={active ? 0.95 : 0.45}
                 strokeOpacity={0}
               />
             );
           })}
-          <Line.Segment point1={[0, 0]} point2={[N_MAX + 1, 0]} color="var(--fg-4)" weight={1} />
+          <Line.Segment point1={[0, 0]} point2={[N_MAX + 1, 0]} color={DIA.muted} weight={STROKE.guide} />
         </FigureFrame>
       </div>
 

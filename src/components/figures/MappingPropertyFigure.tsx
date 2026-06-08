@@ -1,23 +1,27 @@
 import { useMemo, useState } from "react";
 
 import {
+  Arrow,
+  DIA,
+  DOT,
   Ellipse,
+  FONT,
   FigureFrame,
   FunctionCurve,
   Line,
   Point,
-  Polygon,
+  STROKE,
   Text,
   type Vec2,
 } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
-import { DIA } from "./tokens";
 import { type FigureProps } from "./types";
 
 type MappingKind = "injective" | "surjective" | "bijective";
 
 const DOMAIN_X = -3.1;
 const CODOMAIN_X = 3.1;
+const SET_RADIUS: Vec2 = [0.82, 1.62];
 
 function kindFor(nodeId: string): MappingKind {
   if (nodeId === "surjective") return "surjective";
@@ -27,22 +31,6 @@ function kindFor(nodeId: string): MappingKind {
 
 function points(count: number, x: number): Vec2[] {
   return Array.from({ length: count }, (_, i) => [x, ((count - 1) / 2 - i) * 0.78]);
-}
-
-function arrowHead(from: Vec2, to: Vec2): Vec2[] {
-  const angle = Math.atan2(to[1] - from[1], to[0] - from[0]);
-  const ux = Math.cos(angle);
-  const uy = Math.sin(angle);
-  const px = -uy;
-  const py = ux;
-  const tip: Vec2 = [to[0] - 0.13 * ux, to[1] - 0.13 * uy];
-  const base: Vec2 = [to[0] - 0.35 * ux, to[1] - 0.35 * uy];
-
-  return [
-    tip,
-    [base[0] + 0.12 * px, base[1] + 0.12 * py],
-    [base[0] - 0.12 * px, base[1] - 0.12 * py],
-  ];
 }
 
 function mappingFor(kind: MappingKind, raw: number): {
@@ -116,41 +104,27 @@ function MappingPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
     <FigureFrame xDomain={[-4.15, 4.15]} yDomain={[-1.82, 1.82]} height={168} axes={false} grid>
       <Ellipse
         center={[DOMAIN_X, 0]}
-        radius={[0.82, 1.62]}
+        radius={SET_RADIUS}
         color={DIA.accent}
         fillOpacity={0.1}
         strokeOpacity={1}
-        weight={2}
+        weight={STROKE.ref}
       />
       <Ellipse
         center={[CODOMAIN_X, 0]}
-        radius={[0.82, 1.62]}
+        radius={SET_RADIUS}
         color={DIA.codomain}
         fillOpacity={0.1}
         strokeOpacity={1}
-        weight={2}
+        weight={STROKE.ref}
       />
 
-      <Text x={DOMAIN_X} y={1.64} color={DIA.text} size={12}>
+      <Text x={DOMAIN_X} y={1.66} color={DIA.text} size={FONT.label}>
         X
       </Text>
-      <Text x={CODOMAIN_X} y={1.64} color={DIA.text} size={12}>
+      <Text x={CODOMAIN_X} y={1.66} color={DIA.text} size={FONT.label}>
         Y
       </Text>
-
-      {model.targets.map((target, i) => {
-        const start = left[i];
-        const end = right[target];
-        const collision = hitCounts[target] > 1;
-        const color = collision && kind !== "surjective" ? DIA.alert : DIA.accent;
-
-        return (
-          <g key={`${i}:${target}`}>
-            <Line.Segment point1={start} point2={end} color={color} weight={1.5} />
-            <Polygon points={arrowHead(start, end)} color={color} />
-          </g>
-        );
-      })}
 
       {kind === "bijective" &&
         model.targets.map((target, i) => (
@@ -159,15 +133,23 @@ function MappingPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
             point1={[right[target][0], right[target][1] - 0.12]}
             point2={[left[i][0], left[i][1] - 0.12]}
             color={DIA.codomain}
-            weight={0.9}
+            weight={STROKE.hair}
             style="dashed"
           />
         ))}
 
+      {model.targets.map((target, i) => {
+        const collision = hitCounts[target] > 1;
+        const color = collision && kind !== "surjective" ? DIA.alert : DIA.accent;
+        return (
+          <Arrow key={`${i}:${target}`} from={left[i]} to={right[target]} color={color} weight={STROKE.mark} />
+        );
+      })}
+
       {left.map(([x, y], i) => (
         <g key={`left:${model.domainLabels[i]}`}>
-          <Point x={x} y={y} color={DIA.text} svgCircleProps={{ r: 3.5 }} />
-          <Text x={x - 0.42} y={y + 0.02} color={DIA.faint} size={10}>
+          <Point x={x} y={y} color={DIA.text} svgCircleProps={{ r: DOT.base }} />
+          <Text x={x - 0.42} y={y + 0.02} color={DIA.ref} size={FONT.tick}>
             {model.domainLabels[i]}
           </Text>
         </g>
@@ -181,16 +163,16 @@ function MappingPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
               x={x}
               y={y}
               color={missed ? DIA.muted : DIA.codomain}
-              svgCircleProps={{ r: missed ? 3 : 3.8 }}
+              svgCircleProps={{ r: missed ? DOT.small : DOT.hub }}
             />
-            <Text x={x + 0.42} y={y + 0.02} color={DIA.faint} size={10}>
+            <Text x={x + 0.42} y={y + 0.02} color={DIA.ref} size={FONT.tick}>
               {model.codomainLabels[i]}
             </Text>
           </g>
         );
       })}
 
-      <Text x={0} y={1.48} color={DIA.accent} size={12}>
+      <Text x={0} y={1.5} color={DIA.accent} size={FONT.label}>
         f
       </Text>
     </FigureFrame>
@@ -202,23 +184,23 @@ function PlotPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
     <FigureFrame xDomain={[-2.4, 2.4]} yDomain={[-1.85, 1.85]} height={156} grid>
       {kind === "surjective" && raw < 5 && (
         <>
-          <Line.Segment point1={[-2.4, 1.05]} point2={[2.4, 1.05]} color={DIA.muted} weight={1} style="dashed" />
-          <Line.Segment point1={[-2.4, -1.05]} point2={[2.4, -1.05]} color={DIA.muted} weight={1} style="dashed" />
-          <Text x={1.75} y={1.28} color={DIA.faint} size={9}>
+          <Line.Segment point1={[-2.4, 1.05]} point2={[2.4, 1.05]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
+          <Line.Segment point1={[-2.4, -1.05]} point2={[2.4, -1.05]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
+          <Text x={1.75} y={1.28} color={DIA.ref} size={FONT.hint}>
             missed values
           </Text>
         </>
       )}
       {kind === "injective" && raw >= 6 && (
-        <Line.Segment point1={[-2.4, 0]} point2={[2.4, 0]} color={DIA.alert} weight={1} style="dashed" />
+        <Line.Segment point1={[-2.4, 0]} point2={[2.4, 0]} color={DIA.alert} weight={STROKE.guide} style="dashed" />
       )}
       {kind === "bijective" && (
         <FunctionCurve
           y={(x) => x - (raw - 1.5) * 0.18}
           domain={[-2.4, 2.4]}
           color={DIA.codomain}
-          weight={1.4}
-          opacity={0.8}
+          weight={STROKE.ref}
+          opacity={1.0}
           style="dashed"
         />
       )}
@@ -226,9 +208,9 @@ function PlotPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
         y={(x) => plotY(kind, raw, x)}
         domain={[-2.4, 2.4]}
         color={DIA.accent}
-        weight={2.1}
+        weight={STROKE.curve}
       />
-      <Text x={1.75} y={kind === "bijective" ? 1.4 : -1.42} color={DIA.faint} size={10}>
+      <Text x={1.75} y={kind === "bijective" ? 1.4 : -1.42} color={DIA.ref} size={FONT.tick}>
         {kind === "bijective" ? "f and inverse" : "horizontal test"}
       </Text>
     </FigureFrame>

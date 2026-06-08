@@ -121,6 +121,48 @@ export function FunctionCurve({
   );
 }
 
+/**
+ * A straight arrow between two points in figure coordinates, with a solid
+ * triangular head. Shared by the set-mapping figures so every "x maps to y"
+ * arrow looks identical. Use Mafs `Vector` instead for measurement annotations
+ * (a width, a shift) — arrows are for maps between elements.
+ */
+export function Arrow({
+  from,
+  to,
+  color = "var(--accent)",
+  weight = 1.4,
+  opacity = 1,
+  style = "solid",
+}: {
+  from: Vec2;
+  to: Vec2;
+  color?: string;
+  weight?: number;
+  opacity?: number;
+  style?: "solid" | "dashed";
+}) {
+  const angle = Math.atan2(to[1] - from[1], to[0] - from[0]);
+  const ux = Math.cos(angle);
+  const uy = Math.sin(angle);
+  const px = -uy;
+  const py = ux;
+  const tip: Vec2 = [to[0] - 0.12 * ux, to[1] - 0.12 * uy];
+  const base: Vec2 = [to[0] - 0.34 * ux, to[1] - 0.34 * uy];
+  const head: Vec2[] = [
+    tip,
+    [base[0] + 0.12 * px, base[1] + 0.12 * py],
+    [base[0] - 0.12 * px, base[1] - 0.12 * py],
+  ];
+
+  return (
+    <g opacity={opacity}>
+      <Line.Segment point1={from} point2={tip} color={color} weight={weight} style={style} />
+      <Polygon points={head} color={color} fillOpacity={1} strokeOpacity={1} weight={1} />
+    </g>
+  );
+}
+
 export function SamplePoints({
   points,
   color = "var(--accent)",
@@ -147,6 +189,8 @@ export function SamplePoints({
     </>
   );
 }
+
+export { DIA, DOT, FONT, PANEL_BACKING, STROKE } from "./tokens";
 
 export {
   Circle,

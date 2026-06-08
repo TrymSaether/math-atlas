@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { type WaveKind, waveCoeff } from "../../lib/figures/fourierMath";
-import { FigureFrame, Line, Polygon, Text } from "./FigureFrame";
+import { DIA, FONT, FigureFrame, Line, Polygon, STROKE, Text } from "./FigureFrame";
 import { WaveSelect } from "./WaveSelect";
 import { type FigureProps } from "./types";
 
@@ -28,7 +28,7 @@ export default function SpectrumFigure(_: FigureProps) {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[0.25, N + 0.75]} yDomain={[-0.14, 1.08]} grid={false}>
-        <Line.Segment point1={[0.5, 0]} point2={[N + 0.5, 0]} color="var(--fg-4)" weight={1} />
+        <Line.Segment point1={[0.5, 0]} point2={[N + 0.5, 0]} color={DIA.muted} weight={STROKE.guide} />
         {bars.map((v, i) => {
           const k = i + 1;
           const x0 = k - 0.28;
@@ -44,13 +44,13 @@ export default function SpectrumFigure(_: FigureProps) {
                     [x1, v],
                     [x1, 0],
                   ]}
-                  color="var(--accent)"
+                  color={DIA.accent}
                   fillOpacity={0.92}
                   strokeOpacity={0}
                 />
               )}
               {k % 2 === 1 && (
-                <Text x={k} y={-0.08} color="var(--fg-3)" size={10}>
+                <Text x={k} y={-0.08} color={DIA.ref} size={FONT.tick}>
                   {k}
                 </Text>
               )}
