@@ -1903,7 +1903,7 @@
           "syllabus_priority": "medium",
           "source": null
         },
-        "kind": "structure",
+        "kind": "definition",
         "label": "Metric Space",
         "domain": "spaces_constructions",
         "chapter": "2",
@@ -1926,6 +1926,43 @@
         "canonical_label": "metric space",
         "display_label": "Metric Space"
       },
+      {
+        "id": "discrete_metric_space",
+        "statement": "The discrete metric on a set $X$ is defined by $d(x,y)=1$ for $x\\neq y$ and $d(x,x)=0$.",
+        "formal_statement": "For a set $X$, the discrete metric $d$ is given by $d(x,y)=\\begin{cases} 0 & \\text{if }x=y \\\\ 1 & \\text{if }x\\neq y \\end{cases}$",
+        "definition": "A metric space where distinct points are at distance 1 and identical points are at distance 0.",
+        "intuition": "The most extreme metric, where every point is as far apart as possible from every other point.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["metric_space"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "outgoing_relations": ["e_discrete_metric_subtype_metric"],
+        "metadata": {
+          "tags": [],
+          "syllabus_priority": "medium",
+          "source": null
+        },
+        "kind": "example",
+        "label": "Discrete Metric Space",
+        "domain": "spaces_constructions",
+        "related": ["metric_space"],
+        "status": {
+          "content": "usable",
+          "math_review": "unchecked",
+          "schema_review": "valid_shape",
+          "pedagogy_review": "unchecked"
+        },
+        "canonical_label": "discrete metric space",
+        "display_label": "Discrete Metric Space"
+      },
+
       {
         "id": "subspace",
         "statement": "A subset equipped with the induced subspace topology.",
