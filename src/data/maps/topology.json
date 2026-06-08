@@ -1962,7 +1962,6 @@
         "canonical_label": "discrete metric space",
         "display_label": "Discrete Metric Space"
       },
-
       {
         "id": "subspace",
         "statement": "A subset equipped with the induced subspace topology.",
