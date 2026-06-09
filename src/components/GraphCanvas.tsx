@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import ReactFlow, { useReactFlow, useViewport, type Edge, type Node } from "reactflow";
+import ReactFlow, { useReactFlow, useViewport, type Edge, type Node, type Viewport } from "reactflow";
 import type { LoadedMap, MapId } from "../data";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout } from "../lib/atlasLayout";
 import { getDomainTone } from "../lib/colors";
@@ -14,9 +14,16 @@ import { MinimapCard } from "./MinimapCard";
 import { RouteToast } from "./RouteToast";
 import { TopoEdgeView } from "./TopoEdge";
 import { TopoNodeView } from "./TopoNode";
+import type { ViewMode } from "../store";
 
 const nodeTypes = { topo: TopoNodeView, domainRegion: DomainRegionNode };
 const edgeTypes = { topo: TopoEdgeView };
+const VIEWPORT_STORAGE_KEY = "math-atlas-viewports-v1";
+
+interface PersistedViewportState {
+  version: 1;
+  maps: Partial<Record<MapId, Partial<Record<ViewMode, Viewport>>>>;
+}
 
 export type NodeEmphasis = "landmark" | "normal" | "minor";
 
@@ -31,6 +38,60 @@ function lodForZoom(zoom: number): NodeLOD {
   if (zoom < 0.32) return "far";
   if (zoom < 0.62) return "mid";
   return "near";
+}
+
+function isFiniteNumber(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value);
+}
+
+function normalizeViewport(value: unknown): Viewport | null {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
+  const candidate = value as Partial<Viewport>;
+  if (!isFiniteNumber(candidate.x) || !isFiniteNumber(candidate.y) || !isFiniteNumber(candidate.zoom)) {
+    return null;
+  }
+  return {
+    x: candidate.x,
+    y: candidate.y,
+    zoom: Math.min(2.4, Math.max(0.08, candidate.zoom)),
+  };
+}
+
+function readViewportState(): PersistedViewportState {
+  if (typeof localStorage === "undefined") return { version: 1, maps: {} };
+  try {
+    const raw = localStorage.getItem(VIEWPORT_STORAGE_KEY);
+    if (!raw) return { version: 1, maps: {} };
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+      return { version: 1, maps: {} };
+    }
+    const record = parsed as { version?: unknown; maps?: unknown };
+    if (record.version !== 1 || typeof record.maps !== "object" || record.maps === null || Array.isArray(record.maps)) {
+      return { version: 1, maps: {} };
+    }
+    return { version: 1, maps: record.maps as PersistedViewportState["maps"] };
+  } catch {
+    return { version: 1, maps: {} };
+  }
+}
+
+function savedViewportFor(mapId: MapId, view: ViewMode): Viewport | null {
+  return normalizeViewport(readViewportState().maps[mapId]?.[view]);
+}
+
+function saveViewport(mapId: MapId, view: ViewMode, viewport: Viewport): void {
+  if (typeof localStorage === "undefined") return;
+  const state = readViewportState();
+  state.maps[mapId] = {
+    ...(state.maps[mapId] ?? {}),
+    [view]: normalizeViewport(viewport) ?? viewport,
+  };
+  try {
+    localStorage.setItem(VIEWPORT_STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    /* ignore private-mode / quota failures */
+  }
 }
 
 interface NodeData {
@@ -77,7 +138,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const rf = useReactFlow();
 
   const { data } = map;
-  const { zoom } = useViewport();
+  const { x, y, zoom } = useViewport();
   // Hide non-highlighted edges only at extreme zoom-out where they become noise.
   const edgeLODHidden = zoom < 0.18;
   const lod = lodForZoom(zoom);
@@ -390,14 +451,32 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
   // Default view shows the entire map. The swimlane layout is built to be
   // compact (bands hug their content) so fit-all reads as a legible overview
-  // rather than a sliver lost in dead space.
+  // rather than a sliver lost in dead space. If the user has already navigated
+  // this map/mode, restore that exact viewport instead.
+  const viewportPersistenceKey = `${mapId}:${view}`;
+  const restoredViewportKeyRef = useRef<string | null>(null);
+
   useEffect(() => {
-    const timeout = window.setTimeout(
-      () => rf.fitView({ padding: 0.12, duration: view === "cluster" ? 520 : 0 }),
-      40,
-    );
+    restoredViewportKeyRef.current = null;
+    const savedViewport = savedViewportFor(mapId, view);
+    const timeout = window.setTimeout(() => {
+      if (savedViewport) {
+        rf.setViewport(savedViewport, { duration: 0 });
+      } else {
+        rf.fitView({ padding: 0.12, duration: view === "cluster" ? 520 : 0 });
+      }
+      restoredViewportKeyRef.current = viewportPersistenceKey;
+    }, 40);
     return () => window.clearTimeout(timeout);
-  }, [rf, map.data.id, view]);
+  }, [rf, mapId, view, viewportPersistenceKey]);
+
+  useEffect(() => {
+    if (restoredViewportKeyRef.current !== viewportPersistenceKey) return;
+    const timeout = window.setTimeout(() => {
+      saveViewport(mapId, view, { x, y, zoom });
+    }, 150);
+    return () => window.clearTimeout(timeout);
+  }, [mapId, view, viewportPersistenceKey, x, y, zoom]);
 
   useEffect(() => {
     if (!selectedId) return;
