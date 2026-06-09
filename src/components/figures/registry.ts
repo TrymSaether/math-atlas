@@ -48,6 +48,7 @@ export const FIGURE_REGISTRY: Record<
   sampling_theorem: lazy(() => import("./SamplingFigure")),
   aliasing: lazy(() => import("./SamplingFigure")),
   heat_equation: lazy(() => import("./HeatFigure")),
+  hahn_banach_theorem: lazy(() => import("./HahnBanachFigure")),
 
   // --- Exercises & exam problems: reuse the figure that best illustrates them ---
   // Fourier-series waveforms (triangle / sawtooth / square + partial sums).
