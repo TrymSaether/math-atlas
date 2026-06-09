@@ -65,9 +65,7 @@
         "intuition": "Linear algebra with topology, completeness, duality, and limits turned on.",
         "notation": []
       },
-      "tags": [
-        "field"
-      ],
+      "tags": ["field"],
       "priority": "core"
     },
     {
@@ -78,14 +76,9 @@
       "content": {
         "definition": "A set with addition and scalar multiplication satisfying the vector space axioms over a field.",
         "intuition": "The algebraic stage on which linear combinations make sense.",
-        "notation": [
-          "X"
-        ]
+        "notation": ["X"]
       },
-      "tags": [
-        "space",
-        "algebra"
-      ],
+      "tags": ["space", "algebra"],
       "priority": "core"
     },
     {
@@ -98,14 +91,9 @@
         "formal": "$(M,d)$ with $d:M\\times M\\to \\mathbb{R}_{\\ge 0}$, $d(x,y)=0\\Leftrightarrow x=y$, $d(x,y)=d(y,x)$, $d(x,z)\\le d(x,y)+d(y,z)$.",
         "formula": "$$\\begin{aligned} &d(x,y)\\ge 0,\\\\ &d(x,y)=0 \\iff x=y,\\\\ &d(x,y)=d(y,x),\\\\ &d(x,z)\\le d(x,y)+d(y,z) \\end{aligned}$$",
         "intuition": "A space where convergence and Cauchy sequences can be measured.",
-        "notation": [
-          "$(M,d)$"
-        ]
+        "notation": ["$(M,d)$"]
       },
-      "tags": [
-        "space",
-        "topology"
-      ],
+      "tags": ["space", "topology"],
       "priority": "core"
     },
     {
@@ -143,14 +131,9 @@
       "content": {
         "definition": "A vector space with a topology making addition and scalar multiplication continuous.",
         "intuition": "A vector space where limits are compatible with linear operations.",
-        "notation": [
-          "TVS"
-        ]
+        "notation": ["TVS"]
       },
-      "tags": [
-        "space",
-        "topology"
-      ],
+      "tags": ["space", "topology"],
       "priority": "standard"
     },
     {
@@ -163,21 +146,13 @@
         "definition": "A normed vector space is a vector space together with a chosen norm. The norm induces the canonical metric $d(x,y)=\\|x-y\\|_X$.",
         "formal": "A normed vector space is a pair $(X,\\|\\cdot\\|_X)$ where $X$ is a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and $\\|\\cdot\\|_X$ is a norm on $X$.",
         "intuition": "A normed vector space is linear algebra with size and distance added. This makes it possible to discuss convergence, Cauchy sequences, continuity, bounded linear maps, and completeness.",
-        "notation": [
-          "$$(X,\\|\\cdot\\|_X),\\qquad d_X(x,y)=\\|x-y\\|_X$$"
-        ]
+        "notation": ["$$(X,\\|\\cdot\\|_X),\\qquad d_X(x,y)=\\|x-y\\|_X$$"]
       },
       "assumptions": [
         "$X$ is a vector space.",
         "$\\|\\cdot\\|_X$ is a norm on $X$."
       ],
-      "tags": [
-        "space",
-        "norm",
-        "metric",
-        "convergence",
-        "functional_analysis"
-      ],
+      "tags": ["space", "norm", "metric", "convergence", "functional_analysis"],
       "priority": "core"
     },
     {
@@ -186,17 +161,13 @@
       "domain": "spaces_norms",
       "label": "Banach space",
       "content": {
-        "definition": "A normed vector space complete in the metric induced by its norm.",
-        "formal": "A normed space X such that every norm-Cauchy sequence converges in X.",
-        "intuition": "A normed space with no missing limits.",
-        "notation": [
-          "X"
-        ]
+        "definition": "A Banach space is a normed vector space in which every norm-Cauchy sequence converges in norm to a point of the space.",
+        "formal": "A normed vector space $(X,\\|\\cdot\\|)$ is Banach if it is complete as a metric space under $d(x,y)=\\|x-y\\|$.",
+        "formula": "$$\\begin{aligned} (X,\\|\\cdot\\|)\\text{ is Banach} &\\iff (X,d)\\text{ is complete, where }d(x,y)=\\|x-y\\| \\\\ &\\iff \\forall (x_n)_{n=1}^{\\infty}\\subseteq X,\\ \\left[\\forall \\varepsilon>0\\ \\exists N\\in\\mathbb{N}\\ \\forall m,n\\ge N:\\ \\|x_n-x_m\\|<\\varepsilon\\right] \\\\ &\\qquad\\Rightarrow \\exists x\\in X\\ \\forall \\varepsilon>0\\ \\exists N\\in\\mathbb{N}\\ \\forall n\\ge N:\\ \\|x_n-x\\|<\\varepsilon. \\end{aligned}$$",
+        "intuition": "A Banach space is a normed space whose limiting points, as detected by Cauchy sequences, are already contained in the space.",
+        "notation": ["$(X,\\|\\cdot\\|)$ Banach"]
       },
-      "tags": [
-        "space",
-        "complete"
-      ],
+      "tags": ["space", "complete"],
       "priority": "core"
     },
     {
@@ -208,14 +179,9 @@
         "definition": "A vector space equipped with an inner product inducing a norm.",
         "formal": "(H,\\langle\\cdot,\\cdot\\rangle) with positive-definite sesquilinear inner product.",
         "intuition": "A vector space where angles and orthogonality make sense.",
-        "notation": [
-          "(H, <·,·>)"
-        ]
+        "notation": ["(H, <·,·>)"]
       },
-      "tags": [
-        "space",
-        "hilbert"
-      ],
+      "tags": ["space", "hilbert"],
       "priority": "core"
     },
     {
@@ -227,15 +193,9 @@
         "definition": "A complete inner product space.",
         "formal": "An inner product space H complete under \\|x\\|=\\sqrt{\\langle x,x\\rangle}.",
         "intuition": "Euclidean geometry after passing to infinite dimensions.",
-        "notation": [
-          "H"
-        ]
+        "notation": ["H"]
       },
-      "tags": [
-        "space",
-        "hilbert",
-        "complete"
-      ],
+      "tags": ["space", "hilbert", "complete"],
       "priority": "core"
     },
     {
@@ -246,14 +206,9 @@
       "content": {
         "definition": "A topological vector space whose topology has a local base at zero consisting of convex sets.",
         "intuition": "A TVS with enough convex geometry for separation theorems.",
-        "notation": [
-          "LCS"
-        ]
+        "notation": ["LCS"]
       },
-      "tags": [
-        "space",
-        "convexity"
-      ],
+      "tags": ["space", "convexity"],
       "priority": "standard"
     },
     {
@@ -265,14 +220,9 @@
         "definition": "The Banach space of continuous linear functionals on a normed vector space.",
         "formal": "X^* = L(X, K).",
         "intuition": "The space of all continuous scalar probes on X.",
-        "notation": [
-          "X*"
-        ]
+        "notation": ["X*"]
       },
-      "tags": [
-        "duality",
-        "space"
-      ],
+      "tags": ["duality", "space"],
       "priority": "core"
     },
     {
@@ -285,21 +235,13 @@
         "definition": "A norm is a function assigning a nonnegative length to each vector in a vector space, compatible with scalar multiplication and vector addition.",
         "formal": "Let $X$ be a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$. A norm on $X$ is a function $\\|\\cdot\\|:X\\to[0,\\infty)$ such that for all $x,y\\in X$ and $\\lambda\\in\\mathbb K$, $$\\begin{aligned} &\\|x\\|\\ge 0,\\\\ &\\|x\\|=0\\iff x=0,\\\\ &\\|\\lambda x\\|=|\\lambda|\\,\\|x\\|,\\\\ &\\|x+y\\|\\le \\|x\\|+\\|y\\|. \\end{aligned}$$",
         "intuition": "A norm is the analytic version of length: it measures vector size while respecting the linear structure.",
-        "notation": [
-          "$$\\|x\\|,\\qquad \\|\\cdot\\|,\\qquad \\|\\cdot\\|_X$$"
-        ]
+        "notation": ["$$\\|x\\|,\\qquad \\|\\cdot\\|,\\qquad \\|\\cdot\\|_X$$"]
       },
       "assumptions": [
         "$X$ is a vector space.",
         "The scalar field is $\\mathbb R$ or $\\mathbb C$."
       ],
-      "tags": [
-        "definition",
-        "norm",
-        "length",
-        "metric",
-        "functional_analysis"
-      ],
+      "tags": ["definition", "norm", "length", "metric", "functional_analysis"],
       "priority": "core"
     },
     {
@@ -312,17 +254,10 @@
         "definition": "The metric induced by a norm is the distance function $d_X(x,y)=\\|x-y\\|_X$.",
         "formal": "Let $(X,\\|\\cdot\\|_X)$ be a normed vector space. Define $$d_X(x,y)=\\|x-y\\|_X.$$ Then $d_X$ is a metric on $X$.",
         "intuition": "Distance is the length of the displacement from one vector to the other.",
-        "notation": [
-          "$$d_X(x,y)=\\|x-y\\|_X$$"
-        ]
+        "notation": ["$$d_X(x,y)=\\|x-y\\|_X$$"]
       },
-      "assumptions": [
-        "$(X,\\|\\cdot\\|_X)$ is a normed vector space."
-      ],
-      "tags": [
-        "construction",
-        "metric"
-      ],
+      "assumptions": ["$(X,\\|\\cdot\\|_X)$ is a normed vector space."],
+      "tags": ["construction", "metric"],
       "priority": "core"
     },
     {
@@ -333,14 +268,9 @@
       "content": {
         "definition": "The topology generated by open metric balls.",
         "intuition": "Open sets are built from distance balls.",
-        "notation": [
-          "tau_d"
-        ]
+        "notation": ["tau_d"]
       },
-      "tags": [
-        "construction",
-        "topology"
-      ],
+      "tags": ["construction", "topology"],
       "priority": "core"
     },
     {
@@ -354,10 +284,7 @@
         "intuition": "Cauchy approximation cannot converge outside the space.",
         "notation": []
       },
-      "tags": [
-        "property",
-        "metric"
-      ],
+      "tags": ["property", "metric"],
       "priority": "core"
     },
     {
@@ -370,10 +297,7 @@
         "intuition": "Topological finiteness; in metric spaces often sequential compactness.",
         "notation": []
       },
-      "tags": [
-        "property",
-        "topology"
-      ],
+      "tags": ["property", "topology"],
       "priority": "standard"
     },
     {
@@ -385,14 +309,9 @@
         "definition": "The coarsest topology on X making every functional in X* continuous.",
         "formal": "\\sigma(X,X^*) is generated by seminorms x\\mapsto |x^*(x)|, x^*\\in X^*.",
         "intuition": "Convergence is tested only by continuous scalar probes.",
-        "notation": [
-          "sigma(X,X*)"
-        ]
+        "notation": ["sigma(X,X*)"]
       },
-      "tags": [
-        "weak topology",
-        "duality"
-      ],
+      "tags": ["weak topology", "duality"],
       "priority": "core"
     },
     {
@@ -404,14 +323,9 @@
         "definition": "The coarsest topology on $X^\\ast$ making every evaluation map $x^\\ast \\mapsto x^\\ast(x)$ continuous for $x \\in X$.",
         "formal": "$$\\sigma(X^\\ast,X)=\\text{the coarsest topology on }X^\\ast \\text{ making all evaluation maps }x^\\ast \\mapsto x^\\ast(x)\\text{ continuous for }x\\in X.$$",
         "intuition": "Pointwise convergence on the predual $X$.",
-        "notation": [
-          "$\\sigma(X^\\ast,X)$"
-        ]
+        "notation": ["$\\sigma(X^\\ast,X)$"]
       },
-      "tags": [
-        "weak-star",
-        "duality"
-      ],
+      "tags": ["weak-star", "duality"],
       "priority": "core"
     },
     {
@@ -424,10 +338,7 @@
         "intuition": "Uniform finite control.",
         "notation": []
       },
-      "tags": [
-        "property",
-        "operators"
-      ],
+      "tags": ["property", "operators"],
       "priority": "core"
     },
     {
@@ -440,10 +351,7 @@
         "intuition": "Small input changes produce small output changes.",
         "notation": []
       },
-      "tags": [
-        "property",
-        "topology"
-      ],
+      "tags": ["property", "topology"],
       "priority": "core"
     },
     {
@@ -456,10 +364,7 @@
         "intuition": "Terms of the sequence cluster around the limit.",
         "notation": []
       },
-      "tags": [
-        "property",
-        "topology"
-      ],
+      "tags": ["property", "topology"],
       "priority": "core"
     },
     {
@@ -471,13 +376,9 @@
         "definition": "A linear operator is an operator between vector spaces that preserves addition and scalar multiplication.",
         "formal": "Let $X,Y$ be vector spaces over $\\mathbb K$. A map $T:X\\to Y$ is a linear operator iff $T(\\alpha x+\\beta y)=\\alpha Tx+\\beta Ty$ for all $x,y\\in X$ and $\\alpha,\\beta\\in\\mathbb K$.",
         "intuition": "An operator that respects superposition: transform after combining equals combine after transforming.",
-        "notation": [
-          "$T:X\\to Y$ linear, $T\\in L(X,Y)$"
-        ]
+        "notation": ["$T:X\\to Y$ linear, $T\\in L(X,Y)$"]
       },
-      "tags": [
-        "operator"
-      ],
+      "tags": ["operator"],
       "priority": "core"
     },
     {
@@ -489,14 +390,9 @@
         "definition": "A linear map from a vector space to its scalar field.",
         "formal": "f:X\\to K linear.",
         "intuition": "A scalar measurement of vectors.",
-        "notation": [
-          "f, x*"
-        ]
+        "notation": ["f, x*"]
       },
-      "tags": [
-        "duality",
-        "functional"
-      ],
+      "tags": ["duality", "functional"],
       "priority": "core"
     },
     {
@@ -517,13 +413,7 @@
         "$(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ are normed vector spaces.",
         "$T:X\\to Y$ is linear."
       ],
-      "tags": [
-        "operator",
-        "bounded",
-        "linear",
-        "continuous",
-        "normed_space"
-      ],
+      "tags": ["operator", "bounded", "linear", "continuous", "normed_space"],
       "priority": "core"
     },
     {
@@ -545,12 +435,7 @@
         "$(Y,\\|\\cdot\\|_Y)$ is a normed vector space.",
         "$f:X\\to Y$ is a function."
       ],
-      "tags": [
-        "function",
-        "bounded",
-        "image",
-        "normed_space"
-      ],
+      "tags": ["function", "bounded", "image", "normed_space"],
       "priority": "core"
     },
     {
@@ -561,14 +446,9 @@
       "content": {
         "definition": "A linear operator that is continuous between the given topologies.",
         "intuition": "The same object as a bounded linear operator in normed spaces.",
-        "notation": [
-          "T in L(X,Y)"
-        ]
+        "notation": ["T in L(X,Y)"]
       },
-      "tags": [
-        "operator",
-        "continuous"
-      ],
+      "tags": ["operator", "continuous"],
       "priority": "core"
     },
     {
@@ -580,14 +460,9 @@
         "definition": "The norm of a bounded linear operator given by its largest action on the unit ball.",
         "formal": "$\\|T\\| = \\sup\\{\\|Tx\\| : \\|x\\| \\leq 1\\}$.",
         "intuition": "Worst-case amplification factor.",
-        "notation": [
-          "$\\|T\\|$"
-        ]
+        "notation": ["$\\|T\\|$"]
       },
-      "tags": [
-        "operator",
-        "norm"
-      ],
+      "tags": ["operator", "norm"],
       "priority": "core"
     },
     {
@@ -600,14 +475,9 @@
         "formal": "$$T:X\\to Y \\text{ compact in } \\mathcal{L}(X,Y) \\quad \\iff \\quad T(B_X) \\text{ has compact closure in } Y.$$",
         "formula": "$$\\begin{aligned}\nT:X\\to Y \\text{ compact, means } \\forall \\text{ bounded } B\\subseteq X,\\ \\overline{T(B)} \\text{ is compact in } Y.\n\\end{aligned}$$",
         "intuition": "An infinite-dimensional operator behaving partly like a finite-rank operator.",
-        "notation": [
-          "$K(X,Y)$"
-        ]
+        "notation": ["$K(X,Y)$"]
       },
-      "tags": [
-        "operator",
-        "compact"
-      ],
+      "tags": ["operator", "compact"],
       "priority": "standard"
     },
     {
@@ -619,14 +489,9 @@
         "definition": "For $T:X\\to Y$, the map $T^*:Y^*\\to X^*$ defined by composition with $T$.",
         "formal": "$\\langle T^* y^*, x \\rangle = \\langle y^*, Tx \\rangle$.",
         "intuition": "Move $T$ from vectors to scalar probes by precomposition.",
-        "notation": [
-          "$T^*$"
-        ]
+        "notation": ["$T^*$"]
       },
-      "tags": [
-        "operator",
-        "duality"
-      ],
+      "tags": ["operator", "duality"],
       "priority": "standard"
     },
     {
@@ -638,14 +503,9 @@
         "definition": "An operator on a Hilbert space equal to its Hilbert-space adjoint.",
         "formal": "T=T^*, equivalently <Tx,y>=<x,Ty>.",
         "intuition": "Infinite-dimensional analogue of a Hermitian matrix.",
-        "notation": [
-          "T=T*"
-        ]
+        "notation": ["T=T*"]
       },
-      "tags": [
-        "operator",
-        "spectral"
-      ],
+      "tags": ["operator", "spectral"],
       "priority": "standard"
     },
     {
@@ -657,13 +517,9 @@
         "definition": "A positively homogeneous and subadditive real-valued map on a real vector space.",
         "formal": "$p(\\alpha x)=\\alpha p(x)$ for $\\alpha\\geq 0$ and $p(x+y)\\leq p(x)+p(y)$.",
         "intuition": "A one-sided convex bound for a linear functional.",
-        "notation": [
-          "$p$"
-        ]
+        "notation": ["$p$"]
       },
-      "tags": [
-        "hahn-banach"
-      ],
+      "tags": ["hahn-banach"],
       "priority": "standard"
     },
     {
@@ -674,14 +530,9 @@
       "content": {
         "definition": "The graph ${(x,Tx)}$ is closed in $X \\times Y$.",
         "intuition": "If $x_n \\to x$ and $Tx_n \\to y$, then $y=Tx$.",
-        "notation": [
-          "$\\text{graph}(T)$ closed in $X \\times Y$"
-        ]
+        "notation": ["$\\text{graph}(T)$ closed in $X \\times Y$"]
       },
-      "tags": [
-        "operator",
-        "closed graph"
-      ],
+      "tags": ["operator", "closed graph"],
       "priority": "standard"
     },
     {
@@ -693,14 +544,9 @@
         "definition": "The set of points of norm at most one.",
         "formal": "$$B_X={x in X: \\|x\\|\\leq 1}.$$",
         "intuition": "The basic bounded test set for normed-space geometry.",
-        "notation": [
-          "$B_X$"
-        ]
+        "notation": ["$B_X$"]
       },
-      "tags": [
-        "norm",
-        "geometry"
-      ],
+      "tags": ["norm", "geometry"],
       "priority": "standard"
     },
     {
@@ -712,13 +558,9 @@
         "definition": "The set of scalars lambda for which T-lambda I is not invertible in the appropriate operator algebra.",
         "formal": "sigma(T)={lambda: T-lambda I is not bijective with bounded inverse}.",
         "intuition": "The infinite-dimensional replacement for eigenvalues.",
-        "notation": [
-          "sigma(T)"
-        ]
+        "notation": ["sigma(T)"]
       },
-      "tags": [
-        "spectral"
-      ],
+      "tags": ["spectral"],
       "priority": "standard"
     },
     {
@@ -729,14 +571,9 @@
       "content": {
         "definition": "A maximal orthonormal set whose closed linear span is the Hilbert space.",
         "intuition": "Coordinate axes for Hilbert space.",
-        "notation": [
-          "(e_n)"
-        ]
+        "notation": ["(e_n)"]
       },
-      "tags": [
-        "hilbert",
-        "basis"
-      ],
+      "tags": ["hilbert", "basis"],
       "priority": "standard"
     },
     {
@@ -747,14 +584,9 @@
       "content": {
         "definition": "A linear operator P satisfying P^2=P.",
         "intuition": "A map that keeps one component and kills another.",
-        "notation": [
-          "P"
-        ]
+        "notation": ["P"]
       },
-      "tags": [
-        "operator",
-        "hilbert"
-      ],
+      "tags": ["operator", "hilbert"],
       "priority": "standard"
     },
     {
@@ -767,9 +599,7 @@
         "intuition": "A global choice principle enabling maximal-object arguments.",
         "notation": []
       },
-      "tags": [
-        "foundations"
-      ],
+      "tags": ["foundations"],
       "priority": "standard"
     },
     {
@@ -782,10 +612,7 @@
         "intuition": "The maximal-extension engine behind Hahn-Banach.",
         "notation": []
       },
-      "tags": [
-        "foundations",
-        "hahn-banach"
-      ],
+      "tags": ["foundations", "hahn-banach"],
       "priority": "standard"
     },
     {
@@ -799,10 +626,7 @@
         "intuition": "Completeness prevents a space from being too thin.",
         "notation": []
       },
-      "tags": [
-        "category",
-        "completeness"
-      ],
+      "tags": ["category", "completeness"],
       "priority": "core"
     },
     {
@@ -815,9 +639,7 @@
         "intuition": "Build one object that survives infinitely many requirements.",
         "notation": []
       },
-      "tags": [
-        "proof method"
-      ],
+      "tags": ["proof method"],
       "priority": "standard"
     },
     {
@@ -830,9 +652,7 @@
         "intuition": "Control the whole space from a dense core.",
         "notation": []
       },
-      "tags": [
-        "proof method"
-      ],
+      "tags": ["proof method"],
       "priority": "standard"
     },
     {
@@ -845,9 +665,7 @@
         "intuition": "Turn infinite behavior into finite or convergent behavior.",
         "notation": []
       },
-      "tags": [
-        "proof method"
-      ],
+      "tags": ["proof method"],
       "priority": "standard"
     },
     {
@@ -860,10 +678,7 @@
         "intuition": "Probe objects by scalar-valued tests.",
         "notation": []
       },
-      "tags": [
-        "proof method",
-        "duality"
-      ],
+      "tags": ["proof method", "duality"],
       "priority": "core"
     },
     {
@@ -876,9 +691,7 @@
         "intuition": "Prove first for finite/simple pieces, then complete.",
         "notation": []
       },
-      "tags": [
-        "proof method"
-      ],
+      "tags": ["proof method"],
       "priority": "standard"
     },
     {
@@ -891,9 +704,7 @@
         "intuition": "The usual analytic scalar fields.",
         "notation": []
       },
-      "tags": [
-        "assumption"
-      ],
+      "tags": ["assumption"],
       "priority": "standard"
     },
     {
@@ -906,10 +717,7 @@
         "intuition": "Baire-category arguments require completeness of the domain.",
         "notation": []
       },
-      "tags": [
-        "assumption",
-        "completeness"
-      ],
+      "tags": ["assumption", "completeness"],
       "priority": "core"
     },
     {
@@ -922,10 +730,7 @@
         "intuition": "Closed graph/open mapping statements need Banach codomain.",
         "notation": []
       },
-      "tags": [
-        "assumption",
-        "completeness"
-      ],
+      "tags": ["assumption", "completeness"],
       "priority": "core"
     },
     {
@@ -938,10 +743,7 @@
         "intuition": "Each vector is controlled separately before uniform boundedness upgrades the control.",
         "notation": []
       },
-      "tags": [
-        "assumption",
-        "ubp"
-      ],
+      "tags": ["assumption", "ubp"],
       "priority": "core"
     },
     {
@@ -954,10 +756,7 @@
         "intuition": "Open mapping requires every target vector to have a preimage.",
         "notation": []
       },
-      "tags": [
-        "assumption",
-        "open mapping"
-      ],
+      "tags": ["assumption", "open mapping"],
       "priority": "core"
     },
     {
@@ -970,10 +769,7 @@
         "intuition": "Sequential limit compatibility replaces an a priori boundedness estimate.",
         "notation": []
       },
-      "tags": [
-        "assumption",
-        "closed graph"
-      ],
+      "tags": ["assumption", "closed graph"],
       "priority": "core"
     },
     {
@@ -986,10 +782,7 @@
         "intuition": "Banach-Alaoglu is a compactness theorem for this specific topology.",
         "notation": []
       },
-      "tags": [
-        "assumption",
-        "weak-star"
-      ],
+      "tags": ["assumption", "weak-star"],
       "priority": "core"
     },
     {
@@ -1002,10 +795,7 @@
         "intuition": "Compactness gives eigenvalue accumulation control; self-adjointness gives orthogonality.",
         "notation": []
       },
-      "tags": [
-        "assumption",
-        "spectral"
-      ],
+      "tags": ["assumption", "spectral"],
       "priority": "standard"
     },
     {
@@ -1019,10 +809,7 @@
         "intuition": "Scalar probes defined on a subspace can be extended globally.",
         "notation": []
       },
-      "tags": [
-        "hahn-banach",
-        "duality"
-      ],
+      "tags": ["hahn-banach", "duality"],
       "priority": "core"
     },
     {
@@ -1036,10 +823,7 @@
         "intuition": "Pointwise control plus completeness forces uniform operator control.",
         "notation": []
       },
-      "tags": [
-        "ubp",
-        "baire"
-      ],
+      "tags": ["ubp", "baire"],
       "priority": "core"
     },
     {
@@ -1053,10 +837,7 @@
         "intuition": "A complete linear surjection cannot crush all neighborhoods.",
         "notation": []
       },
-      "tags": [
-        "open mapping",
-        "baire"
-      ],
+      "tags": ["open mapping", "baire"],
       "priority": "core"
     },
     {
@@ -1070,10 +851,7 @@
         "intuition": "A graph-compatible limit rule forces norm continuity.",
         "notation": []
       },
-      "tags": [
-        "closed graph",
-        "open mapping"
-      ],
+      "tags": ["closed graph", "open mapping"],
       "priority": "core"
     },
     {
@@ -1087,10 +865,7 @@
         "intuition": "Pointwise bounded scalar probes have compactness in the weakest natural topology.",
         "notation": []
       },
-      "tags": [
-        "weak-star",
-        "compactness"
-      ],
+      "tags": ["weak-star", "compactness"],
       "priority": "core"
     },
     {
@@ -1104,10 +879,7 @@
         "intuition": "Orthogonal projection is the engine of Hilbert space geometry.",
         "notation": []
       },
-      "tags": [
-        "hilbert",
-        "projection"
-      ],
+      "tags": ["hilbert", "projection"],
       "priority": "standard"
     },
     {
@@ -1121,11 +893,7 @@
         "intuition": "The dual of a Hilbert space is the Hilbert space itself, anti-linearly or linearly depending on convention.",
         "notation": []
       },
-      "tags": [
-        "hilbert",
-        "duality",
-        "hilbert-space version"
-      ],
+      "tags": ["hilbert", "duality", "hilbert-space version"],
       "priority": "core"
     },
     {
@@ -1139,11 +907,7 @@
         "intuition": "Compact self-adjoint operators behave like diagonal Hermitian matrices.",
         "notation": []
       },
-      "tags": [
-        "spectral",
-        "hilbert",
-        "compact operators"
-      ],
+      "tags": ["spectral", "hilbert", "compact operators"],
       "priority": "standard"
     },
     {
@@ -1156,9 +920,7 @@
         "intuition": "Banach-space bijections are automatically topological isomorphisms.",
         "notation": []
       },
-      "tags": [
-        "open mapping"
-      ],
+      "tags": ["open mapping"],
       "priority": "core"
     },
     {
@@ -1171,10 +933,7 @@
         "intuition": "Build the largest possible extension; maximality forces full domain.",
         "notation": []
       },
-      "tags": [
-        "proof",
-        "hahn-banach"
-      ],
+      "tags": ["proof", "hahn-banach"],
       "priority": "core"
     },
     {
@@ -1186,9 +945,7 @@
         "statement": "Create a poset of admissible dominated extensions.",
         "notation": []
       },
-      "tags": [
-        "proof step"
-      ],
+      "tags": ["proof step"],
       "priority": "core"
     },
     {
@@ -1200,9 +957,7 @@
         "statement": "Unify a chain of compatible extensions.",
         "notation": []
       },
-      "tags": [
-        "proof step"
-      ],
+      "tags": ["proof step"],
       "priority": "core"
     },
     {
@@ -1214,9 +969,7 @@
         "statement": "Apply Zorn to get a maximal dominated extension.",
         "notation": []
       },
-      "tags": [
-        "proof step"
-      ],
+      "tags": ["proof step"],
       "priority": "core"
     },
     {
@@ -1228,9 +981,7 @@
         "statement": "If the maximal domain is not all of E, extend by one new vector.",
         "notation": []
       },
-      "tags": [
-        "proof step"
-      ],
+      "tags": ["proof step"],
       "priority": "core"
     },
     {
@@ -1243,10 +994,7 @@
         "intuition": "One ball gets uniform control, then homogeneity spreads it to the unit ball.",
         "notation": []
       },
-      "tags": [
-        "proof",
-        "ubp"
-      ],
+      "tags": ["proof", "ubp"],
       "priority": "core"
     },
     {
@@ -1258,9 +1006,7 @@
         "statement": "Define $E_n=\\{x: \\sup_i \\|T_i x\\|\\leq n\\}$.",
         "notation": []
       },
-      "tags": [
-        "proof step"
-      ],
+      "tags": ["proof step"],
       "priority": "core"
     },
     {
@@ -1272,9 +1018,7 @@
         "statement": "Apply Baire category to the closed cover X=union E_n.",
         "notation": []
       },
-      "tags": [
-        "proof step"
-      ],
+      "tags": ["proof step"],
       "priority": "core"
     },
     {
@@ -1286,9 +1030,7 @@
         "statement": "Use linearity to move the interior ball to a bound on the unit ball.",
         "notation": []
       },
-      "tags": [
-        "proof step"
-      ],
+      "tags": ["proof step"],
       "priority": "core"
     },
     {
@@ -1301,10 +1043,7 @@
         "intuition": "Surjectivity plus completeness forces a ball in the image.",
         "notation": []
       },
-      "tags": [
-        "proof",
-        "open mapping"
-      ],
+      "tags": ["proof", "open mapping"],
       "priority": "core"
     },
     {
@@ -1317,10 +1056,7 @@
         "intuition": "Closed graph is a complete domain in disguise.",
         "notation": []
       },
-      "tags": [
-        "proof",
-        "closed graph"
-      ],
+      "tags": ["proof", "closed graph"],
       "priority": "core"
     },
     {
@@ -1333,10 +1069,7 @@
         "intuition": "Weak-star compactness is product compactness plus linear constraints.",
         "notation": []
       },
-      "tags": [
-        "proof",
-        "banach-alaoglu"
-      ],
+      "tags": ["proof", "banach-alaoglu"],
       "priority": "core"
     },
     {
@@ -1349,10 +1082,7 @@
         "intuition": "A functional measures exactly the component along one vector.",
         "notation": []
       },
-      "tags": [
-        "proof",
-        "riesz"
-      ],
+      "tags": ["proof", "riesz"],
       "priority": "core"
     },
     {
@@ -1365,10 +1095,7 @@
         "intuition": "Compactness gives eigenvectors; self-adjointness makes different eigenspaces orthogonal.",
         "notation": []
       },
-      "tags": [
-        "proof",
-        "spectral"
-      ],
+      "tags": ["proof", "spectral"],
       "priority": "standard"
     },
     {
@@ -1380,14 +1107,9 @@
         "definition": "Sequence spaces of p-summable scalar sequences, with p-norm.",
         "formal": "$$\\begin{aligned}\\ell^p &=\\{x=(x_n): \\sum |x_n|^p<\\infty\\},\\ 1\\leq p<\\infty \\\\ \\ell^\\infty &=\\{x=(x_n): \\sup_n |x_n|<\\infty\\} \\end{aligned}$$",
         "intuition": "Discrete model Banach spaces.",
-        "notation": [
-          "$\\ell^p$"
-        ]
+        "notation": ["$\\ell^p$"]
       },
-      "tags": [
-        "example",
-        "sequence spaces"
-      ],
+      "tags": ["example", "sequence spaces"],
       "priority": "core"
     },
     {
@@ -1399,14 +1121,9 @@
         "definition": "Equivalence classes of p-integrable measurable functions.",
         "formal": "L^p(\\Omega)= {f: integral |f|^p < infinity}/a.e. equality.",
         "intuition": "Function-space analogue of ell^p.",
-        "notation": [
-          "L^p"
-        ]
+        "notation": ["L^p"]
       },
-      "tags": [
-        "example",
-        "function spaces"
-      ],
+      "tags": ["example", "function spaces"],
       "priority": "core"
     },
     {
@@ -1418,14 +1135,9 @@
         "definition": "Continuous scalar-valued functions on a compact Hausdorff space K with supremum norm.",
         "formal": "C(K) with ||f||_infty=sup_{x in K}|f(x)|.",
         "intuition": "Continuous functions as a Banach space.",
-        "notation": [
-          "C(K)"
-        ]
+        "notation": ["C(K)"]
       },
-      "tags": [
-        "example",
-        "function spaces"
-      ],
+      "tags": ["example", "function spaces"],
       "priority": "core"
     },
     {
@@ -1437,15 +1149,9 @@
         "definition": "The Banach space of scalar sequences converging to zero with the supremum norm.",
         "formal": "$$c_0=\\{x \\in \\ell^\\infty: x_n \\to 0\\}.$$",
         "intuition": "A canonical non-reflexive Banach space.",
-        "notation": [
-          "$c_0$"
-        ]
+        "notation": ["$c_0$"]
       },
-      "tags": [
-        "example",
-        "sequence spaces",
-        "nonreflexive"
-      ],
+      "tags": ["example", "sequence spaces", "nonreflexive"],
       "priority": "standard"
     },
     {
@@ -1457,14 +1163,9 @@
         "definition": "$$\\ell^2 \\text{ is the square-summable sequence space with inner product } \\langle x,y \\rangle = \\sum x_n \\overline{y_n}.$$",
         "formal": "$$\\ell^2 \\text{ with } \\langle x,y \\rangle = \\sum_n x_n \\overline{y_n}.$$",
         "intuition": "The canonical separable infinite-dimensional Hilbert space.",
-        "notation": [
-          "$\\ell^2$"
-        ]
+        "notation": ["$\\ell^2$"]
       },
-      "tags": [
-        "example",
-        "hilbert"
-      ],
+      "tags": ["example", "hilbert"],
       "priority": "core"
     },
     {
@@ -1477,10 +1178,7 @@
         "intuition": "Shows completeness is not cosmetic in Banach-space theorems.",
         "notation": []
       },
-      "tags": [
-        "counterexample",
-        "completeness"
-      ],
+      "tags": ["counterexample", "completeness"],
       "priority": "core"
     },
     {
@@ -1493,10 +1191,7 @@
         "intuition": "Dual functionals can detect nonzero vectors.",
         "notation": []
       },
-      "tags": [
-        "application",
-        "duality"
-      ],
+      "tags": ["application", "duality"],
       "priority": "core"
     },
     {
@@ -1509,10 +1204,7 @@
         "intuition": "A limit operator inherits boundedness from pointwise convergence plus completeness.",
         "notation": []
       },
-      "tags": [
-        "application",
-        "operators"
-      ],
+      "tags": ["application", "operators"],
       "priority": "standard"
     },
     {
@@ -1525,10 +1217,7 @@
         "intuition": "Compactness appears after weakening the topology.",
         "notation": []
       },
-      "tags": [
-        "application",
-        "weak topology"
-      ],
+      "tags": ["application", "weak topology"],
       "priority": "standard"
     },
     {
@@ -1541,10 +1230,7 @@
         "intuition": "Diagonalize the operator conceptually, then analyze eigenvalues/spectrum.",
         "notation": []
       },
-      "tags": [
-        "application",
-        "spectral"
-      ],
+      "tags": ["application", "spectral"],
       "priority": "standard"
     },
     {
@@ -1573,12 +1259,7 @@
         "citation": "standard mathematical terminology; compatible with the existing functional_analysis graph",
         "references": []
       },
-      "tags": [
-        "definition",
-        "function",
-        "map",
-        "foundations"
-      ],
+      "tags": ["definition", "function", "map", "foundations"],
       "priority": "core"
     },
     {
@@ -1591,11 +1272,7 @@
         "definition": "An operator is a function or map acting between structured spaces. In functional analysis, the term usually signals that the domain and codomain are vector spaces or topological vector spaces, and often that the map is linear unless explicitly stated otherwise.",
         "formal": "An operator is typically a map $T:X\\to Y$ where $X,Y$ carry mathematical structure; in functional analysis $X,Y$ are usually vector or normed spaces. If additionally $T(\\alpha x+\\beta y)=\\alpha Tx+\\beta Ty$, then $T$ is a linear operator.",
         "intuition": "A function wearing structure: it is still an assignment, but the word operator tells the reader to care about vector-space, norm, topology, or Hilbert-space structure.",
-        "notation": [
-          "$T:X\\to Y$",
-          "$Tx$",
-          "$T(x)$"
-        ]
+        "notation": ["$T:X\\to Y$", "$Tx$", "$T(x)$"]
       },
       "assumptions": [
         "$T$ is a function/map.",
@@ -1606,13 +1283,7 @@
         "citation": "standard functional-analysis convention; compatible with Bowers-Kalton notation L(X,Y)",
         "references": []
       },
-      "tags": [
-        "definition",
-        "operator",
-        "function",
-        "map",
-        "terminology"
-      ],
+      "tags": ["definition", "operator", "function", "map", "terminology"],
       "priority": "core"
     },
     {
@@ -1625,9 +1296,7 @@
         "definition": "A nonlinear operator is a map between structured spaces that fails linearity.",
         "formal": "A map $F:X\\to Y$ is nonlinear if there exist $x,y\\in X$ or $\\lambda\\in\\mathbb K$ such that $F(x+y)\\ne F(x)+F(y)$ or $F(\\lambda x)\\ne \\lambda F(x)$.",
         "intuition": "Still an operator because it acts on structured spaces; not a linear operator because it refuses to respect superposition.",
-        "notation": [
-          "$F:X\\to Y$"
-        ]
+        "notation": ["$F:X\\to Y$"]
       },
       "assumptions": [
         "$X$ and $Y$ are structured spaces, usually vector or normed spaces.",
@@ -1638,11 +1307,7 @@
         "citation": "standard mathematical terminology",
         "references": []
       },
-      "tags": [
-        "operator",
-        "nonlinear",
-        "terminology"
-      ],
+      "tags": ["operator", "nonlinear", "terminology"],
       "priority": "standard"
     },
     {
@@ -1663,12 +1328,7 @@
         "citation": "derived semantic clarification from standard functional-analysis convention",
         "references": []
       },
-      "tags": [
-        "terminology",
-        "semantic hierarchy",
-        "function",
-        "operator"
-      ],
+      "tags": ["terminology", "semantic hierarchy", "function", "operator"],
       "priority": "core"
     },
     {
@@ -1681,19 +1341,13 @@
         "definition": "A linear subspace containing all limits of convergent sequences from itself, in the ambient norm/topology.",
         "formal": "M\\le X,\\quad M=\\overline{M}.",
         "intuition": "A subspace with no missing limit points, so quotient constructions behave instead of collapsing into nonsense.",
-        "notation": [
-          "M\\subseteq X"
-        ]
+        "notation": ["M\\subseteq X"]
       },
       "assumptions": [
         "X is a normed or topological vector space.",
         "M is a linear subspace of X."
       ],
-      "tags": [
-        "subspace",
-        "closed",
-        "banach_space"
-      ],
+      "tags": ["subspace", "closed", "banach_space"],
       "priority": "core"
     },
     {
@@ -1706,9 +1360,7 @@
         "definition": "The quotient space collapses a closed subspace to zero and measures distance to that subspace using the quotient norm.",
         "formal": "X/Y=\\{x+Y:x\\in X\\},\\qquad \\|x+Y\\|=\\inf_{y\\in Y}\\|x+y\\|.",
         "intuition": "You identify points that differ by an element of Y; geometry modulo a subspace, because apparently ordinary geometry was not abstract enough.",
-        "notation": [
-          "X/Y"
-        ]
+        "notation": ["X/Y"]
       },
       "assumptions": [
         "X is a normed or Banach space.",
@@ -1718,11 +1370,7 @@
         "citation": "Bowers-Kalton Section 3.7",
         "references": []
       },
-      "tags": [
-        "quotient",
-        "banach_space",
-        "construction"
-      ],
+      "tags": ["quotient", "banach_space", "construction"],
       "priority": "core"
     },
     {
@@ -1735,22 +1383,14 @@
         "definition": "The canonical surjective linear map from a space onto its quotient by a subspace.",
         "formal": "Q:X\\to X/Y,\\qquad Qx=x+Y.",
         "intuition": "Forget the component lying in Y.",
-        "notation": [
-          "Q:X\\to X/Y"
-        ]
+        "notation": ["Q:X\\to X/Y"]
       },
-      "assumptions": [
-        "Y is a closed subspace of X."
-      ],
+      "assumptions": ["Y is a closed subspace of X."],
       "source": {
         "citation": "Bowers-Kalton Section 3.7",
         "references": []
       },
-      "tags": [
-        "quotient",
-        "map",
-        "operator"
-      ],
+      "tags": ["quotient", "map", "operator"],
       "priority": "core"
     },
     {
@@ -1763,18 +1403,10 @@
         "definition": "The null space of a linear operator.",
         "formal": "\\ker T=\\{x\\in X:Tx=0\\}.",
         "intuition": "Everything the operator kills.",
-        "notation": [
-          "\\ker T"
-        ]
+        "notation": ["\\ker T"]
       },
-      "assumptions": [
-        "T:X\\to Y is linear."
-      ],
-      "tags": [
-        "operator",
-        "kernel",
-        "quotient"
-      ],
+      "assumptions": ["T:X\\to Y is linear."],
+      "tags": ["operator", "kernel", "quotient"],
       "priority": "core"
     },
     {
@@ -1787,18 +1419,10 @@
         "definition": "Weak convergence is convergence in the weak topology \\sigma(X,X^*).",
         "formal": "x_n\\rightharpoonup x \\iff \\forall x^*\\in X^*:\\ x^*(x_n)\\to x^*(x).",
         "intuition": "Vectors converge when every scalar probe in the dual agrees that they converge.",
-        "notation": [
-          "x_n\\rightharpoonup x"
-        ]
+        "notation": ["x_n\\rightharpoonup x"]
       },
-      "assumptions": [
-        "X is a normed space."
-      ],
-      "tags": [
-        "weak topology",
-        "convergence",
-        "duality"
-      ],
+      "assumptions": ["X is a normed space."],
+      "tags": ["weak topology", "convergence", "duality"],
       "priority": "core"
     },
     {
@@ -1811,18 +1435,10 @@
         "definition": "Weak-star convergence is convergence in \\sigma(X^*,X).",
         "formal": "x_n^*\\overset{w^*}{\\to}x^* \\iff \\forall x\\in X:\\ x_n^*(x)\\to x^*(x).",
         "intuition": "Functionals converge by agreeing pointwise on every vector.",
-        "notation": [
-          "x_n^*\\overset{w^*}{\\to}x^*"
-        ]
+        "notation": ["x_n^*\\overset{w^*}{\\to}x^*"]
       },
-      "assumptions": [
-        "X is a normed space."
-      ],
-      "tags": [
-        "weak-star",
-        "convergence",
-        "duality"
-      ],
+      "assumptions": ["X is a normed space."],
+      "tags": ["weak-star", "convergence", "duality"],
       "priority": "core"
     },
     {
@@ -1837,18 +1453,12 @@
         "intuition": "The set may look large in X, but every scalar probe sees only bounded values.",
         "notation": []
       },
-      "assumptions": [
-        "X is a normed space."
-      ],
+      "assumptions": ["X is a normed space."],
       "source": {
         "citation": "2025 exam Question 5",
         "references": []
       },
-      "tags": [
-        "weak topology",
-        "boundedness",
-        "exam"
-      ],
+      "tags": ["weak topology", "boundedness", "exam"],
       "priority": "core"
     },
     {
@@ -1862,19 +1472,12 @@
         "intuition": "If every scalar probe sees boundedness, completeness upgrades this to actual norm boundedness.",
         "notation": []
       },
-      "assumptions": [
-        "X is Banach.",
-        "A is weakly bounded."
-      ],
+      "assumptions": ["X is Banach.", "A is weakly bounded."],
       "source": {
         "citation": "2025 exam Question 5",
         "references": []
       },
-      "tags": [
-        "weak boundedness",
-        "uniform boundedness",
-        "exam"
-      ],
+      "tags": ["weak boundedness", "uniform boundedness", "exam"],
       "priority": "core"
     },
     {
@@ -1887,22 +1490,14 @@
         "definition": "The norm on a normed vector space is positively homogeneous and subadditive.",
         "formal": "p(x)=\\|x\\|.",
         "intuition": "The norm is the basic domination function in Hahn-Banach.",
-        "notation": [
-          "p(x)=\\|x\\|"
-        ]
+        "notation": ["p(x)=\\|x\\|"]
       },
-      "assumptions": [
-        "X is a normed vector space."
-      ],
+      "assumptions": ["X is a normed vector space."],
       "source": {
         "citation": "Bowers-Kalton Chapter 3",
         "references": []
       },
-      "tags": [
-        "example",
-        "hahn-banach",
-        "norm"
-      ],
+      "tags": ["example", "hahn-banach", "norm"],
       "priority": "core"
     },
     {
@@ -1917,10 +1512,7 @@
         "intuition": "The map does not respect superposition.",
         "notation": []
       },
-      "tags": [
-        "operator",
-        "nonlinear"
-      ],
+      "tags": ["operator", "nonlinear"],
       "priority": "standard"
     },
     {
@@ -1944,11 +1536,7 @@
         "citation": "Bowers-Kalton Exercise 1.4",
         "references": []
       },
-      "tags": [
-        "counterexample",
-        "boundedness",
-        "operator"
-      ],
+      "tags": ["counterexample", "boundedness", "operator"],
       "priority": "core"
     },
     {
@@ -1960,23 +1548,14 @@
         "statement": "The dual of C(K) is the space of finite Borel measures on K.",
         "formal": "C(K)^*\\cong M(K),\\qquad \\varphi(f)=\\int_K f\\,d\\mu,\\qquad \\|\\varphi\\|=|\\mu|(K).",
         "intuition": "Every continuous scalar probe on C(K) is integration against a measure.",
-        "notation": [
-          "C(K)^*=M(K)"
-        ]
+        "notation": ["C(K)^*=M(K)"]
       },
-      "assumptions": [
-        "K is compact metric, in the Bowers-Kalton version."
-      ],
+      "assumptions": ["K is compact metric, in the Bowers-Kalton version."],
       "source": {
         "citation": "Bowers-Kalton Theorem 2.20",
         "references": []
       },
-      "tags": [
-        "riesz representation",
-        "C(K)",
-        "measures",
-        "duality"
-      ],
+      "tags": ["riesz representation", "C(K)", "measures", "duality"],
       "priority": "standard"
     },
     {
@@ -2004,10 +1583,7 @@
           {
             "role": "argument",
             "content": "Since $x_n \\to x$, for every $\\delta > 0$ there exists N in N such that for all k >= N, d(x_k, x) < delta. Choose $\\delta = \\epsilon/2$. Since $\\epsilon > 0$, $\\epsilon/2 > 0$.",
-            "uses": [
-              "metric_space",
-              "convergence"
-            ]
+            "uses": ["metric_space", "convergence"]
           },
           {
             "role": "claim",
@@ -2035,12 +1611,7 @@
         "citation": "Bowers-Kalton Exercise 1.1",
         "references": []
       },
-      "tags": [
-        "exercise",
-        "metric space",
-        "convergence",
-        "cauchy"
-      ],
+      "tags": ["exercise", "metric space", "convergence", "cauchy"],
       "priority": "core"
     }
   ],

@@ -11,9 +11,12 @@
   // turn off formatter for json files to avoid conflicts with eslint
   "[json]": {
     "editor.formatOnSave": false,
-    "editor.defaultFormatter": null,
-    "editor.formatOnType": false
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnType": false,
+    "editor.formatOnPaste": false,
+    "editor.formatOnSaveMode": "file"
   },
+
   "editor.codeActionsOnSave": {
     "source.fixAll": "always"
   },
