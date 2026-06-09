@@ -449,3 +449,8 @@ lerna-debug.log*
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Built map artifacts — generated from *.source.json by `npm run build:maps`.
+# The source files are the tracked truth; never commit the generated output.
+/src/data/maps/*.json
+!/src/data/maps/*.source.json

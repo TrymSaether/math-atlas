@@ -4,10 +4,12 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "predev": "npm run build:maps",
     "dev": "vite",
     "build:maps": "tsx scripts/build-maps.ts",
     "check:maps": "tsx scripts/build-maps.ts --check",
-    "build": "npm run check:maps && tsc -b && vite build",
+    "build": "npm run build:maps && tsc -b && vite build",
+    "prepreview": "npm run build:maps",
     "preview": "vite preview"
   },
   "dependencies": {
