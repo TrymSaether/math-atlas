@@ -119,12 +119,12 @@ export const SourceConceptSchema = z
     diagram: z.string().min(1).optional(),
     /** Free-text stated hypotheses; not concept references, so not edges. */
     assumptions: z.array(Prose).default([]),
+    /**
+     * Step-by-step derivation. Carries theorem/lemma proofs and exercise
+     * solutions alike (same shape); the UI labels it "Solution" for
+     * `kind === "exercise"` and "Proof" otherwise.
+     */
     proof: z
-      .object({ steps: z.array(ProofStepSchema).min(1) })
-      .strict()
-      .optional(),
-    /** Worked solution for exercises; same step shape as a proof. */
-    solution: z
       .object({ steps: z.array(ProofStepSchema).min(1) })
       .strict()
       .optional(),

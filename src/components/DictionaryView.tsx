@@ -7,7 +7,7 @@ import type { GraphNode } from "../types";
 import { MathText, MathProse } from "../lib/katex";
 import { KIND_LABEL } from "../types";
 import { getDomainTone } from "../lib/colors";
-import { nodeDefinition, nodeFormula } from "../lib/nodeContent";
+import { nodeDefinition, nodeFormula, proofBlockLabel } from "../lib/nodeContent";
 import { CATEGORY_META, categoryOf, kindAbbrev } from "../lib/nodeCategory";
 import {
   KIND_ORDER,
@@ -260,7 +260,7 @@ function DetailPane({
   const definition = nodeDefinition(entry, [statement, formalStatement]);
   const formula = nodeFormula(entry, [statement, formalStatement, definition]);
   const proofSteps = entry.proof?.steps ?? [];
-  const solutionSteps = entry.solution?.steps ?? [];
+  const proofLabel = proofBlockLabel(entry.kind);
   const prereqIds = [...new Set([...entry.statementDependencies, ...entry.proofDependencies])];
   const usedByIds = [
     ...new Set((map.outgoingEdgesByNodeId.get(entry.id) ?? []).map((edge) => edge.to)),
@@ -378,15 +378,9 @@ function DetailPane({
               <MathProse text={entry.examples[0].tex} asBlock />
             </Facet>
           )}
-          {solutionSteps.length > 0 && (
-            <div>
-              <StepLabel label="Solution" toneColor={tone.color} />
-              <Steps steps={solutionSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
-            </div>
-          )}
           {proofSteps.length > 0 && (
             <div>
-              <StepLabel label="Proof" toneColor={tone.color} />
+              <StepLabel label={proofLabel} toneColor={tone.color} />
               <Steps steps={proofSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
             </div>
           )}

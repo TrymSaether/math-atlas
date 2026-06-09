@@ -43,17 +43,6 @@ export const ArtifactNodeSchema = z.object({
       ),
     })
     .optional(),
-  solution: z
-    .object({
-      steps: z.array(
-        z.object({
-          role: z.string(),
-          content: z.string(),
-          uses: z.array(z.string()),
-        }),
-      ),
-    })
-    .optional(),
   source: z
     .object({
       citation: z.string().optional(),

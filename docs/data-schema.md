@@ -125,9 +125,9 @@ export const SourceConcept = z
     diagram: z.string().optional(), // single curated diagram path (figure pipeline owns the rest)
     assumptions: z.array(Prose).default([]), // free-text hypotheses; NOT concept refs, so not edges
 
-    // proof / worked solution — same step shape; proof for statements, solution for exercises
+    // one step list for both theorem proofs and exercise solutions (same shape);
+    // UI labels it "Solution" when kind === "exercise", else "Proof"
     proof: ProofSchema.optional(),
-    solution: ProofSchema.optional(),
 
     // provenance
     source: z
@@ -191,7 +191,7 @@ export const ArtifactNode = z.object({
   content: /* same content block */,
   examples: /* same */,
   diagram: /* same */, assumptions: /* same */,
-  proof: /* same */, solution: /* same */,
+  proof: /* same */,
   source: /* same */,
   tags: z.array(z.string()),
   priority: z.string(),

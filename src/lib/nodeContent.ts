@@ -19,6 +19,14 @@ function stepsText(steps: { content: string }[] | undefined): string {
   return (steps ?? []).map((s) => s.content).join(" ").trim();
 }
 
+/**
+ * Heading for a node's derivation block. Exercises carry their worked
+ * answer in the same `proof` field, but read better labelled "Solution".
+ */
+export function proofBlockLabel(kind: string): "Proof" | "Solution" {
+  return kind === "exercise" ? "Solution" : "Proof";
+}
+
 /** Readable lead text for cards, panels, dictionary entries, and search. */
 export function nodeStatement(node: GraphNode): string {
   return (
@@ -49,7 +57,6 @@ export function nodeAnswerText(node: GraphNode): string {
     clean(node.content.gloss) ||
     nodeFormalStatement(node) ||
     clean(node.content.formula) ||
-    stepsText(node.solution?.steps) ||
     stepsText(node.proof?.steps) ||
     exampleText(node)
   );

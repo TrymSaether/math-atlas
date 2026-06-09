@@ -2550,7 +2550,16 @@
         "statement": "Let $X = \\{a, b, c, d\\}$. Show that  $ \\mathcal{T} = \\{\\emptyset, \\{a\\}, \\{a, b\\}, \\{a, b, c\\}, \\{b, c, d\\}, X\\}$ is not a topology on $X$. Find a topology $\\mathcal{T}'$ (different from the discrete topology) on $X$ such that $\\mathcal{T} \\subseteq \\mathcal{T}'$.",
         "notation": []
       },
-      "solution": {
+      "source": {
+        "citation": "Thaule, Introduction to Topology, Exercise 3.1",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "topological-spaces"
+      ],
+      "priority": "standard",
+      "proof": {
         "steps": [
           {
             "role": "argument",
@@ -2581,16 +2590,7 @@
             ]
           }
         ]
-      },
-      "source": {
-        "citation": "Thaule, Introduction to Topology, Exercise 3.1",
-        "references": []
-      },
-      "tags": [
-        "exercise",
-        "topological-spaces"
-      ],
-      "priority": "standard"
+      }
     },
     {
       "id": "exercise_3_2",
@@ -2602,15 +2602,6 @@
         "intuition": "Practice problem from Chapter 3.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup and Definitions Let $X$ be non-empty, fix $x_0\\in X$, and define $\\mathcal{T}=\\{U\\subseteq X\\mid x_0\\notin U\\text{ or }X\\setminus U\\text{ is finite}\\}$. ### Solution $\\emptyset\\in\\mathcal{T}$ because it omits $x_0$, and $X\\in\\mathcal{T}$ because $X\\setminus X=\\emptyset$ is finite. For arbitrary unions, let $V=\\bigcup U_\\lambda$. If $x_0\\notin V$, then $V\\in\\mathcal{T}$. If $x_0\\in V$, then $x_0\\in U_{\\lambda_0}$ for some $\\lambda_0$, so $X\\setminus U_{\\lambda_0}$ is finite and $X\\setminus V\\subseteq X\\setminus U_{\\lambda_0}$ is finite. For finite intersections $W=\\bigcap_{i=1}^nU_i$, if some $U_i$ omits $x_0$, so does $W$; otherwise every $X\\setminus U_i$ is finite and $X\\setminus W=\\bigcup_i(X\\setminus U_i)$ is finite. Thus $\\mathcal{T}$ is a topology.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 3.2",
         "references": []
@@ -2621,7 +2612,16 @@
         "closed-sets",
         "closure"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup and Definitions Let $X$ be non-empty, fix $x_0\\in X$, and define $\\mathcal{T}=\\{U\\subseteq X\\mid x_0\\notin U\\text{ or }X\\setminus U\\text{ is finite}\\}$. ### Solution $\\emptyset\\in\\mathcal{T}$ because it omits $x_0$, and $X\\in\\mathcal{T}$ because $X\\setminus X=\\emptyset$ is finite. For arbitrary unions, let $V=\\bigcup U_\\lambda$. If $x_0\\notin V$, then $V\\in\\mathcal{T}$. If $x_0\\in V$, then $x_0\\in U_{\\lambda_0}$ for some $\\lambda_0$, so $X\\setminus U_{\\lambda_0}$ is finite and $X\\setminus V\\subseteq X\\setminus U_{\\lambda_0}$ is finite. For finite intersections $W=\\bigcap_{i=1}^nU_i$, if some $U_i$ omits $x_0$, so does $W$; otherwise every $X\\setminus U_i$ is finite and $X\\setminus W=\\bigcup_i(X\\setminus U_i)$ is finite. Thus $\\mathcal{T}$ is a topology.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_3_3",
@@ -2633,15 +2633,6 @@
         "intuition": "Practice problem from Chapter 3.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup and Definitions Let $X$ be a set and $A\\subseteq X$. Coarser means contained as a collection of open sets. ### Solution The coarsest topology on $X$ in which $A$ is open is $\\mathcal{T}_A=\\{\\emptyset,A,X\\}$. This is a topology because all unions and finite intersections of these three sets are again among these three sets. If $\\mathcal{T}$ is any topology with $A\\in\\mathcal{T}$, then $\\emptyset,X\\in\\mathcal{T}$ by the topology axioms, so $\\mathcal{T}_A\\subseteq\\mathcal{T}$. Hence $\\mathcal{T}_A$ is the desired coarsest topology.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 3.3",
         "references": []
@@ -2652,7 +2643,16 @@
         "closed-sets",
         "closure"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup and Definitions Let $X$ be a set and $A\\subseteq X$. Coarser means contained as a collection of open sets. ### Solution The coarsest topology on $X$ in which $A$ is open is $\\mathcal{T}_A=\\{\\emptyset,A,X\\}$. This is a topology because all unions and finite intersections of these three sets are again among these three sets. If $\\mathcal{T}$ is any topology with $A\\in\\mathcal{T}$, then $\\emptyset,X\\in\\mathcal{T}$ by the topology axioms, so $\\mathcal{T}_A\\subseteq\\mathcal{T}$. Hence $\\mathcal{T}_A$ is the desired coarsest topology.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_3_4",
@@ -2664,15 +2664,6 @@
         "intuition": "Practice problem from Chapter 3.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup and Definitions $\\mathcal{T}_{\\mathrm{disc}}=\\mathcal{P}(X)$ and $\\mathcal{T}_{\\mathrm{cof}}=\\{U\\subseteq X\\mid X\\setminus U\\text{ is finite}\\}\\cup\\{\\emptyset\\}$. ### Solution Every $U\\in\\mathcal{T}_{\\mathrm{cof}}$ is a subset of $X$, and every subset of $X$ lies in $\\mathcal{T}_{\\mathrm{disc}}$. Therefore $\\mathcal{T}_{\\mathrm{cof}}\\subseteq\\mathcal{T}_{\\mathrm{disc}}$, so the discrete topology is finer. If $X$ is infinite this containment is strict because singletons are discrete-open but not cofinite-open; if $X$ is finite the two topologies agree.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 3.4",
         "references": []
@@ -2683,7 +2674,16 @@
         "closed-sets",
         "closure"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup and Definitions $\\mathcal{T}_{\\mathrm{disc}}=\\mathcal{P}(X)$ and $\\mathcal{T}_{\\mathrm{cof}}=\\{U\\subseteq X\\mid X\\setminus U\\text{ is finite}\\}\\cup\\{\\emptyset\\}$. ### Solution Every $U\\in\\mathcal{T}_{\\mathrm{cof}}$ is a subset of $X$, and every subset of $X$ lies in $\\mathcal{T}_{\\mathrm{disc}}$. Therefore $\\mathcal{T}_{\\mathrm{cof}}\\subseteq\\mathcal{T}_{\\mathrm{disc}}$, so the discrete topology is finer. If $X$ is infinite this containment is strict because singletons are discrete-open but not cofinite-open; if $X$ is finite the two topologies agree.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_3_5",
@@ -2695,15 +2695,6 @@
         "intuition": "Practice problem from Chapter 3.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup and Definitions Let $X=\\{a,b,c,d\\}$. A homeomorphism is a bijection whose map and inverse are continuous. ### Solution Let $f$ swap $a$ and $b$ and fix $c,d$. Set $\\mathcal{T}_1=\\{\\emptyset,\\{a\\},\\{a,c\\},\\{a,b,c\\},X\\}$ and $\\mathcal{T}_2=\\{f(U)\\mid U\\in\\mathcal{T}_1\\}=\\{\\emptyset,\\{b\\},\\{b,c\\},\\{a,b,c\\},X\\}$. Both are topologies by direct closure under unions and finite intersections. They are distinct since $\\{a\\}\\in\\mathcal{T}_1$ but $\\{a\\}\\notin\\mathcal{T}_2$. For each open set in $\\mathcal{T}_2$, its preimage under $f$ is the corresponding open set in $\\mathcal{T}_1$; since $f=f^{-1}$, the inverse is continuous by the same check. Thus the two spaces are homeomorphic with unequal topologies.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 3.5",
         "references": []
@@ -2714,7 +2705,16 @@
         "closed-sets",
         "closure"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup and Definitions Let $X=\\{a,b,c,d\\}$. A homeomorphism is a bijection whose map and inverse are continuous. ### Solution Let $f$ swap $a$ and $b$ and fix $c,d$. Set $\\mathcal{T}_1=\\{\\emptyset,\\{a\\},\\{a,c\\},\\{a,b,c\\},X\\}$ and $\\mathcal{T}_2=\\{f(U)\\mid U\\in\\mathcal{T}_1\\}=\\{\\emptyset,\\{b\\},\\{b,c\\},\\{a,b,c\\},X\\}$. Both are topologies by direct closure under unions and finite intersections. They are distinct since $\\{a\\}\\in\\mathcal{T}_1$ but $\\{a\\}\\notin\\mathcal{T}_2$. For each open set in $\\mathcal{T}_2$, its preimage under $f$ is the corresponding open set in $\\mathcal{T}_1$; since $f=f^{-1}$, the inverse is continuous by the same check. Thus the two spaces are homeomorphic with unequal topologies.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_3_6",
@@ -2726,15 +2726,6 @@
         "intuition": "Practice problem from Chapter 3.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup and Definitions Let $X$ be a topological space and $A,B\\subseteq X$. The closure $\\overline{A}$ is the smallest closed set containing $A$. ### Solution If $A\\subseteq B$, every closed set containing $B$ also contains $A$, so $\\overline{A}$ is contained in every closed superset of $B$ and hence $\\overline{A}\\subseteq\\overline{B}$. For unions, the first part gives $\\overline{A}\\cup\\overline{B}\\subseteq\\overline{A\\cup B}$. Conversely $\\overline{A}\\cup\\overline{B}$ is closed as a finite union of closed sets and contains $A\\cup B$, so minimality gives $\\overline{A\\cup B}\\subseteq\\overline{A}\\cup\\overline{B}$. Therefore $\\overline{A\\cup B}=\\overline{A}\\cup\\overline{B}$.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 3.6",
         "references": []
@@ -2745,7 +2736,16 @@
         "closed-sets",
         "closure"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup and Definitions Let $X$ be a topological space and $A,B\\subseteq X$. The closure $\\overline{A}$ is the smallest closed set containing $A$. ### Solution If $A\\subseteq B$, every closed set containing $B$ also contains $A$, so $\\overline{A}$ is contained in every closed superset of $B$ and hence $\\overline{A}\\subseteq\\overline{B}$. For unions, the first part gives $\\overline{A}\\cup\\overline{B}\\subseteq\\overline{A\\cup B}$. Conversely $\\overline{A}\\cup\\overline{B}$ is closed as a finite union of closed sets and contains $A\\cup B$, so minimality gives $\\overline{A\\cup B}\\subseteq\\overline{A}\\cup\\overline{B}$. Therefore $\\overline{A\\cup B}=\\overline{A}\\cup\\overline{B}$.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_3_7",
@@ -2757,15 +2757,6 @@
         "intuition": "Practice problem from Chapter 3.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup and Definitions Let $A\\subseteq X$. A neighbourhood of $x$ is an open set containing $x$, and $\\overline{A}$ is the smallest closed set containing $A$. ### Solution If some neighbourhood $U$ of $x$ satisfies $U\\cap A=\\emptyset$, then $A\\subseteq X\\setminus U$, where $X\\setminus U$ is closed. Hence $\\overline{A}\\subseteq X\\setminus U$, so $x\\notin\\overline{A}$. Conversely, if $x\\notin\\overline{A}$, then there is a closed set $C\\supseteq A$ with $x\\notin C$. Then $U=X\\setminus C$ is an open neighbourhood of $x$ and $U\\cap A=\\emptyset$. Thus $x\\in\\overline{A}$ iff every neighbourhood of $x$ meets $A$.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 3.7",
         "references": []
@@ -2776,7 +2767,16 @@
         "closed-sets",
         "closure"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup and Definitions Let $A\\subseteq X$. A neighbourhood of $x$ is an open set containing $x$, and $\\overline{A}$ is the smallest closed set containing $A$. ### Solution If some neighbourhood $U$ of $x$ satisfies $U\\cap A=\\emptyset$, then $A\\subseteq X\\setminus U$, where $X\\setminus U$ is closed. Hence $\\overline{A}\\subseteq X\\setminus U$, so $x\\notin\\overline{A}$. Conversely, if $x\\notin\\overline{A}$, then there is a closed set $C\\supseteq A$ with $x\\notin C$. Then $U=X\\setminus C$ is an open neighbourhood of $x$ and $U\\cap A=\\emptyset$. Thus $x\\in\\overline{A}$ iff every neighbourhood of $x$ meets $A$.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_3_8",
@@ -2788,15 +2788,6 @@
         "intuition": "Practice problem from Chapter 3.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup and Definitions Let $X=\\{a,b,c,d,e\\}$ with the listed topology and $S=\\{a,b\\}$. A set is dense iff its closure is all of $X$. ### Solution Closed sets are complements of listed open sets. The closed sets containing $S$ are exactly $X$ and $\\{a,b,c\\}$, so $\\overline{S}=X\\cap\\{a,b,c\\}=\\{a,b,c\\}$. This is not $X$, so $S$ is not dense. Equivalently, the non-empty open set $\\{d,e\\}$ is disjoint from $S$.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 3.8",
         "references": []
@@ -2807,7 +2798,16 @@
         "closed-sets",
         "closure"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup and Definitions Let $X=\\{a,b,c,d,e\\}$ with the listed topology and $S=\\{a,b\\}$. A set is dense iff its closure is all of $X$. ### Solution Closed sets are complements of listed open sets. The closed sets containing $S$ are exactly $X$ and $\\{a,b,c\\}$, so $\\overline{S}=X\\cap\\{a,b,c\\}=\\{a,b,c\\}$. This is not $X$, so $S$ is not dense. Equivalently, the non-empty open set $\\{d,e\\}$ is disjoint from $S$.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_4_1",
@@ -2819,15 +2819,6 @@
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup Let $X=\\{a,b,c,d,e\\}$ with the listed topology $\\mathcal{T}$. ### Solution For $\\mathcal{S}=\\{\\{a,b\\},\\{b,d,e\\},\\{c,d,e\\}\\}$, the union is $X$. Its finite intersections give basis elements $\\{a,b\\},\\{b,d,e\\},\\{c,d,e\\},\\{b\\},\\{d,e\\}$, whose unions are exactly the members of $\\mathcal{T}$. Thus $\\mathcal{S}$ is a subbasis for $\\mathcal{T}$. For $\\mathcal{S}'=\\{\\{a,b\\},\\{b,c,d,e\\},\\{d,e\\}\\}$, the generated basis is $\\{a,b\\},\\{b,c,d,e\\},\\{d,e\\},\\{b\\}$. Unions of these sets cannot produce $\\{c,d,e\\}$, which is in $\\mathcal{T}$, so $\\mathcal{S}'$ is not a subbasis for $\\mathcal{T}$.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 4.1",
         "references": []
@@ -2838,7 +2829,16 @@
         "subbases",
         "standard-topology"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup Let $X=\\{a,b,c,d,e\\}$ with the listed topology $\\mathcal{T}$. ### Solution For $\\mathcal{S}=\\{\\{a,b\\},\\{b,d,e\\},\\{c,d,e\\}\\}$, the union is $X$. Its finite intersections give basis elements $\\{a,b\\},\\{b,d,e\\},\\{c,d,e\\},\\{b\\},\\{d,e\\}$, whose unions are exactly the members of $\\mathcal{T}$. Thus $\\mathcal{S}$ is a subbasis for $\\mathcal{T}$. For $\\mathcal{S}'=\\{\\{a,b\\},\\{b,c,d,e\\},\\{d,e\\}\\}$, the generated basis is $\\{a,b\\},\\{b,c,d,e\\},\\{d,e\\},\\{b\\}$. Unions of these sets cannot produce $\\{c,d,e\\}$, which is in $\\mathcal{T}$, so $\\mathcal{S}'$ is not a subbasis for $\\mathcal{T}$.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_4_2",
@@ -2850,15 +2850,6 @@
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup Let $\\mathcal{B}=\\{(a,b)\\mid a,b\\in\\mathbb{R},a<b\\}$. ### Solution For every $x$, $(x-1,x+1)$ contains $x$, so B1 holds. If $x\\in(a,b)\\cap(c,d)$, then $x\\in(\\max(a,c),\\min(b,d))\\subseteq(a,b)\\cap(c,d)$, so B2 holds. Thus $\\mathcal{B}$ is a basis. Metric balls for $|x-y|$ are intervals $(x-r,x+r)$, and every interval around a point contains such a ball by choosing $r=\\min(x-a,b-x)$. Hence this basis generates the usual metric topology.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 4.2",
         "references": []
@@ -2869,7 +2860,16 @@
         "subbases",
         "standard-topology"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup Let $\\mathcal{B}=\\{(a,b)\\mid a,b\\in\\mathbb{R},a<b\\}$. ### Solution For every $x$, $(x-1,x+1)$ contains $x$, so B1 holds. If $x\\in(a,b)\\cap(c,d)$, then $x\\in(\\max(a,c),\\min(b,d))\\subseteq(a,b)\\cap(c,d)$, so B2 holds. Thus $\\mathcal{B}$ is a basis. Metric balls for $|x-y|$ are intervals $(x-r,x+r)$, and every interval around a point contains such a ball by choosing $r=\\min(x-a,b-x)$. Hence this basis generates the usual metric topology.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_4_3",
@@ -2881,15 +2881,6 @@
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup Let $\\mathcal{S}=\\{(a,\\infty)\\mid a\\in\\mathbb{R}\\}\\cup\\{(-\\infty,b)\\mid b\\in\\mathbb{R}\\}$. ### Solution The union of the subbasis elements is $\\mathbb{R}$. Finite intersections are rays, empty sets, or intervals $(a,b)=(a,\\infty)\\cap(-\\infty,b)$. Thus every standard basis interval is generated. Conversely, each ray is a union of standard open intervals, e.g. $(a,\\infty)=\\bigcup_{n=1}^\\infty(a,a+n)$. Therefore the topology generated by $\\mathcal{S}$ is exactly the standard topology.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 4.3",
         "references": []
@@ -2900,7 +2891,16 @@
         "subbases",
         "standard-topology"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup Let $\\mathcal{S}=\\{(a,\\infty)\\mid a\\in\\mathbb{R}\\}\\cup\\{(-\\infty,b)\\mid b\\in\\mathbb{R}\\}$. ### Solution The union of the subbasis elements is $\\mathbb{R}$. Finite intersections are rays, empty sets, or intervals $(a,b)=(a,\\infty)\\cap(-\\infty,b)$. Thus every standard basis interval is generated. Conversely, each ray is a union of standard open intervals, e.g. $(a,\\infty)=\\bigcup_{n=1}^\\infty(a,a+n)$. Therefore the topology generated by $\\mathcal{S}$ is exactly the standard topology.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_4_4",
@@ -2912,15 +2912,6 @@
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup Let $\\mathcal{B}_{\\mathbb{Q}}=\\{(a,b)\\mid a,b\\in\\mathbb{Q},a<b\\}$. ### Solution Density of $\\mathbb{Q}$ gives rational $a<x<b$ for each real $x$, so B1 holds. Intersections of rational-endpoint intervals are rational-endpoint intervals, so B2 holds. Every such interval is standard-open. Conversely, if $x\\in(a,b)$ with real endpoints, choose rationals $p,q$ with $a<p<x<q<b$; then $(p,q)\\subseteq(a,b)$. Hence these intervals generate the standard topology.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 4.4",
         "references": []
@@ -2931,7 +2922,16 @@
         "subbases",
         "standard-topology"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup Let $\\mathcal{B}_{\\mathbb{Q}}=\\{(a,b)\\mid a,b\\in\\mathbb{Q},a<b\\}$. ### Solution Density of $\\mathbb{Q}$ gives rational $a<x<b$ for each real $x$, so B1 holds. Intersections of rational-endpoint intervals are rational-endpoint intervals, so B2 holds. Every such interval is standard-open. Conversely, if $x\\in(a,b)$ with real endpoints, choose rationals $p,q$ with $a<p<x<q<b$; then $(p,q)\\subseteq(a,b)$. Hence these intervals generate the standard topology.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_4_5",
@@ -2943,15 +2943,6 @@
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup Let $\\mathcal{B}_\\ell=\\{[a,b)\\mid a<b\\}$ and let $\\mathcal{T}_\\ell$ be the lower limit topology. ### Solution B1 follows from $x\\in[x,x+1)$. B2 follows from $[a,b)\\cap[c,d)=[\\max(a,c),\\min(b,d))$ when the intersection is non-empty. The closure of $(0,1)$ is $[0,1)$: first, $[0,1)$ is closed because its complement $(-\\infty,0)\\cup[1,\\infty)$ is lower-limit-open. Thus the closure is contained in $[0,1)$. Every neighbourhood of $0$ contains some $[0,\\varepsilon)$ meeting $(0,1)$, while $[1,2)$ is a neighbourhood of $1$ disjoint from $(0,1)$. Therefore $\\overline{(0,1)}=[0,1)$.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 4.5",
         "references": []
@@ -2962,7 +2953,16 @@
         "subbases",
         "standard-topology"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup Let $\\mathcal{B}_\\ell=\\{[a,b)\\mid a<b\\}$ and let $\\mathcal{T}_\\ell$ be the lower limit topology. ### Solution B1 follows from $x\\in[x,x+1)$. B2 follows from $[a,b)\\cap[c,d)=[\\max(a,c),\\min(b,d))$ when the intersection is non-empty. The closure of $(0,1)$ is $[0,1)$: first, $[0,1)$ is closed because its complement $(-\\infty,0)\\cup[1,\\infty)$ is lower-limit-open. Thus the closure is contained in $[0,1)$. Every neighbourhood of $0$ contains some $[0,\\varepsilon)$ meeting $(0,1)$, while $[1,2)$ is a neighbourhood of $1$ disjoint from $(0,1)$. Therefore $\\overline{(0,1)}=[0,1)$.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_4_6",
@@ -2974,15 +2974,6 @@
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup For $n\\in\\mathbb{Z}$, let $B(n)=\\{n\\}$ if $n$ is odd and $B(n)=\\{n-1,n,n+1\\}$ if $n$ is even. ### Solution Each $n$ lies in $B(n)$, so B1 holds. For B2, if an intersection contains an odd point $x$, then $B(x)=\\{x\\}$ refines the intersection. If it contains an even point $x$, then the only basis element with even center $x$ supplies the needed local refinement; neighbouring odd basis elements are singletons and cannot contain $x$. Hence every point in an intersection has a basis neighbourhood contained in that intersection, so the collection is a basis.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 4.6",
         "references": []
@@ -2993,7 +2984,16 @@
         "subbases",
         "standard-topology"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup For $n\\in\\mathbb{Z}$, let $B(n)=\\{n\\}$ if $n$ is odd and $B(n)=\\{n-1,n,n+1\\}$ if $n$ is even. ### Solution Each $n$ lies in $B(n)$, so B1 holds. For B2, if an intersection contains an odd point $x$, then $B(x)=\\{x\\}$ refines the intersection. If it contains an even point $x$, then the only basis element with even center $x$ supplies the needed local refinement; neighbouring odd basis elements are singletons and cannot contain $x$. Hence every point in an intersection has a basis neighbourhood contained in that intersection, so the collection is a basis.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_4_7",
@@ -3005,15 +3005,6 @@
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup For $a\\ne0$, define $A_{a,b}=\\{az+b\\mid z\\in\\mathbb{Z}\\}$. ### Solution B1 holds because $A_{1,0}=\\mathbb{Z}$. If $n\\in A_{a,b}\\cap A_{c,d}$, then the intersection is the congruence class $A_{\\operatorname{lcm}(|a|,|c|),n}$, so B2 holds. Each basis element is clopen because its complement is a finite union of the other residue classes modulo $|a|$. Every non-empty open set is infinite. If there were finitely many primes $p_i$, then $\\mathbb{Z}\\setminus\\{-1,1\\}=\\bigcup_iA_{p_i,0}$ would be closed, so $\\{-1,1\\}$ would be open, contradicting that no non-empty finite set is open. Therefore there are infinitely many primes.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 4.7",
         "references": []
@@ -3024,7 +3015,16 @@
         "subbases",
         "standard-topology"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup For $a\\ne0$, define $A_{a,b}=\\{az+b\\mid z\\in\\mathbb{Z}\\}$. ### Solution B1 holds because $A_{1,0}=\\mathbb{Z}$. If $n\\in A_{a,b}\\cap A_{c,d}$, then the intersection is the congruence class $A_{\\operatorname{lcm}(|a|,|c|),n}$, so B2 holds. Each basis element is clopen because its complement is a finite union of the other residue classes modulo $|a|$. Every non-empty open set is infinite. If there were finitely many primes $p_i$, then $\\mathbb{Z}\\setminus\\{-1,1\\}=\\bigcup_iA_{p_i,0}$ would be closed, so $\\{-1,1\\}$ would be open, contradicting that no non-empty finite set is open. Therefore there are infinitely many primes.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_4_8",
@@ -3036,15 +3036,6 @@
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
-      "solution": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "### Setup Let $\\mathcal{B}$ be a basis for $X$ and $A\\subseteq X$. ### Solution If $A$ is dense, every non-empty open set meets $A$, hence every non-empty basis element meets $A$. Conversely, assume every non-empty basis element meets $A$. Given a non-empty open set $U$, choose $x\\in U$ and a basis element $B$ with $x\\in B\\subseteq U$. Then $B\\cap A\\ne\\emptyset$, so $U\\cap A\\ne\\emptyset$. Thus every non-empty open set meets $A$, and $A$ is dense.",
-            "uses": []
-          }
-        ]
-      },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 4.8",
         "references": []
@@ -3055,7 +3046,16 @@
         "subbases",
         "standard-topology"
       ],
-      "priority": "standard"
+      "priority": "standard",
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "### Setup Let $\\mathcal{B}$ be a basis for $X$ and $A\\subseteq X$. ### Solution If $A$ is dense, every non-empty open set meets $A$, hence every non-empty basis element meets $A$. Conversely, assume every non-empty basis element meets $A$. Given a non-empty open set $U$, choose $x\\in U$ and a basis element $B$ with $x\\in B\\subseteq U$. Then $B\\cap A\\ne\\emptyset$, so $U\\cap A\\ne\\emptyset$. Thus every non-empty open set meets $A$, and $A$ is dense.",
+            "uses": []
+          }
+        ]
+      }
     },
     {
       "id": "exercise_5_1",

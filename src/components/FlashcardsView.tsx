@@ -6,7 +6,7 @@ import { useStore } from "../store";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
-import { nodeAnswerText, nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
+import { nodeAnswerText, nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement, proofBlockLabel } from "../lib/nodeContent";
 import type { GraphNode } from "../types";
 import { Spine, Facet, MathBox, Proof, specimenMeta } from "./Specimen";
 import { hasNodeVisual, NodeVisual } from "./NodeVisual";
@@ -348,11 +348,11 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
   const gloss = (node.content.gloss ?? "").trim();
   const explanation = (node.content.intuition ?? "").trim();
   const example = (node.examples[0]?.tex ?? "").trim();
-  const solution = (node.solution?.steps ?? []).map((s) => s.content).join("\n\n").trim();
   const proof = (node.proof?.steps ?? []).map((s) => s.content).join("\n\n").trim();
+  const proofLabel = proofBlockLabel(node.kind);
   const showGloss = gloss && gloss !== explanation && gloss !== statement;
   // When there is no formal statement block, lead with the best plain answer.
-  const lead = statement || formal || gloss || explanation || solution;
+  const lead = statement || formal || gloss || explanation || proof;
 
   return (
     <CardShell
@@ -408,15 +408,14 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
             <MathProse text={explanation} />
           </Facet>
         )}
-        {solution && solution !== lead && (
-          <Proof text={solution} toneColor={tone.color} label="Solution" defaultOpen />
-        )}
         {example && (
           <Facet label="Example" muted>
             <MathProse text={example} />
           </Facet>
         )}
-        {proof && <Proof text={proof} toneColor={tone.color} defaultOpen />}
+        {proof && proof !== lead && (
+          <Proof text={proof} toneColor={tone.color} label={proofLabel} defaultOpen />
+        )}
       </div>
     </CardShell>
   );

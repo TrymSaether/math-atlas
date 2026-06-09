@@ -4993,6 +4993,21 @@
       "source": "exercise_1_1",
       "target": "cauchy_sequence",
       "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_compactness_results",
+      "target": "diagonal_argument",
+      "relation": "uses"
+    },
+    {
+      "source": "banach_alaoglu_theorem",
+      "target": "diagonal_argument",
+      "relation": "uses"
+    },
+    {
+      "source": "approximation_argument",
+      "target": "density_argument",
+      "relation": "related_to"
     }
   ]
 }

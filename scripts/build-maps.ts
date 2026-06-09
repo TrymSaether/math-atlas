@@ -126,7 +126,6 @@ function buildArtifact(src: SourceGraph): {
     diagram: c.diagram,
     assumptions: c.assumptions,
     proof: c.proof,
-    solution: c.solution,
     source: c.source,
     tags: c.tags,
     priority: c.priority,

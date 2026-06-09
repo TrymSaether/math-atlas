@@ -6,7 +6,7 @@ import { useStore } from "../store";
 import type { LoadedMap, MapId } from "../data";
 import { MathText, MathProse } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
-import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement } from "../lib/nodeContent";
+import { nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement, proofBlockLabel } from "../lib/nodeContent";
 import { compactNodeRef, nodeSourceCitation } from "../lib/nodeMeta";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
@@ -16,7 +16,7 @@ import { Spine, Facet, MathBox, ConnectionChip, Steps, Collapsible } from "./Spe
 const USED_BY_INITIAL = 8;
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
 
-type TabId = "overview" | "proof" | "solution" | "links" | "source";
+type TabId = "overview" | "proof" | "links" | "source";
 
 export function NodePanel() {
   const mapId = useStore((s) => s.mapId);
@@ -121,23 +121,21 @@ function PanelContent({
   const assumptions = node.assumptions;
   const notation = node.content.notation;
   const proofSteps = node.proof?.steps ?? [];
-  const solutionSteps = node.solution?.steps ?? [];
+  const proofLabel = proofBlockLabel(node.kind);
   const compactRef = compactNodeRef(node);
   const sourceCitation = nodeSourceCitation(node);
   const showGloss = gloss && gloss !== explanation;
   const linkCount = prereqIds.length + usedBy.length + examples.length + exercises.length;
   const hasProof = proofSteps.length > 0;
-  const hasSolution = solutionSteps.length > 0;
 
   // Tabs are content-driven: a tab only appears when it has something to show.
   const tabs = useMemo(() => {
     const t: { id: TabId; label: string; badge?: number }[] = [{ id: "overview", label: "Overview" }];
-    if (hasProof) t.push({ id: "proof", label: "Proof" });
-    if (hasSolution) t.push({ id: "solution", label: "Solution" });
+    if (hasProof) t.push({ id: "proof", label: proofLabel });
     if (linkCount > 0) t.push({ id: "links", label: "Links", badge: linkCount });
     t.push({ id: "source", label: "Source" });
     return t;
-  }, [hasProof, hasSolution, linkCount]);
+  }, [hasProof, proofLabel, linkCount]);
 
   const activeTab = tabs.some((t) => t.id === tab) ? tab : "overview";
 
@@ -386,14 +384,6 @@ function PanelContent({
           <section id="sec-proof">
             <Collapsible toneColor={tone.color} defaultOpen>
               <Steps steps={proofSteps} toneColor={tone.color} map={map} onSelect={select} />
-            </Collapsible>
-          </section>
-        )}
-
-        {activeTab === "solution" && (
-          <section id="sec-solution">
-            <Collapsible toneColor={tone.color} defaultOpen>
-              <Steps steps={solutionSteps} toneColor={tone.color} map={map} onSelect={select} />
             </Collapsible>
           </section>
         )}
