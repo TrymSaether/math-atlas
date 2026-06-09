@@ -8,6 +8,12 @@
     "typescriptreact"
   ],
   "eslint.alwaysShowStatus": true,
+  // turn off formatter for json files to avoid conflicts with eslint
+  "[json]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null,
+    "editor.formatOnType": false
+  },
   "editor.codeActionsOnSave": {
     "source.fixAll": "always"
   },
