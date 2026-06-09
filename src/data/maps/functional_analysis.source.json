@@ -102,17 +102,16 @@
       "domain": "spaces_norms",
       "label": "Cauchy sequence",
       "content": {
-        "statement": "A sequence in a metric space is Cauchy if its tail terms become arbitrarily close to one another.",
-        "definition": "A Cauchy sequence is a sequence in a metric space whose sufficiently late terms are pairwise arbitrarily close.",
-        "formal": "Let $(M,d)$ be a metric space and let $(x_n)_{n\\in\\mathbb{N}}$ be a sequence in $M$. The sequence, $(x_n)$ is Cauchy iff, $$\\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall m,n\\ge N:\\ d(x_m,x_n)<\\varepsilon$$",
-        "intuition": "The sequence stabilizes internally: far enough along the sequence, its terms cluster together, whether or not the space actually contains a limiting point.",
-        "notation": [
-          "$$\\begin{aligned} &(x_n)\\text{ is Cauchy}\\\\ &\\iff \\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall m,n\\ge N:\\ d(x_m,x_n)<\\varepsilon \\\\ &\\iff d(x_m,x_n)\\to 0\\text{ as }m,n\\to\\infty \\end{aligned}$$"
-        ]
+        "statement": "A sequence in a metric space is Cauchy if, eventually, all of its terms are arbitrarily close to each other.",
+        "definition": "A Cauchy sequence is a sequence whose tails have arbitrarily small diameter.",
+        "formal": "Let $(M,d)$ be a metric space and let $(x_n)_{n\\in\\mathbb{N}}$ be a sequence in $M$. The sequence $(x_n)$ is Cauchy if and only if $$\\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall m,n\\ge N:\\ d(x_m,x_n)<\\varepsilon.$$",
+        "formula": "$$\\begin{aligned} (x_n)\\text{ is Cauchy} &\\iff \\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall m,n\\ge N:\\ d(x_m,x_n)<\\varepsilon \\\\ &\\iff \\operatorname{diam}\\{x_n:n\\ge N\\}\\to 0\\text{ as }N\\to\\infty \\\\ &\\iff d(x_m,x_n)\\to 0\\text{ as }m,n\\to\\infty. \\end{aligned}$$",
+        "intuition": "A Cauchy sequence becomes internally stable: sufficiently far out, its terms are close to each other, independently of whether they converge to a point of the space.",
+        "notation": ["$(x_n)\\text{ is Cauchy}$"]
       },
       "assumptions": [
-        "A metric space $(M,d)$ is given.",
-        "The sequence $(x_n)_{n\\in\\mathbb{N}}$ takes values in $M$."
+        "$(M,d)$ is a metric space.",
+        "$(x_n)_{n\\in\\mathbb{N}}$ is a sequence with $x_n\\in M$ for all $n\\in\\mathbb{N}$."
       ],
       "tags": [
         "definition",
@@ -217,10 +216,11 @@
       "domain": "duality_weak_topologies",
       "label": "Dual space",
       "content": {
-        "definition": "The Banach space of continuous linear functionals on a normed vector space.",
-        "formal": "X^* = L(X, K).",
-        "intuition": "The space of all continuous scalar probes on X.",
-        "notation": ["X*"]
+        "definition": "The dual space of a normed vector space is the normed space of all continuous linear functionals on it, equipped with the operator norm.",
+        "formal": "Let $(X,\\|\\cdot\\|)$ be a normed vector space over $\\mathbb{K}$. Its dual space is $X^*:=\\mathcal{L}(X,\\mathbb{K})$, equipped with the norm $\\|f\\|=\\sup_{\\|x\\|\\le 1}|f(x)|$.",
+        "formula": "$$\\begin{aligned} X^* &:= \\mathcal{L}(X,\\mathbb{K}) \\\\ &= \\{f:X\\to\\mathbb{K}: f\\text{ is linear and continuous}\\}, \\\\ \\|f\\|_{X^*} &:= \\sup_{\\|x\\|\\le 1}|f(x)| = \\sup_{\\|x\\|=1}|f(x)|. \\end{aligned}$$",
+        "intuition": "The dual space contains the continuous linear scalar measurements of vectors in $X$; its norm records the largest size such a measurement can have on the unit ball of $X$.",
+        "notation": ["$X^*$", "$\\mathcal{L}(X,\\mathbb{K})$"]
       },
       "tags": ["duality", "space"],
       "priority": "core"
@@ -2648,7 +2648,7 @@
     },
     {
       "source": "hilbert_space",
-      "target": "banach_space",
+      "target": "metric_induced_by_norm",
       "relation": "defined_in_terms_of"
     },
     {
