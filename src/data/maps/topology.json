@@ -873,33 +873,19 @@
         "critical_assumptions": []
       },
       "proof_step": {
-        "statement": null,
-        "formal_statement": null,
-        "definition": null,
-        "intuition": null,
-        "notation": null,
-        "assumptions": [],
-        "dependencies": {
-          "definitional_dependency": [],
-          "logical_dependency": [],
-          "assumption_dependency": [],
-          "construction_dependency": [],
-          "notation_dependency": [],
-          "pedagogical_dependency": [],
-          "historical_dependency": []
-        },
-        "outgoing_relations": [],
-        "metadata": {
-          "tags": [],
-          "syllabus_priority": "medium",
-          "source": null
-        },
-        "kind": "proof_step",
-        "part_of_proof": null,
-        "step_number": 0,
-        "claim": null,
-        "justification": null,
-        "uses": []
+        "id": null,
+        "label": null,
+        "role": [
+          "claim",
+          "setup",
+          "argument",
+          "calculation",
+          "remark",
+          "conclusion",
+          "other"
+        ],
+        "content": null,
+        "depends_on": []
       },
       "example": {
         "statement": null,

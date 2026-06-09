@@ -10,6 +10,72 @@
       "Theorem assumptions, statement definitions, and proof dependencies use different dependency classes.",
       "Terminology nodes distinguish raw functions/maps from operators: every operator is a function, but operator carries structured-space context in functional analysis."
     ],
+    "domains": [
+      {
+        "id": "foundations",
+        "label": "Foundations",
+        "order": 1,
+        "color": "#2563EB",
+        "tint": "#EFF4FF",
+        "border": "#C9DAFE"
+      },
+      {
+        "id": "spaces_norms",
+        "label": "Spaces & Norms",
+        "order": 2,
+        "color": "#16A34A",
+        "tint": "#ECFBF1",
+        "border": "#BEE9CB"
+      },
+      {
+        "id": "operators",
+        "label": "Operators",
+        "order": 3,
+        "color": "#7C3AED",
+        "tint": "#F4EEFE",
+        "border": "#D8C8FB"
+      },
+      {
+        "id": "duality_weak_topologies",
+        "label": "Duality & Weak Topologies",
+        "order": 4,
+        "color": "#0D9488",
+        "tint": "#EAF7F5",
+        "border": "#B8DDD6"
+      },
+      {
+        "id": "hilbert_spectral",
+        "label": "Hilbert & Spectral Theory",
+        "order": 5,
+        "color": "#F97316",
+        "tint": "#FFF1E8",
+        "border": "#F8CFB0"
+      },
+      {
+        "id": "hahn_banach",
+        "label": "Hahn-Banach",
+        "order": 6,
+        "color": "#DB2777",
+        "tint": "#FDEEF5",
+        "border": "#F4C0D7"
+      },
+      {
+        "id": "baire_mapping_theorems",
+        "label": "Baire & Mapping Theorems",
+        "order": 7,
+        "color": "#DC2626",
+        "tint": "#FEF1F1",
+        "border": "#F4C5C5"
+      },
+      {
+        "id": "examples_applications",
+        "label": "Examples & Applications",
+        "order": 8,
+        "color": "#EAB308",
+        "tint": "#FBF6E1",
+        "border": "#EFDF8E"
+      }
+    ],
     "items": [
       {
         "id": "functional_analysis",
@@ -68,10 +134,11 @@
         "label": "Metric space",
         "kind": "structure",
         "statement": null,
-        "formal_statement": "(M,d) with d:M\\times M\\to[0,\\infty), d(x,y)=0\\Leftrightarrow x=y, d(x,y)=d(y,x), d(x,z)\\le d(x,y)+d(y,z).",
+        "formal_statement": "$(M,d)$ with $d:M\\times M\\to \\mathbb{R}_{\\ge 0}$, $d(x,y)=0\\Leftrightarrow x=y$, $d(x,y)=d(y,x)$, $d(x,z)\\le d(x,y)+d(y,z)$.",
         "definition": "A set equipped with a distance function satisfying positivity, symmetry, and the triangle inequality.",
         "intuition": "A space where convergence and Cauchy sequences can be measured.",
-        "notation": "(M,d)",
+        "notation": "$(M,d)$",
+        "formula": "$$\\begin{aligned} &d(x,y)\\ge 0,\\\\ &d(x,y)=0 \\iff x=y,\\\\ &d(x,y)=d(y,x),\\\\ &d(x,z)\\le d(x,y)+d(y,z) \\end{aligned}$$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [],
@@ -173,22 +240,21 @@
         "kind": "structure",
         "domain": "spaces_norms",
         "statement": "A normed vector space is a vector space equipped with a norm.",
-        "formal_statement": "A normed vector space is a pair $(X,\\|\\cdot\\|)$ where $X$ is a vector space over $\\mathbb{K}\\in\\{\\mathbb{R},\\mathbb{C}\\}$ and $\\|\\cdot\\|:X\\to[0,\\infty)$ satisfies $\\|x\\|=0\\iff x=0$, $\\|\\lambda x\\|=|\\lambda|\\|x\\|$, and $\\|x+y\\|\\le \\|x\\|+\\|y\\|$ for all $x,y\\in X$ and $\\lambda\\in\\mathbb{K}$.",
-        "definition": "A normed vector space is a vector space together with a norm, giving each vector a length and inducing a metric by $d(x,y)=\\|x-y\\|$.",
-        "intuition": "A normed space is linear algebra with a compatible notion of size. Once vectors have lengths, one can measure distances, define limits, study continuity, and ask whether Cauchy sequences converge.",
-        "notation": "$$\\begin{aligned}\n(X,\\|\\cdot\\|),\\qquad\n&\\|x\\|\\ge 0,\\\\\n&\\|x\\|=0 \\iff x=0,\\\\\n&\\|\\lambda x\\|=|\\lambda|\\,\\|x\\|,\\\\\n&\\|x+y\\|\\le \\|x\\|+\\|y\\|,\\\\\n&d(x,y)=\\|x-y\\|\n\\end{aligned}$$",
+        "formal_statement": "A normed vector space is a pair $(X,\\|\\cdot\\|_X)$ where $X$ is a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and $\\|\\cdot\\|_X$ is a norm on $X$.",
+        "definition": "A normed vector space is a vector space together with a chosen norm. The norm induces the canonical metric $d(x,y)=\\|x-y\\|_X$.",
+        "intuition": "A normed vector space is linear algebra with size and distance added. This makes it possible to discuss convergence, Cauchy sequences, continuity, bounded linear maps, and completeness.",
+        "notation": "$$(X,\\|\\cdot\\|_X),\\qquad d_X(x,y)=\\|x-y\\|_X$$",
         "assumptions": [
-          "The scalar field is $\\mathbb{R}$ or $\\mathbb{C}$.",
           "$X$ is a vector space.",
-          "$\\|\\cdot\\|$ is a norm on $X$."
+          "$\\|\\cdot\\|_X$ is a norm on $X$."
         ],
         "dependencies": {
           "definitional_dependency": ["vector_space", "norm"],
           "logical_dependency": [],
           "assumption_dependency": ["scalar_field_real_or_complex"],
-          "construction_dependency": [],
+          "construction_dependency": ["metric_induced_by_norm"],
           "notation_dependency": ["norm"],
-          "pedagogical_dependency": ["vector_space", "norm"],
+          "pedagogical_dependency": ["vector_space", "norm", "metric_space"],
           "historical_dependency": []
         },
         "metadata": {
@@ -201,7 +267,29 @@
           ],
           "syllabus_priority": "core",
           "source": null
-        }
+        },
+        "introduced_object": "normed_vector_space",
+        "genus": "vector space with extra structure",
+        "differentia": [
+          "equipped with a specified norm",
+          "has a canonical metric induced by the norm"
+        ],
+        "examples": [
+          "ell_p_spaces",
+          "l_p_spaces",
+          "c_k",
+          "c_0",
+          "banach_space",
+          "hilbert_space"
+        ],
+        "non_examples": [
+          "A vector space without a chosen norm is not a normed vector space.",
+          "A metric space with no compatible vector space structure is not a normed vector space."
+        ],
+        "equivalent_definitions": [
+          "A vector space $X$ together with a norm $\\|\\cdot\\|_X$.",
+          "A vector space whose topology is induced by a specified norm."
+        ]
       },
       {
         "id": "banach_space",
@@ -349,23 +437,33 @@
         "id": "norm",
         "label": "Norm",
         "kind": "definition",
-        "statement": null,
-        "formal_statement": "$$\\|x\\|\\ge0, \\|x\\|=0\\Leftrightarrow x=0, \\|\\lambda x\\|=|\\lambda|\\|x\\|, \\|x+y\\|\\le\\|x\\|+\\|y\\|.$$",
-        "definition": "A function assigning lengths to vectors, satisfying positivity, homogeneity, and the triangle inequality.",
-        "intuition": "Length compatible with linear structure.",
-        "notation": "$$\\|\\cdot\\|_{\\circ}$$",
-        "assumptions": [],
+        "domain": "spaces_norms",
+        "statement": "A norm is a length function on a vector space satisfying positive definiteness, absolute homogeneity, and the triangle inequality.",
+        "formal_statement": "Let $X$ be a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$. A norm on $X$ is a function $\\|\\cdot\\|:X\\to[0,\\infty)$ such that for all $x,y\\in X$ and $\\lambda\\in\\mathbb K$, $$\\begin{aligned} &\\|x\\|\\ge 0,\\\\ &\\|x\\|=0\\iff x=0,\\\\ &\\|\\lambda x\\|=|\\lambda|\\,\\|x\\|,\\\\ &\\|x+y\\|\\le \\|x\\|+\\|y\\|. \\end{aligned}$$",
+        "definition": "A norm is a function assigning a nonnegative length to each vector in a vector space, compatible with scalar multiplication and vector addition.",
+        "intuition": "A norm is the analytic version of length: it measures vector size while respecting the linear structure.",
+        "notation": "$$\\|x\\|,\\qquad \\|\\cdot\\|,\\qquad \\|\\cdot\\|_X$$",
+        "assumptions": [
+          "$X$ is a vector space.",
+          "The scalar field is $\\mathbb R$ or $\\mathbb C$."
+        ],
         "dependencies": {
-          "definitional_dependency": [],
+          "definitional_dependency": ["vector_space"],
           "logical_dependency": [],
-          "assumption_dependency": [],
+          "assumption_dependency": ["scalar_field_real_or_complex"],
           "construction_dependency": [],
           "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "pedagogical_dependency": ["vector_space"],
           "historical_dependency": []
         },
         "metadata": {
-          "tags": ["definition", "norm"],
+          "tags": [
+            "definition",
+            "norm",
+            "length",
+            "metric",
+            "functional_analysis"
+          ],
           "syllabus_priority": "core",
           "source": null
         },
@@ -376,28 +474,43 @@
           "absolutely homogeneous",
           "subadditive"
         ],
-        "examples": ["ell_p_spaces", "l_p_spaces", "c_k"],
-        "non_examples": [],
-        "equivalent_definitions": [],
-        "domain": "spaces_norms"
+        "examples": [
+          "ell_p_spaces",
+          "l_p_spaces",
+          "c_k",
+          "c_0",
+          "operator_norm"
+        ],
+        "non_examples": [
+          "A seminorm may satisfy homogeneity and the triangle inequality but fail positive definiteness.",
+          "A bounded scalar-valued function on a set is not a norm unless the domain is a vector space and the norm axioms hold."
+        ],
+        "equivalent_definitions": [
+          "A positive-definite seminorm.",
+          "A sublinear functional $p:X\\to[0,\\infty)$ such that $p(\\lambda x)=|\\lambda|p(x)$ for all scalars $\\lambda$ and $p(x)=0$ only when $x=0$."
+        ]
       },
       {
         "id": "metric_induced_by_norm",
         "label": "Metric induced by a norm",
         "kind": "construction",
-        "statement": null,
-        "formal_statement": "d_{\\|\\cdot\\|}(x,y)=\\|x-y\\|.",
-        "definition": "The metric d(x,y)=||x-y|| associated to a norm.",
-        "intuition": "Distance is length of displacement.",
-        "notation": "d(x,y)=||x-y||",
-        "assumptions": [],
+        "statement": "Every norm on a vector space induces a metric by measuring the norm of the difference.",
+        "formal_statement": "Let $(X,\\|\\cdot\\|_X)$ be a normed vector space. Define $$d_X(x,y)=\\|x-y\\|_X.$$ Then $d_X$ is a metric on $X$.",
+        "definition": "The metric induced by a norm is the distance function $d_X(x,y)=\\|x-y\\|_X$.",
+        "intuition": "Distance is the length of the displacement from one vector to the other.",
+        "notation": "$$d_X(x,y)=\\|x-y\\|_X$$",
+        "assumptions": ["$(X,\\|\\cdot\\|_X)$ is a normed vector space."],
         "dependencies": {
-          "definitional_dependency": ["norm", "normed_vector_space"],
+          "definitional_dependency": [
+            "normed_vector_space",
+            "norm",
+            "metric_space"
+          ],
           "logical_dependency": [],
           "assumption_dependency": [],
-          "construction_dependency": [],
-          "notation_dependency": [],
-          "pedagogical_dependency": [],
+          "construction_dependency": ["norm"],
+          "notation_dependency": ["norm"],
+          "pedagogical_dependency": ["norm", "metric_space"],
           "historical_dependency": []
         },
         "metadata": {
@@ -405,7 +518,15 @@
           "syllabus_priority": "core",
           "source": null
         },
-        "domain": "spaces_norms"
+        "domain": "spaces_norms",
+        "introduced_object": "metric_induced_by_norm",
+        "genus": "metric",
+        "differentia": ["defined by the norm of the difference $x-y$"],
+        "examples": ["ell_p_spaces", "l_p_spaces", "c_k", "c_0"],
+        "non_examples": [
+          "A metric that is not translation-invariant or not homogeneous need not come from a norm."
+        ],
+        "equivalent_definitions": []
       },
       {
         "id": "topology_induced_by_metric",
@@ -438,7 +559,7 @@
         "label": "Completeness",
         "kind": "property",
         "statement": null,
-        "formal_statement": "(x_n) Cauchy in X implies there exists x in X with x_n -> x.",
+        "formal_statement": "$(x_n)_{n=1}^\\infty$ Cauchy in $X$ implies there exists $x \\in X$ with $x_n \\to x$.",
         "definition": "Every Cauchy sequence converges to a point of the space.",
         "intuition": "Cauchy approximation cannot converge outside the space.",
         "notation": null,
@@ -520,10 +641,10 @@
         "label": "Weak-star topology",
         "kind": "construction",
         "statement": null,
-        "formal_statement": "\\sigma(X^*,X).",
-        "definition": "The coarsest topology on X* making every evaluation map x* -> x*(x) continuous for x in X.",
-        "intuition": "Pointwise convergence on the predual X.",
-        "notation": "sigma(X*,X)",
+        "formal_statement": "$$\\sigma(X^\\ast,X)=\\text{the coarsest topology on }X^\\ast \\text{ making all evaluation maps }x^\\ast \\mapsto x^\\ast(x)\\text{ continuous for }x\\in X.$$",
+        "definition": "The coarsest topology on $X^\\ast$ making every evaluation map $x^\\ast \\mapsto x^\\ast(x)$ continuous for $x \\in X$.",
+        "intuition": "Pointwise convergence on the predual $X$.",
+        "notation": "$\\sigma(X^\\ast,X)$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["dual_space", "weak_topology"],
@@ -594,6 +715,32 @@
         "domain": "foundations"
       },
       {
+        "id": "convergence",
+        "label": "Convergence",
+        "kind": "property",
+        "statement": null,
+        "formal_statement": null,
+        "definition": "A sequence converges to a limit if its terms eventually get arbitrarily close to the limit.",
+        "intuition": "Terms of the sequence cluster around the limit.",
+        "notation": null,
+        "assumptions": [],
+        "dependencies": {
+          "definitional_dependency": ["topology_induced_by_metric"],
+          "logical_dependency": [],
+          "assumption_dependency": [],
+          "construction_dependency": [],
+          "notation_dependency": [],
+          "pedagogical_dependency": [],
+          "historical_dependency": []
+        },
+        "metadata": {
+          "tags": ["property", "topology"],
+          "syllabus_priority": "core",
+          "source": null
+        },
+        "domain": "foundations"
+      },
+      {
         "id": "linear_operator",
         "label": "Linear operator",
         "kind": "object",
@@ -601,7 +748,7 @@
         "formal_statement": "Let $X,Y$ be vector spaces over $\\mathbb K$. A map $T:X\\to Y$ is a linear operator iff $T(\\alpha x+\\beta y)=\\alpha Tx+\\beta Ty$ for all $x,y\\in X$ and $\\alpha,\\beta\\in\\mathbb K$.",
         "definition": "A linear operator is an operator between vector spaces that preserves addition and scalar multiplication.",
         "intuition": "An operator that respects superposition: transform after combining equals combine after transforming.",
-        "notation": "T:X->Y",
+        "notation": "$T:X\\to Y$ linear, $T\\in L(X,Y)$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["vector_space", "operator", "function"],
@@ -660,7 +807,7 @@
         "formal_statement": "Let $(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ be normed vector spaces. A linear map $T:X\\to Y$ is bounded iff $\\exists C>0\\,\\forall x\\in X:\\ \\|Tx\\|_Y\\le C\\|x\\|_X$.",
         "definition": "A bounded linear operator is a linear operator $T:X\\to Y$ such that $\\|Tx\\|_Y\\le C\\|x\\|_X$ for all $x\\in X$ and some constant $C>0$.",
         "intuition": "The operator may stretch vectors, but only by a uniform linear factor. It cannot amplify small inputs into disproportionately large outputs, because apparently analysis wanted the word bounded to mean something subtler than bounded.",
-        "notation": "$$\\begin{aligned}\nT\\in L(X,Y)\n&\\iff T:X\\to Y\\text{ is linear and }\\exists C>0\\ \\forall x\\in X:\\ \\|Tx\\|_Y\\le C\\|x\\|_X,\\\\\n\\|T\\|\n&:=\\sup_{\\|x\\|_X\\le 1}\\|Tx\\|_Y<\\infty.\n\\end{aligned}$$",
+        "notation": "$$\\begin{aligned}\nT\\in L(X,Y)\n&\\iff T:X\\to Y\\text{ is linear and }\\exists C>0\\ \\forall x\\in X:\\ \\|Tx\\|_Y\\le C\\|x\\|_X,\\\\ \\|T\\|\n&:=\\sup_{\\|x\\|_X\\le 1}\\|Tx\\|_Y<\\infty.\n\\end{aligned}$$",
         "assumptions": [
           "$(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ are normed vector spaces.",
           "$T:X\\to Y$ is linear."
@@ -728,7 +875,7 @@
         "formal_statement": "Let $X$ be a set and let $(Y,\\|\\cdot\\|_Y)$ be a normed vector space. A function $f:X\\to Y$ is bounded on $X$ iff $\\exists M>0\\,\\forall x\\in X:\\ \\|f(x)\\|_Y\\le M$.",
         "definition": "A function $f:X\\to Y$ is bounded on $X$ if all values of $f$ have norm bounded above by a single constant.",
         "intuition": "The whole image $f(X)$ fits inside one ball centered at $0$ in $Y$.",
-        "notation": "$$\\begin{aligned}\nf:X\\to Y\\text{ bounded on }X\n&\\iff \\exists M>0\\ \\forall x\\in X:\\ \\|f(x)\\|_Y\\le M,\\\\\nf(X)&\\subseteq B_Y(0,M).\n\\end{aligned}$$",
+        "notation": "$$\\begin{aligned}\nf:X\\to Y\\text{ bounded on }X\n&\\iff \\exists M>0\\ \\forall x\\in X:\\ \\|f(x)\\|_Y\\le M,\\\\ f(X)&\\subseteq B_Y(0,M).\n\\end{aligned}$$",
         "assumptions": [
           "$X$ is a set.",
           "$(Y,\\|\\cdot\\|_Y)$ is a normed vector space.",
@@ -796,10 +943,10 @@
         "label": "Operator norm",
         "kind": "definition",
         "statement": null,
-        "formal_statement": "||T|| = sup{||Tx|| : ||x|| <= 1}.",
+        "formal_statement": "$\\|T\\| = \\sup\\{\\|Tx\\| : \\|x\\| \\leq 1\\}$.",
         "definition": "The norm of a bounded linear operator given by its largest action on the unit ball.",
         "intuition": "Worst-case amplification factor.",
-        "notation": "||T||",
+        "notation": "$\\|T\\|$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [
@@ -831,10 +978,11 @@
         "label": "Compact operator",
         "kind": "definition",
         "statement": null,
-        "formal_statement": "T:X->Y compact iff T(B_X) has compact closure in Y.",
+        "formal_statement": "$$T:X\\to Y \\text{ compact in } \\mathcal{L}(X,Y) \\quad \\iff \\quad T(B_X) \\text{ has compact closure in } Y.$$",
         "definition": "A bounded linear operator that maps bounded sets to relatively compact sets.",
         "intuition": "An infinite-dimensional operator behaving partly like a finite-rank operator.",
-        "notation": "K(X,Y)",
+        "formlua": "$$\\begin{aligned}\nT:X\\to Y \\text{ compact, means } \\forall \\text{ bounded } B\\subseteq X,\\ \\overline{T(B)} \\text{ is compact in } Y.\n\\end{aligned}$$",
+        "notation": "$K(X,Y)$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["bounded_linear_operator", "compactness"],
@@ -863,10 +1011,10 @@
         "label": "Adjoint operator",
         "kind": "construction",
         "statement": null,
-        "formal_statement": "(T^*y^*)(x)=y^*(Tx).",
-        "definition": "For T:X->Y, the map T*:Y*->X* defined by composition with T.",
-        "intuition": "Move T from vectors to scalar probes by precomposition.",
-        "notation": "T*",
+        "formal_statement": "$\\langle T^* y^*, x \\rangle = \\langle y^*, Tx \\rangle$.",
+        "definition": "For $T:X\\to Y$, the map $T^*:Y^*\\to X^*$ defined by composition with $T$.",
+        "intuition": "Move $T$ from vectors to scalar probes by precomposition.",
+        "notation": "$T^*$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["bounded_linear_operator", "dual_space"],
@@ -925,10 +1073,10 @@
         "label": "Sublinear functional",
         "kind": "definition",
         "statement": null,
-        "formal_statement": "p(\\alpha x)=\\alpha p(x) for \\alpha>=0 and p(x+y)<=p(x)+p(y).",
+        "formal_statement": "$p(\\alpha x)=\\alpha p(x)$ for $\\alpha\\geq 0$ and $p(x+y)\\leq p(x)+p(y)$.",
         "definition": "A positively homogeneous and subadditive real-valued map on a real vector space.",
         "intuition": "A one-sided convex bound for a linear functional.",
-        "notation": "p",
+        "notation": "$p$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["vector_space"],
@@ -958,9 +1106,9 @@
         "kind": "property",
         "statement": null,
         "formal_statement": null,
-        "definition": "The graph {(x,Tx)} is closed in X x Y.",
-        "intuition": "If x_n -> x and Tx_n -> y, then y=Tx.",
-        "notation": "graph(T)",
+        "definition": "The graph ${(x,Tx)}$ is closed in $X \\times Y$.",
+        "intuition": "If $x_n \\to x$ and $Tx_n \\to y$, then $y=Tx$.",
+        "notation": "$\\text{graph}(T)$ closed in $X \\times Y$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [
@@ -986,10 +1134,10 @@
         "label": "Closed unit ball",
         "kind": "object",
         "statement": null,
-        "formal_statement": "B_X={x in X: ||x||<=1}.",
+        "formal_statement": "$$B_X={x in X: \\|x\\|\\leq 1}.$$",
         "definition": "The set of points of norm at most one.",
         "intuition": "The basic bounded test set for normed-space geometry.",
-        "notation": "B_X",
+        "notation": "$B_X$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["normed_vector_space", "norm"],
@@ -1525,7 +1673,7 @@
         "label": "Hahn-Banach theorem",
         "kind": "theorem",
         "statement": "A dominated linear functional on a subspace extends to the whole space without increasing its bound.",
-        "formal_statement": "If f<=p on V subset E, p sublinear, then f extends to F:E->R with F<=p; normed-space versions preserve norm.",
+        "formal_statement": "If $f\\leq p$ on V \\subset E, p$ sublinear, then $f$ extends to $F:E\\to\\mathbb{R}$ with $F\\leq p$, normed-space versions preserve norm.",
         "definition": null,
         "intuition": "Scalar probes defined on a subspace can be extended globally.",
         "notation": null,
@@ -1551,11 +1699,11 @@
           "source": null
         },
         "hypotheses": [
-          "V is a subspace of E",
-          "p is sublinear",
-          "f is linear and dominated by p on V"
+          "$V$ is a subspace of $E$",
+          "$p$ is sublinear",
+          "$f$ is linear and dominated by $p$ on $V$"
         ],
-        "conclusion": "There exists a linear extension to E dominated by p; in normed spaces the extension can preserve norm.",
+        "conclusion": "There exists a linear extension to $E$ dominated by $p$, in normed spaces the extension can preserve norm.",
         "proof_methods": ["duality_argument"],
         "related_theorems": [
           "banach_alaoglu_theorem",
@@ -1713,8 +1861,12 @@
           "syllabus_priority": "core",
           "source": null
         },
-        "hypotheses": ["X,Y Banach", "T:X->Y linear", "graph(T) closed"],
-        "conclusion": "T is bounded/continuous.",
+        "hypotheses": [
+          "$X,Y$ Banach",
+          "$T:X\\to Y$ linear",
+          "$\\text{graph}(T)$ closed"
+        ],
+        "conclusion": "$T$ is bounded/continuous.",
         "proof_methods": ["duality_argument"],
         "related_theorems": ["open_mapping_theorem"],
         "examples": [],
@@ -1866,11 +2018,11 @@
           "source": null
         },
         "hypotheses": [
-          "H is Hilbert",
-          "T:H->H is compact",
-          "T is self-adjoint"
+          "$H$ is Hilbert",
+          "$T:H\\to H$ is compact",
+          "$T$ is self-adjoint"
         ],
-        "conclusion": "T has real spectral data and an orthogonal decomposition by eigenspaces.",
+        "conclusion": "$T$ has real spectral data and an orthogonal decomposition by eigenspaces.",
         "proof_methods": [
           "compactness_argument",
           "approximation_argument",
@@ -1883,8 +2035,8 @@
           {
             "id": "spectral_theorem_bounded_self_adjoint_variant",
             "label": "Bounded self-adjoint spectral theorem",
-            "hypotheses": ["T bounded self-adjoint on Hilbert space"],
-            "conclusion": "T admits a projection-valued spectral measure."
+            "hypotheses": ["$T$ bounded self-adjoint on Hilbert space"],
+            "conclusion": "$T$ admits a projection-valued spectral measure."
           }
         ],
         "domain": "hilbert_spectral"
@@ -2113,7 +2265,7 @@
           "source": null
         },
         "proves": "uniform_boundedness_principle",
-        "strategy": "Define E_n={x: sup_i ||T_i x||<=n}; use Baire to find E_n with interior; shift and scale to bound operator norms.",
+        "strategy": "Define $E_n=\\{x: \\sup_i \\|T_i x\\|\\leq n\\}$; use Baire to find $E_n$ with interior; shift and scale to bound operator norms.",
         "steps": [
           "step_ubp_closed_sets",
           "step_ubp_baire_nonempty_interior",
@@ -2131,7 +2283,7 @@
         "id": "step_ubp_closed_sets",
         "label": "UBP step 1: closed control sets",
         "kind": "proof_step",
-        "statement": "Define E_n={x: sup_i ||T_i x||<=n}.",
+        "statement": "Define $E_n=\\{x: \\sup_i \\|T_i x\\|\\leq n\\}$.",
         "formal_statement": null,
         "definition": null,
         "intuition": null,
@@ -2153,7 +2305,7 @@
         },
         "part_of_proof": "proof_uniform_boundedness_baire",
         "step_number": 1,
-        "claim": "Each E_n is closed and union_n E_n = X.",
+        "claim": "Each $E_n$ is closed and $\\bigcup_n E_n = X$.",
         "justification": "Continuity gives closedness; pointwise boundedness gives the union.",
         "uses": [
           "bounded_linear_operator",
@@ -2415,13 +2567,13 @@
       },
       {
         "id": "ell_p_spaces",
-        "label": "ell^p spaces",
+        "label": "$\\ell^p$ spaces",
         "kind": "example",
         "statement": null,
-        "formal_statement": "ell^p={x=(x_n): sum |x_n|^p<infty}, 1<=p<infty; ell^infty bounded sequences.",
+        "formal_statement": "$$\\begin{aligned}\\ell^p &=\\{x=(x_n): \\sum |x_n|^p<\\infty\\},\\ 1\\leq p<\\infty \\\\ \\ell^\\infty &=\\{x=(x_n): \\sup_n |x_n|<\\infty\\} \\end{aligned}$$",
         "definition": "Sequence spaces of p-summable scalar sequences, with p-norm.",
         "intuition": "Discrete model Banach spaces.",
-        "notation": "ell^p",
+        "notation": "$\\ell^p$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["banach_space", "norm"],
@@ -2508,13 +2660,13 @@
       },
       {
         "id": "c_0",
-        "label": "c_0",
+        "label": "Zero-convergent sequences $c_0$",
         "kind": "example",
         "statement": null,
-        "formal_statement": "c_0={x in ell^infty: x_n -> 0}.",
+        "formal_statement": "$$c_0=\\{x \\in \\ell^\\infty: x_n \\to 0\\}.$$",
         "definition": "The Banach space of scalar sequences converging to zero with the supremum norm.",
         "intuition": "A canonical non-reflexive Banach space.",
-        "notation": "c_0",
+        "notation": "$c_0$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["banach_space", "norm", "completeness"],
@@ -2538,13 +2690,13 @@
       },
       {
         "id": "ell_2_as_hilbert_space",
-        "label": "ell^2 as Hilbert space",
+        "label": "$\\ell^2$ as Hilbert space",
         "kind": "example",
         "statement": null,
-        "formal_statement": "ell^2 with <x,y>=sum_n x_n overline{y_n}.",
-        "definition": "The square-summable sequence space with inner product <x,y>=sum x_n conjugate(y_n).",
+        "formal_statement": "$$\\ell^2 \\text{ with } \\langle x,y \\rangle = \\sum_n x_n \\overline{y_n}.$$",
+        "definition": "$$\\ell^2 \\text{ is the square-summable sequence space with inner product } \\langle x,y \\rangle = \\sum x_n \\overline{y_n}.$$",
         "intuition": "The canonical separable infinite-dimensional Hilbert space.",
-        "notation": "ell^2",
+        "notation": "$\\ell^2$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": [
@@ -2865,7 +3017,7 @@
         "formal_statement": "$\\{\\text{operators}\\}\\subseteq \\{\\text{functions/maps}\\}$ as terminology classes, while every operator is still a function as set-theoretic data.",
         "definition": "A semantic relation saying that 'function/map' imposes fewer assumptions, while 'operator' adds contextual structure such as vector-space, normed-space, or linear structure.",
         "intuition": "Function is the raw arrow. Operator is the arrow with structure attached. Same underlying species, different amount of mathematical baggage.",
-        "notation": "$\\text{operator}\\Rightarrow \\text{function}$, but generally $\\text{function}\\nRightarrow \\text{operator}$",
+        "notation": "$\\text{operator}\\Rightarrow \\text{function}$, but generally $\\text{function} \\nRightarrow \\text{operator}$",
         "assumptions": [],
         "dependencies": {
           "definitional_dependency": ["function", "operator"],
@@ -3230,11 +3382,11 @@
       },
       {
         "id": "nonzero_linear_map_on_unbounded_normed_space",
-        "label": "Nonzero linear map on a normed space is not bounded as a function on the whole domain",
+        "label": "Nonzero linear map on unbounded normed space",
         "kind": "counterexample",
         "domain": "operators",
         "statement": "A nonzero bounded linear operator need not be bounded as a function on all of X.",
-        "formal_statement": "T\\ne0,\\ T\\in\\mathcal L(X,Y) \\implies \\sup_{x\\in X}\\|Tx\\|_Y=\\infty.",
+        "formal_statement": "$$T\\ne0,\\ T\\in\\mathcal L(X,Y) \\implies \\sup_{x\\in X}\\|Tx\\|_Y=\\infty.$$",
         "definition": "This distinguishes bounded linear operator from bounded function on its whole domain.",
         "intuition": "Linear maps scale. If one vector has nonzero image, scaling that vector makes the image arbitrarily large.",
         "notation": null,
@@ -3311,6 +3463,86 @@
         "examples": ["c_k"],
         "applications": [],
         "variants": []
+      },
+      {
+        "id": "exercise_1_1",
+        "label": "Exercise 1.1: Show that in a metric space, a convergent sequence is Cauchy.",
+        "kind": "exercise",
+        "domain": "foundations",
+        "statement": "Show that in a metric space a convergent sequence is a Cauchy sequence.",
+        "formal_statement": "(X,d)\\text{ metric space},\\ x_n\\to x \\implies x_n \\text{ is Cauchy}.",
+        "definition": null,
+        "intuition": "Convergence means the terms get arbitrarily close to the limit, so they must get arbitrarily close to each other.",
+        "notation": null,
+        "assumptions": [
+          "$(X,d)$ is a metric space.",
+          "$$\\lim_{n\\to\\infty} x_n = x \\quad \\Leftrightarrow \\quad \\forall \\varepsilon > 0,\\ \\exists N:\\ n\\ge N \\implies d(x_n,x)<\\varepsilon$$."
+        ],
+        "dependencies": {
+          "definitional_dependency": [
+            "metric_space",
+            "convergence",
+            "cauchy_sequence"
+          ]
+        },
+        "logical_dependency": [],
+        "assumption_dependency": ["domain_is_metric_space"],
+        "construction_dependency": [],
+        "notation_dependency": [],
+        "pedagogical_dependency": ["metric_space", "convergence", "cauchy"],
+        "historical_dependency": [],
+        "metadata": {
+          "tags": ["exercise", "metric space", "convergence", "cauchy"],
+          "syllabus_priority": "core",
+          "source": "Bowers-Kalton Exercise 1.1",
+          "exam_priority": "supporting",
+          "exercise_refs": ["1.1"],
+          "proof_required": true
+        },
+        "proof_steps": [
+          {
+            "id": "step_1",
+            "label": "Assume convergence and choose epsilon",
+            "role": "setup",
+            "content": "Let $(X,d)$ be a metric space, and suppose $x_n \\to x$. Let $\\epsilon > 0$ be arbitrary.",
+            "depends_on": []
+          },
+          {
+            "id": "step_2",
+            "label": "Choose $\\delta$",
+            "role": "argument",
+            "content": "Since $x_n \\to x$, for every $\\delta > 0$ there exists N in N such that for all k >= N, d(x_k, x) < delta. Choose $\\delta = \\epsilon/2$. Since $\\epsilon > 0$, $\\epsilon/2 > 0$.",
+            "depends_on": ["step_1", "metric_space", "convergence"]
+          },
+          {
+            "id": "step_3",
+            "label": "Get the convergence bound",
+            "role": "claim",
+            "content": "There exists $N \\in \\mathbb{N}$ such that for all $k >= N, d(x_k, x) < \\epsilon/2$.",
+            "depends_on": ["step_2"]
+          },
+          {
+            "id": "step_4",
+            "label": "Apply the bound to $n$ and $m$",
+            "role": "argument",
+            "content": "Let $n,m >= N$. Since the bound holds for every $k >= N$, we get $d(x_n, x) < \\epsilon/2$ and $d(x_m, x) < \\epsilon/2$.",
+            "depends_on": ["step_3"]
+          },
+          {
+            "id": "step_5",
+            "label": "Estimate distance between sequence terms",
+            "role": "calculation",
+            "content": "Using the triangle inequality and symmetry, $d(x_n, x_m) \\leq d(x_n, x) + d(x, x_m) = d(x_n, x) + d(x_m, x) < \\epsilon/2 + \\epsilon/2 = \\epsilon$.",
+            "depends_on": ["step_4"]
+          },
+          {
+            "id": "step_6",
+            "label": "Final conclusion",
+            "role": "conclusion",
+            "content": "Therefore, for every $\\epsilon > 0$, there exists $N \\in \\mathbb{N}$ such that for all $n,m >= N$, $d(x_n, x_m) < \\epsilon$. Hence $(x_n)$ is Cauchy.",
+            "depends_on": ["step_5"]
+          }
+        ]
       }
     ],
     "edges": [
@@ -7119,72 +7351,39 @@
         "direction": "source_to_target",
         "confidence": "high",
         "notes": "Counterexample instance used to distinguish operator boundedness from bounded image."
-      }
-    ],
-    "domains": [
-      {
-        "id": "foundations",
-        "label": "Foundations",
-        "order": 1,
-        "color": "#2563EB",
-        "tint": "#EFF4FF",
-        "border": "#C9DAFE"
       },
       {
-        "id": "spaces_norms",
-        "label": "Spaces & Norms",
-        "order": 2,
-        "color": "#16A34A",
-        "tint": "#ECFBF1",
-        "border": "#BEE9CB"
+        "id": "e353",
+        "source": "norm",
+        "target": "vector_space",
+        "type": "requires",
+        "dependency_class": "definitional_dependency",
+        "label": "norm requires vector_space",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "A norm is defined on a vector space."
       },
       {
-        "id": "operators",
-        "label": "Operators",
-        "order": 3,
-        "color": "#7C3AED",
-        "tint": "#F4EEFE",
-        "border": "#D8C8FB"
+        "id": "e354",
+        "source": "norm",
+        "target": "scalar_field_real_or_complex",
+        "type": "requires",
+        "dependency_class": "assumption_dependency",
+        "label": "norm assumes scalar_field_real_or_complex",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The homogeneity axiom uses scalars from $\\mathbb R$ or $\\mathbb C$."
       },
       {
-        "id": "duality_weak_topologies",
-        "label": "Duality & Weak Topologies",
-        "order": 4,
-        "color": "#0D9488",
-        "tint": "#EAF7F5",
-        "border": "#B8DDD6"
-      },
-      {
-        "id": "hilbert_spectral",
-        "label": "Hilbert & Spectral Theory",
-        "order": 5,
-        "color": "#F97316",
-        "tint": "#FFF1E8",
-        "border": "#F8CFB0"
-      },
-      {
-        "id": "hahn_banach",
-        "label": "Hahn-Banach",
-        "order": 6,
-        "color": "#DB2777",
-        "tint": "#FDEEF5",
-        "border": "#F4C0D7"
-      },
-      {
-        "id": "baire_mapping_theorems",
-        "label": "Baire & Mapping Theorems",
-        "order": 7,
-        "color": "#DC2626",
-        "tint": "#FEF1F1",
-        "border": "#F4C5C5"
-      },
-      {
-        "id": "examples_applications",
-        "label": "Examples & Applications",
-        "order": 8,
-        "color": "#EAB308",
-        "tint": "#FBF6E1",
-        "border": "#EFDF8E"
+        "id": "e355",
+        "source": "normed_vector_space",
+        "target": "metric_space",
+        "type": "induces",
+        "dependency_class": "construction_dependency",
+        "label": "normed_vector_space induces metric_space",
+        "direction": "source_to_target",
+        "confidence": "high",
+        "notes": "The metric is $d_X(x,y)=\\|x-y\\|_X$."
       }
     ]
   },

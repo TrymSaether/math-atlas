@@ -3467,10 +3467,7 @@
             "label": "Apply Tonelli to \\(|f|\\)",
             "role": "argument",
             "content": "Since $|f|\\ge0$ is measurable, Tonelli's theorem gives $$\\int_X\\int_Y |f(x,y)|\\,d\\nu(y)\\,d\\mu(x)=\\int_Y\\int_X |f(x,y)|\\,d\\mu(x)\\,d\\nu(y)=\\int_{X\\times Y}|f|\\,d(\\mu\\times\\nu)<\\infty.$$ Hence $f(x,\\cdot)\\in L^1(Y)$ for almost every $x$, and $f(\\cdot,y)\\in L^1(X)$ for almost every $y$.",
-            "depends_on": [
-              "tonelli_theorem",
-              "l1_space"
-            ]
+            "depends_on": ["tonelli_theorem", "l1_space"]
           },
           {
             "id": "decompose-real-function",
@@ -3555,11 +3552,7 @@
           "stein_shakarchi_real_analysis_ch2"
         ],
         "metadata": {
-          "tags": [
-            "measure-theory",
-            "product-measure",
-            "iterated-integrals"
-          ],
+          "tags": ["measure-theory", "product-measure", "iterated-integrals"],
           "syllabus_priority": "core",
           "source": "Folland: Real Analysis, Ch.2 Fubini-Tonelli Theorem; Stein-Shakarchi: Real Analysis, Ch.2"
         },
