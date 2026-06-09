@@ -12,6 +12,7 @@ Two shapes, one build step between them.
 **Rules that drive the whole design**
 
 1. Every fact is stored **once**, in its most normalized form. Everything else is derived.
+   - One relation per pair, in its **most specific** form: a generic `uses` may not coexist with a specific dependency (`defined_in_terms_of`/`assumes`/`constructed_from`) on the same ordered pair, and `related_to` (the weakest link) may not coexist with any other relation on the same unordered pair. The strict schema rejects such subsumed parallels.
 2. **Edges are the only relationship store.** No `dependencies`, `outgoing_relations`, or `related` as separate authored fields.
 3. **Direction is fixed by relation type**, never authored per-edge. Inverses are declared once, materialized at build.
 4. Source schema is **strict** — no `.passthrough()`. Unknown/typo keys fail the build.

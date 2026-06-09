@@ -1015,7 +1015,7 @@
       "label": "Hahn-Banach theorem",
       "content": {
         "statement": "A dominated linear functional on a subspace extends to the whole space without increasing its bound.",
-        "formal": "If $f\\leq p$ on V \\subset E, p$ sublinear, then $f$ extends to $F:E\\to\\mathbb{R}$ with $F\\leq p$, normed-space versions preserve norm.",
+        "formal": "If $f\\leq p$ on $V \\subset E, p$ sublinear, then $f$ extends to $F:E\\to\\mathbb{R}$ with $F\\leq p$, normed-space versions preserve norm.",
         "intuition": "Scalar probes defined on a subspace can be extended globally.",
         "notation": []
       },
@@ -2171,181 +2171,6 @@
       "relation": "generalizes"
     },
     {
-      "source": "normed_vector_space",
-      "target": "norm",
-      "relation": "uses"
-    },
-    {
-      "source": "banach_space",
-      "target": "completeness",
-      "relation": "uses"
-    },
-    {
-      "source": "banach_space",
-      "target": "metric_induced_by_norm",
-      "relation": "uses"
-    },
-    {
-      "source": "inner_product_space",
-      "target": "norm",
-      "relation": "uses"
-    },
-    {
-      "source": "hilbert_space",
-      "target": "completeness",
-      "relation": "uses"
-    },
-    {
-      "source": "metric_induced_by_norm",
-      "target": "norm",
-      "relation": "uses"
-    },
-    {
-      "source": "metric_induced_by_norm",
-      "target": "normed_vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "topology_induced_by_metric",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "completeness",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "continuity",
-      "target": "topology_induced_by_metric",
-      "relation": "uses"
-    },
-    {
-      "source": "linear_operator",
-      "target": "vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "linear_functional",
-      "target": "linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "linear_functional",
-      "target": "vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "bounded_linear_operator",
-      "target": "boundedness",
-      "relation": "uses"
-    },
-    {
-      "source": "bounded_linear_operator",
-      "target": "normed_vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "operator_norm",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_operator",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "adjoint_operator",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "adjoint_operator",
-      "target": "dual_space",
-      "relation": "uses"
-    },
-    {
-      "source": "self_adjoint_operator",
-      "target": "adjoint_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "self_adjoint_operator",
-      "target": "hilbert_space",
-      "relation": "uses"
-    },
-    {
-      "source": "sublinear_functional",
-      "target": "vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_graph",
-      "target": "linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_unit_ball",
-      "target": "normed_vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_unit_ball",
-      "target": "norm",
-      "relation": "uses"
-    },
-    {
-      "source": "spectrum",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "orthonormal_basis",
-      "target": "hilbert_space",
-      "relation": "uses"
-    },
-    {
-      "source": "projection_operator",
-      "target": "linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "dual_space",
-      "target": "normed_vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "dual_space",
-      "target": "linear_functional",
-      "relation": "uses"
-    },
-    {
-      "source": "dual_space",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "weak_topology",
-      "target": "dual_space",
-      "relation": "uses"
-    },
-    {
-      "source": "weak_topology",
-      "target": "linear_functional",
-      "relation": "uses"
-    },
-    {
-      "source": "weak_star_topology",
-      "target": "dual_space",
-      "relation": "uses"
-    },
-    {
-      "source": "weak_star_topology",
-      "target": "weak_topology",
-      "relation": "uses"
-    },
-    {
       "source": "metric_induced_by_norm",
       "target": "norm",
       "relation": "constructed_from"
@@ -2376,104 +2201,9 @@
       "relation": "constructed_from"
     },
     {
-      "source": "domain_is_banach_space",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "codomain_is_banach_space",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "pointwise_bounded_family_assumption",
-      "target": "boundedness",
-      "relation": "uses"
-    },
-    {
-      "source": "surjective_operator_assumption",
-      "target": "linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_graph_assumption",
-      "target": "closed_graph",
-      "relation": "uses"
-    },
-    {
-      "source": "unit_ball_weak_star_assumption",
-      "target": "closed_unit_ball",
-      "relation": "uses"
-    },
-    {
-      "source": "unit_ball_weak_star_assumption",
-      "target": "weak_star_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "unit_ball_weak_star_assumption",
-      "target": "dual_space",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_self_adjoint_operator_assumption",
-      "target": "compact_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_self_adjoint_operator_assumption",
-      "target": "self_adjoint_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_self_adjoint_operator_assumption",
-      "target": "hilbert_space",
-      "relation": "uses"
-    },
-    {
-      "source": "zorns_lemma",
-      "target": "axiom_of_choice",
-      "relation": "related_to"
-    },
-    {
-      "source": "baire_category_theorem",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "baire_category_theorem",
-      "target": "completeness",
-      "relation": "uses"
-    },
-    {
       "source": "baire_category_theorem",
       "target": "completeness",
       "relation": "assumes"
-    },
-    {
-      "source": "hahn_banach_theorem",
-      "target": "vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "hahn_banach_theorem",
-      "target": "normed_vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "hahn_banach_theorem",
-      "target": "linear_functional",
-      "relation": "uses"
-    },
-    {
-      "source": "hahn_banach_theorem",
-      "target": "sublinear_functional",
-      "relation": "uses"
-    },
-    {
-      "source": "hahn_banach_theorem",
-      "target": "dual_space",
-      "relation": "uses"
     },
     {
       "source": "hahn_banach_theorem",
@@ -2484,26 +2214,6 @@
       "source": "hahn_banach_theorem",
       "target": "scalar_field_real_or_complex",
       "relation": "assumes"
-    },
-    {
-      "source": "uniform_boundedness_principle",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "uniform_boundedness_principle",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "uniform_boundedness_principle",
-      "target": "operator_norm",
-      "relation": "uses"
-    },
-    {
-      "source": "uniform_boundedness_principle",
-      "target": "boundedness",
-      "relation": "uses"
     },
     {
       "source": "uniform_boundedness_principle",
@@ -2519,21 +2229,6 @@
       "source": "uniform_boundedness_principle",
       "target": "pointwise_bounded_family_assumption",
       "relation": "assumes"
-    },
-    {
-      "source": "open_mapping_theorem",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "open_mapping_theorem",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "open_mapping_theorem",
-      "target": "continuity",
-      "relation": "uses"
     },
     {
       "source": "open_mapping_theorem",
@@ -2557,26 +2252,6 @@
     },
     {
       "source": "closed_graph_theorem",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_graph_theorem",
-      "target": "linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_graph_theorem",
-      "target": "closed_graph",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_graph_theorem",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_graph_theorem",
       "target": "open_mapping_theorem",
       "relation": "uses"
     },
@@ -2597,26 +2272,6 @@
     },
     {
       "source": "banach_alaoglu_theorem",
-      "target": "dual_space",
-      "relation": "uses"
-    },
-    {
-      "source": "banach_alaoglu_theorem",
-      "target": "closed_unit_ball",
-      "relation": "uses"
-    },
-    {
-      "source": "banach_alaoglu_theorem",
-      "target": "weak_star_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "banach_alaoglu_theorem",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "banach_alaoglu_theorem",
       "target": "axiom_of_choice",
       "relation": "uses"
     },
@@ -2632,26 +2287,6 @@
     },
     {
       "source": "riesz_representation_theorem",
-      "target": "hilbert_space",
-      "relation": "uses"
-    },
-    {
-      "source": "riesz_representation_theorem",
-      "target": "dual_space",
-      "relation": "uses"
-    },
-    {
-      "source": "riesz_representation_theorem",
-      "target": "linear_functional",
-      "relation": "uses"
-    },
-    {
-      "source": "riesz_representation_theorem",
-      "target": "inner_product_space",
-      "relation": "uses"
-    },
-    {
-      "source": "riesz_representation_theorem",
       "target": "projection_theorem",
       "relation": "uses"
     },
@@ -2659,31 +2294,6 @@
       "source": "riesz_representation_theorem",
       "target": "domain_is_banach_space",
       "relation": "assumes"
-    },
-    {
-      "source": "spectral_theorem",
-      "target": "hilbert_space",
-      "relation": "uses"
-    },
-    {
-      "source": "spectral_theorem",
-      "target": "compact_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "spectral_theorem",
-      "target": "self_adjoint_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "spectral_theorem",
-      "target": "spectrum",
-      "relation": "uses"
-    },
-    {
-      "source": "spectral_theorem",
-      "target": "orthonormal_basis",
-      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
@@ -2707,32 +2317,7 @@
     },
     {
       "source": "bounded_inverse_theorem",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "bounded_inverse_theorem",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "bounded_inverse_theorem",
       "target": "open_mapping_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "projection_theorem",
-      "target": "hilbert_space",
-      "relation": "uses"
-    },
-    {
-      "source": "projection_theorem",
-      "target": "completeness",
-      "relation": "uses"
-    },
-    {
-      "source": "projection_theorem",
-      "target": "compactness",
       "relation": "uses"
     },
     {
@@ -3191,16 +2776,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "target": "completeness",
-      "relation": "related_to"
-    },
-    {
-      "source": "banach_space",
-      "target": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "relation": "related_to"
-    },
-    {
       "source": "norm",
       "target": "ell_p_spaces",
       "relation": "generalizes"
@@ -3221,24 +2796,9 @@
       "relation": "uses"
     },
     {
-      "source": "bounded_linear_operator",
-      "target": "continuous_linear_operator",
-      "relation": "related_to"
-    },
-    {
       "source": "sublinear_functional",
       "target": "norm_as_sublinear_functional",
       "relation": "generalizes"
-    },
-    {
-      "source": "normed_vector_space",
-      "target": "vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "banach_space",
-      "target": "normed_vector_space",
-      "relation": "uses"
     },
     {
       "source": "inner_product_space",
@@ -3246,18 +2806,8 @@
       "relation": "uses"
     },
     {
-      "source": "hilbert_space",
-      "target": "inner_product_space",
-      "relation": "uses"
-    },
-    {
       "source": "bounded_linear_operator",
       "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_operator",
-      "target": "bounded_linear_operator",
       "relation": "uses"
     },
     {
@@ -3301,31 +2851,6 @@
       "relation": "generalizes"
     },
     {
-      "source": "inner_product_space",
-      "target": "vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "weak_topology",
-      "target": "normed_vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "continuous_linear_operator",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "operator_norm",
-      "target": "normed_vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_graph",
-      "target": "topology_induced_by_metric",
-      "relation": "uses"
-    },
-    {
       "source": "step_hb_order_extensions",
       "target": "hahn_banach_theorem",
       "relation": "uses"
@@ -3351,91 +2876,6 @@
       "relation": "constructed_from"
     },
     {
-      "source": "ell_p_spaces",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "ell_p_spaces",
-      "target": "norm",
-      "relation": "uses"
-    },
-    {
-      "source": "l_p_spaces",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "l_p_spaces",
-      "target": "norm",
-      "relation": "uses"
-    },
-    {
-      "source": "c_k",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "c_k",
-      "target": "norm",
-      "relation": "uses"
-    },
-    {
-      "source": "c_k",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "c_0",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "c_0",
-      "target": "norm",
-      "relation": "uses"
-    },
-    {
-      "source": "c_0",
-      "target": "completeness",
-      "relation": "uses"
-    },
-    {
-      "source": "ell_2_as_hilbert_space",
-      "target": "hilbert_space",
-      "relation": "uses"
-    },
-    {
-      "source": "ell_2_as_hilbert_space",
-      "target": "inner_product_space",
-      "relation": "uses"
-    },
-    {
-      "source": "ell_2_as_hilbert_space",
-      "target": "completeness",
-      "relation": "uses"
-    },
-    {
-      "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "target": "normed_vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "target": "completeness",
-      "relation": "uses"
-    },
-    {
-      "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "target": "banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "cauchy_sequence",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
       "source": "completeness",
       "target": "cauchy_sequence",
       "relation": "uses"
@@ -3452,48 +2892,13 @@
     },
     {
       "source": "bounded_linear_operator",
-      "target": "operator_norm",
-      "relation": "uses"
-    },
-    {
-      "source": "bounded_function_on_domain",
-      "target": "boundedness",
-      "relation": "uses"
-    },
-    {
-      "source": "bounded_linear_operator",
       "target": "bounded_function_on_domain",
       "relation": "motivated_by"
-    },
-    {
-      "source": "bounded_function_on_domain",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "operator",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "linear_operator",
-      "target": "function",
-      "relation": "uses"
     },
     {
       "source": "function",
       "target": "operator",
       "relation": "generalizes"
-    },
-    {
-      "source": "linear_operator",
-      "target": "operator",
-      "relation": "uses"
-    },
-    {
-      "source": "bounded_linear_operator",
-      "target": "operator",
-      "relation": "uses"
     },
     {
       "source": "compact_operator",
@@ -3521,16 +2926,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "semantic_strength_function_operator",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "semantic_strength_function_operator",
-      "target": "operator",
-      "relation": "uses"
-    },
-    {
       "source": "linear_operator",
       "target": "semantic_strength_function_operator",
       "relation": "motivated_by"
@@ -3556,16 +2951,6 @@
       "relation": "generalizes"
     },
     {
-      "source": "quotient_space",
-      "target": "closed_subspace",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_space",
-      "target": "norm",
-      "relation": "uses"
-    },
-    {
       "source": "quotient_map",
       "target": "quotient_space",
       "relation": "constructed_from"
@@ -3586,21 +2971,6 @@
       "relation": "uses"
     },
     {
-      "source": "weak_convergence",
-      "target": "weak_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "weak_star_convergence",
-      "target": "weak_star_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "weakly_bounded_set",
-      "target": "dual_space",
-      "relation": "uses"
-    },
-    {
       "source": "weakly_bounded_implies_norm_bounded",
       "target": "uniform_boundedness_principle",
       "relation": "uses"
@@ -3608,37 +2978,12 @@
     {
       "source": "riesz_representation_c_k",
       "target": "c_k",
-      "relation": "uses"
-    },
-    {
-      "source": "riesz_representation_c_k",
-      "target": "dual_space",
-      "relation": "uses"
-    },
-    {
-      "source": "riesz_representation_c_k",
-      "target": "c_k",
       "relation": "generalizes"
-    },
-    {
-      "source": "bounded_function_on_domain",
-      "target": "nonzero_linear_map_on_unbounded_normed_space",
-      "relation": "related_to"
     },
     {
       "source": "bounded_linear_operator",
       "target": "nonzero_linear_map_on_unbounded_normed_space",
       "relation": "generalizes"
-    },
-    {
-      "source": "norm",
-      "target": "vector_space",
-      "relation": "uses"
-    },
-    {
-      "source": "norm",
-      "target": "scalar_field_real_or_complex",
-      "relation": "uses"
     },
     {
       "source": "metric_space",
@@ -4062,16 +3407,6 @@
     },
     {
       "source": "baire_category_theorem",
-      "target": "uniform_boundedness_principle",
-      "relation": "related_to"
-    },
-    {
-      "source": "baire_category_theorem",
-      "target": "open_mapping_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "baire_category_theorem",
       "target": "closed_graph_theorem",
       "relation": "related_to"
     },
@@ -4206,11 +3541,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "open_mapping_theorem",
-      "target": "closed_graph_theorem",
-      "relation": "related_to"
-    },
-    {
       "source": "closed_graph_theorem",
       "target": "banach_space",
       "relation": "defined_in_terms_of"
@@ -4286,11 +3616,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "riesz_representation_theorem",
-      "target": "spectral_theorem",
-      "relation": "related_to"
-    },
-    {
       "source": "spectral_theorem",
       "target": "hilbert_space",
       "relation": "defined_in_terms_of"
@@ -4337,26 +3662,6 @@
     },
     {
       "source": "ell_p_spaces",
-      "target": "hahn_banach_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "ell_p_spaces",
-      "target": "riesz_representation_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "ell_p_spaces",
-      "target": "dual_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "ell_p_spaces",
-      "target": "completeness",
-      "relation": "related_to"
-    },
-    {
-      "source": "ell_p_spaces",
       "target": "banach_space",
       "relation": "satisfies"
     },
@@ -4374,21 +3679,6 @@
       "source": "l_p_spaces",
       "target": "norm",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "l_p_spaces",
-      "target": "uniform_boundedness_principle",
-      "relation": "related_to"
-    },
-    {
-      "source": "l_p_spaces",
-      "target": "dual_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "l_p_spaces",
-      "target": "completeness",
-      "relation": "related_to"
     },
     {
       "source": "l_p_spaces",
@@ -4417,16 +3707,6 @@
     },
     {
       "source": "c_k",
-      "target": "hahn_banach_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "c_k",
-      "target": "dual_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "c_k",
       "target": "banach_space",
       "relation": "satisfies"
     },
@@ -4452,16 +3732,6 @@
     },
     {
       "source": "c_0",
-      "target": "hahn_banach_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "c_0",
-      "target": "dual_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "c_0",
       "target": "banach_space",
       "relation": "satisfies"
     },
@@ -4484,16 +3754,6 @@
       "source": "ell_2_as_hilbert_space",
       "target": "completeness",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "ell_2_as_hilbert_space",
-      "target": "riesz_representation_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "ell_2_as_hilbert_space",
-      "target": "spectral_theorem",
-      "relation": "related_to"
     },
     {
       "source": "ell_2_as_hilbert_space",
@@ -4524,21 +3784,6 @@
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "banach_space",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "target": "open_mapping_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "target": "uniform_boundedness_principle",
-      "relation": "related_to"
-    },
-    {
-      "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "target": "closed_graph_theorem",
-      "relation": "related_to"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
@@ -4718,11 +3963,6 @@
     {
       "source": "weak_convergence",
       "target": "dual_space",
-      "relation": "uses"
-    },
-    {
-      "source": "weak_convergence",
-      "target": "dual_space",
       "relation": "motivated_by"
     },
     {
@@ -4744,11 +3984,6 @@
       "source": "weak_star_convergence",
       "target": "weak_star_topology",
       "relation": "constructed_from"
-    },
-    {
-      "source": "weak_star_convergence",
-      "target": "dual_space",
-      "relation": "uses"
     },
     {
       "source": "weak_star_convergence",
@@ -4811,11 +4046,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "weakly_bounded_implies_norm_bounded",
-      "target": "uniform_boundedness_principle",
-      "relation": "related_to"
-    },
-    {
       "source": "norm_as_sublinear_functional",
       "target": "norm",
       "relation": "defined_in_terms_of"
@@ -4829,11 +4059,6 @@
       "source": "norm_as_sublinear_functional",
       "target": "normed_vector_space",
       "relation": "assumes"
-    },
-    {
-      "source": "norm_as_sublinear_functional",
-      "target": "norm",
-      "relation": "uses"
     },
     {
       "source": "norm_as_sublinear_functional",

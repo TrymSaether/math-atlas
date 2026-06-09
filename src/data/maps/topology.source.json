@@ -7064,11 +7064,6 @@
   ],
   "edges": [
     {
-      "source": "topological_space",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
       "source": "continuity",
       "target": "topology",
       "relation": "uses"
@@ -7081,211 +7076,6 @@
     {
       "source": "connectedness",
       "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "topological_space",
-      "target": "set",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_set",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "neighborhood",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "basis_for_topology",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "basis_for_topology",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "subbasis",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "subbasis",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "closure",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "interior",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "boundary",
-      "target": "closure",
-      "relation": "uses"
-    },
-    {
-      "source": "boundary",
-      "target": "interior",
-      "relation": "uses"
-    },
-    {
-      "source": "dense_subset",
-      "target": "closure",
-      "relation": "uses"
-    },
-    {
-      "source": "continuity",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "continuity",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "continuity",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "homeomorphism",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "convergence",
-      "target": "neighborhood",
-      "relation": "uses"
-    },
-    {
-      "source": "compactness",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "compactness",
-      "target": "compactness_fip_characterization",
-      "relation": "related_to"
-    },
-    {
-      "source": "compactness_fip_characterization",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "compactness_fip_characterization",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "sequential_compactness",
-      "target": "convergence",
-      "relation": "uses"
-    },
-    {
-      "source": "connectedness",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "path_connectedness",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "hausdorff_property",
-      "target": "neighborhood",
-      "relation": "uses"
-    },
-    {
-      "source": "hausdorff_property",
-      "target": "separation_axioms",
-      "relation": "uses"
-    },
-    {
-      "source": "regularity",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "regularity",
-      "target": "neighborhood",
-      "relation": "uses"
-    },
-    {
-      "source": "regularity",
-      "target": "separation_axioms",
-      "relation": "uses"
-    },
-    {
-      "source": "normality",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "normality",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "normality",
-      "target": "separation_axioms",
-      "relation": "uses"
-    },
-    {
-      "source": "countability_axioms",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "countability_axioms",
-      "target": "neighborhood",
-      "relation": "uses"
-    },
-    {
-      "source": "first_countability",
-      "target": "neighborhood",
-      "relation": "uses"
-    },
-    {
-      "source": "first_countability",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "first_countability",
-      "target": "countability_axioms",
-      "relation": "uses"
-    },
-    {
-      "source": "second_countability",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "second_countability",
-      "target": "countability_axioms",
-      "relation": "uses"
-    },
-    {
-      "source": "local_compactness",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "local_compactness",
-      "target": "neighborhood",
       "relation": "uses"
     },
     {
@@ -7585,77 +7375,12 @@
     },
     {
       "source": "compact_subsets_of_hausdorff_are_closed",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_subsets_of_hausdorff_are_closed",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_subsets_of_hausdorff_are_closed",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_subsets_of_hausdorff_are_closed",
       "target": "hausdorff_assumption",
       "relation": "assumes"
     },
     {
-      "source": "poincare_conjecture",
-      "target": "manifold",
-      "relation": "uses"
-    },
-    {
-      "source": "poincare_conjecture",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "analysis_on_metric_spaces",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "analysis_on_metric_spaces",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "analysis_on_metric_spaces",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "heine_borel_theorem",
-      "target": "euclidean_space",
-      "relation": "uses"
-    },
-    {
-      "source": "heine_borel_theorem",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "heine_borel_theorem",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
       "source": "heine_borel_theorem",
       "target": "bolzano_weierstrass_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "bolzano_weierstrass_theorem",
-      "target": "convergence",
-      "relation": "uses"
-    },
-    {
-      "source": "bolzano_weierstrass_theorem",
-      "target": "euclidean_space",
       "relation": "uses"
     },
     {
@@ -7665,38 +7390,8 @@
     },
     {
       "source": "urysohn_lemma",
-      "target": "normality",
-      "relation": "uses"
-    },
-    {
-      "source": "urysohn_lemma",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "urysohn_lemma",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "urysohn_lemma",
       "target": "normality_assumption",
       "relation": "assumes"
-    },
-    {
-      "source": "tietze_extension_theorem",
-      "target": "normality",
-      "relation": "uses"
-    },
-    {
-      "source": "tietze_extension_theorem",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "tietze_extension_theorem",
-      "target": "continuity",
-      "relation": "uses"
     },
     {
       "source": "tietze_extension_theorem",
@@ -7710,16 +7405,6 @@
     },
     {
       "source": "alexander_subbase_theorem",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "alexander_subbase_theorem",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "alexander_subbase_theorem",
       "target": "zorns_lemma",
       "relation": "uses"
     },
@@ -7727,26 +7412,6 @@
       "source": "alexander_subbase_theorem",
       "target": "axiom_of_choice",
       "relation": "assumes"
-    },
-    {
-      "source": "tychonoff_theorem",
-      "target": "product_space",
-      "relation": "uses"
-    },
-    {
-      "source": "tychonoff_theorem",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "tychonoff_theorem",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "tychonoff_theorem",
-      "target": "open_set",
-      "relation": "uses"
     },
     {
       "source": "tychonoff_theorem",
@@ -7770,31 +7435,6 @@
     },
     {
       "source": "baire_category_theorem",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "baire_category_theorem",
-      "target": "local_compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "baire_category_theorem",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "baire_category_theorem",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "baire_category_theorem",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "baire_category_theorem",
       "target": "complete_metric_assumption",
       "relation": "assumes"
     },
@@ -7807,26 +7447,6 @@
       "source": "baire_category_theorem",
       "target": "hausdorff_assumption",
       "relation": "assumes"
-    },
-    {
-      "source": "urysohn_metrization_theorem",
-      "target": "regularity",
-      "relation": "uses"
-    },
-    {
-      "source": "urysohn_metrization_theorem",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "urysohn_metrization_theorem",
-      "target": "second_countability",
-      "relation": "uses"
-    },
-    {
-      "source": "urysohn_metrization_theorem",
-      "target": "metric_topology",
-      "relation": "uses"
     },
     {
       "source": "urysohn_metrization_theorem",
@@ -7850,42 +7470,7 @@
     },
     {
       "source": "brouwer_fixed_point_theorem",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "brouwer_fixed_point_theorem",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "brouwer_fixed_point_theorem",
-      "target": "euclidean_space",
-      "relation": "uses"
-    },
-    {
-      "source": "brouwer_fixed_point_theorem",
       "target": "heine_borel_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "jordan_curve_theorem",
-      "target": "circle",
-      "relation": "uses"
-    },
-    {
-      "source": "jordan_curve_theorem",
-      "target": "connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "jordan_curve_theorem",
-      "target": "boundary",
-      "relation": "uses"
-    },
-    {
-      "source": "jordan_curve_theorem",
-      "target": "euclidean_space",
       "relation": "uses"
     },
     {
@@ -7949,34 +7534,9 @@
       "relation": "assumes"
     },
     {
-      "source": "proof_tychonoff_via_alexander",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_tychonoff_via_alexander",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
       "source": "proof_heine_borel_open_cover",
       "target": "heine_borel_theorem",
       "relation": "proves"
-    },
-    {
-      "source": "proof_heine_borel_open_cover",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_heine_borel_open_cover",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_heine_borel_open_cover",
-      "target": "euclidean_space",
-      "relation": "uses"
     },
     {
       "source": "proof_heine_borel_open_cover",
@@ -8049,53 +7609,13 @@
       "relation": "generalizes"
     },
     {
-      "source": "hausdorff_property",
-      "target": "indiscrete_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "hausdorff_property",
-      "target": "sierpinski_space",
-      "relation": "related_to"
-    },
-    {
       "source": "non_hausdorff_spaces_as_counterexamples",
       "target": "hausdorff_assumption",
       "relation": "violates"
     },
     {
-      "source": "non_hausdorff_spaces_as_counterexamples",
-      "target": "hausdorff_assumption",
-      "relation": "related_to"
-    },
-    {
       "source": "compact_subsets_of_hausdorff_are_closed",
       "target": "non_hausdorff_spaces_as_counterexamples",
-      "relation": "uses"
-    },
-    {
-      "source": "sequential_compactness",
-      "target": "compact_non_sequentially_compact_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_non_sequentially_compact_space",
-      "target": "first_countability",
-      "relation": "related_to"
-    },
-    {
-      "source": "path_connectedness",
-      "target": "connected_not_path_connected_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "topology",
-      "target": "set",
-      "relation": "uses"
-    },
-    {
-      "source": "open_set",
-      "target": "topology",
       "relation": "uses"
     },
     {
@@ -8114,1121 +7634,6 @@
       "relation": "uses"
     },
     {
-      "source": "separation_axioms",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "separation_axioms",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "separation_axioms",
-      "target": "neighborhood",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_1",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_1",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_1",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_1",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_2",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_2",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_2",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_2",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_3",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_3",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_3",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_3",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_4",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_4",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_4",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_4",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_5",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_5",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_5",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_5",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_6",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_6",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_6",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_6",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_7",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_7",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_7",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_7",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_8",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_8",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_8",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_2_8",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_1",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_1",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_1",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "closure",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "closure",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "closure",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "closure",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "closure",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "closure",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "closure",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_1",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_1",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_1",
-      "target": "real_line_standard_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_1",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_1",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "real_line_standard_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_3",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_3",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_3",
-      "target": "real_line_standard_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_3",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_3",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "real_line_standard_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_5",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_5",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_5",
-      "target": "real_line_standard_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_5",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_5",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "real_line_standard_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_7",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_7",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_7",
-      "target": "real_line_standard_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_7",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_7",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "real_line_standard_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "dense_subset",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_1",
-      "target": "subspace_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_1",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_1",
-      "target": "quotient_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_1",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_2",
-      "target": "subspace_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_2",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_2",
-      "target": "quotient_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_2",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_3",
-      "target": "subspace_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_3",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_3",
-      "target": "quotient_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_3",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_4",
-      "target": "subspace_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_4",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_4",
-      "target": "quotient_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_4",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_5",
-      "target": "subspace_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_5",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_5",
-      "target": "quotient_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_5",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_6",
-      "target": "subspace_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_6",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_6",
-      "target": "quotient_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_6",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_7",
-      "target": "subspace_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_7",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_7",
-      "target": "quotient_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_7",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_8",
-      "target": "subspace_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_8",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_8",
-      "target": "quotient_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_5_8",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_1",
-      "target": "connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_1",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_1",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_1",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_2",
-      "target": "connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_2",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_2",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_2",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_3",
-      "target": "connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_3",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_3",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_3",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_4",
-      "target": "connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_4",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_4",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_4",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_5",
-      "target": "connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_5",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_5",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_5",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_6",
-      "target": "connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_6",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_6",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_6",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_7",
-      "target": "connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_7",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_7",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_7",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_8",
-      "target": "connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_8",
-      "target": "compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_8",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_6_8",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_1",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_1",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_2",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_2",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_3",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_3",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_4",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_4",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_5",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_5",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_6",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_6",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_7",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_7",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_8",
-      "target": "path_connectedness",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_7_8",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_8_1",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_8_2",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_8_3",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_8_4",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_8_5",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_8_6",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_8_7",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "exercise_8_8",
-      "target": "algebraic_topology_examples",
-      "relation": "uses"
-    },
-    {
-      "source": "based_map",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
       "source": "fundamental_group",
       "target": "based_map",
       "relation": "uses"
@@ -9236,21 +7641,6 @@
     {
       "source": "induced_homomorphism",
       "target": "based_map",
-      "relation": "uses"
-    },
-    {
-      "source": "basepoint_independence",
-      "target": "fundamental_group",
-      "relation": "uses"
-    },
-    {
-      "source": "basepoint_independence",
-      "target": "path_connected_space",
-      "relation": "uses"
-    },
-    {
-      "source": "basepoint_independence",
-      "target": "isomorphism",
       "relation": "uses"
     },
     {
@@ -9264,44 +7654,14 @@
       "relation": "constructed_from"
     },
     {
-      "source": "simply_connected",
-      "target": "fundamental_group",
-      "relation": "uses"
-    },
-    {
-      "source": "induced_homomorphism",
-      "target": "homomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "induced_homomorphism",
-      "target": "fundamental_group",
-      "relation": "uses"
-    },
-    {
-      "source": "functoriality",
-      "target": "induced_homomorphism",
-      "relation": "uses"
-    },
-    {
       "source": "functoriality",
       "target": "composition_continuous",
-      "relation": "uses"
-    },
-    {
-      "source": "path_homotopy",
-      "target": "homotopy",
       "relation": "uses"
     },
     {
       "source": "path_homotopy_classes",
       "target": "path_homotopy",
       "relation": "constructed_from"
-    },
-    {
-      "source": "product_of_paths",
-      "target": "path_homotopy",
-      "relation": "uses"
     },
     {
       "source": "product_of_paths",
@@ -9314,83 +7674,8 @@
       "relation": "constructed_from"
     },
     {
-      "source": "homotopy_equivalence",
-      "target": "homotopy",
-      "relation": "uses"
-    },
-    {
-      "source": "deformation_retract",
-      "target": "retraction",
-      "relation": "uses"
-    },
-    {
-      "source": "deformation_retract",
-      "target": "homotopy",
-      "relation": "uses"
-    },
-    {
-      "source": "covering_space",
-      "target": "local_homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "lifting",
-      "target": "covering_space",
-      "relation": "uses"
-    },
-    {
-      "source": "path_lifting",
-      "target": "covering_space",
-      "relation": "uses"
-    },
-    {
-      "source": "homotopy_lifting",
-      "target": "covering_space",
-      "relation": "uses"
-    },
-    {
-      "source": "pi1_circle",
-      "target": "fundamental_group",
-      "relation": "uses"
-    },
-    {
-      "source": "pi1_product",
-      "target": "fundamental_group",
-      "relation": "uses"
-    },
-    {
-      "source": "pi1_product",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
       "source": "pi1_invariant",
       "target": "functoriality",
-      "relation": "uses"
-    },
-    {
-      "source": "topological_property",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "homeomorphism_equivalence_relation",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "composition_continuous",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "continuity_point_top",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "continuity_point_top",
-      "target": "neighborhood",
       "relation": "uses"
     },
     {
@@ -9404,83 +7689,8 @@
       "relation": "uses"
     },
     {
-      "source": "continuity_preimage_metric",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "continuous_map_metric",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "continuous_map_metric",
-      "target": "neighborhood_metric",
-      "relation": "uses"
-    },
-    {
-      "source": "open_closed_set_metric",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "open_closed_ball",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "neighborhood_metric",
-      "target": "open_closed_ball",
-      "relation": "uses"
-    },
-    {
-      "source": "compactness",
-      "target": "cover",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_subspace",
-      "target": "compact_space",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_subspace",
-      "target": "subspace_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_image",
-      "target": "compact_space",
-      "relation": "uses"
-    },
-    {
-      "source": "product_compact",
-      "target": "compact_space",
-      "relation": "uses"
-    },
-    {
-      "source": "product_compact",
-      "target": "product_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "tube_lemma",
-      "target": "compact_space",
-      "relation": "uses"
-    },
-    {
       "source": "evt",
       "target": "compact_space",
-      "relation": "uses"
-    },
-    {
-      "source": "bounded",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "connected_image",
-      "target": "connected_space",
       "relation": "uses"
     },
     {
@@ -9490,27 +7700,7 @@
     },
     {
       "source": "path_implies_connected",
-      "target": "path_connected_space",
-      "relation": "uses"
-    },
-    {
-      "source": "path_implies_connected",
       "target": "connected_space",
-      "relation": "uses"
-    },
-    {
-      "source": "real_line_connected",
-      "target": "connected_space",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_subsets_of_hausdorff_are_closed",
-      "target": "compact_space",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_subsets_of_hausdorff_are_closed",
-      "target": "hausdorff_space",
       "relation": "uses"
     },
     {
@@ -9539,121 +7729,11 @@
       "relation": "constructed_from"
     },
     {
-      "source": "intersection_topologies",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_universal",
-      "target": "quotient_space",
-      "relation": "uses"
-    },
-    {
-      "source": "open_closed_map",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "homeomorphism_open_closed",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_space",
-      "target": "equivalence_class",
-      "relation": "uses"
-    },
-    {
-      "source": "product_topology",
-      "target": "cartesian_product",
-      "relation": "uses"
-    },
-    {
-      "source": "group",
-      "target": "binary_operation",
-      "relation": "uses"
-    },
-    {
-      "source": "homomorphism",
-      "target": "group",
-      "relation": "uses"
-    },
-    {
-      "source": "isomorphism",
-      "target": "homomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "subgroup",
-      "target": "group",
-      "relation": "uses"
-    },
-    {
-      "source": "normal_subgroup",
-      "target": "subgroup",
-      "relation": "uses"
-    },
-    {
-      "source": "coset",
-      "target": "subgroup",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_group",
-      "target": "normal_subgroup",
-      "relation": "uses"
-    },
-    {
-      "source": "cyclic_subgroup",
-      "target": "subgroup",
-      "relation": "uses"
-    },
-    {
-      "source": "fht",
-      "target": "homomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "complement",
-      "target": "set_difference",
-      "relation": "uses"
-    },
-    {
-      "source": "set_difference",
-      "target": "subset",
-      "relation": "uses"
-    },
-    {
       "source": "intersection_union",
       "target": "subset",
       "relation": "uses"
     },
     {
-      "source": "image",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "restriction",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "preimage",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "injective",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "surjective",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
       "source": "isomorphism",
       "target": "injective",
       "relation": "uses"
@@ -9661,41 +7741,6 @@
     {
       "source": "isomorphism",
       "target": "surjective",
-      "relation": "uses"
-    },
-    {
-      "source": "bijective",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "bijective",
-      "target": "injective",
-      "relation": "uses"
-    },
-    {
-      "source": "bijective",
-      "target": "surjective",
-      "relation": "uses"
-    },
-    {
-      "source": "isomorphism",
-      "target": "bijective",
-      "relation": "uses"
-    },
-    {
-      "source": "image_of_function",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "inverse_of_function",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "restriction_of_function",
-      "target": "function",
       "relation": "uses"
     },
     {
@@ -9704,34 +7749,14 @@
       "relation": "related_to"
     },
     {
-      "source": "composition_continuous",
-      "target": "composition_maps",
-      "relation": "uses"
-    },
-    {
       "source": "continuity_point_metric",
       "target": "continuous_map_metric",
-      "relation": "related_to"
-    },
-    {
-      "source": "disjoint_union",
-      "target": "cartesian_product",
       "relation": "related_to"
     },
     {
       "source": "fta",
       "target": "pi1_circle",
       "relation": "related_to"
-    },
-    {
-      "source": "homotopy_equiv_iso",
-      "target": "homotopy_equivalence",
-      "relation": "uses"
-    },
-    {
-      "source": "homotopy_type",
-      "target": "homotopy_equivalence",
-      "relation": "uses"
     },
     {
       "source": "lebesgue_number",
@@ -9741,16 +7766,6 @@
     {
       "source": "lifting_correspondence",
       "target": "path_lifting",
-      "relation": "uses"
-    },
-    {
-      "source": "neighborhood_characterization_open",
-      "target": "neighborhood",
-      "relation": "uses"
-    },
-    {
-      "source": "nullhomotopic",
-      "target": "homotopy",
       "relation": "uses"
     },
     {
@@ -9789,29 +7804,9 @@
       "relation": "related_to"
     },
     {
-      "source": "closed_set",
-      "target": "complement",
-      "relation": "uses"
-    },
-    {
-      "source": "closed_set",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
-      "source": "neighborhood",
-      "target": "topological_space",
-      "relation": "uses"
-    },
-    {
       "source": "hausdorff_space",
       "target": "metric_space",
       "relation": "generalizes"
-    },
-    {
-      "source": "heine_borel_theorem",
-      "target": "bounded",
-      "relation": "uses"
     },
     {
       "source": "functoriality",
@@ -9821,11 +7816,6 @@
     {
       "source": "continuity_preimage_metric",
       "target": "continuity_basis",
-      "relation": "uses"
-    },
-    {
-      "source": "cyclic_subgroup",
-      "target": "group",
       "relation": "uses"
     },
     {
@@ -9839,26 +7829,6 @@
       "relation": "uses"
     },
     {
-      "source": "functoriality",
-      "target": "homomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "fht",
-      "target": "normal_subgroup",
-      "relation": "uses"
-    },
-    {
-      "source": "fht",
-      "target": "quotient_group",
-      "relation": "uses"
-    },
-    {
-      "source": "fht",
-      "target": "isomorphism",
-      "relation": "uses"
-    },
-    {
       "source": "homotopy_equiv_iso",
       "target": "pi1_invariant",
       "relation": "uses"
@@ -9869,28 +7839,8 @@
       "relation": "uses"
     },
     {
-      "source": "lifting_correspondence",
-      "target": "fundamental_group",
-      "relation": "uses"
-    },
-    {
-      "source": "local_homeomorphism",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "pasting_lemma",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
       "source": "pasting_lemma",
       "target": "homotopy",
-      "relation": "uses"
-    },
-    {
-      "source": "retraction",
-      "target": "subspace_topology",
       "relation": "uses"
     },
     {
@@ -9899,33 +7849,8 @@
       "relation": "uses"
     },
     {
-      "source": "pi1_invariant",
-      "target": "homeomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "pi1_invariant",
-      "target": "topological_property",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_group",
-      "target": "coset",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_group",
-      "target": "fht",
-      "relation": "related_to"
-    },
-    {
       "source": "composition_maps",
       "target": "restriction",
-      "relation": "uses"
-    },
-    {
-      "source": "tube_lemma",
-      "target": "product_topology",
       "relation": "uses"
     },
     {
@@ -9940,11 +7865,6 @@
     },
     {
       "source": "quotient_space",
-      "target": "open_closed_map",
-      "relation": "uses"
-    },
-    {
-      "source": "homeomorphism_open_closed",
       "target": "open_closed_map",
       "relation": "uses"
     },
@@ -10014,51 +7934,6 @@
       "relation": "satisfies"
     },
     {
-      "source": "hausdorff_assumption",
-      "target": "hausdorff_property",
-      "relation": "uses"
-    },
-    {
-      "source": "regularity_assumption",
-      "target": "regularity",
-      "relation": "uses"
-    },
-    {
-      "source": "normality_assumption",
-      "target": "normality",
-      "relation": "uses"
-    },
-    {
-      "source": "second_countability_assumption",
-      "target": "second_countability",
-      "relation": "uses"
-    },
-    {
-      "source": "local_compactness_assumption",
-      "target": "local_compactness",
-      "relation": "uses"
-    },
-    {
-      "source": "neighborhood_metric",
-      "target": "metric_space",
-      "relation": "uses"
-    },
-    {
-      "source": "neighborhood_metric",
-      "target": "neighborhood",
-      "relation": "uses"
-    },
-    {
-      "source": "neighborhood_metric",
-      "target": "open_neighborhood",
-      "relation": "uses"
-    },
-    {
-      "source": "neighborhood_metric",
-      "target": "metric_topology",
-      "relation": "uses"
-    },
-    {
       "source": "neighborhood",
       "target": "neighborhood_metric",
       "relation": "generalizes"
@@ -10069,124 +7944,9 @@
       "relation": "related_to"
     },
     {
-      "source": "set",
-      "target": "membership",
-      "relation": "uses"
-    },
-    {
-      "source": "subset",
-      "target": "set",
-      "relation": "uses"
-    },
-    {
-      "source": "subset",
-      "target": "membership",
-      "relation": "uses"
-    },
-    {
-      "source": "empty_set",
-      "target": "set",
-      "relation": "uses"
-    },
-    {
-      "source": "power_set",
-      "target": "set",
-      "relation": "uses"
-    },
-    {
-      "source": "power_set",
-      "target": "subset",
-      "relation": "uses"
-    },
-    {
-      "source": "cartesian_product",
-      "target": "ordered_pair",
-      "relation": "uses"
-    },
-    {
-      "source": "relation",
-      "target": "cartesian_product",
-      "relation": "uses"
-    },
-    {
-      "source": "relation",
-      "target": "subset",
-      "relation": "uses"
-    },
-    {
-      "source": "equivalence_relation",
-      "target": "relation",
-      "relation": "uses"
-    },
-    {
       "source": "equivalence_class",
       "target": "equivalence_relation",
       "relation": "constructed_from"
-    },
-    {
-      "source": "equivalence_class",
-      "target": "equivalence_relation",
-      "relation": "uses"
-    },
-    {
-      "source": "function",
-      "target": "domain",
-      "relation": "uses"
-    },
-    {
-      "source": "function",
-      "target": "codomain",
-      "relation": "uses"
-    },
-    {
-      "source": "function",
-      "target": "relation",
-      "relation": "uses"
-    },
-    {
-      "source": "preimage",
-      "target": "set",
-      "relation": "uses"
-    },
-    {
-      "source": "inverse_of_function",
-      "target": "relation",
-      "relation": "uses"
-    },
-    {
-      "source": "image_of_function",
-      "target": "set",
-      "relation": "uses"
-    },
-    {
-      "source": "restriction_of_function",
-      "target": "set",
-      "relation": "uses"
-    },
-    {
-      "source": "restriction_of_function",
-      "target": "subset",
-      "relation": "uses"
-    },
-    {
-      "source": "image",
-      "target": "subset",
-      "relation": "uses"
-    },
-    {
-      "source": "preimage",
-      "target": "subset",
-      "relation": "uses"
-    },
-    {
-      "source": "continuity",
-      "target": "preimage",
-      "relation": "uses"
-    },
-    {
-      "source": "identity_map",
-      "target": "function",
-      "relation": "uses"
     },
     {
       "source": "composition_maps",
@@ -10194,173 +7954,8 @@
       "relation": "uses"
     },
     {
-      "source": "indexed_family",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "topology",
-      "target": "indexed_family",
-      "relation": "uses"
-    },
-    {
-      "source": "choice_function",
-      "target": "indexed_family",
-      "relation": "uses"
-    },
-    {
-      "source": "axiom_of_choice",
-      "target": "choice_function",
-      "relation": "uses"
-    },
-    {
-      "source": "axiom_of_choice",
-      "target": "indexed_family",
-      "relation": "uses"
-    },
-    {
-      "source": "zorns_lemma",
-      "target": "axiom_of_choice",
-      "relation": "related_to"
-    },
-    {
-      "source": "topology",
-      "target": "power_set",
-      "relation": "uses"
-    },
-    {
-      "source": "topology",
-      "target": "empty_set",
-      "relation": "uses"
-    },
-    {
-      "source": "topology",
-      "target": "intersection_union",
-      "relation": "uses"
-    },
-    {
-      "source": "intersection_union",
-      "target": "indexed_family",
-      "relation": "uses"
-    },
-    {
-      "source": "inclusion_map",
-      "target": "subset",
-      "relation": "uses"
-    },
-    {
-      "source": "inclusion_map",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "disjoint_union",
-      "target": "indexed_family",
-      "relation": "uses"
-    },
-    {
-      "source": "disjoint_union",
-      "target": "cartesian_product",
-      "relation": "uses"
-    },
-    {
-      "source": "finite_set",
-      "target": "bijective",
-      "relation": "uses"
-    },
-    {
-      "source": "finite_subcover",
-      "target": "cover",
-      "relation": "uses"
-    },
-    {
-      "source": "finite_subcover",
-      "target": "finite_set",
-      "relation": "uses"
-    },
-    {
       "source": "compactness",
       "target": "finite_subcover",
-      "relation": "uses"
-    },
-    {
-      "source": "finite_subcover_argument",
-      "target": "finite_subcover",
-      "relation": "uses"
-    },
-    {
-      "source": "open_cover_argument",
-      "target": "cover",
-      "relation": "uses"
-    },
-    {
-      "source": "open_cover_argument",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "basis_argument",
-      "target": "basis_for_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "basis_argument",
-      "target": "subbasis",
-      "relation": "uses"
-    },
-    {
-      "source": "separation_argument",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "separation_argument",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_space",
-      "target": "equivalence_relation",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_topology",
-      "target": "preimage",
-      "relation": "uses"
-    },
-    {
-      "source": "binary_operation",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "binary_operation",
-      "target": "cartesian_product",
-      "relation": "uses"
-    },
-    {
-      "source": "group",
-      "target": "set",
-      "relation": "uses"
-    },
-    {
-      "source": "homomorphism",
-      "target": "function",
-      "relation": "uses"
-    },
-    {
-      "source": "subgroup",
-      "target": "subset",
-      "relation": "uses"
-    },
-    {
-      "source": "metric_topology",
-      "target": "topology",
-      "relation": "uses"
-    },
-    {
-      "source": "metric_topology",
-      "target": "open_closed_ball",
       "relation": "uses"
     },
     {
@@ -10371,21 +7966,6 @@
     {
       "source": "continuity_point_metric",
       "target": "neighborhood_metric",
-      "relation": "uses"
-    },
-    {
-      "source": "continuity_basis",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "continuity_basis",
-      "target": "preimage",
-      "relation": "uses"
-    },
-    {
-      "source": "compact_image",
-      "target": "cover",
       "relation": "uses"
     },
     {
@@ -10419,36 +7999,6 @@
       "relation": "uses"
     },
     {
-      "source": "homeomorphism_open_closed",
-      "target": "bijective",
-      "relation": "uses"
-    },
-    {
-      "source": "homeomorphism_open_closed",
-      "target": "continuity",
-      "relation": "uses"
-    },
-    {
-      "source": "homeomorphism_open_closed",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "homeomorphism_open_closed",
-      "target": "closed_set",
-      "relation": "uses"
-    },
-    {
-      "source": "product_compact",
-      "target": "product_space",
-      "relation": "uses"
-    },
-    {
-      "source": "product_compact",
-      "target": "cover",
-      "relation": "uses"
-    },
-    {
       "source": "product_compact",
       "target": "tube_lemma",
       "relation": "uses"
@@ -10460,67 +8010,12 @@
     },
     {
       "source": "tube_lemma",
-      "target": "product_space",
-      "relation": "uses"
-    },
-    {
-      "source": "tube_lemma",
-      "target": "open_set",
-      "relation": "uses"
-    },
-    {
-      "source": "tube_lemma",
-      "target": "cover",
-      "relation": "uses"
-    },
-    {
-      "source": "tube_lemma",
       "target": "finite_subcover",
-      "relation": "uses"
-    },
-    {
-      "source": "alexander_subbase_theorem",
-      "target": "cover",
-      "relation": "uses"
-    },
-    {
-      "source": "heine_borel_theorem",
-      "target": "cover",
-      "relation": "uses"
-    },
-    {
-      "source": "heine_borel_theorem",
-      "target": "open_closed_ball",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_universal",
-      "target": "quotient_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_universal",
-      "target": "preimage",
-      "relation": "uses"
-    },
-    {
-      "source": "quotient_universal",
-      "target": "identity_map",
       "relation": "uses"
     },
     {
       "source": "quotient_universal",
       "target": "composition_continuous",
-      "relation": "uses"
-    },
-    {
-      "source": "pi1_product",
-      "target": "product_space",
-      "relation": "uses"
-    },
-    {
-      "source": "pi1_product",
-      "target": "induced_homomorphism",
       "relation": "uses"
     },
     {
@@ -10546,21 +8041,6 @@
     {
       "source": "pi1_product",
       "target": "isomorphism",
-      "relation": "uses"
-    },
-    {
-      "source": "supremum",
-      "target": "real_line_standard_topology",
-      "relation": "uses"
-    },
-    {
-      "source": "supremum",
-      "target": "subset",
-      "relation": "uses"
-    },
-    {
-      "source": "normal_subgroup",
-      "target": "coset",
       "relation": "uses"
     },
     {
@@ -10620,11 +8100,6 @@
     },
     {
       "source": "inverse_of_function",
-      "target": "bijective",
-      "relation": "related_to"
-    },
-    {
-      "source": "inverse_of_function",
       "target": "injective",
       "relation": "related_to"
     },
@@ -10669,19 +8144,9 @@
       "relation": "assumes"
     },
     {
-      "source": "hausdorff_assumption",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
       "source": "normality_assumption",
       "target": "normality",
       "relation": "assumes"
-    },
-    {
-      "source": "normality_assumption",
-      "target": "normality",
-      "relation": "related_to"
     },
     {
       "source": "regularity_assumption",
@@ -10689,29 +8154,14 @@
       "relation": "assumes"
     },
     {
-      "source": "regularity_assumption",
-      "target": "regularity",
-      "relation": "related_to"
-    },
-    {
       "source": "second_countability_assumption",
       "target": "second_countability",
       "relation": "assumes"
     },
     {
-      "source": "second_countability_assumption",
-      "target": "second_countability",
-      "relation": "related_to"
-    },
-    {
       "source": "local_compactness_assumption",
       "target": "local_compactness",
       "relation": "assumes"
-    },
-    {
-      "source": "local_compactness_assumption",
-      "target": "local_compactness",
-      "relation": "related_to"
     },
     {
       "source": "topological_space",
@@ -10730,21 +8180,6 @@
     },
     {
       "source": "topological_space",
-      "target": "discrete_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "topological_space",
-      "target": "indiscrete_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "topological_space",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "topological_space",
       "target": "basis_for_topology",
       "relation": "related_to"
     },
@@ -10752,21 +8187,6 @@
       "source": "metric_space",
       "target": "hausdorff_space",
       "relation": "uses"
-    },
-    {
-      "source": "metric_space",
-      "target": "open_closed_ball",
-      "relation": "related_to"
-    },
-    {
-      "source": "metric_space",
-      "target": "open_closed_set_metric",
-      "relation": "related_to"
-    },
-    {
-      "source": "metric_space",
-      "target": "continuous_map_metric",
-      "relation": "related_to"
     },
     {
       "source": "metric_space",
@@ -10779,29 +8199,9 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "discrete_metric_space",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
       "source": "quotient_space",
       "target": "equivalence_relation",
       "relation": "constructed_from"
-    },
-    {
-      "source": "quotient_space",
-      "target": "equivalence_class",
-      "relation": "related_to"
-    },
-    {
-      "source": "quotient_space",
-      "target": "quotient_universal",
-      "relation": "related_to"
-    },
-    {
-      "source": "quotient_space",
-      "target": "open_closed_map",
-      "relation": "related_to"
     },
     {
       "source": "quotient_space",
@@ -10815,67 +8215,7 @@
     },
     {
       "source": "compact_space",
-      "target": "compact_subspace",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_space",
       "target": "heine_borel_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_space",
-      "target": "compact_image",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_space",
-      "target": "product_compact",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_space",
-      "target": "topological_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_space",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "connected_space",
-      "target": "connected_image",
-      "relation": "related_to"
-    },
-    {
-      "source": "connected_space",
-      "target": "real_line_connected",
-      "relation": "related_to"
-    },
-    {
-      "source": "connected_space",
-      "target": "path_connected_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "connected_space",
-      "target": "ivt",
-      "relation": "related_to"
-    },
-    {
-      "source": "connected_space",
-      "target": "topological_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "connected_space",
-      "target": "connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "path_connected_space",
-      "target": "path_implies_connected",
       "relation": "related_to"
     },
     {
@@ -10889,43 +8229,8 @@
       "relation": "related_to"
     },
     {
-      "source": "path_connected_space",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "hausdorff_space",
-      "target": "compact_subsets_of_hausdorff_are_closed",
-      "relation": "related_to"
-    },
-    {
       "source": "hausdorff_space",
       "target": "heine_borel_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "hausdorff_space",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "hausdorff_space",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "regular_space",
-      "target": "regularity",
-      "relation": "related_to"
-    },
-    {
-      "source": "normal_space",
-      "target": "normality",
-      "relation": "related_to"
-    },
-    {
-      "source": "locally_compact_space",
-      "target": "local_compactness",
       "relation": "related_to"
     },
     {
@@ -10936,21 +8241,6 @@
     {
       "source": "locally_compact_space",
       "target": "one_point_compactification",
-      "relation": "related_to"
-    },
-    {
-      "source": "second_countable_space",
-      "target": "second_countability",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_hausdorff_space",
-      "target": "compact_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_hausdorff_space",
-      "target": "hausdorff_space",
       "relation": "related_to"
     },
     {
@@ -11009,21 +8299,6 @@
       "relation": "related_to"
     },
     {
-      "source": "closed_set",
-      "target": "closure",
-      "relation": "related_to"
-    },
-    {
-      "source": "closed_set",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "closed_set",
-      "target": "complement",
-      "relation": "related_to"
-    },
-    {
       "source": "neighborhood",
       "target": "open_set",
       "relation": "defined_in_terms_of"
@@ -11032,26 +8307,6 @@
       "source": "neighborhood",
       "target": "topological_space",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "neighborhood",
-      "target": "neighborhood_metric",
-      "relation": "related_to"
-    },
-    {
-      "source": "neighborhood",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "neighborhood",
-      "target": "continuity_point_top",
-      "relation": "related_to"
-    },
-    {
-      "source": "neighborhood",
-      "target": "open_neighborhood",
-      "relation": "related_to"
     },
     {
       "source": "basis_for_topology",
@@ -11062,26 +8317,6 @@
       "source": "basis_for_topology",
       "target": "open_set",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "basis_for_topology",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "basis_for_topology",
-      "target": "generated_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "basis_for_topology",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "basis_for_topology",
-      "target": "continuity_basis",
-      "relation": "related_to"
     },
     {
       "source": "subbasis",
@@ -11094,29 +8329,9 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "subbasis",
-      "target": "generated_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "subbasis",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
       "source": "closure",
       "target": "closed_set",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "closure",
-      "target": "interior",
-      "relation": "related_to"
-    },
-    {
-      "source": "closure",
-      "target": "dense_subset",
-      "relation": "related_to"
     },
     {
       "source": "interior",
@@ -11147,21 +8362,6 @@
       "source": "interior",
       "target": "closure",
       "relation": "motivated_by"
-    },
-    {
-      "source": "interior",
-      "target": "boundary",
-      "relation": "related_to"
-    },
-    {
-      "source": "interior",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "interior",
-      "target": "neighborhood",
-      "relation": "related_to"
     },
     {
       "source": "interior",
@@ -11209,48 +8409,13 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "continuity",
-      "target": "continuity_preimage_metric",
-      "relation": "related_to"
-    },
-    {
-      "source": "continuity",
-      "target": "composition_continuous",
-      "relation": "related_to"
-    },
-    {
-      "source": "continuity",
-      "target": "homeomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "continuity",
-      "target": "continuity_point_top",
-      "relation": "related_to"
-    },
-    {
-      "source": "continuity",
-      "target": "continuity_basis",
-      "relation": "related_to"
-    },
-    {
       "source": "homeomorphism",
       "target": "continuity",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "homeomorphism",
-      "target": "topological_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "homeomorphism",
       "target": "continuity_point_top",
-      "relation": "related_to"
-    },
-    {
-      "source": "homeomorphism",
-      "target": "homeomorphism_open_closed",
       "relation": "related_to"
     },
     {
@@ -11315,17 +8480,7 @@
     },
     {
       "source": "compactness",
-      "target": "cover",
-      "relation": "related_to"
-    },
-    {
-      "source": "compactness",
       "target": "compact_subspace",
-      "relation": "related_to"
-    },
-    {
-      "source": "compactness",
-      "target": "heine_borel_theorem",
       "relation": "related_to"
     },
     {
@@ -11394,11 +8549,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "hausdorff_property",
-      "target": "open_neighborhood",
-      "relation": "related_to"
-    },
-    {
       "source": "regularity",
       "target": "closed_set",
       "relation": "defined_in_terms_of"
@@ -11479,31 +8629,6 @@
       "relation": "related_to"
     },
     {
-      "source": "subspace_topology",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "product_topology",
-      "target": "tube_lemma",
-      "relation": "related_to"
-    },
-    {
-      "source": "product_topology",
-      "target": "product_compact",
-      "relation": "related_to"
-    },
-    {
-      "source": "product_topology",
-      "target": "cartesian_product",
-      "relation": "related_to"
-    },
-    {
-      "source": "product_topology",
-      "target": "pi1_product",
-      "relation": "related_to"
-    },
-    {
       "source": "quotient_topology",
       "target": "preimage",
       "relation": "defined_in_terms_of"
@@ -11525,27 +8650,12 @@
     },
     {
       "source": "metric_topology",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "metric_topology",
       "target": "open_closed_set_metric",
       "relation": "related_to"
     },
     {
       "source": "metric_topology",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "metric_topology",
       "target": "discrete_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "metric_topology",
-      "target": "basis_for_topology",
       "relation": "related_to"
     },
     {
@@ -11557,11 +8667,6 @@
       "source": "order_topology",
       "target": "neighborhood_metric",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "one_point_compactification",
-      "target": "local_compactness",
-      "relation": "related_to"
     },
     {
       "source": "one_point_compactification",
@@ -11645,11 +8750,6 @@
     },
     {
       "source": "compact_subsets_of_hausdorff_are_closed",
-      "target": "compact_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_subsets_of_hausdorff_are_closed",
       "target": "homeomorphism_open_closed",
       "relation": "related_to"
     },
@@ -11735,22 +8835,7 @@
     },
     {
       "source": "heine_borel_theorem",
-      "target": "bounded",
-      "relation": "related_to"
-    },
-    {
-      "source": "heine_borel_theorem",
       "target": "product_compact",
-      "relation": "related_to"
-    },
-    {
-      "source": "heine_borel_theorem",
-      "target": "evt",
-      "relation": "related_to"
-    },
-    {
-      "source": "heine_borel_theorem",
-      "target": "bolzano_weierstrass_theorem",
       "relation": "related_to"
     },
     {
@@ -11762,16 +8847,6 @@
       "source": "bolzano_weierstrass_theorem",
       "target": "euclidean_space",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "bolzano_weierstrass_theorem",
-      "target": "sequential_compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "bolzano_weierstrass_theorem",
-      "target": "euclidean_space",
-      "relation": "related_to"
     },
     {
       "source": "urysohn_lemma",
@@ -11787,11 +8862,6 @@
       "source": "urysohn_lemma",
       "target": "continuity",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "urysohn_lemma",
-      "target": "tietze_extension_theorem",
-      "relation": "related_to"
     },
     {
       "source": "tietze_extension_theorem",
@@ -11824,26 +8894,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "alexander_subbase_theorem",
-      "target": "tychonoff_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "alexander_subbase_theorem",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "alexander_subbase_theorem",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "alexander_subbase_theorem",
-      "target": "zorns_lemma",
-      "relation": "related_to"
-    },
-    {
       "source": "tychonoff_theorem",
       "target": "product_space",
       "relation": "defined_in_terms_of"
@@ -11862,21 +8912,6 @@
       "source": "tychonoff_theorem",
       "target": "open_set",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "tychonoff_theorem",
-      "target": "product_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "tychonoff_theorem",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "tychonoff_theorem",
-      "target": "axiom_of_choice",
-      "relation": "related_to"
     },
     {
       "source": "baire_category_theorem",
@@ -11922,11 +8957,6 @@
       "source": "urysohn_metrization_theorem",
       "target": "metric_topology",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "urysohn_metrization_theorem",
-      "target": "urysohn_lemma",
-      "relation": "related_to"
     },
     {
       "source": "brouwer_fixed_point_theorem",
@@ -12125,16 +9155,6 @@
     },
     {
       "source": "euclidean_space",
-      "target": "heine_borel_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "euclidean_space",
-      "target": "brouwer_fixed_point_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "euclidean_space",
       "target": "metric_topology",
       "relation": "related_to"
     },
@@ -12285,11 +9305,6 @@
     },
     {
       "source": "cantor_set",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "cantor_set",
       "target": "hausdorff_property",
       "relation": "satisfies"
     },
@@ -12332,11 +9347,6 @@
       "source": "circle",
       "target": "connectedness",
       "relation": "motivated_by"
-    },
-    {
-      "source": "circle",
-      "target": "jordan_curve_theorem",
-      "relation": "related_to"
     },
     {
       "source": "circle",
@@ -12385,11 +9395,6 @@
     },
     {
       "source": "torus",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "torus",
       "target": "quotient_topology",
       "relation": "related_to"
     },
@@ -12425,16 +9430,6 @@
     },
     {
       "source": "rationals_with_subspace_topology",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "rationals_with_subspace_topology",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
-      "source": "rationals_with_subspace_topology",
       "target": "topological_space",
       "relation": "satisfies"
     },
@@ -12460,11 +9455,6 @@
     },
     {
       "source": "long_line",
-      "target": "order_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "long_line",
       "target": "topological_space",
       "relation": "satisfies"
     },
@@ -12482,11 +9472,6 @@
       "source": "long_line",
       "target": "second_countability",
       "relation": "violates"
-    },
-    {
-      "source": "sorgenfrey_line",
-      "target": "basis_for_topology",
-      "relation": "related_to"
     },
     {
       "source": "sorgenfrey_line",
@@ -12550,11 +9535,6 @@
     },
     {
       "source": "quotient_space_examples",
-      "target": "quotient_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "quotient_space_examples",
       "target": "quotient_space",
       "relation": "satisfies"
     },
@@ -12592,11 +9572,6 @@
       "source": "non_hausdorff_spaces_as_counterexamples",
       "target": "compact_subsets_of_hausdorff_are_closed",
       "relation": "motivated_by"
-    },
-    {
-      "source": "non_hausdorff_spaces_as_counterexamples",
-      "target": "compact_subsets_of_hausdorff_are_closed",
-      "relation": "related_to"
     },
     {
       "source": "non_hausdorff_spaces_as_counterexamples",
@@ -12714,26 +9689,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_2_1",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_1",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_1",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_1",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_2_2",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
@@ -12772,26 +9727,6 @@
       "source": "exercise_2_2",
       "target": "open_set",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_2_2",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_2",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_2",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_2",
-      "target": "open_set",
-      "relation": "related_to"
     },
     {
       "source": "exercise_2_3",
@@ -12834,26 +9769,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_2_3",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_3",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_3",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_3",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_2_4",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
@@ -12892,26 +9807,6 @@
       "source": "exercise_2_4",
       "target": "open_set",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_2_4",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_4",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_4",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_4",
-      "target": "open_set",
-      "relation": "related_to"
     },
     {
       "source": "exercise_2_5",
@@ -12954,26 +9849,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_2_5",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_5",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_5",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_5",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_2_6",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
@@ -13012,26 +9887,6 @@
       "source": "exercise_2_6",
       "target": "open_set",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_2_6",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_6",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_6",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_6",
-      "target": "open_set",
-      "relation": "related_to"
     },
     {
       "source": "exercise_2_7",
@@ -13074,26 +9929,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_2_7",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_7",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_7",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_7",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_2_8",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
@@ -13132,26 +9967,6 @@
       "source": "exercise_2_8",
       "target": "open_set",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_2_8",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_8",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_8",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_2_8",
-      "target": "open_set",
-      "relation": "related_to"
     },
     {
       "source": "exercise_3_1",
@@ -13184,21 +9999,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_3_1",
-      "target": "topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_1",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_1",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_3_2",
       "target": "topology",
       "relation": "defined_in_terms_of"
@@ -13277,46 +10077,6 @@
       "source": "exercise_3_2",
       "target": "homeomorphism",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "closed_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "closure",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_2",
-      "target": "homeomorphism",
-      "relation": "related_to"
     },
     {
       "source": "exercise_3_3",
@@ -13399,46 +10159,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_3_3",
-      "target": "topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "closed_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "closure",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_3",
-      "target": "homeomorphism",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_3_4",
       "target": "topology",
       "relation": "defined_in_terms_of"
@@ -13517,46 +10237,6 @@
       "source": "exercise_3_4",
       "target": "homeomorphism",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "closed_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "closure",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_4",
-      "target": "homeomorphism",
-      "relation": "related_to"
     },
     {
       "source": "exercise_3_5",
@@ -13639,46 +10319,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_3_5",
-      "target": "topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "closed_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "closure",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_5",
-      "target": "homeomorphism",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_3_6",
       "target": "topology",
       "relation": "defined_in_terms_of"
@@ -13757,46 +10397,6 @@
       "source": "exercise_3_6",
       "target": "homeomorphism",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "closed_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "closure",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_6",
-      "target": "homeomorphism",
-      "relation": "related_to"
     },
     {
       "source": "exercise_3_7",
@@ -13879,46 +10479,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_3_7",
-      "target": "topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "closed_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "closure",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_7",
-      "target": "homeomorphism",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_3_8",
       "target": "topology",
       "relation": "defined_in_terms_of"
@@ -13997,46 +10557,6 @@
       "source": "exercise_3_8",
       "target": "homeomorphism",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "open_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "closed_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "closure",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_3_8",
-      "target": "homeomorphism",
-      "relation": "related_to"
     },
     {
       "source": "exercise_4_1",
@@ -14089,31 +10609,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_4_1",
-      "target": "basis_for_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_1",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_1",
-      "target": "real_line_standard_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_1",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_1",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_4_2",
       "target": "basis_for_topology",
       "relation": "defined_in_terms_of"
@@ -14162,31 +10657,6 @@
       "source": "exercise_4_2",
       "target": "dense_subset",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "basis_for_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "real_line_standard_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_2",
-      "target": "dense_subset",
-      "relation": "related_to"
     },
     {
       "source": "exercise_4_3",
@@ -14239,31 +10709,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_4_3",
-      "target": "basis_for_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_3",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_3",
-      "target": "real_line_standard_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_3",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_3",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_4_4",
       "target": "basis_for_topology",
       "relation": "defined_in_terms_of"
@@ -14312,31 +10757,6 @@
       "source": "exercise_4_4",
       "target": "dense_subset",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "basis_for_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "real_line_standard_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_4",
-      "target": "dense_subset",
-      "relation": "related_to"
     },
     {
       "source": "exercise_4_5",
@@ -14389,31 +10809,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_4_5",
-      "target": "basis_for_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_5",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_5",
-      "target": "real_line_standard_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_5",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_5",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_4_6",
       "target": "basis_for_topology",
       "relation": "defined_in_terms_of"
@@ -14462,31 +10857,6 @@
       "source": "exercise_4_6",
       "target": "dense_subset",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "basis_for_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "real_line_standard_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_6",
-      "target": "dense_subset",
-      "relation": "related_to"
     },
     {
       "source": "exercise_4_7",
@@ -14539,31 +10909,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_4_7",
-      "target": "basis_for_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_7",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_7",
-      "target": "real_line_standard_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_7",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_7",
-      "target": "dense_subset",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_4_8",
       "target": "basis_for_topology",
       "relation": "defined_in_terms_of"
@@ -14612,31 +10957,6 @@
       "source": "exercise_4_8",
       "target": "dense_subset",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "basis_for_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "real_line_standard_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_4_8",
-      "target": "dense_subset",
-      "relation": "related_to"
     },
     {
       "source": "exercise_5_1",
@@ -14679,26 +10999,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_5_1",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_1",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_1",
-      "target": "quotient_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_1",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_5_2",
       "target": "subspace_topology",
       "relation": "defined_in_terms_of"
@@ -14737,26 +11037,6 @@
       "source": "exercise_5_2",
       "target": "continuity",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_5_2",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_2",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_2",
-      "target": "quotient_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_2",
-      "target": "continuity",
-      "relation": "related_to"
     },
     {
       "source": "exercise_5_3",
@@ -14799,26 +11079,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_5_3",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_3",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_3",
-      "target": "quotient_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_3",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_5_4",
       "target": "subspace_topology",
       "relation": "defined_in_terms_of"
@@ -14857,26 +11117,6 @@
       "source": "exercise_5_4",
       "target": "continuity",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_5_4",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_4",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_4",
-      "target": "quotient_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_4",
-      "target": "continuity",
-      "relation": "related_to"
     },
     {
       "source": "exercise_5_5",
@@ -14919,26 +11159,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_5_5",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_5",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_5",
-      "target": "quotient_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_5",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_5_6",
       "target": "subspace_topology",
       "relation": "defined_in_terms_of"
@@ -14977,26 +11197,6 @@
       "source": "exercise_5_6",
       "target": "continuity",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_5_6",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_6",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_6",
-      "target": "quotient_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_6",
-      "target": "continuity",
-      "relation": "related_to"
     },
     {
       "source": "exercise_5_7",
@@ -15039,26 +11239,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_5_7",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_7",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_7",
-      "target": "quotient_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_7",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_5_8",
       "target": "subspace_topology",
       "relation": "defined_in_terms_of"
@@ -15099,26 +11279,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_5_8",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_8",
-      "target": "product_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_8",
-      "target": "quotient_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_5_8",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_6_1",
       "target": "connectedness",
       "relation": "defined_in_terms_of"
@@ -15157,26 +11317,6 @@
       "source": "exercise_6_1",
       "target": "path_connectedness",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_6_1",
-      "target": "connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_1",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_1",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_1",
-      "target": "path_connectedness",
-      "relation": "related_to"
     },
     {
       "source": "exercise_6_2",
@@ -15219,26 +11359,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_6_2",
-      "target": "connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_2",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_2",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_2",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_6_3",
       "target": "connectedness",
       "relation": "defined_in_terms_of"
@@ -15277,26 +11397,6 @@
       "source": "exercise_6_3",
       "target": "path_connectedness",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_6_3",
-      "target": "connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_3",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_3",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_3",
-      "target": "path_connectedness",
-      "relation": "related_to"
     },
     {
       "source": "exercise_6_4",
@@ -15339,26 +11439,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_6_4",
-      "target": "connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_4",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_4",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_4",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_6_5",
       "target": "connectedness",
       "relation": "defined_in_terms_of"
@@ -15397,26 +11477,6 @@
       "source": "exercise_6_5",
       "target": "path_connectedness",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_6_5",
-      "target": "connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_5",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_5",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_5",
-      "target": "path_connectedness",
-      "relation": "related_to"
     },
     {
       "source": "exercise_6_6",
@@ -15459,26 +11519,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_6_6",
-      "target": "connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_6",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_6",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_6",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_6_7",
       "target": "connectedness",
       "relation": "defined_in_terms_of"
@@ -15519,26 +11559,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_6_7",
-      "target": "connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_7",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_7",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_7",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_6_8",
       "target": "connectedness",
       "relation": "defined_in_terms_of"
@@ -15577,26 +11597,6 @@
       "source": "exercise_6_8",
       "target": "path_connectedness",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_6_8",
-      "target": "connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_8",
-      "target": "compactness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_8",
-      "target": "hausdorff_property",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_6_8",
-      "target": "path_connectedness",
-      "relation": "related_to"
     },
     {
       "source": "exercise_7_1",
@@ -15619,16 +11619,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_7_1",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_7_1",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_7_2",
       "target": "path_connectedness",
       "relation": "defined_in_terms_of"
@@ -15647,16 +11637,6 @@
       "source": "exercise_7_2",
       "target": "algebraic_topology_examples",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_7_2",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_7_2",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
     },
     {
       "source": "exercise_7_3",
@@ -15679,16 +11659,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_7_3",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_7_3",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_7_4",
       "target": "path_connectedness",
       "relation": "defined_in_terms_of"
@@ -15707,16 +11677,6 @@
       "source": "exercise_7_4",
       "target": "algebraic_topology_examples",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_7_4",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_7_4",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
     },
     {
       "source": "exercise_7_5",
@@ -15739,16 +11699,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_7_5",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_7_5",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_7_6",
       "target": "path_connectedness",
       "relation": "defined_in_terms_of"
@@ -15767,16 +11717,6 @@
       "source": "exercise_7_6",
       "target": "algebraic_topology_examples",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_7_6",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_7_6",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
     },
     {
       "source": "exercise_7_7",
@@ -15799,16 +11739,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_7_7",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_7_7",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_7_8",
       "target": "path_connectedness",
       "relation": "defined_in_terms_of"
@@ -15827,16 +11757,6 @@
       "source": "exercise_7_8",
       "target": "algebraic_topology_examples",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_7_8",
-      "target": "path_connectedness",
-      "relation": "related_to"
-    },
-    {
-      "source": "exercise_7_8",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
     },
     {
       "source": "exercise_8_1",
@@ -15849,11 +11769,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_8_1",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_8_2",
       "target": "algebraic_topology_examples",
       "relation": "defined_in_terms_of"
@@ -15862,11 +11777,6 @@
       "source": "exercise_8_2",
       "target": "algebraic_topology_examples",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_8_2",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
     },
     {
       "source": "exercise_8_3",
@@ -15879,11 +11789,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_8_3",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_8_4",
       "target": "algebraic_topology_examples",
       "relation": "defined_in_terms_of"
@@ -15892,11 +11797,6 @@
       "source": "exercise_8_4",
       "target": "algebraic_topology_examples",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_8_4",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
     },
     {
       "source": "exercise_8_5",
@@ -15909,11 +11809,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_8_5",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_8_6",
       "target": "algebraic_topology_examples",
       "relation": "defined_in_terms_of"
@@ -15922,11 +11817,6 @@
       "source": "exercise_8_6",
       "target": "algebraic_topology_examples",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_8_6",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
     },
     {
       "source": "exercise_8_7",
@@ -15939,11 +11829,6 @@
       "relation": "motivated_by"
     },
     {
-      "source": "exercise_8_7",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
-    },
-    {
       "source": "exercise_8_8",
       "target": "algebraic_topology_examples",
       "relation": "defined_in_terms_of"
@@ -15952,31 +11837,11 @@
       "source": "exercise_8_8",
       "target": "algebraic_topology_examples",
       "relation": "motivated_by"
-    },
-    {
-      "source": "exercise_8_8",
-      "target": "algebraic_topology_examples",
-      "relation": "related_to"
     },
     {
       "source": "based_map",
       "target": "continuity",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "based_map",
-      "target": "induced_homomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "based_map",
-      "target": "functoriality",
-      "relation": "related_to"
-    },
-    {
-      "source": "based_map",
-      "target": "fundamental_group",
-      "relation": "related_to"
     },
     {
       "source": "basepoint_independence",
@@ -15992,21 +11857,6 @@
       "source": "basepoint_independence",
       "target": "isomorphism",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "basepoint_independence",
-      "target": "fundamental_group",
-      "relation": "related_to"
-    },
-    {
-      "source": "basepoint_independence",
-      "target": "path_connected_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "basepoint_independence",
-      "target": "isomorphism",
-      "relation": "related_to"
     },
     {
       "source": "binary_operation",
@@ -16024,24 +11874,9 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "binary_operation",
-      "target": "group",
-      "relation": "related_to"
-    },
-    {
-      "source": "binary_operation",
-      "target": "cartesian_product",
-      "relation": "related_to"
-    },
-    {
       "source": "bounded",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "bounded",
-      "target": "metric_space",
-      "relation": "related_to"
     },
     {
       "source": "bounded",
@@ -16125,11 +11960,6 @@
     },
     {
       "source": "homeomorphism_equivalence_relation",
-      "target": "homeomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "homeomorphism_equivalence_relation",
       "target": "topological_property",
       "relation": "related_to"
     },
@@ -16149,11 +11979,6 @@
       "relation": "related_to"
     },
     {
-      "source": "composition_continuous",
-      "target": "composition_maps",
-      "relation": "related_to"
-    },
-    {
       "source": "composition_maps",
       "target": "function",
       "relation": "defined_in_terms_of"
@@ -16167,11 +11992,6 @@
       "source": "composition_maps",
       "target": "codomain",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "continuity_point_metric",
-      "target": "neighborhood_metric",
-      "relation": "related_to"
     },
     {
       "source": "continuity_point_metric",
@@ -16199,11 +12019,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "continuity_basis",
-      "target": "subbasis",
-      "relation": "related_to"
-    },
-    {
       "source": "continuity_preimage_metric",
       "target": "continuity",
       "relation": "defined_in_terms_of"
@@ -16211,11 +12026,6 @@
     {
       "source": "continuity_preimage_metric",
       "target": "open_closed_set_metric",
-      "relation": "related_to"
-    },
-    {
-      "source": "continuity_preimage_metric",
-      "target": "continuity_basis",
       "relation": "related_to"
     },
     {
@@ -16236,11 +12046,6 @@
     {
       "source": "compact_image",
       "target": "connected_image",
-      "relation": "related_to"
-    },
-    {
-      "source": "compact_image",
-      "target": "evt",
       "relation": "related_to"
     },
     {
@@ -16284,11 +12089,6 @@
       "relation": "related_to"
     },
     {
-      "source": "continuous_map_metric",
-      "target": "neighborhood_metric",
-      "relation": "related_to"
-    },
-    {
       "source": "cover",
       "target": "basis_for_topology",
       "relation": "related_to"
@@ -16304,26 +12104,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "covering_space",
-      "target": "local_homeomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "covering_space",
-      "target": "lifting",
-      "relation": "related_to"
-    },
-    {
-      "source": "covering_space",
-      "target": "path_lifting",
-      "relation": "related_to"
-    },
-    {
-      "source": "covering_space",
-      "target": "pi1_circle",
-      "relation": "related_to"
-    },
-    {
       "source": "cyclic_subgroup",
       "target": "subgroup",
       "relation": "defined_in_terms_of"
@@ -16332,16 +12112,6 @@
       "source": "cyclic_subgroup",
       "target": "group",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "cyclic_subgroup",
-      "target": "subgroup",
-      "relation": "related_to"
-    },
-    {
-      "source": "cyclic_subgroup",
-      "target": "group",
-      "relation": "related_to"
     },
     {
       "source": "cyclic_subgroup",
@@ -16357,20 +12127,10 @@
       "source": "deformation_retract",
       "target": "homotopy",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "deformation_retract",
-      "target": "retraction",
-      "relation": "related_to"
     },
     {
       "source": "deformation_retract",
       "target": "homotopy_equivalence",
-      "relation": "related_to"
-    },
-    {
-      "source": "deformation_retract",
-      "target": "homotopy",
       "relation": "related_to"
     },
     {
@@ -16414,16 +12174,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "equivalence_class",
-      "target": "coset",
-      "relation": "related_to"
-    },
-    {
-      "source": "equivalence_class",
-      "target": "homotopy_classes",
-      "relation": "related_to"
-    },
-    {
       "source": "functoriality",
       "target": "induced_homomorphism",
       "relation": "defined_in_terms_of"
@@ -16432,51 +12182,6 @@
       "source": "functoriality",
       "target": "homomorphism",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "functoriality",
-      "target": "induced_homomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "functoriality",
-      "target": "pi1_invariant",
-      "relation": "related_to"
-    },
-    {
-      "source": "functoriality",
-      "target": "composition_continuous",
-      "relation": "related_to"
-    },
-    {
-      "source": "functoriality",
-      "target": "homomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "fundamental_group",
-      "target": "path_homotopy_classes",
-      "relation": "related_to"
-    },
-    {
-      "source": "fundamental_group",
-      "target": "product_of_paths",
-      "relation": "related_to"
-    },
-    {
-      "source": "fundamental_group",
-      "target": "simply_connected",
-      "relation": "related_to"
-    },
-    {
-      "source": "fundamental_group",
-      "target": "induced_homomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "fundamental_group",
-      "target": "pi1_circle",
-      "relation": "related_to"
     },
     {
       "source": "fht",
@@ -16499,26 +12204,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "fht",
-      "target": "homomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "fht",
-      "target": "isomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "fht",
-      "target": "normal_subgroup",
-      "relation": "related_to"
-    },
-    {
-      "source": "evt",
-      "target": "compact_space",
-      "relation": "related_to"
-    },
-    {
       "source": "supremum",
       "target": "real_line_standard_topology",
       "relation": "defined_in_terms_of"
@@ -16527,11 +12212,6 @@
       "source": "supremum",
       "target": "subset",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "supremum",
-      "target": "evt",
-      "relation": "related_to"
     },
     {
       "source": "supremum",
@@ -16554,21 +12234,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "group",
-      "target": "subgroup",
-      "relation": "related_to"
-    },
-    {
-      "source": "group",
-      "target": "homomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "group",
-      "target": "fundamental_group",
-      "relation": "related_to"
-    },
-    {
       "source": "homomorphism",
       "target": "group",
       "relation": "defined_in_terms_of"
@@ -16577,16 +12242,6 @@
       "source": "homomorphism",
       "target": "function",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "homomorphism",
-      "target": "isomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "homomorphism",
-      "target": "induced_homomorphism",
-      "relation": "related_to"
     },
     {
       "source": "homomorphism",
@@ -16624,31 +12279,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "homeomorphism_open_closed",
-      "target": "open_closed_map",
-      "relation": "related_to"
-    },
-    {
-      "source": "homotopy",
-      "target": "nullhomotopic",
-      "relation": "related_to"
-    },
-    {
-      "source": "homotopy",
-      "target": "path_homotopy",
-      "relation": "related_to"
-    },
-    {
-      "source": "homotopy",
-      "target": "homotopy_classes",
-      "relation": "related_to"
-    },
-    {
-      "source": "homotopy",
-      "target": "homotopy_equivalence",
-      "relation": "related_to"
-    },
-    {
       "source": "homotopy_classes",
       "target": "path_homotopy",
       "relation": "related_to"
@@ -16659,16 +12289,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "homotopy_equivalence",
-      "target": "homotopy_type",
-      "relation": "related_to"
-    },
-    {
-      "source": "homotopy_equivalence",
-      "target": "homotopy_equiv_iso",
-      "relation": "related_to"
-    },
-    {
       "source": "homotopy_equiv_iso",
       "target": "homotopy_equivalence",
       "relation": "defined_in_terms_of"
@@ -16676,11 +12296,6 @@
     {
       "source": "homotopy_equiv_iso",
       "target": "homotopy_type",
-      "relation": "related_to"
-    },
-    {
-      "source": "homotopy_equiv_iso",
-      "target": "pi1_invariant",
       "relation": "related_to"
     },
     {
@@ -16692,16 +12307,6 @@
       "source": "homotopy_lifting",
       "target": "covering_space",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "homotopy_lifting",
-      "target": "path_lifting",
-      "relation": "related_to"
-    },
-    {
-      "source": "homotopy_lifting",
-      "target": "covering_space",
-      "relation": "related_to"
     },
     {
       "source": "homotopy_lifting",
@@ -16774,11 +12379,6 @@
       "relation": "related_to"
     },
     {
-      "source": "intersection_topologies",
-      "target": "topological_space",
-      "relation": "related_to"
-    },
-    {
       "source": "isomorphism",
       "target": "homomorphism",
       "relation": "defined_in_terms_of"
@@ -16790,17 +12390,7 @@
     },
     {
       "source": "isomorphism",
-      "target": "bijective",
-      "relation": "related_to"
-    },
-    {
-      "source": "isomorphism",
       "target": "pi1_circle",
-      "relation": "related_to"
-    },
-    {
-      "source": "lebesgue_number",
-      "target": "compact_space",
       "relation": "related_to"
     },
     {
@@ -16817,21 +12407,6 @@
       "source": "coset",
       "target": "set",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "coset",
-      "target": "subgroup",
-      "relation": "related_to"
-    },
-    {
-      "source": "coset",
-      "target": "normal_subgroup",
-      "relation": "related_to"
-    },
-    {
-      "source": "coset",
-      "target": "quotient_group",
-      "relation": "related_to"
     },
     {
       "source": "lifting",
@@ -16860,28 +12435,13 @@
     },
     {
       "source": "lifting_correspondence",
-      "target": "path_lifting",
-      "relation": "related_to"
-    },
-    {
-      "source": "lifting_correspondence",
       "target": "pi1_circle",
-      "relation": "related_to"
-    },
-    {
-      "source": "lifting_correspondence",
-      "target": "fundamental_group",
       "relation": "related_to"
     },
     {
       "source": "local_homeomorphism",
       "target": "homeomorphism",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "local_homeomorphism",
-      "target": "homeomorphism",
-      "relation": "related_to"
     },
     {
       "source": "neighborhood_metric",
@@ -16914,34 +12474,9 @@
       "relation": "related_to"
     },
     {
-      "source": "neighborhood_metric",
-      "target": "metric_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "neighborhood_metric",
-      "target": "metric_topology",
-      "relation": "related_to"
-    },
-    {
-      "source": "neighborhood_metric",
-      "target": "open_closed_ball",
-      "relation": "related_to"
-    },
-    {
-      "source": "neighborhood_metric",
-      "target": "open_neighborhood",
-      "relation": "related_to"
-    },
-    {
       "source": "neighborhood_characterization_open",
       "target": "neighborhood",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "neighborhood_characterization_open",
-      "target": "neighborhood",
-      "relation": "related_to"
     },
     {
       "source": "neighborhood_characterization_open",
@@ -16967,16 +12502,6 @@
       "source": "normal_subgroup",
       "target": "coset",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "normal_subgroup",
-      "target": "quotient_group",
-      "relation": "related_to"
-    },
-    {
-      "source": "normal_subgroup",
-      "target": "subgroup",
-      "relation": "related_to"
     },
     {
       "source": "normal_subgroup",
@@ -17019,44 +12544,14 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "open_closed_map",
-      "target": "continuity",
-      "relation": "related_to"
-    },
-    {
       "source": "pasting_lemma",
       "target": "closed_set",
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "pasting_lemma",
-      "target": "product_of_paths",
-      "relation": "related_to"
-    },
-    {
-      "source": "pasting_lemma",
-      "target": "closed_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "pasting_lemma",
-      "target": "homotopy",
-      "relation": "related_to"
-    },
-    {
       "source": "path_homotopy",
       "target": "homotopy",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "path_homotopy",
-      "target": "path_homotopy_classes",
-      "relation": "related_to"
-    },
-    {
-      "source": "path_homotopy",
-      "target": "product_of_paths",
-      "relation": "related_to"
     },
     {
       "source": "path_homotopy",
@@ -17072,11 +12567,6 @@
       "source": "path_implies_connected",
       "target": "path_connected_space",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "path_implies_connected",
-      "target": "connected_space",
-      "relation": "related_to"
     },
     {
       "source": "product_compact",
@@ -17097,11 +12587,6 @@
       "source": "product_compact",
       "target": "cover",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "product_compact",
-      "target": "tube_lemma",
-      "relation": "related_to"
     },
     {
       "source": "product_compact",
@@ -17144,11 +12629,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "retraction",
-      "target": "subspace_topology",
-      "relation": "related_to"
-    },
-    {
       "source": "simply_connected",
       "target": "fundamental_group",
       "relation": "defined_in_terms_of"
@@ -17185,33 +12665,13 @@
     },
     {
       "source": "injective",
-      "target": "function",
-      "relation": "related_to"
-    },
-    {
-      "source": "injective",
       "target": "surjective",
-      "relation": "related_to"
-    },
-    {
-      "source": "injective",
-      "target": "bijective",
       "relation": "related_to"
     },
     {
       "source": "surjective",
       "target": "function",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "surjective",
-      "target": "function",
-      "relation": "related_to"
-    },
-    {
-      "source": "surjective",
-      "target": "bijective",
-      "relation": "related_to"
     },
     {
       "source": "bijective",
@@ -17227,11 +12687,6 @@
       "source": "bijective",
       "target": "surjective",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "bijective",
-      "target": "function",
-      "relation": "related_to"
     },
     {
       "source": "real_line_connected",
@@ -17279,11 +12734,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "tube_lemma",
-      "target": "compact_space",
-      "relation": "related_to"
-    },
-    {
       "source": "path_lifting",
       "target": "covering_space",
       "relation": "defined_in_terms_of"
@@ -17309,11 +12759,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "quotient_universal",
-      "target": "composition_continuous",
-      "relation": "related_to"
-    },
-    {
       "source": "pi1_invariant",
       "target": "homeomorphism",
       "relation": "defined_in_terms_of"
@@ -17322,16 +12767,6 @@
       "source": "pi1_invariant",
       "target": "topological_property",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "pi1_invariant",
-      "target": "homeomorphism",
-      "relation": "related_to"
-    },
-    {
-      "source": "pi1_invariant",
-      "target": "topological_property",
-      "relation": "related_to"
     },
     {
       "source": "pi1_invariant",
@@ -17360,11 +12795,6 @@
     },
     {
       "source": "pi1_product",
-      "target": "fundamental_group",
-      "relation": "related_to"
-    },
-    {
-      "source": "pi1_product",
       "target": "pi1_circle",
       "relation": "related_to"
     },
@@ -17387,11 +12817,6 @@
       "source": "open_neighborhood",
       "target": "topological_space",
       "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "open_neighborhood",
-      "target": "open_set",
-      "relation": "related_to"
     },
     {
       "source": "open_neighborhood",

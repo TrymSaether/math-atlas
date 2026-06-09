@@ -211,7 +211,17 @@ export const SourceGraphSchema = z
 
     const edgeIds = new Set<string>();
     const semantic = new Set<string>();
+    // Relations seen per ordered (s|t) and unordered (sorted) pair, for the
+    // subsumption check below.
+    const relsByOrdered = new Map<string, Set<string>>();
+    const relsByUnordered = new Map<string, Set<string>>();
+    const note = (map: Map<string, Set<string>>, k: string, r: string) => {
+      const s = map.get(k) ?? map.set(k, new Set()).get(k)!;
+      s.add(r);
+    };
     for (const [i, e] of data.edges.entries()) {
+      note(relsByOrdered, `${e.source}|${e.target}`, e.relation);
+      note(relsByUnordered, [e.source, e.target].sort().join("|"), e.relation);
       if (e.id) {
         if (edgeIds.has(e.id))
           ctx.addIssue({
@@ -252,6 +262,36 @@ export const SourceGraphSchema = z
           message: `Duplicate semantic edge: ${e.source} ${e.relation} ${e.target}`,
         });
       semantic.add(key);
+    }
+
+    // Subsumption: every fact is stored once, in its most specific form.
+    //  • a generic `uses` is redundant when a specific dependency
+    //    (defined_in_terms_of / assumes / constructed_from) connects the SAME
+    //    ordered pair — the specific relation already implies it;
+    //  • the weakest link `related_to` is redundant when ANY other relation
+    //    connects the same unordered pair.
+    const SPECIFIC_DEP = ["defined_in_terms_of", "assumes", "constructed_from"];
+    for (const [i, e] of data.edges.entries()) {
+      if (e.relation === "uses") {
+        const rels = relsByOrdered.get(`${e.source}|${e.target}`);
+        const dominant = SPECIFIC_DEP.find((r) => rels?.has(r));
+        if (dominant)
+          ctx.addIssue({
+            code: "custom",
+            path: ["edges", i],
+            message: `Redundant 'uses' edge ${e.source} → ${e.target}: subsumed by '${dominant}' on the same pair`,
+          });
+      }
+      if (e.relation === "related_to") {
+        const rels = relsByUnordered.get([e.source, e.target].sort().join("|"));
+        const other = [...(rels ?? [])].find((r) => r !== "related_to");
+        if (other)
+          ctx.addIssue({
+            code: "custom",
+            path: ["edges", i],
+            message: `Redundant 'related_to' edge ${e.source} ↔ ${e.target}: subsumed by '${other}' on the same pair`,
+          });
+      }
     }
   });
 

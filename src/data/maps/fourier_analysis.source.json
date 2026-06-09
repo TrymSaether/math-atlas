@@ -11474,31 +11474,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "periodic_function",
-      "target": "torus_circle",
-      "relation": "related_to"
-    },
-    {
-      "source": "integer_frequency",
-      "target": "torus_circle",
-      "relation": "related_to"
-    },
-    {
-      "source": "integer_frequency",
-      "target": "complex_exponential",
-      "relation": "related_to"
-    },
-    {
-      "source": "complex_exponential",
-      "target": "periodic_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "orthonormal_system",
-      "target": "inner_product_space",
-      "relation": "related_to"
-    },
-    {
       "source": "orthonormal_system",
       "target": "complex_exponential",
       "relation": "related_to"
@@ -11515,22 +11490,7 @@
     },
     {
       "source": "orthogonality_of_exponentials",
-      "target": "fourier_coefficient",
-      "relation": "related_to"
-    },
-    {
-      "source": "orthogonality_of_exponentials",
       "target": "l2_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "equivalence_relation",
-      "target": "equivalence_class",
-      "relation": "related_to"
-    },
-    {
-      "source": "equivalence_relation",
-      "target": "quotient_set",
       "relation": "related_to"
     },
     {
@@ -11544,31 +11504,6 @@
       "relation": "related_to"
     },
     {
-      "source": "equivalence_class",
-      "target": "quotient_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "equivalence_class",
-      "target": "lp_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "quotient_set",
-      "target": "lp_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "quotient_set",
-      "target": "torus_circle",
-      "relation": "related_to"
-    },
-    {
-      "source": "torus_circle",
-      "target": "fourier_coefficient",
-      "relation": "related_to"
-    },
-    {
       "source": "normalized_circle_measure",
       "target": "l1_space",
       "relation": "related_to"
@@ -11576,61 +11511,11 @@
     {
       "source": "normalized_circle_measure",
       "target": "l2_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "normalized_circle_measure",
-      "target": "fourier_coefficient",
       "relation": "related_to"
     },
     {
       "source": "normalized_circle_measure",
       "target": "convolution",
-      "relation": "related_to"
-    },
-    {
-      "source": "continuous_functions_torus",
-      "target": "torus_circle",
-      "relation": "related_to"
-    },
-    {
-      "source": "continuous_functions_torus",
-      "target": "fejer_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "continuous_functions_torus",
-      "target": "weierstrass_approximation_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "lp_space",
-      "target": "l1_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "lp_space",
-      "target": "l2_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "lp_space",
-      "target": "essential_supremum",
-      "relation": "related_to"
-    },
-    {
-      "source": "lp_space",
-      "target": "torus_circle",
-      "relation": "related_to"
-    },
-    {
-      "source": "lp_space",
-      "target": "ae_equal_one_point_spike",
-      "relation": "related_to"
-    },
-    {
-      "source": "ae_equal_one_point_spike",
-      "target": "almost_everywhere",
       "relation": "related_to"
     },
     {
@@ -11644,58 +11529,13 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "l1_space",
-      "target": "lebesgue_integral",
-      "relation": "related_to"
-    },
-    {
-      "source": "l1_space",
-      "target": "measurable_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "l1_space",
-      "target": "fubini_theorem",
-      "relation": "related_to"
-    },
-    {
       "source": "l2_space",
       "target": "lp_space",
       "relation": "uses"
     },
     {
-      "source": "l2_space",
-      "target": "inner_product_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "l2_space",
-      "target": "hilbert_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "hilbert_space",
-      "target": "inner_product_space",
-      "relation": "related_to"
-    },
-    {
       "source": "holder_lipschitz_continuity",
       "target": "decay_smoothness",
-      "relation": "related_to"
-    },
-    {
-      "source": "holder_lipschitz_continuity",
-      "target": "ss3_3_ex15",
-      "relation": "related_to"
-    },
-    {
-      "source": "holder_lipschitz_continuity",
-      "target": "ss3_3_ex16",
-      "relation": "related_to"
-    },
-    {
-      "source": "schwartz_density",
-      "target": "plancherel_theorem",
       "relation": "related_to"
     },
     {
@@ -11704,34 +11544,9 @@
       "relation": "related_to"
     },
     {
-      "source": "schwartz_density",
-      "target": "schwartz_space",
-      "relation": "related_to"
-    },
-    {
       "source": "fourier_coefficient",
       "target": "orthogonality_of_exponentials",
       "relation": "motivated_by"
-    },
-    {
-      "source": "fourier_coefficient",
-      "target": "complex_exponential",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_coefficient",
-      "target": "inner_product_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_coefficient",
-      "target": "fourier_spectrum",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_spectrum",
-      "target": "fourier_series",
-      "relation": "related_to"
     },
     {
       "source": "fourier_spectrum",
@@ -11739,68 +11554,8 @@
       "relation": "related_to"
     },
     {
-      "source": "fourier_series",
-      "target": "fourier_coefficient",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_series",
-      "target": "real_fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "trigonometric_polynomial",
-      "target": "complex_exponential",
-      "relation": "related_to"
-    },
-    {
-      "source": "partial_sum",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "parseval_identity",
-      "target": "bessel_inequality",
-      "relation": "related_to"
-    },
-    {
       "source": "parseval_identity",
       "target": "plancherel_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "riemann_lebesgue_lemma",
-      "target": "fourier_coefficient",
-      "relation": "related_to"
-    },
-    {
-      "source": "riemann_lebesgue_lemma",
-      "target": "fourier_transform_l1_continuity_decay",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_series_uniqueness_theorem",
-      "target": "fourier_coefficient",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_series_uniqueness_theorem",
-      "target": "fejer_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "best_approximation",
-      "target": "partial_sum",
-      "relation": "related_to"
-    },
-    {
-      "source": "best_approximation",
-      "target": "orthonormal_system",
-      "relation": "related_to"
-    },
-    {
-      "source": "best_approximation",
-      "target": "mean_square_convergence",
       "relation": "related_to"
     },
     {
@@ -11814,71 +11569,6 @@
       "relation": "related_to"
     },
     {
-      "source": "trigonometric_system_complete",
-      "target": "mean_square_convergence",
-      "relation": "related_to"
-    },
-    {
-      "source": "trigonometric_system_complete",
-      "target": "parseval_identity",
-      "relation": "related_to"
-    },
-    {
-      "source": "trigonometric_system_complete",
-      "target": "best_approximation",
-      "relation": "related_to"
-    },
-    {
-      "source": "good_kernel",
-      "target": "convolution",
-      "relation": "related_to"
-    },
-    {
-      "source": "dirichlet_kernel",
-      "target": "partial_sum",
-      "relation": "related_to"
-    },
-    {
-      "source": "fejer_kernel",
-      "target": "dirichlet_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "fejer_kernel",
-      "target": "good_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "poisson_kernel",
-      "target": "good_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "cesaro_summation",
-      "target": "partial_sum",
-      "relation": "related_to"
-    },
-    {
-      "source": "cesaro_summation",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "cesaro_summation",
-      "target": "dirichlet_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "cesaro_summation",
-      "target": "fejer_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "cesaro_summation",
-      "target": "fejer_theorem",
-      "relation": "related_to"
-    },
-    {
       "source": "cesaro_summation",
       "target": "good_kernel",
       "relation": "related_to"
@@ -11886,131 +11576,6 @@
     {
       "source": "summation_by_parts",
       "target": "dirichlet_convergence_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "summation_by_parts",
-      "target": "ss2_6_ex7",
-      "relation": "related_to"
-    },
-    {
-      "source": "summation_by_parts",
-      "target": "ss3_3_ex17",
-      "relation": "related_to"
-    },
-    {
-      "source": "abel_summation",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "abel_summation",
-      "target": "fourier_coefficient",
-      "relation": "related_to"
-    },
-    {
-      "source": "abel_summation",
-      "target": "poisson_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "abel_summation",
-      "target": "convolution",
-      "relation": "related_to"
-    },
-    {
-      "source": "abel_summation",
-      "target": "good_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "abel_summation",
-      "target": "dirichlet_problem_disk",
-      "relation": "related_to"
-    },
-    {
-      "source": "fejer_theorem",
-      "target": "fejer_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "fejer_theorem",
-      "target": "good_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "fejer_theorem",
-      "target": "weierstrass_approximation_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "fejer_theorem",
-      "target": "dirichlet_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "mean_square_convergence",
-      "target": "l2_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "mean_square_convergence",
-      "target": "parseval_identity",
-      "relation": "related_to"
-    },
-    {
-      "source": "pointwise_convergence",
-      "target": "dirichlet_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "pointwise_convergence",
-      "target": "dini_criterion",
-      "relation": "related_to"
-    },
-    {
-      "source": "pointwise_convergence",
-      "target": "dirichlet_convergence_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "pointwise_convergence",
-      "target": "du_bois_reymond_counterexample",
-      "relation": "related_to"
-    },
-    {
-      "source": "pointwise_convergence",
-      "target": "carleson_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "gibbs_phenomenon",
-      "target": "partial_sum",
-      "relation": "related_to"
-    },
-    {
-      "source": "gibbs_phenomenon",
-      "target": "dirichlet_convergence_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "gibbs_phenomenon",
-      "target": "dirichlet_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "carleson_theorem",
-      "target": "l2_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "carleson_theorem",
-      "target": "almost_everywhere",
-      "relation": "related_to"
-    },
-    {
-      "source": "du_bois_reymond_counterexample",
-      "target": "dirichlet_kernel",
       "relation": "related_to"
     },
     {
@@ -12026,31 +11591,6 @@
     {
       "source": "fourier_transform",
       "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_inversion",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_inversion",
-      "target": "schwartz_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "convolution_theorem",
-      "target": "convolution",
-      "relation": "related_to"
-    },
-    {
-      "source": "convolution_theorem",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "plancherel_theorem",
-      "target": "l2_space_real_line",
       "relation": "related_to"
     },
     {
@@ -12059,228 +11599,13 @@
       "relation": "satisfies"
     },
     {
-      "source": "gaussian_transform",
-      "target": "uncertainty_principle",
-      "relation": "related_to"
-    },
-    {
-      "source": "poisson_summation_formula",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "poisson_summation_formula",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "poisson_summation_formula",
-      "target": "theta_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "poisson_summation_formula",
-      "target": "sampling_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_transform_euclidean_space",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "differentiation_rule",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "differentiation_rule",
-      "target": "schwartz_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "tempered_distribution",
-      "target": "schwartz_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "dirac_delta",
-      "target": "tempered_distribution",
-      "relation": "related_to"
-    },
-    {
       "source": "dirac_delta",
       "target": "good_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "weak_derivative",
-      "target": "tempered_distribution",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_transform_distributions",
-      "target": "tempered_distribution",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_transform_distributions",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "roots_of_unity",
-      "target": "complex_exponential",
-      "relation": "related_to"
-    },
-    {
-      "source": "roots_of_unity",
-      "target": "cyclic_group",
-      "relation": "related_to"
-    },
-    {
-      "source": "roots_of_unity",
-      "target": "dft",
-      "relation": "related_to"
-    },
-    {
-      "source": "finite_abelian_group",
-      "target": "dual_group",
-      "relation": "related_to"
-    },
-    {
-      "source": "finite_abelian_group",
-      "target": "characters_finite_abelian",
-      "relation": "related_to"
-    },
-    {
-      "source": "group_character",
-      "target": "dual_group",
-      "relation": "related_to"
-    },
-    {
-      "source": "group_character",
-      "target": "characters_finite_abelian",
-      "relation": "related_to"
-    },
-    {
-      "source": "finite_fourier",
-      "target": "roots_of_unity",
-      "relation": "related_to"
-    },
-    {
-      "source": "finite_fourier",
-      "target": "orthonormal_system",
-      "relation": "related_to"
-    },
-    {
-      "source": "finite_fourier",
-      "target": "dft",
-      "relation": "related_to"
-    },
-    {
-      "source": "dtft",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "fft",
-      "target": "dft",
-      "relation": "related_to"
-    },
-    {
-      "source": "circular_convolution",
-      "target": "dft",
-      "relation": "related_to"
-    },
-    {
-      "source": "circular_convolution",
-      "target": "convolution",
       "relation": "related_to"
     },
     {
       "source": "circular_convolution",
       "target": "fft",
-      "relation": "related_to"
-    },
-    {
-      "source": "sampling_theorem",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "sampling_theorem",
-      "target": "fourier_inversion",
-      "relation": "related_to"
-    },
-    {
-      "source": "aliasing",
-      "target": "sampling_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "laplacian",
-      "target": "heat_equation",
-      "relation": "related_to"
-    },
-    {
-      "source": "laplacian",
-      "target": "wave_equation",
-      "relation": "related_to"
-    },
-    {
-      "source": "laplacian",
-      "target": "schrodinger_equation",
-      "relation": "related_to"
-    },
-    {
-      "source": "heat_equation",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "heat_equation",
-      "target": "good_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "wave_equation",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "isoperimetric",
-      "target": "parseval_identity",
-      "relation": "related_to"
-    },
-    {
-      "source": "isoperimetric",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "weyl_equidistribution",
-      "target": "weierstrass_approximation_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "weyl_equidistribution",
-      "target": "trigonometric_polynomial",
-      "relation": "related_to"
-    },
-    {
-      "source": "central_limit",
-      "target": "convolution_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "central_limit",
-      "target": "gaussian_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "signal_filtering",
-      "target": "convolution_theorem",
       "relation": "related_to"
     },
     {
@@ -12295,112 +11620,12 @@
     },
     {
       "source": "dirichlet_primes",
-      "target": "dirichlet_l_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "dirichlet_primes",
-      "target": "dirichlet_character",
-      "relation": "related_to"
-    },
-    {
-      "source": "dirichlet_primes",
       "target": "characters_finite_abelian",
-      "relation": "related_to"
-    },
-    {
-      "source": "dirichlet_primes",
-      "target": "primes_diverge",
-      "relation": "related_to"
-    },
-    {
-      "source": "measure_space",
-      "target": "sigma_algebra",
-      "relation": "related_to"
-    },
-    {
-      "source": "measure_space",
-      "target": "measure",
-      "relation": "related_to"
-    },
-    {
-      "source": "measure_space",
-      "target": "measurable_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "measure_space",
-      "target": "product_measure",
-      "relation": "related_to"
-    },
-    {
-      "source": "almost_everywhere",
-      "target": "lebesgue_integral",
-      "relation": "related_to"
-    },
-    {
-      "source": "almost_everywhere",
-      "target": "lp_space",
       "relation": "related_to"
     },
     {
       "source": "almost_everywhere",
       "target": "quotient_set",
-      "relation": "related_to"
-    },
-    {
-      "source": "dominated_convergence_theorem",
-      "target": "lebesgue_integral",
-      "relation": "related_to"
-    },
-    {
-      "source": "fubini_theorem",
-      "target": "tonelli_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "fubini_theorem",
-      "target": "product_measure",
-      "relation": "related_to"
-    },
-    {
-      "source": "fubini_theorem",
-      "target": "lebesgue_integral",
-      "relation": "related_to"
-    },
-    {
-      "source": "fubini_tonelli",
-      "target": "tonelli_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "fubini_tonelli",
-      "target": "fubini_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "fubini_tonelli",
-      "target": "product_measure",
-      "relation": "related_to"
-    },
-    {
-      "source": "fubini_tonelli",
-      "target": "lebesgue_integral",
-      "relation": "related_to"
-    },
-    {
-      "source": "fubini_tonelli",
-      "target": "l1_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "sigma_algebra",
-      "target": "measure",
-      "relation": "related_to"
-    },
-    {
-      "source": "sigma_algebra",
-      "target": "measurable_function",
       "relation": "related_to"
     },
     {
@@ -12414,36 +11639,6 @@
       "relation": "related_to"
     },
     {
-      "source": "measurable_function",
-      "target": "lebesgue_integral",
-      "relation": "related_to"
-    },
-    {
-      "source": "sigma_finite_measure",
-      "target": "measure_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "sigma_finite_measure",
-      "target": "product_measure",
-      "relation": "related_to"
-    },
-    {
-      "source": "sigma_finite_measure",
-      "target": "tonelli_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "sigma_finite_measure",
-      "target": "fubini_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "product_measure",
-      "target": "tonelli_theorem",
-      "relation": "related_to"
-    },
-    {
       "source": "lebesgue_integral",
       "target": "measure_space",
       "relation": "defined_in_terms_of"
@@ -12459,63 +11654,13 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "lebesgue_integral",
-      "target": "measure_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "tonelli_theorem",
-      "target": "lebesgue_integral",
-      "relation": "related_to"
-    },
-    {
       "source": "real_fourier_series",
       "target": "trigonometric_polynomial",
-      "relation": "related_to"
-    },
-    {
-      "source": "real_fourier_series",
-      "target": "complex_exponential",
-      "relation": "related_to"
-    },
-    {
-      "source": "half_range_expansion",
-      "target": "real_fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "localization_principle",
-      "target": "dirichlet_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "weierstrass_approximation_theorem",
-      "target": "trigonometric_polynomial",
-      "relation": "related_to"
-    },
-    {
-      "source": "abel_theorem",
-      "target": "abel_summation",
-      "relation": "related_to"
-    },
-    {
-      "source": "translation_modulation",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_transform_l1_continuity_decay",
-      "target": "fourier_transform",
       "relation": "related_to"
     },
     {
       "source": "fourier_scaling_rule",
       "target": "gaussian_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_scaling_rule",
-      "target": "heat_kernel_real_line",
       "relation": "related_to"
     },
     {
@@ -12524,128 +11669,13 @@
       "relation": "related_to"
     },
     {
-      "source": "hausdorff_young_inequality",
-      "target": "plancherel_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "hausdorff_young_inequality",
-      "target": "fourier_transform_l1_continuity_decay",
-      "relation": "related_to"
-    },
-    {
-      "source": "band_limited",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "paley_wiener_theorem",
-      "target": "band_limited",
-      "relation": "related_to"
-    },
-    {
-      "source": "heat_kernel_real_line",
-      "target": "gaussian_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "heat_kernel_real_line",
-      "target": "convolution_theorem",
-      "relation": "related_to"
-    },
-    {
       "source": "test_function",
       "target": "schwartz_space",
       "relation": "related_to"
     },
     {
-      "source": "convolution_distributions",
-      "target": "dirac_delta",
-      "relation": "related_to"
-    },
-    {
-      "source": "convolution_distributions",
-      "target": "convolution",
-      "relation": "related_to"
-    },
-    {
-      "source": "fundamental_solution",
-      "target": "fourier_transform_distributions",
-      "relation": "related_to"
-    },
-    {
-      "source": "fundamental_solution",
-      "target": "convolution_distributions",
-      "relation": "related_to"
-    },
-    {
-      "source": "parseval_dft",
-      "target": "dft",
-      "relation": "related_to"
-    },
-    {
       "source": "parseval_dft",
       "target": "parseval_identity",
-      "relation": "related_to"
-    },
-    {
-      "source": "dct",
-      "target": "dft",
-      "relation": "related_to"
-    },
-    {
-      "source": "dct",
-      "target": "half_range_expansion",
-      "relation": "related_to"
-    },
-    {
-      "source": "separation_of_variables",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "dirichlet_problem_disk",
-      "target": "poisson_kernel",
-      "relation": "related_to"
-    },
-    {
-      "source": "theta_function",
-      "target": "gaussian_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "schrodinger_equation",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "schrodinger_equation",
-      "target": "differentiation_rule",
-      "relation": "related_to"
-    },
-    {
-      "source": "diffraction",
-      "target": "fourier_transform_euclidean_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "diffraction",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "weierstrass_function",
-      "target": "fourier_series",
-      "relation": "related_to"
-    },
-    {
-      "source": "poisson_kernel_half_plane",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "poisson_kernel_half_plane",
-      "target": "good_kernel",
       "relation": "related_to"
     },
     {
@@ -12655,67 +11685,12 @@
     },
     {
       "source": "wave_equation_euclidean_space",
-      "target": "fourier_transform_euclidean_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "wave_equation_euclidean_space",
       "target": "wave_equation",
       "relation": "related_to"
     },
     {
-      "source": "radon_transform",
-      "target": "fourier_transform_euclidean_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "dual_group",
-      "target": "characters_finite_abelian",
-      "relation": "related_to"
-    },
-    {
       "source": "dual_group",
       "target": "finite_fourier",
-      "relation": "related_to"
-    },
-    {
-      "source": "characters_finite_abelian",
-      "target": "orthonormal_system",
-      "relation": "related_to"
-    },
-    {
-      "source": "characters_finite_abelian",
-      "target": "finite_fourier",
-      "relation": "related_to"
-    },
-    {
-      "source": "characters_finite_abelian",
-      "target": "dirichlet_character",
-      "relation": "related_to"
-    },
-    {
-      "source": "euclid_algorithm",
-      "target": "fundamental_arithmetic",
-      "relation": "related_to"
-    },
-    {
-      "source": "euclid_algorithm",
-      "target": "euler_phi_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "fundamental_arithmetic",
-      "target": "euler_product",
-      "relation": "related_to"
-    },
-    {
-      "source": "fundamental_arithmetic",
-      "target": "riemann_zeta_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "infinitude_primes",
-      "target": "fundamental_arithmetic",
       "relation": "related_to"
     },
     {
@@ -12726,116 +11701,11 @@
     {
       "source": "infinitude_primes",
       "target": "dirichlet_primes",
-      "relation": "related_to"
-    },
-    {
-      "source": "euler_product",
-      "target": "riemann_zeta_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "euler_product",
-      "target": "dirichlet_l_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "primes_diverge",
-      "target": "euler_product",
-      "relation": "related_to"
-    },
-    {
-      "source": "residue_class_modulo",
-      "target": "dirichlet_primes",
-      "relation": "related_to"
-    },
-    {
-      "source": "residue_class_modulo",
-      "target": "dirichlet_character",
-      "relation": "related_to"
-    },
-    {
-      "source": "euler_phi_function",
-      "target": "dirichlet_character",
-      "relation": "related_to"
-    },
-    {
-      "source": "riemann_zeta_function",
-      "target": "primes_diverge",
-      "relation": "related_to"
-    },
-    {
-      "source": "dirichlet_character",
-      "target": "dirichlet_l_function",
-      "relation": "related_to"
-    },
-    {
-      "source": "dirichlet_l_function",
-      "target": "l_function_nonvanishing",
-      "relation": "related_to"
-    },
-    {
-      "source": "l_function_nonvanishing",
-      "target": "dirichlet_primes",
-      "relation": "related_to"
-    },
-    {
-      "source": "essential_supremum",
-      "target": "almost_everywhere",
-      "relation": "related_to"
-    },
-    {
-      "source": "l1_space_real_line",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "l1_space_real_line",
-      "target": "lp_space",
       "relation": "related_to"
     },
     {
       "source": "l2_space_real_line",
       "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "support_of_function",
-      "target": "band_limited",
-      "relation": "related_to"
-    },
-    {
-      "source": "support_of_function",
-      "target": "paley_wiener_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "sinc_function",
-      "target": "sampling_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "entire_function",
-      "target": "paley_wiener_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_transform_convention",
-      "target": "fourier_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_transform_convention",
-      "target": "fourier_inversion",
-      "relation": "related_to"
-    },
-    {
-      "source": "fourier_transform_convention",
-      "target": "plancherel_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "variance_standard_deviation",
-      "target": "uncertainty_principle",
       "relation": "related_to"
     },
     {
@@ -12845,37 +11715,12 @@
     },
     {
       "source": "moderate_decrease",
-      "target": "polynomial_decay",
-      "relation": "related_to"
-    },
-    {
-      "source": "moderate_decrease",
-      "target": "schwartz_space",
-      "relation": "related_to"
-    },
-    {
-      "source": "moderate_decrease",
-      "target": "l1_space_real_line",
-      "relation": "related_to"
-    },
-    {
-      "source": "moderate_decrease",
-      "target": "l2_space_real_line",
-      "relation": "related_to"
-    },
-    {
-      "source": "moderate_decrease",
       "target": "fourier_transform_l1_continuity_decay",
       "relation": "related_to"
     },
     {
       "source": "moderate_decrease",
       "target": "riemann_lebesgue_lemma",
-      "relation": "related_to"
-    },
-    {
-      "source": "polynomial_decay",
-      "target": "schwartz_space",
       "relation": "related_to"
     },
     {
@@ -13096,11 +11941,6 @@
     {
       "source": "ss2_6_ex7",
       "target": "dirichlet_convergence_theorem",
-      "relation": "related_to"
-    },
-    {
-      "source": "ss2_6_ex7",
-      "target": "ss2_6_ex8",
       "relation": "related_to"
     },
     {
@@ -13416,11 +12256,6 @@
     {
       "source": "ss5_5_ex17",
       "target": "gaussian_transform",
-      "relation": "related_to"
-    },
-    {
-      "source": "ss5_5_ex17",
-      "target": "ss5_5_ex18",
       "relation": "related_to"
     },
     {
