@@ -69,45 +69,6 @@ const TONES: Record<DomainKey, DomainTone> = Object.fromEntries(
   DOMAIN_KEYS.map((key) => [key, makeTone(key)]),
 ) as Record<DomainKey, DomainTone>;
 
-/**
- * Canonical light-theme RGB anchor per palette key. Used only to snap an
- * authored hex `color` to its nearest hue — the rendered value is still the
- * CSS variable, so this never freezes a domain to light-theme values.
- */
-const ANCHORS: Record<DomainKey, [number, number, number]> = {
-  blue: [0x25, 0x63, 0xeb],
-  green: [0x16, 0xa3, 0x4a],
-  purple: [0x7c, 0x3a, 0xed],
-  red: [0xdc, 0x26, 0x26],
-  teal: [0x0d, 0x94, 0x88],
-  orange: [0xf9, 0x73, 0x16],
-  pink: [0xdb, 0x27, 0x77],
-  gold: [0xea, 0xb3, 0x08],
-};
-
-function parseHex(value: string | undefined): [number, number, number] | null {
-  if (!value) return null;
-  const match = value.trim().match(/^#?([0-9a-f]{6})$/i);
-  if (!match) return null;
-  const hex = match[1];
-  return [
-    Number.parseInt(hex.slice(0, 2), 16),
-    Number.parseInt(hex.slice(2, 4), 16),
-    Number.parseInt(hex.slice(4, 6), 16),
-  ];
-}
-
-/** Squared perceptual-ish distance (luma-weighted) between two RGB triples. */
-function colorDistance(
-  a: [number, number, number],
-  b: [number, number, number],
-): number {
-  const dr = (a[0] - b[0]) * 0.3;
-  const dg = (a[1] - b[1]) * 0.59;
-  const db = (a[2] - b[2]) * 0.11;
-  return dr * dr + dg * dg + db * db;
-}
-
 function explicitKey(domain: GraphDomain): DomainKey | null {
   const candidate = (domain as { palette?: string }).palette?.trim().toLowerCase();
   if (candidate && candidate in TONES) return candidate as DomainKey;
@@ -118,11 +79,8 @@ function explicitKey(domain: GraphDomain): DomainKey | null {
  * Resolve a distinct palette key for every domain, honoring authored intent.
  *
  * 1. Domains with an explicit `palette` key are pinned first.
- * 2. Remaining domains with an authored hex `color` are matched to their
- *    nearest free anchor, processed closest-match-first so the strongest
- *    intent wins the contested hue and weaker matches spill to their next best.
- * 3. Anything left sweeps `DOMAIN_KEYS` in `order`, taking the next free hue.
- * 4. Past 8 domains the palette wraps by order index.
+ * 2. Any whose key was already taken sweep `DOMAIN_KEYS` in `order`, taking the
+ *    next free hue, wrapping by order index past 8 domains.
  */
 export function resolveDomainTones(
   domains: GraphDomain[],
@@ -146,27 +104,10 @@ export function resolveDomainTones(
     else remaining.push(domain);
   }
 
-  // 2. Nearest-anchor matching for hex colors, closest pair first.
-  const candidates: { id: string; key: DomainKey; dist: number }[] = [];
-  const noColor: GraphDomain[] = [];
-  for (const domain of remaining) {
-    const rgb = parseHex(domain.color);
-    if (!rgb) {
-      noColor.push(domain);
-      continue;
-    }
-    for (const key of DOMAIN_KEYS) {
-      candidates.push({ id: domain.id, key, dist: colorDistance(rgb, ANCHORS[key]) });
-    }
-  }
-  candidates.sort((a, b) => a.dist - b.dist);
-  for (const { id, key } of candidates) {
-    if (result.has(id) || !freeKeys.has(key)) continue;
-    assign(id, key);
-  }
-
-  // 3 + 4. Ordered sweep for the rest, wrapping once the palette is exhausted.
-  const colorless = [...noColor, ...remaining.filter((d) => !result.has(d.id))];
+  // Ordered sweep for domains whose explicit palette key was already taken,
+  // wrapping once the palette is exhausted. (Domains always carry a palette key
+  // now, so step 1 handles the common case; this only resolves collisions.)
+  const colorless = remaining.filter((d) => !result.has(d.id));
   let sweep = 0;
   colorless.forEach((domain, index) => {
     if (result.has(domain.id)) return;

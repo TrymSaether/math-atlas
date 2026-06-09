@@ -30,13 +30,7 @@
     "**/public": false,
     "**/assets": true,
     "**/.playwright*": true,
-    "**/playwright.config.ts": true,
-    "**/tsconfig.json": true,
-    "**/tsconfig.*.json": true,
     "**/eslint.config.js": true,
-    "**/.eslintrc": true,
-    "**/.prettier*": true,
-    "**/tsconfig*": true,
     "**/.cache": true
   }
 }

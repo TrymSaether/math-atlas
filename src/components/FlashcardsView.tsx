@@ -106,7 +106,7 @@ function FlashcardsBody({ map }: { map: LoadedMap }) {
     () =>
       map.data.nodes.filter((n) => {
         if (kinds.size > 0 && !kinds.has(n.kind)) return false;
-        if (topics.size > 0 && !topics.has(n.domainId)) return false;
+        if (topics.size > 0 && !topics.has(n.domain)) return false;
         return Boolean(answerText(n) || hasNodeVisual(n));
       }),
     [map, kinds, topics],
@@ -302,8 +302,8 @@ function CardShell({
 }
 
 function CardMeta({ node, map }: { node: GraphNode; map: LoadedMap }) {
-  const tone = getDomainTone(node.domainId);
-  const domain = map.domainById.get(node.domainId);
+  const tone = getDomainTone(node.domain);
+  const domain = map.domainById.get(node.domain);
   return (
     <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-ui-meta">
       <span className="inline-flex items-center gap-1.5 font-medium" style={{ color: tone.color }}>
@@ -317,7 +317,7 @@ function CardMeta({ node, map }: { node: GraphNode; map: LoadedMap }) {
 }
 
 function CardFront({ node, map, onFlip }: { node: GraphNode; map: LoadedMap; onFlip: () => void }) {
-  const tone = getDomainTone(node.domainId);
+  const tone = getDomainTone(node.domain);
   return (
     <CardShell tone={tone.color}>
       <button
@@ -329,7 +329,7 @@ function CardFront({ node, map, onFlip }: { node: GraphNode; map: LoadedMap; onF
           className="font-serif text-atlas-display"
           style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.02em" }}
         >
-          <MathText text={node.title} />
+          <MathText text={node.label} />
         </h2>
         <span className="font-mono text-ui-hint uppercase tracking-label-wide" style={{ color: "var(--fg-4)" }}>
           Tap or press space to flip
@@ -340,16 +340,16 @@ function CardFront({ node, map, onFlip }: { node: GraphNode; map: LoadedMap; onF
 }
 
 function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOpen: () => void }) {
-  const tone = getDomainTone(node.domainId);
+  const tone = getDomainTone(node.domain);
   const statement = nodeStatement(node);
   const formal = nodeFormalStatement(node);
   const definition = nodeDefinition(node, [statement, formal]);
   const formula = nodeFormula(node, [statement, formal, definition]);
-  const gloss = node.gloss.trim();
-  const explanation = node.explanation.trim();
-  const solution = node.solution.trim();
-  const example = node.example.trim();
-  const proof = node.proof.trim();
+  const gloss = (node.content.gloss ?? "").trim();
+  const explanation = (node.content.intuition ?? "").trim();
+  const example = (node.examples[0]?.tex ?? "").trim();
+  const solution = (node.solution?.steps ?? []).map((s) => s.content).join("\n\n").trim();
+  const proof = (node.proof?.steps ?? []).map((s) => s.content).join("\n\n").trim();
   const showGloss = gloss && gloss !== explanation && gloss !== statement;
   // When there is no formal statement block, lead with the best plain answer.
   const lead = statement || formal || gloss || explanation || solution;
@@ -372,7 +372,7 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
           <CardMeta node={node} map={map} />
         </div>
         <h3 className="font-serif text-atlas-card" style={{ color: "var(--fg-1)", fontWeight: 600 }}>
-          <MathText text={node.title} />
+          <MathText text={node.label} />
         </h3>
 
         {lead && (

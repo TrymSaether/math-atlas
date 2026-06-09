@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build:maps": "tsx scripts/build-maps.ts",
+    "check:maps": "tsx scripts/build-maps.ts --check",
+    "build": "npm run check:maps && tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -25,13 +27,14 @@
     "react-dom": "^18.3.1",
     "reactflow": "^11.11.4",
     "tailwind-merge": "^2.5.4",
+    "tsx": "^4.22.4",
     "zod": "^3.23.8",
     "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/dagre": "^0.7.52",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.19.20",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",

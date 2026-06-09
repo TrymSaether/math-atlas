@@ -1,9 +1,5 @@
-import {
-  FieldJsonSchema,
-  type GraphData,
-  type GraphDomain,
-  type GraphEdge,
-} from "../types";
+import type { GraphData, GraphDomain, GraphEdge, GraphNode } from "../types";
+import type { Artifact } from "./artifactSchema";
 import {
   computeSwimlaneLayout,
   type DomainBounds,
@@ -12,7 +8,53 @@ import {
 import { registerDomainTones, type DomainTone } from "../lib/colors";
 import { computeGraphMetrics, type GraphMetrics } from "../lib/graphMetrics";
 import { DEFAULT_MAP_ID, MAPS, loadRawMap, type MapId } from "./mapRegistry";
-import { normalizeFieldGraph } from "./normalizeFieldGraph";
+
+/**
+ * Enrich a pre-validated build artifact into the runtime GraphData by computing
+ * the derived fields (see GraphNode). The artifact is already schema-checked at
+ * build time, so there is no runtime validation or format translation here.
+ */
+function enrichArtifact(artifact: Artifact): GraphData {
+  const domains: GraphDomain[] = [...artifact.domains].sort(
+    (a, b) => a.order - b.order || a.label.localeCompare(b.label),
+  );
+  const domainLabel = new Map(domains.map((d) => [d.id, d.label]));
+
+  // Prerequisites: for node X, the `from` (prereq) of dependency edges into X.
+  const prereqs = new Map<string, string[]>();
+  for (const e of artifact.edges) {
+    if (!e.isDependency) continue;
+    const list = prereqs.get(e.to) ?? [];
+    list.push(e.from);
+    prereqs.set(e.to, list);
+  }
+
+  const domainCounters = new Map<string, number>();
+  const nodes: GraphNode[] = artifact.nodes.map((n) => {
+    const idx = (domainCounters.get(n.domain) ?? 0) + 1;
+    domainCounters.set(n.domain, idx);
+    return {
+      ...n,
+      topicCluster: domainLabel.get(n.domain) ?? n.domain,
+      number: String(idx),
+      dictChapter: n.source?.chapter ?? "",
+      statementDependencies: prereqs.get(n.id) ?? [],
+      proofDependencies: [
+        ...new Set((n.proof?.steps ?? []).flatMap((s) => s.uses)),
+      ],
+    };
+  });
+
+  return {
+    id: artifact.id,
+    label: artifact.label,
+    field: artifact.field,
+    version: artifact.version,
+    domains,
+    nodes,
+    edges: artifact.edges as GraphEdge[],
+  };
+}
 
 function groupEdges(edges: GraphEdge[], key: "from" | "to") {
   const grouped = new Map<string, GraphEdge[]>();
@@ -94,8 +136,7 @@ function buildLoadedMap(data: GraphData): LoadedMap {
 
 async function parseMapData(mapId: MapId): Promise<GraphData> {
   const raw = await loadRawMap(mapId);
-  const parsed = FieldJsonSchema.parse(raw);
-  return normalizeFieldGraph(parsed);
+  return enrichArtifact(raw as Artifact);
 }
 
 const loadedMapCache = new Map<MapId, Promise<LoadedMap>>();

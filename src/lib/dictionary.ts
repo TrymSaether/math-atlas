@@ -35,7 +35,7 @@ export const KIND_ORDER: Record<string, number> = {
 export type DictSortMode = "alpha" | "section" | "kind";
 
 export function isDictionaryEntry(node: GraphNode): boolean {
-  return Boolean(nodeAnswerText(node) || node.diagramPath);
+  return Boolean(nodeAnswerText(node) || node.diagram);
 }
 
 export function dictionaryEntries(map: LoadedMap): GraphNode[] {
@@ -104,13 +104,13 @@ export function sectionFacet(
 
   const domainOrder = map.data.domains.map((d) => d.id);
   const present = domainOrder.filter((d) =>
-    entries.some((e) => e.domainId === d),
+    entries.some((e) => e.domain === d),
   );
   const labelOf = (v: string) => map.domainById.get(v)?.label ?? v;
   return {
     mode: "domain",
     values: present,
-    valueOf: (n) => n.domainId,
+    valueOf: (n) => n.domain,
     labelOf,
     chipLabelOf: labelOf,
   };

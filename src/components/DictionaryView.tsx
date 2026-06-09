@@ -53,7 +53,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
   const domainCounts = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const e of entries) counts.set(e.domainId, (counts.get(e.domainId) ?? 0) + 1);
+    for (const e of entries) counts.set(e.domain, (counts.get(e.domain) ?? 0) + 1);
     return map.data.domains
       .map((d) => ({ id: d.id, label: d.label, count: counts.get(d.id) ?? 0 }))
       .filter((d) => d.count > 0);
@@ -63,8 +63,8 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     const q = query.trim().toLowerCase();
     const items = entries.filter((e) => {
       if (kinds.size > 0 && !kinds.has(e.kind)) return false;
-      if (topics.size > 0 && !topics.has(e.domainId)) return false;
-      if (q && !e.title.toLowerCase().includes(q) && !(e.ref ?? "").toLowerCase().includes(q)) return false;
+      if (topics.size > 0 && !topics.has(e.domain)) return false;
+      if (q && !e.label.toLowerCase().includes(q) && !(e.source?.ref ?? "").toLowerCase().includes(q)) return false;
       return true;
     });
     return items.sort((a, b) => compareEntries(a, b, sortBy, facet));
@@ -217,7 +217,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 }
 
 function IndexRow({ entry, active, onClick }: { entry: GraphNode; active: boolean; onClick: () => void }) {
-  const tone = getDomainTone(entry.domainId);
+  const tone = getDomainTone(entry.domain);
   const Icon = CATEGORY_META[categoryOf(entry.kind)].icon;
   return (
     <button
@@ -233,7 +233,7 @@ function IndexRow({ entry, active, onClick }: { entry: GraphNode; active: boolea
         <Icon className="h-3.5 w-3.5" aria-hidden />
       </span>
       <span className="dict-row-term font-serif">
-        <MathText text={entry.title} />
+        <MathText text={entry.label} />
       </span>
       <span className="dict-row-meta">{kindAbbrev(entry.kind)}</span>
     </button>
@@ -253,14 +253,14 @@ function DetailPane({
 }) {
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
-  const tone = getDomainTone(entry.domainId);
-  const domain = map.domainById.get(entry.domainId);
+  const tone = getDomainTone(entry.domain);
+  const domain = map.domainById.get(entry.domain);
   const statement = entryStatement(entry);
   const formalStatement = entryFormalStatement(entry);
   const definition = nodeDefinition(entry, [statement, formalStatement]);
   const formula = nodeFormula(entry, [statement, formalStatement, definition]);
-  const proof = entry.proof.trim();
-  const solution = entry.solution.trim();
+  const proofSteps = entry.proof?.steps ?? [];
+  const solutionSteps = entry.solution?.steps ?? [];
   const prereqIds = [...new Set([...entry.statementDependencies, ...entry.proofDependencies])];
   const usedByIds = [
     ...new Set((map.outgoingEdgesByNodeId.get(entry.id) ?? []).map((edge) => edge.to)),
@@ -270,23 +270,27 @@ function DetailPane({
   });
   const relatedCaseIds = (() => {
     const ids = new Set<string>();
-    for (const edge of map.outgoingEdgesByNodeId.get(entry.id) ?? []) {
-      if (edge.relation === "has_example" || edge.relation === "has_counterexample") ids.add(edge.to);
-    }
-    for (const edge of map.incomingEdgesByNodeId.get(entry.id) ?? []) {
-      if (edge.relation === "has_property" || edge.relation === "motivates") ids.add(edge.from);
-    }
+    for (const edge of map.outgoingEdgesByNodeId.get(entry.id) ?? []) ids.add(edge.to);
+    for (const edge of map.incomingEdgesByNodeId.get(entry.id) ?? []) ids.add(edge.from);
     return [...ids].filter((id) => {
       const node = map.nodeById.get(id);
       return node && RELATED_CASE_KINDS.has(node.kind);
     });
   })();
   const exerciseIds = (map.outgoingEdgesByNodeId.get(entry.id) ?? [])
-    .filter((edge) => edge.relation === "requires")
     .map((edge) => edge.to)
     .filter((id, index, ids) => ids.indexOf(id) === index)
     .filter((id) => map.nodeById.get(id)?.kind === "exercise");
-  const related = entry.related
+  const related = [
+    ...new Set([
+      ...(map.outgoingEdgesByNodeId.get(entry.id) ?? [])
+        .filter((e) => e.relation === "related_to")
+        .map((e) => e.to),
+      ...(map.incomingEdgesByNodeId.get(entry.id) ?? [])
+        .filter((e) => e.relation === "related_to")
+        .map((e) => e.from),
+    ]),
+  ]
     .map((id) => map.nodeById.get(id))
     .filter((n): n is GraphNode => Boolean(n));
 
@@ -305,7 +309,7 @@ function DetailPane({
         <header className="dict-doc-head">
           <span className="dict-doc-rail" style={{ background: tone.color }} aria-hidden />
           <h2 className="dict-doc-term font-serif">
-            <MathText text={entry.title} />
+            <MathText text={entry.label} />
           </h2>
           <div className="dict-doc-meta">
             <span className="dict-doc-domain" style={{ color: tone.color }}>{domain?.label ?? entry.topicCluster}</span>
@@ -353,10 +357,10 @@ function DetailPane({
               <MathBox text={formula} />
             </Facet>
           )}
-          {entry.notation.length > 0 && (
+          {entry.content.notation.length > 0 && (
             <Facet label="Notation" muted>
               <div className="flex flex-wrap gap-x-3 gap-y-1.5">
-                {entry.notation.map((n, i) => (
+                {entry.content.notation.map((n, i) => (
                   <span key={i} className="font-math" style={{ color: "var(--fg-1)" }}>
                     <MathText text={n} />
                   </span>
@@ -364,32 +368,28 @@ function DetailPane({
               </div>
             </Facet>
           )}
-          {entry.gloss && (
+          {entry.content.gloss && (
             <Facet label="In words">
-              <MathProse text={entry.gloss} asBlock />
+              <MathProse text={entry.content.gloss} asBlock />
             </Facet>
           )}
-          {entry.example && (
+          {entry.examples[0]?.tex && (
             <Facet label="Example" muted>
-              <MathProse text={entry.example} asBlock />
+              <MathProse text={entry.examples[0].tex} asBlock />
             </Facet>
           )}
-          {entry.solutionSteps.length > 0 ? (
+          {solutionSteps.length > 0 && (
             <div>
               <StepLabel label="Solution" toneColor={tone.color} />
-              <Steps steps={entry.solutionSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
+              <Steps steps={solutionSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
             </div>
-          ) : solution ? (
-            <Proof text={solution} toneColor={tone.color} label="Solution" defaultOpen />
-          ) : null}
-          {entry.proofSteps.length > 0 ? (
+          )}
+          {proofSteps.length > 0 && (
             <div>
               <StepLabel label="Proof" toneColor={tone.color} />
-              <Steps steps={entry.proofSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
+              <Steps steps={proofSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
             </div>
-          ) : proof ? (
-            <Proof text={proof} toneColor={tone.color} defaultOpen />
-          ) : null}
+          )}
         </div>
 
         <footer className="dict-doc-foot">
@@ -402,7 +402,7 @@ function DetailPane({
               <span className="dict-related-lab">See also</span>
               <div className="dict-related-chips">
                 {related.map((n) => {
-                  const rtone = getDomainTone(n.domainId);
+                  const rtone = getDomainTone(n.domain);
                   return (
                     <button
                       key={n.id}
@@ -412,7 +412,7 @@ function DetailPane({
                       style={{ borderColor: rtone.border }}
                     >
                       <span className="dict-related-dot" style={{ background: rtone.color }} aria-hidden />
-                      <MathText text={n.title} />
+                      <MathText text={n.label} />
                     </button>
                   );
                 })}
@@ -452,7 +452,7 @@ function DictionaryLinkGroup({
       <span className="dict-related-lab">{label}</span>
       <div className="dict-related-chips">
         {nodes.map((node) => {
-          const tone = getDomainTone(node.domainId);
+          const tone = getDomainTone(node.domain);
           return (
             <button
               key={node.id}
@@ -462,7 +462,7 @@ function DictionaryLinkGroup({
               style={{ borderColor: tone.border }}
             >
               <span className="dict-related-dot" style={{ background: tone.color }} aria-hidden />
-              <MathText text={node.title} />
+              <MathText text={node.label} />
             </button>
           );
         })}
@@ -480,7 +480,7 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
 }
 
 function compareEntries(a: GraphNode, b: GraphNode, sortBy: DictSortMode, facet: SectionFacet): number {
-  const alpha = dictionarySortTitle(a.title).localeCompare(dictionarySortTitle(b.title), undefined, {
+  const alpha = dictionarySortTitle(a.label).localeCompare(dictionarySortTitle(b.label), undefined, {
     sensitivity: "base",
   });
   if (sortBy === "section") {
@@ -527,7 +527,7 @@ function groupEntries(items: GraphNode[], sortBy: DictSortMode, facet: SectionFa
       label = `${KIND_LABEL[entry.kind]}s`;
       id = `dict-kind-${entry.kind}`;
     } else {
-      const letter = dictionaryLetter(entry.title);
+      const letter = dictionaryLetter(entry.label);
       label = letter;
       id = `dict-L-${letter}`;
     }

@@ -11,7 +11,7 @@ import { compactNodeRef, nodeSourceCitation } from "../lib/nodeMeta";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { hasNodeVisual, NodeVisual } from "./NodeVisual";
-import { Spine, Facet, MathBox, ConnectionChip, Steps, Collapsible, Argument } from "./Specimen";
+import { Spine, Facet, MathBox, ConnectionChip, Steps, Collapsible } from "./Specimen";
 
 const USED_BY_INITIAL = 8;
 const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
@@ -58,9 +58,9 @@ function PanelContent({
 }) {
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
-  const domain = map.domainById.get(node.domainId);
-  const tone = getDomainTone(node.domainId);
-  const domainGlyphId = getDomainGlyphId({ mapId, domainId: node.domainId });
+  const domain = map.domainById.get(node.domain);
+  const tone = getDomainTone(node.domain);
+  const domainGlyphId = getDomainGlyphId({ mapId, domainId: node.domain });
   const [tab, setTab] = useState<TabId>("overview");
   const [showAllUsed, setShowAllUsed] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -75,12 +75,8 @@ function PanelContent({
   );
   const examples = useMemo(() => {
     const ids = new Set<string>();
-    for (const edge of map.outgoingEdgesByNodeId.get(node.id) ?? []) {
-      if (edge.relation === "has_example" || edge.relation === "has_counterexample") ids.add(edge.to);
-    }
-    for (const edge of map.incomingEdgesByNodeId.get(node.id) ?? []) {
-      if (edge.relation === "has_property" || edge.relation === "motivates") ids.add(edge.from);
-    }
+    for (const edge of map.outgoingEdgesByNodeId.get(node.id) ?? []) ids.add(edge.to);
+    for (const edge of map.incomingEdgesByNodeId.get(node.id) ?? []) ids.add(edge.from);
     return [...ids].filter((cid) => {
       const n = map.nodeById.get(cid);
       return n && RELATED_CASE_KINDS.has(n.kind);
@@ -89,7 +85,6 @@ function PanelContent({
   const exercises = useMemo(
     () =>
       (map.outgoingEdgesByNodeId.get(node.id) ?? [])
-        .filter((edge) => edge.relation === "requires")
         .map((edge) => edge.to)
         .filter((cid, index, ids) => ids.indexOf(cid) === index)
         .filter((cid) => map.nodeById.get(cid)?.kind === "exercise"),
@@ -106,8 +101,8 @@ function PanelContent({
 
   // Ordered domain peers drive the prev/next pager in the header.
   const peers = useMemo(
-    () => map.data.nodes.filter((n) => n.domainId === node.domainId),
-    [map, node.domainId],
+    () => map.data.nodes.filter((n) => n.domain === node.domain),
+    [map, node.domain],
   );
   const peerIdx = peers.findIndex((n) => n.id === node.id);
   const prev = peerIdx > 0 ? peers[peerIdx - 1] : null;
@@ -120,19 +115,19 @@ function PanelContent({
   const formalStatement = nodeFormalStatement(node);
   const definition = nodeDefinition(node, [statement, formalStatement]);
   const formula = nodeFormula(node, [statement, formalStatement, definition]);
-  const explanation = node.explanation.trim();
-  const solution = node.solution.trim();
-  const proof = node.proof.trim();
-  const gloss = node.gloss.trim();
-  const example = node.example.trim();
+  const explanation = (node.content.intuition ?? "").trim();
+  const gloss = (node.content.gloss ?? "").trim();
+  const example = (node.examples[0]?.tex ?? "").trim();
   const assumptions = node.assumptions;
-  const notation = node.notation;
+  const notation = node.content.notation;
+  const proofSteps = node.proof?.steps ?? [];
+  const solutionSteps = node.solution?.steps ?? [];
   const compactRef = compactNodeRef(node);
   const sourceCitation = nodeSourceCitation(node);
   const showGloss = gloss && gloss !== explanation;
   const linkCount = prereqIds.length + usedBy.length + examples.length + exercises.length;
-  const hasProof = node.proofSteps.length > 0 || Boolean(proof);
-  const hasSolution = node.solutionSteps.length > 0 || Boolean(solution);
+  const hasProof = proofSteps.length > 0;
+  const hasSolution = solutionSteps.length > 0;
 
   // Tabs are content-driven: a tab only appears when it has something to show.
   const tabs = useMemo(() => {
@@ -211,7 +206,7 @@ function PanelContent({
               className="font-serif text-node-panel-title"
               style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.015em" }}
             >
-              <MathText text={node.title} />
+              <MathText text={node.label} />
             </h2>
             <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-ui-meta">
               <span className="inline-flex items-center gap-1.5 font-medium" style={{ color: tone.color }}>
@@ -390,11 +385,7 @@ function PanelContent({
         {activeTab === "proof" && (
           <section id="sec-proof">
             <Collapsible toneColor={tone.color} defaultOpen>
-              {node.proofSteps.length > 0 ? (
-                <Steps steps={node.proofSteps} toneColor={tone.color} map={map} onSelect={select} />
-              ) : (
-                <Argument text={proof} toneColor={tone.color} />
-              )}
+              <Steps steps={proofSteps} toneColor={tone.color} map={map} onSelect={select} />
             </Collapsible>
           </section>
         )}
@@ -402,11 +393,7 @@ function PanelContent({
         {activeTab === "solution" && (
           <section id="sec-solution">
             <Collapsible toneColor={tone.color} defaultOpen>
-              {node.solutionSteps.length > 0 ? (
-                <Steps steps={node.solutionSteps} toneColor={tone.color} map={map} onSelect={select} />
-              ) : (
-                <Argument text={solution} toneColor={tone.color} />
-              )}
+              <Steps steps={solutionSteps} toneColor={tone.color} map={map} onSelect={select} />
             </Collapsible>
           </section>
         )}
@@ -466,7 +453,7 @@ function PanelContent({
               <dd style={{ color: "var(--fg-2)" }}>{KIND_LABEL[node.kind]}</dd>
               <dt style={{ color: "var(--fg-3)" }}>Map position</dt>
               <dd style={{ color: "var(--fg-2)" }}>
-                {node.chapter} · {node.section || "unranked"} · #{node.number}
+                {node.topicCluster} · {node.priority || "unranked"} · #{node.number}
               </dd>
               {compactRef && (
                 <>
@@ -480,11 +467,11 @@ function PanelContent({
                   <dd style={{ color: "var(--fg-2)" }}>{sourceCitation}</dd>
                 </>
               )}
-              {node.bookRefs.length > 0 && (
+              {(node.source?.references ?? []).length > 0 && (
                 <>
                   <dt style={{ color: "var(--fg-3)" }}>Textbook</dt>
                   <dd className="flex flex-wrap gap-1" style={{ color: "var(--fg-2)" }}>
-                    {node.bookRefs.map((r) => (
+                    {(node.source?.references ?? []).map((r) => (
                       <span
                         key={r}
                         className="rounded font-mono text-ui-2xs"
@@ -581,7 +568,7 @@ function PanelDictionaryLinkGroup({
       </span>
       <div className="flex flex-wrap gap-1.5">
         {nodes.map((node) => {
-          const nodeTone = getDomainTone(node.domainId);
+          const nodeTone = getDomainTone(node.domain);
           return (
             <button
               key={node.id}
@@ -592,7 +579,7 @@ function PanelDictionaryLinkGroup({
             >
               <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: nodeTone.color }} aria-hidden />
               <span className="min-w-0 truncate">
-                <MathText text={node.title} />
+                <MathText text={node.label} />
               </span>
             </button>
           );

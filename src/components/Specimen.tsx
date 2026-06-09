@@ -288,9 +288,9 @@ export function Steps({
       {steps.map((step, i) => {
         const last = i === steps.length - 1;
         const role = ROLE_LABEL[step.role] ?? (step.role ? step.role : "");
-        const deps = map ? step.dependsOn.filter((id) => map.nodeById.has(id)) : [];
+        const deps = map ? step.uses.filter((id) => map.nodeById.has(id)) : [];
         return (
-          <li key={step.id || i} className="relative pb-5 pl-7 last:pb-0">
+          <li key={i} className="relative pb-5 pl-7 last:pb-0">
             {/* derivation rail + node marker */}
             {!last && (
               <span
@@ -310,18 +310,13 @@ export function Steps({
             >
               {i + 1}
             </span>
-            <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-              {step.label && (
-                <span className="font-math text-ui-lead" style={{ color: "var(--fg-1)", fontWeight: 600 }}>
-                  <MathProse text={step.label} />
-                </span>
-              )}
-              {role && (
+            {role && (
+              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                 <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
                   {role}
                 </span>
-              )}
-            </div>
+              </div>
+            )}
             {step.content && (
               <div className="font-math mt-1.5 text-ui-copy leading-[1.7]" style={{ color: "var(--fg-1)" }}>
                 <MathProse text={step.content} asBlock />
@@ -361,12 +356,12 @@ export function ConnectionChip({
 }) {
   const node = map.nodeById.get(id);
   if (!node) return null;
-  const tone = getDomainTone(node.domainId);
+  const tone = getDomainTone(node.domain);
   const Icon = CATEGORY_META[categoryOf(node.kind)].icon;
   return (
     <button
       onClick={onClick}
-      title={`${node.title} · ${KIND_LABEL[node.kind]}`}
+      title={`${node.label} · ${KIND_LABEL[node.kind]}`}
       className="group inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
     >
@@ -377,7 +372,7 @@ export function ConnectionChip({
         <Icon className="h-2.5 w-2.5" strokeWidth={2.4} aria-hidden />
       </span>
       <span className="min-w-0 truncate text-ui-control leading-4" style={{ color: "var(--fg-1)" }}>
-        <MathText text={node.title} />
+        <MathText text={node.label} />
       </span>
     </button>
   );

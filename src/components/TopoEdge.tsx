@@ -12,7 +12,7 @@ import { prefersReducedMotion } from "../lib/utils";
 import { useStore } from "../store";
 import type { GraphEdge } from "../types";
 
-const FALLBACK_EDGE = { relation: "relation", dependencyClass: "" };
+const FALLBACK_EDGE = { relation: "relation", isDependency: false };
 
 interface RouteReveal {
   delay: number;

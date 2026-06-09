@@ -40,7 +40,7 @@ export function MinimapCard({
             id: node.id,
             cx: node.position.x + ATLAS_NODE_WIDTH / 2,
             cy: node.position.y + ATLAS_NODE_HEIGHT / 2,
-            domainId: graphNode?.domainId ?? "",
+            domainId: graphNode?.domain ?? "",
           };
         }),
     [nodes],

@@ -2,11 +2,21 @@
   "compilerOptions": {
     "composite": true,
     "skipLibCheck": true,
+    "target": "ES2022",
+    "lib": ["ES2022"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "outDir": ".cache/tsconfig-node",
-    "strict": true
+    "strict": true,
+    "types": ["node"]
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.ts",
+    "scripts/**/*.ts",
+    "src/data/sourceSchema.ts",
+    "src/data/relations.ts",
+    "src/data/artifactSchema.ts"
+  ]
 }

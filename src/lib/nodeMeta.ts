@@ -14,14 +14,14 @@ export function isCompactNodeRef(ref: string): boolean {
 }
 
 export function compactNodeRef(node: GraphNode): string {
-  const ref = node.ref.trim();
+  const ref = (node.source?.ref ?? "").trim();
   return isCompactNodeRef(ref) ? ref : "";
 }
 
 export function nodeSourceCitation(node: GraphNode): string {
-  const citation = node.sourceCitation.trim();
+  const citation = (node.source?.citation ?? "").trim();
   if (citation) return citation;
 
-  const ref = node.ref.trim();
+  const ref = (node.source?.ref ?? "").trim();
   return ref && !isCompactNodeRef(ref) ? ref : "";
 }

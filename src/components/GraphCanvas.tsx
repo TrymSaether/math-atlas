@@ -85,11 +85,11 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const filteredNodes = useMemo(() => {
     return data.nodes.filter((node) => {
       if (!kinds.has(node.kind)) return false;
-      if (topics.size && !topics.has(node.domainId)) return false;
+      if (topics.size && !topics.has(node.domain)) return false;
       if (search) {
         const haystack =
           searchScope === "title"
-            ? `${node.title} ${node.kind}`.toLowerCase()
+            ? `${node.label} ${node.kind}`.toLowerCase()
             : nodeSearchText(node);
         if (!haystack.includes(search)) return false;
       }
@@ -138,7 +138,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const visibleDomainCounts = useMemo(() => {
     const counts = new Map<string, number>();
     for (const node of filteredNodes) {
-      counts.set(node.domainId, (counts.get(node.domainId) ?? 0) + 1);
+      counts.set(node.domain, (counts.get(node.domain) ?? 0) + 1);
     }
     return counts;
   }, [filteredNodes]);
@@ -298,7 +298,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       const hasOutgoing = nodeHandleState.outgoing.has(node.id);
       const category = categoryOf(node.kind);
       const emphasis = emphasisById.get(node.id) ?? "normal";
-      const handleColor = getDomainTone(node.domainId).color;
+      const handleColor = getDomainTone(node.domain).color;
       const routePulseDelay = routeViz.nodePulse.get(node.id);
       const routeEndpoint =
         node.id === routeFrom ? "from" : node.id === routeTo ? "to" : undefined;
@@ -432,8 +432,8 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       )}
       <CanvasControls />
       <RouteToast
-        fromTitle={routeFrom ? map.nodeById.get(routeFrom)?.title : undefined}
-        toTitle={routeTo ? map.nodeById.get(routeTo)?.title : undefined}
+        fromTitle={routeFrom ? map.nodeById.get(routeFrom)?.label : undefined}
+        toTitle={routeTo ? map.nodeById.get(routeTo)?.label : undefined}
         count={route?.found ? route.path.length : 0}
         found={route ? route.found : null}
       />

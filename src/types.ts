@@ -1,392 +1,56 @@
-import { z } from "zod";
+import type { ArtifactNode, ArtifactEdge } from "./data/artifactSchema";
 
 export type NodeKind = string;
 export type Relation = string;
-export type EdgeSource = "auto" | "verified";
 
-export const SOURCE_DEPENDS_ON_TARGET = new Set([
-  "requires",
-  "uses",
-  "assumes",
-  "defined_by",
-  "constructed_from",
-  "subtype_of",
-  "instance_of",
-  "applied_to",
-  "violates_assumption",
-  "shows_necessity_of",
-]);
+/** A single proof / solution step (the artifact's step shape). */
+export type ProofStep = ArtifactNode extends { proof?: { steps: infer S } }
+  ? S extends (infer Step)[]
+    ? Step
+    : never
+  : never;
 
-const FIELD_EDGE_DIRECTIONS = new Set([
-  "source_to_target",
-  "target_to_source",
-  "bidirectional",
-]);
-
-const IdSchema = z.string().trim().min(1);
-const OptionalTextSchema = z.string().trim().default("");
-const RequiredTextSchema = z.string().trim().min(1);
-const StringArraySchema = z.array(z.string().trim().min(1)).default([]);
-
-export const GraphDomainSchema = z.object({
-  id: IdSchema,
-  label: RequiredTextSchema,
-  order: z.number().int().nonnegative(),
-  /** Authored hex hue; snapped to the nearest palette key at render time. */
-  color: RequiredTextSchema,
-  /**
-   * Optional explicit palette key (blue/green/purple/red/teal/orange/pink/gold).
-   * Overrides `color` snapping when an author wants to pin a domain's hue.
-   */
-  palette: OptionalTextSchema,
-  /** Legacy advisory fields — rendering now derives tones from the palette. */
-  tint: OptionalTextSchema,
-  border: OptionalTextSchema,
-});
-
-export type GraphDomain = z.infer<typeof GraphDomainSchema>;
+export interface GraphDomain {
+  id: string;
+  label: string;
+  order: number;
+  /** Palette key (blue/green/purple/red/teal/orange/pink/gold). */
+  palette: string;
+}
 
 /**
- * A single step of a multi-step proof or worked solution. The source carries
- * these as `proof_steps` / `solution_steps` arrays (see fourier_analysis), each
- * with a human `label`, a semantic `role` (setup / claim / calculation / case /
- * argument / conclusion / remark), prose+TeX `content`, and the node ids the
- * step leans on.
+ * Runtime node = the built artifact node plus a few fields *derived at load*
+ * (see data/loadMap). These are computed indices/labels, not stored data:
+ *
+ * - `topicCluster` — the node's domain label.
+ * - `number` — a stable per-domain index (source has no chapter numbering).
+ * - `dictChapter` — `source.chapter`, surfaced for the Dictionary view's grouping.
+ * - `statementDependencies` — prerequisite ids via the dependency edges.
+ * - `proofDependencies` — concept ids referenced by the proof's steps.
  */
-export const ProofStepSchema = z.object({
-  id: OptionalTextSchema,
-  label: OptionalTextSchema,
-  role: OptionalTextSchema,
-  content: OptionalTextSchema,
-  dependsOn: StringArraySchema,
-});
+export interface GraphNode extends ArtifactNode {
+  topicCluster: string;
+  number: string;
+  dictChapter: string;
+  statementDependencies: string[];
+  proofDependencies: string[];
+}
 
-export type ProofStep = z.infer<typeof ProofStepSchema>;
+export type GraphEdge = ArtifactEdge;
 
-export const TopoNodeSchema = z.object({
-  id: IdSchema,
-  kind: z.string().trim().min(1),
-  domainId: IdSchema,
-  number: RequiredTextSchema,
-  title: RequiredTextSchema,
-  chapter: OptionalTextSchema,
-  section: OptionalTextSchema,
-  sectionTitle: OptionalTextSchema,
-  sourceCitation: OptionalTextSchema,
-  topicCluster: RequiredTextSchema,
-  originalText: OptionalTextSchema,
-  formalStatement: OptionalTextSchema,
-  definitionText: OptionalTextSchema,
-  formulaText: OptionalTextSchema,
-  mathematicalFormula: OptionalTextSchema,
-  explanation: OptionalTextSchema,
-  solution: OptionalTextSchema,
-  proof: OptionalTextSchema,
-  // Structured multi-step proof / worked solution (the canonical fourier shape).
-  proofSteps: z.array(ProofStepSchema).default([]),
-  solutionSteps: z.array(ProofStepSchema).default([]),
-  // Stated hypotheses, symbolic notation, and external textbook citations.
-  assumptions: StringArraySchema,
-  notation: StringArraySchema,
-  bookRefs: StringArraySchema,
-  statementDependencies: StringArraySchema,
-  proofDependencies: StringArraySchema,
-  tags: StringArraySchema,
-  qualityFlags: StringArraySchema,
-  // Curated dictionary fields (present on topology nodes merged from the
-  // dictionary; empty elsewhere). Drive the dictionary view and the panel's
-  // gloss/example/diagram sections.
-  gloss: OptionalTextSchema,
-  example: OptionalTextSchema,
-  diagramPath: OptionalTextSchema,
-  ref: OptionalTextSchema,
-  dictChapter: OptionalTextSchema,
-  related: StringArraySchema,
-});
+/** Back-compat aliases for the React-Flow node/edge components. */
+export type TopoNode = GraphNode;
+export type TopoEdge = GraphEdge;
 
-export type TopoNode = z.infer<typeof TopoNodeSchema>;
-export type GraphNode = TopoNode;
-
-export const TopoEdgeSchema = z.object({
-  id: IdSchema,
-  from: IdSchema,
-  to: IdSchema,
-  relation: z.string().trim().min(1),
-  source: z.enum(["auto", "verified"]).default("auto"),
-  confidence: z.number().min(0).max(1).default(1),
-  label: OptionalTextSchema,
-  dependencyClass: OptionalTextSchema,
-  notes: OptionalTextSchema,
-});
-
-export type TopoEdge = z.infer<typeof TopoEdgeSchema>;
-export type GraphEdge = TopoEdge;
-
-export const TopoDataSchema = z
-  .object({
-    id: OptionalTextSchema,
-    label: OptionalTextSchema,
-    field: OptionalTextSchema,
-    domains: z.array(GraphDomainSchema).default([]),
-    nodes: z.array(TopoNodeSchema).default([]),
-    edges: z.array(TopoEdgeSchema).default([]),
-  })
-  .superRefine((data, ctx) => {
-    const domainIds = new Set<string>();
-    for (const domain of data.domains) {
-      if (domainIds.has(domain.id)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["domains"],
-          message: `Duplicate domain id: ${domain.id}`,
-        });
-      }
-      domainIds.add(domain.id);
-    }
-
-    const nodeIds = new Set<string>();
-    for (const node of data.nodes) {
-      if (nodeIds.has(node.id)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["nodes"],
-          message: `Duplicate node id: ${node.id}`,
-        });
-      }
-      nodeIds.add(node.id);
-      if (domainIds.size > 0 && !domainIds.has(node.domainId)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["nodes", node.id, "domainId"],
-          message: `Node ${node.id} references missing domain: ${node.domainId}`,
-        });
-      }
-    }
-
-    const edgeIds = new Set<string>();
-    for (const edge of data.edges) {
-      if (edgeIds.has(edge.id)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["edges"],
-          message: `Duplicate edge id: ${edge.id}`,
-        });
-      }
-      edgeIds.add(edge.id);
-      if (!nodeIds.has(edge.from)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["edges", edge.id, "from"],
-          message: `Edge ${edge.id} references missing source node: ${edge.from}`,
-        });
-      }
-      if (!nodeIds.has(edge.to)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["edges", edge.id, "to"],
-          message: `Edge ${edge.id} references missing target node: ${edge.to}`,
-        });
-      }
-    }
-  });
-
-export type TopoData = z.infer<typeof TopoDataSchema>;
-export type GraphData = TopoData;
-
-/** Raw step shape in the source JSON (`proof_steps` / `solution_steps`). */
-export const FieldStepSchema = z
-  .object({
-    id: z.string().default(""),
-    label: z.string().default(""),
-    role: z.string().default(""),
-    content: z.string().default(""),
-    depends_on: z.array(z.string()).default([]),
-  })
-  .passthrough();
-
-export const FieldItemSchema = z
-  .object({
-    id: IdSchema,
-    label: RequiredTextSchema,
-    kind: z.string().trim().min(1),
-    domain: IdSchema,
-    statement: z.string().nullable().optional(),
-    formal_statement: z.string().nullable().optional(),
-    definition: z.string().nullable().optional(),
-    formula: z.string().nullable().optional(),
-    intuition: z.string().nullable().optional(),
-    solution: z.string().nullable().optional(),
-    proof: z.string().nullable().optional(),
-    proof_steps: z.array(FieldStepSchema).default([]),
-    solution_steps: z.array(FieldStepSchema).default([]),
-    book_refs: z.array(z.string()).default([]),
-    proof_dependencies: z.array(z.string()).default([]),
-    notation: z
-      .union([z.string(), z.array(z.string())])
-      .nullable()
-      .optional(),
-    // Curated dictionary fields, folded in by scripts/reconcile_dictionary.py.
-    chapter: z.string().nullable().optional(),
-    ref: z.string().nullable().optional(),
-    gloss: z.string().nullable().optional(),
-    example: z.string().nullable().optional(),
-    diagram_path: z.string().nullable().optional(),
-    related: z.array(z.string()).default([]),
-    assumptions: z.array(z.string()).default([]),
-    dependencies: z.record(z.array(z.string())).default({}),
-    outgoing_relations: z.array(z.string()).default([]),
-    metadata: z
-      .object({
-        tags: z.array(z.string()).default([]),
-        syllabus_priority: z.string().default("medium"),
-        source: z.string().nullable().optional(),
-      })
-      .default({ tags: [], syllabus_priority: "medium", source: null }),
-  })
-  .passthrough();
-
-export const FieldEdgeSchema = z
-  .object({
-    id: IdSchema,
-    source: IdSchema,
-    target: IdSchema,
-    type: z.string().trim().min(1),
-    dependency_class: z.string().nullable().optional(),
-    label: z.string().default(""),
-    direction: z.string().default("source_to_target"),
-    confidence: z.enum(["high", "medium", "low"]).default("medium"),
-    notes: z.string().nullable().optional(),
-  })
-  .passthrough();
-
-export const FieldJsonSchema = z
-  .object({
-    schema: z.unknown().optional(),
-    graph: z
-      .object({
-        id: z.string(),
-        label: z.string(),
-        field: z.string(),
-        model: z.string().optional(),
-        design_notes: z.array(z.unknown()).default([]),
-        domains: z.array(GraphDomainSchema),
-        items: z.array(FieldItemSchema),
-        edges: z.array(FieldEdgeSchema).default([]),
-      })
-      .passthrough(),
-    views: z.unknown().optional(),
-    query_model: z.unknown().optional(),
-    example_queries: z.unknown().optional(),
-  })
-  .passthrough()
-  .superRefine((data, ctx) => {
-    const domainIds = new Set<string>();
-    for (const domain of data.graph.domains) {
-      if (domainIds.has(domain.id)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["graph", "domains"],
-          message: `Duplicate domain id: ${domain.id}`,
-        });
-      }
-      domainIds.add(domain.id);
-    }
-    const itemIds = new Set<string>();
-    for (const item of data.graph.items) {
-      if (itemIds.has(item.id)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["graph", "items"],
-          message: `Duplicate item id: ${item.id}`,
-        });
-      }
-      itemIds.add(item.id);
-      if (!domainIds.has(item.domain)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["graph", "items", item.id, "domain"],
-          message: `Item ${item.id} references missing domain: ${item.domain}`,
-        });
-      }
-    }
-    for (const item of data.graph.items) {
-      for (const [dependencyClass, dependencyIds] of Object.entries(item.dependencies ?? {})) {
-        for (const dependencyId of dependencyIds) {
-          if (!itemIds.has(dependencyId)) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              path: ["graph", "items", item.id, "dependencies", dependencyClass],
-              message: `Item ${item.id} references missing dependency: ${dependencyId}`,
-            });
-          }
-        }
-      }
-    }
-
-    const edgeIds = new Set<string>();
-    const semanticEdges = new Map<string, string>();
-    for (const edge of data.graph.edges) {
-      if (edgeIds.has(edge.id)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["graph", "edges"],
-          message: `Duplicate edge id: ${edge.id}`,
-        });
-      }
-      edgeIds.add(edge.id);
-
-      if (!itemIds.has(edge.source)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["graph", "edges", edge.id, "source"],
-          message: `Edge ${edge.id} references missing source item: ${edge.source}`,
-        });
-      }
-      if (!itemIds.has(edge.target)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["graph", "edges", edge.id, "target"],
-          message: `Edge ${edge.id} references missing target item: ${edge.target}`,
-        });
-      }
-      if (!FIELD_EDGE_DIRECTIONS.has(edge.direction)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["graph", "edges", edge.id, "direction"],
-          message: `Edge ${edge.id} has unsupported direction: ${edge.direction}`,
-        });
-      }
-      if (SOURCE_DEPENDS_ON_TARGET.has(edge.type) && edge.direction !== "source_to_target") {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["graph", "edges", edge.id, "direction"],
-          message: `Edge ${edge.id} relation ${edge.type} expects source_to_target direction`,
-        });
-      }
-
-      const semanticKey = [
-        edge.source,
-        edge.target,
-        edge.type,
-        edge.dependency_class ?? "",
-        edge.direction,
-      ].join("\u0000");
-      const existingEdgeId = semanticEdges.get(semanticKey);
-      if (existingEdgeId) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["graph", "edges", edge.id],
-          message: `Edge ${edge.id} duplicates semantic edge ${existingEdgeId}`,
-        });
-      } else {
-        semanticEdges.set(semanticKey, edge.id);
-      }
-    }
-  });
-
-export type FieldJson = z.infer<typeof FieldJsonSchema>;
-export type FieldItem = z.infer<typeof FieldItemSchema>;
-export type FieldEdge = z.infer<typeof FieldEdgeSchema>;
+export interface GraphData {
+  id: string;
+  label: string;
+  field: string;
+  version: number;
+  domains: GraphDomain[];
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+}
 
 function titleCase(value: string): string {
   return value
@@ -424,20 +88,3 @@ export const RELATION_LABEL = new Proxy(relationLabelBase, {
     return target[prop] ?? titleCase(prop);
   },
 }) as Record<string, string>;
-
-/** Single neutral hairline color for edges — domain accents live on nodes only. */
-export const EDGE_COLOR = "rgba(0, 0, 0, 0.16)";
-export const EDGE_COLOR_HIGHLIGHT = "#0A84FF";
-
-export function parseTopoNode(input: unknown): TopoNode {
-  return TopoNodeSchema.parse(input);
-}
-export function parseTopoEdge(input: unknown): TopoEdge {
-  return TopoEdgeSchema.parse(input);
-}
-export function parseTopoData(input: unknown): TopoData {
-  return TopoDataSchema.parse(input);
-}
-export function safeParseTopoData(input: unknown) {
-  return TopoDataSchema.safeParse(input);
-}

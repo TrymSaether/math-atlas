@@ -42,7 +42,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
   const routeMode = useStore((s) => s.routeMode);
   const pickRoutePoint = useStore((s) => s.pickRoutePoint);
   const activate = () => (routeMode ? pickRoutePoint(node.id) : select(node.id));
-  const tone = getDomainTone(node.domainId);
+  const tone = getDomainTone(node.domain);
 
   // Route traversal: pulse this node as the path's head passes it.
   const rootRef = useRef<HTMLDivElement>(null);
@@ -89,7 +89,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       }}
       role="button"
       tabIndex={0}
-      aria-label={`${KIND_LABEL[node.kind]}: ${node.title}`}
+      aria-label={`${KIND_LABEL[node.kind]}: ${node.label}`}
       className={cn(
         "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[var(--radius-lg)] border px-3 py-2 outline-none transition-all duration-150",
         "focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
@@ -189,7 +189,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
           WebkitBoxOrient: "vertical",
         }}
       >
-        <MathText text={node.title} />
+        <MathText text={node.label} />
       </div>
 
       {hasOutgoing && (

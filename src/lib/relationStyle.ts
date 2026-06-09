@@ -20,19 +20,14 @@ export interface RelationStyle {
  */
 export type EdgeClass = "hard" | "soft";
 
-const SOFT_DEPENDENCY_CLASSES = new Set(["pedagogical_dependency"]);
-const SOFT_RELATIONS = new Set([
-  "motivates",
-  "prerequisite_for",
-  "has_example",
-  "has_counterexample",
-  "has_property",
-]);
-
-export function classifyEdge(edge: Pick<GraphEdge, "relation" | "dependencyClass">): EdgeClass {
-  if (edge.dependencyClass && SOFT_DEPENDENCY_CLASSES.has(edge.dependencyClass)) return "soft";
-  if (SOFT_RELATIONS.has(edge.relation)) return "soft";
-  return "hard";
+/**
+ * Hard vs soft is the artifact's own `isDependency` flag: the dependency
+ * relations (defined_in_terms_of / uses / assumes / constructed_from /
+ * generalizes) are the structural backbone; everything else (motivated_by,
+ * related_to, satisfies, violates, proves) is a supplementary overlay.
+ */
+export function classifyEdge(edge: Pick<GraphEdge, "isDependency">): EdgeClass {
+  return edge.isDependency ? "hard" : "soft";
 }
 
 // Neutral ink — the same hairline for every hard edge, so structure reads as one
@@ -50,7 +45,7 @@ const SOFT: Omit<RelationStyle, "label"> = {
 };
 
 export function getEdgeStyle(
-  edge: Pick<GraphEdge, "relation" | "dependencyClass">,
+  edge: { relation: string; isDependency: boolean },
   highlighted = false,
   dimmed = false,
 ): RelationStyle {

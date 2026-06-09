@@ -113,12 +113,12 @@ export function CommandPalette() {
                           className="px-2 pt-3 [&_[cmdk-group-heading]]:text-ui-2xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-label-wide [&_[cmdk-group-heading]]:text-[color:var(--fg-3)]"
                         >
                           {data.nodes.map((n) => {
-                            const tone = getDomainTone(n.domainId);
+                            const tone = getDomainTone(n.domain);
                             const CategoryIcon = CATEGORY_META[categoryOf(n.kind)].icon;
                             return (
                               <Item
                                 key={n.id}
-                                value={`${n.title} ${n.kind} ${n.tags.join(" ")}`}
+                                value={`${n.label} ${n.kind} ${n.tags.join(" ")}`}
                                 onSelect={() => {
                                   select(n.id);
                                   setOpen(false);
@@ -139,7 +139,7 @@ export function CommandPalette() {
                                     {KIND_LABEL[n.kind]}
                                   </span>
                                   <span className="min-w-0 flex-1 truncate text-ui-sm text-[color:var(--fg-1)]">
-                                    <MathText text={n.title} />
+                                    <MathText text={n.label} />
                                   </span>
                                   <span className="ml-2 max-w-[140px] truncate text-ui-caption text-[color:var(--fg-3)]">
                                     {n.topicCluster}

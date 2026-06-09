@@ -77,7 +77,7 @@ export function computeAtlasLayout(data: GraphData): AtlasLayout {
   const nodeIds = new Set(data.nodes.map((n) => n.id));
   const domainOrder = data.domains.map((d) => d.id);
   for (const n of data.nodes) {
-    if (!domainOrder.includes(n.domainId)) domainOrder.push(n.domainId);
+    if (!domainOrder.includes(n.domain)) domainOrder.push(n.domain);
   }
 
   const g = new dagre.graphlib.Graph({ directed: true, compound: true });
@@ -102,8 +102,8 @@ export function computeAtlasLayout(data: GraphData): AtlasLayout {
   const domainByNodeId = new Map<string, string>();
   for (const node of data.nodes) {
     g.setNode(node.id, { width: NODE_WIDTH, height: NODE_HEIGHT });
-    g.setParent(node.id, `cluster::${node.domainId}`);
-    domainByNodeId.set(node.id, node.domainId);
+    g.setParent(node.id, `cluster::${node.domain}`);
+    domainByNodeId.set(node.id, node.domain);
   }
 
   for (const edge of data.edges) {
@@ -172,14 +172,14 @@ export function computeSwimlaneLayout(
   // Lane order: declared domain order first, then any stragglers.
   const laneOrder = data.domains.map((d) => d.id);
   for (const node of data.nodes) {
-    if (!laneOrder.includes(node.domainId)) laneOrder.push(node.domainId);
+    if (!laneOrder.includes(node.domain)) laneOrder.push(node.domain);
   }
 
   const nodesByDomain = new Map<string, GraphNode[]>();
   for (const node of data.nodes) {
-    const list = nodesByDomain.get(node.domainId) ?? [];
+    const list = nodesByDomain.get(node.domain) ?? [];
     list.push(node);
-    nodesByDomain.set(node.domainId, list);
+    nodesByDomain.set(node.domain, list);
   }
 
   // Pass 1 — lay out each lane relative to its own top-left (0,0) and record its
@@ -285,9 +285,9 @@ export function computeClusterLayout(
 ): AtlasLayout {
   const nodesByDomain = new Map<string, GraphNode[]>();
   for (const node of nodes) {
-    const list = nodesByDomain.get(node.domainId) ?? [];
+    const list = nodesByDomain.get(node.domain) ?? [];
     list.push(node);
-    nodesByDomain.set(node.domainId, list);
+    nodesByDomain.set(node.domain, list);
   }
 
   const domainIds = domains
@@ -360,8 +360,8 @@ export function computeClusterLayout(
 }
 
 function compareNodeOrder(a: GraphNode, b: GraphNode): number {
-  const chapter = a.chapter.localeCompare(b.chapter);
-  if (chapter !== 0) return chapter;
+  const domain = a.domain.localeCompare(b.domain);
+  if (domain !== 0) return domain;
   const an = numberParts(a.number);
   const bn = numberParts(b.number);
   const length = Math.max(an.length, bn.length);
@@ -369,7 +369,7 @@ function compareNodeOrder(a: GraphNode, b: GraphNode): number {
     const diff = (an[i] ?? 0) - (bn[i] ?? 0);
     if (diff !== 0) return diff;
   }
-  return a.title.localeCompare(b.title);
+  return a.label.localeCompare(b.label);
 }
 
 function numberParts(value: string): number[] {
