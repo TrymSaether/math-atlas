@@ -65,8 +65,6 @@
         "intuition": "Linear algebra with topology, completeness, duality, and limits turned on.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "field"
       ],
@@ -84,8 +82,6 @@
           "X"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "space",
         "algebra"
@@ -106,8 +102,6 @@
           "$(M,d)$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "space",
         "topology"
@@ -128,7 +122,6 @@
           "$$\\begin{aligned} &(x_n)\\text{ is Cauchy}\\\\ &\\iff \\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall m,n\\ge N:\\ d(x_m,x_n)<\\varepsilon \\\\ &\\iff d(x_m,x_n)\\to 0\\text{ as }m,n\\to\\infty \\end{aligned}$$"
         ]
       },
-      "examples": [],
       "assumptions": [
         "A metric space $(M,d)$ is given.",
         "The sequence $(x_n)_{n\\in\\mathbb{N}}$ takes values in $M$."
@@ -154,8 +147,6 @@
           "TVS"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "space",
         "topology"
@@ -176,7 +167,6 @@
           "$$(X,\\|\\cdot\\|_X),\\qquad d_X(x,y)=\\|x-y\\|_X$$"
         ]
       },
-      "examples": [],
       "assumptions": [
         "$X$ is a vector space.",
         "$\\|\\cdot\\|_X$ is a norm on $X$."
@@ -203,8 +193,6 @@
           "X"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "space",
         "complete"
@@ -224,8 +212,6 @@
           "(H, <·,·>)"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "space",
         "hilbert"
@@ -245,8 +231,6 @@
           "H"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "space",
         "hilbert",
@@ -266,8 +250,6 @@
           "LCS"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "space",
         "convexity"
@@ -287,8 +269,6 @@
           "X*"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "duality",
         "space"
@@ -309,7 +289,6 @@
           "$$\\|x\\|,\\qquad \\|\\cdot\\|,\\qquad \\|\\cdot\\|_X$$"
         ]
       },
-      "examples": [],
       "assumptions": [
         "$X$ is a vector space.",
         "The scalar field is $\\mathbb R$ or $\\mathbb C$."
@@ -337,7 +316,6 @@
           "$$d_X(x,y)=\\|x-y\\|_X$$"
         ]
       },
-      "examples": [],
       "assumptions": [
         "$(X,\\|\\cdot\\|_X)$ is a normed vector space."
       ],
@@ -359,8 +337,6 @@
           "tau_d"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "construction",
         "topology"
@@ -378,8 +354,6 @@
         "intuition": "Cauchy approximation cannot converge outside the space.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "property",
         "metric"
@@ -396,8 +370,6 @@
         "intuition": "Topological finiteness; in metric spaces often sequential compactness.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "property",
         "topology"
@@ -417,8 +389,6 @@
           "sigma(X,X*)"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "weak topology",
         "duality"
@@ -438,8 +408,6 @@
           "$\\sigma(X^\\ast,X)$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "weak-star",
         "duality"
@@ -456,8 +424,6 @@
         "intuition": "Uniform finite control.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "property",
         "operators"
@@ -474,8 +440,6 @@
         "intuition": "Small input changes produce small output changes.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "property",
         "topology"
@@ -492,8 +456,6 @@
         "intuition": "Terms of the sequence cluster around the limit.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "property",
         "topology"
@@ -513,8 +475,6 @@
           "$T:X\\to Y$ linear, $T\\in L(X,Y)$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "operator"
       ],
@@ -533,8 +493,6 @@
           "f, x*"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "duality",
         "functional"
@@ -555,7 +513,6 @@
           "$$\\begin{aligned}\nT\\in L(X,Y)\n&\\iff T:X\\to Y\\text{ is linear and }\\exists C>0\\ \\forall x\\in X:\\ \\|Tx\\|_Y\\le C\\|x\\|_X,\\\\ \\|T\\|\n&:=\\sup_{\\|x\\|_X\\le 1}\\|Tx\\|_Y<\\infty.\n\\end{aligned}$$"
         ]
       },
-      "examples": [],
       "assumptions": [
         "$(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ are normed vector spaces.",
         "$T:X\\to Y$ is linear."
@@ -583,7 +540,6 @@
           "$$\\begin{aligned}\nf:X\\to Y\\text{ bounded on }X\n&\\iff \\exists M>0\\ \\forall x\\in X:\\ \\|f(x)\\|_Y\\le M,\\\\ f(X)&\\subseteq B_Y(0,M).\n\\end{aligned}$$"
         ]
       },
-      "examples": [],
       "assumptions": [
         "$X$ is a set.",
         "$(Y,\\|\\cdot\\|_Y)$ is a normed vector space.",
@@ -609,8 +565,6 @@
           "T in L(X,Y)"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "operator",
         "continuous"
@@ -630,8 +584,6 @@
           "$\\|T\\|$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "operator",
         "norm"
@@ -652,8 +604,6 @@
           "$K(X,Y)$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "operator",
         "compact"
@@ -673,8 +623,6 @@
           "$T^*$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "operator",
         "duality"
@@ -694,8 +642,6 @@
           "T=T*"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "operator",
         "spectral"
@@ -715,8 +661,6 @@
           "$p$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "hahn-banach"
       ],
@@ -734,8 +678,6 @@
           "$\\text{graph}(T)$ closed in $X \\times Y$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "operator",
         "closed graph"
@@ -755,8 +697,6 @@
           "$B_X$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "norm",
         "geometry"
@@ -776,8 +716,6 @@
           "sigma(T)"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "spectral"
       ],
@@ -795,8 +733,6 @@
           "(e_n)"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "hilbert",
         "basis"
@@ -815,8 +751,6 @@
           "P"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "operator",
         "hilbert"
@@ -833,8 +767,6 @@
         "intuition": "A global choice principle enabling maximal-object arguments.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "foundations"
       ],
@@ -850,8 +782,6 @@
         "intuition": "The maximal-extension engine behind Hahn-Banach.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "foundations",
         "hahn-banach"
@@ -869,7 +799,6 @@
         "intuition": "Completeness prevents a space from being too thin.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "completeness"
       ],
@@ -889,8 +818,6 @@
         "intuition": "Build one object that survives infinitely many requirements.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof method"
       ],
@@ -906,8 +833,6 @@
         "intuition": "Control the whole space from a dense core.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof method"
       ],
@@ -923,8 +848,6 @@
         "intuition": "Turn infinite behavior into finite or convergent behavior.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof method"
       ],
@@ -940,8 +863,6 @@
         "intuition": "Probe objects by scalar-valued tests.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof method",
         "duality"
@@ -958,8 +879,6 @@
         "intuition": "Prove first for finite/simple pieces, then complete.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof method"
       ],
@@ -975,8 +894,6 @@
         "intuition": "The usual analytic scalar fields.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "assumption"
       ],
@@ -992,8 +909,6 @@
         "intuition": "Baire-category arguments require completeness of the domain.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "assumption",
         "completeness"
@@ -1010,8 +925,6 @@
         "intuition": "Closed graph/open mapping statements need Banach codomain.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "assumption",
         "completeness"
@@ -1028,8 +941,6 @@
         "intuition": "Each vector is controlled separately before uniform boundedness upgrades the control.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "assumption",
         "ubp"
@@ -1046,8 +957,6 @@
         "intuition": "Open mapping requires every target vector to have a preimage.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "assumption",
         "open mapping"
@@ -1064,8 +973,6 @@
         "intuition": "Sequential limit compatibility replaces an a priori boundedness estimate.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "assumption",
         "closed graph"
@@ -1082,8 +989,6 @@
         "intuition": "Banach-Alaoglu is a compactness theorem for this specific topology.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "assumption",
         "weak-star"
@@ -1100,8 +1005,6 @@
         "intuition": "Compactness gives eigenvalue accumulation control; self-adjointness gives orthogonality.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "assumption",
         "spectral"
@@ -1119,7 +1022,6 @@
         "intuition": "Scalar probes defined on a subspace can be extended globally.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "scalar_field_real_or_complex"
       ],
@@ -1140,7 +1042,6 @@
         "intuition": "Pointwise control plus completeness forces uniform operator control.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "domain_is_banach_space",
         "pointwise_bounded_family_assumption"
@@ -1162,7 +1063,6 @@
         "intuition": "A complete linear surjection cannot crush all neighborhoods.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "domain_is_banach_space",
         "codomain_is_banach_space",
@@ -1185,7 +1085,6 @@
         "intuition": "A graph-compatible limit rule forces norm continuity.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "domain_is_banach_space",
         "codomain_is_banach_space",
@@ -1208,7 +1107,6 @@
         "intuition": "Pointwise bounded scalar probes have compactness in the weakest natural topology.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "unit_ball_weak_star_assumption"
       ],
@@ -1229,8 +1127,6 @@
         "intuition": "Orthogonal projection is the engine of Hilbert space geometry.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "hilbert",
         "projection"
@@ -1248,7 +1144,6 @@
         "intuition": "The dual of a Hilbert space is the Hilbert space itself, anti-linearly or linearly depending on convention.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "domain_is_banach_space"
       ],
@@ -1270,7 +1165,6 @@
         "intuition": "Compact self-adjoint operators behave like diagonal Hermitian matrices.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "compact_self_adjoint_operator_assumption"
       ],
@@ -1291,8 +1185,6 @@
         "intuition": "Banach-space bijections are automatically topological isomorphisms.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "open mapping"
       ],
@@ -1308,8 +1200,6 @@
         "intuition": "Build the largest possible extension; maximality forces full domain.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof",
         "hahn-banach"
@@ -1325,8 +1215,6 @@
         "statement": "Create a poset of admissible dominated extensions.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof step"
       ],
@@ -1341,8 +1229,6 @@
         "statement": "Unify a chain of compatible extensions.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof step"
       ],
@@ -1357,8 +1243,6 @@
         "statement": "Apply Zorn to get a maximal dominated extension.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof step"
       ],
@@ -1373,8 +1257,6 @@
         "statement": "If the maximal domain is not all of E, extend by one new vector.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof step"
       ],
@@ -1390,8 +1272,6 @@
         "intuition": "One ball gets uniform control, then homogeneity spreads it to the unit ball.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof",
         "ubp"
@@ -1407,8 +1287,6 @@
         "statement": "Define $E_n=\\{x: \\sup_i \\|T_i x\\|\\leq n\\}$.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof step"
       ],
@@ -1423,8 +1301,6 @@
         "statement": "Apply Baire category to the closed cover X=union E_n.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof step"
       ],
@@ -1439,8 +1315,6 @@
         "statement": "Use linearity to move the interior ball to a bound on the unit ball.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof step"
       ],
@@ -1456,8 +1330,6 @@
         "intuition": "Surjectivity plus completeness forces a ball in the image.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof",
         "open mapping"
@@ -1474,8 +1346,6 @@
         "intuition": "Closed graph is a complete domain in disguise.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof",
         "closed graph"
@@ -1492,8 +1362,6 @@
         "intuition": "Weak-star compactness is product compactness plus linear constraints.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof",
         "banach-alaoglu"
@@ -1510,8 +1378,6 @@
         "intuition": "A functional measures exactly the component along one vector.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof",
         "riesz"
@@ -1528,8 +1394,6 @@
         "intuition": "Compactness gives eigenvectors; self-adjointness makes different eigenspaces orthogonal.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "proof",
         "spectral"
@@ -1549,8 +1413,6 @@
           "$\\ell^p$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "example",
         "sequence spaces"
@@ -1570,8 +1432,6 @@
           "L^p"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "example",
         "function spaces"
@@ -1591,8 +1451,6 @@
           "C(K)"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "example",
         "function spaces"
@@ -1612,8 +1470,6 @@
           "$c_0$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "example",
         "sequence spaces",
@@ -1634,8 +1490,6 @@
           "$\\ell^2$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "example",
         "hilbert"
@@ -1652,8 +1506,6 @@
         "intuition": "Shows completeness is not cosmetic in Banach-space theorems.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "counterexample",
         "completeness"
@@ -1670,8 +1522,6 @@
         "intuition": "Dual functionals can detect nonzero vectors.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "application",
         "duality"
@@ -1688,8 +1538,6 @@
         "intuition": "A limit operator inherits boundedness from pointwise convergence plus completeness.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "application",
         "operators"
@@ -1706,8 +1554,6 @@
         "intuition": "Compactness appears after weakening the topology.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "application",
         "weak topology"
@@ -1724,8 +1570,6 @@
         "intuition": "Diagonalize the operator conceptually, then analyze eigenvalues/spectrum.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "application",
         "spectral"
@@ -1749,7 +1593,6 @@
           "$\\operatorname{codom}(f)=Y$"
         ]
       },
-      "examples": [],
       "assumptions": [
         "$X$ is a set.",
         "$Y$ is a set.",
@@ -1783,7 +1626,6 @@
           "$T(x)$"
         ]
       },
-      "examples": [],
       "assumptions": [
         "$T$ is a function/map.",
         "The domain and codomain usually carry additional structure.",
@@ -1816,7 +1658,6 @@
           "$F:X\\to Y$"
         ]
       },
-      "examples": [],
       "assumptions": [
         "$X$ and $Y$ are structured spaces, usually vector or normed spaces.",
         "$F:X\\to Y$ is a function.",
@@ -1847,8 +1688,6 @@
           "$\\text{operator}\\Rightarrow \\text{function}$, but generally $\\text{function} \\nRightarrow \\text{operator}$"
         ]
       },
-      "examples": [],
-      "assumptions": [],
       "source": {
         "citation": "derived semantic clarification from standard functional-analysis convention",
         "references": []
@@ -1875,7 +1714,6 @@
           "M\\subseteq X"
         ]
       },
-      "examples": [],
       "assumptions": [
         "X is a normed or topological vector space.",
         "M is a linear subspace of X."
@@ -1901,7 +1739,6 @@
           "X/Y"
         ]
       },
-      "examples": [],
       "assumptions": [
         "X is a normed or Banach space.",
         "Y is a closed linear subspace of X."
@@ -1931,7 +1768,6 @@
           "Q:X\\to X/Y"
         ]
       },
-      "examples": [],
       "assumptions": [
         "Y is a closed subspace of X."
       ],
@@ -1960,7 +1796,6 @@
           "\\ker T"
         ]
       },
-      "examples": [],
       "assumptions": [
         "T:X\\to Y is linear."
       ],
@@ -1985,7 +1820,6 @@
           "x_n\\rightharpoonup x"
         ]
       },
-      "examples": [],
       "assumptions": [
         "X is a normed space."
       ],
@@ -2010,7 +1844,6 @@
           "x_n^*\\overset{w^*}{\\to}x^*"
         ]
       },
-      "examples": [],
       "assumptions": [
         "X is a normed space."
       ],
@@ -2033,7 +1866,6 @@
         "intuition": "The set may look large in X, but every scalar probe sees only bounded values.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "X is a normed space."
       ],
@@ -2059,7 +1891,6 @@
         "intuition": "If every scalar probe sees boundedness, completeness upgrades this to actual norm boundedness.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "X is Banach.",
         "A is weakly bounded."
@@ -2089,7 +1920,6 @@
           "p(x)=\\|x\\|"
         ]
       },
-      "examples": [],
       "assumptions": [
         "X is a normed vector space."
       ],
@@ -2116,8 +1946,6 @@
         "intuition": "The map does not respect superposition.",
         "notation": []
       },
-      "examples": [],
-      "assumptions": [],
       "tags": [
         "operator",
         "nonlinear"
@@ -2136,7 +1964,6 @@
         "intuition": "Linear maps scale. If one vector has nonzero image, scaling that vector makes the image arbitrarily large.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "T:X\\to Y is linear.",
         "T\\ne 0.",
@@ -2166,7 +1993,6 @@
           "C(K)^*=M(K)"
         ]
       },
-      "examples": [],
       "assumptions": [
         "K is compact metric, in the Bowers-Kalton version."
       ],
@@ -2193,7 +2019,6 @@
         "intuition": "Convergence means the terms get arbitrarily close to the limit, so they must get arbitrarily close to each other.",
         "notation": []
       },
-      "examples": [],
       "assumptions": [
         "$(X,d)$ is a metric space.",
         "$$\\lim_{n\\to\\infty} x_n = x \\quad \\Leftrightarrow \\quad \\forall \\varepsilon > 0,\\ \\exists N:\\ n\\ge N \\implies d(x_n,x)<\\varepsilon$$."
@@ -2252,4132 +2077,2922 @@
     {
       "source": "vector_space",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "metric_space",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "topological_vector_space",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "normed_vector_space",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "banach_space",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "hilbert_space",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "dual_space",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "bounded_linear_operator",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "compact_operator",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "spectral_theorem",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "vector_space",
       "target": "topological_vector_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "vector_space",
       "target": "normed_vector_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "topological_vector_space",
       "target": "normed_vector_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "locally_convex_space",
       "target": "normed_vector_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "normed_vector_space",
       "target": "banach_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "normed_vector_space",
       "target": "inner_product_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "inner_product_space",
       "target": "hilbert_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "banach_space",
       "target": "hilbert_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "topological_vector_space",
       "target": "locally_convex_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "banach_space",
       "target": "dual_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "linear_operator",
       "target": "continuous_linear_operator",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "linear_operator",
       "target": "bounded_linear_operator",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "continuous_linear_operator",
       "target": "bounded_linear_operator",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "bounded_linear_operator",
       "target": "compact_operator",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "bounded_linear_operator",
       "target": "self_adjoint_operator",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "normed_vector_space",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_space",
       "target": "completeness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_space",
       "target": "metric_induced_by_norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "inner_product_space",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "hilbert_space",
       "target": "completeness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "metric_induced_by_norm",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "metric_induced_by_norm",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "topology_induced_by_metric",
       "target": "metric_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "completeness",
       "target": "metric_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "continuity",
       "target": "topology_induced_by_metric",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "linear_operator",
       "target": "vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "linear_functional",
       "target": "linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "linear_functional",
       "target": "vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "bounded_linear_operator",
       "target": "boundedness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "bounded_linear_operator",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "operator_norm",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "compact_operator",
       "target": "compactness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "adjoint_operator",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "adjoint_operator",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "self_adjoint_operator",
       "target": "adjoint_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "self_adjoint_operator",
       "target": "hilbert_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "sublinear_functional",
       "target": "vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_graph",
       "target": "linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_unit_ball",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_unit_ball",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectrum",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "orthonormal_basis",
       "target": "hilbert_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "projection_operator",
       "target": "linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "dual_space",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "dual_space",
       "target": "linear_functional",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "dual_space",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_topology",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_topology",
       "target": "linear_functional",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_star_topology",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_star_topology",
       "target": "weak_topology",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "metric_induced_by_norm",
       "target": "norm",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "topology_induced_by_metric",
       "target": "metric_induced_by_norm",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "norm",
       "target": "inner_product_space",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "topology_induced_by_metric",
       "target": "operator_norm",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "weak_topology",
       "target": "dual_space",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "weak_star_topology",
       "target": "dual_space",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "domain_is_banach_space",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "codomain_is_banach_space",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "pointwise_bounded_family_assumption",
       "target": "boundedness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "surjective_operator_assumption",
       "target": "linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_graph_assumption",
       "target": "closed_graph",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "unit_ball_weak_star_assumption",
       "target": "closed_unit_ball",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "unit_ball_weak_star_assumption",
       "target": "weak_star_topology",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "unit_ball_weak_star_assumption",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "compact_self_adjoint_operator_assumption",
       "target": "compact_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "compact_self_adjoint_operator_assumption",
       "target": "self_adjoint_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "compact_self_adjoint_operator_assumption",
       "target": "hilbert_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "zorns_lemma",
       "target": "axiom_of_choice",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "baire_category_theorem",
       "target": "metric_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "baire_category_theorem",
       "target": "completeness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "baire_category_theorem",
       "target": "completeness",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "linear_functional",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "sublinear_functional",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "zorns_lemma",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "scalar_field_real_or_complex",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "operator_norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "boundedness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "baire_category_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "pointwise_bounded_family_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "open_mapping_theorem",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "open_mapping_theorem",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "open_mapping_theorem",
       "target": "continuity",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "open_mapping_theorem",
       "target": "baire_category_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "open_mapping_theorem",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "open_mapping_theorem",
       "target": "codomain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "open_mapping_theorem",
       "target": "surjective_operator_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "closed_graph_theorem",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_graph_theorem",
       "target": "linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_graph_theorem",
       "target": "closed_graph",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_graph_theorem",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_graph_theorem",
       "target": "open_mapping_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_graph_theorem",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "closed_graph_theorem",
       "target": "codomain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "closed_graph_theorem",
       "target": "closed_graph_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "closed_unit_ball",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "weak_star_topology",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "compactness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "axiom_of_choice",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "unit_ball_weak_star_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "weak_star_topology",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "hilbert_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "linear_functional",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "inner_product_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "projection_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "spectral_theorem",
       "target": "hilbert_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
       "target": "compact_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
       "target": "self_adjoint_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
       "target": "spectrum",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
       "target": "orthonormal_basis",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
       "target": "riesz_representation_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
       "target": "compactness_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
       "target": "approximation_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
       "target": "compact_self_adjoint_operator_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "bounded_inverse_theorem",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "bounded_inverse_theorem",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "bounded_inverse_theorem",
       "target": "open_mapping_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "projection_theorem",
       "target": "hilbert_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "projection_theorem",
       "target": "completeness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "projection_theorem",
       "target": "compactness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "separation_of_points",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "pointwise_limits_of_operators",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "weak_compactness_results",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "adjoint_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "spectral_theorem",
       "target": "operator_spectrum_analysis",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_hahn_banach_zorn",
       "target": "hahn_banach_theorem",
-      "relation": "proves",
-      "confidence": "high",
-      "verified": false
+      "relation": "proves"
     },
     {
       "source": "proof_hahn_banach_zorn",
       "target": "duality_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_hahn_banach_zorn",
       "target": "zorns_lemma",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_hahn_banach_zorn",
       "target": "scalar_field_real_or_complex",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_hahn_banach_zorn",
       "target": "step_hb_order_extensions",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_hahn_banach_zorn",
       "target": "step_hb_chain_upper_bound",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_hahn_banach_zorn",
       "target": "step_hb_zorn_maximal_extension",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_hahn_banach_zorn",
       "target": "step_hb_one_dimensional_extension",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_uniform_boundedness_baire",
       "target": "uniform_boundedness_principle",
-      "relation": "proves",
-      "confidence": "high",
-      "verified": false
+      "relation": "proves"
     },
     {
       "source": "proof_uniform_boundedness_baire",
       "target": "compactness_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_uniform_boundedness_baire",
       "target": "baire_category_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_uniform_boundedness_baire",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_uniform_boundedness_baire",
       "target": "pointwise_bounded_family_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_uniform_boundedness_baire",
       "target": "step_ubp_closed_sets",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_uniform_boundedness_baire",
       "target": "step_ubp_baire_nonempty_interior",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_uniform_boundedness_baire",
       "target": "step_ubp_uniform_bound",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_open_mapping_baire",
       "target": "open_mapping_theorem",
-      "relation": "proves",
-      "confidence": "high",
-      "verified": false
+      "relation": "proves"
     },
     {
       "source": "proof_open_mapping_baire",
       "target": "compactness_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_open_mapping_baire",
       "target": "approximation_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_open_mapping_baire",
       "target": "baire_category_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_open_mapping_baire",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_open_mapping_baire",
       "target": "codomain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_open_mapping_baire",
       "target": "surjective_operator_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_closed_graph_via_open_mapping",
       "target": "closed_graph_theorem",
-      "relation": "proves",
-      "confidence": "high",
-      "verified": false
+      "relation": "proves"
     },
     {
       "source": "proof_closed_graph_via_open_mapping",
       "target": "duality_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_closed_graph_via_open_mapping",
       "target": "open_mapping_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_closed_graph_via_open_mapping",
       "target": "closed_graph_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_banach_alaoglu_tychonoff",
       "target": "banach_alaoglu_theorem",
-      "relation": "proves",
-      "confidence": "high",
-      "verified": false
+      "relation": "proves"
     },
     {
       "source": "proof_banach_alaoglu_tychonoff",
       "target": "compactness_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_banach_alaoglu_tychonoff",
       "target": "axiom_of_choice",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_banach_alaoglu_tychonoff",
       "target": "unit_ball_weak_star_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_riesz_representation_projection",
       "target": "riesz_representation_theorem",
-      "relation": "proves",
-      "confidence": "high",
-      "verified": false
+      "relation": "proves"
     },
     {
       "source": "proof_riesz_representation_projection",
       "target": "duality_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_riesz_representation_projection",
       "target": "projection_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_riesz_representation_projection",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_spectral_theorem_compact_self_adjoint",
       "target": "spectral_theorem",
-      "relation": "proves",
-      "confidence": "high",
-      "verified": false
+      "relation": "proves"
     },
     {
       "source": "proof_spectral_theorem_compact_self_adjoint",
       "target": "compactness_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_spectral_theorem_compact_self_adjoint",
       "target": "approximation_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_spectral_theorem_compact_self_adjoint",
       "target": "duality_argument",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_spectral_theorem_compact_self_adjoint",
       "target": "riesz_representation_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_spectral_theorem_compact_self_adjoint",
       "target": "compact_self_adjoint_operator_assumption",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "step_hb_order_extensions",
       "target": "linear_functional",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_hb_order_extensions",
       "target": "sublinear_functional",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_hb_chain_upper_bound",
       "target": "zorns_lemma",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_hb_zorn_maximal_extension",
       "target": "zorns_lemma",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_hb_zorn_maximal_extension",
       "target": "step_hb_chain_upper_bound",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_hb_one_dimensional_extension",
       "target": "sublinear_functional",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_hb_one_dimensional_extension",
       "target": "step_hb_zorn_maximal_extension",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_ubp_closed_sets",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_ubp_closed_sets",
       "target": "pointwise_bounded_family_assumption",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_ubp_baire_nonempty_interior",
       "target": "baire_category_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_ubp_baire_nonempty_interior",
       "target": "domain_is_banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_ubp_uniform_bound",
       "target": "linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_ubp_uniform_bound",
       "target": "operator_norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_ubp_uniform_bound",
       "target": "step_ubp_baire_nonempty_interior",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_space",
       "target": "ell_p_spaces",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "normed_vector_space",
       "target": "ell_p_spaces",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "dual_space",
       "target": "ell_p_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "completeness",
       "target": "ell_p_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "ell_p_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "ell_p_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "banach_space",
       "target": "l_p_spaces",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "normed_vector_space",
       "target": "l_p_spaces",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "dual_space",
       "target": "l_p_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "completeness",
       "target": "l_p_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "l_p_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "banach_space",
       "target": "c_k",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "normed_vector_space",
       "target": "c_k",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "dual_space",
       "target": "c_k",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "c_k",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "banach_space",
       "target": "c_0",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "normed_vector_space",
       "target": "c_0",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "dual_space",
       "target": "c_0",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "c_0",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "hilbert_space",
       "target": "ell_2_as_hilbert_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "banach_space",
       "target": "ell_2_as_hilbert_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "inner_product_space",
       "target": "ell_2_as_hilbert_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "ell_2_as_hilbert_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "spectral_theorem",
       "target": "ell_2_as_hilbert_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "normed_vector_space",
       "target": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "completeness",
-      "relation": "violates",
-      "confidence": "high",
-      "verified": false
+      "relation": "violates"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "banach_space",
-      "relation": "violates",
-      "confidence": "high",
-      "verified": false
+      "relation": "violates"
     },
     {
       "source": "banach_space",
       "target": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "open_mapping_theorem",
       "target": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "closed_graph_theorem",
       "target": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "completeness",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "banach_space",
       "target": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
-    },
-    {
-      "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "target": "banach_space",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "norm",
       "target": "ell_p_spaces",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "norm",
       "target": "l_p_spaces",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "norm",
       "target": "c_k",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "bounded_linear_operator",
       "target": "adjoint_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "bounded_linear_operator",
       "target": "continuous_linear_operator",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "sublinear_functional",
       "target": "norm_as_sublinear_functional",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "normed_vector_space",
       "target": "vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_space",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "inner_product_space",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "hilbert_space",
       "target": "inner_product_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "bounded_linear_operator",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "compact_operator",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "weak_topology",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "separation_of_points",
       "target": "hahn_banach_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "separation_of_points",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "pointwise_limits_of_operators",
       "target": "uniform_boundedness_principle",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_compactness_results",
       "target": "banach_alaoglu_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "operator_spectrum_analysis",
       "target": "spectral_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "operator_spectrum_analysis",
       "target": "spectrum",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "normed_vector_space",
       "target": "metric_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "inner_product_space",
       "target": "vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_topology",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "continuous_linear_operator",
       "target": "continuity",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "operator_norm",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "closed_graph",
       "target": "topology_induced_by_metric",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "step_hb_order_extensions",
       "target": "hahn_banach_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_uniform_boundedness_baire",
       "target": "bounded_linear_operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "proof_closed_graph_via_open_mapping",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_closed_graph_via_open_mapping",
       "target": "codomain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "proof_banach_alaoglu_tychonoff",
       "target": "weak_star_topology",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "ell_p_spaces",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "ell_p_spaces",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "l_p_spaces",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "l_p_spaces",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "c_k",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "c_k",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "c_k",
       "target": "compactness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "c_0",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "c_0",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "c_0",
       "target": "completeness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "hilbert_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "inner_product_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "completeness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "normed_vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "completeness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "banach_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "cauchy_sequence",
       "target": "metric_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "completeness",
       "target": "cauchy_sequence",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "cauchy_sequence",
       "target": "metric_induced_by_norm",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "metric_induced_by_norm",
       "target": "normed_vector_space",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "bounded_linear_operator",
       "target": "operator_norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "bounded_function_on_domain",
       "target": "boundedness",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "bounded_linear_operator",
       "target": "bounded_function_on_domain",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "bounded_function_on_domain",
       "target": "function",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "operator",
       "target": "function",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "linear_operator",
       "target": "function",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "function",
       "target": "operator",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "linear_operator",
       "target": "operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "bounded_linear_operator",
       "target": "operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "compact_operator",
       "target": "operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "projection_operator",
       "target": "operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "operator",
       "target": "nonlinear_operator",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "nonlinear_operator",
       "target": "nonlinearity",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "semantic_strength_function_operator",
       "target": "nonlinear_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "semantic_strength_function_operator",
       "target": "function",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "semantic_strength_function_operator",
       "target": "operator",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "linear_operator",
       "target": "semantic_strength_function_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "function",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "operator",
       "target": "functional_analysis",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "operator",
       "target": "linear_operator",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "function",
       "target": "bounded_function_on_domain",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "quotient_space",
       "target": "closed_subspace",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "quotient_space",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "quotient_map",
       "target": "quotient_space",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "kernel",
       "target": "bounded_linear_operator",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "kernel",
       "target": "closed_subspace",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "open_mapping_theorem",
       "target": "closed_graph_theorem",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_convergence",
       "target": "weak_topology",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_star_convergence",
       "target": "weak_star_topology",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weakly_bounded_set",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weakly_bounded_implies_norm_bounded",
       "target": "uniform_boundedness_principle",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "c_k",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "c_k",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "bounded_function_on_domain",
       "target": "nonzero_linear_map_on_unbounded_normed_space",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "bounded_linear_operator",
       "target": "nonzero_linear_map_on_unbounded_normed_space",
-      "relation": "generalizes",
-      "confidence": "high",
-      "verified": false
+      "relation": "generalizes"
     },
     {
       "source": "norm",
       "target": "vector_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "norm",
       "target": "scalar_field_real_or_complex",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "metric_space",
       "target": "normed_vector_space",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "cauchy_sequence",
       "target": "metric_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "cauchy_sequence",
       "target": "metric_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "topological_vector_space",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "normed_vector_space",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "normed_vector_space",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "normed_vector_space",
       "target": "scalar_field_real_or_complex",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "normed_vector_space",
       "target": "metric_induced_by_norm",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "normed_vector_space",
       "target": "vector_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "normed_vector_space",
       "target": "norm",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "normed_vector_space",
       "target": "metric_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "banach_space",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "banach_space",
       "target": "completeness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "banach_space",
       "target": "metric_induced_by_norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "inner_product_space",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "inner_product_space",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "hilbert_space",
       "target": "inner_product_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "hilbert_space",
       "target": "completeness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "hilbert_space",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "locally_convex_space",
       "target": "topological_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "dual_space",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "dual_space",
       "target": "linear_functional",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "dual_space",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "norm",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "norm",
       "target": "scalar_field_real_or_complex",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "norm",
       "target": "vector_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "metric_induced_by_norm",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "metric_induced_by_norm",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "metric_induced_by_norm",
       "target": "metric_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "metric_induced_by_norm",
       "target": "norm",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "metric_induced_by_norm",
       "target": "metric_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "topology_induced_by_metric",
       "target": "metric_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "completeness",
       "target": "metric_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_topology",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_topology",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_topology",
       "target": "linear_functional",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_star_topology",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_star_topology",
       "target": "weak_topology",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "continuity",
       "target": "topology_induced_by_metric",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "convergence",
       "target": "topology_induced_by_metric",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "linear_operator",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "linear_operator",
       "target": "operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "linear_operator",
       "target": "function",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "linear_operator",
       "target": "function",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "linear_operator",
       "target": "operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "linear_functional",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "linear_functional",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_linear_operator",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_linear_operator",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_linear_operator",
       "target": "boundedness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_linear_operator",
       "target": "operator_norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_linear_operator",
       "target": "function",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_linear_operator",
       "target": "operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_linear_operator",
       "target": "linear_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "bounded_linear_operator",
       "target": "normed_vector_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "bounded_linear_operator",
       "target": "function",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "bounded_linear_operator",
       "target": "operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "bounded_linear_operator",
       "target": "semantic_strength_function_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "bounded_function_on_domain",
       "target": "boundedness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_function_on_domain",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_function_on_domain",
       "target": "function",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_function_on_domain",
       "target": "bounded_linear_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "continuous_linear_operator",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "continuous_linear_operator",
       "target": "continuity",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "operator_norm",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "operator_norm",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "compact_operator",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "compact_operator",
       "target": "compactness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "adjoint_operator",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "adjoint_operator",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "self_adjoint_operator",
       "target": "adjoint_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "self_adjoint_operator",
       "target": "hilbert_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "self_adjoint_operator",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "sublinear_functional",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_graph",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_graph",
       "target": "topology_induced_by_metric",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_unit_ball",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_unit_ball",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "spectrum",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "orthonormal_basis",
       "target": "hilbert_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "projection_operator",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "zorns_lemma",
       "target": "axiom_of_choice",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "baire_category_theorem",
       "target": "metric_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "baire_category_theorem",
       "target": "completeness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "baire_category_theorem",
       "target": "uniform_boundedness_principle",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "baire_category_theorem",
       "target": "open_mapping_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "baire_category_theorem",
       "target": "closed_graph_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "domain_is_banach_space",
       "target": "banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "codomain_is_banach_space",
       "target": "banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "pointwise_bounded_family_assumption",
       "target": "boundedness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "surjective_operator_assumption",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_graph_assumption",
       "target": "closed_graph",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "unit_ball_weak_star_assumption",
       "target": "closed_unit_ball",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "unit_ball_weak_star_assumption",
       "target": "weak_star_topology",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "unit_ball_weak_star_assumption",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "compact_self_adjoint_operator_assumption",
       "target": "compact_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "compact_self_adjoint_operator_assumption",
       "target": "self_adjoint_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "compact_self_adjoint_operator_assumption",
       "target": "hilbert_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "linear_functional",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "sublinear_functional",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "banach_alaoglu_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "hahn_banach_theorem",
       "target": "riesz_representation_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "operator_norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "boundedness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
-    },
-    {
-      "source": "uniform_boundedness_principle",
-      "target": "baire_category_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "open_mapping_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "open_mapping_theorem",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "open_mapping_theorem",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "open_mapping_theorem",
       "target": "continuity",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "open_mapping_theorem",
       "target": "closed_graph_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "closed_graph_theorem",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_graph_theorem",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_graph_theorem",
       "target": "closed_graph",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_graph_theorem",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
-    },
-    {
-      "source": "closed_graph_theorem",
-      "target": "open_mapping_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "closed_unit_ball",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "weak_star_topology",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "banach_alaoglu_theorem",
       "target": "compactness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
-    },
-    {
-      "source": "banach_alaoglu_theorem",
-      "target": "hahn_banach_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "projection_theorem",
       "target": "hilbert_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "projection_theorem",
       "target": "completeness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "projection_theorem",
       "target": "compactness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "hilbert_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "linear_functional",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "inner_product_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
-    },
-    {
-      "source": "riesz_representation_theorem",
-      "target": "hahn_banach_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "spectral_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "spectral_theorem",
       "target": "hilbert_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "spectral_theorem",
       "target": "compact_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "spectral_theorem",
       "target": "self_adjoint_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "spectral_theorem",
       "target": "spectrum",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "spectral_theorem",
       "target": "orthonormal_basis",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
-    },
-    {
-      "source": "spectral_theorem",
-      "target": "riesz_representation_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_inverse_theorem",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_inverse_theorem",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "ell_p_spaces",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "ell_p_spaces",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "ell_p_spaces",
       "target": "hahn_banach_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "ell_p_spaces",
       "target": "riesz_representation_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "ell_p_spaces",
       "target": "dual_space",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "ell_p_spaces",
       "target": "completeness",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "ell_p_spaces",
       "target": "banach_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "ell_p_spaces",
       "target": "normed_vector_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "l_p_spaces",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "l_p_spaces",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "l_p_spaces",
       "target": "uniform_boundedness_principle",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "l_p_spaces",
       "target": "dual_space",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "l_p_spaces",
       "target": "completeness",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "l_p_spaces",
       "target": "banach_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "l_p_spaces",
       "target": "normed_vector_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "c_k",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "c_k",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "c_k",
       "target": "compactness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "c_k",
       "target": "hahn_banach_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "c_k",
       "target": "dual_space",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "c_k",
       "target": "banach_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "c_k",
       "target": "normed_vector_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "c_0",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "c_0",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "c_0",
       "target": "completeness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "c_0",
       "target": "hahn_banach_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "c_0",
       "target": "dual_space",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "c_0",
       "target": "banach_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "c_0",
       "target": "normed_vector_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "hilbert_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "inner_product_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "completeness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "riesz_representation_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "spectral_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "hilbert_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "banach_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "ell_2_as_hilbert_space",
       "target": "inner_product_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "completeness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "open_mapping_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "uniform_boundedness_principle",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "closed_graph_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "target": "normed_vector_space",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "operator",
       "target": "function",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "operator",
       "target": "function",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "operator",
       "target": "vector_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "operator",
       "target": "normed_vector_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "nonlinear_operator",
       "target": "operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "nonlinear_operator",
       "target": "function",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "nonlinear_operator",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "nonlinear_operator",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "nonlinear_operator",
       "target": "operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "nonlinear_operator",
       "target": "linear_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "semantic_strength_function_operator",
       "target": "function",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "semantic_strength_function_operator",
       "target": "operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "semantic_strength_function_operator",
       "target": "function",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "semantic_strength_function_operator",
       "target": "operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "semantic_strength_function_operator",
       "target": "linear_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "closed_subspace",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_subspace",
       "target": "topology_induced_by_metric",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "closed_subspace",
       "target": "normed_vector_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "quotient_space",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "quotient_space",
       "target": "closed_subspace",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "quotient_space",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "quotient_space",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "quotient_space",
       "target": "closed_subspace",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "quotient_space",
       "target": "normed_vector_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "quotient_map",
       "target": "quotient_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "quotient_map",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "quotient_map",
       "target": "quotient_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "kernel",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "kernel",
       "target": "vector_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "kernel",
       "target": "linear_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "weak_convergence",
       "target": "weak_topology",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_convergence",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_convergence",
       "target": "linear_functional",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_convergence",
       "target": "weak_topology",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "weak_convergence",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_convergence",
       "target": "dual_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "weak_convergence",
       "target": "weak_topology",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "weak_star_convergence",
       "target": "weak_star_topology",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_star_convergence",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_star_convergence",
       "target": "weak_star_topology",
-      "relation": "constructed_from",
-      "confidence": "high",
-      "verified": false
+      "relation": "constructed_from"
     },
     {
       "source": "weak_star_convergence",
       "target": "dual_space",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "weak_star_convergence",
       "target": "weak_star_topology",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "weak_star_convergence",
       "target": "dual_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "weakly_bounded_set",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weakly_bounded_set",
       "target": "boundedness",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weakly_bounded_set",
       "target": "dual_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "weakly_bounded_set",
       "target": "weak_topology",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "weakly_bounded_implies_norm_bounded",
       "target": "banach_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weakly_bounded_implies_norm_bounded",
       "target": "weakly_bounded_set",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weakly_bounded_implies_norm_bounded",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "weakly_bounded_implies_norm_bounded",
       "target": "domain_is_banach_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "weakly_bounded_implies_norm_bounded",
       "target": "uniform_boundedness_principle",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "weakly_bounded_implies_norm_bounded",
       "target": "dual_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "weakly_bounded_implies_norm_bounded",
       "target": "uniform_boundedness_principle",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "norm_as_sublinear_functional",
       "target": "norm",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "norm_as_sublinear_functional",
       "target": "sublinear_functional",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "norm_as_sublinear_functional",
       "target": "normed_vector_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "norm_as_sublinear_functional",
       "target": "norm",
-      "relation": "uses",
-      "confidence": "high",
-      "verified": false
+      "relation": "uses"
     },
     {
       "source": "norm_as_sublinear_functional",
       "target": "norm",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "norm_as_sublinear_functional",
       "target": "sublinear_functional",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "norm_as_sublinear_functional",
       "target": "hahn_banach_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "norm_as_sublinear_functional",
       "target": "sublinear_functional",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "nonlinearity",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "nonlinearity",
       "target": "linear_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "bounded_function_on_domain",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "normed_vector_space",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "bounded_function_on_domain",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "bounded_linear_operator",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "semantic_strength_function_operator",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "bounded_linear_operator",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "linear_operator",
-      "relation": "satisfies",
-      "confidence": "high",
-      "verified": false
+      "relation": "satisfies"
     },
     {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "bounded_function_on_domain",
-      "relation": "violates",
-      "confidence": "high",
-      "verified": false
+      "relation": "violates"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "c_k",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "dual_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "bounded_linear_operator",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "compactness",
-      "relation": "assumes",
-      "confidence": "high",
-      "verified": false
+      "relation": "assumes"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "dual_space",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "c_k",
-      "relation": "motivated_by",
-      "confidence": "high",
-      "verified": false
+      "relation": "motivated_by"
     },
     {
       "source": "riesz_representation_c_k",
       "target": "hahn_banach_theorem",
-      "relation": "related_to",
-      "confidence": "high",
-      "verified": false
+      "relation": "related_to"
     },
     {
       "source": "exercise_1_1",
       "target": "metric_space",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_1",
       "target": "convergence",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_1",
       "target": "cauchy_sequence",
-      "relation": "defined_in_terms_of",
-      "confidence": "high",
-      "verified": false
+      "relation": "defined_in_terms_of"
     }
   ]
 }

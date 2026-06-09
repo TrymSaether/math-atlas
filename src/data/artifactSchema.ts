@@ -75,8 +75,6 @@ export const ArtifactEdgeSchema = z.object({
   to: z.string(),
   relation: z.enum(RELATION_KEYS),
   isDependency: z.boolean(),
-  confidence: z.number().min(0).max(1),
-  verified: z.boolean(),
 });
 
 export const ArtifactSchema = z.object({

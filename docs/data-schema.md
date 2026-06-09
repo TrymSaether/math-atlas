@@ -63,6 +63,8 @@ import { z } from "zod";
 
 const Slug = z.string().regex(/^[a-z0-9_]+$/);
 const Tex = z.string().min(1); // LaTeX; rendered downstream
+const Prose = z.string().min(1); // plain prose, not a restatement of the definition
+// AUTHORABLE_RELATIONS = the forward-only subset authors may write (see §1).
 const Kind = z.enum([
   "object",
   "definition",
@@ -108,47 +110,32 @@ export const SourceConcept = z
         statement: Tex.optional(), // informal statement
         definition: Tex.optional(), // genus+differentia style is fine here
         formal: Tex.optional(), // precise/formal statement
-        intuition: z.string().optional(), // prose, not a restatement of definition
+        formula: Tex.optional(), // displayed formula/identity — distinct from notation
+        intuition: Prose.optional(), // prose, not a restatement of definition
+        gloss: Prose.optional(), // short dictionary-style gloss; drives Dictionary view
         notation: z.array(Tex).default([]),
       })
       .strict()
-      .default({}),
+      .default({ notation: [] }),
 
     // optional structured pedagogy (kept only if a renderer uses it)
     examples: z
       .array(z.object({ tex: Tex, caption: z.string().optional() }).strict())
       .default([]),
+    diagram: z.string().optional(), // single curated diagram path (figure pipeline owns the rest)
+    assumptions: z.array(Prose).default([]), // free-text hypotheses; NOT concept refs, so not edges
 
-    // proof, when carried on the statement rather than as its own node
-    proof: z
-      .object({
-        steps: z.array(
-          z
-            .object({
-              role: z.enum([
-                "setup",
-                "claim",
-                "calculation",
-                "case",
-                "argument",
-                "conclusion",
-                "remark",
-              ]),
-              content: Tex,
-              uses: z.array(Slug).default([]), // concept ids this step leans on
-            })
-            .strict(),
-        ),
-      })
-      .strict()
-      .optional(),
+    // proof / worked solution — same step shape; proof for statements, solution for exercises
+    proof: ProofSchema.optional(),
+    solution: ProofSchema.optional(),
 
     // provenance
     source: z
       .object({
         citation: z.string().optional(),
         chapter: z.string().optional(),
-        ref: z.string().optional(),
+        ref: z.string().optional(), // single pointer (e.g. "Thm 3.2")
+        references: z.array(z.string()).default([]), // external textbook citations (was book_refs)
       })
       .strict()
       .optional(),
@@ -157,17 +144,17 @@ export const SourceConcept = z
   })
   .strict();
 
+// ProofSchema = { steps: [{ role: setup|claim|calculation|case|argument|conclusion|remark,
+//                           content: Tex, uses: Slug[] }] }
+
 export const SourceEdge = z
   .object({
     id: Slug.optional(), // optional: build derives a deterministic id if absent
     source: Slug,
     target: Slug,
-    relation: z.enum(
-      Object.keys(RELATIONS) as [RelationType, ...RelationType[]],
-    ),
-    // provenance only — NO direction, NO dependency_class (both implied by relation)
-    confidence: z.enum(["high", "medium", "low"]).default("high"),
-    verified: z.boolean().default(false), // human-checked vs auto-extracted
+    relation: z.enum(AUTHORABLE_RELATIONS), // forward keys only; inverses are render-time
+    // NO direction, NO dependency_class (both implied by relation);
+    // NO confidence/verified (were authored constant, read by nothing — removed)
     notes: z.string().optional(),
   })
   .strict();
@@ -203,7 +190,8 @@ export const ArtifactNode = z.object({
   label: z.string(),
   content: /* same content block */,
   examples: /* same */,
-  proof: /* same */,
+  diagram: /* same */, assumptions: /* same */,
+  proof: /* same */, solution: /* same */,
   source: /* same */,
   tags: z.array(z.string()),
   priority: z.string(),
@@ -218,9 +206,8 @@ export const ArtifactEdge = z.object({
   to: z.string(),
   relation: z.string(),
   isDependency: z.boolean(),
-  confidence: z.number(),                  // 0..1, converted from enum here, once
-  verified: z.boolean(),
-  derived: z.boolean(),                    // true for materialized inverse edges
+  // edges are stored single-direction; inverses are derived at render time,
+  // not materialized — so no `derived` flag. No confidence/verified.
 });
 
 export const Artifact = z.object({
@@ -243,11 +230,11 @@ for each *.source.json:
   2. FK check: every edge.source/target, proof step `uses`, → existing concept
   3. dup check: concept ids, domain ids, edge ids; contiguous domain order
   4. orient: for each edge, set from/to using RELATIONS[relation] + isDep
-  5. materialize inverses: emit reverse edge (derived:true) for non-symmetric relations
-  6. dedupe: collapse semantically identical edges (from,to,relation)
-  7. compute: degree, depth (longest prereq chain)
-  8. convert: confidence enum → number
-  9. emit *.json (artifact); pretty for diff or minified for ship
+  5. dedupe: collapse semantically identical edges (from,to,relation;
+            symmetric relations canonicalize the pair so A↔B is stored once)
+  6. compute: degree, depth (longest prereq chain)
+  7. emit *.json (artifact); pretty for diff or minified for ship
+            (inverse edges are NOT materialized — derived at render time)
 exit non-zero on any issue  → wired into CI / prebuild
 ```
 
@@ -273,7 +260,7 @@ Runtime `loadMap` then drops `FieldJsonSchema.parse` + `normalizeFieldGraph` and
 | `equivalent_definitions`                                                     | **drop** (or `related_to` edge if it targets a concept)                                                        | —                 |
 | `proof`/`proof_steps`/`solution_steps`/`proof_dependencies`                  | **keep** as `proof.steps[].uses`                                                                               | content + edges   |
 | `source`/`book_refs`/`ref`/`chapter`                                         | **keep**, nest under `source`                                                                                  | provenance        |
-| `confidence` (enum)                                                          | **keep** in source; convert to number in artifact only                                                         | provenance        |
+| `confidence` (enum) / edge `verified`                                        | **drop** (authored constant `high`/`false` everywhere, read by nothing)                                        | —                 |
 | `status`/`math_review`/`schema_review`/`pedagogy_review`/`convention_review` | **move out** of artifact (authoring tooling only)                                                              | —                 |
 | `canonical_label`/`display_label`                                            | **drop** (one `label`)                                                                                         | —                 |
 | `number`/`section`/`sectionTitle`/`topicCluster`/`chapter`(fabricated)       | **drop** (derive at render)                                                                                    | —                 |
