@@ -2027,11 +2027,6 @@
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/brouwer.svg",
-      "assumptions": [
-        "continuity",
-        "compactness",
-        "euclidean_space"
-      ],
       "proof": {
         "steps": [
           {

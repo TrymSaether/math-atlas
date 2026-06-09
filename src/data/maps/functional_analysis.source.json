@@ -799,9 +799,6 @@
         "intuition": "Completeness prevents a space from being too thin.",
         "notation": []
       },
-      "assumptions": [
-        "completeness"
-      ],
       "tags": [
         "category",
         "completeness"
@@ -1022,9 +1019,6 @@
         "intuition": "Scalar probes defined on a subspace can be extended globally.",
         "notation": []
       },
-      "assumptions": [
-        "scalar_field_real_or_complex"
-      ],
       "tags": [
         "hahn-banach",
         "duality"
@@ -1042,10 +1036,6 @@
         "intuition": "Pointwise control plus completeness forces uniform operator control.",
         "notation": []
       },
-      "assumptions": [
-        "domain_is_banach_space",
-        "pointwise_bounded_family_assumption"
-      ],
       "tags": [
         "ubp",
         "baire"
@@ -1063,11 +1053,6 @@
         "intuition": "A complete linear surjection cannot crush all neighborhoods.",
         "notation": []
       },
-      "assumptions": [
-        "domain_is_banach_space",
-        "codomain_is_banach_space",
-        "surjective_operator_assumption"
-      ],
       "tags": [
         "open mapping",
         "baire"
@@ -1085,11 +1070,6 @@
         "intuition": "A graph-compatible limit rule forces norm continuity.",
         "notation": []
       },
-      "assumptions": [
-        "domain_is_banach_space",
-        "codomain_is_banach_space",
-        "closed_graph_assumption"
-      ],
       "tags": [
         "closed graph",
         "open mapping"
@@ -1107,9 +1087,6 @@
         "intuition": "Pointwise bounded scalar probes have compactness in the weakest natural topology.",
         "notation": []
       },
-      "assumptions": [
-        "unit_ball_weak_star_assumption"
-      ],
       "tags": [
         "weak-star",
         "compactness"
@@ -1144,9 +1121,6 @@
         "intuition": "The dual of a Hilbert space is the Hilbert space itself, anti-linearly or linearly depending on convention.",
         "notation": []
       },
-      "assumptions": [
-        "domain_is_banach_space"
-      ],
       "tags": [
         "hilbert",
         "duality",
@@ -1165,9 +1139,6 @@
         "intuition": "Compact self-adjoint operators behave like diagonal Hermitian matrices.",
         "notation": []
       },
-      "assumptions": [
-        "compact_self_adjoint_operator_assumption"
-      ],
       "tags": [
         "spectral",
         "hilbert",
