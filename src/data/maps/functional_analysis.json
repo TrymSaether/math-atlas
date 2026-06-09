@@ -981,7 +981,7 @@
         "formal_statement": "$$T:X\\to Y \\text{ compact in } \\mathcal{L}(X,Y) \\quad \\iff \\quad T(B_X) \\text{ has compact closure in } Y.$$",
         "definition": "A bounded linear operator that maps bounded sets to relatively compact sets.",
         "intuition": "An infinite-dimensional operator behaving partly like a finite-rank operator.",
-        "formlua": "$$\\begin{aligned}\nT:X\\to Y \\text{ compact, means } \\forall \\text{ bounded } B\\subseteq X,\\ \\overline{T(B)} \\text{ is compact in } Y.\n\\end{aligned}$$",
+        "formula": "$$\\begin{aligned}\nT:X\\to Y \\text{ compact, means } \\forall \\text{ bounded } B\\subseteq X,\\ \\overline{T(B)} \\text{ is compact in } Y.\n\\end{aligned}$$",
         "notation": "$K(X,Y)$",
         "assumptions": [],
         "dependencies": {
