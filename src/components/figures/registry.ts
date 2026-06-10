@@ -49,6 +49,10 @@ export const FIGURE_REGISTRY: Record<
   aliasing: lazy(() => import("./SamplingFigure")),
   heat_equation: lazy(() => import("./HeatFigure")),
   hahn_banach_theorem: lazy(() => import("./HahnBanachFigure")),
+  norm: lazy(() => import("./NormUnitBallFigure")),
+  closed_unit_ball: lazy(() => import("./NormUnitBallFigure")),
+  lp_norms_on_r2: lazy(() => import("./NormUnitBallFigure")),
+  equivalent_norms: lazy(() => import("./NormUnitBallFigure")),
 
   // --- Exercises & exam problems: reuse the figure that best illustrates them ---
   // Fourier-series waveforms (triangle / sawtooth / square + partial sums).
