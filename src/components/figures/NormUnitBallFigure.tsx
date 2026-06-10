@@ -22,8 +22,8 @@ type NormKind = "l2" | "l1" | "linf" | "lp";
 const MODES: { kind: NormKind; label: string; short: string }[] = [
   { kind: "l2", label: "Euclidean $\\ell^2$", short: "$\\ell^2$" },
   { kind: "l1", label: "Taxicab $\\ell^1$", short: "$\\ell^1$" },
-  { kind: "linf", label: "Chessboard $\\ell^\\infty$", short: "$\\ell^\\infty$" },
-  { kind: "lp", label: "Smooth $\\ell^p$", short: "$\\ell^p$" },
+  { kind: "linf", label: "Maximum $\\ell^\\infty$", short: "$\\ell^\\infty$" },
+  { kind: "lp", label: "Tunable $\\ell^p$", short: "$\\ell^p$" },
 ];
 
 const VIEW_MIN = -2.35;
@@ -51,8 +51,20 @@ function lpBoundary(p: number, steps = 160): Vec2[] {
 }
 
 function unitBallPoints(kind: NormKind, p: number): Vec2[] {
-  if (kind === "l1") return [[1, 0], [0, 1], [-1, 0], [0, -1]];
-  if (kind === "linf") return [[1, 1], [-1, 1], [-1, -1], [1, -1]];
+  if (kind === "l1")
+    return [
+      [1, 0],
+      [0, 1],
+      [-1, 0],
+      [0, -1],
+    ];
+  if (kind === "linf")
+    return [
+      [1, 1],
+      [-1, 1],
+      [-1, -1],
+      [1, -1],
+    ];
   return lpBoundary(kind === "lp" ? p : 2);
 }
 
@@ -78,7 +90,7 @@ function NormModeSelect({
       <div
         role="radiogroup"
         aria-label="Norm type"
-        className="inline-flex flex-wrap gap-1 rounded-[var(--radius-md)] border p-1"
+        className="inline-flex flex-wrap gap-1 rounded-[var(--radius-md)] border"
         style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
       >
         {MODES.map((mode) => {
@@ -105,7 +117,11 @@ function NormModeSelect({
       {value === "lp" && (
         <label
           className="inline-flex items-center gap-2 rounded-[var(--radius-md)] border px-2.5 py-1.5 text-ui-meta"
-          style={{ borderColor: "var(--border)", background: "var(--surface-2)", color: "var(--fg-2)" }}
+          style={{
+            borderColor: "var(--border)",
+            background: "var(--surface-2)",
+            color: "var(--fg-2)",
+          }}
         >
           <MathText text="$p=$" />
           <input
@@ -138,17 +154,29 @@ function ReadoutPanel({
 }) {
   const inside = value <= 1 + 1e-6;
   const normSubscript =
-    mode === "lp" ? p.toFixed(p % 1 === 0 ? 0 : 1) : mode === "linf" ? "\\infty" : mode === "l1" ? "1" : "2";
+    mode === "lp"
+      ? p.toFixed(p % 1 === 0 ? 0 : 1)
+      : mode === "linf"
+        ? "\\infty"
+        : mode === "l1"
+          ? "1"
+          : "2";
 
   return (
     <aside
       className="flex min-w-[13rem] flex-1 flex-col rounded-[var(--radius-md)] border p-3"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
     >
-      <div className="text-center text-ui-body font-semibold" style={{ color: "var(--fg-1)" }}>
+      <div
+        className="text-center text-ui-body font-semibold"
+        style={{ color: "var(--fg-1)" }}
+      >
         <MathText text="Rubber band tension" />
       </div>
-      <div className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-ui-meta" style={{ color: "var(--fg-2)" }}>
+      <div
+        className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-ui-meta"
+        style={{ color: "var(--fg-2)" }}
+      >
         <span>
           <MathText text="$x=$" />
         </span>
@@ -162,7 +190,10 @@ function ReadoutPanel({
           {value.toFixed(3)}
         </strong>
       </div>
-      <div className="mt-3 h-1.5 rounded-full" style={{ background: "var(--surface-3)" }}>
+      <div
+        className="mt-3 h-1.5 rounded-full"
+        style={{ background: "var(--surface-3)" }}
+      >
         <div
           className="h-full rounded-full"
           style={{
@@ -172,12 +203,20 @@ function ReadoutPanel({
         />
       </div>
       <div className="mt-3 text-ui-meta" style={{ color: "var(--fg-2)" }}>
-        <MathText text="$\\|x\\|$" />{" <= 1? "}
+        <MathText text="$\\|x\\|$" />
+        {" <= 1? "}
         <strong style={{ color: inside ? DIA.ok : DIA.alert }}>
-          <MathText text={inside ? "Yes, inside the unit ball" : "No, outside the unit ball"} />
+          <MathText
+            text={
+              inside ? "Yes, inside the unit ball" : "No, outside the unit ball"
+            }
+          />
         </strong>
       </div>
-      <div className="mt-3 border-t pt-2 text-ui-meta" style={{ borderColor: "var(--border)", color: "var(--fg-2)" }}>
+      <div
+        className="mt-3 border-t pt-2 text-ui-meta"
+        style={{ borderColor: "var(--border)", color: "var(--fg-2)" }}
+      >
         {[
           "$\\|x\\|\\ge 0$, and $\\|x\\|=0\\iff x=0$",
           "$\\|\\lambda x\\|=|\\lambda|\\,\\|x\\|$",
@@ -210,19 +249,63 @@ export default function NormUnitBallFigure(_: FigureProps) {
 
   return (
     <figure className="m-0">
-      <NormModeSelect value={mode} onChange={setMode} pInput={pInput} onPInput={setPInput} />
+      <NormModeSelect
+        value={mode}
+        onChange={setMode}
+        pInput={pInput}
+        onPInput={setPInput}
+      />
       <div className="mt-3 flex flex-col gap-3 2xl:flex-row">
         <div className="min-w-0 flex-[1.35]">
-          <FigureFrame xDomain={[-2.4, 2.4]} yDomain={[-2.1, 2.1]} height={255} axes={false} grid>
+          <FigureFrame
+            xDomain={[-2.4, 2.4]}
+            yDomain={[-2.1, 2.1]}
+            height={255}
+            axes={false}
+            grid
+          >
             {mode === "l2" ? (
-              <Circle center={[0, 0]} radius={1} color={DIA.codomain} fillOpacity={0.11} strokeOpacity={1} weight={STROKE.ref} />
+              <Circle
+                center={[0, 0]}
+                radius={1}
+                color={DIA.codomain}
+                fillOpacity={0.11}
+                strokeOpacity={1}
+                weight={STROKE.ref}
+              />
             ) : (
-              <Polygon points={ball} color={DIA.codomain} fillOpacity={0.11} strokeOpacity={1} weight={STROKE.ref} />
+              <Polygon
+                points={ball}
+                color={DIA.codomain}
+                fillOpacity={0.11}
+                strokeOpacity={1}
+                weight={STROKE.ref}
+              />
             )}
-            <Line.Segment point1={[-2.25, 0]} point2={[2.25, 0]} color={DIA.muted} weight={STROKE.guide} />
-            <Line.Segment point1={[0, -1.95]} point2={[0, 1.95]} color={DIA.muted} weight={STROKE.guide} />
-            <Vector tail={[0, 0]} tip={x} color={value <= 1 ? DIA.ok : DIA.alert} weight={Math.min(3.2, 1.4 + value * 0.45)} />
-            <Point x={0} y={0} color={DIA.faint} svgCircleProps={{ r: DOT.small }} />
+            <Line.Segment
+              point1={[-2.25, 0]}
+              point2={[2.25, 0]}
+              color={DIA.muted}
+              weight={STROKE.guide}
+            />
+            <Line.Segment
+              point1={[0, -1.95]}
+              point2={[0, 1.95]}
+              color={DIA.muted}
+              weight={STROKE.guide}
+            />
+            <Vector
+              tail={[0, 0]}
+              tip={x}
+              color={value <= 1 ? DIA.ok : DIA.alert}
+              weight={Math.min(3.2, 1.4 + value * 0.45)}
+            />
+            <Point
+              x={0}
+              y={0}
+              color={DIA.faint}
+              svgCircleProps={{ r: DOT.small }}
+            />
             <LaTeX at={[2.22, -0.24]} tex="x_1" color={DIA.text} />
             <LaTeX at={[0.18, 1.82]} tex="x_2" color={DIA.text} />
             <LaTeX at={[1.1, 1.08]} tex={label} color={DIA.codomain} />
@@ -232,7 +315,10 @@ export default function NormUnitBallFigure(_: FigureProps) {
         </div>
         <ReadoutPanel point={x} value={value} mode={mode} p={p} />
       </div>
-      <figcaption className="mt-2 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <figcaption
+        className="mt-2 text-ui-meta"
+        style={{ color: "var(--fg-3)" }}
+      >
         <MathText text="Drag $x$ and switch norms. The same vector has different size because each unit ball encodes a different geometry." />
       </figcaption>
     </figure>
