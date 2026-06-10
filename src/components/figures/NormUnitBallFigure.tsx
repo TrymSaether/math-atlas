@@ -213,7 +213,7 @@ export default function NormUnitBallFigure(_: FigureProps) {
       <NormModeSelect value={mode} onChange={setMode} pInput={pInput} onPInput={setPInput} />
       <div className="mt-3 flex flex-col gap-3 2xl:flex-row">
         <div className="min-w-0 flex-[1.35]">
-          <FigureFrame xDomain={[-2.4, 2.4]} yDomain={[-2.1, 2.1]} height={255} grid>
+          <FigureFrame xDomain={[-2.4, 2.4]} yDomain={[-2.1, 2.1]} height={255} axes={false} grid>
             {mode === "l2" ? (
               <Circle center={[0, 0]} radius={1} color={DIA.codomain} fillOpacity={0.11} strokeOpacity={1} weight={STROKE.ref} />
             ) : (
