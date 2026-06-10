@@ -1,0 +1,14 @@
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img" aria-label="Dual norm as a supporting functional of a unit ball">
+  <rect x="0" y="0" width="320" height="180" fill="none" />
+  <path d="M158 33 C207 34 242 57 247 91 C252 129 205 150 159 148 C111 146 72 123 73 89 C74 56 111 31 158 33 Z"
+        fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.8" />
+  <line x1="87" y1="38" x2="264" y2="141" stroke="var(--dia-acc,#2457c5)" stroke-width="1.8" />
+  <line x1="105" y1="20" x2="282" y2="123" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.1" stroke-dasharray="5 5" />
+  <line x1="69" y1="56" x2="246" y2="159" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.1" stroke-dasharray="5 5" />
+  <circle cx="216" cy="113" r="5" fill="var(--dia-boundary,#dc2626)" />
+  <line x1="160" y1="90" x2="216" y2="113" stroke="var(--dia-boundary,#dc2626)" stroke-width="1.5" />
+  <circle cx="160" cy="90" r="3.5" fill="var(--dia-ink,#27221d)" />
+  <text x="222" y="108" font-size="12" fill="var(--dia-boundary,#dc2626)">touch</text>
+  <text x="232" y="145" font-size="12" fill="var(--dia-acc,#2457c5)">x*(x)=||x*||</text>
+  <text x="159" y="164" font-size="12" text-anchor="middle" fill="var(--dia-mut,#8c8274)">||x*|| = sup_{||x|| &lt;= 1} |x*(x)|</text>
+</svg>

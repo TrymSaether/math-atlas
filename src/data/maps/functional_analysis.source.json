@@ -142,9 +142,9 @@
       "label": "Normed vector space",
       "content": {
         "statement": "A normed vector space is a vector space equipped with a norm.",
-        "definition": "A normed vector space is a vector space together with a chosen norm. The norm induces the canonical metric $d(x,y)=\\|x-y\\|_X$.",
+        "definition": "A normed vector space is a vector space together with a chosen norm. The norm supplies both a geometry of unit balls and the canonical metric $d(x,y)=\\|x-y\\|_X$.",
         "formal": "A normed vector space is a pair $(X,\\|\\cdot\\|_X)$ where $X$ is a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and $\\|\\cdot\\|_X$ is a norm on $X$.",
-        "intuition": "A normed vector space is linear algebra with size and distance added. This makes it possible to discuss convergence, Cauchy sequences, continuity, bounded linear maps, and completeness.",
+        "intuition": "A normed vector space is linear algebra with a calibrated notion of size. Its unit ball is the local shape of the geometry, and translating that ball through the space gives distance, convergence, Cauchy sequences, continuity, bounded linear maps, and completeness.",
         "notation": ["$$(X,\\|\\cdot\\|_X),\\qquad d_X(x,y)=\\|x-y\\|_X$$"]
       },
       "assumptions": [
@@ -232,11 +232,17 @@
       "label": "Norm",
       "content": {
         "statement": "A norm is a length function on a vector space satisfying positive definiteness, absolute homogeneity, and the triangle inequality.",
-        "definition": "A norm is a function assigning a nonnegative length to each vector in a vector space, compatible with scalar multiplication and vector addition.",
+        "definition": "A norm is a function assigning a nonnegative length to each vector in a vector space, compatible with scalar multiplication and vector addition. Its unit ball is convex, balanced, absorbing, and determines the norm.",
         "formal": "Let $X$ be a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$. A norm on $X$ is a function $\\|\\cdot\\|:X\\to[0,\\infty)$ such that for all $x,y\\in X$ and $\\lambda\\in\\mathbb K$, $$\\begin{aligned} &\\|x\\|\\ge 0,\\\\ &\\|x\\|=0\\iff x=0,\\\\ &\\|\\lambda x\\|=|\\lambda|\\,\\|x\\|,\\\\ &\\|x+y\\|\\le \\|x\\|+\\|y\\|. \\end{aligned}$$",
-        "intuition": "A norm is the analytic version of length: it measures vector size while respecting the linear structure.",
+        "intuition": "A norm is the analytic version of length, but the best picture is its unit ball: vectors inside cost at most one unit of size, and every other length is read by scaling that shape until it reaches the vector.",
         "notation": ["$$\\|x\\|,\\qquad \\|\\cdot\\|,\\qquad \\|\\cdot\\|_X$$"]
       },
+      "examples": [
+        {
+          "tex": "$\\|(x_1,x_2)\\|_1=|x_1|+|x_2|$, $\\|(x_1,x_2)\\|_2=(|x_1|^2+|x_2|^2)^{1/2}$, and $\\|(x_1,x_2)\\|_\\infty=\\max(|x_1|,|x_2|)$.",
+          "caption": "The same vector can have different sizes in different norm geometries."
+        }
+      ],
       "assumptions": [
         "$X$ is a vector space.",
         "The scalar field is $\\mathbb R$ or $\\mathbb C$."
@@ -253,7 +259,7 @@
         "statement": "Every norm on a vector space induces a metric by measuring the norm of the difference.",
         "definition": "The metric induced by a norm is the distance function $d_X(x,y)=\\|x-y\\|_X$.",
         "formal": "Let $(X,\\|\\cdot\\|_X)$ be a normed vector space. Define $$d_X(x,y)=\\|x-y\\|_X.$$ Then $d_X$ is a metric on $X$.",
-        "intuition": "Distance is the length of the displacement from one vector to the other.",
+        "intuition": "Distance is the norm-cost of the displacement from one vector to the other. Metric balls are just translated and rescaled copies of the norm unit ball.",
         "notation": ["$$d_X(x,y)=\\|x-y\\|_X$$"]
       },
       "assumptions": ["$(X,\\|\\cdot\\|_X)$ is a normed vector space."],
@@ -293,8 +299,9 @@
       "domain": "spaces_norms",
       "label": "Compactness",
       "content": {
-        "definition": "Every open cover admits a finite subcover.",
-        "intuition": "Topological finiteness; in metric spaces often sequential compactness.",
+        "definition": "A space or subset is compact if every open cover admits a finite subcover.",
+        "formal": "$K\\subseteq X\\text{ compact}\\iff\\text{ every open cover of }K\\text{ has a finite subcover}.$",
+        "intuition": "Compactness is topological finiteness. In metric spaces it can be detected by sequences: every sequence in a compact set has a convergent subsequence.",
         "notation": []
       },
       "tags": ["property", "topology"],
@@ -457,9 +464,9 @@
       "domain": "operators",
       "label": "Operator norm",
       "content": {
-        "definition": "The norm of a bounded linear operator given by its largest action on the unit ball.",
-        "formal": "$\\|T\\| = \\sup\\{\\|Tx\\| : \\|x\\| \\leq 1\\}$.",
-        "intuition": "Worst-case amplification factor.",
+        "definition": "The operator norm of a bounded linear operator is its largest possible output size on the unit ball of the domain.",
+        "formal": "Let $T:X\\to Y$ be linear between normed spaces. $$\\|T\\|=\\sup_{\\|x\\|_X\\leq 1}\\|Tx\\|_Y=\\sup_{x\\neq 0}\\frac{\\|Tx\\|_Y}{\\|x\\|_X}.$$",
+        "intuition": "The operator norm is the worst-case stretch factor: send the domain unit ball through $T$ and measure the farthest point in the codomain norm.",
         "notation": ["$\\|T\\|$"]
       },
       "tags": ["operator", "norm"],
@@ -541,13 +548,112 @@
       "domain": "spaces_norms",
       "label": "Closed unit ball",
       "content": {
-        "definition": "The set of points of norm at most one.",
-        "formal": "$$B_X={x in X: \\|x\\|\\leq 1}.$$",
-        "intuition": "The basic bounded test set for normed-space geometry.",
-        "notation": ["$B_X$"]
+        "definition": "The closed unit ball of a normed space is the set of vectors with norm at most one.",
+        "formal": "$$B_X=\\{x\\in X:\\|x\\|_X\\leq 1\\}.$$",
+        "intuition": "The closed unit ball is the basic test shape for normed-space geometry. Its convexity is the triangle inequality, its symmetry is absolute homogeneity, and its compactness behavior separates finite-dimensional from infinite-dimensional analysis.",
+        "notation": ["$B_X$", "$\\overline{B}_X(0,1)$"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/equivalent-norms-sandwich.svg",
       "tags": ["norm", "geometry"],
       "priority": "standard"
+    },
+    {
+      "id": "lp_norms_on_r2",
+      "kind": "example",
+      "domain": "spaces_norms",
+      "label": "$\\ell^p$ norms on $\\mathbb{R}^2$",
+      "content": {
+        "statement": "The same vector space $\\mathbb{R}^2$ carries different norm geometries: diamond, round, square, and smooth intermediate unit balls.",
+        "definition": "For $1\\leq p<\\infty$, the $\\ell^p$ norm on $\\mathbb{R}^2$ is $\\|(x_1,x_2)\\|_p=(|x_1|^p+|x_2|^p)^{1/p}$, while $\\|(x_1,x_2)\\|_\\infty=\\max(|x_1|,|x_2|)$.",
+        "formal": "$$\\begin{aligned}\\|(x_1,x_2)\\|_1&=|x_1|+|x_2|,\\\\ \\|(x_1,x_2)\\|_2&=(|x_1|^2+|x_2|^2)^{1/2},\\\\ \\|(x_1,x_2)\\|_p&=(|x_1|^p+|x_2|^p)^{1/p},\\\\ \\|(x_1,x_2)\\|_\\infty&=\\max(|x_1|,|x_2|).\\end{aligned}$$",
+        "intuition": "Changing the norm changes what one unit of reach looks like: $\\ell^1$ gives a diamond, $\\ell^2$ a circle, $\\ell^\\infty$ a square, and $\\ell^p$ interpolates between these shapes.",
+        "notation": ["$\\|\\cdot\\|_p$", "$\\ell^p$"]
+      },
+      "assumptions": ["The underlying vector space is $\\mathbb{R}^2$.", "$1\\leq p<\\infty$ for the smooth $\\ell^p$ family."],
+      "tags": ["example", "norm", "unit-ball", "finite-dimensional"],
+      "priority": "core"
+    },
+    {
+      "id": "minkowski_functional",
+      "kind": "construction",
+      "domain": "spaces_norms",
+      "label": "Minkowski functional",
+      "content": {
+        "statement": "A convex, balanced, absorbing set around zero defines a gauge by asking how much the set must be scaled to reach a vector.",
+        "definition": "The Minkowski functional of a set $B\\subseteq X$ is $p_B(x)=\\inf\\{t>0:x\\in tB\\}$.",
+        "formal": "Let $B\\subseteq X$ be convex, balanced, absorbing, and with $p_B(x)=0$ only for $x=0$. Then $$p_B(x)=\\inf\\{t>0:x\\in tB\\}$$ is a norm whose unit ball is $B$ up to closure.",
+        "intuition": "Instead of starting with a formula for length, start with the one-unit shape. The norm of $x$ is the scale factor needed to stretch that shape until it contains $x$.",
+        "notation": ["$p_B(x)$"]
+      },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/minkowski-functional.svg",
+      "assumptions": ["$B$ is convex, balanced, absorbing, and contains $0$.", "Additional separation from $0$ is needed for the gauge to be a norm rather than only a seminorm."],
+      "tags": ["construction", "norm", "convexity", "unit-ball"],
+      "priority": "core"
+    },
+    {
+      "id": "equivalent_norms",
+      "kind": "definition",
+      "domain": "spaces_norms",
+      "label": "Equivalent norms",
+      "content": {
+        "statement": "Two norms are equivalent when each controls the other up to fixed positive constants.",
+        "definition": "Norms $\\|\\cdot\\|_a$ and $\\|\\cdot\\|_b$ on the same vector space are equivalent if they bound each other by constant multiples.",
+        "formal": "$$\\|\\cdot\\|_a\\sim\\|\\cdot\\|_b\\iff \\exists c,C>0\\ \\forall x\\in X:\\ c\\|x\\|_a\\leq\\|x\\|_b\\leq C\\|x\\|_a.$$",
+        "intuition": "Equivalent norms may draw different unit balls, but neither geometry can make a vector infinitely smaller or larger than the other. Each unit ball is sandwiched between scaled copies of the other.",
+        "notation": ["$\\|\\cdot\\|_a\\sim\\|\\cdot\\|_b$"]
+      },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/equivalent-norms-sandwich.svg",
+      "assumptions": ["Both norms are defined on the same vector space $X$."],
+      "tags": ["definition", "norm", "topology", "unit-ball"],
+      "priority": "core"
+    },
+    {
+      "id": "finite_dimensional_norm_equivalence",
+      "kind": "theorem",
+      "domain": "spaces_norms",
+      "label": "Finite-dimensional norm equivalence",
+      "content": {
+        "statement": "Every two norms on a finite-dimensional vector space are equivalent.",
+        "formal": "If $\\dim X<\\infty$ and $\\|\\cdot\\|_a,\\|\\cdot\\|_b$ are norms on $X$, then $$\\exists c,C>0\\ \\forall x\\in X:\\ c\\|x\\|_a\\leq\\|x\\|_b\\leq C\\|x\\|_a.$$",
+        "intuition": "In finite dimensions, every norm unit ball can be squeezed between two scaled copies of any other. This is why different finite-dimensional norms induce the same open sets and convergence.",
+        "notation": []
+      },
+      "assumptions": ["$X$ is finite-dimensional."],
+      "tags": ["theorem", "norm", "finite-dimensional", "topology"],
+      "priority": "core"
+    },
+    {
+      "id": "noncompact_closed_unit_ball_in_infinite_dimensions",
+      "kind": "counterexample",
+      "domain": "spaces_norms",
+      "label": "Infinite-dimensional unit balls need not be compact",
+      "content": {
+        "statement": "In infinite-dimensional normed spaces, the closed unit ball is generally not compact in the norm topology.",
+        "formal": "In $\\ell^p$ for $1\\leq p<\\infty$, the standard basis vectors $(e_n)$ satisfy $\\|e_n\\|_p=1$ and $\\|e_n-e_m\\|_p=2^{1/p}$ for $n\\neq m$. Hence $(e_n)$ has no norm-convergent subsequence.",
+        "intuition": "The unit ball can contain infinitely many points that remain a fixed distance apart. This is the geometric rupture between finite-dimensional norm geometry and Banach-space theory.",
+        "notation": ["$(e_n)$"]
+      },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/infinite-dimensional-unit-ball.svg",
+      "assumptions": ["The norm topology is used.", "The space is infinite-dimensional; the displayed model is $\\ell^p$."],
+      "tags": ["counterexample", "compactness", "unit-ball", "infinite-dimensional"],
+      "priority": "core"
+    },
+    {
+      "id": "dual_norm_geometry",
+      "kind": "definition",
+      "domain": "duality_weak_topologies",
+      "label": "Dual norm geometry",
+      "content": {
+        "statement": "The dual norm measures the largest scalar reading a functional can take on the unit ball.",
+        "definition": "For a continuous linear functional $x^*\\in X^*$, its norm is the support value of the unit ball in the direction $x^*$.",
+        "formal": "$$\\|x^*\\|=\\sup_{\\|x\\|\\leq 1}|x^*(x)|.$$",
+        "intuition": "A functional is a scalar probe. Its norm is the farthest signed level it can see while the input vector stays inside the unit ball.",
+        "notation": ["$\\|x^*\\|$", "$\\sup_{\\|x\\|\\leq 1}|x^*(x)|$"]
+      },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/dual-norm-support.svg",
+      "assumptions": ["$X$ is a normed vector space.", "$x^*\\in X^*$ is continuous and linear."],
+      "tags": ["duality", "norm", "unit-ball", "support"],
+      "priority": "core"
     },
     {
       "id": "spectrum",
@@ -1104,11 +1210,17 @@
       "domain": "examples_applications",
       "label": "$\\ell^p$ spaces",
       "content": {
-        "definition": "Sequence spaces of p-summable scalar sequences, with p-norm.",
-        "formal": "$$\\begin{aligned}\\ell^p &=\\{x=(x_n): \\sum |x_n|^p<\\infty\\},\\ 1\\leq p<\\infty \\\\ \\ell^\\infty &=\\{x=(x_n): \\sup_n |x_n|<\\infty\\} \\end{aligned}$$",
-        "intuition": "Discrete model Banach spaces.",
+        "definition": "Sequence spaces of $p$-summable scalar sequences, equipped with the $p$-norm.",
+        "formal": "$$\\begin{aligned}\\ell^p&=\\left\\{x=(x_n):\\sum_{n=1}^{\\infty}|x_n|^p<\\infty\\right\\},\\quad 1\\leq p<\\infty,\\\\ \\|x\\|_p&=\\left(\\sum_{n=1}^{\\infty}|x_n|^p\\right)^{1/p},\\\\ \\ell^\\infty&=\\{x=(x_n):\\sup_n |x_n|<\\infty\\},\\quad \\|x\\|_\\infty=\\sup_n |x_n|.\\end{aligned}$$",
+        "intuition": "The $\\ell^p$ spaces are discrete model Banach spaces. Their standard basis vectors all have norm one, but in infinite dimensions those points do not cluster in norm.",
         "notation": ["$\\ell^p$"]
       },
+      "examples": [
+        {
+          "tex": "For the standard basis vector $e_n=(0,\\ldots,0,1,0,\\ldots)$, $\\|e_n\\|_p=1$ for every $n$ and every $1\\leq p\\leq\\infty$.",
+          "caption": "Basis vectors witness the noncompactness of infinite-dimensional unit balls."
+        }
+      ],
       "tags": ["example", "sequence spaces"],
       "priority": "core"
     },
@@ -2945,6 +3057,76 @@
       "source": "closed_unit_ball",
       "target": "norm",
       "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "lp_norms_on_r2",
+      "target": "norm",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "lp_norms_on_r2",
+      "target": "closed_unit_ball",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "minkowski_functional",
+      "target": "closed_unit_ball",
+      "relation": "constructed_from"
+    },
+    {
+      "source": "minkowski_functional",
+      "target": "norm",
+      "relation": "motivated_by"
+    },
+    {
+      "source": "equivalent_norms",
+      "target": "norm",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "equivalent_norms",
+      "target": "closed_unit_ball",
+      "relation": "motivated_by"
+    },
+    {
+      "source": "finite_dimensional_norm_equivalence",
+      "target": "equivalent_norms",
+      "relation": "uses"
+    },
+    {
+      "source": "finite_dimensional_norm_equivalence",
+      "target": "closed_unit_ball",
+      "relation": "motivated_by"
+    },
+    {
+      "source": "noncompact_closed_unit_ball_in_infinite_dimensions",
+      "target": "closed_unit_ball",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "noncompact_closed_unit_ball_in_infinite_dimensions",
+      "target": "compactness",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "noncompact_closed_unit_ball_in_infinite_dimensions",
+      "target": "ell_p_spaces",
+      "relation": "motivated_by"
+    },
+    {
+      "source": "dual_norm_geometry",
+      "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "dual_norm_geometry",
+      "target": "closed_unit_ball",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "operator_norm",
+      "target": "closed_unit_ball",
+      "relation": "motivated_by"
     },
     {
       "source": "spectrum",
