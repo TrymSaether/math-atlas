@@ -182,6 +182,68 @@ export const AUTHORABLE_RELATIONS = [
 export type AuthorableRelation = (typeof AUTHORABLE_RELATIONS)[number];
 
 /**
+ * Terse verb form of each relation, in the *forward* reading direction (how
+ * `source → target` reads). Kept alongside the prose `reads` so the edge-label
+ * control can offer a compact alternative without re-deriving grammar.
+ */
+export const RELATION_TERSE: Record<RelationType, string> = {
+  defined_in_terms_of: "defined from",
+  defines: "defines",
+  uses: "uses",
+  used_by: "used by",
+  assumes: "assumes",
+  assumed_by: "underlies",
+  constructed_from: "built from",
+  constructs: "builds",
+  generalizes: "generalizes",
+  specializes: "special case",
+  motivated_by: "motivated by",
+  motivates: "motivates",
+  related_to: "related",
+  satisfies: "satisfies",
+  satisfied_by: "satisfied by",
+  violates: "violates",
+  violated_by: "violated by",
+  proves: "proves",
+  proved_by: "proved by",
+};
+
+function isRelationType(relation: string): relation is RelationType {
+  return relation in RELATIONS;
+}
+
+/** True when the relation is its own inverse (only `related_to` today). */
+export function isSymmetricRelation(relation: string): boolean {
+  return isRelationType(relation) && RELATIONS[relation].symmetric;
+}
+
+/**
+ * The relation key whose forward prose reads *along the drawn arrow*. Dependency
+ * edges are stored prerequisite → dependent (the reverse of how they were
+ * authored), so their label must use the inverse relation; everything else reads
+ * source → target as-authored.
+ */
+export function orientedRelation(relation: string, isDependency: boolean): RelationType | null {
+  if (!isRelationType(relation)) return null;
+  return isDependency ? RELATIONS[relation].inverse : relation;
+}
+
+/**
+ * Human label for an edge, read in the direction of the arrow. `prose` uses the
+ * relations table's `reads` phrase ("is used to define"); `terse` uses the short
+ * verb form ("defines"). Falls back to the raw key for unknown relations.
+ */
+export function edgeLabel(
+  relation: string,
+  isDependency: boolean,
+  style: "prose" | "terse",
+): string {
+  const oriented = orientedRelation(relation, isDependency);
+  if (!oriented) return relation;
+  return style === "terse" ? RELATION_TERSE[oriented] : RELATIONS[oriented].reads;
+}
+
+/**
  * Orient an authored edge into the artifact's `from → to` convention, where
  * `from` is the prerequisite and `to` is the dependent for dependency edges.
  * Non-dependency edges keep their authored source → target orientation.

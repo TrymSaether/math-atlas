@@ -1923,8 +1923,10 @@ a:focus-visible,
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
 }
 
+/* Handles are edge anchors only — nodes are never hand-connected here, so they
+   stay fully hidden (no hover reveal). Hover/selection is expressed on the card. */
 .react-flow__node:hover .react-flow__handle.graph-node-handle {
-  opacity: 0.75 !important;
+  opacity: 0 !important;
 }
 
 .react-flow__handle.graph-node-handle-left {

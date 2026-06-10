@@ -7,6 +7,8 @@ import type { NodeKind, Relation } from "./types";
 export type SearchScope = "all" | "title";
 export type ViewMode = "dependency" | "cluster";
 export type EdgeStyle = "smooth" | "straight" | "bezier";
+/** How edge relationship labels read on hover/selection. */
+export type EdgeLabelStyle = "prose" | "terse";
 /** Which surface is shown: the graph canvas, the dictionary reading view, the flashcard study mode, or the geometric sandbox. */
 export type Surface = "atlas" | "dictionary" | "flashcards" | "sandbox";
 
@@ -30,6 +32,7 @@ interface PersistedState {
   view?: ViewMode;
   showSoftDeps?: boolean;
   edgeStyle?: EdgeStyle;
+  edgeLabelStyle?: EdgeLabelStyle;
   focusMode?: boolean;
   focusDepth?: number;
   showGrid?: boolean;
@@ -76,6 +79,9 @@ interface State {
   /** Edge routing for the dependency graph. */
   edgeStyle: EdgeStyle;
   setEdgeStyle: (s: EdgeStyle) => void;
+  /** Wording of the relationship label shown on hover/selection. */
+  edgeLabelStyle: EdgeLabelStyle;
+  setEdgeLabelStyle: (s: EdgeLabelStyle) => void;
   focusMode: boolean;
   toggleFocusMode: () => void;
   focusDepth: number;
@@ -177,6 +183,10 @@ function isEdgeStyle(value: unknown): value is EdgeStyle {
   return value === "smooth" || value === "straight" || value === "bezier";
 }
 
+function isEdgeLabelStyle(value: unknown): value is EdgeLabelStyle {
+  return value === "prose" || value === "terse";
+}
+
 function isSurface(value: unknown): value is Surface {
   return value === "atlas" || value === "dictionary" || value === "flashcards" || value === "sandbox";
 }
@@ -216,6 +226,7 @@ function normalizePersistedState(value: unknown | null): PersistedState | null {
     view: isViewMode(value.view) ? value.view : undefined,
     showSoftDeps: asBoolean(value.showSoftDeps),
     edgeStyle: isEdgeStyle(value.edgeStyle) ? value.edgeStyle : undefined,
+    edgeLabelStyle: isEdgeLabelStyle(value.edgeLabelStyle) ? value.edgeLabelStyle : undefined,
     focusMode: asBoolean(value.focusMode),
     focusDepth: normalizedFocusDepth(value.focusDepth),
     showGrid: asBoolean(value.showGrid),
@@ -252,6 +263,7 @@ function persistedStateFor(state: State): PersistedState {
     view: state.view,
     showSoftDeps: state.showSoftDeps,
     edgeStyle: state.edgeStyle,
+    edgeLabelStyle: state.edgeLabelStyle,
     focusMode: state.focusMode,
     focusDepth: state.focusDepth,
     showGrid: state.showGrid,
@@ -379,6 +391,8 @@ export const useStore = create<State>((set, get) => ({
   toggleSoftDeps: () => set((s) => ({ showSoftDeps: !s.showSoftDeps })),
   edgeStyle: persistedState?.edgeStyle ?? (persistedState?.view === "cluster" ? "bezier" : "smooth"),
   setEdgeStyle: (edgeStyle) => set({ edgeStyle }),
+  edgeLabelStyle: persistedState?.edgeLabelStyle ?? "prose",
+  setEdgeLabelStyle: (edgeLabelStyle) => set({ edgeLabelStyle }),
   focusMode: persistedState?.focusMode ?? false,
   toggleFocusMode: () => set((s) => ({ focusMode: !s.focusMode })),
   focusDepth: persistedState?.focusDepth ?? 1,

@@ -7,6 +7,7 @@ import {
   getStraightPath,
   type EdgeProps,
 } from "reactflow";
+import { edgeLabel } from "../data/relations";
 import { getEdgeStyle } from "../lib/relationStyle";
 import { prefersReducedMotion } from "../lib/utils";
 import { useStore } from "../store";
@@ -34,6 +35,7 @@ interface Data {
 export function TopoEdgeView(props: EdgeProps<Data>) {
   const { sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data } = props;
   const edgeStyle = useStore((s) => s.edgeStyle);
+  const edgeLabelStyle = useStore((s) => s.edgeLabelStyle);
   const geom = { sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition };
   const [path, labelX, labelY] =
     edgeStyle === "straight"
@@ -46,6 +48,9 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
   const highlight = Boolean(data?.highlight);
   const dim = Boolean(data?.dim);
   const markerId = `arrow-${props.id}`;
+  // Blueprint head grammar: the marker SHAPE encodes the relation family. Sized in
+  // user space so heads keep a constant footprint regardless of stroke weight.
+  const markerSize = highlight ? 13 : 11;
 
   // Route traversal: reveal this segment with a staggered dash-draw. pathLength=1
   // normalizes the path so a single dashoffset 1→0 reveals it regardless of length.
@@ -70,18 +75,36 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
       <defs>
         <marker
           id={markerId}
-          viewBox="0 0 10 10"
-          refX="7"
-          refY="5"
-          markerWidth={highlight ? 6 : 5}
-          markerHeight={highlight ? 6 : 5}
+          viewBox="0 0 12 12"
+          refX={style.marker === "circle" ? 6 : 9}
+          refY="6"
+          markerWidth={markerSize}
+          markerHeight={markerSize}
+          markerUnits="userSpaceOnUse"
           orient="auto-start-reverse"
         >
-          <path
-            d="M0,0 L10,5 L0,10 z"
-            fill={style.color}
-            opacity={style.opacity}
-          />
+          {style.marker === "triangle" ? (
+            <path d="M2,2 L10,6 L2,10 z" fill={style.color} opacity={style.opacity} />
+          ) : style.marker === "open-triangle" ? (
+            <path
+              d="M2.4,2.4 L10.4,6 L2.4,9.6 z"
+              fill="var(--surface)"
+              stroke={style.color}
+              strokeWidth={1.4}
+              strokeLinejoin="round"
+              opacity={style.opacity}
+            />
+          ) : (
+            <circle
+              cx="6"
+              cy="6"
+              r="3.2"
+              fill="var(--surface)"
+              stroke={style.color}
+              strokeWidth={1.4}
+              opacity={style.opacity}
+            />
+          )}
         </marker>
       </defs>
       {highlight && (
@@ -99,6 +122,9 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
         id={props.id}
         path={path}
         markerEnd={`url(#${markerId})`}
+        // Symmetric relations (related_to) carry no direction — mirror the open
+        // circle onto the start so the edge reads as a mutual association.
+        markerStart={style.symmetric ? `url(#${markerId})` : undefined}
         style={{
           stroke: style.color,
           strokeWidth: style.width,
@@ -109,6 +135,17 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
           fill: "none",
         }}
       />
+      {/* Junction tick — where backbone edges leave their prerequisite. Soft edges
+          stay tick-less so the overlay reads as lighter than the structure. */}
+      {style.family !== "soft" && !dim && (
+        <circle
+          cx={sourceX}
+          cy={sourceY}
+          r={highlight ? 2.6 : 1.8}
+          fill={style.color}
+          fillOpacity={highlight ? 0.95 : Math.min(1, style.opacity + 0.18)}
+        />
+      )}
       {route && (
         <path
           key={route.runKey}
@@ -130,7 +167,7 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
       {!dim && highlight && (
         <EdgeLabelRenderer>
           <div
-            className="rounded-[var(--radius-xs)] border px-2 py-0.5 text-edge-label font-bold uppercase tracking-label-tight shadow-[var(--shadow-1)]"
+            className="rounded-[var(--radius-xs)] border px-2 py-0.5 text-edge-label font-medium lowercase tracking-label-tight shadow-[var(--shadow-1)]"
             style={{
               position: "absolute",
               transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
@@ -140,7 +177,11 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
               color: "var(--edge-highlight)",
             }}
           >
-            {style.label}
+            {edgeLabel(
+              data?.edge?.relation ?? FALLBACK_EDGE.relation,
+              data?.edge?.isDependency ?? FALLBACK_EDGE.isDependency,
+              edgeLabelStyle,
+            )}
           </div>
         </EdgeLabelRenderer>
       )}

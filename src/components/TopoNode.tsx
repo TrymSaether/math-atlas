@@ -91,19 +91,34 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       tabIndex={0}
       aria-label={`${KIND_LABEL[node.kind]}: ${node.label}`}
       className={cn(
-        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[var(--radius-lg)] border px-3 py-2 outline-none transition-all duration-150",
+        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[var(--radius-lg)] border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
         "focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
+        // Hover affordance: a quiet lift + soft elevation, nothing more. Selected
+        // nodes own their own shadow below, so the hover shadow only applies at rest.
         "hover:-translate-y-px",
+        !isSelected && !routeEndpoint && "hover:shadow-[var(--shadow-2)]",
         dim && "opacity-30",
         isMinor && !accented && !dim && "opacity-[0.82]",
       )}
       style={{
         background: "var(--surface)",
-        borderColor: routeEndpoint ? "var(--accent)" : accented ? tone.color : isLandmark ? tone.border : "var(--border)",
-        borderWidth: routeEndpoint || isLandmark || accented ? 1.5 : 1,
+        borderColor: routeEndpoint
+          ? "var(--accent)"
+          : isSelected
+            ? tone.color
+            : isRelated
+              ? tone.border
+              : isLandmark
+                ? tone.border
+                : "var(--border)",
+        borderWidth: routeEndpoint || isSelected || isLandmark ? 1.5 : 1,
+        // Selected: domain-hue border + a soft neutral lift, no ring. Related
+        // neighbours stay quiet (border tint only) so the focus reads clearly.
         boxShadow: routeEndpoint
           ? "0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent)"
-          : undefined,
+          : isSelected
+            ? "var(--shadow-2)"
+            : undefined,
       }}
     >
       {/* Lane rail — color says which domain, texture says which kind. */}
@@ -118,8 +133,8 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       {hasIncoming && (
         <Handle
           type="target"
-          position={Position.Right}
-          className="graph-node-handle graph-node-handle-right"
+          position={Position.Left}
+          className="graph-node-handle graph-node-handle-left"
           style={handleStyle(handleColor)}
         />
       )}
@@ -195,8 +210,8 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       {hasOutgoing && (
         <Handle
           type="source"
-          position={Position.Left}
-          className="graph-node-handle graph-node-handle-left"
+          position={Position.Right}
+          className="graph-node-handle graph-node-handle-right"
           style={handleStyle(handleColor)}
         />
       )}

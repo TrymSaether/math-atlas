@@ -14,7 +14,7 @@ import {
   type Icon,
 } from "@phosphor-icons/react";
 import { useReactFlow, useViewport } from "reactflow";
-import { useStore, type EdgeStyle, type ViewMode } from "../store";
+import { useStore, type EdgeLabelStyle, type EdgeStyle, type ViewMode } from "../store";
 import { cn } from "../lib/utils";
 import { getDomainTone } from "../lib/colors";
 import { CATEGORY_META, kindsByCategory } from "../lib/nodeCategory";
@@ -370,6 +370,8 @@ function MapPanel({
   const toggleSoftDeps = useStore((s) => s.toggleSoftDeps);
   const edgeStyle = useStore((s) => s.edgeStyle);
   const setEdgeStyle = useStore((s) => s.setEdgeStyle);
+  const edgeLabelStyle = useStore((s) => s.edgeLabelStyle);
+  const setEdgeLabelStyle = useStore((s) => s.setEdgeLabelStyle);
   const mapId = useStore((s) => s.mapId);
   const map = useStore((s) => s.loadedMaps[mapId]);
   const kinds = useStore((s) => s.kinds);
@@ -433,6 +435,19 @@ function MapPanel({
             { value: "smooth", label: "Step" },
             { value: "bezier", label: "Curve" },
             { value: "straight", label: "Line" },
+          ]}
+        />
+      </PanelSection>
+
+      <div className="h-px" style={{ background: "var(--border)" }} />
+
+      <PanelSection title="Edge labels">
+        <Segmented<EdgeLabelStyle>
+          value={edgeLabelStyle}
+          onChange={setEdgeLabelStyle}
+          options={[
+            { value: "prose", label: "Prose" },
+            { value: "terse", label: "Verb" },
           ]}
         />
       </PanelSection>
