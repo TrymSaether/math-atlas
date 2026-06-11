@@ -49,9 +49,14 @@ export default {
           2: "var(--fg-2)",
           3: "var(--fg-3)",
           4: "var(--fg-4)",
+          "on-color": "var(--fg-on-color)",
         },
-        border: "var(--border)",
+        border: {
+          DEFAULT: "var(--border)",
+          strong: "var(--border-strong)",
+        },
         hairline: "var(--hairline)",
+        danger: "var(--danger)",
         accent: {
           DEFAULT: "var(--accent)",
           soft: "var(--accent-soft)",

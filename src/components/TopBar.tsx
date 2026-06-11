@@ -4,6 +4,7 @@ import { MagnifyingGlassIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon, Compas
 import { useReactFlow } from "reactflow";
 import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
+import { cn } from "../lib/utils";
 import { THEMES, schemeFor, siblingOf } from "../lib/themes";
 import { LogoMark } from "./Logo";
 import { Pill, DockButton } from "./chrome/Pill";
@@ -115,10 +116,7 @@ function MapBrandSelector() {
         >
           <LogoMark size={18} className="text-[color:var(--fg-1)]" />
         </span>
-        <span
-          className="hidden whitespace-nowrap font-serif text-atlas-brand sm:inline"
-          style={{ color: "var(--fg-1)" }}
-        >
+        <span className="hidden whitespace-nowrap font-serif text-atlas-brand text-fg-1 sm:inline">
           Math Atlas
         </span>
       </Button>
@@ -126,18 +124,19 @@ function MapBrandSelector() {
         kind="field"
         active={open}
         onClick={() => setOpen((o) => !o)}
-        className="flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 text-ui-control font-sans sm:px-3.5"
-        style={!open ? { color: "var(--fg-1)" } : undefined}
+        className={cn(
+          "flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 text-ui-control font-sans sm:px-3.5",
+          !open && "text-fg-1",
+        )}
         aria-label="Field selector"
         aria-expanded={open}
       >
         <span className="min-w-0 truncate">{currentLabel}</span>
         <CaretDownIcon
-          className="h-3.5 w-3.5 shrink-0 transition-transform duration-150"
-          style={{
-            color: open ? "var(--accent)" : "var(--fg-2)",
-            transform: open ? "rotate(180deg)" : "rotate(0deg)",
-          }}
+          className={cn(
+            "h-3.5 w-3.5 shrink-0 transition-transform duration-150",
+            open ? "rotate-180 text-accent" : "text-fg-2",
+          )}
         />
       </Button>
       {open && (
@@ -155,8 +154,10 @@ function MapBrandSelector() {
                   setMap(id);
                   setOpen(false);
                 }}
-                className="flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2.5 text-left text-ui-control"
-                style={!active ? { color: "var(--fg-2)" } : undefined}
+                className={cn(
+                  "flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2.5 text-left text-ui-control",
+                  !active && "text-fg-2",
+                )}
               >
                 <span className="block min-w-0 flex-1 truncate">{MAPS[id].label}</span>
                 {active && <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />}
@@ -175,18 +176,16 @@ function SearchBox() {
     <Button
       kind="text"
       onClick={() => setPaletteOpen(true)}
-      className="flex h-9 min-w-9 items-center gap-2 rounded-[var(--radius-xl)] px-2.5 text-ui-control md:min-w-[190px] md:px-3.5"
-      style={{ color: "var(--fg-2)" }}
+      className="flex h-9 min-w-9 items-center gap-2 rounded-[var(--radius-xl)] px-2.5 text-ui-control text-fg-2 md:min-w-[190px] md:px-3.5"
       aria-label="Open search"
     >
-      <MagnifyingGlassIcon className="h-4 w-4 shrink-0" style={{ color: "var(--fg-3)" }} />
+      <MagnifyingGlassIcon className="h-4 w-4 shrink-0 text-fg-3" />
       <span className="hidden md:inline">Search the atlas</span>
       <kbd
-        className="ml-auto hidden h-5 items-center rounded-[var(--radius-xs)] border px-1.5 font-mono text-ui-2xs md:inline-flex"
+        className="ml-auto hidden h-5 items-center rounded-[var(--radius-xs)] border px-1.5 font-mono text-ui-2xs text-fg-2 md:inline-flex"
         style={{
           background: "var(--chrome-hover)",
           borderColor: "var(--chrome-border)",
-          color: "var(--fg-2)",
         }}
       >
         ⌘K
@@ -351,13 +350,10 @@ function DisplayPopover({
       style={{ top: position.top, right: position.right }}
     >
       <div className="mb-2.5 flex items-baseline justify-between">
-        <span
-          className="text-ui-caption font-semibold uppercase tracking-label-wide"
-          style={{ color: "var(--fg-3)" }}
-        >
+        <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
           Theme
         </span>
-        <span className="text-ui-meta font-medium" style={{ color: "var(--fg-2)" }}>
+        <span className="text-ui-meta font-medium text-fg-2">
           {activeLabel}
         </span>
       </div>
@@ -389,8 +385,7 @@ function EditToggle() {
       {edited && !editMode && (
         <span
           aria-hidden
-          className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full"
-          style={{ background: "var(--accent)" }}
+          className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-accent"
         />
       )}
     </div>

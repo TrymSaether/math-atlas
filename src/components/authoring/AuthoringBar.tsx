@@ -8,7 +8,9 @@ import {
 } from "@phosphor-icons/react";
 import { useStore } from "../../store";
 import { MAPS } from "../../data";
+import { cn } from "../../lib/utils";
 import { Button } from "../chrome/Button";
+import { Pill } from "../chrome/Pill";
 
 /**
  * Floating authoring toolbar, shown only in edit mode. Create nodes, and manage
@@ -60,22 +62,16 @@ export function AuthoringBar() {
   return (
     <div className="pointer-events-none absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2">
       {notice && (
-        <div
-          className="pointer-events-auto rounded-[var(--radius-md)] border px-3 py-1.5 text-ui-xs"
-          style={{ background: "var(--surface)", borderColor: "var(--border)", color: "var(--fg-2)", boxShadow: "var(--shadow-2)" }}
-        >
+        <div className="pointer-events-auto rounded-[var(--radius-md)] border border-border bg-surface px-3 py-1.5 text-ui-xs text-fg-2 shadow-2">
           {notice}
         </div>
       )}
-      <div
-        className="map-popover pointer-events-auto flex items-center gap-1 rounded-[var(--radius-xl)] p-1.5"
-        style={{ boxShadow: "var(--shadow-3)" }}
-      >
-        <span className="flex items-center gap-1.5 px-2 font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--accent)" }}>
+      <Pill className="top-tools gap-1 p-1.5">
+        <span className="flex items-center gap-1.5 px-2 font-mono text-ui-2xs uppercase tracking-label text-accent">
           <PencilSimpleIcon className="h-3.5 w-3.5" weight="fill" />
           Editing
         </span>
-        <div className="mx-0.5 h-5 w-px" style={{ background: "var(--border)" }} />
+        <div className="mx-0.5 h-5 w-px bg-border" />
         <BarButton label="New concept" onClick={() => openNodeEditor({ mode: "create" })} primary>
           <PlusIcon className="h-4 w-4" /> New
         </BarButton>
@@ -87,7 +83,7 @@ export function AuthoringBar() {
         </BarButton>
         {isEdited &&
           (confirmRevert ? (
-            <span className="flex items-center gap-1 pl-1 text-ui-xs" style={{ color: "var(--fg-2)" }}>
+            <span className="flex items-center gap-1 pl-1 text-ui-xs text-fg-2">
               Discard local edits?
               <button
                 type="button"
@@ -95,12 +91,11 @@ export function AuthoringBar() {
                   void revertMap();
                   setConfirmRevert(false);
                 }}
-                className="rounded-[var(--radius-sm)] px-2 py-1 font-semibold"
-                style={{ color: "var(--danger, #c0392b)" }}
+                className="rounded-[var(--radius-sm)] px-2 py-1 font-semibold text-danger"
               >
                 Revert
               </button>
-              <button type="button" onClick={() => setConfirmRevert(false)} className="px-1" style={{ color: "var(--fg-3)" }}>
+              <button type="button" onClick={() => setConfirmRevert(false)} className="px-1 text-fg-3">
                 No
               </button>
             </span>
@@ -109,7 +104,7 @@ export function AuthoringBar() {
               <ArrowCounterClockwiseIcon className="h-4 w-4" /> Revert
             </BarButton>
           ))}
-      </div>
+      </Pill>
       <input
         ref={fileRef}
         type="file"
@@ -143,8 +138,10 @@ function BarButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="flex items-center gap-1.5 rounded-[var(--radius-lg)] px-2.5 py-1.5 text-ui-sm font-medium"
-      style={primary ? undefined : { color: "var(--fg-2)" }}
+      className={cn(
+        "flex items-center gap-1.5 rounded-[var(--radius-lg)] px-2.5 py-1.5 text-ui-sm font-medium",
+        !primary && "text-fg-2",
+      )}
     >
       {children}
     </Button>

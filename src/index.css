@@ -1481,6 +1481,11 @@
   --type-atlas-summary: 28px;
   --type-atlas-display: 34px;
 
+  /* Semantic status color. Aliases the theme-tuned --red so danger affordances
+     retune across every theme — no per-theme block needed (same pattern as the
+     --fact-* glyph colors). */
+  --danger: var(--red);
+
   --tracking-label: 0.13em;
   --tracking-label-wide: 0.14em;
   --tracking-label-tight: 0.06em;

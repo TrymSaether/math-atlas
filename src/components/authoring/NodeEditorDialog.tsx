@@ -251,7 +251,7 @@ function EdgeEditor({ nodeId }: { nodeId: string }) {
             <PlusIcon className="h-3.5 w-3.5" /> Link
           </button>
         </div>
-        {error && <p className="col-span-2 text-ui-xs" style={{ color: "var(--danger, #c0392b)" }}>{error}</p>}
+        {error && <p className="col-span-2 text-ui-xs" style={{ color: "var(--danger)" }}>{error}</p>}
       </div>
     </div>
   );
@@ -420,8 +420,8 @@ export function NodeEditorDialog() {
                       <button
                         type="button"
                         onClick={() => deleteNode(editingId)}
-                        className="rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui-xs font-semibold text-white"
-                        style={{ background: "var(--danger, #c0392b)" }}
+                        className="rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui-xs font-semibold text-fg-on-color"
+                        style={{ background: "var(--danger)" }}
                       >
                         Delete
                       </button>
@@ -434,13 +434,13 @@ export function NodeEditorDialog() {
                       type="button"
                       onClick={() => setConfirmDelete(true)}
                       className="flex items-center gap-1.5 rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui-xs font-medium"
-                      style={{ color: "var(--danger, #c0392b)" }}
+                      style={{ color: "var(--danger)" }}
                     >
                       <TrashIcon className="h-3.5 w-3.5" /> Delete
                     </button>
                   )
                 )}
-                {editError && <span className="min-w-0 flex-1 truncate text-ui-xs" style={{ color: "var(--danger, #c0392b)" }}>{editError}</span>}
+                {editError && <span className="min-w-0 flex-1 truncate text-ui-xs" style={{ color: "var(--danger)" }}>{editError}</span>}
                 <div className="ml-auto flex items-center gap-2">
                   <button type="button" onClick={close} className="rounded-[var(--radius-sm)] px-3 py-1.5 text-ui-sm" style={{ color: "var(--fg-2)" }}>
                     {editor.mode === "edit" ? "Done" : "Cancel"}

@@ -35,7 +35,7 @@ export function WaveSelect({
             className="rounded-[var(--radius-sm)] px-2.5 py-1 text-ui-meta transition-colors"
             style={{
               background: active ? "var(--accent)" : "transparent",
-              color: active ? "var(--accent-fg, #fff)" : "var(--fg-2)",
+              color: active ? "var(--fg-on-color)" : "var(--fg-2)",
               fontWeight: active ? 600 : 400,
             }}
           >

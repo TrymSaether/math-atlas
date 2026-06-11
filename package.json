@@ -15,13 +15,11 @@
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
     "@radix-ui/react-dialog": "^1.1.2",
-    "@radix-ui/react-tooltip": "^1.1.4",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
     "dagre": "^0.8.5",
     "framer-motion": "^11.11.17",
     "katex": "^0.16.11",
-    "lucide-react": "^0.460.0",
     "mafs": "^0.21.0",
     "mathjs": "^15.2.0",
     "mathlive": "^0.109.2",

@@ -133,7 +133,7 @@ export function CommandPalette() {
                                     className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full"
                                     style={{ background: tone.tint, color: tone.color }}
                                   >
-                                    <CategoryIcon className="h-2.5 w-2.5" strokeWidth={2.4} aria-hidden />
+                                    <CategoryIcon className="h-2.5 w-2.5" weight="bold" aria-hidden />
                                   </span>
                                   <span className="w-[96px] flex-shrink-0 text-ui-caption font-medium uppercase tracking-label-tight text-[color:var(--fg-3)]">
                                     {KIND_LABEL[n.kind]}

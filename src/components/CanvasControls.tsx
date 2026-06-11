@@ -187,14 +187,11 @@ function DepthPicker({ value, onChange }: { value: number; onChange: (value: num
             type="button"
             onClick={() => onChange(depth)}
             className={cn(
-              "flex h-6 w-6 items-center justify-center rounded-[var(--radius-sm)] text-ui-2xs font-semibold tabular-nums transition",
-              active && "is-active",
+              "flex h-6 w-6 items-center justify-center rounded-[var(--radius-sm)] text-ui-2xs font-semibold tabular-nums transition-colors",
+              active
+                ? "bg-accent-soft text-accent ring-1 ring-inset ring-accent-border"
+                : "text-fg-2",
             )}
-            style={{
-              background: active ? "var(--accent-soft)" : "transparent",
-              color: active ? "var(--accent)" : "var(--fg-2)",
-              boxShadow: active ? "inset 0 0 0 1px var(--accent-border)" : "none",
-            }}
             aria-label={`Focus depth ${depth}`}
             aria-pressed={active}
           >
@@ -217,19 +214,18 @@ function Switch({ checked, onClick, label }: { checked: boolean; onClick: () => 
       aria-checked={checked}
       aria-label={label}
       onClick={onClick}
-      className="relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-full transition-colors"
-      style={{
-        background: checked ? "var(--accent)" : "var(--surface-3)",
-        boxShadow: checked ? "none" : "inset 0 0 0 1px var(--border)",
-      }}
+      className={cn(
+        "relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-full transition-colors",
+        checked ? "bg-accent" : "bg-surface-3 ring-1 ring-inset ring-border",
+      )}
     >
       <span
         className="absolute h-[17px] w-[17px] rounded-full transition-transform"
         style={{
           left: 2,
-          background: "#fff",
+          background: "var(--surface)",
           transform: checked ? "translateX(16px)" : "translateX(0)",
-          boxShadow: "0 1px 2.5px rgba(0,0,0,0.3)",
+          boxShadow: "var(--shadow-1)",
         }}
       />
     </button>
@@ -247,12 +243,8 @@ function Segmented<T extends string>({
 }) {
   return (
     <div
-      className="grid w-full gap-0.5 rounded-[var(--radius-md)] p-0.5"
-      style={{
-        gridTemplateColumns: `repeat(${options.length}, 1fr)`,
-        background: "var(--surface-2)",
-        boxShadow: "inset 0 0 0 1px var(--border)",
-      }}
+      className="grid w-full gap-0.5 rounded-[var(--radius-md)] bg-surface-2 p-0.5 ring-1 ring-inset ring-border"
+      style={{ gridTemplateColumns: `repeat(${options.length}, 1fr)` }}
     >
       {options.map((o) => {
         const active = o.value === value;
@@ -260,11 +252,10 @@ function Segmented<T extends string>({
           <button
             key={o.value}
             onClick={() => onChange(o.value)}
-            className="rounded-[var(--radius-sm)] px-2 py-1.5 text-ui-meta font-semibold transition-colors"
-            style={{
-              background: active ? "var(--accent)" : "transparent",
-              color: active ? "var(--fg-on-color)" : "var(--fg-2)",
-            }}
+            className={cn(
+              "rounded-[var(--radius-sm)] px-2 py-1.5 text-ui-meta font-semibold transition-colors",
+              active ? "bg-accent text-fg-on-color" : "text-fg-2",
+            )}
             aria-pressed={active}
           >
             {o.label}
@@ -280,10 +271,7 @@ function Segmented<T extends string>({
 function PanelSection({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div>
-      <div
-        className="mb-2 text-ui-caption font-semibold uppercase tracking-label-wide"
-        style={{ color: "var(--fg-3)" }}
-      >
+      <div className="mb-2 text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
         {title}
       </div>
       {children}
@@ -313,20 +301,19 @@ function ModeTile({
     <button
       type="button"
       onClick={onClick}
-      className="group relative flex flex-col gap-2 rounded-[var(--radius-lg)] border p-2 text-left transition"
-      style={{
-        borderColor: active ? "var(--accent)" : "var(--border)",
-        background: active ? "var(--accent-soft)" : "var(--surface)",
-        boxShadow: active ? "0 0 0 1px var(--accent)" : "none",
-      }}
+      className={cn(
+        "group relative flex flex-col gap-2 rounded-[var(--radius-lg)] border p-2 text-left transition-colors",
+        active
+          ? "border-accent bg-accent-soft ring-1 ring-inset ring-accent"
+          : "border-border bg-surface",
+      )}
       aria-pressed={active}
     >
       <span
-        className="flex h-14 w-full items-center justify-center rounded-[var(--radius-md)]"
-        style={{
-          background: active ? "var(--accent)" : "var(--surface-2)",
-          color: active ? "var(--fg-on-color)" : "var(--fg-2)",
-        }}
+        className={cn(
+          "flex h-14 w-full items-center justify-center rounded-[var(--radius-md)]",
+          active ? "bg-accent text-fg-on-color" : "bg-surface-2 text-fg-2",
+        )}
         aria-hidden
       >
         <IconComponent className="h-6 w-6" weight={active ? "bold" : "regular"} />
@@ -334,14 +321,14 @@ function ModeTile({
 
       <span className="px-0.5">
         <span
-          className="block text-ui-control font-semibold leading-tight"
-          style={{ color: active ? "var(--accent)" : "var(--fg-1)" }}
+          className={cn(
+            "block text-ui-control font-semibold leading-tight",
+            active ? "text-accent" : "text-fg-1",
+          )}
         >
           {label}
         </span>
-        <span className="block text-ui-hint" style={{ color: "var(--fg-3)" }}>
-          {hint}
-        </span>
+        <span className="block text-ui-hint text-fg-3">{hint}</span>
       </span>
     </button>
   );
@@ -410,22 +397,20 @@ function MapPanel({
         </div>
       </PanelSection>
 
-      <div className="h-px" style={{ background: "var(--border)" }} />
+      <div className="h-px bg-border" />
 
       <PanelSection title="Layers">
         <div className="flex flex-col gap-0.5">
           {LAYERS.map(({ key, label }) => (
             <div key={key} className="flex items-center justify-between gap-3 py-1">
-              <span className="text-ui-control font-medium" style={{ color: "var(--fg-1)" }}>
-                {label}
-              </span>
+              <span className="text-ui-control font-medium text-fg-1">{label}</span>
               <Switch label={label} checked={checked[key]} onClick={toggle[key]} />
             </div>
           ))}
         </div>
       </PanelSection>
 
-      <div className="h-px" style={{ background: "var(--border)" }} />
+      <div className="h-px bg-border" />
 
       <PanelSection title="Edge style">
         <Segmented<EdgeStyle>
@@ -439,7 +424,7 @@ function MapPanel({
         />
       </PanelSection>
 
-      <div className="h-px" style={{ background: "var(--border)" }} />
+      <div className="h-px bg-border" />
 
       <PanelSection title="Edge labels">
         <Segmented<EdgeLabelStyle>
@@ -454,7 +439,7 @@ function MapPanel({
 
       {map && (
         <>
-          <div className="h-px" style={{ background: "var(--border)" }} />
+          <div className="h-px bg-border" />
           <PanelSection title="Domains">
             <div className="flex flex-wrap gap-1.5">
               {map.data.domains.map((d) => {
@@ -465,12 +450,13 @@ function MapPanel({
                   <button
                     key={d.id}
                     onClick={() => toggleTopic(d.id)}
-                    className="inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition"
-                    style={
-                      active
-                        ? { background: tone.tint, borderColor: tone.border, color: tone.text }
-                        : { background: "var(--surface)", borderColor: "var(--border)", color: "var(--fg-3)" }
-                    }
+                    className={cn(
+                      "inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition-colors",
+                      !active && "bg-surface border-border text-fg-3",
+                    )}
+                    // Active domain chips carry the data-derived domain tone, which
+                    // has no static utility equivalent.
+                    style={active ? { background: tone.tint, borderColor: tone.border, color: tone.text } : undefined}
                   >
                     {glyphId ? (
                       <DomainGlyph id={glyphId} size={12} />
@@ -485,15 +471,14 @@ function MapPanel({
             {topics.size > 0 && (
               <button
                 onClick={resetTopics}
-                className="mt-2 text-ui-hint hover:underline"
-                style={{ color: "var(--accent)" }}
+                className="mt-2 text-ui-hint text-accent hover:underline"
               >
                 Reset domains
               </button>
             )}
           </PanelSection>
 
-          <div className="h-px" style={{ background: "var(--border)" }} />
+          <div className="h-px bg-border" />
 
           <PanelSection title="Categories">
             <div className="flex flex-wrap gap-1.5">
@@ -505,18 +490,14 @@ function MapPanel({
                   <button
                     key={category}
                     onClick={() => groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))}
-                    className="flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition"
-                    style={
+                    className={cn(
+                      "flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition-colors",
                       active
-                        ? {
-                          background: "var(--accent-soft)",
-                          borderColor: "var(--accent-border)",
-                          color: "var(--accent)",
-                        }
-                        : { background: "var(--surface)", borderColor: "var(--border)", color: "var(--fg-3)" }
-                    }
+                        ? "bg-accent-soft border-accent-border text-accent"
+                        : "bg-surface border-border text-fg-3",
+                    )}
                   >
-                    <Icon className="h-3 w-3" strokeWidth={2.25} aria-hidden />
+                    <Icon className="h-3 w-3" weight={active ? "bold" : "regular"} aria-hidden />
                     {meta.label}
                   </button>
                 );
