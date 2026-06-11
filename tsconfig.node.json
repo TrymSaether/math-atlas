@@ -17,6 +17,7 @@
     "scripts/**/*.ts",
     "src/data/sourceSchema.ts",
     "src/data/relations.ts",
-    "src/data/artifactSchema.ts"
+    "src/data/artifactSchema.ts",
+    "src/data/buildArtifact.ts"
   ]
 }

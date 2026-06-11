@@ -8,13 +8,16 @@ import {
 import { registerDomainTones, type DomainTone } from "../lib/colors";
 import { computeGraphMetrics, type GraphMetrics } from "../lib/graphMetrics";
 import { DEFAULT_MAP_ID, MAPS, loadRawMap, type MapId } from "./mapRegistry";
+import { SourceGraphSchema } from "./sourceSchema";
+import { buildArtifact } from "./buildArtifact";
+import { readOverlay } from "./edits";
 
 /**
  * Enrich a pre-validated build artifact into the runtime GraphData by computing
  * the derived fields (see GraphNode). The artifact is already schema-checked at
  * build time, so there is no runtime validation or format translation here.
  */
-function enrichArtifact(artifact: Artifact): GraphData {
+export function enrichArtifact(artifact: Artifact): GraphData {
   const domains: GraphDomain[] = [...artifact.domains].sort(
     (a, b) => a.order - b.order || a.label.localeCompare(b.label),
   );
@@ -112,7 +115,7 @@ export interface LoadedMap {
   metrics: GraphMetrics;
 }
 
-function buildLoadedMap(data: GraphData): LoadedMap {
+export function buildLoadedMap(data: GraphData): LoadedMap {
   const metrics = computeGraphMetrics(data);
   const layout = computeSwimlaneLayout(data, metrics);
   return {
@@ -134,9 +137,57 @@ function buildLoadedMap(data: GraphData): LoadedMap {
   };
 }
 
-async function parseMapData(mapId: MapId): Promise<GraphData> {
+/**
+ * Format a Zod error from validating an edited source graph into a short,
+ * human-facing message (the editor surfaces this when an edit is rejected).
+ */
+export function formatSourceIssues(error: import("zod").ZodError): string {
+  return error.issues
+    .slice(0, 4)
+    .map((i) => `${i.path.join(".") || "graph"}: ${i.message}`)
+    .join("; ");
+}
+
+export type BuildResult =
+  | { ok: true; map: LoadedMap; warnings: string[] }
+  | { ok: false; error: string };
+
+/**
+ * Validate an edited source graph with the SAME strict schema the CLI build
+ * uses, then re-derive the runtime LoadedMap. This is the in-browser mirror of
+ * `scripts/build-maps.ts` and the single gate every authoring edit passes
+ * through, so the invariants (FK integrity, dup/subsumption, contiguous
+ * domains) can never be violated from the UI.
+ */
+export function buildLoadedMapFromSource(source: unknown): BuildResult {
+  const parsed = SourceGraphSchema.safeParse(source);
+  if (!parsed.success) {
+    return { ok: false, error: formatSourceIssues(parsed.error) };
+  }
+  const { artifact, warnings } = buildArtifact(parsed.data);
+  return { ok: true, map: buildLoadedMap(enrichArtifact(artifact)), warnings };
+}
+
+async function buildFromShipped(mapId: MapId): Promise<LoadedMap> {
   const raw = await loadRawMap(mapId);
-  return enrichArtifact(raw as Artifact);
+  return buildLoadedMap(enrichArtifact(raw as Artifact));
+}
+
+/**
+ * Build the runtime map, preferring a saved authoring overlay. A corrupt or
+ * stale overlay never breaks the app: validation failure falls back to the
+ * shipped artifact with a console warning.
+ */
+async function buildPreferringOverlay(mapId: MapId): Promise<LoadedMap> {
+  const overlay = readOverlay(mapId);
+  if (overlay) {
+    const result = buildLoadedMapFromSource(overlay.source);
+    if (result.ok) return result.map;
+    console.warn(
+      `[math-atlas] ignoring invalid edit overlay for "${mapId}": ${result.error}`,
+    );
+  }
+  return buildFromShipped(mapId);
 }
 
 const loadedMapCache = new Map<MapId, Promise<LoadedMap>>();
@@ -145,9 +196,15 @@ export function loadMap(mapId: MapId = DEFAULT_MAP_ID): Promise<LoadedMap> {
   const cached = loadedMapCache.get(mapId);
   if (cached) return cached;
 
-  const loaded = parseMapData(mapId).then(buildLoadedMap);
+  const loaded = buildPreferringOverlay(mapId);
   loadedMapCache.set(mapId, loaded);
   return loaded;
+}
+
+/** Load the built-in map, bypassing (and not caching) any overlay — for revert. */
+export function loadShippedMap(mapId: MapId = DEFAULT_MAP_ID): Promise<LoadedMap> {
+  loadedMapCache.delete(mapId);
+  return buildFromShipped(mapId);
 }
 
 export async function loadRegisteredMaps(): Promise<Record<MapId, LoadedMap>> {

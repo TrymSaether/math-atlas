@@ -1,8 +1,34 @@
 import { create } from "zustand";
-import { DEFAULT_MAP_ID, isMapId, loadMap, type LoadedMap, type MapId } from "./data";
+import { DEFAULT_MAP_ID, isMapId, loadMap, MAPS, type LoadedMap, type MapId } from "./data";
 import { applyTheme, readStoredTheme, schemeFor } from "./lib/themes";
 import { defaultVisibleKinds } from "./lib/nodeCategory";
 import type { NodeKind, Relation } from "./types";
+import type { SourceGraph } from "./data/sourceSchema";
+import type { AuthorableRelation } from "./data/relations";
+import { buildLoadedMapFromSource, loadShippedMap } from "./data/loadMap";
+import { graphDataToSource } from "./data/toSource";
+import { clearOverlay, hasOverlay, writeOverlay } from "./data/edits";
+import {
+  addEdge as addSourceEdge,
+  applyDraft,
+  removeEdge as removeSourceEdge,
+  slugify,
+  uniqueSlug,
+  type NodeDraft,
+} from "./data/authoring";
+
+/** Result of an authoring mutation; `error` is a human-facing validation message. */
+export interface EditResult {
+  ok: boolean;
+  error?: string;
+  id?: string;
+}
+
+/** What the node editor dialog is doing, if open. */
+export type NodeEditorState =
+  | { mode: "create" }
+  | { mode: "edit"; nodeId: string }
+  | null;
 
 export type SearchScope = "all" | "title";
 export type ViewMode = "dependency" | "cluster";
@@ -117,6 +143,39 @@ interface State {
 
   paletteOpen: boolean;
   setPaletteOpen: (o: boolean) => void;
+
+  /* ---- Authoring ---------------------------------------------------- */
+  /** Whether authoring affordances are shown. */
+  editMode: boolean;
+  toggleEditMode: () => void;
+  /** Maps with a saved local edit overlay (drives the "edited" badge). */
+  editedMaps: Set<MapId>;
+  /** Session working source per map; lazily derived from the loaded map. */
+  editSources: Partial<Record<MapId, SourceGraph>>;
+  /** Open node editor dialog (create or edit), or null. */
+  nodeEditor: NodeEditorState;
+  /** Last authoring validation error, for inline display. */
+  editError: string | null;
+  openNodeEditor: (state: NonNullable<NodeEditorState>) => void;
+  closeNodeEditor: () => void;
+  /** Create or update a node from a draft. Returns ok + new id (create). */
+  commitNode: (draft: NodeDraft) => EditResult;
+  /** Delete a node and all edges (and proof refs) touching it. */
+  deleteNode: (id: string) => EditResult;
+  /** Add a forward-relation edge. */
+  addNodeEdge: (edge: {
+    source: string;
+    target: string;
+    relation: AuthorableRelation;
+  }) => EditResult;
+  /** Remove an edge by its semantic key (see authoring.edgeKey). */
+  removeNodeEdge: (key: string) => EditResult;
+  /** Current working source for the active map (for export), or null. */
+  currentEditSource: () => SourceGraph | null;
+  /** Replace the active map from an imported source graph. */
+  importSource: (source: unknown) => EditResult;
+  /** Discard local edits for the active map and restore the built-in. */
+  revertMap: () => Promise<EditResult>;
 }
 
 function toggle<T>(set: Set<T>, v: T) {
@@ -303,6 +362,53 @@ function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefin
 }
 
 
+function initialEditedMaps(): Set<MapId> {
+  const edited = new Set<MapId>();
+  for (const id of Object.keys(MAPS) as MapId[]) {
+    if (hasOverlay(id)) edited.add(id);
+  }
+  return edited;
+}
+
+/** The active map's working source: the session copy, else derived from the loaded map. */
+function workingSource(state: State): SourceGraph | null {
+  const map = state.loadedMaps[state.mapId];
+  if (!map) return null;
+  return state.editSources[state.mapId] ?? graphDataToSource(map.data);
+}
+
+/**
+ * Validate + build a candidate source graph, and on success swap it into the
+ * active map, persist the overlay, and flag the map as edited. The working
+ * source is re-normalized from the built map so it always matches what renders.
+ */
+function commitCandidate(
+  get: () => State,
+  set: (partial: Partial<State> | ((s: State) => Partial<State>)) => void,
+  candidate: unknown,
+  selectId?: string,
+): EditResult {
+  const result = buildLoadedMapFromSource(candidate);
+  if (!result.ok) {
+    set({ editError: result.error });
+    return { ok: false, error: result.error };
+  }
+  const mapId = get().mapId;
+  const normalized = graphDataToSource(result.map.data);
+  set((s) => ({
+    loadedMaps: { ...s.loadedMaps, [mapId]: result.map },
+    editSources: { ...s.editSources, [mapId]: normalized },
+    editedMaps: new Set(s.editedMaps).add(mapId),
+    editError: null,
+  }));
+  writeOverlay(mapId, {
+    baseVersion: normalized.version,
+    updated: normalized.updated,
+    source: normalized,
+  });
+  return { ok: true, id: selectId };
+}
+
 export const useStore = create<State>((set, get) => ({
   theme: readStoredTheme(),
   setTheme: (id) => {
@@ -432,6 +538,120 @@ export const useStore = create<State>((set, get) => ({
 
   paletteOpen: false,
   setPaletteOpen: (o) => set({ paletteOpen: o }),
+
+  /* ---- Authoring ---------------------------------------------------- */
+  editMode: false,
+  toggleEditMode: () =>
+    set((s) => ({
+      editMode: !s.editMode,
+      // Leaving edit mode closes any open editor.
+      nodeEditor: s.editMode ? null : s.nodeEditor,
+      editError: null,
+    })),
+  editedMaps: initialEditedMaps(),
+  editSources: {},
+  nodeEditor: null,
+  editError: null,
+  openNodeEditor: (nodeEditor) => set({ nodeEditor, editError: null }),
+  closeNodeEditor: () => set({ nodeEditor: null, editError: null }),
+
+  commitNode: (draft) => {
+    if (!draft.label.trim()) {
+      const error = "A label is required.";
+      set({ editError: error });
+      return { ok: false, error };
+    }
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+
+    let id = draft.id;
+    let concepts: SourceGraph["concepts"];
+    if (id) {
+      const existing = base.concepts.find((c) => c.id === id);
+      const concept = applyDraft(draft, id, existing);
+      concepts = base.concepts.map((c) => (c.id === id ? concept : c));
+    } else {
+      const taken = new Set(base.concepts.map((c) => c.id));
+      id = uniqueSlug(slugify(draft.label), taken);
+      concepts = [...base.concepts, applyDraft(draft, id)];
+    }
+    const result = commitCandidate(get, set, { ...base, concepts }, id);
+    if (result.ok) set({ selectedId: id, nodeEditor: null });
+    return result;
+  },
+
+  deleteNode: (id) => {
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+    const candidate: SourceGraph = {
+      ...base,
+      // Cascade: drop the concept, its edges, and any proof step that referenced it.
+      concepts: base.concepts
+        .filter((c) => c.id !== id)
+        .map((c) =>
+          c.proof
+            ? {
+                ...c,
+                proof: {
+                  steps: c.proof.steps.map((step) => ({
+                    ...step,
+                    uses: step.uses.filter((u) => u !== id),
+                  })),
+                },
+              }
+            : c,
+        ),
+      edges: base.edges.filter((e) => e.source !== id && e.target !== id),
+    };
+    const result = commitCandidate(get, set, candidate);
+    if (result.ok && get().selectedId === id) set({ selectedId: null });
+    if (result.ok && get().nodeEditor?.mode === "edit") set({ nodeEditor: null });
+    return result;
+  },
+
+  addNodeEdge: (edge) => {
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+    return commitCandidate(get, set, addSourceEdge(base, edge));
+  },
+
+  removeNodeEdge: (key) => {
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+    return commitCandidate(get, set, removeSourceEdge(base, key));
+  },
+
+  currentEditSource: () => workingSource(get()),
+
+  importSource: (source) => commitCandidate(get, set, source),
+
+  revertMap: async () => {
+    const mapId = get().mapId;
+    clearOverlay(mapId);
+    try {
+      const map = await loadShippedMap(mapId);
+      set((s) => {
+        const editSources = { ...s.editSources };
+        delete editSources[mapId];
+        const editedMaps = new Set(s.editedMaps);
+        editedMaps.delete(mapId);
+        const validIds = new Set(map.data.nodes.map((n) => n.id));
+        return {
+          editSources,
+          editedMaps,
+          loadedMaps: { ...s.loadedMaps, [mapId]: map },
+          selectedId: s.selectedId && validIds.has(s.selectedId) ? s.selectedId : null,
+          nodeEditor: null,
+          editError: null,
+        };
+      });
+      return { ok: true };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      set({ editError: message });
+      return { ok: false, error: message };
+    }
+  },
 }));
 
 useStore.subscribe((state) => {

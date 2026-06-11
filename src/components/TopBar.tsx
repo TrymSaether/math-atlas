@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
-import { MagnifyingGlassIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon, CompassToolIcon, CompassIcon, SlidersHorizontalIcon, SunIcon, MoonIcon, CheckIcon, BookmarkSimple, Globe, Stack } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon, CompassToolIcon, CompassIcon, SlidersHorizontalIcon, SunIcon, MoonIcon, CheckIcon, PencilSimpleIcon, BookmarkSimple, Globe, Stack } from "@phosphor-icons/react";
 import { useReactFlow } from "reactflow";
 import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
@@ -38,6 +38,10 @@ export function TopBar() {
             <DictionaryButton />
             <FlashcardsButton />
             <SandboxButton />
+          </Pill>
+          {/* Authoring */}
+          <Pill variant="soft" className="top-tools">
+            <EditToggle />
           </Pill>
           {/* Appearance */}
           <Pill variant="soft" className="top-tools">
@@ -368,6 +372,32 @@ function DisplayPopover({
       </div>
     </div>,
     document.body,
+  );
+}
+
+function EditToggle() {
+  const editMode = useStore((s) => s.editMode);
+  const toggleEditMode = useStore((s) => s.toggleEditMode);
+  const mapId = useStore((s) => s.mapId);
+  const edited = useStore((s) => s.editedMaps.has(mapId));
+  return (
+    <div className="relative">
+      <DockButton
+        onClick={toggleEditMode}
+        active={editMode}
+        label={editMode ? "Exit edit mode" : "Edit this map"}
+        title={editMode ? "Exit edit mode" : "Edit this map"}
+      >
+        <PencilSimpleIcon className="h-4 w-4" weight={editMode ? "fill" : "regular"} />
+      </DockButton>
+      {edited && !editMode && (
+        <span
+          aria-hidden
+          className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full"
+          style={{ background: "var(--accent)" }}
+        />
+      )}
+    </div>
   );
 }
 

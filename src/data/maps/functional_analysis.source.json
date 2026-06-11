@@ -139,13 +139,13 @@
       "id": "normed_vector_space",
       "kind": "structure",
       "domain": "spaces_norms",
-      "label": "Normed vector space",
+      "label": "Normed Vector Space",
       "content": {
-        "statement": "A normed vector space is a vector space equipped with a norm.",
-        "definition": "A normed vector space is a vector space together with a chosen norm. The norm supplies both a geometry of unit balls and the canonical metric $d(x,y)=\\|x-y\\|_X$.",
-        "formal": "A normed vector space is a pair $(X,\\|\\cdot\\|_X)$ where $X$ is a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and $\\|\\cdot\\|_X$ is a norm on $X$.",
+        "statement": "A normed vector space is a vector space equipped with a norm, which induces a metric and a compatible topology.",
+        "definition": "A normed vector space is a vector space $X$ over $\\mathbb K$ together with a norm $\\|\\cdot\\|_X$ on $X$. The norm induces a metric $d_X(x,y)=\\|x-y\\|_X$ and a compatible topology $\\tau_X$.",
+        "formal": "A normed vector space is an ordered pair $(X,\\|\\cdot\\|_X)$ where $X$ is a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and $\\|\\cdot\\|_X$ is a norm on $X$. The norm induces a metric $d_X(x,y)=\\|x-y\\|_X$ and a compatible topology $\\tau_X$.",
         "intuition": "A normed vector space is linear algebra with a calibrated notion of size. Its unit ball is the local shape of the geometry, and translating that ball through the space gives distance, convergence, Cauchy sequences, continuity, bounded linear maps, and completeness.",
-        "notation": ["$$(X,\\|\\cdot\\|_X),\\qquad d_X(x,y)=\\|x-y\\|_X$$"]
+        "notation": ["$(X,\\|\\cdot\\|_X)$"]
       },
       "assumptions": [
         "$X$ is a vector space.",
@@ -406,7 +406,7 @@
       "id": "bounded_linear_operator",
       "kind": "definition",
       "domain": "operators",
-      "label": "Bounded linear operator",
+      "label": "Bounded Linear Operator",
       "content": {
         "statement": "A bounded linear operator is a linear map between normed vector spaces whose output norm is controlled by a constant multiple of the input norm.",
         "definition": "A bounded linear operator is a linear operator $T:X\\to Y$ such that $\\|Tx\\|_Y\\le C\\|x\\|_X$ for all $x\\in X$ and some constant $C>0$.",
@@ -422,7 +422,7 @@
       ],
       "tags": ["operator", "bounded", "linear", "continuous", "normed_space"],
       "priority": "core"
-    },
+    }, 
     {
       "id": "bounded_function_on_domain",
       "kind": "definition",
@@ -569,7 +569,10 @@
         "intuition": "Changing the norm changes what one unit of reach looks like: $\\ell^1$ gives a diamond, $\\ell^2$ a circle, $\\ell^\\infty$ a square, and $\\ell^p$ interpolates between these shapes.",
         "notation": ["$\\|\\cdot\\|_p$", "$\\ell^p$"]
       },
-      "assumptions": ["The underlying vector space is $\\mathbb{R}^2$.", "$1\\leq p<\\infty$ for the smooth $\\ell^p$ family."],
+      "assumptions": [
+        "The underlying vector space is $\\mathbb{R}^2$.",
+        "$1\\leq p<\\infty$ for the smooth $\\ell^p$ family."
+      ],
       "tags": ["example", "norm", "unit-ball", "finite-dimensional"],
       "priority": "core"
     },
@@ -586,7 +589,10 @@
         "notation": ["$p_B(x)$"]
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/minkowski-functional.svg",
-      "assumptions": ["$B$ is convex, balanced, absorbing, and contains $0$.", "Additional separation from $0$ is needed for the gauge to be a norm rather than only a seminorm."],
+      "assumptions": [
+        "$B$ is convex, balanced, absorbing, and contains $0$.",
+        "Additional separation from $0$ is needed for the gauge to be a norm rather than only a seminorm."
+      ],
       "tags": ["construction", "norm", "convexity", "unit-ball"],
       "priority": "core"
     },
@@ -634,8 +640,16 @@
         "notation": ["$(e_n)$"]
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/infinite-dimensional-unit-ball.svg",
-      "assumptions": ["The norm topology is used.", "The space is infinite-dimensional; the displayed model is $\\ell^p$."],
-      "tags": ["counterexample", "compactness", "unit-ball", "infinite-dimensional"],
+      "assumptions": [
+        "The norm topology is used.",
+        "The space is infinite-dimensional; the displayed model is $\\ell^p$."
+      ],
+      "tags": [
+        "counterexample",
+        "compactness",
+        "unit-ball",
+        "infinite-dimensional"
+      ],
       "priority": "core"
     },
     {
@@ -651,7 +665,10 @@
         "notation": ["$\\|x^*\\|$", "$\\sup_{\\|x\\|\\leq 1}|x^*(x)|$"]
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/dual-norm-support.svg",
-      "assumptions": ["$X$ is a normed vector space.", "$x^*\\in X^*$ is continuous and linear."],
+      "assumptions": [
+        "$X$ is a normed vector space.",
+        "$x^*\\in X^*$ is continuous and linear."
+      ],
       "tags": ["duality", "norm", "unit-ball", "support"],
       "priority": "core"
     },
@@ -806,9 +823,9 @@
       "domain": "foundations",
       "label": "Scalar field real or complex",
       "content": {
-        "statement": "The scalar field is R or C.",
-        "intuition": "The usual analytic scalar fields.",
-        "notation": []
+        "statement": "The scalar field is either the real numbers or the complex numbers.",
+        "intuition": "Functional analysis is usually developed over the reals or complexes, and some results depend on this choice.",
+        "notation": ["$$\\mathbb{K} \\in \\{\\mathbb{R}, \\mathbb{C}\\}$$"]
       },
       "tags": ["assumption"],
       "priority": "standard"
@@ -820,8 +837,8 @@
       "label": "Domain is Banach",
       "content": {
         "statement": "The domain space is complete in its norm.",
-        "intuition": "Baire-category arguments require completeness of the domain.",
-        "notation": []
+        "intuition": "Completeness of the domain is crucial for the Baire category argument to work in the proofs of the mapping theorems.",
+        "notation": ["$$X \\text{ is a Banach space}$$"]
       },
       "tags": ["assumption", "completeness"],
       "priority": "core"
@@ -834,7 +851,7 @@
       "content": {
         "statement": "The codomain space is complete in its norm.",
         "intuition": "Closed graph/open mapping statements need Banach codomain.",
-        "notation": []
+        "notation": ["$$Y \\text{ is a Banach space}$$"]
       },
       "tags": ["assumption", "completeness"],
       "priority": "core"

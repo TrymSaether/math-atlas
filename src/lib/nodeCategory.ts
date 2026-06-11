@@ -35,7 +35,6 @@ const KIND_TO_CATEGORY: Record<string, NodeCategory> = {
   object: "definition",
   notation: "definition",
   axiom: "definition",
-  assumption: "definition",
   // Structures — the spaces and algebraic objects of study.
   structure: "structure",
   // Theorems — "what is true".
@@ -46,6 +45,7 @@ const KIND_TO_CATEGORY: Record<string, NodeCategory> = {
   conjecture: "theorem",
   // Properties — "attributes and characteristics".
   property: "property",
+  assumption: "property",
   // Instances — "what it looks like".
   example: "example",
   counterexample: "example",
