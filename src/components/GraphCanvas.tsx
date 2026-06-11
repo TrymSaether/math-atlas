@@ -11,7 +11,6 @@ import { useStore } from "../store";
 import { CanvasControls } from "./CanvasControls";
 import { DomainRegionNode } from "./DomainRegionNode";
 import { MinimapCard } from "./MinimapCard";
-import { RouteToast } from "./RouteToast";
 import { TopoEdgeView } from "./TopoEdge";
 import { TopoNodeView } from "./TopoNode";
 import type { ViewMode } from "../store";
@@ -509,12 +508,13 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       {showMinimap && (
         <MinimapCard nodes={conceptNodes} regions={activeLayout.domainBounds} selectedId={selectedId} />
       )}
-      <CanvasControls />
-      <RouteToast
-        fromTitle={routeFrom ? map.nodeById.get(routeFrom)?.label : undefined}
-        toTitle={routeTo ? map.nodeById.get(routeTo)?.label : undefined}
-        count={route?.found ? route.path.length : 0}
-        found={route ? route.found : null}
+      <CanvasControls
+        routeSummary={{
+          fromTitle: routeFrom ? map.nodeById.get(routeFrom)?.label : undefined,
+          toTitle: routeTo ? map.nodeById.get(routeTo)?.label : undefined,
+          count: route?.found ? route.path.length : 0,
+          found: route ? route.found : null,
+        }}
       />
     </>
   );

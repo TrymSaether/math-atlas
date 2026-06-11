@@ -135,6 +135,8 @@ interface State {
   toggleRouteMode: () => void;
   /** Click handler while planning: picks start, then destination. */
   pickRoutePoint: (id: string) => void;
+  setRouteEndpoint: (endpoint: "from" | "to", id: string | null) => void;
+  swapRouteEndpoints: () => void;
   clearRoute: () => void;
   replayRoute: () => void;
 
@@ -522,13 +524,41 @@ export const useStore = create<State>((set, get) => ({
     set((s) =>
       s.routeMode
         ? { routeMode: false, routeFrom: null, routeTo: null }
-        : { routeMode: true, routeFrom: null, routeTo: null },
+        : { routeMode: true, routeFrom: s.selectedId, routeTo: null },
     ),
   pickRoutePoint: (id) =>
     set((s) => {
-      if (!s.routeFrom) return { routeFrom: id, routeTo: null };
+      if (!s.routeFrom) {
+        if (s.routeTo && id !== s.routeTo) {
+          return { routeFrom: id, routeMode: false, routeRunKey: s.routeRunKey + 1 };
+        }
+        return { routeFrom: id, routeTo: null };
+      }
       if (id === s.routeFrom) return {};
       return { routeTo: id, routeMode: false, routeRunKey: s.routeRunKey + 1 };
+    }),
+  setRouteEndpoint: (endpoint, id) =>
+    set((s) => {
+      const nextFrom = endpoint === "from" ? id : s.routeFrom;
+      const nextTo = endpoint === "to" ? id : s.routeTo;
+      const dedupedTo = nextFrom && nextTo === nextFrom ? null : nextTo;
+      const complete = Boolean(nextFrom && dedupedTo);
+      return {
+        routeFrom: nextFrom,
+        routeTo: dedupedTo,
+        routeMode: !complete,
+        routeRunKey: complete ? s.routeRunKey + 1 : s.routeRunKey,
+      };
+    }),
+  swapRouteEndpoints: () =>
+    set((s) => {
+      const complete = Boolean(s.routeFrom && s.routeTo);
+      return {
+        routeFrom: s.routeTo,
+        routeTo: s.routeFrom,
+        routeMode: !complete,
+        routeRunKey: complete ? s.routeRunKey + 1 : s.routeRunKey,
+      };
     }),
   clearRoute: () => set({ routeMode: false, routeFrom: null, routeTo: null }),
   replayRoute: () => set((s) => ({ routeRunKey: s.routeRunKey + 1 })),

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import {
   Check,
@@ -10,6 +10,9 @@ import {
   Plus,
   Shapes,
   Path,
+  ArrowCounterClockwise,
+  ArrowsDownUp,
+  X,
   Graph,
   type Icon,
 } from "@phosphor-icons/react";
@@ -20,6 +23,7 @@ import { getDomainTone } from "../lib/colors";
 import { CATEGORY_META, kindsByCategory } from "../lib/nodeCategory";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { Pill, DockButton } from "./chrome/Pill";
+import { Button } from "./chrome/Button";
 
 interface PanelPosition {
   top: number;
@@ -40,12 +44,22 @@ function panelPositionFor(el: HTMLElement): PanelPosition {
  * right rail. The top "Map" pill opens an Apple-Maps "Map Modes"-style card that
  * consolidates view modes, layers, edge style, and filters.
  */
-export function CanvasControls() {
+export interface RouteSummary {
+  fromTitle?: string;
+  toTitle?: string;
+  count: number;
+  found: boolean | null;
+}
+
+export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }) {
   const rf = useReactFlow();
   const [mapPanelOpen, setMapPanelOpen] = useState(false);
   const [panelPosition, setPanelPosition] = useState<PanelPosition | null>(null);
+  const [directionsPosition, setDirectionsPosition] = useState<PanelPosition | null>(null);
   const mapButtonRef = useRef<HTMLDivElement>(null);
+  const routeButtonRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const directionsRef = useRef<HTMLDivElement>(null);
   const focusMode = useStore((s) => s.focusMode);
   const toggleFocusMode = useStore((s) => s.toggleFocusMode);
   const focusDepth = useStore((s) => s.focusDepth);
@@ -54,15 +68,18 @@ export function CanvasControls() {
   const routeFrom = useStore((s) => s.routeFrom);
   const routeTo = useStore((s) => s.routeTo);
   const toggleRouteMode = useStore((s) => s.toggleRouteMode);
+  const clearRoute = useStore((s) => s.clearRoute);
   const showMinimap = useStore((s) => s.showMinimap);
   const toggleMinimap = useStore((s) => s.toggleMinimap);
   const routeActive = routeMode || (routeFrom !== null && routeTo !== null);
+  const directionsOpen = routeActive;
 
   useEffect(() => {
-    if (!mapPanelOpen) return;
+    if (!mapPanelOpen && !directionsOpen) return;
     const onDown = (e: MouseEvent) => {
       const target = e.target as Node;
       if (
+        mapPanelOpen &&
         mapButtonRef.current &&
         !mapButtonRef.current.contains(target) &&
         panelRef.current &&
@@ -70,12 +87,24 @@ export function CanvasControls() {
       ) {
         setMapPanelOpen(false);
       }
+      if (
+        directionsOpen &&
+        routeButtonRef.current &&
+        !routeButtonRef.current.contains(target) &&
+        directionsRef.current &&
+        !directionsRef.current.contains(target)
+      ) {
+        if (!routeFrom || !routeTo) clearRoute();
+      }
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMapPanelOpen(false);
+      if (e.key !== "Escape") return;
+      setMapPanelOpen(false);
+      if (directionsOpen && (!routeFrom || !routeTo)) clearRoute();
     };
     const onResize = () => {
       if (mapButtonRef.current) setPanelPosition(panelPositionFor(mapButtonRef.current));
+      if (routeButtonRef.current) setDirectionsPosition(panelPositionFor(routeButtonRef.current));
     };
     document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onKey);
@@ -85,7 +114,13 @@ export function CanvasControls() {
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onResize);
     };
-  }, [mapPanelOpen]);
+  }, [clearRoute, directionsOpen, mapPanelOpen, routeFrom, routeTo]);
+
+  useEffect(() => {
+    if (directionsOpen && routeButtonRef.current) {
+      setDirectionsPosition(panelPositionFor(routeButtonRef.current));
+    }
+  }, [directionsOpen, routeFrom, routeTo]);
 
   return (
     <div className="pointer-events-none absolute right-3 top-[72px] z-30 flex flex-col items-end gap-2.5 sm:right-4 sm:top-[76px]">
@@ -107,13 +142,20 @@ export function CanvasControls() {
 
       {/* Navigation tools */}
       <Pill orientation="vertical" className="canvas-dock">
-        <DockButton
-          label={routeActive ? "Cancel route" : "Plan route"}
-          active={routeActive}
-          onClick={toggleRouteMode}
-        >
-          <Path className="h-[17px] w-[17px]" weight="regular" />
-        </DockButton>
+        <div ref={routeButtonRef} className="mb-[3px]">
+          <DockButton
+            label={routeActive ? "Directions" : "Plan route"}
+            active={routeActive}
+            onClick={() => {
+              if (routeButtonRef.current) {
+                setDirectionsPosition(panelPositionFor(routeButtonRef.current));
+              }
+              if (!routeActive) toggleRouteMode();
+            }}
+          >
+            <Path className="h-[17px] w-[17px]" weight="regular" />
+          </DockButton>
+        </div>
         <DockButton label="Focus neighborhood" active={focusMode} onClick={toggleFocusMode}>
           <Crosshair className="h-[17px] w-[17px]" weight="regular" />
         </DockButton>
@@ -154,6 +196,342 @@ export function CanvasControls() {
 
       {mapPanelOpen && panelPosition && (
         <MapPanel panelRef={panelRef} position={panelPosition} />
+      )}
+      {directionsOpen && directionsPosition && (
+        <DirectionsPanel
+          panelRef={directionsRef}
+          position={directionsPosition}
+          summary={routeSummary ?? { count: 0, found: null }}
+        />
+      )}
+    </div>
+  );
+}
+
+function DirectionsPanel({
+  panelRef,
+  position,
+  summary,
+}: {
+  panelRef: RefObject<HTMLDivElement>;
+  position: PanelPosition;
+  summary: RouteSummary;
+}) {
+  const routeMode = useStore((s) => s.routeMode);
+  const routeFrom = useStore((s) => s.routeFrom);
+  const routeTo = useStore((s) => s.routeTo);
+  const selectedId = useStore((s) => s.selectedId);
+  const mapId = useStore((s) => s.mapId);
+  const map = useStore((s) => s.loadedMaps[mapId]);
+  const setRouteEndpoint = useStore((s) => s.setRouteEndpoint);
+  const swapRouteEndpoints = useStore((s) => s.swapRouteEndpoints);
+  const clearRoute = useStore((s) => s.clearRoute);
+  const replayRoute = useStore((s) => s.replayRoute);
+  const setSearch = useStore((s) => s.setSearch);
+  const resetTopics = useStore((s) => s.resetTopics);
+
+  const selectedTitle = selectedId ? map?.nodeById.get(selectedId)?.label : undefined;
+  const fromTitle = summary.fromTitle ?? (routeFrom ? map?.nodeById.get(routeFrom)?.label : undefined);
+  const toTitle = summary.toTitle ?? (routeTo ? map?.nodeById.get(routeTo)?.label : undefined);
+  const hasBoth = Boolean(routeFrom && routeTo);
+  const showSelectedShortcut = Boolean(routeMode && selectedId && selectedTitle);
+  const [fromQuery, setFromQuery] = useState(fromTitle ?? "");
+  const [toQuery, setToQuery] = useState(toTitle ?? "");
+  const [activeField, setActiveField] = useState<"from" | "to" | null>(null);
+
+  useEffect(() => {
+    if (activeField !== "from") setFromQuery(fromTitle ?? "");
+  }, [activeField, fromTitle]);
+
+  useEffect(() => {
+    if (activeField !== "to") setToQuery(toTitle ?? "");
+  }, [activeField, toTitle]);
+
+  const nodes = map?.data.nodes ?? [];
+  const fromResults = useRouteSearchResults(nodes, fromQuery, routeTo);
+  const toResults = useRouteSearchResults(nodes, toQuery, routeFrom);
+
+  return createPortal(
+    <div
+      ref={panelRef}
+      className="map-popover pointer-events-auto fixed z-50 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 rounded-[var(--radius-2xl)] p-3"
+      style={{
+        top: position.top,
+        right: position.right,
+        maxHeight: `calc(100vh - ${position.top + 16}px)`,
+      }}
+      role="dialog"
+      aria-label="Directions"
+    >
+      <div className="flex items-center justify-between gap-3">
+        <div className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
+          Directions
+        </div>
+        <button
+          type="button"
+          onClick={clearRoute}
+          className="rounded-[var(--radius-sm)] p-1.5 text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg-1"
+          aria-label={routeMode ? "Cancel directions" : "Clear directions"}
+          title={routeMode ? "Cancel directions" : "Clear directions"}
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+
+      <div className="grid grid-cols-[1fr_34px] gap-2">
+        <div className="relative flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface shadow-[inset_0_1px_0_var(--chrome-highlight)]">
+          <RouteSearchField
+            label="Start"
+            value={fromQuery}
+            placeholder="Search"
+            selected={Boolean(routeFrom)}
+            active={activeField === "from"}
+            results={fromResults}
+            onFocus={() => setActiveField("from")}
+            onChange={(value) => {
+              setFromQuery(value);
+              if (routeFrom) setRouteEndpoint("from", null);
+            }}
+            onClear={() => {
+              setFromQuery("");
+              setRouteEndpoint("from", null);
+              setActiveField("from");
+            }}
+            onSelect={(id, label) => {
+              setFromQuery(label);
+              setRouteEndpoint("from", id);
+              setActiveField(null);
+            }}
+          />
+          <div className="mx-3 h-px bg-border" />
+          <RouteSearchField
+            label="Stop"
+            value={toQuery}
+            placeholder="Search"
+            selected={Boolean(routeTo)}
+            active={activeField === "to"}
+            results={toResults}
+            onFocus={() => setActiveField("to")}
+            onChange={(value) => {
+              setToQuery(value);
+              if (routeTo) setRouteEndpoint("to", null);
+            }}
+            onClear={() => {
+              setToQuery("");
+              setRouteEndpoint("to", null);
+              setActiveField("to");
+            }}
+            onSelect={(id, label) => {
+              setToQuery(label);
+              setRouteEndpoint("to", id);
+              setActiveField(null);
+            }}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={swapRouteEndpoints}
+          disabled={!routeFrom && !routeTo}
+          className="flex h-full min-h-[86px] w-[34px] items-center justify-center rounded-[var(--radius-lg)] border border-border bg-surface text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:cursor-default disabled:opacity-35"
+          aria-label="Swap route endpoints"
+          title="Swap route endpoints"
+        >
+          <ArrowsDownUp className="h-4 w-4" />
+        </button>
+      </div>
+
+      {showSelectedShortcut && (
+        <div className="flex items-center justify-between gap-3 px-1">
+          <span className="min-w-0 truncate text-ui-meta text-fg-3">
+            {selectedTitle}
+          </span>
+          <button
+            type="button"
+            onClick={() => {
+              const endpoint = routeFrom ? "to" : "from";
+              setRouteEndpoint(endpoint, selectedId);
+              if (endpoint === "from") setFromQuery(selectedTitle ?? "");
+              else setToQuery(selectedTitle ?? "");
+            }}
+            disabled={selectedId === routeFrom || selectedId === routeTo}
+            className="shrink-0 rounded-[var(--radius-sm)] px-2 py-1 text-ui-meta font-semibold text-accent transition-colors hover:bg-accent-soft disabled:opacity-45"
+          >
+            Use
+          </button>
+        </div>
+      )}
+
+      {hasBoth && (
+        <div className="rounded-[var(--radius-lg)] border border-border bg-surface px-3 py-2">
+          {summary.found ? (
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0 text-ui-meta tabular-nums text-fg-3">
+                <span className="font-semibold text-fg-1">{summary.count}</span>{" "}
+                concept{summary.count === 1 ? "" : "s"}
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  kind="text"
+                  accent
+                  onClick={replayRoute}
+                  className="flex h-8 items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold"
+                >
+                  <ArrowCounterClockwise className="h-4 w-4" />
+                  Replay
+                </Button>
+                <Button
+                  kind="text"
+                  onClick={clearRoute}
+                  className="flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold text-fg-2"
+                >
+                  Clear
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0 truncate text-ui-meta font-semibold text-fg-1">
+                No visible route
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  kind="text"
+                  accent
+                  onClick={() => {
+                    setSearch("");
+                    resetTopics();
+                    replayRoute();
+                  }}
+                  className="flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold"
+                >
+                  Filters
+                </Button>
+                <Button
+                  kind="text"
+                  onClick={clearRoute}
+                  className="flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold text-fg-2"
+                >
+                  Clear
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>,
+    document.body,
+  );
+}
+
+function useRouteSearchResults(
+  nodes: import("../types").GraphNode[],
+  query: string,
+  excludedId: string | null,
+) {
+  return useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    const ranked = nodes
+      .filter((node) => node.id !== excludedId)
+      .map((node) => {
+        const label = node.label.toLowerCase();
+        const kind = node.kind.toLowerCase();
+        const domain = node.topicCluster.toLowerCase();
+        const haystack = `${label} ${kind} ${domain}`;
+        if (normalized && !haystack.includes(normalized)) return null;
+        const rank = !normalized
+          ? 2
+          : label === normalized
+            ? 0
+            : label.startsWith(normalized)
+              ? 1
+              : 2;
+        return { node, rank };
+      })
+      .filter((item): item is { node: import("../types").GraphNode; rank: number } => Boolean(item))
+      .sort((a, b) => a.rank - b.rank || a.node.label.localeCompare(b.node.label));
+    return ranked.slice(0, 5).map(({ node }) => node);
+  }, [excludedId, nodes, query]);
+}
+
+function RouteSearchField({
+  label,
+  value,
+  placeholder,
+  selected,
+  active,
+  results,
+  onFocus,
+  onChange,
+  onClear,
+  onSelect,
+}: {
+  label: string;
+  value: string;
+  placeholder: string;
+  selected: boolean;
+  active: boolean;
+  results: import("../types").GraphNode[];
+  onFocus: () => void;
+  onChange: (value: string) => void;
+  onClear: () => void;
+  onSelect: (id: string, label: string) => void;
+}) {
+  const showResults = active && value.trim().length > 0 && results.length > 0;
+  return (
+    <div className="relative">
+      <label className="flex min-h-[43px] min-w-0 items-center gap-2 px-3 py-1.5">
+        <span className="w-9 shrink-0 text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
+          {label}
+        </span>
+        <input
+          value={value}
+          onFocus={onFocus}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          className="min-w-0 flex-1 bg-transparent text-ui-control font-medium text-fg-1 outline-none placeholder:text-fg-3"
+          aria-label={`${label} concept`}
+          autoComplete="off"
+          spellCheck={false}
+        />
+        {selected && (
+          <span
+            className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+            aria-hidden
+          />
+        )}
+        {value && (
+          <button
+            type="button"
+            onClick={onClear}
+            className="shrink-0 rounded-[var(--radius-xs)] p-1 text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg-1"
+            aria-label={`Clear ${label.toLowerCase()}`}
+            title={`Clear ${label.toLowerCase()}`}
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        )}
+      </label>
+      {showResults && (
+        <div className="mx-2 mb-2 overflow-hidden rounded-[var(--radius-md)] border border-border bg-surface-2">
+          {results.map((node) => (
+            <button
+              key={node.id}
+              type="button"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => onSelect(node.id, node.label)}
+              className="flex w-full min-w-0 items-center justify-between gap-3 px-2.5 py-1.5 text-left transition-colors hover:bg-surface"
+            >
+              <span className="min-w-0">
+                <span className="block truncate text-ui-meta font-semibold text-fg-1">
+                  {node.label}
+                </span>
+                <span className="block truncate text-ui-hint text-fg-3">
+                  {node.kind}
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );

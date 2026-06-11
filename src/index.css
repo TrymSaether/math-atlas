@@ -1783,64 +1783,6 @@ a:focus-visible,
   background: var(--chrome-divider);
 }
 
-/* Bottom floating docks — route planning and edit mode use the same chrome
-   rhythm as topbar tools while keeping their label + action layout. */
-.bottom-dock {
-  height: 44px;
-  gap: 4px;
-  padding: 4px 4px 4px 12px;
-}
-
-.bottom-dock .dock-label {
-  display: inline-flex;
-  height: 36px;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 6px;
-  border-radius: var(--radius-md);
-  padding-right: 8px;
-  font-family: var(--font-mono);
-  font-size: var(--type-ui-caption);
-  font-weight: 650;
-  letter-spacing: var(--tracking-label-tight);
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.bottom-dock .dock-button,
-.bottom-dock .dock-icon-button {
-  height: 36px;
-  flex-shrink: 0;
-  border-radius: var(--radius-md);
-}
-
-.bottom-dock .dock-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0px;
-  padding-left: 12px;
-  padding-right: 12px;
-  font-size: var(--type-ui-control);
-  font-weight: 550;
-}
-
-.bottom-dock .dock-icon-button {
-  width: 36px;
-}
-
-.bottom-dock .map-text-button.is-accent {
-  padding-left: 14px;
-  padding-right: 14px;
-}
-
-.bottom-dock .map-text-button + .map-text-button,
-.bottom-dock .map-icon-button + .map-icon-button,
-.bottom-dock .map-text-button + .map-icon-button,
-.bottom-dock .map-icon-button + .map-text-button {
-  margin-left: 1px;
-}
-
 /* Authoring dialog form controls */
 .authoring-field {
   display: block;

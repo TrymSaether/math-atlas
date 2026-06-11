@@ -1,6 +1,23 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
-import { MagnifyingGlassIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon, CompassToolIcon, CompassIcon, SlidersHorizontalIcon, SunIcon, MoonIcon, CheckIcon, PencilSimpleIcon } from "@phosphor-icons/react";
+import {
+  MagnifyingGlassIcon,
+  CaretDownIcon,
+  BookOpenTextIcon,
+  CardsIcon,
+  CompassToolIcon,
+  CompassIcon,
+  SlidersHorizontalIcon,
+  SunIcon,
+  MoonIcon,
+  CheckIcon,
+  PencilSimpleIcon,
+  PlusIcon,
+  DownloadSimpleIcon,
+  UploadSimpleIcon,
+  ArrowCounterClockwiseIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import { useReactFlow } from "reactflow";
 import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
@@ -81,7 +98,8 @@ function MapBrandSelector() {
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpen(false);
     };
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -141,9 +159,7 @@ function MapBrandSelector() {
         />
       </Button>
       {open && (
-        <div
-          className="map-popover absolute left-0 top-[60px] w-[min(300px,calc(100vw-24px))] overflow-hidden rounded-[var(--radius-xl)] p-1.5 sm:w-[260px]"
-        >
+        <div className="map-popover absolute left-0 top-[60px] w-[min(300px,calc(100vw-24px))] overflow-hidden rounded-[var(--radius-xl)] p-1.5 sm:w-[260px]">
           {(Object.keys(MAPS) as MapId[]).map((id) => {
             const active = id === mapId;
             return (
@@ -160,8 +176,12 @@ function MapBrandSelector() {
                   !active && "text-fg-2",
                 )}
               >
-                <span className="block min-w-0 flex-1 truncate">{MAPS[id].label}</span>
-                {active && <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />}
+                <span className="block min-w-0 flex-1 truncate">
+                  {MAPS[id].label}
+                </span>
+                {active && (
+                  <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />
+                )}
               </Button>
             );
           })}
@@ -308,12 +328,22 @@ function DisplayButton() {
       >
         <SlidersHorizontalIcon className="h-4 w-4" weight="regular" />
       </DockButton>
-      {open && position && <DisplayPopover popoverRef={popoverRef} position={position} />}
+      {open && position && (
+        <DisplayPopover popoverRef={popoverRef} position={position} />
+      )}
     </div>
   );
 }
 
-function ThemeSwatch({ theme, active, onClick }: { theme: (typeof THEMES)[number]; active: boolean; onClick: () => void }) {
+function ThemeSwatch({
+  theme,
+  active,
+  onClick,
+}: {
+  theme: (typeof THEMES)[number];
+  active: boolean;
+  onClick: () => void;
+}) {
   const p = theme.preview;
   return (
     <button
@@ -360,7 +390,12 @@ function DisplayPopover({
       </div>
       <div className="flex flex-wrap items-center gap-3">
         {THEMES.map((t) => (
-          <ThemeSwatch key={t.id} theme={t} active={t.id === theme} onClick={() => setTheme(t.id)} />
+          <ThemeSwatch
+            key={t.id}
+            theme={t}
+            active={t.id === theme}
+            onClick={() => setTheme(t.id)}
+          />
         ))}
       </div>
     </div>,
@@ -373,15 +408,110 @@ function EditToggle() {
   const toggleEditMode = useStore((s) => s.toggleEditMode);
   const mapId = useStore((s) => s.mapId);
   const edited = useStore((s) => s.editedMaps.has(mapId));
+  const openNodeEditor = useStore((s) => s.openNodeEditor);
+  const currentEditSource = useStore((s) => s.currentEditSource);
+  const importSource = useStore((s) => s.importSource);
+  const revertMap = useStore((s) => s.revertMap);
+  const [open, setOpen] = useState(false);
+  const [position, setPosition] = useState<PopoverPosition | null>(null);
+  const [confirmDiscard, setConfirmDiscard] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (
+        ref.current &&
+        !ref.current.contains(target) &&
+        popoverRef.current &&
+        !popoverRef.current.contains(target)
+      ) {
+        setOpen(false);
+        setConfirmDiscard(false);
+      }
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        setConfirmDiscard(false);
+      }
+    };
+    const onResize = () => {
+      if (ref.current) setPosition(popoverPositionFor(ref.current));
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [open]);
+
+  const showNotice = (message: string) => {
+    setNotice(message);
+    window.setTimeout(() => setNotice(null), 4000);
+  };
+
+  const exportSource = () => {
+    const source = currentEditSource();
+    if (!source) {
+      showNotice("Map source is not loaded.");
+      return;
+    }
+    const blob = new Blob([JSON.stringify(source, null, 2) + "\n"], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${mapId}.source.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showNotice("Source JSON exported.");
+  };
+
+  const importFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed: unknown = JSON.parse(String(reader.result));
+        const result = importSource(parsed);
+        showNotice(
+          result.ok
+            ? "Source JSON imported."
+            : `Import failed: ${result.error}`,
+        );
+      } catch {
+        showNotice("Import failed: not valid JSON.");
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const openPanel = () => {
+    if (!editMode) toggleEditMode();
+    if (ref.current) setPosition(popoverPositionFor(ref.current));
+    setOpen((o) => !o || !editMode);
+  };
+
   return (
-    <div className="relative">
+    <div className="relative" ref={ref}>
       <DockButton
-        onClick={toggleEditMode}
+        onClick={openPanel}
         active={editMode}
         label={editMode ? "Exit edit mode" : "Edit this map"}
         title={editMode ? "Exit edit mode" : "Edit this map"}
       >
-        <PencilSimpleIcon className="h-4 w-4" weight={editMode ? "fill" : "regular"} />
+        <PencilSimpleIcon
+          className="h-4 w-4"
+          weight={editMode ? "fill" : "regular"}
+        />
       </DockButton>
       {edited && !editMode && (
         <span
@@ -389,7 +519,184 @@ function EditToggle() {
           className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-accent"
         />
       )}
+      <input
+        ref={fileRef}
+        type="file"
+        accept="application/json,.json"
+        className="hidden"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) importFile(file);
+          e.target.value = "";
+        }}
+      />
+      {open && position && (
+        <EditMapPopover
+          popoverRef={popoverRef}
+          position={position}
+          edited={edited}
+          notice={notice}
+          confirmDiscard={confirmDiscard}
+          onNewConcept={() => {
+            openNodeEditor({ mode: "create" });
+            setOpen(false);
+          }}
+          onImport={() => fileRef.current?.click()}
+          onExport={exportSource}
+          onAskDiscard={() => setConfirmDiscard(true)}
+          onKeep={() => setConfirmDiscard(false)}
+          onDiscard={async () => {
+            const result = await revertMap();
+            setConfirmDiscard(false);
+            showNotice(
+              result.ok
+                ? "Local edits discarded."
+                : `Discard failed: ${result.error}`,
+            );
+          }}
+          onDone={() => {
+            toggleEditMode();
+            setOpen(false);
+            setConfirmDiscard(false);
+          }}
+        />
+      )}
     </div>
+  );
+}
+
+function EditMapPopover({
+  popoverRef,
+  position,
+  edited,
+  notice,
+  confirmDiscard,
+  onNewConcept,
+  onImport,
+  onExport,
+  onAskDiscard,
+  onKeep,
+  onDiscard,
+  onDone,
+}: {
+  popoverRef: RefObject<HTMLDivElement>;
+  position: PopoverPosition;
+  edited: boolean;
+  notice: string | null;
+  confirmDiscard: boolean;
+  onNewConcept: () => void;
+  onImport: () => void;
+  onExport: () => void;
+  onAskDiscard: () => void;
+  onKeep: () => void;
+  onDiscard: () => void;
+  onDone: () => void;
+}) {
+  return createPortal(
+    <div
+      ref={popoverRef}
+      className="map-popover pointer-events-auto fixed z-50 flex w-[min(300px,calc(100vw-24px))] flex-col gap-2.5 rounded-[var(--radius-2xl)] p-3"
+      style={{ top: position.top, right: position.right }}
+      role="dialog"
+      aria-label="Edit map"
+    >
+      <div className="flex items-center justify-between gap-3">
+        <div className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
+          Edit map
+        </div>
+      </div>
+
+      {notice && (
+        <div className="rounded-[var(--radius-md)] border border-accent-border bg-accent-soft px-3 py-2 text-ui-meta font-medium text-accent">
+          {notice}
+        </div>
+      )}
+
+      <Button
+        kind="text"
+        accent
+        onClick={onNewConcept}
+        className="flex h-11 w-full items-center justify-center gap-2 rounded-[var(--radius-lg)] px-3 text-ui-control font-semibold"
+      >
+        <PlusIcon className="h-4 w-4" weight="bold" />
+        New concept
+      </Button>
+
+      <div className="grid grid-cols-2 gap-2">
+        <EditActionButton label="Import" onClick={onImport}>
+          <UploadSimpleIcon className="h-4 w-4" />
+        </EditActionButton>
+        <EditActionButton label="Export" onClick={onExport}>
+          <DownloadSimpleIcon className="h-4 w-4" />
+        </EditActionButton>
+      </div>
+
+      <div className="rounded-[var(--radius-lg)] border border-border bg-surface px-2 py-2">
+        {edited ? (
+          confirmDiscard ? (
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-ui-meta font-semibold text-fg-1">
+                Discard edits?
+              </span>
+              <span className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={onDiscard}
+                  className="rounded-[var(--radius-sm)] bg-danger px-2.5 py-1.5 text-ui-meta font-semibold text-fg-on-color"
+                >
+                  Discard
+                </button>
+                <button
+                  type="button"
+                  onClick={onKeep}
+                  className="rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui-meta font-semibold text-fg-2 hover:bg-surface-2"
+                >
+                  Keep
+                </button>
+              </span>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={onAskDiscard}
+              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] px-2 py-1.5 text-left transition-colors hover:bg-surface-2"
+            >
+              <span className="flex min-w-0 items-center gap-2 text-ui-meta font-semibold text-fg-1">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                Local edits
+              </span>
+              <ArrowCounterClockwiseIcon className="h-4 w-4 shrink-0 text-danger" />
+            </button>
+          )
+        ) : (
+          <div className="px-2 py-1.5 text-ui-meta text-fg-3">
+            No local edits
+          </div>
+        )}
+      </div>
+    </div>,
+    document.body,
+  );
+}
+
+function EditActionButton({
+  label,
+  onClick,
+  children,
+}: {
+  label: string;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <Button
+      kind="text"
+      onClick={onClick}
+      className="flex h-9 items-center justify-center gap-2 rounded-[var(--radius-lg)] border border-border bg-surface px-2 text-ui-meta font-semibold text-fg-2 hover:text-fg-1"
+    >
+      {children}
+      <span>{label}</span>
+    </Button>
   );
 }
 
@@ -404,7 +711,11 @@ function SchemeToggle() {
       label={isDark ? "Switch to light scheme" : "Switch to dark scheme"}
       title={isDark ? "Light" : "Dark"}
     >
-      {isDark ? <SunIcon className="h-4 w-4" weight="regular" /> : <MoonIcon className="h-4 w-4" weight="regular" />}
+      {isDark ? (
+        <SunIcon className="h-4 w-4" weight="regular" />
+      ) : (
+        <MoonIcon className="h-4 w-4" weight="regular" />
+      )}
     </DockButton>
   );
 }
