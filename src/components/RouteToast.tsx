@@ -1,6 +1,7 @@
-import { ArrowRight, ArrowCounterClockwise as RotateCcw, X } from "@phosphor-icons/react";
+import { ArrowRight, ArrowCounterClockwise as RotateCcw, Path, X } from "@phosphor-icons/react";
 import { useStore } from "../store";
 import { Button } from "./chrome/Button";
+import { Pill } from "./chrome/Pill";
 
 /**
  * Floating status card for the route planner. Shows planning hints while picking
@@ -34,26 +35,22 @@ export function RouteToast({
     <div
       className={`pointer-events-none absolute inset-x-0 z-30 flex justify-center px-3 ${editMode ? "bottom-[68px]" : "bottom-4"}`}
     >
-      <div
-        className="map-chrome-soft pointer-events-auto flex h-11 max-w-full items-center gap-2 rounded-[var(--radius-xl)] p-1 pl-3"
-      >
+      <Pill variant="soft" className="bottom-dock max-w-full overflow-hidden">
+        <RouteLabel>{planning ? "Plan route" : "Route"}</RouteLabel>
+        <div className="mx-0.5 h-5 w-px shrink-0 map-divider" />
         {planning ? (
-          <span className="flex min-w-0 items-center gap-1.5 text-ui-control" style={{ color: "var(--fg-1)" }}>
+          <span className="flex min-w-0 items-center gap-1.5 px-2 text-ui-control" style={{ color: "var(--fg-1)" }}>
             {!routeFrom ? (
-              <>
-                <Eyebrow>Plan route</Eyebrow> pick a start concept
-              </>
+              <>pick a start concept</>
             ) : (
               <>
-                <Eyebrow>From</Eyebrow>
                 <strong className="font-semibold">{fromTitle}</strong>
                 <span style={{ color: "var(--fg-3)" }}> · pick a destination</span>
               </>
             )}
           </span>
         ) : found ? (
-          <span className="flex min-w-0 items-center gap-1.5 text-ui-control" style={{ color: "var(--fg-1)" }}>
-            <Eyebrow>Route</Eyebrow>
+          <span className="flex min-w-0 items-center gap-1.5 px-2 text-ui-control" style={{ color: "var(--fg-1)" }}>
             <span className="max-w-[140px] truncate font-semibold">{fromTitle}</span>
             <ArrowRight className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--accent)" }} />
             <span className="max-w-[140px] truncate font-semibold">{toTitle}</span>
@@ -62,8 +59,8 @@ export function RouteToast({
             </span>
           </span>
         ) : (
-          <span className="min-w-0 text-ui-control" style={{ color: "var(--fg-1)" }}>
-            <Eyebrow>Route</Eyebrow> no path between{" "}
+          <span className="min-w-0 px-2 text-ui-control" style={{ color: "var(--fg-1)" }}>
+            no path between{" "}
             <strong className="font-semibold">{fromTitle}</strong> and{" "}
             <strong className="font-semibold">{toTitle}</strong>
           </span>
@@ -82,17 +79,15 @@ export function RouteToast({
             <X className="h-3.5 w-3.5" />
           </ToastButton>
         </div>
-      </div>
+      </Pill>
     </div>
   );
 }
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
+function RouteLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span
-      className="shrink-0 font-mono text-ui-caption font-semibold uppercase tracking-label-tight"
-      style={{ color: "var(--fg-3)" }}
-    >
+    <span className="dock-label">
+      <Path className="h-4 w-4" weight="regular" />
       {children}
     </span>
   );
@@ -111,7 +106,7 @@ function ToastButton({
     <Button
       kind="icon"
       onClick={onClick}
-      className="h-9 w-9 rounded-[var(--radius-md)]"
+      className="dock-icon-button"
       title={label}
       aria-label={label}
     >

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
-import { MagnifyingGlassIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon, CompassToolIcon, CompassIcon, SlidersHorizontalIcon, SunIcon, MoonIcon, CheckIcon, PencilSimpleIcon, BookmarkSimple, Globe, Stack } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, CaretDownIcon, BookOpenTextIcon, CardsIcon, CompassToolIcon, CompassIcon, SlidersHorizontalIcon, SunIcon, MoonIcon, CheckIcon, PencilSimpleIcon } from "@phosphor-icons/react";
 import { useReactFlow } from "reactflow";
 import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
@@ -25,12 +25,16 @@ function popoverPositionFor(el: HTMLElement): PopoverPosition {
 
 export function TopBar() {
   return (
-    <header className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-3 sm:px-4">
-      <div className="pointer-events-auto flex w-full min-w-0 items-start justify-between gap-2.5 sm:gap-3">
+    <header className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-3 sm:px-4 sm:pt-4">
+      <div className="pointer-events-auto relative flex w-full min-w-0 items-start justify-between gap-2.5 sm:gap-3">
         <MapBrandSelector />
-        <div className="dock-scrollbar flex min-w-0 items-center justify-end gap-2.5 overflow-x-auto sm:flex-none">
-          {/* Search — its own field, like Apple Maps' floating search */}
+        <div className="pointer-events-auto absolute left-1/2 top-0 hidden -translate-x-1/2 md:block">
           <Pill variant="soft" className="top-tools">
+            <SearchBox />
+          </Pill>
+        </div>
+        <div className="dock-scrollbar flex min-w-0 items-center justify-end gap-2.5 overflow-x-auto sm:flex-none">
+          <Pill variant="soft" className="top-tools md:hidden">
             <SearchBox />
           </Pill>
           {/* Surfaces — mutually-exclusive view switches, grouped */}
@@ -40,12 +44,9 @@ export function TopBar() {
             <FlashcardsButton />
             <SandboxButton />
           </Pill>
-          {/* Authoring */}
-          <Pill variant="soft" className="top-tools">
-            <EditToggle />
-          </Pill>
           {/* Appearance */}
           <Pill variant="soft" className="top-tools">
+            <EditToggle />
             <SchemeToggle />
             <DisplayButton />
           </Pill>
@@ -141,7 +142,7 @@ function MapBrandSelector() {
       </Button>
       {open && (
         <div
-          className="map-popover absolute left-0 top-[52px] w-[min(300px,calc(100vw-24px))] overflow-hidden rounded-[var(--radius-2xl)] p-1.5 sm:w-[260px]"
+          className="map-popover absolute left-0 top-[60px] w-[min(300px,calc(100vw-24px))] overflow-hidden rounded-[var(--radius-xl)] p-1.5 sm:w-[260px]"
         >
           {(Object.keys(MAPS) as MapId[]).map((id) => {
             const active = id === mapId;

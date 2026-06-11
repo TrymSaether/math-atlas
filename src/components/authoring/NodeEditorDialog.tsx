@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { XIcon, TrashIcon, PlusIcon, ArrowsLeftRightIcon } from "@phosphor-icons/react";
+import { XIcon, TrashIcon, PlusIcon, ArrowsLeftRightIcon, CaretDownIcon, CheckIcon } from "@phosphor-icons/react";
 
 import { useStore } from "../../store";
 import { MathText } from "../../lib/katex";
@@ -21,6 +21,16 @@ import {
 
 const PRIORITIES: Priority[] = ["core", "standard", "peripheral"];
 
+function FieldLabel({ label, hint }: { label?: string; hint?: string }) {
+  if (!label) return null;
+  return (
+    <span className="authoring-label">
+      {label}
+      {hint && <span className="authoring-hint">{hint}</span>}
+    </span>
+  );
+}
+
 /** A single labelled text/area control bound to a draft field. */
 function Field({
   label,
@@ -39,27 +49,16 @@ function Field({
   placeholder?: string;
   hint?: string;
 }) {
-  const className =
-    "w-full rounded-[var(--radius-md)] border bg-[color:var(--surface-2)] px-2.5 py-1.5 text-ui-sm outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]";
-  const style = {
-    borderColor: "var(--border)",
-    color: "var(--fg-1)",
-    fontFamily: mono ? "var(--font-mono, monospace)" : undefined,
-  } as const;
   return (
-    <label className="block">
-      <span className="mb-1 block font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--fg-3)" }}>
-        {label}
-        {hint && <span className="ml-1.5 normal-case tracking-normal" style={{ color: "var(--fg-4)" }}>{hint}</span>}
-      </span>
+    <label className="authoring-field">
+      <FieldLabel label={label} hint={hint} />
       {area ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           rows={2}
-          className={className}
-          style={style}
+          className={mono ? "authoring-control authoring-control-mono" : "authoring-control"}
         />
       ) : (
         <input
@@ -67,11 +66,90 @@ function Field({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className={className}
-          style={style}
+          className={mono ? "authoring-control authoring-control-mono" : "authoring-control"}
         />
       )}
     </label>
+  );
+}
+
+type SelectOption = {
+  value: string;
+  label?: string;
+};
+
+function SelectField({
+  label,
+  value,
+  onChange,
+  options,
+  compact,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: SelectOption[];
+  compact?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const selected = options.find((option) => option.value === value);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  return (
+    <div className="authoring-field" ref={ref}>
+      <FieldLabel label={label} />
+      <div className="relative">
+        <button
+          type="button"
+          className={compact ? "authoring-control authoring-select-trigger authoring-select-trigger-compact" : "authoring-control authoring-select-trigger"}
+          onClick={() => setOpen((o) => !o)}
+          aria-haspopup="listbox"
+          aria-expanded={open}
+        >
+          <span className="min-w-0 truncate">{selected?.label ?? value}</span>
+          <CaretDownIcon className="h-4 w-4 shrink-0 text-fg-2" />
+        </button>
+        {open && (
+          <div className="authoring-select-popover" role="listbox">
+            {options.map((option) => {
+              const active = option.value === value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  role="option"
+                  aria-selected={active}
+                  className={active ? "authoring-select-option is-active" : "authoring-select-option"}
+                  onClick={() => {
+                    onChange(option.value);
+                    setOpen(false);
+                  }}
+                >
+                  <span className="min-w-0 truncate">{option.label}</span>
+                  {active && <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -108,8 +186,7 @@ function NodePicker({
         }}
         onBlur={() => window.setTimeout(() => setOpen(false), 120)}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full rounded-[var(--radius-md)] border bg-[color:var(--surface-2)] px-2.5 py-1.5 text-ui-sm outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
-        style={{ borderColor: "var(--border)", color: "var(--fg-1)" }}
+        className="authoring-control"
       />
       {open && matches.length > 0 && (
         <ul
@@ -125,7 +202,7 @@ function NodePicker({
                   onChange(o.id);
                   setOpen(false);
                 }}
-                className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-2 py-1.5 text-left text-ui-sm hover:bg-[color:var(--surface-3)]"
+                className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-2 py-1.5 text-left text-ui-sm text-fg-1 hover:bg-[color:var(--surface-3)]"
                 style={{ color: "var(--fg-1)" }}
               >
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: getDomainTone(o.id).color }} aria-hidden />
@@ -179,9 +256,7 @@ function EdgeEditor({ nodeId }: { nodeId: string }) {
 
   return (
     <div className="space-y-2.5">
-      <div className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--fg-3)" }}>
-        Links ({incident.length})
-      </div>
+      <FieldLabel label={`Links (${incident.length})`} />
 
       {incident.length > 0 && (
         <ul className="space-y-1">
@@ -228,16 +303,13 @@ function EdgeEditor({ nodeId }: { nodeId: string }) {
           <ArrowsLeftRightIcon className="h-3.5 w-3.5" />
           {outgoing ? "from this" : "to this"}
         </button>
-        <select
+        <SelectField
+          label=""
           value={relation}
-          onChange={(e) => setRelation(e.target.value as AuthorableRelation)}
-          className="h-8 rounded-[var(--radius-sm)] border bg-[color:var(--surface-2)] px-2 text-ui-xs outline-none"
-          style={{ borderColor: "var(--border)", color: "var(--fg-1)" }}
-        >
-          {AUTHORABLE_RELATIONS.map((r) => (
-            <option key={r} value={r}>{RELATIONS[r].reads}</option>
-          ))}
-        </select>
+          onChange={(next) => setRelation(next as AuthorableRelation)}
+          compact
+          options={AUTHORABLE_RELATIONS.map((r) => ({ value: r, label: RELATIONS[r].reads }))}
+        />
         <div className="col-span-2 flex items-center gap-2">
           <div className="min-w-0 flex-1">
             <NodePicker options={others} value={other} onChange={setOther} />
@@ -245,8 +317,7 @@ function EdgeEditor({ nodeId }: { nodeId: string }) {
           <button
             type="button"
             onClick={submit}
-            className="flex h-8 items-center gap-1 rounded-[var(--radius-sm)] px-2.5 text-ui-xs font-semibold"
-            style={{ background: "var(--accent)", color: "var(--fg-on-color)" }}
+            className="authoring-action authoring-action-primary h-8 rounded-[var(--radius-sm)] px-2.5 text-ui-xs"
           >
             <PlusIcon className="h-3.5 w-3.5" /> Link
           </button>
@@ -309,11 +380,11 @@ export function NodeEditorDialog() {
           </Dialog.Overlay>
           <Dialog.Content asChild>
             <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 8, scale: 0.99 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.99 }}
+              initial={reduceMotion ? { opacity: 0, x: "-50%", y: "-50%" } : { opacity: 0, x: "-50%", y: "calc(-50% + 8px)", scale: 0.99 }}
+              animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 1 }}
+              exit={reduceMotion ? { opacity: 0, x: "-50%", y: "-50%" } : { opacity: 0, x: "-50%", y: "calc(-50% + 8px)", scale: 0.99 }}
               transition={{ duration: reduceMotion ? 0 : 0.18, ease: [0.2, 0.7, 0.2, 1] }}
-              className="fixed left-1/2 top-1/2 z-50 flex max-h-[88vh] w-[min(640px,calc(100vw-24px))] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[var(--radius-lg)] border"
+              className="fixed left-1/2 top-1/2 z-50 flex max-h-[min(760px,calc(100vh-32px))] w-[min(700px,calc(100vw-32px))] flex-col overflow-hidden rounded-[var(--radius-xl)] border"
               style={{ background: "var(--surface)", borderColor: "var(--border)", boxShadow: "var(--shadow-3)" }}
             >
               <header className="flex shrink-0 items-center justify-between border-b px-5 py-3" style={{ borderColor: "var(--border-subtle)" }}>
@@ -334,45 +405,31 @@ export function NodeEditorDialog() {
                 </button>
               </header>
 
-              <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-5 py-4">
+              <div className="min-h-0 flex-1 space-y-3.5 overflow-y-auto px-5 py-4">
                 <Field label="Label" value={draft.label} onChange={(v) => set({ label: v })} placeholder="e.g. Banach space" />
                 {draft.label.trim() && (
-                  <div className="-mt-1 text-ui-sm" style={{ color: "var(--fg-3)" }}>
-                    Preview: <MathText text={draft.label} />
+                  <div className="-mt-1 text-ui-xs font-medium text-fg-3">
+                    Preview <span className="text-fg-2"><MathText text={draft.label} /></span>
                   </div>
                 )}
 
                 <div className="grid grid-cols-2 gap-3">
-                  <label className="block">
-                    <span className="mb-1 block font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--fg-3)" }}>Kind</span>
-                    <select
-                      value={draft.kind}
-                      onChange={(e) => set({ kind: e.target.value })}
-                      className="w-full rounded-[var(--radius-md)] border bg-[color:var(--surface-2)] px-2.5 py-1.5 text-ui-sm outline-none"
-                      style={{ borderColor: "var(--border)", color: "var(--fg-1)" }}
-                    >
-                      {KIND_VALUES.map((k) => (
-                        <option key={k} value={k}>{KIND_LABEL[k]}</option>
-                      ))}
-                    </select>
-                  </label>
-                  <label className="block">
-                    <span className="mb-1 block font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--fg-3)" }}>Domain</span>
-                    <select
-                      value={draft.domain}
-                      onChange={(e) => set({ domain: e.target.value })}
-                      className="w-full rounded-[var(--radius-md)] border bg-[color:var(--surface-2)] px-2.5 py-1.5 text-ui-sm outline-none"
-                      style={{ borderColor: "var(--border)", color: "var(--fg-1)" }}
-                    >
-                      {map.data.domains.map((d) => (
-                        <option key={d.id} value={d.id}>{d.label}</option>
-                      ))}
-                    </select>
-                  </label>
+                  <SelectField
+                    label="Kind"
+                    value={draft.kind}
+                    onChange={(kind) => set({ kind })}
+                    options={KIND_VALUES.map((k) => ({ value: k, label: KIND_LABEL[k] }))}
+                  />
+                  <SelectField
+                    label="Domain"
+                    value={draft.domain}
+                    onChange={(domain) => set({ domain })}
+                    options={map.data.domains.map((d) => ({ value: d.id, label: d.label }))}
+                  />
                 </div>
 
                 <div>
-                  <span className="mb-1 block font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--fg-3)" }}>Priority</span>
+                  <FieldLabel label="Priority" />
                   <div className="flex gap-1.5">
                     {PRIORITIES.map((p) => {
                       const active = draft.priority === p;
@@ -381,12 +438,7 @@ export function NodeEditorDialog() {
                           key={p}
                           type="button"
                           onClick={() => set({ priority: p })}
-                          className="rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-xs font-medium capitalize"
-                          style={
-                            active
-                              ? { background: "var(--accent-soft)", borderColor: "var(--accent-border)", color: "var(--accent)" }
-                              : { background: "var(--surface)", borderColor: "var(--border)", color: "var(--fg-3)" }
-                          }
+                          className={active ? "authoring-chip is-active" : "authoring-chip"}
                         >
                           {p}
                         </button>
@@ -420,12 +472,12 @@ export function NodeEditorDialog() {
                       <button
                         type="button"
                         onClick={() => deleteNode(editingId)}
-                        className="rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui-xs font-semibold text-fg-on-color"
-                        style={{ background: "var(--danger)" }}
+                        className="authoring-action rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui-xs"
+                        style={{ background: "var(--danger)", color: "var(--fg-on-color)" }}
                       >
                         Delete
                       </button>
-                      <button type="button" onClick={() => setConfirmDelete(false)} className="text-ui-xs" style={{ color: "var(--fg-3)" }}>
+                      <button type="button" onClick={() => setConfirmDelete(false)} className="authoring-action rounded-[var(--radius-sm)] px-2 py-1.5 text-ui-xs text-fg-3">
                         Cancel
                       </button>
                     </div>
@@ -433,8 +485,7 @@ export function NodeEditorDialog() {
                     <button
                       type="button"
                       onClick={() => setConfirmDelete(true)}
-                      className="flex items-center gap-1.5 rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui-xs font-medium"
-                      style={{ color: "var(--danger)" }}
+                      className="authoring-action authoring-action-danger rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui-xs"
                     >
                       <TrashIcon className="h-3.5 w-3.5" /> Delete
                     </button>
@@ -442,14 +493,13 @@ export function NodeEditorDialog() {
                 )}
                 {editError && <span className="min-w-0 flex-1 truncate text-ui-xs" style={{ color: "var(--danger)" }}>{editError}</span>}
                 <div className="ml-auto flex items-center gap-2">
-                  <button type="button" onClick={close} className="rounded-[var(--radius-sm)] px-3 py-1.5 text-ui-sm" style={{ color: "var(--fg-2)" }}>
+                  <button type="button" onClick={close} className="authoring-action rounded-[var(--radius-sm)] px-3 py-1.5 text-ui-sm text-fg-2">
                     {editor.mode === "edit" ? "Done" : "Cancel"}
                   </button>
                   <button
                     type="button"
                     onClick={save}
-                    className="rounded-[var(--radius-sm)] px-3.5 py-1.5 text-ui-sm font-semibold"
-                    style={{ background: "var(--accent)", color: "var(--fg-on-color)" }}
+                    className="authoring-action authoring-action-primary rounded-[var(--radius-sm)] px-3.5 py-1.5 text-ui-sm"
                   >
                     {editor.mode === "create" ? "Create" : "Save"}
                   </button>

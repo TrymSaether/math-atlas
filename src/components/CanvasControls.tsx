@@ -88,7 +88,7 @@ export function CanvasControls() {
   }, [mapPanelOpen]);
 
   return (
-    <div className="pointer-events-none absolute right-3 top-[72px] z-30 flex flex-col items-end gap-2.5 sm:right-4">
+    <div className="pointer-events-none absolute right-3 top-[72px] z-30 flex flex-col items-end gap-2.5 sm:right-4 sm:top-[76px]">
       {/* Map view — modes, layers, edge style & filters */}
       <div ref={mapButtonRef}>
         <Pill orientation="vertical" className="canvas-dock">

@@ -35,7 +35,9 @@ export function AuthoringBar() {
   const exportSource = () => {
     const source = currentEditSource();
     if (!source) return;
-    const blob = new Blob([JSON.stringify(source, null, 2) + "\n"], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(source, null, 2) + "\n"], {
+      type: "application/json",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -60,26 +62,33 @@ export function AuthoringBar() {
   };
 
   return (
-    <div className="pointer-events-none absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2">
+    <div className="pointer-events-none absolute bottom-4 left-1/2 z-30 flex w-[min(820px,calc(100vw-24px))] -translate-x-1/2 flex-col items-center gap-2">
       {notice && (
         <div className="map-chrome-soft pointer-events-auto rounded-[var(--radius-md)] px-3 py-1.5 text-ui-xs text-fg-2">
           {notice}
         </div>
       )}
-      <Pill variant="soft" className="top-tools h-11 gap-1 p-1">
-        <span className="flex h-9 items-center gap-1.5 rounded-[var(--radius-md)] px-2 font-mono text-ui-caption font-semibold uppercase tracking-label-tight text-accent">
+      <Pill variant="soft" className="bottom-dock max-w-full overflow-hidden">
+        <span className="dock-label">
           <PencilSimpleIcon className="h-4 w-4" weight="fill" />
           Editing
         </span>
         <div className="mx-0.5 h-5 w-px map-divider" />
-        <BarButton label="New concept" onClick={() => openNodeEditor({ mode: "create" })} primary>
-          <PlusIcon className="h-4 w-4" /> New
+        <BarButton
+          label="New concept"
+          onClick={() => openNodeEditor({ mode: "create" })}
+          primary
+        >
+          <PlusIcon className="h-4 w-4" />
         </BarButton>
         <BarButton label="Export source JSON" onClick={exportSource}>
-          <DownloadSimpleIcon className="h-4 w-4" /> Export
+          <DownloadSimpleIcon className="h-4 w-4" />
         </BarButton>
-        <BarButton label="Import source JSON" onClick={() => fileRef.current?.click()}>
-          <UploadSimpleIcon className="h-4 w-4" /> Import
+        <BarButton
+          label="Import source JSON"
+          onClick={() => fileRef.current?.click()}
+        >
+          <UploadSimpleIcon className="h-4 w-4" />
         </BarButton>
         {isEdited &&
           (confirmRevert ? (
@@ -95,12 +104,19 @@ export function AuthoringBar() {
               >
                 Revert
               </button>
-              <button type="button" onClick={() => setConfirmRevert(false)} className="px-1 text-fg-3">
+              <button
+                type="button"
+                onClick={() => setConfirmRevert(false)}
+                className="px-1 text-fg-3"
+              >
                 No
               </button>
             </span>
           ) : (
-            <BarButton label={`Revert ${MAPS[mapId].label} to built-in`} onClick={() => setConfirmRevert(true)}>
+            <BarButton
+              label={`Revert ${MAPS[mapId].label} to built-in`}
+              onClick={() => setConfirmRevert(true)}
+            >
               <ArrowCounterClockwiseIcon className="h-4 w-4" /> Revert
             </BarButton>
           ))}
@@ -139,7 +155,7 @@ function BarButton({
       aria-label={label}
       title={label}
       className={cn(
-        "flex h-9 items-center gap-1.5 rounded-[var(--radius-md)] px-3 text-ui-control font-medium",
+        "dock-button",
         primary && "px-3.5",
         !primary && "text-fg-2",
       )}
