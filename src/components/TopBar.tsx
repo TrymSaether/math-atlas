@@ -26,9 +26,9 @@ function popoverPositionFor(el: HTMLElement): PopoverPosition {
 export function TopBar() {
   return (
     <header className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-3 sm:px-4">
-      <div className="pointer-events-auto flex w-full min-w-0 items-start justify-between gap-2 sm:gap-3">
+      <div className="pointer-events-auto flex w-full min-w-0 items-start justify-between gap-2.5 sm:gap-3">
         <MapBrandSelector />
-        <div className="dock-scrollbar flex min-w-0 items-center justify-end gap-2 overflow-x-auto sm:flex-none">
+        <div className="dock-scrollbar flex min-w-0 items-center justify-end gap-2.5 overflow-x-auto sm:flex-none">
           {/* Search — its own field, like Apple Maps' floating search */}
           <Pill variant="soft" className="top-tools">
             <SearchBox />
@@ -103,12 +103,12 @@ function MapBrandSelector() {
       <Button
         kind="text"
         onClick={goHome}
-        className="group flex min-w-0 items-center gap-2.5 rounded-[var(--radius-lg)] py-1 pl-1.5 pr-1 sm:pl-2 sm:pr-2.5"
+        className="group flex min-w-0 items-center gap-2.5 rounded-[var(--radius-md)] py-1 pl-1.5 pr-1 sm:pl-2 sm:pr-2.5"
         aria-label="Math Atlas — back to map"
         title="Back to map"
       >
         <span
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-transform group-hover:scale-105"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-sm)] transition-transform group-hover:scale-105"
           style={{
             background: "color-mix(in srgb, var(--surface) 78%, transparent)",
             boxShadow: "inset 0 0 0 1px var(--chrome-border)",
@@ -125,7 +125,7 @@ function MapBrandSelector() {
         active={open}
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 text-ui-control font-sans sm:px-3.5",
+          "flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-md)] px-2.5 text-ui-control font-sans sm:px-3.5",
           !open && "text-fg-1",
         )}
         aria-label="Field selector"
@@ -155,7 +155,7 @@ function MapBrandSelector() {
                   setOpen(false);
                 }}
                 className={cn(
-                  "flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2.5 text-left text-ui-control",
+                  "flex w-full items-center gap-2 rounded-[var(--radius-md)] px-3 py-2.5 text-left text-ui-control",
                   !active && "text-fg-2",
                 )}
               >
@@ -176,7 +176,7 @@ function SearchBox() {
     <Button
       kind="text"
       onClick={() => setPaletteOpen(true)}
-      className="flex h-9 min-w-9 items-center gap-2 rounded-[var(--radius-xl)] px-2.5 text-ui-control text-fg-2 md:min-w-[190px] md:px-3.5"
+      className="flex h-9 min-w-9 items-center gap-2 rounded-[var(--radius-md)] px-2.5 text-ui-control text-fg-2 md:min-w-[190px] md:px-3.5"
       aria-label="Open search"
     >
       <MagnifyingGlassIcon className="h-4 w-4 shrink-0 text-fg-3" />
@@ -346,7 +346,7 @@ function DisplayPopover({
   return createPortal(
     <div
       ref={popoverRef}
-      className="map-popover pointer-events-auto fixed z-50 w-[min(260px,calc(100vw-24px))] rounded-[var(--radius-2xl)] p-4"
+      className="map-popover pointer-events-auto fixed z-50 w-[min(260px,calc(100vw-24px))] rounded-[var(--radius-2xl)] p-3"
       style={{ top: position.top, right: position.right }}
     >
       <div className="mb-2.5 flex items-baseline justify-between">

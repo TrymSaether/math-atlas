@@ -1,5 +1,6 @@
 import { ArrowRight, ArrowCounterClockwise as RotateCcw, X } from "@phosphor-icons/react";
 import { useStore } from "../store";
+import { Button } from "./chrome/Button";
 
 /**
  * Floating status card for the route planner. Shows planning hints while picking
@@ -23,23 +24,21 @@ export function RouteToast({
   const toggleRouteMode = useStore((s) => s.toggleRouteMode);
   const replayRoute = useStore((s) => s.replayRoute);
   const clearRoute = useStore((s) => s.clearRoute);
+  const editMode = useStore((s) => s.editMode);
 
   const planning = routeMode;
   const hasRoute = !routeMode && routeFrom && routeTo;
   if (!planning && !hasRoute) return null;
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-4 z-30 flex justify-center px-3">
+    <div
+      className={`pointer-events-none absolute inset-x-0 z-30 flex justify-center px-3 ${editMode ? "bottom-[68px]" : "bottom-4"}`}
+    >
       <div
-        className="pointer-events-auto flex max-w-full items-center gap-2.5 rounded-[var(--radius-xl)] border py-1.5 pl-4 pr-1.5"
-        style={{
-          background: "var(--surface)",
-          borderColor: "var(--border)",
-          boxShadow: "var(--shadow-2)",
-        }}
+        className="map-chrome-soft pointer-events-auto flex h-11 max-w-full items-center gap-2 rounded-[var(--radius-xl)] p-1 pl-3"
       >
         {planning ? (
-          <span className="text-ui-control" style={{ color: "var(--fg-1)" }}>
+          <span className="flex min-w-0 items-center gap-1.5 text-ui-control" style={{ color: "var(--fg-1)" }}>
             {!routeFrom ? (
               <>
                 <Eyebrow>Plan route</Eyebrow> pick a start concept
@@ -53,7 +52,7 @@ export function RouteToast({
             )}
           </span>
         ) : found ? (
-          <span className="flex items-center gap-1.5 text-ui-control" style={{ color: "var(--fg-1)" }}>
+          <span className="flex min-w-0 items-center gap-1.5 text-ui-control" style={{ color: "var(--fg-1)" }}>
             <Eyebrow>Route</Eyebrow>
             <span className="max-w-[140px] truncate font-semibold">{fromTitle}</span>
             <ArrowRight className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--accent)" }} />
@@ -63,7 +62,7 @@ export function RouteToast({
             </span>
           </span>
         ) : (
-          <span className="text-ui-control" style={{ color: "var(--fg-1)" }}>
+          <span className="min-w-0 text-ui-control" style={{ color: "var(--fg-1)" }}>
             <Eyebrow>Route</Eyebrow> no path between{" "}
             <strong className="font-semibold">{fromTitle}</strong> and{" "}
             <strong className="font-semibold">{toTitle}</strong>
@@ -91,7 +90,7 @@ export function RouteToast({
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <span
-      className="mr-1.5 text-ui-2xs font-semibold uppercase tracking-label"
+      className="shrink-0 font-mono text-ui-caption font-semibold uppercase tracking-label-tight"
       style={{ color: "var(--fg-3)" }}
     >
       {children}
@@ -109,15 +108,14 @@ function ToastButton({
   children: React.ReactNode;
 }) {
   return (
-    <button
-      type="button"
+    <Button
+      kind="icon"
       onClick={onClick}
-      className="flex h-7 w-7 items-center justify-center rounded-[var(--radius-sm)] transition-colors hover:bg-[var(--surface-3)]"
-      style={{ color: "var(--fg-2)" }}
+      className="h-9 w-9 rounded-[var(--radius-md)]"
       title={label}
       aria-label={label}
     >
       {children}
-    </button>
+    </Button>
   );
 }

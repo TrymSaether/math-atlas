@@ -327,7 +327,7 @@ export function NodeEditorDialog() {
                   type="button"
                   onClick={close}
                   aria-label="Close"
-                  className="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-[color:var(--surface-3)]"
+                  className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] hover:bg-[color:var(--surface-3)]"
                   style={{ color: "var(--fg-2)" }}
                 >
                   <XIcon className="h-4 w-4" />

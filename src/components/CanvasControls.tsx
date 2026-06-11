@@ -88,7 +88,7 @@ export function CanvasControls() {
   }, [mapPanelOpen]);
 
   return (
-    <div className="pointer-events-none absolute right-3 top-[72px] z-30 flex flex-col items-end gap-2 sm:right-4">
+    <div className="pointer-events-none absolute right-3 top-[72px] z-30 flex flex-col items-end gap-2.5 sm:right-4">
       {/* Map view — modes, layers, edge style & filters */}
       <div ref={mapButtonRef}>
         <Pill orientation="vertical" className="canvas-dock">
@@ -178,7 +178,7 @@ function ZoomReadout() {
 
 function DepthPicker({ value, onChange }: { value: number; onChange: (value: number) => void }) {
   return (
-    <div className="flex flex-col items-center gap-1 py-1" aria-label="Focus depth">
+    <div className="flex flex-col items-center gap-1.5 py-1" aria-label="Focus depth">
       {[1, 2, 3].map((depth) => {
         const active = value === depth;
         return (
@@ -187,7 +187,7 @@ function DepthPicker({ value, onChange }: { value: number; onChange: (value: num
             type="button"
             onClick={() => onChange(depth)}
             className={cn(
-              "flex h-6 w-6 items-center justify-center rounded-[var(--radius-sm)] text-ui-2xs font-semibold tabular-nums transition-colors",
+              "flex h-6 w-6 items-center justify-center rounded-[var(--radius-xs)] text-ui-2xs font-semibold tabular-nums transition-colors",
               active
                 ? "bg-accent-soft text-accent ring-1 ring-inset ring-accent-border"
                 : "text-fg-2",
@@ -215,12 +215,12 @@ function Switch({ checked, onClick, label }: { checked: boolean; onClick: () => 
       aria-label={label}
       onClick={onClick}
       className={cn(
-        "relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-full transition-colors",
+        "relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-[var(--radius-pill)] transition-colors",
         checked ? "bg-accent" : "bg-surface-3 ring-1 ring-inset ring-border",
       )}
     >
       <span
-        className="absolute h-[17px] w-[17px] rounded-full transition-transform"
+        className="absolute h-[17px] w-[17px] rounded-[var(--radius-pill)] transition-transform"
         style={{
           left: 2,
           background: "var(--surface)",
@@ -302,7 +302,7 @@ function ModeTile({
       type="button"
       onClick={onClick}
       className={cn(
-        "group relative flex flex-col gap-2 rounded-[var(--radius-lg)] border p-2 text-left transition-colors",
+        "group relative flex flex-col gap-2 rounded-[var(--radius-md)] border p-2 text-left transition-colors",
         active
           ? "border-accent bg-accent-soft ring-1 ring-inset ring-accent"
           : "border-border bg-surface",
@@ -311,7 +311,7 @@ function ModeTile({
     >
       <span
         className={cn(
-          "flex h-14 w-full items-center justify-center rounded-[var(--radius-md)]",
+          "flex h-14 w-full items-center justify-center rounded-[var(--radius-sm)]",
           active ? "bg-accent text-fg-on-color" : "bg-surface-2 text-fg-2",
         )}
         aria-hidden
@@ -373,7 +373,7 @@ function MapPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-50 flex w-[min(320px,calc(100vw-24px))] flex-col gap-4 overflow-y-auto rounded-[var(--radius-2xl)] p-4"
+      className="map-popover pointer-events-auto fixed z-50 flex w-[min(320px,calc(100vw-24px))] flex-col gap-3.5 overflow-y-auto rounded-[var(--radius-2xl)] p-3.5"
       style={{
         top: position.top,
         right: position.right,
@@ -400,7 +400,7 @@ function MapPanel({
       <div className="h-px bg-border" />
 
       <PanelSection title="Layers">
-        <div className="flex flex-col gap-0.5">
+        <div className="flex flex-col gap-1">
           {LAYERS.map(({ key, label }) => (
             <div key={key} className="flex items-center justify-between gap-3 py-1">
               <span className="text-ui-control font-medium text-fg-1">{label}</span>

@@ -35,7 +35,7 @@
 
 .dictionary-view .dict-index-head {
   flex-shrink: 0;
-  padding: 16px 18px 12px;
+  padding: 14px 16px 12px;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
 }
@@ -93,9 +93,10 @@
 
 .dictionary-view .dict-search input {
   width: 100%;
+  min-height: 34px;
   padding: 7px 10px 7px 28px;
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: var(--radius-md);
   background: var(--surface-2);
   color: var(--fg-1);
   font-family: var(--font-sans);
@@ -118,7 +119,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   margin-top: 10px;
 }
 
@@ -128,7 +129,8 @@
   gap: 5px;
   max-width: 100%;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  min-height: 24px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--fg-3);
   cursor: pointer;
@@ -153,7 +155,7 @@
   flex-shrink: 0;
   width: 6px;
   height: 6px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .dictionary-view .dict-facet-n {
@@ -179,7 +181,7 @@
 .dictionary-view .dict-controls {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   margin-top: 10px;
 }
 
@@ -194,7 +196,8 @@
 
 .dictionary-view .dict-chip {
   border: 1px solid var(--border);
-  border-radius: 999px;
+  min-height: 24px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   background: var(--surface);
   color: var(--fg-2);
@@ -260,11 +263,12 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   width: 100%;
+  min-height: 34px;
   padding: 7px 10px 7px 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: transparent;
   cursor: pointer;
   text-align: left;
@@ -281,7 +285,7 @@
   inset-block: 6px;
   left: 0;
   width: 3px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .dictionary-view .dict-row-glyph {
@@ -335,7 +339,7 @@
 .dictionary-view .dict-doc-inner {
   max-width: 760px;
   margin-inline: auto;
-  padding: 40px 40px 96px;
+  padding: 36px 40px 96px;
 }
 
 .dictionary-view .dict-back {
@@ -364,7 +368,7 @@
   top: 4px;
   bottom: 4px;
   width: 3.5px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .dictionary-view .dict-doc-term {
@@ -410,9 +414,9 @@
   max-width: 460px;
   height: auto;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   background: var(--surface);
-  padding: 14px;
+  padding: 12px;
 }
 
 .dictionary-view .dict-doc-dia .themed-diagram svg {
@@ -456,7 +460,8 @@
   align-items: center;
   gap: 6px;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  min-height: 28px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--fg-1);
   cursor: pointer;
@@ -472,7 +477,7 @@
 .dictionary-view .dict-related-dot {
   width: 7px;
   height: 7px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .dictionary-view .dict-open {
@@ -481,7 +486,8 @@
   align-items: center;
   gap: 4px;
   border: 1px solid var(--accent-border);
-  border-radius: 999px;
+  min-height: 30px;
+  border-radius: var(--radius-sm);
   background: var(--accent-soft);
   color: var(--accent);
   cursor: pointer;

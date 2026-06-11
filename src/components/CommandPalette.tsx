@@ -64,7 +64,7 @@ export function CommandPalette() {
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
                 >
                   <Command
-                    className="overflow-hidden rounded-2xl border"
+                    className="overflow-hidden rounded-[var(--radius-2xl)] border"
                     style={{
                       background: "var(--surface)",
                       borderColor: "var(--border)",
@@ -183,7 +183,7 @@ function Item({
     <Command.Item
       value={value}
       onSelect={onSelect}
-      className="cursor-pointer rounded-md px-2 py-2 text-ui-sm text-[color:var(--fg-1)] aria-selected:bg-[color:var(--accent-soft)] aria-selected:text-[color:var(--fg-1)]"
+      className="cursor-pointer rounded-[var(--radius-sm)] px-2 py-2 text-ui-sm text-[color:var(--fg-1)] aria-selected:bg-[color:var(--accent-soft)] aria-selected:text-[color:var(--fg-1)]"
     >
       {children}
     </Command.Item>

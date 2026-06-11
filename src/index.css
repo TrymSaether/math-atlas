@@ -1495,15 +1495,15 @@
   /* Radius scale — restrained, editorial feel */
   --radius-xs: 4px;
   /* kbd, tags, tiny chips */
-  --radius-sm: 8px;
+  --radius-sm: 7px;
   /* compact icon buttons, depth picker */
-  --radius-md: 12px;
+  --radius-md: 10px;
   /* segmented controls, small cards */
-  --radius-lg: 16px;
+  --radius-lg: 14px;
   /* panels, node cards, tiles */
-  --radius-xl: 18px;
+  --radius-xl: 16px;
   /* pill chrome wrappers, search bar */
-  --radius-2xl: 22px;
+  --radius-2xl: 20px;
   /* popovers, map panel */
   --radius-pill: 999px;
 
@@ -1642,21 +1642,21 @@ a:focus-visible,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-pill);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
   color: var(--fg-2);
 }
 
 .map-control-button {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-pill);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
 }
 
 .top-tools .map-icon-button {
-  width: 38px;
-  height: 36px;
+  width: 36px;
+  height: 34px;
   border-radius: var(--radius-md);
 }
 
@@ -1666,19 +1666,19 @@ a:focus-visible,
 
 /* Vertical canvas dock — compact glass pills on the right rail */
 .canvas-dock .map-icon-button {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: var(--radius-md);
 }
 
 .canvas-dock .map-icon-button+.map-icon-button {
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .canvas-dock .zoom-readout {
-  width: 32px;
-  height: 22px;
-  margin: 1px 0;
+  width: 34px;
+  height: 24px;
+  margin: 3px 0;
   font-size: 10px;
   letter-spacing: 0;
   color: var(--fg-2);
@@ -1733,7 +1733,7 @@ a:focus-visible,
 .map-field-button.is-accent {
   background: var(--accent);
   color: var(--fg-on-color);
-  box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 26%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg-on-color) 18%, transparent);
 }
 
 /* Keep the accent fill on hover (the generic :hover chrome tint sits at equal
@@ -1767,18 +1767,18 @@ a:focus-visible,
 
 @media (max-width: 640px) {
   .map-icon-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .map-control-button {
     width: 38px;
     height: 38px;
   }
 
-  .map-control-button {
-    width: 42px;
-    height: 42px;
-  }
-
   .top-tools .map-icon-button {
-    width: 36px;
-    height: 34px;
+    width: 34px;
+    height: 32px;
   }
 }
 
@@ -1792,7 +1792,7 @@ a:focus-visible,
 .atlas-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: calc(var(--radius-2xl) + 2px);
+  border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-3);
   color: var(--fg-1);
 }
@@ -1832,14 +1832,14 @@ a:focus-visible,
   font-family: var(--font-mono);
   background: var(--surface-3);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   color: var(--fg-1);
 }
 
 .themed-diagram {
   background: var(--dia-space);
   border: 1px solid var(--dia-line);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   color: var(--dia-ink);
   overflow: hidden;
   box-shadow: var(--shadow-1);
@@ -2025,7 +2025,7 @@ a:focus-visible,
 
 ::-webkit-scrollbar-thumb {
   background: var(--fg-4);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 ::-webkit-scrollbar-thumb:hover {

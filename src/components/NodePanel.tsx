@@ -62,7 +62,7 @@ export function NodePanel() {
             duration: reduceMotion ? 0 : 0.22,
             ease: [0.2, 0.7, 0.2, 1],
           }}
-          className="pointer-events-auto absolute left-3 right-3 top-[68px] bottom-3 z-20 flex flex-col overflow-hidden rounded-[var(--radius-lg)] border sm:right-auto sm:w-[min(560px,calc(100vw-24px))]"
+          className="pointer-events-auto absolute left-3 right-3 top-[68px] bottom-3 z-20 flex flex-col overflow-hidden rounded-[var(--radius-xl)] border sm:right-auto sm:w-[min(560px,calc(100vw-24px))]"
           style={{
             background: "var(--surface)",
             borderColor: "var(--border)",
@@ -210,10 +210,10 @@ function PanelContent({
     <>
       {/* Sticky header */}
       <header
-        className="relative shrink-0 px-5 pt-3"
+        className="relative shrink-0 px-5 pt-3.5"
         style={{ background: "var(--surface)" }}
       >
-        <div className="mb-2.5 flex items-center justify-between">
+        <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-0.5">
             <IconButton
               label="Previous in domain"
@@ -322,13 +322,13 @@ function PanelContent({
                 role="tab"
                 aria-selected={active}
                 onClick={() => setTab(t.id)}
-                className="relative flex items-center gap-1.5 rounded-t-[7px] px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors focus:outline-none"
+                className="relative flex items-center gap-1.5 rounded-t-[var(--radius-sm)] px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors focus:outline-none"
                 style={{ color: active ? "var(--fg-1)" : "var(--fg-3)" }}
               >
                 {t.label}
                 {t.badge != null && (
                   <span
-                    className="rounded-full px-1.5 py-px text-ui-2xs leading-none"
+                    className="rounded-[var(--radius-xs)] px-1.5 py-px text-ui-2xs leading-none"
                     style={{
                       background: active ? tone.tint : "var(--surface-3)",
                       color: active ? tone.text : "var(--fg-3)",
@@ -356,7 +356,7 @@ function PanelContent({
 
       <div
         ref={scrollRef}
-        className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5"
+        className="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4"
       >
         {activeTab === "overview" && (
           <>
@@ -670,7 +670,7 @@ function IconButton({
       disabled={disabled}
       aria-label={label}
       title={label}
-      className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)] disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+      className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)] disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
       style={{ color: "var(--fg-2)" }}
     >
       {children}

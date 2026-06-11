@@ -62,16 +62,16 @@ export function AuthoringBar() {
   return (
     <div className="pointer-events-none absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2">
       {notice && (
-        <div className="pointer-events-auto rounded-[var(--radius-md)] border border-border bg-surface px-3 py-1.5 text-ui-xs text-fg-2 shadow-2">
+        <div className="map-chrome-soft pointer-events-auto rounded-[var(--radius-md)] px-3 py-1.5 text-ui-xs text-fg-2">
           {notice}
         </div>
       )}
-      <Pill className="top-tools gap-1 p-1.5">
-        <span className="flex items-center gap-1.5 px-2 font-mono text-ui-2xs uppercase tracking-label text-accent">
-          <PencilSimpleIcon className="h-3.5 w-3.5" weight="fill" />
+      <Pill variant="soft" className="top-tools h-11 gap-1 p-1">
+        <span className="flex h-9 items-center gap-1.5 rounded-[var(--radius-md)] px-2 font-mono text-ui-caption font-semibold uppercase tracking-label-tight text-accent">
+          <PencilSimpleIcon className="h-4 w-4" weight="fill" />
           Editing
         </span>
-        <div className="mx-0.5 h-5 w-px bg-border" />
+        <div className="mx-0.5 h-5 w-px map-divider" />
         <BarButton label="New concept" onClick={() => openNodeEditor({ mode: "create" })} primary>
           <PlusIcon className="h-4 w-4" /> New
         </BarButton>
@@ -83,7 +83,7 @@ export function AuthoringBar() {
         </BarButton>
         {isEdited &&
           (confirmRevert ? (
-            <span className="flex items-center gap-1 pl-1 text-ui-xs text-fg-2">
+            <span className="flex h-9 items-center gap-1 rounded-[var(--radius-md)] pl-2 pr-1 text-ui-xs text-fg-2">
               Discard local edits?
               <button
                 type="button"
@@ -139,7 +139,8 @@ function BarButton({
       aria-label={label}
       title={label}
       className={cn(
-        "flex items-center gap-1.5 rounded-[var(--radius-lg)] px-2.5 py-1.5 text-ui-sm font-medium",
+        "flex h-9 items-center gap-1.5 rounded-[var(--radius-md)] px-3 text-ui-control font-medium",
+        primary && "px-3.5",
         !primary && "text-fg-2",
       )}
     >

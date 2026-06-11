@@ -163,7 +163,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
           )}
           {/* Short kind pill (THM / DEF / …) + reference number. */}
           <span
-            className="inline-flex h-[18px] shrink-0 items-center rounded-md border px-1.5 text-ui-tiny font-bold uppercase tracking-label-tight"
+            className="inline-flex h-[18px] shrink-0 items-center rounded-[var(--radius-xs)] border px-1.5 text-ui-tiny font-bold uppercase tracking-label-tight"
             style={{
               background: "var(--surface-2)",
               borderColor: "var(--border)",
