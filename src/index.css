@@ -1723,10 +1723,22 @@ a:focus-visible,
   box-shadow: inset 0 0 0 1px var(--accent-border);
 }
 
-.map-icon-button.is-accent {
+.map-icon-button.is-accent,
+.map-text-button.is-accent,
+.map-field-button.is-accent {
   background: var(--accent);
   color: var(--fg-on-color);
   box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 26%, transparent);
+}
+
+/* Keep the accent fill on hover (the generic :hover chrome tint sits at equal
+   specificity and would otherwise wash it out) and lift it slightly. */
+.map-icon-button.is-accent:hover,
+.map-text-button.is-accent:hover,
+.map-field-button.is-accent:hover {
+  background: var(--accent);
+  color: var(--fg-on-color);
+  filter: brightness(1.06);
 }
 
 .map-divider {

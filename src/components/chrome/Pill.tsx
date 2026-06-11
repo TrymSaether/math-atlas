@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "../../lib/utils";
+import { Button } from "./Button";
 
 /**
  * A single floating glass pill, Apple-Maps style. Groups one or more related
@@ -37,7 +38,10 @@ export function Pill({
   );
 }
 
-/** An icon button sized for a glass Pill. Active state reads in the accent tint. */
+/**
+ * An icon button sized for a glass Pill — a thin convenience wrapper over
+ * {@link Button} that applies the dock's label / pressed conventions.
+ */
 export function DockButton({
   label,
   title,
@@ -54,16 +58,16 @@ export function DockButton({
   children: ReactNode;
 }) {
   return (
-    <button
-      type="button"
+    <Button
+      kind="icon"
+      active={active}
       onClick={onClick}
-      className={cn("pointer-events-auto map-icon-button", active && "is-active")}
       aria-label={label}
       aria-pressed={active}
       aria-expanded={expanded}
       title={title ?? label}
     >
       {children}
-    </button>
+    </Button>
   );
 }

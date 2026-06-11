@@ -8,6 +8,7 @@ import {
 } from "@phosphor-icons/react";
 import { useStore } from "../../store";
 import { MAPS } from "../../data";
+import { Button } from "../chrome/Button";
 
 /**
  * Floating authoring toolbar, shown only in edit mode. Create nodes, and manage
@@ -136,19 +137,16 @@ function BarButton({
   children: React.ReactNode;
 }) {
   return (
-    <button
-      type="button"
+    <Button
+      kind="text"
+      accent={primary}
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="flex items-center gap-1.5 rounded-[var(--radius-lg)] px-2.5 py-1.5 text-ui-sm font-medium transition-colors"
-      style={
-        primary
-          ? { background: "var(--accent)", color: "var(--fg-on-color)" }
-          : { color: "var(--fg-2)" }
-      }
+      className="flex items-center gap-1.5 rounded-[var(--radius-lg)] px-2.5 py-1.5 text-ui-sm font-medium"
+      style={primary ? undefined : { color: "var(--fg-2)" }}
     >
       {children}
-    </button>
+    </Button>
   );
 }

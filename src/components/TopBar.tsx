@@ -5,9 +5,9 @@ import { useReactFlow } from "reactflow";
 import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
 import { THEMES, schemeFor, siblingOf } from "../lib/themes";
-import { cn } from "../lib/utils";
 import { LogoMark } from "./Logo";
 import { Pill, DockButton } from "./chrome/Pill";
+import { Button } from "./chrome/Button";
 
 interface PopoverPosition {
   top: number;
@@ -99,10 +99,10 @@ function MapBrandSelector() {
       ref={ref}
       className="map-chrome-soft relative flex h-11 min-w-0 max-w-[calc(100vw-224px)] items-center gap-1 rounded-[var(--radius-xl)] p-1 sm:max-w-none"
     >
-      <button
-        type="button"
+      <Button
+        kind="text"
         onClick={goHome}
-        className="map-text-button group flex min-w-0 items-center gap-2.5 rounded-[var(--radius-lg)] py-1 pl-1.5 pr-1 sm:pl-2 sm:pr-2.5"
+        className="group flex min-w-0 items-center gap-2.5 rounded-[var(--radius-lg)] py-1 pl-1.5 pr-1 sm:pl-2 sm:pr-2.5"
         aria-label="Math Atlas — back to map"
         title="Back to map"
       >
@@ -121,14 +121,12 @@ function MapBrandSelector() {
         >
           Math Atlas
         </span>
-      </button>
-      <button
-        type="button"
+      </Button>
+      <Button
+        kind="field"
+        active={open}
         onClick={() => setOpen((o) => !o)}
-        className={cn(
-          "map-field-button flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 text-ui-control font-sans sm:px-3.5",
-          open && "is-active",
-        )}
+        className="flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 text-ui-control font-sans sm:px-3.5"
         style={!open ? { color: "var(--fg-1)" } : undefined}
         aria-label="Field selector"
         aria-expanded={open}
@@ -141,7 +139,7 @@ function MapBrandSelector() {
             transform: open ? "rotate(180deg)" : "rotate(0deg)",
           }}
         />
-      </button>
+      </Button>
       {open && (
         <div
           className="map-popover absolute left-0 top-[52px] w-[min(300px,calc(100vw-24px))] overflow-hidden rounded-[var(--radius-2xl)] p-1.5 sm:w-[260px]"
@@ -149,22 +147,20 @@ function MapBrandSelector() {
           {(Object.keys(MAPS) as MapId[]).map((id) => {
             const active = id === mapId;
             return (
-              <button
+              <Button
                 key={id}
-                type="button"
+                kind="text"
+                active={active}
                 onClick={() => {
                   setMap(id);
                   setOpen(false);
                 }}
-                className={cn(
-                  "map-text-button flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2.5 text-left text-ui-control",
-                  active && "is-active",
-                )}
+                className="flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2.5 text-left text-ui-control"
                 style={!active ? { color: "var(--fg-2)" } : undefined}
               >
                 <span className="block min-w-0 flex-1 truncate">{MAPS[id].label}</span>
                 {active && <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />}
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -176,10 +172,10 @@ function MapBrandSelector() {
 function SearchBox() {
   const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   return (
-    <button
-      type="button"
+    <Button
+      kind="text"
       onClick={() => setPaletteOpen(true)}
-      className="map-text-button flex h-9 min-w-9 items-center gap-2 rounded-[var(--radius-xl)] px-2.5 text-ui-control md:min-w-[190px] md:px-3.5"
+      className="flex h-9 min-w-9 items-center gap-2 rounded-[var(--radius-xl)] px-2.5 text-ui-control md:min-w-[190px] md:px-3.5"
       style={{ color: "var(--fg-2)" }}
       aria-label="Open search"
     >
@@ -195,7 +191,7 @@ function SearchBox() {
       >
         ⌘K
       </kbd>
-    </button>
+    </Button>
   );
 }
 
