@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="260" viewBox="0 0 640 260" role="img" aria-labelledby="title desc">
+  <title id="title">Operator as structured map</title>
+  <desc id="desc">A Math Atlas diagram showing an operator as a function between structured spaces.</desc>
+  <defs>
+    <marker id="arrow-ink" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="var(--dia-ink)" />
+    </marker>
+    <marker id="arrow-accent" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="var(--accent)" />
+    </marker>
+  </defs>
+
+  <rect width="640" height="260" rx="18" fill="var(--dia-paper)" />
+
+  <rect x="74" y="58" width="168" height="144" rx="16" fill="var(--dia-fill)" stroke="var(--dia-line)" stroke-width="1.4" />
+  <rect x="398" y="58" width="168" height="144" rx="16" fill="var(--dia-fill2)" stroke="var(--dia-line)" stroke-width="1.4" />
+
+  <text x="158" y="92" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="650" fill="var(--dia-ink)">V</text>
+  <text x="482" y="92" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="650" fill="var(--dia-ink)">W</text>
+
+  <text x="158" y="122" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="var(--fg-2)">vector space</text>
+  <text x="158" y="144" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="var(--fg-2)">norm</text>
+  <text x="158" y="166" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="var(--fg-2)">linearity</text>
+
+  <text x="482" y="122" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="var(--fg-2)">codomain structure</text>
+  <text x="482" y="144" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="var(--fg-2)">topology</text>
+  <text x="482" y="166" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="var(--fg-2)">geometry</text>
+
+  <line x1="242" y1="130" x2="398" y2="130" stroke="var(--accent)" stroke-width="2.1" stroke-linecap="round" marker-end="url(#arrow-accent)" />
+  <text x="320" y="110" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-style="italic" fill="var(--accent)">T</text>
+
+  <line x1="158" y1="212" x2="482" y2="212" stroke="var(--dia-line)" stroke-width="1" marker-end="url(#arrow-ink)" />
+  <text x="320" y="238" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="var(--fg-2)">same map, but studied with extra structure</text>
+</svg>
