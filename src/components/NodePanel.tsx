@@ -24,6 +24,7 @@ import { compactNodeRef, nodeSourceCitation } from "../lib/nodeMeta";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { hasNodeVisual, NodeVisual } from "./NodeVisual";
+import { NodeEditorPanel } from "./authoring/NodeEditorPanel";
 import {
   Spine,
   Facet,
@@ -47,14 +48,29 @@ export function NodePanel() {
   const map = useStore((s) => s.loadedMaps[mapId]);
   const id = useStore((s) => s.selectedId);
   const select = useStore((s) => s.select);
-  const node = id && map ? (map.nodeById.get(id) ?? null) : null;
+  const editMode = useStore((s) => s.editMode);
+  const nodeEditor = useStore((s) => s.nodeEditor);
+  const closeNodeEditor = useStore((s) => s.closeNodeEditor);
   const reduceMotion = useReducedMotion();
+
+  const node = id && map ? (map.nodeById.get(id) ?? null) : null;
+  // The side sheet hosts three things: a new-concept form, an inline editor for
+  // the selected node (edit mode), or the read-only reader.
+  const creating = nodeEditor?.mode === "create";
+  const editing = editMode && node !== null;
+  const open = creating || node !== null;
+  const key = creating ? "__create__" : node ? node.id : "__none__";
+
+  const closeCreate = () => {
+    closeNodeEditor();
+    select(null);
+  };
 
   return (
     <AnimatePresence>
-      {node && map && (
+      {open && map && (
         <motion.aside
-          key={node.id}
+          key={key}
           initial={reduceMotion ? false : { opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
           exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -16 }}
@@ -69,12 +85,18 @@ export function NodePanel() {
             boxShadow: "var(--shadow-3)",
           }}
         >
-          <PanelContent
-            node={node}
-            map={map}
-            mapId={mapId}
-            onClose={() => select(null)}
-          />
+          {creating ? (
+            <NodeEditorPanel editingId={null} map={map} mapId={mapId} onClose={closeCreate} />
+          ) : editing && node ? (
+            <NodeEditorPanel
+              editingId={node.id}
+              map={map}
+              mapId={mapId}
+              onClose={() => select(null)}
+            />
+          ) : node ? (
+            <PanelContent node={node} map={map} mapId={mapId} onClose={() => select(null)} />
+          ) : null}
         </motion.aside>
       )}
     </AnimatePresence>
@@ -94,8 +116,7 @@ function PanelContent({
 }) {
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
-  const editMode = useStore((s) => s.editMode);
-  const openNodeEditor = useStore((s) => s.openNodeEditor);
+  const toggleEditMode = useStore((s) => s.toggleEditMode);
   const domain = map.domainById.get(node.domain);
   const tone = getDomainTone(node.domain);
   const domainGlyphId = getDomainGlyphId({ mapId, domainId: node.domain });
@@ -239,10 +260,7 @@ function PanelContent({
             )}
           </div>
           <div className="flex items-center gap-0.5">
-            <IconButton
-              label="Edit concept"
-              onClick={() => openNodeEditor({ mode: "edit", nodeId: node.id })}
-            >
+            <IconButton label="Edit concept" onClick={toggleEditMode}>
               <PencilSimpleIcon className="h-4 w-4" />
             </IconButton>
             <IconButton label="Open in dictionary" onClick={openInDictionary}>

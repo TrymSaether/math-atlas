@@ -7,7 +7,6 @@ import { NodePanel } from "./components/NodePanel";
 import { DictionaryView } from "./components/DictionaryView";
 import { FlashcardsView } from "./components/FlashcardsView";
 import { CommandPalette } from "./components/CommandPalette";
-import { NodeEditorDialog } from "./components/authoring/NodeEditorDialog";
 
 // The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
 // atlas's initial bundle stays light.
@@ -83,7 +82,6 @@ export default function App() {
         </main>
         <TopBar />
         <CommandPalette />
-        <NodeEditorDialog />
       </div>
     </ReactFlowProvider>
   );

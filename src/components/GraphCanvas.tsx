@@ -3,7 +3,7 @@ import ReactFlow, { useReactFlow, useViewport, type Edge, type Node, type Viewpo
 import type { LoadedMap, MapId } from "../data";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout } from "../lib/atlasLayout";
 import { getDomainTone } from "../lib/colors";
-import { bfsPath } from "../lib/graph";
+import { useRouteResult } from "../lib/route";
 import { nodeSearchText } from "../lib/nodeContent";
 import { classifyEdge } from "../lib/relationStyle";
 import { categoryOf, type NodeCategory } from "../lib/nodeCategory";
@@ -136,6 +136,17 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const showMinimap = useStore((s) => s.showMinimap);
   const rf = useReactFlow();
 
+  // Directions: prereq cone or all-paths subgraph over the *full* dependency
+  // DAG. Computed early so its nodes/edges can be force-revealed below.
+  const routeFrom = useStore((s) => s.routeFrom);
+  const routeTo = useStore((s) => s.routeTo);
+  const routeRunKey = useStore((s) => s.routeRunKey);
+  const setRouteSequence = useStore((s) => s.setRouteSequence);
+  const route = useRouteResult();
+  useEffect(() => {
+    setRouteSequence(route.ordered);
+  }, [route, setRouteSequence]);
+
   const { data } = map;
   const { x, y, zoom } = useViewport();
   // Hide non-highlighted edges only at extreme zoom-out where they become noise.
@@ -144,6 +155,9 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
   const filteredNodes = useMemo(() => {
     return data.nodes.filter((node) => {
+      // Route concepts are always shown, so a prerequisite hidden by a filter
+      // still appears while directions are active (no silent dead-ends).
+      if (route.nodeIds.has(node.id)) return true;
       if (!kinds.has(node.kind)) return false;
       if (topics.size && !topics.has(node.domain)) return false;
       if (search) {
@@ -155,7 +169,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       }
       return true;
     });
-  }, [data.nodes, kinds, topics, search, searchScope]);
+  }, [data.nodes, kinds, topics, search, searchScope, route.nodeIds]);
 
   const visibleIds = useMemo(() => new Set(filteredNodes.map((node) => node.id)), [filteredNodes]);
 
@@ -163,12 +177,13 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     () =>
       data.edges.filter(
         (edge) =>
-          relations.has(edge.relation) &&
+          // Route edges are force-shown alongside their force-shown endpoints.
+          (route.edgeIds.has(edge.id) ||
+            (relations.has(edge.relation) && (showSoftDeps || classifyEdge(edge) === "hard"))) &&
           visibleIds.has(edge.from) &&
-          visibleIds.has(edge.to) &&
-          (showSoftDeps || classifyEdge(edge) === "hard"),
+          visibleIds.has(edge.to),
       ),
-    [data.edges, relations, visibleIds, showSoftDeps],
+    [data.edges, relations, visibleIds, showSoftDeps, route.edgeIds],
   );
 
   // Importance tiers from computed impact: a handful of load-bearing landmarks,
@@ -224,44 +239,30 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     return new Set(filteredAdjacency.get(selectedId) ?? []);
   }, [selectedId, visibleIds, filteredAdjacency]);
 
-  // Route planner: shortest dependency path between the two chosen concepts,
-  // over the *visible* graph so the drawn route is always renderable.
-  const routeFrom = useStore((s) => s.routeFrom);
-  const routeTo = useStore((s) => s.routeTo);
-  const routeRunKey = useStore((s) => s.routeRunKey);
-
-  const route = useMemo(() => {
-    if (!routeFrom || !routeTo) return null;
-    if (!visibleIds.has(routeFrom) || !visibleIds.has(routeTo)) {
-      return { path: [] as string[], edgeIds: [] as string[], found: false };
-    }
-    const path = bfsPath(filteredAdjacency, routeFrom, routeTo);
-    if (!path) return { path: [], edgeIds: [], found: false };
-    const key = (a: string, b: string) => `${a}\u0000${b}`;
-    const edgeByPair = new Map<string, string>();
-    for (const edge of filteredEdges) {
-      edgeByPair.set(key(edge.from, edge.to), edge.id);
-      edgeByPair.set(key(edge.to, edge.from), edge.id);
-    }
-    const edgeIds: string[] = [];
-    for (let i = 0; i < path.length - 1; i += 1) {
-      const id = edgeByPair.get(key(path[i], path[i + 1]));
-      if (id) edgeIds.push(id);
-    }
-    return { path, edgeIds, found: true };
-  }, [routeFrom, routeTo, visibleIds, filteredAdjacency, filteredEdges]);
-
-  // Per-segment reveal/pulse delays. Total traversal is bounded (~760 ms) so a
-  // long path doesn't crawl; a short one keeps a legible stagger.
+  // (Route is computed near the top via useRouteResult so its nodes can be
+  // force-revealed in the filter pass above.)
+  // Per-concept reveal/pulse delays. The route lights up in study order
+  // (foundational prerequisites first, rippling outward to the goal). Total
+  // traversal is bounded so a long cone doesn't crawl; a short one still
+  // staggers legibly.
   const routeViz = useMemo(() => {
     const edgeReveal = new Map<string, number>();
     const nodePulse = new Map<string, number>();
-    if (!route?.found || route.edgeIds.length === 0) return { edgeReveal, nodePulse };
-    const seg = Math.max(70, Math.min(170, Math.round(760 / route.edgeIds.length)));
-    route.edgeIds.forEach((id, i) => edgeReveal.set(id, i * seg));
-    route.path.forEach((id, i) => nodePulse.set(id, i * seg));
+    if (!route.found || route.ordered.length === 0) return { edgeReveal, nodePulse };
+    const seg = Math.max(40, Math.min(130, Math.round(900 / route.ordered.length)));
+    const orderIndex = new Map<string, number>();
+    route.ordered.forEach((id, i) => {
+      orderIndex.set(id, i);
+      nodePulse.set(id, i * seg);
+    });
+    // An edge reveals as its dependent endpoint lights up.
+    for (const edge of filteredEdges) {
+      if (!route.edgeIds.has(edge.id)) continue;
+      const i = orderIndex.get(edge.to) ?? orderIndex.get(edge.from) ?? 0;
+      edgeReveal.set(edge.id, i * seg);
+    }
     return { edgeReveal, nodePulse };
-  }, [route]);
+  }, [route, filteredEdges]);
 
   const focusSet = useMemo(() => {
     if (!focusMode || !selectedId || !visibleIds.has(selectedId)) return null;
@@ -512,8 +513,9 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         routeSummary={{
           fromTitle: routeFrom ? map.nodeById.get(routeFrom)?.label : undefined,
           toTitle: routeTo ? map.nodeById.get(routeTo)?.label : undefined,
-          count: route?.found ? route.path.length : 0,
-          found: route ? route.found : null,
+          count: route.ordered.length,
+          found: routeTo ? route.found : null,
+          ordered: route.ordered,
         }}
       />
     </>

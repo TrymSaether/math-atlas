@@ -5,6 +5,7 @@ import { defaultVisibleKinds } from "./lib/nodeCategory";
 import type { NodeKind, Relation } from "./types";
 import type { SourceGraph } from "./data/sourceSchema";
 import type { AuthorableRelation } from "./data/relations";
+import type { RouteKind } from "./lib/route";
 import { buildLoadedMapFromSource, loadShippedMap } from "./data/loadMap";
 import { graphDataToSource } from "./data/toSource";
 import { clearOverlay, hasOverlay, writeOverlay } from "./data/edits";
@@ -65,6 +66,7 @@ interface PersistedState {
   showRegions?: boolean;
   showMinimap?: boolean;
   surface?: Surface;
+  routeKind?: RouteKind;
   maps?: Partial<Record<MapId, PersistedMapState>>;
 }
 
@@ -125,7 +127,13 @@ interface State {
   selectedId: string | null;
   select: (id: string | null) => void;
 
-  /** Route planner: trace a dependency path between two concepts. */
+  /**
+   * Directions. Two build modes over the dependency DAG:
+   *   • prereq — upstream cone of a single goal (`routeTo`); `routeFrom` unused.
+   *   • path   — every dependency path between `routeFrom` and `routeTo`.
+   */
+  routeKind: RouteKind;
+  setRouteKind: (kind: RouteKind) => void;
   routeMode: boolean;
   routeFrom: string | null;
   routeTo: string | null;
@@ -133,12 +141,20 @@ interface State {
   routeRunKey: number;
   /** Enter/cancel route planning (clears any in-progress pick). */
   toggleRouteMode: () => void;
-  /** Click handler while planning: picks start, then destination. */
+  /** Click handler while planning: prereq sets the goal; path picks start→stop. */
   pickRoutePoint: (id: string) => void;
   setRouteEndpoint: (endpoint: "from" | "to", id: string | null) => void;
   swapRouteEndpoints: () => void;
   clearRoute: () => void;
   replayRoute: () => void;
+  /** Current route's study order, mirrored here so the tour can walk it. */
+  routeSequence: string[];
+  setRouteSequence: (ids: string[]) => void;
+  /** Guided tour: index into `routeSequence`, or null when not touring. */
+  tourIndex: number | null;
+  startTour: () => void;
+  tourStep: (delta: number) => void;
+  endTour: () => void;
 
   surface: Surface;
   setSurface: (s: Surface) => void;
@@ -294,6 +310,7 @@ function normalizePersistedState(value: unknown | null): PersistedState | null {
     showRegions: asBoolean(value.showRegions),
     showMinimap: asBoolean(value.showMinimap),
     surface: isSurface(value.surface) ? value.surface : undefined,
+    routeKind: value.routeKind === "prereq" || value.routeKind === "path" ? value.routeKind : undefined,
     maps,
   };
 }
@@ -331,6 +348,7 @@ function persistedStateFor(state: State): PersistedState {
     showRegions: state.showRegions,
     showMinimap: state.showMinimap,
     surface: state.surface,
+    routeKind: state.routeKind,
     maps: persistedMaps,
   };
 }
@@ -348,8 +366,6 @@ function setFromPersisted<T extends string>(
 function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefined) {
   const validNodeIds = new Set(map.data.nodes.map((node) => node.id));
   const selectedId = saved?.selectedId && validNodeIds.has(saved.selectedId) ? saved.selectedId : null;
-  const routeFrom = saved?.routeFrom && validNodeIds.has(saved.routeFrom) ? saved.routeFrom : null;
-  const routeTo = saved?.routeTo && validNodeIds.has(saved.routeTo) ? saved.routeTo : null;
 
   return {
     search: saved?.search ?? "",
@@ -357,9 +373,11 @@ function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefin
     topics: setFromPersisted(saved?.topics, map.data.domains.map((domain) => domain.id), []),
     relations: setFromPersisted(saved?.relations, map.relations, map.relations),
     selectedId,
+    // Routes are transient exploration state — never restored, so the map opens
+    // on the fit-all overview rather than a highlighted cone.
     routeMode: false,
-    routeFrom,
-    routeTo,
+    routeFrom: null,
+    routeTo: null,
   };
 }
 
@@ -470,6 +488,8 @@ export const useStore = create<State>((set, get) => ({
             routeTo: null,
           }),
       routeMode: false,
+      tourIndex: null,
+      routeSequence: [],
     });
     void get().ensureMapLoaded(mapId);
   },
@@ -516,6 +536,17 @@ export const useStore = create<State>((set, get) => ({
   selectedId: null,
   select: (id) => set({ selectedId: id }),
 
+  routeKind: persistedState?.routeKind ?? "prereq",
+  setRouteKind: (routeKind) =>
+    set((s) => ({
+      routeKind,
+      // Switching modes invalidates an in-progress pick and any active tour.
+      routeMode: true,
+      routeFrom: null,
+      routeTo: routeKind === "prereq" ? s.selectedId : null,
+      tourIndex: null,
+      routeRunKey: s.routeRunKey + 1,
+    })),
   routeMode: false,
   routeFrom: null,
   routeTo: null,
@@ -523,19 +554,25 @@ export const useStore = create<State>((set, get) => ({
   toggleRouteMode: () =>
     set((s) =>
       s.routeMode
-        ? { routeMode: false, routeFrom: null, routeTo: null }
-        : { routeMode: true, routeFrom: s.selectedId, routeTo: null },
+        ? { routeMode: false, routeFrom: null, routeTo: null, tourIndex: null }
+        : s.routeKind === "prereq"
+          ? { routeMode: true, routeFrom: null, routeTo: s.selectedId, tourIndex: null }
+          : { routeMode: true, routeFrom: s.selectedId, routeTo: null, tourIndex: null },
     ),
   pickRoutePoint: (id) =>
     set((s) => {
+      if (s.routeKind === "prereq") {
+        // One pick = the goal; its prerequisite cone resolves immediately.
+        return { routeTo: id, routeFrom: null, routeMode: false, tourIndex: null, routeRunKey: s.routeRunKey + 1 };
+      }
       if (!s.routeFrom) {
         if (s.routeTo && id !== s.routeTo) {
-          return { routeFrom: id, routeMode: false, routeRunKey: s.routeRunKey + 1 };
+          return { routeFrom: id, routeMode: false, tourIndex: null, routeRunKey: s.routeRunKey + 1 };
         }
         return { routeFrom: id, routeTo: null };
       }
       if (id === s.routeFrom) return {};
-      return { routeTo: id, routeMode: false, routeRunKey: s.routeRunKey + 1 };
+      return { routeTo: id, routeMode: false, tourIndex: null, routeRunKey: s.routeRunKey + 1 };
     }),
   setRouteEndpoint: (endpoint, id) =>
     set((s) => {
@@ -547,6 +584,7 @@ export const useStore = create<State>((set, get) => ({
         routeFrom: nextFrom,
         routeTo: dedupedTo,
         routeMode: !complete,
+        tourIndex: null,
         routeRunKey: complete ? s.routeRunKey + 1 : s.routeRunKey,
       };
     }),
@@ -557,11 +595,35 @@ export const useStore = create<State>((set, get) => ({
         routeFrom: s.routeTo,
         routeTo: s.routeFrom,
         routeMode: !complete,
+        tourIndex: null,
         routeRunKey: complete ? s.routeRunKey + 1 : s.routeRunKey,
       };
     }),
-  clearRoute: () => set({ routeMode: false, routeFrom: null, routeTo: null }),
+  clearRoute: () =>
+    set({ routeMode: false, routeFrom: null, routeTo: null, tourIndex: null, routeSequence: [] }),
   replayRoute: () => set((s) => ({ routeRunKey: s.routeRunKey + 1 })),
+
+  routeSequence: [],
+  setRouteSequence: (ids) =>
+    set((s) => {
+      // Keep an active tour in bounds when the underlying sequence changes.
+      if (s.tourIndex === null) return { routeSequence: ids };
+      if (ids.length === 0) return { routeSequence: ids, tourIndex: null };
+      return { routeSequence: ids, tourIndex: Math.min(s.tourIndex, ids.length - 1) };
+    }),
+  tourIndex: null,
+  startTour: () =>
+    set((s) => {
+      if (s.routeSequence.length === 0) return {};
+      return { tourIndex: 0, selectedId: s.routeSequence[0] };
+    }),
+  tourStep: (delta) =>
+    set((s) => {
+      if (s.tourIndex === null || s.routeSequence.length === 0) return {};
+      const next = Math.max(0, Math.min(s.routeSequence.length - 1, s.tourIndex + delta));
+      return { tourIndex: next, selectedId: s.routeSequence[next] };
+    }),
+  endTour: () => set({ tourIndex: null }),
 
   surface: persistedState?.surface ?? "atlas",
   setSurface: (surface) => set({ surface }),

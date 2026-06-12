@@ -494,10 +494,18 @@ function EditToggle() {
     reader.readAsText(file);
   };
 
+  // The pencil is a plain on/off toggle: turning edit mode on opens the toolbar,
+  // turning it off closes it.
   const openPanel = () => {
-    if (!editMode) toggleEditMode();
-    if (ref.current) setPosition(popoverPositionFor(ref.current));
-    setOpen((o) => !o || !editMode);
+    if (editMode) {
+      toggleEditMode();
+      setOpen(false);
+      setConfirmDiscard(false);
+    } else {
+      toggleEditMode();
+      if (ref.current) setPosition(popoverPositionFor(ref.current));
+      setOpen(true);
+    }
   };
 
   return (
@@ -593,111 +601,87 @@ function EditMapPopover({
   onDone: () => void;
 }) {
   return createPortal(
+    // Same glass-pill convention as the top chrome: soft chrome, radius-xl, the
+    // `top-tools` scope for icon sizing, and shared `Button kind="icon"` states.
     <div
       ref={popoverRef}
-      className="map-popover pointer-events-auto fixed z-50 flex w-[min(300px,calc(100vw-24px))] flex-col gap-2.5 rounded-[var(--radius-2xl)] p-3"
+      className="map-chrome-soft top-tools pointer-events-auto fixed z-50 flex items-center gap-1 rounded-[var(--radius-xl)] p-1"
       style={{ top: position.top, right: position.right }}
       role="dialog"
       aria-label="Edit map"
     >
-      <div className="flex items-center justify-between gap-3">
-        <div className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
-          Edit map
-        </div>
-      </div>
+      <Button
+        kind="icon"
+        accent
+        onClick={onNewConcept}
+        title="New concept"
+        aria-label="New concept"
+      >
+        <PlusIcon className="h-4 w-4" weight="bold" />
+      </Button>
+
+      <ToolDivider />
+
+      <Button kind="icon" onClick={onExport} title="Export source" aria-label="Export source">
+        <DownloadSimpleIcon className="h-4 w-4" />
+      </Button>
+      <Button kind="icon" onClick={onImport} title="Import source" aria-label="Import source">
+        <UploadSimpleIcon className="h-4 w-4" />
+      </Button>
+
+      {edited &&
+        (confirmDiscard ? (
+          <>
+            <ToolDivider />
+            <Button
+              kind="icon"
+              onClick={onDiscard}
+              title="Confirm revert"
+              aria-label="Confirm revert"
+              className="text-danger"
+            >
+              <CheckIcon className="h-4 w-4" weight="bold" />
+            </Button>
+            <Button kind="icon" onClick={onKeep} title="Cancel revert" aria-label="Cancel revert">
+              <XIcon className="h-4 w-4" />
+            </Button>
+          </>
+        ) : (
+          <>
+            <ToolDivider />
+            <Button
+              kind="icon"
+              onClick={onAskDiscard}
+              title="Revert edits"
+              aria-label="Revert edits"
+              className="text-danger"
+            >
+              <ArrowCounterClockwiseIcon className="h-4 w-4" />
+            </Button>
+          </>
+        ))}
+
+      <ToolDivider />
+
+      <Button kind="icon" onClick={onDone} title="Done editing" aria-label="Done editing">
+        <CheckIcon className="h-4 w-4" weight="bold" />
+      </Button>
 
       {notice && (
-        <div className="rounded-[var(--radius-md)] border border-accent-border bg-accent-soft px-3 py-2 text-ui-meta font-medium text-accent">
+        <div
+          className="map-popover pointer-events-none absolute right-0 top-full mt-1.5 whitespace-nowrap rounded-[var(--radius-md)] px-2.5 py-1 text-ui-hint font-medium text-accent"
+          role="status"
+        >
           {notice}
         </div>
       )}
-
-      <Button
-        kind="text"
-        accent
-        onClick={onNewConcept}
-        className="flex h-11 w-full items-center justify-center gap-2 rounded-[var(--radius-lg)] px-3 text-ui-control font-semibold"
-      >
-        <PlusIcon className="h-4 w-4" weight="bold" />
-        New concept
-      </Button>
-
-      <div className="grid grid-cols-2 gap-2">
-        <EditActionButton label="Import" onClick={onImport}>
-          <UploadSimpleIcon className="h-4 w-4" />
-        </EditActionButton>
-        <EditActionButton label="Export" onClick={onExport}>
-          <DownloadSimpleIcon className="h-4 w-4" />
-        </EditActionButton>
-      </div>
-
-      <div className="rounded-[var(--radius-lg)] border border-border bg-surface px-2 py-2">
-        {edited ? (
-          confirmDiscard ? (
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-ui-meta font-semibold text-fg-1">
-                Discard edits?
-              </span>
-              <span className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={onDiscard}
-                  className="rounded-[var(--radius-sm)] bg-danger px-2.5 py-1.5 text-ui-meta font-semibold text-fg-on-color"
-                >
-                  Discard
-                </button>
-                <button
-                  type="button"
-                  onClick={onKeep}
-                  className="rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui-meta font-semibold text-fg-2 hover:bg-surface-2"
-                >
-                  Keep
-                </button>
-              </span>
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={onAskDiscard}
-              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] px-2 py-1.5 text-left transition-colors hover:bg-surface-2"
-            >
-              <span className="flex min-w-0 items-center gap-2 text-ui-meta font-semibold text-fg-1">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                Local edits
-              </span>
-              <ArrowCounterClockwiseIcon className="h-4 w-4 shrink-0 text-danger" />
-            </button>
-          )
-        ) : (
-          <div className="px-2 py-1.5 text-ui-meta text-fg-3">
-            No local edits
-          </div>
-        )}
-      </div>
     </div>,
     document.body,
   );
 }
 
-function EditActionButton({
-  label,
-  onClick,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <Button
-      kind="text"
-      onClick={onClick}
-      className="flex h-9 items-center justify-center gap-2 rounded-[var(--radius-lg)] border border-border bg-surface px-2 text-ui-meta font-semibold text-fg-2 hover:text-fg-1"
-    >
-      {children}
-      <span>{label}</span>
-    </Button>
-  );
+function ToolDivider() {
+  return <div className="map-divider mx-0.5 h-5 w-px shrink-0 rounded-full" aria-hidden />;
 }
 
 function SchemeToggle() {

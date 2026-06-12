@@ -14,10 +14,15 @@ import {
   ArrowsDownUp,
   X,
   Graph,
+  GraduationCap,
+  CaretLeft,
+  CaretRight,
   type Icon,
 } from "@phosphor-icons/react";
 import { useReactFlow, useViewport } from "reactflow";
 import { useStore, type EdgeLabelStyle, type EdgeStyle, type ViewMode } from "../store";
+import type { RouteKind } from "../lib/route";
+import { MathText } from "../lib/katex";
 import { cn } from "../lib/utils";
 import { getDomainTone } from "../lib/colors";
 import { CATEGORY_META, kindsByCategory } from "../lib/nodeCategory";
@@ -49,6 +54,8 @@ export interface RouteSummary {
   toTitle?: string;
   count: number;
   found: boolean | null;
+  /** Study order of the resolved route — drives the list and the tour. */
+  ordered: string[];
 }
 
 export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }) {
@@ -64,6 +71,7 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
   const toggleFocusMode = useStore((s) => s.toggleFocusMode);
   const focusDepth = useStore((s) => s.focusDepth);
   const setFocusDepth = useStore((s) => s.setFocusDepth);
+  const routeKind = useStore((s) => s.routeKind);
   const routeMode = useStore((s) => s.routeMode);
   const routeFrom = useStore((s) => s.routeFrom);
   const routeTo = useStore((s) => s.routeTo);
@@ -71,7 +79,10 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
   const clearRoute = useStore((s) => s.clearRoute);
   const showMinimap = useStore((s) => s.showMinimap);
   const toggleMinimap = useStore((s) => s.toggleMinimap);
-  const routeActive = routeMode || (routeFrom !== null && routeTo !== null);
+  // Prereq resolves from a single goal (`routeTo`); path needs both endpoints.
+  const routeResolved =
+    routeKind === "prereq" ? routeTo !== null : routeFrom !== null && routeTo !== null;
+  const routeActive = routeMode || routeResolved;
   const directionsOpen = routeActive;
 
   useEffect(() => {
@@ -94,13 +105,13 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
         directionsRef.current &&
         !directionsRef.current.contains(target)
       ) {
-        if (!routeFrom || !routeTo) clearRoute();
+        if (!routeResolved) clearRoute();
       }
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
       setMapPanelOpen(false);
-      if (directionsOpen && (!routeFrom || !routeTo)) clearRoute();
+      if (directionsOpen && !routeResolved) clearRoute();
     };
     const onResize = () => {
       if (mapButtonRef.current) setPanelPosition(panelPositionFor(mapButtonRef.current));
@@ -114,7 +125,7 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onResize);
     };
-  }, [clearRoute, directionsOpen, mapPanelOpen, routeFrom, routeTo]);
+  }, [clearRoute, directionsOpen, mapPanelOpen, routeResolved]);
 
   useEffect(() => {
     if (directionsOpen && routeButtonRef.current) {
@@ -201,7 +212,7 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
         <DirectionsPanel
           panelRef={directionsRef}
           position={directionsPosition}
-          summary={routeSummary ?? { count: 0, found: null }}
+          summary={routeSummary ?? { count: 0, found: null, ordered: [] }}
         />
       )}
     </div>
@@ -217,6 +228,8 @@ function DirectionsPanel({
   position: PanelPosition;
   summary: RouteSummary;
 }) {
+  const routeKind = useStore((s) => s.routeKind);
+  const setRouteKind = useStore((s) => s.setRouteKind);
   const routeMode = useStore((s) => s.routeMode);
   const routeFrom = useStore((s) => s.routeFrom);
   const routeTo = useStore((s) => s.routeTo);
@@ -227,14 +240,22 @@ function DirectionsPanel({
   const swapRouteEndpoints = useStore((s) => s.swapRouteEndpoints);
   const clearRoute = useStore((s) => s.clearRoute);
   const replayRoute = useStore((s) => s.replayRoute);
-  const setSearch = useStore((s) => s.setSearch);
-  const resetTopics = useStore((s) => s.resetTopics);
+  const select = useStore((s) => s.select);
+  const tourIndex = useStore((s) => s.tourIndex);
+  const startTour = useStore((s) => s.startTour);
+  const tourStep = useStore((s) => s.tourStep);
+  const endTour = useStore((s) => s.endTour);
+
+  const isPrereq = routeKind === "prereq";
+  const ordered = summary.ordered;
+  const resolved = isPrereq ? Boolean(routeTo) : Boolean(routeFrom && routeTo);
+  const goalLabel = (id: string | null) => (id ? map?.nodeById.get(id)?.label : undefined);
 
   const selectedTitle = selectedId ? map?.nodeById.get(selectedId)?.label : undefined;
-  const fromTitle = summary.fromTitle ?? (routeFrom ? map?.nodeById.get(routeFrom)?.label : undefined);
-  const toTitle = summary.toTitle ?? (routeTo ? map?.nodeById.get(routeTo)?.label : undefined);
-  const hasBoth = Boolean(routeFrom && routeTo);
+  const fromTitle = summary.fromTitle ?? goalLabel(routeFrom);
+  const toTitle = summary.toTitle ?? goalLabel(routeTo);
   const showSelectedShortcut = Boolean(routeMode && selectedId && selectedTitle);
+
   const [fromQuery, setFromQuery] = useState(fromTitle ?? "");
   const [toQuery, setToQuery] = useState(toTitle ?? "");
   const [activeField, setActiveField] = useState<"from" | "to" | null>(null);
@@ -242,7 +263,6 @@ function DirectionsPanel({
   useEffect(() => {
     if (activeField !== "from") setFromQuery(fromTitle ?? "");
   }, [activeField, fromTitle]);
-
   useEffect(() => {
     if (activeField !== "to") setToQuery(toTitle ?? "");
   }, [activeField, toTitle]);
@@ -254,7 +274,7 @@ function DirectionsPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-50 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 rounded-[var(--radius-2xl)] p-3"
+      className="map-popover pointer-events-auto fixed z-50 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-y-auto rounded-[var(--radius-2xl)] p-3"
       style={{
         top: position.top,
         right: position.right,
@@ -278,36 +298,21 @@ function DirectionsPanel({
         </button>
       </div>
 
-      <div className="grid grid-cols-[1fr_34px] gap-2">
-        <div className="relative flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface shadow-[inset_0_1px_0_var(--chrome-highlight)]">
+      <Segmented<RouteKind>
+        value={routeKind}
+        onChange={setRouteKind}
+        options={[
+          { value: "prereq", label: "Prerequisites" },
+          { value: "path", label: "Path" },
+        ]}
+      />
+
+      {isPrereq ? (
+        <div className="flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface shadow-[inset_0_1px_0_var(--chrome-highlight)]">
           <RouteSearchField
-            label="Start"
-            value={fromQuery}
-            placeholder="Search"
-            selected={Boolean(routeFrom)}
-            active={activeField === "from"}
-            results={fromResults}
-            onFocus={() => setActiveField("from")}
-            onChange={(value) => {
-              setFromQuery(value);
-              if (routeFrom) setRouteEndpoint("from", null);
-            }}
-            onClear={() => {
-              setFromQuery("");
-              setRouteEndpoint("from", null);
-              setActiveField("from");
-            }}
-            onSelect={(id, label) => {
-              setFromQuery(label);
-              setRouteEndpoint("from", id);
-              setActiveField(null);
-            }}
-          />
-          <div className="mx-3 h-px bg-border" />
-          <RouteSearchField
-            label="Stop"
+            label="Goal"
             value={toQuery}
-            placeholder="Search"
+            placeholder="Pick a concept"
             selected={Boolean(routeTo)}
             active={activeField === "to"}
             results={toResults}
@@ -328,27 +333,77 @@ function DirectionsPanel({
             }}
           />
         </div>
-        <button
-          type="button"
-          onClick={swapRouteEndpoints}
-          disabled={!routeFrom && !routeTo}
-          className="flex h-full min-h-[86px] w-[34px] items-center justify-center rounded-[var(--radius-lg)] border border-border bg-surface text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:cursor-default disabled:opacity-35"
-          aria-label="Swap route endpoints"
-          title="Swap route endpoints"
-        >
-          <ArrowsDownUp className="h-4 w-4" />
-        </button>
-      </div>
+      ) : (
+        <div className="grid grid-cols-[1fr_34px] gap-2">
+          <div className="relative flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface shadow-[inset_0_1px_0_var(--chrome-highlight)]">
+            <RouteSearchField
+              label="From"
+              value={fromQuery}
+              placeholder="What you know"
+              selected={Boolean(routeFrom)}
+              active={activeField === "from"}
+              results={fromResults}
+              onFocus={() => setActiveField("from")}
+              onChange={(value) => {
+                setFromQuery(value);
+                if (routeFrom) setRouteEndpoint("from", null);
+              }}
+              onClear={() => {
+                setFromQuery("");
+                setRouteEndpoint("from", null);
+                setActiveField("from");
+              }}
+              onSelect={(id, label) => {
+                setFromQuery(label);
+                setRouteEndpoint("from", id);
+                setActiveField(null);
+              }}
+            />
+            <div className="mx-3 h-px bg-border" />
+            <RouteSearchField
+              label="Goal"
+              value={toQuery}
+              placeholder="What you want"
+              selected={Boolean(routeTo)}
+              active={activeField === "to"}
+              results={toResults}
+              onFocus={() => setActiveField("to")}
+              onChange={(value) => {
+                setToQuery(value);
+                if (routeTo) setRouteEndpoint("to", null);
+              }}
+              onClear={() => {
+                setToQuery("");
+                setRouteEndpoint("to", null);
+                setActiveField("to");
+              }}
+              onSelect={(id, label) => {
+                setToQuery(label);
+                setRouteEndpoint("to", id);
+                setActiveField(null);
+              }}
+            />
+          </div>
+          <button
+            type="button"
+            onClick={swapRouteEndpoints}
+            disabled={!routeFrom && !routeTo}
+            className="flex h-full min-h-[86px] w-[34px] items-center justify-center rounded-[var(--radius-lg)] border border-border bg-surface text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:cursor-default disabled:opacity-35"
+            aria-label="Swap endpoints"
+            title="Swap endpoints"
+          >
+            <ArrowsDownUp className="h-4 w-4" />
+          </button>
+        </div>
+      )}
 
       {showSelectedShortcut && (
         <div className="flex items-center justify-between gap-3 px-1">
-          <span className="min-w-0 truncate text-ui-meta text-fg-3">
-            {selectedTitle}
-          </span>
+          <span className="min-w-0 truncate text-ui-meta text-fg-3">{selectedTitle}</span>
           <button
             type="button"
             onClick={() => {
-              const endpoint = routeFrom ? "to" : "from";
+              const endpoint = isPrereq || !routeFrom ? (isPrereq ? "to" : "from") : "to";
               setRouteEndpoint(endpoint, selectedId);
               if (endpoint === "from") setFromQuery(selectedTitle ?? "");
               else setToQuery(selectedTitle ?? "");
@@ -361,65 +416,174 @@ function DirectionsPanel({
         </div>
       )}
 
-      {hasBoth && (
+      {resolved && summary.found === false && (
         <div className="rounded-[var(--radius-lg)] border border-border bg-surface px-3 py-2">
-          {summary.found ? (
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0 text-ui-meta tabular-nums text-fg-3">
-                <span className="font-semibold text-fg-1">{summary.count}</span>{" "}
-                concept{summary.count === 1 ? "" : "s"}
-              </div>
-              <div className="flex items-center gap-1">
-                <Button
-                  kind="text"
-                  accent
-                  onClick={replayRoute}
-                  className="flex h-8 items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold"
-                >
-                  <ArrowCounterClockwise className="h-4 w-4" />
-                  Replay
-                </Button>
-                <Button
-                  kind="text"
-                  onClick={clearRoute}
-                  className="flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold text-fg-2"
-                >
-                  Clear
-                </Button>
-              </div>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0 truncate text-ui-meta font-semibold text-fg-1">
+              No dependency path
             </div>
-          ) : (
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0 truncate text-ui-meta font-semibold text-fg-1">
-                No visible route
-              </div>
-              <div className="flex items-center gap-1">
-                <Button
-                  kind="text"
-                  accent
-                  onClick={() => {
-                    setSearch("");
-                    resetTopics();
-                    replayRoute();
-                  }}
-                  className="flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold"
-                >
-                  Filters
-                </Button>
-                <Button
-                  kind="text"
-                  onClick={clearRoute}
-                  className="flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold text-fg-2"
-                >
-                  Clear
-                </Button>
-              </div>
-            </div>
-          )}
+            <Button
+              kind="text"
+              onClick={clearRoute}
+              className="flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold text-fg-2"
+            >
+              Clear
+            </Button>
+          </div>
         </div>
+      )}
+
+      {resolved && summary.found && ordered.length > 0 && (
+        <RouteSequence
+          map={map}
+          ordered={ordered}
+          isPrereq={isPrereq}
+          tourIndex={tourIndex}
+          onPick={(id) => select(id)}
+          onStartTour={startTour}
+          onStep={tourStep}
+          onEndTour={endTour}
+          onReplay={replayRoute}
+        />
       )}
     </div>,
     document.body,
+  );
+}
+
+/** The resolved route as an ordered study list, with tour controls. */
+function RouteSequence({
+  map,
+  ordered,
+  isPrereq,
+  tourIndex,
+  onPick,
+  onStartTour,
+  onStep,
+  onEndTour,
+  onReplay,
+}: {
+  map: import("../data").LoadedMap | undefined;
+  ordered: string[];
+  isPrereq: boolean;
+  tourIndex: number | null;
+  onPick: (id: string) => void;
+  onStartTour: () => void;
+  onStep: (delta: number) => void;
+  onEndTour: () => void;
+  onReplay: () => void;
+}) {
+  const touring = tourIndex !== null;
+  // Prereq count excludes the goal itself (last in study order).
+  const prereqCount = Math.max(0, ordered.length - 1);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center justify-between gap-3 px-1">
+        <div className="min-w-0 text-ui-meta tabular-nums text-fg-3">
+          <span className="font-semibold text-fg-1">
+            {isPrereq ? prereqCount : ordered.length}
+          </span>{" "}
+          {isPrereq
+            ? `prerequisite${prereqCount === 1 ? "" : "s"}`
+            : `concept${ordered.length === 1 ? "" : "s"}`}
+        </div>
+        {!touring ? (
+          <div className="flex items-center gap-1">
+            <Button
+              kind="text"
+              accent
+              onClick={onStartTour}
+              className="flex h-8 items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold"
+            >
+              <GraduationCap className="h-4 w-4" weight="fill" />
+              Start tour
+            </Button>
+            <Button
+              kind="text"
+              onClick={onReplay}
+              className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-fg-2"
+              aria-label="Replay animation"
+            >
+              <ArrowCounterClockwise className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-0.5">
+            <button
+              type="button"
+              onClick={() => onStep(-1)}
+              disabled={tourIndex === 0}
+              className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:opacity-35"
+              aria-label="Previous concept"
+            >
+              <CaretLeft className="h-4 w-4" />
+            </button>
+            <span className="min-w-[44px] text-center text-ui-meta tabular-nums font-semibold text-fg-1">
+              {tourIndex + 1} / {ordered.length}
+            </span>
+            <button
+              type="button"
+              onClick={() => onStep(1)}
+              disabled={tourIndex >= ordered.length - 1}
+              className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:opacity-35"
+              aria-label="Next concept"
+            >
+              <CaretRight className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={onEndTour}
+              className="ml-1 rounded-[var(--radius-sm)] px-2 py-1 text-ui-meta font-semibold text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1"
+            >
+              End
+            </button>
+          </div>
+        )}
+      </div>
+
+      <ol className="flex max-h-[42vh] flex-col gap-0.5 overflow-y-auto rounded-[var(--radius-lg)] border border-border bg-surface p-1">
+        {ordered.map((id, i) => {
+          const node = map?.nodeById.get(id);
+          const current = touring && i === tourIndex;
+          return (
+            <li key={id}>
+              <button
+                type="button"
+                onClick={() => onPick(id)}
+                className={cn(
+                  "flex w-full items-center gap-2.5 rounded-[var(--radius-md)] px-2 py-1.5 text-left transition-colors",
+                  current ? "bg-accent-soft" : "hover:bg-surface-2",
+                )}
+                aria-current={current ? "step" : undefined}
+              >
+                <span
+                  className={cn(
+                    "flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-ui-2xs font-semibold tabular-nums",
+                    current ? "bg-accent text-fg-on-color" : "bg-surface-3 text-fg-3",
+                  )}
+                >
+                  {i + 1}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span
+                    className={cn(
+                      "block truncate text-ui-meta font-semibold",
+                      current ? "text-accent" : "text-fg-1",
+                    )}
+                  >
+                    <MathText text={node?.label ?? id} />
+                  </span>
+                  {node && (
+                    <span className="block truncate text-ui-hint text-fg-3">{node.kind}</span>
+                  )}
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }
 
