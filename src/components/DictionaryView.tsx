@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRightIcon, ArrowLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
+import {
+  ArrowUpRightIcon,
+  ArrowLeftIcon,
+  MagnifyingGlassIcon,
+} from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import { MAPS, type LoadedMap, type MapId } from "../data";
@@ -7,7 +11,11 @@ import type { GraphNode } from "../types";
 import { MathText, MathProse } from "../lib/katex";
 import { KIND_LABEL } from "../types";
 import { getDomainTone } from "../lib/colors";
-import { nodeDefinition, nodeFormula, proofBlockLabel } from "../lib/nodeContent";
+import {
+  nodeDefinition,
+  nodeFormula,
+  proofBlockLabel,
+} from "../lib/nodeContent";
 import { CATEGORY_META, categoryOf, kindAbbrev } from "../lib/nodeCategory";
 import {
   KIND_ORDER,
@@ -18,7 +26,15 @@ import {
   type DictSortMode,
   type SectionFacet,
 } from "../lib/dictionary";
-import { Spine, Facet, MathBox, Proof, Steps, StepLabel, specimenMeta } from "./Specimen";
+import {
+  Spine,
+  Facet,
+  MathBox,
+  Proof,
+  Steps,
+  StepLabel,
+  specimenMeta,
+} from "./Specimen";
 import { hasNodeVisual, NodeVisual } from "./NodeVisual";
 import "./DictionaryView.css";
 
@@ -42,7 +58,9 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const entries = useMemo(() => {
     const base = dictionaryEntries(map);
     const seen = new Set(base.map((node) => node.id));
-    const visualOnly = map.data.nodes.filter((node) => !seen.has(node.id) && hasNodeVisual(node));
+    const visualOnly = map.data.nodes.filter(
+      (node) => !seen.has(node.id) && hasNodeVisual(node),
+    );
     return [...base, ...visualOnly];
   }, [map]);
   const facet = useMemo(() => sectionFacet(map, entries), [map, entries]);
@@ -53,7 +71,8 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
   const domainCounts = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const e of entries) counts.set(e.domain, (counts.get(e.domain) ?? 0) + 1);
+    for (const e of entries)
+      counts.set(e.domain, (counts.get(e.domain) ?? 0) + 1);
     return map.data.domains
       .map((d) => ({ id: d.id, label: d.label, count: counts.get(d.id) ?? 0 }))
       .filter((d) => d.count > 0);
@@ -64,13 +83,21 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     const items = entries.filter((e) => {
       if (kinds.size > 0 && !kinds.has(e.kind)) return false;
       if (topics.size > 0 && !topics.has(e.domain)) return false;
-      if (q && !e.label.toLowerCase().includes(q) && !(e.source?.ref ?? "").toLowerCase().includes(q)) return false;
+      if (
+        q &&
+        !e.label.toLowerCase().includes(q) &&
+        !(e.source?.ref ?? "").toLowerCase().includes(q)
+      )
+        return false;
       return true;
     });
     return items.sort((a, b) => compareEntries(a, b, sortBy, facet));
   }, [entries, facet, kinds, topics, sortBy, query]);
 
-  const groups = useMemo(() => groupEntries(filtered, sortBy, facet), [filtered, sortBy, facet]);
+  const groups = useMemo(
+    () => groupEntries(filtered, sortBy, facet),
+    [filtered, sortBy, facet],
+  );
 
   // Keep a valid selection: honor an external (⌘K) selection, else fall back to
   // the first entry that survives the current filters.
@@ -91,14 +118,18 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   // Reveal the active row in the index list.
   useEffect(() => {
     if (!activeId) return;
-    const el = indexRef.current?.querySelector<HTMLElement>(`#dict-row-${CSS.escape(activeId)}`);
+    const el = indexRef.current?.querySelector<HTMLElement>(
+      `#dict-row-${CSS.escape(activeId)}`,
+    );
     el?.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
       block: "nearest",
     });
   }, [activeId]);
 
-  const activeEntry = activeId ? map.nodeById.get(activeId) ?? null : null;
+  const activeEntry = activeId ? (map.nodeById.get(activeId) ?? null) : null;
 
   const openRow = (id: string) => {
     setActiveId(id);
@@ -107,7 +138,10 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   };
 
   return (
-    <div className="dictionary-view" style={{ background: "var(--bg)", color: "var(--fg-1)" }}>
+    <div
+      className="dictionary-view"
+      style={{ background: "var(--bg)", color: "var(--fg-1)" }}
+    >
       <div className={`dict-md${mobileDetail ? " dict-md--detail" : ""}`}>
         {/* ---- Index column ---- */}
         <aside className="dict-index" aria-label="Dictionary index">
@@ -115,7 +149,9 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
             <p className="dict-kicker">{meta.label} · Dictionary</p>
             <div className="dict-headrow">
               <h1 className="dict-title font-serif">{meta.label}</h1>
-              <span className="dict-count">{filtered.length}/{entries.length}</span>
+              <span className="dict-count">
+                {filtered.length}/{entries.length}
+              </span>
             </div>
 
             <div className="dict-search">
@@ -130,7 +166,11 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
             </div>
 
             {domainCounts.length > 1 && (
-              <div className="dict-facets" role="group" aria-label="Filter by domain">
+              <div
+                className="dict-facets"
+                role="group"
+                aria-label="Filter by domain"
+              >
                 {domainCounts.map((d) => {
                   const tone = getDomainTone(d.id);
                   const active = topics.has(d.id);
@@ -141,17 +181,32 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                       className="dict-facet"
                       aria-pressed={active}
                       onClick={() => toggleTopic(d.id)}
-                      style={active ? { background: tone.tint, borderColor: tone.border, color: tone.text } : undefined}
+                      style={
+                        active
+                          ? {
+                              background: tone.tint,
+                              borderColor: tone.border,
+                              color: tone.text,
+                            }
+                          : undefined
+                      }
                       title={d.label}
                     >
-                      <span className="dict-facet-dot" style={{ background: tone.color }} />
+                      <span
+                        className="dict-facet-dot"
+                        style={{ background: tone.color }}
+                      />
                       <span className="dict-facet-lab">{d.label}</span>
                       <span className="dict-facet-n">{d.count}</span>
                     </button>
                   );
                 })}
                 {topics.size > 0 && (
-                  <button type="button" className="dict-facet-reset" onClick={resetTopics}>
+                  <button
+                    type="button"
+                    className="dict-facet-reset"
+                    onClick={resetTopics}
+                  >
                     Clear
                   </button>
                 )}
@@ -160,21 +215,33 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
             <div className="dict-controls">
               <span className="dict-controls-lab">Sort</span>
-              <Chip label="A–Z" active={sortBy === "alpha"} onClick={() => setSortBy("alpha")} />
+              <Chip
+                label="A–Z"
+                active={sortBy === "alpha"}
+                onClick={() => setSortBy("alpha")}
+              />
               <Chip
                 label={facet.mode === "chapter" ? "Chapter" : "Domain"}
                 active={sortBy === "section"}
                 onClick={() => setSortBy("section")}
               />
-              <Chip label="Kind" active={sortBy === "kind"} onClick={() => setSortBy("kind")} />
+              <Chip
+                label="Kind"
+                active={sortBy === "kind"}
+                onClick={() => setSortBy("kind")}
+              />
             </div>
           </header>
 
           <div className="dict-rows" ref={indexRef}>
             {entries.length === 0 ? (
-              <p className="dict-empty">No dictionary entries for {meta.label} yet.</p>
+              <p className="dict-empty">
+                No dictionary entries for {meta.label} yet.
+              </p>
             ) : groups.length === 0 ? (
-              <p className="dict-empty">No entries match the current filters.</p>
+              <p className="dict-empty">
+                No entries match the current filters.
+              </p>
             ) : (
               groups.map((group) => (
                 <section key={group.id} className="dict-rowgroup">
@@ -216,7 +283,15 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   );
 }
 
-function IndexRow({ entry, active, onClick }: { entry: GraphNode; active: boolean; onClick: () => void }) {
+function IndexRow({
+  entry,
+  active,
+  onClick,
+}: {
+  entry: GraphNode;
+  active: boolean;
+  onClick: () => void;
+}) {
   const tone = getDomainTone(entry.domain);
   const Icon = CATEGORY_META[categoryOf(entry.kind)].icon;
   return (
@@ -228,7 +303,11 @@ function IndexRow({ entry, active, onClick }: { entry: GraphNode; active: boolea
       aria-current={active}
       style={active ? { background: tone.tint } : undefined}
     >
-      <span className="dict-row-rail" style={{ background: active ? tone.color : "transparent" }} aria-hidden />
+      <span
+        className="dict-row-rail"
+        style={{ background: active ? tone.color : "transparent" }}
+        aria-hidden
+      />
       <span className="dict-row-glyph" style={{ color: tone.color }}>
         <Icon className="h-3.5 w-3.5" aria-hidden />
       </span>
@@ -261,17 +340,25 @@ function DetailPane({
   const formula = nodeFormula(entry, [statement, formalStatement, definition]);
   const proofSteps = entry.proof?.steps ?? [];
   const proofLabel = proofBlockLabel(entry.kind);
-  const prereqIds = [...new Set([...entry.statementDependencies, ...entry.proofDependencies])];
+  const prereqIds = [
+    ...new Set([...entry.statementDependencies, ...entry.proofDependencies]),
+  ];
   const usedByIds = [
-    ...new Set((map.outgoingEdgesByNodeId.get(entry.id) ?? []).map((edge) => edge.to)),
+    ...new Set(
+      (map.outgoingEdgesByNodeId.get(entry.id) ?? []).map((edge) => edge.to),
+    ),
   ].filter((id) => {
     const node = map.nodeById.get(id);
-    return node && !RELATED_CASE_KINDS.has(node.kind) && node.kind !== "exercise";
+    return (
+      node && !RELATED_CASE_KINDS.has(node.kind) && node.kind !== "exercise"
+    );
   });
   const relatedCaseIds = (() => {
     const ids = new Set<string>();
-    for (const edge of map.outgoingEdgesByNodeId.get(entry.id) ?? []) ids.add(edge.to);
-    for (const edge of map.incomingEdgesByNodeId.get(entry.id) ?? []) ids.add(edge.from);
+    for (const edge of map.outgoingEdgesByNodeId.get(entry.id) ?? [])
+      ids.add(edge.to);
+    for (const edge of map.incomingEdgesByNodeId.get(entry.id) ?? [])
+      ids.add(edge.from);
     return [...ids].filter((id) => {
       const node = map.nodeById.get(id);
       return node && RELATED_CASE_KINDS.has(node.kind);
@@ -307,13 +394,21 @@ function DetailPane({
         </button>
 
         <header className="dict-doc-head">
-          <span className="dict-doc-rail" style={{ background: tone.color }} aria-hidden />
+          <span
+            className="dict-doc-rail"
+            style={{ background: tone.color }}
+            aria-hidden
+          />
           <h2 className="dict-doc-term font-serif">
             <MathText text={entry.label} />
           </h2>
           <div className="dict-doc-meta">
-            <span className="dict-doc-domain" style={{ color: tone.color }}>{domain?.label ?? entry.topicCluster}</span>
-            <span className="dict-doc-sep" aria-hidden>·</span>
+            <span className="dict-doc-domain" style={{ color: tone.color }}>
+              {domain?.label ?? entry.topicCluster}
+            </span>
+            <span className="dict-doc-sep" aria-hidden>
+              ·
+            </span>
             <span>{specimenMeta(entry)}</span>
           </div>
         </header>
@@ -335,8 +430,14 @@ function DetailPane({
               <ul className="m-0 space-y-1.5 p-0">
                 {entry.assumptions.map((a, i) => (
                   <li key={i} className="flex gap-2">
-                    <span aria-hidden className="mt-[7px] h-1 w-1 shrink-0 rounded-full" style={{ background: tone.color }} />
-                    <span><MathProse text={a} /></span>
+                    <span
+                      aria-hidden
+                      className="mt-[7px] h-1 w-1 shrink-0 rounded-full"
+                      style={{ background: tone.color }}
+                    />
+                    <span>
+                      <MathProse text={a} />
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -361,7 +462,11 @@ function DetailPane({
             <Facet label="Notation" muted>
               <div className="flex flex-wrap gap-x-3 gap-y-1.5">
                 {entry.content.notation.map((n, i) => (
-                  <span key={i} className="font-math" style={{ color: "var(--fg-1)" }}>
+                  <span
+                    key={i}
+                    className="font-math"
+                    style={{ color: "var(--fg-1)" }}
+                  >
                     <MathText text={n} />
                   </span>
                 ))}
@@ -381,16 +486,41 @@ function DetailPane({
           {proofSteps.length > 0 && (
             <div>
               <StepLabel label={proofLabel} toneColor={tone.color} />
-              <Steps steps={proofSteps} toneColor={tone.color} map={map} onSelect={onPickRelated} />
+              <Steps
+                steps={proofSteps}
+                toneColor={tone.color}
+                map={map}
+                onSelect={onPickRelated}
+              />
             </div>
           )}
         </div>
 
         <footer className="dict-doc-foot">
-          <DictionaryLinkGroup label="Depends on" ids={prereqIds} map={map} onPick={onPickRelated} />
-          <DictionaryLinkGroup label="Used by" ids={usedByIds} map={map} onPick={onPickRelated} />
-          <DictionaryLinkGroup label="Related cases" ids={relatedCaseIds} map={map} onPick={onPickRelated} />
-          <DictionaryLinkGroup label="Exercises" ids={exerciseIds} map={map} onPick={onPickRelated} />
+          <DictionaryLinkGroup
+            label="Depends on"
+            ids={prereqIds}
+            map={map}
+            onPick={onPickRelated}
+          />
+          <DictionaryLinkGroup
+            label="Used by"
+            ids={usedByIds}
+            map={map}
+            onPick={onPickRelated}
+          />
+          <DictionaryLinkGroup
+            label="Related cases"
+            ids={relatedCaseIds}
+            map={map}
+            onPick={onPickRelated}
+          />
+          <DictionaryLinkGroup
+            label="Exercises"
+            ids={exerciseIds}
+            map={map}
+            onPick={onPickRelated}
+          />
           {related.length > 0 && (
             <div className="dict-related">
               <span className="dict-related-lab">See also</span>
@@ -405,7 +535,11 @@ function DetailPane({
                       onClick={() => onPickRelated(n.id)}
                       style={{ borderColor: rtone.border }}
                     >
-                      <span className="dict-related-dot" style={{ background: rtone.color }} aria-hidden />
+                      <span
+                        className="dict-related-dot"
+                        style={{ background: rtone.color }}
+                        aria-hidden
+                      />
                       <MathText text={n.label} />
                     </button>
                   );
@@ -422,7 +556,11 @@ function DetailPane({
   );
 }
 
-const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
+const RELATED_CASE_KINDS = new Set([
+  "example",
+  "non_example",
+  "counterexample",
+]);
 
 function DictionaryLinkGroup({
   label,
@@ -455,7 +593,11 @@ function DictionaryLinkGroup({
               onClick={() => onPick(node.id)}
               style={{ borderColor: tone.border }}
             >
-              <span className="dict-related-dot" style={{ background: tone.color }} aria-hidden />
+              <span
+                className="dict-related-dot"
+                style={{ background: tone.color }}
+                aria-hidden
+              />
               <MathText text={node.label} />
             </button>
           );
@@ -465,21 +607,45 @@ function DictionaryLinkGroup({
   );
 }
 
-function Chip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+function Chip({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
   return (
-    <button type="button" className="dict-chip" aria-pressed={active} onClick={onClick}>
+    <button
+      type="button"
+      className="dict-chip"
+      aria-pressed={active}
+      onClick={onClick}
+    >
       {label}
     </button>
   );
 }
 
-function compareEntries(a: GraphNode, b: GraphNode, sortBy: DictSortMode, facet: SectionFacet): number {
-  const alpha = dictionarySortTitle(a.label).localeCompare(dictionarySortTitle(b.label), undefined, {
-    sensitivity: "base",
-  });
+function compareEntries(
+  a: GraphNode,
+  b: GraphNode,
+  sortBy: DictSortMode,
+  facet: SectionFacet,
+): number {
+  const alpha = dictionarySortTitle(a.label).localeCompare(
+    dictionarySortTitle(b.label),
+    undefined,
+    {
+      sensitivity: "base",
+    },
+  );
   if (sortBy === "section") {
     const order = facet.values;
-    return order.indexOf(facet.valueOf(a)) - order.indexOf(facet.valueOf(b)) || alpha;
+    return (
+      order.indexOf(facet.valueOf(a)) - order.indexOf(facet.valueOf(b)) || alpha
+    );
   }
   if (sortBy === "kind") {
     return (KIND_ORDER[a.kind] ?? 99) - (KIND_ORDER[b.kind] ?? 99) || alpha;
@@ -491,7 +657,10 @@ function dictionarySortTitle(title: string): string {
   return title
     .trim()
     .replace(/^(\${1,2}|\\\(|\\\[)\s*/, "")
-    .replace(/^\\(?:mathrm|mathbf|mathbb|mathcal|operatorname|text)\{([^{}]+)\}/, "$1")
+    .replace(
+      /^\\(?:mathrm|mathbf|mathbb|mathcal|operatorname|text)\{([^{}]+)\}/,
+      "$1",
+    )
     .replace(/^\\ell\b/, "L")
     .replace(/^\\([A-Za-z]+)\b/, "$1");
 }
@@ -507,7 +676,11 @@ interface Group {
   items: GraphNode[];
 }
 
-function groupEntries(items: GraphNode[], sortBy: DictSortMode, facet: SectionFacet): Group[] {
+function groupEntries(
+  items: GraphNode[],
+  sortBy: DictSortMode,
+  facet: SectionFacet,
+): Group[] {
   const groups: Group[] = [];
   let current: Group | null = null;
   for (const entry of items) {
