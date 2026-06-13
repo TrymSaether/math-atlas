@@ -115,6 +115,7 @@
         "intuition": "A Cauchy sequence becomes internally stable: sufficiently far out, its terms are close to each other, independently of whether they converge to a point of the space.",
         "notation": ["$(x_n)\\text{ is Cauchy}$"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-completeness.svg",
       "assumptions": [
         "$(M,d)$ is a metric space.",
         "$(x_n)_{n\\in\\mathbb{N}}$ is a sequence with $x_n\\in M$ for all $n\\in\\mathbb{N}$."
@@ -172,6 +173,7 @@
         "intuition": "A Banach space is a normed space whose limiting points, as detected by Cauchy sequences, are already contained in the space.",
         "notation": ["$(X,\\|\\cdot\\|)$ Banach"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-completeness.svg",
       "tags": ["space", "complete"],
       "priority": "core"
     },
@@ -228,6 +230,7 @@
         "intuition": "The dual space contains the continuous linear scalar measurements of vectors in $X$; its norm records the largest size such a measurement can have on the unit ball of $X$.",
         "notation": ["$X^*$", "$\\mathcal{L}(X,\\mathbb{K})$"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/dual-space-probes.svg",
       "tags": ["duality", "space"],
       "priority": "core"
     },
@@ -296,6 +299,7 @@
         "intuition": "Cauchy approximation cannot converge outside the space.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-completeness.svg",
       "tags": ["property", "metric"],
       "priority": "core"
     },
@@ -324,6 +328,7 @@
         "intuition": "Convergence is tested only by continuous scalar probes.",
         "notation": ["sigma(X,X*)"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
       "tags": ["weak topology", "duality"],
       "priority": "core"
     },
@@ -338,6 +343,7 @@
         "intuition": "Pointwise convergence on the predual $X$.",
         "notation": ["$\\sigma(X^\\ast,X)$"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
       "tags": ["weak-star", "duality"],
       "priority": "core"
     },
@@ -422,6 +428,7 @@
         "intuition": "A scalar measurement of vectors.",
         "notation": ["f, x*"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/dual-space-probes.svg",
       "tags": ["duality", "functional"],
       "priority": "core"
     },
@@ -521,6 +528,7 @@
         "intuition": "Move $T$ from vectors to scalar probes by precomposition.",
         "notation": ["$T^*$"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/adjoint-operator.svg",
       "tags": ["operator", "duality"],
       "priority": "standard"
     },
@@ -549,6 +557,7 @@
         "intuition": "A one-sided convex bound for a linear functional.",
         "notation": ["$p$"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/sublinear-functional.svg",
       "tags": ["hahn-banach"],
       "priority": "standard"
     },
@@ -562,6 +571,7 @@
         "intuition": "If $x_n \\to x$ and $Tx_n \\to y$, then $y=Tx$.",
         "notation": ["$\\text{graph}(T)$ closed in $X \\times Y$"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/closed-graph.svg",
       "tags": ["operator", "closed graph"],
       "priority": "standard"
     },
@@ -719,6 +729,7 @@
         "intuition": "Coordinate axes for Hilbert space.",
         "notation": ["(e_n)"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/infinite-dimensional-unit-ball.svg",
       "tags": ["hilbert", "basis"],
       "priority": "standard"
     },
@@ -772,6 +783,7 @@
         "intuition": "Completeness prevents a space from being too thin.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/baire-category.svg",
       "tags": ["category", "completeness"],
       "priority": "core"
     },
@@ -811,6 +823,7 @@
         "intuition": "Turn infinite behavior into finite or convergent behavior.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
       "tags": ["proof method"],
       "priority": "standard"
     },
@@ -824,6 +837,7 @@
         "intuition": "Probe objects by scalar-valued tests.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/dual-space-probes.svg",
       "tags": ["proof method", "duality"],
       "priority": "core"
     },
@@ -915,6 +929,7 @@
         "intuition": "Sequential limit compatibility replaces an a priori boundedness estimate.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/closed-graph.svg",
       "tags": ["assumption", "closed graph"],
       "priority": "core"
     },
@@ -928,6 +943,7 @@
         "intuition": "Banach-Alaoglu is a compactness theorem for this specific topology.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
       "tags": ["assumption", "weak-star"],
       "priority": "core"
     },
@@ -1057,6 +1073,7 @@
         "intuition": "A complete linear surjection cannot crush all neighborhoods.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/open-mapping.svg",
       "tags": ["open mapping", "baire"],
       "priority": "core"
     },
@@ -1071,6 +1088,7 @@
         "intuition": "A graph-compatible limit rule forces norm continuity.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/closed-graph.svg",
       "tags": ["closed graph", "open mapping"],
       "priority": "core"
     },
@@ -1085,6 +1103,7 @@
         "intuition": "Pointwise bounded scalar probes have compactness in the weakest natural topology.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
       "tags": ["weak-star", "compactness"],
       "priority": "core"
     },
@@ -1113,6 +1132,7 @@
         "intuition": "The dual of a Hilbert space is the Hilbert space itself, anti-linearly or linearly depending on convention.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/riesz-representation.svg",
       "tags": ["hilbert", "duality", "hilbert-space version"],
       "priority": "core"
     },
@@ -1140,6 +1160,7 @@
         "intuition": "Banach-space bijections are automatically topological isomorphisms.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/open-mapping.svg",
       "tags": ["open mapping"],
       "priority": "core"
     },
@@ -1268,6 +1289,7 @@
         "intuition": "Compactness appears after weakening the topology.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
       "tags": ["application", "weak topology"],
       "priority": "standard"
     },
@@ -1395,6 +1417,7 @@
         "intuition": "A subspace with no missing limit points, so quotient constructions behave instead of collapsing into nonsense.",
         "notation": ["M\\subseteq X"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/quotient-space.svg",
       "assumptions": [
         "X is a normed or topological vector space.",
         "M is a linear subspace of X."
@@ -1414,6 +1437,7 @@
         "intuition": "You identify points that differ by an element of Y; geometry modulo a subspace, because apparently ordinary geometry was not abstract enough.",
         "notation": ["X/Y"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/quotient-space.svg",
       "assumptions": [
         "X is a normed or Banach space.",
         "Y is a closed linear subspace of X."
@@ -1437,6 +1461,7 @@
         "intuition": "Forget the component lying in Y.",
         "notation": ["Q:X\\to X/Y"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/quotient-space.svg",
       "assumptions": ["Y is a closed subspace of X."],
       "source": {
         "citation": "Bowers-Kalton Section 3.7",
@@ -1457,6 +1482,7 @@
         "intuition": "Everything the operator kills.",
         "notation": ["\\ker T"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/kernel-quotient.svg",
       "assumptions": ["T:X\\to Y is linear."],
       "tags": ["operator", "kernel", "quotient"],
       "priority": "core"
@@ -1468,12 +1494,13 @@
       "label": "Weak convergence",
       "content": {
         "statement": "A sequence converges weakly if every continuous linear functional converges on it.",
-        "definition": "Weak convergence is convergence in the weak topology \\sigma(X,X^*).",
-        "formal": "x_n\\rightharpoonup x \\iff \\forall x^*\\in X^*:\\ x^*(x_n)\\to x^*(x).",
+        "definition": "Weak convergence $x_n\\rightharpoonup x$ means convergence in the weak topology $\\sigma(X,X^*)$.",
+        "formal": "$$x_n\\rightharpoonup x \\iff \\forall x^*\\in X^*:\\ x^*(x_n)\\to x^*(x).$$",
         "intuition": "Vectors converge when every scalar probe in the dual agrees that they converge.",
         "notation": ["x_n\\rightharpoonup x"]
       },
-      "assumptions": ["X is a normed space."],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
+      "assumptions": ["$X$ is a normed space."],
       "tags": ["weak topology", "convergence", "duality"],
       "priority": "core"
     },
@@ -1483,13 +1510,14 @@
       "domain": "duality_weak_topologies",
       "label": "Weak-star convergence",
       "content": {
-        "statement": "A sequence of functionals converges weak-star if it converges pointwise on X.",
-        "definition": "Weak-star convergence is convergence in \\sigma(X^*,X).",
-        "formal": "x_n^*\\overset{w^*}{\\to}x^* \\iff \\forall x\\in X:\\ x_n^*(x)\\to x^*(x).",
+        "statement": "A sequence of functionals $(x_n^*)_{n=1}^\\infty$ converges weak-star to $x^*$ if for every vector $x$, the scalars $x_n^*(x)$ converge to $x^*(x)$.",
+        "definition": "Weak-star convergence $x_n^*\\overset{w^*}{\\to}x^*$ means convergence in \\sigma(X^*,X).",
+        "formal": "$$x_n^*\\overset{w^*}{\\to}x^* \\iff \\forall x\\in X:\\ x_n^*(x)\\to x^*(x).$$",
         "intuition": "Functionals converge by agreeing pointwise on every vector.",
         "notation": ["x_n^*\\overset{w^*}{\\to}x^*"]
       },
-      "assumptions": ["X is a normed space."],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
+      "assumptions": ["$X$ is a normed space."],
       "tags": ["weak-star", "convergence", "duality"],
       "priority": "core"
     },
@@ -1505,7 +1533,8 @@
         "intuition": "The set may look large in X, but every scalar probe sees only bounded values.",
         "notation": []
       },
-      "assumptions": ["X is a normed space."],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
+      "assumptions": ["$X$ is a normed space."],
       "source": {
         "citation": "2025 exam Question 5",
         "references": []
@@ -1524,7 +1553,8 @@
         "intuition": "If every scalar probe sees boundedness, completeness upgrades this to actual norm boundedness.",
         "notation": []
       },
-      "assumptions": ["X is Banach.", "A is weakly bounded."],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
+      "assumptions": ["$X$ is Banach.", "$A$ is weakly bounded."],
       "source": {
         "citation": "2025 exam Question 5",
         "references": []
@@ -1544,7 +1574,8 @@
         "intuition": "The norm is the basic domination function in Hahn-Banach.",
         "notation": ["p(x)=\\|x\\|"]
       },
-      "assumptions": ["X is a normed vector space."],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/sublinear-functional.svg",
+      "assumptions": ["$X$ is a normed vector space."],
       "source": {
         "citation": "Bowers-Kalton Chapter 3",
         "references": []
@@ -1580,9 +1611,9 @@
         "notation": []
       },
       "assumptions": [
-        "T:X\\to Y is linear.",
-        "T\\ne 0.",
-        "X is a normed vector space over an unbounded scalar field."
+        "$T:X\\to Y$ is linear.",
+        "$T\\ne 0.$",
+        "$X$ is a normed vector space over an unbounded scalar field."
       ],
       "source": {
         "citation": "Bowers-Kalton Exercise 1.4",
@@ -1602,6 +1633,7 @@
         "intuition": "Every continuous scalar probe on C(K) is integration against a measure.",
         "notation": ["C(K)^*=M(K)"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/riesz-representation.svg",
       "assumptions": ["K is compact metric, in the Bowers-Kalton version."],
       "source": {
         "citation": "Bowers-Kalton Theorem 2.20",

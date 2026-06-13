@@ -1,0 +1,20 @@
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img" aria-label="The dual space consists of scalar probes on a normed space">
+  <rect x="0" y="0" width="320" height="180" fill="none" />
+  <ellipse cx="104" cy="92" rx="56" ry="50" fill="var(--dia-space,#f6f0e4)" stroke="var(--dia-ink,#27221d)" stroke-width="1.4" />
+  <line x1="61" y1="72" x2="146" y2="72" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.1" />
+  <line x1="65" y1="94" x2="151" y2="94" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.1" />
+  <line x1="77" y1="116" x2="139" y2="116" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.1" />
+  <circle cx="124" cy="82" r="4.5" fill="var(--dia-acc,#2457c5)" />
+  <path d="M132 81 C163 63 191 62 223 76" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="1.8" marker-end="url(#dual-arrow)" />
+  <rect x="220" y="50" width="54" height="52" rx="5" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.4" />
+  <line x1="234" y1="77" x2="260" y2="77" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.5" />
+  <text x="104" y="37" font-size="13" text-anchor="middle" fill="var(--dia-ink,#27221d)">X</text>
+  <text x="248" y="39" font-size="13" text-anchor="middle" fill="var(--dia-ink,#27221d)">K</text>
+  <text x="176" y="58" font-size="12" text-anchor="middle" fill="var(--dia-acc,#2457c5)">x*</text>
+  <text x="160" y="154" font-size="12" text-anchor="middle" fill="var(--dia-mut,#8c8274)">X* = continuous linear scalar measurements</text>
+  <defs>
+    <marker id="dual-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--dia-acc,#2457c5)" />
+    </marker>
+  </defs>
+</svg>

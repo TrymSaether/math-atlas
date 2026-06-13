@@ -1,0 +1,12 @@
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img" aria-label="A sublinear functional gives a convex one-sided bound">
+  <rect x="0" y="0" width="320" height="180" fill="none" />
+  <line x1="48" y1="132" x2="274" y2="132" stroke="var(--dia-line,#d6ccb8)" stroke-width="1" />
+  <line x1="74" y1="146" x2="74" y2="34" stroke="var(--dia-line,#d6ccb8)" stroke-width="1" />
+  <path d="M74 132 C107 103 136 84 160 62 C184 84 214 103 248 132" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.8" fill-opacity="0.45" />
+  <line x1="78" y1="124" x2="244" y2="78" stroke="var(--dia-acc,#2457c5)" stroke-width="1.7" />
+  <circle cx="160" cy="62" r="4.5" fill="var(--dia-acc2,#0d9488)" />
+  <text x="164" y="55" font-size="11" fill="var(--dia-acc2,#0d9488)">p</text>
+  <text x="214" y="79" font-size="11" fill="var(--dia-acc,#2457c5)">linear f</text>
+  <text x="160" y="28" font-size="13" text-anchor="middle" fill="var(--dia-ink,#27221d)">sublinear domination</text>
+  <text x="160" y="164" font-size="12" text-anchor="middle" fill="var(--dia-mut,#8c8274)">f(v) <= p(v), with p convex and positively homogeneous</text>
+</svg>

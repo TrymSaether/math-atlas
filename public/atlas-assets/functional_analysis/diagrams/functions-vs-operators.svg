@@ -1,0 +1,28 @@
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img" aria-label="Functions are raw arrows while operators preserve structure">
+  <rect x="0" y="0" width="320" height="180" fill="none" />
+  <ellipse cx="84" cy="84" rx="44" ry="52" fill="var(--dia-space,#f6f0e4)" stroke="var(--dia-ink,#27221d)" stroke-width="1.4" />
+  <ellipse cx="236" cy="84" rx="44" ry="52" fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-ink,#27221d)" stroke-width="1.4" />
+  <path d="M124 82 C150 54 171 54 196 82" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2" marker-end="url(#fa-arrow)" />
+  <path d="M124 102 C151 126 171 126 196 102" fill="none" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#fa-arrow2)" />
+  <circle cx="72" cy="66" r="4" fill="var(--dia-acc,#2457c5)" />
+  <circle cx="96" cy="91" r="4" fill="var(--dia-acc,#2457c5)" />
+  <circle cx="80" cy="111" r="4" fill="var(--dia-acc,#2457c5)" />
+  <circle cx="225" cy="66" r="4" fill="var(--dia-acc,#2457c5)" />
+  <circle cx="251" cy="89" r="4" fill="var(--dia-acc,#2457c5)" />
+  <circle cx="234" cy="112" r="4" fill="var(--dia-acc,#2457c5)" />
+  <line x1="56" y1="130" x2="112" y2="130" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.2" />
+  <line x1="208" y1="130" x2="264" y2="130" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.2" />
+  <text x="84" y="35" font-size="13" text-anchor="middle" fill="var(--dia-ink,#27221d)">set X</text>
+  <text x="236" y="35" font-size="13" text-anchor="middle" fill="var(--dia-ink,#27221d)">set Y</text>
+  <text x="160" y="49" font-size="12" text-anchor="middle" fill="var(--dia-acc,#2457c5)">function</text>
+  <text x="160" y="137" font-size="12" text-anchor="middle" fill="var(--dia-acc2,#0d9488)">operator: structured map</text>
+  <text x="160" y="164" font-size="12" text-anchor="middle" fill="var(--dia-mut,#8c8274)">operator =&gt; function, plus linear/topological context</text>
+  <defs>
+    <marker id="fa-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--dia-acc,#2457c5)" />
+    </marker>
+    <marker id="fa-arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--dia-acc2,#0d9488)" />
+    </marker>
+  </defs>
+</svg>
