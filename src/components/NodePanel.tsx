@@ -375,38 +375,42 @@ function PropertiesTab({
   }
 
   return (
-    <section id="sec-properties" className="m-0 p-0">
+    <ol id="sec-properties" className="m-0 list-none space-y-3.5 p-0">
       {properties.map((property, index) => {
         const { title, body } = splitProperty(property);
         return (
-          <article
-            key={`${title || body}-${index}`}
-            className="border-t py-3.5 first:border-t-0 first:pt-0"
-            style={{ borderColor: "var(--border-subtle)" }}
-          >
-            <div className="mb-1 flex items-baseline gap-2.5">
+          <li key={`${title || body}-${index}`} className="relative pl-8">
+            {/* Tone numbered node — the same marker grammar as a proof step,
+                minus the connecting rail (properties are independent claims). */}
+            <span
+              aria-hidden
+              className="absolute left-0 top-px flex h-[21px] w-[21px] items-center justify-center rounded-full font-mono text-ui-2xs"
+              style={{
+                background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
+                color: toneColor,
+                border: `1px solid color-mix(in srgb, ${toneColor} 40%, transparent)`,
+              }}
+            >
+              {index + 1}
+            </span>
+            {title && (
               <span
-                className="font-mono text-ui-2xs uppercase tracking-label"
+                className="mb-1 block font-mono text-ui-2xs uppercase tracking-label"
                 style={{ color: toneColor }}
               >
-                P{String(index + 1).padStart(2, "0")}
+                {title}
               </span>
-              {title && (
-                <span
-                  className="font-mono text-ui-2xs uppercase tracking-label"
-                  style={{ color: "var(--fg-3)" }}
-                >
-                  {title}
-                </span>
-              )}
-            </div>
-            <div className="text-ui-copy" style={{ color: "var(--fg-1)" }}>
+            )}
+            <div
+              className="min-h-[21px] text-ui-copy"
+              style={{ color: "var(--fg-1)" }}
+            >
               <MathProse text={body} />
             </div>
-          </article>
+          </li>
         );
       })}
-    </section>
+    </ol>
   );
 }
 
