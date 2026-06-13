@@ -375,46 +375,37 @@ function PropertiesTab({
   }
 
   return (
-    <section id="sec-properties">
-      <dl className="m-0 grid grid-cols-[52px_minmax(0,1fr)] p-0">
-        {properties.map((property, index) => {
-          const { title, body } = splitProperty(property);
-          return (
-            <div
-              key={`${title || body}-${index}`}
-              className="contents"
-            >
-              <dt
-                className="border-t py-3 pr-3 text-right font-mono text-ui-2xs uppercase tracking-label-tight"
-                style={{
-                  borderColor: index === 0 ? "transparent" : "var(--border-subtle)",
-                  color: index === 0 ? toneColor : "var(--fg-3)",
-                }}
+    <section id="sec-properties" className="m-0 p-0">
+      {properties.map((property, index) => {
+        const { title, body } = splitProperty(property);
+        return (
+          <article
+            key={`${title || body}-${index}`}
+            className="border-t py-3.5 first:border-t-0 first:pt-0"
+            style={{ borderColor: "var(--border-subtle)" }}
+          >
+            <div className="mb-1 flex items-baseline gap-2.5">
+              <span
+                className="font-mono text-ui-2xs uppercase tracking-label"
+                style={{ color: toneColor }}
               >
                 P{String(index + 1).padStart(2, "0")}
-              </dt>
-              <dd
-                className="m-0 min-w-0 border-t py-3"
-                style={{
-                  borderColor: index === 0 ? "transparent" : "var(--border-subtle)",
-                }}
-              >
-                {title && (
-                  <div
-                    className="mb-1 font-mono text-ui-2xs uppercase tracking-label"
-                    style={{ color: toneColor }}
-                  >
-                    {title}
-                  </div>
-                )}
-                <div className="text-ui-copy leading-[1.65]" style={{ color: "var(--fg-1)" }}>
-                  <MathProse text={body} />
-                </div>
-              </dd>
+              </span>
+              {title && (
+                <span
+                  className="font-mono text-ui-2xs uppercase tracking-label"
+                  style={{ color: "var(--fg-3)" }}
+                >
+                  {title}
+                </span>
+              )}
             </div>
-          );
-        })}
-      </dl>
+            <div className="text-ui-copy" style={{ color: "var(--fg-1)" }}>
+              <MathProse text={body} />
+            </div>
+          </article>
+        );
+      })}
     </section>
   );
 }
