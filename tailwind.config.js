@@ -62,16 +62,6 @@ export default {
           soft: "var(--accent-soft)",
           border: "var(--accent-border)",
         },
-        domain: {
-          blue: "var(--blue)",
-          green: "var(--green)",
-          purple: "var(--purple)",
-          red: "var(--red)",
-          teal: "var(--teal)",
-          orange: "var(--orange)",
-          pink: "var(--pink)",
-          gold: "var(--gold)",
-        },
       },
       boxShadow: {
         1: "var(--shadow-1)",

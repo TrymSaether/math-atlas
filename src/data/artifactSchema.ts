@@ -8,6 +8,7 @@
  * and inverse labels are derived at render time via ./relations, not stored.
  */
 import { z } from "zod";
+import { DOMAIN_PALETTE_KEYS } from "../lib/palette";
 import { RELATION_KEYS } from "./relations";
 import { KIND_VALUES } from "./sourceSchema";
 
@@ -77,7 +78,7 @@ export const ArtifactSchema = z.object({
       id: z.string(),
       label: z.string(),
       order: z.number().int(),
-      palette: z.string(),
+      palette: z.enum(DOMAIN_PALETTE_KEYS),
     }),
   ),
   nodes: z.array(ArtifactNodeSchema),

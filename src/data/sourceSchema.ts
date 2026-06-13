@@ -8,6 +8,7 @@
  * keys a hard build failure.
  */
 import { z } from "zod";
+import { DOMAIN_PALETTE_KEYS } from "../lib/palette";
 import { AUTHORABLE_RELATIONS, RELATIONS } from "./relations";
 
 const Slug = z
@@ -50,19 +51,7 @@ export const SourceDomainSchema = z
     id: Slug,
     label: z.string().min(1),
     order: z.number().int().nonnegative(),
-    palette: z.enum([
-      "blue",
-      "green",
-      "purple",
-      "red",
-      "teal",
-      "orange",
-      "pink",
-      "gold",
-      "brown",
-      "cyan",
-      "magenta",
-    ]),
+    palette: z.enum(DOMAIN_PALETTE_KEYS),
   })
   .strict();
 

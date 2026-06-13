@@ -15,6 +15,7 @@
   "include": [
     "vite.config.ts",
     "scripts/**/*.ts",
+    "src/lib/palette.ts",
     "src/data/sourceSchema.ts",
     "src/data/relations.ts",
     "src/data/artifactSchema.ts",

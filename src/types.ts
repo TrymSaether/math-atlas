@@ -1,4 +1,5 @@
 import type { ArtifactNode, ArtifactEdge } from "./data/artifactSchema";
+import type { DomainKey } from "./lib/palette";
 
 export type NodeKind = string;
 export type Relation = string;
@@ -14,8 +15,8 @@ export interface GraphDomain {
   id: string;
   label: string;
   order: number;
-  /** Palette key (blue/green/purple/red/teal/orange/pink/gold). */
-  palette: string;
+  /** Stable key into the 20-color domain palette. */
+  palette: DomainKey;
 }
 
 /**

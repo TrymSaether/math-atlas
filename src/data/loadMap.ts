@@ -5,7 +5,7 @@ import {
   type DomainBounds,
   type Position,
 } from "../lib/atlasLayout";
-import { registerDomainTones, type DomainTone } from "../lib/colors";
+import { resolveDomainTones, type DomainTone } from "../lib/colors";
 import { computeGraphMetrics, type GraphMetrics } from "../lib/graphMetrics";
 import { DEFAULT_MAP_ID, MAPS, loadRawMap, type MapId } from "./mapRegistry";
 import { SourceGraphSchema } from "./sourceSchema";
@@ -122,7 +122,7 @@ export function buildLoadedMap(data: GraphData): LoadedMap {
     data,
     nodeById: new Map(data.nodes.map((node) => [node.id, node])),
     domainById: new Map(data.domains.map((domain) => [domain.id, domain])),
-    domainTones: registerDomainTones(data.domains),
+    domainTones: resolveDomainTones(data.domains),
     edgeById: new Map(data.edges.map((edge) => [edge.id, edge])),
     incomingEdgesByNodeId: groupEdges(data.edges, "to"),
     outgoingEdgesByNodeId: groupEdges(data.edges, "from"),

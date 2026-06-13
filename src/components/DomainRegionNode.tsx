@@ -27,7 +27,11 @@ export function DomainRegionNode({ data }: NodeProps<Data>) {
   // overflows a narrow or short region.
   const watermarkSize = Math.max(
     28,
-    Math.min(data.width / Math.max(8, data.label.length * 0.62), data.height * 0.42, 132),
+    Math.min(
+      data.width / Math.max(8, data.label.length * 0.62),
+      data.height * 0.42,
+      132,
+    ),
   );
 
   return (
@@ -36,22 +40,23 @@ export function DomainRegionNode({ data }: NodeProps<Data>) {
       style={{ width: data.width, height: data.height }}
     >
       <div
-        className="absolute inset-0 border border-dashed"
+        className="absolute inset-0 overflow-hidden border"
         style={{
-          background: `color-mix(in srgb, ${data.tint} ${isCircle ? 44 : 64}%, transparent)`,
+          background: `color-mix(in srgb, ${data.tint} ${isCircle ? 36 : 48}%, transparent)`,
           borderColor: data.border,
-          borderRadius: isCircle ? 9999 : 24,
-          boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--surface) 68%, transparent)",
+          borderRadius: isCircle ? 9999 : "var(--radius-2xl)",
         }}
-      />
-      {/* Colored left rail — extends the per-card lane metaphor to the band, so
-          the domain reads even where the tint washes out. */}
-      {!isCircle && (
-        <div
-          className="absolute inset-y-5 left-0 w-[4px] rounded-[var(--radius-xs)]"
-          style={{ background: data.color, opacity: 0.5 }}
-        />
-      )}
+      >
+        {/* Colored left rail — mirrors the per-card rail convention while sitting
+            inside the clipped domain frame, so no gap appears between rail, fill,
+            and border. */}
+        {!isCircle && (
+          <span
+            className="absolute inset-y-0 left-[-1px] w-[4px]"
+            style={{ background: data.border }}
+          />
+        )}
+      </div>
       {/* Faint oversized domain name — the label of last resort at low zoom. */}
       <div
         className="absolute inset-0 flex items-center justify-center overflow-hidden px-8"
@@ -82,7 +87,10 @@ export function DomainRegionNode({ data }: NodeProps<Data>) {
         {glyphId ? (
           <DomainGlyph id={glyphId} size={13} />
         ) : (
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: data.color }} />
+          <span
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ background: data.color }}
+          />
         )}
         <span className="min-w-0 truncate">{data.label}</span>
         <span

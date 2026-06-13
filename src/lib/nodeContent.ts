@@ -16,7 +16,10 @@ function exampleText(node: GraphNode): string {
 
 /** Lead text of a step list (proof / solution), joined for plain-text use. */
 function stepsText(steps: { content: string }[] | undefined): string {
-  return (steps ?? []).map((s) => s.content).join(" ").trim();
+  return (steps ?? [])
+    .map((s) => s.content)
+    .join(" ")
+    .trim();
 }
 
 /**

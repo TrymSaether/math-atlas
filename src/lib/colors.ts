@@ -1,21 +1,18 @@
 /**
- * Math Atlas 8-domain palette + domain→tone resolution.
+ * Math Atlas domain palette + domain->tone resolution.
  *
- * Design contract (single source of truth):
- *  - Every visible tone is a CSS variable, so all hues retune automatically
- *    across the four themes (paper / chalkboard / 3b1b light / 3b1b dark).
- *  - A domain's *hue* is chosen from its authored data, not its array position:
- *    an explicit `palette` key wins; otherwise the authored hex `color` is
- *    snapped to its nearest palette anchor. Domains without either fall back to
- *    an ordered sweep. Assignment keeps hues distinct (a permutation while the
- *    domain count stays within the 8-hue palette), so adjacent clusters never
- *    collide.
- *  - Resolution is pure: `resolveDomainTones` takes the domains and returns a
- *    Map. A small module registry is primed from that result purely as a
- *    convenience for the many call sites that only hold a bare `domainId`.
+ * Base hues live in CSS variables and all visible tones are derived from them,
+ * so every theme retunes the same 20-color palette without duplicating tint and
+ * border tokens. Authored `palette` keys win; collisions and missing keys fall
+ * through the shuffled palette order.
  */
 
 import type { GraphDomain } from "../types";
+import {
+  DOMAIN_PALETTE_KEYS,
+  isDomainKey,
+  type DomainKey,
+} from "./palette";
 
 export interface DomainTone {
   /** Solid color (stroke, ID, dot, rail). */
@@ -30,33 +27,8 @@ export interface DomainTone {
   key: DomainKey;
 }
 
-export type DomainKey =
-  | "blue"
-  | "green"
-  | "purple"
-  | "red"
-  | "teal"
-  | "orange"
-  | "pink"
-  | "gold"
-  | "brown"
-  | "cyan"
-  | "magenta";
-
 /** Palette order — also the fallback sweep order for domains with no hue hint. */
-export const DOMAIN_KEYS: DomainKey[] = [
-  "blue",
-  "green",
-  "purple",
-  "red",
-  "teal",
-  "orange",
-  "pink",
-  "gold",
-  "brown",
-  "cyan",
-  "magenta",
-];
+export const DOMAIN_KEYS = DOMAIN_PALETTE_KEYS;
 
 function makeTone(key: DomainKey): DomainTone {
   return {
@@ -76,10 +48,8 @@ const TONES: Record<DomainKey, DomainTone> = Object.fromEntries(
 ) as Record<DomainKey, DomainTone>;
 
 function explicitKey(domain: GraphDomain): DomainKey | null {
-  const candidate = (domain as { palette?: string }).palette
-    ?.trim()
-    .toLowerCase();
-  if (candidate && candidate in TONES) return candidate as DomainKey;
+  const candidate = domain.palette.trim().toLowerCase();
+  if (isDomainKey(candidate)) return candidate;
   return null;
 }
 
@@ -88,7 +58,7 @@ function explicitKey(domain: GraphDomain): DomainKey | null {
  *
  * 1. Domains with an explicit `palette` key are pinned first.
  * 2. Any whose key was already taken sweep `DOMAIN_KEYS` in `order`, taking the
- *    next free hue, wrapping by order index past 8 domains.
+ *    next free hue, wrapping by order index past the 20-color palette.
  */
 export function resolveDomainTones(
   domains: GraphDomain[],
@@ -133,8 +103,8 @@ export function resolveDomainTones(
 
 // --- Bare-id registry -------------------------------------------------------
 // Many components only carry a `domainId`. They read from this registry, which
-// the active map primes via `registerDomainTones` (see App.tsx / buildLoadedMap)
-// before first paint. Resolution itself stays pure (above).
+// the active map primes via `registerDomainTones` before first paint. Resolution
+// itself stays pure (above).
 
 const registry = new Map<string, DomainTone>();
 
@@ -152,6 +122,7 @@ export function registerDomainTones(
   domains: GraphDomain[],
 ): Map<string, DomainTone> {
   const resolved = resolveDomainTones(domains);
+  registry.clear();
   for (const [id, tone] of resolved) registry.set(id, tone);
   return resolved;
 }
