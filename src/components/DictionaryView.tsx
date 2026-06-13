@@ -353,7 +353,6 @@ function DetailPane({
             relations={view.relations}
             map={map}
             onSelect={onPickRelated}
-            gutter={104}
             includeSeeAlso
           />
           <button type="button" className="dict-open" onClick={openInAtlas}>
