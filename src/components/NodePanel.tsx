@@ -11,35 +11,13 @@ import {
 
 import { useStore } from "../store";
 import type { LoadedMap, MapId } from "../data";
-import { MathText, MathProse } from "../lib/katex";
-import { getDomainTone } from "../lib/colors";
-import {
-  nodeDefinition,
-  nodeFormula,
-  nodeFormalStatement,
-  nodeStatement,
-  proofBlockLabel,
-} from "../lib/nodeContent";
-import { compactNodeRef, nodeSourceCitation } from "../lib/nodeMeta";
-import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { KIND_LABEL, type GraphNode } from "../types";
-import { hasNodeVisual, NodeVisual } from "./NodeVisual";
+import { useConceptView } from "../lib/conceptView";
+import { Steps, Collapsible } from "./Specimen";
+import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";
 import { NodeEditorPanel } from "./authoring/NodeEditorPanel";
-import {
-  Spine,
-  Facet,
-  MathBox,
-  ConnectionChip,
-  Steps,
-  Collapsible,
-} from "./Specimen";
 
 const USED_BY_INITIAL = 8;
-const RELATED_CASE_KINDS = new Set([
-  "example",
-  "non_example",
-  "counterexample",
-]);
 
 type TabId = "overview" | "proof" | "links" | "source";
 
@@ -117,50 +95,9 @@ function PanelContent({
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
   const toggleEditMode = useStore((s) => s.toggleEditMode);
-  const domain = map.domainById.get(node.domain);
-  const tone = getDomainTone(node.domain);
-  const domainGlyphId = getDomainGlyphId({ mapId, domainId: node.domain });
+  const view = useConceptView(node, map, mapId);
   const [tab, setTab] = useState<TabId>("overview");
-  const [showAllUsed, setShowAllUsed] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const prereqIds = useMemo(
-    () => [
-      ...new Set([...node.statementDependencies, ...node.proofDependencies]),
-    ],
-    [node],
-  );
-  const allConsequences = useMemo(
-    () => (map.outgoingEdgesByNodeId.get(node.id) ?? []).map((edge) => edge.to),
-    [map, node.id],
-  );
-  const examples = useMemo(() => {
-    const ids = new Set<string>();
-    for (const edge of map.outgoingEdgesByNodeId.get(node.id) ?? [])
-      ids.add(edge.to);
-    for (const edge of map.incomingEdgesByNodeId.get(node.id) ?? [])
-      ids.add(edge.from);
-    return [...ids].filter((cid) => {
-      const n = map.nodeById.get(cid);
-      return n && RELATED_CASE_KINDS.has(n.kind);
-    });
-  }, [map, node.id]);
-  const exercises = useMemo(
-    () =>
-      (map.outgoingEdgesByNodeId.get(node.id) ?? [])
-        .map((edge) => edge.to)
-        .filter((cid, index, ids) => ids.indexOf(cid) === index)
-        .filter((cid) => map.nodeById.get(cid)?.kind === "exercise"),
-    [map, node.id],
-  );
-  const usedBy = useMemo(
-    () =>
-      [...new Set(allConsequences)].filter((cid) => {
-        const n = map.nodeById.get(cid);
-        return n && !RELATED_CASE_KINDS.has(n.kind) && n.kind !== "exercise";
-      }),
-    [allConsequences, map],
-  );
 
   // Ordered domain peers drive the prev/next pager in the header.
   const peers = useMemo(
@@ -172,44 +109,37 @@ function PanelContent({
   const next =
     peerIdx >= 0 && peerIdx < peers.length - 1 ? peers[peerIdx + 1] : null;
 
-  const visibleUsed = showAllUsed ? usedBy : usedBy.slice(0, USED_BY_INITIAL);
-  const hiddenUsedCount = usedBy.length - visibleUsed.length;
-
-  const statement = nodeStatement(node);
-  const formalStatement = nodeFormalStatement(node);
-  const definition = nodeDefinition(node, [statement, formalStatement]);
-  const formula = nodeFormula(node, [statement, formalStatement, definition]);
-  const explanation = (node.content.intuition ?? "").trim();
-  const gloss = (node.content.gloss ?? "").trim();
-  const example = (node.examples[0]?.tex ?? "").trim();
-  const assumptions = node.assumptions;
-  const notation = node.content.notation;
-  const proofSteps = node.proof?.steps ?? [];
-  const proofLabel = proofBlockLabel(node.kind);
-  const compactRef = compactNodeRef(node);
-  const sourceCitation = nodeSourceCitation(node);
-  const showGloss = gloss && gloss !== explanation;
-  const linkCount =
-    prereqIds.length + usedBy.length + examples.length + exercises.length;
-  const hasProof = proofSteps.length > 0;
+  const hasProof = view.proof.hasProof;
+  const linkCount = view.relations.count;
+  // The overview body shows prose/visual only; relations live in the Links tab.
+  const bodyEmpty = !(
+    view.statement ||
+    view.formalStatement ||
+    view.definition ||
+    view.formula ||
+    view.intuition ||
+    view.gloss ||
+    view.example ||
+    view.assumptions.length ||
+    view.notation.length
+  );
 
   // Tabs are content-driven: a tab only appears when it has something to show.
   const tabs = useMemo(() => {
     const t: { id: TabId; label: string; badge?: number }[] = [
       { id: "overview", label: "Overview" },
     ];
-    if (hasProof) t.push({ id: "proof", label: proofLabel });
+    if (hasProof) t.push({ id: "proof", label: view.proof.label });
     if (linkCount > 0)
       t.push({ id: "links", label: "Links", badge: linkCount });
     t.push({ id: "source", label: "Source" });
     return t;
-  }, [hasProof, proofLabel, linkCount]);
+  }, [hasProof, view.proof.label, linkCount]);
 
   const activeTab = tabs.some((t) => t.id === tab) ? tab : "overview";
 
   useEffect(() => {
     setTab("overview");
-    setShowAllUsed(false);
     scrollRef.current?.scrollTo({ top: 0 });
   }, [node.id]);
 
@@ -275,60 +205,7 @@ function PanelContent({
           </div>
         </div>
 
-        <div className="flex items-start gap-2.5">
-          <span
-            aria-hidden
-            className="mt-[7px] h-9 w-[3px] shrink-0 rounded-full"
-            style={{ background: tone.color }}
-          />
-          <div className="min-w-0">
-            <h2
-              className="font-serif text-node-panel-title"
-              style={{
-                color: "var(--fg-1)",
-                fontWeight: 600,
-                letterSpacing: "-0.015em",
-              }}
-            >
-              <MathText text={node.label} />
-            </h2>
-            <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-ui-meta">
-              <span
-                className="inline-flex items-center gap-1.5 font-medium"
-                style={{ color: tone.color }}
-              >
-                {domainGlyphId ? (
-                  <DomainGlyph id={domainGlyphId} size={14} />
-                ) : (
-                  <span
-                    className="h-2 w-2 rounded-full"
-                    style={{ background: tone.color }}
-                  />
-                )}
-                {domain?.label ?? node.topicCluster}
-              </span>
-              <span aria-hidden style={{ color: "var(--fg-4)" }}>
-                ·
-              </span>
-              <span style={{ color: "var(--fg-2)" }}>
-                {KIND_LABEL[node.kind]}
-              </span>
-              {compactRef && (
-                <>
-                  <span aria-hidden style={{ color: "var(--fg-4)" }}>
-                    ·
-                  </span>
-                  <span
-                    className="font-mono text-ui-hint"
-                    style={{ color: "var(--fg-3)" }}
-                  >
-                    {compactRef}
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
+        <ConceptHeader view={view} />
 
         {/* Tab strip */}
         <div role="tablist" className="mt-3.5 flex items-center gap-0.5">
@@ -348,8 +225,8 @@ function PanelContent({
                   <span
                     className="rounded-[var(--radius-xs)] px-1.5 py-px text-ui-2xs leading-none"
                     style={{
-                      background: active ? tone.tint : "var(--surface-3)",
-                      color: active ? tone.text : "var(--fg-3)",
+                      background: active ? view.tone.tint : "var(--surface-3)",
+                      color: active ? view.tone.text : "var(--fg-3)",
                     }}
                   >
                     {t.badge}
@@ -359,7 +236,7 @@ function PanelContent({
                   <motion.span
                     layoutId="panel-tab-underline"
                     className="absolute inset-x-2 -bottom-px h-[2px] rounded-full"
-                    style={{ background: tone.color }}
+                    style={{ background: view.tone.color }}
                   />
                 )}
               </button>
@@ -374,163 +251,23 @@ function PanelContent({
 
       <div
         ref={scrollRef}
-        className="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4"
+        className="min-h-0 flex-1 overflow-y-auto px-5 py-4"
       >
-        {activeTab === "overview" && (
-          <>
-            {hasNodeVisual(node) ? (
-              <section id="sec-diagram">
-                <NodeVisual node={node} />
-              </section>
-            ) : null}
-
-            {statement && (
-              <section id="sec-statement">
-                <Spine tone={tone} kind={node.kind}>
-                  <MathProse text={statement} />
-                </Spine>
-              </section>
-            )}
-
-            {assumptions.length > 0 && (
-              <section id="sec-assumptions">
-                <Facet label="Assumptions">
-                  <ul className="m-0 space-y-1.5 p-0">
-                    {assumptions.map((a, i) => (
-                      <li key={i} className="flex gap-2">
-                        <span
-                          aria-hidden
-                          className="mt-[7px] h-1 w-1 shrink-0 rounded-full"
-                          style={{ background: tone.color }}
-                        />
-                        <span>
-                          <MathProse text={a} />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </Facet>
-              </section>
-            )}
-
-            {formalStatement && formalStatement !== statement && (
-              <section id="sec-formal">
-                <Facet label="Formal statement">
-                  <MathProse text={formalStatement} />
-                </Facet>
-              </section>
-            )}
-
-            {definition && (
-              <section id="sec-definition">
-                <Facet label="Definition" toneColor={tone.color}>
-                  <MathBox text={definition} />
-                </Facet>
-              </section>
-            )}
-
-            {formula && (
-              <section id="sec-formula">
-                <Facet label="Formula" toneColor={tone.color}>
-                  <MathBox text={formula} />
-                </Facet>
-              </section>
-            )}
-
-            {/* {notation.length > 0 && (
-              <section id="sec-notation">
-                <Facet label="Notation" muted>
-                  <div className="flex flex-wrap justify-center gap-x-3 gap-y-1.5">
-                    {notation.map((n, i) => (
-                      <span key={i} className="font-math text-ui-body" style={{ color: "var(--fg-1)" }}>
-                        <MathText text={n} />
-                      </span>
-                    ))}
-                  </div>
-                </Facet>
-              </section>
-            )} */}
-
-            {explanation && (
-              <section id="sec-intuition">
-                <Facet label="Intuition">
-                  <MathProse text={explanation} />
-                </Facet>
-              </section>
-            )}
-
-            {showGloss && (
-              <section id="sec-inwords">
-                <Facet label="In words">
-                  <MathProse text={gloss} />
-                </Facet>
-              </section>
-            )}
-
-            {example && (
-              <section id="sec-example">
-                <Facet label="Example" muted>
-                  <MathProse text={example} />
-                </Facet>
-              </section>
-            )}
-
-            {linkCount > 0 && (
-              <section id="sec-overview-links">
-                <div className="space-y-3">
-                  <PanelDictionaryLinkGroup
-                    label="Depends on"
-                    ids={prereqIds}
-                    map={map}
-                    onPick={select}
-                  />
-                  <PanelDictionaryLinkGroup
-                    label="Used by"
-                    ids={usedBy}
-                    map={map}
-                    onPick={select}
-                  />
-                  <PanelDictionaryLinkGroup
-                    label="Related cases"
-                    ids={examples}
-                    map={map}
-                    onPick={select}
-                  />
-                  <PanelDictionaryLinkGroup
-                    label="Exercises"
-                    ids={exercises}
-                    map={map}
-                    onPick={select}
-                  />
-                </div>
-              </section>
-            )}
-
-            {!statement &&
-              !explanation &&
-              !definition &&
-              !formalStatement &&
-              !showGloss &&
-              !example &&
-              assumptions.length === 0 &&
-              notation.length === 0 &&
-              linkCount === 0 && (
-                <p
-                  className="text-ui-sm italic"
-                  style={{ color: "var(--fg-3)" }}
-                >
-                  No written content recorded for this concept yet.
-                </p>
-              )}
-          </>
-        )}
+        {activeTab === "overview" &&
+          (bodyEmpty ? (
+            <p className="text-ui-sm italic" style={{ color: "var(--fg-3)" }}>
+              No written content recorded for this concept yet.
+            </p>
+          ) : (
+            <ConceptBody view={view} map={map} density="panel" onSelect={select} />
+          ))}
 
         {activeTab === "proof" && (
           <section id="sec-proof">
-            <Collapsible toneColor={tone.color} defaultOpen>
+            <Collapsible toneColor={view.tone.color} defaultOpen>
               <Steps
-                steps={proofSteps}
-                toneColor={tone.color}
+                steps={view.proof.steps}
+                toneColor={view.tone.color}
                 map={map}
                 onSelect={select}
               />
@@ -539,65 +276,13 @@ function PanelContent({
         )}
 
         {activeTab === "links" && (
-          <section id="sec-connections" className="space-y-4">
-            {prereqIds.length > 0 && (
-              <ChipGroup label="Depends on" count={prereqIds.length}>
-                {prereqIds.map((rid) => (
-                  <ConnectionChip
-                    key={rid}
-                    id={rid}
-                    map={map}
-                    onClick={() => select(rid)}
-                  />
-                ))}
-              </ChipGroup>
-            )}
-            {usedBy.length > 0 && (
-              <ChipGroup label="Used by" count={usedBy.length}>
-                {visibleUsed.map((rid) => (
-                  <ConnectionChip
-                    key={rid}
-                    id={rid}
-                    map={map}
-                    onClick={() => select(rid)}
-                  />
-                ))}
-                {hiddenUsedCount > 0 && (
-                  <button
-                    onClick={() => setShowAllUsed(true)}
-                    className="self-center px-1 text-ui-xs hover:underline"
-                    style={{ color: "var(--accent)" }}
-                  >
-                    +{hiddenUsedCount} more
-                  </button>
-                )}
-              </ChipGroup>
-            )}
-            {examples.length > 0 && (
-              <ChipGroup label="Related cases" count={examples.length}>
-                {examples.map((rid) => (
-                  <ConnectionChip
-                    key={rid}
-                    id={rid}
-                    map={map}
-                    onClick={() => select(rid)}
-                  />
-                ))}
-              </ChipGroup>
-            )}
-            {exercises.length > 0 && (
-              <ChipGroup label="Exercises" count={exercises.length}>
-                {exercises.map((rid) => (
-                  <ConnectionChip
-                    key={rid}
-                    id={rid}
-                    map={map}
-                    onClick={() => select(rid)}
-                  />
-                ))}
-              </ChipGroup>
-            )}
-          </section>
+          <ConceptRelations
+            relations={view.relations}
+            map={map}
+            onSelect={select}
+            includeSeeAlso
+            initialPerGroup={USED_BY_INITIAL}
+          />
         )}
 
         {activeTab === "source" && (
@@ -610,26 +295,24 @@ function PanelContent({
                   : "No tags recorded."}
               </dd>
               <dt style={{ color: "var(--fg-3)" }}>Domain</dt>
-              <dd style={{ color: "var(--fg-2)" }}>
-                {domain?.label ?? node.topicCluster}
-              </dd>
+              <dd style={{ color: "var(--fg-2)" }}>{view.domainLabel}</dd>
               <dt style={{ color: "var(--fg-3)" }}>Kind</dt>
-              <dd style={{ color: "var(--fg-2)" }}>{KIND_LABEL[node.kind]}</dd>
+              <dd style={{ color: "var(--fg-2)" }}>{view.kindLabel}</dd>
               <dt style={{ color: "var(--fg-3)" }}>Map position</dt>
               <dd style={{ color: "var(--fg-2)" }}>
                 {node.topicCluster} · {node.priority || "unranked"} · #
                 {node.number}
               </dd>
-              {compactRef && (
+              {view.compactRef && (
                 <>
                   <dt style={{ color: "var(--fg-3)" }}>Reference</dt>
-                  <dd style={{ color: "var(--fg-2)" }}>{compactRef}</dd>
+                  <dd style={{ color: "var(--fg-2)" }}>{view.compactRef}</dd>
                 </>
               )}
-              {sourceCitation && (
+              {view.sourceCitation && (
                 <>
                   <dt style={{ color: "var(--fg-3)" }}>Citation</dt>
-                  <dd style={{ color: "var(--fg-2)" }}>{sourceCitation}</dd>
+                  <dd style={{ color: "var(--fg-2)" }}>{view.sourceCitation}</dd>
                 </>
               )}
               {(node.source?.references ?? []).length > 0 && (
@@ -693,91 +376,5 @@ function IconButton({
     >
       {children}
     </button>
-  );
-}
-
-function ChipGroup({
-  label,
-  count,
-  children,
-}: {
-  label: string;
-  count: number;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <div className="mb-2 flex items-center gap-2">
-        <span
-          className="font-mono text-ui-2xs uppercase tracking-label"
-          style={{ color: "var(--fg-3)" }}
-        >
-          {label}
-        </span>
-        <span
-          className="font-mono text-ui-2xs"
-          style={{ color: "var(--fg-4)" }}
-        >
-          {count}
-        </span>
-      </div>
-      <div className="flex flex-wrap gap-1.5">{children}</div>
-    </div>
-  );
-}
-
-function PanelDictionaryLinkGroup({
-  label,
-  ids,
-  map,
-  onPick,
-}: {
-  label: string;
-  ids: string[];
-  map: LoadedMap;
-  onPick: (id: string) => void;
-}) {
-  const nodes = ids
-    .map((id) => map.nodeById.get(id))
-    .filter((node): node is GraphNode => Boolean(node));
-
-  if (nodes.length === 0) return null;
-
-  return (
-    <div>
-      <span
-        className="mb-1.5 block font-mono text-ui-2xs uppercase tracking-label"
-        style={{ color: "var(--fg-3)" }}
-      >
-        {label}
-      </span>
-      <div className="flex flex-wrap gap-1.5">
-        {nodes.map((node) => {
-          const nodeTone = getDomainTone(node.domain);
-          return (
-            <button
-              key={node.id}
-              type="button"
-              onClick={() => onPick(node.id)}
-              className="inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] border px-2 py-1 text-left text-ui-xs leading-tight transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
-              style={{
-                borderColor: nodeTone.border,
-                color: "var(--fg-2)",
-                background: "var(--surface)",
-              }}
-            >
-              <span
-                className="h-1.5 w-1.5 shrink-0 rounded-full"
-                style={{ background: nodeTone.color }}
-                aria-hidden
-              />
-              <span className="min-w-0 truncate">
-                <MathText text={node.label} />
-              </span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
   );
 }

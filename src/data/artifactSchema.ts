@@ -33,6 +33,7 @@ export const ArtifactNodeSchema = z.object({
   ),
   diagram: z.string().optional(),
   assumptions: z.array(z.string()),
+  properties: z.array(z.string()),
   proof: z
     .object({
       steps: z.array(

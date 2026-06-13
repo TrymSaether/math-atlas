@@ -8,34 +8,20 @@ import {
 import { useStore } from "../store";
 import { MAPS, type LoadedMap, type MapId } from "../data";
 import type { GraphNode } from "../types";
-import { MathText, MathProse } from "../lib/katex";
+import { MathText } from "../lib/katex";
 import { KIND_LABEL } from "../types";
 import { getDomainTone } from "../lib/colors";
-import {
-  nodeDefinition,
-  nodeFormula,
-  proofBlockLabel,
-} from "../lib/nodeContent";
+import { useConceptView } from "../lib/conceptView";
 import { CATEGORY_META, categoryOf, kindAbbrev } from "../lib/nodeCategory";
 import {
   KIND_ORDER,
   dictionaryEntries,
-  entryStatement,
-  entryFormalStatement,
   sectionFacet,
   type DictSortMode,
   type SectionFacet,
 } from "../lib/dictionary";
-import {
-  Spine,
-  Facet,
-  MathBox,
-  Proof,
-  Steps,
-  StepLabel,
-  specimenMeta,
-} from "./Specimen";
-import { hasNodeVisual, NodeVisual } from "./NodeVisual";
+import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";
+import { hasNodeVisual } from "./NodeVisual";
 import "./DictionaryView.css";
 
 export function DictionaryView() {
@@ -269,6 +255,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
             <DetailPane
               entry={activeEntry}
               map={map}
+              mapId={mapId}
               onBack={() => setMobileDetail(false)}
               onPickRelated={openRow}
             />
@@ -322,64 +309,19 @@ function IndexRow({
 function DetailPane({
   entry,
   map,
+  mapId,
   onBack,
   onPickRelated,
 }: {
   entry: GraphNode;
   map: LoadedMap;
+  mapId: MapId;
   onBack: () => void;
   onPickRelated: (id: string) => void;
 }) {
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
-  const tone = getDomainTone(entry.domain);
-  const domain = map.domainById.get(entry.domain);
-  const statement = entryStatement(entry);
-  const formalStatement = entryFormalStatement(entry);
-  const definition = nodeDefinition(entry, [statement, formalStatement]);
-  const formula = nodeFormula(entry, [statement, formalStatement, definition]);
-  const proofSteps = entry.proof?.steps ?? [];
-  const proofLabel = proofBlockLabel(entry.kind);
-  const prereqIds = [
-    ...new Set([...entry.statementDependencies, ...entry.proofDependencies]),
-  ];
-  const usedByIds = [
-    ...new Set(
-      (map.outgoingEdgesByNodeId.get(entry.id) ?? []).map((edge) => edge.to),
-    ),
-  ].filter((id) => {
-    const node = map.nodeById.get(id);
-    return (
-      node && !RELATED_CASE_KINDS.has(node.kind) && node.kind !== "exercise"
-    );
-  });
-  const relatedCaseIds = (() => {
-    const ids = new Set<string>();
-    for (const edge of map.outgoingEdgesByNodeId.get(entry.id) ?? [])
-      ids.add(edge.to);
-    for (const edge of map.incomingEdgesByNodeId.get(entry.id) ?? [])
-      ids.add(edge.from);
-    return [...ids].filter((id) => {
-      const node = map.nodeById.get(id);
-      return node && RELATED_CASE_KINDS.has(node.kind);
-    });
-  })();
-  const exerciseIds = (map.outgoingEdgesByNodeId.get(entry.id) ?? [])
-    .map((edge) => edge.to)
-    .filter((id, index, ids) => ids.indexOf(id) === index)
-    .filter((id) => map.nodeById.get(id)?.kind === "exercise");
-  const related = [
-    ...new Set([
-      ...(map.outgoingEdgesByNodeId.get(entry.id) ?? [])
-        .filter((e) => e.relation === "related_to")
-        .map((e) => e.to),
-      ...(map.incomingEdgesByNodeId.get(entry.id) ?? [])
-        .filter((e) => e.relation === "related_to")
-        .map((e) => e.from),
-    ]),
-  ]
-    .map((id) => map.nodeById.get(id))
-    .filter((n): n is GraphNode => Boolean(n));
+  const view = useConceptView(entry, map, mapId);
 
   const openInAtlas = () => {
     select(entry.id);
@@ -394,216 +336,32 @@ function DetailPane({
         </button>
 
         <header className="dict-doc-head">
-          <span
-            className="dict-doc-rail"
-            style={{ background: tone.color }}
-            aria-hidden
-          />
-          <h2 className="dict-doc-term font-serif">
-            <MathText text={entry.label} />
-          </h2>
-          <div className="dict-doc-meta">
-            <span className="dict-doc-domain" style={{ color: tone.color }}>
-              {domain?.label ?? entry.topicCluster}
-            </span>
-            <span className="dict-doc-sep" aria-hidden>
-              ·
-            </span>
-            <span>{specimenMeta(entry)}</span>
-          </div>
+          <ConceptHeader view={view} />
         </header>
 
-        {hasNodeVisual(entry) && (
-          <div className="dict-doc-dia">
-            <NodeVisual node={entry} className="dict-doc-visual" />
-          </div>
-        )}
-
         <div className="dict-doc-body">
-          {statement && (
-            <Spine tone={tone} kind={entry.kind} label="Statement" size="dict">
-              <MathProse text={statement} asBlock />
-            </Spine>
-          )}
-          {entry.assumptions.length > 0 && (
-            <Facet label="Assumptions">
-              <ul className="m-0 space-y-1.5 p-0">
-                {entry.assumptions.map((a, i) => (
-                  <li key={i} className="flex gap-2">
-                    <span
-                      aria-hidden
-                      className="mt-[7px] h-1 w-1 shrink-0 rounded-full"
-                      style={{ background: tone.color }}
-                    />
-                    <span>
-                      <MathProse text={a} />
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Facet>
-          )}
-          {formalStatement && formalStatement !== statement && (
-            <Facet label="Formal statement">
-              <MathProse text={formalStatement} asBlock />
-            </Facet>
-          )}
-          {definition && (
-            <Facet label="Definition" toneColor={tone.color}>
-              <MathBox text={definition} />
-            </Facet>
-          )}
-          {formula && (
-            <Facet label="Formula" toneColor={tone.color}>
-              <MathBox text={formula} />
-            </Facet>
-          )}
-          {entry.content.notation.length > 0 && (
-            <Facet label="Notation" muted>
-              <div className="flex flex-wrap gap-x-3 gap-y-1.5">
-                {entry.content.notation.map((n, i) => (
-                  <span
-                    key={i}
-                    className="font-math"
-                    style={{ color: "var(--fg-1)" }}
-                  >
-                    <MathText text={n} />
-                  </span>
-                ))}
-              </div>
-            </Facet>
-          )}
-          {entry.content.gloss && (
-            <Facet label="In words">
-              <MathProse text={entry.content.gloss} asBlock />
-            </Facet>
-          )}
-          {entry.examples[0]?.tex && (
-            <Facet label="Example" muted>
-              <MathProse text={entry.examples[0].tex} asBlock />
-            </Facet>
-          )}
-          {proofSteps.length > 0 && (
-            <div>
-              <StepLabel label={proofLabel} toneColor={tone.color} />
-              <Steps
-                steps={proofSteps}
-                toneColor={tone.color}
-                map={map}
-                onSelect={onPickRelated}
-              />
-            </div>
-          )}
+          <ConceptBody
+            view={view}
+            map={map}
+            density="full"
+            onSelect={onPickRelated}
+          />
         </div>
 
         <footer className="dict-doc-foot">
-          <DictionaryLinkGroup
-            label="Depends on"
-            ids={prereqIds}
+          <ConceptRelations
+            relations={view.relations}
             map={map}
-            onPick={onPickRelated}
+            onSelect={onPickRelated}
+            gutter={104}
+            includeSeeAlso
           />
-          <DictionaryLinkGroup
-            label="Used by"
-            ids={usedByIds}
-            map={map}
-            onPick={onPickRelated}
-          />
-          <DictionaryLinkGroup
-            label="Related cases"
-            ids={relatedCaseIds}
-            map={map}
-            onPick={onPickRelated}
-          />
-          <DictionaryLinkGroup
-            label="Exercises"
-            ids={exerciseIds}
-            map={map}
-            onPick={onPickRelated}
-          />
-          {related.length > 0 && (
-            <div className="dict-related">
-              <span className="dict-related-lab">See also</span>
-              <div className="dict-related-chips">
-                {related.map((n) => {
-                  const rtone = getDomainTone(n.domain);
-                  return (
-                    <button
-                      key={n.id}
-                      type="button"
-                      className="dict-related-chip"
-                      onClick={() => onPickRelated(n.id)}
-                      style={{ borderColor: rtone.border }}
-                    >
-                      <span
-                        className="dict-related-dot"
-                        style={{ background: rtone.color }}
-                        aria-hidden
-                      />
-                      <MathText text={n.label} />
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
           <button type="button" className="dict-open" onClick={openInAtlas}>
             Show in atlas <ArrowUpRightIcon className="h-3 w-3" aria-hidden />
           </button>
         </footer>
       </div>
     </article>
-  );
-}
-
-const RELATED_CASE_KINDS = new Set([
-  "example",
-  "non_example",
-  "counterexample",
-]);
-
-function DictionaryLinkGroup({
-  label,
-  ids,
-  map,
-  onPick,
-}: {
-  label: string;
-  ids: string[];
-  map: LoadedMap;
-  onPick: (id: string) => void;
-}) {
-  const nodes = ids
-    .map((id) => map.nodeById.get(id))
-    .filter((node): node is GraphNode => Boolean(node));
-
-  if (nodes.length === 0) return null;
-
-  return (
-    <div className="dict-related">
-      <span className="dict-related-lab">{label}</span>
-      <div className="dict-related-chips">
-        {nodes.map((node) => {
-          const tone = getDomainTone(node.domain);
-          return (
-            <button
-              key={node.id}
-              type="button"
-              className="dict-related-chip"
-              onClick={() => onPick(node.id)}
-              style={{ borderColor: tone.border }}
-            >
-              <span
-                className="dict-related-dot"
-                style={{ background: tone.color }}
-                aria-hidden
-              />
-              <MathText text={node.label} />
-            </button>
-          );
-        })}
-      </div>
-    </div>
   );
 }
 

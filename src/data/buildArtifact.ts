@@ -9,7 +9,11 @@
  */
 import type { SourceGraph } from "./sourceSchema";
 import { orientEdge, RELATIONS } from "./relations";
-import { ARTIFACT_VERSION, type Artifact, type ArtifactEdge } from "./artifactSchema";
+import {
+  ARTIFACT_VERSION,
+  type Artifact,
+  type ArtifactEdge,
+} from "./artifactSchema";
 
 export function deterministicEdgeId(
   from: string,
@@ -54,11 +58,17 @@ export function buildArtifact(src: SourceGraph): {
   const seen = new Set<string>();
   const edges: ArtifactEdge[] = [];
   for (const e of src.edges) {
-    const { from, to, isDependency } = orientEdge(e.source, e.target, e.relation);
+    const { from, to, isDependency } = orientEdge(
+      e.source,
+      e.target,
+      e.relation,
+    );
     const id = e.id ?? deterministicEdgeId(from, to, e.relation);
     // Symmetric relations read the same either way, so canonicalize the pair
     // before deduping — A→B and B→A collapse to one edge.
-    const [ka, kb] = RELATIONS[e.relation].symmetric ? [from, to].sort() : [from, to];
+    const [ka, kb] = RELATIONS[e.relation].symmetric
+      ? [from, to].sort()
+      : [from, to];
     const key = `${ka} ${kb} ${e.relation}`;
     if (seen.has(key)) continue;
     seen.add(key);
@@ -91,6 +101,7 @@ export function buildArtifact(src: SourceGraph): {
     examples: c.examples,
     diagram: c.diagram,
     assumptions: c.assumptions,
+    properties: c.properties,
     proof: c.proof,
     source: c.source,
     tags: c.tags,

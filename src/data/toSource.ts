@@ -22,12 +22,14 @@ export function graphDataToSource(data: GraphData): SourceGraph {
     examples: n.examples,
     diagram: n.diagram,
     assumptions: n.assumptions,
+    properties: n.properties,
     // The artifact loosens proof-step `role` to string; it came from a valid
     // build, so the enum values are intact.
     proof: n.proof as SourceConcept["proof"],
     source: n.source,
     tags: n.tags,
-    priority: (n.priority || "standard") as SourceGraph["concepts"][number]["priority"],
+    priority: (n.priority ||
+      "standard") as SourceGraph["concepts"][number]["priority"],
   }));
 
   const edges: SourceEdge[] = data.edges.map((e) => {

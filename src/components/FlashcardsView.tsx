@@ -3,13 +3,15 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Check, CaretLeft as ChevronLeft, CaretRight as ChevronRight, ArrowCounterClockwise as RotateCcw, Shuffle, Sparkle as Sparkles, X } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
-import type { LoadedMap } from "../data";
-import { MathText, MathProse } from "../lib/katex";
+import type { LoadedMap, MapId } from "../data";
+import { MathText } from "../lib/katex";
 import { getDomainTone } from "../lib/colors";
-import { nodeAnswerText, nodeDefinition, nodeFormula, nodeFormalStatement, nodeStatement, proofBlockLabel } from "../lib/nodeContent";
+import { nodeAnswerText } from "../lib/nodeContent";
+import { useConceptView } from "../lib/conceptView";
 import type { GraphNode } from "../types";
-import { Spine, Facet, MathBox, Proof, specimenMeta } from "./Specimen";
-import { hasNodeVisual, NodeVisual } from "./NodeVisual";
+import { specimenMeta } from "./Specimen";
+import { ConceptHeader, ConceptBody } from "./concept";
+import { hasNodeVisual } from "./NodeVisual";
 
 /** A node carries enough to drill if it has a title and at least one answer-side facet. */
 function answerText(n: GraphNode): string {
@@ -91,10 +93,10 @@ export function FlashcardsView() {
   const mapId = useStore((s) => s.mapId);
   const map = useStore((s) => s.loadedMaps[mapId]);
   if (!map) return null;
-  return <FlashcardsBody map={map} />;
+  return <FlashcardsBody map={map} mapId={mapId} />;
 }
 
-function FlashcardsBody({ map }: { map: LoadedMap }) {
+function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   // Share the TopBar/dictionary filter state so a narrowed atlas narrows the deck.
   const kinds = useStore((s) => s.kinds);
   const topics = useStore((s) => s.topics);
@@ -232,7 +234,7 @@ function FlashcardsBody({ map }: { map: LoadedMap }) {
                     className="absolute inset-0"
                   >
                     {state.flipped ? (
-                      <CardBack node={node} map={map} onOpen={() => { select(node.id); setSurface("dictionary"); }} />
+                      <CardBack node={node} map={map} mapId={mapId} onOpen={() => { select(node.id); setSurface("dictionary"); }} />
                     ) : (
                       <CardFront node={node} map={map} onFlip={flip} />
                     )}
@@ -339,24 +341,21 @@ function CardFront({ node, map, onFlip }: { node: GraphNode; map: LoadedMap; onF
   );
 }
 
-function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOpen: () => void }) {
-  const tone = getDomainTone(node.domain);
-  const statement = nodeStatement(node);
-  const formal = nodeFormalStatement(node);
-  const definition = nodeDefinition(node, [statement, formal]);
-  const formula = nodeFormula(node, [statement, formal, definition]);
-  const gloss = (node.content.gloss ?? "").trim();
-  const explanation = (node.content.intuition ?? "").trim();
-  const example = (node.examples[0]?.tex ?? "").trim();
-  const proof = (node.proof?.steps ?? []).map((s) => s.content).join("\n\n").trim();
-  const proofLabel = proofBlockLabel(node.kind);
-  const showGloss = gloss && gloss !== explanation && gloss !== statement;
-  // When there is no formal statement block, lead with the best plain answer.
-  const lead = statement || formal || gloss || explanation || proof;
-
+function CardBack({
+  node,
+  map,
+  mapId,
+  onOpen,
+}: {
+  node: GraphNode;
+  map: LoadedMap;
+  mapId: MapId;
+  onOpen: () => void;
+}) {
+  const view = useConceptView(node, map, mapId);
   return (
     <CardShell
-      tone={tone.color}
+      tone={view.tone.color}
       footer={
         <button
           onClick={onOpen}
@@ -368,54 +367,8 @@ function CardBack({ node, map, onOpen }: { node: GraphNode; map: LoadedMap; onOp
       }
     >
       <div className="space-y-4 px-6 py-5">
-        <div className="flex items-center justify-between gap-3">
-          <CardMeta node={node} map={map} />
-        </div>
-        <h3 className="font-serif text-atlas-card" style={{ color: "var(--fg-1)", fontWeight: 600 }}>
-          <MathText text={node.label} />
-        </h3>
-
-        {lead && (
-          <Spine tone={tone} kind={node.kind} label="Statement" size="dict">
-            <MathProse text={lead} />
-          </Spine>
-        )}
-        {formal && formal !== lead && (
-          <Facet label="Formal statement">
-            <MathProse text={formal} asBlock />
-          </Facet>
-        )}
-        {definition && (
-          <Facet label="Definition" toneColor={tone.color}>
-            <MathBox text={definition} />
-          </Facet>
-        )}
-        {formula && (
-          <Facet label="Formula" toneColor={tone.color}>
-            <MathBox text={formula} />
-          </Facet>
-        )}
-        {hasNodeVisual(node) && (
-          <NodeVisual node={node} className="max-h-none" />
-        )}
-        {showGloss && (
-          <Facet label="In words">
-            <MathProse text={gloss} />
-          </Facet>
-        )}
-        {explanation && explanation !== lead && (
-          <Facet label="Intuition">
-            <MathProse text={explanation} />
-          </Facet>
-        )}
-        {example && (
-          <Facet label="Example" muted>
-            <MathProse text={example} />
-          </Facet>
-        )}
-        {proof && proof !== lead && (
-          <Proof text={proof} toneColor={tone.color} label={proofLabel} defaultOpen />
-        )}
+        <ConceptHeader view={view} size="card" />
+        <ConceptBody view={view} map={map} density="card" />
       </div>
     </CardShell>
   );

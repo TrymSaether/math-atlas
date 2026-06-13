@@ -116,6 +116,7 @@ export const SourceConceptSchema = z
      * solutions alike (same shape); the UI labels it "Solution" for
      * `kind === "exercise"` and "Proof" otherwise.
      */
+    properties: z.array(Prose).default([]),
     proof: z
       .object({ steps: z.array(ProofStepSchema).min(1) })
       .strict()

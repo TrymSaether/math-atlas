@@ -1413,14 +1413,14 @@
       "content": {
         "statement": "A closed subspace is a linear subspace that is closed in the ambient topology.",
         "definition": "A linear subspace containing all limits of convergent sequences from itself, in the ambient norm/topology.",
-        "formal": "M\\le X,\\quad M=\\overline{M}.",
+        "formal": "$$M\\le X,\\quad M=\\overline{M}.$$",
         "intuition": "A subspace with no missing limit points, so quotient constructions behave instead of collapsing into nonsense.",
-        "notation": ["M\\subseteq X"]
+        "notation": ["$$M\\subseteq X$$"]
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/quotient-space.svg",
       "assumptions": [
-        "X is a normed or topological vector space.",
-        "M is a linear subspace of X."
+        "$X$ is a normed or topological vector space.",
+        "$M$ is a linear subspace of $X$."
       ],
       "tags": ["subspace", "closed", "banach_space"],
       "priority": "core"
@@ -1431,22 +1431,37 @@
       "domain": "spaces_norms",
       "label": "Quotient space",
       "content": {
-        "statement": "Given a normed/Banach space X and a closed subspace Y, the quotient X/Y is the space of cosets x+Y.",
-        "definition": "The quotient space collapses a closed subspace to zero and measures distance to that subspace using the quotient norm.",
-        "formal": "X/Y=\\{x+Y:x\\in X\\},\\qquad \\|x+Y\\|=\\inf_{y\\in Y}\\|x+y\\|.",
-        "intuition": "You identify points that differ by an element of Y; geometry modulo a subspace, because apparently ordinary geometry was not abstract enough.",
-        "notation": ["X/Y"]
+        "statement": "Let $X$ be a normed vector space and $Y \\subseteq X$ a closed linear subspace. The quotient space $X/Y$ is the set of equivalence classes of vectors modulo $Y$, where two vectors are equivalent if their difference lies in $Y$.",
+        "definition": "The quotient construction identifies all vectors differing by an element of $Y$, effectively collapsing $Y$ into the zero element. Each element of $X/Y$ is a coset $x+Y$, representing an affine translate of $Y$. The quotient inherits a natural vector space structure, and when $Y$ is closed, it becomes a normed space under the quotient norm.",
+        "formal": "$$\\begin{aligned} x &\\sim y \\iff x-y \\in Y,\\\\ X/Y &= \\{x+Y : x \\in X\\},\\\\ \\alpha(x+Y) &= \\alpha x + Y,\\\\ (x+Y)+(z+Y) &= (x+z)+Y,\\\\ \\|x+Y\\|_{X/Y} &= \\inf_{y \\in Y} \\|x-y\\|_X. \\end{aligned}$$",
+        "intuition": "A quotient space forgets directions inside the subspace $Y$. Moving along $Y$ does not change your position in $X/Y$, so each coset behaves like a single point. Geometrically, $X/Y$ measures only the directions transverse to $Y$.",
+        "notation": ["$X/Y$", "$x+Y$", "$[x]$"]
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/quotient-space.svg",
       "assumptions": [
-        "X is a normed or Banach space.",
-        "Y is a closed linear subspace of X."
+        "X is a normed vector space.",
+        "Y is a linear subspace of X.",
+        "Y is closed if the quotient norm is required to be non-degenerate.",
+        "If X is Banach and Y is closed, then X/Y is Banach."
       ],
+      "properties": [
+        "The canonical quotient map $q : X \\to X/Y$ given by $q(x)=x+Y$ is linear and surjective.",
+        "The kernel of $q$ is exactly $Y$, $$\\ker(q)=Y.$$",
+        "dim($X/Y$) = dim($X$) - dim($Y$) in the finite-dimensional case.",
+        "If $T : X \\to Z$ is linear with $Y \\subseteq \\ker(T)$, then $T$ factors uniquely through $X/Y$."
+      ],
+
       "source": {
-        "citation": "Bowers-Kalton Section 3.7",
+        "citation": "Standard construction; see quotient spaces in linear and functional analysis",
         "references": []
       },
-      "tags": ["quotient", "banach_space", "construction"],
+      "tags": [
+        "quotient_space",
+        "normed_space",
+        "banach_space",
+        "functional_analysis",
+        "construction"
+      ],
       "priority": "core"
     },
     {
@@ -1457,9 +1472,9 @@
       "content": {
         "statement": "The quotient map sends a vector to its coset.",
         "definition": "The canonical surjective linear map from a space onto its quotient by a subspace.",
-        "formal": "Q:X\\to X/Y,\\qquad Qx=x+Y.",
+        "formal": "$$Q:X\\to X/Y,\\qquad Qx=x+Y.$$",
         "intuition": "Forget the component lying in Y.",
-        "notation": ["Q:X\\to X/Y"]
+        "notation": ["$$Q:X\\to X/Y$$"]
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/quotient-space.svg",
       "assumptions": ["Y is a closed subspace of X."],
@@ -1478,12 +1493,12 @@
       "content": {
         "statement": "The kernel of a linear operator is the set of vectors mapped to zero.",
         "definition": "The null space of a linear operator.",
-        "formal": "\\ker T=\\{x\\in X:Tx=0\\}.",
+        "formal": "$$\\ker T=\\{x\\in X:Tx=0\\}.$$",
         "intuition": "Everything the operator kills.",
-        "notation": ["\\ker T"]
+        "notation": ["$$\\ker T$$"]
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/kernel-quotient.svg",
-      "assumptions": ["T:X\\to Y is linear."],
+      "assumptions": ["$$T:X\\to Y is linear.$$"],
       "tags": ["operator", "kernel", "quotient"],
       "priority": "core"
     },

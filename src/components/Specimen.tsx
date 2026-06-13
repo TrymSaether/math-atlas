@@ -13,11 +13,16 @@
  */
 import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { CaretRight } from "@phosphor-icons/react";
+import { CaretRightIcon } from "@phosphor-icons/react";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { getDomainTone, type DomainTone } from "../lib/colors";
-import { CATEGORY_META, categoryOf, kindAbbrev, railBackground } from "../lib/nodeCategory";
+import {
+  CATEGORY_META,
+  categoryOf,
+  kindAbbrev,
+  railBackground,
+} from "../lib/nodeCategory";
 import { compactNodeRef } from "../lib/nodeMeta";
 import { KIND_LABEL, type GraphNode, type ProofStep } from "../types";
 
@@ -67,7 +72,10 @@ export function Spine({
       )}
       <div
         className="font-math leading-[1.6]"
-        style={{ color: "var(--fg-1)", fontSize: size === "dict" ? "15px" : "15.5px" }}
+        style={{
+          color: "var(--fg-1)",
+          fontSize: size === "dict" ? "15px" : "15.5px",
+        }}
       >
         {children}
       </div>
@@ -113,7 +121,11 @@ export function MathBox({ text }: { text: string }) {
   return (
     <div
       className="block max-w-full overflow-x-auto rounded-[var(--radius-sm)] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-      style={{ background: "var(--surface-2)", borderColor: "var(--border)", color: "var(--fg-1)" }}
+      style={{
+        background: "var(--surface-2)",
+        borderColor: "var(--border)",
+        color: "var(--fg-1)",
+      }}
     >
       <MathText text={text} asBlock />
     </div>
@@ -125,10 +137,19 @@ export function MathBox({ text }: { text: string }) {
  * block (or the panel's Proof / Solution tab). The static, always-shown sibling
  * of the collapsible {@link Proof} header.
  */
-export function StepLabel({ label, toneColor }: { label: string; toneColor: string }) {
+export function StepLabel({
+  label,
+  toneColor,
+}: {
+  label: string;
+  toneColor: string;
+}) {
   return (
     <div className="mb-3 flex items-center gap-2">
-      <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
+      <span
+        className="font-mono text-ui-2xs uppercase tracking-label"
+        style={{ color: toneColor }}
+      >
         {label}
       </span>
       <span
@@ -149,7 +170,13 @@ export function StepLabel({ label, toneColor }: { label: string; toneColor: stri
  * Proof / Solution tabs (under a static {@link StepLabel}) and the collapsible
  * {@link Proof} so the manuscript texture is identical everywhere.
  */
-export function Argument({ text, toneColor }: { text: string; toneColor: string }) {
+export function Argument({
+  text,
+  toneColor,
+}: {
+  text: string;
+  toneColor: string;
+}) {
   return (
     <div
       className="font-math pl-3.5 text-ui-copy leading-[1.7]"
@@ -159,7 +186,11 @@ export function Argument({ text, toneColor }: { text: string; toneColor: string 
       }}
     >
       <MathProse text={tidyMathText(text)} asBlock />
-      <span aria-hidden className="mt-1.5 block text-right text-ui-sm" style={{ color: toneColor }}>
+      <span
+        aria-hidden
+        className="mt-1.5 block text-right text-ui-sm"
+        style={{ color: toneColor }}
+      >
         ∎
       </span>
     </div>
@@ -194,9 +225,12 @@ export function Collapsible({
         aria-label={label ? undefined : open ? "Collapse" : "Expand"}
         className="group mb-1 flex w-full items-center gap-1.5 focus:outline-none"
       >
-        <CaretRight
+        <CaretRightIcon
           className="h-3 w-3 shrink-0 transition-transform duration-200"
-          style={{ color: toneColor, transform: open ? "rotate(90deg)" : "none" }}
+          style={{
+            color: toneColor,
+            transform: open ? "rotate(90deg)" : "none",
+          }}
           aria-hidden
         />
         {label && (
@@ -210,7 +244,9 @@ export function Collapsible({
         <span
           aria-hidden
           className="h-px flex-1 opacity-50 transition-opacity group-hover:opacity-100"
-          style={{ background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)` }}
+          style={{
+            background: `repeating-linear-gradient(90deg, ${toneColor} 0 2px, transparent 2px 5px)`,
+          }}
         />
       </button>
       <AnimatePresence initial={false}>
@@ -220,7 +256,10 @@ export function Collapsible({
             initial={reduceMotion ? false : { height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
-            transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.2, 0.7, 0.2, 1] }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.22,
+              ease: [0.2, 0.7, 0.2, 1],
+            }}
             className="overflow-hidden"
           >
             <div className="mt-2">{children}</div>
@@ -237,6 +276,7 @@ export function Collapsible({
  * section among many (dictionary, flashcard back); the panel's dedicated tabs
  * wrap their content in a label-less Collapsible instead.
  */
+
 export function Proof({
   text,
   toneColor,
@@ -296,7 +336,9 @@ export function Steps({
               <span
                 aria-hidden
                 className="absolute left-[10px] top-6 bottom-0 w-px"
-                style={{ background: `color-mix(in srgb, ${toneColor} 45%, transparent)` }}
+                style={{
+                  background: `color-mix(in srgb, ${toneColor} 45%, transparent)`,
+                }}
               />
             )}
             <span
@@ -312,25 +354,40 @@ export function Steps({
             </span>
             {role && (
               <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
+                <span
+                  className="font-mono text-ui-2xs uppercase tracking-label"
+                  style={{ color: toneColor }}
+                >
                   {role}
                 </span>
               </div>
             )}
             {step.content && (
-              <div className="font-math mt-1.5 text-ui-copy leading-[1.7]" style={{ color: "var(--fg-1)" }}>
+              <div
+                className="font-math mt-1.5 text-ui-copy leading-[1.7]"
+                style={{ color: "var(--fg-1)" }}
+              >
                 <MathProse text={step.content} asBlock />
               </div>
             )}
             {deps.length > 0 && onSelect && (
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {deps.map((id) => (
-                  <ConnectionChip key={id} id={id} map={map!} onClick={() => onSelect(id)} />
+                  <ConnectionChip
+                    key={id}
+                    id={id}
+                    map={map!}
+                    onClick={() => onSelect(id)}
+                  />
                 ))}
               </div>
             )}
             {last && (
-              <span aria-hidden className="mt-2 block text-ui-sm" style={{ color: toneColor }}>
+              <span
+                aria-hidden
+                className="mt-2 block text-ui-sm"
+                style={{ color: toneColor }}
+              >
                 ∎
               </span>
             )}
@@ -349,10 +406,13 @@ export function ConnectionChip({
   id,
   map,
   onClick,
+  caption,
 }: {
   id: string;
   map: LoadedMap;
   onClick: () => void;
+  /** Faint relation verb shown after the title (e.g. "defined from"). */
+  caption?: string;
 }) {
   const node = map.nodeById.get(id);
   if (!node) return null;
@@ -361,7 +421,11 @@ export function ConnectionChip({
   return (
     <button
       onClick={onClick}
-      title={`${node.label} · ${KIND_LABEL[node.kind]}`}
+      title={
+        caption
+          ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}`
+          : `${node.label} · ${KIND_LABEL[node.kind]}`
+      }
       className="group inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
     >
@@ -371,9 +435,20 @@ export function ConnectionChip({
       >
         <Icon className="h-2.5 w-2.5" strokeWidth={2.4} aria-hidden />
       </span>
-      <span className="min-w-0 truncate text-ui-control leading-4" style={{ color: "var(--fg-1)" }}>
+      <span
+        className="min-w-0 truncate text-ui-control leading-4"
+        style={{ color: "var(--fg-1)" }}
+      >
         <MathText text={node.label} />
       </span>
+      {caption && (
+        <span
+          className="shrink-0 font-mono text-ui-2xs lowercase"
+          style={{ color: "var(--fg-4)" }}
+        >
+          {caption}
+        </span>
+      )}
     </button>
   );
 }
