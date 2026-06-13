@@ -38,7 +38,10 @@ export type DomainKey =
   | "teal"
   | "orange"
   | "pink"
-  | "gold";
+  | "gold"
+  | "brown"
+  | "cyan"
+  | "magenta";
 
 /** Palette order — also the fallback sweep order for domains with no hue hint. */
 export const DOMAIN_KEYS: DomainKey[] = [
@@ -50,6 +53,9 @@ export const DOMAIN_KEYS: DomainKey[] = [
   "orange",
   "pink",
   "gold",
+  "brown",
+  "cyan",
+  "magenta",
 ];
 
 function makeTone(key: DomainKey): DomainTone {
@@ -70,7 +76,9 @@ const TONES: Record<DomainKey, DomainTone> = Object.fromEntries(
 ) as Record<DomainKey, DomainTone>;
 
 function explicitKey(domain: GraphDomain): DomainKey | null {
-  const candidate = (domain as { palette?: string }).palette?.trim().toLowerCase();
+  const candidate = (domain as { palette?: string }).palette
+    ?.trim()
+    .toLowerCase();
   if (candidate && candidate in TONES) return candidate as DomainKey;
   return null;
 }
@@ -111,7 +119,8 @@ export function resolveDomainTones(
   let sweep = 0;
   colorless.forEach((domain, index) => {
     if (result.has(domain.id)) return;
-    while (sweep < DOMAIN_KEYS.length && !freeKeys.has(DOMAIN_KEYS[sweep])) sweep++;
+    while (sweep < DOMAIN_KEYS.length && !freeKeys.has(DOMAIN_KEYS[sweep]))
+      sweep++;
     const key =
       sweep < DOMAIN_KEYS.length
         ? DOMAIN_KEYS[sweep]

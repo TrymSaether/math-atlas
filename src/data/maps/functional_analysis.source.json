@@ -48,9 +48,15 @@
       "palette": "pink"
     },
     {
+      "id": "order_theory",
+      "label": "Order Theory",
+      "order": 7,
+      "palette": "brown"
+    },
+    {
       "id": "examples_applications",
       "label": "Examples & Applications",
-      "order": 7,
+      "order": 8,
       "palette": "gold"
     }
   ],
@@ -362,6 +368,23 @@
       "priority": "core"
     },
     {
+      "id": "pointwise_limit",
+      "kind": "application",
+      "domain": "examples_applications",
+      "label": "Pointwise limits of bounded linear functionals",
+      "content": {
+        "statement": "Hahn-Banach shows pointwise limits of bounded linear functionals are bounded under pointwise convergence.",
+        "formal": "If $f_n:X\\to \\mathbb{K}$ are bounded linear functionals and $f_n(x)\\to f(x)$ for all $x\\in X$, then $f:X\\to \\mathbb{K}$ is a bounded linear functional.",
+        "intuition": "Hahn-Banach prevents pathological unbounded functionals from arising as pointwise limits of bounded ones.",
+        "notation": [
+          "f_n\\xrightarrow[n\\to\\infty]{}f\\text{ pointwise} \\implies f\\in X^*$$"
+        ],
+        "formula": "$$\\begin{aligned} &f_n:X\\to \\mathbb{K}\\text{ bounded linear functionals},\\\\ &f_n(x)\\to f(x)\\text{ for all }x\\in X,\\\\ \\implies &f:X\\to \\mathbb{K}\\text{ is a bounded linear functional}. \\end{aligned}$$"
+      },
+      "tags": ["application", "hahn_banach"],
+      "priority": "core"
+    },
+    {
       "id": "convergence",
       "kind": "property",
       "domain": "foundations",
@@ -422,7 +445,7 @@
       ],
       "tags": ["operator", "bounded", "linear", "continuous", "normed_space"],
       "priority": "core"
-    }, 
+    },
     {
       "id": "bounded_function_on_domain",
       "kind": "definition",
@@ -927,26 +950,100 @@
       "domain": "hahn_banach",
       "label": "Hahn-Banach theorem",
       "content": {
-        "statement": "A dominated linear functional on a subspace extends to the whole space without increasing its bound.",
-        "formal": "If $f\\leq p$ on $V \\subset E, p$ sublinear, then $f$ extends to $F:E\\to\\mathbb{R}$ with $F\\leq p$, normed-space versions preserve norm.",
-        "intuition": "Scalar probes defined on a subspace can be extended globally.",
-        "notation": []
+        "statement": "A linear functional dominated by a sublinear functional on a subspace extends to the whole space while preserving domination.",
+        "formal": "Let $E$ be a real vector space, let $V\\leq E$ be a linear subspace, let $p:E\\to\\mathbb{R}$ be sublinear, and let $f:V\\to\\mathbb{R}$ be linear with $f(v)\\leq p(v)$ for all $v\\in V$. Then there exists a linear functional $F:E\\to\\mathbb{R}$ such that $F|_V=f$ and $F(x)\\leq p(x)$ for all $x\\in E$. If $E$ is normed and $|f(v)|\\leq C\\|v\\|$ for all $v\\in V$, then $F$ may be chosen so that $|F(x)|\\leq C\\|x\\|$ for all $x\\in E$; in particular, taking $C=\\|f\\|$ gives $\\|F\\|=\\|f\\|$.",
+        "intuition": "A linear measurement defined on a subspace can be extended globally without exceeding the same controlling bound.",
+        "notation": [
+          "$E$: real vector space",
+          "$V\\leq E$: linear subspace",
+          "$p:E\\to\\mathbb{R}$: sublinear functional",
+          "$f:V\\to\\mathbb{R}$: dominated linear functional",
+          "$F:E\\to\\mathbb{R}$: dominated extension of $f$"
+        ]
       },
-      "tags": ["hahn-banach", "duality"],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $\\mathcal P$ be the set of all pairs $(W,g)$ such that $V\\subseteq W\\subseteq E$, $W$ is a linear subspace, $g:W\\to\\mathbb{R}$ is linear, $g|_V=f$, and $g(w)\\leq p(w)$ for all $w\\in W$. Order $\\mathcal P$ by $(W_1,g_1)\\leq (W_2,g_2)$ iff $W_1\\subseteq W_2$ and $g_2|_{W_1}=g_1$. Then $(V,f)\\in\\mathcal P$, so $\\mathcal P$ is nonempty.",
+            "uses": ["partially_ordered_set"]
+          },
+          {
+            "role": "argument",
+            "content": "Let $\\mathcal C$ be a chain in $\\mathcal P$. Define $$W_{\\mathcal C}=\\bigcup_{(W,g)\\in\\mathcal C}W.$$ Since $\\mathcal C$ is totally ordered by extension, $W_{\\mathcal C}$ is a linear subspace. Define $g_{\\mathcal C}(x)=g(x)$ whenever $x\\in W$ for some $(W,g)\\in\\mathcal C$. This is well-defined because any two members of a chain agree on their common domain. The map $g_{\\mathcal C}$ is linear, extends $f$, and satisfies $g_{\\mathcal C}(x)\\leq p(x)$ for every $x\\in W_{\\mathcal C}$. Hence $(W_{\\mathcal C},g_{\\mathcal C})$ is an upper bound for $\\mathcal C$.",
+            "uses": ["upper_bound", "chain"]
+          },
+          {
+            "role": "claim",
+            "content": "By Zorn's lemma, $\\mathcal P$ has a maximal element $(M,h)$. We claim that $M=E$.",
+            "uses": ["zorns_lemma"]
+          },
+          {
+            "role": "argument",
+            "content": "Assume for contradiction that $M\\neq E$, and choose $x_0\\in E\\setminus M$. Any linear extension of $h$ to $M+\\mathbb{R}x_0$ has the form $$H(m+t x_0)=h(m)+t\\alpha$$ for some $\\alpha\\in\\mathbb{R}$. For $m,n\\in M$, sublinearity and domination give $$h(m)-h(n)=h(m-n)\\leq p(m-n)\\leq p(m+x_0)+p(-n-x_0).$$ Therefore $$-p(-n-x_0)-h(n)\\leq p(m+x_0)-h(m).$$ Hence $$\\sup_{n\\in M}\\{-p(-n-x_0)-h(n)\\}\\leq\\inf_{m\\in M}\\{p(m+x_0)-h(m)\\}.$$ Choose $\\alpha$ between these two quantities.",
+            "uses": ["sublinear_functional", "positive_homogeneity"]
+          },
+          {
+            "role": "calculation",
+            "content": "We show that $H\\leq p$ on $M+\\mathbb{R}x_0$. By the choice of $\\alpha$, for all $m\\in M$ we have $$h(m)+\\alpha\\leq p(m+x_0)$$ and $$h(m)-\\alpha\\leq p(m-x_0).$$ If $t>0$, apply the first inequality to $m/t$ and multiply by $t$: $$h(m)+t\\alpha\\leq p(m+t x_0).$$ If $t<0$, apply the second inequality to $m/(-t)$ and multiply by $-t$: $$h(m)+t\\alpha\\leq p(m+t x_0).$$ The case $t=0$ is exactly $h(m)\\leq p(m)$. Thus $H(m+t x_0)\\leq p(m+t x_0)$ for all $m\\in M$ and $t\\in\\mathbb{R}$.",
+            "uses": ["sublinear_functional", "positive_homogeneity"]
+          },
+          {
+            "role": "argument",
+            "content": "Thus $(M+\\mathbb{R}x_0,H)$ belongs to $\\mathcal P$ and strictly extends $(M,h)$, since $x_0\\notin M$. This contradicts the maximality of $(M,h)$.",
+            "uses": ["maximal_element"]
+          },
+          {
+            "role": "conclusion",
+            "content": "Therefore $M=E$. Hence $h$ is a linear functional on all of $E$, extends $f$, and satisfies $h(x)\\leq p(x)$ for all $x\\in E$. Set $F=h$.",
+            "uses": ["zorns_lemma"]
+          },
+          {
+            "role": "conclusion",
+            "content": "For the norm-preserving version, set $p(x)=C\\|x\\|$. Since $|f(v)|\\leq C\\|v\\|$, the dominated extension theorem gives an extension $F$ with $F(x)\\leq C\\|x\\|$. Applying this inequality to $-x$ gives $-F(x)=F(-x)\\leq C\\|x\\|$, so $|F(x)|\\leq C\\|x\\|$. Thus $\\|F\\|\\leq C$. Taking $C=\\|f\\|$ gives $\\|F\\|\\leq\\|f\\|$. Since $F|_V=f$, $$\\|f\\|=\\sup_{\\|v\\|\\leq 1,\\,v\\in V}|F(v)|\\leq \\|F\\|.$$ Therefore $\\|F\\|=\\|f\\|$.",
+            "uses": ["norm", "operator_norm"]
+          }
+        ]
+      },
+      "tags": [
+        "hahn-banach",
+        "functional-analysis",
+        "duality",
+        "linear-extension",
+        "normed-spaces"
+      ],
       "priority": "core"
     },
     {
       "id": "uniform_boundedness_principle",
       "kind": "theorem",
       "domain": "baire_mapping_theorems",
-      "label": "Banach-Steinhaus theorem / Uniform Boundedness Principle",
+      "assumptions": [
+        "The domain space $X$ is a Banach space.",
+        "The family $\\{T_i:X \\to Y\\}$ consists of bounded linear operators.",
+        "For each $x\\in X$, the set $\\{\\|T_i x\\|:i\\in I\\}$ is bounded."
+      ],
+      "label": "Uniform Boundedness Principle",
       "content": {
-        "statement": "A pointwise bounded family of bounded linear operators on a Banach space is uniformly bounded in operator norm.",
-        "formal": "If X Banach and {T_i} subset L(X,Y) with sup_i ||T_i x||<infty for each x, then sup_i ||T_i||<infty.",
-        "intuition": "Pointwise control plus completeness forces uniform operator control.",
-        "notation": []
+        "statement": "A pointwise bounded family of bounded linear operators on a Banach space is uniformly bounded.",
+        "formal": "If $X$ is Banach and $\\{T_i:X \\to Y\\}$ is a family of bounded linear operators such that for every $x\\in X$, the set $\\{\\|T_i x\\|:i\\in I\\}$ is bounded, then there exists $C<\\infty$ such that $\\|T_i\\|\\leq C$ for all $i\\in I$.",
+        "intuition": "If each vector is controlled separately, then a uniform bound on the operators emerges from the Baire category argument.",
+        "notation": ["$\\{T_i:X \\to Y\\}$", "$\\|T_i\\|$"],
+        "formula": "$$\\begin{aligned}&\\text{If } X \\text{ is Banach and } \\{T_i:X \\to Y\\} \\text{ is a family of bounded linear operators such that}\\\\ &\\quad \\forall x\\in X, \\{\\|T_i x\\|:i\\in I\\} \\text{ is bounded},\\\\ &\\text{then } \\exists C<\\infty \\text{ such that } \\|T_i\\|\\leq C \\text{ for all } i\\in I.\\end{aligned}$$",
+        "definition": "The uniform boundedness principle, also known as the Banach-Steinhaus theorem, states that if a family of bounded linear operators on a Banach space is pointwise bounded, then it is uniformly bounded in operator norm."
       },
-      "tags": ["ubp", "baire"],
+      "examples": [
+        {
+          "tex": "Consider the family of operators $T_n: \\ell^p \\to \\ell^p$ defined by $T_n(x_1,x_2,\\ldots) = (0,0,\\ldots,0,x_n,0,\\ldots)$ where $x_n$ is in the $n$-th position. Each $T_n$ is a bounded linear operator with norm 1. For each fixed vector $x=(x_1,x_2,\\ldots) \\in \\ell^p$, the set $\\{\\|T_n x\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example illustrates that pointwise boundedness does not imply uniform boundedness if the domain space is not complete."
+        },
+        {
+          "tex": "Let $X=C[0,1]$ be the space of continuous functions on the interval $[0,1]$ with the supremum norm, and let $Y=\\mathbb{R}$. Define a family of operators $T_n: X \\to Y$ by $T_n(f) = f(1/n)$. Each $T_n$ is a bounded linear operator with norm 1. For each fixed function $f \\in C[0,1]$, the set $\\{\\|T_n f\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example shows that even in a complete space, pointwise boundedness does not guarantee uniform boundedness without the completeness assumption."
+        },
+        {
+          "tex": "Consider the family of operators $T_n: \\ell^p \\to \\ell^p$ defined by $T_n(x_1,x_2,\\ldots) = (x_1,x_2,\\ldots,x_{n-1},0,x_{n+1},\\ldots)$ where the $n$-th term is set to zero. Each $T_n$ is a bounded linear operator with norm 1. For each fixed vector $x=(x_1,x_2,\\ldots) \\in \\ell^p$, the set $\\{\\|T_n x\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example demonstrates that pointwise boundedness does not imply uniform boundedness if the domain space is not complete."
+        }
+      ],
+      "tags": ["ubp", "baire", "banach_steinhaus"],
       "priority": "core"
     },
     {
@@ -1045,181 +1142,6 @@
       },
       "tags": ["open mapping"],
       "priority": "core"
-    },
-    {
-      "id": "proof_hahn_banach_zorn",
-      "kind": "proof",
-      "domain": "hahn_banach",
-      "label": "Proof of Hahn-Banach by Zorn",
-      "content": {
-        "statement": "Extend dominated functionals by maximal extension.",
-        "intuition": "Build the largest possible extension; maximality forces full domain.",
-        "notation": []
-      },
-      "tags": ["proof", "hahn-banach"],
-      "priority": "core"
-    },
-    {
-      "id": "step_hb_order_extensions",
-      "kind": "proof_step",
-      "domain": "hahn_banach",
-      "label": "HB step 1: order extensions",
-      "content": {
-        "statement": "Create a poset of admissible dominated extensions.",
-        "notation": []
-      },
-      "tags": ["proof step"],
-      "priority": "core"
-    },
-    {
-      "id": "step_hb_chain_upper_bound",
-      "kind": "proof_step",
-      "domain": "hahn_banach",
-      "label": "HB step 2: chain upper bound",
-      "content": {
-        "statement": "Unify a chain of compatible extensions.",
-        "notation": []
-      },
-      "tags": ["proof step"],
-      "priority": "core"
-    },
-    {
-      "id": "step_hb_zorn_maximal_extension",
-      "kind": "proof_step",
-      "domain": "hahn_banach",
-      "label": "HB step 3: maximal extension",
-      "content": {
-        "statement": "Apply Zorn to get a maximal dominated extension.",
-        "notation": []
-      },
-      "tags": ["proof step"],
-      "priority": "core"
-    },
-    {
-      "id": "step_hb_one_dimensional_extension",
-      "kind": "proof_step",
-      "domain": "hahn_banach",
-      "label": "HB step 4: one-dimensional extension contradiction",
-      "content": {
-        "statement": "If the maximal domain is not all of E, extend by one new vector.",
-        "notation": []
-      },
-      "tags": ["proof step"],
-      "priority": "core"
-    },
-    {
-      "id": "proof_uniform_boundedness_baire",
-      "kind": "proof",
-      "domain": "baire_mapping_theorems",
-      "label": "Proof of Uniform Boundedness by Baire",
-      "content": {
-        "statement": "Use Baire on closed sets where the family is uniformly bounded pointwise.",
-        "intuition": "One ball gets uniform control, then homogeneity spreads it to the unit ball.",
-        "notation": []
-      },
-      "tags": ["proof", "ubp"],
-      "priority": "core"
-    },
-    {
-      "id": "step_ubp_closed_sets",
-      "kind": "proof_step",
-      "domain": "baire_mapping_theorems",
-      "label": "UBP step 1: closed control sets",
-      "content": {
-        "statement": "Define $E_n=\\{x: \\sup_i \\|T_i x\\|\\leq n\\}$.",
-        "notation": []
-      },
-      "tags": ["proof step"],
-      "priority": "core"
-    },
-    {
-      "id": "step_ubp_baire_nonempty_interior",
-      "kind": "proof_step",
-      "domain": "baire_mapping_theorems",
-      "label": "UBP step 2: Baire gives an interior ball",
-      "content": {
-        "statement": "Apply Baire category to the closed cover X=union E_n.",
-        "notation": []
-      },
-      "tags": ["proof step"],
-      "priority": "core"
-    },
-    {
-      "id": "step_ubp_uniform_bound",
-      "kind": "proof_step",
-      "domain": "baire_mapping_theorems",
-      "label": "UBP step 3: rescale to unit ball",
-      "content": {
-        "statement": "Use linearity to move the interior ball to a bound on the unit ball.",
-        "notation": []
-      },
-      "tags": ["proof step"],
-      "priority": "core"
-    },
-    {
-      "id": "proof_open_mapping_baire",
-      "kind": "proof",
-      "domain": "baire_mapping_theorems",
-      "label": "Proof of Open Mapping Theorem by Baire",
-      "content": {
-        "statement": "Use Baire to show the image of a unit ball absorbs a neighborhood of zero.",
-        "intuition": "Surjectivity plus completeness forces a ball in the image.",
-        "notation": []
-      },
-      "tags": ["proof", "open mapping"],
-      "priority": "core"
-    },
-    {
-      "id": "proof_closed_graph_via_open_mapping",
-      "kind": "proof",
-      "domain": "baire_mapping_theorems",
-      "label": "Proof of Closed Graph via Open Mapping",
-      "content": {
-        "statement": "Make the graph into a Banach space and apply open mapping to the projection.",
-        "intuition": "Closed graph is a complete domain in disguise.",
-        "notation": []
-      },
-      "tags": ["proof", "closed graph"],
-      "priority": "core"
-    },
-    {
-      "id": "proof_banach_alaoglu_tychonoff",
-      "kind": "proof",
-      "domain": "duality_weak_topologies",
-      "label": "Proof of Banach-Alaoglu by product compactness",
-      "content": {
-        "statement": "Embed the dual unit ball into a product of compact scalar disks and close it.",
-        "intuition": "Weak-star compactness is product compactness plus linear constraints.",
-        "notation": []
-      },
-      "tags": ["proof", "banach-alaoglu"],
-      "priority": "core"
-    },
-    {
-      "id": "proof_riesz_representation_projection",
-      "kind": "proof",
-      "domain": "hilbert_spectral",
-      "label": "Proof of Hilbert Riesz representation",
-      "content": {
-        "statement": "Use the kernel of a functional and orthogonal projection.",
-        "intuition": "A functional measures exactly the component along one vector.",
-        "notation": []
-      },
-      "tags": ["proof", "riesz"],
-      "priority": "core"
-    },
-    {
-      "id": "proof_spectral_theorem_compact_self_adjoint",
-      "kind": "proof",
-      "domain": "hilbert_spectral",
-      "label": "Proof of spectral theorem for compact self-adjoint operators",
-      "content": {
-        "statement": "Extract eigenvectors by compactness, then diagonalize orthogonally by induction/approximation.",
-        "intuition": "Compactness gives eigenvectors; self-adjointness makes different eigenspaces orthogonal.",
-        "notation": []
-      },
-      "tags": ["proof", "spectral"],
-      "priority": "standard"
     },
     {
       "id": "ell_p_spaces",
@@ -1457,6 +1379,7 @@
         "citation": "derived semantic clarification from standard functional-analysis convention",
         "references": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/functions-vs-operators.svg",
       "tags": ["terminology", "semantic hierarchy", "function", "operator"],
       "priority": "core"
     },
@@ -1741,6 +1664,190 @@
         "references": []
       },
       "tags": ["exercise", "metric space", "convergence", "cauchy"],
+      "priority": "core"
+    },
+    {
+      "id": "partially_ordered_set",
+      "kind": "definition",
+      "domain": "order_theory",
+      "label": "Partially ordered set",
+      "content": {
+        "statement": "A partially ordered set is a set equipped with a comparison relation that is reflexive, antisymmetric, and transitive.",
+        "formal": "A partially ordered set is a pair $(P,\\leq)$, where $P$ is a set and $\\leq$ is a relation on $P$ satisfying: for all $a,b,c\\in P$, (i) $a\\leq a$; (ii) if $a\\leq b$ and $b\\leq a$, then $a=b$; and (iii) if $a\\leq b$ and $b\\leq c$, then $a\\leq c$.",
+        "intuition": "Think of a partially ordered set as a universe where some objects can be compared by size, extension, inclusion, strength, or information content, but not necessarily all objects can be compared. In the Hahn-Banach proof, one extension is larger than another if it is defined on a bigger subspace and agrees with the smaller one.",
+        "notation": [
+          "$(P,\\leq)$: a partially ordered set",
+          "$a\\leq b$: $a$ is below $b$, smaller than $b$, or contained/extended by $b$ depending on context"
+        ]
+      },
+      "examples": [
+        {
+          "tex": "If $P$ is a collection of subsets of a set $E$, then $(P,\\subseteq)$ is partially ordered by inclusion."
+        }
+      ],
+      "tags": ["order-theory", "zorns-lemma", "hahn-banach", "foundations"],
+      "priority": "standard"
+    },
+    {
+      "id": "chain",
+      "kind": "definition",
+      "domain": "order_theory",
+      "label": "Chain",
+      "content": {
+        "statement": "A chain is a subset of a partially ordered set in which every two elements are comparable.",
+        "formal": "Let $(P,\\leq)$ be a partially ordered set. A subset $\\mathcal C\\subseteq P$ is called a chain if for every $a,b\\in\\mathcal C$, either $a\\leq b$ or $b\\leq a$.",
+        "intuition": "A chain is a single consistent line of growth inside a partially ordered set. In Hahn-Banach, a chain is a family of extensions where each extension is compatible with the others because one extends the other.",
+        "notation": [
+          "$\\mathcal C\\subseteq P$: a chain in $P$",
+          "$a,b\\in\\mathcal C \\Rightarrow a\\leq b$ or $b\\leq a$"
+        ]
+      },
+      "examples": [
+        {
+          "tex": "In $(\\mathcal P(E),\\subseteq)$, the family $A_1\\subseteq A_2\\subseteq A_3\\subseteq\\cdots$ is a chain."
+        }
+      ],
+      "tags": ["order-theory", "zorns-lemma", "hahn-banach"],
+      "priority": "standard"
+    },
+    {
+      "id": "upper_bound",
+      "kind": "definition",
+      "domain": "order_theory",
+      "label": "Upper bound",
+      "content": {
+        "statement": "An upper bound for a subset of a partially ordered set is an element lying above every element of that subset.",
+        "formal": "Let $(P,\\leq)$ be a partially ordered set and let $A\\subseteq P$. An element $b\\in P$ is an upper bound for $A$ if $a\\leq b$ for every $a\\in A$.",
+        "intuition": "An upper bound is a single object that contains, extends, or dominates every object in the family. It does not have to belong to the family itself.",
+        "notation": [
+          "$b$ is an upper bound for $A$",
+          "$\\forall a\\in A,\\ a\\leq b$"
+        ]
+      },
+      "examples": [
+        {
+          "tex": "If $A=\\{A_i:i\\in I\\}$ is a chain of subsets ordered by inclusion, then $\\bigcup_{i\\in I}A_i$ is an upper bound for $A$."
+        }
+      ],
+      "tags": ["order-theory", "zorns-lemma", "hahn-banach"],
+      "priority": "standard"
+    },
+    {
+      "id": "maximal_element",
+      "kind": "definition",
+      "domain": "order_theory",
+      "label": "Maximal element",
+      "content": {
+        "statement": "A maximal element is an element that cannot be strictly enlarged within the partially ordered set.",
+        "formal": "Let $(P,\\leq)$ be a partially ordered set. An element $m\\in P$ is maximal if whenever $m\\leq p$ for some $p\\in P$, one has $p=m$.",
+        "intuition": "Maximal means there is no legal move upward from this object. In Hahn-Banach, a maximal extension is an extension that cannot be extended further while preserving the domination condition.",
+        "notation": [
+          "$m\\in P$: maximal element",
+          "$m\\leq p \\Rightarrow p=m$"
+        ]
+      },
+      "examples": [
+        {
+          "tex": "In a family of admissible Hahn-Banach extensions, a maximal element is a pair $(M,h)$ such that no strictly larger admissible pair $(M',h')$ extends it."
+        }
+      ],
+      "tags": ["order-theory", "zorns-lemma", "hahn-banach"],
+      "priority": "standard"
+    },
+    {
+      "id": "positive_homogeneity",
+      "kind": "property",
+      "domain": "hahn_banach",
+      "label": "Positive homogeneity",
+      "content": {
+        "statement": "Positive homogeneity means that scaling an input by a nonnegative scalar scales the output by the same scalar.",
+        "formal": "A function $p:E\\to\\mathbb R$ on a real vector space is positively homogeneous if $p(\\alpha x)=\\alpha p(x)$ for every $x\\in E$ and every scalar $\\alpha\\geq 0$.",
+        "intuition": "Positive homogeneity says the function measures size linearly along each ray starting at the origin. If you move twice as far in the same direction, the value doubles.",
+        "notation": ["$p(\\alpha x)=\\alpha p(x)$", "$\\alpha\\geq0$"]
+      },
+      "examples": [
+        {
+          "tex": "For a norm, $\\|\\alpha x\\|=|\\alpha|\\|x\\|$. In particular, for $\\alpha\\geq0$, $\\|\\alpha x\\|=\\alpha\\|x\\|$, so every norm is positively homogeneous."
+        }
+      ],
+      "tags": [
+        "homogeneity",
+        "sublinear-functional",
+        "hahn-banach",
+        "functional-analysis"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "bounded_operators_banach_space",
+      "kind": "theorem",
+      "domain": "operators",
+      "label": "Bounded Linear Operators is Banach, if its Codomain is Banach",
+      "assumptions": [
+        "$X$ and $Y$ are normed linear spaces over the same scalar field, usually $\\mathbb{K}=\\mathbb{R}$ or $\\mathbb{C}$.",
+        "The operator norm $\\|\\cdot\\|_{\\mathrm{op}}$ is defined by the supremum over the unit ball of $X$.",
+        "Completeness of $\\mathcal{B}(X,Y)$ requires completeness of $Y$, not of $X$.",
+        "In particular, $X^\\ast=\\mathcal{B}(X,\\mathbb{C})$ is Banach because $\\mathbb{C}$ is Banach."
+      ],
+      "content": {
+        "statement": "The space of bounded linear operators between normed spaces is a normed linear space, and it is Banach whenever the codomain is Banach.",
+        "formal": "Let X and Y be normed linear spaces. Then $\\mathcal{B}(X,Y)$, endowed with the operator norm, is a normed linear space. If Y is Banach, then $\\mathcal{B}(X,Y)$ is Banach.",
+        "formula": "$$\\|A\\|=\\sup_{\\|x\\|\\le 1}\\|Ax\\|,\\qquad A\\in \\mathcal{B}(X,Y).$$",
+        "intuition": "Uniform control of operators transfers completeness from the target space Y to the operator space $\\mathcal{B}(X,Y)$.",
+        "notation": [
+          "$$\\mathcal{B}(X,Y)=\\{A:X\\to Y: A \\text{ is linear and bounded}\\}$$",
+          "$$\\|A\\|=\\sup_{\\|x\\|\\le 1}\\|Ax\\|$$"
+        ]
+      },
+
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "First note that linear maps form a vector space under pointwise operations: $$(A+B)(x)=Ax+Bx,\\qquad (\\alpha A)(x)=\\alpha Ax.$$ If $A,B\\in \\mathcal{B}(X,Y)$ and $\\alpha$ is a scalar, then $$\\|A+B\\|\\le \\|A\\|+\\|B\\|<\\infty,$$ and $$\\|\\alpha A\\|=|\\alpha|\\|A\\|<\\infty.$$ Hence $A+B$ and $\\alpha A$ are bounded linear operators. Therefore $\\mathcal{B}(X,Y)$ is a linear space, and the operator norm makes it a normed linear space.",
+            "uses": [
+              "operator_norm",
+              "bounded_linear_operator",
+              "normed_vector_space"
+            ]
+          },
+          {
+            "role": "argument",
+            "content": "Now assume that $Y$ is Banach, and let $(A_n)$ be a Cauchy sequence in $\\mathcal{B}(X,Y)$. For each fixed $x\\in X$, we have $$\\|A_nx-A_mx\\|=\\|(A_n-A_m)x\\|\\le \\|A_n-A_m\\|\\|x\\|.$$ Since $(A_n)$ is Cauchy in operator norm, it follows that $(A_nx)$ is Cauchy in $Y$. Because $Y$ is Banach, there exists an element $Ax\\in Y$ such that $$A_nx\\to Ax.$$ This defines a map $A:X\\to Y$.",
+            "uses": ["cauchy_sequence", "operator_norm", "banach_space"]
+          },
+          {
+            "role": "argument",
+            "content": "The map $A$ is linear. Indeed, for $x_1,x_2\\in X$ and scalar $\\lambda$, using the linearity of each $A_n$ gives $$A(x_1+x_2)=\\lim_{n\\to\\infty}A_n(x_1+x_2)=\\lim_{n\\to\\infty}(A_nx_1+A_nx_2)=Ax_1+Ax_2,$$ and $$A(\\lambda x_1)=\\lim_{n\\to\\infty}A_n(\\lambda x_1)=\\lambda\\lim_{n\\to\\infty}A_nx_1=\\lambda Ax_1.$$",
+            "uses": ["linear_operator", "pointwise_limit"]
+          },
+          {
+            "role": "argument",
+            "content": "Since every Cauchy sequence in a normed space is bounded, there exists $C>0$ such that $$\\|A_n\\|\\le C$$ for all $n$. Hence, for every $x\\in X$, $$\\|Ax\\|=\\lim_{n\\to\\infty}\\|A_nx\\|\\le \\limsup_{n\\to\\infty}\\|A_n\\|\\|x\\|\\le C\\|x\\|.$$ Therefore $A$ is bounded, and so $A\\in \\mathcal{B}(X,Y)$.",
+            "uses": [
+              "cauchy_sequence",
+              "boundedness",
+              "bounded_linear_operator",
+              "operator_norm"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "It remains to show convergence in operator norm. Given $\\varepsilon>0$, choose $N$ such that for all $n,m\\ge N$, $$\\|A_n-A_m\\|<\\varepsilon.$$ Then for every $x\\in X$, $$\\|A_nx-A_mx\\|\\le \\varepsilon\\|x\\|.$$ Letting $m\\to\\infty$ gives $$\\|A_nx-Ax\\|\\le \\varepsilon\\|x\\|.$$ Taking the supremum over $\\|x\\|\\le 1$ yields $$\\|A_n-A\\|\\le \\varepsilon.$$ Thus $A_n\\to A$ in operator norm. Therefore every Cauchy sequence in $\\mathcal{B}(X,Y)$ converges in $\\mathcal{B}(X,Y)$, so $\\mathcal{B}(X,Y)$ is Banach whenever $Y$ is Banach.",
+            "uses": ["convergence", "banach_space", "bounded_linear_operator"]
+          }
+        ]
+      },
+      "source": {
+        "citation": "Standard functional analysis theorem: completeness of B(X,Y) when Y is Banach.",
+        "ref": "Bounded linear operators between normed spaces; Banach space completeness theorem.",
+        "references": [
+          "bounded_linear_operators",
+          "operator_norm",
+          "banach_space"
+        ]
+      },
+      "tags": ["functional_analysis", "operator_theory", "banach_spaces"],
       "priority": "core"
     }
   ],
@@ -2046,281 +2153,6 @@
       "relation": "uses"
     },
     {
-      "source": "proof_hahn_banach_zorn",
-      "target": "hahn_banach_theorem",
-      "relation": "proves"
-    },
-    {
-      "source": "proof_hahn_banach_zorn",
-      "target": "duality_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_hahn_banach_zorn",
-      "target": "zorns_lemma",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_hahn_banach_zorn",
-      "target": "scalar_field_real_or_complex",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_hahn_banach_zorn",
-      "target": "step_hb_order_extensions",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_hahn_banach_zorn",
-      "target": "step_hb_chain_upper_bound",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_hahn_banach_zorn",
-      "target": "step_hb_zorn_maximal_extension",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_hahn_banach_zorn",
-      "target": "step_hb_one_dimensional_extension",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_uniform_boundedness_baire",
-      "target": "uniform_boundedness_principle",
-      "relation": "proves"
-    },
-    {
-      "source": "proof_uniform_boundedness_baire",
-      "target": "compactness_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_uniform_boundedness_baire",
-      "target": "baire_category_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_uniform_boundedness_baire",
-      "target": "domain_is_banach_space",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_uniform_boundedness_baire",
-      "target": "pointwise_bounded_family_assumption",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_uniform_boundedness_baire",
-      "target": "step_ubp_closed_sets",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_uniform_boundedness_baire",
-      "target": "step_ubp_baire_nonempty_interior",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_uniform_boundedness_baire",
-      "target": "step_ubp_uniform_bound",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_open_mapping_baire",
-      "target": "open_mapping_theorem",
-      "relation": "proves"
-    },
-    {
-      "source": "proof_open_mapping_baire",
-      "target": "compactness_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_open_mapping_baire",
-      "target": "approximation_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_open_mapping_baire",
-      "target": "baire_category_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_open_mapping_baire",
-      "target": "domain_is_banach_space",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_open_mapping_baire",
-      "target": "codomain_is_banach_space",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_open_mapping_baire",
-      "target": "surjective_operator_assumption",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_closed_graph_via_open_mapping",
-      "target": "closed_graph_theorem",
-      "relation": "proves"
-    },
-    {
-      "source": "proof_closed_graph_via_open_mapping",
-      "target": "duality_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_closed_graph_via_open_mapping",
-      "target": "open_mapping_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_closed_graph_via_open_mapping",
-      "target": "closed_graph_assumption",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_banach_alaoglu_tychonoff",
-      "target": "banach_alaoglu_theorem",
-      "relation": "proves"
-    },
-    {
-      "source": "proof_banach_alaoglu_tychonoff",
-      "target": "compactness_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_banach_alaoglu_tychonoff",
-      "target": "axiom_of_choice",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_banach_alaoglu_tychonoff",
-      "target": "unit_ball_weak_star_assumption",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_riesz_representation_projection",
-      "target": "riesz_representation_theorem",
-      "relation": "proves"
-    },
-    {
-      "source": "proof_riesz_representation_projection",
-      "target": "duality_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_riesz_representation_projection",
-      "target": "projection_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_riesz_representation_projection",
-      "target": "domain_is_banach_space",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_spectral_theorem_compact_self_adjoint",
-      "target": "spectral_theorem",
-      "relation": "proves"
-    },
-    {
-      "source": "proof_spectral_theorem_compact_self_adjoint",
-      "target": "compactness_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_spectral_theorem_compact_self_adjoint",
-      "target": "approximation_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_spectral_theorem_compact_self_adjoint",
-      "target": "duality_argument",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_spectral_theorem_compact_self_adjoint",
-      "target": "riesz_representation_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_spectral_theorem_compact_self_adjoint",
-      "target": "compact_self_adjoint_operator_assumption",
-      "relation": "assumes"
-    },
-    {
-      "source": "step_hb_order_extensions",
-      "target": "linear_functional",
-      "relation": "uses"
-    },
-    {
-      "source": "step_hb_order_extensions",
-      "target": "sublinear_functional",
-      "relation": "uses"
-    },
-    {
-      "source": "step_hb_chain_upper_bound",
-      "target": "zorns_lemma",
-      "relation": "uses"
-    },
-    {
-      "source": "step_hb_zorn_maximal_extension",
-      "target": "zorns_lemma",
-      "relation": "uses"
-    },
-    {
-      "source": "step_hb_zorn_maximal_extension",
-      "target": "step_hb_chain_upper_bound",
-      "relation": "uses"
-    },
-    {
-      "source": "step_hb_one_dimensional_extension",
-      "target": "sublinear_functional",
-      "relation": "uses"
-    },
-    {
-      "source": "step_hb_one_dimensional_extension",
-      "target": "step_hb_zorn_maximal_extension",
-      "relation": "uses"
-    },
-    {
-      "source": "step_ubp_closed_sets",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "step_ubp_closed_sets",
-      "target": "pointwise_bounded_family_assumption",
-      "relation": "uses"
-    },
-    {
-      "source": "step_ubp_baire_nonempty_interior",
-      "target": "baire_category_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "step_ubp_baire_nonempty_interior",
-      "target": "domain_is_banach_space",
-      "relation": "uses"
-    },
-    {
-      "source": "step_ubp_uniform_bound",
-      "target": "linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "step_ubp_uniform_bound",
-      "target": "operator_norm",
-      "relation": "uses"
-    },
-    {
-      "source": "step_ubp_uniform_bound",
-      "target": "step_ubp_baire_nonempty_interior",
-      "relation": "uses"
-    },
-    {
       "source": "banach_space",
       "target": "ell_p_spaces",
       "relation": "generalizes"
@@ -2549,31 +2381,6 @@
       "source": "normed_vector_space",
       "target": "metric_space",
       "relation": "generalizes"
-    },
-    {
-      "source": "step_hb_order_extensions",
-      "target": "hahn_banach_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_uniform_boundedness_baire",
-      "target": "bounded_linear_operator",
-      "relation": "uses"
-    },
-    {
-      "source": "proof_closed_graph_via_open_mapping",
-      "target": "domain_is_banach_space",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_closed_graph_via_open_mapping",
-      "target": "codomain_is_banach_space",
-      "relation": "assumes"
-    },
-    {
-      "source": "proof_banach_alaoglu_tychonoff",
-      "target": "weak_star_topology",
-      "relation": "constructed_from"
     },
     {
       "source": "completeness",
@@ -3974,6 +3781,96 @@
       "source": "approximation_argument",
       "target": "density_argument",
       "relation": "related_to"
+    },
+    {
+      "source": "duality_argument",
+      "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "duality_argument",
+      "target": "linear_functional",
+      "relation": "uses"
+    },
+    {
+      "source": "hahn_banach_theorem",
+      "target": "partially_ordered_set",
+      "relation": "uses"
+    },
+    {
+      "source": "chain",
+      "target": "partially_ordered_set",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "upper_bound",
+      "target": "partially_ordered_set",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "maximal_element",
+      "target": "partially_ordered_set",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "zorns_lemma",
+      "target": "chain",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "zorns_lemma",
+      "target": "upper_bound",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "zorns_lemma",
+      "target": "maximal_element",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "sublinear_functional",
+      "target": "positive_homogeneity",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hahn_banach_theorem",
+      "target": "positive_homogeneity",
+      "relation": "uses"
+    },
+    {
+      "source": "pointwise_limit",
+      "target": "convergence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "pointwise_limit",
+      "target": "bounded_linear_operator",
+      "relation": "uses"
+    },
+    {
+      "source": "uniform_boundedness_principle",
+      "target": "pointwise_limit",
+      "relation": "uses"
+    },
+    {
+      "source": "bounded_operators_banach_space",
+      "target": "bounded_linear_operator",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "bounded_operators_banach_space",
+      "target": "operator_norm",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "bounded_operators_banach_space",
+      "target": "banach_space",
+      "relation": "uses"
+    },
+    {
+      "source": "bounded_operators_banach_space",
+      "target": "cauchy_sequence",
+      "relation": "uses"
     }
   ]
 }

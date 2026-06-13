@@ -59,6 +59,9 @@ export const SourceDomainSchema = z
       "orange",
       "pink",
       "gold",
+      "brown",
+      "cyan",
+      "magenta",
     ]),
   })
   .strict();

@@ -21,6 +21,9 @@ export const PALETTE = [
   "var(--teal)",
   "var(--pink)",
   "var(--gold)",
+  "var(--brown)",
+  "var(--cyan)",
+  "var(--magenta)",
 ] as const;
 
 interface RowSpec {
@@ -59,10 +62,15 @@ function makeWorkspace(
   title: string,
   specs: RowSpec[],
   viewport: ViewRect,
-  opts: { source?: "atlas" | "example"; marks?: DistributiveOmit<Mark, "id">[] } = {},
+  opts: {
+    source?: "atlas" | "example";
+    marks?: DistributiveOmit<Mark, "id">[];
+  } = {},
 ): Workspace {
   const { rows, values } = buildRows(specs, opts.source ?? "atlas", id);
-  const marks: Mark[] = (opts.marks ?? []).map((m) => ({ ...m, id: uid("mark") }) as Mark);
+  const marks: Mark[] = (opts.marks ?? []).map(
+    (m) => ({ ...m, id: uid("mark") }) as Mark,
+  );
   return { id, title, rows, values, viewport, views: [], marks };
 }
 
@@ -71,7 +79,7 @@ const SQUARE: ViewRect = { xmin: -10, xmax: 10, ymin: -7, ymax: 7 };
 // ---------------------------------------------------------------------------
 
 export const WORKSPACES: Record<string, Workspace> = {
-  "blank": makeWorkspace(
+  blank: makeWorkspace(
     "blank",
     "Blank workspace",
     [{ source: "f(x) = x^2" }],
@@ -97,7 +105,11 @@ export const WORKSPACES: Record<string, Workspace> = {
     "Unit circle & a point",
     [
       { source: "C = Circle((0, 0), 1)", note: "the unit circle" },
-      { source: "t = 0.9", slider: { min: 0, max: 6.283, step: 0.01 }, note: "angle θ" },
+      {
+        source: "t = 0.9",
+        slider: { min: 0, max: 6.283, step: 0.01 },
+        note: "angle θ",
+      },
       { source: "P = (cos(t), sin(t))", note: "point on the circle" },
       { source: "R = Segment((0, 0), P)", note: "radius to P" },
       { source: "c = cos(t)" },
@@ -111,8 +123,16 @@ export const WORKSPACES: Record<string, Workspace> = {
     "Secant approaching a tangent",
     [
       { source: "f(x) = sin(x)" },
-      { source: "a = 1", slider: { min: -3, max: 3, step: 0.05 }, note: "base point" },
-      { source: "h = 1.2", slider: { min: 0.01, max: 3, step: 0.01 }, note: "→ 0 for the tangent" },
+      {
+        source: "a = 1",
+        slider: { min: -3, max: 3, step: 0.05 },
+        note: "base point",
+      },
+      {
+        source: "h = 1.2",
+        slider: { min: 0.01, max: 3, step: 0.01 },
+        note: "→ 0 for the tangent",
+      },
       { source: "m = (f(a + h) - f(a)) / h", note: "slope of the secant" },
       { source: "g(x) = f(a) + m (x - a)", note: "the secant line" },
       { source: "A = (a, f(a))" },
@@ -139,7 +159,7 @@ export const WORKSPACES: Record<string, Workspace> = {
     SQUARE,
   ),
 
-  "vectors": makeWorkspace(
+  vectors: makeWorkspace(
     "vectors",
     "Vector addition",
     [

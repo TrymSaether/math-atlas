@@ -1421,6 +1421,20 @@
       "priority": "standard"
     },
     {
+      "id": "partially_ordered_set",
+      "kind": "definition",
+      "domain": "foundations",
+      "label": "Partially Ordered Set",
+      "content": {
+        "statement": "A set equipped with a reflexive, antisymmetric, and transitive relation.",
+        "definition": "A partially ordered set $(P,\\le)$ is a set $P$ together with a binary relation $\\le$ that is reflexive ($x\\le x$), antisymmetric (if $x\\le y$ and $y\\le x$ then $x=y$), and transitive (if $x\\le y$ and $y\\le z$ then $x\\le z$).",
+        "intuition": "A poset is a set of elements with a notion of order that allows for incomparable elements.",
+        "notation": ["$(P,\\le)$"]
+      },
+      "tags": ["definition", "order-theory"],
+      "priority": "standard"
+    },
+    {
       "id": "zorns_lemma",
       "kind": "lemma",
       "domain": "foundations",
@@ -12111,6 +12125,11 @@
     {
       "source": "finite_subcover",
       "target": "intersection_union",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "zorns_lemma",
+      "target": "partially_ordered_set",
       "relation": "defined_in_terms_of"
     }
   ]
