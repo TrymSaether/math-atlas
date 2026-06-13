@@ -1419,6 +1419,25 @@
   --dia-muted-fill: var(--border-strong);
 }
 
+/* Diagram fills are semantic marks, not app chrome. Keep them distinct from
+   the SVG/card background so set regions remain visible in every theme. */
+:root,
+:root[data-theme] {
+  --dia-paper: color-mix(in srgb, var(--surface) 92%, var(--bg));
+  --dia-space: color-mix(in srgb, var(--surface) 94%, var(--bg));
+  --dia-panel: color-mix(in srgb, var(--surface) 96%, var(--bg));
+  --dia-fill: color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --dia-fill2: color-mix(in srgb, var(--teal) 11%, var(--surface));
+  --dia-domain: var(--dia-fill);
+  --dia-open: color-mix(in srgb, var(--accent) 18%, var(--surface));
+  --dia-int: var(--dia-open);
+  --dia-set: var(--dia-fill);
+  --dia-acc-fill: color-mix(in srgb, var(--dia-acc) 18%, transparent);
+  --dia-acc2-fill: color-mix(in srgb, var(--dia-acc2) 18%, transparent);
+  --dia-boundary-fill: color-mix(in srgb, var(--dia-boundary) 16%, transparent);
+  --dia-muted-fill: color-mix(in srgb, var(--fg-3) 16%, var(--surface));
+}
+
 /* ---- TYPOGRAPHY ----------------------------------------------------- */
 :root {
   --font-serif:

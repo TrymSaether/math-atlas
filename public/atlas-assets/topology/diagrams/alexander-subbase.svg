@@ -1,36 +1,36 @@
 <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-serif,'Newsreader',Georgia,serif)" role="img">
   <title>Subbasic cover to finite subcover</title>
 
-  <text x="96" y="28" font-size="12" fill="var(--atlas-ink,#27221d)" text-anchor="middle" font-style="italic">1. subbasic cover</text>
-  <text x="284" y="28" font-size="12" fill="var(--atlas-ink,#27221d)" text-anchor="middle" font-style="italic">2. finite subcover</text>
+  <text x="96" y="28" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">1. subbasic cover</text>
+  <text x="284" y="28" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle" font-style="italic">2. finite subcover</text>
 
-  <path d="M176 84 H204" stroke="var(--atlas-muted-strong,#6f675d)" stroke-width="1.4" fill="none" stroke-linecap="round" />
-  <path d="M204 84 L198 79 M204 84 L198 89" stroke="var(--atlas-muted-strong,#6f675d)" stroke-width="1.4" fill="none" stroke-linecap="round" />
+  <path d="M176 84 H204" stroke="var(--dia-mut,#8c8274)" stroke-width="1.4" fill="none" stroke-linecap="round" />
+  <path d="M204 84 L198 79 M204 84 L198 89" stroke="var(--dia-mut,#8c8274)" stroke-width="1.4" fill="none" stroke-linecap="round" />
 
-  <rect x="24" y="50" width="144" height="68" rx="10" fill="var(--atlas-surface,#fffdf8)" stroke="var(--atlas-ink,#27221d)" stroke-width="1.35" />
-  <text x="155" y="66" font-size="12" fill="var(--atlas-ink,#27221d)" text-anchor="middle">X</text>
+  <rect x="24" y="50" width="144" height="68" rx="10" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)" stroke-width="1.35" />
+  <text x="155" y="66" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle">X</text>
 
   <!-- panel 1: transparent fills, visible strokes -->
   <g stroke-width="1.35" fill-opacity="0.14" stroke-opacity="0.72">
-    <rect x="24" y="50" width="42" height="68" rx="9" fill="var(--atlas-accent-soft,#dbeafe)" stroke="var(--atlas-accent,#2457c5)" />
-    <rect x="92" y="50" width="42" height="68" rx="9" fill="var(--atlas-accent-2-soft,#ccfbf1)" stroke="var(--atlas-accent-2,#0d9488)" />
-    <rect x="126" y="50" width="42" height="68" rx="9" fill="var(--atlas-accent-soft,#dbeafe)" stroke="var(--atlas-accent,#2457c5)" />
-    <rect x="58" y="50" width="42" height="68" rx="9" fill="var(--atlas-muted-soft,#e7e1d8)" stroke="var(--atlas-muted,#8c8274)" />
-    <rect x="24" y="50" width="76" height="34" rx="9" fill="var(--atlas-muted-soft,#e7e1d8)" stroke="var(--atlas-muted,#8c8274)" />
-    <rect x="92" y="84" width="76" height="34" rx="9" fill="var(--atlas-muted-soft,#e7e1d8)" stroke="var(--atlas-muted,#8c8274)" />
+    <rect x="24" y="50" width="42" height="68" rx="9" fill="var(--dia-acc-fill,rgba(36,87,197,.18))" stroke="var(--dia-acc,#2457c5)" />
+    <rect x="92" y="50" width="42" height="68" rx="9" fill="var(--dia-acc2-fill,rgba(13,148,136,.18))" stroke="var(--dia-acc2,#0d9488)" />
+    <rect x="126" y="50" width="42" height="68" rx="9" fill="var(--dia-acc-fill,rgba(36,87,197,.18))" stroke="var(--dia-acc,#2457c5)" />
+    <rect x="58" y="50" width="42" height="68" rx="9" fill="var(--dia-muted-fill,#e7e1d8)" stroke="var(--dia-mut,#8c8274)" />
+    <rect x="24" y="50" width="76" height="34" rx="9" fill="var(--dia-muted-fill,#e7e1d8)" stroke="var(--dia-mut,#8c8274)" />
+    <rect x="92" y="84" width="76" height="34" rx="9" fill="var(--dia-muted-fill,#e7e1d8)" stroke="var(--dia-mut,#8c8274)" />
   </g>
 
-  <rect x="212" y="50" width="144" height="68" rx="10" fill="var(--atlas-surface,#fffdf8)" stroke="var(--atlas-ink,#27221d)" stroke-width="1.35" />
-  <text x="343" y="66" font-size="12" fill="var(--atlas-ink,#27221d)" text-anchor="middle">X</text>
+  <rect x="212" y="50" width="144" height="68" rx="10" fill="var(--dia-paper,#fffdf8)" stroke="var(--dia-ink,#27221d)" stroke-width="1.35" />
+  <text x="343" y="66" font-size="12" fill="var(--dia-ink,#27221d)" text-anchor="middle">X</text>
 
   <g fill-opacity="0.36" stroke-opacity="0.95" stroke-width="1.7">
-    <rect x="212" y="50" width="50" height="68" rx="9" fill="var(--atlas-accent-soft,#dbeafe)" stroke="var(--atlas-accent,#2457c5)" />
-    <rect x="258" y="50" width="50" height="68" rx="9" fill="var(--atlas-accent-2-soft,#ccfbf1)" stroke="var(--atlas-accent-2,#0d9488)" />
-    <rect x="304" y="50" width="52" height="68" rx="9" fill="var(--atlas-accent-soft,#dbeafe)" stroke="var(--atlas-accent,#2457c5)" />
+    <rect x="212" y="50" width="50" height="68" rx="9" fill="var(--dia-acc-fill,rgba(36,87,197,.18))" stroke="var(--dia-acc,#2457c5)" />
+    <rect x="258" y="50" width="50" height="68" rx="9" fill="var(--dia-acc2-fill,rgba(13,148,136,.18))" stroke="var(--dia-acc2,#0d9488)" />
+    <rect x="304" y="50" width="52" height="68" rx="9" fill="var(--dia-acc-fill,rgba(36,87,197,.18))" stroke="var(--dia-acc,#2457c5)" />
   </g>
 
-  <text x="96" y="140" font-size="10" fill="var(--atlas-ink,#27221d)" text-anchor="middle">many sets cover X</text>
-  <text x="284" y="140" font-size="10" fill="var(--atlas-ink,#27221d)" text-anchor="middle">same colored sets still cover X</text>
+  <text x="96" y="140" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle">many sets cover X</text>
+  <text x="284" y="140" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle">same colored sets still cover X</text>
 
-  <text x="190" y="164" font-size="10" fill="var(--atlas-ink,#27221d)" text-anchor="middle">Alexander test: enough to check subbasic covers</text>
+  <text x="190" y="164" font-size="10" fill="var(--dia-ink,#27221d)" text-anchor="middle">Alexander test: enough to check subbasic covers</text>
 </svg>
