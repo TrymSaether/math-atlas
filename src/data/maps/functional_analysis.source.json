@@ -1417,7 +1417,7 @@
         "intuition": "A subspace with no missing limit points, so quotient constructions behave instead of collapsing into nonsense.",
         "notation": ["$$M\\subseteq X$$"]
       },
-      "diagram": "/atlas-assets/functional_analysis/diagrams/quotient-space.svg",
+      "diagram": "/atlas-assets/topology/diagrams/closed-subset.svg",
       "assumptions": [
         "$X$ is a normed or topological vector space.",
         "$M$ is a linear subspace of $X$."
@@ -1437,7 +1437,7 @@
         "intuition": "A quotient space forgets directions inside the subspace $Y$. Moving along $Y$ does not change your position in $X/Y$, so each coset behaves like a single point. Geometrically, $X/Y$ measures only the directions transverse to $Y$.",
         "notation": ["$X/Y$", "$x+Y$", "$[x]$"]
       },
-      "diagram": "/atlas-assets/functional_analysis/diagrams/quotient-space.svg",
+      "diagram": "/atlas-assets/topology/diagrams/quotient-space.svg",
       "assumptions": [
         "X is a normed vector space.",
         "Y is a linear subspace of X.",
@@ -1476,7 +1476,7 @@
         "intuition": "Forget the component lying in Y.",
         "notation": ["$$Q:X\\to X/Y$$"]
       },
-      "diagram": "/atlas-assets/functional_analysis/diagrams/quotient-space.svg",
+      "diagram": "/atlas-assets/topology/diagrams/quotient-space.svg",
       "assumptions": ["Y is a closed subspace of X."],
       "source": {
         "citation": "Bowers-Kalton Section 3.7",

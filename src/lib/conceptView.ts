@@ -110,6 +110,7 @@ export interface ConceptView {
   gloss: string;
   example: string;
   assumptions: string[];
+  properties: string[];
 
   proof: {
     steps: ProofStep[];
@@ -181,6 +182,7 @@ export function buildConceptView(
   const example = (node.examples[0]?.tex ?? "").trim();
   const notation = node.content.notation ?? [];
   const assumptions = node.assumptions;
+  const properties = node.properties;
 
   const steps = node.proof?.steps ?? [];
   const proofText = steps
@@ -199,6 +201,7 @@ export function buildConceptView(
       gloss ||
       example ||
       assumptions.length ||
+      properties.length ||
       notation.length ||
       steps.length ||
       relations.count,
@@ -221,6 +224,7 @@ export function buildConceptView(
     gloss,
     example,
     assumptions,
+    properties,
     proof: {
       steps,
       text: proofText,

@@ -4,14 +4,23 @@ import type { LoadedMap } from "../../data";
 import type { ConceptView } from "../../lib/conceptView";
 import { Spine, Steps, Collapsible } from "../Specimen";
 import { hasNodeVisual, NodeVisual } from "../NodeVisual";
-import { Ledger, type LedgerRow } from "./Ledger";
 
 /**
- * The shared concept body: one emphasized statement (the Spine anchor) over an
- * aligned label-gutter Ledger of facets, optionally followed by the proof. The
- * old surfaces each boxed the definition and formula as competing callouts; here
- * only the statement is boxed and the rest demote to quiet ledger rows, so the
- * hierarchy reads at a glance.
+ * The shared concept body: one emphasized statement (the Spine anchor) over a
+ * vertical stack of full-width facet "environments", optionally followed by the
+ * proof.
+ *
+ * Each facet renders as its own environment whose chrome signals its kind —
+ * borrowing the LaTeX theorem-environment idea so the eye distinguishes a
+ * definition from an intuition from a worked example without reading a word:
+ *  - Define / In words → plain (and muted) prose, the running body text.
+ *  - Formal / Formula   → a bordered display box (the equation environment).
+ *  - Intuition          → a tone-ruled aside.
+ *  - Example            → a neutral-ruled aside.
+ *  - Assumes            → a full-width checklist.
+ *  - Notation           → inline glyph chips.
+ * Labels sit as a flush-left eyebrow above their content (no gutter column), so
+ * each environment uses the full panel width.
  *
  * `density` is the one knob the surfaces turn:
  *  - card  — the flashcard answer: essentials + collapsed proof.
@@ -22,9 +31,9 @@ export type ConceptDensity = "card" | "panel" | "full";
 
 type Field =
   | "assumptions"
-  | "formal"
   | "definition"
   | "formula"
+  | "formal"
   | "notation"
   | "intuition"
   | "gloss"
@@ -34,7 +43,7 @@ interface DensitySpec {
   fields: Field[];
   proof: boolean;
   proofOpen: boolean;
-  gutter: number;
+  proofCollapsible: boolean;
   spine: "panel" | "dict";
 }
 
@@ -43,30 +52,30 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
     fields: ["definition", "formula", "intuition", "example"],
     proof: true,
     proofOpen: false,
-    gutter: 92,
+    proofCollapsible: true,
     spine: "dict",
   },
   panel: {
-    fields: ["assumptions", "formal", "definition", "formula", "intuition", "gloss", "example"],
+    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "example"],
     proof: false,
     proofOpen: false,
-    gutter: 86,
+    proofCollapsible: false,
     spine: "panel",
   },
   full: {
-    fields: ["assumptions", "formal", "definition", "formula", "notation", "intuition", "gloss", "example"],
+    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "example"],
     proof: true,
     proofOpen: true,
-    gutter: 104,
+    proofCollapsible: true,
     spine: "dict",
   },
 };
 
 const FIELD_LABEL: Record<Field, string> = {
   assumptions: "Assumes",
-  formal: "Formal",
   definition: "Define",
   formula: "Formula",
+  formal: "Formal",
   notation: "Notation",
   intuition: "Intuition",
   gloss: "In words",
@@ -89,17 +98,11 @@ export function ConceptBody({
   const spec = DENSITY[density];
   const { tone, node } = view;
 
-  const rows: LedgerRow[] = [];
-  for (const field of spec.fields) {
-    const content = renderField(view, field);
-    if (content) rows.push({ label: FIELD_LABEL[field], content });
-  }
+  const fields = spec.fields.filter((f) => hasField(view, f));
 
   return (
     <div className="space-y-4">
-      {showVisual && hasNodeVisual(node) && (
-        <NodeVisual node={node} />
-      )}
+      {showVisual && hasNodeVisual(node) && <NodeVisual node={node} />}
 
       {view.statement && (
         <Spine tone={tone} kind={node.kind} size={spec.spine}>
@@ -107,19 +110,27 @@ export function ConceptBody({
         </Spine>
       )}
 
-      <Ledger rows={rows} gutter={spec.gutter} />
+      {fields.length > 0 && (
+        <div className="space-y-4">
+          {fields.map((field) => (
+            <Environment key={field} view={view} field={field} />
+          ))}
+        </div>
+      )}
 
       {spec.proof && view.proof.hasProof && (
         <Collapsible
           toneColor={tone.color}
           label={view.proof.label}
           defaultOpen={spec.proofOpen}
+          collapsible={spec.proofCollapsible}
         >
           <Steps
             steps={view.proof.steps}
             toneColor={tone.color}
             map={map}
             onSelect={onSelect}
+            defaultOpen={spec.proofOpen}
           />
         </Collapsible>
       )}
@@ -127,52 +138,178 @@ export function ConceptBody({
   );
 }
 
-function renderField(view: ConceptView, field: Field): ReactNode {
+/** A flush-left mono micro-label heading an environment. */
+function Eyebrow({ children, color }: { children: ReactNode; color?: string }) {
+  return (
+    <div
+      className="mb-1.5 font-mono text-ui-2xs uppercase tracking-label"
+      style={{ color: color ?? "var(--fg-3)" }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/** One facet rendered with chrome that signals its kind. */
+function Environment({ view, field }: { view: ConceptView; field: Field }) {
+  const label = FIELD_LABEL[field];
+  const tone = view.tone;
+
   switch (field) {
     case "assumptions":
-      return view.assumptions.length > 0 ? (
-        <ul className="m-0 space-y-1.5 p-0">
-          {view.assumptions.map((a, i) => (
-            <li key={i} className="flex gap-2">
-              <span
-                aria-hidden
-                className="mt-[7px] h-1 w-1 shrink-0 rounded-full"
-                style={{ background: view.tone.color }}
-              />
-              <span>
-                <MathProse text={a} />
-              </span>
-            </li>
-          ))}
-        </ul>
-      ) : null;
-    case "formal":
-      return view.formalStatement ? (
-        <MathProse text={view.formalStatement} asBlock />
-      ) : null;
+      return (
+        <section>
+          <Eyebrow>{label}</Eyebrow>
+          <ul className="m-0 space-y-1.5 p-0">
+            {view.assumptions.map((a, i) => (
+              <li key={i} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--fg-1)" }}>
+                <span
+                  aria-hidden
+                  className="mt-[9px] h-1 w-1 shrink-0 rounded-full"
+                  style={{ background: tone.color }}
+                />
+                <span className="min-w-0">
+                  <MathProse text={a} />
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+
     case "definition":
-      return view.definition ? (
-        <MathText text={view.definition} asBlock />
-      ) : null;
+      return (
+        <section>
+          <Eyebrow>{label}</Eyebrow>
+          <div className="max-w-full overflow-x-auto text-ui-copy" style={{ color: "var(--fg-1)" }}>
+            <MathText text={view.definition} asBlock />
+          </div>
+        </section>
+      );
+
     case "formula":
-      return view.formula ? <MathText text={view.formula} asBlock /> : null;
+    case "formal":
+      return (
+        <section>
+          <Eyebrow>{label}</Eyebrow>
+          <DisplayBox>
+            {field === "formula" ? (
+              <MathText text={view.formula} asBlock />
+            ) : (
+              <MathProse text={view.formalStatement} asBlock />
+            )}
+          </DisplayBox>
+        </section>
+      );
+
     case "notation":
-      return view.notation.length > 0 ? (
-        <div className="flex flex-wrap gap-x-3 gap-y-1.5 font-math">
-          {view.notation.map((n, i) => (
-            <span key={i} style={{ color: "var(--fg-1)" }}>
-              <MathText text={n} />
-            </span>
-          ))}
-        </div>
-      ) : null;
+      return (
+        <section>
+          <Eyebrow>{label}</Eyebrow>
+          <div className="flex flex-wrap gap-1.5">
+            {view.notation.map((n, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center rounded-[var(--radius-sm)] border px-2 py-1 font-math leading-none"
+                style={{
+                  background: "var(--surface-2)",
+                  borderColor: "var(--border)",
+                  color: "var(--fg-1)",
+                }}
+              >
+                <MathText text={n} />
+              </span>
+            ))}
+          </div>
+        </section>
+      );
+
     case "intuition":
-      return view.intuition ? <MathProse text={view.intuition} /> : null;
-    case "gloss":
-      return view.gloss ? <MathProse text={view.gloss} /> : null;
+      return (
+        <Aside accent={tone.color} eyebrow={tone.color} label={label}>
+          <MathProse text={view.intuition} />
+        </Aside>
+      );
+
     case "example":
-      return view.example ? <MathProse text={view.example} /> : null;
+      return (
+        <Aside accent="var(--border-strong)" label={label}>
+          <MathProse text={view.example} />
+        </Aside>
+      );
+
+    case "gloss":
+      return (
+        <section>
+          <Eyebrow>{label}</Eyebrow>
+          <div className="text-ui-copy" style={{ color: "var(--fg-2)" }}>
+            <MathProse text={view.gloss} />
+          </div>
+        </section>
+      );
+
     default:
       return null;
+  }
+}
+
+/** Bordered display block for formal statements / formulas — wide math scrolls within. */
+function DisplayBox({ children }: { children: ReactNode }) {
+  return (
+    <div
+      className="max-w-full overflow-x-auto rounded-[var(--radius-md)] border px-4 py-3 font-math leading-[1.6]"
+      style={{
+        background: "var(--surface-2)",
+        borderColor: "var(--border)",
+        color: "var(--fg-1)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/** A left-ruled aside — tone-ruled for Intuition, neutral-ruled for Example. */
+function Aside({
+  accent,
+  eyebrow,
+  label,
+  children,
+}: {
+  accent: string;
+  eyebrow?: string;
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className="border-l-2 pl-3.5" style={{ borderColor: accent }}>
+      <Eyebrow color={eyebrow}>{label}</Eyebrow>
+      <div className="text-ui-copy" style={{ color: "var(--fg-1)" }}>
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function hasField(view: ConceptView, field: Field): boolean {
+  switch (field) {
+    case "assumptions":
+      return view.assumptions.length > 0;
+    case "definition":
+      return !!view.definition;
+    case "formula":
+      return !!view.formula;
+    case "formal":
+      return !!view.formalStatement;
+    case "notation":
+      return view.notation.length > 0;
+    case "intuition":
+      return !!view.intuition;
+    case "gloss":
+      return !!view.gloss;
+    case "example":
+      return !!view.example;
+    default:
+      return false;
   }
 }

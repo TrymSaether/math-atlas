@@ -13,13 +13,13 @@ import { useStore } from "../store";
 import type { LoadedMap, MapId } from "../data";
 import { KIND_LABEL, type GraphNode } from "../types";
 import { useConceptView } from "../lib/conceptView";
-import { Steps, Collapsible } from "./Specimen";
+import { MathProse, Steps } from "./Specimen";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";
 import { NodeEditorPanel } from "./authoring/NodeEditorPanel";
 
 const USED_BY_INITIAL = 8;
 
-type TabId = "overview" | "proof" | "links" | "source";
+type TabId = "overview" | "properties" | "proof" | "links" | "source";
 
 export function NodePanel() {
   const mapId = useStore((s) => s.mapId);
@@ -110,6 +110,7 @@ function PanelContent({
     peerIdx >= 0 && peerIdx < peers.length - 1 ? peers[peerIdx + 1] : null;
 
   const hasProof = view.proof.hasProof;
+  const hasProperties = view.properties.length > 0;
   const linkCount = view.relations.count;
   // The overview body shows prose/visual only; relations live in the Links tab.
   const bodyEmpty = !(
@@ -129,12 +130,13 @@ function PanelContent({
     const t: { id: TabId; label: string; badge?: number }[] = [
       { id: "overview", label: "Overview" },
     ];
+    if (hasProperties) t.push({ id: "properties", label: "Properties" });
     if (hasProof) t.push({ id: "proof", label: view.proof.label });
     if (linkCount > 0)
       t.push({ id: "links", label: "Links", badge: linkCount });
     t.push({ id: "source", label: "Source" });
     return t;
-  }, [hasProof, view.proof.label, linkCount]);
+  }, [hasProperties, hasProof, view.proof.label, linkCount]);
 
   const activeTab = tabs.some((t) => t.id === tab) ? tab : "overview";
 
@@ -217,7 +219,7 @@ function PanelContent({
                 role="tab"
                 aria-selected={active}
                 onClick={() => setTab(t.id)}
-                className="relative flex items-center gap-1.5 rounded-t-[var(--radius-sm)] px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors focus:outline-none"
+                className="relative flex items-center gap-1.5 rounded-t-[var(--radius-sm)] px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)]"
                 style={{ color: active ? "var(--fg-1)" : "var(--fg-3)" }}
               >
                 {t.label}
@@ -264,15 +266,18 @@ function PanelContent({
 
         {activeTab === "proof" && (
           <section id="sec-proof">
-            <Collapsible toneColor={view.tone.color} defaultOpen>
-              <Steps
-                steps={view.proof.steps}
-                toneColor={view.tone.color}
-                map={map}
-                onSelect={select}
-              />
-            </Collapsible>
+            <Steps
+              steps={view.proof.steps}
+              toneColor={view.tone.color}
+              map={map}
+              onSelect={select}
+              defaultOpen={false}
+            />
           </section>
+        )}
+
+        {activeTab === "properties" && (
+          <PropertiesTab properties={view.properties} toneColor={view.tone.color} />
         )}
 
         {activeTab === "links" && (
@@ -352,6 +357,76 @@ function PanelContent({
       </div>
     </>
   );
+}
+
+function PropertiesTab({
+  properties,
+  toneColor,
+}: {
+  properties: string[];
+  toneColor: string;
+}) {
+  if (properties.length === 0) {
+    return (
+      <p className="text-ui-sm italic" style={{ color: "var(--fg-3)" }}>
+        No reusable properties recorded for this concept yet.
+      </p>
+    );
+  }
+
+  return (
+    <section id="sec-properties">
+      <dl className="m-0 grid grid-cols-[52px_minmax(0,1fr)] p-0">
+        {properties.map((property, index) => {
+          const { title, body } = splitProperty(property);
+          return (
+            <div
+              key={`${title || body}-${index}`}
+              className="contents"
+            >
+              <dt
+                className="border-t py-3 pr-3 text-right font-mono text-ui-2xs uppercase tracking-label-tight"
+                style={{
+                  borderColor: index === 0 ? "transparent" : "var(--border-subtle)",
+                  color: index === 0 ? toneColor : "var(--fg-3)",
+                }}
+              >
+                P{String(index + 1).padStart(2, "0")}
+              </dt>
+              <dd
+                className="m-0 min-w-0 border-t py-3"
+                style={{
+                  borderColor: index === 0 ? "transparent" : "var(--border-subtle)",
+                }}
+              >
+                {title && (
+                  <div
+                    className="mb-1 font-mono text-ui-2xs uppercase tracking-label"
+                    style={{ color: toneColor }}
+                  >
+                    {title}
+                  </div>
+                )}
+                <div className="text-ui-copy leading-[1.65]" style={{ color: "var(--fg-1)" }}>
+                  <MathProse text={body} />
+                </div>
+              </dd>
+            </div>
+          );
+        })}
+      </dl>
+    </section>
+  );
+}
+
+function splitProperty(text: string): { title: string; body: string } {
+  const trimmed = text.trim();
+  const match = /^([^:$]{3,48}):\s+(.+)$/.exec(trimmed);
+  if (!match) return { title: "", body: trimmed };
+  return {
+    title: match[1].trim(),
+    body: match[2].trim(),
+  };
 }
 
 function IconButton({

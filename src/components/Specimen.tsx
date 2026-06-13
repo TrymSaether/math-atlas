@@ -11,7 +11,7 @@
  * Keeping these here means the panel and the dictionary render the same data with
  * one design — change it once, both surfaces follow.
  */
-import { useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CaretRightIcon } from "@phosphor-icons/react";
 import type { LoadedMap } from "../data";
@@ -207,15 +207,22 @@ export function Collapsible({
   toneColor,
   label,
   defaultOpen = false,
+  collapsible = true,
   children,
 }: {
   toneColor: string;
   label?: string;
   defaultOpen?: boolean;
+  collapsible?: boolean;
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const reduceMotion = useReducedMotion();
+
+  if (!collapsible) {
+    return <>{children}</>;
+  }
+
   return (
     <div>
       <button
@@ -282,14 +289,21 @@ export function Proof({
   toneColor,
   label = "Proof",
   defaultOpen = false,
+  collapsible = true,
 }: {
   text: string;
   toneColor: string;
   label?: string;
   defaultOpen?: boolean;
+  collapsible?: boolean;
 }) {
   return (
-    <Collapsible toneColor={toneColor} label={label} defaultOpen={defaultOpen}>
+    <Collapsible
+      toneColor={toneColor}
+      label={label}
+      defaultOpen={defaultOpen}
+      collapsible={collapsible}
+    >
       <Argument text={text} toneColor={toneColor} />
     </Collapsible>
   );
@@ -317,11 +331,15 @@ export function Steps({
   toneColor,
   map,
   onSelect,
+  defaultOpen = true,
+  collapsible = true,
 }: {
   steps: ProofStep[];
   toneColor: string;
   map?: LoadedMap;
   onSelect?: (id: string) => void;
+  defaultOpen?: boolean;
+  collapsible?: boolean;
 }) {
   return (
     <ol className="m-0 list-none space-y-0 p-0">
@@ -330,38 +348,139 @@ export function Steps({
         const role = ROLE_LABEL[step.role] ?? (step.role ? step.role : "");
         const deps = map ? step.uses.filter((id) => map.nodeById.has(id)) : [];
         return (
-          <li key={i} className="relative pb-5 pl-7 last:pb-0">
-            {/* derivation rail + node marker */}
-            {!last && (
-              <span
-                aria-hidden
-                className="absolute left-[10px] top-6 bottom-0 w-px"
-                style={{
-                  background: `color-mix(in srgb, ${toneColor} 45%, transparent)`,
-                }}
-              />
-            )}
-            <span
-              aria-hidden
-              className="absolute left-0 top-1 flex h-[21px] w-[21px] items-center justify-center rounded-full font-mono text-ui-2xs"
-              style={{
-                background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
-                color: toneColor,
-                border: `1px solid color-mix(in srgb, ${toneColor} 40%, transparent)`,
-              }}
-            >
-              {i + 1}
-            </span>
-            {role && (
-              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <span
-                  className="font-mono text-ui-2xs uppercase tracking-label"
-                  style={{ color: toneColor }}
-                >
-                  {role}
-                </span>
-              </div>
-            )}
+          <ProofStepItem
+            key={i}
+            index={i}
+            step={step}
+            role={role}
+            deps={deps}
+            last={last}
+            toneColor={toneColor}
+            map={map}
+            onSelect={onSelect}
+            defaultOpen={defaultOpen}
+            collapsible={collapsible}
+          />
+        );
+      })}
+    </ol>
+  );
+}
+
+function ProofStepItem({
+  index,
+  step,
+  role,
+  deps,
+  last,
+  toneColor,
+  map,
+  onSelect,
+  defaultOpen,
+  collapsible,
+}: {
+  index: number;
+  step: ProofStep;
+  role: string;
+  deps: string[];
+  last: boolean;
+  toneColor: string;
+  map?: LoadedMap;
+  onSelect?: (id: string) => void;
+  defaultOpen: boolean;
+  collapsible: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen || !collapsible);
+  const generatedId = useId();
+  const reduceMotion = useReducedMotion();
+  const stepNumber = index + 1;
+  const bodyId = `${generatedId}-proof-step-${stepNumber}`;
+  const showBody = open || !collapsible;
+
+  return (
+    <li
+      className={`relative pl-8 ${
+        last ? "" : showBody ? "pb-4" : "pb-2"
+      }`}
+    >
+      {!last && (
+        <span
+          aria-hidden
+          className="absolute bottom-0 left-[10px] top-[22px] w-px"
+          style={{
+            background: `color-mix(in srgb, ${toneColor} 45%, transparent)`,
+          }}
+        />
+      )}
+      <span
+        aria-hidden
+        className="absolute left-0 top-0 flex h-[21px] w-[21px] items-center justify-center rounded-full font-mono text-ui-2xs"
+        style={{
+          background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
+          color: toneColor,
+          border: `1px solid color-mix(in srgb, ${toneColor} 40%, transparent)`,
+        }}
+      >
+        {stepNumber}
+      </span>
+
+      <button
+        type="button"
+        onClick={() => collapsible && setOpen((v) => !v)}
+        aria-expanded={showBody}
+        aria-controls={bodyId}
+        disabled={!collapsible}
+        className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-[var(--radius-xs)] px-1 py-0.5 text-left transition-colors hover:bg-[color:var(--surface-2)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] disabled:cursor-default disabled:hover:bg-transparent"
+      >
+        {collapsible && (
+          <CaretRightIcon
+            className="h-3 w-3 shrink-0 transition-transform duration-200"
+            style={{
+              color: "var(--fg-3)",
+              transform: showBody ? "rotate(90deg)" : "none",
+            }}
+            aria-hidden
+          />
+        )}
+        <span className="min-w-0">
+          <span
+            className="block truncate font-mono text-ui-2xs uppercase tracking-label-tight"
+            style={{ color: toneColor }}
+          >
+            {role || "Step"}
+          </span>
+        </span>
+        {deps.length > 0 && (
+          <span
+            className="ml-auto shrink-0 rounded-[var(--radius-xs)] px-1.5 py-px font-mono text-ui-2xs leading-none"
+            style={{
+              background: "var(--surface-3)",
+              color: "var(--fg-3)",
+            }}
+          >
+            {deps.length} use{deps.length === 1 ? "" : "s"}
+          </span>
+        )}
+      </button>
+
+      <AnimatePresence initial={false}>
+        {showBody && (
+          <motion.div
+            key="proof-step-body"
+            id={bodyId}
+            initial={reduceMotion || !collapsible ? false : { height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={
+              reduceMotion || !collapsible
+                ? { opacity: 0 }
+                : { height: 0, opacity: 0 }
+            }
+            transition={{
+              duration: reduceMotion ? 0 : 0.18,
+              ease: [0.2, 0.7, 0.2, 1],
+            }}
+            className="overflow-hidden"
+          >
             {step.content && (
               <div
                 className="font-math mt-1.5 text-ui-copy leading-[1.7]"
@@ -370,13 +489,13 @@ export function Steps({
                 <MathProse text={step.content} asBlock />
               </div>
             )}
-            {deps.length > 0 && onSelect && (
+            {deps.length > 0 && onSelect && map && (
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {deps.map((id) => (
                   <ConnectionChip
                     key={id}
                     id={id}
-                    map={map!}
+                    map={map}
                     onClick={() => onSelect(id)}
                   />
                 ))}
@@ -391,10 +510,10 @@ export function Steps({
                 ∎
               </span>
             )}
-          </li>
-        );
-      })}
-    </ol>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </li>
   );
 }
 

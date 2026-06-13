@@ -546,6 +546,7 @@ export function NodeEditorPanel({
         <Field label="Gloss" value={draft.gloss} onChange={(v) => set({ gloss: v })} area hint="dictionary one-liner" />
         <Field label="Notation" value={draft.notation} onChange={(v) => set({ notation: v })} area mono hint="one per line" />
         <Field label="Assumptions" value={draft.assumptions} onChange={(v) => set({ assumptions: v })} area hint="one per line" />
+        <Field label="Properties" value={draft.properties} onChange={(v) => set({ properties: v })} area hint="one per line" />
         <Field label="Tags" value={draft.tags} onChange={(v) => set({ tags: v })} hint="comma-separated" />
 
         {editingId !== null && (
