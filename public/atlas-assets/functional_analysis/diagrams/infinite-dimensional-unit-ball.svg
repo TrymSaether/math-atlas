@@ -1,22 +1,26 @@
-<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img" aria-label="Separated basis vectors on an infinite-dimensional unit sphere">
-  <rect x="0" y="0" width="320" height="180" fill="none" />
-  <ellipse cx="160" cy="92" rx="116" ry="54"
-           fill="var(--dia-fill,#e7ddc9)" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.7" opacity="0.9" />
-  <ellipse cx="160" cy="92" rx="86" ry="34"
-           fill="none" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.1" stroke-dasharray="5 5" />
-  <g fill="var(--dia-acc,#2457c5)" stroke="var(--dia-space,#f6f0e4)" stroke-width="1.4">
-    <circle cx="72" cy="74" r="5" />
-    <circle cx="110" cy="124" r="5" />
-    <circle cx="155" cy="46" r="5" />
-    <circle cx="204" cy="132" r="5" />
-    <circle cx="246" cy="70" r="5" />
+<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img" aria-label="Orthonormal vectors on the unit sphere are pairwise root-two apart, so the sequence has no convergent subsequence and the unit ball is not compact in infinite dimensions">
+  <rect x="0" y="0" width="320" height="200" fill="none" />
+
+  <!-- unit sphere -->
+  <circle cx="160" cy="100" r="62" fill="var(--dia-fill,#e7ddc9)" fill-opacity="0.45" stroke="var(--dia-acc2,#0d9488)" stroke-width="1.7" />
+
+  <!-- radii to two orthonormal vectors, with the right-angle at the centre -->
+  <line x1="160" y1="100" x2="98" y2="100" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.1" />
+  <line x1="160" y1="100" x2="160" y2="38" stroke="var(--dia-line,#d6ccb8)" stroke-width="1.1" />
+  <path d="M142 100 L142 82 L160 82" fill="none" stroke="var(--dia-line,#d6ccb8)" stroke-width="1" />
+
+  <!-- chord between them has length root two -->
+  <line x1="98" y1="100" x2="160" y2="38" stroke="var(--dia-boundary,#dc2626)" stroke-width="1.6" />
+
+  <!-- the orthonormal points -->
+  <g fill="var(--dia-acc,#2457c5)" stroke="var(--dia-space,#f6f0e4)" stroke-width="1.3">
+    <circle cx="98" cy="100" r="5" /><circle cx="160" cy="38" r="5" />
+    <circle cx="211" cy="65" r="5" /><circle cx="216" cy="135" r="5" /><circle cx="138" cy="158" r="5" />
   </g>
-  <path d="M72 74 C100 48 127 42 155 46" fill="none" stroke="var(--dia-boundary,#dc2626)" stroke-width="1.1" stroke-dasharray="4 4" />
-  <path d="M155 46 C190 42 222 49 246 70" fill="none" stroke="var(--dia-boundary,#dc2626)" stroke-width="1.1" stroke-dasharray="4 4" />
-  <text x="72" y="63" font-size="11" text-anchor="middle" fill="var(--dia-ink,#27221d)">e_1</text>
-  <text x="110" y="141" font-size="11" text-anchor="middle" fill="var(--dia-ink,#27221d)">e_2</text>
-  <text x="155" y="35" font-size="11" text-anchor="middle" fill="var(--dia-ink,#27221d)">e_3</text>
-  <text x="204" y="149" font-size="11" text-anchor="middle" fill="var(--dia-ink,#27221d)">e_4</text>
-  <text x="246" y="59" font-size="11" text-anchor="middle" fill="var(--dia-ink,#27221d)">e_n</text>
-  <text x="160" y="165" font-size="12" text-anchor="middle" fill="var(--dia-mut,#8c8274)">||e_n||=1, but no norm-convergent subsequence</text>
+  <text x="88" y="91" font-size="11" font-style="italic" text-anchor="end" fill="var(--dia-ink,#27221d)">e&#8321;</text>
+  <text x="160" y="30" font-size="11" font-style="italic" text-anchor="middle" fill="var(--dia-ink,#27221d)">e&#8322;</text>
+  <text x="220" y="61" font-size="11" font-style="italic" fill="var(--dia-ink,#27221d)">e&#8323;</text>
+  <text x="116" y="76" font-size="10.5" fill="var(--dia-boundary,#dc2626)">&#8730;2</text>
+
+  <text x="160" y="190" font-size="12" text-anchor="middle" fill="var(--dia-mut,#8c8274)">&#8214;e&#8345;&#8214;=1 but &#8214;e&#8345;&#8722;e&#8344;&#8214;=&#8730;2: no convergent subsequence</text>
 </svg>

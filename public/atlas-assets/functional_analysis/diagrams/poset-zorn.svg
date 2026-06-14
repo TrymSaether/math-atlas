@@ -1,0 +1,31 @@
+<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" font-family="'Newsreader',Georgia,serif" role="img" aria-label="A Hasse diagram of a partial order: a chain runs from bottom to a top element, that element is an upper bound, and the two top elements are maximal">
+  <rect x="0" y="0" width="320" height="200" fill="none" />
+
+  <!-- covering relations (Hasse edges) -->
+  <g stroke="var(--dia-line,#d6ccb8)" stroke-width="1.4" fill="none" stroke-linecap="round">
+    <line x1="160" y1="170" x2="96" y2="114" />
+    <line x1="160" y1="170" x2="224" y2="114" />
+    <line x1="96" y1="114" x2="120" y2="52" />
+    <line x1="160" y1="114" x2="120" y2="52" />
+    <line x1="224" y1="114" x2="216" y2="52" />
+  </g>
+
+  <!-- highlighted maximal chain: bottom < b < t -->
+  <polyline points="160,170 160,114 216,52" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2.6" stroke-linecap="round" />
+
+  <!-- nodes -->
+  <circle cx="96" cy="114" r="4" fill="var(--dia-mut,#8c8274)" />
+  <circle cx="224" cy="114" r="4" fill="var(--dia-mut,#8c8274)" />
+  <circle cx="160" cy="170" r="4.6" fill="var(--dia-acc,#2457c5)" />
+  <circle cx="160" cy="114" r="4.6" fill="var(--dia-acc,#2457c5)" />
+  <!-- the other maximal element -->
+  <circle cx="120" cy="52" r="4.6" fill="var(--dia-mut,#8c8274)" />
+  <!-- upper bound of the chain, itself maximal -->
+  <circle cx="216" cy="52" r="5.2" fill="var(--dia-ok,#16a34a)" />
+  <circle cx="216" cy="52" r="11.5" fill="none" stroke="var(--dia-ok,#16a34a)" stroke-width="1.2" stroke-dasharray="3.5 3.5" />
+
+  <text x="170" y="132" font-size="11" fill="var(--dia-acc,#2457c5)">chain</text>
+  <text x="232" y="50" font-size="11" fill="var(--dia-ok,#16a34a)">upper bound</text>
+  <text x="112" y="42" font-size="11" text-anchor="middle" fill="var(--dia-mut,#8c8274)">maximal</text>
+  <text x="160" y="192" font-size="12" text-anchor="middle" fill="var(--dia-mut,#8c8274)">every chain has an upper bound &#8658; a maximal element exists</text>
+</svg>

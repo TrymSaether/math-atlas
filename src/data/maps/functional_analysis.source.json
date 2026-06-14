@@ -84,6 +84,7 @@
         "intuition": "The algebraic stage on which linear combinations make sense.",
         "notation": ["X"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/vector-space-span.svg",
       "tags": ["space", "algebra"],
       "priority": "core"
     },
@@ -99,6 +100,7 @@
         "intuition": "A space where convergence and Cauchy sequences can be measured.",
         "notation": ["$(M,d)$"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/metric-open-balls.svg",
       "tags": ["space", "topology"],
       "priority": "core"
     },
@@ -139,6 +141,7 @@
         "intuition": "A vector space where limits are compatible with linear operations.",
         "notation": ["TVS"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/vector-space-span.svg",
       "tags": ["space", "topology"],
       "priority": "standard"
     },
@@ -215,6 +218,7 @@
         "intuition": "A TVS with enough convex geometry for separation theorems.",
         "notation": ["LCS"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/vector-space-span.svg",
       "tags": ["space", "convexity"],
       "priority": "standard"
     },
@@ -271,6 +275,7 @@
         "intuition": "Distance is the norm-cost of the displacement from one vector to the other. Metric balls are just translated and rescaled copies of the norm unit ball.",
         "notation": ["$$d_X(x,y)=\\|x-y\\|_X$$"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/metric-open-balls.svg",
       "assumptions": ["$(X,\\|\\cdot\\|_X)$ is a normed vector space."],
       "tags": ["construction", "metric"],
       "priority": "core"
@@ -285,6 +290,7 @@
         "intuition": "Open sets are built from distance balls.",
         "notation": ["tau_d"]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/metric-open-balls.svg",
       "tags": ["construction", "topology"],
       "priority": "core"
     },
@@ -803,6 +809,7 @@
         "intuition": "A global choice principle enabling maximal-object arguments.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
       "tags": ["foundations"],
       "priority": "standard"
     },
@@ -816,6 +823,7 @@
         "intuition": "The maximal-extension engine behind Hahn-Banach.",
         "notation": []
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
       "tags": ["foundations", "hahn-banach"],
       "priority": "standard"
     },
@@ -1840,6 +1848,7 @@
           "$a\\leq b$: $a$ is below $b$, smaller than $b$, or contained/extended by $b$ depending on context"
         ]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
       "examples": [
         {
           "content": "If $P$ is a collection of subsets of a set $E$, then $(P,\\subseteq)$ is partially ordered by inclusion."
@@ -1862,6 +1871,7 @@
           "$a,b\\in\\mathcal C \\Rightarrow a\\leq b$ or $b\\leq a$"
         ]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
       "examples": [
         {
           "content": "In $(\\mathcal P(E),\\subseteq)$, the family $A_1\\subseteq A_2\\subseteq A_3\\subseteq\\cdots$ is a chain."
@@ -1884,6 +1894,7 @@
           "$\\forall a\\in A,\\ a\\leq b$"
         ]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
       "examples": [
         {
           "content": "If $A=\\{A_i:i\\in I\\}$ is a chain of subsets ordered by inclusion, then $\\bigcup_{i\\in I}A_i$ is an upper bound for $A$."
@@ -1906,6 +1917,7 @@
           "$m\\leq p \\Rightarrow p=m$"
         ]
       },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
       "examples": [
         {
           "content": "In a family of admissible Hahn-Banach extensions, a maximal element is a pair $(M,h)$ such that no strictly larger admissible pair $(M',h')$ extends it."
