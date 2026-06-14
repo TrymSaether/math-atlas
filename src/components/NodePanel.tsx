@@ -120,7 +120,8 @@ function PanelContent({
     view.formula ||
     view.intuition ||
     view.gloss ||
-    view.example ||
+    view.extraContent.length ||
+    view.examples.length ||
     view.assumptions.length ||
     view.notation.length
   );

@@ -14,12 +14,8 @@ import { KIND_VALUES } from "./sourceSchema";
 
 export const ARTIFACT_VERSION = 1;
 
-export const ArtifactNodeSchema = z.object({
-  id: z.string(),
-  kind: z.enum(KIND_VALUES),
-  domain: z.string(),
-  label: z.string(),
-  content: z.object({
+const ArtifactContentSchema = z
+  .object({
     statement: z.string().optional(),
     definition: z.string().optional(),
     formal: z.string().optional(),
@@ -27,9 +23,21 @@ export const ArtifactNodeSchema = z.object({
     intuition: z.string().optional(),
     gloss: z.string().optional(),
     notation: z.array(z.string()),
-  }),
+  })
+  .catchall(z.unknown());
+
+export const ArtifactNodeSchema = z.object({
+  id: z.string(),
+  kind: z.enum(KIND_VALUES),
+  domain: z.string(),
+  label: z.string(),
+  content: ArtifactContentSchema,
   examples: z.array(
-    z.object({ tex: z.string(), caption: z.string().optional() }),
+    z.object({
+      content: z.string(),
+      label: z.string().optional(),
+      role: z.string().optional(),
+    }),
   ),
   diagram: z.string().optional(),
   assumptions: z.array(z.string()),

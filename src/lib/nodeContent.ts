@@ -1,5 +1,15 @@
 import type { GraphNode } from "../types";
 
+export const KNOWN_CONTENT_KEYS = new Set([
+  "statement",
+  "definition",
+  "formal",
+  "formula",
+  "intuition",
+  "gloss",
+  "notation",
+]);
+
 function clean(value: string | undefined): string {
   return (value ?? "").trim();
 }
@@ -9,9 +19,12 @@ function distinct(value: string | undefined, seen: string[]): string {
   return normalized && !seen.includes(normalized) ? normalized : "";
 }
 
-/** First example's TeX, if any. */
-function exampleText(node: GraphNode): string {
-  return clean(node.examples[0]?.tex);
+function examplesText(node: GraphNode): string {
+  return node.examples
+    .flatMap((example) => [example.role, example.label, example.content])
+    .map((value) => clean(value))
+    .filter(Boolean)
+    .join(" ");
 }
 
 /** Lead text of a step list (proof / solution), joined for plain-text use. */
@@ -20,6 +33,31 @@ function stepsText(steps: { content: string }[] | undefined): string {
     .map((s) => s.content)
     .join(" ")
     .trim();
+}
+
+export function contentValueText(value: unknown): string {
+  if (typeof value === "string") return value.trim();
+  if (typeof value === "number" || typeof value === "boolean")
+    return String(value);
+  if (Array.isArray(value))
+    return value
+      .map(contentValueText)
+      .filter(Boolean)
+      .join(" ");
+  if (value && typeof value === "object")
+    return Object.values(value)
+      .map(contentValueText)
+      .filter(Boolean)
+      .join(" ");
+  return "";
+}
+
+function extraContentText(node: GraphNode): string {
+  return Object.entries(node.content)
+    .filter(([key]) => !KNOWN_CONTENT_KEYS.has(key))
+    .map(([, value]) => contentValueText(value))
+    .filter(Boolean)
+    .join(" ");
 }
 
 /**
@@ -60,8 +98,10 @@ export function nodeAnswerText(node: GraphNode): string {
     clean(node.content.gloss) ||
     nodeFormalStatement(node) ||
     clean(node.content.formula) ||
+    extraContentText(node) ||
+    examplesText(node) ||
     stepsText(node.proof?.steps) ||
-    exampleText(node)
+    ""
   );
 }
 
@@ -75,8 +115,9 @@ export function nodeSearchText(node: GraphNode): string {
     nodeDefinition(node),
     nodeFormula(node),
     node.content.gloss,
-    exampleText(node),
+    examplesText(node),
     node.content.intuition,
+    extraContentText(node),
   ]
     .filter(Boolean)
     .join(" ")

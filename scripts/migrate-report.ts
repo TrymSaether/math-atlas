@@ -253,7 +253,7 @@ function convert(raw: any, t: Tally) {
       domain: it.domain,
       label: it.label,
       content,
-      examples: it.example ? [{ tex: it.example }] : [],
+      examples: it.example ? [{ content: it.example }] : [],
       ...(it.diagram_path ? { diagram: it.diagram_path } : {}),
       assumptions,
       ...(proofSteps.length ? { proof: { steps: proofSteps } } : {}),

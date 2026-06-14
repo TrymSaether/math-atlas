@@ -109,7 +109,7 @@
       },
       "examples": [
         {
-          "tex": "If $f:\\mathbb R\\to\\mathbb R$ is $f(x)=x+1$, then $f^{-1}(y)=y-1$. If $f(x)=x^2$, the inverse relation is not a function $\\mathbb R\\to\\mathbb R$."
+          "content": "If $f:\\mathbb R\\to\\mathbb R$ is $f(x)=x+1$, then $f^{-1}(y)=y-1$. If $f(x)=x^2$, the inverse relation is not a function $\\mathbb R\\to\\mathbb R$."
         }
       ],
       "tags": ["functions", "relations", "inverse"],
@@ -232,7 +232,7 @@
       },
       "examples": [
         {
-          "tex": "Every metric space is a topological space via its metric topology (Thm. 3.2). On $\\{a,b,c\\}$, there are $29$ distinct topologies."
+          "content": "Every metric space is a topological space via its metric topology (Thm. 3.2). On $\\{a,b,c\\}$, there are $29$ distinct topologies."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/topological-space.svg",
@@ -272,7 +272,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}^n$ with $d(x,y)=\\lVert x-y\\rVert$ is the prototype. The \\emph{discrete metric} ($d(x,y)=1$ for $x\\neq y$, else $0$) makes any set a metric space."
+          "content": "$\\mathbb{R}^n$ with $d(x,y)=\\lVert x-y\\rVert$ is the prototype. The \\emph{discrete metric} ($d(x,y)=1$ for $x\\neq y$, else $0$) makes any set a metric space."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/metric-space.svg",
@@ -338,7 +338,7 @@
       },
       "examples": [
         {
-          "tex": "Collapsing the boundary circle of a disc to a point yields a sphere; gluing the ends of $[0,1]$ yields $S^1$."
+          "content": "Collapsing the boundary circle of a disc to a point yields a sphere; gluing the ends of $[0,1]$ yields $S^1$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/quotient-space.svg",
@@ -363,7 +363,7 @@
       },
       "examples": [
         {
-          "tex": "Finite spaces and indiscrete spaces are compact; $\\mathbb{R}$ is not (the cover by $(n-1,n+1)$ has no finite subcover)."
+          "content": "Finite spaces and indiscrete spaces are compact; $\\mathbb{R}$ is not (the cover by $(n-1,n+1)$ has no finite subcover)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/compact-space.svg",
@@ -388,7 +388,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}$ is connected (Thm. 6.12); a two-point discrete space is disconnected."
+          "content": "$\\mathbb{R}$ is connected (Thm. 6.12); a two-point discrete space is disconnected."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/connected-space.svg",
@@ -413,7 +413,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}^n$ is path-connected, as is $\\mathbb{R}^n\\setminus\\{p\\}$ for $n\\ge 2$."
+          "content": "$\\mathbb{R}^n$ is path-connected, as is $\\mathbb{R}^n\\setminus\\{p\\}$ for $n\\ge 2$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/path-connected.svg",
@@ -438,7 +438,7 @@
       },
       "examples": [
         {
-          "tex": "Every metric space is Hausdorff; an infinite set with the cofinite topology is not."
+          "content": "Every metric space is Hausdorff; an infinite set with the cofinite topology is not."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/hausdorff.svg",
@@ -495,7 +495,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}^n$, every compact space, and every discrete space are locally compact; $\\mathbb{Q}$ is not."
+          "content": "$\\mathbb{R}^n$, every compact space, and every discrete space are locally compact; $\\mathbb{Q}$ is not."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/local-compactness.svg",
@@ -549,7 +549,7 @@
       },
       "examples": [
         {
-          "tex": "$[0,1]$, $S^n$, and the torus $T^2$ are compact Hausdorff; a finite indiscrete space is compact but not Hausdorff."
+          "content": "$[0,1]$, $S^n$, and the torus $T^2$ are compact Hausdorff; a finite indiscrete space is compact but not Hausdorff."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/compact-hausdorff.svg",
@@ -608,7 +608,7 @@
       },
       "examples": [
         {
-          "tex": "In a discrete space every subset is closed; in $\\mathbb{R}$ every interval $[a,b]$ and every singleton is closed."
+          "content": "In a discrete space every subset is closed; in $\\mathbb{R}$ every interval $[a,b]$ and every singleton is closed."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/closed-subset.svg",
@@ -636,7 +636,7 @@
       },
       "examples": [
         {
-          "tex": "In $\\mathbb{R}$ with the standard topology, $(-1,1)$ is a neighborhood of $0$ because $0\\in(-1,1)$ and $(-1,1)$ is open."
+          "content": "In $\\mathbb{R}$ with the standard topology, $(-1,1)$ is a neighborhood of $0$ because $0\\in(-1,1)$ and $(-1,1)$ is open."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/neighborhood-top.svg",
@@ -664,7 +664,7 @@
       },
       "examples": [
         {
-          "tex": "The open $\\epsilon$-balls form a basis for the metric topology; all singletons form a basis for the discrete topology."
+          "content": "The open $\\epsilon$-balls form a basis for the metric topology; all singletons form a basis for the discrete topology."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/basis.svg",
@@ -691,7 +691,7 @@
       },
       "examples": [
         {
-          "tex": "$\\langle\\mathcal{S}\\rangle=\\big\\{\\bigcup_\\lambda\\bigcap_{i=1}^{n_\\lambda}S_{\\lambda,i}\\mid S_{\\lambda,i}\\in\\mathcal{S}\\big\\}$ (Thm. 4.15)."
+          "content": "$\\langle\\mathcal{S}\\rangle=\\big\\{\\bigcup_\\lambda\\bigcap_{i=1}^{n_\\lambda}S_{\\lambda,i}\\mid S_{\\lambda,i}\\in\\mathcal{S}\\big\\}$ (Thm. 4.15)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/subbasis.svg",
@@ -718,7 +718,7 @@
       },
       "examples": [
         {
-          "tex": "In $\\mathbb{R}$, $\\overline{(a,b]}=[a,b]$. In general $\\mathrm{Int}(A)\\subseteq A\\subseteq\\overline{A}$."
+          "content": "In $\\mathbb{R}$, $\\overline{(a,b]}=[a,b]$. In general $\\mathrm{Int}(A)\\subseteq A\\subseteq\\overline{A}$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/closure.svg",
@@ -745,7 +745,7 @@
       },
       "examples": [
         {
-          "tex": "In $\\mathbb{R}$ with its usual topology, $$\\operatorname{int}_{\\mathbb{R}}((a,b])=(a,b).$$"
+          "content": "In $\\mathbb{R}$ with its usual topology, $$\\operatorname{int}_{\\mathbb{R}}((a,b])=(a,b).$$"
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/interior.svg",
@@ -791,7 +791,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{Q}$ is dense in $\\mathbb{R}$. In a discrete space the only dense subset is the whole space."
+          "content": "$\\mathbb{Q}$ is dense in $\\mathbb{R}$. In a discrete space the only dense subset is the whole space."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/dense.svg",
@@ -818,7 +818,7 @@
       },
       "examples": [
         {
-          "tex": "Every constant map is continuous, since the preimage of an open set is either $\\varnothing$ or all of $X$. Every map from a discrete topological space is continuous, since every subset of the domain is open."
+          "content": "Every constant map is continuous, since the preimage of an open set is either $\\varnothing$ or all of $X$. Every map from a discrete topological space is continuous, since every subset of the domain is open."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/continuous-map-top.svg",
@@ -848,7 +848,7 @@
       },
       "examples": [
         {
-          "tex": "The map $f\\colon \\mathbb{R}\\to\\mathbb{R}$, $f(x)=2x-1$, is a homeomorphism with inverse $f^{-1}(y)=\\frac{y+1}{2}$. A continuous bijection need \\emph{not} be a homeomorphism: if $X$ has at least two points, then $\\mathrm{id}\\colon X_{\\mathrm{disc}}\\to X_{\\mathrm{ind}}$ is continuous and bijective, but its inverse is not continuous."
+          "content": "The map $f\\colon \\mathbb{R}\\to\\mathbb{R}$, $f(x)=2x-1$, is a homeomorphism with inverse $f^{-1}(y)=\\frac{y+1}{2}$. A continuous bijection need \\emph{not} be a homeomorphism: if $X$ has at least two points, then $\\mathrm{id}\\colon X_{\\mathrm{disc}}\\to X_{\\mathrm{ind}}$ is continuous and bijective, but its inverse is not continuous."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homeomorphism.svg",
@@ -892,7 +892,7 @@
       },
       "examples": [
         {
-          "tex": "A closed interval $[a,b]$ is compact; the open interval $(0,1)$ is not — the cover $\\{(1/n,1)\\}_{n\\ge 2}$ has no finite subcover."
+          "content": "A closed interval $[a,b]$ is compact; the open interval $(0,1)$ is not — the cover $\\{(1/n,1)\\}_{n\\ge 2}$ has no finite subcover."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/compact-space.svg",
@@ -928,7 +928,7 @@
       },
       "examples": [
         {
-          "tex": "On compact $[0,1]$, nested closed intervals $[0,1/n]$ have the FIP and indeed intersect in $\\{0\\}$."
+          "content": "On compact $[0,1]$, nested closed intervals $[0,1/n]$ have the FIP and indeed intersect in $\\{0\\}$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/fip-characterization.svg",
@@ -955,7 +955,7 @@
       },
       "examples": [
         {
-          "tex": "$[0,1]$ is sequentially compact (Bolzano–Weierstrass); the product $[0,1]^{[0,1]}$ is compact yet not sequentially compact."
+          "content": "$[0,1]$ is sequentially compact (Bolzano–Weierstrass); the product $[0,1]^{[0,1]}$ is compact yet not sequentially compact."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/sequential-compactness.svg",
@@ -1119,7 +1119,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}^n$ is locally compact (each point has a compact ball) but not compact; $\\mathbb{Q}$ is not locally compact."
+          "content": "$\\mathbb{R}^n$ is locally compact (each point has a compact ball) but not compact; $\\mathbb{Q}$ is not locally compact."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/local-compactness.svg",
@@ -1144,7 +1144,7 @@
       },
       "examples": [
         {
-          "tex": "$K\\subseteq A$ is closed in $A$ iff $K=A\\cap L$ for some $L$ closed in $X$ (Thm. 5.3)."
+          "content": "$K\\subseteq A$ is closed in $A$ iff $K=A\\cap L$ for some $L$ closed in $X$ (Thm. 5.3)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/subspace-topology.svg",
@@ -1171,7 +1171,7 @@
       },
       "examples": [
         {
-          "tex": "If $\\mathcal{B}_X,\\mathcal{B}_Y$ are bases, the products $B_X\\times B_Y$ form a basis (Thm. 5.9). The torus $T^2=S^1\\times S^1$ carries this topology."
+          "content": "If $\\mathcal{B}_X,\\mathcal{B}_Y$ are bases, the products $B_X\\times B_Y$ form a basis (Thm. 5.9). The torus $T^2=S^1\\times S^1$ carries this topology."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/product-topology.svg",
@@ -1211,7 +1211,7 @@
       },
       "examples": [
         {
-          "tex": "In $\\mathbb{R}$ with $d(x,y)=|x-y|$, the metric topology is the usual topology generated by open intervals. In a discrete metric space, every subset is open, so the metric topology is the discrete topology."
+          "content": "In $\\mathbb{R}$ with $d(x,y)=|x-y|$, the metric topology is the usual topology generated by open intervals. In a discrete metric space, every subset is open, so the metric topology is the discrete topology."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/metric-topology.svg",
@@ -1274,7 +1274,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}^n$ compactifies to the sphere $S^n$; the plane $\\mathbb{C}$ becomes the Riemann sphere."
+          "content": "$\\mathbb{R}^n$ compactifies to the sphere $S^n$; the plane $\\mathbb{C}$ becomes the Riemann sphere."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/one-point-compactification.svg",
@@ -1300,7 +1300,7 @@
       },
       "examples": [
         {
-          "tex": "$\\beta\\mathbb{N}$ is the space of ultrafilters on $\\mathbb{N}$; far larger than the one-point compactification $\\mathbb{N}\\cup\\{\\infty\\}$."
+          "content": "$\\beta\\mathbb{N}$ is the space of ultrafilters on $\\mathbb{N}$; far larger than the one-point compactification $\\mathbb{N}\\cup\\{\\infty\\}$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/stone-cech.svg",
@@ -1461,7 +1461,7 @@
       },
       "examples": [
         {
-          "tex": "Combined with Thm. 6.37 it shows a continuous bijection from a compact space to a Hausdorff space is a homeomorphism."
+          "content": "Combined with Thm. 6.37 it shows a continuous bijection from a compact space to a Hausdorff space is a homeomorphism."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/compact-in-hausdorff-closed.svg",
@@ -1548,7 +1548,7 @@
       },
       "examples": [
         {
-          "tex": "Closed intervals $[a,b]$, closed balls, and spheres in $\\mathbb R^n$ are compact; $(0,1)$ is bounded but not compact, and $\\mathbb R$ is closed but not compact."
+          "content": "Closed intervals $[a,b]$, closed balls, and spheres in $\\mathbb R^n$ are compact; $(0,1)$ is bounded but not compact, and $\\mathbb R$ is closed but not compact."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/heine-borel.svg",
@@ -1606,7 +1606,7 @@
       },
       "examples": [
         {
-          "tex": "In $\\mathbb{R}$, the sequence $(1, 1/2, 1/3, 1/4, \\ldots)$ is bounded, so it has a convergent subsequence (the whole sequence converges to 0). A sequence like $(1, 2, 3, \\ldots)$ is unbounded and need not have a convergent subsequence."
+          "content": "In $\\mathbb{R}$, the sequence $(1, 1/2, 1/3, 1/4, \\ldots)$ is bounded, so it has a convergent subsequence (the whole sequence converges to 0). A sequence like $(1, 2, 3, \\ldots)$ is unbounded and need not have a convergent subsequence."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/bolzano-weierstrass.svg",
@@ -1660,7 +1660,7 @@
       },
       "examples": [
         {
-          "tex": "In the product topology, cylinder sets (inverse images of open sets in one factor) form a subbasis. Alexander's lemma shows that to prove a product is compact, one needs only to handle such subbasic covers—which is much more tractable than handling all open covers."
+          "content": "In the product topology, cylinder sets (inverse images of open sets in one factor) form a subbasis. Alexander's lemma shows that to prove a product is compact, one needs only to handle such subbasic covers—which is much more tractable than handling all open covers."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/alexander-subbase.svg",
@@ -1711,7 +1711,7 @@
       },
       "examples": [
         {
-          "tex": "The Cantor cube $\\{0,1\\}^{\\mathbb{N}}$ is compact as a product of countably many copies of the compact space $\\{0,1\\}$. The Hilbert cube $[0,1]^{\\mathbb{N}}$ (a product of countably many copies of $[0,1]$) is also compact."
+          "content": "The Cantor cube $\\{0,1\\}^{\\mathbb{N}}$ is compact as a product of countably many copies of the compact space $\\{0,1\\}$. The Hilbert cube $[0,1]^{\\mathbb{N}}$ (a product of countably many copies of $[0,1]$) is also compact."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/tychonoff.svg",
@@ -1796,7 +1796,7 @@
       },
       "examples": [
         {
-          "tex": "If $f$ had no fixed point, the ray from $f(x)$ through $x$ would define a retraction $D^2\\to S^1$, contradicting $\\pi_1(S^1)\\cong\\mathbb{Z}$."
+          "content": "If $f$ had no fixed point, the ray from $f(x)$ through $x$ would define a retraction $D^2\\to S^1$, contradicting $\\pi_1(S^1)\\cong\\mathbb{Z}$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/brouwer.svg",
@@ -1935,7 +1935,7 @@
       },
       "examples": [
         {
-          "tex": "$C$ is compact (closed and bounded in $\\mathbb{R}$) and sequentially compact."
+          "content": "$C$ is compact (closed and bounded in $\\mathbb{R}$) and sequentially compact."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/cantor-set.svg",
@@ -2092,7 +2092,7 @@
       },
       "examples": [
         {
-          "tex": "$[0,1]^{[0,1]}$ (a product of $\\mathfrak{c}$ copies of $[0,1]$) is compact by Tychonoff yet has a sequence with no convergent subsequence."
+          "content": "$[0,1]^{[0,1]}$ (a product of $\\mathfrak{c}$ copies of $[0,1]$) is compact by Tychonoff yet has a sequence with no convergent subsequence."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/compact-not-seq-compact.svg",
@@ -3240,7 +3240,7 @@
       },
       "examples": [
         {
-          "tex": "Composing a loop at $x_0$ with $h$ gives a loop at $y_0$."
+          "content": "Composing a loop at $x_0$ with $h$ gives a loop at $y_0$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/based-map.svg",
@@ -3266,7 +3266,7 @@
       },
       "examples": [
         {
-          "tex": "A path $\\alpha$ from $x_0$ to $x_1$ induces the isomorphism $\\hat\\alpha([f])=[\\alpha]^{-1}*[f]*[\\alpha]$."
+          "content": "A path $\\alpha$ from $x_0$ to $x_1$ induces the isomorphism $\\hat\\alpha([f])=[\\alpha]^{-1}*[f]*[\\alpha]$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/basepoint-independence.svg",
@@ -3301,7 +3301,7 @@
       },
       "examples": [
         {
-          "tex": "Addition and multiplication on $\\mathbb{Z}$ are binary operations."
+          "content": "Addition and multiplication on $\\mathbb{Z}$ are binary operations."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/binary-operation.svg",
@@ -3327,7 +3327,7 @@
       },
       "examples": [
         {
-          "tex": "In $\\mathbb{R}^n$, $A$ is bounded iff it sits inside some ball about the origin. Boundedness is metric, not topological."
+          "content": "In $\\mathbb{R}^n$, $A$ is bounded iff it sits inside some ball about the origin. Boundedness is metric, not topological."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/bounded.svg",
@@ -3355,7 +3355,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}^2=\\mathbb{R}\\times\\mathbb{R}$; the torus is $S^1\\times S^1$."
+          "content": "$\\mathbb{R}^2=\\mathbb{R}\\times\\mathbb{R}$; the torus is $S^1\\times S^1$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/cartesian-product.svg",
@@ -3380,7 +3380,7 @@
       },
       "examples": [
         {
-          "tex": "If $X$ is finite, the cofinite topology equals the discrete topology; if $X$ is infinite it is strictly coarser."
+          "content": "If $X$ is finite, the cofinite topology equals the discrete topology; if $X$ is infinite it is strictly coarser."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/cofinite-topology.svg",
@@ -3408,7 +3408,7 @@
       },
       "examples": [
         {
-          "tex": "$S^n\\subseteq\\mathbb{R}^{n+1}$ is compact; the torus $T^2$ is compact."
+          "content": "$S^n\\subseteq\\mathbb{R}^{n+1}$ is compact; the torus $T^2$ is compact."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/compact-subspace.svg",
@@ -3434,7 +3434,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathcal{T}_{\\mathrm{ind}}\\subseteq\\mathcal{T}\\subseteq\\mathcal{T}_{\\mathrm{disc}}$ for every $\\mathcal{T}$. Not every pair of topologies is comparable."
+          "content": "$\\mathcal{T}_{\\mathrm{ind}}\\subseteq\\mathcal{T}\\subseteq\\mathcal{T}_{\\mathrm{disc}}$ for every $\\mathcal{T}$. Not every pair of topologies is comparable."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/comparable-topologies.svg",
@@ -3462,7 +3462,7 @@
       },
       "examples": [
         {
-          "tex": "In a topological space, $K$ is closed iff $K^c$ is open."
+          "content": "In a topological space, $K$ is closed iff $K^c$ is open."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/complement.svg",
@@ -3487,7 +3487,7 @@
       },
       "examples": [
         {
-          "tex": "The identity map $\\operatorname{id}_X \\colon X \\to X$ is a homeomorphism, so $X \\cong X$. If $f \\colon X \\to Y$ is a homeomorphism, then $f^{-1} \\colon Y \\to X$ is also a homeomorphism. If $f \\colon X \\to Y$ and $g \\colon Y \\to Z$ are homeomorphisms, then $$\\begin{aligned} g \\circ f \\colon X \\to Z \\end{aligned}$$ is a homeomorphism with inverse $$\\begin{aligned} (g \\circ f)^{-1} = f^{-1} \\circ g^{-1}. \\end{aligned}$$"
+          "content": "The identity map $\\operatorname{id}_X \\colon X \\to X$ is a homeomorphism, so $X \\cong X$. If $f \\colon X \\to Y$ is a homeomorphism, then $f^{-1} \\colon Y \\to X$ is also a homeomorphism. If $f \\colon X \\to Y$ and $g \\colon Y \\to Z$ are homeomorphisms, then $$\\begin{aligned} g \\circ f \\colon X \\to Z \\end{aligned}$$ is a homeomorphism with inverse $$\\begin{aligned} (g \\circ f)^{-1} = f^{-1} \\circ g^{-1}. \\end{aligned}$$"
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homeomorphism-equivalence-relation.svg",
@@ -3527,7 +3527,7 @@
       },
       "examples": [
         {
-          "tex": "Used repeatedly, e.g. to show that being homeomorphic is transitive (Thm. 3.23)."
+          "content": "Used repeatedly, e.g. to show that being homeomorphic is transitive (Thm. 3.23)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/composition-continuous-maps.svg",
@@ -3574,7 +3574,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathrm{id}_B\\circ f=f=f\\circ\\mathrm{id}_A$; continuity and homomorphism properties are preserved under composition."
+          "content": "$\\mathrm{id}_B\\circ f=f=f\\circ\\mathrm{id}_A$; continuity and homomorphism properties are preserved under composition."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/composition-maps.svg",
@@ -3599,7 +3599,7 @@
       },
       "examples": [
         {
-          "tex": "Recovers the $\\epsilon$-$\\delta$ definition by taking $B=\\mathsf{B}_Y(f(p);\\epsilon)$ and $A=\\mathsf{B}_X(p;\\delta)$."
+          "content": "Recovers the $\\epsilon$-$\\delta$ definition by taking $B=\\mathsf{B}_Y(f(p);\\epsilon)$ and $A=\\mathsf{B}_X(p;\\delta)$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/continuity-point-metric.svg",
@@ -3644,7 +3644,7 @@
       },
       "examples": [
         {
-          "tex": "Directly generalises the metric neighborhood criterion of Thm. 2.12."
+          "content": "Directly generalises the metric neighborhood criterion of Thm. 2.12."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/continuity-point-top.svg",
@@ -3670,7 +3670,7 @@
       },
       "examples": [
         {
-          "tex": "Crucial for proving that projections out of a product are continuous."
+          "content": "Crucial for proving that projections out of a product are continuous."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/continuity-basis.svg",
@@ -3715,7 +3715,7 @@
       },
       "examples": [
         {
-          "tex": "This open-set criterion becomes the definition of continuity between topological spaces."
+          "content": "This open-set criterion becomes the definition of continuity between topological spaces."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/continuity-preimage-metric.svg",
@@ -3761,7 +3761,7 @@
       },
       "examples": [
         {
-          "tex": "Pull an open cover of $Y$ back through $f$, take a finite subcover upstairs, push forward."
+          "content": "Pull an open cover of $Y$ back through $f$, take a finite subcover upstairs, push forward."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/compact-image.svg",
@@ -3806,7 +3806,7 @@
       },
       "examples": [
         {
-          "tex": "Yields the Intermediate Value Theorem as a special case (Thm. 6.13)."
+          "content": "Yields the Intermediate Value Theorem as a special case (Thm. 6.13)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/connected-image.svg",
@@ -3851,7 +3851,7 @@
       },
       "examples": [
         {
-          "tex": "Every map out of a discrete metric space is continuous; the identity $\\mathbb{R}\\to\\mathbb{R}$ is continuous, but $\\mathbb{R}\\to\\mathbb{R}_{\\mathrm{disc}}$ is not."
+          "content": "Every map out of a discrete metric space is continuous; the identity $\\mathbb{R}\\to\\mathbb{R}$ is continuous, but $\\mathbb{R}\\to\\mathbb{R}_{\\mathrm{disc}}$ is not."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/continuous-map-metric.svg",
@@ -3877,7 +3877,7 @@
       },
       "examples": [
         {
-          "tex": "Any basis or subbasis for $X$ is an open cover of $X$."
+          "content": "Any basis or subbasis for $X$ is an open cover of $X$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/cover.svg",
@@ -3903,7 +3903,7 @@
       },
       "examples": [
         {
-          "tex": "$p\\colon\\mathbb{R}\\to S^1$, $t\\mapsto e^{2\\pi i t}$, is the universal cover of the circle."
+          "content": "$p\\colon\\mathbb{R}\\to S^1$, $t\\mapsto e^{2\\pi i t}$, is the universal cover of the circle."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/covering-space.svg",
@@ -3929,7 +3929,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{Z}=\\langle 1\\rangle=\\langle -1\\rangle$ is infinite cyclic. $\\pi_1(S^1)\\cong\\mathbb{Z}$ is cyclic."
+          "content": "$\\mathbb{Z}=\\langle 1\\rangle=\\langle -1\\rangle$ is infinite cyclic. $\\pi_1(S^1)\\cong\\mathbb{Z}$ is cyclic."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/cyclic-subgroup.svg",
@@ -3964,7 +3964,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}^2\\setminus\\{0\\}$ deformation retracts onto $S^1$; a disc retracts onto its centre."
+          "content": "$\\mathbb{R}^2\\setminus\\{0\\}$ deformation retracts onto $S^1$; a disc retracts onto its centre."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/deformation-retract.svg",
@@ -3992,7 +3992,7 @@
       },
       "examples": [
         {
-          "tex": "$\\{1,2,3\\}\\setminus\\{2\\}=\\{1,3\\}$."
+          "content": "$\\{1,2,3\\}\\setminus\\{2\\}=\\{1,3\\}$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/set-difference.svg",
@@ -4017,7 +4017,7 @@
       },
       "examples": [
         {
-          "tex": "For any set $X$, $\\mathcal{T}_{\\mathrm{disc}}$ is the largest topology; every map out of a discrete space is continuous."
+          "content": "For any set $X$, $\\mathcal{T}_{\\mathrm{disc}}$ is the largest topology; every map out of a discrete space is continuous."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/discrete-topology.svg",
@@ -4045,7 +4045,7 @@
       },
       "examples": [
         {
-          "tex": "The preimage of an evenly covered set is a disjoint union of homeomorphic sheets (Def. 8.1)."
+          "content": "The preimage of an evenly covered set is a disjoint union of homeomorphic sheets (Def. 8.1)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/disjoint-union.svg",
@@ -4070,7 +4070,7 @@
       },
       "examples": [
         {
-          "tex": "Equivalence relations correspond (up to bijection) to surjective maps $X\\to A$ (Lemma 5.15)."
+          "content": "Equivalence relations correspond (up to bijection) to surjective maps $X\\to A$ (Lemma 5.15)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/equivalence-class.svg",
@@ -4096,7 +4096,7 @@
       },
       "examples": [
         {
-          "tex": "Immediately gives that homeomorphic based spaces have isomorphic $\\pi_1$ (Cor. 7.25)."
+          "content": "Immediately gives that homeomorphic based spaces have isomorphic $\\pi_1$ (Cor. 7.25)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/functoriality.svg",
@@ -4141,7 +4141,7 @@
       },
       "examples": [
         {
-          "tex": "$\\pi_1(\\mathbb{R}^n,0)=0$ (trivial); $\\pi_1(S^1,s_0)\\cong\\mathbb{Z}$ (Thm. 8.16)."
+          "content": "$\\pi_1(\\mathbb{R}^n,0)=0$ (trivial); $\\pi_1(S^1,s_0)\\cong\\mathbb{Z}$ (Thm. 8.16)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/fundamental-group.svg",
@@ -4167,7 +4167,7 @@
       },
       "examples": [
         {
-          "tex": "Identifies the image of $\\varphi$ with the quotient of $G_1$ by what $\\varphi$ collapses."
+          "content": "Identifies the image of $\\varphi$ with the quotient of $G_1$ by what $\\varphi$ collapses."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/fht.svg",
@@ -4202,7 +4202,7 @@
       },
       "examples": [
         {
-          "tex": "A non-vanishing polynomial would let a large loop be contracted, contradicting that its image winds $n$ times."
+          "content": "A non-vanishing polynomial would let a large loop be contracted, contradicting that its image winds $n$ times."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/fta.svg",
@@ -4229,7 +4229,7 @@
       },
       "examples": [
         {
-          "tex": "The classical “continuous functions on $[a,b]$ attain extrema” is the case $X=[a,b]$."
+          "content": "The classical “continuous functions on $[a,b]$ attain extrema” is the case $X=[a,b]$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/evt.svg",
@@ -4302,7 +4302,7 @@
       },
       "examples": [
         {
-          "tex": "If $r\\notin f(X)$ then $f^{-1}((-\\infty,r))$ and $f^{-1}((r,\\infty))$ would separate $X$."
+          "content": "If $r\\notin f(X)$ then $f^{-1}((-\\infty,r))$ and $f^{-1}((r,\\infty))$ would separate $X$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/ivt.svg",
@@ -4347,7 +4347,7 @@
       },
       "examples": [
         {
-          "tex": "$(\\mathbb{Z},+)$ is an abelian group; $\\pi_1(X,x_0)$ is a group under $*$ (Thm. 7.16)."
+          "content": "$(\\mathbb{Z},+)$ is an abelian group; $\\pi_1(X,x_0)$ is a group under $*$ (Thm. 7.16)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/group.svg",
@@ -4373,7 +4373,7 @@
       },
       "examples": [
         {
-          "tex": "The induced map $h_*\\colon\\pi_1(X)\\to\\pi_1(Y)$ is a homomorphism (Def. 7.22)."
+          "content": "The induced map $h_*\\colon\\pi_1(X)\\to\\pi_1(Y)$ is a homomorphism (Def. 7.22)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homomorphism.svg",
@@ -4399,7 +4399,7 @@
       },
       "examples": [
         {
-          "tex": "Often the quickest route to proving a continuous bijection is a homeomorphism (e.g. from a compact space to a Hausdorff one)."
+          "content": "Often the quickest route to proving a continuous bijection is a homeomorphism (e.g. from a compact space to a Hausdorff one)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homeomorphism-open-closed.svg",
@@ -4444,7 +4444,7 @@
       },
       "examples": [
         {
-          "tex": "If $f_0\\simeq f_1$ with $f_1$ constant, $f_0$ is \\emph{nullhomotopic}. Any two maps into $\\mathbb{R}^n$ are homotopic via the straight-line homotopy."
+          "content": "If $f_0\\simeq f_1$ with $f_1$ constant, $f_0$ is \\emph{nullhomotopic}. Any two maps into $\\mathbb{R}^n$ are homotopic via the straight-line homotopy."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homotopy.svg",
@@ -4470,7 +4470,7 @@
       },
       "examples": [
         {
-          "tex": "$[X,\\mathbb{R}^n]$ has a single element, since all such maps are homotopic."
+          "content": "$[X,\\mathbb{R}^n]$ has a single element, since all such maps are homotopic."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homotopy-classes.svg",
@@ -4496,7 +4496,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}$ and a point $\\{p\\}$ are homotopy equivalent but not homeomorphic."
+          "content": "$\\mathbb{R}$ and a point $\\{p\\}$ are homotopy equivalent but not homeomorphic."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homotopy-equivalence.svg",
@@ -4522,7 +4522,7 @@
       },
       "examples": [
         {
-          "tex": "Lets you compute $\\pi_1$ of a space via any simpler space it deformation retracts onto."
+          "content": "Lets you compute $\\pi_1$ of a space via any simpler space it deformation retracts onto."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homotopy-equiv-iso.svg",
@@ -4557,7 +4557,7 @@
       },
       "examples": [
         {
-          "tex": "Ensures path-homotopic loops in $B$ have lifts with the same endpoint, so $\\Phi$ is well-defined (Def. 8.14)."
+          "content": "Ensures path-homotopic loops in $B$ have lifts with the same endpoint, so $\\Phi$ is well-defined (Def. 8.14)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homotopy-lifting.svg",
@@ -4592,7 +4592,7 @@
       },
       "examples": [
         {
-          "tex": "All contractible spaces (those homotopy equivalent to a point) share one homotopy type."
+          "content": "All contractible spaces (those homotopy equivalent to a point) share one homotopy type."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/homotopy-type.svg",
@@ -4620,7 +4620,7 @@
       },
       "examples": [
         {
-          "tex": "For $f\\colon\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x^2$, the image is $[0,\\infty)$."
+          "content": "For $f\\colon\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x^2$, the image is $[0,\\infty)$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/image.svg",
@@ -4647,7 +4647,7 @@
       },
       "examples": [
         {
-          "tex": "The inclusion of a subspace is continuous for the subspace topology."
+          "content": "The inclusion of a subspace is continuous for the subspace topology."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/inclusion-map.svg",
@@ -4672,7 +4672,7 @@
       },
       "examples": [
         {
-          "tex": "For any topology $\\mathcal{T}$ on $X$ we have $\\mathcal{T}_{\\mathrm{ind}}\\subseteq\\mathcal{T}\\subseteq\\mathcal{T}_{\\mathrm{disc}}$. Every map \\emph{into} an indiscrete space is continuous."
+          "content": "For any topology $\\mathcal{T}$ on $X$ we have $\\mathcal{T}_{\\mathrm{ind}}\\subseteq\\mathcal{T}\\subseteq\\mathcal{T}_{\\mathrm{disc}}$. Every map \\emph{into} an indiscrete space is continuous."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/indiscrete-topology.svg",
@@ -4698,7 +4698,7 @@
       },
       "examples": [
         {
-          "tex": "$(\\mathrm{id}_X)_*$ is the identity; composites behave well (functoriality, Thm. 7.24)."
+          "content": "$(\\mathrm{id}_X)_*$ is the identity; composites behave well (functoriality, Thm. 7.24)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/induced-homomorphism.svg",
@@ -4728,7 +4728,7 @@
       },
       "examples": [
         {
-          "tex": "$A,B$ are \\emph{disjoint} when $A\\cap B=\\varnothing$. Always $A\\cap B\\subseteq A\\subseteq A\\cup B$."
+          "content": "$A,B$ are \\emph{disjoint} when $A\\cap B=\\varnothing$. Always $A\\cap B\\subseteq A\\subseteq A\\cup B$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/intersection-union.svg",
@@ -4753,7 +4753,7 @@
       },
       "examples": [
         {
-          "tex": "On $\\{a,b,c\\}$, intersecting two topologies can give $\\{\\varnothing,X\\}$ while their union fails T2."
+          "content": "On $\\{a,b,c\\}$, intersecting two topologies can give $\\{\\varnothing,X\\}$ while their union fails T2."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/intersection-topologies.svg",
@@ -4788,7 +4788,7 @@
       },
       "examples": [
         {
-          "tex": "$\\Phi\\colon\\pi_1(S^1)\\to\\mathbb{Z}$ is an isomorphism (Thm. 8.16)."
+          "content": "$\\Phi\\colon\\pi_1(S^1)\\to\\mathbb{Z}$ is an isomorphism (Thm. 8.16)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/isomorphism.svg",
@@ -4814,7 +4814,7 @@
       },
       "examples": [
         {
-          "tex": "Used to chop $I$ into small subintervals, each mapping into one evenly covered open set (proof of Thm. 8.12)."
+          "content": "Used to chop $I$ into small subintervals, each mapping into one evenly covered open set (proof of Thm. 8.12)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/lebesgue-number.svg",
@@ -4849,7 +4849,7 @@
       },
       "examples": [
         {
-          "tex": "In an abelian group all left and right cosets agree."
+          "content": "In an abelian group all left and right cosets agree."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/coset.svg",
@@ -4875,7 +4875,7 @@
       },
       "examples": [
         {
-          "tex": "A path in $S^1$ lifts to a path in $\\mathbb{R}$ once a starting point is chosen (Thm. 8.12)."
+          "content": "A path in $S^1$ lifts to a path in $\\mathbb{R}$ once a starting point is chosen (Thm. 8.12)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/lifting.svg",
@@ -4901,7 +4901,7 @@
       },
       "examples": [
         {
-          "tex": "For $p\\colon\\mathbb{R}\\to S^1$, $\\Phi$ sends a loop to its winding number, giving $\\pi_1(S^1)\\cong\\mathbb{Z}$."
+          "content": "For $p\\colon\\mathbb{R}\\to S^1$, $\\Phi$ sends a loop to its winding number, giving $\\pi_1(S^1)\\cong\\mathbb{Z}$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/lifting-correspondence.svg",
@@ -4927,7 +4927,7 @@
       },
       "examples": [
         {
-          "tex": "Preserves local properties such as local connectedness; $p\\colon\\mathbb{R}\\to S^1$ is a local homeomorphism but not injective."
+          "content": "Preserves local properties such as local connectedness; $p\\colon\\mathbb{R}\\to S^1$ is a local homeomorphism but not injective."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/local-homeomorphism.svg",
@@ -4957,7 +4957,7 @@
       },
       "examples": [
         {
-          "tex": "In $\\mathbb R$, $[-1,2]$ is a neighborhood of $0$ because $(-1/2,1/2)\\subseteq[-1,2]$. It is not a neighborhood of $2$, since no open interval centered at $2$ lies inside $[-1,2]$."
+          "content": "In $\\mathbb R$, $[-1,2]$ is a neighborhood of $0$ because $(-1/2,1/2)\\subseteq[-1,2]$. It is not a neighborhood of $2$, since no open interval centered at $2$ lies inside $[-1,2]$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/neighborhood-metric.svg",
@@ -4983,7 +4983,7 @@
       },
       "examples": [
         {
-          "tex": "In $\\mathbb{R}$ with the standard topology, $(0,1)$ is open because every point $x\\in(0,1)$ has a smaller open interval around it contained in $(0,1)$. The set $[0,1]$ is not open in $\\mathbb{R}$ because $0$ has no open neighborhood contained in $[0,1]$."
+          "content": "In $\\mathbb{R}$ with the standard topology, $(0,1)$ is open because every point $x\\in(0,1)$ has a smaller open interval around it contained in $(0,1)$. The set $[0,1]$ is not open in $\\mathbb{R}$ because $0$ has no open neighborhood contained in $[0,1]$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/neighborhood-characterization-open.svg",
@@ -5028,7 +5028,7 @@
       },
       "examples": [
         {
-          "tex": "Every subgroup of an abelian group is normal; kernels of homomorphisms are always normal."
+          "content": "Every subgroup of an abelian group is normal; kernels of homomorphisms are always normal."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/normal-subgroup.svg",
@@ -5054,7 +5054,7 @@
       },
       "examples": [
         {
-          "tex": "Every map into $\\mathbb{R}^n$ is nullhomotopic; the identity $S^1\\to S^1$ is \\emph{not}."
+          "content": "Every map into $\\mathbb{R}^n$ is nullhomotopic; the identity $S^1\\to S^1$ is \\emph{not}."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/nullhomotopic.svg",
@@ -5080,7 +5080,7 @@
       },
       "examples": [
         {
-          "tex": "Open balls are open and closed balls are closed (Lemma 2.10). Both $\\varnothing$ and $X$ are clopen."
+          "content": "Open balls are open and closed balls are closed (Lemma 2.10). Both $\\varnothing$ and $X$ are clopen."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/open-closed-set-metric.svg",
@@ -5106,7 +5106,7 @@
       },
       "examples": [
         {
-          "tex": "In the discrete metric, $\\mathsf{B}(x;r)=\\{x\\}$ for $r\\le 1$ and $\\mathsf{B}(x;r)=X$ for $r>1$."
+          "content": "In the discrete metric, $\\mathsf{B}(x;r)=\\{x\\}$ for $r\\le 1$ and $\\mathsf{B}(x;r)=X$ for $r>1$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/open-closed-ball.svg",
@@ -5132,7 +5132,7 @@
       },
       "examples": [
         {
-          "tex": "Every homeomorphism is both open and closed, but $\\mathbb{R}\\to\\{*\\}$ is open and closed yet not a homeomorphism."
+          "content": "Every homeomorphism is both open and closed, but $\\mathbb{R}\\to\\{*\\}$ is open and closed yet not a homeomorphism."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/open-closed-map.svg",
@@ -5158,7 +5158,7 @@
       },
       "examples": [
         {
-          "tex": "Makes the concatenation of paths $f*g$ continuous (Def. 7.12)."
+          "content": "Makes the concatenation of paths $f*g$ continuous (Def. 7.12)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/pasting-lemma.svg",
@@ -5203,7 +5203,7 @@
       },
       "examples": [
         {
-          "tex": "Any two paths in $\\mathbb{R}^n$ with the same endpoints are path homotopic via the straight-line homotopy."
+          "content": "Any two paths in $\\mathbb{R}^n$ with the same endpoints are path homotopic via the straight-line homotopy."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/path-homotopy.svg",
@@ -5229,7 +5229,7 @@
       },
       "examples": [
         {
-          "tex": "The product $*$ and inverse descend to these classes, giving group structure (Thm. 7.14)."
+          "content": "The product $*$ and inverse descend to these classes, giving group structure (Thm. 7.14)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/path-homotopy-classes.svg",
@@ -5255,7 +5255,7 @@
       },
       "examples": [
         {
-          "tex": "The topologist's sine curve is connected but not path-connected (a standard counterexample)."
+          "content": "The topologist's sine curve is connected but not path-connected (a standard counterexample)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/path-implies-connected.svg",
@@ -5300,7 +5300,7 @@
       },
       "examples": [
         {
-          "tex": "With Thm. 6.40 this gives compactness of closed boxes in $\\mathbb{R}^n$, hence Heine–Borel."
+          "content": "With Thm. 6.40 this gives compactness of closed boxes in $\\mathbb{R}^n$, hence Heine–Borel."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/product-compact.svg",
@@ -5350,7 +5350,7 @@
       },
       "examples": [
         {
-          "tex": "On path homotopy classes, $*$ is associative with constant-path units and reverse-path inverses (Thm. 7.14)."
+          "content": "On path homotopy classes, $*$ is associative with constant-path units and reverse-path inverses (Thm. 7.14)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/product-of-paths.svg",
@@ -5376,7 +5376,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{Z}/m\\mathbb{Z}$ is the cyclic group of order $m$."
+          "content": "$\\mathbb{Z}/m\\mathbb{Z}$ is the cyclic group of order $m$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/quotient-group.svg",
@@ -5413,7 +5413,7 @@
       },
       "examples": [
         {
-          "tex": "If $f|_R$ is injective, then $f|_R\\colon R\\to f(R)$ is a bijection."
+          "content": "If $f|_R$ is injective, then $f|_R\\colon R\\to f(R)$ is a bijection."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/restriction.svg",
@@ -5438,7 +5438,7 @@
       },
       "examples": [
         {
-          "tex": "$S^1$ is a retract of $\\mathbb{R}^2\\setminus\\{0\\}$ via $r(x)=x/\\lVert x\\rVert$."
+          "content": "$S^1$ is a retract of $\\mathbb{R}^2\\setminus\\{0\\}$ via $r(x)=x/\\lVert x\\rVert$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/retraction.svg",
@@ -5464,7 +5464,7 @@
       },
       "examples": [
         {
-          "tex": "$\\mathbb{R}^n$ is simply connected; $S^1$ and the torus $T^2$ are not."
+          "content": "$\\mathbb{R}^n$ is simply connected; $S^1$ and the torus $T^2$ are not."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/simply-connected.svg",
@@ -5490,7 +5490,7 @@
       },
       "examples": [
         {
-          "tex": "$m\\mathbb{Z}=\\{mn\\mid n\\in\\mathbb{Z}\\}$ is a proper subgroup of $\\mathbb{Z}$ for $m\\ge 2$."
+          "content": "$m\\mathbb{Z}=\\{mn\\mid n\\in\\mathbb{Z}\\}$ is a proper subgroup of $\\mathbb{Z}$ for $m\\ge 2$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/subgroup.svg",
@@ -5518,7 +5518,7 @@
       },
       "examples": [
         {
-          "tex": "$\\{1,2\\}\\subsetneq\\{1,2,3\\}$ and $\\mathbb{Z}\\subseteq\\mathbb{R}$."
+          "content": "$\\{1,2\\}\\subsetneq\\{1,2,3\\}$ and $\\mathbb{Z}\\subseteq\\mathbb{R}$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/subset.svg",
@@ -5545,7 +5545,7 @@
       },
       "examples": [
         {
-          "tex": "$f(x)=2x$ is injective, but $f(x)=x^2$ is not."
+          "content": "$f(x)=2x$ is injective, but $f(x)=x^2$ is not."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/injective.svg",
@@ -5572,7 +5572,7 @@
       },
       "examples": [
         {
-          "tex": "$f(x)=x$ is surjective, but $f(x)=x^2$ is not."
+          "content": "$f(x)=x$ is surjective, but $f(x)=x^2$ is not."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/surjective.svg",
@@ -5599,7 +5599,7 @@
       },
       "examples": [
         {
-          "tex": "$f(x)=x$ is bijective, but $f(x)=x^2$ is not."
+          "content": "$f(x)=x$ is bijective, but $f(x)=x^2$ is not."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/bijective.svg",
@@ -5624,7 +5624,7 @@
       },
       "examples": [
         {
-          "tex": "Consequently all intervals are connected, and $\\mathbb{R}^n$ is connected."
+          "content": "Consequently all intervals are connected, and $\\mathbb{R}^n$ is connected."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/real-line-connected.svg",
@@ -5674,7 +5674,7 @@
       },
       "examples": [
         {
-          "tex": "Connectedness, compactness, Hausdorffness and the fundamental group are all topological invariants."
+          "content": "Connectedness, compactness, Hausdorffness and the fundamental group are all topological invariants."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/topological-property.svg",
@@ -5700,7 +5700,7 @@
       },
       "examples": [
         {
-          "tex": "$\\langle\\varnothing\\rangle=\\mathcal{T}_{\\mathrm{ind}}$; the collection of all singletons generates $\\mathcal{T}_{\\mathrm{disc}}$."
+          "content": "$\\langle\\varnothing\\rangle=\\mathcal{T}_{\\mathrm{ind}}$; the collection of all singletons generates $\\mathcal{T}_{\\mathrm{disc}}$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/generated-topology.svg",
@@ -5726,7 +5726,7 @@
       },
       "examples": [
         {
-          "tex": "Used directly to prove that a finite product of compact spaces is compact (Thm. 6.39)."
+          "content": "Used directly to prove that a finite product of compact spaces is compact (Thm. 6.39)."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/tube-lemma.svg",
@@ -5771,7 +5771,7 @@
       },
       "examples": [
         {
-          "tex": "For $p\\colon\\mathbb{R}\\to S^1$, a loop winding once lifts to a path in $\\mathbb{R}$ from $0$ to $1$."
+          "content": "For $p\\colon\\mathbb{R}\\to S^1$, a loop winding once lifts to a path in $\\mathbb{R}$ from $0$ to $1$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/path-lifting.svg",
@@ -5806,7 +5806,7 @@
       },
       "examples": [
         {
-          "tex": "Lets you define continuous maps on glued spaces by defining them on $X$ in a $\\sim$-compatible way."
+          "content": "Lets you define continuous maps on glued spaces by defining them on $X$ in a $\\sim$-compatible way."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/quotient-universal.svg",
@@ -5851,7 +5851,7 @@
       },
       "examples": [
         {
-          "tex": "Since $\\pi_1(\\mathbb{R}^2)=0$ but $\\pi_1(S^1)\\cong\\mathbb{Z}$, the plane and the circle are not homeomorphic."
+          "content": "Since $\\pi_1(\\mathbb{R}^2)=0$ but $\\pi_1(S^1)\\cong\\mathbb{Z}$, the plane and the circle are not homeomorphic."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/pi1-invariant.svg",
@@ -5896,7 +5896,7 @@
       },
       "examples": [
         {
-          "tex": "$\\pi_1(T^2)=\\pi_1(S^1\\times S^1)\\cong\\mathbb{Z}\\times\\mathbb{Z}$."
+          "content": "$\\pi_1(T^2)=\\pi_1(S^1\\times S^1)\\cong\\mathbb{Z}\\times\\mathbb{Z}$."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/pi1-product.svg",
@@ -5950,7 +5950,7 @@
       },
       "examples": [
         {
-          "tex": "It underlies the $2$-dimensional Brouwer theorem and the fundamental theorem of algebra."
+          "content": "It underlies the $2$-dimensional Brouwer theorem and the fundamental theorem of algebra."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/pi1-circle.svg",
@@ -6001,7 +6001,7 @@
       },
       "examples": [
         {
-          "tex": "In $\\mathbb{R}$ with the standard topology, $(-1,1)$ is a neighborhood of $0$ because $0\\in(-1,1)$ and $(-1,1)$ is open."
+          "content": "In $\\mathbb{R}$ with the standard topology, $(-1,1)$ is a neighborhood of $0$ because $0\\in(-1,1)$ and $(-1,1)$ is open."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/neighborhood-top.svg",
@@ -6151,7 +6151,7 @@
       },
       "examples": [
         {
-          "tex": "For $f:\\mathbb R\\to\\mathbb R$ with $f(x)=x^2$, the preimage of $[0,1]$ is $[-1,1]$."
+          "content": "For $f:\\mathbb R\\to\\mathbb R$ with $f(x)=x^2$, the preimage of $[0,1]$ is $[-1,1]$."
         }
       ],
       "tags": ["functions", "preimage", "topology-prerequisite"],

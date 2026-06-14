@@ -22,6 +22,7 @@ import {
   nodeDefinition,
   nodeFormula,
   proofBlockLabel,
+  KNOWN_CONTENT_KEYS,
 } from "./nodeContent";
 import { compactNodeRef, nodeSourceCitation } from "./nodeMeta";
 import { getDomainGlyphId, type DomainGlyphKey } from "../components/DomainGlyph";
@@ -60,6 +61,18 @@ export interface ConceptRelations {
   groups: RelationGroup[];
   /** Total linked neighbours (drives the panel's Links badge). */
   count: number;
+}
+
+export interface ExtraContentEntry {
+  key: string;
+  label: string;
+  value: unknown;
+}
+
+export interface ExampleEntry {
+  content: string;
+  label: string;
+  role: string;
 }
 
 const NONE_KEY = "__none__";
@@ -108,7 +121,8 @@ export interface ConceptView {
   intuition: string;
   /** Plain-language gloss, blank when it duplicates `intuition`/`statement`. */
   gloss: string;
-  example: string;
+  extraContent: ExtraContentEntry[];
+  examples: ExampleEntry[];
   assumptions: string[];
   properties: string[];
 
@@ -165,6 +179,42 @@ function buildRelations(node: GraphNode, map: LoadedMap): ConceptRelations {
   return { groups, count };
 }
 
+function titleCaseKey(key: string): string {
+  return key
+    .split(/[_\s-]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function hasVisibleExtraValue(value: unknown): boolean {
+  if (value === null || value === undefined) return false;
+  if (typeof value === "string") return value.trim().length > 0;
+  if (Array.isArray(value)) return value.some(hasVisibleExtraValue);
+  if (typeof value === "object") return Object.keys(value).length > 0;
+  return true;
+}
+
+function extraContent(node: GraphNode): ExtraContentEntry[] {
+  return Object.entries(node.content)
+    .filter(([key, value]) => !KNOWN_CONTENT_KEYS.has(key) && hasVisibleExtraValue(value))
+    .map(([key, value]) => ({
+      key,
+      label: titleCaseKey(key) || key,
+      value,
+    }));
+}
+
+function examples(node: GraphNode): ExampleEntry[] {
+  return node.examples
+    .map((example) => ({
+      content: example.content.trim(),
+      label: (example.label ?? "").trim(),
+      role: (example.role ?? "").trim(),
+    }))
+    .filter((example) => example.content.length > 0);
+}
+
 export function buildConceptView(
   node: GraphNode,
   map: LoadedMap,
@@ -179,7 +229,8 @@ export function buildConceptView(
   const rawGloss = (node.content.gloss ?? "").trim();
   const gloss =
     rawGloss && rawGloss !== intuition && rawGloss !== statement ? rawGloss : "";
-  const example = (node.examples[0]?.tex ?? "").trim();
+  const extras = extraContent(node);
+  const exampleEntries = examples(node);
   const notation = node.content.notation ?? [];
   const assumptions = node.assumptions;
   const properties = node.properties;
@@ -199,7 +250,8 @@ export function buildConceptView(
       formula ||
       intuition ||
       gloss ||
-      example ||
+      extras.length ||
+      exampleEntries.length ||
       assumptions.length ||
       properties.length ||
       notation.length ||
@@ -222,7 +274,8 @@ export function buildConceptView(
     notation,
     intuition,
     gloss,
-    example,
+    extraContent: extras,
+    examples: exampleEntries,
     assumptions,
     properties,
     proof: {

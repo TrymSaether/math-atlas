@@ -37,10 +37,11 @@ type Field =
   | "notation"
   | "intuition"
   | "gloss"
-  | "example";
+  | "examples";
 
 interface DensitySpec {
   fields: Field[];
+  exampleLimit?: number;
   proof: boolean;
   proofOpen: boolean;
   proofCollapsible: boolean;
@@ -49,21 +50,23 @@ interface DensitySpec {
 
 const DENSITY: Record<ConceptDensity, DensitySpec> = {
   card: {
-    fields: ["definition", "formula", "intuition", "example"],
+    fields: ["definition", "formula", "intuition", "examples"],
+    exampleLimit: 2,
     proof: true,
     proofOpen: false,
     proofCollapsible: true,
     spine: "dict",
   },
   panel: {
-    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "example"],
+    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "examples"],
+    exampleLimit: 2,
     proof: false,
     proofOpen: false,
     proofCollapsible: false,
     spine: "panel",
   },
   full: {
-    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "example"],
+    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "examples"],
     proof: true,
     proofOpen: true,
     proofCollapsible: true,
@@ -79,7 +82,7 @@ const FIELD_LABEL: Record<Field, string> = {
   notation: "Notation",
   intuition: "Intuition",
   gloss: "In words",
-  example: "Example",
+  examples: "Examples",
 };
 
 export function ConceptBody({
@@ -113,7 +116,20 @@ export function ConceptBody({
       {fields.length > 0 && (
         <div className="space-y-4">
           {fields.map((field) => (
-            <Environment key={field} view={view} field={field} />
+            <Environment
+              key={field}
+              view={view}
+              field={field}
+              exampleLimit={spec.exampleLimit}
+            />
+          ))}
+        </div>
+      )}
+
+      {view.extraContent.length > 0 && (
+        <div className="space-y-4">
+          {view.extraContent.map((entry) => (
+            <ExtraEnvironment key={entry.key} entry={entry} />
           ))}
         </div>
       )}
@@ -138,6 +154,62 @@ export function ConceptBody({
   );
 }
 
+function ExtraEnvironment({
+  entry,
+}: {
+  entry: ConceptView["extraContent"][number];
+}) {
+  return (
+    <section>
+      <Eyebrow>{entry.label}</Eyebrow>
+      <ExtraValue value={entry.value} />
+    </section>
+  );
+}
+
+function ExtraValue({ value }: { value: unknown }) {
+  if (typeof value === "string") {
+    return (
+      <div className="text-ui-copy" style={{ color: "var(--fg-1)" }}>
+        <MathProse text={value} />
+      </div>
+    );
+  }
+
+  if (Array.isArray(value) && value.every((item) => typeof item === "string")) {
+    const items = value.map((item) => item.trim()).filter(Boolean);
+    return (
+      <ul className="m-0 space-y-1.5 p-0">
+        {items.map((item, index) => (
+          <li key={index} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--fg-1)" }}>
+            <span
+              aria-hidden
+              className="mt-[9px] h-1 w-1 shrink-0 rounded-full"
+              style={{ background: "var(--fg-3)" }}
+            />
+            <span className="min-w-0">
+              <MathProse text={item} />
+            </span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  return (
+    <pre
+      className="max-w-full overflow-x-auto rounded-[var(--radius-md)] border px-3 py-2 font-mono text-ui-xs leading-[1.6]"
+      style={{
+        background: "var(--surface-2)",
+        borderColor: "var(--border)",
+        color: "var(--fg-2)",
+      }}
+    >
+      {JSON.stringify(value, null, 2)}
+    </pre>
+  );
+}
+
 /** A flush-left mono micro-label heading an environment. */
 function Eyebrow({ children, color }: { children: ReactNode; color?: string }) {
   return (
@@ -151,7 +223,15 @@ function Eyebrow({ children, color }: { children: ReactNode; color?: string }) {
 }
 
 /** One facet rendered with chrome that signals its kind. */
-function Environment({ view, field }: { view: ConceptView; field: Field }) {
+function Environment({
+  view,
+  field,
+  exampleLimit,
+}: {
+  view: ConceptView;
+  field: Field;
+  exampleLimit?: number;
+}) {
   const label = FIELD_LABEL[field];
   const tone = view.tone;
 
@@ -231,12 +311,38 @@ function Environment({ view, field }: { view: ConceptView; field: Field }) {
         </Aside>
       );
 
-    case "example":
+    case "examples": {
+      const examples =
+        exampleLimit === undefined ? view.examples : view.examples.slice(0, exampleLimit);
       return (
         <Aside accent="var(--border-strong)" label={label}>
-          <MathProse text={view.example} />
+          <div className="space-y-3">
+            {examples.map((example, index) => (
+              <div key={index} className="space-y-1">
+                {(example.role || example.label) && (
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    {example.role && (
+                      <span
+                        className="font-mono text-ui-2xs tracking-label-tight"
+                        style={{ color: "var(--fg-3)" }}
+                      >
+                        <MathProse text={example.role} />
+                      </span>
+                    )}
+                    {example.label && (
+                      <span className="text-ui-sm font-medium" style={{ color: "var(--fg-2)" }}>
+                        <MathProse text={example.label} />
+                      </span>
+                    )}
+                  </div>
+                )}
+                <MathProse text={example.content} />
+              </div>
+            ))}
+          </div>
         </Aside>
       );
+    }
 
     case "gloss":
       return (
@@ -307,8 +413,8 @@ function hasField(view: ConceptView, field: Field): boolean {
       return !!view.intuition;
     case "gloss":
       return !!view.gloss;
-    case "example":
-      return !!view.example;
+    case "examples":
+      return view.examples.length > 0;
     default:
       return false;
   }

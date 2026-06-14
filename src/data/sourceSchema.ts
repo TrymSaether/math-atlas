@@ -5,7 +5,8 @@
  * never in the browser. Edges are the only relationship store; direction and
  * dependency-class are implied by `relation` (see ./relations). No presentation,
  * workflow, or derived fields are permitted — `.strict()` makes unknown/typo
- * keys a hard build failure.
+ * keys a hard build failure. Concept `content` is the intentional exception:
+ * authored maps may carry extra content facets, and read surfaces render them.
  */
 import { z } from "zod";
 import { DOMAIN_PALETTE_KEYS } from "../lib/palette";
@@ -67,23 +68,19 @@ const ContentSchema = z
     gloss: Prose.optional(),
     notation: z.array(Tex).default([]),
   })
-  .strict();
+  .catchall(z.unknown());
 
 const ExampleSchema = z
-  .object({ tex: Tex, caption: z.string().min(1).optional() })
+  .object({
+    content: Tex,
+    label: z.string().min(1).optional(),
+    role: z.string().min(1).optional(),
+  })
   .strict();
 
 const ProofStepSchema = z
   .object({
-    role: z.enum([
-      "setup",
-      "claim",
-      "calculation",
-      "case",
-      "argument",
-      "conclusion",
-      "remark",
-    ]),
+    role: z.string().min(1),
     content: Tex,
     uses: z.array(Slug).default([]),
   })

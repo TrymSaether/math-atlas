@@ -442,12 +442,12 @@ function ProofStepItem({
             aria-hidden
           />
         )}
-        <span className="min-w-0">
-          <span
-            className="block truncate font-mono text-ui-2xs uppercase tracking-label-tight"
-            style={{ color: toneColor }}
-          >
-            {role || "Step"}
+        <span className="min-w-0 truncate">
+          <span style={{ color: toneColor }}>
+            <MathText
+              text={role || "Step"}
+              className="block truncate font-mono text-ui-2xs tracking-label-tight"
+            />
           </span>
         </span>
         {deps.length > 0 && (

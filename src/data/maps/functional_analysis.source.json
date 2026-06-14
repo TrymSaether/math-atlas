@@ -3,7 +3,7 @@
   "label": "Functional Analysis mini knowledge graph",
   "field": "functional_analysis",
   "version": 1,
-  "updated": "2026-06-09",
+  "updated": "2026-06-14",
   "domains": [
     {
       "id": "foundations",
@@ -248,8 +248,8 @@
       },
       "examples": [
         {
-          "tex": "$\\|(x_1,x_2)\\|_1=|x_1|+|x_2|$, $\\|(x_1,x_2)\\|_2=(|x_1|^2+|x_2|^2)^{1/2}$, and $\\|(x_1,x_2)\\|_\\infty=\\max(|x_1|,|x_2|)$.",
-          "caption": "The same vector can have different sizes in different norm geometries."
+          "content": "$\\|(x_1,x_2)\\|_1=|x_1|+|x_2|$, $\\|(x_1,x_2)\\|_2=(|x_1|^2+|x_2|^2)^{1/2}$, and $\\|(x_1,x_2)\\|_\\infty=\\max(|x_1|,|x_2|)$.",
+          "label": "The same vector can have different sizes in different norm geometries."
         }
       ],
       "assumptions": [
@@ -379,15 +379,62 @@
       "domain": "examples_applications",
       "label": "Pointwise limits of bounded linear functionals",
       "content": {
-        "statement": "Hahn-Banach shows pointwise limits of bounded linear functionals are bounded under pointwise convergence.",
-        "formal": "If $f_n:X\\to \\mathbb{K}$ are bounded linear functionals and $f_n(x)\\to f(x)$ for all $x\\in X$, then $f:X\\to \\mathbb{K}$ is a bounded linear functional.",
-        "intuition": "Hahn-Banach prevents pathological unbounded functionals from arising as pointwise limits of bounded ones.",
+        "statement": "On a Banach space, a pointwise limit of bounded linear functionals is again a bounded linear functional, and its norm is bounded by the limit inferior of the norms.",
+        "formal": "Let $X$ be a Banach space and let $(f_n)_{n\\in\\mathbb{N}}$ be a sequence in $X^*$. If $f_n(x)\\to f(x)$ for every $x\\in X$, then $f\\in X^*$ and $\\|f\\|\\le\\liminf_{n\\to\\infty}\\|f_n\\|$.",
+        "intuition": "Two ingredients with different requirements. Linearity passes through pointwise limits for free — no completeness, no boundedness needed. Boundedness is the real content: pointwise convergence gives $\\sup_n|f_n(x)|<\\infty$ at each $x$, and completeness of $X$ upgrades this to a *uniform* bound $\\sup_n\\|f_n\\|<\\infty$ via the uniform boundedness principle. The norm estimate is then lower semicontinuity of the norm under pointwise limits.",
         "notation": [
-          "f_n\\xrightarrow[n\\to\\infty]{}f\\text{ pointwise} \\implies f\\in X^*$$"
+          "$(f_n)_{n\\in\\mathbb{N}}\\subseteq X^*$",
+          "$f_n\\xrightarrow[n\\to\\infty]{}f\\text{ pointwise}$"
         ],
-        "formula": "$$\\begin{aligned} &f_n:X\\to \\mathbb{K}\\text{ bounded linear functionals},\\\\ &f_n(x)\\to f(x)\\text{ for all }x\\in X,\\\\ \\implies &f:X\\to \\mathbb{K}\\text{ is a bounded linear functional}. \\end{aligned}$$"
+        "formula": "$$\\begin{aligned} &X\\text{ Banach},\\quad (f_n)_{n\\in\\mathbb{N}}\\subseteq X^*,\\\\ &\\forall x\\in X:\\ f_n(x)\\to f(x),\\\\ &\\Longrightarrow f\\in X^*\\ \\text{and}\\ \\|f\\|\\le\\liminf_{n\\to\\infty}\\|f_n\\|. \\end{aligned}$$"
       },
-      "tags": ["application", "hahn_banach"],
+      "proof": {
+        "steps": [
+          {
+            "role": "linearity",
+            "content": "For $x,y\\in X$ and scalars $\\alpha,\\beta$, $f(\\alpha x+\\beta y)=\\lim_n f_n(\\alpha x+\\beta y)=\\lim_n\\bigl(\\alpha f_n(x)+\\beta f_n(y)\\bigr)=\\alpha f(x)+\\beta f(y)$. So $f$ is linear.",
+            "uses": ["linear_functional", "convergence"]
+          },
+          {
+            "role": "pointwise bound",
+            "content": "Fix $x\\in X$. Since $(f_n(x))_n$ converges it is bounded, hence $\\sup_n|f_n(x)|<\\infty$. This holds for every $x$.",
+            "uses": ["convergence", "boundedness"]
+          },
+          {
+            "role": "uniform bound",
+            "content": "The pointwise bounds and completeness of $X$ give, via the uniform boundedness principle, $M:=\\sup_n\\|f_n\\|<\\infty$.",
+            "uses": ["uniform_boundedness_principle", "completeness"]
+          },
+          {
+            "role": "boundedness of $f$",
+            "content": "For every $x$, $|f(x)|=\\lim_n|f_n(x)|\\le M\\|x\\|$. Hence $f$ is bounded, i.e. $f\\in X^*$.",
+            "uses": ["boundedness"]
+          },
+          {
+            "role": "norm estimate",
+            "content": "Taking $\\liminf_n$ in $|f_n(x)|\\le\\|f_n\\|\\,\\|x\\|$ gives $|f(x)|\\le(\\liminf_n\\|f_n\\|)\\|x\\|$ for all $x$, so $\\|f\\|\\le\\liminf_n\\|f_n\\|$.",
+            "uses": ["norm", "operator_norm", "convergence"]
+          }
+        ]
+      },
+      "assumptions": [
+        "$X$ is a Banach space.",
+        "$(f_n)_{n\\in\\mathbb{N}}$ is a sequence of bounded linear functionals on $X$.",
+        "$f_n(x)$ converges for every fixed $x\\in X$."
+      ],
+      "examples": [
+        {
+          "content": "Completeness enters only at the uniform-bound step. If $X$ is merely normed, UBP can fail and the pointwise limit may be unbounded. Standard counterexample: $X=c_{00}$ (finitely supported sequences) with the $\\ell^\\infty$ norm, $f_n(x)=\\sum_{k=1}^n x_k$. Each $f_n\\in X^*$ with $\\|f_n\\|=n$; for any fixed $x\\in c_{00}$ the sum is eventually constant, so $f_n(x)\\to\\sum_k x_k=:f(x)$ pointwise, but $f$ is unbounded on the $\\ell^\\infty$ unit ball.",
+          "label": "Failure mode without completeness",
+          "role": "failure_mode"
+        }
+      ],
+      "tags": [
+        "application",
+        "banach-steinhaus",
+        "pointwise-convergence",
+        "lower-semicontinuity"
+      ],
       "priority": "core"
     },
     {
@@ -1050,13 +1097,13 @@
       },
       "examples": [
         {
-          "tex": "Consider the family of operators $T_n: \\ell^p \\to \\ell^p$ defined by $T_n(x_1,x_2,\\ldots) = (0,0,\\ldots,0,x_n,0,\\ldots)$ where $x_n$ is in the $n$-th position. Each $T_n$ is a bounded linear operator with norm 1. For each fixed vector $x=(x_1,x_2,\\ldots) \\in \\ell^p$, the set $\\{\\|T_n x\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example illustrates that pointwise boundedness does not imply uniform boundedness if the domain space is not complete."
+          "content": "Consider the family of operators $T_n: \\ell^p \\to \\ell^p$ defined by $T_n(x_1,x_2,\\ldots) = (0,0,\\ldots,0,x_n,0,\\ldots)$ where $x_n$ is in the $n$-th position. Each $T_n$ is a bounded linear operator with norm 1. For each fixed vector $x=(x_1,x_2,\\ldots) \\in \\ell^p$, the set $\\{\\|T_n x\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example illustrates that pointwise boundedness does not imply uniform boundedness if the domain space is not complete."
         },
         {
-          "tex": "Let $X=C[0,1]$ be the space of continuous functions on the interval $[0,1]$ with the supremum norm, and let $Y=\\mathbb{R}$. Define a family of operators $T_n: X \\to Y$ by $T_n(f) = f(1/n)$. Each $T_n$ is a bounded linear operator with norm 1. For each fixed function $f \\in C[0,1]$, the set $\\{\\|T_n f\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example shows that even in a complete space, pointwise boundedness does not guarantee uniform boundedness without the completeness assumption."
+          "content": "Let $X=C[0,1]$ be the space of continuous functions on the interval $[0,1]$ with the supremum norm, and let $Y=\\mathbb{R}$. Define a family of operators $T_n: X \\to Y$ by $T_n(f) = f(1/n)$. Each $T_n$ is a bounded linear operator with norm 1. For each fixed function $f \\in C[0,1]$, the set $\\{\\|T_n f\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example shows that even in a complete space, pointwise boundedness does not guarantee uniform boundedness without the completeness assumption."
         },
         {
-          "tex": "Consider the family of operators $T_n: \\ell^p \\to \\ell^p$ defined by $T_n(x_1,x_2,\\ldots) = (x_1,x_2,\\ldots,x_{n-1},0,x_{n+1},\\ldots)$ where the $n$-th term is set to zero. Each $T_n$ is a bounded linear operator with norm 1. For each fixed vector $x=(x_1,x_2,\\ldots) \\in \\ell^p$, the set $\\{\\|T_n x\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example demonstrates that pointwise boundedness does not imply uniform boundedness if the domain space is not complete."
+          "content": "Consider the family of operators $T_n: \\ell^p \\to \\ell^p$ defined by $T_n(x_1,x_2,\\ldots) = (x_1,x_2,\\ldots,x_{n-1},0,x_{n+1},\\ldots)$ where the $n$-th term is set to zero. Each $T_n$ is a bounded linear operator with norm 1. For each fixed vector $x=(x_1,x_2,\\ldots) \\in \\ell^p$, the set $\\{\\|T_n x\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example demonstrates that pointwise boundedness does not imply uniform boundedness if the domain space is not complete."
         }
       ],
       "tags": ["ubp", "baire", "banach_steinhaus"],
@@ -1177,8 +1224,8 @@
       },
       "examples": [
         {
-          "tex": "For the standard basis vector $e_n=(0,\\ldots,0,1,0,\\ldots)$, $\\|e_n\\|_p=1$ for every $n$ and every $1\\leq p\\leq\\infty$.",
-          "caption": "Basis vectors witness the noncompactness of infinite-dimensional unit balls."
+          "content": "For the standard basis vector $e_n=(0,\\ldots,0,1,0,\\ldots)$, $\\|e_n\\|_p=1$ for every $n$ and every $1\\leq p\\leq\\infty$.",
+          "label": "Basis vectors witness the noncompactness of infinite-dimensional unit balls."
         }
       ],
       "tags": ["example", "sequence spaces"],
@@ -1313,26 +1360,93 @@
       "label": "Function / map",
       "content": {
         "statement": "A function is a rule assigning to each element of a domain exactly one element of a codomain.",
-        "definition": "A function, also called a map or mapping, is an assignment from a domain $X$ to a codomain $Y$ with exactly one output value in $Y$ for each input value in $X$.",
-        "formal": "A function $f:X\\to Y$ is a relation such that $\\forall x\\in X\\,\\exists! y\\in Y:\\ y=f(x)$.",
-        "intuition": "The bare mathematical arrow: inputs in one set are assigned outputs in another set, with no algebraic or topological structure assumed.",
+        "definition": "A function, also called a map or mapping, from $A$ to $B$ is a subset $f\\subseteq A\\times B$ such that every $a\\in A$ occurs as the first coordinate of exactly one ordered pair in $f$. We write $f(a)$ for that unique second coordinate.",
+        "formal": "$$f:A\\to B\\quad\\Longleftrightarrow\\quad f\\subseteq A\\times B\\ \\text{ and }\\ \\forall a\\in A\\,\\exists! b\\in B:\\ (a,b)\\in f.$$",
+        "intuition": "The bare mathematical arrow is still a set of ordered pairs under the hood. The function condition says each input is used once, so the notation $f(a)$ names one unambiguous output.",
         "notation": [
-          "$f:X\\to Y$",
+          "$f:A\\to B$",
           "$x\\mapsto f(x)$",
-          "$\\operatorname{dom}(f)=X$",
-          "$\\operatorname{codom}(f)=Y$"
+          "$\\operatorname{dom}(f)=A$",
+          "$\\operatorname{codom}(f)=B$"
         ]
       },
       "assumptions": [
-        "$X$ is a set.",
-        "$Y$ is a set.",
-        "Each $x\\in X$ has exactly one assigned value $f(x)\\in Y$."
+        "$A$ is a set.",
+        "$B$ is a set.",
+        "Each $a\\in A$ has exactly one assigned value $f(a)\\in B$."
       ],
       "source": {
         "citation": "standard mathematical terminology; compatible with the existing functional_analysis graph",
         "references": []
       },
       "tags": ["definition", "function", "map", "foundations"],
+      "priority": "core"
+    },
+    {
+      "id": "ordered_pair",
+      "kind": "object",
+      "domain": "foundations",
+      "label": "Ordered pair",
+      "content": {
+        "statement": "An ordered pair $(a,b)$ records two objects in order; $(a,b)=(c,d)$ exactly when $a=c$ and $b=d$.",
+        "definition": "An ordered pair is an object with a first coordinate and a second coordinate. It may be encoded in pure set theory by Kuratowski's definition $(a,b):=\\{\\{a\\},\\{a,b\\}\\}$, but in ordinary use it can be treated as a primitive ordered object.",
+        "formal": "$$(a,b)=(c,d)\\quad\\Longleftrightarrow\\quad a=c\\ \\text{ and }\\ b=d.$$",
+        "intuition": "Sets forget order, but ordered pairs remember it: $\\{3,7\\}=\\{7,3\\}$ while $(3,7)\\neq(7,3)$. That memory is what makes coordinates, products, relations, and functions possible.",
+        "notation": ["$(a,b)$", "$(a,b):=\\{\\{a\\},\\{a,b\\}\\}$"]
+      },
+      "examples": [
+        {
+          "content": "$$\\{3,7\\}=\\{7,3\\},\\qquad (3,7)\\neq(7,3).$$",
+          "label": "A set has no first coordinate; an ordered pair does."
+        }
+      ],
+      "tags": ["definition", "set-theory", "foundations"],
+      "priority": "core"
+    },
+    {
+      "id": "cartesian_product",
+      "kind": "construction",
+      "domain": "foundations",
+      "label": "Cartesian product",
+      "content": {
+        "statement": "$A\\times B$ is the set of all ordered pairs whose first coordinate lies in $A$ and whose second coordinate lies in $B$.",
+        "definition": "The Cartesian product of sets $A$ and $B$ is $$A\\times B:=\\{(a,b):a\\in A,\\ b\\in B\\}.$$",
+        "formal": "$$A\\times B:=\\{(a,b):a\\in A,\\ b\\in B\\}.$$",
+        "intuition": "A product is the ambient set where binary relations and functions live. Choosing the first coordinate from $A$ and the second from $B$ makes $A\\times B$ a coordinate system for assignments from $A$ to $B$.",
+        "notation": ["$A\\times B$"]
+      },
+      "tags": ["definition", "set-theory", "product", "foundations"],
+      "priority": "core"
+    },
+    {
+      "id": "sequence",
+      "kind": "definition",
+      "domain": "foundations",
+      "label": "Sequence",
+      "content": {
+        "statement": "A sequence in a set $S$ is a function $\\varphi:\\mathbb{N}\\to S$, usually written $(f_n)_{n\\in\\mathbb{N}}$ when $f_n=\\varphi(n)$.",
+        "definition": "A sequence in $S$ is a function from the natural numbers to $S$. As set-theoretic data it is the graph $$\\{(n,f_n):n\\in\\mathbb{N}\\}\\subseteq\\mathbb{N}\\times S.$$ In functional analysis one often takes $S=X^*$, so each term $f_n$ is one bounded linear functional.",
+        "formal": "$$\\varphi:\\mathbb{N}\\to S,\\qquad f_n:=\\varphi(n),\\qquad (f_n)_{n\\in\\mathbb{N}}=\\{(n,f_n):n\\in\\mathbb{N}\\}.$$",
+        "intuition": "The terms $f_1,f_2,\\ldots$ live inside the sequence; a limit $f$, when it exists, is a separate object the sequence approaches. Reusing the same letter for the sequence and its limit hides this distinction.",
+        "notation": [
+          "$\\varphi:\\mathbb{N}\\to S$",
+          "$(f_n)_{n\\in\\mathbb{N}}$",
+          "$f_n:=\\varphi(n)$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "The alternating sequence $0,1,0,1,\\ldots$ in $S=\\{0,1\\}$, truncated to its first three terms, is $$\\{(1,0),(2,1),(3,0)\\}.$$"
+        },
+        {
+          "content": "The constant sequence $f_n=g$ for all $n$ is $$\\{(n,g):n\\in\\mathbb{N}\\}=\\{(1,g),(2,g),(3,g),\\ldots\\}.$$ The second coordinate repeats, but the ordered pairs are distinct because their first coordinates differ."
+        }
+      ],
+      "assumptions": [
+        "$\\mathbb{N}$ is used as the index set.",
+        "$S$ is the set in which the terms live; for sequences of functionals, $S=X^*$."
+      ],
+      "tags": ["definition", "sequence", "function", "foundations"],
       "priority": "core"
     },
     {
@@ -1450,7 +1564,6 @@
         "dim($X/Y$) = dim($X$) - dim($Y$) in the finite-dimensional case.",
         "If $T : X \\to Z$ is linear with $Y \\subseteq \\ker(T)$, then $T$ factors uniquely through $X/Y$."
       ],
-
       "source": {
         "citation": "Standard construction; see quotient spaces in linear and functional analysis",
         "references": []
@@ -1729,7 +1842,7 @@
       },
       "examples": [
         {
-          "tex": "If $P$ is a collection of subsets of a set $E$, then $(P,\\subseteq)$ is partially ordered by inclusion."
+          "content": "If $P$ is a collection of subsets of a set $E$, then $(P,\\subseteq)$ is partially ordered by inclusion."
         }
       ],
       "tags": ["order-theory", "zorns-lemma", "hahn-banach", "foundations"],
@@ -1751,7 +1864,7 @@
       },
       "examples": [
         {
-          "tex": "In $(\\mathcal P(E),\\subseteq)$, the family $A_1\\subseteq A_2\\subseteq A_3\\subseteq\\cdots$ is a chain."
+          "content": "In $(\\mathcal P(E),\\subseteq)$, the family $A_1\\subseteq A_2\\subseteq A_3\\subseteq\\cdots$ is a chain."
         }
       ],
       "tags": ["order-theory", "zorns-lemma", "hahn-banach"],
@@ -1773,7 +1886,7 @@
       },
       "examples": [
         {
-          "tex": "If $A=\\{A_i:i\\in I\\}$ is a chain of subsets ordered by inclusion, then $\\bigcup_{i\\in I}A_i$ is an upper bound for $A$."
+          "content": "If $A=\\{A_i:i\\in I\\}$ is a chain of subsets ordered by inclusion, then $\\bigcup_{i\\in I}A_i$ is an upper bound for $A$."
         }
       ],
       "tags": ["order-theory", "zorns-lemma", "hahn-banach"],
@@ -1795,7 +1908,7 @@
       },
       "examples": [
         {
-          "tex": "In a family of admissible Hahn-Banach extensions, a maximal element is a pair $(M,h)$ such that no strictly larger admissible pair $(M',h')$ extends it."
+          "content": "In a family of admissible Hahn-Banach extensions, a maximal element is a pair $(M,h)$ such that no strictly larger admissible pair $(M',h')$ extends it."
         }
       ],
       "tags": ["order-theory", "zorns-lemma", "hahn-banach"],
@@ -1814,7 +1927,7 @@
       },
       "examples": [
         {
-          "tex": "For a norm, $\\|\\alpha x\\|=|\\alpha|\\|x\\|$. In particular, for $\\alpha\\geq0$, $\\|\\alpha x\\|=\\alpha\\|x\\|$, so every norm is positively homogeneous."
+          "content": "For a norm, $\\|\\alpha x\\|=|\\alpha|\\|x\\|$. In particular, for $\\alpha\\geq0$, $\\|\\alpha x\\|=\\alpha\\|x\\|$, so every norm is positively homogeneous."
         }
       ],
       "tags": [
@@ -1993,7 +2106,6 @@
       "priority": "core"
     }
   ],
-
   "edges": [
     {
       "source": "vector_space",
@@ -3981,8 +4093,33 @@
       "relation": "uses"
     },
     {
+      "source": "cartesian_product",
+      "target": "ordered_pair",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "function",
+      "target": "cartesian_product",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "sequence",
+      "target": "function",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "sequence",
+      "target": "cartesian_product",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "pointwise_limit",
       "target": "convergence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "pointwise_limit",
+      "target": "sequence",
       "relation": "defined_in_terms_of"
     },
     {
@@ -3991,8 +4128,13 @@
       "relation": "uses"
     },
     {
-      "source": "uniform_boundedness_principle",
-      "target": "pointwise_limit",
+      "source": "pointwise_limit",
+      "target": "banach_space",
+      "relation": "assumes"
+    },
+    {
+      "source": "pointwise_limit",
+      "target": "uniform_boundedness_principle",
       "relation": "uses"
     },
     {
