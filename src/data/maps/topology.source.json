@@ -3012,7 +3012,9 @@
         "formal": "$$U\\subseteq X \\text{ is open in }(X,\\mathcal{T})\\Longleftrightarrow U\\in\\mathcal{T}.$$",
         "intuition": "Open sets are the primitive observable neighborhoods of the space; all topological notions are expressed in terms of them.",
         "notation": [
-          "$$U\\in\\mathcal{T}$$"
+          "$$U\\in\\mathcal{T}$$",
+          "$$U\\text{ is open in }X$$",
+          "$$U\\text{ is open in }(X,\\mathcal{T})$$"
         ]
       },
       "diagram": "/atlas-assets/topology/diagrams/open-set.svg",
@@ -3408,6 +3410,36 @@
         "citation": "Thaule, Introduction to Topology (TMA4190)",
         "chapter": "5",
         "ref": "Thm. 5.26",
+        "references": []
+      },
+      "tags": [],
+      "priority": "standard"
+    },
+    {
+      "id": "closed_ball",
+      "kind": "definition",
+      "domain": "continuity",
+      "label": "Closed Ball",
+      "content": {
+        "statement": "A closed ball in a metric space $(X,d)$ is a subset of the form $\\overline{\\mathsf{B}}(a;r)=\\{x\\in X\\mid d(x,a)\\le r\\}$ for some centre $a\\in X$ and radius $r\\in\\mathbb{R}_{>0}$. Every closed ball is a closed subset of $X$ in the topology induced by $d$.",
+        "formal": "$$\\overline{\\mathsf{B}}(a;r)=\\{x\\in X\\mid d(x,a)\\le r\\}\\subseteq X$$",
+        "intuition": "Fix a point $a$ and a radius $r$. The closed ball contains all points at distance at most $r$ from $a$, including the boundary. The boundary points belong to the set, so the ball is 'sealed shut' and contains all its limit points, which is why it is closed.",
+        "gloss": "A metric ball together with its boundary: all points within or exactly at radius $r$ from a centre $a$.",
+        "notation": [
+          "$$\\overline{\\mathsf{B}}(a;r)$$",
+          "$$\\overline{\\mathsf{B}}_d(a;r)$$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "In the discrete metric, $\\overline{\\mathsf{B}}(x;r)=\\{x\\}$ whenever $0<r<1$, and $\\overline{\\mathsf{B}}(x;r)=X$ whenever $r\\ge 1$. Thus every singleton is also closed."
+        }
+      ],
+      "diagram": "/atlas-assets/topology/diagrams/open-closed-ball.svg",
+      "source": {
+        "citation": "Thaule, Introduction to Topology (TMA4190)",
+        "chapter": "2",
+        "ref": "Def. 2.7",
         "references": []
       },
       "tags": [],
@@ -3927,6 +3959,36 @@
       "examples": [
         {
           "content": "In the discrete metric, $\\mathsf{B}(x;r)=\\{x\\}$ for $r\\le 1$ and $\\mathsf{B}(x;r)=X$ for $r>1$."
+        }
+      ],
+      "diagram": "/atlas-assets/topology/diagrams/open-closed-ball.svg",
+      "source": {
+        "citation": "Thaule, Introduction to Topology (TMA4190)",
+        "chapter": "2",
+        "ref": "Def. 2.7",
+        "references": []
+      },
+      "tags": [],
+      "priority": "standard"
+    },
+    {
+      "id": "open_ball",
+      "kind": "definition",
+      "domain": "continuity",
+      "label": "Open Ball",
+      "content": {
+        "statement": "An open ball in a metric space $(X,d)$ is a subset of the form $\\mathsf{B}(a;r)=\\{x\\in X\\mid d(x,a)<r\\}$ for some centre $a\\in X$ and radius $r\\in\\mathbb{R}_{>0}$. Every open ball is an open subset of $X$ in the topology induced by $d$.",
+        "formal": "$$\\mathsf{B}(a;r)=\\{x\\in X\\mid d(x,a)<r\\}\\subseteq X$$",
+        "intuition": "Fix a point $a$ and a radius $r$. The open ball contains all points strictly closer than $r$ to $a$. Since the boundary points are excluded, every point inside still has some room around it to move without leaving the set, which is exactly why it is open.",
+        "gloss": "A basic open neighbourhood in a metric space: all points strictly within radius $r$ of a centre $a$.",
+        "notation": [
+          "$$\\mathsf{B}(a;r)$$",
+          "$$\\mathsf{B}_d(a;r)$$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "In the discrete metric, $\\mathsf{B}(x;r)=\\{x\\}$ whenever $0<r\\le 1$, and $\\mathsf{B}(x;r)=X$ whenever $r>1$. Thus every singleton is open."
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/open-closed-ball.svg",
@@ -9482,6 +9544,16 @@
       "target": "open_closed_ball",
       "relation": "defined_in_terms_of"
     },
+        {
+      "source": "metric_topology",
+      "target": "open_ball",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "metric_topology",
+      "target": "closed_ball",
+      "relation": "defined_in_terms_of"
+    },
     {
       "source": "metric_topology",
       "target": "topology",
@@ -9569,6 +9641,16 @@
     },
     {
       "source": "open_closed_ball",
+      "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+        {
+      "source": "open_ball",
+      "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "closed_ball",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
     },
@@ -11612,6 +11694,16 @@
       "target": "open_closed_ball",
       "relation": "related_to"
     },
+     {
+      "source": "bounded",
+      "target": "open_ball",
+      "relation": "related_to"
+    },
+        {
+      "source": "bounded",
+      "target": "closed_ball",
+      "relation": "related_to"
+    },
     {
       "source": "brouwer_fixed_point_theorem",
       "target": "pi1_circle",
@@ -12040,6 +12132,26 @@
     {
       "source": "one_point_compactification",
       "target": "compact_space",
+      "relation": "related_to"
+    },
+    {
+      "source": "open_ball",
+      "target": "open_closed_ball",
+      "relation": "related_to"
+    },
+    {
+      "source": "closed_ball",
+      "target": "open_closed_ball",
+      "relation": "related_to"
+    },
+    {
+      "source": "open_ball",
+      "target": "open_closed_set_metric",
+      "relation": "related_to"
+    },
+    {
+      "source": "closed_ball",
+      "target": "open_closed_set_metric",
       "relation": "related_to"
     },
     {

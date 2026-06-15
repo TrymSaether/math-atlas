@@ -831,20 +831,21 @@ function PanelSection({ title, children }: { title: string; children: ReactNode 
     </div>
   );
 }
-
-const MODES: { id: ViewMode; label: string; icon: Icon }[] = [
-  { id: "dependency", label: "Dependency", icon: GitBranchIcon },
-  { id: "cluster", label: "Clusters", icon: CirclesThreeIcon },
+const MODES: { id: ViewMode; label: string; hint: string; icon: Icon }[] = [
+  { id: "dependency", label: "Dependency", hint: "Logical graph", icon: GitBranchIcon },
+  { id: "cluster", label: "Regions", hint: "Domain clusters", icon: CirclesThreeIcon },
 ];
 
 function ModeTile({
   active,
   label,
+  hint,
   icon: IconComponent,
   onClick,
 }: {
   active: boolean;
   label: string;
+  hint: string;
   icon: Icon;
   onClick: () => void;
 }) {
@@ -853,14 +854,13 @@ function ModeTile({
       type="button"
       onClick={onClick}
       className={cn(
-        "group relative flex flex-col gap-1 rounded-md border-0 p-2 text-left transition-colors",
+        "group relative flex flex-col gap-2 rounded-md border p-2 text-left transition-colors",
         active
           ? "border-accent bg-accent-soft ring-1 ring-inset ring-accent"
           : "border-border bg-surface hover:border-border-strong hover:bg-surface-2",
       )}
       aria-pressed={active}
     >
-      {" "}
       <span
         className={cn(
           "flex h-14 w-full items-center justify-center rounded-sm",
@@ -868,21 +868,20 @@ function ModeTile({
         )}
         aria-hidden
       >
-        {" "}
-        <IconComponent className="h-6 w-6" weight={active ? "bold" : "regular"} />{" "}
-      </span>{" "}
+        <IconComponent className="h-6 w-6" weight={active ? "bold" : "regular"} />
+      </span>
+
       <span className="px-0.5">
-        {" "}
         <span
           className={cn(
             "block text-ui-control font-semibold leading-tight",
             active ? "text-accent" : "text-fg-1",
           )}
         >
-          {" "}
-          {label}{" "}
-        </span>{" "}
-      </span>{" "}
+          {label}
+        </span>
+        <span className="block text-ui-hint text-fg-3">{hint}</span>
+      </span>
     </button>
   );
 }
@@ -942,6 +941,7 @@ function MapPanel({
               key={m.id}
               active={view === m.id}
               label={m.label}
+              hint={m.hint}
               icon={m.icon}
               onClick={() => setView(m.id)}
             />
