@@ -72,6 +72,5 @@ export function swatch(palette: string): string {
 
 /** Visible length of a string, ignoring ANSI escape sequences. */
 export function visibleLength(s: string): number {
-  // eslint-disable-next-line no-control-regex
   return s.replace(new RegExp(`${ESC}\\[[0-9;]*m`, "g"), "").length;
 }

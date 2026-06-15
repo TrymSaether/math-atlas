@@ -15,7 +15,6 @@ import {
 } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { SegmentedControl } from "./SegmentedControl";
-import { type FigureProps } from "./types";
 
 type Mode = "uniform" | "pointwise" | "l2";
 
@@ -79,7 +78,7 @@ function distances(spec: ModeSpec, n: number): { sup: number; l2: number } {
   return { sup, l2: Math.sqrt((sq / N) * (b - a)) };
 }
 
-export default function ConvergenceModesFigure(_props: FigureProps) {
+export default function ConvergenceModesFigure() {
   const [mode, setMode] = useState<Mode>("uniform");
   const [n, setN] = useState(3);
   const spec = SPECS[mode];

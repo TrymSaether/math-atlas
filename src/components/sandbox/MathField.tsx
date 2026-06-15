@@ -43,9 +43,12 @@ export function MathField({
   const hostRef = useRef<HTMLSpanElement>(null);
   const mfRef = useRef<MathfieldElement | null>(null);
   const lastEmitted = useRef(value);
-  // Keep callbacks fresh without re-mounting the field.
+  // Keep callbacks fresh without re-mounting the field. Updated after commit
+  // (not during render) so the long-lived event listeners always see the latest.
   const cbs = useRef({ onChange, onEnter, onFocus });
-  cbs.current = { onChange, onEnter, onFocus };
+  useEffect(() => {
+    cbs.current = { onChange, onEnter, onFocus };
+  });
 
   useEffect(() => {
     configureMathlive();

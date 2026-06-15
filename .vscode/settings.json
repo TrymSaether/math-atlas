@@ -1,45 +1,17 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
-  "eslint.alwaysShowStatus": true,
-  // turn off formatter for json files to avoid conflicts with eslint
-  "[json]": {
-    "editor.formatOnSave": false,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnType": false,
-    "editor.formatOnPaste": false,
-    "editor.formatOnSaveMode": "file"
-  },
-
   "editor.codeActionsOnSave": {
-    "source.fixAll": "always"
+    "source.fixAll.eslint": "explicit"
   },
-  "eslint.options": {
-    "extensions": [".js", ".jsx", ".ts", ".tsx"]
+  "eslint.validate": ["javascript", "typescript", "typescriptreact"],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true
   },
   "files.watcherExclude": {
     "**/node_modules/**": true,
-    "**/dist/**": true
-  },
-  "files.exclude": {
-    "**/node_modules": true,
-    "**/dist": true,
-    "**/.git": true,
-    "**/.vscode": true,
-    "**/.DS_Store": true,
-    "**/coverage": true,
-    "**/build": true,
-    "**/out": true,
-    "**/public": false,
-    "**/assets": true,
-    "**/.playwright*": true,
-    "**/eslint.config.js": true,
-    "**/.cache": true
+    "**/dist/**": true,
+    "**/.cache/**": true
   }
 }

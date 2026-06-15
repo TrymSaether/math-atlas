@@ -219,7 +219,7 @@ function DirectionsPanel({
   position,
   summary,
 }: {
-  panelRef: RefObject<HTMLDivElement>;
+  panelRef: RefObject<HTMLDivElement | null>;
   position: PanelPosition;
   summary: RouteSummary;
 }) {
@@ -255,12 +255,18 @@ function DirectionsPanel({
   const [toQuery, setToQuery] = useState(toTitle ?? "");
   const [activeField, setActiveField] = useState<"from" | "to" | null>(null);
 
-  useEffect(() => {
+  // Mirror the canonical titles into the editable query fields, except while the
+  // user is editing that field. Tracked during render instead of via effects.
+  const [fromSync, setFromSync] = useState({ activeField, fromTitle });
+  if (fromSync.activeField !== activeField || fromSync.fromTitle !== fromTitle) {
+    setFromSync({ activeField, fromTitle });
     if (activeField !== "from") setFromQuery(fromTitle ?? "");
-  }, [activeField, fromTitle]);
-  useEffect(() => {
+  }
+  const [toSync, setToSync] = useState({ activeField, toTitle });
+  if (toSync.activeField !== activeField || toSync.toTitle !== toTitle) {
+    setToSync({ activeField, toTitle });
     if (activeField !== "to") setToQuery(toTitle ?? "");
-  }, [activeField, toTitle]);
+  }
 
   const nodes = map?.data.nodes ?? [];
   const fromResults = useRouteSearchResults(nodes, fromQuery, routeTo);
@@ -880,7 +886,7 @@ function MapPanel({
   panelRef,
   position,
 }: {
-  panelRef: RefObject<HTMLDivElement>;
+  panelRef: RefObject<HTMLDivElement | null>;
   position: PanelPosition;
 }) {
   const view = useStore((s) => s.view);

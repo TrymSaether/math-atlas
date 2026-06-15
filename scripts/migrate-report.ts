@@ -115,6 +115,9 @@ const PALETTE = [
   "cyan",
   "magenta",
 ] as const;
+type MigrationPalette = (typeof PALETTE)[number];
+const isMigrationPalette = (value: string): value is MigrationPalette =>
+  (PALETTE as readonly string[]).includes(value);
 // Fields the source schema carries; everything else on an item is dropped.
 const CARRIED = new Set([
   "id",
@@ -172,19 +175,85 @@ interface Tally {
   itemRelEdges: number;
 }
 
-function convert(raw: any, t: Tally) {
+// ── Loosely-typed shape of the legacy FieldJson maps this script reads. ──
+interface LegacyStep {
+  role?: string;
+  content?: string;
+  depends_on?: string[];
+}
+
+interface LegacyDomain {
+  id: string;
+  label: string;
+  order: number;
+  palette: string;
+}
+
+interface LegacyEdge {
+  type: string;
+  source: string;
+  target: string;
+}
+
+interface LegacyItem {
+  id: string;
+  kind: string;
+  domain: string;
+  label: string;
+  statement?: string;
+  definition?: string;
+  formal_statement?: string;
+  formula?: string;
+  intuition?: string;
+  gloss?: string;
+  notation?: unknown;
+  proof?: string;
+  proof_steps?: LegacyStep[];
+  solution?: string;
+  solution_steps?: LegacyStep[];
+  assumptions?: string[];
+  book_refs?: string[];
+  metadata?: { source?: string; tags?: string[]; syllabus_priority?: string };
+  chapter?: string | number;
+  ref?: string;
+  example?: string;
+  diagram_path?: string;
+  dependencies?: Record<string, string[]>;
+  [key: string]: unknown;
+}
+
+interface LegacyGraph {
+  id: string;
+  label: string;
+  field?: string;
+  domains: LegacyDomain[];
+  items: LegacyItem[];
+  edges?: LegacyEdge[];
+}
+
+interface LegacyRaw {
+  graph: LegacyGraph;
+}
+
+interface OutEdge {
+  source: string;
+  target: string;
+  relation: AuthorableRelation;
+}
+
+function convert(raw: LegacyRaw, t: Tally) {
   const g = raw.graph;
   const domains = [...g.domains]
-    .sort((a: any, b: any) => a.order - b.order)
-    .map((d: any, i: number) => ({
+    .sort((a, b) => a.order - b.order)
+    .map((d, i) => ({
       id: d.id,
       label: d.label,
       order: i,
-      palette: PALETTE.includes(d.palette) ? d.palette : PALETTE[i % PALETTE.length],
+      palette: isMigrationPalette(d.palette) ? d.palette : PALETTE[i % PALETTE.length],
     }));
 
-  const conceptIds = new Set(g.items.map((it: any) => it.id));
-  const concepts = g.items.map((it: any) => {
+  const conceptIds = new Set(g.items.map((it) => it.id));
+  const concepts = g.items.map((it) => {
     for (const k of Object.keys(it)) if (!CARRIED.has(k)) bump(t.droppedFields, k);
     if (!KNOWN_KINDS.has(it.kind)) bump(t.kindRemap, `${it.kind} → object`);
     const notation =
@@ -198,24 +267,18 @@ function convert(raw: any, t: Tally) {
     if (it.formula) content.formula = it.formula;
     if (it.intuition) content.intuition = it.intuition;
     if (it.gloss) content.gloss = it.gloss;
-    const toSteps = (arr: any[], fallback?: string) => {
+    const toSteps = (arr: LegacyStep[] | undefined, fallback?: string) => {
+      const roles = ["setup", "claim", "calculation", "case", "argument", "conclusion", "remark"];
       const steps = (arr ?? [])
-        .map((s: any) => ({
-          role: [
-            "setup",
-            "claim",
-            "calculation",
-            "case",
-            "argument",
-            "conclusion",
-            "remark",
-          ].includes(s.role)
-            ? s.role
-            : "argument",
-          content: (s.content ?? "").trim(),
-          uses: (s.depends_on ?? []).filter((u: string) => conceptIds.has(u)),
-        }))
-        .filter((s: any) => s.content);
+        .map((s) => {
+          const role = s.role ?? "";
+          return {
+            role: roles.includes(role) ? role : "argument",
+            content: (s.content ?? "").trim(),
+            uses: (s.depends_on ?? []).filter((u) => conceptIds.has(u)),
+          };
+        })
+        .filter((s) => s.content);
       if (steps.length === 0 && fallback?.trim())
         return [{ role: "argument", content: fallback.trim(), uses: [] }];
       return steps;
@@ -248,7 +311,7 @@ function convert(raw: any, t: Tally) {
 
   // edges: explicit edges + expand item.dependencies, then dedupe semantically.
   const seen = new Set<string>();
-  const edges: any[] = [];
+  const edges: OutEdge[] = [];
   const push = (source: string, target: string, relation: AuthorableRelation) => {
     if (!conceptIds.has(source) || !conceptIds.has(target) || source === target) return;
     const key = `${source} ${target} ${relation}`;
@@ -269,7 +332,7 @@ function convert(raw: any, t: Tally) {
     for (const [cls, ids] of Object.entries(it.dependencies ?? {})) {
       const rel = DEP_MAP[cls];
       if (!rel) continue;
-      for (const dep of ids as string[]) {
+      for (const dep of ids) {
         t.depEdges++;
         push(it.id, dep, rel);
       }

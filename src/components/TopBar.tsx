@@ -360,7 +360,7 @@ function DisplayPopover({
   popoverRef,
   position,
 }: {
-  popoverRef: RefObject<HTMLDivElement>;
+  popoverRef: RefObject<HTMLDivElement | null>;
   position: PopoverPosition;
 }) {
   const theme = useStore((s) => s.theme);
@@ -564,7 +564,7 @@ function EditMapPopover({
   onDiscard,
   onDone,
 }: {
-  popoverRef: RefObject<HTMLDivElement>;
+  popoverRef: RefObject<HTMLDivElement | null>;
   position: PopoverPosition;
   edited: boolean;
   notice: string | null;

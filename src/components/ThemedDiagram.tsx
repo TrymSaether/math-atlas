@@ -57,18 +57,19 @@ export function ThemedDiagram({
     [instanceId, markup],
   );
 
+  // On a source change, reset from the cache during render; the effect below only
+  // runs the async fetch on a cache miss (so no synchronous setState in an effect).
+  const [loadedSrc, setLoadedSrc] = useState(resolvedSrc);
+  if (resolvedSrc !== loadedSrc) {
+    setLoadedSrc(resolvedSrc);
+    setMarkup(SVG_CACHE.get(resolvedSrc) ?? "");
+    setFailed(false);
+  }
+
   useEffect(() => {
-    const cached = SVG_CACHE.get(resolvedSrc);
-    if (cached) {
-      setMarkup(cached);
-      setFailed(false);
-      return;
-    }
+    if (SVG_CACHE.has(resolvedSrc)) return;
 
     let cancelled = false;
-    setMarkup("");
-    setFailed(false);
-
     fetch(resolvedSrc)
       .then((response) => {
         if (!response.ok) throw new Error(`Unable to load diagram: ${resolvedSrc}`);

@@ -5,7 +5,6 @@ import { type WaveKind, wavePartialSum, waveTarget } from "../../lib/figures/fou
 import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
-import { type FigureProps } from "./types";
 
 const XS = linspace(-Math.PI, Math.PI, 600);
 const DX = (2 * Math.PI) / XS.length;
@@ -20,7 +19,7 @@ const Y_DOMAIN: Record<WaveKind, [number, number]> = {
   triangle: [-0.3, Math.PI + 0.3],
 };
 
-export default function ParsevalFigure(_: FigureProps) {
+export default function ParsevalFigure() {
   const [kind, setKind] = useState<WaveKind>("square");
   const [N, setN] = useState(5);
 

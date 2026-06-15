@@ -4,7 +4,6 @@ import { type WaveKind, wavePartialSum, waveTarget } from "../../lib/figures/fou
 import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
-import { type FigureProps } from "./types";
 
 const Y: Record<WaveKind, [number, number]> = {
   square: [-1.35, 1.35],
@@ -23,7 +22,7 @@ const CAPTION: Record<WaveKind, string> = {
  * number of harmonics and a selector for the target shape. Serves the
  * Fourier-series family of nodes.
  */
-export default function SeriesFigure(_: FigureProps) {
+export default function SeriesFigure() {
   const [kind, setKind] = useState<WaveKind>("square");
   const [terms, setTerms] = useState(6);
 

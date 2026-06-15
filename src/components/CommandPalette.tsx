@@ -32,9 +32,13 @@ export function CommandPalette() {
     return () => document.removeEventListener("keydown", onKey);
   }, [setOpen]);
 
-  useEffect(() => {
+  // Clear the query when the palette closes (compare against the previous value
+  // during render rather than syncing in an effect).
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (open !== prevOpen) {
+    setPrevOpen(open);
     if (!open) setQuery("");
-  }, [open]);
+  }
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>

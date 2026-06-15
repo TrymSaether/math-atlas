@@ -3,7 +3,6 @@ import { useMemo, useState } from "react";
 import { linspace } from "../../lib/figures/plot";
 import { DIA, FigureFrame, FunctionCurve, Line, Polygon, STROKE, type Vec2 } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
-import { type FigureProps } from "./types";
 
 function testFn(x: number): number {
   const tent = Math.max(0, 1 - Math.abs(x + 1.25) / 1.05);
@@ -53,7 +52,7 @@ function lobePolygons(values: number[], sign: "positive" | "negative"): Vec2[][]
   return polys;
 }
 
-export default function RiemannLebesgueFigure(_: FigureProps) {
+export default function RiemannLebesgueFigure() {
   const [n, setN] = useState(2);
 
   const integrandValues = useMemo(() => XS.map((x) => testFn(x) * Math.cos(n * x)), [n]);

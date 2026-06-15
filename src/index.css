@@ -1,6 +1,81 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+    sans-serif;
+  --font-display: "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
+  --font-serif: "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
+  --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia",
+    serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  --text-edge-label: var(--type-edge-label);
+  --text-edge-label--line-height: 1.1;
+  --text-ui-tiny: var(--type-ui-tiny);
+  --text-ui-tiny--line-height: 1.15;
+  --text-ui-2xs: var(--type-ui-2xs);
+  --text-ui-2xs--line-height: 1.15;
+  --text-ui-caption: var(--type-ui-caption);
+  --text-ui-caption--line-height: 1.25;
+  --text-ui-hint: var(--type-ui-hint);
+  --text-ui-hint--line-height: 1.35;
+  --text-ui-meta: var(--type-ui-meta);
+  --text-ui-meta--line-height: 1.35;
+  --text-ui-xs: var(--type-ui-xs);
+  --text-ui-xs--line-height: 1.4;
+  --text-ui-control: var(--type-ui-control);
+  --text-ui-control--line-height: 1.25;
+  --text-ui-sm: var(--type-ui-sm);
+  --text-ui-sm--line-height: 1.5;
+  --text-ui-copy: var(--type-ui-copy);
+  --text-ui-copy--line-height: 1.6;
+  --text-ui-body: var(--type-ui-body);
+  --text-ui-body--line-height: 1.5;
+  --text-ui-lead: var(--type-ui-lead);
+  --text-ui-lead--line-height: 1.5;
+  --text-atlas-brand: var(--type-atlas-brand);
+  --text-atlas-brand--line-height: 1;
+  --text-atlas-card: var(--type-atlas-card);
+  --text-atlas-card--line-height: 1.15;
+  --text-node-panel-title: var(--type-node-panel-title);
+  --text-node-panel-title--line-height: 1.08;
+  --text-atlas-panel: var(--type-atlas-panel);
+  --text-atlas-panel--line-height: 1.06;
+  --text-atlas-summary: var(--type-atlas-summary);
+  --text-atlas-summary--line-height: 1.25;
+  --text-atlas-display: var(--type-atlas-display);
+  --text-atlas-display--line-height: 1.1;
+
+  --tracking-label: 0.13em;
+  --tracking-label-wide: 0.14em;
+  --tracking-label-tight: 0.06em;
+
+  --color-bg: var(--bg);
+  --color-bg-deep: var(--bg-deep);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-fg-1: var(--fg-1);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-fg-4: var(--fg-4);
+  --color-fg-on-color: var(--fg-on-color);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-hairline: var(--hairline);
+  --color-danger: var(--danger);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-border: var(--accent-border);
+
+  --radius-r-xs: 4px;
+  --radius-r-sm: 7px;
+  --radius-r-md: 10px;
+  --radius-r-lg: 14px;
+  --radius-r-xl: 16px;
+  --radius-r-2xl: 20px;
+  --radius-pill: 999px;
+}
 
 /* ========================================================================
    Math Atlas — Design Tokens

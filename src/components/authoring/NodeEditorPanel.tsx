@@ -396,13 +396,14 @@ export function NodeEditorPanel({
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   // Reseed when the editor target changes (selecting a different node, or
-  // switching into create mode).
-  useEffect(() => {
+  // switching into create mode). Compared during render rather than in an effect.
+  const [prevEditingId, setPrevEditingId] = useState(editingId);
+  if (editingId !== prevEditingId) {
+    setPrevEditingId(editingId);
     setConfirmDelete(false);
     if (editingId !== null && concept) setDraft(conceptToDraft(concept));
     else if (editingId === null) setDraft(emptyDraft(map.data.domains[0]?.id ?? ""));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editingId]);
+  }
 
   const set = (patch: Partial<NodeDraft>) => setDraft((d) => ({ ...d, ...patch }));
   const save = () => commitNode(draft);

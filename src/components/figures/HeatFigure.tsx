@@ -3,7 +3,6 @@ import { useState } from "react";
 import { heatProfile, squareWave } from "../../lib/figures/fourierMath";
 import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
-import { type FigureProps } from "./types";
 
 const TERMS = 40;
 
@@ -12,7 +11,7 @@ const TERMS = 40;
  * decays like e^{−k²t}, so the sharp edges (high frequencies) melt first and the
  * profile relaxes toward its mean. The slider is (a log-spaced) time t.
  */
-export default function HeatFigure(_: FigureProps) {
+export default function HeatFigure() {
   // slider 0..100 → t from 0 up to ~0.5, spaced so early diffusion is visible
   const [raw, setRaw] = useState(0);
   const t = (raw / 100) ** 2 * 0.5;

@@ -108,7 +108,7 @@ function OperatorNormModel({ nodeId }: FigureProps) {
   const [stretch, setStretch] = useState(1.65);
   const minor = 0.58;
   const ellipse = useMemo(() => ellipsePoints(stretch, minor), [stretch]);
-  const circle = useMemo(unitCirclePoints, []);
+  const circle = useMemo(() => unitCirclePoints(), []);
   const label = nodeId === "operator_norm" ? "$\\|T\\|$" : "$\\|Tx\\|\\le C\\|x\\|$";
 
   return (

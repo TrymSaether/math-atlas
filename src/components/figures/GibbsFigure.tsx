@@ -3,10 +3,9 @@ import { useState } from "react";
 import { squareWave, squareWavePartialSum } from "../../lib/figures/fourierMath";
 import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
-import { type FigureProps } from "./types";
 
 /** Square wave + its Fourier partial sum S_N, with a slider on the number of harmonics. */
-export default function GibbsFigure(_: FigureProps) {
+export default function GibbsFigure() {
   const [terms, setTerms] = useState(8);
 
   return (

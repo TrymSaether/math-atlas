@@ -26,7 +26,7 @@ import { bold, dim, cyan, gray, red, yellow, green } from "../utils/color";
 import { MARK, kindGlyph } from "../utils/glyphs";
 import { padStart } from "../utils/text";
 
-function requireMap(maps: CliMap[], _ctx: Ctx): CliMap {
+function requireMap(maps: CliMap[]): CliMap {
   if (maps.length === 1) return maps[0];
   throw new CliError(`'graph' needs a single map (${maps.length} loaded)`, "pass --map <id>");
 }
@@ -198,7 +198,7 @@ function run(ctx: Ctx): number {
   const pickByConcept = (id: string): CliMap => {
     const f = findConcept(maps, id);
     if (f) return f.map;
-    return requireMap(maps, ctx);
+    return requireMap(maps);
   };
 
   switch (sub) {
@@ -212,13 +212,13 @@ function run(ctx: Ctx): number {
       if (!rest[0]) throw new CliError("usage: atlas graph chain <concept-id>");
       return cmdChain(pickByConcept(rest[0]), rest[0]);
     case "orphans":
-      return cmdOrphans(requireMap(maps, ctx));
+      return cmdOrphans(requireMap(maps));
     case "cycles":
-      return cmdCycles(requireMap(maps, ctx));
+      return cmdCycles(requireMap(maps));
     case "rank":
-      return cmdRank(requireMap(maps, ctx), String(ctx.flags.by ?? "degree"));
+      return cmdRank(requireMap(maps), String(ctx.flags.by ?? "degree"));
     case "topo":
-      return cmdTopo(requireMap(maps, ctx));
+      return cmdTopo(requireMap(maps));
     default:
       throw new CliError(`unknown graph subcommand '${sub}'`);
   }

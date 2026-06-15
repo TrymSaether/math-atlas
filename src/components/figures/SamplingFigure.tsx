@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 
 import { aliasFrequency } from "../../lib/figures/fourierMath";
 import { MathText } from "../../lib/katex";
@@ -52,14 +51,11 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
   const dt = 1 / fs;
   const nyquistOk = fs >= 2 * SIGNAL_HZ;
   const aliasHz = aliasFrequency(SIGNAL_HZ, fs);
-  const samples = useMemo(() => {
-    const dt = 1 / fs;
-    const pts: [number, number][] = [];
-    for (let t = 0; t <= T_MAX + 1e-9; t += dt) {
-      pts.push([t, Math.sin(2 * Math.PI * SIGNAL_HZ * t)]);
-    }
-    return pts;
-  }, [fs]);
+  // Cheap to recompute each render (a handful of points); no memo needed.
+  const samples: [number, number][] = [];
+  for (let t = 0; t <= T_MAX + 1e-9; t += dt) {
+    samples.push([t, Math.sin(2 * Math.PI * SIGNAL_HZ * t)]);
+  }
 
   const focusAlias = nodeId === "aliasing";
 

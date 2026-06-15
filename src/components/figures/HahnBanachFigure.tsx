@@ -14,7 +14,6 @@ import {
   type Vec2,
 } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
-import { type FigureProps } from "./types";
 
 const UNIT_BALL: Vec2[] = [
   [1, 0],
@@ -54,7 +53,7 @@ function levelSet(alpha: number): [Vec2, Vec2] {
  * V with f(t,0)=t. Each slider value gives an extension F(x,y)=x+alpha y whose
  * level line F=1 still supports the l1 unit ball, so the functional norm stays 1.
  */
-export default function HahnBanachFigure(_: FigureProps) {
+export default function HahnBanachFigure() {
   const [alpha, setAlpha] = useState(0.45);
   const [a, b] = useMemo(() => levelSet(alpha), [alpha]);
   const absAlpha = Math.abs(alpha);

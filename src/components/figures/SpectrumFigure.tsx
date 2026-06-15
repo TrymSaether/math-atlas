@@ -3,7 +3,6 @@ import { useMemo, useState } from "react";
 import { type WaveKind, waveCoeff } from "../../lib/figures/fourierMath";
 import { DIA, FONT, FigureFrame, Line, Polygon, STROKE, Text } from "./FigureFrame";
 import { WaveSelect } from "./WaveSelect";
-import { type FigureProps } from "./types";
 
 const CAPTION: Record<WaveKind, string> = {
   square: "Only odd harmonics; magnitudes fall like 1/k.",
@@ -15,7 +14,7 @@ const CAPTION: Record<WaveKind, string> = {
  * Bar chart of Fourier-coefficient magnitudes |c_k| for a chosen waveform.
  * Makes the decay rate (and which harmonics vanish) visible at a glance.
  */
-export default function SpectrumFigure(_: FigureProps) {
+export default function SpectrumFigure() {
   const [kind, setKind] = useState<WaveKind>("square");
   const N = 14;
 

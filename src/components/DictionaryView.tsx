@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { createElement, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRightIcon, ArrowLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
@@ -77,20 +77,20 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const groups = useMemo(() => groupEntries(filtered, sortBy, facet), [filtered, sortBy, facet]);
 
   // Keep a valid selection: honor an external (⌘K) selection, else fall back to
-  // the first entry that survives the current filters.
-  useEffect(() => {
+  // the first entry that survives the current filters. Both adjustments run during
+  // render (the fallback is self-converging) rather than in effects.
+  const [prevSelectedId, setPrevSelectedId] = useState(selectedId);
+  if (selectedId !== prevSelectedId) {
+    setPrevSelectedId(selectedId);
     if (selectedId && entries.some((e) => e.id === selectedId)) {
       setActiveId(selectedId);
       setMobileDetail(true);
     }
-  }, [selectedId, entries]);
+  }
 
-  useEffect(() => {
-    if (filtered.length === 0) return;
-    if (!activeId || !filtered.some((e) => e.id === activeId)) {
-      setActiveId(filtered[0].id);
-    }
-  }, [filtered, activeId]);
+  if (filtered.length > 0 && (!activeId || !filtered.some((e) => e.id === activeId))) {
+    setActiveId(filtered[0].id);
+  }
 
   // Reveal the active row in the index list.
   useEffect(() => {
@@ -241,7 +241,7 @@ function IndexRow({
   onClick: () => void;
 }) {
   const tone = getDomainTone(entry.domain);
-  const Icon = kindIcon(entry.kind);
+  const icon = kindIcon(entry.kind);
   return (
     <button
       type="button"
@@ -257,7 +257,7 @@ function IndexRow({
         aria-hidden
       />
       <span className="dict-row-glyph" style={{ color: tone.color }}>
-        <Icon className="h-3.5 w-3.5" aria-hidden />
+        {createElement(icon, { className: "h-3.5 w-3.5", "aria-hidden": true })}
       </span>
       <span className="dict-row-term font-serif">
         <MathText text={entry.label} />

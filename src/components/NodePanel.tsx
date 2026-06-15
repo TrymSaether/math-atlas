@@ -137,10 +137,16 @@ function PanelContent({
     return t;
   }, [hasProperties, hasProof, view.proof.label, linkCount]);
 
+  // Reset to the overview tab when the panel switches to a different node.
+  const [prevNodeId, setPrevNodeId] = useState(node.id);
+  if (node.id !== prevNodeId) {
+    setPrevNodeId(node.id);
+    setTab("overview");
+  }
+
   const activeTab = tabs.some((t) => t.id === tab) ? tab : "overview";
 
   useEffect(() => {
-    setTab("overview");
     scrollRef.current?.scrollTo({ top: 0 });
   }, [node.id]);
 

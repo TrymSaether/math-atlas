@@ -15,7 +15,7 @@ import { reportDiagnostics } from "../diagnostics/reporter";
 import { bold, dim, cyan } from "../utils/color";
 
 /** Resolve the anchor concept id for a Zod issue path, when there is one. */
-function anchorFor(json: unknown, path: (string | number)[]): string | undefined {
+function anchorFor(json: unknown, path: readonly PropertyKey[]): string | undefined {
   if (path[0] === "concepts" && typeof path[1] === "number") {
     const c = (json as { concepts?: { id?: string }[] })?.concepts?.[path[1]];
     return c?.id;

@@ -4,7 +4,6 @@ import { MathText } from "../../lib/katex";
 import { DIA, FONT, FigureFrame, LaTeX, Line, Polygon, STROKE, Text } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { SegmentedControl } from "./SegmentedControl";
-import { type FigureProps } from "./types";
 
 type Mode = "banach" | "incomplete";
 
@@ -22,7 +21,7 @@ function opNorm(mode: Mode, n: number): number {
   return 0.32 * Math.sqrt(n); // pointwise bounded yet escapes any ceiling
 }
 
-export default function UniformBoundednessFigure(_props: FigureProps) {
+export default function UniformBoundednessFigure() {
   const [mode, setMode] = useState<Mode>("banach");
   const [count, setCount] = useState(8);
 

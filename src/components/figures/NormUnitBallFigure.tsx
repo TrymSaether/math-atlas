@@ -16,7 +16,6 @@ import {
   type Vec2,
   useMovablePoint,
 } from "./FigureFrame";
-import { type FigureProps } from "./types";
 
 type NormKind = "l2" | "l1" | "linf" | "lp";
 
@@ -269,7 +268,7 @@ function ReadoutPanel({
   );
 }
 
-export default function NormUnitBallFigure(_: FigureProps) {
+export default function NormUnitBallFigure() {
   const [mode, setMode] = useState<NormKind>("linf");
   const [p, setP] = useState(3);
   const point = useMovablePoint([1.4, -0.7], {

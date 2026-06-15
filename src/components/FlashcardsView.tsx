@@ -131,7 +131,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const deckIds = useMemo(() => deck.map((n) => n.id), [deck]);
   const deckKey = deckIds.join("|");
 
-  const [state, dispatch] = useReducer(drillReducer, undefined, () => ({
+  const [state, dispatch] = useReducer(drillReducer, undefined, (): DrillState => ({
     seed: 1,
     order: shuffle(deckIds, 1),
     pos: 0,

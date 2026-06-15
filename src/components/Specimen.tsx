@@ -11,7 +11,7 @@
  * Keeping these here means the panel and the dictionary render the same data with
  * one design — change it once, both surfaces follow.
  */
-import { useId, useState, type ReactNode } from "react";
+import { createElement, useId, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CaretRightIcon } from "@phosphor-icons/react";
 import type { LoadedMap } from "../data";
@@ -493,7 +493,7 @@ export function ConnectionChip({
   const node = map.nodeById.get(id);
   if (!node) return null;
   const tone = getDomainTone(node.domain);
-  const Icon = kindIcon(node.kind);
+  const icon = kindIcon(node.kind);
   return (
     <button
       onClick={onClick}
@@ -509,7 +509,7 @@ export function ConnectionChip({
         className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
         style={{ background: tone.tint, color: tone.color }}
       >
-        <Icon className="h-2.5 w-2.5" strokeWidth={2.4} aria-hidden />
+        {createElement(icon, { className: "h-2.5 w-2.5", strokeWidth: 2.4, "aria-hidden": true })}
       </span>
       <span className="min-w-0 truncate text-ui-control leading-4" style={{ color: "var(--fg-1)" }}>
         <MathText text={node.label} />

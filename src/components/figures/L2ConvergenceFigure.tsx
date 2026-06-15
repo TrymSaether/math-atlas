@@ -9,7 +9,6 @@ import {
 import { DIA, FigureFrame, FunctionCurve, Line, Plot, Polygon, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
-import { type FigureProps } from "./types";
 
 const N_MAX = 50;
 const TAIL = 2000; // harmonics to approximate total energy
@@ -56,7 +55,7 @@ const CAPTIONS: Record<WaveKind, string> = {
 
 const NS_BAR = Array.from({ length: N_MAX + 1 }, (_, i) => i);
 
-export default function L2ConvergenceFigure(_: FigureProps) {
+export default function L2ConvergenceFigure() {
   const [kind, setKind] = useState<WaveKind>("square");
   const [N, setN] = useState(5);
 

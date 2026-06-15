@@ -17,7 +17,6 @@ import {
   Vector,
   useMovablePoint,
 } from "./FigureFrame";
-import { type FigureProps } from "./types";
 
 const X_DOMAIN: [number, number] = [-4, 4];
 
@@ -44,7 +43,7 @@ function overlapPoints(s: number): [number, number][] | null {
   ];
 }
 
-export default function ConvolutionFigure(_: FigureProps) {
+export default function ConvolutionFigure() {
   const shift = useMovablePoint([-1.2, 1.2], {
     color: "var(--accent)",
     constrain: ([x]) => [Math.min(3, Math.max(-3, x)), 1.2],

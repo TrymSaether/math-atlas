@@ -60,21 +60,25 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
   // normalizes the path so a single dashoffset 1→0 reveals it regardless of length.
   const route = data?.routeReveal;
   const revealRef = useRef<SVGPathElement>(null);
+  // Depend on the primitive fields rather than the `route` object: `data.routeReveal`
+  // is a fresh object most renders, so keying on runKey/delay avoids re-animating.
+  const routeRunKey = route?.runKey;
+  const routeDelay = route?.delay;
   useEffect(() => {
     const el = revealRef.current;
-    if (!el || !route) return;
+    if (!el || routeRunKey === undefined || routeDelay === undefined) return;
     if (prefersReducedMotion()) {
       el.style.strokeDashoffset = "0";
       return;
     }
     const anim = el.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], {
       duration: 300,
-      delay: route.delay,
+      delay: routeDelay,
       easing: "cubic-bezier(0.22,0.61,0.36,1)",
       fill: "both",
     });
     return () => anim.cancel();
-  }, [route?.runKey, route?.delay]);
+  }, [routeRunKey, routeDelay]);
 
   return (
     <>
