@@ -521,7 +521,7 @@ function EmptyState({ onBack }: { onBack: () => void }) {
       <p className="text-ui-lead" style={{ color: "var(--fg-1)" }}>
         No cards match the current filters.
       </p>
-      <p className="max-w-[340px] text-ui-sm" style={{ color: "var(--fg-3)" }}>
+      <p className="max-w-85 text-ui-sm" style={{ color: "var(--fg-3)" }}>
         Widen the domain or category filters in the toolbar to build a study deck.
       </p>
       <button

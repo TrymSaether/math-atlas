@@ -42,5 +42,6 @@
     "**/pnpm-lock.yaml": true,
     "**/yarn.lock": true,
     "src/data/maps/*.source.json": false,
-  }
+  },
+  "css.lint.unknownAtRules": "ignore"
 }

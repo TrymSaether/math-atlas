@@ -112,7 +112,7 @@ export function CommandPalette() {
                       {data && (
                         <Command.Group
                           heading="Concepts"
-                          className="px-2 pt-3 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide [&_[cmdk-group-heading]]:text-[color:var(--fg-3)]"
+                          className="px-2 pt-3 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide **:[[cmdk-group-heading]]:text-(--fg-3)"
                         >
                           {data.nodes.map((n) => {
                             const tone = getDomainTone(n.domain);
@@ -128,11 +128,11 @@ export function CommandPalette() {
                               >
                                 <span className="flex w-full items-center gap-2.5">
                                   <span
-                                    className="h-2 w-2 flex-shrink-0 rounded-full"
+                                    className="h-2 w-2 shrink-0 rounded-full"
                                     style={{ background: tone.color }}
                                   />
                                   <span
-                                    className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full"
+                                    className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
                                     style={{ background: tone.tint, color: tone.color }}
                                   >
                                     <CategoryIcon
@@ -141,13 +141,13 @@ export function CommandPalette() {
                                       aria-hidden
                                     />
                                   </span>
-                                  <span className="w-[96px] flex-shrink-0 text-ui-caption font-medium uppercase tracking-label-tight text-[color:var(--fg-3)]">
+                                  <span className="w-24 shrink-0 text-ui-caption font-medium uppercase tracking-label-tight text-(--fg-3)">
                                     {KIND_LABEL[n.kind]}
                                   </span>
-                                  <span className="min-w-0 flex-1 truncate text-ui-sm text-[color:var(--fg-1)]">
+                                  <span className="min-w-0 flex-1 truncate text-ui-sm text-(--fg-1)">
                                     <MathText text={n.label} />
                                   </span>
-                                  <span className="ml-2 max-w-[140px] truncate text-ui-caption text-[color:var(--fg-3)]">
+                                  <span className="ml-2 max-w-35 truncate text-ui-caption text-(--fg-3)">
                                     {n.topicCluster}
                                   </span>
                                 </span>
@@ -159,7 +159,7 @@ export function CommandPalette() {
                     </Command.List>
 
                     <div
-                      className="flex items-center justify-between border-t px-3 py-1.5 text-ui-caption text-[color:var(--fg-3)]"
+                      className="flex items-center justify-between border-t px-3 py-1.5 text-ui-caption text-(--fg-3)"
                       style={{ borderColor: "var(--border-subtle)" }}
                     >
                       <span>↑↓ navigate · ↵ select · esc close</span>
@@ -189,7 +189,7 @@ function Item({
     <Command.Item
       value={value}
       onSelect={onSelect}
-      className="cursor-pointer rounded-sm px-2 py-2 text-ui-sm text-[color:var(--fg-1)] aria-selected:bg-[color:var(--accent-soft)] aria-selected:text-[color:var(--fg-1)]"
+      className="cursor-pointer rounded-sm px-2 py-2 text-ui-sm text-(--fg-1) aria-selected:bg-(--accent-soft) aria-selected:text-(--fg-1)"
     >
       {children}
     </Command.Item>

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /**
  * Specimen primitives — the shared content vocabulary used by both the NodePanel
  * (compact) and the Dictionary (expansive). A concept is treated as a *specimen*:
@@ -376,7 +377,7 @@ function ProofStepItem({
       {!last && (
         <span
           aria-hidden
-          className="absolute bottom-0 left-[10px] top-[22px] w-px"
+          className="absolute bottom-0 left-2.5 top-5.5 w-px"
           style={{
             background: `color-mix(in srgb, ${toneColor} 45%, transparent)`,
           }}
@@ -384,7 +385,7 @@ function ProofStepItem({
       )}
       <span
         aria-hidden
-        className="absolute left-0 top-0 flex h-[21px] w-[21px] items-center justify-center rounded-full font-mono text-ui-2xs"
+        className="absolute left-0 top-0 flex h-5.25 w-5.25 items-center justify-center rounded-full font-mono text-ui-2xs"
         style={{
           background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
           color: toneColor,
@@ -400,7 +401,7 @@ function ProofStepItem({
         aria-expanded={showBody}
         aria-controls={bodyId}
         disabled={!collapsible}
-        className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-xs px-1 py-0.5 text-left transition-colors hover:bg-(--surface-2) focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] disabled:cursor-default disabled:hover:bg-transparent"
+        className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-xs px-1 py-0.5 text-left transition-colors hover:bg-(--surface-2) focus:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-border) disabled:cursor-default disabled:hover:bg-transparent"
       >
         {collapsible && (
           <CaretRightIcon
@@ -502,7 +503,7 @@ export function ConnectionChip({
           ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}`
           : `${node.label} · ${KIND_LABEL[node.kind]}`
       }
-      className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
+      className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
     >
       <span
