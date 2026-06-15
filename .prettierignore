@@ -1,0 +1,14 @@
+node_modules
+dist
+.cache
+.venv
+.DS_Store
+*.tsbuildinfo
+package-lock.json
+
+.claude
+.vscode
+
+src/data/maps/*.source.json
+src/data/maps/*.json
+public/atlas-assets
