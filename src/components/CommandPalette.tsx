@@ -93,7 +93,7 @@ export function CommandPalette() {
 
                       <Command.Group
                         heading="Fields"
-                        className="px-2 pt-2 [&_[cmdk-group-heading]]:text-ui-2xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-label-wide [&_[cmdk-group-heading]]:text-[color:var(--fg-3)]"
+                        className="px-2 pt-2 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide **:[[cmdk-group-heading]]:text-(--fg-3)"
                       >
                         {(Object.keys(MAPS) as MapId[]).map((id) => (
                           <Item
@@ -104,9 +104,7 @@ export function CommandPalette() {
                               setOpen(false);
                             }}
                           >
-                            <span className="text-ui-sm text-[color:var(--fg-1)]">
-                              Open {MAPS[id].label}
-                            </span>
+                            <span className="text-ui-sm text-(--fg-1)">Open {MAPS[id].label}</span>
                           </Item>
                         ))}
                       </Command.Group>
@@ -114,7 +112,7 @@ export function CommandPalette() {
                       {data && (
                         <Command.Group
                           heading="Concepts"
-                          className="px-2 pt-3 [&_[cmdk-group-heading]]:text-ui-2xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-label-wide [&_[cmdk-group-heading]]:text-[color:var(--fg-3)]"
+                          className="px-2 pt-3 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide [&_[cmdk-group-heading]]:text-[color:var(--fg-3)]"
                         >
                           {data.nodes.map((n) => {
                             const tone = getDomainTone(n.domain);
