@@ -12,7 +12,8 @@ import { MathText } from "../lib/katex";
 import { KIND_LABEL } from "../types";
 import { getDomainTone } from "../lib/colors";
 import { useConceptView } from "../lib/conceptView";
-import { CATEGORY_META, categoryOf, kindAbbrev } from "../lib/nodeCategory";
+import { kindAbbrev } from "../lib/nodeCategory";
+import { kindIcon } from "../lib/nodeCategoryIcons";
 import {
   KIND_ORDER,
   dictionaryEntries,
@@ -280,7 +281,7 @@ function IndexRow({
   onClick: () => void;
 }) {
   const tone = getDomainTone(entry.domain);
-  const Icon = CATEGORY_META[categoryOf(entry.kind)].icon;
+  const Icon = kindIcon(entry.kind);
   return (
     <button
       type="button"

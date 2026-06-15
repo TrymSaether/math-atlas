@@ -23,6 +23,7 @@ import {
   kindAbbrev,
   railBackground,
 } from "../lib/nodeCategory";
+import { kindIcon } from "../lib/nodeCategoryIcons";
 import { compactNodeRef } from "../lib/nodeMeta";
 import { KIND_LABEL, type GraphNode, type ProofStep } from "../types";
 
@@ -536,7 +537,7 @@ export function ConnectionChip({
   const node = map.nodeById.get(id);
   if (!node) return null;
   const tone = getDomainTone(node.domain);
-  const Icon = CATEGORY_META[categoryOf(node.kind)].icon;
+  const Icon = kindIcon(node.kind);
   return (
     <button
       onClick={onClick}

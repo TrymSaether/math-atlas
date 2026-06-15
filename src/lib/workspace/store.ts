@@ -70,7 +70,7 @@ function syncScalarAssignmentSource(source: string, value: number): string {
   return `${match[1]}${formatScalarSourceValue(value)}${match[3]}`;
 }
 
-export const useSandbox = create<SandboxState>((set, get) => {
+export const useSandbox = create<SandboxState>((set, _get) => {
   const initial = emptyWorkspace();
   return {
     ws: initial,

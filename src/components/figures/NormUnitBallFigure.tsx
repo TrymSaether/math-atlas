@@ -291,7 +291,6 @@ export default function NormUnitBallFigure(_: FigureProps) {
     [ball, value],
   );
   const scaledOutline = useMemo(() => closedPolyline(scaledBall), [scaledBall]);
-  const subscript = normSubscript(mode, p);
   const statusColor = inside ? DIA.ok : DIA.alert;
   const scaledOutlineColor = DIA.alert;
 

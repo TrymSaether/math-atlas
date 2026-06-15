@@ -11,7 +11,7 @@ import {
 
 import { useStore } from "../store";
 import type { LoadedMap, MapId } from "../data";
-import { KIND_LABEL, type GraphNode } from "../types";
+import type { GraphNode } from "../types";
 import { useConceptView } from "../lib/conceptView";
 import { MathProse, Steps } from "./Specimen";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";

@@ -3,6 +3,7 @@ import { Handle, Position, type NodeProps } from "reactflow";
 import { getDomainTone } from "../lib/colors";
 import { MathText } from "../lib/katex";
 import { CATEGORY_META, categoryOf, kindAbbrev, railBackground, type NodeCategory } from "../lib/nodeCategory";
+import { CATEGORY_ICON } from "../lib/nodeCategoryIcons";
 import { cn, prefersReducedMotion } from "../lib/utils";
 import { useStore } from "../store";
 import { KIND_LABEL, type TopoNode as TopoNodeT } from "../types";
@@ -60,7 +61,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
   const emphasis = data.emphasis ?? "normal";
   const category = data.category ?? categoryOf(node.kind);
   const categoryMeta = CATEGORY_META[category];
-  const CategoryIcon = categoryMeta.icon;
+  const CategoryIcon = CATEGORY_ICON[category];
 
   const isLandmark = emphasis === "landmark";
   const isMinor = emphasis === "minor";

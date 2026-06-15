@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useStore } from "../store";
 import { MAPS, type MapId } from "../data";
 import { getDomainTone } from "../lib/colors";
-import { CATEGORY_META, categoryOf } from "../lib/nodeCategory";
+import { kindIcon } from "../lib/nodeCategoryIcons";
 import { KIND_LABEL } from "../types";
 import { MathText } from "../lib/katex";
 
@@ -114,7 +114,7 @@ export function CommandPalette() {
                         >
                           {data.nodes.map((n) => {
                             const tone = getDomainTone(n.domain);
-                            const CategoryIcon = CATEGORY_META[categoryOf(n.kind)].icon;
+                            const CategoryIcon = kindIcon(n.kind);
                             return (
                               <Item
                                 key={n.id}

@@ -70,13 +70,14 @@ export const FIGURE_REGISTRY: Record<
   self_adjoint_operator: lazy(() => import("./HilbertSpectralFigure")),
   spectrum: lazy(() => import("./HilbertSpectralFigure")),
   spectral_theorem: lazy(() => import("./HilbertSpectralFigure")),
-  compact_self_adjoint_operator_assumption: lazy(() => import("./HilbertSpectralFigure")),
+  compact_self_adjoint_operator_assumption: lazy(
+    () => import("./HilbertSpectralFigure"),
+  ),
 
   // Convergence modes: uniform vs pointwise vs mean-square.
   convergence: lazy(() => import("./ConvergenceModesFigure")),
   pointwise_limit: lazy(() => import("./ConvergenceModesFigure")),
   pointwise_limits_of_operators: lazy(() => import("./ConvergenceModesFigure")),
-  sequence: lazy(() => import("./ConvergenceModesFigure")),
 
   // Sequence spaces ℓᵖ / Lᵖ / c₀ and their nesting.
   ell_p_spaces: lazy(() => import("./SequenceSpaceFigure")),
@@ -90,9 +91,15 @@ export const FIGURE_REGISTRY: Record<
   hilbert_space: lazy(() => import("./InnerProductFigure")),
 
   // Uniform boundedness principle (Banach–Steinhaus).
-  uniform_boundedness_principle: lazy(() => import("./UniformBoundednessFigure")),
-  pointwise_bounded_family_assumption: lazy(() => import("./UniformBoundednessFigure")),
-  bounded_operators_banach_space: lazy(() => import("./UniformBoundednessFigure")),
+  uniform_boundedness_principle: lazy(
+    () => import("./UniformBoundednessFigure"),
+  ),
+  pointwise_bounded_family_assumption: lazy(
+    () => import("./UniformBoundednessFigure"),
+  ),
+  bounded_operators_banach_space: lazy(
+    () => import("./UniformBoundednessFigure"),
+  ),
 
   // --- Exercises & exam problems: reuse the figure that best illustrates them ---
   // Fourier-series waveforms (triangle / sawtooth / square + partial sums).

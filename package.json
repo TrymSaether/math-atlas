@@ -3,9 +3,13 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "bin": {
+    "atlas": "scripts/atlas/bin.mjs"
+  },
   "scripts": {
     "predev": "npm run build:maps",
     "dev": "vite",
+    "atlas": "tsx scripts/atlas/cli.ts",
     "build:maps": "tsx scripts/build-maps.ts",
     "check:maps": "tsx scripts/build-maps.ts --check",
     "build": "npm run build:maps && tsc -b && vite build",

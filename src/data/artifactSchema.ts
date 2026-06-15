@@ -6,64 +6,22 @@
  * indexes (adjacency, groupings) as today. Edges are stored single-direction
  * (from = prerequisite, to = dependent for dependency edges); reverse adjacency
  * and inverse labels are derived at render time via ./relations, not stored.
+ *
+ * The node shape is *derived* from the authored `SourceConceptSchema` plus the
+ * two build-time fields (`degree`, `depth`) — see ArtifactNodeSchema. Deriving
+ * rather than re-declaring keeps the artifact's field types (e.g. the `priority`
+ * enum, the proof-step shape) in lockstep with the source, so there is no drift
+ * to paper over with casts in the load/edit paths.
  */
 import { z } from "zod";
 import { DOMAIN_PALETTE_KEYS } from "../lib/palette";
 import { RELATION_KEYS } from "./relations";
-import { KIND_VALUES } from "./sourceSchema";
+import { SourceConceptSchema } from "./sourceSchema";
 
 export const ARTIFACT_VERSION = 1;
 
-const ArtifactContentSchema = z
-  .object({
-    statement: z.string().optional(),
-    definition: z.string().optional(),
-    formal: z.string().optional(),
-    formula: z.string().optional(),
-    intuition: z.string().optional(),
-    gloss: z.string().optional(),
-    notation: z.array(z.string()),
-  })
-  .catchall(z.unknown());
-
-export const ArtifactNodeSchema = z.object({
-  id: z.string(),
-  kind: z.enum(KIND_VALUES),
-  domain: z.string(),
-  label: z.string(),
-  content: ArtifactContentSchema,
-  examples: z.array(
-    z.object({
-      content: z.string(),
-      label: z.string().optional(),
-      role: z.string().optional(),
-    }),
-  ),
-  diagram: z.string().optional(),
-  assumptions: z.array(z.string()),
-  properties: z.array(z.string()),
-  proof: z
-    .object({
-      steps: z.array(
-        z.object({
-          role: z.string(),
-          content: z.string(),
-          uses: z.array(z.string()),
-        }),
-      ),
-    })
-    .optional(),
-  source: z
-    .object({
-      citation: z.string().optional(),
-      chapter: z.string().optional(),
-      ref: z.string().optional(),
-      references: z.array(z.string()),
-    })
-    .optional(),
-  tags: z.array(z.string()),
-  priority: z.string(),
-  // Derived at build:
+/** Source concept + the fields the build derives. */
+export const ArtifactNodeSchema = SourceConceptSchema.extend({
   degree: z.number().int().nonnegative(),
   depth: z.number().int().nonnegative(),
 });

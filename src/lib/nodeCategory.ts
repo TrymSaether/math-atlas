@@ -1,15 +1,3 @@
-import {
-  CircleIcon,
-  DiamondIcon,
-  CompassToolIcon,
-  CubeIcon,
-  PencilLineIcon,
-  ScrollIcon,
-  FlaskIcon,
-  TagIcon,
-  type Icon,
-} from "@phosphor-icons/react";
-
 /**
  * The raw data carries 20+ `kind` values with a long singleton tail. For visual
  * encoding we collapse them into seven canonical categories. The precise kind is
@@ -18,6 +6,11 @@ import {
  *
  * Color is reserved for *domains* — categories are distinguished by glyph/shape,
  * never hue.
+ *
+ * This module is intentionally framework-free (no React, no icon imports) so the
+ * Node tooling — the `atlas` CLI in scripts/atlas — can reuse the same kind→
+ * category mapping. The category → Phosphor icon mapping lives next door in
+ * ./nodeCategoryIcons.
  */
 export type NodeCategory =
   | "definition"
@@ -76,7 +69,6 @@ export type RailTexture = "solid" | "dashed" | "dotted";
 export interface CategoryMeta {
   id: NodeCategory;
   label: string;
-  icon: Icon;
   rail: RailTexture;
   glyphFilled: boolean;
 }
@@ -85,56 +77,48 @@ export const CATEGORY_META: Record<NodeCategory, CategoryMeta> = {
   definition: {
     id: "definition",
     label: "Definition",
-    icon: CircleIcon,
     rail: "solid",
     glyphFilled: true,
   },
   structure: {
     id: "structure",
     label: "Structure",
-    icon: CubeIcon,
     rail: "solid",
     glyphFilled: true,
   },
   theorem: {
     id: "theorem",
     label: "Theorem",
-    icon: DiamondIcon,
     rail: "solid",
     glyphFilled: true,
   },
   property: {
     id: "property",
     label: "Property",
-    icon: TagIcon,
     rail: "solid",
     glyphFilled: true,
   },
   construction: {
     id: "construction",
     label: "Construction",
-    icon: CompassToolIcon,
     rail: "solid",
     glyphFilled: true,
   },
   example: {
     id: "example",
     label: "Example",
-    icon: FlaskIcon,
     rail: "dashed",
     glyphFilled: false,
   },
   proof: {
     id: "proof",
     label: "Proof",
-    icon: ScrollIcon,
     rail: "dotted",
     glyphFilled: false,
   },
   exercise: {
     id: "exercise",
     label: "Exercise",
-    icon: PencilLineIcon,
     rail: "dotted",
     glyphFilled: false,
   },

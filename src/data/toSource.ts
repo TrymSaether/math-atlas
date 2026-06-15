@@ -8,7 +8,7 @@
  * touch (edge `notes`, dropped at build, are author-only and never surfaced).
  */
 import type { GraphData } from "../types";
-import type { SourceConcept, SourceEdge, SourceGraph } from "./sourceSchema";
+import type { SourceEdge, SourceGraph } from "./sourceSchema";
 
 const TODAY = (): string => new Date().toISOString().slice(0, 10);
 
@@ -23,13 +23,10 @@ export function graphDataToSource(data: GraphData): SourceGraph {
     diagram: n.diagram,
     assumptions: n.assumptions,
     properties: n.properties,
-    // The artifact loosens proof-step `role` to string; it came from a valid
-    // build, so the enum values are intact.
-    proof: n.proof as SourceConcept["proof"],
+    proof: n.proof,
     source: n.source,
     tags: n.tags,
-    priority: (n.priority ||
-      "standard") as SourceGraph["concepts"][number]["priority"],
+    priority: n.priority,
   }));
 
   const edges: SourceEdge[] = data.edges.map((e) => {
@@ -54,7 +51,7 @@ export function graphDataToSource(data: GraphData): SourceGraph {
       id: d.id,
       label: d.label,
       order: d.order,
-      palette: d.palette as SourceGraph["domains"][number]["palette"],
+      palette: d.palette,
     })),
     concepts,
     edges,

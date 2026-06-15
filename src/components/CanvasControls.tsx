@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import {
-  Check,
   Crosshair,
   Stack,
   MapTrifold,
@@ -26,6 +25,7 @@ import { MathText } from "../lib/katex";
 import { cn } from "../lib/utils";
 import { getDomainTone } from "../lib/colors";
 import { CATEGORY_META, kindsByCategory } from "../lib/nodeCategory";
+import { CATEGORY_ICON } from "../lib/nodeCategoryIcons";
 import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
 import { Pill, DockButton } from "./chrome/Pill";
 import { Button } from "./chrome/Button";
@@ -1026,7 +1026,7 @@ function MapPanel({
             <div className="flex flex-wrap gap-1.5">
               {kindsByCategory(map.kinds).map(({ category, kinds: groupKinds }) => {
                 const meta = CATEGORY_META[category];
-                const Icon = meta.icon;
+                const Icon = CATEGORY_ICON[category];
                 const active = groupKinds.every((k) => kinds.has(k));
                 return (
                   <button

@@ -5,8 +5,9 @@
  * never in the browser. Edges are the only relationship store; direction and
  * dependency-class are implied by `relation` (see ./relations). No presentation,
  * workflow, or derived fields are permitted — `.strict()` makes unknown/typo
- * keys a hard build failure. Concept `content` is the intentional exception:
- * authored maps may carry extra content facets, and read surfaces render them.
+ * keys a hard build failure. Concept `content` is `.strict()` too: every facet
+ * is an explicit field, so a misspelled key fails the build instead of being
+ * silently carried. Add a new facet to ContentSchema the day a map needs it.
  */
 import { z } from "zod";
 import { DOMAIN_PALETTE_KEYS } from "../lib/palette";
@@ -68,7 +69,7 @@ const ContentSchema = z
     gloss: Prose.optional(),
     notation: z.array(Tex).default([]),
   })
-  .catchall(z.unknown());
+  .strict();
 
 const ExampleSchema = z
   .object({
