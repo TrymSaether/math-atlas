@@ -48,7 +48,5 @@ export function fuzzySearch<T>(
     for (const k of keys(item)) best = Math.max(best, fuzzyScore(query, k));
     return { item, score: best, matched: best >= 0 };
   });
-  return hits
-    .filter((h) => h.matched)
-    .sort((a, b) => b.score - a.score);
+  return hits.filter((h) => h.matched).sort((a, b) => b.score - a.score);
 }

@@ -61,22 +61,17 @@ const nodeType = (n: MathNode) => (n as unknown as { type: string }).type;
 /** A numeric literal, including a signed one like `-1` (unary-minus of a const). */
 const isNumericLiteral = (n: MathNode): boolean => {
   const t = nodeType(n);
-  if (t === "ConstantNode")
-    return typeof (n as unknown as { value: unknown }).value === "number";
+  if (t === "ConstantNode") return typeof (n as unknown as { value: unknown }).value === "number";
   if (t === "OperatorNode") {
     const o = n as unknown as { fn: string; args: MathNode[] };
-    if (
-      (o.fn === "unaryMinus" || o.fn === "unaryPlus") &&
-      o.args.length === 1
-    ) {
+    if ((o.fn === "unaryMinus" || o.fn === "unaryPlus") && o.args.length === 1) {
       return isNumericLiteral(o.args[0]);
     }
   }
   return false;
 };
 const isArray2 = (n: MathNode): n is MathNode & { items: MathNode[] } =>
-  nodeType(n) === "ArrayNode" &&
-  (n as unknown as { items: MathNode[] }).items.length === 2;
+  nodeType(n) === "ArrayNode" && (n as unknown as { items: MathNode[] }).items.length === 2;
 
 /**
  * Shallow pass: identify which defined names are functions vs scalars/points,
@@ -91,8 +86,7 @@ function collectNameKinds(sources: string[]): { multNames: Set<string> } {
       const node = parseSource(src);
       const type = nodeType(node);
       if (type === "AssignmentNode") {
-        const name = (node as unknown as { object: { name: string } }).object
-          .name;
+        const name = (node as unknown as { object: { name: string } }).object.name;
         if (name !== "y") multNames.add(name);
       }
       // FunctionAssignmentNode names are callable — deliberately excluded.
@@ -103,11 +97,7 @@ function collectNameKinds(sources: string[]): { multNames: Set<string> } {
   return { multNames };
 }
 
-function parseRow(
-  source: string,
-  id: string,
-  multNames: Set<string>,
-): ParsedRow {
+function parseRow(source: string, id: string, multNames: Set<string>): ParsedRow {
   const src = source.trim();
   if (!src) return { id, kind: "blank", deps: [] };
 
@@ -227,22 +217,16 @@ function texForName(name: string): string {
 function texForValue(v: Value | undefined): string {
   if (v === undefined) return "";
   if (isNum(v)) return formatValue(v).replace(/-/g, "{-}");
-  if (isVec(v))
-    return String.raw`\left(${v.map((x) => texForValue(x)).join(", ")}\right)`;
+  if (isVec(v)) return String.raw`\left(${v.map((x) => texForValue(x)).join(", ")}\right)`;
   return String(v);
 }
 
-function substituteScalars(
-  node: MathNode,
-  scope: Scope,
-  bound: Set<string>,
-): MathNode {
+function substituteScalars(node: MathNode, scope: Scope, bound: Set<string>): MathNode {
   const substituted = node.transform((n) => {
     if (nodeType(n) !== "SymbolNode") return n;
     const name = (n as unknown as { name: string }).name;
     const value = scope[name];
-    if (bound.has(name) || typeof value !== "number" || !Number.isFinite(value))
-      return n;
+    if (bound.has(name) || typeof value !== "number" || !Number.isFinite(value)) return n;
     return math.parse(formatValue(value));
   });
 
@@ -253,21 +237,12 @@ function substituteScalars(
   }
 }
 
-function texForExpression(
-  node: MathNode,
-  scope: Scope,
-  bound: Set<string> = new Set(),
-): string {
+function texForExpression(node: MathNode, scope: Scope, bound: Set<string> = new Set()): string {
   return substituteScalars(node, scope, bound).toTex({ parenthesis: "auto" });
 }
 
-function evaluatedTexFor(
-  p: ParsedRow,
-  computed: Computed,
-  scope: Scope,
-): string | undefined {
-  if (computed.error || computed.kind === "blank" || computed.kind === "invalid")
-    return undefined;
+function evaluatedTexFor(p: ParsedRow, computed: Computed, scope: Scope): string | undefined {
+  if (computed.error || computed.kind === "blank" || computed.kind === "invalid") return undefined;
 
   if (p.kind === "function" && p.expr) {
     const params = p.params ?? ["x"];
@@ -307,13 +282,7 @@ const KIND_LABEL: Record<ObjKind, string> = {
   invalid: "error",
 };
 
-const GEOM_KINDS = new Set<ObjKind>([
-  "segment",
-  "line",
-  "circle",
-  "polygon",
-  "vector",
-]);
+const GEOM_KINDS = new Set<ObjKind>(["segment", "line", "circle", "polygon", "vector"]);
 
 /** Build a drawable shape from a geometry constructor and its evaluated args. */
 function buildGeom(ctor: string, vals: Value[]): GeomShape {
@@ -335,10 +304,7 @@ function buildGeom(ctor: string, vals: Value[]): GeomShape {
       const c = pt(vals[0], "Circle");
       const r = isNum(vals[1])
         ? vals[1]
-        : Math.hypot(
-            pt(vals[1], "Circle")[0] - c[0],
-            pt(vals[1], "Circle")[1] - c[1],
-          );
+        : Math.hypot(pt(vals[1], "Circle")[0] - c[0], pt(vals[1], "Circle")[1] - c[1]);
       return { kind: "circle", c, r };
     }
     case "Polygon":
@@ -372,8 +338,7 @@ export function compile(ws: Workspace): CompiledWorkspace {
 
   const evalRow = (p: ParsedRow): Computed => {
     if (p.kind === "blank") return { id: p.id, kind: "blank", deps: [] };
-    if (p.kind === "invalid")
-      return { id: p.id, kind: "invalid", deps: [], error: p.error };
+    if (p.kind === "invalid") return { id: p.id, kind: "invalid", deps: [], error: p.error };
 
     const base: Computed = {
       id: p.id,
@@ -448,10 +413,7 @@ export function compile(ws: Workspace): CompiledWorkspace {
 }
 
 /** Kahn topological sort; rows left in a cycle are appended so they self-report. */
-function topoOrder(
-  parsed: ParsedRow[],
-  definer: Record<string, string>,
-): string[] {
+function topoOrder(parsed: ParsedRow[], definer: Record<string, string>): string[] {
   const ids = parsed.map((p) => p.id);
   const indeg: Record<string, number> = {};
   const adj: Record<string, string[]> = {};

@@ -17,8 +17,15 @@ import { bold, dim, cyan, green, gray } from "../utils/color";
 import { MARK, kindGlyph } from "../utils/glyphs";
 
 const KINDS = [
-  "theorem", "definition", "proof", "construction",
-  "example", "exercise", "lemma", "corollary", "domain",
+  "theorem",
+  "definition",
+  "proof",
+  "construction",
+  "example",
+  "exercise",
+  "lemma",
+  "corollary",
+  "domain",
 ];
 
 async function prompt(question: string, fallback?: string): Promise<string> {
@@ -44,7 +51,9 @@ function writeSource(f: SourceFile, json: unknown, dryRun: boolean): void {
   const text = JSON.stringify(json, null, 2) + "\n";
   if (dryRun) {
     process.stdout.write("\n" + dim("── dry run: would write ──") + "\n");
-    process.stdout.write(text.slice(0, 1200) + (text.length > 1200 ? dim("\n… (truncated)\n") : "\n"));
+    process.stdout.write(
+      text.slice(0, 1200) + (text.length > 1200 ? dim("\n… (truncated)\n") : "\n"),
+    );
   } else {
     writeFileSync(f.path, text);
     process.stdout.write("\n" + green(`${MARK.ok} wrote ${f.fileName}`) + "\n");
@@ -77,9 +86,7 @@ async function run(ctx: Ctx): Promise<number> {
     updated?: string;
   };
 
-  process.stdout.write(
-    "\n" + bold(`atlas new ${kind}`) + dim(`  →  ${mapId}`) + "\n\n",
-  );
+  process.stdout.write("\n" + bold(`atlas new ${kind}`) + dim(`  →  ${mapId}`) + "\n\n");
 
   if (kind === "domain") {
     const label = stringFlag(ctx, "label") ?? (await prompt("domain label?"));

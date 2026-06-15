@@ -96,7 +96,10 @@ function groupRows(rows: Row[], byId: Record<string, Computed | undefined>): Row
     { id: "objects", title: "Objects", rows: [] },
     { id: "issues", title: "Needs attention", rows: [] },
   ];
-  const bySection = Object.fromEntries(sections.map((section) => [section.id, section])) as Record<SectionId, RowSection>;
+  const bySection = Object.fromEntries(sections.map((section) => [section.id, section])) as Record<
+    SectionId,
+    RowSection
+  >;
 
   rows.forEach((row, i) => {
     const computed = byId[row.id];
@@ -107,7 +110,8 @@ function groupRows(rows: Row[], byId: Record<string, Computed | undefined>): Row
     }
     const rowType = rowTypeFor(computed);
     if (rowType === "slider") bySection.inputs.rows.push(entry);
-    else if (rowType === "function" || rowType === "value" || rowType === "blank") bySection.definitions.rows.push(entry);
+    else if (rowType === "function" || rowType === "value" || rowType === "blank")
+      bySection.definitions.rows.push(entry);
     else bySection.objects.rows.push(entry);
   });
 
@@ -169,11 +173,13 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
         </div>
 
         {/* Color swatch */}
-        <button type="button" onClick={cycleColor} title="Cycle color" className="sandbox-color-button flex w-5 items-center justify-center">
-          <span
-            className="sandbox-color-swatch"
-            style={{ background: row.color }}
-          />
+        <button
+          type="button"
+          onClick={cycleColor}
+          title="Cycle color"
+          className="sandbox-color-button flex w-5 items-center justify-center"
+        >
+          <span className="sandbox-color-swatch" style={{ background: row.color }} />
         </button>
 
         {/* Editor + readout */}
@@ -208,7 +214,12 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
           ) : null}
 
           {isParam && (
-            <ParamSlider row={row} value={asNumber(computed?.value)} onChange={(v) => setScalarValue(row.id, v)} onConfig={(s) => setSlider(row.id, s)} />
+            <ParamSlider
+              row={row}
+              value={asNumber(computed?.value)}
+              onChange={(v) => setScalarValue(row.id, v)}
+              onConfig={(s) => setSlider(row.id, s)}
+            />
           )}
 
           {selected && <RowMeta row={row} computed={computed} status={status} />}
@@ -216,7 +227,11 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
 
         {/* Controls */}
         <div className="sandbox-row-controls flex w-6 flex-col items-center justify-center gap-0.5">
-          <button type="button" onClick={() => toggleVisible(row.id)} title={row.visible ? "Hide" : "Show"}>
+          <button
+            type="button"
+            onClick={() => toggleVisible(row.id)}
+            title={row.visible ? "Hide" : "Show"}
+          >
             {row.visible ? <Eye size={14} /> : <EyeSlash size={14} />}
           </button>
           <button type="button" onClick={() => removeRow(row.id)} title="Delete">
@@ -250,9 +265,15 @@ function ParamSlider({
 
   return (
     <div className="sandbox-param-slider mt-1 flex items-center gap-1.5" style={sliderStyle}>
-      <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
+      <NumBox
+        label="Minimum value"
+        value={slider.min}
+        onChange={(min) => onConfig({ ...slider, min })}
+      />
       <div className="sandbox-slider-track min-w-0 flex-1">
-        {dragging && <span className="sandbox-slider-bubble font-mono tabular-nums">{formatValue(value)}</span>}
+        {dragging && (
+          <span className="sandbox-slider-bubble font-mono tabular-nums">{formatValue(value)}</span>
+        )}
         <input
           type="range"
           min={slider.min}
@@ -267,12 +288,24 @@ function ParamSlider({
           className="ws-slider w-full"
         />
       </div>
-      <NumBox label="Maximum value" value={slider.max} onChange={(max) => onConfig({ ...slider, max })} />
+      <NumBox
+        label="Maximum value"
+        value={slider.max}
+        onChange={(max) => onConfig({ ...slider, max })}
+      />
     </div>
   );
 }
 
-function NumBox({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
+function NumBox({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+}) {
   return (
     <input
       aria-label={label}

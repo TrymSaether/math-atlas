@@ -20,10 +20,7 @@ function mapStats(map: CliMap): Record<string, number | string> {
   const totalDeg = map.nodes.reduce((s, x) => s + x.degree, 0);
   const avgDeg = n ? totalDeg / n / 1 : 0;
   const avgPrereq = n
-    ? map.nodes.reduce(
-        (s, x) => s + (map.prereqsOf.get(x.id)?.length ?? 0),
-        0,
-      ) / n
+    ? map.nodes.reduce((s, x) => s + (map.prereqsOf.get(x.id)?.length ?? 0), 0) / n
     : 0;
   const maxDepth = map.nodes.reduce((m, x) => Math.max(m, x.depth), 0);
   const { hasCycle } = topoSort(map);
@@ -39,9 +36,7 @@ function mapStats(map: CliMap): Record<string, number | string> {
 
 function renderMap(map: CliMap): void {
   const s = mapStats(map);
-  process.stdout.write(
-    "\n" + bold(cyan(map.label)) + dim(`  ${map.id}  v${map.version}`) + "\n",
-  );
+  process.stdout.write("\n" + bold(cyan(map.label)) + dim(`  ${map.id}  v${map.version}`) + "\n");
 
   // Headline numbers.
   process.stdout.write(
@@ -58,9 +53,7 @@ function renderMap(map: CliMap): void {
 
   // Per-domain.
   const maxDomain = Math.max(
-    ...map.domainsByOrder.map(
-      (d) => map.nodes.filter((n) => n.domain === d.id).length,
-    ),
+    ...map.domainsByOrder.map((d) => map.nodes.filter((n) => n.domain === d.id).length),
   );
   process.stdout.write("\n  " + bold("By domain") + "\n");
   for (const d of map.domainsByOrder) {
@@ -82,29 +75,18 @@ function renderMap(map: CliMap): void {
     .map(([k, c]) => [`${kindGlyph(k)} ${k}`, padStart(String(c), 4)]);
   process.stdout.write("\n  " + bold("By kind") + "\n");
   process.stdout.write(
-    indent(
-      table(
-        [{ header: "kind" }, { header: "count", align: "right" }],
-        kindRows,
-      ),
-    ) + "\n",
+    indent(table([{ header: "kind" }, { header: "count", align: "right" }], kindRows)) + "\n",
   );
 
   // Per-relation.
   const rels = new Map<string, number>();
-  for (const e of map.edges)
-    rels.set(e.relation, (rels.get(e.relation) ?? 0) + 1);
+  for (const e of map.edges) rels.set(e.relation, (rels.get(e.relation) ?? 0) + 1);
   const relRows = [...rels.entries()]
     .sort((a, b) => b[1] - a[1])
     .map(([r, c]) => [r, padStart(String(c), 4)]);
   process.stdout.write("\n  " + bold("By relation") + "\n");
   process.stdout.write(
-    indent(
-      table(
-        [{ header: "relation" }, { header: "count", align: "right" }],
-        relRows,
-      ),
-    ) + "\n",
+    indent(table([{ header: "relation" }, { header: "count", align: "right" }], relRows)) + "\n",
   );
 }
 
@@ -122,9 +104,7 @@ function run(ctx: Ctx): number {
     process.stdout.write(JSON.stringify(payload, null, 2) + "\n");
     return 0;
   }
-  process.stdout.write(
-    "\n" + bold("atlas stats") + gray(`  ·  ${maps.length} map(s)`) + "\n",
-  );
+  process.stdout.write("\n" + bold("atlas stats") + gray(`  ·  ${maps.length} map(s)`) + "\n");
   for (const m of maps) renderMap(m);
   process.stdout.write("\n");
   return 0;

@@ -13,17 +13,8 @@ import { SourceGraphSchema } from "../../../src/data/sourceSchema";
 import { buildArtifact } from "../../../src/data/buildArtifact";
 import type { Command } from "../core/command";
 import { type Ctx } from "../core/context";
-import {
-  listSourceFiles,
-  filterByMap,
-  type SourceFile,
-} from "../core/loadSources";
-import {
-  loadCache,
-  saveCache,
-  hashSource,
-  type CacheState,
-} from "../core/cache";
+import { listSourceFiles, filterByMap, type SourceFile } from "../core/loadSources";
+import { loadCache, saveCache, hashSource, type CacheState } from "../core/cache";
 import { bold, dim, cyan, green, red, yellow, gray } from "../utils/color";
 import { MARK } from "../utils/glyphs";
 
@@ -116,9 +107,7 @@ function buildAll(ctx: Ctx, label = "atlas build"): number {
   const files = filterByMap(listSourceFiles(ctx.ws), ctx.mapFilter);
   const cache = loadCache(ctx.ws);
 
-  process.stdout.write(
-    "\n" + bold(label) + dim(check ? "  ·  check only" : "") + "\n",
-  );
+  process.stdout.write("\n" + bold(label) + dim(check ? "  ·  check only" : "") + "\n");
   const results = files.map((f) => {
     const r = buildOne(f, ctx.ws, cache, { check, force });
     printResult(r);
@@ -142,9 +131,7 @@ function run(ctx: Ctx): Promise<number> | number {
 
   // Watch mode: initial build, then rebuild on any source change (debounced).
   buildAll(ctx, "atlas build --watch");
-  process.stdout.write(
-    yellow(`${MARK.info} watching ${ctx.ws.mapsDir} …`) + "\n",
-  );
+  process.stdout.write(yellow(`${MARK.info} watching ${ctx.ws.mapsDir} …`) + "\n");
   let timer: NodeJS.Timeout | undefined;
   watch(ctx.ws.mapsDir, (_event, filename) => {
     if (!filename || !filename.endsWith(".source.json")) return;

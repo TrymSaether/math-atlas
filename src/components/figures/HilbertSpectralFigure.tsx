@@ -40,18 +40,8 @@ function SpectralBars() {
 
   return (
     <figure className="m-0">
-      <FigureFrame
-        xDomain={[0.25, 9.75]}
-        yDomain={[-0.2, 1.15]}
-        height={190}
-        grid={false}
-      >
-        <Line.Segment
-          point1={[0.5, 0]}
-          point2={[9.5, 0]}
-          color={DIA.muted}
-          weight={STROKE.guide}
-        />
+      <FigureFrame xDomain={[0.25, 9.75]} yDomain={[-0.2, 1.15]} height={190} grid={false}>
+        <Line.Segment point1={[0.5, 0]} point2={[9.5, 0]} color={DIA.muted} weight={STROKE.guide} />
         {values.map((lambda, i) => {
           const k = i + 1;
           return (
@@ -85,10 +75,7 @@ function SpectralBars() {
         label={`r = ${decay.toFixed(2)}`}
         ariaLabel="Eigenvalue decay ratio"
       />
-      <figcaption
-        className="mt-1.5 text-ui-meta"
-        style={{ color: "var(--fg-3)" }}
-      >
+      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         <MathText text="A compact self-adjoint model diagonalizes into orthonormal eigenvectors; nonzero eigenvalues can only accumulate at 0." />
       </figcaption>
     </figure>
@@ -105,44 +92,18 @@ function ProjectionModel() {
 
   return (
     <figure className="m-0">
-      <FigureFrame
-        xDomain={[-1.75, 1.75]}
-        yDomain={[-1.25, 1.45]}
-        height={190}
-        grid
-      >
+      <FigureFrame xDomain={[-1.75, 1.75]} yDomain={[-1.25, 1.45]} height={190} grid>
         <Line.Segment
           point1={lineStart}
           point2={lineEnd}
           color={DIA.codomain}
           weight={STROKE.curve}
         />
-        <Line.Segment
-          point1={p}
-          point2={x}
-          color={DIA.alert}
-          weight={STROKE.mark}
-          style="dashed"
-        />
-        <Vector
-          tail={[0, 0]}
-          tip={x}
-          color={DIA.accent}
-          weight={STROKE.curve}
-        />
+        <Line.Segment point1={p} point2={x} color={DIA.alert} weight={STROKE.mark} style="dashed" />
+        <Vector tail={[0, 0]} tip={x} color={DIA.accent} weight={STROKE.curve} />
         <Vector tail={[0, 0]} tip={p} color={DIA.ok} weight={STROKE.curve} />
-        <Point
-          x={x[0]}
-          y={x[1]}
-          color={DIA.accent}
-          svgCircleProps={{ r: DOT.hub }}
-        />
-        <Point
-          x={p[0]}
-          y={p[1]}
-          color={DIA.ok}
-          svgCircleProps={{ r: DOT.hub }}
-        />
+        <Point x={x[0]} y={x[1]} color={DIA.accent} svgCircleProps={{ r: DOT.hub }} />
+        <Point x={p[0]} y={p[1]} color={DIA.ok} svgCircleProps={{ r: DOT.hub }} />
         <LaTeX at={[x[0] + 0.08, x[1] + 0.09]} tex={String.raw`x`} color={DIA.accent} />
         <LaTeX at={[p[0] + 0.08, p[1] - 0.13]} tex={String.raw`Px`} color={DIA.ok} />
         <LaTeX at={[-1.43, lineStart[1] + 0.16]} tex={String.raw`C`} color={DIA.codomain} />
@@ -156,10 +117,7 @@ function ProjectionModel() {
         label={`theta = ${degrees}^\\circ`}
         ariaLabel="Projection subspace angle"
       />
-      <figcaption
-        className="mt-1.5 text-ui-meta"
-        style={{ color: "var(--fg-3)" }}
-      >
+      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         <MathText text="The nearest point $Px$ is characterized by an error vector orthogonal to the closed convex set or subspace." />
       </figcaption>
     </figure>

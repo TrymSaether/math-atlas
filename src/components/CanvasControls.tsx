@@ -197,17 +197,12 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
 
       {/* Fit view */}
       <Pill orientation="vertical" className="canvas-dock">
-        <DockButton
-          label="Fit view"
-          onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}
-        >
+        <DockButton label="Fit view" onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}>
           <CornersOut className="h-[17px] w-[17px]" weight="regular" />
         </DockButton>
       </Pill>
 
-      {mapPanelOpen && panelPosition && (
-        <MapPanel panelRef={panelRef} position={panelPosition} />
-      )}
+      {mapPanelOpen && panelPosition && <MapPanel panelRef={panelRef} position={panelPosition} />}
       {directionsOpen && directionsPosition && (
         <DirectionsPanel
           panelRef={directionsRef}
@@ -481,9 +476,7 @@ function RouteSequence({
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between gap-3 px-1">
         <div className="min-w-0 text-ui-meta tabular-nums text-fg-3">
-          <span className="font-semibold text-fg-1">
-            {isPrereq ? prereqCount : ordered.length}
-          </span>{" "}
+          <span className="font-semibold text-fg-1">{isPrereq ? prereqCount : ordered.length}</span>{" "}
           {isPrereq
             ? `prerequisite${prereqCount === 1 ? "" : "s"}`
             : `concept${ordered.length === 1 ? "" : "s"}`}
@@ -657,12 +650,7 @@ function RouteSearchField({
           autoComplete="off"
           spellCheck={false}
         />
-        {selected && (
-          <span
-            className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-            aria-hidden
-          />
-        )}
+        {selected && <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />}
         {value && (
           <button
             type="button"
@@ -689,9 +677,7 @@ function RouteSearchField({
                 <span className="block truncate text-ui-meta font-semibold text-fg-1">
                   {node.label}
                 </span>
-                <span className="block truncate text-ui-hint text-fg-3">
-                  {node.kind}
-                </span>
+                <span className="block truncate text-ui-hint text-fg-3">{node.kind}</span>
               </span>
             </button>
           ))}
@@ -748,7 +734,15 @@ function DepthPicker({ value, onChange }: { value: number; onChange: (value: num
 /* ---- Shared controls ----------------------------------------------- */
 
 /** iOS-style switch used for layer toggles. */
-function Switch({ checked, onClick, label }: { checked: boolean; onClick: () => void; label: string }) {
+function Switch({
+  checked,
+  onClick,
+  label,
+}: {
+  checked: boolean;
+  onClick: () => void;
+  label: string;
+}) {
   return (
     <button
       type="button"
@@ -998,12 +992,19 @@ function MapPanel({
                     )}
                     // Active domain chips carry the data-derived domain tone, which
                     // has no static utility equivalent.
-                    style={active ? { background: tone.tint, borderColor: tone.border, color: tone.text } : undefined}
+                    style={
+                      active
+                        ? { background: tone.tint, borderColor: tone.border, color: tone.text }
+                        : undefined
+                    }
                   >
                     {glyphId ? (
                       <DomainGlyph id={glyphId} size={12} />
                     ) : (
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "currentColor" }} />
+                      <span
+                        className="h-1.5 w-1.5 shrink-0 rounded-full"
+                        style={{ background: "currentColor" }}
+                      />
                     )}
                     {d.label}
                   </button>
@@ -1031,7 +1032,9 @@ function MapPanel({
                 return (
                   <button
                     key={category}
-                    onClick={() => groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))}
+                    onClick={() =>
+                      groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))
+                    }
                     className={cn(
                       "flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition-colors",
                       active

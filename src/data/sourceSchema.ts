@@ -13,9 +13,7 @@ import { z } from "zod";
 import { DOMAIN_PALETTE_KEYS } from "../lib/palette";
 import { AUTHORABLE_RELATIONS, RELATIONS } from "./relations";
 
-const Slug = z
-  .string()
-  .regex(/^[a-z0-9_]+$/, "ids must be lower_snake_case slugs");
+const Slug = z.string().regex(/^[a-z0-9_]+$/, "ids must be lower_snake_case slugs");
 const Tex = z.string().min(1);
 const Prose = z.string().min(1);
 
@@ -141,9 +139,7 @@ export const SourceGraphSchema = z
     label: z.string().min(1),
     field: z.string().min(1),
     version: z.number().int().positive(),
-    updated: z
-      .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "updated must be ISO date"),
+    updated: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "updated must be ISO date"),
     domains: z.array(SourceDomainSchema).min(1),
     concepts: z.array(SourceConceptSchema).min(1),
     edges: z.array(SourceEdgeSchema).default([]),

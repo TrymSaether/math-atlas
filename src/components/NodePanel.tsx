@@ -106,8 +106,7 @@ function PanelContent({
   );
   const peerIdx = peers.findIndex((n) => n.id === node.id);
   const prev = peerIdx > 0 ? peers[peerIdx - 1] : null;
-  const next =
-    peerIdx >= 0 && peerIdx < peers.length - 1 ? peers[peerIdx + 1] : null;
+  const next = peerIdx >= 0 && peerIdx < peers.length - 1 ? peers[peerIdx + 1] : null;
 
   const hasProof = view.proof.hasProof;
   const hasProperties = view.properties.length > 0;
@@ -133,8 +132,7 @@ function PanelContent({
     ];
     if (hasProperties) t.push({ id: "properties", label: "Properties" });
     if (hasProof) t.push({ id: "proof", label: view.proof.label });
-    if (linkCount > 0)
-      t.push({ id: "links", label: "Links", badge: linkCount });
+    if (linkCount > 0) t.push({ id: "links", label: "Links", badge: linkCount });
     t.push({ id: "source", label: "Source" });
     return t;
   }, [hasProperties, hasProof, view.proof.label, linkCount]);
@@ -163,10 +161,7 @@ function PanelContent({
   return (
     <>
       {/* Sticky header */}
-      <header
-        className="relative shrink-0 px-5 pt-3.5"
-        style={{ background: "var(--surface)" }}
-      >
+      <header className="relative shrink-0 px-5 pt-3.5" style={{ background: "var(--surface)" }}>
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-0.5">
             <IconButton
@@ -184,10 +179,7 @@ function PanelContent({
               <CaretDownIcon className="h-4 w-4" />
             </IconButton>
             {peerIdx >= 0 && (
-              <span
-                className="ml-1.5 font-mono text-ui-meta"
-                style={{ color: "var(--fg-3)" }}
-              >
+              <span className="ml-1.5 font-mono text-ui-meta" style={{ color: "var(--fg-3)" }}>
                 {peerIdx + 1}/{peers.length}
               </span>
             )}
@@ -246,16 +238,10 @@ function PanelContent({
             );
           })}
         </div>
-        <div
-          className="-mx-5 border-b"
-          style={{ borderColor: "var(--border-subtle)" }}
-        />
+        <div className="-mx-5 border-b" style={{ borderColor: "var(--border-subtle)" }} />
       </header>
 
-      <div
-        ref={scrollRef}
-        className="min-h-0 flex-1 overflow-y-auto px-5 py-4"
-      >
+      <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
         {activeTab === "overview" &&
           (bodyEmpty ? (
             <p className="text-ui-sm italic" style={{ color: "var(--fg-3)" }}>
@@ -296,9 +282,7 @@ function PanelContent({
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-ui-xs">
               <dt style={{ color: "var(--fg-3)" }}>Tags</dt>
               <dd style={{ color: "var(--fg-2)" }}>
-                {node.tags.length > 0
-                  ? node.tags.join(", ")
-                  : "No tags recorded."}
+                {node.tags.length > 0 ? node.tags.join(", ") : "No tags recorded."}
               </dd>
               <dt style={{ color: "var(--fg-3)" }}>Domain</dt>
               <dd style={{ color: "var(--fg-2)" }}>{view.domainLabel}</dd>
@@ -306,8 +290,7 @@ function PanelContent({
               <dd style={{ color: "var(--fg-2)" }}>{view.kindLabel}</dd>
               <dt style={{ color: "var(--fg-3)" }}>Map position</dt>
               <dd style={{ color: "var(--fg-2)" }}>
-                {node.topicCluster} · {node.priority || "unranked"} · #
-                {node.number}
+                {node.topicCluster} · {node.priority || "unranked"} · #{node.number}
               </dd>
               {view.compactRef && (
                 <>
@@ -324,10 +307,7 @@ function PanelContent({
               {(node.source?.references ?? []).length > 0 && (
                 <>
                   <dt style={{ color: "var(--fg-3)" }}>Textbook</dt>
-                  <dd
-                    className="flex flex-wrap gap-1"
-                    style={{ color: "var(--fg-2)" }}
-                  >
+                  <dd className="flex flex-wrap gap-1" style={{ color: "var(--fg-2)" }}>
                     {(node.source?.references ?? []).map((r) => (
                       <span
                         key={r}
@@ -360,13 +340,7 @@ function PanelContent({
   );
 }
 
-function PropertiesTab({
-  properties,
-  toneColor,
-}: {
-  properties: string[];
-  toneColor: string;
-}) {
+function PropertiesTab({ properties, toneColor }: { properties: string[]; toneColor: string }) {
   if (properties.length === 0) {
     return (
       <p className="text-ui-sm italic" style={{ color: "var(--fg-3)" }}>
@@ -402,10 +376,7 @@ function PropertiesTab({
                 {title}
               </span>
             )}
-            <div
-              className="min-h-[21px] text-ui-copy"
-              style={{ color: "var(--fg-1)" }}
-            >
+            <div className="min-h-[21px] text-ui-copy" style={{ color: "var(--fg-1)" }}>
               <MathProse text={body} />
             </div>
           </li>

@@ -34,7 +34,10 @@ export function ancestors(adj: Adjacency, id: string): Set<string> {
   while (stack.length) {
     const cur = stack.pop()!;
     for (const { id: nxt } of adj.in.get(cur) ?? []) {
-      if (!seen.has(nxt)) { seen.add(nxt); stack.push(nxt); }
+      if (!seen.has(nxt)) {
+        seen.add(nxt);
+        stack.push(nxt);
+      }
     }
   }
   return seen;
@@ -46,7 +49,10 @@ export function descendants(adj: Adjacency, id: string): Set<string> {
   while (stack.length) {
     const cur = stack.pop()!;
     for (const { id: nxt } of adj.out.get(cur) ?? []) {
-      if (!seen.has(nxt)) { seen.add(nxt); stack.push(nxt); }
+      if (!seen.has(nxt)) {
+        seen.add(nxt);
+        stack.push(nxt);
+      }
     }
   }
   return seen;
@@ -56,7 +62,7 @@ export function descendants(adj: Adjacency, id: string): Set<string> {
 export function topoSortWithCycles(
   nodeIds: Set<string>,
   adj: Adjacency,
-  allNodes: TopoNode[]
+  allNodes: TopoNode[],
 ): TopoSortResult {
   const byId = new Map(allNodes.map((n) => [n.id, n]));
   const components = stronglyConnectedComponents(nodeIds, adj, byId);
@@ -98,14 +104,17 @@ export function topoSortWithCycles(
       indeg.set(nxt, d);
       if (d === 0) {
         let i = 0;
-        while (i < ready.length && cmpComponent(components[ready[i]], components[nxt], byId) < 0) i++;
+        while (i < ready.length && cmpComponent(components[ready[i]], components[nxt], byId) < 0)
+          i++;
         ready.splice(i, 0, nxt);
       }
     }
   }
 
   const nodes = orderedComponents.flatMap((component) =>
-    components[component].map((id) => byId.get(id)).filter((node): node is TopoNode => Boolean(node)),
+    components[component]
+      .map((id) => byId.get(id))
+      .filter((node): node is TopoNode => Boolean(node)),
   );
   const cycles = components
     .filter((component) => isCycleComponent(component, adj))
@@ -117,11 +126,7 @@ export function topoSortWithCycles(
 }
 
 /** Topological sort restricted to the subgraph induced by `nodeIds`. */
-export function topoSort(
-  nodeIds: Set<string>,
-  adj: Adjacency,
-  allNodes: TopoNode[]
-): TopoNode[] {
+export function topoSort(nodeIds: Set<string>, adj: Adjacency, allNodes: TopoNode[]): TopoNode[] {
   return topoSortWithCycles(nodeIds, adj, allNodes).nodes;
 }
 
@@ -182,11 +187,7 @@ function isCycleComponent(component: string[], adj: Adjacency): boolean {
   return (adj.out.get(id) ?? []).some((edge) => edge.id === id);
 }
 
-function cmpComponent(
-  a: string[],
-  b: string[],
-  byId: Map<string, TopoNode>,
-): number {
+function cmpComponent(a: string[], b: string[], byId: Map<string, TopoNode>): number {
   return cmpNum(byId.get(a[0])!, byId.get(b[0])!);
 }
 
@@ -195,11 +196,7 @@ function cmpComponent(
  * (e.g. `LoadedMap.neighborsByNodeId`), or `null` if they are disconnected.
  * Returns the inclusive ordered list of node ids from `from` to `to`.
  */
-export function bfsPath(
-  adj: Map<string, Set<string>>,
-  from: string,
-  to: string,
-): string[] | null {
+export function bfsPath(adj: Map<string, Set<string>>, from: string, to: string): string[] | null {
   if (from === to) return [from];
   const prev = new Map<string, string>();
   const visited = new Set<string>([from]);
@@ -241,7 +238,7 @@ export function buildLearningPath(
   targetId: string,
   edges: TopoEdge[],
   allowed: Set<Relation>,
-  nodes: TopoNode[]
+  nodes: TopoNode[],
 ): TopoNode[] {
   return buildLearningPathReport(targetId, edges, allowed, nodes).nodes;
 }
@@ -250,7 +247,7 @@ export function buildLearningPathReport(
   targetId: string,
   edges: TopoEdge[],
   allowed: Set<Relation>,
-  nodes: TopoNode[]
+  nodes: TopoNode[],
 ): LearningPath {
   const adj = buildAdjacency(edges, allowed);
   const anc = ancestors(adj, targetId);

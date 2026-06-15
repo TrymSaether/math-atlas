@@ -7,12 +7,7 @@
 import type { Command } from "../core/command";
 import { loadMaps, type Ctx } from "../core/context";
 import type { CliMap } from "../core/model";
-import {
-  components,
-  betweenness,
-  roots,
-  detectCycles,
-} from "../graph/algorithms";
+import { components, betweenness, roots, detectCycles } from "../graph/algorithms";
 import { categoryOf } from "../../../src/lib/nodeCategory";
 import { meter } from "../reporters/bars";
 import { table } from "../reporters/table";
@@ -32,9 +27,7 @@ function diagnose(map: CliMap) {
 
   const comps = components(map);
   const cycles = detectCycles(map);
-  const avgDeg = nodes.length
-    ? nodes.reduce((s, n) => s + n.degree, 0) / nodes.length
-    : 0;
+  const avgDeg = nodes.length ? nodes.reduce((s, n) => s + n.degree, 0) / nodes.length : 0;
 
   const oversized = [...nodes]
     .map((n) => ({ id: n.id, p: map.prereqsOf.get(n.id)?.length ?? 0 }))
@@ -67,9 +60,7 @@ function diagnose(map: CliMap) {
 function renderMap(map: CliMap): void {
   const dx = diagnose(map);
   const n = dx.nodes.length;
-  process.stdout.write(
-    "\n" + bold(cyan(map.label)) + dim(`  ${map.id}`) + "\n\n",
-  );
+  process.stdout.write("\n" + bold(cyan(map.label)) + dim(`  ${map.id}`) + "\n\n");
 
   // Coverage meters.
   const meterRow = (label: string, num: number, den: number) =>
@@ -77,8 +68,7 @@ function renderMap(map: CliMap): void {
   process.stdout.write("  " + bold("Coverage") + "\n");
   meterRow(
     "definitions",
-    dx.definitions.filter((d) => has(d, "definition") || has(d, "statement"))
-      .length,
+    dx.definitions.filter((d) => has(d, "definition") || has(d, "statement")).length,
     dx.definitions.length,
   );
   meterRow(
@@ -86,11 +76,7 @@ function renderMap(map: CliMap): void {
     dx.theorems.filter((t) => has(t, "statement") || has(t, "formal")).length,
     dx.theorems.length,
   );
-  meterRow(
-    "theorem proofs",
-    dx.theorems.filter((t) => !!t.proof).length,
-    dx.theorems.length,
-  );
+  meterRow("theorem proofs", dx.theorems.filter((t) => !!t.proof).length, dx.theorems.length);
   meterRow("intuition", dx.nodes.filter((x) => has(x, "intuition")).length, n);
   meterRow("diagrams", dx.nodes.filter((x) => !!x.diagram).length, n);
 
@@ -111,9 +97,7 @@ function renderMap(map: CliMap): void {
       "\n" +
       "  " +
       dim("cycles".padEnd(18)) +
-      (dx.cycles.length
-        ? red(`${MARK.error} ${dx.cycles.length}`)
-        : green(`${MARK.ok} none`)) +
+      (dx.cycles.length ? red(`${MARK.error} ${dx.cycles.length}`) : green(`${MARK.ok} none`)) +
       "\n" +
       "  " +
       dim("foundations".padEnd(18)) +
@@ -153,9 +137,7 @@ function renderMap(map: CliMap): void {
   const thin = [...dx.domainSizes].sort((a, b) => a.n - b.n).slice(0, 3);
   process.stdout.write("\n  " + bold("Thinnest domains") + "\n");
   for (const d of thin)
-    process.stdout.write(
-      "  " + gray(padStart(String(d.n), 4)) + "  " + dim(d.label) + "\n",
-    );
+    process.stdout.write("  " + gray(padStart(String(d.n), 4)) + "  " + dim(d.label) + "\n");
 }
 
 function indent(s: string, pad = "  "): string {
@@ -178,10 +160,7 @@ function run(ctx: Ctx): number {
             components: dx.comps.length,
             cycles: dx.cycles.length,
             avgDegree: Number(dx.avgDeg.toFixed(2)),
-            diagramCoverage: pct(
-              dx.nodes.filter((x) => !!x.diagram).length,
-              dx.nodes.length,
-            ),
+            diagramCoverage: pct(dx.nodes.filter((x) => !!x.diagram).length, dx.nodes.length),
           };
         }),
         null,
@@ -190,9 +169,7 @@ function run(ctx: Ctx): number {
     );
     return 0;
   }
-  process.stdout.write(
-    "\n" + bold("atlas doctor") + gray(`  ·  ${maps.length} map(s)`) + "\n",
-  );
+  process.stdout.write("\n" + bold("atlas doctor") + gray(`  ·  ${maps.length} map(s)`) + "\n");
   for (const m of maps) renderMap(m);
   process.stdout.write("\n");
   return 0;

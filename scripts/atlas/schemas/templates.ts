@@ -4,10 +4,7 @@
  * which content facets are pre-stubbed (a theorem gets statement+proof, a
  * definition gets definition, etc.).
  */
-import type {
-  SourceConcept,
-  SourceDomain,
-} from "../../../src/data/sourceSchema";
+import type { SourceConcept, SourceDomain } from "../../../src/data/sourceSchema";
 
 export type NewKind =
   | "theorem"

@@ -1,9 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  ArrowUpRightIcon,
-  ArrowLeftIcon,
-  MagnifyingGlassIcon,
-} from "@phosphor-icons/react";
+import { ArrowUpRightIcon, ArrowLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import { MAPS, type LoadedMap, type MapId } from "../data";
@@ -45,9 +41,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const entries = useMemo(() => {
     const base = dictionaryEntries(map);
     const seen = new Set(base.map((node) => node.id));
-    const visualOnly = map.data.nodes.filter(
-      (node) => !seen.has(node.id) && hasNodeVisual(node),
-    );
+    const visualOnly = map.data.nodes.filter((node) => !seen.has(node.id) && hasNodeVisual(node));
     return [...base, ...visualOnly];
   }, [map]);
   const facet = useMemo(() => sectionFacet(map, entries), [map, entries]);
@@ -58,8 +52,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
   const domainCounts = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const e of entries)
-      counts.set(e.domain, (counts.get(e.domain) ?? 0) + 1);
+    for (const e of entries) counts.set(e.domain, (counts.get(e.domain) ?? 0) + 1);
     return map.data.domains
       .map((d) => ({ id: d.id, label: d.label, count: counts.get(d.id) ?? 0 }))
       .filter((d) => d.count > 0);
@@ -81,10 +74,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     return items.sort((a, b) => compareEntries(a, b, sortBy, facet));
   }, [entries, facet, kinds, topics, sortBy, query]);
 
-  const groups = useMemo(
-    () => groupEntries(filtered, sortBy, facet),
-    [filtered, sortBy, facet],
-  );
+  const groups = useMemo(() => groupEntries(filtered, sortBy, facet), [filtered, sortBy, facet]);
 
   // Keep a valid selection: honor an external (⌘K) selection, else fall back to
   // the first entry that survives the current filters.
@@ -105,13 +95,9 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   // Reveal the active row in the index list.
   useEffect(() => {
     if (!activeId) return;
-    const el = indexRef.current?.querySelector<HTMLElement>(
-      `#dict-row-${CSS.escape(activeId)}`,
-    );
+    const el = indexRef.current?.querySelector<HTMLElement>(`#dict-row-${CSS.escape(activeId)}`);
     el?.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
       block: "nearest",
     });
   }, [activeId]);
@@ -125,10 +111,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   };
 
   return (
-    <div
-      className="dictionary-view"
-      style={{ background: "var(--bg)", color: "var(--fg-1)" }}
-    >
+    <div className="dictionary-view" style={{ background: "var(--bg)", color: "var(--fg-1)" }}>
       <div className={`dict-md${mobileDetail ? " dict-md--detail" : ""}`}>
         {/* ---- Index column ---- */}
         <aside className="dict-index" aria-label="Dictionary index">
@@ -153,11 +136,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
             </div>
 
             {domainCounts.length > 1 && (
-              <div
-                className="dict-facets"
-                role="group"
-                aria-label="Filter by domain"
-              >
+              <div className="dict-facets" role="group" aria-label="Filter by domain">
                 {domainCounts.map((d) => {
                   const tone = getDomainTone(d.id);
                   const active = topics.has(d.id);
@@ -179,21 +158,14 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                       }
                       title={d.label}
                     >
-                      <span
-                        className="dict-facet-dot"
-                        style={{ background: tone.color }}
-                      />
+                      <span className="dict-facet-dot" style={{ background: tone.color }} />
                       <span className="dict-facet-lab">{d.label}</span>
                       <span className="dict-facet-n">{d.count}</span>
                     </button>
                   );
                 })}
                 {topics.size > 0 && (
-                  <button
-                    type="button"
-                    className="dict-facet-reset"
-                    onClick={resetTopics}
-                  >
+                  <button type="button" className="dict-facet-reset" onClick={resetTopics}>
                     Clear
                   </button>
                 )}
@@ -202,33 +174,21 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
             <div className="dict-controls">
               <span className="dict-controls-lab">Sort</span>
-              <Chip
-                label="A–Z"
-                active={sortBy === "alpha"}
-                onClick={() => setSortBy("alpha")}
-              />
+              <Chip label="A–Z" active={sortBy === "alpha"} onClick={() => setSortBy("alpha")} />
               <Chip
                 label={facet.mode === "chapter" ? "Chapter" : "Domain"}
                 active={sortBy === "section"}
                 onClick={() => setSortBy("section")}
               />
-              <Chip
-                label="Kind"
-                active={sortBy === "kind"}
-                onClick={() => setSortBy("kind")}
-              />
+              <Chip label="Kind" active={sortBy === "kind"} onClick={() => setSortBy("kind")} />
             </div>
           </header>
 
           <div className="dict-rows" ref={indexRef}>
             {entries.length === 0 ? (
-              <p className="dict-empty">
-                No dictionary entries for {meta.label} yet.
-              </p>
+              <p className="dict-empty">No dictionary entries for {meta.label} yet.</p>
             ) : groups.length === 0 ? (
-              <p className="dict-empty">
-                No entries match the current filters.
-              </p>
+              <p className="dict-empty">No entries match the current filters.</p>
             ) : (
               groups.map((group) => (
                 <section key={group.id} className="dict-rowgroup">
@@ -341,12 +301,7 @@ function DetailPane({
         </header>
 
         <div className="dict-doc-body">
-          <ConceptBody
-            view={view}
-            map={map}
-            density="full"
-            onSelect={onPickRelated}
-          />
+          <ConceptBody view={view} map={map} density="full" onSelect={onPickRelated} />
         </div>
 
         <footer className="dict-doc-foot">
@@ -365,22 +320,9 @@ function DetailPane({
   );
 }
 
-function Chip({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
+function Chip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
-    <button
-      type="button"
-      className="dict-chip"
-      aria-pressed={active}
-      onClick={onClick}
-    >
+    <button type="button" className="dict-chip" aria-pressed={active} onClick={onClick}>
       {label}
     </button>
   );
@@ -401,9 +343,7 @@ function compareEntries(
   );
   if (sortBy === "section") {
     const order = facet.values;
-    return (
-      order.indexOf(facet.valueOf(a)) - order.indexOf(facet.valueOf(b)) || alpha
-    );
+    return order.indexOf(facet.valueOf(a)) - order.indexOf(facet.valueOf(b)) || alpha;
   }
   if (sortBy === "kind") {
     return (KIND_ORDER[a.kind] ?? 99) - (KIND_ORDER[b.kind] ?? 99) || alpha;
@@ -415,10 +355,7 @@ function dictionarySortTitle(title: string): string {
   return title
     .trim()
     .replace(/^(\${1,2}|\\\(|\\\[)\s*/, "")
-    .replace(
-      /^\\(?:mathrm|mathbf|mathbb|mathcal|operatorname|text)\{([^{}]+)\}/,
-      "$1",
-    )
+    .replace(/^\\(?:mathrm|mathbf|mathbb|mathcal|operatorname|text)\{([^{}]+)\}/, "$1")
     .replace(/^\\ell\b/, "L")
     .replace(/^\\([A-Za-z]+)\b/, "$1");
 }
@@ -434,11 +371,7 @@ interface Group {
   items: GraphNode[];
 }
 
-function groupEntries(
-  items: GraphNode[],
-  sortBy: DictSortMode,
-  facet: SectionFacet,
-): Group[] {
+function groupEntries(items: GraphNode[], sortBy: DictSortMode, facet: SectionFacet): Group[] {
   const groups: Group[] = [];
   let current: Group | null = null;
   for (const entry of items) {

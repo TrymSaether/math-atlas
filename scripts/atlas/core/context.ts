@@ -34,10 +34,7 @@ export class CliError extends Error {
   }
 }
 
-export function createContext(
-  positionals: string[],
-  flags: Record<string, FlagValue>,
-): Ctx {
+export function createContext(positionals: string[], flags: Record<string, FlagValue>): Ctx {
   return {
     ws: resolveWorkspace(),
     positionals,
@@ -49,21 +46,13 @@ export function createContext(
   };
 }
 
-export function flag(
-  ctx: Ctx,
-  name: string,
-  short?: string,
-): FlagValue | undefined {
+export function flag(ctx: Ctx, name: string, short?: string): FlagValue | undefined {
   if (name in ctx.flags) return ctx.flags[name];
   if (short && short in ctx.flags) return ctx.flags[short];
   return undefined;
 }
 
-export function stringFlag(
-  ctx: Ctx,
-  name: string,
-  short?: string,
-): string | undefined {
+export function stringFlag(ctx: Ctx, name: string, short?: string): string | undefined {
   const v = flag(ctx, name, short);
   return typeof v === "string" ? v : undefined;
 }

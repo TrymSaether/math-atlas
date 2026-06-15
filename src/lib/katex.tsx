@@ -9,7 +9,15 @@ export type MathSegment =
  * Render text with inline TeX delimited by $...$ and display TeX by $$...$$,
  * plus Unicode math passthrough. Robust against unbalanced dollar signs.
  */
-export function MathText({ text, className, asBlock = false }: { text: string; className?: string; asBlock?: boolean }) {
+export function MathText({
+  text,
+  className,
+  asBlock = false,
+}: {
+  text: string;
+  className?: string;
+  asBlock?: boolean;
+}) {
   const html = useMemo(() => renderMathInString(text), [text]);
   const Tag = asBlock ? "div" : "span";
   return (
@@ -22,10 +30,7 @@ export function MathText({ text, className, asBlock = false }: { text: string; c
 }
 
 function escape(s: string) {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 function restoreAllowedInlineHtml(value: string): string {
@@ -49,7 +54,9 @@ function renderTextMarkup(value: string): string {
 function renderProseInString(text: string): string {
   return splitMathSegments(text)
     .map((segment) =>
-      segment.type === "text" ? renderTextMarkup(segment.value) : renderKatex(segment.value, segment.display),
+      segment.type === "text"
+        ? renderTextMarkup(segment.value)
+        : renderKatex(segment.value, segment.display),
     )
     .join("");
 }
@@ -59,7 +66,15 @@ function renderProseInString(text: string): string {
  * (\textbf, \textit/\emph, \text) in the prose between math spans. Used by the
  * dictionary view, whose curated statements mix prose and TeX.
  */
-export function MathProse({ text, className, asBlock = false }: { text: string; className?: string; asBlock?: boolean }) {
+export function MathProse({
+  text,
+  className,
+  asBlock = false,
+}: {
+  text: string;
+  className?: string;
+  asBlock?: boolean;
+}) {
   const html = useMemo(() => renderProseInString(text), [text]);
   const Tag = asBlock ? "div" : "span";
   return <Tag className={className} dangerouslySetInnerHTML={{ __html: html }} />;
@@ -164,6 +179,8 @@ function findMathEnd(text: string, from: number, close: string): number {
 
 export function renderMathInString(text: string): string {
   return splitMathSegments(text)
-    .map((segment) => (segment.type === "text" ? escape(segment.value) : renderKatex(segment.value, segment.display)))
+    .map((segment) =>
+      segment.type === "text" ? escape(segment.value) : renderKatex(segment.value, segment.display),
+    )
     .join("");
 }

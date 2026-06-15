@@ -30,8 +30,7 @@ export function scanTex(map: CliMap): TexField[] {
         out.push({ conceptId: c.id, field: `content.${k}`, tex: v });
     }
     (content.notation ?? []).forEach((n, i) => {
-      if (typeof n === "string")
-        out.push({ conceptId: c.id, field: `notation[${i}]`, tex: n });
+      if (typeof n === "string") out.push({ conceptId: c.id, field: `notation[${i}]`, tex: n });
     });
     (c.examples ?? []).forEach((e, i) => {
       if (e.content.includes("$"))
@@ -57,8 +56,7 @@ export interface MathSegment {
 /** Extract `$…$`, `$$…$$`, `\(…\)`, `\[…\]` math segments from a field. */
 export function extractMath(text: string): MathSegment[] {
   const segs: MathSegment[] = [];
-  const re =
-    /\$\$([\s\S]+?)\$\$|\$([^$]+?)\$|\\\[([\s\S]+?)\\\]|\\\(([\s\S]+?)\\\)/g;
+  const re = /\$\$([\s\S]+?)\$\$|\$([^$]+?)\$|\\\[([\s\S]+?)\\\]|\\\(([\s\S]+?)\\\)/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(text)) !== null) {
     if (m[1] !== undefined) segs.push({ math: m[1], display: true });

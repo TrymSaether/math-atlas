@@ -10,19 +10,12 @@ import type { Command } from "../core/command";
 import { loadSourceFiles, type Ctx } from "../core/context";
 import { buildCliMap } from "../core/model";
 import { runLints } from "../validators/index";
-import {
-  type Diagnostic,
-  error,
-  countBySeverity,
-} from "../diagnostics/diagnostic";
+import { type Diagnostic, error, countBySeverity } from "../diagnostics/diagnostic";
 import { reportDiagnostics } from "../diagnostics/reporter";
 import { bold, dim, cyan } from "../utils/color";
 
 /** Resolve the anchor concept id for a Zod issue path, when there is one. */
-function anchorFor(
-  json: unknown,
-  path: (string | number)[],
-): string | undefined {
+function anchorFor(json: unknown, path: (string | number)[]): string | undefined {
   if (path[0] === "concepts" && typeof path[1] === "number") {
     const c = (json as { concepts?: { id?: string }[] })?.concepts?.[path[1]];
     return c?.id;
@@ -73,9 +66,7 @@ function run(ctx: Ctx): number {
     }
     const parsed = SourceGraphSchema.safeParse(f.json);
     if (!parsed.success) {
-      all.push(
-        ...issuesToDiagnostics(f.mapId, f.fileName, f.json, parsed.error),
-      );
+      all.push(...issuesToDiagnostics(f.mapId, f.fileName, f.json, parsed.error));
       continue;
     }
     const map = buildCliMap(parsed.data, f.raw, f.fileName);
@@ -87,9 +78,7 @@ function run(ctx: Ctx): number {
     return all.some((d) => d.severity === "error") ? 1 : 0;
   }
 
-  process.stdout.write(
-    "\n" + bold("atlas validate") + dim(`  ·  ${files.length} map(s)`) + "\n",
-  );
+  process.stdout.write("\n" + bold("atlas validate") + dim(`  ·  ${files.length} map(s)`) + "\n");
   reportDiagnostics(all, { rawByMap, showSuggestions: suggest });
 
   const c = countBySeverity(all);
@@ -106,8 +95,7 @@ function run(ctx: Ctx): number {
 
 const command: Command = {
   name: "validate",
-  summary:
-    "Validate every map: schema, references, structure, content, diagrams",
+  summary: "Validate every map: schema, references, structure, content, diagrams",
   group: "Quality",
   usage: "atlas validate [--map <id>] [--suggest] [--json]",
   help: [

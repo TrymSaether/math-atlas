@@ -51,8 +51,10 @@ const descriptions: Record<FunctionNode, string> = {
   function: "A function is total and single-valued: every input has exactly one outgoing arrow.",
   image_of_function: "The image is the part of the codomain actually hit by selected inputs.",
   preimage: "The preimage pulls a subset of the codomain back to all inputs landing inside it.",
-  inverse_of_function: "The inverse relation reverses arrows; it is a function only in the bijective case.",
-  restriction_of_function: "A restriction keeps the same rule and discards inputs outside the chosen subset.",
+  inverse_of_function:
+    "The inverse relation reverses arrows; it is a function only in the bijective case.",
+  restriction_of_function:
+    "A restriction keeps the same rule and discards inputs outside the chosen subset.",
   domain: "The domain is the whole input side: every element there must have a function value.",
   codomain: "The codomain is the declared target side; the image may occupy only part of it.",
 };
@@ -91,15 +93,7 @@ function points(count: number, x: number): Vec2[] {
   return Array.from({ length: count }, (_, i) => [x, ((count - 1) / 2 - i) * 0.68]);
 }
 
-function SetOval({
-  x,
-  label,
-  color = DOMAIN_COLOR,
-}: {
-  x: number;
-  label: string;
-  color?: string;
-}) {
+function SetOval({ x, label, color = DOMAIN_COLOR }: { x: number; label: string; color?: string }) {
   return (
     <>
       <Ellipse
@@ -305,7 +299,13 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
           <Point
             x={x}
             y={y}
-            color={omitted.has(i) ? SELECTED_COLOR : highlightedLeft.includes(i) ? DOMAIN_COLOR : INK_COLOR}
+            color={
+              omitted.has(i)
+                ? SELECTED_COLOR
+                : highlightedLeft.includes(i)
+                  ? DOMAIN_COLOR
+                  : INK_COLOR
+            }
             svgCircleProps={{ r: highlightedLeft.includes(i) ? DOT.hub : DOT.base }}
           />
           <Text x={x - 0.42} y={y + 0.02} color={INK_COLOR} size={FONT.tick}>
@@ -319,8 +319,16 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
           <Point
             x={x}
             y={y}
-            color={highlightedRight.includes(i) ? CODOMAIN_COLOR : hitCounts[i] === 0 ? MUTED_COLOR : INK_COLOR}
-            svgCircleProps={{ r: highlightedRight.includes(i) ? DOT.hub : hitCounts[i] === 0 ? DOT.small : DOT.base }}
+            color={
+              highlightedRight.includes(i)
+                ? CODOMAIN_COLOR
+                : hitCounts[i] === 0
+                  ? MUTED_COLOR
+                  : INK_COLOR
+            }
+            svgCircleProps={{
+              r: highlightedRight.includes(i) ? DOT.hub : hitCounts[i] === 0 ? DOT.small : DOT.base,
+            }}
           />
           <Text x={x + 0.42} y={y + 0.02} color={INK_COLOR} size={FONT.tick}>
             {["u", "v", "w", "z"][i]}
@@ -331,7 +339,13 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
       <LaTeX
         at={[0, 1.42]}
         color={DOMAIN_COLOR}
-        tex={kind === "inverse_of_function" ? String.raw`f\text{ and }f^{-1}` : kind === "restriction_of_function" ? String.raw`f|_A` : String.raw`f`}
+        tex={
+          kind === "inverse_of_function"
+            ? String.raw`f\text{ and }f^{-1}`
+            : kind === "restriction_of_function"
+              ? String.raw`f|_A`
+              : String.raw`f`
+        }
       />
       {kind === "preimage" && (
         <LaTeX at={[0, -1.48]} color={INK_COLOR} tex={String.raw`f^{-1}(B)=\{x:f(x)\in B\}`} />

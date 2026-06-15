@@ -114,20 +114,10 @@ export default function ConvergenceModesFigure(_props: FigureProps) {
 
   return (
     <figure className="m-0">
-      <FigureFrame
-        xDomain={spec.xDomain}
-        yDomain={spec.yDomain}
-        height={190}
-        grid
-      >
+      <FigureFrame xDomain={spec.xDomain} yDomain={spec.yDomain} height={190} grid>
         {band && epsilonLabels && (
           <>
-            <Polygon
-              points={band}
-              color={DIA.ok}
-              fillOpacity={0.12}
-              strokeOpacity={0}
-            />
+            <Polygon points={band} color={DIA.ok} fillOpacity={0.12} strokeOpacity={0} />
 
             <LaTeX
               at={[epsilonLabels.upper[0], epsilonLabels.upper[1] + 0.15]}
@@ -187,10 +177,7 @@ export default function ConvergenceModesFigure(_props: FigureProps) {
         label={`$n = ${n}$`}
         ariaLabel="Sequence index n"
       />
-      <figcaption
-        className="mt-1.5 space-y-1 text-ui-meta"
-        style={{ color: "var(--fg-3)" }}
-      >
+      <figcaption className="mt-1.5 space-y-1 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         <div className="font-math" style={{ color: "var(--fg-2)" }}>
           <MathText
             text={`$\\|f_n-f\\|_\\infty=${sup.toFixed(2)}\\quad\\|f_n-f\\|_2=${l2.toFixed(2)}$`}

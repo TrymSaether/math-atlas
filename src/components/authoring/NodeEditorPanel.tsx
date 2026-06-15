@@ -23,11 +23,7 @@ import { DomainGlyph, getDomainGlyphId } from "../DomainGlyph";
 import { graphDataToSource } from "../../data/toSource";
 import { KIND_VALUES } from "../../data/sourceSchema";
 import { KIND_LABEL } from "../../types";
-import {
-  AUTHORABLE_RELATIONS,
-  RELATIONS,
-  type AuthorableRelation,
-} from "../../data/relations";
+import { AUTHORABLE_RELATIONS, RELATIONS, type AuthorableRelation } from "../../data/relations";
 import {
   conceptToDraft,
   edgeKey,
@@ -161,7 +157,9 @@ function SelectField({
                   type="button"
                   role="option"
                   aria-selected={active}
-                  className={active ? "authoring-select-option is-active" : "authoring-select-option"}
+                  className={
+                    active ? "authoring-select-option is-active" : "authoring-select-option"
+                  }
                   onClick={() => {
                     onChange(option.value);
                     setOpen(false);
@@ -251,10 +249,7 @@ function NodePicker({
 function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
   const mapId = useStore((s) => s.mapId);
   const editSource = useStore((s) => s.editSources[mapId]);
-  const source = useMemo(
-    () => editSource ?? graphDataToSource(map.data),
-    [editSource, map],
-  );
+  const source = useMemo(() => editSource ?? graphDataToSource(map.data), [editSource, map]);
   const addNodeEdge = useStore((s) => s.addNodeEdge);
   const removeNodeEdge = useStore((s) => s.removeNodeEdge);
 
@@ -387,10 +382,7 @@ export function NodeEditorPanel({
   onClose: () => void;
 }) {
   const editSource = useStore((s) => s.editSources[mapId]);
-  const source = useMemo(
-    () => editSource ?? graphDataToSource(map.data),
-    [editSource, map],
-  );
+  const source = useMemo(() => editSource ?? graphDataToSource(map.data), [editSource, map]);
   const commitNode = useStore((s) => s.commitNode);
   const deleteNode = useStore((s) => s.deleteNode);
   const editError = useStore((s) => s.editError);
@@ -493,7 +485,10 @@ export function NodeEditorPanel({
                 <MathText text={draft.label} />
               </div>
             )}
-            <div className="mt-2 flex items-center gap-1.5 text-ui-meta" style={{ color: tone.color }}>
+            <div
+              className="mt-2 flex items-center gap-1.5 text-ui-meta"
+              style={{ color: tone.color }}
+            >
               {glyphId ? (
                 <DomainGlyph id={glyphId} size={14} />
               ) : (
@@ -538,16 +533,83 @@ export function NodeEditorPanel({
           </div>
         </div>
 
-        <Field label="Statement" value={draft.statement} onChange={(v) => set({ statement: v })} area mono hint="LaTeX" preview />
-        <Field label="Definition" value={draft.definition} onChange={(v) => set({ definition: v })} area mono hint="LaTeX" preview />
-        <Field label="Formal statement" value={draft.formal} onChange={(v) => set({ formal: v })} area mono hint="LaTeX" preview />
-        <Field label="Formula" value={draft.formula} onChange={(v) => set({ formula: v })} area mono hint="LaTeX" preview />
-        <Field label="Intuition" value={draft.intuition} onChange={(v) => set({ intuition: v })} area />
-        <Field label="Gloss" value={draft.gloss} onChange={(v) => set({ gloss: v })} area hint="dictionary one-liner" />
-        <Field label="Notation" value={draft.notation} onChange={(v) => set({ notation: v })} area mono hint="one per line" />
-        <Field label="Assumptions" value={draft.assumptions} onChange={(v) => set({ assumptions: v })} area hint="one per line" />
-        <Field label="Properties" value={draft.properties} onChange={(v) => set({ properties: v })} area hint="one per line" />
-        <Field label="Tags" value={draft.tags} onChange={(v) => set({ tags: v })} hint="comma-separated" />
+        <Field
+          label="Statement"
+          value={draft.statement}
+          onChange={(v) => set({ statement: v })}
+          area
+          mono
+          hint="LaTeX"
+          preview
+        />
+        <Field
+          label="Definition"
+          value={draft.definition}
+          onChange={(v) => set({ definition: v })}
+          area
+          mono
+          hint="LaTeX"
+          preview
+        />
+        <Field
+          label="Formal statement"
+          value={draft.formal}
+          onChange={(v) => set({ formal: v })}
+          area
+          mono
+          hint="LaTeX"
+          preview
+        />
+        <Field
+          label="Formula"
+          value={draft.formula}
+          onChange={(v) => set({ formula: v })}
+          area
+          mono
+          hint="LaTeX"
+          preview
+        />
+        <Field
+          label="Intuition"
+          value={draft.intuition}
+          onChange={(v) => set({ intuition: v })}
+          area
+        />
+        <Field
+          label="Gloss"
+          value={draft.gloss}
+          onChange={(v) => set({ gloss: v })}
+          area
+          hint="dictionary one-liner"
+        />
+        <Field
+          label="Notation"
+          value={draft.notation}
+          onChange={(v) => set({ notation: v })}
+          area
+          mono
+          hint="one per line"
+        />
+        <Field
+          label="Assumptions"
+          value={draft.assumptions}
+          onChange={(v) => set({ assumptions: v })}
+          area
+          hint="one per line"
+        />
+        <Field
+          label="Properties"
+          value={draft.properties}
+          onChange={(v) => set({ properties: v })}
+          area
+          hint="one per line"
+        />
+        <Field
+          label="Tags"
+          value={draft.tags}
+          onChange={(v) => set({ tags: v })}
+          hint="comma-separated"
+        />
 
         {editingId !== null && (
           <div className="border-t pt-3" style={{ borderColor: "var(--border-subtle)" }}>

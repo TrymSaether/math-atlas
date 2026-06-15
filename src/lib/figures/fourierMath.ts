@@ -63,7 +63,7 @@ export type WaveKind = "square" | "sawtooth" | "triangle";
 
 /** Fold an arbitrary x into the principal period (−π, π]. */
 function wrap(x: number): number {
-  const t = ((x + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+  const t = (((x + Math.PI) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
   return t - Math.PI;
 }
 

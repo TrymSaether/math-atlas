@@ -15,11 +15,7 @@ import { SourceGraphSchema } from "../src/data/sourceSchema";
 import type { AuthorableRelation } from "../src/data/relations";
 
 const MAPS_DIR = fileURLToPath(new URL("../src/data/maps", import.meta.url));
-const FILES = [
-  "topology.json",
-  "fourier_analysis.json",
-  "functional_analysis.json",
-];
+const FILES = ["topology.json", "fourier_analysis.json", "functional_analysis.json"];
 const write = process.argv.includes("--write");
 
 // ── mapping tables (judgment calls; this is what the report surfaces) ──
@@ -53,10 +49,7 @@ const KNOWN_KINDS = new Set([
 const mapKind = (k: string) => (KNOWN_KINDS.has(k) ? k : "object");
 
 // relation → {to: authorable, swap: emit with source/target swapped}
-const REL_MAP: Record<
-  string,
-  { to: AuthorableRelation; swap: boolean } | null
-> = {
+const REL_MAP: Record<string, { to: AuthorableRelation; swap: boolean } | null> = {
   requires: { to: "uses", swap: false },
   uses: { to: "uses", swap: false },
   assumes: { to: "assumes", swap: false },
@@ -187,22 +180,15 @@ function convert(raw: any, t: Tally) {
       id: d.id,
       label: d.label,
       order: i,
-      palette: PALETTE.includes(d.palette)
-        ? d.palette
-        : PALETTE[i % PALETTE.length],
+      palette: PALETTE.includes(d.palette) ? d.palette : PALETTE[i % PALETTE.length],
     }));
 
   const conceptIds = new Set(g.items.map((it: any) => it.id));
   const concepts = g.items.map((it: any) => {
-    for (const k of Object.keys(it))
-      if (!CARRIED.has(k)) bump(t.droppedFields, k);
+    for (const k of Object.keys(it)) if (!CARRIED.has(k)) bump(t.droppedFields, k);
     if (!KNOWN_KINDS.has(it.kind)) bump(t.kindRemap, `${it.kind} → object`);
     const notation =
-      it.notation == null
-        ? []
-        : Array.isArray(it.notation)
-          ? it.notation
-          : [it.notation];
+      it.notation == null ? [] : Array.isArray(it.notation) ? it.notation : [it.notation];
     const content: Record<string, unknown> = {
       notation: notation.filter(Boolean),
     };
@@ -236,12 +222,8 @@ function convert(raw: any, t: Tally) {
     };
     const proofSteps = toSteps(it.proof_steps, it.proof);
     const solutionSteps = toSteps(it.solution_steps, it.solution);
-    const assumptions = (it.assumptions ?? [])
-      .map((a: string) => (a ?? "").trim())
-      .filter(Boolean);
-    const references = (it.book_refs ?? [])
-      .map((r: string) => (r ?? "").trim())
-      .filter(Boolean);
+    const assumptions = (it.assumptions ?? []).map((a: string) => (a ?? "").trim()).filter(Boolean);
+    const references = (it.book_refs ?? []).map((r: string) => (r ?? "").trim()).filter(Boolean);
     const source: Record<string, unknown> = {};
     if (it.metadata?.source) source.citation = it.metadata.source;
     if (it.chapter) source.chapter = String(it.chapter);
@@ -267,13 +249,8 @@ function convert(raw: any, t: Tally) {
   // edges: explicit edges + expand item.dependencies, then dedupe semantically.
   const seen = new Set<string>();
   const edges: any[] = [];
-  const push = (
-    source: string,
-    target: string,
-    relation: AuthorableRelation,
-  ) => {
-    if (!conceptIds.has(source) || !conceptIds.has(target) || source === target)
-      return;
+  const push = (source: string, target: string, relation: AuthorableRelation) => {
+    if (!conceptIds.has(source) || !conceptIds.has(target) || source === target) return;
     const key = `${source} ${target} ${relation}`;
     if (seen.has(key)) return;
     seen.add(key);
@@ -342,25 +319,20 @@ for (const file of FILES) {
   const parsed = SourceGraphSchema.safeParse(src);
 
   console.log(`\n══════════ ${file} ══════════`);
-  console.log(
-    `  concepts: ${src.concepts.length} (from ${raw.graph.items.length} items)`,
-  );
+  console.log(`  concepts: ${src.concepts.length} (from ${raw.graph.items.length} items)`);
   console.log(
     `  edges:    ${src.edges.length} after dedupe  ` +
       `(explicit: clean ${t.cleanRel}, swapped ${t.swapRel}, fuzzy ${t.fuzzyRel}; ` +
       `dependency-expanded ${t.depEdges}; item-relation-expanded ${t.itemRelEdges})`,
   );
   console.log(`  kind remaps needed (kind not in enum):\n${top(t.kindRemap)}`);
-  console.log(
-    `  authored fields DROPPED (count = items carrying them):\n${top(t.droppedFields)}`,
-  );
+  console.log(`  authored fields DROPPED (count = items carrying them):\n${top(t.droppedFields)}`);
   console.log(
     `  strict schema: ${parsed.success ? "✓ PASSES" : `✗ FAILS — ${parsed.error.issues.length} issues`}`,
   );
   if (!parsed.success) {
     const byMsg = new Map<string, number>();
-    for (const i of parsed.error.issues)
-      bump(byMsg, i.message.replace(/: .*/, ""));
+    for (const i of parsed.error.issues) bump(byMsg, i.message.replace(/: .*/, ""));
     console.log(top(byMsg, 8));
   }
   if (write && parsed.success) {
@@ -369,6 +341,4 @@ for (const file of FILES) {
     console.log(`  → wrote ${file.replace(/\.json$/, ".source.json")}`);
   }
 }
-console.log(
-  write ? "\n(*.source.json written)" : "\n(report only — no files written)",
-);
+console.log(write ? "\n(*.source.json written)" : "\n(report only — no files written)");

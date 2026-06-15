@@ -28,17 +28,12 @@ import { padStart } from "../utils/text";
 
 function requireMap(maps: CliMap[], _ctx: Ctx): CliMap {
   if (maps.length === 1) return maps[0];
-  throw new CliError(
-    `'graph' needs a single map (${maps.length} loaded)`,
-    "pass --map <id>",
-  );
+  throw new CliError(`'graph' needs a single map (${maps.length} loaded)`, "pass --map <id>");
 }
 
 function label(map: CliMap, id: string): string {
   const n = map.nodeById.get(id);
-  return n
-    ? `${kindGlyph(n.kind)} ${cyan(id)} ${dim("— " + n.label)}`
-    : cyan(id);
+  return n ? `${kindGlyph(n.kind)} ${cyan(id)} ${dim("— " + n.label)}` : cyan(id);
 }
 
 function cmdShow(map: CliMap, id: string): number {
@@ -69,25 +64,18 @@ function cmdPath(map: CliMap, a: string, b: string): number {
   if (!steps) {
     if (!map.nodeById.has(a)) throw new CliError(`concept '${a}' not found`);
     if (!map.nodeById.has(b)) throw new CliError(`concept '${b}' not found`);
-    process.stdout.write(
-      "\n" + yellow(`${MARK.warning} no path between ${a} and ${b}`) + "\n\n",
-    );
+    process.stdout.write("\n" + yellow(`${MARK.warning} no path between ${a} and ${b}`) + "\n\n");
     return 0;
   }
   process.stdout.write(
-    "\n" +
-      bold(`Path ${a} → ${b}`) +
-      dim(`  (${steps.length - 1} hops)`) +
-      "\n\n",
+    "\n" + bold(`Path ${a} → ${b}`) + dim(`  (${steps.length - 1} hops)`) + "\n\n",
   );
   steps.forEach((s, i) => {
     if (i === 0) {
       process.stdout.write("  " + label(map, s.id) + "\n");
       return;
     }
-    const rel = s.edge
-      ? edgeLabel(s.edge.relation, s.edge.isDependency, "terse")
-      : "";
+    const rel = s.edge ? edgeLabel(s.edge.relation, s.edge.isDependency, "terse") : "";
     process.stdout.write(
       "  " +
         gray("  │ ") +
@@ -104,19 +92,13 @@ function cmdPath(map: CliMap, a: string, b: string): number {
 }
 
 function cmdChain(map: CliMap, id: string): number {
-  if (!map.nodeById.has(id))
-    throw new CliError(`concept '${id}' not found in ${map.id}`);
+  if (!map.nodeById.has(id)) throw new CliError(`concept '${id}' not found in ${map.id}`);
   const chain = prerequisiteChain(map, id);
   process.stdout.write(
-    "\n" +
-      bold(`Prerequisite chain for ${id}`) +
-      dim(`  (${chain.length} prerequisites)`) +
-      "\n",
+    "\n" + bold(`Prerequisite chain for ${id}`) + dim(`  (${chain.length} prerequisites)`) + "\n",
   );
   if (chain.length === 0) {
-    process.stdout.write(
-      "\n  " + green(`${MARK.ok} foundational — depends on nothing`) + "\n\n",
-    );
+    process.stdout.write("\n  " + green(`${MARK.ok} foundational — depends on nothing`) + "\n\n");
     return 0;
   }
   // Group by depth so the layering is visible.
@@ -133,13 +115,9 @@ function cmdChain(map: CliMap, id: string): number {
 
 function cmdOrphans(map: CliMap): number {
   const list = orphans(map);
-  process.stdout.write(
-    "\n" + bold(`Orphans in ${map.id}`) + dim(`  (${list.length})`) + "\n\n",
-  );
+  process.stdout.write("\n" + bold(`Orphans in ${map.id}`) + dim(`  (${list.length})`) + "\n\n");
   if (!list.length) {
-    process.stdout.write(
-      "  " + green(`${MARK.ok} none — every concept is connected`) + "\n\n",
-    );
+    process.stdout.write("  " + green(`${MARK.ok} none — every concept is connected`) + "\n\n");
     return 0;
   }
   for (const id of list) process.stdout.write("  " + label(map, id) + "\n");
@@ -149,13 +127,9 @@ function cmdOrphans(map: CliMap): number {
 
 function cmdCycles(map: CliMap): number {
   const cycles = detectCycles(map);
-  process.stdout.write(
-    "\n" + bold(`Cycles in ${map.id}`) + dim(`  (${cycles.length})`) + "\n\n",
-  );
+  process.stdout.write("\n" + bold(`Cycles in ${map.id}`) + dim(`  (${cycles.length})`) + "\n\n");
   if (!cycles.length) {
-    process.stdout.write(
-      "  " + green(`${MARK.ok} acyclic — dependency DAG is sound`) + "\n\n",
-    );
+    process.stdout.write("  " + green(`${MARK.ok} acyclic — dependency DAG is sound`) + "\n\n");
     return 0;
   }
   for (const cyc of cycles) {
@@ -179,9 +153,7 @@ function cmdRank(map: CliMap, by: string): number {
     const bc = betweenness(map);
     rows = [...bc.entries()].sort((a, b) => b[1] - a[1]);
   } else {
-    rows = map.nodes
-      .map((n) => [n.id, n.degree] as [string, number])
-      .sort((a, b) => b[1] - a[1]);
+    rows = map.nodes.map((n) => [n.id, n.degree] as [string, number]).sort((a, b) => b[1] - a[1]);
   }
   const display = rows
     .slice(0, 20)
@@ -195,11 +167,7 @@ function cmdRank(map: CliMap, by: string): number {
       bold(`Centrality (${by}) — top 20 of ${top}`) +
       "\n\n" +
       table(
-        [
-          { header: "#", align: "right" },
-          { header: "concept" },
-          { header: by, align: "right" },
-        ],
+        [{ header: "#", align: "right" }, { header: "concept" }, { header: by, align: "right" }],
         display,
       ) +
       "\n\n",
@@ -212,14 +180,10 @@ function cmdTopo(map: CliMap): number {
   process.stdout.write("\n" + bold(`Topological order — ${map.id}`) + "\n\n");
   if (hasCycle)
     process.stdout.write(
-      "  " +
-        yellow(`${MARK.warning} graph has a cycle; order is partial`) +
-        "\n\n",
+      "  " + yellow(`${MARK.warning} graph has a cycle; order is partial`) + "\n\n",
     );
   order.forEach((id, i) =>
-    process.stdout.write(
-      "  " + gray(padStart(String(i + 1), 4)) + "  " + label(map, id) + "\n",
-    ),
+    process.stdout.write("  " + gray(padStart(String(i + 1), 4)) + "  " + label(map, id) + "\n"),
   );
   process.stdout.write("\n");
   return 0;
@@ -227,10 +191,7 @@ function cmdTopo(map: CliMap): number {
 
 function run(ctx: Ctx): number {
   const [sub, ...rest] = ctx.positionals;
-  if (!sub)
-    throw new CliError(
-      "usage: atlas graph <show|path|chain|orphans|cycles|rank|topo>",
-    );
+  if (!sub) throw new CliError("usage: atlas graph <show|path|chain|orphans|cycles|rank|topo>");
   const maps = loadMaps(ctx);
 
   // Subcommands that take a concept may auto-pick the map containing it.
@@ -245,8 +206,7 @@ function run(ctx: Ctx): number {
       if (!rest[0]) throw new CliError("usage: atlas graph show <concept-id>");
       return cmdShow(pickByConcept(rest[0]), rest[0]);
     case "path":
-      if (rest.length < 2)
-        throw new CliError("usage: atlas graph path <a> <b>");
+      if (rest.length < 2) throw new CliError("usage: atlas graph path <a> <b>");
       return cmdPath(pickByConcept(rest[0]), rest[0], rest[1]);
     case "chain":
       if (!rest[0]) throw new CliError("usage: atlas graph chain <concept-id>");
@@ -268,8 +228,7 @@ const command: Command = {
   name: "graph",
   summary: "Inspect the graph: show, path, chain, orphans, cycles, rank, topo",
   group: "Graph",
-  usage:
-    "atlas graph <show|path|chain|orphans|cycles|rank|topo> [...] [--map <id>]",
+  usage: "atlas graph <show|path|chain|orphans|cycles|rank|topo> [...] [--map <id>]",
   help: [
     dim("  show <id>     ") + "incoming/outgoing edges",
     dim("  path <a> <b>  ") + "shortest connection",

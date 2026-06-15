@@ -27,11 +27,7 @@ export function DomainRegionNode({ data }: NodeProps<Data>) {
   // overflows a narrow or short region.
   const watermarkSize = Math.max(
     28,
-    Math.min(
-      data.width / Math.max(8, data.label.length * 0.62),
-      data.height * 0.42,
-      132,
-    ),
+    Math.min(data.width / Math.max(8, data.label.length * 0.62), data.height * 0.42, 132),
   );
 
   return (
@@ -87,16 +83,10 @@ export function DomainRegionNode({ data }: NodeProps<Data>) {
         {glyphId ? (
           <DomainGlyph id={glyphId} size={13} />
         ) : (
-          <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{ background: data.color }}
-          />
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: data.color }} />
         )}
         <span className="min-w-0 truncate">{data.label}</span>
-        <span
-          className="font-mono text-ui-tiny font-semibold"
-          style={{ color: "var(--fg-3)" }}
-        >
+        <span className="font-mono text-ui-tiny font-semibold" style={{ color: "var(--fg-3)" }}>
           {data.count}
         </span>
       </div>

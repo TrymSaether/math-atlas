@@ -64,9 +64,7 @@ export function NodeViz({
         compact={!detailed}
         pan={interactive}
         height={height}
-        onMovePoint={
-          interactive ? (id, p) => setValues((v) => ({ ...v, [id]: p })) : undefined
-        }
+        onMovePoint={interactive ? (id, p) => setValues((v) => ({ ...v, [id]: p })) : undefined}
       />
       {caption && (
         <figcaption

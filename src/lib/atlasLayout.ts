@@ -110,8 +110,7 @@ export function computeAtlasLayout(data: GraphData): AtlasLayout {
     if (!nodeIds.has(edge.from) || !nodeIds.has(edge.to)) continue;
     // Weight intra-domain edges higher so dagre keeps cluster members close.
     // Cross-domain edges get minlen=0 so they don't stretch ranks vertically.
-    const sameDomain =
-      domainByNodeId.get(edge.from) === domainByNodeId.get(edge.to);
+    const sameDomain = domainByNodeId.get(edge.from) === domainByNodeId.get(edge.to);
     g.setEdge(edge.from, edge.to, {
       weight: sameDomain ? 4 : 1,
       minlen: 1,
@@ -132,8 +131,7 @@ export function computeAtlasLayout(data: GraphData): AtlasLayout {
     const cluster = g.node(`cluster::${domainId}`) as unknown as
       | { x: number; y: number; width: number; height: number }
       | undefined;
-    if (!cluster || !Number.isFinite(cluster.width) || cluster.width === 0)
-      continue;
+    if (!cluster || !Number.isFinite(cluster.width) || cluster.width === 0) continue;
     domainBounds.set(domainId, {
       x: cluster.x - cluster.width / 2 - CLUSTER_PAD,
       y: cluster.y - cluster.height / 2 - CLUSTER_PAD,
@@ -159,10 +157,7 @@ export function computeAtlasLayout(data: GraphData): AtlasLayout {
  * Positions are deterministic: ordering is fully determined by depth, impact,
  * and the stable node ordering — no jitter, so spatial memory survives reloads.
  */
-export function computeSwimlaneLayout(
-  data: GraphData,
-  metrics: GraphMetrics,
-): AtlasLayout {
+export function computeSwimlaneLayout(data: GraphData, metrics: GraphMetrics): AtlasLayout {
   const positions = new Map<string, Position>();
   const domainBounds = new Map<string, DomainBounds>();
   if (data.nodes.length === 0) return { positions, domainBounds };
@@ -205,8 +200,7 @@ export function computeSwimlaneLayout(
     // Sort each cell most-impactful first.
     for (const list of byDepth.values()) {
       list.sort((a, b) => {
-        const diff =
-          (impactByNodeId.get(b.id) ?? 0) - (impactByNodeId.get(a.id) ?? 0);
+        const diff = (impactByNodeId.get(b.id) ?? 0) - (impactByNodeId.get(a.id) ?? 0);
         if (diff !== 0) return diff;
         return compareNodeOrder(a, b);
       });
@@ -221,10 +215,7 @@ export function computeSwimlaneLayout(
     for (const depth of usedDepths)
       maxRows = Math.max(maxRows, cellRows(byDepth.get(depth)!.length));
 
-    const laneHeight =
-      LANE_PAD_Y * 2 +
-      maxRows * NODE_HEIGHT +
-      Math.max(0, maxRows - 1) * ROW_GAP;
+    const laneHeight = LANE_PAD_Y * 2 + maxRows * NODE_HEIGHT + Math.max(0, maxRows - 1) * ROW_GAP;
     const laneMidY = laneHeight / 2;
 
     const rel = new Map<string, Position>();
@@ -256,10 +247,7 @@ export function computeSwimlaneLayout(
   // (top → bottom). All bands are normalized to the widest lane and share the
   // left edge, so they read as aligned geography and depth-0 lines up across
   // every lane for a clean vertical "same-depth" scan.
-  const maxLaneWidth = lanes.reduce(
-    (max, lane) => Math.max(max, lane.width),
-    0,
-  );
+  const maxLaneWidth = lanes.reduce((max, lane) => Math.max(max, lane.width), 0);
   let laneTop = 0;
   for (const lane of lanes) {
     for (const [id, p] of lane.rel) {
@@ -290,9 +278,7 @@ export function computeClusterLayout(
     nodesByDomain.set(node.domain, list);
   }
 
-  const domainIds = domains
-    .map((domain) => domain.id)
-    .filter((id) => nodesByDomain.has(id));
+  const domainIds = domains.map((domain) => domain.id).filter((id) => nodesByDomain.has(id));
   for (const id of nodesByDomain.keys()) {
     if (!domainIds.includes(id)) domainIds.push(id);
   }
@@ -307,16 +293,13 @@ export function computeClusterLayout(
   domainIds.forEach((domainId, domainIndex) => {
     const members = [...(nodesByDomain.get(domainId) ?? [])].sort((a, b) => {
       if (degreeByNodeId) {
-        const diff =
-          (degreeByNodeId.get(b.id) ?? 0) - (degreeByNodeId.get(a.id) ?? 0);
+        const diff = (degreeByNodeId.get(b.id) ?? 0) - (degreeByNodeId.get(a.id) ?? 0);
         if (diff !== 0) return diff;
       }
       return compareNodeOrder(a, b);
     });
     const domainAngle =
-      domainCount === 1
-        ? 0
-        : -Math.PI / 2 + (domainIndex / domainCount) * Math.PI * 2;
+      domainCount === 1 ? 0 : -Math.PI / 2 + (domainIndex / domainCount) * Math.PI * 2;
     const cx = Math.cos(domainAngle) * domainRing;
     const cy = Math.sin(domainAngle) * domainRing;
     const itemRing = Math.max(132, 88 + Math.sqrt(members.length) * 56);
@@ -329,9 +312,7 @@ export function computeClusterLayout(
     members.forEach((node, itemIndex) => {
       const rand = seeded(hashString(`${domainId}:${node.id}`));
       const angle =
-        members.length === 1
-          ? 0
-          : -Math.PI / 2 + (itemIndex / members.length) * Math.PI * 2;
+        members.length === 1 ? 0 : -Math.PI / 2 + (itemIndex / members.length) * Math.PI * 2;
       const radius = members.length === 1 ? 0 : itemRing + (rand() - 0.5) * 24;
       const x = cx + Math.cos(angle) * radius - NODE_WIDTH / 2;
       const y = cy + Math.sin(angle) * radius - NODE_HEIGHT / 2;

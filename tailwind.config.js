@@ -5,9 +5,29 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Inter"', "Aptos", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "system-ui", "sans-serif"],
-        display: ['"DM Serif Display"', '"Cormorant Garamond"', '"Iowan Old Style"', "Georgia", "serif"],
-        serif: ['"DM Serif Display"', '"Cormorant Garamond"', '"Iowan Old Style"', "Georgia", "serif"],
+        sans: [
+          '"Inter"',
+          "Aptos",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "system-ui",
+          "sans-serif",
+        ],
+        display: [
+          '"DM Serif Display"',
+          '"Cormorant Garamond"',
+          '"Iowan Old Style"',
+          "Georgia",
+          "serif",
+        ],
+        serif: [
+          '"DM Serif Display"',
+          '"Cormorant Garamond"',
+          '"Iowan Old Style"',
+          "Georgia",
+          "serif",
+        ],
         math: ['"STIX Two Text"', '"STIX Two Math"', "Georgia", "serif"],
         mono: ['"JetBrains Mono"', '"SF Mono"', "ui-monospace", "Menlo", "monospace"],
       },

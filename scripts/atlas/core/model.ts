@@ -8,11 +8,7 @@
  */
 import { buildArtifact } from "../../../src/data/buildArtifact";
 import type { SourceGraph } from "../../../src/data/sourceSchema";
-import type {
-  Artifact,
-  ArtifactEdge,
-  ArtifactNode,
-} from "../../../src/data/artifactSchema";
+import type { Artifact, ArtifactEdge, ArtifactNode } from "../../../src/data/artifactSchema";
 
 export interface CliMap {
   id: string;
@@ -45,11 +41,7 @@ export interface CliMap {
   neighbors: Map<string, Set<string>>;
 }
 
-export function buildCliMap(
-  source: SourceGraph,
-  raw: string,
-  fileName: string,
-): CliMap {
+export function buildCliMap(source: SourceGraph, raw: string, fileName: string): CliMap {
   const { artifact, warnings } = buildArtifact(source);
 
   const nodeById = new Map(artifact.nodes.map((n) => [n.id, n]));

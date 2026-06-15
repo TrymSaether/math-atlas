@@ -74,10 +74,7 @@ function buildReachability(
 }
 
 /** Longest path following successors (toward foundations). Cycle-safe (back-edges ⇒ 0). */
-function computeDepths(
-  nodeIds: Set<string>,
-  succ: Map<string, Set<string>>,
-): Map<string, number> {
+function computeDepths(nodeIds: Set<string>, succ: Map<string, Set<string>>): Map<string, number> {
   const depth = new Map<string, number>();
   const state = new Map<string, 0 | 1 | 2>(); // 0/undef=unseen, 1=on-stack, 2=done
 

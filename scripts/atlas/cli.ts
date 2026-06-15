@@ -83,11 +83,7 @@ function parseArgs(argv: string[]): Parsed {
       const eq = body.indexOf("=");
       if (eq >= 0) {
         flags[body.slice(0, eq)] = body.slice(eq + 1);
-      } else if (
-        VALUE_FLAGS.has(body) &&
-        i + 1 < argv.length &&
-        !argv[i + 1].startsWith("-")
-      ) {
+      } else if (VALUE_FLAGS.has(body) && i + 1 < argv.length && !argv[i + 1].startsWith("-")) {
         flags[body] = argv[++i];
       } else {
         flags[body] = true;
@@ -95,11 +91,7 @@ function parseArgs(argv: string[]): Parsed {
     } else if (tok.startsWith("-") && tok.length > 1) {
       const short = tok.slice(1);
       const long = SHORT[short] ?? short;
-      if (
-        VALUE_FLAGS.has(long) &&
-        i + 1 < argv.length &&
-        !argv[i + 1].startsWith("-")
-      ) {
+      if (VALUE_FLAGS.has(long) && i + 1 < argv.length && !argv[i + 1].startsWith("-")) {
         flags[long] = argv[++i];
       } else {
         flags[long] = true;
@@ -114,19 +106,13 @@ function parseArgs(argv: string[]): Parsed {
 }
 
 function banner(): void {
-  process.stdout.write(
-    "\n" + bold(cyan("  atlas")) + dim("  ·  Math Atlas developer CLI") + "\n",
-  );
+  process.stdout.write("\n" + bold(cyan("  atlas")) + dim("  ·  Math Atlas developer CLI") + "\n");
 }
 
 function printHelp(): void {
   banner();
   process.stdout.write(
-    "\n  " +
-      dim("usage:") +
-      " atlas " +
-      cyan("<command>") +
-      " [args] [--flags]\n",
+    "\n  " + dim("usage:") + " atlas " + cyan("<command>") + " [args] [--flags]\n",
   );
 
   const groups = new Map<string, Command[]>();
@@ -139,9 +125,7 @@ function printHelp(): void {
     if (!cmds) continue;
     process.stdout.write("\n  " + bold(g) + "\n");
     for (const c of cmds) {
-      process.stdout.write(
-        "    " + cyan(c.name.padEnd(12)) + dim(c.summary) + "\n",
-      );
+      process.stdout.write("    " + cyan(c.name.padEnd(12)) + dim(c.summary) + "\n");
     }
   }
   process.stdout.write(
@@ -181,16 +165,12 @@ function printHelp(): void {
 
 function printCommandHelp(cmd: Command): void {
   banner();
-  process.stdout.write(
-    "\n  " + bold(cmd.name) + dim("  —  " + cmd.summary) + "\n",
-  );
+  process.stdout.write("\n  " + bold(cmd.name) + dim("  —  " + cmd.summary) + "\n");
   if (cmd.usage) {
     process.stdout.write("\n  " + dim("usage:") + " " + cmd.usage + "\n");
   }
   if (cmd.help?.length) {
-    process.stdout.write(
-      "\n" + cmd.help.map((l) => "  " + l).join("\n") + "\n",
-    );
+    process.stdout.write("\n" + cmd.help.map((l) => "  " + l).join("\n") + "\n");
   }
   process.stdout.write("\n");
 }
@@ -209,10 +189,7 @@ function suggest(name: string): string | undefined {
 }
 
 function levenshtein(a: string, b: string): number {
-  const dp = Array.from({ length: a.length + 1 }, (_, i) => [
-    i,
-    ...Array(b.length).fill(0),
-  ]);
+  const dp = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
   for (let j = 0; j <= b.length; j++) dp[0][j] = j;
   for (let i = 1; i <= a.length; i++)
     for (let j = 1; j <= b.length; j++)
@@ -236,14 +213,9 @@ async function main(): Promise<number> {
 
   const cmd = REGISTRY.get(command);
   if (!cmd) {
-    process.stderr.write(
-      red(`${MARK.error} unknown command '${command}'`) + "\n",
-    );
+    process.stderr.write(red(`${MARK.error} unknown command '${command}'`) + "\n");
     const guess = suggest(command);
-    if (guess)
-      process.stderr.write(
-        dim(`  did you mean `) + cyan(guess) + dim("?") + "\n",
-      );
+    if (guess) process.stderr.write(dim(`  did you mean `) + cyan(guess) + dim("?") + "\n");
     process.stderr.write(dim("  run `atlas help` for the command list") + "\n");
     return 1;
   }
@@ -269,9 +241,7 @@ async function main(): Promise<number> {
 main().then(
   (code) => process.exit(code),
   (err) => {
-    process.stderr.write(
-      red("\nunexpected error:\n") + String(err?.stack ?? err) + "\n",
-    );
+    process.stderr.write(red("\nunexpected error:\n") + String(err?.stack ?? err) + "\n");
     process.exit(1);
   },
 );

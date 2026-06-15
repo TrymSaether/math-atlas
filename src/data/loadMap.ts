@@ -1,10 +1,6 @@
 import type { GraphData, GraphDomain, GraphEdge, GraphNode } from "../types";
 import type { Artifact } from "./artifactSchema";
-import {
-  computeSwimlaneLayout,
-  type DomainBounds,
-  type Position,
-} from "../lib/atlasLayout";
+import { computeSwimlaneLayout, type DomainBounds, type Position } from "../lib/atlasLayout";
 import { resolveDomainTones, type DomainTone } from "../lib/colors";
 import { computeGraphMetrics, type GraphMetrics } from "../lib/graphMetrics";
 import { DEFAULT_MAP_ID, MAPS, loadRawMap, type MapId } from "./mapRegistry";
@@ -42,9 +38,7 @@ export function enrichArtifact(artifact: Artifact): GraphData {
       number: String(idx),
       dictChapter: n.source?.chapter ?? "",
       statementDependencies: prereqs.get(n.id) ?? [],
-      proofDependencies: [
-        ...new Set((n.proof?.steps ?? []).flatMap((s) => s.uses)),
-      ],
+      proofDependencies: [...new Set((n.proof?.steps ?? []).flatMap((s) => s.uses))],
     };
   });
 
@@ -183,9 +177,7 @@ async function buildPreferringOverlay(mapId: MapId): Promise<LoadedMap> {
   if (overlay) {
     const result = buildLoadedMapFromSource(overlay.source);
     if (result.ok) return result.map;
-    console.warn(
-      `[math-atlas] ignoring invalid edit overlay for "${mapId}": ${result.error}`,
-    );
+    console.warn(`[math-atlas] ignoring invalid edit overlay for "${mapId}": ${result.error}`);
   }
   return buildFromShipped(mapId);
 }
@@ -209,9 +201,7 @@ export function loadShippedMap(mapId: MapId = DEFAULT_MAP_ID): Promise<LoadedMap
 
 export async function loadRegisteredMaps(): Promise<Record<MapId, LoadedMap>> {
   const entries = await Promise.all(
-    (Object.keys(MAPS) as MapId[]).map(
-      async (mapId) => [mapId, await loadMap(mapId)] as const,
-    ),
+    (Object.keys(MAPS) as MapId[]).map(async (mapId) => [mapId, await loadMap(mapId)] as const),
   );
   return Object.fromEntries(entries) as Record<MapId, LoadedMap>;
 }

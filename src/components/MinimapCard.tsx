@@ -185,17 +185,18 @@ export function MinimapCard({
             <g key={point.id}>
               <circle cx={p.x} cy={p.y} r={3.4} fill="var(--surface)" opacity={0.94} />
               <circle cx={p.x} cy={p.y} r={2.2} fill={tone.color} opacity={0.96} />
-              <circle cx={p.x} cy={p.y} r={4.2} fill="none" stroke={tone.color} strokeWidth={0.8} opacity={0.78} />
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={4.2}
+                fill="none"
+                stroke={tone.color}
+                strokeWidth={0.8}
+                opacity={0.78}
+              />
             </g>
           ) : (
-            <circle
-              key={point.id}
-              cx={p.x}
-              cy={p.y}
-              r={1.35}
-              fill={tone.color}
-              opacity={0.66}
-            />
+            <circle key={point.id} cx={p.x} cy={p.y} r={1.35} fill={tone.color} opacity={0.66} />
           );
         })}
       </svg>

@@ -64,10 +64,8 @@
   --edge-highlight: var(--blue);
 
   --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-2:
-    0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-3:
-    0 12px 32px rgba(15, 23, 42, 0.1), 0 2px 6px rgba(15, 23, 42, 0.05);
+  --shadow-2: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-3: 0 12px 32px rgba(15, 23, 42, 0.1), 0 2px 6px rgba(15, 23, 42, 0.05);
 
   --grid-dot: #e5e7eb;
   --grid-major: rgba(15, 23, 42, 0.05);
@@ -191,7 +189,6 @@
   --dia-muted-fill: var(--border-strong);
 }
 
-
 :root {
   /* Derived domain tones. Theme blocks define only base hues. */
   --blue-50: color-mix(in srgb, var(--blue) 10%, var(--surface));
@@ -290,10 +287,8 @@
   --edge-highlight: var(--accent);
 
   --shadow-1: 0 1px 2px rgba(31, 35, 40, 0.05);
-  --shadow-2:
-    0 4px 14px rgba(31, 35, 40, 0.08), 0 1px 2px rgba(31, 35, 40, 0.05);
-  --shadow-3:
-    0 18px 50px rgba(31, 35, 40, 0.12), 0 2px 6px rgba(31, 35, 40, 0.06);
+  --shadow-2: 0 4px 14px rgba(31, 35, 40, 0.08), 0 1px 2px rgba(31, 35, 40, 0.05);
+  --shadow-3: 0 18px 50px rgba(31, 35, 40, 0.12), 0 2px 6px rgba(31, 35, 40, 0.06);
 
   --grid-dot: #dfd3bf;
   --grid-major: rgba(31, 35, 40, 0.055);
@@ -460,8 +455,7 @@
   --edge-highlight: var(--accent);
 
   --shadow-1: 0 1px 2px rgba(42, 37, 32, 0.05);
-  --shadow-2:
-    0 4px 14px rgba(42, 37, 32, 0.08), 0 1px 2px rgba(42, 37, 32, 0.05);
+  --shadow-2: 0 4px 14px rgba(42, 37, 32, 0.08), 0 1px 2px rgba(42, 37, 32, 0.05);
   --shadow-3: 0 18px 60px rgba(42, 37, 32, 0.1);
 
   --grid-dot: #e2d7c4;
@@ -630,10 +624,8 @@
   --edge-highlight: var(--accent);
 
   --shadow-1: 0 1px 2px rgba(12, 42, 46, 0.04);
-  --shadow-2:
-    0 4px 14px rgba(12, 42, 46, 0.07), 0 1px 2px rgba(12, 42, 46, 0.04);
-  --shadow-3:
-    0 16px 44px rgba(12, 42, 46, 0.11), 0 2px 6px rgba(12, 42, 46, 0.05);
+  --shadow-2: 0 4px 14px rgba(12, 42, 46, 0.07), 0 1px 2px rgba(12, 42, 46, 0.04);
+  --shadow-3: 0 16px 44px rgba(12, 42, 46, 0.11), 0 2px 6px rgba(12, 42, 46, 0.05);
 
   --grid-dot: #d2e5e4;
   --grid-major: rgba(12, 42, 46, 0.05);
@@ -797,10 +789,8 @@
   --edge-highlight: var(--accent);
 
   --shadow-1: 0 1px 2px rgba(44, 22, 32, 0.04);
-  --shadow-2:
-    0 4px 14px rgba(44, 22, 32, 0.07), 0 1px 2px rgba(44, 22, 32, 0.04);
-  --shadow-3:
-    0 16px 44px rgba(44, 22, 32, 0.11), 0 2px 6px rgba(44, 22, 32, 0.05);
+  --shadow-2: 0 4px 14px rgba(44, 22, 32, 0.07), 0 1px 2px rgba(44, 22, 32, 0.04);
+  --shadow-3: 0 16px 44px rgba(44, 22, 32, 0.11), 0 2px 6px rgba(44, 22, 32, 0.05);
 
   --grid-dot: #efd9df;
   --grid-major: rgba(44, 22, 32, 0.05);
@@ -965,10 +955,8 @@
   --edge-highlight: var(--accent);
 
   --shadow-1: 0 1px 2px rgba(20, 21, 26, 0.05);
-  --shadow-2:
-    0 4px 14px rgba(20, 21, 26, 0.09), 0 1px 2px rgba(20, 21, 26, 0.05);
-  --shadow-3:
-    0 16px 44px rgba(20, 21, 26, 0.14), 0 2px 6px rgba(20, 21, 26, 0.06);
+  --shadow-2: 0 4px 14px rgba(20, 21, 26, 0.09), 0 1px 2px rgba(20, 21, 26, 0.05);
+  --shadow-3: 0 16px 44px rgba(20, 21, 26, 0.14), 0 2px 6px rgba(20, 21, 26, 0.06);
 
   --grid-dot: #e3e5eb;
   --grid-major: rgba(20, 21, 26, 0.05);
@@ -1133,10 +1121,8 @@
   --edge-highlight: var(--accent);
 
   --shadow-1: 0 1px 2px rgba(28, 27, 24, 0.04);
-  --shadow-2:
-    0 4px 12px rgba(28, 27, 24, 0.07), 0 1px 2px rgba(28, 27, 24, 0.04);
-  --shadow-3:
-    0 14px 40px rgba(28, 27, 24, 0.1), 0 2px 6px rgba(28, 27, 24, 0.05);
+  --shadow-2: 0 4px 12px rgba(28, 27, 24, 0.07), 0 1px 2px rgba(28, 27, 24, 0.04);
+  --shadow-3: 0 14px 40px rgba(28, 27, 24, 0.1), 0 2px 6px rgba(28, 27, 24, 0.05);
 
   --grid-dot: #e4e1d7;
   --grid-major: rgba(28, 27, 24, 0.05);
@@ -1221,10 +1207,8 @@
   --edge-highlight: var(--accent);
 
   --shadow-1: 0 1px 2px rgba(26, 24, 20, 0.04), 0 1px 0 rgba(26, 24, 20, 0.02);
-  --shadow-2:
-    0 4px 14px rgba(26, 24, 20, 0.07), 0 1px 2px rgba(26, 24, 20, 0.04);
-  --shadow-3:
-    0 14px 40px rgba(26, 24, 20, 0.1), 0 2px 6px rgba(26, 24, 20, 0.05);
+  --shadow-2: 0 4px 14px rgba(26, 24, 20, 0.07), 0 1px 2px rgba(26, 24, 20, 0.04);
+  --shadow-3: 0 14px 40px rgba(26, 24, 20, 0.1), 0 2px 6px rgba(26, 24, 20, 0.05);
 
   --grid-dot: #d8d0bc;
   --grid-major: rgba(26, 24, 20, 0.05);
@@ -1440,16 +1424,12 @@
 
 /* ---- TYPOGRAPHY ----------------------------------------------------- */
 :root {
-  --font-serif:
-    "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia",
-    serif;
+  --font-serif: "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
   --font-sans:
-    "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
-    sans-serif;
+    "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
   --font-math:
-    "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math",
-    "Georgia", serif;
+    "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
 
   --type-edge-label: 9px;
   --type-ui-tiny: 9.5px;
@@ -1509,12 +1489,9 @@
   --chrome-border: color-mix(in srgb, var(--border) 78%, transparent);
   --chrome-divider: color-mix(in srgb, var(--border) 72%, transparent);
   --chrome-highlight: color-mix(in srgb, var(--surface) 82%, transparent);
-  --chrome-shadow:
-    0 8px 22px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
-  --chrome-shadow-soft:
-    0 4px 12px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --chrome-shadow-popover:
-    0 18px 44px rgba(15, 23, 42, 0.13), 0 4px 10px rgba(15, 23, 42, 0.07);
+  --chrome-shadow: 0 8px 22px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --chrome-shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --chrome-shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.13), 0 4px 10px rgba(15, 23, 42, 0.07);
 }
 
 :root[data-theme="chalkboard"],
@@ -1532,12 +1509,9 @@
   --chrome-border: color-mix(in srgb, var(--border-strong) 70%, transparent);
   --chrome-divider: color-mix(in srgb, var(--border-strong) 58%, transparent);
   --chrome-highlight: color-mix(in srgb, var(--fg-1) 12%, transparent);
-  --chrome-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.34), 0 1px 5px rgba(0, 0, 0, 0.26);
-  --chrome-shadow-soft:
-    0 5px 16px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.22);
-  --chrome-shadow-popover:
-    0 22px 54px rgba(0, 0, 0, 0.46), 0 5px 14px rgba(0, 0, 0, 0.34);
+  --chrome-shadow: 0 10px 28px rgba(0, 0, 0, 0.34), 0 1px 5px rgba(0, 0, 0, 0.26);
+  --chrome-shadow-soft: 0 5px 16px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --chrome-shadow-popover: 0 22px 54px rgba(0, 0, 0, 0.46), 0 5px 14px rgba(0, 0, 0, 0.34);
 }
 
 html,
@@ -1737,8 +1711,7 @@ a:focus-visible,
 .map-field-button.is-accent {
   background: var(--accent);
   color: var(--fg-on-color);
-  box-shadow: inset 0 0 0 1px
-    color-mix(in srgb, var(--fg-on-color) 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg-on-color) 18%, transparent);
 }
 
 /* Keep the accent fill on hover (the generic :hover chrome tint sits at equal
@@ -2284,11 +2257,7 @@ textarea.authoring-control {
 /* Canvas backdrops */
 .atlas-dots {
   background-color: var(--bg);
-  background-image: radial-gradient(
-    circle,
-    var(--grid-dot) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
@@ -2317,22 +2286,10 @@ textarea.authoring-control {
   --sandbox-rail-border: var(--chrome-border);
   --sandbox-row: transparent;
   --sandbox-row-hover: color-mix(in srgb, var(--fg-1) 5%, transparent);
-  --sandbox-row-selected: color-mix(
-    in srgb,
-    var(--accent-soft) 42%,
-    transparent
-  );
-  --sandbox-row-selected-border: color-mix(
-    in srgb,
-    var(--accent-border) 70%,
-    transparent
-  );
+  --sandbox-row-selected: color-mix(in srgb, var(--accent-soft) 42%, transparent);
+  --sandbox-row-selected-border: color-mix(in srgb, var(--accent-border) 70%, transparent);
   --sandbox-field: color-mix(in srgb, var(--surface) 58%, transparent);
-  --sandbox-field-focus: color-mix(
-    in srgb,
-    var(--accent-soft) 28%,
-    var(--surface) 72%
-  );
+  --sandbox-field-focus: color-mix(in srgb, var(--accent-soft) 28%, var(--surface) 72%);
   --sandbox-field-border: color-mix(in srgb, var(--border) 54%, transparent);
   --sandbox-control: color-mix(in srgb, var(--fg-1) 6%, transparent);
   --sandbox-control-hover: color-mix(in srgb, var(--fg-1) 10%, transparent);
@@ -2495,8 +2452,7 @@ textarea.authoring-control {
 .sandbox-section-header:focus-visible {
   outline: none;
   background: color-mix(in srgb, var(--accent-soft) 22%, transparent);
-  box-shadow: inset 0 0 0 1px
-    color-mix(in srgb, var(--accent-border) 70%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-border) 70%, transparent);
 }
 
 .sandbox-section-icon {
@@ -2607,8 +2563,7 @@ textarea.authoring-control {
 .sandbox-field-frame:focus-within {
   background: var(--sandbox-field-focus);
   border-color: var(--accent-border);
-  box-shadow: inset 0 0 0 1px
-    color-mix(in srgb, var(--accent-border) 26%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-border) 26%, transparent);
 }
 
 .sandbox-row-readout {
@@ -2800,8 +2755,7 @@ textarea.authoring-control {
 }
 
 .sandbox-expression-row[data-selected="true"]:hover .sandbox-row-controls,
-.sandbox-expression-row[data-selected="true"]:focus-within
-  .sandbox-row-controls {
+.sandbox-expression-row[data-selected="true"]:focus-within .sandbox-row-controls {
   opacity: 1;
 }
 

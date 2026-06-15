@@ -1,16 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { MathText } from "../../lib/katex";
-import {
-  DIA,
-  FONT,
-  FigureFrame,
-  LaTeX,
-  Line,
-  Polygon,
-  STROKE,
-  Text,
-} from "./FigureFrame";
+import { DIA, FONT, FigureFrame, LaTeX, Line, Polygon, STROKE, Text } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { SegmentedControl } from "./SegmentedControl";
 import { type FigureProps } from "./types";
@@ -45,7 +36,12 @@ export default function UniformBoundednessFigure(_props: FigureProps) {
 
   return (
     <figure className="m-0">
-      <FigureFrame xDomain={[0.3, MAX_OPS + 0.7]} yDomain={[-0.16 * yMax, yMax]} height={190} grid={false}>
+      <FigureFrame
+        xDomain={[0.3, MAX_OPS + 0.7]}
+        yDomain={[-0.16 * yMax, yMax]}
+        height={190}
+        grid={false}
+      >
         <Line.Segment
           point1={[0.5, 0]}
           point2={[MAX_OPS + 0.5, 0]}
@@ -84,10 +80,19 @@ export default function UniformBoundednessFigure(_props: FigureProps) {
             </g>
           );
         })}
-        <LaTeX at={[2.6, CEILING + 0.06 * yMax]} tex={String.raw`\sup_\alpha\|T_\alpha\|`} color={bounded ? DIA.ok : DIA.alert} />
+        <LaTeX
+          at={[2.6, CEILING + 0.06 * yMax]}
+          tex={String.raw`\sup_\alpha\|T_\alpha\|`}
+          color={bounded ? DIA.ok : DIA.alert}
+        />
         <LaTeX at={[8.5, yMax - 0.12 * yMax]} tex={String.raw`\|T_n\|`} color={DIA.accent} />
       </FigureFrame>
-      <SegmentedControl value={mode} options={MODE_OPTIONS} onChange={setMode} ariaLabel="Domain completeness" />
+      <SegmentedControl
+        value={mode}
+        options={MODE_OPTIONS}
+        onChange={setMode}
+        ariaLabel="Domain completeness"
+      />
       <RangeControl
         min={3}
         max={MAX_OPS}

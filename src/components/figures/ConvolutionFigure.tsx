@@ -78,13 +78,25 @@ export default function ConvolutionFigure(_: FigureProps) {
               <Line.Segment point1={[1, 0]} point2={[1, 1]} color={DIA.accent} />
             </Transform>
             {overlap && (
-              <Polygon points={overlap} color={DIA.alert} fillOpacity={0.38} strokeOpacity={0.95} weight={STROKE.mark} />
+              <Polygon
+                points={overlap}
+                color={DIA.alert}
+                fillOpacity={0.38}
+                strokeOpacity={0.95}
+                weight={STROKE.mark}
+              />
             )}
 
             <Line.Segment point1={[-1, 0]} point2={[-1, 1]} color={DIA.faint} />
             <Line.Segment point1={[1, 0]} point2={[1, 1]} color={DIA.faint} />
 
-            <Line.Segment point1={[-3, 1.2]} point2={[3, 1.2]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
+            <Line.Segment
+              point1={[-3, 1.2]}
+              point2={[3, 1.2]}
+              color={DIA.muted}
+              weight={STROKE.guide}
+              style="dashed"
+            />
             <Vector tail={[0, 1.2]} tip={[s, 1.2]} color={DIA.accent} weight={STROKE.mark} />
             <Text x={s} y={1.35} color={DIA.accent} size={FONT.tick}>
               s
@@ -96,7 +108,9 @@ export default function ConvolutionFigure(_: FigureProps) {
             className="absolute bottom-2 left-3 rounded-[var(--radius-xs)] px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
             style={{ background: PANEL_BACKING }}
           >
-            <MathText text={`$s=${s.toFixed(1)},\\quad \\operatorname{overlap}=${value.toFixed(2)}$`} />
+            <MathText
+              text={`$s=${s.toFixed(1)},\\quad \\operatorname{overlap}=${value.toFixed(2)}$`}
+            />
           </div>
         </section>
 
@@ -115,7 +129,12 @@ export default function ConvolutionFigure(_: FigureProps) {
             <Line.Segment point1={[-4, 0]} point2={[4, 0]} color={DIA.muted} />
             <Line.Segment point1={[s, 0]} point2={[s, value]} color={DIA.muted} />
 
-            <FunctionCurve y={boxConvolution} domain={[-2, 2]} color={DIA.accent} weight={STROKE.curve} />
+            <FunctionCurve
+              y={boxConvolution}
+              domain={[-2, 2]}
+              color={DIA.accent}
+              weight={STROKE.curve}
+            />
 
             <Point x={s} y={value} color={DIA.alert} />
             <Vector tail={[s, 0]} tip={[s, value]} color={DIA.alert} weight={STROKE.mark} />

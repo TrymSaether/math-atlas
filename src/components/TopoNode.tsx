@@ -2,7 +2,13 @@ import { memo, useEffect, useRef, type CSSProperties } from "react";
 import { Handle, Position, type NodeProps } from "reactflow";
 import { getDomainTone } from "../lib/colors";
 import { MathText } from "../lib/katex";
-import { CATEGORY_META, categoryOf, kindAbbrev, railBackground, type NodeCategory } from "../lib/nodeCategory";
+import {
+  CATEGORY_META,
+  categoryOf,
+  kindAbbrev,
+  railBackground,
+  type NodeCategory,
+} from "../lib/nodeCategory";
 import { CATEGORY_ICON } from "../lib/nodeCategoryIcons";
 import { cn, prefersReducedMotion } from "../lib/utils";
 import { useStore } from "../store";
@@ -30,15 +36,7 @@ function handleStyle(color?: string): CSSProperties {
 }
 
 function TopoNodeViewComponent({ data }: NodeProps<Data>) {
-  const {
-    node,
-    dim,
-    isSelected,
-    isRelated,
-    hasIncoming,
-    hasOutgoing,
-    handleColor,
-  } = data;
+  const { node, dim, isSelected, isRelated, hasIncoming, hasOutgoing, handleColor } = data;
   const select = useStore((s) => s.select);
   const routeMode = useStore((s) => s.routeMode);
   const pickRoutePoint = useStore((s) => s.pickRoutePoint);

@@ -26,10 +26,7 @@ export interface EditResult {
 }
 
 /** What the node editor dialog is doing, if open. */
-export type NodeEditorState =
-  | { mode: "create" }
-  | { mode: "edit"; nodeId: string }
-  | null;
+export type NodeEditorState = { mode: "create" } | { mode: "edit"; nodeId: string } | null;
 
 export type SearchScope = "all" | "title";
 export type ViewMode = "dependency" | "cluster";
@@ -265,7 +262,9 @@ function isEdgeLabelStyle(value: unknown): value is EdgeLabelStyle {
 }
 
 function isSurface(value: unknown): value is Surface {
-  return value === "atlas" || value === "dictionary" || value === "flashcards" || value === "sandbox";
+  return (
+    value === "atlas" || value === "dictionary" || value === "flashcards" || value === "sandbox"
+  );
 }
 
 function normalizedFocusDepth(value: unknown): number | undefined {
@@ -310,7 +309,8 @@ function normalizePersistedState(value: unknown | null): PersistedState | null {
     showRegions: asBoolean(value.showRegions),
     showMinimap: asBoolean(value.showMinimap),
     surface: isSurface(value.surface) ? value.surface : undefined,
-    routeKind: value.routeKind === "prereq" || value.routeKind === "path" ? value.routeKind : undefined,
+    routeKind:
+      value.routeKind === "prereq" || value.routeKind === "path" ? value.routeKind : undefined,
     maps,
   };
 }
@@ -365,12 +365,17 @@ function setFromPersisted<T extends string>(
 
 function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefined) {
   const validNodeIds = new Set(map.data.nodes.map((node) => node.id));
-  const selectedId = saved?.selectedId && validNodeIds.has(saved.selectedId) ? saved.selectedId : null;
+  const selectedId =
+    saved?.selectedId && validNodeIds.has(saved.selectedId) ? saved.selectedId : null;
 
   return {
     search: saved?.search ?? "",
     kinds: setFromPersisted(saved?.kinds, map.kinds, defaultVisibleKinds(map.kinds)),
-    topics: setFromPersisted(saved?.topics, map.data.domains.map((domain) => domain.id), []),
+    topics: setFromPersisted(
+      saved?.topics,
+      map.data.domains.map((domain) => domain.id),
+      [],
+    ),
     relations: setFromPersisted(saved?.relations, map.relations, map.relations),
     selectedId,
     // Routes are transient exploration state — never restored, so the map opens
@@ -380,7 +385,6 @@ function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefin
     routeTo: null,
   };
 }
-
 
 function initialEditedMaps(): Set<MapId> {
   const edited = new Set<MapId>();
@@ -452,8 +456,7 @@ export const useStore = create<State>((set, get) => ({
         if (state.mapId !== mapId) {
           return {
             loadedMaps,
-            loadingMapId:
-              state.loadingMapId === mapId ? null : state.loadingMapId,
+            loadingMapId: state.loadingMapId === mapId ? null : state.loadingMapId,
           };
         }
 
@@ -517,7 +520,8 @@ export const useStore = create<State>((set, get) => ({
     }),
   showSoftDeps: persistedState?.showSoftDeps ?? false,
   toggleSoftDeps: () => set((s) => ({ showSoftDeps: !s.showSoftDeps })),
-  edgeStyle: persistedState?.edgeStyle ?? (persistedState?.view === "cluster" ? "bezier" : "smooth"),
+  edgeStyle:
+    persistedState?.edgeStyle ?? (persistedState?.view === "cluster" ? "bezier" : "smooth"),
   setEdgeStyle: (edgeStyle) => set({ edgeStyle }),
   edgeLabelStyle: persistedState?.edgeLabelStyle ?? "prose",
   setEdgeLabelStyle: (edgeLabelStyle) => set({ edgeLabelStyle }),
@@ -563,11 +567,22 @@ export const useStore = create<State>((set, get) => ({
     set((s) => {
       if (s.routeKind === "prereq") {
         // One pick = the goal; its prerequisite cone resolves immediately.
-        return { routeTo: id, routeFrom: null, routeMode: false, tourIndex: null, routeRunKey: s.routeRunKey + 1 };
+        return {
+          routeTo: id,
+          routeFrom: null,
+          routeMode: false,
+          tourIndex: null,
+          routeRunKey: s.routeRunKey + 1,
+        };
       }
       if (!s.routeFrom) {
         if (s.routeTo && id !== s.routeTo) {
-          return { routeFrom: id, routeMode: false, tourIndex: null, routeRunKey: s.routeRunKey + 1 };
+          return {
+            routeFrom: id,
+            routeMode: false,
+            tourIndex: null,
+            routeRunKey: s.routeRunKey + 1,
+          };
         }
         return { routeFrom: id, routeTo: null };
       }

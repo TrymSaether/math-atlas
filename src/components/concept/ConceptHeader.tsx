@@ -16,8 +16,7 @@ export function ConceptHeader({
   size?: "panel" | "card";
 }) {
   const { tone, glyphId, domainLabel, kindLabel, compactRef } = view;
-  const titleClass =
-    size === "card" ? "text-atlas-card" : "text-node-panel-title";
+  const titleClass = size === "card" ? "text-atlas-card" : "text-node-panel-title";
   return (
     <div className="flex items-start gap-2.5">
       <span
@@ -44,10 +43,7 @@ export function ConceptHeader({
             {glyphId ? (
               <DomainGlyph id={glyphId} size={12} />
             ) : (
-              <span
-                className="h-1.5 w-1.5 rounded-full"
-                style={{ background: tone.color }}
-              />
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: tone.color }} />
             )}
             {domainLabel}
           </span>
@@ -59,13 +55,7 @@ export function ConceptHeader({
   );
 }
 
-function MetaPill({
-  children,
-  mono = false,
-}: {
-  children: React.ReactNode;
-  mono?: boolean;
-}) {
+function MetaPill({ children, mono = false }: { children: React.ReactNode; mono?: boolean }) {
   return (
     <span
       className={`rounded-full px-2 py-0.5 text-ui-meta ${mono ? "font-mono text-ui-hint" : ""}`}

@@ -68,9 +68,7 @@ function makeWorkspace(
   } = {},
 ): Workspace {
   const { rows, values } = buildRows(specs, opts.source ?? "atlas", id);
-  const marks: Mark[] = (opts.marks ?? []).map(
-    (m) => ({ ...m, id: uid("mark") }) as Mark,
-  );
+  const marks: Mark[] = (opts.marks ?? []).map((m) => ({ ...m, id: uid("mark") }) as Mark);
   return { id, title, rows, values, viewport, views: [], marks };
 }
 
@@ -79,13 +77,9 @@ const SQUARE: ViewRect = { xmin: -10, xmax: 10, ymin: -7, ymax: 7 };
 // ---------------------------------------------------------------------------
 
 export const WORKSPACES: Record<string, Workspace> = {
-  blank: makeWorkspace(
-    "blank",
-    "Blank workspace",
-    [{ source: "f(x) = x^2" }],
-    SQUARE,
-    { source: "example" },
-  ),
+  blank: makeWorkspace("blank", "Blank workspace", [{ source: "f(x) = x^2" }], SQUARE, {
+    source: "example",
+  }),
 
   "parabola-vertex": makeWorkspace(
     "parabola-vertex",

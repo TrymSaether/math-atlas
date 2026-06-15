@@ -12,14 +12,7 @@ import { table } from "../reporters/table";
 import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color";
 import { pct, padStart } from "../utils/text";
 
-const FACETS = [
-  "body",
-  "proof",
-  "examples",
-  "diagram",
-  "intuition",
-  "notation",
-] as const;
+const FACETS = ["body", "proof", "examples", "diagram", "intuition", "notation"] as const;
 type Facet = (typeof FACETS)[number];
 
 function has(node: CliMap["nodes"][number], key: string): boolean {
@@ -32,15 +25,10 @@ function score(nodes: CliMap["nodes"], facet: Facet): [number, number] {
   switch (facet) {
     case "body": {
       const den = nodes.filter((n) =>
-        ["definition", "theorem", "structure", "construction"].includes(
-          categoryOf(n.kind),
-        ),
+        ["definition", "theorem", "structure", "construction"].includes(categoryOf(n.kind)),
       );
       return [
-        den.filter(
-          (n) =>
-            has(n, "definition") || has(n, "statement") || has(n, "formal"),
-        ).length,
+        den.filter((n) => has(n, "definition") || has(n, "statement") || has(n, "formal")).length,
         den.length,
       ];
     }
@@ -55,10 +43,7 @@ function score(nodes: CliMap["nodes"], facet: Facet): [number, number] {
     case "intuition":
       return [nodes.filter((n) => has(n, "intuition")).length, nodes.length];
     case "notation":
-      return [
-        nodes.filter((n) => (n.content.notation ?? []).length > 0).length,
-        nodes.length,
-      ];
+      return [nodes.filter((n) => (n.content.notation ?? []).length > 0).length, nodes.length];
   }
 }
 
@@ -73,9 +58,7 @@ function cell([num, den]: [number, number]): string {
 }
 
 function renderMap(map: CliMap): void {
-  process.stdout.write(
-    "\n" + bold(cyan(map.label)) + dim(`  ${map.id}`) + "\n\n",
-  );
+  process.stdout.write("\n" + bold(cyan(map.label)) + dim(`  ${map.id}`) + "\n\n");
 
   const rows = map.domainsByOrder.map((d) => {
     const nodes = map.nodes.filter((n) => n.domain === d.id);
@@ -125,9 +108,7 @@ function run(ctx: Ctx): number {
             return {
               domain: d.id,
               n: nodes.length,
-              ...Object.fromEntries(
-                FACETS.map((f) => [f, pct(...score(nodes, f))]),
-              ),
+              ...Object.fromEntries(FACETS.map((f) => [f, pct(...score(nodes, f))])),
             };
           }),
         })),
@@ -137,9 +118,7 @@ function run(ctx: Ctx): number {
     );
     return 0;
   }
-  process.stdout.write(
-    "\n" + bold("atlas coverage") + gray(`  ·  ${maps.length} map(s)`) + "\n",
-  );
+  process.stdout.write("\n" + bold("atlas coverage") + gray(`  ·  ${maps.length} map(s)`) + "\n");
   for (const m of maps) renderMap(m);
   process.stdout.write("\n");
   return 0;

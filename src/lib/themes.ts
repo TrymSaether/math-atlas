@@ -243,9 +243,7 @@ export function schemeFor(themeId: string): ColorScheme {
 export function siblingOf(themeId: string): string {
   const theme = THEME_BY_ID.get(themeId);
   if (!theme) return DEFAULT_THEME_ID;
-  const sib = THEMES.find(
-    (t) => t.family === theme.family && t.scheme !== theme.scheme,
-  );
+  const sib = THEMES.find((t) => t.family === theme.family && t.scheme !== theme.scheme);
   return sib?.id ?? themeId;
 }
 

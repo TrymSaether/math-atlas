@@ -176,10 +176,7 @@ export const KIND_ABBREV: Record<string, string> = {
 };
 
 export function kindAbbrev(kind: string): string {
-  return (
-    KIND_ABBREV[kind] ??
-    kind.slice(0, 3).replace(/^\w/, (char) => char.toUpperCase())
-  );
+  return KIND_ABBREV[kind] ?? kind.slice(0, 3).replace(/^\w/, (char) => char.toUpperCase());
 }
 
 export function isExerciseKind(kind: string): boolean {
@@ -197,9 +194,7 @@ export const DEFAULT_VISIBLE_CATEGORIES: NodeCategory[] = [
 ];
 
 /** Raw kinds present in the map, grouped by category in display order. */
-export function kindsByCategory(
-  kinds: string[],
-): { category: NodeCategory; kinds: string[] }[] {
+export function kindsByCategory(kinds: string[]): { category: NodeCategory; kinds: string[] }[] {
   return CATEGORY_ORDER.map((category) => ({
     category,
     kinds: kinds.filter((k) => categoryOf(k) === category),
@@ -208,7 +203,5 @@ export function kindsByCategory(
 
 /** The default visible kind set: every kind whose category is shown by default. */
 export function defaultVisibleKinds(kinds: string[]): string[] {
-  return kinds.filter((k) =>
-    DEFAULT_VISIBLE_CATEGORIES.includes(categoryOf(k)),
-  );
+  return kinds.filter((k) => DEFAULT_VISIBLE_CATEGORIES.includes(categoryOf(k)));
 }

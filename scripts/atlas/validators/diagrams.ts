@@ -7,11 +7,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import type { CliMap } from "../core/model";
 import type { Workspace } from "../core/workspace";
-import {
-  type Diagnostic,
-  warning,
-  suggestion,
-} from "../diagnostics/diagnostic";
+import { type Diagnostic, warning, suggestion } from "../diagnostics/diagnostic";
 
 /** Map a leading-slash public URL to an absolute filesystem path. */
 export function diagramFsPath(ws: Workspace, ref: string): string {

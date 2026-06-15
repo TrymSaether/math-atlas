@@ -16,9 +16,7 @@ import {
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
-const PROBE_VALUES = [
-  1, 0.72, 0.52, 0.38, 0.28, 0.2, 0.15, 0.11, 0.08, 0.06, 0.045, 0.034,
-];
+const PROBE_VALUES = [1, 0.72, 0.52, 0.38, 0.28, 0.2, 0.15, 0.11, 0.08, 0.06, 0.045, 0.034];
 
 function probeValue(n: number): number {
   return PROBE_VALUES[n - 1] ?? 1 / (n + 1);
@@ -36,26 +34,13 @@ export default function WeakConvergenceFigure({ nodeId }: FigureProps) {
   const [n, setN] = useState(5);
   const value = probeValue(n);
   const weakStar = isWeakStarNode(nodeId);
-  const bars = useMemo(
-    () => Array.from({ length: 12 }, (_, i) => probeValue(i + 1)),
-    [],
-  );
+  const bars = useMemo(() => Array.from({ length: 12 }, (_, i) => probeValue(i + 1)), []);
   const selectedLabel = weakStar ? "$x_n^*(x)$" : "$x^*(e_n)$";
 
   return (
     <figure className="m-0">
-      <FigureFrame
-        xDomain={[0.2, 12.8]}
-        yDomain={[-0.2, 1.2]}
-        height={190}
-        grid={false}
-      >
-        <Line.Segment
-          point1={[0.5, 0]}
-          point2={[12.5, 0]}
-          color={DIA.ink}
-          weight={STROKE.guide}
-        />
+      <FigureFrame xDomain={[0.2, 12.8]} yDomain={[-0.2, 1.2]} height={190} grid={false}>
+        <Line.Segment point1={[0.5, 0]} point2={[12.5, 0]} color={DIA.ink} weight={STROKE.guide} />
         <Line.Segment
           point1={[0.5, 1]}
           point2={[12.5, 1]}
@@ -99,11 +84,7 @@ export default function WeakConvergenceFigure({ nodeId }: FigureProps) {
         />
         <LaTeX
           at={[8.85, 0.24]}
-          tex={
-            weakStar
-              ? String.raw`x_n^*(x)\to x^*(x)`
-              : String.raw`x^*(e_n)\to 0`
-          }
+          tex={weakStar ? String.raw`x_n^*(x)\to x^*(x)` : String.raw`x^*(e_n)\to 0`}
         />
       </FigureFrame>
       <RangeControl
@@ -114,10 +95,7 @@ export default function WeakConvergenceFigure({ nodeId }: FigureProps) {
         label={`n = ${n}`}
         ariaLabel="Sequence index n"
       />
-      <figcaption
-        className="mt-1.5 text-ui-meta"
-        style={{ color: "var(--fg-3)" }}
-      >
+      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         <MathText
           text={
             weakStar

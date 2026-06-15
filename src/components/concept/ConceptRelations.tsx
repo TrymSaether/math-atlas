@@ -1,9 +1,6 @@
 import { useState } from "react";
 import type { LoadedMap } from "../../data";
-import type {
-  ConceptRelations as Relations,
-  RelationLink,
-} from "../../lib/conceptView";
+import type { ConceptRelations as Relations, RelationLink } from "../../lib/conceptView";
 import { ConnectionChip } from "../Specimen";
 
 /**
@@ -29,9 +26,7 @@ export function ConceptRelations({
   /** Collapse long groups behind a "+N more" toggle (the panel uses 8). */
   initialPerGroup?: number;
 }) {
-  const groups = relations.groups.filter(
-    (g) => includeSeeAlso || g.key !== "related_to",
-  );
+  const groups = relations.groups.filter((g) => includeSeeAlso || g.key !== "related_to");
   if (groups.length === 0) return null;
 
   return (
@@ -46,12 +41,7 @@ export function ConceptRelations({
               {g.label}
             </div>
           )}
-          <ChipRow
-            links={g.links}
-            map={map}
-            onSelect={onSelect}
-            initial={initialPerGroup}
-          />
+          <ChipRow links={g.links} map={map} onSelect={onSelect} initial={initialPerGroup} />
         </section>
       ))}
     </div>
@@ -75,12 +65,7 @@ function ChipRow({
   return (
     <div className="flex flex-wrap gap-1.5">
       {visible.map((link) => (
-        <ConnectionChip
-          key={link.id}
-          id={link.id}
-          map={map}
-          onClick={() => onSelect(link.id)}
-        />
+        <ConnectionChip key={link.id} id={link.id} map={map} onClick={() => onSelect(link.id)} />
       ))}
       {hidden > 0 && (
         <button

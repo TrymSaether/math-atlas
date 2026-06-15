@@ -11,7 +11,15 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import { BookmarkSimple, CaretDown, CornersOut, FolderSimple, Minus, Plus, X } from "@phosphor-icons/react";
+import {
+  BookmarkSimple,
+  CaretDown,
+  CornersOut,
+  FolderSimple,
+  Minus,
+  Plus,
+  X,
+} from "@phosphor-icons/react";
 import { Pill, DockButton } from "../chrome/Pill";
 import { cn } from "../../lib/utils";
 import { useSandbox } from "../../lib/workspace/store";
@@ -87,16 +95,32 @@ export function SandboxView() {
             </Pill>
           )}
           <Pill orientation="vertical" variant="soft" className="canvas-dock pointer-events-auto">
-            <DockButton label="Zoom in" title="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
+            <DockButton
+              label="Zoom in"
+              title="Zoom in"
+              onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}
+            >
               <Plus className="h-4 w-4" weight="regular" />
             </DockButton>
-            <DockButton label="Zoom out" title="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
+            <DockButton
+              label="Zoom out"
+              title="Zoom out"
+              onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}
+            >
               <Minus className="h-4 w-4" weight="regular" />
             </DockButton>
-            <DockButton label="Reset view" title="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
+            <DockButton
+              label="Reset view"
+              title="Reset view"
+              onClick={() => setViewport({ ...DEFAULT_RECT })}
+            >
               <CornersOut className="h-4 w-4" weight="regular" />
             </DockButton>
-            <DockButton label="Save view" title="Save current view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
+            <DockButton
+              label="Save view"
+              title="Save current view"
+              onClick={() => saveView(`view ${ws.views.length + 1}`)}
+            >
               <BookmarkSimple className="h-4 w-4" weight="regular" />
             </DockButton>
           </Pill>
@@ -154,7 +178,8 @@ function WorkspaceMenu() {
         <span className="min-w-0 flex-1">
           <span className="block truncate text-ui-sm font-semibold">{ws.title}</span>
           <span className="sandbox-workspace-meta block truncate font-mono text-ui-2xs uppercase tracking-label-tight">
-            {ws.rows.length} expressions · {issueCount > 0 ? `${issueCount} issue${issueCount === 1 ? "" : "s"}` : "ready"}
+            {ws.rows.length} expressions ·{" "}
+            {issueCount > 0 ? `${issueCount} issue${issueCount === 1 ? "" : "s"}` : "ready"}
           </span>
         </span>
         <CaretDown

@@ -24,21 +24,16 @@ import { SourceGraphSchema } from "../src/data/sourceSchema";
 import { buildArtifact } from "../src/data/buildArtifact";
 
 const MAPS_DIR =
-  process.env.MAPS_DIR ??
-  fileURLToPath(new URL("../src/data/maps", import.meta.url));
+  process.env.MAPS_DIR ?? fileURLToPath(new URL("../src/data/maps", import.meta.url));
 const checkOnly = process.argv.includes("--check");
 
 function formatIssues(file: string, error: import("zod").ZodError): string {
-  const lines = error.issues.map(
-    (i) => `  ✗ ${i.path.join(".") || "(root)"}: ${i.message}`,
-  );
+  const lines = error.issues.map((i) => `  ✗ ${i.path.join(".") || "(root)"}: ${i.message}`);
   return `${file}: ${error.issues.length} issue(s)\n${lines.join("\n")}`;
 }
 
 function main(): void {
-  const sources = readdirSync(MAPS_DIR).filter((f) =>
-    f.endsWith(".source.json"),
-  );
+  const sources = readdirSync(MAPS_DIR).filter((f) => f.endsWith(".source.json"));
   if (sources.length === 0) {
     console.error("No *.source.json files found in", MAPS_DIR);
     process.exit(1);

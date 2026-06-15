@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useRef } from "react";
-import ReactFlow, { useReactFlow, useViewport, type Edge, type Node, type Viewport } from "reactflow";
+import ReactFlow, {
+  useReactFlow,
+  useViewport,
+  type Edge,
+  type Node,
+  type Viewport,
+} from "reactflow";
 import type { LoadedMap, MapId } from "../data";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout } from "../lib/atlasLayout";
 import { getDomainTone } from "../lib/colors";
@@ -46,7 +52,11 @@ function isFiniteNumber(value: unknown): value is number {
 function normalizeViewport(value: unknown): Viewport | null {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
   const candidate = value as Partial<Viewport>;
-  if (!isFiniteNumber(candidate.x) || !isFiniteNumber(candidate.y) || !isFiniteNumber(candidate.zoom)) {
+  if (
+    !isFiniteNumber(candidate.x) ||
+    !isFiniteNumber(candidate.y) ||
+    !isFiniteNumber(candidate.zoom)
+  ) {
     return null;
   }
   return {
@@ -66,7 +76,12 @@ function readViewportState(): PersistedViewportState {
       return { version: 1, maps: {} };
     }
     const record = parsed as { version?: unknown; maps?: unknown };
-    if (record.version !== 1 || typeof record.maps !== "object" || record.maps === null || Array.isArray(record.maps)) {
+    if (
+      record.version !== 1 ||
+      typeof record.maps !== "object" ||
+      record.maps === null ||
+      Array.isArray(record.maps)
+    ) {
       return { version: 1, maps: {} };
     }
     return { version: 1, maps: record.maps as PersistedViewportState["maps"] };
@@ -123,7 +138,9 @@ function InnerGraph() {
 
 function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const view = useStore((s) => s.view);
-  const search = useStore((s) => s.search).toLowerCase().trim();
+  const search = useStore((s) => s.search)
+    .toLowerCase()
+    .trim();
   const searchScope = useStore((s) => s.searchScope);
   const kinds = useStore((s) => s.kinds);
   const topics = useStore((s) => s.topics);
@@ -190,9 +207,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   // and the leaves nothing depends on. Drives node emphasis (size/weight).
   const emphasisById = useMemo(() => {
     const impact = map.metrics.impactByNodeId;
-    const ranked = [...impact.entries()]
-      .filter(([, v]) => v > 0)
-      .sort((a, b) => b[1] - a[1]);
+    const ranked = [...impact.entries()].filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]);
     const landmarkCount = Math.min(14, Math.ceil(ranked.length * 0.1));
     const landmarks = new Set(ranked.slice(0, landmarkCount).map(([id]) => id));
     const tier = new Map<string, NodeEmphasis>();
@@ -361,8 +376,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       const emphasis = emphasisById.get(node.id) ?? "normal";
       const handleColor = getDomainTone(node.domain).color;
       const routePulseDelay = routeViz.nodePulse.get(node.id);
-      const routeEndpoint =
-        node.id === routeFrom ? "from" : node.id === routeTo ? "to" : undefined;
+      const routeEndpoint = node.id === routeFrom ? "from" : node.id === routeTo ? "to" : undefined;
 
       const prev = prevCache.get(node.id);
       const reuse =
@@ -411,7 +425,20 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
     dataCacheRef.current = nextCache;
     return result;
-  }, [filteredNodes, activeLayout.positions, selectedId, contextIds, visibleIds, nodeHandleState, emphasisById, lod, routeViz, routeFrom, routeTo, routeRunKey]);
+  }, [
+    filteredNodes,
+    activeLayout.positions,
+    selectedId,
+    contextIds,
+    visibleIds,
+    nodeHandleState,
+    emphasisById,
+    lod,
+    routeViz,
+    routeFrom,
+    routeTo,
+    routeRunKey,
+  ]);
 
   const nodes = useMemo(() => [...regionNodes, ...conceptNodes], [regionNodes, conceptNodes]);
 
@@ -429,8 +456,20 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       // on) are a supplementary overlay and skip reduction. Highlighted/focused/
       // route edges always stay so cones and the traced path read complete.
       const isHard = classifyEdge(edge) === "hard";
-      if (view === "dependency" && isHard && !reduced.has(edge.id) && !highlight && !focused && !onRoute) continue;
-      const dim = !onRoute && selectedId !== null && visibleIds.has(selectedId) && (focusSet ? !inFocus : !highlight);
+      if (
+        view === "dependency" &&
+        isHard &&
+        !reduced.has(edge.id) &&
+        !highlight &&
+        !focused &&
+        !onRoute
+      )
+        continue;
+      const dim =
+        !onRoute &&
+        selectedId !== null &&
+        visibleIds.has(selectedId) &&
+        (focusSet ? !inFocus : !highlight);
       // Low zoom: only keep edges incident to the selection (or whole focus set).
       if (edgeLODHidden && !highlight && !focused && !onRoute) continue;
       out.push({
@@ -442,12 +481,25 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
           edge,
           highlight,
           dim,
-          routeReveal: onRoute ? { delay: routeDelay, runKey: routeRunKey, color: ROUTE_COLOR } : undefined,
+          routeReveal: onRoute
+            ? { delay: routeDelay, runKey: routeRunKey, color: ROUTE_COLOR }
+            : undefined,
         },
       });
     }
     return out;
-  }, [filteredEdges, highlightedEdgeIds, focusSet, selectedId, visibleIds, edgeLODHidden, view, map.metrics.reducedEdgeIds, routeViz, routeRunKey]);
+  }, [
+    filteredEdges,
+    highlightedEdgeIds,
+    focusSet,
+    selectedId,
+    visibleIds,
+    edgeLODHidden,
+    view,
+    map.metrics.reducedEdgeIds,
+    routeViz,
+    routeRunKey,
+  ]);
 
   // Default view shows the entire map. The swimlane layout is built to be
   // compact (bands hug their content) so fit-all reads as a legible overview
@@ -482,11 +534,10 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     if (!selectedId) return;
     const position = activeLayout.positions.get(selectedId);
     if (!position) return;
-    rf.setCenter(
-      position.x + ATLAS_NODE_WIDTH / 2,
-      position.y + ATLAS_NODE_HEIGHT / 2,
-      { zoom: Math.max(0.9, rf.getZoom()), duration: 450 },
-    );
+    rf.setCenter(position.x + ATLAS_NODE_WIDTH / 2, position.y + ATLAS_NODE_HEIGHT / 2, {
+      zoom: Math.max(0.9, rf.getZoom()),
+      duration: 450,
+    });
   }, [selectedId, activeLayout.positions, rf]);
 
   return (
@@ -507,7 +558,11 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         defaultEdgeOptions={{ type: "topo" }}
       />
       {showMinimap && (
-        <MinimapCard nodes={conceptNodes} regions={activeLayout.domainBounds} selectedId={selectedId} />
+        <MinimapCard
+          nodes={conceptNodes}
+          regions={activeLayout.domainBounds}
+          selectedId={selectedId}
+        />
       )}
       <CanvasControls
         routeSummary={{

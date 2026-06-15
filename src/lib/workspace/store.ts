@@ -11,12 +11,7 @@
 import { create } from "zustand";
 import type { Value } from "./expr";
 import { compile, type CompiledWorkspace } from "./engine";
-import {
-  emptyWorkspace,
-  loadWorkspace,
-  newId,
-  PALETTE,
-} from "./library";
+import { emptyWorkspace, loadWorkspace, newId, PALETTE } from "./library";
 import type { DistributiveOmit, Mark, Row, SliderSpec, ViewRect, Workspace } from "./types";
 
 interface SandboxState {
@@ -157,8 +152,7 @@ export const useSandbox = create<SandboxState>((set, _get) => {
         return recompile({ ...s.ws, rows, values: { ...s.ws.values, [id]: value } });
       }),
 
-    setPoint: (id, p) =>
-      set((s) => recompile({ ...s.ws, values: { ...s.ws.values, [id]: p } })),
+    setPoint: (id, p) => set((s) => recompile({ ...s.ws, values: { ...s.ws.values, [id]: p } })),
 
     setViewport: (rect) => set((s) => ({ ws: { ...s.ws, viewport: rect } })),
 
@@ -166,10 +160,7 @@ export const useSandbox = create<SandboxState>((set, _get) => {
       set((s) => ({
         ws: {
           ...s.ws,
-          views: [
-            ...s.ws.views,
-            { id: newId("view"), name, rect: { ...s.ws.viewport } },
-          ],
+          views: [...s.ws.views, { id: newId("view"), name, rect: { ...s.ws.viewport } }],
         },
       })),
 

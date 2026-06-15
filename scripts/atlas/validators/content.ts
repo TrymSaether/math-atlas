@@ -5,11 +5,7 @@
  * suggestion, not a warning.
  */
 import type { CliMap } from "../core/model";
-import {
-  type Diagnostic,
-  warning,
-  suggestion,
-} from "../diagnostics/diagnostic";
+import { type Diagnostic, warning, suggestion } from "../diagnostics/diagnostic";
 import { categoryOf } from "../../../src/lib/nodeCategory";
 
 export function run(map: CliMap): Diagnostic[] {
@@ -41,12 +37,7 @@ export function run(map: CliMap): Diagnostic[] {
       );
     }
 
-    if (
-      cat === "definition" &&
-      !has("definition") &&
-      !has("statement") &&
-      !has("formal")
-    ) {
+    if (cat === "definition" && !has("definition") && !has("statement") && !has("formal")) {
       out.push(
         warning({
           ...base,

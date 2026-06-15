@@ -10,12 +10,7 @@
 import { z } from "zod";
 import type { Workspace } from "./model";
 
-const refOrLiteral = z.union([
-  z.string(),
-  z.number(),
-  z.array(z.number()),
-  z.boolean(),
-]);
+const refOrLiteral = z.union([z.string(), z.number(), z.array(z.number()), z.boolean()]);
 
 const markStyle = z
   .object({

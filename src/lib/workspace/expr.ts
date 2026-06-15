@@ -113,15 +113,17 @@ export function parseSource(src: string, multNames?: Set<string>): MathNode {
  */
 export function symbolDeps(node: MathNode, bound: Set<string> = new Set()): string[] {
   const out = new Set<string>();
-  node.filter((n) => (n as MathNode).type === "SymbolNode").forEach((n) => {
-    const name = (n as unknown as { name: string }).name;
-    if (bound.has(name)) return;
-    if (name in CONSTANT_NAMES) return;
-    if (GEOMETRY.has(name)) return;
-    // A name that resolves to a mathjs function/constant isn't a workspace dep.
-    if (isBuiltin(name)) return;
-    out.add(name);
-  });
+  node
+    .filter((n) => (n as MathNode).type === "SymbolNode")
+    .forEach((n) => {
+      const name = (n as unknown as { name: string }).name;
+      if (bound.has(name)) return;
+      if (name in CONSTANT_NAMES) return;
+      if (GEOMETRY.has(name)) return;
+      // A name that resolves to a mathjs function/constant isn't a workspace dep.
+      if (isBuiltin(name)) return;
+      out.add(name);
+    });
   return [...out];
 }
 

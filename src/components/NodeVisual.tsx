@@ -9,13 +9,7 @@ export function hasNodeVisual(node: GraphNode): boolean {
   return Boolean(FIGURE_REGISTRY[node.id] || node.diagram?.trim());
 }
 
-export function NodeVisual({
-  node,
-  className,
-}: {
-  node: GraphNode;
-  className?: string;
-}) {
+export function NodeVisual({ node, className }: { node: GraphNode; className?: string }) {
   const InteractiveFigure = FIGURE_REGISTRY[node.id];
   const diagramPath = node.diagram?.trim() ?? "";
   const frameClassName = cn("block w-full rounded-[var(--radius-md)] border p-3", className);
@@ -40,7 +34,13 @@ export function NodeVisual({
   }
 
   if (diagramPath) {
-    return <ThemedDiagram src={diagramPath} alt={`Diagram for ${node.label}`} className={frameClassName} />;
+    return (
+      <ThemedDiagram
+        src={diagramPath}
+        alt={`Diagram for ${node.label}`}
+        className={frameClassName}
+      />
+    );
   }
 
   return null;

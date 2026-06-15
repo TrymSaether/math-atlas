@@ -27,9 +27,7 @@ function run(ctx: Ctx): number {
     if (!found) throw new CliError(`concept '${id}' not found`);
     process.stdout.write("\n" + bold(`TeX preview — ${id}`) + "\n\n");
     for (const tf of scanTex(found.map).filter((t) => t.conceptId === id)) {
-      process.stdout.write(
-        "  " + dim(tf.field.padEnd(18)) + texToPlain(tf.tex) + "\n",
-      );
+      process.stdout.write("  " + dim(tf.field.padEnd(18)) + texToPlain(tf.tex) + "\n");
     }
     process.stdout.write("\n");
     return 0;
@@ -47,9 +45,7 @@ function run(ctx: Ctx): number {
     return all.length ? 1 : 0;
   }
 
-  process.stdout.write(
-    "\n" + bold("atlas latex check") + dim(`  ·  ${maps.length} map(s)`) + "\n",
-  );
+  process.stdout.write("\n" + bold("atlas latex check") + dim(`  ·  ${maps.length} map(s)`) + "\n");
   if (all.length === 0) {
     process.stdout.write("\n" + green(`${MARK.ok} all TeX parses cleanly`) + "\n\n");
     return 0;

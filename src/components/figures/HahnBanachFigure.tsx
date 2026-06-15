@@ -70,10 +70,25 @@ export default function HahnBanachFigure(_: FigureProps) {
           strokeOpacity={1}
           weight={STROKE.ref}
         />
-        <Line.Segment point1={[-1.42, 0]} point2={[1.42, 0]} color={DIA.accent} weight={STROKE.curve} />
-        <Line.Segment point1={[0, -1.16]} point2={[0, 1.16]} color={DIA.muted} weight={STROKE.guide} />
+        <Line.Segment
+          point1={[-1.42, 0]}
+          point2={[1.42, 0]}
+          color={DIA.accent}
+          weight={STROKE.curve}
+        />
+        <Line.Segment
+          point1={[0, -1.16]}
+          point2={[0, 1.16]}
+          color={DIA.muted}
+          weight={STROKE.guide}
+        />
         <Line.Segment point1={a} point2={b} color={DIA.ok} weight={STROKE.curve} />
-        <Line.Segment point1={[1, -0.18]} point2={[1, 0.18]} color={DIA.muted} weight={STROKE.hair} />
+        <Line.Segment
+          point1={[1, -0.18]}
+          point2={[1, 0.18]}
+          color={DIA.muted}
+          weight={STROKE.hair}
+        />
         <Point x={1} y={0} color={DIA.ok} svgCircleProps={{ r: DOT.hub }} />
         <Point x={0} y={0} color={DIA.text} svgCircleProps={{ r: DOT.small }} />
 

@@ -17,12 +17,7 @@ import { CaretRightIcon } from "@phosphor-icons/react";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse, tidyMathText } from "../lib/katex";
 import { getDomainTone, type DomainTone } from "../lib/colors";
-import {
-  CATEGORY_META,
-  categoryOf,
-  kindAbbrev,
-  railBackground,
-} from "../lib/nodeCategory";
+import { CATEGORY_META, categoryOf, kindAbbrev, railBackground } from "../lib/nodeCategory";
 import { kindIcon } from "../lib/nodeCategoryIcons";
 import { compactNodeRef } from "../lib/nodeMeta";
 import { KIND_LABEL, type GraphNode, type ProofStep } from "../types";
@@ -107,10 +102,7 @@ export function Facet({
       >
         {label}
       </span>
-      <div
-        className="text-ui-copy"
-        style={{ color: muted ? "var(--fg-2)" : "var(--fg-1)" }}
-      >
+      <div className="text-ui-copy" style={{ color: muted ? "var(--fg-2)" : "var(--fg-1)" }}>
         {children}
       </div>
     </div>
@@ -138,19 +130,10 @@ export function MathBox({ text }: { text: string }) {
  * block (or the panel's Proof / Solution tab). The static, always-shown sibling
  * of the collapsible {@link Proof} header.
  */
-export function StepLabel({
-  label,
-  toneColor,
-}: {
-  label: string;
-  toneColor: string;
-}) {
+export function StepLabel({ label, toneColor }: { label: string; toneColor: string }) {
   return (
     <div className="mb-3 flex items-center gap-2">
-      <span
-        className="font-mono text-ui-2xs uppercase tracking-label"
-        style={{ color: toneColor }}
-      >
+      <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
         {label}
       </span>
       <span
@@ -171,13 +154,7 @@ export function StepLabel({
  * Proof / Solution tabs (under a static {@link StepLabel}) and the collapsible
  * {@link Proof} so the manuscript texture is identical everywhere.
  */
-export function Argument({
-  text,
-  toneColor,
-}: {
-  text: string;
-  toneColor: string;
-}) {
+export function Argument({ text, toneColor }: { text: string; toneColor: string }) {
   return (
     <div
       className="font-math pl-3.5 text-ui-copy leading-[1.7]"
@@ -187,11 +164,7 @@ export function Argument({
       }}
     >
       <MathProse text={tidyMathText(text)} asBlock />
-      <span
-        aria-hidden
-        className="mt-1.5 block text-right text-ui-sm"
-        style={{ color: toneColor }}
-      >
+      <span aria-hidden className="mt-1.5 block text-right text-ui-sm" style={{ color: toneColor }}>
         ∎
       </span>
     </div>
@@ -399,11 +372,7 @@ function ProofStepItem({
   const showBody = open || !collapsible;
 
   return (
-    <li
-      className={`relative pl-8 ${
-        last ? "" : showBody ? "pb-4" : "pb-2"
-      }`}
-    >
+    <li className={`relative pl-8 ${last ? "" : showBody ? "pb-4" : "pb-2"}`}>
       {!last && (
         <span
           aria-hidden
@@ -471,11 +440,7 @@ function ProofStepItem({
             id={bodyId}
             initial={reduceMotion || !collapsible ? false : { height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
-            exit={
-              reduceMotion || !collapsible
-                ? { opacity: 0 }
-                : { height: 0, opacity: 0 }
-            }
+            exit={reduceMotion || !collapsible ? { opacity: 0 } : { height: 0, opacity: 0 }}
             transition={{
               duration: reduceMotion ? 0 : 0.18,
               ease: [0.2, 0.7, 0.2, 1],
@@ -493,21 +458,12 @@ function ProofStepItem({
             {deps.length > 0 && onSelect && map && (
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {deps.map((id) => (
-                  <ConnectionChip
-                    key={id}
-                    id={id}
-                    map={map}
-                    onClick={() => onSelect(id)}
-                  />
+                  <ConnectionChip key={id} id={id} map={map} onClick={() => onSelect(id)} />
                 ))}
               </div>
             )}
             {last && (
-              <span
-                aria-hidden
-                className="mt-2 block text-ui-sm"
-                style={{ color: toneColor }}
-              >
+              <span aria-hidden className="mt-2 block text-ui-sm" style={{ color: toneColor }}>
                 ∎
               </span>
             )}
@@ -555,17 +511,11 @@ export function ConnectionChip({
       >
         <Icon className="h-2.5 w-2.5" strokeWidth={2.4} aria-hidden />
       </span>
-      <span
-        className="min-w-0 truncate text-ui-control leading-4"
-        style={{ color: "var(--fg-1)" }}
-      >
+      <span className="min-w-0 truncate text-ui-control leading-4" style={{ color: "var(--fg-1)" }}>
         <MathText text={node.label} />
       </span>
       {caption && (
-        <span
-          className="shrink-0 font-mono text-ui-2xs lowercase"
-          style={{ color: "var(--fg-4)" }}
-        >
+        <span className="shrink-0 font-mono text-ui-2xs lowercase" style={{ color: "var(--fg-4)" }}>
           {caption}
         </span>
       )}

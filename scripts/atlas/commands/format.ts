@@ -21,10 +21,29 @@ type Obj = Record<string, unknown>;
 const TOP_ORDER = ["id", "label", "field", "version", "updated", "domains", "concepts", "edges"];
 const DOMAIN_ORDER = ["id", "label", "order", "palette"];
 const CONCEPT_ORDER = [
-  "id", "kind", "domain", "label", "content", "examples", "diagram",
-  "assumptions", "properties", "proof", "source", "tags", "priority",
+  "id",
+  "kind",
+  "domain",
+  "label",
+  "content",
+  "examples",
+  "diagram",
+  "assumptions",
+  "properties",
+  "proof",
+  "source",
+  "tags",
+  "priority",
 ];
-const CONTENT_ORDER = ["statement", "definition", "formal", "formula", "intuition", "gloss", "notation"];
+const CONTENT_ORDER = [
+  "statement",
+  "definition",
+  "formal",
+  "formula",
+  "intuition",
+  "gloss",
+  "notation",
+];
 const EXAMPLE_ORDER = ["content", "label", "role"];
 const STEP_ORDER = ["role", "content", "uses"];
 const SOURCE_ORDER = ["citation", "chapter", "ref", "references"];
@@ -48,8 +67,7 @@ function canonicalize(json: Obj): Obj {
   }
 
   const domainOrder = new Map<string, number>();
-  for (const d of (top.domains as Obj[]) ?? [])
-    domainOrder.set(String(d.id), Number(d.order));
+  for (const d of (top.domains as Obj[]) ?? []) domainOrder.set(String(d.id), Number(d.order));
 
   if (Array.isArray(top.concepts)) {
     top.concepts = (top.concepts as Obj[])
@@ -104,9 +122,7 @@ function run(ctx: Ctx): number {
   const files = loadSourceFiles(ctx);
   let changed = 0;
 
-  process.stdout.write(
-    "\n" + bold("atlas format") + dim(check ? "  ·  check only" : "") + "\n",
-  );
+  process.stdout.write("\n" + bold("atlas format") + dim(check ? "  ·  check only" : "") + "\n");
 
   for (const f of files) {
     if (f.jsonError) throw new CliError(`${f.fileName}: malformed JSON`);

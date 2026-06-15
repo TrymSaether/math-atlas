@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useMemo, useReducer } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Check, CaretLeft as ChevronLeft, CaretRight as ChevronRight, ArrowCounterClockwise as RotateCcw, Shuffle, Sparkle as Sparkles, X } from "@phosphor-icons/react";
+import {
+  Check,
+  CaretLeft as ChevronLeft,
+  CaretRight as ChevronRight,
+  ArrowCounterClockwise as RotateCcw,
+  Shuffle,
+  Sparkle as Sparkles,
+  X,
+} from "@phosphor-icons/react";
 
 import { useStore } from "../store";
 import type { LoadedMap, MapId } from "../data";
@@ -59,7 +67,14 @@ function drillReducer(state: DrillState, action: DrillAction): DrillState {
       };
     }
     case "reshuffle":
-      return { ...state, seed: state.seed + 1, order: action.order, pos: 0, flipped: false, ratings: {} };
+      return {
+        ...state,
+        seed: state.seed + 1,
+        order: action.order,
+        pos: 0,
+        flipped: false,
+        ratings: {},
+      };
     case "review":
       return { ...state, order: action.order, pos: 0, flipped: false, ratings: {} };
     default:
@@ -137,10 +152,13 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const finished = total > 0 && ratedCount === total;
 
   const currentId = state.order[state.pos];
-  const node = currentId ? map.nodeById.get(currentId) ?? null : null;
+  const node = currentId ? (map.nodeById.get(currentId) ?? null) : null;
 
   const flip = useCallback(() => dispatch({ type: "flip" }), []);
-  const go = useCallback((delta: number) => dispatch({ type: "go", pos: state.pos + delta }), [state.pos]);
+  const go = useCallback(
+    (delta: number) => dispatch({ type: "go", pos: state.pos + delta }),
+    [state.pos],
+  );
   const rate = useCallback(
     (rating: Rating) => currentId && dispatch({ type: "rate", id: currentId, rating }),
     [currentId],
@@ -185,7 +203,10 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       <div className="flex w-full max-w-[680px] flex-1 flex-col">
         {/* Progress rail */}
         <div className="mb-3 flex items-center gap-3">
-          <div className="h-1.5 flex-1 overflow-hidden rounded-full" style={{ background: "var(--surface-3)" }}>
+          <div
+            className="h-1.5 flex-1 overflow-hidden rounded-full"
+            style={{ background: "var(--surface-3)" }}
+          >
             <div
               className="h-full rounded-full transition-[width] duration-300"
               style={{
@@ -201,7 +222,11 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
             onClick={reshuffle}
             disabled={total === 0}
             className="flex h-7 items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 text-ui-meta font-medium transition-colors hover:bg-[color:var(--surface-3)] disabled:opacity-40"
-            style={{ borderColor: "var(--border)", color: "var(--fg-2)", background: "var(--surface)" }}
+            style={{
+              borderColor: "var(--border)",
+              color: "var(--fg-2)",
+              background: "var(--surface)",
+            }}
             title="Shuffle and restart"
           >
             <Shuffle className="h-3 w-3" />
@@ -234,7 +259,15 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                     className="absolute inset-0"
                   >
                     {state.flipped ? (
-                      <CardBack node={node} map={map} mapId={mapId} onOpen={() => { select(node.id); setSurface("dictionary"); }} />
+                      <CardBack
+                        node={node}
+                        map={map}
+                        mapId={mapId}
+                        onOpen={() => {
+                          select(node.id);
+                          setSurface("dictionary");
+                        }}
+                      />
                     ) : (
                       <CardFront node={node} map={map} onFlip={flip} />
                     )}
@@ -244,7 +277,11 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
               {/* Controls */}
               <div className="mt-3 flex items-center justify-between gap-3">
-                <PagerButton label="Previous card" disabled={state.pos === 0} onClick={() => go(-1)}>
+                <PagerButton
+                  label="Previous card"
+                  disabled={state.pos === 0}
+                  onClick={() => go(-1)}
+                >
                   <ChevronLeft className="h-4 w-4" />
                 </PagerButton>
 
@@ -263,14 +300,22 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                   <button
                     onClick={flip}
                     className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
-                    style={{ background: "var(--accent)", color: "var(--surface)", boxShadow: "var(--shadow-2)" }}
+                    style={{
+                      background: "var(--accent)",
+                      color: "var(--surface)",
+                      boxShadow: "var(--shadow-2)",
+                    }}
                   >
                     Reveal answer
                     <Kbd onAccent>Space</Kbd>
                   </button>
                 )}
 
-                <PagerButton label="Next card" disabled={state.pos >= total - 1} onClick={() => go(1)}>
+                <PagerButton
+                  label="Next card"
+                  disabled={state.pos >= total - 1}
+                  onClick={() => go(1)}
+                >
                   <ChevronRight className="h-4 w-4" />
                 </PagerButton>
               </div>
@@ -294,7 +339,11 @@ function CardShell({
   return (
     <div
       className="flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] border"
-      style={{ background: "var(--surface)", borderColor: "var(--border)", boxShadow: "var(--shadow-2)" }}
+      style={{
+        background: "var(--surface)",
+        borderColor: "var(--border)",
+        boxShadow: "var(--shadow-2)",
+      }}
     >
       <span aria-hidden className="h-1 w-full shrink-0" style={{ background: tone }} />
       <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
@@ -312,7 +361,9 @@ function CardMeta({ node, map }: { node: GraphNode; map: LoadedMap }) {
         <span className="h-2 w-2 rounded-full" style={{ background: tone.color }} />
         {domain?.label ?? node.topicCluster}
       </span>
-      <span aria-hidden style={{ color: "var(--fg-4)" }}>·</span>
+      <span aria-hidden style={{ color: "var(--fg-4)" }}>
+        ·
+      </span>
       <span style={{ color: "var(--fg-2)" }}>{specimenMeta(node)}</span>
     </div>
   );
@@ -333,7 +384,10 @@ function CardFront({ node, map, onFlip }: { node: GraphNode; map: LoadedMap; onF
         >
           <MathText text={node.label} />
         </h2>
-        <span className="font-mono text-ui-hint uppercase tracking-label-wide" style={{ color: "var(--fg-4)" }}>
+        <span
+          className="font-mono text-ui-hint uppercase tracking-label-wide"
+          style={{ color: "var(--fg-4)" }}
+        >
           Tap or press space to flip
         </span>
       </button>
@@ -393,7 +447,11 @@ function SummaryCard({
   return (
     <div
       className="flex flex-1 flex-col items-center justify-center gap-6 rounded-[var(--radius-2xl)] border px-8 py-12 text-center"
-      style={{ background: "var(--surface)", borderColor: "var(--border)", boxShadow: "var(--shadow-2)" }}
+      style={{
+        background: "var(--surface)",
+        borderColor: "var(--border)",
+        boxShadow: "var(--shadow-2)",
+      }}
     >
       <div
         className="flex h-14 w-14 items-center justify-center rounded-full"
@@ -402,7 +460,10 @@ function SummaryCard({
         <Sparkles className="h-7 w-7" />
       </div>
       <div className="space-y-1.5">
-        <h2 className="font-serif text-atlas-summary" style={{ color: "var(--fg-1)", fontWeight: 600 }}>
+        <h2
+          className="font-serif text-atlas-summary"
+          style={{ color: "var(--fg-1)", fontWeight: 600 }}
+        >
           Deck complete
         </h2>
         <p className="text-ui-body" style={{ color: "var(--fg-2)" }}>
@@ -415,7 +476,11 @@ function SummaryCard({
           <button
             onClick={onReview}
             className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
-            style={{ background: "var(--accent)", color: "var(--surface)", boxShadow: "var(--shadow-2)" }}
+            style={{
+              background: "var(--accent)",
+              color: "var(--surface)",
+              boxShadow: "var(--shadow-2)",
+            }}
           >
             Review {againCount} missed
           </button>
@@ -423,7 +488,11 @@ function SummaryCard({
         <button
           onClick={onRestart}
           className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] border px-5 text-ui-body font-medium transition-colors hover:bg-[color:var(--surface-3)]"
-          style={{ borderColor: "var(--border)", color: "var(--fg-1)", background: "var(--surface)" }}
+          style={{
+            borderColor: "var(--border)",
+            color: "var(--fg-1)",
+            background: "var(--surface)",
+          }}
         >
           <RotateCcw className="h-4 w-4" /> Restart deck
         </button>
@@ -518,7 +587,11 @@ function Kbd({ children, onAccent = false }: { children: React.ReactNode; onAcce
       className="ml-0.5 hidden h-5 items-center rounded border px-1.5 font-mono text-ui-2xs sm:inline-flex"
       style={
         onAccent
-          ? { background: "color-mix(in srgb, var(--surface) 25%, transparent)", borderColor: "transparent", color: "var(--surface)" }
+          ? {
+              background: "color-mix(in srgb, var(--surface) 25%, transparent)",
+              borderColor: "transparent",
+              color: "var(--surface)",
+            }
           : { background: "var(--surface-3)", borderColor: "var(--border)", color: "var(--fg-3)" }
       }
     >

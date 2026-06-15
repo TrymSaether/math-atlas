@@ -67,9 +67,7 @@ export interface ViewRect {
 }
 
 /** Distributive `Omit` so unions keep their per-member shape. */
-export type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
-  ? Omit<T, K>
-  : never;
+export type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
 
 /** An annotation layered on the plane. */
 export type Mark =

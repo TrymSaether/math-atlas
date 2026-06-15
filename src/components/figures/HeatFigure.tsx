@@ -43,7 +43,8 @@ export default function HeatFigure(_: FigureProps) {
         ariaLabel="Diffusion time t"
       />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        Sharp edges carry the high frequencies, which decay fastest — heat flow is a low-pass filter.
+        Sharp edges carry the high frequencies, which decay fastest — heat flow is a low-pass
+        filter.
       </figcaption>
     </figure>
   );

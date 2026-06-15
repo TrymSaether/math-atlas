@@ -20,8 +20,8 @@ const DX = (2 * Math.PI) / XS.length;
 
 const COEFFS: number[] = [0];
 for (let n = 1; n <= 20; n++) {
-  const re = XS.reduce((sum, x) => sum + testFn(x) * Math.cos(n * x), 0) * DX / Math.PI;
-  const im = XS.reduce((sum, x) => sum - testFn(x) * Math.sin(n * x), 0) * DX / Math.PI;
+  const re = (XS.reduce((sum, x) => sum + testFn(x) * Math.cos(n * x), 0) * DX) / Math.PI;
+  const im = (XS.reduce((sum, x) => sum - testFn(x) * Math.sin(n * x), 0) * DX) / Math.PI;
   COEFFS.push(Math.hypot(re, im));
 }
 const COEFF_MAX = Math.max(...COEFFS.slice(1), 1e-9);
@@ -66,10 +66,22 @@ export default function RiemannLebesgueFigure(_: FigureProps) {
     <figure className="m-0">
       <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={Y_DOMAIN} grid>
         {positiveLobes.map((points, i) => (
-          <Polygon key={`pos-${i}`} points={points} color={DIA.accent} fillOpacity={0.16} strokeOpacity={0} />
+          <Polygon
+            key={`pos-${i}`}
+            points={points}
+            color={DIA.accent}
+            fillOpacity={0.16}
+            strokeOpacity={0}
+          />
         ))}
         {negativeLobes.map((points, i) => (
-          <Polygon key={`neg-${i}`} points={points} color={DIA.alert} fillOpacity={0.16} strokeOpacity={0} />
+          <Polygon
+            key={`neg-${i}`}
+            points={points}
+            color={DIA.alert}
+            fillOpacity={0.16}
+            strokeOpacity={0}
+          />
         ))}
         <FunctionCurve
           y={testFn}
@@ -87,7 +99,10 @@ export default function RiemannLebesgueFigure(_: FigureProps) {
       </FigureFrame>
 
       <div className="mt-2 px-1">
-        <div className="mb-1 flex items-baseline justify-between text-ui-hint" style={{ color: "var(--fg-3)" }}>
+        <div
+          className="mb-1 flex items-baseline justify-between text-ui-hint"
+          style={{ color: "var(--fg-3)" }}
+        >
           <span>Coefficient spectrum |ĉₖ|</span>
           <span className="font-mono" style={{ color: "var(--fg-2)" }}>
             n = {n}, |ĉₙ| = {cn.toFixed(4)}
@@ -112,14 +127,33 @@ export default function RiemannLebesgueFigure(_: FigureProps) {
               />
             );
           })}
-          <Line.Segment point1={[0.5, 0]} point2={[20.5, 0]} color={DIA.muted} weight={STROKE.guide} />
-          <Line.Segment point1={[n, 0]} point2={[n, 1.05]} color={DIA.accent} weight={STROKE.mark} style="dashed" />
+          <Line.Segment
+            point1={[0.5, 0]}
+            point2={[20.5, 0]}
+            color={DIA.muted}
+            weight={STROKE.guide}
+          />
+          <Line.Segment
+            point1={[n, 0]}
+            point2={[n, 1.05]}
+            color={DIA.accent}
+            weight={STROKE.mark}
+            style="dashed"
+          />
         </FigureFrame>
       </div>
 
-      <RangeControl min={1} max={20} value={n} onChange={setN} label={`n = ${n}`} ariaLabel="Frequency n" />
+      <RangeControl
+        min={1}
+        max={20}
+        value={n}
+        onChange={setN}
+        label={`n = ${n}`}
+        ariaLabel="Frequency n"
+      />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        As n grows, f·cos(nx) oscillates faster; positive and negative lobes cancel, driving the coefficient to zero.
+        As n grows, f·cos(nx) oscillates faster; positive and negative lobes cancel, driving the
+        coefficient to zero.
       </figcaption>
     </figure>
   );

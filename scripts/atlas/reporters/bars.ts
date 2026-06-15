@@ -31,11 +31,7 @@ export function barRow(
 }
 
 /** A 0..100 percent meter, coloured by band (red < 40 < yellow < 75 < green). */
-export function meter(
-  numerator: number,
-  denominator: number,
-  width = 20,
-): string {
+export function meter(numerator: number, denominator: number, width = 20): string {
   const p = pct(numerator, denominator);
   const filled = Math.round((p / 100) * width);
   const paint = p >= 75 ? green : p >= 40 ? yellow : red;

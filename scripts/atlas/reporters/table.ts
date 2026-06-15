@@ -24,15 +24,11 @@ export function table(columns: Column[], rows: string[][]): string {
   });
 
   const fmt = (cell: string, i: number): string =>
-    columns[i].align === "right"
-      ? padStart(cell, widths[i])
-      : padEnd(cell, widths[i]);
+    columns[i].align === "right" ? padStart(cell, widths[i]) : padEnd(cell, widths[i]);
 
   const head = columns.map((c, i) => bold(fmt(c.header, i))).join(gray("  "));
   const rule = gray(widths.map((w) => "─".repeat(w)).join("  "));
-  const body = rows
-    .map((r) => r.map((cell, i) => fmt(cell ?? "", i)).join(gray("  ")))
-    .join("\n");
+  const body = rows.map((r) => r.map((cell, i) => fmt(cell ?? "", i)).join(gray("  "))).join("\n");
 
   return `${head}\n${rule}\n${body}`;
 }

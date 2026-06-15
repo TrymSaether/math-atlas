@@ -8,8 +8,7 @@
  */
 const ESC = "";
 
-let enabled =
-  process.stdout.isTTY === true && process.env.NO_COLOR === undefined;
+let enabled = process.stdout.isTTY === true && process.env.NO_COLOR === undefined;
 
 export function setColor(on: boolean): void {
   enabled = on;

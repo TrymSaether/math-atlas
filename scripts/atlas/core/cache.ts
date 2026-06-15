@@ -29,8 +29,5 @@ export function loadCache(ws: Workspace): CacheState {
 
 export function saveCache(ws: Workspace, state: CacheState): void {
   if (!existsSync(ws.cacheDir)) mkdirSync(ws.cacheDir, { recursive: true });
-  writeFileSync(
-    join(ws.cacheDir, CACHE_FILE),
-    JSON.stringify(state, null, 2) + "\n",
-  );
+  writeFileSync(join(ws.cacheDir, CACHE_FILE), JSON.stringify(state, null, 2) + "\n");
 }

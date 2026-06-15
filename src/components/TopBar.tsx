@@ -98,8 +98,7 @@ function MapBrandSelector() {
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node))
-        setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -176,12 +175,8 @@ function MapBrandSelector() {
                   !active && "text-fg-2",
                 )}
               >
-                <span className="block min-w-0 flex-1 truncate">
-                  {MAPS[id].label}
-                </span>
-                {active && (
-                  <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />
-                )}
+                <span className="block min-w-0 flex-1 truncate">{MAPS[id].label}</span>
+                {active && <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />}
               </Button>
             );
           })}
@@ -328,9 +323,7 @@ function DisplayButton() {
       >
         <SlidersHorizontalIcon className="h-4 w-4" weight="regular" />
       </DockButton>
-      {open && position && (
-        <DisplayPopover popoverRef={popoverRef} position={position} />
-      )}
+      {open && position && <DisplayPopover popoverRef={popoverRef} position={position} />}
     </div>
   );
 }
@@ -384,9 +377,7 @@ function DisplayPopover({
         <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
           Theme
         </span>
-        <span className="text-ui-meta font-medium text-fg-2">
-          {activeLabel}
-        </span>
+        <span className="text-ui-meta font-medium text-fg-2">{activeLabel}</span>
       </div>
       <div className="flex flex-wrap items-center gap-3">
         {THEMES.map((t) => (
@@ -482,11 +473,7 @@ function EditToggle() {
       try {
         const parsed: unknown = JSON.parse(String(reader.result));
         const result = importSource(parsed);
-        showNotice(
-          result.ok
-            ? "Source JSON imported."
-            : `Import failed: ${result.error}`,
-        );
+        showNotice(result.ok ? "Source JSON imported." : `Import failed: ${result.error}`);
       } catch {
         showNotice("Import failed: not valid JSON.");
       }
@@ -516,16 +503,10 @@ function EditToggle() {
         label={editMode ? "Exit edit mode" : "Edit this map"}
         title={editMode ? "Exit edit mode" : "Edit this map"}
       >
-        <PencilSimpleIcon
-          className="h-4 w-4"
-          weight={editMode ? "fill" : "regular"}
-        />
+        <PencilSimpleIcon className="h-4 w-4" weight={editMode ? "fill" : "regular"} />
       </DockButton>
       {edited && !editMode && (
-        <span
-          aria-hidden
-          className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-accent"
-        />
+        <span aria-hidden className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-accent" />
       )}
       <input
         ref={fileRef}
@@ -556,11 +537,7 @@ function EditToggle() {
           onDiscard={async () => {
             const result = await revertMap();
             setConfirmDiscard(false);
-            showNotice(
-              result.ok
-                ? "Local edits discarded."
-                : `Discard failed: ${result.error}`,
-            );
+            showNotice(result.ok ? "Local edits discarded." : `Discard failed: ${result.error}`);
           }}
           onDone={() => {
             toggleEditMode();

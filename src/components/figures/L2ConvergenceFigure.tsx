@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-import { type WaveKind, waveCoeff, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
+import {
+  type WaveKind,
+  waveCoeff,
+  wavePartialSum,
+  waveTarget,
+} from "../../lib/figures/fourierMath";
 import { DIA, FigureFrame, FunctionCurve, Line, Plot, Polygon, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
@@ -45,7 +50,8 @@ const Y_DOMAIN: Record<WaveKind, [number, number]> = {
 const CAPTIONS: Record<WaveKind, string> = {
   square: "Square wave has a jump — coefficients decay like 1/n, so the L² error shrinks slowly.",
   sawtooth: "Sawtooth also jumps — same 1/n decay, same slow convergence as square.",
-  triangle: "Triangle is continuous — coefficients decay like 1/n², so the error collapses much faster.",
+  triangle:
+    "Triangle is continuous — coefficients decay like 1/n², so the error collapses much faster.",
 };
 
 const NS_BAR = Array.from({ length: N_MAX + 1 }, (_, i) => i);
@@ -90,8 +96,13 @@ export default function L2ConvergenceFigure(_: FigureProps) {
       </FigureFrame>
 
       <div className="mt-2 px-1">
-        <div className="mb-1 flex items-baseline justify-between text-ui-hint" style={{ color: "var(--fg-3)" }}>
-          <span>L² error ‖S<sub>N</sub>f − f‖²</span>
+        <div
+          className="mb-1 flex items-baseline justify-between text-ui-hint"
+          style={{ color: "var(--fg-3)" }}
+        >
+          <span>
+            L² error ‖S<sub>N</sub>f − f‖²
+          </span>
           <span className="font-mono" style={{ color: "var(--fg-2)" }}>
             {errPct}% of ‖f‖²
           </span>
@@ -117,12 +128,30 @@ export default function L2ConvergenceFigure(_: FigureProps) {
               />
             );
           })}
-          <Line.Segment point1={[0, 0]} point2={[N_MAX + 1, 0]} color={DIA.muted} weight={STROKE.guide} />
+          <Line.Segment
+            point1={[0, 0]}
+            point2={[N_MAX + 1, 0]}
+            color={DIA.muted}
+            weight={STROKE.guide}
+          />
         </FigureFrame>
       </div>
 
-      <WaveSelect value={kind} onChange={(k) => { setKind(k); setN(5); }} />
-      <RangeControl min={1} max={N_MAX} value={N} onChange={setN} label={`N = ${N}`} ariaLabel="Number of harmonics N" />
+      <WaveSelect
+        value={kind}
+        onChange={(k) => {
+          setKind(k);
+          setN(5);
+        }}
+      />
+      <RangeControl
+        min={1}
+        max={N_MAX}
+        value={N}
+        onChange={setN}
+        label={`N = ${N}`}
+        ariaLabel="Number of harmonics N"
+      />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         {CAPTIONS[kind]}
       </figcaption>

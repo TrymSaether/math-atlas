@@ -13,11 +13,7 @@ export interface LintOptions {
   suggest?: boolean;
 }
 
-export function runLints(
-  map: CliMap,
-  ws: Workspace,
-  opts: LintOptions = {},
-): Diagnostic[] {
+export function runLints(map: CliMap, ws: Workspace, opts: LintOptions = {}): Diagnostic[] {
   const diags = [
     ...structure.run(map),
     ...content.run(map),

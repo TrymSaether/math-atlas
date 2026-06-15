@@ -10,10 +10,7 @@ import { type FigureProps } from "./types";
  * `FigureProps`, then add an entry here. NodePanel consults this map before
  * falling back to the static `ThemedDiagram`.
  */
-export const FIGURE_REGISTRY: Record<
-  string,
-  LazyExoticComponent<ComponentType<FigureProps>>
-> = {
+export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<FigureProps>>> = {
   function: lazy(() => import("./FunctionSetFigure")),
   domain: lazy(() => import("./FunctionSetFigure")),
   codomain: lazy(() => import("./FunctionSetFigure")),
@@ -70,9 +67,7 @@ export const FIGURE_REGISTRY: Record<
   self_adjoint_operator: lazy(() => import("./HilbertSpectralFigure")),
   spectrum: lazy(() => import("./HilbertSpectralFigure")),
   spectral_theorem: lazy(() => import("./HilbertSpectralFigure")),
-  compact_self_adjoint_operator_assumption: lazy(
-    () => import("./HilbertSpectralFigure"),
-  ),
+  compact_self_adjoint_operator_assumption: lazy(() => import("./HilbertSpectralFigure")),
 
   // Convergence modes: uniform vs pointwise vs mean-square.
   convergence: lazy(() => import("./ConvergenceModesFigure")),
@@ -91,15 +86,9 @@ export const FIGURE_REGISTRY: Record<
   hilbert_space: lazy(() => import("./InnerProductFigure")),
 
   // Uniform boundedness principle (Banach–Steinhaus).
-  uniform_boundedness_principle: lazy(
-    () => import("./UniformBoundednessFigure"),
-  ),
-  pointwise_bounded_family_assumption: lazy(
-    () => import("./UniformBoundednessFigure"),
-  ),
-  bounded_operators_banach_space: lazy(
-    () => import("./UniformBoundednessFigure"),
-  ),
+  uniform_boundedness_principle: lazy(() => import("./UniformBoundednessFigure")),
+  pointwise_bounded_family_assumption: lazy(() => import("./UniformBoundednessFigure")),
+  bounded_operators_banach_space: lazy(() => import("./UniformBoundednessFigure")),
 
   // --- Exercises & exam problems: reuse the figure that best illustrates them ---
   // Fourier-series waveforms (triangle / sawtooth / square + partial sums).

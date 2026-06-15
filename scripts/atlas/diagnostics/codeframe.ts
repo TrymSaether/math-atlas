@@ -52,10 +52,7 @@ export function renderFrame(raw: string, loc: Located, context = 1): string {
 }
 
 /** Convenience: locate by concept id and render, or return undefined. */
-export function frameForConcept(
-  raw: string,
-  conceptId: string,
-): string | undefined {
+export function frameForConcept(raw: string, conceptId: string): string | undefined {
   const loc = locate(raw, conceptAnchors(conceptId));
   return loc ? renderFrame(raw, loc) : undefined;
 }

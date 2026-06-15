@@ -170,14 +170,11 @@ function NormModeSelect({
                     className="h-1 w-20 cursor-pointer appearance-none rounded-full"
                     style={{
                       accentColor: "var(--fg-on-color)",
-                      background:
-                        "color-mix(in srgb, var(--fg-on-color) 28%, transparent)",
+                      background: "color-mix(in srgb, var(--fg-on-color) 28%, transparent)",
                     }}
                     aria-label="Tunable lp exponent"
                   />
-                  <span className="min-w-7 text-right tabular-nums">
-                    {formatCoord(p)}
-                  </span>
+                  <span className="min-w-7 text-right tabular-nums">{formatCoord(p)}</span>
                 </>
               )}
             </div>
@@ -240,10 +237,7 @@ function ReadoutPanel({
           <MathText text={`$\\{z:\\|z\\|_{${subscript}}\\le 1\\}$`} />
         </span>
       </div>
-      <div
-        className="mt-3 h-1.5 rounded-full"
-        style={{ background: "var(--surface-3)" }}
-      >
+      <div className="mt-3 h-1.5 rounded-full" style={{ background: "var(--surface-3)" }}>
         <div
           className="h-full rounded-full"
           style={{
@@ -286,10 +280,7 @@ export default function NormUnitBallFigure(_: FigureProps) {
   const value = normValue(x, mode, p);
   const inside = value <= 1 + 1e-6;
   const ball = useMemo(() => unitBallPoints(mode, p), [mode, p]);
-  const scaledBall = useMemo(
-    () => scalePoints(ball, Math.max(value, UNIT_RADIUS)),
-    [ball, value],
-  );
+  const scaledBall = useMemo(() => scalePoints(ball, Math.max(value, UNIT_RADIUS)), [ball, value]);
   const scaledOutline = useMemo(() => closedPolyline(scaledBall), [scaledBall]);
   const statusColor = inside ? DIA.ok : DIA.alert;
   const scaledOutlineColor = DIA.alert;
@@ -354,28 +345,15 @@ export default function NormUnitBallFigure(_: FigureProps) {
               color={DIA.muted}
               weight={STROKE.guide}
             />
-            <Vector
-              tail={[0, 0]}
-              tip={x}
-              color={statusColor}
-              weight={MEASURED_STROKE}
-            />
-            <Point
-              x={0}
-              y={0}
-              color={DIA.faint}
-              svgCircleProps={{ r: DOT.small }}
-            />
+            <Vector tail={[0, 0]} tip={x} color={statusColor} weight={MEASURED_STROKE} />
+            <Point x={0} y={0} color={DIA.faint} svgCircleProps={{ r: DOT.small }} />
             <LaTeX at={[x[0] + 0.17, x[1] + 0.17]} tex="x" color={DIA.accent} />
             {point.element}
           </FigureFrame>
         </div>
         <ReadoutPanel point={x} value={value} mode={mode} p={p} />
       </div>
-      <figcaption
-        className="mt-2 text-ui-meta"
-        style={{ color: "var(--fg-3)" }}
-      >
+      <figcaption className="mt-2 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         <MathText text="Drag $x$ or switch norms. The norm is the scale factor that expands the unit ball until it reaches the vector." />
       </figcaption>
     </figure>

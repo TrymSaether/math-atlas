@@ -35,11 +35,7 @@ import {
 } from "../data/relations";
 
 /** Instance kinds that read as "related cases" rather than downstream results. */
-export const RELATED_CASE_KINDS = new Set([
-  "example",
-  "non_example",
-  "counterexample",
-]);
+export const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);
 
 /** A single neighbour, carrying the faithful relation phrasing from N's side. */
 export interface RelationLink {
@@ -76,9 +72,7 @@ export interface ExampleEntry {
 }
 
 const NONE_KEY = "__none__";
-const RELATION_RANK = new Map<string, number>(
-  RELATION_KEYS.map((key, index) => [key, index]),
-);
+const RELATION_RANK = new Map<string, number>(RELATION_KEYS.map((key, index) => [key, index]));
 
 /** Full relation label, read from this concept's perspective. */
 function relationLabel(rel: RelationType | null): string {
@@ -91,10 +85,7 @@ function relationLabel(rel: RelationType | null): string {
  * the authored relation to the node's own viewpoint so the caption is correct on
  * both ends of the arrow.
  */
-function perspectiveRelation(
-  edgeRelation: string,
-  nodeIsFrom: boolean,
-): RelationType | null {
+function perspectiveRelation(edgeRelation: string, nodeIsFrom: boolean): RelationType | null {
   if (!(edgeRelation in RELATIONS)) return null;
   const isDependency = RELATIONS[edgeRelation as RelationType].isDependency;
   const arrow = orientedRelation(edgeRelation, isDependency);
@@ -160,8 +151,7 @@ function buildRelations(node: GraphNode, map: LoadedMap): ConceptRelations {
   for (const e of outgoing) add(e.to, perspectiveRelation(e.relation, true));
   for (const e of incoming) add(e.from, perspectiveRelation(e.relation, false));
   // Proof-step references are dependencies that may carry no edge of their own.
-  for (const id of [...node.statementDependencies, ...node.proofDependencies])
-    add(id, null);
+  for (const id of [...node.statementDependencies, ...node.proofDependencies]) add(id, null);
 
   const groups: RelationGroup[] = [...byRelation.keys()]
     .sort((a, b) => {
@@ -215,11 +205,7 @@ function examples(node: GraphNode): ExampleEntry[] {
     .filter((example) => example.content.length > 0);
 }
 
-export function buildConceptView(
-  node: GraphNode,
-  map: LoadedMap,
-  mapId: MapId,
-): ConceptView {
+export function buildConceptView(node: GraphNode, map: LoadedMap, mapId: MapId): ConceptView {
   const statement = nodeStatement(node);
   const formal = nodeFormalStatement(node);
   const formalStatement = formal && formal !== statement ? formal : "";
@@ -227,8 +213,7 @@ export function buildConceptView(
   const formula = nodeFormula(node, [statement, formal, definition]);
   const intuition = (node.content.intuition ?? "").trim();
   const rawGloss = (node.content.gloss ?? "").trim();
-  const gloss =
-    rawGloss && rawGloss !== intuition && rawGloss !== statement ? rawGloss : "";
+  const gloss = rawGloss && rawGloss !== intuition && rawGloss !== statement ? rawGloss : "";
   const extras = extraContent(node);
   const exampleEntries = examples(node);
   const notation = node.content.notation ?? [];
@@ -245,18 +230,18 @@ export function buildConceptView(
 
   const hasContent = Boolean(
     statement ||
-      formalStatement ||
-      definition ||
-      formula ||
-      intuition ||
-      gloss ||
-      extras.length ||
-      exampleEntries.length ||
-      assumptions.length ||
-      properties.length ||
-      notation.length ||
-      steps.length ||
-      relations.count,
+    formalStatement ||
+    definition ||
+    formula ||
+    intuition ||
+    gloss ||
+    extras.length ||
+    exampleEntries.length ||
+    assumptions.length ||
+    properties.length ||
+    notation.length ||
+    steps.length ||
+    relations.count,
   );
 
   return {
@@ -289,13 +274,6 @@ export function buildConceptView(
   };
 }
 
-export function useConceptView(
-  node: GraphNode,
-  map: LoadedMap,
-  mapId: MapId,
-): ConceptView {
-  return useMemo(
-    () => buildConceptView(node, map, mapId),
-    [node, map, mapId],
-  );
+export function useConceptView(node: GraphNode, map: LoadedMap, mapId: MapId): ConceptView {
+  return useMemo(() => buildConceptView(node, map, mapId), [node, map, mapId]);
 }

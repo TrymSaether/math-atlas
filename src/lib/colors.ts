@@ -8,11 +8,7 @@
  */
 
 import type { GraphDomain } from "../types";
-import {
-  DOMAIN_PALETTE_KEYS,
-  isDomainKey,
-  type DomainKey,
-} from "./palette";
+import { DOMAIN_PALETTE_KEYS, isDomainKey, type DomainKey } from "./palette";
 
 export interface DomainTone {
   /** Solid color (stroke, ID, dot, rail). */
@@ -60,12 +56,8 @@ function explicitKey(domain: GraphDomain): DomainKey | null {
  * 2. Any whose key was already taken sweep `DOMAIN_KEYS` in `order`, taking the
  *    next free hue, wrapping by order index past the 20-color palette.
  */
-export function resolveDomainTones(
-  domains: GraphDomain[],
-): Map<string, DomainTone> {
-  const ordered = [...domains].sort(
-    (a, b) => a.order - b.order || a.label.localeCompare(b.label),
-  );
+export function resolveDomainTones(domains: GraphDomain[]): Map<string, DomainTone> {
+  const ordered = [...domains].sort((a, b) => a.order - b.order || a.label.localeCompare(b.label));
   const result = new Map<string, DomainTone>();
   const freeKeys = new Set<DomainKey>(DOMAIN_KEYS);
 
@@ -89,12 +81,9 @@ export function resolveDomainTones(
   let sweep = 0;
   colorless.forEach((domain, index) => {
     if (result.has(domain.id)) return;
-    while (sweep < DOMAIN_KEYS.length && !freeKeys.has(DOMAIN_KEYS[sweep]))
-      sweep++;
+    while (sweep < DOMAIN_KEYS.length && !freeKeys.has(DOMAIN_KEYS[sweep])) sweep++;
     const key =
-      sweep < DOMAIN_KEYS.length
-        ? DOMAIN_KEYS[sweep]
-        : DOMAIN_KEYS[index % DOMAIN_KEYS.length];
+      sweep < DOMAIN_KEYS.length ? DOMAIN_KEYS[sweep] : DOMAIN_KEYS[index % DOMAIN_KEYS.length];
     assign(domain.id, key);
   });
 
@@ -118,9 +107,7 @@ function hash(value: string): number {
 }
 
 /** Resolve the active map's domains and publish them to the bare-id registry. */
-export function registerDomainTones(
-  domains: GraphDomain[],
-): Map<string, DomainTone> {
+export function registerDomainTones(domains: GraphDomain[]): Map<string, DomainTone> {
   const resolved = resolveDomainTones(domains);
   registry.clear();
   for (const [id, tone] of resolved) registry.set(id, tone);

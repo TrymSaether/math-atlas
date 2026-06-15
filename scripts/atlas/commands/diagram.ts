@@ -11,15 +11,17 @@ import type { Command } from "../core/command";
 import { loadMaps, loadSourceFiles, CliError, type Ctx } from "../core/context";
 import { run as diagramLints, diagramFsPath } from "../validators/diagrams";
 import { reportDiagnostics } from "../diagnostics/reporter";
-import {
-  type Diagnostic,
-  warning,
-  countBySeverity,
-} from "../diagnostics/diagnostic";
+import { type Diagnostic, warning, countBySeverity } from "../diagnostics/diagnostic";
 import { bold, dim, cyan, green, yellow } from "../utils/color";
 import { MARK } from "../utils/glyphs";
 
-function lintSvg(ws: Ctx["ws"], map: string, file: string, concept: string, ref: string): Diagnostic[] {
+function lintSvg(
+  ws: Ctx["ws"],
+  map: string,
+  file: string,
+  concept: string,
+  ref: string,
+): Diagnostic[] {
   const out: Diagnostic[] = [];
   const fsPath = diagramFsPath(ws, ref);
   if (!existsSync(fsPath)) return out; // missing-file is reported by `check`
@@ -27,9 +29,21 @@ function lintSvg(ws: Ctx["ws"], map: string, file: string, concept: string, ref:
   const base = { code: "diagram/lint", map, file, conceptId: concept, path: ref };
 
   if (!/viewBox\s*=/.test(svg))
-    out.push(warning({ ...base, message: `${ref}: missing viewBox`, hint: "add viewBox for crisp scaling" }));
+    out.push(
+      warning({
+        ...base,
+        message: `${ref}: missing viewBox`,
+        hint: "add viewBox for crisp scaling",
+      }),
+    );
   if (!/aria-label\s*=/.test(svg) && !/<title>/.test(svg))
-    out.push(warning({ ...base, message: `${ref}: no aria-label or <title>`, hint: "add an accessible label" }));
+    out.push(
+      warning({
+        ...base,
+        message: `${ref}: no aria-label or <title>`,
+        hint: "add an accessible label",
+      }),
+    );
 
   const hexes = svg.match(/#[0-9a-fA-F]{3,6}\b/g) ?? [];
   if (hexes.length > 0)
@@ -41,8 +55,10 @@ function lintSvg(ws: Ctx["ws"], map: string, file: string, concept: string, ref:
       }),
     );
 
-  const textChars = [...svg.matchAll(/<text[^>]*>([\s\S]*?)<\/text>/g)]
-    .reduce((n, m) => n + m[1].replace(/<[^>]+>/g, "").trim().length, 0);
+  const textChars = [...svg.matchAll(/<text[^>]*>([\s\S]*?)<\/text>/g)].reduce(
+    (n, m) => n + m[1].replace(/<[^>]+>/g, "").trim().length,
+    0,
+  );
   if (textChars > 240)
     out.push(
       warning({
@@ -68,7 +84,8 @@ function run(ctx: Ctx): number {
       if (!c) continue;
       c.diagram = path;
       const parsed = SourceGraphSchema.safeParse(json);
-      if (!parsed.success) throw new CliError("resulting source fails schema", parsed.error.issues[0]?.message);
+      if (!parsed.success)
+        throw new CliError("resulting source fails schema", parsed.error.issues[0]?.message);
       if (!existsSync(diagramFsPath(ctx.ws, path)))
         process.stdout.write(yellow(`  ${MARK.warning} note: no file yet at public${path}`) + "\n");
       writeFileSync(f.path, JSON.stringify(json, null, 2) + "\n");
@@ -88,7 +105,10 @@ function run(ctx: Ctx): number {
       );
       const none = m.source.concepts.filter((c) => !c.diagram);
       process.stdout.write(
-        "\n  " + cyan(m.id) + dim(`  ·  ${broken.length} broken, ${none.length}/${m.nodes.length} without a diagram`) + "\n",
+        "\n  " +
+          cyan(m.id) +
+          dim(`  ·  ${broken.length} broken, ${none.length}/${m.nodes.length} without a diagram`) +
+          "\n",
       );
       for (const c of broken)
         process.stdout.write(`    ${yellow(MARK.warning)} ${c.id} ${dim("→ " + c.diagram)}\n`);

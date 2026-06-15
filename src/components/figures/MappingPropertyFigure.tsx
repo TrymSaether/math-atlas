@@ -33,7 +33,10 @@ function points(count: number, x: number): Vec2[] {
   return Array.from({ length: count }, (_, i) => [x, ((count - 1) / 2 - i) * 0.78]);
 }
 
-function mappingFor(kind: MappingKind, raw: number): {
+function mappingFor(
+  kind: MappingKind,
+  raw: number,
+): {
   domainLabels: string[];
   codomainLabels: string[];
   targets: number[];
@@ -84,7 +87,8 @@ function plotY(kind: MappingKind, raw: number, x: number): number {
 
 function propertyText(kind: MappingKind, raw: number): string {
   if (kind === "bijective") return "one input, one output, and an inverse";
-  if (kind === "surjective") return raw >= 5 ? "onto: every target is hit" : "not onto: one target is missed";
+  if (kind === "surjective")
+    return raw >= 5 ? "onto: every target is hit" : "not onto: one target is missed";
   return raw >= 6 ? "not injective: two arrows collide" : "injective: no arrows collide";
 }
 
@@ -96,9 +100,17 @@ function controlLabel(kind: MappingKind, raw: number): string {
 
 function MappingPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
   const model = useMemo(() => mappingFor(kind, raw), [kind, raw]);
-  const left = useMemo(() => points(model.domainLabels.length, DOMAIN_X), [model.domainLabels.length]);
-  const right = useMemo(() => points(model.codomainLabels.length, CODOMAIN_X), [model.codomainLabels.length]);
-  const hitCounts = model.codomainLabels.map((_, i) => model.targets.filter((target) => target === i).length);
+  const left = useMemo(
+    () => points(model.domainLabels.length, DOMAIN_X),
+    [model.domainLabels.length],
+  );
+  const right = useMemo(
+    () => points(model.codomainLabels.length, CODOMAIN_X),
+    [model.codomainLabels.length],
+  );
+  const hitCounts = model.codomainLabels.map(
+    (_, i) => model.targets.filter((target) => target === i).length,
+  );
 
   return (
     <FigureFrame xDomain={[-4.15, 4.15]} yDomain={[-1.82, 1.82]} height={168} axes={false} grid>
@@ -144,7 +156,13 @@ function MappingPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
         const collision = hitCounts[target] > 1;
         const color = collision && kind !== "surjective" ? DIA.alert : DIA.ink;
         return (
-          <Arrow key={`${i}:${target}`} from={left[i]} to={right[target]} color={color} weight={STROKE.mark} />
+          <Arrow
+            key={`${i}:${target}`}
+            from={left[i]}
+            to={right[target]}
+            color={color}
+            weight={STROKE.mark}
+          />
         );
       })}
 
@@ -186,15 +204,33 @@ function PlotPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
     <FigureFrame xDomain={[-2.4, 2.4]} yDomain={[-1.85, 1.85]} height={156} grid>
       {kind === "surjective" && raw < 5 && (
         <>
-          <Line.Segment point1={[-2.4, 1.05]} point2={[2.4, 1.05]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
-          <Line.Segment point1={[-2.4, -1.05]} point2={[2.4, -1.05]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
+          <Line.Segment
+            point1={[-2.4, 1.05]}
+            point2={[2.4, 1.05]}
+            color={DIA.muted}
+            weight={STROKE.guide}
+            style="dashed"
+          />
+          <Line.Segment
+            point1={[-2.4, -1.05]}
+            point2={[2.4, -1.05]}
+            color={DIA.muted}
+            weight={STROKE.guide}
+            style="dashed"
+          />
           <Text x={1.75} y={1.28} color={DIA.ref} size={FONT.hint}>
             missed values
           </Text>
         </>
       )}
       {kind === "injective" && raw >= 6 && (
-        <Line.Segment point1={[-2.4, 0]} point2={[2.4, 0]} color={DIA.alert} weight={STROKE.guide} style="dashed" />
+        <Line.Segment
+          point1={[-2.4, 0]}
+          point2={[2.4, 0]}
+          color={DIA.alert}
+          weight={STROKE.guide}
+          style="dashed"
+        />
       )}
       {kind === "bijective" && (
         <FunctionCurve

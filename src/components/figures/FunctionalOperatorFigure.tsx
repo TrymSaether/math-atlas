@@ -46,7 +46,12 @@ function CompactOperatorModel() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[0.25, 12.75]} yDomain={[-0.16, 1.12]} height={190} grid={false}>
-        <Line.Segment point1={[0.5, 0]} point2={[12.5, 0]} color={DIA.muted} weight={STROKE.guide} />
+        <Line.Segment
+          point1={[0.5, 0]}
+          point2={[12.5, 0]}
+          color={DIA.muted}
+          weight={STROKE.guide}
+        />
         {values.map((value, i) => {
           const n = i + 1;
           const x0 = n - 0.28;
@@ -73,7 +78,13 @@ function CompactOperatorModel() {
             </g>
           );
         })}
-        <Line.Segment point1={[0.5, 0.08]} point2={[12.5, 0.08]} color={DIA.ref} weight={STROKE.hair} style="dashed" />
+        <Line.Segment
+          point1={[0.5, 0.08]}
+          point2={[12.5, 0.08]}
+          color={DIA.ref}
+          weight={STROKE.hair}
+          style="dashed"
+        />
         <LaTeX at={[2.25, 1.01]} tex={String.raw`\|Te_n\|`} color={DIA.text} />
         <LaTeX at={[10.25, 0.19]} tex={String.raw`\|Te_n\|\to 0`} color={DIA.codomain} />
       </FigureFrame>
@@ -105,8 +116,18 @@ function OperatorNormModel({ nodeId }: FigureProps) {
       <FigureFrame xDomain={[-2.15, 2.15]} yDomain={[-1.35, 1.35]} height={190} grid>
         <Polyline points={circle} color={DIA.ref} weight={STROKE.hair} />
         <Polyline points={ellipse} color={DIA.accent} weight={STROKE.curve} />
-        <Line.Segment point1={[-stretch, 0]} point2={[stretch, 0]} color={DIA.accent} weight={STROKE.mark} />
-        <Line.Segment point1={[0, -minor]} point2={[0, minor]} color={DIA.codomain} weight={STROKE.mark} />
+        <Line.Segment
+          point1={[-stretch, 0]}
+          point2={[stretch, 0]}
+          color={DIA.accent}
+          weight={STROKE.mark}
+        />
+        <Line.Segment
+          point1={[0, -minor]}
+          point2={[0, minor]}
+          color={DIA.codomain}
+          weight={STROKE.mark}
+        />
         <Vector tail={[0, 0]} tip={[1, 0]} color={DIA.ref} weight={STROKE.guide} />
         <Vector tail={[0, 0]} tip={[stretch, 0]} color={DIA.alert} weight={STROKE.curve} />
         <Point x={1} y={0} color={DIA.ref} svgCircleProps={{ r: DOT.small }} />
@@ -125,7 +146,9 @@ function OperatorNormModel({ nodeId }: FigureProps) {
         ariaLabel="Operator stretch bound"
       />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        <MathText text={`${label} is read from the largest radius of the image of the domain unit ball.`} />
+        <MathText
+          text={`${label} is read from the largest radius of the image of the domain unit ball.`}
+        />
       </figcaption>
     </figure>
   );

@@ -76,36 +76,27 @@ export interface SectionFacet {
   chipLabelOf: (value: string) => string;
 }
 
-export function sectionFacet(
-  map: LoadedMap,
-  entries: GraphNode[],
-): SectionFacet {
+export function sectionFacet(map: LoadedMap, entries: GraphNode[]): SectionFacet {
   const hasChapters = entries.some((e) => e.dictChapter);
 
   if (hasChapters) {
     const order = ["2", "3", "4", "5", "6", "7", "8", "A", "B"];
-    const present = order.filter((c) =>
-      entries.some((e) => e.dictChapter === c),
-    );
+    const present = order.filter((c) => entries.some((e) => e.dictChapter === c));
     // Append any chapter ids the source uses that aren't in the known order.
     for (const e of entries) {
-      if (e.dictChapter && !present.includes(e.dictChapter))
-        present.push(e.dictChapter);
+      if (e.dictChapter && !present.includes(e.dictChapter)) present.push(e.dictChapter);
     }
     return {
       mode: "chapter",
       values: present,
       valueOf: (n) => n.dictChapter,
-      labelOf: (v) =>
-        `Ch. ${v} · ${chapterLabel(v).replace(/^Appendix . — /, "")}`,
+      labelOf: (v) => `Ch. ${v} · ${chapterLabel(v).replace(/^Appendix . — /, "")}`,
       chipLabelOf: chapterShortLabel,
     };
   }
 
   const domainOrder = map.data.domains.map((d) => d.id);
-  const present = domainOrder.filter((d) =>
-    entries.some((e) => e.domain === d),
-  );
+  const present = domainOrder.filter((d) => entries.some((e) => e.domain === d));
   const labelOf = (v: string) => map.domainById.get(v)?.label ?? v;
   return {
     mode: "domain",

@@ -47,9 +47,7 @@ export function run(map: CliMap): Diagnostic[] {
     .map((c) => ({
       id: c.id,
       label: c.label.toLowerCase(),
-      re: new RegExp(
-        `\\b${c.label.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`,
-      ),
+      re: new RegExp(`\\b${c.label.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`),
     }));
 
   for (const c of map.source.concepts) {

@@ -58,7 +58,16 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
     spine: "dict",
   },
   panel: {
-    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "examples"],
+    fields: [
+      "assumptions",
+      "definition",
+      "formula",
+      "formal",
+      "notation",
+      "intuition",
+      "gloss",
+      "examples",
+    ],
     exampleLimit: 2,
     proof: false,
     proofOpen: false,
@@ -66,7 +75,16 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
     spine: "panel",
   },
   full: {
-    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "examples"],
+    fields: [
+      "assumptions",
+      "definition",
+      "formula",
+      "formal",
+      "notation",
+      "intuition",
+      "gloss",
+      "examples",
+    ],
     proof: true,
     proofOpen: true,
     proofCollapsible: true,
@@ -116,12 +134,7 @@ export function ConceptBody({
       {fields.length > 0 && (
         <div className="space-y-4">
           {fields.map((field) => (
-            <Environment
-              key={field}
-              view={view}
-              field={field}
-              exampleLimit={spec.exampleLimit}
-            />
+            <Environment key={field} view={view} field={field} exampleLimit={spec.exampleLimit} />
           ))}
         </div>
       )}
@@ -154,11 +167,7 @@ export function ConceptBody({
   );
 }
 
-function ExtraEnvironment({
-  entry,
-}: {
-  entry: ConceptView["extraContent"][number];
-}) {
+function ExtraEnvironment({ entry }: { entry: ConceptView["extraContent"][number] }) {
   return (
     <section>
       <Eyebrow>{entry.label}</Eyebrow>

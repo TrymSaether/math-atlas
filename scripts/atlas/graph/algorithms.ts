@@ -31,9 +31,7 @@ export function orphans(map: CliMap): string[] {
 
 /** Concepts with no prerequisites (DAG roots / foundations). */
 export function roots(map: CliMap): string[] {
-  return map.nodes
-    .filter((n) => (map.prereqsOf.get(n.id)?.length ?? 0) === 0)
-    .map((n) => n.id);
+  return map.nodes.filter((n) => (map.prereqsOf.get(n.id)?.length ?? 0) === 0).map((n) => n.id);
 }
 
 export interface Cycle {
@@ -69,8 +67,7 @@ export function detectCycles(map: CliMap): Cycle[] {
 /** Kahn's topological order over the dependency DAG (foundations first). */
 export function topoSort(map: CliMap): { order: string[]; hasCycle: boolean } {
   const indeg = new Map<string, number>();
-  for (const n of map.nodes)
-    indeg.set(n.id, map.prereqsOf.get(n.id)?.length ?? 0);
+  for (const n of map.nodes) indeg.set(n.id, map.prereqsOf.get(n.id)?.length ?? 0);
   const queue = map.nodes.filter((n) => indeg.get(n.id) === 0).map((n) => n.id);
   const order: string[] = [];
   while (queue.length) {
@@ -91,18 +88,11 @@ export interface PathStep {
 }
 
 /** Shortest undirected path between two concepts (BFS), with the edges used. */
-export function shortestPath(
-  map: CliMap,
-  a: string,
-  b: string,
-): PathStep[] | undefined {
+export function shortestPath(map: CliMap, a: string, b: string): PathStep[] | undefined {
   if (!map.nodeById.has(a) || !map.nodeById.has(b)) return undefined;
   if (a === b) return [{ id: a }];
 
-  const prev = new Map<
-    string,
-    { from: string; edge: ArtifactEdge; forward: boolean }
-  >();
+  const prev = new Map<string, { from: string; edge: ArtifactEdge; forward: boolean }>();
   const queue = [a];
   const seen = new Set([a]);
   while (queue.length) {

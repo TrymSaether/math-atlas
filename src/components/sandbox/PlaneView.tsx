@@ -120,7 +120,14 @@ export function PlaneView({
             const { color, name } = meta[c.id];
             const label = compact ? undefined : name;
             return c.kind === "freePoint" ? (
-              <FreePoint key={c.id} id={c.id} point={m(p)} color={color} name={label} onMove={onMovePoint} />
+              <FreePoint
+                key={c.id}
+                id={c.id}
+                point={m(p)}
+                color={color}
+                name={label}
+                onMove={onMovePoint}
+              />
             ) : (
               <DepPoint key={c.id} point={m(p)} color={color} name={label} />
             );
@@ -179,7 +186,15 @@ function DepPoint({ point, color, name }: { point: Pt; color: string; name?: str
   );
 }
 
-function MarkLayer({ mark, viewport, compact }: { mark: Mark; viewport: ViewRect; compact: boolean }) {
+function MarkLayer({
+  mark,
+  viewport,
+  compact,
+}: {
+  mark: Mark;
+  viewport: ViewRect;
+  compact: boolean;
+}) {
   const color = mark.color ?? "var(--fg-3)";
   switch (mark.kind) {
     case "label":
@@ -198,9 +213,21 @@ function MarkLayer({ mark, viewport, compact }: { mark: Mark; viewport: ViewRect
         </>
       );
     case "vline":
-      return <Line.Segment point1={[mark.x, viewport.ymin]} point2={[mark.x, viewport.ymax]} color={color} />;
+      return (
+        <Line.Segment
+          point1={[mark.x, viewport.ymin]}
+          point2={[mark.x, viewport.ymax]}
+          color={color}
+        />
+      );
     case "hline":
-      return <Line.Segment point1={[viewport.xmin, mark.y]} point2={[viewport.xmax, mark.y]} color={color} />;
+      return (
+        <Line.Segment
+          point1={[viewport.xmin, mark.y]}
+          point2={[viewport.xmax, mark.y]}
+          color={color}
+        />
+      );
   }
 }
 

@@ -56,9 +56,26 @@ export default function KernelFigure({ nodeId }: FigureProps) {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={yDomain} grid>
-        <FunctionCurve y={kernel} domain={[-Math.PI, Math.PI]} color={DIA.accent} weight={STROKE.curve} />
-        <Line.Segment point1={[-handleX, yDomain[0]]} point2={[-handleX, yDomain[1]]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
-        <Line.Segment point1={[handleX, yDomain[0]]} point2={[handleX, yDomain[1]]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
+        <FunctionCurve
+          y={kernel}
+          domain={[-Math.PI, Math.PI]}
+          color={DIA.accent}
+          weight={STROKE.curve}
+        />
+        <Line.Segment
+          point1={[-handleX, yDomain[0]]}
+          point2={[-handleX, yDomain[1]]}
+          color={DIA.muted}
+          weight={STROKE.guide}
+          style="dashed"
+        />
+        <Line.Segment
+          point1={[handleX, yDomain[0]]}
+          point2={[handleX, yDomain[1]]}
+          color={DIA.muted}
+          weight={STROKE.guide}
+          style="dashed"
+        />
       </FigureFrame>
       <RangeControl
         min={isPoisson ? 5 : 1}

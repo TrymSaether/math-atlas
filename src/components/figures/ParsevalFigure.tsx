@@ -11,7 +11,7 @@ const XS = linspace(-Math.PI, Math.PI, 600);
 const DX = (2 * Math.PI) / XS.length;
 
 function numericalEnergy(ys: number[]): number {
-  return ys.reduce((s, y) => s + y * y, 0) * DX / Math.PI;
+  return (ys.reduce((s, y) => s + y * y, 0) * DX) / Math.PI;
 }
 
 const Y_DOMAIN: Record<WaveKind, [number, number]> = {
@@ -52,13 +52,21 @@ export default function ParsevalFigure(_: FigureProps) {
 
       {/* Parseval energy balance */}
       <div className="mt-2.5 px-1">
-        <div className="mb-1.5 flex items-baseline justify-between text-ui-hint" style={{ color: "var(--fg-3)" }}>
-          <span>Energy captured by {N} harmonic{N !== 1 ? "s" : ""}</span>
+        <div
+          className="mb-1.5 flex items-baseline justify-between text-ui-hint"
+          style={{ color: "var(--fg-3)" }}
+        >
+          <span>
+            Energy captured by {N} harmonic{N !== 1 ? "s" : ""}
+          </span>
           <span className="font-mono" style={{ color: fraction > 0.95 ? DIA.ok : DIA.text }}>
             {pct}%
           </span>
         </div>
-        <div className="relative h-2.5 w-full overflow-hidden rounded-full" style={{ background: "var(--surface-3)" }}>
+        <div
+          className="relative h-2.5 w-full overflow-hidden rounded-full"
+          style={{ background: "var(--surface-3)" }}
+        >
           <div
             className="h-full rounded-full"
             style={{
@@ -68,16 +76,33 @@ export default function ParsevalFigure(_: FigureProps) {
             }}
           />
         </div>
-        <div className="mt-1 flex justify-between font-mono text-ui-hint" style={{ color: "var(--fg-4)" }}>
+        <div
+          className="mt-1 flex justify-between font-mono text-ui-hint"
+          style={{ color: "var(--fg-4)" }}
+        >
           <span>Σ|ĉₙ|² ≈ {partialE.toFixed(3)}</span>
           <span>‖f‖² = {totalE.toFixed(3)}</span>
         </div>
       </div>
 
-      <WaveSelect value={kind} onChange={(k) => { setKind(k); setN(5); }} />
-      <RangeControl min={1} max={40} value={N} onChange={setN} label={`N = ${N}`} ariaLabel="Number of harmonics N" />
+      <WaveSelect
+        value={kind}
+        onChange={(k) => {
+          setKind(k);
+          setN(5);
+        }}
+      />
+      <RangeControl
+        min={1}
+        max={40}
+        value={N}
+        onChange={setN}
+        label={`N = ${N}`}
+        ariaLabel="Number of harmonics N"
+      />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        Both sides of Parseval's identity update live — adding harmonics fills the bar until the partial sum captures all the energy.
+        Both sides of Parseval's identity update live — adding harmonics fills the bar until the
+        partial sum captures all the energy.
       </figcaption>
     </figure>
   );

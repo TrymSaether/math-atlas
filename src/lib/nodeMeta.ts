@@ -1,10 +1,6 @@
 import type { GraphNode } from "../types";
 
-const LONG_REF_PATTERNS = [
-  /^Stein(?:-|\u2013)Shakarchi\b/i,
-  /^.+:\s*Ch\./i,
-  /;\s*/,
-];
+const LONG_REF_PATTERNS = [/^Stein(?:-|\u2013)Shakarchi\b/i, /^.+:\s*Ch\./i, /;\s*/];
 
 export function isCompactNodeRef(ref: string): boolean {
   const value = ref.trim();

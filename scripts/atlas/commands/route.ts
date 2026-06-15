@@ -53,16 +53,24 @@ function run(ctx: Ctx): number {
   }
 
   process.stdout.write(
-    "\n" + bold("Study path") + dim(`  →  ${target}`) +
-      (from ? dim(`   (from ${from})`) : "") + "\n" +
-      gray(`  ${map.label}  ·  ${path.length} step(s)`) + "\n\n",
+    "\n" +
+      bold("Study path") +
+      dim(`  →  ${target}`) +
+      (from ? dim(`   (from ${from})`) : "") +
+      "\n" +
+      gray(`  ${map.label}  ·  ${path.length} step(s)`) +
+      "\n\n",
   );
   if (path.length === 1) {
-    process.stdout.write(green(`  ${MARK.ok} ${target} is foundational — nothing to learn first`) + "\n\n");
+    process.stdout.write(
+      green(`  ${MARK.ok} ${target} is foundational — nothing to learn first`) + "\n\n",
+    );
     return 0;
   }
   path.forEach((id, i) => process.stdout.write(step(map, id, i + 1) + "\n"));
-  process.stdout.write("\n" + dim("  tip: ") + cyan(`atlas explain ${target}`) + dim(" for the full card") + "\n\n");
+  process.stdout.write(
+    "\n" + dim("  tip: ") + cyan(`atlas explain ${target}`) + dim(" for the full card") + "\n\n",
+  );
   return 0;
 }
 

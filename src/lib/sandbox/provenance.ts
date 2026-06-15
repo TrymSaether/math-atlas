@@ -58,10 +58,7 @@ function maxProvenance(a: Provenance, b: Provenance): Provenance {
  * object's direct dependencies (the evaluator visits in topological order, so
  * they are available before this object is reached).
  */
-export function deriveProvenance(
-  obj: WorkspaceObject,
-  depProvenances: Provenance[],
-): Provenance {
+export function deriveProvenance(obj: WorkspaceObject, depProvenances: Provenance[]): Provenance {
   let result = baseProvenance(obj);
   for (const dep of depProvenances) {
     result = maxProvenance(result, dep);

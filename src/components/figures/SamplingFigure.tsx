@@ -67,7 +67,13 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
     <figure className="m-0">
       <FigureFrame xDomain={[0, T_MAX]} yDomain={[-1.25, 1.25]} grid>
         <Line.Segment point1={[0, 0]} point2={[T_MAX, 0]} color={DIA.muted} weight={STROKE.guide} />
-        <Line.Segment point1={[HANDLE_MIN, 1.08]} point2={[HANDLE_MAX, 1.08]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
+        <Line.Segment
+          point1={[HANDLE_MIN, 1.08]}
+          point2={[HANDLE_MAX, 1.08]}
+          color={DIA.muted}
+          weight={STROKE.guide}
+          style="dashed"
+        />
         {/* The critical (Nyquist) rate: a tick on the rate track shows why 2·f is
             the threshold, instead of leaving the user to discover it by dragging. */}
         <Line.Segment
@@ -76,11 +82,26 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
           color={nyquistOk ? DIA.codomain : DIA.alert}
           weight={STROKE.mark}
         />
-        <Text x={NYQUIST_HANDLE_X} y={1.22} color={nyquistOk ? DIA.codomain : DIA.alert} size={FONT.hint}>
+        <Text
+          x={NYQUIST_HANDLE_X}
+          y={1.22}
+          color={nyquistOk ? DIA.codomain : DIA.alert}
+          size={FONT.hint}
+        >
           2f
         </Text>
-        <Vector tail={[HANDLE_MIN, 1.08]} tip={[rate.x, 1.08]} color={DIA.accent} weight={STROKE.mark} />
-        <Text x={Math.min(rate.x, NYQUIST_HANDLE_X - 0.28)} y={0.94} color={DIA.accent} size={FONT.tick}>
+        <Vector
+          tail={[HANDLE_MIN, 1.08]}
+          tip={[rate.x, 1.08]}
+          color={DIA.accent}
+          weight={STROKE.mark}
+        />
+        <Text
+          x={Math.min(rate.x, NYQUIST_HANDLE_X - 0.28)}
+          y={0.94}
+          color={DIA.accent}
+          size={FONT.tick}
+        >
           f_s
         </Text>
         <Vector tail={[0, -1.08]} tip={[dt, -1.08]} color={DIA.codomain} weight={STROKE.mark} />

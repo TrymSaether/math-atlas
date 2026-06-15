@@ -29,9 +29,7 @@ function run(ctx: Ctx): number {
   if (!query) throw new CliError("usage: atlas find <query>");
 
   const maps = loadMaps(ctx);
-  const items: Hit[] = maps.flatMap((map) =>
-    map.nodes.map((node) => ({ map, node })),
-  );
+  const items: Hit[] = maps.flatMap((map) => map.nodes.map((node) => ({ map, node })));
   const limit = Number(ctx.flags.limit ?? 15) || 15;
   const hits = fuzzySearch(query, items, (h) => [
     h.node.id,
@@ -55,10 +53,7 @@ function run(ctx: Ctx): number {
   }
 
   process.stdout.write(
-    "\n" +
-      bold("atlas find") +
-      dim(`  ·  "${query}"  ·  ${hits.length} match(es)`) +
-      "\n\n",
+    "\n" + bold("atlas find") + dim(`  ·  "${query}"  ·  ${hits.length} match(es)`) + "\n\n",
   );
   if (hits.length === 0) {
     process.stdout.write(dim("  no matches\n\n"));
@@ -90,9 +85,7 @@ function run(ctx: Ctx): number {
         bold("Related to ") +
         cyan(top.node.id) +
         "\n  " +
-        (neigh.length
-          ? neigh.map((id) => cyan(id)).join(dim(", "))
-          : dim("none")) +
+        (neigh.length ? neigh.map((id) => cyan(id)).join(dim(", ")) : dim("none")) +
         "\n",
     );
   }

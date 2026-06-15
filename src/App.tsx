@@ -54,7 +54,10 @@ export default function App() {
             ) : surface === "sandbox" ? (
               <Suspense
                 fallback={
-                  <div className="flex h-full items-center justify-center text-sm" style={{ color: "var(--fg-3)" }}>
+                  <div
+                    className="flex h-full items-center justify-center text-sm"
+                    style={{ color: "var(--fg-3)" }}
+                  >
                     Loading sandbox…
                   </div>
                 }

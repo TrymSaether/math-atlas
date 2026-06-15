@@ -29,9 +29,7 @@ export function run(map: CliMap): Diagnostic[] {
           message: `'${c.id}' proof uses ${undeclared
             .slice(0, 5)
             .map((u) => `'${u}'`)
-            .join(
-              ", ",
-            )}${undeclared.length > 5 ? "…" : ""} but no edge records the dependency`,
+            .join(", ")}${undeclared.length > 5 ? "…" : ""} but no edge records the dependency`,
           hint: "add a 'uses' edge so the prerequisite chain reflects the proof",
         }),
       );

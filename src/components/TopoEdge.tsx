@@ -44,7 +44,11 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
         ? getBezierPath(geom)
         : getSmoothStepPath({ ...geom, borderRadius: 14 });
 
-  const style = getEdgeStyle(data?.edge ?? FALLBACK_EDGE, Boolean(data?.highlight), Boolean(data?.dim));
+  const style = getEdgeStyle(
+    data?.edge ?? FALLBACK_EDGE,
+    Boolean(data?.highlight),
+    Boolean(data?.dim),
+  );
   const highlight = Boolean(data?.highlight);
   const dim = Boolean(data?.dim);
   const markerId = `arrow-${props.id}`;
@@ -63,10 +67,12 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
       el.style.strokeDashoffset = "0";
       return;
     }
-    const anim = el.animate(
-      [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }],
-      { duration: 300, delay: route.delay, easing: "cubic-bezier(0.22,0.61,0.36,1)", fill: "both" },
-    );
+    const anim = el.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], {
+      duration: 300,
+      delay: route.delay,
+      easing: "cubic-bezier(0.22,0.61,0.36,1)",
+      fill: "both",
+    });
     return () => anim.cancel();
   }, [route?.runKey, route?.delay]);
 

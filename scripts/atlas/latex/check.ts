@@ -21,26 +21,20 @@ function countUnescaped(s: string, ch: string): number {
 
 function balanceIssues(f: TexField): string[] {
   const issues: string[] = [];
-  if (countUnescaped(f.tex, "$") % 2 !== 0)
-    issues.push("unbalanced `$` math delimiter");
+  if (countUnescaped(f.tex, "$") % 2 !== 0) issues.push("unbalanced `$` math delimiter");
 
   const open = (f.tex.match(/(?<!\\)\{/g) ?? []).length;
   const close = (f.tex.match(/(?<!\\)\}/g) ?? []).length;
-  if (open !== close)
-    issues.push(`unbalanced braces (${open} '{' vs ${close} '}')`);
+  if (open !== close) issues.push(`unbalanced braces (${open} '{' vs ${close} '}')`);
 
   const begins = [...f.tex.matchAll(/\\begin\{([^}]*)\}/g)].map((m) => m[1]);
   const ends = [...f.tex.matchAll(/\\end\{([^}]*)\}/g)].map((m) => m[1]);
   if (begins.length !== ends.length)
-    issues.push(
-      `unbalanced environments (${begins.length} \\begin vs ${ends.length} \\end)`,
-    );
+    issues.push(`unbalanced environments (${begins.length} \\begin vs ${ends.length} \\end)`);
   else {
     for (let i = 0; i < begins.length; i++)
       if (begins[i] !== ends[i])
-        issues.push(
-          `environment mismatch: \\begin{${begins[i]}} … \\end{${ends[i]}}`,
-        );
+        issues.push(`environment mismatch: \\begin{${begins[i]}} … \\end{${ends[i]}}`);
   }
   return issues;
 }
@@ -73,9 +67,7 @@ export function checkLatex(map: CliMap): Diagnostic[] {
           displayMode: seg.display,
         });
       } catch (err) {
-        const reason = (err as Error).message
-          .replace(/^KaTeX parse error:\s*/, "")
-          .split("\n")[0];
+        const reason = (err as Error).message.replace(/^KaTeX parse error:\s*/, "").split("\n")[0];
         out.push(
           error({
             ...base,

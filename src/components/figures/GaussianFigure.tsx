@@ -40,12 +40,23 @@ export default function GaussianFigure({ nodeId }: FigureProps) {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[-6, 6]} yDomain={[-0.08, 1.18]} grid>
-        <Line.Segment point1={[0, 1.06]} point2={[2.2, 1.06]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
+        <Line.Segment
+          point1={[0, 1.06]}
+          point2={[2.2, 1.06]}
+          color={DIA.muted}
+          weight={STROKE.guide}
+          style="dashed"
+        />
         <Vector tail={[0, 1.06]} tip={[sigma, 1.06]} color={DIA.accent} weight={STROKE.mark} />
         <Text x={sigma + 0.34} y={1.08} color={DIA.accent} size={FONT.tick}>
           σ
         </Text>
-        <Vector tail={[0, 0.88]} tip={[-freqSigma, 0.88]} color={DIA.codomain} weight={STROKE.mark} />
+        <Vector
+          tail={[0, 0.88]}
+          tip={[-freqSigma, 0.88]}
+          color={DIA.codomain}
+          weight={STROKE.mark}
+        />
         <Text x={-freqSigma - 0.5} y={0.9} color={DIA.codomain} size={FONT.tick}>
           1/σ
         </Text>

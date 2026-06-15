@@ -49,9 +49,7 @@ export const EMPTY_ROUTE: RouteResult = {
 };
 
 /** Relations that belong to the logical dependency DAG (closed, data-derived). */
-const DEP_RELATIONS = new Set<RelationType>(
-  RELATION_KEYS.filter((k) => RELATIONS[k].isDependency),
-);
+const DEP_RELATIONS = new Set<RelationType>(RELATION_KEYS.filter((k) => RELATIONS[k].isDependency));
 
 function depAdjacency(map: LoadedMap): Adjacency {
   return buildAdjacency(map.data.edges, DEP_RELATIONS);
@@ -85,11 +83,7 @@ export function prereqResult(map: LoadedMap, targetId: string): RouteResult {
 }
 
 /** All dependency paths between two concepts (the connecting subgraph). */
-export function pathResult(
-  map: LoadedMap,
-  fromId: string,
-  toId: string,
-): RouteResult {
+export function pathResult(map: LoadedMap, fromId: string, toId: string): RouteResult {
   if (!map.nodeById.has(fromId) || !map.nodeById.has(toId)) return EMPTY_ROUTE;
   const adj = depAdjacency(map);
   const down = descendants(adj, fromId); // dependents of `from`
