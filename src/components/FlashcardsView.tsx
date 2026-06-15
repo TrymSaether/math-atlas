@@ -131,13 +131,17 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const deckIds = useMemo(() => deck.map((n) => n.id), [deck]);
   const deckKey = deckIds.join("|");
 
-  const [state, dispatch] = useReducer(drillReducer, undefined, (): DrillState => ({
-    seed: 1,
-    order: shuffle(deckIds, 1),
-    pos: 0,
-    flipped: false,
-    ratings: {},
-  }));
+  const [state, dispatch] = useReducer(
+    drillReducer,
+    undefined,
+    (): DrillState => ({
+      seed: 1,
+      order: shuffle(deckIds, 1),
+      pos: 0,
+      flipped: false,
+      ratings: {},
+    }),
+  );
 
   // Rebuild the run whenever the filtered deck identity changes.
   useEffect(() => {
@@ -199,8 +203,8 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   }, [finished, flip, go, rate, state.flipped, setSurface]);
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center px-4 pb-4 pt-[68px]">
-      <div className="flex w-full max-w-[680px] flex-1 flex-col">
+    <div className="absolute inset-0 flex flex-col items-center px-4 pb-4 pt-17">
+      <div className="flex w-full max-w-170 flex-1 flex-col">
         {/* Progress rail */}
         <div className="mb-3 flex items-center gap-3">
           <div

@@ -757,8 +757,10 @@ function Switch({
       aria-label={label}
       onClick={onClick}
       className={cn(
-        "relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-[var(--radius-pill)] transition-colors",
-        checked ? "bg-accent" : "bg-surface-3 ring-1 ring-inset ring-border",
+        "relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-[var(--radius-pill)] transition-[box-shadow,filter,background-color]",
+        checked
+          ? "bg-accent hover:brightness-105"
+          : "bg-surface-3 ring-1 ring-inset ring-border hover:bg-surface-2 hover:ring-border-strong",
       )}
     >
       <span
@@ -796,7 +798,7 @@ function Segmented<T extends string>({
             onClick={() => onChange(o.value)}
             className={cn(
               "rounded-[var(--radius-sm)] px-2 py-1.5 text-ui-meta font-semibold transition-colors",
-              active ? "bg-accent text-fg-on-color" : "text-fg-2",
+              active ? "bg-accent text-fg-on-color" : "text-fg-2 hover:bg-surface hover:text-fg-1",
             )}
             aria-pressed={active}
           >
@@ -847,7 +849,7 @@ function ModeTile({
         "group relative flex flex-col gap-2 rounded-[var(--radius-md)] border p-2 text-left transition-colors",
         active
           ? "border-accent bg-accent-soft ring-1 ring-inset ring-accent"
-          : "border-border bg-surface",
+          : "border-border bg-surface hover:border-border-strong hover:bg-surface-2",
       )}
       aria-pressed={active}
     >
@@ -994,7 +996,8 @@ function MapPanel({
                     onClick={() => toggleTopic(d.id)}
                     className={cn(
                       "inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition-colors",
-                      !active && "bg-surface border-border text-fg-3",
+                      !active &&
+                        "bg-surface border-border text-fg-3 hover:border-border-strong hover:bg-surface-2 hover:text-fg-1",
                     )}
                     // Active domain chips carry the data-derived domain tone, which
                     // has no static utility equivalent.
@@ -1045,7 +1048,7 @@ function MapPanel({
                       "flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition-colors",
                       active
                         ? "bg-accent-soft border-accent-border text-accent"
-                        : "bg-surface border-border text-fg-3",
+                        : "bg-surface border-border text-fg-3 hover:border-border-strong hover:bg-surface-2 hover:text-fg-1",
                     )}
                   >
                     <Icon className="h-3 w-3" weight={active ? "bold" : "regular"} aria-hidden />

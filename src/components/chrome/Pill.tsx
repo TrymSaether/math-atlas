@@ -27,7 +27,7 @@ export function Pill({
   return (
     <div
       className={cn(
-        "pointer-events-auto flex items-center rounded-[var(--radius-xl)] p-1",
+        "pointer-events-auto flex items-center rounded-xl p-1",
         variant === "soft" ? "map-chrome-soft" : "map-chrome",
         orientation === "vertical" && "flex-col",
         className,

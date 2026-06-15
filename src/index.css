@@ -1614,6 +1614,23 @@ button {
   font-family: inherit;
 }
 
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+[role="tab"]:not([aria-disabled="true"]),
+[role="switch"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: default;
+}
+
+button > svg,
+button > svg * {
+  pointer-events: none;
+}
+
 /* Accent-colored keyboard focus ring — scoped to interactive elements only
    so focusable container divs (e.g. cmdk) don't get an outline. */
 button:focus-visible,
@@ -2207,6 +2224,7 @@ textarea.authoring-control {
   background: var(--handle-color) !important;
   border: 1.5px solid var(--surface) !important;
   opacity: 0 !important;
+  pointer-events: none !important;
   transition: opacity 0.15s !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
 }
@@ -2272,6 +2290,10 @@ textarea.authoring-control {
 
 .react-flow__node {
   font-family: inherit;
+}
+
+.react-flow__node.atlas-flow-node {
+  cursor: pointer !important;
 }
 
 .react-flow__node:focus {

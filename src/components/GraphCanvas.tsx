@@ -365,6 +365,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     const nextCache = new Map<string, NodeData>();
     const selectionActive = selectedId !== null && visibleIds.has(selectedId);
 
+    // eslint-disable-next-line react-hooks/refs
     const result = filteredNodes.map((node) => {
       const position = activeLayout.positions.get(node.id) ?? { x: 0, y: 0 };
       const isSelected = node.id === selectedId;
@@ -417,12 +418,14 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       return {
         id: node.id,
         type: "topo",
+        className: "atlas-flow-node",
         position,
         draggable: false,
         data,
       };
     });
 
+    // eslint-disable-next-line react-hooks/refs
     dataCacheRef.current = nextCache;
     return result;
   }, [
@@ -555,6 +558,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         panOnScroll
         selectionOnDrag={false}
         nodesDraggable={false}
+        nodesConnectable={false}
         defaultEdgeOptions={{ type: "topo" }}
       />
       {showMinimap && (

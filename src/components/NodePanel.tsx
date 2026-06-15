@@ -218,7 +218,7 @@ function PanelContent({
                 role="tab"
                 aria-selected={active}
                 onClick={() => setTab(t.id)}
-                className="relative flex items-center gap-1.5 rounded-t-[var(--radius-sm)] px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)]"
+                className="relative flex items-center gap-1.5 rounded-t-(--radius-sm) px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors hover:bg-[color:var(--surface-2)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)]"
                 style={{ color: active ? "var(--fg-1)" : "var(--fg-3)" }}
               >
                 {t.label}
