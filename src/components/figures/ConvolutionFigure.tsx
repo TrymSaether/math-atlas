@@ -57,11 +57,11 @@ export default function ConvolutionFigure() {
     <figure className="m-0">
       <div className="space-y-2">
         <section
-          className="relative overflow-hidden rounded-[var(--radius-lg)] border"
+          className="relative overflow-hidden rounded-lg border"
           style={{ borderColor: "var(--border)", background: "var(--bg)" }}
         >
           <div
-            className="absolute left-3 top-2 z-10 rounded-[var(--radius-xs)] px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
+            className="absolute left-3 top-2 z-10 rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
             style={{ color: "var(--fg-2)", background: PANEL_BACKING }}
           >
             <MathText text={`$f(t)$ fixed, $g(s-t)$ sliding`} />
@@ -104,7 +104,7 @@ export default function ConvolutionFigure() {
           </FigureFrame>
 
           <div
-            className="absolute bottom-2 left-3 rounded-[var(--radius-xs)] px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
+            className="absolute bottom-2 left-3 rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
             style={{ background: PANEL_BACKING }}
           >
             <MathText
@@ -114,11 +114,11 @@ export default function ConvolutionFigure() {
         </section>
 
         <section
-          className="relative overflow-hidden rounded-[var(--radius-lg)] border"
+          className="relative overflow-hidden rounded-lg border"
           style={{ borderColor: "var(--border)", background: "var(--bg)" }}
         >
           <div
-            className="absolute left-3 top-2 z-10 rounded-[var(--radius-xs)] px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
+            className="absolute left-3 top-2 z-10 rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
             style={{ color: "var(--fg-2)", background: PANEL_BACKING }}
           >
             <MathText text={`$(f*g)(s)=\\int_{-\\infty}^{\\infty} f(t)g(s-t)\\,dt$`} />
@@ -140,7 +140,7 @@ export default function ConvolutionFigure() {
           </FigureFrame>
 
           <div
-            className="absolute bottom-2 left-3 rounded-[var(--radius-xs)] px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
+            className="absolute bottom-2 left-3 rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
             style={{ background: PANEL_BACKING }}
           >
             <MathText text={`$s=${s.toFixed(1)},\\quad (f*g)(s)=${value.toFixed(2)}$`} />

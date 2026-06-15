@@ -121,12 +121,12 @@ function MapBrandSelector() {
       <Button
         kind="text"
         onClick={goHome}
-        className="group flex min-w-0 items-center gap-2.5 rounded-[var(--radius-md)] py-1 pl-1.5 pr-1 sm:pl-2 sm:pr-2.5"
+        className="group flex min-w-0 items-center gap-2.5 rounded-md py-1 pl-1.5 pr-1 sm:pl-2 sm:pr-2.5"
         aria-label="Math Atlas — back to map"
         title="Back to map"
       >
         <span
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-sm)] transition-transform group-hover:scale-105"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm transition-transform group-hover:scale-105"
           style={{
             background: "color-mix(in srgb, var(--surface) 78%, transparent)",
             boxShadow: "inset 0 0 0 1px var(--chrome-border)",
@@ -143,7 +143,7 @@ function MapBrandSelector() {
         active={open}
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "flex h-9 min-w-0 items-center gap-2 rounded-[var(--radius-md)] px-2.5 text-ui-control font-sans sm:px-3.5",
+          "flex h-9 min-w-0 items-center gap-2 rounded-md px-2.5 text-ui-control font-sans sm:px-3.5",
           !open && "text-fg-1",
         )}
         aria-label="Field selector"
@@ -171,7 +171,7 @@ function MapBrandSelector() {
                   setOpen(false);
                 }}
                 className={cn(
-                  "flex w-full items-center gap-2 rounded-[var(--radius-md)] px-3 py-2.5 text-left text-ui-control",
+                  "flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-left text-ui-control",
                   !active && "text-fg-2",
                 )}
               >
@@ -192,13 +192,13 @@ function SearchBox() {
     <Button
       kind="text"
       onClick={() => setPaletteOpen(true)}
-      className="flex h-9 min-w-9 items-center gap-2 rounded-[var(--radius-md)] px-2.5 text-ui-control text-fg-2 md:min-w-[190px] md:px-3.5"
+      className="flex h-9 min-w-9 items-center gap-2 rounded-md px-2.5 text-ui-control text-fg-2 md:min-w-[190px] md:px-3.5"
       aria-label="Open search"
     >
       <MagnifyingGlassIcon className="h-4 w-4 shrink-0 text-fg-3" />
       <span className="hidden md:inline">Search the atlas</span>
       <kbd
-        className="ml-auto hidden h-5 items-center rounded-[var(--radius-xs)] border px-1.5 font-mono text-ui-2xs text-fg-2 md:inline-flex"
+        className="ml-auto hidden h-5 items-center rounded-xs border px-1.5 font-mono text-ui-2xs text-fg-2 md:inline-flex"
         style={{
           background: "var(--chrome-hover)",
           borderColor: "var(--chrome-border)",
@@ -370,7 +370,7 @@ function DisplayPopover({
   return createPortal(
     <div
       ref={popoverRef}
-      className="map-popover pointer-events-auto fixed z-50 w-[min(260px,calc(100vw-24px))] rounded-[var(--radius-2xl)] p-3"
+      className="map-popover pointer-events-auto fixed z-50 w-[min(260px,calc(100vw-24px))] rounded-2xl p-3"
       style={{ top: position.top, right: position.right }}
     >
       <div className="mb-2.5 flex items-baseline justify-between">
@@ -646,7 +646,7 @@ function EditMapPopover({
 
       {notice && (
         <div
-          className="map-popover pointer-events-none absolute right-0 top-full mt-1.5 whitespace-nowrap rounded-[var(--radius-md)] px-2.5 py-1 text-ui-hint font-medium text-accent"
+          className="map-popover pointer-events-none absolute right-0 top-full mt-1.5 whitespace-nowrap rounded-md px-2.5 py-1 text-ui-hint font-medium text-accent"
           role="status"
         >
           {notice}

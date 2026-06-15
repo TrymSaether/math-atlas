@@ -76,7 +76,7 @@ export function SandboxView() {
                 <span key={v.id} className="flex items-center">
                   <button
                     onClick={() => applyView(v.id)}
-                    className="rounded-[var(--radius-sm)] px-2 py-1 text-ui-2xs"
+                    className="rounded-sm px-2 py-1 text-ui-2xs"
                     style={{ color: "var(--fg-2)" }}
                     title="Apply saved view"
                   >
@@ -128,7 +128,7 @@ export function SandboxView() {
       </main>
 
       {/* Floating expression panel */}
-      <aside className="sandbox-sidebar pointer-events-auto absolute bottom-3 left-3 top-[68px] z-20 flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-[var(--radius-lg)] sm:left-4 sm:w-[340px]">
+      <aside className="sandbox-sidebar pointer-events-auto absolute bottom-3 left-3 top-[68px] z-20 flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-lg sm:left-4 sm:w-[340px]">
         <div className="sandbox-sidebar-header flex items-center gap-1 px-2 py-2">
           <WorkspaceMenu />
         </div>

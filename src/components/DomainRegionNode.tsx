@@ -72,7 +72,7 @@ export function DomainRegionNode({ data }: NodeProps<Data>) {
         </span>
       </div>
       <div
-        className="absolute left-4 top-3 inline-flex max-w-[calc(100%-32px)] items-center gap-2 rounded-[var(--radius-sm)] border px-2 py-1 text-ui-caption font-bold uppercase"
+        className="absolute left-4 top-3 inline-flex max-w-[calc(100%-32px)] items-center gap-2 rounded-sm border px-2 py-1 text-ui-caption font-bold uppercase"
         style={{
           background: "color-mix(in srgb, var(--surface) 78%, transparent)",
           borderColor: "color-mix(in srgb, var(--border) 70%, transparent)",

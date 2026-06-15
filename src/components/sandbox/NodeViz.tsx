@@ -53,7 +53,7 @@ export function NodeViz({
 
   return (
     <figure
-      className="overflow-hidden rounded-[var(--radius-lg)] border"
+      className="overflow-hidden rounded-lg border"
       style={{ borderColor: "var(--border)", background: "var(--surface)" }}
     >
       <PlaneView

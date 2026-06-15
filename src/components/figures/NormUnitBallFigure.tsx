@@ -127,7 +127,7 @@ function NormModeSelect({
       <div
         role="radiogroup"
         aria-label="Norm type"
-        className="inline-flex w-fit flex-wrap gap-1 rounded-[var(--radius-md)] border p-1"
+        className="inline-flex w-fit flex-wrap gap-1 rounded-md border p-1"
         style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
       >
         {MODES.map((mode) => {
@@ -146,7 +146,7 @@ function NormModeSelect({
                   onChange(mode.kind);
                 }
               }}
-              className="flex min-h-8 cursor-pointer items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-ui-meta transition-colors focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
+              className="flex min-h-8 cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-ui-meta transition-colors focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
               style={{
                 background: active ? "var(--accent)" : "transparent",
                 color: active ? "var(--fg-on-color)" : "var(--fg-2)",
@@ -203,7 +203,7 @@ function ReadoutPanel({
 
   return (
     <aside
-      className="flex min-w-[13rem] flex-1 flex-col rounded-[var(--radius-md)] border p-3"
+      className="flex min-w-[13rem] flex-1 flex-col rounded-md border p-3"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
       aria-live="polite"
     >

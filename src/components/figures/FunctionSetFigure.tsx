@@ -162,7 +162,7 @@ function Control({
     <div
       role="radiogroup"
       aria-label="Figure case"
-      className="mt-2.5 inline-flex flex-wrap gap-1 rounded-[var(--radius-md)] border p-0.5"
+      className="mt-2.5 inline-flex flex-wrap gap-1 rounded-md border p-0.5"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
     >
       {choices.map((choice) => {
@@ -174,7 +174,7 @@ function Control({
             role="radio"
             aria-checked={active}
             onClick={() => onChange(choice)}
-            className="rounded-[var(--radius-sm)] px-2.5 py-1 text-ui-meta transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--surface-2)]"
+            className="rounded-sm px-2.5 py-1 text-ui-meta transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--surface-2)]"
             style={{
               background: active ? "var(--accent)" : "transparent",
               color: active ? "var(--fg-on-color)" : "var(--fg-2)",

@@ -225,7 +225,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
           <button
             onClick={reshuffle}
             disabled={total === 0}
-            className="flex h-7 items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 text-ui-meta font-medium transition-colors hover:bg-[color:var(--surface-3)] disabled:opacity-40"
+            className="flex h-7 items-center gap-1.5 rounded-sm border px-2.5 text-ui-meta font-medium transition-colors hover:bg-(--surface-3) disabled:opacity-40"
             style={{
               borderColor: "var(--border)",
               color: "var(--fg-2)",
@@ -303,7 +303,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                 ) : (
                   <button
                     onClick={flip}
-                    className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
+                    className="flex h-11 items-center gap-2 rounded-sm px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
                     style={{
                       background: "var(--accent)",
                       color: "var(--surface)",
@@ -342,7 +342,7 @@ function CardShell({
 }) {
   return (
     <div
-      className="flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] border"
+      className="flex h-full flex-col overflow-hidden rounded-2xl border"
       style={{
         background: "var(--surface)",
         borderColor: "var(--border)",
@@ -417,7 +417,7 @@ function CardBack({
       footer={
         <button
           onClick={onOpen}
-          className="flex shrink-0 items-center justify-center gap-1.5 border-t py-2.5 text-ui-xs font-medium transition-colors hover:bg-[color:var(--surface-2)]"
+          className="flex shrink-0 items-center justify-center gap-1.5 border-t py-2.5 text-ui-xs font-medium transition-colors hover:bg-(--surface-2)"
           style={{ borderColor: "var(--border-subtle)", color: "var(--accent)" }}
         >
           Open full entry in dictionary
@@ -450,7 +450,7 @@ function SummaryCard({
   const pct = Math.round((gotCount / total) * 100);
   return (
     <div
-      className="flex flex-1 flex-col items-center justify-center gap-6 rounded-[var(--radius-2xl)] border px-8 py-12 text-center"
+      className="flex flex-1 flex-col items-center justify-center gap-6 rounded-2xl border px-8 py-12 text-center"
       style={{
         background: "var(--surface)",
         borderColor: "var(--border)",
@@ -479,7 +479,7 @@ function SummaryCard({
         {againCount > 0 && (
           <button
             onClick={onReview}
-            className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
+            className="flex h-11 items-center gap-2 rounded-sm px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
             style={{
               background: "var(--accent)",
               color: "var(--surface)",
@@ -491,7 +491,7 @@ function SummaryCard({
         )}
         <button
           onClick={onRestart}
-          className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] border px-5 text-ui-body font-medium transition-colors hover:bg-[color:var(--surface-3)]"
+          className="flex h-11 items-center gap-2 rounded-sm border px-5 text-ui-body font-medium transition-colors hover:bg-(--surface-3)"
           style={{
             borderColor: "var(--border)",
             color: "var(--fg-1)",
@@ -502,7 +502,7 @@ function SummaryCard({
         </button>
         <button
           onClick={onClose}
-          className="h-11 rounded-[var(--radius-sm)] px-5 text-ui-body font-medium transition-colors hover:bg-[color:var(--surface-3)]"
+          className="h-11 rounded-sm px-5 text-ui-body font-medium transition-colors hover:bg-(--surface-3)"
           style={{ color: "var(--fg-2)" }}
         >
           Back to atlas
@@ -515,7 +515,7 @@ function SummaryCard({
 function EmptyState({ onBack }: { onBack: () => void }) {
   return (
     <div
-      className="flex flex-1 flex-col items-center justify-center gap-4 rounded-[var(--radius-2xl)] border px-8 py-12 text-center"
+      className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border px-8 py-12 text-center"
       style={{ background: "var(--surface)", borderColor: "var(--border)" }}
     >
       <p className="text-ui-lead" style={{ color: "var(--fg-1)" }}>
@@ -526,7 +526,7 @@ function EmptyState({ onBack }: { onBack: () => void }) {
       </p>
       <button
         onClick={onBack}
-        className="mt-1 h-10 rounded-[var(--radius-sm)] border px-5 text-ui-sm font-medium transition-colors hover:bg-[color:var(--surface-3)]"
+        className="mt-1 h-10 rounded-sm border px-5 text-ui-sm font-medium transition-colors hover:bg-(--surface-3)"
         style={{ borderColor: "var(--border)", color: "var(--fg-1)", background: "var(--surface)" }}
       >
         Back to atlas
@@ -552,7 +552,7 @@ function PagerButton({
       disabled={disabled}
       aria-label={label}
       title={label}
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors hover:bg-[color:var(--surface-3)] disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors hover:bg-(--surface-3) disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
       style={{ borderColor: "var(--border)", color: "var(--fg-2)", background: "var(--surface)" }}
     >
       {children}
@@ -573,7 +573,7 @@ function RateButton({
   return (
     <button
       onClick={onClick}
-      className="flex h-11 items-center gap-2 rounded-[var(--radius-sm)] border px-5 text-ui-body font-semibold transition-transform active:scale-[0.98]"
+      className="flex h-11 items-center gap-2 rounded-sm border px-5 text-ui-body font-semibold transition-transform active:scale-[0.98]"
       style={{
         background: got ? "var(--accent-soft)" : "var(--surface)",
         borderColor: got ? "var(--accent-border)" : "var(--border)",

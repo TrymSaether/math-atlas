@@ -207,7 +207,7 @@ function ExtraValue({ value }: { value: unknown }) {
 
   return (
     <pre
-      className="max-w-full overflow-x-auto rounded-[var(--radius-md)] border px-3 py-2 font-mono text-ui-xs leading-[1.6]"
+      className="max-w-full overflow-x-auto rounded-md border px-3 py-2 font-mono text-ui-xs leading-[1.6]"
       style={{
         background: "var(--surface-2)",
         borderColor: "var(--border)",
@@ -299,7 +299,7 @@ function Environment({
             {view.notation.map((n, i) => (
               <span
                 key={i}
-                className="inline-flex items-center rounded-[var(--radius-sm)] border px-2 py-1 font-math leading-none"
+                className="inline-flex items-center rounded-sm border px-2 py-1 font-math leading-none"
                 style={{
                   background: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -372,7 +372,7 @@ function Environment({
 function DisplayBox({ children }: { children: ReactNode }) {
   return (
     <div
-      className="max-w-full overflow-x-auto rounded-[var(--radius-md)] border px-4 py-3 font-math leading-[1.6]"
+      className="max-w-full overflow-x-auto rounded-md border px-4 py-3 font-math leading-[1.6]"
       style={{
         background: "var(--surface-2)",
         borderColor: "var(--border)",

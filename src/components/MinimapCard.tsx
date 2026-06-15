@@ -112,7 +112,7 @@ export function MinimapCard({
 
   return (
     <div
-      className="atlas-minimap-card absolute bottom-4 right-4 z-20 hidden rounded-[var(--radius-lg)] border p-1.5 md:block"
+      className="atlas-minimap-card absolute bottom-4 right-4 z-20 hidden rounded-lg border p-1.5 md:block"
       style={{
         background: "color-mix(in srgb, var(--surface) 90%, transparent)",
         borderColor: "color-mix(in srgb, var(--border) 82%, transparent)",
@@ -126,7 +126,7 @@ export function MinimapCard({
         width={W}
         height={H}
         onClick={handleClick}
-        className="block cursor-pointer rounded-[var(--radius-md)]"
+        className="block cursor-pointer rounded-md"
         style={{
           background: "color-mix(in srgb, var(--surface-2) 78%, var(--bg))",
           boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--border) 68%, transparent)",

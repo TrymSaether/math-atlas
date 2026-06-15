@@ -56,7 +56,7 @@ export function CommandPalette() {
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
-              <div className="fixed left-1/2 top-1/2 z-50 w-[620px] max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
+              <div className="fixed left-1/2 top-1/2 z-50 w-155 max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
                 <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
                 <Dialog.Description className="sr-only">
                   Jump to a concept or switch fields.
@@ -68,7 +68,7 @@ export function CommandPalette() {
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
                 >
                   <Command
-                    className="overflow-hidden rounded-[var(--radius-2xl)] border"
+                    className="overflow-hidden rounded-2xl border"
                     style={{
                       background: "var(--surface)",
                       borderColor: "var(--border)",
@@ -78,15 +78,16 @@ export function CommandPalette() {
                   >
                     <div className="border-b px-4 py-3" style={{ borderColor: "var(--border)" }}>
                       <Command.Input
+                        data-no-focus-ring
                         value={query}
                         onValueChange={setQuery}
                         placeholder="Search concepts, definitions, theorems…"
-                        className="w-full bg-transparent text-ui-body outline-none focus-visible:outline-none placeholder:text-[color:var(--fg-3)]"
+                        className="w-full bg-transparent text-ui-body outline-none placeholder:text-(--fg-3)"
                         style={{ color: "var(--fg-1)" }}
                       />
                     </div>
-                    <Command.List className="max-h-[420px] overflow-y-auto p-2">
-                      <Command.Empty className="px-3 py-6 text-center text-ui-xs text-[color:var(--fg-3)]">
+                    <Command.List className="max-h-105 overflow-y-auto p-2">
+                      <Command.Empty className="px-3 py-6 text-center text-ui-xs text-(--fg-3)">
                         No results.
                       </Command.Empty>
 
@@ -190,7 +191,7 @@ function Item({
     <Command.Item
       value={value}
       onSelect={onSelect}
-      className="cursor-pointer rounded-[var(--radius-sm)] px-2 py-2 text-ui-sm text-[color:var(--fg-1)] aria-selected:bg-[color:var(--accent-soft)] aria-selected:text-[color:var(--fg-1)]"
+      className="cursor-pointer rounded-sm px-2 py-2 text-ui-sm text-[color:var(--fg-1)] aria-selected:bg-[color:var(--accent-soft)] aria-selected:text-[color:var(--fg-1)]"
     >
       {children}
     </Command.Item>

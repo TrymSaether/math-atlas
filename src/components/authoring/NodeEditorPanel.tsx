@@ -214,7 +214,7 @@ function NodePicker({
       />
       {open && matches.length > 0 && (
         <ul
-          className="absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-[var(--radius-md)] border p-1 shadow-[var(--shadow-3)]"
+          className="absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-3)"
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           {matches.map((o) => (
@@ -226,7 +226,7 @@ function NodePicker({
                   onChange(o.id);
                   setOpen(false);
                 }}
-                className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-2 py-1.5 text-left text-ui-sm hover:bg-[color:var(--surface-3)]"
+                className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-ui-sm hover:bg-(--surface-3)"
                 style={{ color: "var(--fg-1)" }}
               >
                 <span
@@ -292,7 +292,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
             return (
               <li
                 key={edgeKey(edge)}
-                className="flex items-center gap-2 rounded-[var(--radius-md)] border px-2.5 py-1.5 text-ui-sm"
+                className="flex items-center gap-2 rounded-md border px-2.5 py-1.5 text-ui-sm"
                 style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
               >
                 <span className="min-w-0 flex-1 truncate" style={{ color: "var(--fg-2)" }}>
@@ -312,7 +312,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
                   type="button"
                   onClick={() => removeNodeEdge(edgeKey(edge))}
                   aria-label="Remove link"
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--radius-sm)] hover:bg-[color:var(--surface-3)]"
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
                   style={{ color: "var(--fg-3)" }}
                 >
                   <TrashIcon className="h-3.5 w-3.5" />
@@ -324,14 +324,14 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
       )}
 
       <div
-        className="grid grid-cols-[auto_1fr] items-center gap-2 rounded-[var(--radius-md)] border border-dashed p-2"
+        className="grid grid-cols-[auto_1fr] items-center gap-2 rounded-md border border-dashed p-2"
         style={{ borderColor: "var(--border)" }}
       >
         <button
           type="button"
           onClick={() => setOutgoing((o) => !o)}
           title={outgoing ? "this → concept" : "concept → this"}
-          className="flex h-8 items-center gap-1.5 rounded-[var(--radius-sm)] px-2 text-ui-xs font-medium hover:bg-[color:var(--surface-3)]"
+          className="flex h-8 items-center gap-1.5 rounded-sm px-2 text-ui-xs font-medium hover:bg-(--surface-3)"
           style={{ color: "var(--fg-2)" }}
         >
           <ArrowsLeftRightIcon className="h-3.5 w-3.5" />
@@ -351,7 +351,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           <button
             type="button"
             onClick={submit}
-            className="authoring-action authoring-action-primary h-8 rounded-[var(--radius-sm)] px-2.5 text-ui-xs"
+            className="authoring-action authoring-action-primary h-8 rounded-sm px-2.5 text-ui-xs"
           >
             <PlusIcon className="h-3.5 w-3.5" /> Link
           </button>
@@ -429,7 +429,7 @@ export function NodeEditorPanel({
                   <button
                     type="button"
                     onClick={() => deleteNode(editingId)}
-                    className="authoring-action rounded-[var(--radius-sm)] px-2 py-1 text-ui-xs"
+                    className="authoring-action rounded-sm px-2 py-1 text-ui-xs"
                     style={{ background: "var(--danger)", color: "var(--fg-on-color)" }}
                   >
                     Delete
@@ -437,7 +437,7 @@ export function NodeEditorPanel({
                   <button
                     type="button"
                     onClick={() => setConfirmDelete(false)}
-                    className="authoring-action rounded-[var(--radius-sm)] px-1.5 py-1 text-ui-xs text-fg-3"
+                    className="authoring-action rounded-sm px-1.5 py-1 text-ui-xs text-fg-3"
                   >
                     Cancel
                   </button>
@@ -447,7 +447,7 @@ export function NodeEditorPanel({
                   type="button"
                   onClick={() => setConfirmDelete(true)}
                   aria-label="Delete concept"
-                  className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] hover:bg-[color:var(--surface-3)]"
+                  className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-(--surface-3)"
                   style={{ color: "var(--fg-3)" }}
                 >
                   <TrashIcon className="h-4 w-4" />
@@ -457,7 +457,7 @@ export function NodeEditorPanel({
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] hover:bg-[color:var(--surface-3)]"
+              className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-(--surface-3)"
               style={{ color: "var(--fg-2)" }}
             >
               <XIcon className="h-4 w-4" />
@@ -468,7 +468,7 @@ export function NodeEditorPanel({
         <div className="flex items-start gap-2.5 pb-3.5">
           <span
             aria-hidden
-            className="mt-[7px] h-9 w-[3px] shrink-0 rounded-full"
+            className="mt-1.75 h-9 w-0.75 shrink-0 rounded-full"
             style={{ background: tone.color }}
           />
           <div className="min-w-0 flex-1">
@@ -632,7 +632,7 @@ export function NodeEditorPanel({
         <button
           type="button"
           onClick={save}
-          className="authoring-action authoring-action-primary ml-auto rounded-[var(--radius-sm)] px-3 py-1.5 text-ui-xs"
+          className="authoring-action authoring-action-primary ml-auto rounded-sm px-3 py-1.5 text-ui-xs"
         >
           {editingId === null ? "Create" : "Save"}
         </button>

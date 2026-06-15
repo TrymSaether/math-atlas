@@ -47,7 +47,7 @@ export function Spine({
   const texture = CATEGORY_META[categoryOf(kind)].rail;
   return (
     <div
-      className="relative overflow-hidden rounded-[var(--radius-md)] pl-4 pr-4"
+      className="relative overflow-hidden rounded-md pl-4 pr-4"
       style={{
         background: `color-mix(in srgb, ${tone.tint} 60%, var(--surface))`,
         paddingBlock: size === "dict" ? "12px" : "11px",
@@ -113,7 +113,7 @@ export function Facet({
 export function MathBox({ text }: { text: string }) {
   return (
     <div
-      className="block max-w-full overflow-x-auto rounded-[var(--radius-sm)] border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
+      className="block max-w-full overflow-x-auto rounded-sm border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
       style={{
         background: "var(--surface-2)",
         borderColor: "var(--border)",
@@ -400,7 +400,7 @@ function ProofStepItem({
         aria-expanded={showBody}
         aria-controls={bodyId}
         disabled={!collapsible}
-        className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-[var(--radius-xs)] px-1 py-0.5 text-left transition-colors hover:bg-[color:var(--surface-2)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] disabled:cursor-default disabled:hover:bg-transparent"
+        className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-xs px-1 py-0.5 text-left transition-colors hover:bg-(--surface-2) focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] disabled:cursor-default disabled:hover:bg-transparent"
       >
         {collapsible && (
           <CaretRightIcon
@@ -422,7 +422,7 @@ function ProofStepItem({
         </span>
         {deps.length > 0 && (
           <span
-            className="ml-auto shrink-0 rounded-[var(--radius-xs)] px-1.5 py-px font-mono text-ui-2xs leading-none"
+            className="ml-auto shrink-0 rounded-xs px-1.5 py-px font-mono text-ui-2xs leading-none"
             style={{
               background: "var(--surface-3)",
               color: "var(--fg-3)",
@@ -502,7 +502,7 @@ export function ConnectionChip({
           ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}`
           : `${node.label} · ${KIND_LABEL[node.kind]}`
       }
-      className="group inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-[color:var(--surface-3)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
+      className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
     >
       <span

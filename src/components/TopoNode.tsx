@@ -90,7 +90,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       tabIndex={0}
       aria-label={`${KIND_LABEL[node.kind]}: ${node.label}`}
       className={cn(
-        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[var(--radius-lg)] border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
+        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-lg border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
         "focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
         // Hover affordance: a quiet lift + soft elevation, nothing more. Selected
         // nodes own their own shadow below, so the hover shadow only applies at rest.
@@ -162,7 +162,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
           )}
           {/* Short kind pill (THM / DEF / …) + reference number. */}
           <span
-            className="inline-flex h-[18px] shrink-0 items-center rounded-[var(--radius-xs)] border px-1.5 text-ui-tiny font-bold uppercase tracking-label-tight"
+            className="inline-flex h-[18px] shrink-0 items-center rounded-xs border px-1.5 text-ui-tiny font-bold uppercase tracking-label-tight"
             style={{
               background: "var(--surface-2)",
               borderColor: "var(--border)",

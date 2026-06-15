@@ -1,21 +1,21 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import {
-  Crosshair,
-  Stack,
-  MapTrifold,
-  CornersOut,
-  Minus,
-  Plus,
-  Shapes,
-  Path,
-  ArrowCounterClockwise,
-  ArrowsDownUp,
-  X,
-  Graph,
-  GraduationCap,
-  CaretLeft,
-  CaretRight,
+  CrosshairIcon,
+  StackIcon,
+  MapTrifoldIcon,
+  CornersOutIcon,
+  MinusIcon,
+  PlusIcon,
+  PathIcon,
+  ArrowCounterClockwiseIcon,
+  ArrowsDownUpIcon,
+  XIcon,
+  GraduationCapIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+  GitBranchIcon,
+  CirclesThreeIcon,
   type Icon,
 } from "@phosphor-icons/react";
 import { useReactFlow, useViewport } from "reactflow";
@@ -134,7 +134,7 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
   }, [directionsOpen, routeFrom, routeTo]);
 
   return (
-    <div className="pointer-events-none absolute right-3 top-[72px] z-30 flex flex-col items-end gap-2.5 sm:right-4 sm:top-[76px]">
+    <div className="pointer-events-none absolute right-3 top-18 z-30 flex flex-col items-end gap-2.5 sm:right-4 sm:top-19">
       {/* Map view — modes, layers, edge style & filters */}
       <div ref={mapButtonRef}>
         <Pill orientation="vertical" className="canvas-dock">
@@ -146,14 +146,14 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
               setMapPanelOpen((o) => !o);
             }}
           >
-            <Stack className="h-[17px] w-[17px]" weight="regular" />
+            <StackIcon className="h-4.25 w-4.25" weight="regular" />
           </DockButton>
         </Pill>
       </div>
 
       {/* Navigation tools */}
       <Pill orientation="vertical" className="canvas-dock">
-        <div ref={routeButtonRef} className="mb-[3px]">
+        <div ref={routeButtonRef} className="mb-0.75">
           <DockButton
             label={routeActive ? "Directions" : "Plan route"}
             active={routeActive}
@@ -164,11 +164,11 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
               if (!routeActive) toggleRouteMode();
             }}
           >
-            <Path className="h-[17px] w-[17px]" weight="regular" />
+            <PathIcon className="h-4.25 w-4.25" weight="regular" />
           </DockButton>
         </div>
         <DockButton label="Focus neighborhood" active={focusMode} onClick={toggleFocusMode}>
-          <Crosshair className="h-[17px] w-[17px]" weight="regular" />
+          <CrosshairIcon className="h-4.25 w-4.25" weight="regular" />
         </DockButton>
         {focusMode && <DepthPicker value={focusDepth} onChange={setFocusDepth} />}
       </Pill>
@@ -180,25 +180,25 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
           active={showMinimap}
           onClick={toggleMinimap}
         >
-          <MapTrifold className="h-[17px] w-[17px]" weight="regular" />
+          <MapTrifoldIcon className="h-4.25 w-4.25" weight="regular" />
         </DockButton>
       </Pill>
 
       {/* Zoom */}
       <Pill orientation="vertical" className="canvas-dock">
         <DockButton label="Zoom in" onClick={() => rf.zoomIn({ duration: 180 })}>
-          <Plus className="h-[17px] w-[17px]" weight="regular" />
+          <PlusIcon className="h-4.25 w-4.25" weight="regular" />
         </DockButton>
         <ZoomReadout />
         <DockButton label="Zoom out" onClick={() => rf.zoomOut({ duration: 180 })}>
-          <Minus className="h-[17px] w-[17px]" weight="regular" />
+          <MinusIcon className="h-4.25 w-4.25" weight="regular" />
         </DockButton>
       </Pill>
 
       {/* Fit view */}
       <Pill orientation="vertical" className="canvas-dock">
         <DockButton label="Fit view" onClick={() => rf.fitView({ padding: 0.18, duration: 420 })}>
-          <CornersOut className="h-[17px] w-[17px]" weight="regular" />
+          <CornersOutIcon className="h-4.25 w-4.25" weight="regular" />
         </DockButton>
       </Pill>
 
@@ -275,7 +275,7 @@ function DirectionsPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-50 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-y-auto rounded-[var(--radius-2xl)] p-3"
+      className="map-popover pointer-events-auto fixed z-50 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-y-auto rounded-2xl p-3"
       style={{
         top: position.top,
         right: position.right,
@@ -291,11 +291,11 @@ function DirectionsPanel({
         <button
           type="button"
           onClick={clearRoute}
-          className="rounded-[var(--radius-sm)] p-1.5 text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg-1"
+          className="rounded-sm p-1.5 text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg-1"
           aria-label={routeMode ? "Cancel directions" : "Clear directions"}
           title={routeMode ? "Cancel directions" : "Clear directions"}
         >
-          <X className="h-4 w-4" />
+          <XIcon className="h-4 w-4" />
         </button>
       </div>
 
@@ -309,7 +309,7 @@ function DirectionsPanel({
       />
 
       {isPrereq ? (
-        <div className="flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface shadow-[inset_0_1px_0_var(--chrome-highlight)]">
+        <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-[inset_0_1px_0_var(--chrome-highlight)]">
           <RouteSearchField
             label="Goal"
             value={toQuery}
@@ -336,7 +336,7 @@ function DirectionsPanel({
         </div>
       ) : (
         <div className="grid grid-cols-[1fr_34px] gap-2">
-          <div className="relative flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface shadow-[inset_0_1px_0_var(--chrome-highlight)]">
+          <div className="relative flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-[inset_0_1px_0_var(--chrome-highlight)]">
             <RouteSearchField
               label="From"
               value={fromQuery}
@@ -389,11 +389,11 @@ function DirectionsPanel({
             type="button"
             onClick={swapRouteEndpoints}
             disabled={!routeFrom && !routeTo}
-            className="flex h-full min-h-[86px] w-[34px] items-center justify-center rounded-[var(--radius-lg)] border border-border bg-surface text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:cursor-default disabled:opacity-35"
+            className="flex h-full min-h-21.5 w-8.5 items-center justify-center rounded-lg border border-border bg-surface text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:cursor-default disabled:opacity-35"
             aria-label="Swap endpoints"
             title="Swap endpoints"
           >
-            <ArrowsDownUp className="h-4 w-4" />
+            <ArrowsDownUpIcon className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -410,7 +410,7 @@ function DirectionsPanel({
               else setToQuery(selectedTitle ?? "");
             }}
             disabled={selectedId === routeFrom || selectedId === routeTo}
-            className="shrink-0 rounded-[var(--radius-sm)] px-2 py-1 text-ui-meta font-semibold text-accent transition-colors hover:bg-accent-soft disabled:opacity-45"
+            className="shrink-0 rounded-sm px-2 py-1 text-ui-meta font-semibold text-accent transition-colors hover:bg-accent-soft disabled:opacity-45"
           >
             Use
           </button>
@@ -418,7 +418,7 @@ function DirectionsPanel({
       )}
 
       {resolved && summary.found === false && (
-        <div className="rounded-[var(--radius-lg)] border border-border bg-surface px-3 py-2">
+        <div className="rounded-lg border border-border bg-surface px-3 py-2">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0 truncate text-ui-meta font-semibold text-fg-1">
               No dependency path
@@ -426,7 +426,7 @@ function DirectionsPanel({
             <Button
               kind="text"
               onClick={clearRoute}
-              className="flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold text-fg-2"
+              className="flex h-8 items-center rounded-md px-2.5 text-ui-meta font-semibold text-fg-2"
             >
               Clear
             </Button>
@@ -493,18 +493,18 @@ function RouteSequence({
               kind="text"
               accent
               onClick={onStartTour}
-              className="flex h-8 items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 text-ui-meta font-semibold"
+              className="flex h-8 items-center gap-1.5 rounded-md px-2.5 text-ui-meta font-semibold"
             >
-              <GraduationCap className="h-4 w-4" weight="fill" />
+              <GraduationCapIcon className="h-4 w-4" weight="fill" />
               Start tour
             </Button>
             <Button
               kind="text"
               onClick={onReplay}
-              className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-fg-2"
+              className="flex h-8 w-8 items-center justify-center rounded-md text-fg-2"
               aria-label="Replay animation"
             >
-              <ArrowCounterClockwise className="h-4 w-4" />
+              <ArrowCounterClockwiseIcon className="h-4 w-4" />
             </Button>
           </div>
         ) : (
@@ -513,27 +513,27 @@ function RouteSequence({
               type="button"
               onClick={() => onStep(-1)}
               disabled={tourIndex === 0}
-              className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:opacity-35"
+              className="flex h-8 w-8 items-center justify-center rounded-md text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:opacity-35"
               aria-label="Previous concept"
             >
-              <CaretLeft className="h-4 w-4" />
+              <CaretLeftIcon className="h-4 w-4" />
             </button>
-            <span className="min-w-[44px] text-center text-ui-meta tabular-nums font-semibold text-fg-1">
+            <span className="min-w-11 text-center text-ui-meta tabular-nums font-semibold text-fg-1">
               {tourIndex + 1} / {ordered.length}
             </span>
             <button
               type="button"
               onClick={() => onStep(1)}
               disabled={tourIndex >= ordered.length - 1}
-              className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:opacity-35"
+              className="flex h-8 w-8 items-center justify-center rounded-md text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:opacity-35"
               aria-label="Next concept"
             >
-              <CaretRight className="h-4 w-4" />
+              <CaretRightIcon className="h-4 w-4" />
             </button>
             <button
               type="button"
               onClick={onEndTour}
-              className="ml-1 rounded-[var(--radius-sm)] px-2 py-1 text-ui-meta font-semibold text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1"
+              className="ml-1 rounded-sm px-2 py-1 text-ui-meta font-semibold text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1"
             >
               End
             </button>
@@ -541,7 +541,7 @@ function RouteSequence({
         )}
       </div>
 
-      <ol className="flex max-h-[42vh] flex-col gap-0.5 overflow-y-auto rounded-[var(--radius-lg)] border border-border bg-surface p-1">
+      <ol className="flex max-h-[42vh] flex-col gap-0.5 overflow-y-auto rounded-lg border border-border bg-surface p-1">
         {ordered.map((id, i) => {
           const node = map?.nodeById.get(id);
           const current = touring && i === tourIndex;
@@ -551,7 +551,7 @@ function RouteSequence({
                 type="button"
                 onClick={() => onPick(id)}
                 className={cn(
-                  "flex w-full items-center gap-2.5 rounded-[var(--radius-md)] px-2 py-1.5 text-left transition-colors",
+                  "flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left transition-colors",
                   current ? "bg-accent-soft" : "hover:bg-surface-2",
                 )}
                 aria-current={current ? "step" : undefined}
@@ -642,7 +642,7 @@ function RouteSearchField({
   const showResults = active && value.trim().length > 0 && results.length > 0;
   return (
     <div className="relative">
-      <label className="flex min-h-[43px] min-w-0 items-center gap-2 px-3 py-1.5">
+      <label className="flex min-h-10.75 min-w-0 items-center gap-2 px-3 py-1.5">
         <span className="w-9 shrink-0 text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
           {label}
         </span>
@@ -661,16 +661,16 @@ function RouteSearchField({
           <button
             type="button"
             onClick={onClear}
-            className="shrink-0 rounded-[var(--radius-xs)] p-1 text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg-1"
+            className="shrink-0 rounded-xs p-1 text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg-1"
             aria-label={`Clear ${label.toLowerCase()}`}
             title={`Clear ${label.toLowerCase()}`}
           >
-            <X className="h-3.5 w-3.5" />
+            <XIcon className="h-3.5 w-3.5" />
           </button>
         )}
       </label>
       {showResults && (
-        <div className="mx-2 mb-2 overflow-hidden rounded-[var(--radius-md)] border border-border bg-surface-2">
+        <div className="mx-2 mb-2 overflow-hidden rounded-md border border-border bg-surface-2">
           {results.map((node) => (
             <button
               key={node.id}
@@ -701,7 +701,7 @@ function ZoomReadout() {
     <button
       type="button"
       onClick={() => rf.zoomTo(1, { duration: 180 })}
-      className="zoom-readout pointer-events-auto flex items-center justify-center rounded-[var(--radius-sm)] font-semibold tabular-nums transition-colors"
+      className="zoom-readout pointer-events-auto flex items-center justify-center rounded-sm font-semibold tabular-nums transition-colors"
       aria-label="Reset zoom to 100%"
       title="Reset zoom to 100%"
     >
@@ -721,7 +721,7 @@ function DepthPicker({ value, onChange }: { value: number; onChange: (value: num
             type="button"
             onClick={() => onChange(depth)}
             className={cn(
-              "flex h-6 w-6 items-center justify-center rounded-[var(--radius-xs)] text-ui-2xs font-semibold tabular-nums transition-colors",
+              "flex h-6 w-6 items-center justify-center rounded-xs text-ui-2xs font-semibold tabular-nums transition-colors",
               active
                 ? "bg-accent-soft text-accent ring-1 ring-inset ring-accent-border"
                 : "text-fg-2",
@@ -757,14 +757,14 @@ function Switch({
       aria-label={label}
       onClick={onClick}
       className={cn(
-        "relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-[var(--radius-pill)] transition-[box-shadow,filter,background-color]",
+        "relative inline-flex h-5.5 w-9.5 shrink-0 items-center rounded-pill transition-[box-shadow,filter,background-color]",
         checked
           ? "bg-accent hover:brightness-105"
           : "bg-surface-3 ring-1 ring-inset ring-border hover:bg-surface-2 hover:ring-border-strong",
       )}
     >
       <span
-        className="absolute h-[17px] w-[17px] rounded-[var(--radius-pill)] transition-transform"
+        className="absolute h-4.25 w-4.25 rounded-pill transition-transform"
         style={{
           left: 2,
           background: "var(--surface)",
@@ -782,27 +782,36 @@ function Segmented<T extends string>({
   onChange,
 }: {
   value: T;
-  options: { value: T; label: string }[];
+  options: { value: T; label: string; icon?: Icon }[];
   onChange: (v: T) => void;
 }) {
   return (
     <div
-      className="grid w-full gap-0.5 rounded-[var(--radius-md)] bg-surface-2 p-0.5 ring-1 ring-inset ring-border"
+      className="grid w-full gap-0.5 rounded-md bg-surface-2 p-0.5 ring-1 ring-inset ring-border"
       style={{ gridTemplateColumns: `repeat(${options.length}, 1fr)` }}
     >
       {options.map((o) => {
         const active = o.value === value;
+        const IconComponent = o.icon;
+
         return (
           <button
             key={o.value}
+            type="button"
             onClick={() => onChange(o.value)}
             className={cn(
-              "rounded-[var(--radius-sm)] px-2 py-1.5 text-ui-meta font-semibold transition-colors",
+              "flex items-center justify-center rounded-sm px-2 py-1.5 text-ui-meta font-semibold transition-colors",
               active ? "bg-accent text-fg-on-color" : "text-fg-2 hover:bg-surface hover:text-fg-1",
             )}
+            aria-label={o.label}
+            title={o.label}
             aria-pressed={active}
           >
-            {o.label}
+            {IconComponent ? (
+              <IconComponent className="h-4 w-4" weight={active ? "bold" : "regular"} />
+            ) : (
+              o.label
+            )}
           </button>
         );
       })}
@@ -823,21 +832,19 @@ function PanelSection({ title, children }: { title: string; children: ReactNode 
   );
 }
 
-const MODES: { id: ViewMode; label: string; hint: string; icon: Icon }[] = [
-  { id: "dependency", label: "Dependency", hint: "Logical graph", icon: Graph },
-  { id: "cluster", label: "Regions", hint: "Domain clusters", icon: Shapes },
+const MODES: { id: ViewMode; label: string; icon: Icon }[] = [
+  { id: "dependency", label: "Dependency", icon: GitBranchIcon },
+  { id: "cluster", label: "Clusters", icon: CirclesThreeIcon },
 ];
 
 function ModeTile({
   active,
   label,
-  hint,
   icon: IconComponent,
   onClick,
 }: {
   active: boolean;
   label: string;
-  hint: string;
   icon: Icon;
   onClick: () => void;
 }) {
@@ -846,34 +853,36 @@ function ModeTile({
       type="button"
       onClick={onClick}
       className={cn(
-        "group relative flex flex-col gap-2 rounded-[var(--radius-md)] border p-2 text-left transition-colors",
+        "group relative flex flex-col gap-1 rounded-md border-0 p-2 text-left transition-colors",
         active
           ? "border-accent bg-accent-soft ring-1 ring-inset ring-accent"
           : "border-border bg-surface hover:border-border-strong hover:bg-surface-2",
       )}
       aria-pressed={active}
     >
+      {" "}
       <span
         className={cn(
-          "flex h-14 w-full items-center justify-center rounded-[var(--radius-sm)]",
+          "flex h-14 w-full items-center justify-center rounded-sm",
           active ? "bg-accent text-fg-on-color" : "bg-surface-2 text-fg-2",
         )}
         aria-hidden
       >
-        <IconComponent className="h-6 w-6" weight={active ? "bold" : "regular"} />
-      </span>
-
+        {" "}
+        <IconComponent className="h-6 w-6" weight={active ? "bold" : "regular"} />{" "}
+      </span>{" "}
       <span className="px-0.5">
+        {" "}
         <span
           className={cn(
             "block text-ui-control font-semibold leading-tight",
             active ? "text-accent" : "text-fg-1",
           )}
         >
-          {label}
-        </span>
-        <span className="block text-ui-hint text-fg-3">{hint}</span>
-      </span>
+          {" "}
+          {label}{" "}
+        </span>{" "}
+      </span>{" "}
     </button>
   );
 }
@@ -917,7 +926,7 @@ function MapPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-50 flex w-[min(320px,calc(100vw-24px))] flex-col gap-3.5 overflow-y-auto rounded-[var(--radius-2xl)] p-3.5"
+      className="map-popover pointer-events-auto fixed z-50 flex w-[min(320px,calc(100vw-24px))] flex-col gap-3.5 overflow-y-auto rounded-2xl p-3.5"
       style={{
         top: position.top,
         right: position.right,
@@ -933,7 +942,6 @@ function MapPanel({
               key={m.id}
               active={view === m.id}
               label={m.label}
-              hint={m.hint}
               icon={m.icon}
               onClick={() => setView(m.id)}
             />
@@ -995,7 +1003,7 @@ function MapPanel({
                     key={d.id}
                     onClick={() => toggleTopic(d.id)}
                     className={cn(
-                      "inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition-colors",
+                      "inline-flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-ui-meta font-medium transition-colors",
                       !active &&
                         "bg-surface border-border text-fg-3 hover:border-border-strong hover:bg-surface-2 hover:text-fg-1",
                     )}
@@ -1045,7 +1053,7 @@ function MapPanel({
                       groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))
                     }
                     className={cn(
-                      "flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2.5 py-1 text-ui-meta font-medium transition-colors",
+                      "flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-ui-meta font-medium transition-colors",
                       active
                         ? "bg-accent-soft border-accent-border text-accent"
                         : "bg-surface border-border text-fg-3 hover:border-border-strong hover:bg-surface-2 hover:text-fg-1",
