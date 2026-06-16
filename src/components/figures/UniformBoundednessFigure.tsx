@@ -8,7 +8,7 @@ import { SegmentedControl } from "./SegmentedControl";
 type Mode = "banach" | "incomplete";
 
 const CEILING = 1;
-const MAX_OPS = 14;
+const MAX_OPS = 15; // max number of operators we can show without the labels overlapping too much
 
 const MODE_OPTIONS = [
   { value: "banach" as const, label: "Banach domain" },
@@ -51,7 +51,7 @@ export default function UniformBoundednessFigure() {
         <Line.Segment
           point1={[0.5, CEILING]}
           point2={[MAX_OPS + 0.5, CEILING]}
-          color={bounded ? DIA.ok : DIA.alert}
+          color={bounded ? DIA.ink : DIA.alert}
           weight={STROKE.mark}
           style="dashed"
         />
@@ -80,11 +80,11 @@ export default function UniformBoundednessFigure() {
           );
         })}
         <LaTeX
-          at={[2.6, CEILING + 0.06 * yMax]}
+          at={[2, yMax]}
           tex={String.raw`\sup_\alpha\|T_\alpha\|`}
-          color={bounded ? DIA.ok : DIA.alert}
+          color={bounded ? DIA.ink : DIA.alert}
         />
-        <LaTeX at={[8.5, yMax - 0.12 * yMax]} tex={String.raw`\|T_n\|`} color={DIA.accent} />
+        <LaTeX at={[8.5, yMax]} tex={String.raw`\|T_n\|`} color={DIA.ink} />
       </FigureFrame>
       <SegmentedControl
         value={mode}

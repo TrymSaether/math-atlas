@@ -1184,39 +1184,39 @@
         "steps": [
           {
             "role": "theorem",
-            "content": "Let $X$ be a normed space over $\\mathbb K$. Then $X^\\ast = \\mathcal{B} (X,K)$, equipped with the operator norm $\\|f\\|_{\\mathrm{op}}=\\sup_{\\|x\\|_X\\le 1}|f(x)|$, is a Banach space."
+            "content": "Let $X$ be a normed space over $\\mathbb{K}$. Then $X^\\ast = \\mathcal{B}(X,\\mathbb{K})$, equipped with the operator norm $\\|f\\|_{\\mathrm{op}}=\\sup_{\\|x\\|_X\\le 1}|f(x)|$, is a Banach space."
           },
           {
             "role": "Definition (Normed space)",
-            "content": "A normed space over $\\mathbb{K} \\in \\{\\mathbb{R}, \\mathbb{C}\\}$ is a vector space $X$ together with a map $\\|\\cdot\\| : X \\to [0,\\infty)$ such that, for all $x,y \\in X$ and $\\alpha \\in \\mathbb{K}$: $$\\begin{align}\\|x\\| = 0 &\\iff x = 0 \\tag{N1} \\\\ \\|\\alpha x\\| &= |\\alpha|\\,\\|x\\| \\tag{N2} \\\\ \\|x+y\\| &\\le \\|x\\|+\\|y\\| \\tag{N3}\\end{align}$$"
+            "content": "A normed space over $\\mathbb{K} \\in \\{\\mathbb{R}, \\mathbb{C}\\}$ is a vector space $X$ together with a map $\\|\\cdot\\|_X : X \\to [0,\\infty)$ such that, for all $x,y \\in X$ and $\\alpha \\in \\mathbb{K}$: $$\\begin{align}\\|x\\|_X = 0 &\\iff x = 0 \\tag{N1} \\\\ \\|\\alpha x\\|_X &= |\\alpha|\\,\\|x\\|_X \\tag{N2} \\\\ \\|x+y\\|_X &\\le \\|x\\|_X+\\|y\\|_X \\tag{N3}\\end{align}$$"
           },
           {
             "role": "Definition (Cauchy sequence, complete space, Banach space)",
-            "content": "Let $X$ be a normed space. A sequence $(x_n)$ in $X$ is called \\textit{Cauchy} if, $$\\forall \\varepsilon > 0\\ \\exists N \\in \\mathbb{N}\\ \\forall n,m \\ge N : \\|x_n - x_m\\| < \\varepsilon.$$The space $X$ is called \\textit{complete} if every Cauchy sequence in $X$ converges to a limit in $X$.A \\textit{Banach space} is a complete normed space."
+            "content": "Let $X$ be a normed space. A sequence $(x_n)$ in $X$ is called \\textit{Cauchy} if $$\\forall \\varepsilon > 0\\ \\exists N \\in \\mathbb{N}\\ \\forall n,m \\ge N : \\|x_n - x_m\\|_X < \\varepsilon.$$ The space $X$ is called \\textit{complete} if every Cauchy sequence in $X$ converges to a limit in $X$. A \\textit{Banach space} is a complete normed space."
           },
           {
             "role": "Definition (Bounded linear functional and dual space)",
-            "content": "Let $X$ be a normed space over $\\mathbb{K}$. A linear map $f : X \\to \\mathbb{K}$ is called \\textit{bounded} if$$\\|f\\| := \\sup_{\\|x\\| \\le 1} |f(x)| < \\infty.$$The \\textit{dual space} of $X$ is$$X^* := \\{ f : X \\to \\mathbb{K} \\mid f \\text{ is linear and bounded} \\}.$$Equivalently,$$X^* = B(X,\\mathbb{K}).$$It is a vector space under pointwise operations and is normed by$$\\|f\\| := \\sup_{\\|x\\| \\le 1} |f(x)|.$$"
+            "content": "Let $X$ be a normed space over $\\mathbb{K}$. A linear map $f : X \\to \\mathbb{K}$ is called \\textit{bounded} if $$\\|f\\|_{\\mathrm{op}} := \\sup_{\\|x\\|_X \\le 1} |f(x)| < \\infty.$$ The \\textit{dual space} of $X$ is $$X^* := \\{ f : X \\to \\mathbb{K} \\mid f \\text{ is linear and bounded} \\}.$$ Equivalently, $X^* = \\mathcal{B}(X,\\mathbb{K})$. It is a vector space under pointwise operations and is normed by $$\\|f\\|_{\\mathrm{op}} := \\sup_{\\|x\\|_X \\le 1} |f(x)|.$$"
           },
           {
-            "role": "Lemma A (Cauchy sequences are bounded)",
-            "content": "If $(f_n)$ is Cauchy in a normed space, then $\\sup_n \\|f_n\\| < \\infty$.\\textit{Proof.} For $x = 0$ both sides vanish by (N1) and linearity. For $x \\ne 0$, set $u = x/\\|x\\|$, so $\\|u\\| = 1$ by (N2). Then $|f(u)| \\le \\sup_{\\|v\\|\\le 1}|f(v)| = \\|f\\|$, and by linearity $|f(x)| = \\|x\\|\\,|f(u)| \\le \\|f\\|\\,\\|x\\|$. $\\;\\square$"
+            "role": "Lemma A (Fundamental norm inequality)",
+            "content": "For every $f \\in X^\\ast$ and every $x\\in X$, $$|f(x)| \\le \\|f\\|_{\\mathrm{op}}\\,\\|x\\|_X.$$ \\textit{Proof.} For $x=0$ both sides vanish by (N1) and linearity. For $x \\neq 0$, set $u = \\frac{x}{\\|x\\|_X}$, so $\\|u\\|_X = 1$ by (N2). Since $\\|u\\|_X = 1 \\le 1$, the vector $u$ lies in the supremum set, hence $$|f(u)| \\le \\sup_{\\|v\\|_X \\le 1} |f(v)| = \\|f\\|_{\\mathrm{op}},$$ and by linearity $$|f(x)| = \\|x\\|_X\\,|f(u)| \\le \\|f\\|_{\\mathrm{op}}\\,\\|x\\|_X. \\;\\square$$"
           },
           {
             "role": "Lemma B (Cauchy sequences are bounded)",
-            "content": "If $(f_n)$ is Cauchy in a normed space, then $\\sup_n \\|f_n\\| < \\infty$.\\textit{Proof.} Apply the Cauchy condition with $\\varepsilon = 1$: $\\exists N$ such that $\\|f_n - f_N\\| < 1$ for all $n \\ge N$. By (N3), $\\|f_n\\| \\le \\|f_N\\| + 1$ for $n \\ge N$. Put $M := \\max\\{\\|f_1\\|, \\dots, \\|f_{N-1}\\|, \\|f_N\\| + 1\\}$; a finite set of reals has a maximum, and $\\|f_n\\| \\le M$ for all $n$. $\\;\\square$"
+            "content": "If $(f_n)_{n\\in\\mathbb{N}}$ is Cauchy in a normed space, then $$\\sup_{n \\in \\mathbb{N}} \\|f_n\\|_{\\mathrm{op}} < \\infty.$$ \\textit{Proof.} Apply the Cauchy condition with $\\varepsilon = 1$: there exists $N$ such that $\\|f_n - f_N\\|_{\\mathrm{op}} < 1$ for all $n \\ge N$. By (N3), $\\|f_n\\|_{\\mathrm{op}} \\le \\|f_N\\|_{\\mathrm{op}} + 1$ for $n \\ge N$. Put $$M := \\max\\{\\|f_1\\|_{\\mathrm{op}}, \\dots, \\|f_{N-1}\\|_{\\mathrm{op}}, \\|f_N\\|_{\\mathrm{op}} + 1\\}.$$ A finite set of reals has a maximum, and $\\|f_n\\|_{\\mathrm{op}} \\le M$ for all $n$. $\\;\\square$"
           },
           {
-            "role": "Lemma C (Limits preserve non-strict inequalities).",
-            "content": "If $(a_n) \\to a$ in $\\mathbb{K}$ and $a_n \\le c$ for all $n$ (with $a_n, c \\in \\mathbb{R}$), then $a \\le c$; and if $(z_n)\\to z$ in $\\mathbb{K}$ then $|z_n| \\to |z|$ (continuity of $|\\cdot|$).\\textit{Proof.} Standard; the first is the order-closedness of $(-\\infty, c]$, the second is the reverse triangle inequality $\\big||z_n| - |z|\\big| \\le |z_n - z| \\to 0$. $\\;\\square$"
+            "role": "Lemma C (Limits preserve non-strict inequalities)",
+            "content": "If $(a_n) \\to a$ in $\\mathbb{R}$ and $a_n \\le c$ for all $n$, then $a \\le c$; and if $(z_n)\\to z$ in $\\mathbb{K}$ then $|z_n| \\to |z|$ (continuity of $|\\cdot|$). \\textit{Proof.} Standard; the first is the order-closedness of $(-\\infty, c]$, the second is the reverse triangle inequality $\\big||z_n| - |z|\\big| \\le |z_n - z| \\to 0$. $\\;\\square$"
           },
           {
             "role": "argument",
-            "content": "Let $(f_n)_{n\\in\\mathbb{N}}$ be an arbitrary Cauchy sequence in $X^\\ast$. We want to construct/define $f \\in X^\\ast$ s.t. $\\|f_n - f\\|_{\\mathrm{op}} \\to 0$ as $n \\to \\infty$."
+            "content": "Let $(f_n)_{n\\in\\mathbb{N}}$ be an arbitrary Cauchy sequence in $X^\\ast$. We construct $f \\in X^\\ast$ such that $\\|f_n - f\\|_{\\mathrm{op}} \\to 0$ as $n \\to \\infty$, in four steps."
           },
           {
             "role": "Step 1 — Construction of the pointwise limit $f$",
-            "content": "Fix $x \\in X$. For all $n,m \\in \\mathbb{N}$, by linearity and Lemma A applied to $f_n - f_m \\in X^*$, $$|f_n(x) - f_m(x)| = |(f_n - f_m)(x)| \\le \\|f_n - f_m\\| \\, \\|x\\|. \\tag{1}$$ Let $\\varepsilon > 0$. Since $(f_n)$ is Cauchy in $X^\\ast$, choose $N$ with $\\|f_n - f_m\\| < \\varepsilon/(\\|x\\|+1)$ for $n,m \\ge N$. Then (1) gives $|f_n(x) - f_m(x)| < \\varepsilon$ for $n,m \\ge N$, so $(f_n(x))_n$ is a Cauchy sequence in $\\mathbb{K}$."
+            "content": "Fix $x \\in X$. For all $n,m \\in \\mathbb{N}$, by linearity and Lemma A applied to $f_n - f_m \\in X^*$, $$|f_n(x) - f_m(x)| = |(f_n - f_m)(x)| \\le \\|f_n - f_m\\|_{\\mathrm{op}} \\, \\|x\\|_X. \\tag{1}$$ Let $\\varepsilon > 0$. Since $(f_n)$ is Cauchy in $X^\\ast$, choose $N$ with $\\|f_n - f_m\\|_{\\mathrm{op}} < \\varepsilon/(\\|x\\|_X+1)$ for $n,m \\ge N$. Then (1) gives $|f_n(x) - f_m(x)| < \\varepsilon$ for $n,m \\ge N$, so $(f_n(x))_n$ is a Cauchy sequence in $\\mathbb{K}$. Since $\\mathbb{K}$ is complete, the limit exists; define $$f(x) := \\lim_{n\\to\\infty} f_n(x) \\in \\mathbb{K}. \\tag{2}$$ As $x \\in X$ was arbitrary, (2) defines a function $f : X \\to \\mathbb{K}$. At this stage $f$ is only a function; its linearity and boundedness remain to be proved."
           },
           {
             "role": "Step 2 — $f$ is linear",
@@ -1224,19 +1224,19 @@
           },
           {
             "role": "Step 3 — $f$ is bounded, so $f \\in X^*$",
-            "content": "By Lemma B there is $M < \\infty$ with $\\|f_n\\| \\le M$ for all $n$. By Lemma A, for every $x \\in X$ and every $n$, $$|f_n(x)| \\le \\|f_n\\|\\,\\|x\\| \\le M\\|x\\|. \\tag{3}$$ Fix $x$ and let $n \\to \\infty$ in (3). By (2), $f_n(x) \\to f(x)$, so by Lemma C, $|f_n(x)| \\to |f(x)|$; since the bound $M\\|x\\|$ is independent of $n$ and inequalities are preserved in the limit, $$|f(x)| \\le M\\|x\\| \\qquad \\forall x \\in X.$$Thus $f$ is bounded with $\\|f\\| \\le M$. With Step 2, $f \\in B(X,\\mathbb{K}) = X^*$."
+            "content": "By Lemma B there is $M < \\infty$ with $\\|f_n\\|_{\\mathrm{op}} \\le M$ for all $n$. By Lemma A, for every $x \\in X$ and every $n$, $$|f_n(x)| \\le \\|f_n\\|_{\\mathrm{op}}\\,\\|x\\|_X \\le M\\|x\\|_X. \\tag{3}$$ Fix $x$ and let $n \\to \\infty$ in (3). By (2), $f_n(x) \\to f(x)$, so by Lemma C, $|f_n(x)| \\to |f(x)|$; since the bound $M\\|x\\|_X$ is independent of $n$ and non-strict inequalities are preserved in the limit, $$|f(x)| \\le M\\|x\\|_X \\qquad \\forall x \\in X.$$ Thus $f$ is bounded with $\\|f\\|_{\\mathrm{op}} \\le M$. With Step 2, $f \\in \\mathcal{B}(X,\\mathbb{K}) = X^*$."
           },
           {
             "role": "Step 4 — $f_n \\to f$ in the operator norm",
-            "content": "Let $\\varepsilon > 0$. By Cauchy, choose $N$ with $\\|f_n - f_m\\| \\le \\varepsilon$ for all $n,m \\ge N$. By Lemma A, for every $x$ with $\\|x\\| \\le 1$ and all $n,m \\ge N$,$$|f_n(x) - f_m(x)| \\le \\|f_n - f_m\\|\\,\\|x\\| \\le \\varepsilon. \\tag{4}$$Now fix $n \\ge N$ and $x$, and let $m \\to \\infty$ in (4). By (2), $f_m(x) \\to f(x)$, and by Lemma C the modulus is continuous, so the left side of (4) tends to $|f_n(x) - f(x)|$; the right side $\\varepsilon$ is independent of $m$. By Lemma C (preservation of $\\le$),$$|f_n(x) - f(x)| \\le \\varepsilon \\qquad \\forall x \\text{ with } \\|x\\|\\le 1,\\ \\forall n \\ge N. \\tag{5}$$Taking the supremum over $\\{x : \\|x\\| \\le 1\\}$ in (5):$$\\|f_n - f\\| = \\sup_{\\|x\\|\\le 1} |f_n(x) - f(x)| \\le \\varepsilon \\qquad \\forall n \\ge N.$$Since $\\varepsilon > 0$ was arbitrary, $\\|f_n - f\\| \\to 0$."
+            "content": "Let $\\varepsilon > 0$. By Cauchy, choose $N$ with $\\|f_n - f_m\\|_{\\mathrm{op}} \\le \\varepsilon$ for all $n,m \\ge N$. By Lemma A, for every $x$ with $\\|x\\|_X \\le 1$ and all $n,m \\ge N$, $$|f_n(x) - f_m(x)| \\le \\|f_n - f_m\\|_{\\mathrm{op}}\\,\\|x\\|_X \\le \\varepsilon. \\tag{4}$$ Now fix $n \\ge N$ and $x$, and let $m \\to \\infty$ in (4). By (2), $f_m(x) \\to f(x)$, and by Lemma C the modulus is continuous, so the left side of (4) tends to $|f_n(x) - f(x)|$; the right side $\\varepsilon$ is independent of $m$. By Lemma C (preservation of $\\le$), $$|f_n(x) - f(x)| \\le \\varepsilon \\qquad \\forall x \\text{ with } \\|x\\|_X\\le 1,\\ \\forall n \\ge N. \\tag{5}$$ Taking the supremum over $\\{x : \\|x\\|_X \\le 1\\}$ in (5): $$\\|f_n - f\\|_{\\mathrm{op}} = \\sup_{\\|x\\|_X\\le 1} |f_n(x) - f(x)| \\le \\varepsilon \\qquad \\forall n \\ge N.$$ Since $\\varepsilon > 0$ was arbitrary, $\\|f_n - f\\|_{\\mathrm{op}} \\to 0$."
           },
           {
             "role": "conclusion",
-            "content": "The arbitrary Cauchy sequence $(f_n)$ converges in $X^*$ to $f \\in X^*$. Hence every Cauchy sequence in $X^*$ converges, so $X^*$ is complete, i.e. a Banach space. $\\;\\blacksquare$}"
+            "content": "The arbitrary Cauchy sequence $(f_n)$ converges in $X^*$ to $f \\in X^*$. Hence every Cauchy sequence in $X^*$ converges, so $X^*$ is complete, i.e. a Banach space. $\\;\\blacksquare$"
           },
           {
             "role": "remark",
-            "content": "Completeness of $X$ was never invoked — only completeness of the codomain $\\mathbb{K}$ (Step 1). The identical argument, replacing $|\\cdot|$ by $\\|\\cdot\\|_Y$ throughout, proves: *if $Y$ is Banach then $B(X,Y)$ is Banach for any normed $X$.* The dual space is the case $Y = \\mathbb{K}$."
+            "content": "Completeness of $X$ was never invoked --- only completeness of the codomain $\\mathbb{K}$ (Step 1). The identical argument, replacing $|\\cdot|$ by $\\|\\cdot\\|_Y$ throughout, proves: \\textit{if $Y$ is a Banach space then $\\mathcal{B}(X,Y)$ is a Banach space for any normed space $X$.} The dual space is the case $Y = \\mathbb{K}$."
           }
         ]
       },
