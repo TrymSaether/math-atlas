@@ -7671,11 +7671,6 @@
     },
     {
       "source": "circle",
-      "target": "jordan_curve_theorem",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "circle",
       "target": "path_connectedness",
       "relation": "defined_in_terms_of"
     },
@@ -8021,32 +8016,7 @@
     },
     {
       "source": "euclidean_space",
-      "target": "bolzano_weierstrass_theorem",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "euclidean_space",
-      "target": "brouwer_fixed_point_theorem",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "euclidean_space",
-      "target": "heine_borel_theorem",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "euclidean_space",
-      "target": "jordan_curve_theorem",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "euclidean_space",
       "target": "metric_space",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "euclidean_space",
-      "target": "proof_heine_borel_open_cover",
       "relation": "defined_in_terms_of"
     },
     {
@@ -9207,16 +9177,6 @@
     {
       "source": "first_countability",
       "target": "neighborhood",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "function",
-      "target": "codomain",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "function",
-      "target": "domain",
       "relation": "defined_in_terms_of"
     },
     {
@@ -12625,11 +12585,6 @@
       "relation": "uses"
     },
     {
-      "source": "compact_subsets_of_hausdorff_are_closed",
-      "target": "non_hausdorff_spaces_as_counterexamples",
-      "relation": "uses"
-    },
-    {
       "source": "compactness",
       "target": "finite_subcover",
       "relation": "uses"
@@ -12662,11 +12617,6 @@
     {
       "source": "composition_maps",
       "target": "restriction",
-      "relation": "uses"
-    },
-    {
-      "source": "connectedness",
-      "target": "path_connectedness",
       "relation": "uses"
     },
     {
@@ -12832,16 +12782,6 @@
     {
       "source": "lifting_correspondence",
       "target": "path_lifting",
-      "relation": "uses"
-    },
-    {
-      "source": "metric_space",
-      "target": "hausdorff_space",
-      "relation": "uses"
-    },
-    {
-      "source": "open_cover_notation",
-      "target": "compactness",
       "relation": "uses"
     },
     {

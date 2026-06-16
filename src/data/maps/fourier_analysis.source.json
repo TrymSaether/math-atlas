@@ -8289,11 +8289,6 @@
       "relation": "constructed_from"
     },
     {
-      "source": "abel_summation",
-      "target": "poisson_kernel",
-      "relation": "constructed_from"
-    },
-    {
       "source": "cesaro_summation",
       "target": "convolution",
       "relation": "constructed_from"
@@ -8301,11 +8296,6 @@
     {
       "source": "cesaro_summation",
       "target": "dirichlet_kernel",
-      "relation": "constructed_from"
-    },
-    {
-      "source": "cesaro_summation",
-      "target": "fejer_kernel",
       "relation": "constructed_from"
     },
     {
@@ -11041,11 +11031,6 @@
     {
       "source": "mean_square_convergence",
       "target": "l2_space",
-      "relation": "uses"
-    },
-    {
-      "source": "mean_square_convergence",
-      "target": "parseval_identity",
       "relation": "uses"
     },
     {

@@ -98,7 +98,14 @@ export const RELATIONS: Record<RelationType, RelationMeta> = {
     reads: "generalizes",
     inverse: "specializes",
     symmetric: false,
-    isDependency: true,
+    // A generalization link is lateral, not a strict prerequisite: the data uses
+    // it both as abstraction-of-concrete and as superclass-of-subclass, so the
+    // prerequisite ordering it would impose is ambiguous and contradicts the
+    // definitional edges (e.g. `normed_vector_space generalizes banach_space`
+    // vs `banach_space defined_in_terms_of normed_vector_space`). The real
+    // learning order is carried by defined_in_terms_of / uses / constructed_from
+    // / assumes, so generalizes stays out of the dependency DAG.
+    isDependency: false,
   },
   specializes: {
     reads: "is a special case of",

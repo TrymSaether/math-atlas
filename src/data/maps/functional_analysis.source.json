@@ -2974,16 +2974,6 @@
       "relation": "constructed_from"
     },
     {
-      "source": "normed_vector_space",
-      "target": "metric_induced_by_norm",
-      "relation": "constructed_from"
-    },
-    {
-      "source": "norm",
-      "target": "inner_product_space",
-      "relation": "constructed_from"
-    },
-    {
       "source": "ordered_pair",
       "target": "set",
       "relation": "constructed_from"
@@ -3101,6 +3091,16 @@
     {
       "source": "bounded_inverse_theorem",
       "target": "bounded_linear_operator",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "bounded_linear_functional",
+      "target": "bounded_linear_operator",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "bounded_linear_functional",
+      "target": "linear_functional",
       "relation": "defined_in_terms_of"
     },
     {
@@ -3341,6 +3341,11 @@
     {
       "source": "dual_space_is_banach",
       "target": "operator_norm",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "dual_space",
+      "target": "bounded_linear_functional",
       "relation": "defined_in_terms_of"
     },
     {
@@ -3676,11 +3681,6 @@
     {
       "source": "open_mapping_theorem",
       "target": "continuity",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "operator_norm",
-      "target": "bounded_linear_operator",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4755,22 +4755,12 @@
     },
     {
       "source": "banach_alaoglu_theorem",
-      "target": "weak_compactness_results",
-      "relation": "uses"
-    },
-    {
-      "source": "banach_alaoglu_theorem",
       "target": "weak_topology",
       "relation": "uses"
     },
     {
       "source": "bounded_inverse_theorem",
       "target": "open_mapping_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "bounded_linear_operator",
-      "target": "adjoint_operator",
       "relation": "uses"
     },
     {
@@ -4849,11 +4839,6 @@
       "relation": "uses"
     },
     {
-      "source": "open_mapping_theorem",
-      "target": "closed_graph_theorem",
-      "relation": "uses"
-    },
-    {
       "source": "operator_spectrum_analysis",
       "target": "spectral_theorem",
       "relation": "uses"
@@ -4899,11 +4884,6 @@
       "relation": "uses"
     },
     {
-      "source": "separation_of_points",
-      "target": "hahn_banach_theorem",
-      "relation": "uses"
-    },
-    {
       "source": "spectral_theorem",
       "target": "approximation_argument",
       "relation": "uses"
@@ -4915,22 +4895,12 @@
     },
     {
       "source": "spectral_theorem",
-      "target": "operator_spectrum_analysis",
-      "relation": "uses"
-    },
-    {
-      "source": "spectral_theorem",
       "target": "riesz_representation_theorem",
       "relation": "uses"
     },
     {
       "source": "uniform_boundedness_principle",
       "target": "baire_category_theorem",
-      "relation": "uses"
-    },
-    {
-      "source": "uniform_boundedness_principle",
-      "target": "pointwise_limits_of_operators",
       "relation": "uses"
     },
     {
