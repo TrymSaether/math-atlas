@@ -64,6 +64,7 @@ interface PersistedState {
   showMinimap?: boolean;
   surface?: Surface;
   routeKind?: RouteKind;
+  routeIncludeProof?: boolean;
   maps?: Partial<Record<MapId, PersistedMapState>>;
 }
 
@@ -131,6 +132,9 @@ interface State {
    */
   routeKind: RouteKind;
   setRouteKind: (kind: RouteKind) => void;
+  /** When true, routes also include proof-only prerequisites (the proof overlay). */
+  routeIncludeProof: boolean;
+  setRouteIncludeProof: (on: boolean) => void;
   routeMode: boolean;
   routeFrom: string | null;
   routeTo: string | null;
@@ -311,6 +315,7 @@ function normalizePersistedState(value: unknown | null): PersistedState | null {
     surface: isSurface(value.surface) ? value.surface : undefined,
     routeKind:
       value.routeKind === "prereq" || value.routeKind === "path" ? value.routeKind : undefined,
+    routeIncludeProof: asBoolean(value.routeIncludeProof),
     maps,
   };
 }
@@ -349,6 +354,7 @@ function persistedStateFor(state: State): PersistedState {
     showMinimap: state.showMinimap,
     surface: state.surface,
     routeKind: state.routeKind,
+    routeIncludeProof: state.routeIncludeProof,
     maps: persistedMaps,
   };
 }
@@ -551,6 +557,9 @@ export const useStore = create<State>((set, get) => ({
       tourIndex: null,
       routeRunKey: s.routeRunKey + 1,
     })),
+  routeIncludeProof: persistedState?.routeIncludeProof ?? false,
+  setRouteIncludeProof: (routeIncludeProof) =>
+    set((s) => ({ routeIncludeProof, tourIndex: null, routeRunKey: s.routeRunKey + 1 })),
   routeMode: false,
   routeFrom: null,
   routeTo: null,

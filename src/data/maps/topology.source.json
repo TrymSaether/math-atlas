@@ -3,7 +3,7 @@
   "label": "Topology mathematical knowledge graph mini-graph",
   "field": "topology_field",
   "version": 1,
-  "updated": "2026-06-09",
+  "updated": "2026-06-16",
   "domains": [
     {
       "id": "foundations",
@@ -1309,6 +1309,50 @@
         "functions"
       ],
       "priority": "core"
+    },
+    {
+      "id": "union",
+      "kind": "definition",
+      "domain": "foundations",
+      "label": "Union",
+      "content": {
+        "definition": "Given sets $A$ and $B$, their \\textbf{union} is $$A \\cup B = \\{x \\mid x \\in A \\text{ or } x \\in B\\}.$$ Here \\emph{or} is inclusive: $x$ may belong to $A$, to $B$, or to both. More generally, for a family of sets $\\{A_i\\}_{i\\in I}$, $$\\bigcup_{i\\in I} A_i = \\{x \\mid \\exists i\\in I \\text{ such that } x\\in A_i\\}.$$",
+        "intuition": "The union collects everything that appears in at least one of the sets. Shared elements are not duplicated, because sets record membership, not multiplicity.",
+        "gloss": "The union is the set of all elements belonging to at least one of the given sets.",
+        "notation": [
+          "A \\cup B",
+          "\\bigcup_{i \\in I} A_i"
+        ]
+      },
+      "examples": [
+        {
+          "content": "If $A = \\{1,2,3\\}$ and $B = \\{3,4,5\\}$, then $A \\cup B = \\{1,2,3,4,5\\}$."
+        },
+        {
+          "content": "The union of the intervals $[0,1]$ and $[1,2]$ is $[0,2]$."
+        },
+        {
+          "content": "If every student has taken linear algebra or analysis, then a student who has taken both still satisfies the statement; this is the inclusive meaning of \\emph{or} used in the definition of union."
+        },
+        {
+          "content": "In ordinary English, a sentence like \\emph{either you get at least 70 on the final exam or you fail the course} is usually heard as exclusive: one outcome is intended to rule out the other. This contrasts with the mathematical meaning of \\emph{or} in $x\\in A \\text{ or } x\\in B$, where both may hold."
+        }
+      ],
+      "assumptions": [],
+      "properties": [
+        "$A \\cup B = B \\cup A$",
+        "$(A \\cup B) \\cup C = A \\cup (B \\cup C)$",
+        "$A \\cup A = A$",
+        "$A \\cup \\varnothing = A$",
+        "$A \\subseteq A \\cup B$ and $B \\subseteq A \\cup B$",
+        "$x \\in \\bigcup_{i\\in I} A_i \\Longleftrightarrow \\exists i\\in I \\text{ such that } x\\in A_i$",
+        "The word \\emph{or} in the definition of union is inclusive, not exclusive."
+      ],
+      "tags": [
+        "logic",
+        "set_theory"
+      ],
+      "priority": "standard"
     },
     {
       "id": "zorns_lemma",
@@ -12262,6 +12306,26 @@
     {
       "source": "torus",
       "target": "quotient_topology",
+      "relation": "related_to"
+    },
+    {
+      "source": "union",
+      "target": "empty_set",
+      "relation": "related_to"
+    },
+    {
+      "source": "union",
+      "target": "power_set",
+      "relation": "related_to"
+    },
+    {
+      "source": "union",
+      "target": "set",
+      "relation": "related_to"
+    },
+    {
+      "source": "union",
+      "target": "subset",
       "relation": "related_to"
     },
     {

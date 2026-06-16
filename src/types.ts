@@ -51,6 +51,8 @@ export interface GraphData {
   domains: GraphDomain[];
   nodes: GraphNode[];
   edges: GraphEdge[];
+  /** Proof-dependency overlay (scope `proof`); empty unless proofs cite concepts. */
+  proofEdges: GraphEdge[];
 }
 
 function titleCase(value: string): string {

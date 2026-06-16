@@ -50,6 +50,7 @@ export function enrichArtifact(artifact: Artifact): GraphData {
     domains,
     nodes,
     edges: artifact.edges as GraphEdge[],
+    proofEdges: (artifact.proofEdges ?? []) as GraphEdge[],
   };
 }
 

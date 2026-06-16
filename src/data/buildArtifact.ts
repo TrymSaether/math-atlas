@@ -15,6 +15,11 @@ export function deterministicEdgeId(from: string, to: string, relation: string):
   return `e_${from}__${relation}__${to}`;
 }
 
+/** Proof-overlay edge id — namespaced so it can never collide with an `edges` id. */
+export function proofEdgeId(from: string, to: string): string {
+  return `ep_${from}__uses__${to}`;
+}
+
 /** Longest prerequisite chain ending at each node, over dependency edges. */
 function computeDepths(
   nodeIds: string[],
@@ -58,7 +63,34 @@ export function buildArtifact(src: SourceGraph): {
     const key = `${ka} ${kb} ${e.relation}`;
     if (seen.has(key)) continue;
     seen.add(key);
-    edges.push({ id, from, to, relation: e.relation, isDependency });
+    edges.push({ id, from, to, relation: e.relation, isDependency, scope: "statement" });
+  }
+
+  // Proof-dependency overlay: each concept's proof.steps[].uses becomes a
+  // scope-`proof` dependency edge `use → concept` (the used concept is a
+  // prerequisite of being able to prove this one). Skip a pair that a statement
+  // dependency already covers — needing Y to understand X subsumes needing Y to
+  // prove X — so the overlay holds exactly the *extra* machinery a proof requires.
+  const statementDepPairs = new Set<string>();
+  for (const e of edges) if (e.isDependency) statementDepPairs.add(`${e.from}|${e.to}`);
+  const proofEdges: ArtifactEdge[] = [];
+  const seenProof = new Set<string>();
+  for (const c of src.concepts) {
+    const uses = new Set((c.proof?.steps ?? []).flatMap((s) => s.uses));
+    for (const used of uses) {
+      if (used === c.id) continue; // a proof using its own result is not a prereq
+      const pairKey = `${used}|${c.id}`;
+      if (statementDepPairs.has(pairKey) || seenProof.has(pairKey)) continue;
+      seenProof.add(pairKey);
+      proofEdges.push({
+        id: proofEdgeId(used, c.id),
+        from: used,
+        to: c.id,
+        relation: "uses",
+        isDependency: true,
+        scope: "proof",
+      });
+    }
   }
 
   // degree + depth.
@@ -110,6 +142,7 @@ export function buildArtifact(src: SourceGraph): {
       })),
       nodes,
       edges,
+      proofEdges,
     },
     warnings,
   };

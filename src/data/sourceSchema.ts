@@ -280,6 +280,49 @@ export const SourceGraphSchema = z
           });
       }
     }
+
+    // Dependency DAG must be acyclic. Dependency edges are oriented prereq →
+    // dependent: "source <dep-relation> target" means target is a prerequisite
+    // of source, so the DAG carries target → source. A cycle here is a circular
+    // definition — the strongest invariant the map has, enforced at the cheapest
+    // place (build) rather than left to surface at render time. Equivalent
+    // reformulations are NOT circular: author them with `equivalent_to`, which is
+    // not a dependency and never enters this graph.
+    const dag = new Map<string, string[]>();
+    for (const e of data.edges) {
+      if (!RELATIONS[e.relation].isDependency) continue;
+      (dag.get(e.target) ?? dag.set(e.target, []).get(e.target)!).push(e.source);
+    }
+    const WHITE = 0,
+      GRAY = 1,
+      BLACK = 2;
+    const color = new Map<string, number>();
+    const stack: string[] = [];
+    const reported = new Set<string>();
+    const visit = (id: string) => {
+      color.set(id, GRAY);
+      stack.push(id);
+      for (const next of dag.get(id) ?? []) {
+        if (color.get(next) === GRAY) {
+          // Back edge → cycle. Extract the loop from the current DFS stack.
+          const cycle = stack.slice(stack.indexOf(next)).concat(next);
+          const key = [...cycle].sort().join("|");
+          if (!reported.has(key)) {
+            reported.add(key);
+            ctx.addIssue({
+              code: "custom",
+              path: ["edges"],
+              message: `Circular dependency among concepts: ${cycle.join(" → ")}. Definitions cannot depend on themselves; use 'equivalent_to' for genuinely equivalent reformulations.`,
+            });
+          }
+        } else if ((color.get(next) ?? WHITE) === WHITE) {
+          visit(next);
+        }
+      }
+      stack.pop();
+      color.set(id, BLACK);
+    };
+    for (const id of conceptIds) if ((color.get(id) ?? WHITE) === WHITE) visit(id);
   });
 
 export type SourceGraph = z.infer<typeof SourceGraphSchema>;

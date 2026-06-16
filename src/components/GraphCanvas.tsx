@@ -575,6 +575,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
           count: route.ordered.length,
           found: routeTo ? route.found : null,
           ordered: route.ordered,
+          spine: route.spine,
         }}
       />
     </>

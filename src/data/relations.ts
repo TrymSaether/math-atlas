@@ -30,6 +30,7 @@ export const RELATION_KEYS = [
   "specializes",
   "motivated_by",
   "motivates",
+  "equivalent_to",
   "related_to",
   "satisfies",
   "satisfied_by",
@@ -125,6 +126,19 @@ export const RELATIONS: Record<RelationType, RelationMeta> = {
     symmetric: false,
     isDependency: false,
   },
+  equivalent_to: {
+    reads: "is equivalent to",
+    inverse: "equivalent_to",
+    symmetric: true,
+    // A genuine equivalence (different presentations of the same concept, e.g.
+    // the open-cover / sequential / FIP characterizations of compactness). It is
+    // deliberately NOT a dependency: equivalent concepts have no prerequisite
+    // ordering between them, and routing it out of the DAG is what lets authors
+    // record a legitimate mutual relationship WITHOUT it surfacing as a circular
+    // definition. Consumers collapse an equivalence class into one ordering unit
+    // (see equivalenceClasses / topoSortWithCycles in lib/graph).
+    isDependency: false,
+  },
   related_to: {
     reads: "is related to",
     inverse: "related_to",
@@ -180,6 +194,7 @@ export const AUTHORABLE_RELATIONS = [
   "constructed_from",
   "generalizes",
   "motivated_by",
+  "equivalent_to",
   "related_to",
   "satisfies",
   "violates",
@@ -206,6 +221,7 @@ export const RELATION_TERSE: Record<RelationType, string> = {
   specializes: "special case",
   motivated_by: "motivated by",
   motivates: "motivates",
+  equivalent_to: "equivalent",
   related_to: "related",
   satisfies: "satisfies",
   satisfied_by: "satisfied by",
@@ -219,9 +235,21 @@ function isRelationType(relation: string): relation is RelationType {
   return relation in RELATIONS;
 }
 
-/** True when the relation is its own inverse (only `related_to` today). */
+/** True when the relation is its own inverse (related_to, equivalent_to). */
 export function isSymmetricRelation(relation: string): boolean {
   return isRelationType(relation) && RELATIONS[relation].symmetric;
+}
+
+/**
+ * Relations that assert two concepts are the same thing under different
+ * presentations (only `equivalent_to` today). Consumers collapse the connected
+ * components of these edges into a single ordering unit. Distinct from the
+ * `symmetric` flag, which `related_to` also carries without implying sameness.
+ */
+export const EQUIVALENCE_RELATIONS = new Set<RelationType>(["equivalent_to"]);
+
+export function isEquivalenceRelation(relation: string): boolean {
+  return isRelationType(relation) && EQUIVALENCE_RELATIONS.has(relation as RelationType);
 }
 
 /**

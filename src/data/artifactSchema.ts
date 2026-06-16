@@ -32,6 +32,15 @@ export const ArtifactEdgeSchema = z.object({
   to: z.string(),
   relation: z.enum(RELATION_KEYS),
   isDependency: z.boolean(),
+  /**
+   * Which dependency layer the edge belongs to:
+   * - `statement` — needed to understand the concept's statement/definition (the
+   *   authored edges; the definitional backbone).
+   * - `proof` — needed only to follow the proof (materialized from a concept's
+   *   `proof.steps[].uses`). Lives in `proofEdges`, never in `edges`.
+   * Absent on legacy artifacts ⇒ treated as `statement`.
+   */
+  scope: z.enum(["statement", "proof"]).default("statement"),
 });
 
 export const ArtifactSchema = z.object({
@@ -49,9 +58,18 @@ export const ArtifactSchema = z.object({
     }),
   ),
   nodes: z.array(ArtifactNodeSchema),
+  /** The definitional backbone — authored, statement-scope edges. */
   edges: z.array(ArtifactEdgeSchema),
+  /**
+   * The proof-dependency overlay: scope-`proof` edges derived from each concept's
+   * `proof.steps[].uses`, oriented prereq → dependent. Kept in a separate layer so
+   * the definitional graph (and everything that renders it) is untouched; routing
+   * opts in to it for "able to prove it" paths.
+   */
+  proofEdges: z.array(ArtifactEdgeSchema).default([]),
 });
 
 export type Artifact = z.infer<typeof ArtifactSchema>;
 export type ArtifactNode = z.infer<typeof ArtifactNodeSchema>;
 export type ArtifactEdge = z.infer<typeof ArtifactEdgeSchema>;
+export type EdgeScope = ArtifactEdge["scope"];

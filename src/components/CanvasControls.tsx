@@ -56,6 +56,8 @@ export interface RouteSummary {
   found: boolean | null;
   /** Study order of the resolved route — drives the list and the tour. */
   ordered: string[];
+  /** Shortest dependency chain between endpoints (path mode); inclusive. */
+  spine?: string[];
 }
 
 export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }) {
@@ -225,6 +227,8 @@ function DirectionsPanel({
 }) {
   const routeKind = useStore((s) => s.routeKind);
   const setRouteKind = useStore((s) => s.setRouteKind);
+  const routeIncludeProof = useStore((s) => s.routeIncludeProof);
+  const setRouteIncludeProof = useStore((s) => s.setRouteIncludeProof);
   const routeMode = useStore((s) => s.routeMode);
   const routeFrom = useStore((s) => s.routeFrom);
   const routeTo = useStore((s) => s.routeTo);
@@ -417,6 +421,22 @@ function DirectionsPanel({
         </div>
       )}
 
+      {resolved && (
+        <div className="flex items-center justify-between gap-3 px-1 py-0.5">
+          <span className="min-w-0 text-ui-meta text-fg-2">
+            Include proof prerequisites
+            <span className="block text-ui-meta text-fg-3">
+              {routeIncludeProof ? "enough to prove it" : "enough to understand it"}
+            </span>
+          </span>
+          <Switch
+            label="Include proof prerequisites"
+            checked={routeIncludeProof}
+            onClick={() => setRouteIncludeProof(!routeIncludeProof)}
+          />
+        </div>
+      )}
+
       {resolved && summary.found === false && (
         <div className="rounded-lg border border-border bg-surface px-3 py-2">
           <div className="flex items-center justify-between gap-3">
@@ -438,6 +458,7 @@ function DirectionsPanel({
         <RouteSequence
           map={map}
           ordered={ordered}
+          spine={summary.spine}
           isPrereq={isPrereq}
           tourIndex={tourIndex}
           onPick={(id) => select(id)}
@@ -456,6 +477,7 @@ function DirectionsPanel({
 function RouteSequence({
   map,
   ordered,
+  spine,
   isPrereq,
   tourIndex,
   onPick,
@@ -466,6 +488,7 @@ function RouteSequence({
 }: {
   map: import("../data").LoadedMap | undefined;
   ordered: string[];
+  spine?: string[];
   isPrereq: boolean;
   tourIndex: number | null;
   onPick: (id: string) => void;
@@ -477,6 +500,8 @@ function RouteSequence({
   const touring = tourIndex !== null;
   // Prereq count excludes the goal itself (last in study order).
   const prereqCount = Math.max(0, ordered.length - 1);
+  // Hops along the shortest dependency chain (path mode); spine includes both ends.
+  const spineSteps = !isPrereq && spine && spine.length > 1 ? spine.length - 1 : 0;
 
   return (
     <div className="flex flex-col gap-2">
@@ -486,6 +511,13 @@ function RouteSequence({
           {isPrereq
             ? `prerequisite${prereqCount === 1 ? "" : "s"}`
             : `concept${ordered.length === 1 ? "" : "s"}`}
+          {spineSteps > 0 && (
+            <span className="text-fg-3">
+              {" · "}
+              <span className="font-semibold text-fg-1">{spineSteps}</span> step
+              {spineSteps === 1 ? "" : "s"} via shortest path
+            </span>
+          )}
         </div>
         {!touring ? (
           <div className="flex items-center gap-1">

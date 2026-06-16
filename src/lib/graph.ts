@@ -1,4 +1,5 @@
 import type { TopoEdge, TopoNode, Relation } from "../types";
+import { isEquivalenceRelation } from "../data/relations";
 
 export interface Adjacency {
   out: Map<string, { id: string; rel: Relation }[]>;
@@ -6,11 +7,6 @@ export interface Adjacency {
 }
 
 export interface TopoSortResult {
-  nodes: TopoNode[];
-  cycles: TopoNode[][];
-}
-
-export interface LearningPath {
   nodes: TopoNode[];
   cycles: TopoNode[][];
 }
@@ -58,76 +54,198 @@ export function descendants(adj: Adjacency, id: string): Set<string> {
   return seen;
 }
 
-/** Topological sort restricted to the subgraph induced by `nodeIds`. */
+/** Lower sorts earlier: core concepts are surfaced ahead of peripheral ones. */
+const PRIORITY_RANK: Record<string, number> = { core: 0, standard: 1, peripheral: 2 };
+
+/** Stable node comparator: chapter number, then id as a final deterministic tiebreak. */
+function cmpNode(byId: Map<string, TopoNode>): (a: string, b: string) => number {
+  return (a, b) => {
+    const c = cmpNum(byId.get(a)!, byId.get(b)!);
+    return c !== 0 ? c : a < b ? -1 : a > b ? 1 : 0;
+  };
+}
+
+/**
+ * Topological sort restricted to the subgraph induced by `nodeIds`.
+ *
+ * `equivalence` (node id → canonical class rep, see {@link equivalenceClasses})
+ * is optional. When supplied, concepts in the same equivalence class are merged
+ * into one *ordering unit* so equivalent reformulations are sequenced together
+ * instead of being scattered across the order. Equivalence alone never marks a
+ * unit as a cycle — only genuine dependency loops do (see `cycles` below).
+ */
 export function topoSortWithCycles(
   nodeIds: Set<string>,
   adj: Adjacency,
   allNodes: TopoNode[],
+  equivalence?: Map<string, string>,
 ): TopoSortResult {
   const byId = new Map(allNodes.map((n) => [n.id, n]));
-  const components = stronglyConnectedComponents(nodeIds, adj, byId);
-  const componentByNodeId = new Map<string, number>();
-  components.forEach((component, index) => {
-    for (const id of component) componentByNodeId.set(id, index);
+
+  // Dependency SCCs. A multi-node SCC (or self-loop) is a genuine circular
+  // dependency; these are the only things reported as cycles.
+  const depComponents = stronglyConnectedComponents(nodeIds, adj, byId);
+  const compByNode = new Map<string, number>();
+  depComponents.forEach((component, i) => {
+    for (const id of component) compByNode.set(id, i);
   });
 
-  const componentEdges = new Map<number, Set<number>>();
-  const indeg = new Map<number, number>();
-  for (let i = 0; i < components.length; i++) indeg.set(i, 0);
+  // Merge dependency components linked by an equivalence class into ordering
+  // units (union-find over component indices).
+  const parent = depComponents.map((_, i) => i);
+  const find = (x: number): number => (parent[x] === x ? x : (parent[x] = find(parent[x])));
+  const unite = (a: number, b: number) => {
+    parent[find(a)] = find(b);
+  };
+  if (equivalence) {
+    const repToComponent = new Map<string, number>();
+    for (const id of nodeIds) {
+      const rep = equivalence.get(id);
+      if (rep === undefined) continue;
+      const ci = compByNode.get(id);
+      if (ci === undefined) continue;
+      const seen = repToComponent.get(rep);
+      if (seen === undefined) repToComponent.set(rep, ci);
+      else unite(seen, ci);
+    }
+  }
 
+  // Aggregate units: unit root → member node ids (sorted), and node → unit root.
+  const unitMembers = new Map<number, string[]>();
+  const unitByNode = new Map<string, number>();
+  depComponents.forEach((component, i) => {
+    const root = find(i);
+    const members = unitMembers.get(root) ?? unitMembers.set(root, []).get(root)!;
+    for (const id of component) {
+      members.push(id);
+      unitByNode.set(id, root);
+    }
+  });
+  for (const members of unitMembers.values()) members.sort(cmpNode(byId));
+
+  // A unit is represented by its lowest-numbered member for ordering purposes.
+  const repNode = (root: number) => byId.get(unitMembers.get(root)![0])!;
+  // Tie-break order *within the topological constraints*: surface core concepts
+  // before peripheral ones, then fall back to a stable numeric/id order. Never
+  // reorders across a real prerequisite edge — only chooses among ready units.
+  const cmpUnitStatic = (a: number, b: number) => {
+    const pa = PRIORITY_RANK[repNode(a).priority] ?? PRIORITY_RANK.standard;
+    const pb = PRIORITY_RANK[repNode(b).priority] ?? PRIORITY_RANK.standard;
+    if (pa !== pb) return pa - pb;
+    return cmpNode(byId)(unitMembers.get(a)![0], unitMembers.get(b)![0]);
+  };
+  // Cluster-contiguous: once we enter a domain, prefer ready units in the same
+  // domain so the path finishes a topic instead of bouncing between domains.
+  const cmpReady = (a: number, b: number, lastDomain: string | undefined) => {
+    if (lastDomain !== undefined) {
+      const sa = repNode(a).domain === lastDomain ? 0 : 1;
+      const sb = repNode(b).domain === lastDomain ? 0 : 1;
+      if (sa !== sb) return sa - sb;
+    }
+    return cmpUnitStatic(a, b);
+  };
+
+  // Condensation over units.
+  const unitEdges = new Map<number, Set<number>>();
+  const indeg = new Map<number, number>();
+  for (const root of unitMembers.keys()) indeg.set(root, 0);
   for (const id of nodeIds) {
-    const fromComponent = componentByNodeId.get(id);
-    if (fromComponent === undefined) continue;
+    const fromUnit = unitByNode.get(id);
+    if (fromUnit === undefined) continue;
     for (const { id: nxt } of adj.out.get(id) ?? []) {
       if (!nodeIds.has(nxt)) continue;
-      const toComponent = componentByNodeId.get(nxt);
-      if (toComponent === undefined || toComponent === fromComponent) continue;
-      const edges = componentEdges.get(fromComponent) ?? new Set<number>();
-      if (!edges.has(toComponent)) {
-        edges.add(toComponent);
-        componentEdges.set(fromComponent, edges);
-        indeg.set(toComponent, (indeg.get(toComponent) ?? 0) + 1);
+      const toUnit = unitByNode.get(nxt);
+      if (toUnit === undefined || toUnit === fromUnit) continue;
+      const edges = unitEdges.get(fromUnit) ?? unitEdges.set(fromUnit, new Set()).get(fromUnit)!;
+      if (!edges.has(toUnit)) {
+        edges.add(toUnit);
+        indeg.set(toUnit, (indeg.get(toUnit) ?? 0) + 1);
       }
     }
   }
 
-  const ready: number[] = [];
-  for (const [component, d] of indeg) if (d === 0) ready.push(component);
-  ready.sort((a, b) => cmpComponent(components[a], components[b], byId));
-
-  const orderedComponents: number[] = [];
-  while (ready.length) {
-    const cur = ready.shift()!;
-    orderedComponents.push(cur);
-    for (const nxt of componentEdges.get(cur) ?? []) {
+  // Kahn over units. Each step picks the best ready unit by contiguity →
+  // priority → number, so the order is deterministic and stays within a domain.
+  const ready = new Set<number>();
+  for (const [root, d] of indeg) if (d === 0) ready.add(root);
+  const orderedUnits: number[] = [];
+  let lastDomain: string | undefined;
+  while (ready.size) {
+    let best: number | undefined;
+    for (const r of ready) if (best === undefined || cmpReady(r, best, lastDomain) < 0) best = r;
+    ready.delete(best!);
+    orderedUnits.push(best!);
+    lastDomain = repNode(best!).domain;
+    for (const nxt of unitEdges.get(best!) ?? []) {
       const d = (indeg.get(nxt) ?? 0) - 1;
       indeg.set(nxt, d);
-      if (d === 0) {
-        let i = 0;
-        while (i < ready.length && cmpComponent(components[ready[i]], components[nxt], byId) < 0)
-          i++;
-        ready.splice(i, 0, nxt);
-      }
+      if (d === 0) ready.add(nxt);
     }
   }
 
-  const nodes = orderedComponents.flatMap((component) =>
-    components[component]
+  // Without equivalence the condensation of SCCs is always a DAG, so Kahn places
+  // every unit. Merging by equivalence can introduce a condensation cycle, but
+  // only when an equivalence contradicts the dependency order (e.g. A→B→C with
+  // A≡C). Never drop nodes: append leftover units deterministically and surface
+  // them as cycles so the contradiction is visible.
+  const placed = new Set(orderedUnits);
+  const leftover = [...unitMembers.keys()].filter((r) => !placed.has(r)).sort(cmpUnitStatic);
+  orderedUnits.push(...leftover);
+
+  const nodes = orderedUnits.flatMap((root) =>
+    unitMembers
+      .get(root)!
       .map((id) => byId.get(id))
-      .filter((node): node is TopoNode => Boolean(node)),
+      .filter((n): n is TopoNode => Boolean(n)),
   );
-  const cycles = components
-    .filter((component) => isCycleComponent(component, adj))
-    .map((component) =>
-      component.map((id) => byId.get(id)).filter((node): node is TopoNode => Boolean(node)),
-    );
+
+  const leftoverNodeIds = new Set(leftover.flatMap((r) => unitMembers.get(r)!));
+  const cycleComponents = [
+    ...leftover.map((r) => unitMembers.get(r)!),
+    ...depComponents.filter(
+      (c) => isCycleComponent(c, adj) && !c.some((id) => leftoverNodeIds.has(id)),
+    ),
+  ];
+  const cycles = cycleComponents.map((c) =>
+    c.map((id) => byId.get(id)).filter((n): n is TopoNode => Boolean(n)),
+  );
 
   return { nodes, cycles };
 }
 
-/** Topological sort restricted to the subgraph induced by `nodeIds`. */
-export function topoSort(nodeIds: Set<string>, adj: Adjacency, allNodes: TopoNode[]): TopoNode[] {
-  return topoSortWithCycles(nodeIds, adj, allNodes).nodes;
+/**
+ * Connected components of the `equivalent_to` edges, as a node id → canonical
+ * representative map (the lexicographically smallest member of each class).
+ * Restricted to `nodeIds` when given. Nodes in no equivalence class are absent.
+ */
+export function equivalenceClasses(edges: TopoEdge[], nodeIds?: Set<string>): Map<string, string> {
+  const parent = new Map<string, string>();
+  const find = (x: string): string => {
+    const p = parent.get(x);
+    if (p === undefined || p === x) {
+      parent.set(x, x);
+      return x;
+    }
+    const r = find(p);
+    parent.set(x, r);
+    return r;
+  };
+  const unite = (a: string, b: string) => {
+    const ra = find(a);
+    const rb = find(b);
+    if (ra === rb) return;
+    // Keep the smaller id as the rep for stable, deterministic class names.
+    if (ra < rb) parent.set(rb, ra);
+    else parent.set(ra, rb);
+  };
+  for (const e of edges) {
+    if (!isEquivalenceRelation(e.relation)) continue;
+    if (nodeIds && (!nodeIds.has(e.from) || !nodeIds.has(e.to))) continue;
+    unite(e.from, e.to);
+  }
+  const reps = new Map<string, string>();
+  for (const k of parent.keys()) reps.set(k, find(k));
+  return reps;
 }
 
 function stronglyConnectedComponents(
@@ -187,23 +305,21 @@ function isCycleComponent(component: string[], adj: Adjacency): boolean {
   return (adj.out.get(id) ?? []).some((edge) => edge.id === id);
 }
 
-function cmpComponent(a: string[], b: string[], byId: Map<string, TopoNode>): number {
-  return cmpNum(byId.get(a[0])!, byId.get(b[0])!);
-}
-
 /**
- * Shortest undirected path between two nodes over a neighbor-set adjacency map
- * (e.g. `LoadedMap.neighborsByNodeId`), or `null` if they are disconnected.
- * Returns the inclusive ordered list of node ids from `from` to `to`.
+ * Shortest *directed* path from `from` to `to` over an {@link Adjacency} built by
+ * {@link buildAdjacency}. Because that adjacency is already restricted to an
+ * allowed relation set, this answers relation-typed, direction-respecting queries
+ * such as "shortest dependency chain from concept A up to theorem B". Returns the
+ * inclusive ordered id list, or `null` if `to` is unreachable from `from`.
  */
-export function bfsPath(adj: Map<string, Set<string>>, from: string, to: string): string[] | null {
+export function shortestPath(adj: Adjacency, from: string, to: string): string[] | null {
   if (from === to) return [from];
   const prev = new Map<string, string>();
   const visited = new Set<string>([from]);
   const queue: string[] = [from];
   while (queue.length) {
     const cur = queue.shift()!;
-    for (const next of adj.get(cur) ?? []) {
+    for (const { id: next } of adj.out.get(cur) ?? []) {
       if (visited.has(next)) continue;
       visited.add(next);
       prev.set(next, cur);
@@ -232,25 +348,4 @@ export function cmpNum(a: TopoNode, b: TopoNode): number {
 function splitNum(n: string): [string, number] {
   const [c, i] = n.split(".");
   return [c, parseInt(i, 10) || 0];
-}
-
-export function buildLearningPath(
-  targetId: string,
-  edges: TopoEdge[],
-  allowed: Set<Relation>,
-  nodes: TopoNode[],
-): TopoNode[] {
-  return buildLearningPathReport(targetId, edges, allowed, nodes).nodes;
-}
-
-export function buildLearningPathReport(
-  targetId: string,
-  edges: TopoEdge[],
-  allowed: Set<Relation>,
-  nodes: TopoNode[],
-): LearningPath {
-  const adj = buildAdjacency(edges, allowed);
-  const anc = ancestors(adj, targetId);
-  anc.add(targetId);
-  return topoSortWithCycles(anc, adj, nodes);
 }

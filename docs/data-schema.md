@@ -30,8 +30,9 @@ This table _is_ the schema for edge direction. `source → target` always reads 
 | `uses`                | A uses B                     | `used_by`      | no        | yes   | `logical_dependency`, edge `uses`     |
 | `assumes`             | A assumes B                  | `assumed_by`   | no        | yes   | `assumption_dependency`               |
 | `constructed_from`    | A is built from B            | `constructs`   | no        | yes   | `construction_dependency`             |
-| `generalizes`         | A generalizes B              | `specializes`  | no        | yes   | `subtype_of`/`instance_of` (reversed) |
+| `generalizes`         | A generalizes B              | `specializes`  | no        | no    | `subtype_of`/`instance_of` (reversed) |
 | `motivated_by`        | A is motivated by B          | `motivates`    | no        | no    | `pedagogical_/historical_dependency`  |
+| `equivalent_to`       | A is equivalent to B         | (self)         | **yes**   | no    | `equivalent_definitions`              |
 | `related_to`          | A relates to B               | (self)         | **yes**   | no    | `related`                             |
 | `satisfies`           | space A satisfies property B | `satisfied_by` | no        | no    | `satisfies`                           |
 | `violates`            | space A violates property B  | `violated_by`  | no        | no    | `violates`                            |
@@ -43,8 +44,9 @@ export const RELATIONS = {
   uses: { inverse: "used_by", symmetric: false, isDep: true },
   assumes: { inverse: "assumed_by", symmetric: false, isDep: true },
   constructed_from: { inverse: "constructs", symmetric: false, isDep: true },
-  generalizes: { inverse: "specializes", symmetric: false, isDep: true },
+  generalizes: { inverse: "specializes", symmetric: false, isDep: false },
   motivated_by: { inverse: "motivates", symmetric: false, isDep: false },
+  equivalent_to: { inverse: "equivalent_to", symmetric: true, isDep: false },
   related_to: { inverse: "related_to", symmetric: true, isDep: false },
   satisfies: { inverse: "satisfied_by", symmetric: false, isDep: false },
   violates: { inverse: "violated_by", symmetric: false, isDep: false },
@@ -54,6 +56,13 @@ export type RelationType = keyof typeof RELATIONS;
 ```
 
 Authors only ever write the **forward** key. The reverse (`defines`, `used_by`, …) is never authored — it's materialized into the artifact.
+
+**Notes on a few relations**
+
+- `generalizes` is **lateral, not a dependency** (`isDep: no`). The data uses it both as abstraction-of-concrete and as superclass-of-subclass, so the prerequisite order it would impose is ambiguous and can contradict the definitional edges. The real learning order is carried by `defined_in_terms_of` / `uses` / `assumes` / `constructed_from`.
+- `equivalent_to` asserts two concepts are the **same thing under different presentations** (e.g. the open-cover / sequential / FIP characterizations of compactness). It is symmetric and **not** a dependency, so a genuine mutual relationship can be recorded without it being mistaken for a circular definition. Consumers collapse each `equivalent_to` connected component into a single **ordering unit**, so equivalent reformulations are sequenced together in learning paths instead of being scattered.
+
+**Dependency-DAG invariant.** The sub-graph of dependency edges (`isDep: yes`) must be **acyclic** — a cycle is a circular definition. The strict source schema rejects it at build time (the error names the loop and points you at `equivalent_to` for genuinely equivalent reformulations).
 
 ---
 
@@ -85,16 +94,7 @@ export const SourceDomain = z
     id: Slug,
     label: z.string().min(1),
     order: z.number().int().nonnegative(),
-    palette: z.enum([
-      "blue",
-      "green",
-      "purple",
-      "red",
-      "teal",
-      "orange",
-      "pink",
-      "gold",
-    ]),
+    palette: z.enum(["blue", "green", "purple", "red", "teal", "orange", "pink", "gold"]),
   })
   .strict();
 
@@ -120,9 +120,7 @@ export const SourceConcept = z
       .default({ notation: [] }),
 
     // optional structured pedagogy (kept only if a renderer uses it)
-    examples: z
-      .array(z.object({ tex: Tex, caption: z.string().optional() }).strict())
-      .default([]),
+    examples: z.array(z.object({ tex: Tex, caption: z.string().optional() }).strict()).default([]),
     diagram: z.string().optional(), // single curated diagram path (figure pipeline owns the rest)
     assumptions: z.array(Prose).default([]), // free-text hypotheses; NOT concept refs, so not edges
 
@@ -207,6 +205,7 @@ export const ArtifactEdge = z.object({
   to: z.string(),
   relation: z.string(),
   isDependency: z.boolean(),
+  scope: z.enum(["statement", "proof"]).default("statement"), // dependency layer
   // edges are stored single-direction; inverses are derived at render time,
   // not materialized — so no `derived` flag. No confidence/verified.
 });
@@ -215,9 +214,12 @@ export const Artifact = z.object({
   id, label, field, version,
   domains: z.array(/* domain + resolved tone */),
   nodes:  z.array(ArtifactNode),
-  edges:  z.array(ArtifactEdge),
+  edges:  z.array(ArtifactEdge),       // definitional backbone (scope: statement)
+  proofEdges: z.array(ArtifactEdge),   // proof overlay (scope: proof); see below
 });
 ```
+
+**Two dependency layers.** `edges` is the definitional backbone — what you need to **understand** a concept's statement. `proofEdges` is a separate overlay derived from each concept's `proof.steps[].uses`: `used → concept`, oriented prereq → dependent, scope `proof`. A pair already covered by a statement dependency is skipped, so the overlay holds exactly the **extra** machinery a proof needs. It's kept out of `edges` so the rendered graph, layout, and metrics are unaffected; the Directions feature opts in to it ("enough to prove it" vs "enough to understand it").
 
 Adjacency maps, incoming/outgoing groupings, neighbor sets — keep building those at load (cheap, already done in `buildLoadedMap`). Don't serialize them.
 
@@ -234,6 +236,8 @@ for each *.source.json:
   5. dedupe: collapse semantically identical edges (from,to,relation;
             symmetric relations canonicalize the pair so A↔B is stored once)
   6. compute: degree, depth (longest prereq chain)
+  6b. build proofEdges: each concept's proof.steps[].uses → `used → concept`
+            (scope proof), skipping pairs a statement dependency already covers
   7. emit *.json (artifact); pretty for diff or minified for ship
             (inverse edges are NOT materialized — derived at render time)
 exit non-zero on any issue  → wired into CI / prebuild
