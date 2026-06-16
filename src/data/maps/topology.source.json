@@ -7680,6 +7680,11 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "closed_ball",
+      "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "closed_set",
       "target": "complement",
       "relation": "defined_in_terms_of"
@@ -9541,17 +9546,17 @@
     },
     {
       "source": "metric_topology",
-      "target": "open_closed_ball",
+      "target": "closed_ball",
       "relation": "defined_in_terms_of"
     },
-        {
+    {
       "source": "metric_topology",
       "target": "open_ball",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "metric_topology",
-      "target": "closed_ball",
+      "target": "open_closed_ball",
       "relation": "defined_in_terms_of"
     },
     {
@@ -9640,17 +9645,12 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "open_closed_ball",
-      "target": "metric_space",
-      "relation": "defined_in_terms_of"
-    },
-        {
       "source": "open_ball",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "closed_ball",
+      "source": "open_closed_ball",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
     },
@@ -11691,17 +11691,17 @@
     },
     {
       "source": "bounded",
-      "target": "open_closed_ball",
+      "target": "closed_ball",
       "relation": "related_to"
     },
-     {
+    {
       "source": "bounded",
       "target": "open_ball",
       "relation": "related_to"
     },
-        {
+    {
       "source": "bounded",
-      "target": "closed_ball",
+      "target": "open_closed_ball",
       "relation": "related_to"
     },
     {
@@ -11742,6 +11742,16 @@
     {
       "source": "circle",
       "target": "homeomorphism",
+      "relation": "related_to"
+    },
+    {
+      "source": "closed_ball",
+      "target": "open_closed_ball",
+      "relation": "related_to"
+    },
+    {
+      "source": "closed_ball",
+      "target": "open_closed_set_metric",
       "relation": "related_to"
     },
     {
@@ -12140,17 +12150,7 @@
       "relation": "related_to"
     },
     {
-      "source": "closed_ball",
-      "target": "open_closed_ball",
-      "relation": "related_to"
-    },
-    {
       "source": "open_ball",
-      "target": "open_closed_set_metric",
-      "relation": "related_to"
-    },
-    {
-      "source": "closed_ball",
       "target": "open_closed_set_metric",
       "relation": "related_to"
     },

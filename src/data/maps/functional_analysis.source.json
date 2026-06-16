@@ -1100,6 +1100,39 @@
       "priority": "core"
     },
     {
+      "id": "bounded_linear_functional",
+      "kind": "definition",
+      "domain": "operators",
+      "label": "Bounded Linear Functional",
+      "content": {
+        "statement": "A bounded linear functional is a bounded linear operator from a normed space to the scalar field.",
+        "definition": "A bounded linear functional on a normed space $X$ is a bounded linear operator $f:X\\to \\mathbb{K}$, where $\\mathbb{K}$ is the scalar field (either $\\mathbb{R}$ or $\\mathbb{C}$).",
+        "formal": "Let $(X,\\|\\cdot\\|_X)$ be a normed vector space over $\\mathbb{K}\\in\\{\\mathbb{R},\\mathbb{C}\\}$. A bounded linear functional on $X$ is a linear map $f:X\\to \\mathbb{K}$ such that $$\\exists C\\ge 0\\,\\forall x\\in X:\\ |f(x)|\\le C\\|x\\|_X.$$",
+        "intuition": "A bounded linear functional is a way to assign a scalar value to each vector in a way that is linear and does not grow faster than a constant times the norm of the vector.",
+        "notation": [
+          "$$f\\in X^\\ast=\\mathcal{B}(X,\\mathbb{K})\\iff f\\text{ is linear and }\\exists C\\ge 0\\ \\forall x\\in X:\\ |f(x)|\\le C\\|x\\|_X.$$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "The evaluation functional $\\delta_x:X^\\ast\\to \\mathbb{K}$ defined by $\\delta_x(f)=f(x)$ is a bounded linear functional on $X^\\ast$.",
+          "label": "Evaluation at a fixed vector is a bounded linear functional on the dual space."
+        }
+      ],
+      "assumptions": [
+        "$(X,\\|\\cdot\\|_X)$ is a normed vector space over $\\mathbb{K}\\in\\{\\mathbb{R},\\mathbb{C}\\}$."
+      ],
+      "tags": [
+        "bounded",
+        "continuous",
+        "functional",
+        "linear",
+        "normed_space",
+        "operator"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "bounded_linear_operator",
       "kind": "definition",
       "domain": "operators",
@@ -1150,221 +1183,52 @@
       "proof": {
         "steps": [
           {
-            "role": "setup",
-            "content": "We want to show that $\\mathcal B(X,Y)$ is a Banach space whenever $Y$ is Banach. The proof has two main parts. First, we show that $\\mathcal B(X,Y)$ is a normed linear space under the operator norm. Second, assuming that $Y$ is Banach, we show that every Cauchy sequence in $\\mathcal B(X,Y)$ converges in the operator norm to an element of $\\mathcal B(X,Y)$.",
-            "uses": [
-              "banach_space",
-              "operator_norm",
-              "bounded_linear_operator"
-            ]
+            "role": "theorem",
+            "content": "Let $X$ be a normed space over $\\mathbb K$. Then $X^\\ast = \\mathcal{B} (X,K)$, equipped with the operator norm $\\|f\\|_{\\mathrm{op}}=\\sup_{\\|x\\|_X\\le 1}|f(x)|$, is a Banach space."
           },
           {
-            "role": "setup",
-            "content": "Recall that $$\\mathcal B(X,Y)=\\{A:X\\to Y: A \\text{ is linear and bounded}\\}.$$ The operator norm is defined by $$\\|A\\|_{\\mathrm{op}}=\\sup_{\\|x\\|_X\\le 1}\\|Ax\\|_Y.$$ Since $A$ is bounded, this supremum is finite for every $A\\in\\mathcal B(X,Y)$.",
-            "uses": [
-              "operator_norm",
-              "bounded_linear_operator"
-            ]
+            "role": "definitions needed",
+            "content": "**Definition (Normed space).** A normed space over $\\mathbb{K} \\in \\{\\mathbb{R}, \\mathbb{C}\\}$ is a vector space $X$ with a map $\\|\\cdot\\| : X \\to [0,\\infty)$ satisfying, for all $x,y \\in X$, $\\alpha \\in \\mathbb{K}$: (N1) $\\|x\\| = 0 \\iff x = 0$; (N2) $\\|\\alpha x\\| = |\\alpha|\\,\\|x\\|$; (N3) $\\|x+y\\| \\le \\|x\\| + \\|y\\|$.\n**Definition (Cauchy / complete / Banach).** A sequence $(x_n)$ in a normed space is *Cauchy* if $\\forall \\varepsilon > 0\\ \\exists N \\in \\mathbb{N}\\ \\forall n,m \\ge N : \\|x_n - x_m\\| < \\varepsilon$. The space is *complete* if every Cauchy sequence converges to a limit in the space, and a *Banach space* is a complete normed space.\n**Definition (Bounded linear functional, dual space).** A linear map $f : X \\to \\mathbb{K}$ is *bounded* if $\\|f\\| := \\sup_{\\|x\\| \\le 1} |f(x)| < \\infty$. The *dual space* is $X^* := \\{f : X \\to \\mathbb{K} \\mid f \\text{ linear and bounded}\\} = B(X,\\mathbb{K})$, a vector space under pointwise operations, normed by $\\|\\cdot\\|$ above."
           },
           {
-            "role": "argument",
-            "content": "The collection of all linear operators from $X$ to $Y$ forms a vector space under pointwise operations. That is, if $A,B:X\\to Y$ are linear maps and $\\lambda\\in\\mathbb K$, then $A+B$ and $\\lambda A$ are defined by $$(A+B)x=Ax+Bx$$ and $$(\\lambda A)x=\\lambda Ax.$$ Both $A+B$ and $\\lambda A$ are again linear maps.",
-            "uses": [
-              "linear_operator",
-              "vector_space"
-            ]
+            "role": "\\textbf{Lemma A (Cauchy sequences are bounded)}",
+            "content": "If $(f_n)$ is Cauchy in a normed space, then $\\sup_n \\|f_n\\| < \\infty$.\n\\textit{Proof.} For $x = 0$ both sides vanish by (N1) and linearity. For $x \\ne 0$, set $u = x/\\|x\\|$, so $\\|u\\| = 1$ by (N2). Then $|f(u)| \\le \\sup_{\\|v\\|\\le 1}|f(v)| = \\|f\\|$, and by linearity $|f(x)| = \\|x\\|\\,|f(u)| \\le \\|f\\|\\,\\|x\\|$. $\\;\\square$"
+          },
+          {
+            "role": "\\textbf{Lemma B (Cauchy sequences are bounded)}",
+            "content": "If $(f_n)$ is Cauchy in a normed space, then $\\sup_n \\|f_n\\| < \\infty$.\n\\textit{Proof.} Apply the Cauchy condition with $\\varepsilon = 1$: $\\exists N$ such that $\\|f_n - f_N\\| < 1$ for all $n \\ge N$. By (N3), $\\|f_n\\| \\le \\|f_N\\| + 1$ for $n \\ge N$. Put $M := \\max\\{\\|f_1\\|, \\dots, \\|f_{N-1}\\|, \\|f_N\\| + 1\\}$; a finite set of reals has a maximum, and $\\|f_n\\| \\le M$ for all $n$. $\\;\\square$"
+          },
+          {
+            "role": "\\textbf{Lemma C (Limits preserve non-strict inequalities).}",
+            "content": "If $(a_n) \\to a$ in $\\mathbb{K}$ and $a_n \\le c$ for all $n$ (with $a_n, c \\in \\mathbb{R}$), then $a \\le c$; and if $(z_n)\\to z$ in $\\mathbb{K}$ then $|z_n| \\to |z|$ (continuity of $|\\cdot|$).\n\\textit{Proof.} Standard; the first is the order-closedness of $(-\\infty, c]$, the second is the reverse triangle inequality $\\big||z_n| - |z|\\big| \\le |z_n - z| \\to 0$. $\\;\\square$"
           },
           {
             "role": "argument",
-            "content": "We now show that $\\mathcal B(X,Y)$ is closed under addition and scalar multiplication. Let $A,B\\in\\mathcal B(X,Y)$ and let $\\lambda\\in\\mathbb K$. Since $A$ and $B$ are bounded, $$\\|A\\|_{\\mathrm{op}}<\\infty,\\qquad \\|B\\|_{\\mathrm{op}}<\\infty.$$ For every $x\\in X$ with $\\|x\\|_X\\le 1$, we have $$\\begin{aligned}\\|(A+B)x\\|_Y&=\\|Ax+Bx\\|_Y\\\\ &\\le \\|Ax\\|_Y+\\|Bx\\|_Y.\\end{aligned}$$ Taking the supremum over all $x$ with $\\|x\\|_X\\le 1$, we obtain $$\\|A+B\\|_{\\mathrm{op}}\\le \\|A\\|_{\\mathrm{op}}+\\|B\\|_{\\mathrm{op}}<\\infty.$$ Hence $A+B$ is bounded.",
-            "uses": [
-              "operator_norm",
-              "bounded_linear_operator"
-            ]
+            "content": "Let $(f_n)_{n\\in\\mathbb{N}}$ be an arbitrary Cauchy sequence in $X^\\ast$. We want to construct/define $f \\in X^\\ast$ s.t. $\\|f_n - f\\|_{\\mathrm{op}} \\to 0$ as $n \\to \\infty$."
           },
           {
-            "role": "argument",
-            "content": "Similarly, for every $x\\in X$ with $\\|x\\|_X\\le 1$, $$\\|\\lambda Ax\\|_Y=|\\lambda|\\|Ax\\|_Y.$$ Hence $$\\begin{aligned}\\|\\lambda A\\|_{\\mathrm{op}}&=\\sup_{\\|x\\|_X\\le 1}\\|\\lambda Ax\\|_Y\\\\ &=\\sup_{\\|x\\|_X\\le 1}|\\lambda|\\|Ax\\|_Y\\\\ &=|\\lambda|\\sup_{\\|x\\|_X\\le 1}\\|Ax\\|_Y\\\\ &=|\\lambda|\\|A\\|_{\\mathrm{op}}<\\infty.\\end{aligned}$$ Therefore $\\lambda A$ is bounded. Thus $\\mathcal B(X,Y)$ is a linear subspace of the vector space of all linear maps from $X$ to $Y$.",
-            "uses": [
-              "operator_norm",
-              "bounded_linear_operator"
-            ]
+            "role": "Step 1 — Construction of the pointwise limit $f$",
+            "content": "Fix $x \\in X$. For all $n,m \\in \\mathbb{N}$, by linearity and Lemma A applied to $f_n - f_m \\in X^*$, $$|f_n(x) - f_m(x)| = |(f_n - f_m)(x)| \\le \\|f_n - f_m\\| \\, \\|x\\|. \\tag{1}$$ Let $\\varepsilon > 0$. Since $(f_n)$ is Cauchy in $X^\\ast$, choose $N$ with $\\|f_n - f_m\\| < \\varepsilon/(\\|x\\|+1)$ for $n,m \\ge N$. Then (1) gives $|f_n(x) - f_m(x)| < \\varepsilon$ for $n,m \\ge N$, so $(f_n(x))_n$ is a Cauchy sequence in $\\mathbb{K}$."
           },
           {
-            "role": "argument",
-            "content": "We next verify that $\\|\\cdot\\|_{\\mathrm{op}}$ is a norm on $\\mathcal B(X,Y)$. First, for every $A\\in\\mathcal B(X,Y)$, $$\\|A\\|_{\\mathrm{op}}=\\sup_{\\|x\\|_X\\le 1}\\|Ax\\|_Y\\ge 0,$$ because norms in $Y$ are nonnegative.",
-            "uses": [
-              "operator_norm",
-              "normed_vector_space"
-            ]
+            "role": "Step 2 — $f$ is linear",
+            "content": "Let $x, y \\in X$ and $\\alpha, \\beta \\in \\mathbb{K}$. Using (2), linearity of each $f_n$, and the algebra of limits in $\\mathbb{K}$ (valid since each limit exists by Step 1): $$f(\\alpha x + \\beta y) \\overset{(2)}{=} \\lim_n f_n(\\alpha x + \\beta y) = \\lim_n\\!\\big(\\alpha f_n(x) + \\beta f_n(y)\\big) = \\alpha \\lim_n f_n(x) + \\beta \\lim_n f_n(y) \\overset{(2)}{=} \\alpha f(x) + \\beta f(y).$$ Hence $f$ is linear."
           },
           {
-            "role": "argument",
-            "content": "Now suppose $\\|A\\|_{\\mathrm{op}}=0$. Then for every $x\\in X$ with $\\|x\\|_X\\le 1$, $$\\|Ax\\|_Y=0,$$ and therefore $$Ax=0.$$ Let $x\\in X$ be arbitrary. If $x=0$, then $Ax=0$ by linearity. If $x\\neq 0$, then $$\\left\\|\\frac{x}{\\|x\\|_X}\\right\\|_X=1,$$ so $$A\\left(\\frac{x}{\\|x\\|_X}\\right)=0.$$ By linearity, $$\\frac{1}{\\|x\\|_X}Ax=0,$$ and hence $$Ax=0.$$ Thus $Ax=0$ for every $x\\in X$, so $A=0$. Therefore $$\\|A\\|_{\\mathrm{op}}=0\\quad\\Longleftrightarrow\\quad A=0.$$",
-            "uses": [
-              "operator_norm",
-              "linear_operator"
-            ]
+            "role": "Step 3 — $f$ is bounded, so $f \\in X^*$",
+            "content": "By Lemma B there is $M < \\infty$ with $\\|f_n\\| \\le M$ for all $n$. By Lemma A, for every $x \\in X$ and every $n$, $$|f_n(x)| \\le \\|f_n\\|\\,\\|x\\| \\le M\\|x\\|. \\tag{3}$$ Fix $x$ and let $n \\to \\infty$ in (3). By (2), $f_n(x) \\to f(x)$, so by Lemma C, $|f_n(x)| \\to |f(x)|$; since the bound $M\\|x\\|$ is independent of $n$ and inequalities are preserved in the limit, $$|f(x)| \\le M\\|x\\| \\qquad \\forall x \\in X.$$Thus $f$ is bounded with $\\|f\\| \\le M$. With Step 2, $f \\in B(X,\\mathbb{K}) = X^*$."
           },
           {
-            "role": "argument",
-            "content": "The homogeneity property follows from the earlier calculation: for every $\\lambda\\in\\mathbb K$ and $A\\in\\mathcal B(X,Y)$, $$\\|\\lambda A\\|_{\\mathrm{op}}=|\\lambda|\\|A\\|_{\\mathrm{op}}.$$ The triangle inequality also follows from the earlier estimate: for all $A,B\\in\\mathcal B(X,Y)$, $$\\|A+B\\|_{\\mathrm{op}}\\le \\|A\\|_{\\mathrm{op}}+\\|B\\|_{\\mathrm{op}}.$$ Hence $\\|\\cdot\\|_{\\mathrm{op}}$ is a norm on $\\mathcal B(X,Y)$, and therefore $\\mathcal B(X,Y)$ is a normed linear space.",
-            "uses": [
-              "operator_norm",
-              "normed_vector_space"
-            ]
-          },
-          {
-            "role": "setup",
-            "content": "Now we prove completeness. Assume that $Y$ is a Banach space. Let $\\{A_n\\}$ be a Cauchy sequence in $\\mathcal B(X,Y)$, i.e. $$\\forall \\varepsilon>0,\\ \\exists N\\in\\mathbb N \\text{ such that } \\forall m,n\\ge N,\\ \\|A_n-A_m\\|_{\\mathrm{op}}<\\varepsilon.$$ We want to show that there exists some $A\\in\\mathcal B(X,Y)$ such that $$\\|A_n-A\\|_{\\mathrm{op}}\\to 0.$$",
-            "uses": [
-              "cauchy_sequence",
-              "banach_space",
-              "operator_norm"
-            ]
-          },
-          {
-            "role": "claim",
-            "content": "For each fixed $x\\in X$, the sequence $\\{A_nx\\}$ is a Cauchy sequence in $Y$.",
-            "uses": [
-              "cauchy_sequence"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Fix $x\\in X$ and let $\\varepsilon>0$ be arbitrary. If $x=0$, then for all $m,n$, $$A_nx=A_n0=0,\\qquad A_mx=A_m0=0,$$ so $$\\|A_nx-A_mx\\|_Y=0<\\varepsilon.$$ Hence $\\{A_nx\\}$ is Cauchy in this case.",
-            "uses": [
-              "linear_operator",
-              "cauchy_sequence"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Now suppose $x\\neq 0$. Since $\\{A_n\\}$ is Cauchy in the operator norm, there exists $N\\in\\mathbb N$ such that for all $m,n\\ge N$, $$\\|A_n-A_m\\|_{\\mathrm{op}}<\\frac{\\varepsilon}{\\|x\\|_X}.$$ Therefore, for all $m,n\\ge N$, $$\\begin{aligned}\\|A_nx-A_mx\\|_Y&=\\|(A_n-A_m)x\\|_Y\\\\ &\\le \\|A_n-A_m\\|_{\\mathrm{op}}\\|x\\|_X\\\\ &<\\frac{\\varepsilon}{\\|x\\|_X}\\|x\\|_X\\\\ &=\\varepsilon.\\end{aligned}$$ Thus, in both cases, $\\{A_nx\\}$ is a Cauchy sequence in $Y$.",
-            "uses": [
-              "operator_norm",
-              "cauchy_sequence"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Since $Y$ is Banach, every Cauchy sequence in $Y$ converges in $Y$. Therefore, for each fixed $x\\in X$, the sequence $\\{A_nx\\}$ converges to some element of $Y$. Define $$Ax=\\lim_{n\\to\\infty}A_nx.$$ Since this definition can be made for every $x\\in X$, we obtain a map $$A:X\\to Y.$$ At this point, $A$ is only known to be the pointwise limit of the sequence $\\{A_n\\}$. We still need to prove that $A$ is linear, bounded, and that $A_n\\to A$ in the operator norm.",
-            "uses": [
-              "banach_space",
-              "pointwise_limit"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "We first show that $A$ is linear. Let $x_1,x_2\\in X$. Since each $A_n$ is linear, $$A_n(x_1+x_2)=A_nx_1+A_nx_2.$$ Taking limits in $Y$, and using continuity of addition in a normed space, we obtain $$\\begin{aligned}A(x_1+x_2)&=\\lim_{n\\to\\infty}A_n(x_1+x_2)\\\\ &=\\lim_{n\\to\\infty}(A_nx_1+A_nx_2)\\\\ &=\\lim_{n\\to\\infty}A_nx_1+\\lim_{n\\to\\infty}A_nx_2\\\\ &=Ax_1+Ax_2.\\end{aligned}$$",
-            "uses": [
-              "linear_operator",
-              "pointwise_limit",
-              "continuity"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Now let $\\lambda\\in\\mathbb K$. Since each $A_n$ is linear, $$A_n(\\lambda x_1)=\\lambda A_nx_1.$$ Taking limits in $Y$, and using continuity of scalar multiplication in a normed space, we get $$\\begin{aligned}A(\\lambda x_1)&=\\lim_{n\\to\\infty}A_n(\\lambda x_1)\\\\ &=\\lim_{n\\to\\infty}\\lambda A_nx_1\\\\ &=\\lambda\\lim_{n\\to\\infty}A_nx_1\\\\ &=\\lambda Ax_1.\\end{aligned}$$ Therefore $A$ is linear.",
-            "uses": [
-              "linear_operator",
-              "pointwise_limit",
-              "continuity"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Next, we show that $A$ is bounded. First recall that every Cauchy sequence in a normed space is bounded. Since $\\{A_n\\}$ is Cauchy in $\\mathcal B(X,Y)$, there exists a constant $C>0$ such that $$\\|A_n\\|_{\\mathrm{op}}\\le C$$ for every $n\\in\\mathbb N$.",
-            "uses": [
-              "cauchy_sequence",
-              "boundedness",
-              "operator_norm"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "For completeness, we justify this boundedness. Since $\\{A_n\\}$ is Cauchy, there exists $N\\in\\mathbb N$ such that for every $n\\ge N$, $$\\|A_n-A_N\\|_{\\mathrm{op}}<1.$$ Hence, for $n\\ge N$, $$\\|A_n\\|_{\\mathrm{op}}\\le \\|A_N\\|_{\\mathrm{op}}+\\|A_n-A_N\\|_{\\mathrm{op}}<\\|A_N\\|_{\\mathrm{op}}+1.$$ The finitely many terms $A_1,A_2,\\dots,A_{N-1}$ also have finite operator norm. Therefore, if we define $$C=\\max\\{\\|A_1\\|_{\\mathrm{op}},\\dots,\\|A_{N-1}\\|_{\\mathrm{op}},\\|A_N\\|_{\\mathrm{op}}+1\\},$$ then $$\\|A_n\\|_{\\mathrm{op}}\\le C$$ for all $n\\in\\mathbb N$.",
-            "uses": [
-              "cauchy_sequence",
-              "boundedness",
-              "operator_norm"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Let $x\\in X$ be arbitrary. Since $$Ax=\\lim_{n\\to\\infty}A_nx,$$ and since the norm is continuous, we have $$\\|Ax\\|_Y=\\left\\|\\lim_{n\\to\\infty}A_nx\\right\\|_Y=\\lim_{n\\to\\infty}\\|A_nx\\|_Y.$$ For each $n$, boundedness of $A_n$ gives $$\\|A_nx\\|_Y\\le \\|A_n\\|_{\\mathrm{op}}\\|x\\|_X.$$ Using the uniform bound $\\|A_n\\|_{\\mathrm{op}}\\le C$, we get $$\\|A_nx\\|_Y\\le C\\|x\\|_X$$ for every $n$.",
-            "uses": [
-              "operator_norm",
-              "boundedness",
-              "continuity"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Passing to the limit as $n\\to\\infty$, we obtain $$\\|Ax\\|_Y=\\lim_{n\\to\\infty}\\|A_nx\\|_Y\\le C\\|x\\|_X.$$ Thus, for every $x\\in X$, $$\\|Ax\\|_Y\\le C\\|x\\|_X.$$ This proves that $A$ is bounded.",
-            "uses": [
-              "boundedness",
-              "operator_norm",
-              "pointwise_limit"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Equivalently, taking the supremum over all $x\\in X$ with $\\|x\\|_X\\le 1$, we have $$\\begin{aligned}\\|A\\|_{\\mathrm{op}}&=\\sup_{\\|x\\|_X\\le 1}\\|Ax\\|_Y\\\\ &\\le \\sup_{\\|x\\|_X\\le 1}C\\|x\\|_X\\\\ &\\le C.\\end{aligned}$$ Therefore $$\\|A\\|_{\\mathrm{op}}<\\infty,$$ so $A\\in\\mathcal B(X,Y)$.",
-            "uses": [
-              "operator_norm",
-              "bounded_linear_operator"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "It remains to show that $A_n\\to A$ in the operator norm. Let $\\varepsilon>0$ be arbitrary. Since $\\{A_n\\}$ is Cauchy in $\\mathcal B(X,Y)$, there exists $N\\in\\mathbb N$ such that for all $m,n\\ge N$, $$\\|A_n-A_m\\|_{\\mathrm{op}}<\\varepsilon.$$ Fix $n\\ge N$. Then for every $m\\ge N$ and every $x\\in X$, $$\\begin{aligned}\\|A_nx-A_mx\\|_Y&=\\|(A_n-A_m)x\\|_Y\\\\ &\\le \\|A_n-A_m\\|_{\\mathrm{op}}\\|x\\|_X\\\\ &<\\varepsilon\\|x\\|_X.\\end{aligned}$$",
-            "uses": [
-              "operator_norm",
-              "cauchy_sequence"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Now let $m\\to\\infty$. Since $A_mx\\to Ax$ in $Y$, we have $$A_nx-A_mx\\to A_nx-Ax.$$ By continuity of the norm, $$\\|A_nx-A_mx\\|_Y\\to \\|A_nx-Ax\\|_Y.$$ Therefore, passing to the limit in the inequality $$\\|A_nx-A_mx\\|_Y\\le \\varepsilon\\|x\\|_X,$$ we obtain $$\\|A_nx-Ax\\|_Y\\le \\varepsilon\\|x\\|_X.$$ This holds for every $x\\in X$ and every $n\\ge N$.",
-            "uses": [
-              "pointwise_limit",
-              "continuity",
-              "operator_norm"
-            ]
+            "role": "Step 4 — $f_n \\to f$ in the operator norm",
+            "content": "Let $\\varepsilon > 0$. By Cauchy, choose $N$ with $\\|f_n - f_m\\| \\le \\varepsilon$ for all $n,m \\ge N$. By Lemma A, for every $x$ with $\\|x\\| \\le 1$ and all $n,m \\ge N$,$$|f_n(x) - f_m(x)| \\le \\|f_n - f_m\\|\\,\\|x\\| \\le \\varepsilon. \\tag{4}$$Now **fix $n \\ge N$ and $x$, and let $m \\to \\infty$** in (4). By (2), $f_m(x) \\to f(x)$, and by Lemma C the modulus is continuous, so the left side of (4) tends to $|f_n(x) - f(x)|$; the right side $\\varepsilon$ is independent of $m$. By Lemma C (preservation of $\\le$),$$|f_n(x) - f(x)| \\le \\varepsilon \\qquad \\forall x \\text{ with } \\|x\\|\\le 1,\\ \\forall n \\ge N. \\tag{5}$$Taking the supremum over $\\{x : \\|x\\| \\le 1\\}$ in (5):$$\\|f_n - f\\| = \\sup_{\\|x\\|\\le 1} |f_n(x) - f(x)| \\le \\varepsilon \\qquad \\forall n \\ge N.$$Since $\\varepsilon > 0$ was arbitrary, $\\|f_n - f\\| \\to 0$."
           },
           {
             "role": "conclusion",
-            "content": "Taking the supremum over all $x\\in X$ with $\\|x\\|_X\\le 1$, we get $$\\begin{aligned}\\|A_n-A\\|_{\\mathrm{op}}&=\\sup_{\\|x\\|_X\\le 1}\\|(A_n-A)x\\|_Y\\\\ &=\\sup_{\\|x\\|_X\\le 1}\\|A_nx-Ax\\|_Y\\\\ &\\le \\sup_{\\|x\\|_X\\le 1}\\varepsilon\\|x\\|_X\\\\ &\\le \\varepsilon.\\end{aligned}$$ Thus, for every $\\varepsilon>0$, there exists $N\\in\\mathbb N$ such that for every $n\\ge N$, $$\\|A_n-A\\|_{\\mathrm{op}}\\le \\varepsilon.$$ Hence $$A_n\\to A$$ in the operator norm.",
-            "uses": [
-              "convergence",
-              "operator_norm"
-            ]
-          },
-          {
-            "role": "conclusion",
-            "content": "We have shown that every Cauchy sequence $\\{A_n\\}$ in $\\mathcal B(X,Y)$ converges in the operator norm to some $A\\in\\mathcal B(X,Y)$. Therefore $\\mathcal B(X,Y)$ is complete. Hence, if $Y$ is Banach, then $\\mathcal B(X,Y)$ is Banach.",
-            "uses": [
-              "cauchy_sequence",
-              "convergence",
-              "banach_space"
-            ]
+            "content": "The arbitrary Cauchy sequence $(f_n)$ converges in $X^*$ to $f \\in X^*$. Hence every Cauchy sequence in $X^*$ converges, so $X^*$ is complete, i.e. a Banach space. $\\;\\blacksquare$}"
           },
           {
             "role": "remark",
-            "content": "Notice that no completeness assumption on $X$ was used. Completeness was only needed in the codomain $Y$, because for each fixed $x\\in X$, the sequence $\\{A_nx\\}$ must converge inside $Y$. Thus completeness of $\\mathcal B(X,Y)$ requires completeness of $Y$, not of $X$.",
-            "uses": [
-              "banach_space",
-              "pointwise_limit"
-            ]
-          },
-          {
-            "role": "remark",
-            "content": "As a special case, take $Y=\\mathbb K$. Then $$X^\\ast:=\\mathcal B(X,\\mathbb K)$$ is the dual space of $X$. Since $\\mathbb K$ is Banach, the result above implies that $$X^\\ast$$ is Banach. Therefore the dual of every normed linear space is Banach, even if $X$ itself is not Banach.",
-            "uses": [
-              "dual_space",
-              "banach_space"
-            ]
+            "content": "**Remark (the essential point).** Completeness of $X$ was never invoked — only completeness of the codomain $\\mathbb{K}$ (Step 1). The identical argument, replacing $|\\cdot|$ by $\\|\\cdot\\|_Y$ throughout, proves: *if $Y$ is Banach then $B(X,Y)$ is Banach for any normed $X$.* The dual space is the case $Y = \\mathbb{K}$."
           }
         ]
       },

@@ -69,6 +69,9 @@ export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<F
   spectral_theorem: lazy(() => import("./HilbertSpectralFigure")),
   compact_self_adjoint_operator_assumption: lazy(() => import("./HilbertSpectralFigure")),
 
+  // Cauchy sequences and convergence modes.
+  cauchy_sequence: lazy(() => import("./CauchySequenceFigure")),
+
   // Convergence modes: uniform vs pointwise vs mean-square.
   convergence: lazy(() => import("./ConvergenceModesFigure")),
   pointwise_limit: lazy(() => import("./ConvergenceModesFigure")),
