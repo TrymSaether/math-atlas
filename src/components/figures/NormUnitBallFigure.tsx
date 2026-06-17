@@ -146,7 +146,7 @@ function NormModeSelect({
                   onChange(mode.kind);
                 }
               }}
-              className="flex min-h-8 cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-ui-meta transition-colors focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)]"
+              className="flex min-h-8 cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-ui-meta transition-colors focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
               style={{
                 background: active ? "var(--accent)" : "transparent",
                 color: active ? "var(--fg-on-color)" : "var(--fg-2)",
@@ -203,13 +203,10 @@ function ReadoutPanel({
 
   return (
     <aside
-      className="flex min-w-[13rem] flex-1 flex-col rounded-md border p-3"
+      className="flex min-w-52 flex-1 flex-col rounded-md border p-3"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
       aria-live="polite"
     >
-      <div className="text-ui-body" style={{ color: "var(--fg-1)" }}>
-        Norm Readout
-      </div>
       <div className="mt-2 text-ui-meta" style={{ color: "var(--fg-2)" }}>
         <MathText text={`${MODE_NAMES[mode]} $\\ell^{${subscript}}$`} />
       </div>
