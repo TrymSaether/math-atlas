@@ -26,6 +26,8 @@ import { THEMES, schemeFor, siblingOf } from "../lib/themes";
 import { LogoMark } from "./Logo";
 import { Pill, DockButton } from "./chrome/Pill";
 import { Button } from "./chrome/Button";
+import { UserMenu } from "./auth/UserMenu";
+import { authEnabled } from "../lib/authClient";
 
 interface PopoverPosition {
   top: number;
@@ -67,6 +69,12 @@ export function TopBar() {
             <SchemeToggle />
             <DisplayButton />
           </Pill>
+          {/* Account — only when an API is configured (dev, or prod with VITE_API_URL) */}
+          {authEnabled && (
+            <Pill variant="soft" className="top-tools">
+              <UserMenu />
+            </Pill>
+          )}
         </div>
       </div>
     </header>

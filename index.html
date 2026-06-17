@@ -34,10 +34,7 @@
               : prefersDark
                 ? "chalkboard"
                 : "paper";
-        document.documentElement.classList.toggle(
-          "dark",
-          schemes[theme] === "dark",
-        );
+        document.documentElement.classList.toggle("dark", schemes[theme] === "dark");
         document.documentElement.dataset.theme = theme;
       })();
     </script>

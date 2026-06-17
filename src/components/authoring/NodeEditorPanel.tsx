@@ -294,8 +294,7 @@ function EdgeRow({
         <span className="min-w-0 flex-1 truncate" style={{ color: "var(--fg-2)" }}>
           {role === "source" ? (
             <>
-              this <em style={{ color: "var(--fg-3)" }}>{reads}</em>{" "}
-              <MathText text={otherLabel} />
+              this <em style={{ color: "var(--fg-3)" }}>{reads}</em> <MathText text={otherLabel} />
             </>
           ) : (
             <>
@@ -576,7 +575,11 @@ function UsesPicker({
             <span
               key={id}
               className="inline-flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-ui-xs"
-              style={{ borderColor: "var(--border)", background: "var(--surface-3)", color: "var(--fg-2)" }}
+              style={{
+                borderColor: "var(--border)",
+                background: "var(--surface-3)",
+                color: "var(--fg-2)",
+              }}
             >
               <span
                 className="h-1.5 w-1.5 shrink-0 rounded-full"
@@ -987,10 +990,7 @@ export function NodeEditorPanel({
           mono
           hint="figure id or image src"
         />
-        <ExamplesEditor
-          examples={draft.examples}
-          onChange={(examples) => set({ examples })}
-        />
+        <ExamplesEditor examples={draft.examples} onChange={(examples) => set({ examples })} />
         <ProofStepsEditor
           steps={draft.proof}
           options={map.data.nodes
@@ -1027,7 +1027,9 @@ export function NodeEditorPanel({
           type="button"
           onClick={save}
           className="authoring-action authoring-action-primary ml-auto inline-flex items-center gap-1 rounded-sm px-3 py-1.5 text-ui-xs"
-          style={justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined}
+          style={
+            justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined
+          }
         >
           {justSaved ? (
             <>

@@ -11,6 +11,9 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: { "@": path.resolve(__dirname, "./src") },
+    // better-auth/react must share the app's single React instance, otherwise
+    // its hooks trigger "Invalid hook call" from a duplicate copy.
+    dedupe: ["react", "react-dom"],
   },
   build: {
     rollupOptions: {
@@ -23,5 +26,12 @@ export default defineConfig({
     host: true,
     port: process.env.PORT ? Number(process.env.PORT) : 5173,
     strictPort: !!process.env.PORT,
+    // Forward API + auth calls to the Hono server so the SPA talks same-origin.
+    proxy: {
+      "/api": {
+        target: process.env.API_URL ?? "http://localhost:8787",
+        changeOrigin: true,
+      },
+    },
   },
 });

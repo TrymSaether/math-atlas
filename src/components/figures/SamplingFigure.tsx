@@ -1,4 +1,3 @@
-
 import { aliasFrequency } from "../../lib/figures/fourierMath";
 import { MathText } from "../../lib/katex";
 import {
