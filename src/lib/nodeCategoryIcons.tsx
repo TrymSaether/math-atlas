@@ -9,6 +9,7 @@ import {
   CompassToolIcon,
   CubeIcon,
   PencilLineIcon,
+  ProhibitIcon,
   ScrollIcon,
   FlaskIcon,
   TagIcon,
@@ -27,7 +28,19 @@ export const CATEGORY_ICON: Record<NodeCategory, Icon> = {
   exercise: PencilLineIcon,
 };
 
-/** Icon for a raw concept kind, via its category. */
+/**
+ * Per-kind glyph overrides — used when the precise kind reads as something
+ * distinct from (or opposite to) its category. Counterexamples and non-examples
+ * collapse into the `example` category, but they carry the opposite signal
+ * ("where the property fails"), so they get a prohibition glyph instead of the
+ * example flask.
+ */
+export const KIND_ICON_OVERRIDE: Record<string, Icon> = {
+  counterexample: ProhibitIcon,
+  non_example: ProhibitIcon,
+};
+
+/** Icon for a raw concept kind: a per-kind override if any, else its category icon. */
 export function kindIcon(kind: string): Icon {
-  return CATEGORY_ICON[categoryOf(kind)];
+  return KIND_ICON_OVERRIDE[kind] ?? CATEGORY_ICON[categoryOf(kind)];
 }

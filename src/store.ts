@@ -13,6 +13,7 @@ import {
   addEdge as addSourceEdge,
   applyDraft,
   removeEdge as removeSourceEdge,
+  updateEdge as updateSourceEdge,
   slugify,
   uniqueSlug,
   type NodeDraft,
@@ -181,12 +182,18 @@ interface State {
   commitNode: (draft: NodeDraft) => EditResult;
   /** Delete a node and all edges (and proof refs) touching it. */
   deleteNode: (id: string) => EditResult;
-  /** Add a forward-relation edge. */
+  /** Add a forward-relation edge, with optional author-only notes. */
   addNodeEdge: (edge: {
     source: string;
     target: string;
     relation: AuthorableRelation;
+    notes?: string;
   }) => EditResult;
+  /** Edit an existing edge's relation and/or notes, keyed by its semantic key. */
+  updateNodeEdge: (
+    key: string,
+    patch: { relation?: AuthorableRelation; notes?: string },
+  ) => EditResult;
   /** Remove an edge by its semantic key (see authoring.edgeKey). */
   removeNodeEdge: (key: string) => EditResult;
   /** Current working source for the active map (for export), or null. */
@@ -729,6 +736,12 @@ export const useStore = create<State>((set, get) => ({
     const base = workingSource(get());
     if (!base) return { ok: false, error: "Map not loaded." };
     return commitCandidate(get, set, addSourceEdge(base, edge));
+  },
+
+  updateNodeEdge: (key, patch) => {
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+    return commitCandidate(get, set, updateSourceEdge(base, key, patch));
   },
 
   removeNodeEdge: (key) => {

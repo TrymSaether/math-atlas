@@ -11,8 +11,11 @@ import {
   TrashIcon,
   PlusIcon,
   ArrowsLeftRightIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
   CaretDownIcon,
   CheckIcon,
+  PencilSimpleIcon,
 } from "@phosphor-icons/react";
 
 import { useStore } from "../../store";
@@ -28,9 +31,13 @@ import {
   conceptToDraft,
   edgeKey,
   emptyDraft,
+  emptyExample,
+  emptyProofStep,
   incidentEdges,
+  type ExampleDraft,
   type NodeDraft,
   type Priority,
+  type ProofStepDraft,
 } from "../../data/authoring";
 
 const PRIORITIES: Priority[] = ["core", "standard", "peripheral"];
@@ -246,15 +253,136 @@ function NodePicker({
   );
 }
 
+/** One incident link row: prose reading + author notes, with inline edit/remove. */
+function EdgeRow({
+  edge,
+  role,
+  otherLabel,
+  onUpdate,
+  onRemove,
+}: {
+  edge: { source: string; target: string; relation: AuthorableRelation; notes?: string };
+  role: "source" | "target";
+  otherLabel: string;
+  onUpdate: (patch: { relation?: AuthorableRelation; notes?: string }) => string | null;
+  onRemove: () => void;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [relation, setRelation] = useState<AuthorableRelation>(edge.relation);
+  const [notes, setNotes] = useState(edge.notes ?? "");
+  const [error, setError] = useState<string | null>(null);
+  const reads = RELATIONS[edge.relation].reads;
+
+  const open = () => {
+    setRelation(edge.relation);
+    setNotes(edge.notes ?? "");
+    setError(null);
+    setEditing(true);
+  };
+  const save = () => {
+    const err = onUpdate({ relation, notes });
+    if (err) setError(err);
+    else setEditing(false);
+  };
+
+  return (
+    <li
+      className="rounded-md border px-2.5 py-1.5 text-ui-sm"
+      style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+    >
+      <div className="flex items-center gap-2">
+        <span className="min-w-0 flex-1 truncate" style={{ color: "var(--fg-2)" }}>
+          {role === "source" ? (
+            <>
+              this <em style={{ color: "var(--fg-3)" }}>{reads}</em>{" "}
+              <MathText text={otherLabel} />
+            </>
+          ) : (
+            <>
+              <MathText text={otherLabel} /> <em style={{ color: "var(--fg-3)" }}>{reads}</em> this
+            </>
+          )}
+        </span>
+        <button
+          type="button"
+          onClick={() => (editing ? setEditing(false) : open())}
+          aria-label={editing ? "Close edit" : "Edit link"}
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
+          style={{ color: editing ? "var(--accent)" : "var(--fg-3)" }}
+        >
+          <PencilSimpleIcon className="h-3.5 w-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={onRemove}
+          aria-label="Remove link"
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
+          style={{ color: "var(--fg-3)" }}
+        >
+          <TrashIcon className="h-3.5 w-3.5" />
+        </button>
+      </div>
+
+      {!editing && edge.notes && (
+        <p className="mt-1 text-ui-xs italic" style={{ color: "var(--fg-3)" }}>
+          {edge.notes}
+        </p>
+      )}
+
+      {editing && (
+        <div className="mt-2 space-y-2">
+          <SelectField
+            label=""
+            value={relation}
+            onChange={(next) => setRelation(next as AuthorableRelation)}
+            compact
+            options={AUTHORABLE_RELATIONS.map((r) => ({ value: r, label: RELATIONS[r].reads }))}
+          />
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Author notes (optional) — rationale, not surfaced in the public map"
+            rows={2}
+            className="authoring-control"
+          />
+          {error && (
+            <p className="text-ui-xs" style={{ color: "var(--danger)" }}>
+              {error}
+            </p>
+          )}
+          <div className="flex justify-end gap-1.5">
+            <button
+              type="button"
+              onClick={() => setEditing(false)}
+              className="authoring-action rounded-sm px-2 py-1 text-ui-xs text-fg-3"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={save}
+              className="authoring-action authoring-action-primary rounded-sm px-2.5 py-1 text-ui-xs"
+            >
+              <CheckIcon className="h-3.5 w-3.5" /> Save
+            </button>
+          </div>
+        </div>
+      )}
+    </li>
+  );
+}
+
 function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
   const mapId = useStore((s) => s.mapId);
   const editSource = useStore((s) => s.editSources[mapId]);
   const source = useMemo(() => editSource ?? graphDataToSource(map.data), [editSource, map]);
   const addNodeEdge = useStore((s) => s.addNodeEdge);
+  const updateNodeEdge = useStore((s) => s.updateNodeEdge);
   const removeNodeEdge = useStore((s) => s.removeNodeEdge);
 
   const [relation, setRelation] = useState<AuthorableRelation>("uses");
   const [other, setOther] = useState("");
+  const [notes, setNotes] = useState("");
   const [outgoing, setOutgoing] = useState(true); // this → other, vs other → this
   const [error, setError] = useState<string | null>(null);
 
@@ -270,13 +398,14 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
       return;
     }
     const edge = outgoing
-      ? { source: nodeId, target: other, relation }
-      : { source: other, target: nodeId, relation };
+      ? { source: nodeId, target: other, relation, notes }
+      : { source: other, target: nodeId, relation, notes };
     const result = addNodeEdge(edge);
     if (!result.ok) setError(result.error ?? "Could not add link.");
     else {
       setError(null);
       setOther("");
+      setNotes("");
     }
   };
 
@@ -286,40 +415,16 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
 
       {incident.length > 0 && (
         <ul className="space-y-1">
-          {incident.map(({ edge, role }) => {
-            const otherId = role === "source" ? edge.target : edge.source;
-            const reads = RELATIONS[edge.relation].reads;
-            return (
-              <li
-                key={edgeKey(edge)}
-                className="flex items-center gap-2 rounded-md border px-2.5 py-1.5 text-ui-sm"
-                style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
-              >
-                <span className="min-w-0 flex-1 truncate" style={{ color: "var(--fg-2)" }}>
-                  {role === "source" ? (
-                    <>
-                      this <em style={{ color: "var(--fg-3)" }}>{reads}</em>{" "}
-                      <MathText text={nodeLabel(otherId)} />
-                    </>
-                  ) : (
-                    <>
-                      <MathText text={nodeLabel(otherId)} />{" "}
-                      <em style={{ color: "var(--fg-3)" }}>{reads}</em> this
-                    </>
-                  )}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => removeNodeEdge(edgeKey(edge))}
-                  aria-label="Remove link"
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-                  style={{ color: "var(--fg-3)" }}
-                >
-                  <TrashIcon className="h-3.5 w-3.5" />
-                </button>
-              </li>
-            );
-          })}
+          {incident.map(({ edge, role }) => (
+            <EdgeRow
+              key={edgeKey(edge)}
+              edge={edge}
+              role={role}
+              otherLabel={nodeLabel(role === "source" ? edge.target : edge.source)}
+              onUpdate={(patch) => updateNodeEdge(edgeKey(edge), patch).error ?? null}
+              onRemove={() => removeNodeEdge(edgeKey(edge))}
+            />
+          ))}
         </ul>
       )}
 
@@ -356,11 +461,260 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
             <PlusIcon className="h-3.5 w-3.5" /> Link
           </button>
         </div>
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Author notes (optional)"
+          rows={1}
+          className="authoring-control col-span-2"
+        />
         {error && (
           <p className="col-span-2 text-ui-xs" style={{ color: "var(--danger)" }}>
             {error}
           </p>
         )}
+      </div>
+    </div>
+  );
+}
+
+/** Editor for the worked-examples array (content body + optional label & role). */
+function ExamplesEditor({
+  examples,
+  onChange,
+}: {
+  examples: ExampleDraft[];
+  onChange: (next: ExampleDraft[]) => void;
+}) {
+  const patch = (i: number, p: Partial<ExampleDraft>) =>
+    onChange(examples.map((e, idx) => (idx === i ? { ...e, ...p } : e)));
+  const remove = (i: number) => onChange(examples.filter((_, idx) => idx !== i));
+  const add = () => onChange([...examples, emptyExample()]);
+
+  return (
+    <div className="authoring-field">
+      <FieldLabel label="Examples" hint="worked instances" />
+      <div className="space-y-2">
+        {examples.map((ex, i) => (
+          <div
+            key={i}
+            className="space-y-1.5 rounded-md border p-2"
+            style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+          >
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={ex.label}
+                onChange={(e) => patch(i, { label: e.target.value })}
+                placeholder="Label (optional)"
+                className="authoring-control flex-1"
+              />
+              <input
+                type="text"
+                value={ex.role}
+                onChange={(e) => patch(i, { role: e.target.value })}
+                placeholder="Role (optional)"
+                className="authoring-control flex-1"
+              />
+              <button
+                type="button"
+                onClick={() => remove(i)}
+                aria-label="Remove example"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
+                style={{ color: "var(--fg-3)" }}
+              >
+                <TrashIcon className="h-3.5 w-3.5" />
+              </button>
+            </div>
+            <textarea
+              value={ex.content}
+              onChange={(e) => patch(i, { content: e.target.value })}
+              placeholder="Example content (LaTeX)"
+              rows={2}
+              className="authoring-control authoring-control-mono"
+            />
+            {ex.content.trim() && (
+              <span className="block text-ui-xs text-fg-2">
+                <MathText text={ex.content} />
+              </span>
+            )}
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={add}
+          className="authoring-action rounded-sm px-2.5 py-1.5 text-ui-xs"
+          style={{ color: "var(--fg-2)" }}
+        >
+          <PlusIcon className="h-3.5 w-3.5" /> Add example
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** Multi-select of concept references (a proof step's `uses`): chips + add-picker. */
+function UsesPicker({
+  value,
+  options,
+  map,
+  onChange,
+}: {
+  value: string[];
+  options: { id: string; label: string }[];
+  map: LoadedMap;
+  onChange: (next: string[]) => void;
+}) {
+  const remaining = options.filter((o) => !value.includes(o.id));
+  const label = (id: string) => map.nodeById.get(id)?.label ?? id;
+  return (
+    <div className="space-y-1.5">
+      <FieldLabel label="Uses" hint="concepts cited — become proof-dependency edges" />
+      {value.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {value.map((id) => (
+            <span
+              key={id}
+              className="inline-flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-ui-xs"
+              style={{ borderColor: "var(--border)", background: "var(--surface-3)", color: "var(--fg-2)" }}
+            >
+              <span
+                className="h-1.5 w-1.5 shrink-0 rounded-full"
+                style={{ background: getDomainTone(id).color }}
+                aria-hidden
+              />
+              <span className="max-w-40 truncate">
+                <MathText text={label(id)} />
+              </span>
+              <button
+                type="button"
+                onClick={() => onChange(value.filter((v) => v !== id))}
+                aria-label="Remove reference"
+                className="shrink-0 hover:text-(--danger)"
+                style={{ color: "var(--fg-3)" }}
+              >
+                <XIcon className="h-3 w-3" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+      <NodePicker
+        options={remaining}
+        value=""
+        onChange={(id) => id && onChange([...value, id])}
+        placeholder="Add a cited concept…"
+      />
+    </div>
+  );
+}
+
+/** Editor for the ordered proof / solution steps (role + LaTeX content + uses refs). */
+function ProofStepsEditor({
+  steps,
+  options,
+  map,
+  onChange,
+}: {
+  steps: ProofStepDraft[];
+  options: { id: string; label: string }[];
+  map: LoadedMap;
+  onChange: (next: ProofStepDraft[]) => void;
+}) {
+  const patch = (i: number, p: Partial<ProofStepDraft>) =>
+    onChange(steps.map((s, idx) => (idx === i ? { ...s, ...p } : s)));
+  const remove = (i: number) => onChange(steps.filter((_, idx) => idx !== i));
+  const add = () => onChange([...steps, emptyProofStep()]);
+  const move = (i: number, delta: number) => {
+    const j = i + delta;
+    if (j < 0 || j >= steps.length) return;
+    const next = [...steps];
+    [next[i], next[j]] = [next[j], next[i]];
+    onChange(next);
+  };
+
+  return (
+    <div className="authoring-field">
+      <FieldLabel label="Proof / solution" hint="ordered steps" />
+      <div className="space-y-2">
+        {steps.map((step, i) => (
+          <div
+            key={i}
+            className="space-y-1.5 rounded-md border p-2"
+            style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+          >
+            <div className="flex items-center gap-2">
+              <span
+                className="shrink-0 font-mono text-ui-2xs tabular-nums"
+                style={{ color: "var(--fg-3)" }}
+              >
+                {i + 1}
+              </span>
+              <input
+                type="text"
+                value={step.role}
+                onChange={(e) => patch(i, { role: e.target.value })}
+                placeholder="Role (e.g. Setup, Claim, Conclude)"
+                className="authoring-control flex-1"
+              />
+              <button
+                type="button"
+                onClick={() => move(i, -1)}
+                disabled={i === 0}
+                aria-label="Move step up"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3) disabled:opacity-30"
+                style={{ color: "var(--fg-3)" }}
+              >
+                <ArrowUpIcon className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => move(i, 1)}
+                disabled={i === steps.length - 1}
+                aria-label="Move step down"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3) disabled:opacity-30"
+                style={{ color: "var(--fg-3)" }}
+              >
+                <ArrowDownIcon className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => remove(i)}
+                aria-label="Remove step"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
+                style={{ color: "var(--fg-3)" }}
+              >
+                <TrashIcon className="h-3.5 w-3.5" />
+              </button>
+            </div>
+            <textarea
+              value={step.content}
+              onChange={(e) => patch(i, { content: e.target.value })}
+              placeholder="Step content (LaTeX)"
+              rows={2}
+              className="authoring-control authoring-control-mono"
+            />
+            {step.content.trim() && (
+              <span className="block text-ui-xs text-fg-2">
+                <MathText text={step.content} />
+              </span>
+            )}
+            <UsesPicker
+              value={step.uses}
+              options={options}
+              map={map}
+              onChange={(uses) => patch(i, { uses })}
+            />
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={add}
+          className="authoring-action rounded-sm px-2.5 py-1.5 text-ui-xs"
+          style={{ color: "var(--fg-2)" }}
+        >
+          <PlusIcon className="h-3.5 w-3.5" /> Add step
+        </button>
       </div>
     </div>
   );
@@ -394,6 +748,17 @@ export function NodeEditorPanel({
     concept ? conceptToDraft(concept) : emptyDraft(map.data.domains[0]?.id ?? ""),
   );
   const [confirmDelete, setConfirmDelete] = useState(false);
+  // Transient "Saved" confirmation. A successful edit reseeds the editor in place
+  // (it stays open for continued editing), so without this pulse a save of an
+  // unchanged-looking concept reads as a dead button.
+  const [justSaved, setJustSaved] = useState(false);
+  const savedTimer = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (savedTimer.current) window.clearTimeout(savedTimer.current);
+    },
+    [],
+  );
 
   // Reseed when the editor target changes (selecting a different node, or
   // switching into create mode). Compared during render rather than in an effect.
@@ -401,12 +766,22 @@ export function NodeEditorPanel({
   if (editingId !== prevEditingId) {
     setPrevEditingId(editingId);
     setConfirmDelete(false);
+    setJustSaved(false);
     if (editingId !== null && concept) setDraft(conceptToDraft(concept));
     else if (editingId === null) setDraft(emptyDraft(map.data.domains[0]?.id ?? ""));
   }
 
   const set = (patch: Partial<NodeDraft>) => setDraft((d) => ({ ...d, ...patch }));
-  const save = () => commitNode(draft);
+  const save = () => {
+    const result = commitNode(draft);
+    // Create flips the editor over to the freshly created node (a new instance),
+    // so the pulse is only meaningful for in-place edits.
+    if (result.ok && editingId !== null) {
+      setJustSaved(true);
+      if (savedTimer.current) window.clearTimeout(savedTimer.current);
+      savedTimer.current = window.setTimeout(() => setJustSaved(false), 1800);
+    }
+  };
 
   const tone = getDomainTone(draft.domain || (editingId ?? ""));
   const glyphId = getDomainGlyphId({ mapId, domainId: draft.domain });
@@ -606,6 +981,25 @@ export function NodeEditorPanel({
           hint="one per line"
         />
         <Field
+          label="Diagram"
+          value={draft.diagram}
+          onChange={(v) => set({ diagram: v })}
+          mono
+          hint="figure id or image src"
+        />
+        <ExamplesEditor
+          examples={draft.examples}
+          onChange={(examples) => set({ examples })}
+        />
+        <ProofStepsEditor
+          steps={draft.proof}
+          options={map.data.nodes
+            .filter((n) => n.id !== editingId)
+            .map((n) => ({ id: n.id, label: n.label }))}
+          map={map}
+          onChange={(proof) => set({ proof })}
+        />
+        <Field
           label="Tags"
           value={draft.tags}
           onChange={(v) => set({ tags: v })}
@@ -632,9 +1026,18 @@ export function NodeEditorPanel({
         <button
           type="button"
           onClick={save}
-          className="authoring-action authoring-action-primary ml-auto rounded-sm px-3 py-1.5 text-ui-xs"
+          className="authoring-action authoring-action-primary ml-auto inline-flex items-center gap-1 rounded-sm px-3 py-1.5 text-ui-xs"
+          style={justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined}
         >
-          {editingId === null ? "Create" : "Save"}
+          {justSaved ? (
+            <>
+              <CheckIcon className="h-3.5 w-3.5" weight="bold" /> Saved
+            </>
+          ) : editingId === null ? (
+            "Create"
+          ) : (
+            "Save"
+          )}
         </button>
       </footer>
     </>

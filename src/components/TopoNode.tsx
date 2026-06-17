@@ -1,4 +1,5 @@
 import { memo, useEffect, useRef, type CSSProperties } from "react";
+import { ScrollIcon, FlaskIcon, ChartLineIcon } from "@phosphor-icons/react";
 import { Handle, Position, type NodeProps } from "reactflow";
 import { getDomainTone } from "../lib/colors";
 import { MathText } from "../lib/katex";
@@ -9,11 +10,31 @@ import {
   railBackground,
   type NodeCategory,
 } from "../lib/nodeCategory";
-import { CATEGORY_ICON } from "../lib/nodeCategoryIcons";
+import { CATEGORY_ICON, KIND_ICON_OVERRIDE } from "../lib/nodeCategoryIcons";
 import { cn, prefersReducedMotion } from "../lib/utils";
 import { useStore } from "../store";
 import { KIND_LABEL, type TopoNode as TopoNodeT } from "../types";
+import { hasNodeVisual } from "./NodeVisual";
 import type { NodeEmphasis, NodeLOD } from "./GraphCanvas";
+
+/**
+ * Compact "what's inside" affordance: muted glyphs flagging which rich content a
+ * concept carries — a worked proof, a worked example, an interactive figure — so
+ * the depth of a node reads from the card without opening it. Near LOD only.
+ */
+function RichnessGlyphs({ node }: { node: TopoNodeT }) {
+  const hasProof = (node.proof?.steps?.length ?? 0) > 0;
+  const hasExample = node.examples.length > 0;
+  const hasFigure = hasNodeVisual(node);
+  if (!hasProof && !hasExample && !hasFigure) return null;
+  return (
+    <span className="flex shrink-0 items-center gap-1" style={{ color: "var(--fg-3)" }} aria-hidden>
+      {hasProof && <ScrollIcon className="h-3 w-3" weight="regular" />}
+      {hasExample && <FlaskIcon className="h-3 w-3" weight="regular" />}
+      {hasFigure && <ChartLineIcon className="h-3 w-3" weight="regular" />}
+    </span>
+  );
+}
 
 interface Data {
   node: TopoNodeT;
@@ -59,7 +80,10 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
   const emphasis = data.emphasis ?? "normal";
   const category = data.category ?? categoryOf(node.kind);
   const categoryMeta = CATEGORY_META[category];
-  const CategoryIcon = CATEGORY_ICON[category];
+  // Per-kind glyph override (counterexamples read as "fails", not the example
+  // flask) falling back to the category icon — both member lookups so no
+  // component is "created" during render.
+  const CategoryIcon = KIND_ICON_OVERRIDE[node.kind] ?? CATEGORY_ICON[category];
 
   const isLandmark = emphasis === "landmark";
   const isMinor = emphasis === "minor";
@@ -180,13 +204,16 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
               {node.number}
             </span>
           )}
-          {isLandmark && (
-            <span
-              className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full"
-              style={{ background: tone.color }}
-              title="Foundational — many results depend on this"
-            />
-          )}
+          <span className="ml-auto flex shrink-0 items-center gap-1.5">
+            {lod === "near" && <RichnessGlyphs node={node} />}
+            {isLandmark && (
+              <span
+                className="h-1.5 w-1.5 shrink-0 rounded-full"
+                style={{ background: tone.color }}
+                title="Foundational — many results depend on this"
+              />
+            )}
+          </span>
         </div>
       )}
 

@@ -205,6 +205,9 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
   // Importance tiers from computed impact: a handful of load-bearing landmarks,
   // and the leaves nothing depends on. Drives node emphasis (size/weight).
+  // Authored `priority` then nudges the impact-derived tier so editorial intent
+  // counts: a `core` concept never fades to a minor leaf, and a `peripheral` one
+  // recedes unless it is genuinely load-bearing (a computed landmark).
   const emphasisById = useMemo(() => {
     const impact = map.metrics.impactByNodeId;
     const ranked = [...impact.entries()].filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]);
@@ -213,7 +216,14 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     const tier = new Map<string, NodeEmphasis>();
     for (const node of data.nodes) {
       const v = impact.get(node.id) ?? 0;
-      tier.set(node.id, landmarks.has(node.id) ? "landmark" : v === 0 ? "minor" : "normal");
+      let emphasis: NodeEmphasis = landmarks.has(node.id)
+        ? "landmark"
+        : v === 0
+          ? "minor"
+          : "normal";
+      if (node.priority === "core" && emphasis === "minor") emphasis = "normal";
+      else if (node.priority === "peripheral" && emphasis === "normal") emphasis = "minor";
+      tier.set(node.id, emphasis);
     }
     return tier;
   }, [map.metrics.impactByNodeId, data.nodes]);

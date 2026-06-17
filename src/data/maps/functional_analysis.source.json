@@ -1160,34 +1160,6 @@
       "priority": "core"
     },
     {
-      "id": "bounded_operator_space",
-      "kind": "structure",
-      "domain": "operators",
-      "label": "Space of Bounded Linear Operators",
-      "content": {
-        "statement": "For normed spaces $X$ and $Y$, $\\mathcal{B}(X,Y)$ is the vector space of bounded linear operators from $X$ to $Y$, equipped with the operator norm.",
-        "definition": "The bounded operator space $\\mathcal{B}(X,Y)$ consists of all bounded linear maps $A:X\\to Y$. It is made into a normed vector space by pointwise vector operations and the operator norm.",
-        "formal": "Let $(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ be normed vector spaces over the same scalar field. Then $$\\mathcal{B}(X,Y)=\\{A:X\\to Y: A\\text{ is linear and }\\exists C\\ge0\\ \\forall x\\in X\\ \\|Ax\\|_Y\\le C\\|x\\|_X\\},$$ with $$\\|A\\|_{\\mathrm{op}}=\\sup_{\\|x\\|_X\\le1}\\|Ax\\|_Y.$$",
-        "intuition": "This packages all uniformly controlled linear transformations from $X$ to $Y$ into one normed space. Addition and scalar multiplication are done operator-by-operator, while the norm measures the largest stretch on the unit ball of $X$.",
-        "notation": [
-          "$\\mathcal{B}(X,Y)$",
-          "$\\mathcal{L}(X,Y)$ when the convention identifies continuous and bounded linear maps"
-        ]
-      },
-      "assumptions": [
-        "$X$ and $Y$ are normed vector spaces over the same scalar field.",
-        "Operators in $\\mathcal{B}(X,Y)$ are linear and bounded.",
-        "The norm on $\\mathcal{B}(X,Y)$ is the operator norm."
-      ],
-      "tags": [
-        "bounded",
-        "linear",
-        "normed_space",
-        "operator"
-      ],
-      "priority": "core"
-    },
-    {
       "id": "bounded_operators_banach_space",
       "kind": "theorem",
       "domain": "operators",
@@ -1514,6 +1486,34 @@
       },
       "tags": [
         "norm",
+        "operator"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "bounded_operator_space",
+      "kind": "structure",
+      "domain": "operators",
+      "label": "Space of Bounded Linear Operators",
+      "content": {
+        "statement": "For normed spaces $X$ and $Y$, $\\mathcal{B}(X,Y)$ is the vector space of bounded linear operators from $X$ to $Y$, equipped with the operator norm.",
+        "definition": "The bounded operator space $\\mathcal{B}(X,Y)$ consists of all bounded linear maps $A:X\\to Y$. It is made into a normed vector space by pointwise vector operations and the operator norm.",
+        "formal": "Let $(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ be normed vector spaces over the same scalar field. Then $$\\mathcal{B}(X,Y)=\\{A:X\\to Y: A\\text{ is linear and }\\exists C\\ge0\\ \\forall x\\in X\\ \\|Ax\\|_Y\\le C\\|x\\|_X\\},$$ with $$\\|A\\|_{\\mathrm{op}}=\\sup_{\\|x\\|_X\\le1}\\|Ax\\|_Y.$$",
+        "intuition": "This packages all uniformly controlled linear transformations from $X$ to $Y$ into one normed space. Addition and scalar multiplication are done operator-by-operator, while the norm measures the largest stretch on the unit ball of $X$.",
+        "notation": [
+          "$\\mathcal{B}(X,Y)$",
+          "$\\mathcal{L}(X,Y)$ when the convention identifies continuous and bounded linear maps"
+        ]
+      },
+      "assumptions": [
+        "$X$ and $Y$ are normed vector spaces over the same scalar field.",
+        "Operators in $\\mathcal{B}(X,Y)$ are linear and bounded.",
+        "The norm on $\\mathcal{B}(X,Y)$ is the operator norm."
+      ],
+      "tags": [
+        "bounded",
+        "linear",
+        "normed_space",
         "operator"
       ],
       "priority": "core"
@@ -3184,12 +3184,12 @@
     },
     {
       "source": "bounded_operator_space",
-      "target": "operator_norm",
+      "target": "normed_vector_space",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "bounded_operator_space",
-      "target": "normed_vector_space",
+      "target": "operator_norm",
       "relation": "defined_in_terms_of"
     },
     {
