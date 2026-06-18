@@ -284,11 +284,11 @@ function DirectionsPanel({
       aria-label="Directions"
     >
       <div className="flex items-center justify-between gap-3">
-        <div className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">Directions</div>
+        <div className="text-ui-caption font-semibold uppercase tracking-label-wide text-text-subtle">Directions</div>
         <button
           type="button"
           onClick={clearRoute}
-          className="rounded-sm p-1.5 text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg-1"
+          className="rounded-sm p-1.5 text-text-subtle transition-colors hover:bg-surface-subtle hover:text-text"
           aria-label={routeMode ? "Cancel directions" : "Clear directions"}
           title={routeMode ? "Cancel directions" : "Clear directions"}
         >
@@ -386,7 +386,7 @@ function DirectionsPanel({
             type="button"
             onClick={swapRouteEndpoints}
             disabled={!routeFrom && !routeTo}
-            className="flex h-full min-h-21.5 w-8.5 items-center justify-center rounded-lg border border-border bg-surface text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:cursor-default disabled:opacity-35"
+            className="flex h-full min-h-21.5 w-8.5 items-center justify-center rounded-lg border border-border bg-surface text-text-muted transition-colors hover:bg-surface-subtle hover:text-text disabled:cursor-default disabled:opacity-35"
             aria-label="Swap endpoints"
             title="Swap endpoints"
           >
@@ -397,7 +397,7 @@ function DirectionsPanel({
 
       {showSelectedShortcut && (
         <div className="flex items-center justify-between gap-3 px-1">
-          <span className="min-w-0 truncate text-ui-meta text-fg-3">{selectedTitle}</span>
+          <span className="min-w-0 truncate text-ui-meta text-text-subtle">{selectedTitle}</span>
           <button
             type="button"
             onClick={() => {
@@ -416,9 +416,9 @@ function DirectionsPanel({
 
       {resolved && (
         <div className="flex items-center justify-between gap-3 px-1 py-0.5">
-          <span className="min-w-0 text-ui-meta text-fg-2">
+          <span className="min-w-0 text-ui-meta text-text-muted">
             Include proof prerequisites
-            <span className="block text-ui-meta text-fg-3">
+            <span className="block text-ui-meta text-text-subtle">
               {routeIncludeProof ? "enough to prove it" : "enough to understand it"}
             </span>
           </span>
@@ -433,11 +433,11 @@ function DirectionsPanel({
       {resolved && summary.found === false && (
         <div className="rounded-lg border border-border bg-surface px-3 py-2">
           <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0 truncate text-ui-meta font-semibold text-fg-1">No dependency path</div>
+            <div className="min-w-0 truncate text-ui-meta font-semibold text-text">No dependency path</div>
             <Button
               kind="text"
               onClick={clearRoute}
-              className="flex h-8 items-center rounded-md px-2.5 text-ui-meta font-semibold text-fg-2"
+              className="flex h-8 items-center rounded-md px-2.5 text-ui-meta font-semibold text-text-muted"
             >
               Clear
             </Button>
@@ -497,13 +497,13 @@ function RouteSequence({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between gap-3 px-1">
-        <div className="min-w-0 text-ui-meta tabular-nums text-fg-3">
-          <span className="font-semibold text-fg-1">{isPrereq ? prereqCount : ordered.length}</span>{" "}
+        <div className="min-w-0 text-ui-meta tabular-nums text-text-subtle">
+          <span className="font-semibold text-text">{isPrereq ? prereqCount : ordered.length}</span>{" "}
           {isPrereq ? `prerequisite${prereqCount === 1 ? "" : "s"}` : `concept${ordered.length === 1 ? "" : "s"}`}
           {spineSteps > 0 && (
-            <span className="text-fg-3">
+            <span className="text-text-subtle">
               {" · "}
-              <span className="font-semibold text-fg-1">{spineSteps}</span> step
+              <span className="font-semibold text-text">{spineSteps}</span> step
               {spineSteps === 1 ? "" : "s"} via shortest path
             </span>
           )}
@@ -522,7 +522,7 @@ function RouteSequence({
             <Button
               kind="text"
               onClick={onReplay}
-              className="flex h-8 w-8 items-center justify-center rounded-md text-fg-2"
+              className="flex h-8 w-8 items-center justify-center rounded-md text-text-muted"
               aria-label="Replay animation"
             >
               <ArrowCounterClockwiseIcon className="h-4 w-4" />
@@ -534,19 +534,19 @@ function RouteSequence({
               type="button"
               onClick={() => onStep(-1)}
               disabled={tourIndex === 0}
-              className="flex h-8 w-8 items-center justify-center rounded-md text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:opacity-35"
+              className="flex h-8 w-8 items-center justify-center rounded-md text-text-muted transition-colors hover:bg-surface-subtle hover:text-text disabled:opacity-35"
               aria-label="Previous concept"
             >
               <CaretLeftIcon className="h-4 w-4" />
             </button>
-            <span className="min-w-11 text-center text-ui-meta tabular-nums font-semibold text-fg-1">
+            <span className="min-w-11 text-center text-ui-meta tabular-nums font-semibold text-text">
               {tourIndex + 1} / {ordered.length}
             </span>
             <button
               type="button"
               onClick={() => onStep(1)}
               disabled={tourIndex >= ordered.length - 1}
-              className="flex h-8 w-8 items-center justify-center rounded-md text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1 disabled:opacity-35"
+              className="flex h-8 w-8 items-center justify-center rounded-md text-text-muted transition-colors hover:bg-surface-subtle hover:text-text disabled:opacity-35"
               aria-label="Next concept"
             >
               <CaretRightIcon className="h-4 w-4" />
@@ -554,7 +554,7 @@ function RouteSequence({
             <button
               type="button"
               onClick={onEndTour}
-              className="ml-1 rounded-sm px-2 py-1 text-ui-meta font-semibold text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg-1"
+              className="ml-1 rounded-sm px-2 py-1 text-ui-meta font-semibold text-text-muted transition-colors hover:bg-surface-subtle hover:text-text"
             >
               End
             </button>
@@ -573,25 +573,25 @@ function RouteSequence({
                 onClick={() => onPick(id)}
                 className={cn(
                   "flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left transition-colors",
-                  current ? "bg-accent-soft" : "hover:bg-surface-2",
+                  current ? "bg-accent-soft" : "hover:bg-surface-subtle",
                 )}
                 aria-current={current ? "step" : undefined}
               >
                 <span
                   className={cn(
                     "flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-ui-2xs font-semibold tabular-nums",
-                    current ? "bg-accent text-fg-on-color" : "bg-surface-3 text-fg-3",
+                    current ? "bg-accent text-text-inverse" : "bg-surface-muted text-text-subtle",
                   )}
                 >
                   {i + 1}
                 </span>
                 <span className="min-w-0 flex-1">
                   <span
-                    className={cn("block truncate text-ui-meta font-semibold", current ? "text-accent" : "text-fg-1")}
+                    className={cn("block truncate text-ui-meta font-semibold", current ? "text-accent" : "text-text")}
                   >
                     <MathText text={node?.label ?? id} />
                   </span>
-                  {node && <span className="block truncate text-ui-hint text-fg-3">{node.kind}</span>}
+                  {node && <span className="block truncate text-ui-hint text-text-subtle">{node.kind}</span>}
                 </span>
               </button>
             </li>
@@ -649,7 +649,7 @@ function RouteSearchField({
   return (
     <div className="relative">
       <label className="flex min-h-10.75 min-w-0 items-center gap-2 px-3 py-1.5">
-        <span className="w-9 shrink-0 text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
+        <span className="w-9 shrink-0 text-ui-caption font-semibold uppercase tracking-label-wide text-text-subtle">
           {label}
         </span>
         <input
@@ -657,7 +657,7 @@ function RouteSearchField({
           onFocus={onFocus}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
-          className="min-w-0 flex-1 bg-transparent text-ui-control font-medium text-fg-1 outline-none placeholder:text-fg-3"
+          className="min-w-0 flex-1 bg-transparent text-ui-control font-medium text-text outline-none placeholder:text-text-subtle"
           aria-label={`${label} concept`}
           autoComplete="off"
           spellCheck={false}
@@ -667,7 +667,7 @@ function RouteSearchField({
           <button
             type="button"
             onClick={onClear}
-            className="shrink-0 rounded-xs p-1 text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg-1"
+            className="shrink-0 rounded-xs p-1 text-text-subtle transition-colors hover:bg-surface-subtle hover:text-text"
             aria-label={`Clear ${label.toLowerCase()}`}
             title={`Clear ${label.toLowerCase()}`}
           >
@@ -676,7 +676,7 @@ function RouteSearchField({
         )}
       </label>
       {showResults && (
-        <div className="mx-2 mb-2 overflow-hidden rounded-md border border-border bg-surface-2">
+        <div className="mx-2 mb-2 overflow-hidden rounded-md border border-border bg-surface-subtle">
           {results.map((node) => (
             <button
               key={node.id}
@@ -686,8 +686,8 @@ function RouteSearchField({
               className="flex w-full min-w-0 items-center justify-between gap-3 px-2.5 py-1.5 text-left transition-colors hover:bg-surface"
             >
               <span className="min-w-0">
-                <span className="block truncate text-ui-meta font-semibold text-fg-1">{node.label}</span>
-                <span className="block truncate text-ui-hint text-fg-3">{node.kind}</span>
+                <span className="block truncate text-ui-meta font-semibold text-text">{node.label}</span>
+                <span className="block truncate text-ui-hint text-text-subtle">{node.kind}</span>
               </span>
             </button>
           ))}
@@ -726,7 +726,7 @@ function DepthPicker({ value, onChange }: { value: number; onChange: (value: num
             onClick={() => onChange(depth)}
             className={cn(
               "flex h-6 w-6 items-center justify-center rounded-xs text-ui-2xs font-semibold tabular-nums transition-colors",
-              active ? "bg-accent-soft text-accent ring-1 ring-inset ring-accent-border" : "text-fg-2",
+              active ? "bg-accent-soft text-accent ring-1 ring-inset ring-accent-border" : "text-text-muted",
             )}
             aria-label={`Focus depth ${depth}`}
             aria-pressed={active}
@@ -754,16 +754,16 @@ function Switch({ checked, onClick, label }: { checked: boolean; onClick: () => 
         "relative inline-flex h-5.5 w-9.5 shrink-0 items-center rounded-pill transition-[box-shadow,filter,background-color]",
         checked
           ? "bg-accent hover:brightness-105"
-          : "bg-surface-3 ring-1 ring-inset ring-border hover:bg-surface-2 hover:ring-border-strong",
+          : "bg-surface-muted ring-1 ring-inset ring-border hover:bg-surface-subtle hover:ring-border-strong",
       )}
     >
       <span
         className="absolute h-4.25 w-4.25 rounded-pill transition-transform"
         style={{
           left: 2,
-          background: "var(--surface)",
+          background: "var(--color-surface)",
           transform: checked ? "translateX(16px)" : "translateX(0)",
-          boxShadow: "var(--shadow-1)",
+          boxShadow: "var(--elevation-1)",
         }}
       />
     </button>
@@ -842,17 +842,20 @@ function ModeTile({
       aria-pressed={active}
     >
       <span
-        className={cn("map-mode-tile-preview", active ? "bg-accent-soft text-accent" : "bg-surface-2 text-fg-2")}
+        className={cn(
+          "map-mode-tile-preview",
+          active ? "bg-accent-soft text-accent" : "bg-surface-subtle text-text-muted",
+        )}
         aria-hidden
       >
         <IconComponent className="h-6 w-6" weight={active ? "bold" : "regular"} />
       </span>
 
       <span className="px-0.5">
-        <span className={cn("block text-ui-control font-semibold leading-tight", active ? "text-accent" : "text-fg-1")}>
+        <span className={cn("block text-ui-control font-semibold leading-tight", active ? "text-accent" : "text-text")}>
           {label}
         </span>
-        <span className="block text-ui-hint text-fg-3">{hint}</span>
+        <span className="block text-ui-hint text-text-subtle">{hint}</span>
       </span>
     </button>
   );
@@ -922,7 +925,7 @@ function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement |
           <div className="flex flex-col gap-1">
             {LAYERS.map(({ key, label }) => (
               <div key={key} className="flex items-center justify-between gap-3 py-1">
-                <span className="text-ui-control font-medium text-fg-1">{label}</span>
+                <span className="text-ui-control font-medium text-text">{label}</span>
                 <Switch label={label} checked={checked[key]} onClick={toggle[key]} />
               </div>
             ))}

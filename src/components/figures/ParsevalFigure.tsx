@@ -53,7 +53,7 @@ export default function ParsevalFigure() {
       <div className="mt-2.5 px-1">
         <div
           className="mb-1.5 flex items-baseline justify-between text-ui-hint"
-          style={{ color: "var(--fg-3)" }}
+          style={{ color: "var(--color-text-subtle)" }}
         >
           <span>
             Energy captured by {N} harmonic{N !== 1 ? "s" : ""}
@@ -64,21 +64,18 @@ export default function ParsevalFigure() {
         </div>
         <div
           className="relative h-2.5 w-full overflow-hidden rounded-full"
-          style={{ background: "var(--surface-3)" }}
+          style={{ background: "var(--color-surface-muted)" }}
         >
           <div
             className="h-full rounded-full"
             style={{
               width: `${fraction * 100}%`,
-              background: "var(--accent)",
+              background: "var(--color-accent)",
               transition: "width 0.15s ease",
             }}
           />
         </div>
-        <div
-          className="mt-1 flex justify-between font-mono text-ui-hint"
-          style={{ color: "var(--fg-4)" }}
-        >
+        <div className="mt-1 flex justify-between font-mono text-ui-hint" style={{ color: "var(--color-text-faint)" }}>
           <span>Σ|ĉₙ|² ≈ {partialE.toFixed(3)}</span>
           <span>‖f‖² = {totalE.toFixed(3)}</span>
         </div>
@@ -91,17 +88,10 @@ export default function ParsevalFigure() {
           setN(5);
         }}
       />
-      <RangeControl
-        min={1}
-        max={40}
-        value={N}
-        onChange={setN}
-        label={`N = ${N}`}
-        ariaLabel="Number of harmonics N"
-      />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        Both sides of Parseval's identity update live — adding harmonics fills the bar until the
-        partial sum captures all the energy.
+      <RangeControl min={1} max={40} value={N} onChange={setN} label={`N = ${N}`} ariaLabel="Number of harmonics N" />
+      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--color-text-subtle)" }}>
+        Both sides of Parseval's identity update live — adding harmonics fills the bar until the partial sum captures
+        all the energy.
       </figcaption>
     </figure>
   );

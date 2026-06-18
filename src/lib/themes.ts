@@ -225,9 +225,6 @@ const THEME_BY_ID = new Map(THEMES.map((t) => [t.id, t]));
 
 export function resolveThemeId(value: string | null | undefined): string {
   if (value && THEME_BY_ID.has(value)) return value;
-  // Back-compat: the old store persisted bare "light"/"dark".
-  if (value === "light") return "paper";
-  if (value === "dark") return "chalkboard";
   return DEFAULT_THEME_ID;
 }
 
@@ -264,7 +261,6 @@ export function applyTheme(themeId: string): void {
   if (typeof document === "undefined") return;
   const id = resolveThemeId(themeId);
   document.documentElement.dataset.theme = id;
-  document.documentElement.classList.toggle("dark", schemeFor(id) === "dark");
   try {
     localStorage.setItem(THEME_STORAGE_KEY, id);
   } catch {

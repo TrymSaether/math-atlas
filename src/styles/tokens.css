@@ -1,0 +1,1508 @@
+/* ========================================================================
+   Math Atlas — Design Tokens
+   Theme-aware 20-color domain palette with derived tints/borders.
+   ======================================================================== */
+
+:root,
+:root[data-theme="paper"] {
+  color-scheme: light;
+
+  /* Surfaces */
+  --color-canvas: #f8fafc;
+  --color-canvas-muted: #f1f5f9;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #fcfcfd;
+  --color-surface-muted: #f1f5f9;
+
+  /* Ink */
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-subtle: #94a3b8;
+  --color-text-faint: #cbd5e1;
+  --color-text-inverse: #ffffff;
+
+  /* Borders */
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-border-subtle: #f1f5f9;
+  --color-hairline: #e2e8f0;
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #2563eb;
+  --domain-orange: #f97316;
+  --domain-green: #16a34a;
+  --domain-magenta: #c026d3;
+  --domain-teal: #0d9488;
+  --domain-red: #dc2626;
+  --domain-purple: #7c3aed;
+  --domain-gold: #eab308;
+  --domain-cyan: #0891b2;
+  --domain-brown: #8b5e34;
+  --domain-pink: #db2777;
+  --domain-lime: #65a30d;
+  --domain-indigo: #4f46e5;
+  --domain-coral: #f05d5e;
+  --domain-mint: #10b981;
+  --domain-violet: #8b5cf6;
+  --domain-amber: #d97706;
+  --domain-sky: #0284c7;
+  --domain-rose: #e11d48;
+  --domain-slate: #64748b;
+
+  --color-accent: var(--domain-blue);
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(37, 99, 235, 0.18);
+
+  /* Edges are monochrome ink — color is reserved for domains. */
+  --color-edge: #64748b;
+  --color-edge-active: var(--domain-blue);
+
+  --elevation-1: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --elevation-2: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --elevation-3: 0 12px 32px rgba(15, 23, 42, 0.1), 0 2px 6px rgba(15, 23, 42, 0.05);
+
+  --canvas-grid-dot: #e5e7eb;
+  --canvas-grid-major: rgba(15, 23, 42, 0.05);
+  --canvas-grid-minor: rgba(15, 23, 42, 0.025);
+
+  /* Diagram tokens (used by inline SVGs in /public/atlas-assets/diagrams). */
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+
+  /* Sandbox fact-status glyph colors (★ ✓ ≅ ○). */
+  --fact-computed: var(--domain-green);
+  /* ✓ machine-verified */
+  --fact-recognized: var(--domain-blue);
+  /* ≅ matched a known pattern */
+  --fact-user: var(--domain-gold);
+  /* ★ user-asserted, unverified */
+  --fact-pending: var(--color-text-subtle);
+  /* ○ no input yet */
+}
+
+:root[data-theme="chalkboard"] {
+  color-scheme: dark;
+
+  /* Chalkboard surfaces */
+  --color-canvas: #0e1322;
+  --color-canvas-muted: #080c18;
+  --color-surface: #161d2f;
+  --color-surface-subtle: #1f2740;
+  --color-surface-muted: #28324f;
+
+  --color-text: #eceef4;
+  --color-text-muted: #a8b0c0;
+  --color-text-subtle: #6b7280;
+  --color-text-faint: #3f4761;
+  --color-text-inverse: #0e1322;
+
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-hairline: rgba(255, 255, 255, 0.1);
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #58c4dd;
+  --domain-orange: #f0ac5f;
+  --domain-green: #83c167;
+  --domain-magenta: #e879f9;
+  --domain-teal: #5cd0b3;
+  --domain-red: #fc6255;
+  --domain-purple: #b594d6;
+  --domain-gold: #ffd93d;
+  --domain-cyan: #22d3ee;
+  --domain-brown: #c49a6c;
+  --domain-pink: #d147bd;
+  --domain-lime: #a3e635;
+  --domain-indigo: #818cf8;
+  --domain-coral: #fb7f75;
+  --domain-mint: #6ee7b7;
+  --domain-violet: #c4b5fd;
+  --domain-amber: #fbbf24;
+  --domain-sky: #38bdf8;
+  --domain-rose: #fb7185;
+  --domain-slate: #94a3b8;
+
+  --color-accent: var(--domain-blue);
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(88, 196, 221, 0.28);
+
+  /* Edges are monochrome ink — color is reserved for domains. */
+  --color-edge: #6b7689;
+  --color-edge-active: var(--domain-blue);
+
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --elevation-3: 0 18px 48px rgba(0, 0, 0, 0.55);
+
+  --canvas-grid-dot: rgba(255, 255, 255, 0.08);
+  --canvas-grid-major: rgba(255, 255, 255, 0.05);
+  --canvas-grid-minor: rgba(255, 255, 255, 0.025);
+
+  /* Diagram tokens */
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+:root {
+  /* Derived domain tones. Theme blocks define only base hues. */
+  --domain-blue-tint: color-mix(in srgb, var(--domain-blue) 10%, var(--color-surface));
+  --domain-blue-border: color-mix(in srgb, var(--domain-blue) 34%, var(--color-surface));
+  --domain-orange-tint: color-mix(in srgb, var(--domain-orange) 10%, var(--color-surface));
+  --domain-orange-border: color-mix(in srgb, var(--domain-orange) 34%, var(--color-surface));
+  --domain-green-tint: color-mix(in srgb, var(--domain-green) 10%, var(--color-surface));
+  --domain-green-border: color-mix(in srgb, var(--domain-green) 34%, var(--color-surface));
+  --domain-magenta-tint: color-mix(in srgb, var(--domain-magenta) 10%, var(--color-surface));
+  --domain-magenta-border: color-mix(in srgb, var(--domain-magenta) 34%, var(--color-surface));
+  --domain-teal-tint: color-mix(in srgb, var(--domain-teal) 10%, var(--color-surface));
+  --domain-teal-border: color-mix(in srgb, var(--domain-teal) 34%, var(--color-surface));
+  --domain-red-tint: color-mix(in srgb, var(--domain-red) 10%, var(--color-surface));
+  --domain-red-border: color-mix(in srgb, var(--domain-red) 34%, var(--color-surface));
+  --domain-purple-tint: color-mix(in srgb, var(--domain-purple) 10%, var(--color-surface));
+  --domain-purple-border: color-mix(in srgb, var(--domain-purple) 34%, var(--color-surface));
+  --domain-gold-tint: color-mix(in srgb, var(--domain-gold) 10%, var(--color-surface));
+  --domain-gold-border: color-mix(in srgb, var(--domain-gold) 34%, var(--color-surface));
+  --domain-cyan-tint: color-mix(in srgb, var(--domain-cyan) 10%, var(--color-surface));
+  --domain-cyan-border: color-mix(in srgb, var(--domain-cyan) 34%, var(--color-surface));
+  --domain-brown-tint: color-mix(in srgb, var(--domain-brown) 10%, var(--color-surface));
+  --domain-brown-border: color-mix(in srgb, var(--domain-brown) 34%, var(--color-surface));
+  --domain-pink-tint: color-mix(in srgb, var(--domain-pink) 10%, var(--color-surface));
+  --domain-pink-border: color-mix(in srgb, var(--domain-pink) 34%, var(--color-surface));
+  --domain-lime-tint: color-mix(in srgb, var(--domain-lime) 10%, var(--color-surface));
+  --domain-lime-border: color-mix(in srgb, var(--domain-lime) 34%, var(--color-surface));
+  --domain-indigo-tint: color-mix(in srgb, var(--domain-indigo) 10%, var(--color-surface));
+  --domain-indigo-border: color-mix(in srgb, var(--domain-indigo) 34%, var(--color-surface));
+  --domain-coral-tint: color-mix(in srgb, var(--domain-coral) 10%, var(--color-surface));
+  --domain-coral-border: color-mix(in srgb, var(--domain-coral) 34%, var(--color-surface));
+  --domain-mint-tint: color-mix(in srgb, var(--domain-mint) 10%, var(--color-surface));
+  --domain-mint-border: color-mix(in srgb, var(--domain-mint) 34%, var(--color-surface));
+  --domain-violet-tint: color-mix(in srgb, var(--domain-violet) 10%, var(--color-surface));
+  --domain-violet-border: color-mix(in srgb, var(--domain-violet) 34%, var(--color-surface));
+  --domain-amber-tint: color-mix(in srgb, var(--domain-amber) 10%, var(--color-surface));
+  --domain-amber-border: color-mix(in srgb, var(--domain-amber) 34%, var(--color-surface));
+  --domain-sky-tint: color-mix(in srgb, var(--domain-sky) 10%, var(--color-surface));
+  --domain-sky-border: color-mix(in srgb, var(--domain-sky) 34%, var(--color-surface));
+  --domain-rose-tint: color-mix(in srgb, var(--domain-rose) 10%, var(--color-surface));
+  --domain-rose-border: color-mix(in srgb, var(--domain-rose) 34%, var(--color-surface));
+  --domain-slate-tint: color-mix(in srgb, var(--domain-slate) 10%, var(--color-surface));
+  --domain-slate-border: color-mix(in srgb, var(--domain-slate) 34%, var(--color-surface));
+}
+
+/* 3B1B Light — a warm lecture-note page with the Manim/3Blue1Brown blue
+   leading the interaction color and a brown-gold counterpoint. */
+:root[data-theme="3b1b-light"] {
+  color-scheme: light;
+
+  --color-canvas: #f7f3ea;
+  --color-canvas-muted: #ece3d3;
+  --color-surface: #fffdf7;
+  --color-surface-subtle: #fbf7ed;
+  --color-surface-muted: #f1e8d8;
+
+  --color-text: #1f2328;
+  --color-text-muted: #4c5360;
+  --color-text-subtle: #8a8172;
+  --color-text-faint: #cdbfa7;
+  --color-text-inverse: #fffdf7;
+
+  --color-border: #e2d6c3;
+  --color-border-strong: #cdbfa7;
+  --color-border-subtle: #f0e6d6;
+  --color-hairline: #e2d6c3;
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #236b8e;
+  --domain-orange: #d17a22;
+  --domain-green: #4e8e4a;
+  --domain-magenta: #c026d3;
+  --domain-teal: #169c8c;
+  --domain-red: #c84c3f;
+  --domain-purple: #8a5fbf;
+  --domain-gold: #c89c28;
+  --domain-cyan: #0891b2;
+  --domain-brown: #8b5e34;
+  --domain-pink: #b6429a;
+  --domain-lime: #65a30d;
+  --domain-indigo: #4f46e5;
+  --domain-coral: #f05d5e;
+  --domain-mint: #10b981;
+  --domain-violet: #8b5cf6;
+  --domain-amber: #d97706;
+  --domain-sky: #0284c7;
+  --domain-rose: #e11d48;
+  --domain-slate: #64748b;
+
+  --color-accent: #236b8e;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(35, 107, 142, 0.17);
+
+  --color-edge: #7b837f;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(31, 35, 40, 0.05);
+  --elevation-2: 0 4px 14px rgba(31, 35, 40, 0.08), 0 1px 2px rgba(31, 35, 40, 0.05);
+  --elevation-3: 0 18px 50px rgba(31, 35, 40, 0.12), 0 2px 6px rgba(31, 35, 40, 0.06);
+
+  --canvas-grid-dot: #dfd3bf;
+  --canvas-grid-major: rgba(31, 35, 40, 0.055);
+  --canvas-grid-minor: rgba(31, 35, 40, 0.028);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* 3B1B Dark — a Manim-style blackboard: near-black stage, luminous blue,
+   warm brown-gold highlights, and lifted domain colors. */
+:root[data-theme="3b1b-dark"] {
+  color-scheme: dark;
+
+  --color-canvas: #101214;
+  --color-canvas-muted: #090a0c;
+  --color-surface: #171c20;
+  --color-surface-subtle: #1c2227;
+  --color-surface-muted: #273038;
+
+  --color-text: #f2efe6;
+  --color-text-muted: #c8c0b0;
+  --color-text-subtle: #827a6c;
+  --color-text-faint: #4d463d;
+  --color-text-inverse: #101214;
+
+  --color-border: rgba(242, 239, 230, 0.11);
+  --color-border-strong: rgba(242, 239, 230, 0.2);
+  --color-border-subtle: rgba(242, 239, 230, 0.055);
+  --color-hairline: rgba(242, 239, 230, 0.11);
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #58c4dd;
+  --domain-orange: #ff862f;
+  --domain-green: #83c167;
+  --domain-magenta: #e879f9;
+  --domain-teal: #5cd0b3;
+  --domain-red: #fc6255;
+  --domain-purple: #b189c6;
+  --domain-gold: #e1a158;
+  --domain-cyan: #22d3ee;
+  --domain-brown: #c49a6c;
+  --domain-pink: #d147bd;
+  --domain-lime: #a3e635;
+  --domain-indigo: #818cf8;
+  --domain-coral: #fb7f75;
+  --domain-mint: #6ee7b7;
+  --domain-violet: #c4b5fd;
+  --domain-amber: #fbbf24;
+  --domain-sky: #38bdf8;
+  --domain-rose: #fb7185;
+  --domain-slate: #94a3b8;
+
+  --color-accent: #58c4dd;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(88, 196, 221, 0.29);
+
+  --color-edge: #717c83;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.6);
+  --elevation-3: 0 18px 50px rgba(0, 0, 0, 0.66);
+
+  --canvas-grid-dot: rgba(242, 239, 230, 0.085);
+  --canvas-grid-major: rgba(242, 239, 230, 0.052);
+  --canvas-grid-minor: rgba(242, 239, 230, 0.026);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Manuscript — warm "old paper" reskin matching the symbolic topology
+   SVG/HTML style. Distinct from Paper: warmer surfaces, brown ink, and
+   manuscript-specific diagram fills. */
+:root[data-theme="manuscript"] {
+  color-scheme: light;
+
+  --color-canvas: #f8f5ef;
+  --color-canvas-muted: #efe7da;
+  --color-surface: #fffdf8;
+  --color-surface-subtle: #fbfaf6;
+  --color-surface-muted: #f4efe6;
+
+  --color-text: #27221d;
+  --color-text-muted: #51493f;
+  --color-text-subtle: #8c8274;
+  --color-text-faint: #d8d0c2;
+  --color-text-inverse: #fffdf8;
+
+  --color-border: #d8d0c2;
+  --color-border-strong: #c9bca6;
+  --color-border-subtle: #ece5d8;
+  --color-hairline: #d8d0c2;
+
+  /* Warm domain hues for manuscript mode. */
+  /* 20 Atlas domain hues */
+  --domain-blue: #2457c5;
+  --domain-orange: #c56a24;
+  --domain-green: #26844a;
+  --domain-magenta: #c026d3;
+  --domain-teal: #0d9488;
+  --domain-red: #a8431d;
+  --domain-purple: #7c3aed;
+  --domain-gold: #b89418;
+  --domain-cyan: #0891b2;
+  --domain-brown: #8b5e34;
+  --domain-pink: #b83280;
+  --domain-lime: #65a30d;
+  --domain-indigo: #4f46e5;
+  --domain-coral: #f05d5e;
+  --domain-mint: #10b981;
+  --domain-violet: #8b5cf6;
+  --domain-amber: #d97706;
+  --domain-sky: #0284c7;
+  --domain-rose: #e11d48;
+  --domain-slate: #64748b;
+
+  --color-accent: #2457c5;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(36, 87, 197, 0.16);
+
+  --color-edge: #8c8274;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(42, 37, 32, 0.05);
+  --elevation-2: 0 4px 14px rgba(42, 37, 32, 0.08), 0 1px 2px rgba(42, 37, 32, 0.05);
+  --elevation-3: 0 18px 60px rgba(42, 37, 32, 0.1);
+
+  --canvas-grid-dot: #e2d7c4;
+  --canvas-grid-major: rgba(39, 34, 29, 0.05);
+  --canvas-grid-minor: rgba(39, 34, 29, 0.025);
+
+  /* Diagram tokens */
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: #e7ddc9;
+  --dia-fill2: #f4efe6;
+  --dia-domain: var(--dia-fill);
+  --dia-open: #dce8ff;
+  --dia-int: #dce8ff;
+  --dia-set: var(--dia-fill);
+  --dia-boundary: #a8431d;
+  --dia-ext: #8f8678;
+  --dia-ok: #26844a;
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: #2457c5;
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Nocturne — warm dark. Self-contained: dark schemes must redefine the lifted
+   domain palette and tints, so this mirrors Chalkboard's structure in sepia. */
+:root[data-theme="nocturne"] {
+  color-scheme: dark;
+
+  --color-canvas: #16140f;
+  --color-canvas-muted: #100e0a;
+  --color-surface: #1f1c16;
+  --color-surface-subtle: #2a261e;
+  --color-surface-muted: #353026;
+
+  --color-text: #ece4d4;
+  --color-text-muted: #a99e89;
+  --color-text-subtle: #7a7060;
+  --color-text-faint: #4a4334;
+  --color-text-inverse: #16140f;
+
+  --color-border: rgba(236, 228, 212, 0.12);
+  --color-border-strong: rgba(236, 228, 212, 0.2);
+  --color-border-subtle: rgba(236, 228, 212, 0.06);
+  --color-hairline: rgba(236, 228, 212, 0.12);
+
+  /* Lifted domain hues (warm-leaning) for contrast on sepia. */
+  /* 20 Atlas domain hues */
+  --domain-blue: #6fb6c9;
+  --domain-orange: #e0a05a;
+  --domain-green: #9fc279;
+  --domain-magenta: #e879f9;
+  --domain-teal: #66cdb8;
+  --domain-red: #f0795f;
+  --domain-purple: #c0a0da;
+  --domain-gold: #e6c45a;
+  --domain-cyan: #22d3ee;
+  --domain-brown: #c49a6c;
+  --domain-pink: #d96fa8;
+  --domain-lime: #a3e635;
+  --domain-indigo: #818cf8;
+  --domain-coral: #fb7f75;
+  --domain-mint: #6ee7b7;
+  --domain-violet: #c4b5fd;
+  --domain-amber: #fbbf24;
+  --domain-sky: #38bdf8;
+  --domain-rose: #fb7185;
+  --domain-slate: #94a3b8;
+
+  --color-accent: #e08a4f;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(224, 138, 79, 0.26);
+
+  --color-edge: #7a7060;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --elevation-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --canvas-grid-dot: rgba(236, 228, 212, 0.08);
+  --canvas-grid-major: rgba(236, 228, 212, 0.05);
+  --canvas-grid-minor: rgba(236, 228, 212, 0.025);
+
+  /* Diagram tokens */
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Lagoon — cool aqua light. Slate-family structure retuned to a tidal,
+   blue-green paper with a teal accent. */
+:root[data-theme="lagoon"] {
+  color-scheme: light;
+
+  --color-canvas: #eff6f6;
+  --color-canvas-muted: #e1eded;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f6fbfb;
+  --color-surface-muted: #e6f1f1;
+
+  --color-text: #0c2a2e;
+  --color-text-muted: #3d5c5f;
+  --color-text-subtle: #7c9a9c;
+  --color-text-faint: #c2d8d8;
+  --color-text-inverse: #ffffff;
+
+  --color-border: #d4e6e5;
+  --color-border-strong: #bad4d3;
+  --color-border-subtle: #e6f1f1;
+  --color-hairline: #d4e6e5;
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #2563eb;
+  --domain-orange: #f97316;
+  --domain-green: #16a34a;
+  --domain-magenta: #c026d3;
+  --domain-teal: #0d9488;
+  --domain-red: #dc2626;
+  --domain-purple: #7c3aed;
+  --domain-gold: #eab308;
+  --domain-cyan: #0891b2;
+  --domain-brown: #8b5e34;
+  --domain-pink: #db2777;
+  --domain-lime: #65a30d;
+  --domain-indigo: #4f46e5;
+  --domain-coral: #f05d5e;
+  --domain-mint: #10b981;
+  --domain-violet: #8b5cf6;
+  --domain-amber: #d97706;
+  --domain-sky: #0284c7;
+  --domain-rose: #e11d48;
+  --domain-slate: #64748b;
+
+  --color-accent: #0e7c86;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(14, 124, 134, 0.16);
+
+  --color-edge: #6e9092;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(12, 42, 46, 0.04);
+  --elevation-2: 0 4px 14px rgba(12, 42, 46, 0.07), 0 1px 2px rgba(12, 42, 46, 0.04);
+  --elevation-3: 0 16px 44px rgba(12, 42, 46, 0.11), 0 2px 6px rgba(12, 42, 46, 0.05);
+
+  --canvas-grid-dot: #d2e5e4;
+  --canvas-grid-major: rgba(12, 42, 46, 0.05);
+  --canvas-grid-minor: rgba(12, 42, 46, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Deepsea — cool aqua dark. Mirrors Chalkboard's lifted palette over a deep
+   teal-blue background; sibling of Lagoon. */
+:root[data-theme="deepsea"] {
+  color-scheme: dark;
+
+  --color-canvas: #0a1a1f;
+  --color-canvas-muted: #061215;
+  --color-surface: #102a30;
+  --color-surface-subtle: #163840;
+  --color-surface-muted: #1e4751;
+
+  --color-text: #e4eef0;
+  --color-text-muted: #9eb4b8;
+  --color-text-subtle: #647b80;
+  --color-text-faint: #3a4f55;
+  --color-text-inverse: #0a1a1f;
+
+  --color-border: rgba(228, 238, 240, 0.1);
+  --color-border-strong: rgba(228, 238, 240, 0.18);
+  --color-border-subtle: rgba(228, 238, 240, 0.05);
+  --color-hairline: rgba(228, 238, 240, 0.1);
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #58c4dd;
+  --domain-orange: #f0ac5f;
+  --domain-green: #83c167;
+  --domain-magenta: #e879f9;
+  --domain-teal: #5cd0b3;
+  --domain-red: #fc6255;
+  --domain-purple: #b594d6;
+  --domain-gold: #ffd93d;
+  --domain-cyan: #22d3ee;
+  --domain-brown: #c49a6c;
+  --domain-pink: #d147bd;
+  --domain-lime: #a3e635;
+  --domain-indigo: #818cf8;
+  --domain-coral: #fb7f75;
+  --domain-mint: #6ee7b7;
+  --domain-violet: #c4b5fd;
+  --domain-amber: #fbbf24;
+  --domain-sky: #38bdf8;
+  --domain-rose: #fb7185;
+  --domain-slate: #94a3b8;
+
+  --color-accent: #5cd0b3;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(92, 208, 179, 0.26);
+
+  --color-edge: #5e767b;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --elevation-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --canvas-grid-dot: rgba(228, 238, 240, 0.08);
+  --canvas-grid-major: rgba(228, 238, 240, 0.05);
+  --canvas-grid-minor: rgba(228, 238, 240, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Blossom — warm rose light. A blush paper with a deep-rose accent. */
+:root[data-theme="blossom"] {
+  color-scheme: light;
+
+  --color-canvas: #fbf1f3;
+  --color-canvas-muted: #f4e2e6;
+  --color-surface: #fffbfc;
+  --color-surface-subtle: #fdf5f7;
+  --color-surface-muted: #f7e8ec;
+
+  --color-text: #2c1620;
+  --color-text-muted: #5c4049;
+  --color-text-subtle: #9c8088;
+  --color-text-faint: #e2cdd3;
+  --color-text-inverse: #fffbfc;
+
+  --color-border: #efd9df;
+  --color-border-strong: #e3c3cc;
+  --color-border-subtle: #f7e8ec;
+  --color-hairline: #efd9df;
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #2563eb;
+  --domain-orange: #f97316;
+  --domain-green: #16a34a;
+  --domain-magenta: #c026d3;
+  --domain-teal: #0d9488;
+  --domain-red: #dc2626;
+  --domain-purple: #7c3aed;
+  --domain-gold: #eab308;
+  --domain-cyan: #0891b2;
+  --domain-brown: #8b5e34;
+  --domain-pink: #db2777;
+  --domain-lime: #65a30d;
+  --domain-indigo: #4f46e5;
+  --domain-coral: #f05d5e;
+  --domain-mint: #10b981;
+  --domain-violet: #8b5cf6;
+  --domain-amber: #d97706;
+  --domain-sky: #0284c7;
+  --domain-rose: #e11d48;
+  --domain-slate: #64748b;
+
+  --color-accent: #be2d5a;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(190, 45, 90, 0.15);
+
+  --color-edge: #a78a93;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(44, 22, 32, 0.04);
+  --elevation-2: 0 4px 14px rgba(44, 22, 32, 0.07), 0 1px 2px rgba(44, 22, 32, 0.04);
+  --elevation-3: 0 16px 44px rgba(44, 22, 32, 0.11), 0 2px 6px rgba(44, 22, 32, 0.05);
+
+  --canvas-grid-dot: #efd9df;
+  --canvas-grid-major: rgba(44, 22, 32, 0.05);
+  --canvas-grid-minor: rgba(44, 22, 32, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Aubergine — deep plum dark. Sibling of Blossom; lifted palette over a rich
+   aubergine background with a rose accent. */
+:root[data-theme="aubergine"] {
+  color-scheme: dark;
+
+  --color-canvas: #18101c;
+  --color-canvas-muted: #120b16;
+  --color-surface: #241a2a;
+  --color-surface-subtle: #2f2237;
+  --color-surface-muted: #3a2c44;
+
+  --color-text: #ece2f0;
+  --color-text-muted: #b0a2b8;
+  --color-text-subtle: #7c7186;
+  --color-text-faint: #4a3f54;
+  --color-text-inverse: #18101c;
+
+  --color-border: rgba(236, 226, 240, 0.11);
+  --color-border-strong: rgba(236, 226, 240, 0.19);
+  --color-border-subtle: rgba(236, 226, 240, 0.05);
+  --color-hairline: rgba(236, 226, 240, 0.11);
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #58c4dd;
+  --domain-orange: #f0ac5f;
+  --domain-green: #83c167;
+  --domain-magenta: #e879f9;
+  --domain-teal: #5cd0b3;
+  --domain-red: #fc6255;
+  --domain-purple: #b594d6;
+  --domain-gold: #ffd93d;
+  --domain-cyan: #22d3ee;
+  --domain-brown: #c49a6c;
+  --domain-pink: #e07ac0;
+  --domain-lime: #a3e635;
+  --domain-indigo: #818cf8;
+  --domain-coral: #fb7f75;
+  --domain-mint: #6ee7b7;
+  --domain-violet: #c4b5fd;
+  --domain-amber: #fbbf24;
+  --domain-sky: #38bdf8;
+  --domain-rose: #fb7185;
+  --domain-slate: #94a3b8;
+
+  --color-accent: #e07ac0;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(224, 122, 192, 0.26);
+
+  --color-edge: #786c82;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --elevation-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --canvas-grid-dot: rgba(236, 226, 240, 0.08);
+  --canvas-grid-major: rgba(236, 226, 240, 0.05);
+  --canvas-grid-minor: rgba(236, 226, 240, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Prism — vibrant light. A bright, saturated palette over a faint lavender
+   paper with an electric-magenta accent. */
+:root[data-theme="prism"] {
+  color-scheme: light;
+
+  --color-canvas: #f7f8fa;
+  --color-canvas-muted: #eceef2;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #fbfbfd;
+  --color-surface-muted: #eff0f4;
+
+  --color-text: #14151a;
+  --color-text-muted: #44464f;
+  --color-text-subtle: #888a94;
+  --color-text-faint: #c9cbd3;
+  --color-text-inverse: #ffffff;
+
+  --color-border: #e3e5eb;
+  --color-border-strong: #cdd0d8;
+  --color-border-subtle: #eff0f4;
+  --color-hairline: #e3e5eb;
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #2563eb;
+  --domain-orange: #ea580c;
+  --domain-green: #059669;
+  --domain-magenta: #c026d3;
+  --domain-teal: #0891b2;
+  --domain-red: #e11d48;
+  --domain-purple: #9333ea;
+  --domain-gold: #ca8a04;
+  --domain-cyan: #0891b2;
+  --domain-brown: #8b5e34;
+  --domain-pink: #db2777;
+  --domain-lime: #65a30d;
+  --domain-indigo: #4f46e5;
+  --domain-coral: #f05d5e;
+  --domain-mint: #10b981;
+  --domain-violet: #8b5cf6;
+  --domain-amber: #d97706;
+  --domain-sky: #0284c7;
+  --domain-rose: #e11d48;
+  --domain-slate: #64748b;
+
+  --color-accent: #4f46e5;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(79, 70, 229, 0.16);
+
+  --color-edge: #8a8c96;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(20, 21, 26, 0.05);
+  --elevation-2: 0 4px 14px rgba(20, 21, 26, 0.09), 0 1px 2px rgba(20, 21, 26, 0.05);
+  --elevation-3: 0 16px 44px rgba(20, 21, 26, 0.14), 0 2px 6px rgba(20, 21, 26, 0.06);
+
+  --canvas-grid-dot: #e3e5eb;
+  --canvas-grid-major: rgba(20, 21, 26, 0.05);
+  --canvas-grid-minor: rgba(20, 21, 26, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Neon — vibrant dark. Saturated neon domain hues over a deep violet-black,
+   sibling of Prism, with an electric-pink accent. */
+:root[data-theme="neon"] {
+  color-scheme: dark;
+
+  --color-canvas: #0a0a0e;
+  --color-canvas-muted: #060608;
+  --color-surface: #141419;
+  --color-surface-subtle: #1c1c23;
+  --color-surface-muted: #26262f;
+
+  --color-text: #f2f3f7;
+  --color-text-muted: #abadba;
+  --color-text-subtle: #71737f;
+  --color-text-faint: #42434d;
+  --color-text-inverse: #0a0a0e;
+
+  --color-border: rgba(242, 243, 247, 0.11);
+  --color-border-strong: rgba(242, 243, 247, 0.2);
+  --color-border-subtle: rgba(242, 243, 247, 0.05);
+  --color-hairline: rgba(242, 243, 247, 0.11);
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #38bdf8;
+  --domain-orange: #fb923c;
+  --domain-green: #4ade80;
+  --domain-magenta: #e879f9;
+  --domain-teal: #2dd4bf;
+  --domain-red: #fb7185;
+  --domain-purple: #c084fc;
+  --domain-gold: #fcd34d;
+  --domain-cyan: #22d3ee;
+  --domain-brown: #c49a6c;
+  --domain-pink: #f472d0;
+  --domain-lime: #a3e635;
+  --domain-indigo: #818cf8;
+  --domain-coral: #fb7f75;
+  --domain-mint: #6ee7b7;
+  --domain-violet: #c4b5fd;
+  --domain-amber: #fbbf24;
+  --domain-sky: #38bdf8;
+  --domain-rose: #fb7185;
+  --domain-slate: #94a3b8;
+
+  --color-accent: #22d3ee;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(34, 211, 238, 0.28);
+
+  --color-edge: #6c6e7a;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.6);
+  --elevation-3: 0 18px 48px rgba(0, 0, 0, 0.65);
+
+  --canvas-grid-dot: rgba(242, 243, 247, 0.09);
+  --canvas-grid-major: rgba(242, 243, 247, 0.05);
+  --canvas-grid-minor: rgba(242, 243, 247, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Journal — academic light. A restrained, journal-paper palette: warm article
+   white, near-black ink, and a sober Oxford-blue accent. */
+:root[data-theme="journal"] {
+  color-scheme: light;
+
+  --color-canvas: #fbfaf7;
+  --color-canvas-muted: #f1efe9;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #faf9f5;
+  --color-surface-muted: #f0eee7;
+
+  --color-text: #1c1b18;
+  --color-text-muted: #48463f;
+  --color-text-subtle: #8a877c;
+  --color-text-faint: #cfccc1;
+  --color-text-inverse: #ffffff;
+
+  --color-border: #e4e1d7;
+  --color-border-strong: #cfccc1;
+  --color-border-subtle: #f0eee7;
+  --color-hairline: #e4e1d7;
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #1f3a5f;
+  --domain-orange: #a35a1e;
+  --domain-green: #2f6b4f;
+  --domain-magenta: #c026d3;
+  --domain-teal: #2a6e6e;
+  --domain-red: #8a2a2a;
+  --domain-purple: #5a4a8a;
+  --domain-gold: #8a6a1e;
+  --domain-cyan: #0891b2;
+  --domain-brown: #8b5e34;
+  --domain-pink: #8a2a55;
+  --domain-lime: #65a30d;
+  --domain-indigo: #4f46e5;
+  --domain-coral: #f05d5e;
+  --domain-mint: #10b981;
+  --domain-violet: #8b5cf6;
+  --domain-amber: #d97706;
+  --domain-sky: #0284c7;
+  --domain-rose: #e11d48;
+  --domain-slate: #64748b;
+
+  --color-accent: #1f3a5f;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(31, 58, 95, 0.15);
+
+  --color-edge: #8a877c;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(28, 27, 24, 0.04);
+  --elevation-2: 0 4px 12px rgba(28, 27, 24, 0.07), 0 1px 2px rgba(28, 27, 24, 0.04);
+  --elevation-3: 0 14px 40px rgba(28, 27, 24, 0.1), 0 2px 6px rgba(28, 27, 24, 0.05);
+
+  --canvas-grid-dot: #e4e1d7;
+  --canvas-grid-major: rgba(28, 27, 24, 0.05);
+  --canvas-grid-minor: rgba(28, 27, 24, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Lemma — warm cream paper with a vermilion annotation accent.
+   Light: a quiet reading room. Ink near-black, paper cream, accent sparing. */
+:root[data-theme="lemma"] {
+  color-scheme: light;
+
+  --color-canvas: #f4efe0;
+  --color-canvas-muted: #efe9d7;
+  --color-surface: #fffdf8;
+  --color-surface-subtle: #fbf8f1;
+  --color-surface-muted: #f0ead8;
+
+  --color-text: #1a1814;
+  --color-text-muted: #4a453e;
+  --color-text-subtle: #8c8678;
+  --color-text-faint: #c8bfa7;
+  --color-text-inverse: #fffdf8;
+
+  --color-border: #d8d0bc;
+  --color-border-strong: #c8bfa7;
+  --color-border-subtle: #ece5d8;
+  --color-hairline: #d8d0bc;
+
+  /* Warm domain hues — same family as manuscript */
+  /* 20 Atlas domain hues */
+  --domain-blue: #2457c5;
+  --domain-orange: #c56a24;
+  --domain-green: #26844a;
+  --domain-magenta: #c026d3;
+  --domain-teal: #0d9488;
+  --domain-red: #a8431d;
+  --domain-purple: #7c3aed;
+  --domain-gold: #b89418;
+  --domain-cyan: #0891b2;
+  --domain-brown: #8b5e34;
+  --domain-pink: #b83280;
+  --domain-lime: #65a30d;
+  --domain-indigo: #4f46e5;
+  --domain-coral: #f05d5e;
+  --domain-mint: #10b981;
+  --domain-violet: #8b5cf6;
+  --domain-amber: #d97706;
+  --domain-sky: #0284c7;
+  --domain-rose: #e11d48;
+  --domain-slate: #64748b;
+
+  /* Vermilion — the single brand accent. Used like a red pen: annotations,
+     active states, focus rings. Never large fills or primary call-to-action. */
+  --color-accent: #c2410c;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(194, 65, 12, 0.12);
+
+  --color-edge: #8c8678;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(26, 24, 20, 0.04), 0 1px 0 rgba(26, 24, 20, 0.02);
+  --elevation-2: 0 4px 14px rgba(26, 24, 20, 0.07), 0 1px 2px rgba(26, 24, 20, 0.04);
+  --elevation-3: 0 14px 40px rgba(26, 24, 20, 0.1), 0 2px 6px rgba(26, 24, 20, 0.05);
+
+  --canvas-grid-dot: #d8d0bc;
+  --canvas-grid-major: rgba(26, 24, 20, 0.05);
+  --canvas-grid-minor: rgba(26, 24, 20, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: #ede3ce;
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: rgba(194, 65, 12, 0.08);
+  --dia-int: rgba(194, 65, 12, 0.08);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Lemma Dark — an ink-black study lamp, not a paper inversion.
+   Warm near-black bg, paper-cream text, lifted vermilion accent. */
+:root[data-theme="lemma-dark"] {
+  color-scheme: dark;
+
+  --color-canvas: #15130f;
+  --color-canvas-muted: #100d0a;
+  --color-surface: #1c1a15;
+  --color-surface-subtle: #24211b;
+  --color-surface-muted: #2e2a22;
+
+  --color-text: #f0ead8;
+  --color-text-muted: #b5ae9b;
+  --color-text-subtle: #7a7262;
+  --color-text-faint: #4a4338;
+  --color-text-inverse: #15130f;
+
+  --color-border: rgba(240, 234, 216, 0.1);
+  --color-border-strong: rgba(240, 234, 216, 0.18);
+  --color-border-subtle: rgba(240, 234, 216, 0.05);
+  --color-hairline: rgba(240, 234, 216, 0.1);
+
+  /* Lifted warm hues for contrast on near-black */
+  /* 20 Atlas domain hues */
+  --domain-blue: #6fb6c9;
+  --domain-orange: #e0a05a;
+  --domain-green: #9fc279;
+  --domain-magenta: #e879f9;
+  --domain-teal: #66cdb8;
+  --domain-red: #f0795f;
+  --domain-purple: #c0a0da;
+  --domain-gold: #e6c45a;
+  --domain-cyan: #22d3ee;
+  --domain-brown: #c49a6c;
+  --domain-pink: #d96fa8;
+  --domain-lime: #a3e635;
+  --domain-indigo: #818cf8;
+  --domain-coral: #fb7f75;
+  --domain-mint: #6ee7b7;
+  --domain-violet: #c4b5fd;
+  --domain-amber: #fbbf24;
+  --domain-sky: #38bdf8;
+  --domain-rose: #fb7185;
+  --domain-slate: #94a3b8;
+
+  --color-accent: #e26b30;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(226, 107, 48, 0.24);
+
+  --color-edge: #7a7262;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --elevation-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --canvas-grid-dot: rgba(240, 234, 216, 0.08);
+  --canvas-grid-major: rgba(240, 234, 216, 0.05);
+  --canvas-grid-minor: rgba(240, 234, 216, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Seminar — academic dark. Sibling of Journal: a warm charcoal reader with a
+   lifted, muted palette and a soft slate-blue accent. */
+:root[data-theme="seminar"] {
+  color-scheme: dark;
+
+  --color-canvas: #1a1815;
+  --color-canvas-muted: #131210;
+  --color-surface: #23211d;
+  --color-surface-subtle: #2c2a25;
+  --color-surface-muted: #36332d;
+
+  --color-text: #eceae3;
+  --color-text-muted: #aca89c;
+  --color-text-subtle: #76736a;
+  --color-text-faint: #46443d;
+  --color-text-inverse: #1a1815;
+
+  --color-border: rgba(236, 234, 227, 0.11);
+  --color-border-strong: rgba(236, 234, 227, 0.19);
+  --color-border-subtle: rgba(236, 234, 227, 0.05);
+  --color-hairline: rgba(236, 234, 227, 0.11);
+
+  /* 20 Atlas domain hues */
+  --domain-blue: #7fa8dc;
+  --domain-orange: #dca974;
+  --domain-green: #88be8e;
+  --domain-magenta: #e879f9;
+  --domain-teal: #6fc2ba;
+  --domain-red: #e08a82;
+  --domain-purple: #b49ad4;
+  --domain-gold: #dcc57e;
+  --domain-cyan: #22d3ee;
+  --domain-brown: #c49a6c;
+  --domain-pink: #d88aae;
+  --domain-lime: #a3e635;
+  --domain-indigo: #818cf8;
+  --domain-coral: #fb7f75;
+  --domain-mint: #6ee7b7;
+  --domain-violet: #c4b5fd;
+  --domain-amber: #fbbf24;
+  --domain-sky: #38bdf8;
+  --domain-rose: #fb7185;
+  --domain-slate: #94a3b8;
+
+  --color-accent: #7fa8dc;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+
+  --color-selection: rgba(127, 168, 220, 0.26);
+
+  --color-edge: #76736a;
+  --color-edge-active: var(--color-accent);
+
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --elevation-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --canvas-grid-dot: rgba(236, 234, 227, 0.08);
+  --canvas-grid-major: rgba(236, 234, 227, 0.05);
+  --canvas-grid-minor: rgba(236, 234, 227, 0.025);
+
+  --dia-paper: var(--color-surface);
+  --dia-space: var(--color-surface-subtle);
+  --dia-panel: var(--color-surface);
+  --dia-fill: var(--color-surface-subtle);
+  --dia-fill2: var(--color-surface-muted);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--color-accent-soft);
+  --dia-int: var(--color-accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--domain-red);
+  --dia-ext: var(--color-text-subtle);
+  --dia-ok: var(--domain-green);
+  --dia-line: var(--color-border);
+  --dia-ink: var(--color-text);
+  --dia-acc: var(--color-accent);
+  --dia-acc2: var(--domain-teal);
+  --dia-acc3: var(--domain-purple);
+  --dia-acc3-fill: var(--domain-purple-tint);
+  --dia-mut: var(--color-text-subtle);
+  --dia-muted-fill: var(--color-border-strong);
+}
+
+/* Diagram fills are semantic marks, not app chrome. Keep them distinct from
+   the SVG/card background so set regions remain visible in every theme. */
+:root,
+:root[data-theme] {
+  --dia-paper: color-mix(in srgb, var(--color-surface) 92%, var(--color-canvas));
+  --dia-space: color-mix(in srgb, var(--color-surface) 94%, var(--color-canvas));
+  --dia-panel: color-mix(in srgb, var(--color-surface) 96%, var(--color-canvas));
+  --dia-fill: color-mix(in srgb, var(--color-accent) 13%, var(--color-surface));
+  --dia-fill2: color-mix(in srgb, var(--domain-teal) 11%, var(--color-surface));
+  --dia-domain: var(--dia-fill);
+  --dia-open: color-mix(in srgb, var(--color-accent) 18%, var(--color-surface));
+  --dia-int: var(--dia-open);
+  --dia-set: var(--dia-fill);
+  --dia-acc-fill: color-mix(in srgb, var(--dia-acc) 18%, transparent);
+  --dia-acc2-fill: color-mix(in srgb, var(--dia-acc2) 18%, transparent);
+  --dia-boundary-fill: color-mix(in srgb, var(--dia-boundary) 16%, transparent);
+  --dia-muted-fill: color-mix(in srgb, var(--color-text-subtle) 16%, var(--color-surface));
+}
+
+/* ---- TYPOGRAPHY ----------------------------------------------------- */
+:root {
+  --font-serif: "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
+  --font-sans: "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+  --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
+
+  --type-edge-label: 9px;
+  --type-ui-tiny: 9.5px;
+  --type-ui-2xs: 10px;
+  --type-ui-caption: 10.5px;
+  --type-ui-hint: 11px;
+  --type-ui-meta: 11.5px;
+  --type-ui-xs: 12px;
+  --type-ui-control: 12.5px;
+  --type-ui-sm: 13px;
+  --type-ui-copy: 14.25px;
+  --type-ui-body: 14px;
+  --type-ui-lead: 15px;
+  --type-atlas-brand: 20px;
+  --type-dict-compact-title: 18px;
+  --type-atlas-card: 20px;
+  --type-dict-term: 24px;
+  --type-node-panel-title: 25px;
+  --type-atlas-panel: 27px;
+  --type-atlas-summary: 28px;
+  --type-atlas-display: 34px;
+
+  /* Semantic status color. Aliases the theme-tuned --domain-red so danger affordances
+     retune across every theme — no per-theme block needed (same pattern as the
+     --fact-* glyph colors). */
+  --color-danger: var(--domain-red);
+
+  --tracking-label: 0.13em;
+  --tracking-label-wide: 0.14em;
+  --tracking-label-tight: 0.06em;
+  --tracking-kicker: 0.16em;
+  --tracking-code: 0.02em;
+
+  /* Radius scale — restrained, editorial feel */
+  --radius-xs: 4px;
+  /* kbd, tags, tiny chips */
+  --radius-sm: 7px;
+  /* compact icon buttons, depth picker */
+  --radius-md: 10px;
+  /* segmented controls, small cards */
+  --radius-lg: 14px;
+  /* panels, node cards, tiles */
+  --radius-xl: 16px;
+  /* pill chrome wrappers, search bar */
+  --radius-2xl: 20px;
+  /* popovers, map panel */
+  --radius-pill: 999px;
+
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-micro: 120ms;
+  --dur-std: 220ms;
+
+  --chrome-bg: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  --chrome-bg-strong: color-mix(in srgb, var(--color-surface) 98%, transparent);
+  --chrome-hover: color-mix(in srgb, var(--color-text) 7%, transparent);
+  --chrome-active: color-mix(in srgb, var(--color-text) 9%, var(--color-surface) 88%);
+  --chrome-border: color-mix(in srgb, var(--color-border) 78%, transparent);
+  --chrome-divider: color-mix(in srgb, var(--color-border) 72%, transparent);
+  --chrome-highlight: color-mix(in srgb, var(--color-surface) 82%, transparent);
+  --chrome-shadow: 0 8px 22px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --chrome-shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --chrome-shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.13), 0 4px 10px rgba(15, 23, 42, 0.07);
+}
+
+:root[data-theme="chalkboard"],
+:root[data-theme="3b1b-dark"],
+:root[data-theme="nocturne"],
+:root[data-theme="deepsea"],
+:root[data-theme="aubergine"],
+:root[data-theme="neon"],
+:root[data-theme="seminar"],
+:root[data-theme="lemma-dark"] {
+  --chrome-bg: color-mix(in srgb, var(--color-surface) 86%, transparent);
+  --chrome-bg-strong: color-mix(in srgb, var(--color-surface) 97%, transparent);
+  --chrome-hover: color-mix(in srgb, var(--color-text) 10%, transparent);
+  --chrome-active: color-mix(in srgb, var(--color-text) 14%, var(--color-surface) 84%);
+  --chrome-border: color-mix(in srgb, var(--color-border-strong) 70%, transparent);
+  --chrome-divider: color-mix(in srgb, var(--color-border-strong) 58%, transparent);
+  --chrome-highlight: color-mix(in srgb, var(--color-text) 12%, transparent);
+  --chrome-shadow: 0 10px 28px rgba(0, 0, 0, 0.34), 0 1px 5px rgba(0, 0, 0, 0.26);
+  --chrome-shadow-soft: 0 5px 16px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --chrome-shadow-popover: 0 22px 54px rgba(0, 0, 0, 0.46), 0 5px 14px rgba(0, 0, 0, 0.34);
+}

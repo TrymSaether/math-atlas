@@ -136,15 +136,13 @@ function MapBrandSelector() {
         <span
           className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm transition-transform group-hover:scale-105"
           style={{
-            background: "color-mix(in srgb, var(--surface) 78%, transparent)",
+            background: "color-mix(in srgb, var(--color-surface) 78%, transparent)",
             boxShadow: "inset 0 0 0 1px var(--chrome-border)",
           }}
         >
-          <LogoMark size={18} className="text-(--fg-1)" />
+          <LogoMark size={18} className="text-(--color-text)" />
         </span>
-        <span className="hidden whitespace-nowrap font-serif text-atlas-brand text-fg-1 sm:inline">
-          Math Atlas
-        </span>
+        <span className="hidden whitespace-nowrap font-serif text-atlas-brand text-text sm:inline">Math Atlas</span>
       </Button>
       <Button
         kind="field"
@@ -152,7 +150,7 @@ function MapBrandSelector() {
         onClick={() => setOpen((o) => !o)}
         className={cn(
           "flex h-9 min-w-0 items-center gap-2 rounded-md px-2.5 text-ui-control font-sans sm:px-3.5",
-          !open && "text-fg-1",
+          !open && "text-text",
         )}
         aria-label="Field selector"
         aria-expanded={open}
@@ -161,7 +159,7 @@ function MapBrandSelector() {
         <CaretDownIcon
           className={cn(
             "h-3.5 w-3.5 shrink-0 transition-transform duration-150",
-            open ? "rotate-180 text-accent" : "text-fg-2",
+            open ? "rotate-180 text-accent" : "text-text-muted",
           )}
         />
       </Button>
@@ -181,7 +179,7 @@ function MapBrandSelector() {
                 }}
                 className={cn(
                   "flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-left text-ui-control",
-                  !active && "text-fg-2",
+                  !active && "text-text-muted",
                 )}
               >
                 <span className="block min-w-0 flex-1 truncate">{entry.title}</span>
@@ -201,13 +199,13 @@ function SearchBox() {
     <Button
       kind="text"
       onClick={() => setPaletteOpen(true)}
-      className="flex h-9 min-w-9 items-center gap-2 rounded-md px-2.5 text-ui-control text-fg-2 md:min-w-[190px] md:px-3.5"
+      className="flex h-9 min-w-9 items-center gap-2 rounded-md px-2.5 text-ui-control text-text-muted md:min-w-[190px] md:px-3.5"
       aria-label="Open search"
     >
-      <MagnifyingGlassIcon className="h-4 w-4 shrink-0 text-fg-3" />
+      <MagnifyingGlassIcon className="h-4 w-4 shrink-0 text-text-subtle" />
       <span className="hidden md:inline">Search the atlas</span>
       <kbd
-        className="ml-auto hidden h-5 items-center rounded-xs border px-1.5 font-mono text-ui-2xs text-fg-2 md:inline-flex"
+        className="ml-auto hidden h-5 items-center rounded-xs border px-1.5 font-mono text-ui-2xs text-text-muted md:inline-flex"
         style={{
           background: "var(--chrome-hover)",
           borderColor: "var(--chrome-border)",
@@ -224,12 +222,7 @@ function AtlasButton() {
   const setSurface = useStore((s) => s.setSurface);
   const active = surface === "atlas";
   return (
-    <DockButton
-      onClick={() => setSurface("atlas")}
-      active={active}
-      label="Atlas map"
-      title="Atlas map"
-    >
+    <DockButton onClick={() => setSurface("atlas")} active={active} label="Atlas map" title="Atlas map">
       <CompassIcon className="h-4 w-4" weight="regular" />
     </DockButton>
   );
@@ -293,12 +286,7 @@ function DisplayButton() {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
       const target = e.target as Node;
-      if (
-        ref.current &&
-        !ref.current.contains(target) &&
-        popoverRef.current &&
-        !popoverRef.current.contains(target)
-      ) {
+      if (ref.current && !ref.current.contains(target) && popoverRef.current && !popoverRef.current.contains(target)) {
         setOpen(false);
       }
     };
@@ -355,8 +343,8 @@ function ThemeSwatch({
       style={{
         background: `linear-gradient(135deg, ${p.surface} 0 50%, ${p.accent} 50% 100%)`,
         boxShadow: active
-          ? "0 0 0 2px var(--surface), 0 0 0 3.5px var(--accent)"
-          : "inset 0 0 0 1px var(--border-strong)",
+          ? "0 0 0 2px var(--color-surface), 0 0 0 3.5px var(--color-accent)"
+          : "inset 0 0 0 1px var(--color-border-strong)",
       }}
       aria-pressed={active}
       aria-label={theme.label}
@@ -383,19 +371,12 @@ function DisplayPopover({
       style={{ top: position.top, right: position.right }}
     >
       <div className="mb-2.5 flex items-baseline justify-between">
-        <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
-          Theme
-        </span>
-        <span className="text-ui-meta font-medium text-fg-2">{activeLabel}</span>
+        <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-text-subtle">Theme</span>
+        <span className="text-ui-meta font-medium text-text-muted">{activeLabel}</span>
       </div>
       <div className="flex flex-wrap items-center gap-3">
         {THEMES.map((t) => (
-          <ThemeSwatch
-            key={t.id}
-            theme={t}
-            active={t.id === theme}
-            onClick={() => setTheme(t.id)}
-          />
+          <ThemeSwatch key={t.id} theme={t} active={t.id === theme} onClick={() => setTheme(t.id)} />
         ))}
       </div>
     </div>,
@@ -425,12 +406,7 @@ function EditToggle() {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
       const target = e.target as Node;
-      if (
-        ref.current &&
-        !ref.current.contains(target) &&
-        popoverRef.current &&
-        !popoverRef.current.contains(target)
-      ) {
+      if (ref.current && !ref.current.contains(target) && popoverRef.current && !popoverRef.current.contains(target)) {
         setOpen(false);
         setConfirmDiscard(false);
       }
@@ -600,13 +576,7 @@ function EditMapPopover({
       role="dialog"
       aria-label="Edit map"
     >
-      <Button
-        kind="icon"
-        accent
-        onClick={onNewConcept}
-        title="New concept"
-        aria-label="New concept"
-      >
+      <Button kind="icon" accent onClick={onNewConcept} title="New concept" aria-label="New concept">
         <PlusIcon className="h-4 w-4" weight="bold" />
       </Button>
 
@@ -685,11 +655,7 @@ function SchemeToggle() {
       label={isDark ? "Switch to light scheme" : "Switch to dark scheme"}
       title={isDark ? "Light" : "Dark"}
     >
-      {isDark ? (
-        <SunIcon className="h-4 w-4" weight="regular" />
-      ) : (
-        <MoonIcon className="h-4 w-4" weight="regular" />
-      )}
+      {isDark ? <SunIcon className="h-4 w-4" weight="regular" /> : <MoonIcon className="h-4 w-4" weight="regular" />}
     </DockButton>
   );
 }

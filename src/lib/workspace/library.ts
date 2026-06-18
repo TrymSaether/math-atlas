@@ -11,19 +11,19 @@ import type { DistributiveOmit, Mark, Row, ViewRect, Workspace } from "./types";
 let seq = 0;
 const uid = (p = "row") => `${p}_${(seq++).toString(36)}`;
 
-/** Domain hues from index.css — color is reserved for meaning. */
+/** Domain hues from the CSS token layer — color is reserved for meaning. */
 export const PALETTE = [
-  "var(--blue)",
-  "var(--red)",
-  "var(--green)",
-  "var(--purple)",
-  "var(--orange)",
-  "var(--teal)",
-  "var(--pink)",
-  "var(--gold)",
-  "var(--brown)",
-  "var(--cyan)",
-  "var(--magenta)",
+  "var(--domain-blue)",
+  "var(--domain-red)",
+  "var(--domain-green)",
+  "var(--domain-purple)",
+  "var(--domain-orange)",
+  "var(--domain-teal)",
+  "var(--domain-pink)",
+  "var(--domain-gold)",
+  "var(--domain-brown)",
+  "var(--domain-cyan)",
+  "var(--domain-magenta)",
 ] as const;
 
 interface RowSpec {

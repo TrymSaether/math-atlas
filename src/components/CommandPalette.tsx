@@ -52,15 +52,13 @@ export function CommandPalette() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.16 }}
                 className="fixed inset-0 z-60 backdrop-blur-[2px]"
-                style={{ background: "color-mix(in srgb, var(--bg-deep) 55%, transparent)" }}
+                style={{ background: "color-mix(in srgb, var(--color-canvas-muted) 55%, transparent)" }}
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
               <div className="fixed left-1/2 top-1/2 z-60 w-155 max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
                 <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
-                <Dialog.Description className="sr-only">
-                  Jump to a concept or switch fields.
-                </Dialog.Description>
+                <Dialog.Description className="sr-only">Jump to a concept or switch fields.</Dialog.Description>
                 <motion.div
                   initial={reduceMotion ? false : { opacity: 0, y: -12, scale: 0.99 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -70,30 +68,30 @@ export function CommandPalette() {
                   <Command
                     className="overflow-hidden rounded-2xl border"
                     style={{
-                      background: "var(--surface)",
-                      borderColor: "var(--border)",
-                      boxShadow: "var(--shadow-3)",
+                      background: "var(--color-surface)",
+                      borderColor: "var(--color-border)",
+                      boxShadow: "var(--elevation-3)",
                     }}
                     loop
                   >
-                    <div className="border-b px-4 py-3" style={{ borderColor: "var(--border)" }}>
+                    <div className="border-b px-4 py-3" style={{ borderColor: "var(--color-border)" }}>
                       <Command.Input
                         data-no-focus-ring
                         value={query}
                         onValueChange={setQuery}
                         placeholder="Search concepts, definitions, theorems…"
-                        className="w-full bg-transparent text-ui-body outline-none placeholder:text-(--fg-3)"
-                        style={{ color: "var(--fg-1)" }}
+                        className="w-full bg-transparent text-ui-body outline-none placeholder:text-(--color-text-subtle)"
+                        style={{ color: "var(--color-text)" }}
                       />
                     </div>
                     <Command.List className="panel-scrollbar max-h-105 overflow-y-auto p-2">
-                      <Command.Empty className="px-3 py-6 text-center text-ui-xs text-(--fg-3)">
+                      <Command.Empty className="px-3 py-6 text-center text-ui-xs text-(--color-text-subtle)">
                         No results.
                       </Command.Empty>
 
                       <Command.Group
                         heading="Fields"
-                        className="px-2 pt-2 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide **:[[cmdk-group-heading]]:text-(--fg-3)"
+                        className="px-2 pt-2 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide **:[[cmdk-group-heading]]:text-(--color-text-subtle)"
                       >
                         {catalog.map((entry) => (
                           <Item
@@ -104,7 +102,7 @@ export function CommandPalette() {
                               setOpen(false);
                             }}
                           >
-                            <span className="text-ui-sm text-(--fg-1)">Open {entry.title}</span>
+                            <span className="text-ui-sm text-(--color-text)">Open {entry.title}</span>
                           </Item>
                         ))}
                       </Command.Group>
@@ -112,7 +110,7 @@ export function CommandPalette() {
                       {data && (
                         <Command.Group
                           heading="Concepts"
-                          className="px-2 pt-3 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide **:[[cmdk-group-heading]]:text-(--fg-3)"
+                          className="px-2 pt-3 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide **:[[cmdk-group-heading]]:text-(--color-text-subtle)"
                         >
                           {data.nodes.map((n) => {
                             const tone = getDomainTone(n.domain);
@@ -127,27 +125,20 @@ export function CommandPalette() {
                                 }}
                               >
                                 <span className="flex w-full items-center gap-2.5">
-                                  <span
-                                    className="h-2 w-2 shrink-0 rounded-full"
-                                    style={{ background: tone.color }}
-                                  />
+                                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: tone.color }} />
                                   <span
                                     className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
                                     style={{ background: tone.tint, color: tone.color }}
                                   >
-                                    <CategoryIcon
-                                      className="h-2.5 w-2.5"
-                                      weight="bold"
-                                      aria-hidden
-                                    />
+                                    <CategoryIcon className="h-2.5 w-2.5" weight="bold" aria-hidden />
                                   </span>
-                                  <span className="w-24 shrink-0 text-ui-caption font-medium uppercase tracking-label-tight text-(--fg-3)">
+                                  <span className="w-24 shrink-0 text-ui-caption font-medium uppercase tracking-label-tight text-(--color-text-subtle)">
                                     {KIND_LABEL[n.kind]}
                                   </span>
-                                  <span className="min-w-0 flex-1 truncate text-ui-sm text-(--fg-1)">
+                                  <span className="min-w-0 flex-1 truncate text-ui-sm text-(--color-text)">
                                     <MathText text={n.label} />
                                   </span>
-                                  <span className="ml-2 max-w-35 truncate text-ui-caption text-(--fg-3)">
+                                  <span className="ml-2 max-w-35 truncate text-ui-caption text-(--color-text-subtle)">
                                     {n.topicCluster}
                                   </span>
                                 </span>
@@ -159,8 +150,8 @@ export function CommandPalette() {
                     </Command.List>
 
                     <div
-                      className="flex items-center justify-between border-t px-3 py-1.5 text-ui-caption text-(--fg-3)"
-                      style={{ borderColor: "var(--border-subtle)" }}
+                      className="flex items-center justify-between border-t px-3 py-1.5 text-ui-caption text-(--color-text-subtle)"
+                      style={{ borderColor: "var(--color-border-subtle)" }}
                     >
                       <span>↑↓ navigate · ↵ select · esc close</span>
                       <span className="font-mono">⌘K</span>
@@ -176,20 +167,12 @@ export function CommandPalette() {
   );
 }
 
-function Item({
-  children,
-  onSelect,
-  value,
-}: {
-  children: React.ReactNode;
-  onSelect: () => void;
-  value?: string;
-}) {
+function Item({ children, onSelect, value }: { children: React.ReactNode; onSelect: () => void; value?: string }) {
   return (
     <Command.Item
       value={value}
       onSelect={onSelect}
-      className="cursor-pointer rounded-sm px-2 py-2 text-ui-sm text-(--fg-1) aria-selected:bg-(--accent-soft) aria-selected:text-(--fg-1)"
+      className="cursor-pointer rounded-sm px-2 py-2 text-ui-sm text-(--color-text) aria-selected:bg-(--color-accent-soft) aria-selected:text-(--color-text)"
     >
       {children}
     </Command.Item>

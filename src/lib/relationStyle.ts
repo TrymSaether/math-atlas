@@ -63,9 +63,9 @@ export function familyOf(edge: { relation: string; isDependency: boolean }): Edg
 // Neutral ink for every family — structure reads as one quiet schematic rather than
 // a rainbow. The head shape carries the type; highlight switches to the accent.
 const FAMILY_BASE: Record<EdgeFamily, Omit<RelationStyle, "family" | "symmetric">> = {
-  dependency: { color: "var(--edge-ink)", opacity: 0.46, width: 1.4, marker: "triangle" },
-  generalization: { color: "var(--edge-ink)", opacity: 0.46, width: 1.4, marker: "open-triangle" },
-  soft: { color: "var(--edge-ink)", opacity: 0.3, width: 1.1, dash: "2 5", marker: "circle" },
+  dependency: { color: "var(--color-edge)", opacity: 0.46, width: 1.4, marker: "triangle" },
+  generalization: { color: "var(--color-edge)", opacity: 0.46, width: 1.4, marker: "open-triangle" },
+  soft: { color: "var(--color-edge)", opacity: 0.3, width: 1.1, dash: "2 5", marker: "circle" },
 };
 
 export function getEdgeStyle(
@@ -76,7 +76,7 @@ export function getEdgeStyle(
   const family = familyOf(edge);
   const base = FAMILY_BASE[family];
   return {
-    color: highlighted ? "var(--edge-highlight)" : base.color,
+    color: highlighted ? "var(--color-edge-active)" : base.color,
     opacity: dimmed ? 0.06 : highlighted ? 0.95 : base.opacity,
     width: highlighted ? Math.max(base.width + 1.4, 2.8) : base.width,
     dash: highlighted ? undefined : base.dash,

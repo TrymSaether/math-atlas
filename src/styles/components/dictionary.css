@@ -29,20 +29,20 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  border-right: 1px solid var(--border);
-  background: var(--surface-2);
+  border-right: 1px solid var(--color-border);
+  background: var(--color-surface-subtle);
 }
 
 .dictionary-view .dict-index-head {
   flex-shrink: 0;
   padding: 14px 16px 12px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
 }
 
 .dictionary-view .dict-kicker {
   margin: 0;
-  color: var(--accent);
+  color: var(--color-accent);
   font-family: var(--font-mono);
   font-size: var(--type-ui-hint);
   letter-spacing: var(--tracking-kicker);
@@ -63,12 +63,12 @@
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: 0;
-  color: var(--fg-1);
+  color: var(--color-text);
 }
 
 .dictionary-view .dict-count {
   flex-shrink: 0;
-  color: var(--fg-3);
+  color: var(--color-text-subtle);
   font-family: var(--font-mono);
   font-size: var(--type-ui-hint);
   white-space: nowrap;
@@ -87,7 +87,7 @@
   width: 13px;
   height: 13px;
   transform: translateY(-50%);
-  color: var(--fg-4);
+  color: var(--color-text-faint);
   pointer-events: none;
 }
 
@@ -95,10 +95,10 @@
   width: 100%;
   min-height: 34px;
   padding: 7px 10px 7px 28px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  background: var(--surface-2);
-  color: var(--fg-1);
+  background: var(--color-surface-subtle);
+  color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--type-ui-sm);
   outline: none;
@@ -108,12 +108,12 @@
 }
 
 .dictionary-view .dict-search input::placeholder {
-  color: var(--fg-4);
+  color: var(--color-text-faint);
 }
 
 .dictionary-view .dict-search input:focus {
-  border-color: var(--accent-border);
-  background: var(--surface);
+  border-color: var(--color-accent-border);
+  background: var(--color-surface);
 }
 
 /* ---- Domain facets ------------------------------------------------- */
@@ -130,11 +130,11 @@
   align-items: center;
   gap: 5px;
   max-width: 100%;
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border);
   min-height: 24px;
   border-radius: var(--radius-sm);
-  background: var(--surface);
-  color: var(--fg-3);
+  background: var(--color-surface);
+  color: var(--color-text-subtle);
   cursor: pointer;
   font-size: var(--type-ui-2xs);
   font-weight: 500;
@@ -146,7 +146,7 @@
 }
 
 .dictionary-view .dict-facet:hover {
-  border-color: var(--border-strong);
+  border-color: var(--color-border-strong);
 }
 
 .dictionary-view .dict-facet-lab {
@@ -172,7 +172,7 @@
 .dictionary-view .dict-facet-reset {
   border: none;
   background: none;
-  color: var(--accent);
+  color: var(--color-accent);
   cursor: pointer;
   font-size: var(--type-ui-2xs);
   padding: 3px 5px;
@@ -192,7 +192,7 @@
 
 .dictionary-view .dict-controls-lab {
   margin-right: 2px;
-  color: var(--fg-3);
+  color: var(--color-text-subtle);
   font-family: var(--font-mono);
   font-size: var(--type-ui-2xs);
   letter-spacing: var(--tracking-label-tight);
@@ -200,12 +200,12 @@
 }
 
 .dictionary-view .dict-chip {
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border);
   min-height: 24px;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  background: var(--surface);
-  color: var(--fg-2);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
   font-family: var(--font-mono);
   font-size: var(--type-ui-tiny);
   letter-spacing: var(--tracking-code);
@@ -217,14 +217,14 @@
 }
 
 .dictionary-view .dict-chip:hover {
-  border-color: var(--border-strong);
-  color: var(--fg-1);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
 }
 
 .dictionary-view .dict-chip[aria-pressed="true"] {
-  border-color: var(--accent-border);
-  background: var(--accent-soft);
-  color: var(--accent);
+  border-color: var(--color-accent-border);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
 }
 
 /* ---- Index rows ---------------------------------------------------- */
@@ -249,7 +249,7 @@
   gap: 6px;
   margin: 0;
   padding: 6px 10px 4px;
-  color: var(--fg-3);
+  color: var(--color-text-subtle);
   font-family: var(--font-mono);
   font-size: var(--type-ui-2xs);
   font-weight: 600;
@@ -257,12 +257,12 @@
   text-transform: uppercase;
   position: sticky;
   top: 0;
-  background: linear-gradient(var(--surface-2) 70%, transparent);
+  background: linear-gradient(var(--color-surface-subtle) 70%, transparent);
   z-index: 1;
 }
 
 .dictionary-view .dict-group-n {
-  color: var(--fg-4);
+  color: var(--color-text-faint);
   font-size: var(--type-ui-tiny);
   font-weight: 500;
 }
@@ -314,7 +314,7 @@
   font-size: var(--type-ui-copy);
   line-height: 1.35;
   font-weight: 450;
-  color: var(--fg-1);
+  color: var(--color-text);
 }
 
 .dictionary-view .dict-row-meta {
@@ -322,11 +322,11 @@
   font-family: var(--font-mono);
   font-size: var(--type-ui-caption);
   letter-spacing: var(--tracking-code);
-  color: var(--fg-3);
+  color: var(--color-text-subtle);
 }
 
 .dictionary-view .dict-row--active {
-  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+  background: color-mix(in srgb, var(--color-accent) 9%, var(--color-surface));
 }
 
 .dictionary-view .dict-row--active .dict-row-term {
@@ -341,7 +341,7 @@
 .dictionary-view .dict-detail {
   min-height: 0;
   overflow-y: auto;
-  background: var(--bg);
+  background: var(--color-canvas);
 }
 
 .dictionary-view .dict-doc-inner {
@@ -357,7 +357,7 @@
   margin-bottom: 16px;
   border: none;
   background: none;
-  color: var(--accent);
+  color: var(--color-accent);
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: var(--type-ui-xs);
@@ -380,9 +380,9 @@
   width: 100%;
   max-width: 460px;
   height: auto;
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background: var(--surface);
+  background: var(--color-surface);
   padding: 12px;
 }
 
@@ -403,7 +403,7 @@
   gap: 16px;
   margin-top: 28px;
   padding-top: 18px;
-  border-top: 1px dashed var(--border);
+  border-top: 1px dashed var(--color-border);
 }
 
 .dictionary-view .dict-open {
@@ -411,11 +411,11 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  border: 1px solid var(--accent-border);
+  border: 1px solid var(--color-accent-border);
   min-height: 30px;
   border-radius: var(--radius-sm);
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: var(--type-ui-caption);
@@ -424,7 +424,7 @@
 }
 
 .dictionary-view .dict-open:hover {
-  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
 }
 
 .dictionary-view .dict-detail-empty,
@@ -434,7 +434,7 @@
   justify-content: center;
   height: 100%;
   padding: 64px 24px;
-  color: var(--fg-3);
+  color: var(--color-text-subtle);
   font-style: italic;
   text-align: center;
 }
@@ -468,5 +468,4 @@
   .dictionary-view .dict-doc-inner {
     padding: 24px 22px 80px;
   }
-
 }

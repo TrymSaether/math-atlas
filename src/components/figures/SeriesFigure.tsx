@@ -52,7 +52,7 @@ export default function SeriesFigure() {
         label={`N = ${terms}`}
         ariaLabel="Number of harmonics"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--color-text-subtle)" }}>
         {CAPTION[kind]}
       </figcaption>
     </figure>

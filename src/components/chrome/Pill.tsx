@@ -10,7 +10,7 @@ import { Button } from "./Button";
  * Shared between the top bar and the canvas dock so radius, padding, and the
  * glass treatment stay identical across all floating chrome. Callers add the
  * scope class (`top-tools` or `canvas-dock`) via `className` to pick up the
- * context-specific icon sizing defined in index.css.
+ * context-specific icon sizing defined in the chrome CSS component layer.
  */
 export function Pill({
   children,

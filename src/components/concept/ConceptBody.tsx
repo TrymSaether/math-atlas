@@ -153,7 +153,7 @@ function ExtraEnvironment({ entry }: { entry: ConceptView["extraContent"][number
 function ExtraValue({ value }: { value: unknown }) {
   if (typeof value === "string") {
     return (
-      <div className="text-ui-copy" style={{ color: "var(--fg-1)" }}>
+      <div className="text-ui-copy" style={{ color: "var(--color-text)" }}>
         <MathProse text={value} />
       </div>
     );
@@ -164,8 +164,12 @@ function ExtraValue({ value }: { value: unknown }) {
     return (
       <ul className="m-0 space-y-1.5 p-0">
         {items.map((item, index) => (
-          <li key={index} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--fg-1)" }}>
-            <span aria-hidden className="mt-2.25 h-1 w-1 shrink-0 rounded-full" style={{ background: "var(--fg-3)" }} />
+          <li key={index} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--color-text)" }}>
+            <span
+              aria-hidden
+              className="mt-2.25 h-1 w-1 shrink-0 rounded-full"
+              style={{ background: "var(--color-text-subtle)" }}
+            />
             <span className="min-w-0">
               <MathProse text={item} />
             </span>
@@ -179,9 +183,9 @@ function ExtraValue({ value }: { value: unknown }) {
     <pre
       className="panel-scrollbar max-w-full overflow-x-auto rounded-md border px-3 py-2 font-mono text-ui-xs leading-[1.6]"
       style={{
-        background: "var(--surface-2)",
-        borderColor: "var(--border)",
-        color: "var(--fg-2)",
+        background: "var(--color-surface-subtle)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-text-muted)",
       }}
     >
       {JSON.stringify(value, null, 2)}
@@ -192,7 +196,10 @@ function ExtraValue({ value }: { value: unknown }) {
 /** A flush-left mono micro-label heading an environment. */
 function Eyebrow({ children, color }: { children: ReactNode; color?: string }) {
   return (
-    <div className="mb-1.5 font-mono text-ui-2xs uppercase tracking-label" style={{ color: color ?? "var(--fg-3)" }}>
+    <div
+      className="mb-1.5 font-mono text-ui-2xs uppercase tracking-label"
+      style={{ color: color ?? "var(--color-text-subtle)" }}
+    >
       {children}
     </div>
   );
@@ -210,7 +217,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
           <Eyebrow>{label}</Eyebrow>
           <ul className="m-0 space-y-1.5 p-0">
             {view.assumptions.map((a, i) => (
-              <li key={i} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--fg-1)" }}>
+              <li key={i} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--color-text)" }}>
                 <span
                   aria-hidden
                   className="mt-2.25 h-1 w-1 shrink-0 rounded-full"
@@ -229,7 +236,10 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
       return (
         <section>
           <Eyebrow>{label}</Eyebrow>
-          <div className="panel-scrollbar max-w-full overflow-x-auto text-ui-copy" style={{ color: "var(--fg-1)" }}>
+          <div
+            className="panel-scrollbar max-w-full overflow-x-auto text-ui-copy"
+            style={{ color: "var(--color-text)" }}
+          >
             <MathText text={view.definition} asBlock />
           </div>
         </section>
@@ -260,9 +270,9 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
                 key={i}
                 className="inline-flex items-center rounded-sm border px-2 py-1 font-math leading-none"
                 style={{
-                  background: "var(--surface-2)",
-                  borderColor: "var(--border)",
-                  color: "var(--fg-1)",
+                  background: "var(--color-surface-subtle)",
+                  borderColor: "var(--color-border)",
+                  color: "var(--color-text)",
                 }}
               >
                 <MathText text={n} />
@@ -282,19 +292,22 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
     case "examples": {
       const examples = exampleLimit === undefined ? view.examples : view.examples.slice(0, exampleLimit);
       return (
-        <Aside accent="var(--border-strong)" label={label}>
+        <Aside accent="var(--color-border-strong)" label={label}>
           <div className="space-y-3">
             {examples.map((example, index) => (
               <div key={index} className="space-y-1">
                 {(example.role || example.label) && (
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                     {example.role && (
-                      <span className="font-mono text-ui-2xs tracking-label-tight" style={{ color: "var(--fg-3)" }}>
+                      <span
+                        className="font-mono text-ui-2xs tracking-label-tight"
+                        style={{ color: "var(--color-text-subtle)" }}
+                      >
                         <MathProse text={example.role} />
                       </span>
                     )}
                     {example.label && (
-                      <span className="text-ui-sm font-medium" style={{ color: "var(--fg-2)" }}>
+                      <span className="text-ui-sm font-medium" style={{ color: "var(--color-text-muted)" }}>
                         <MathProse text={example.label} />
                       </span>
                     )}
@@ -312,7 +325,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
       return (
         <section>
           <Eyebrow>{label}</Eyebrow>
-          <div className="text-ui-copy" style={{ color: "var(--fg-2)" }}>
+          <div className="text-ui-copy" style={{ color: "var(--color-text-muted)" }}>
             <MathProse text={view.gloss} />
           </div>
         </section>
@@ -329,9 +342,9 @@ function DisplayBox({ children }: { children: ReactNode }) {
     <div
       className="panel-scrollbar max-w-full overflow-x-auto rounded-md border px-4 py-3 font-math leading-[1.6]"
       style={{
-        background: "var(--surface-2)",
-        borderColor: "var(--border)",
-        color: "var(--fg-1)",
+        background: "var(--color-surface-subtle)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-text)",
       }}
     >
       {children}
@@ -354,7 +367,7 @@ function Aside({
   return (
     <section className="border-l-2 pl-3.5" style={{ borderColor: accent }}>
       <Eyebrow color={eyebrow}>{label}</Eyebrow>
-      <div className="text-ui-copy" style={{ color: "var(--fg-1)" }}>
+      <div className="text-ui-copy" style={{ color: "var(--color-text)" }}>
         {children}
       </div>
     </section>

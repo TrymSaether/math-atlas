@@ -58,9 +58,9 @@ export function NodePanel() {
           }}
           className="pointer-events-auto absolute left-3 right-3 top-18 bottom-3 z-20 flex flex-col overflow-hidden rounded-xl border sm:left-4 sm:top-19 sm:right-auto sm:w-[min(560px,calc(100vw-32px))]"
           style={{
-            background: "var(--surface)",
-            borderColor: "var(--border)",
-            boxShadow: "var(--shadow-3)",
+            background: "var(--color-surface)",
+            borderColor: "var(--color-border)",
+            boxShadow: "var(--elevation-3)",
           }}
         >
           {creating ? (
@@ -157,7 +157,7 @@ function PanelContent({
   return (
     <>
       {/* Sticky header */}
-      <header className="relative shrink-0 px-5 pt-3.5" style={{ background: "var(--surface)" }}>
+      <header className="relative shrink-0 px-5 pt-3.5" style={{ background: "var(--color-surface)" }}>
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-0.5">
             <IconButton label="Previous in domain" disabled={!prev} onClick={() => prev && select(prev.id)}>
@@ -167,7 +167,7 @@ function PanelContent({
               <CaretDownIcon className="h-4 w-4" />
             </IconButton>
             {peerIdx >= 0 && (
-              <span className="ml-1.5 font-mono text-ui-meta" style={{ color: "var(--fg-3)" }}>
+              <span className="ml-1.5 font-mono text-ui-meta" style={{ color: "var(--color-text-subtle)" }}>
                 {peerIdx + 1}/{peers.length}
               </span>
             )}
@@ -203,16 +203,16 @@ function PanelContent({
                 role="tab"
                 aria-selected={active}
                 onClick={() => setTab(t.id)}
-                className="relative flex shrink-0 items-center gap-1.5 rounded-t-(--radius-sm) px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors hover:bg-(--surface-2) focus:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-border)"
-                style={{ color: active ? "var(--fg-1)" : "var(--fg-3)" }}
+                className="relative flex shrink-0 items-center gap-1.5 rounded-t-(--radius-sm) px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors hover:bg-(--color-surface-subtle) focus:outline-none focus-visible:ring-2 focus-visible:ring-(--color-accent-border)"
+                style={{ color: active ? "var(--color-text)" : "var(--color-text-subtle)" }}
               >
                 {t.label}
                 {t.badge != null && (
                   <span
                     className="rounded-xs px-1.5 py-px text-ui-2xs leading-none"
                     style={{
-                      background: active ? view.tone.tint : "var(--surface-3)",
-                      color: active ? view.tone.text : "var(--fg-3)",
+                      background: active ? view.tone.tint : "var(--color-surface-muted)",
+                      color: active ? view.tone.text : "var(--color-text-subtle)",
                     }}
                   >
                     {t.badge}
@@ -229,13 +229,13 @@ function PanelContent({
             );
           })}
         </div>
-        <div className="-mx-5 border-b" style={{ borderColor: "var(--border-subtle)" }} />
+        <div className="-mx-5 border-b" style={{ borderColor: "var(--color-border-subtle)" }} />
       </header>
 
       <div ref={scrollRef} className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-5 py-4">
         {activeTab === "overview" &&
           (bodyEmpty ? (
-            <p className="text-ui-sm italic" style={{ color: "var(--fg-3)" }}>
+            <p className="text-ui-sm italic" style={{ color: "var(--color-text-subtle)" }}>
               No written content recorded for this concept yet.
             </p>
           ) : (
@@ -269,41 +269,41 @@ function PanelContent({
         {activeTab === "source" && (
           <section id="sec-metadata">
             <dl className="node-source-metadata grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-ui-xs">
-              <dt style={{ color: "var(--fg-3)" }}>Tags</dt>
-              <dd style={{ color: "var(--fg-2)" }}>
+              <dt style={{ color: "var(--color-text-subtle)" }}>Tags</dt>
+              <dd style={{ color: "var(--color-text-muted)" }}>
                 {node.tags.length > 0 ? node.tags.join(", ") : "No tags recorded."}
               </dd>
-              <dt style={{ color: "var(--fg-3)" }}>Domain</dt>
-              <dd style={{ color: "var(--fg-2)" }}>{view.domainLabel}</dd>
-              <dt style={{ color: "var(--fg-3)" }}>Kind</dt>
-              <dd style={{ color: "var(--fg-2)" }}>{view.kindLabel}</dd>
-              <dt style={{ color: "var(--fg-3)" }}>Map position</dt>
-              <dd style={{ color: "var(--fg-2)" }}>
+              <dt style={{ color: "var(--color-text-subtle)" }}>Domain</dt>
+              <dd style={{ color: "var(--color-text-muted)" }}>{view.domainLabel}</dd>
+              <dt style={{ color: "var(--color-text-subtle)" }}>Kind</dt>
+              <dd style={{ color: "var(--color-text-muted)" }}>{view.kindLabel}</dd>
+              <dt style={{ color: "var(--color-text-subtle)" }}>Map position</dt>
+              <dd style={{ color: "var(--color-text-muted)" }}>
                 {node.topicCluster} · {node.priority || "unranked"} · #{node.number}
               </dd>
               {view.compactRef && (
                 <>
-                  <dt style={{ color: "var(--fg-3)" }}>Reference</dt>
-                  <dd style={{ color: "var(--fg-2)" }}>{view.compactRef}</dd>
+                  <dt style={{ color: "var(--color-text-subtle)" }}>Reference</dt>
+                  <dd style={{ color: "var(--color-text-muted)" }}>{view.compactRef}</dd>
                 </>
               )}
               {view.sourceCitation && (
                 <>
-                  <dt style={{ color: "var(--fg-3)" }}>Citation</dt>
-                  <dd style={{ color: "var(--fg-2)" }}>{view.sourceCitation}</dd>
+                  <dt style={{ color: "var(--color-text-subtle)" }}>Citation</dt>
+                  <dd style={{ color: "var(--color-text-muted)" }}>{view.sourceCitation}</dd>
                 </>
               )}
               {(node.source?.references ?? []).length > 0 && (
                 <>
-                  <dt style={{ color: "var(--fg-3)" }}>Textbook</dt>
-                  <dd className="flex min-w-0 flex-wrap gap-1" style={{ color: "var(--fg-2)" }}>
+                  <dt style={{ color: "var(--color-text-subtle)" }}>Textbook</dt>
+                  <dd className="flex min-w-0 flex-wrap gap-1" style={{ color: "var(--color-text-muted)" }}>
                     {(node.source?.references ?? []).map((r) => (
                       <span
                         key={r}
                         className="rounded font-mono text-ui-2xs"
                         style={{
-                          background: "var(--surface-3)",
-                          color: "var(--fg-3)",
+                          background: "var(--color-surface-muted)",
+                          color: "var(--color-text-subtle)",
                           padding: "1px 5px",
                         }}
                       >
@@ -313,8 +313,8 @@ function PanelContent({
                   </dd>
                 </>
               )}
-              <dt style={{ color: "var(--fg-3)" }}>ID</dt>
-              <dd className="font-mono text-ui-hint" style={{ color: "var(--fg-2)" }} title={node.id}>
+              <dt style={{ color: "var(--color-text-subtle)" }}>ID</dt>
+              <dd className="font-mono text-ui-hint" style={{ color: "var(--color-text-muted)" }} title={node.id}>
                 {node.id}
               </dd>
             </dl>
@@ -328,7 +328,7 @@ function PanelContent({
 function PropertiesTab({ properties, toneColor }: { properties: string[]; toneColor: string }) {
   if (properties.length === 0) {
     return (
-      <p className="text-ui-sm italic" style={{ color: "var(--fg-3)" }}>
+      <p className="text-ui-sm italic" style={{ color: "var(--color-text-subtle)" }}>
         No reusable properties recorded for this concept yet.
       </p>
     );
@@ -346,7 +346,7 @@ function PropertiesTab({ properties, toneColor }: { properties: string[]; toneCo
               aria-hidden
               className="absolute left-0 top-px flex h-5.25 w-5.25 items-center justify-center rounded-full font-mono text-ui-2xs"
               style={{
-                background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
+                background: `color-mix(in srgb, ${toneColor} 14%, var(--color-surface))`,
                 color: toneColor,
                 border: `1px solid color-mix(in srgb, ${toneColor} 40%, transparent)`,
               }}
@@ -358,7 +358,7 @@ function PropertiesTab({ properties, toneColor }: { properties: string[]; toneCo
                 {title}
               </span>
             )}
-            <div className="min-h-5.25 text-ui-copy" style={{ color: "var(--fg-1)" }}>
+            <div className="min-h-5.25 text-ui-copy" style={{ color: "var(--color-text)" }}>
               <MathProse text={body} />
             </div>
           </li>
@@ -395,8 +395,8 @@ function IconButton({
       disabled={disabled}
       aria-label={label}
       title={label}
-      className="flex h-8 w-8 items-center justify-center rounded-sm transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-(--accent-border) disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
-      style={{ color: "var(--fg-2)" }}
+      className="flex h-8 w-8 items-center justify-center rounded-sm transition-colors hover:bg-(--color-surface-muted) focus:outline-none focus:ring-2 focus:ring-(--color-accent-border) disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+      style={{ color: "var(--color-text-muted)" }}
     >
       {children}
     </button>

@@ -44,11 +44,7 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
         ? getBezierPath(geom)
         : getSmoothStepPath({ ...geom, borderRadius: 14 });
 
-  const style = getEdgeStyle(
-    data?.edge ?? FALLBACK_EDGE,
-    Boolean(data?.highlight),
-    Boolean(data?.dim),
-  );
+  const style = getEdgeStyle(data?.edge ?? FALLBACK_EDGE, Boolean(data?.highlight), Boolean(data?.dim));
   const highlight = Boolean(data?.highlight);
   const dim = Boolean(data?.dim);
   const markerId = `arrow-${props.id}`;
@@ -98,7 +94,7 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
           ) : style.marker === "open-triangle" ? (
             <path
               d="M2.4,2.4 L10.4,6 L2.4,9.6 z"
-              fill="var(--surface)"
+              fill="var(--color-surface)"
               stroke={style.color}
               strokeWidth={1.4}
               strokeLinejoin="round"
@@ -109,7 +105,7 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
               cx="6"
               cy="6"
               r="3.2"
-              fill="var(--surface)"
+              fill="var(--color-surface)"
               stroke={style.color}
               strokeWidth={1.4}
               opacity={style.opacity}
@@ -121,7 +117,7 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
         <path
           d={path}
           fill="none"
-          stroke="var(--bg)"
+          stroke="var(--color-canvas)"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={style.width + 3.2}
@@ -170,21 +166,21 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
           style={{
             strokeDasharray: "1 1",
             strokeDashoffset: 1,
-            filter: "drop-shadow(0 0 3px var(--accent))",
+            filter: "drop-shadow(0 0 3px var(--color-accent))",
           }}
         />
       )}
       {!dim && highlight && (
         <EdgeLabelRenderer>
           <div
-            className="rounded-xs border px-2 py-0.5 text-edge-label font-medium lowercase tracking-label-tight shadow-[var(--shadow-1)]"
+            className="rounded-xs border px-2 py-0.5 text-edge-label font-medium lowercase tracking-label-tight shadow-[var(--elevation-1)]"
             style={{
               position: "absolute",
               transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
               pointerEvents: "none",
-              background: "var(--surface)",
-              borderColor: "color-mix(in srgb, var(--edge-highlight) 35%, var(--border))",
-              color: "var(--edge-highlight)",
+              background: "var(--color-surface)",
+              borderColor: "color-mix(in srgb, var(--color-edge-active) 35%, var(--color-border))",
+              color: "var(--color-edge-active)",
             }}
           >
             {edgeLabel(

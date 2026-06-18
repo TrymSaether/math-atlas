@@ -1,0 +1,104 @@
+/* React Flow theming */
+.react-flow__renderer {
+  background: transparent !important;
+}
+
+.react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.react-flow__handle {
+  width: 6px !important;
+  height: 6px !important;
+  background: transparent !important;
+  border: 0 !important;
+  opacity: 0;
+}
+
+.react-flow__handle.graph-node-handle {
+  width: 8px !important;
+  height: 8px !important;
+  background: var(--handle-color) !important;
+  border: 1.5px solid var(--color-surface) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.15s !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+}
+
+/* Handles are edge anchors only — nodes are never hand-connected here, so they
+   stay fully hidden (no hover reveal). Hover/selection is expressed on the card. */
+.react-flow__node:hover .react-flow__handle.graph-node-handle {
+  opacity: 0 !important;
+}
+
+.react-flow__handle.graph-node-handle-left {
+  left: -4px !important;
+}
+
+.react-flow__handle.graph-node-handle-right {
+  right: -4px !important;
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__minimap {
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+  box-shadow: var(--elevation-2);
+}
+
+.react-flow__controls {
+  background: color-mix(in srgb, var(--color-surface) 96%, transparent) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+  box-shadow: var(--elevation-2);
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  color: var(--color-text-muted) !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: 0 !important;
+}
+
+.react-flow__controls-button:hover {
+  background: var(--color-surface-muted) !important;
+}
+
+.react-flow__controls-button svg {
+  fill: currentColor;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:focus .react-flow__edge-path {
+  outline: none;
+}
+
+.react-flow__node {
+  font-family: inherit;
+}
+
+.react-flow__node.atlas-flow-node {
+  cursor: pointer !important;
+}
+
+.react-flow__node:focus {
+  outline: none;
+}
+
+.react-flow__node-default {
+  box-shadow: none !important;
+  background: transparent !important;
+  border: 0 !important;
+}

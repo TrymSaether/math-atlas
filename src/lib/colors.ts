@@ -29,13 +29,13 @@ export const DOMAIN_KEYS = DOMAIN_PALETTE_KEYS;
 function makeTone(key: DomainKey): DomainTone {
   return {
     key,
-    color: `var(--${key})`,
-    tint: `var(--${key}-50)`,
-    border: `var(--${key}-200)`,
+    color: `var(--domain-${key})`,
+    tint: `var(--domain-${key}-tint)`,
+    border: `var(--domain-${key}-border)`,
     // Deepen the hue toward the page ink so it stays legible on the pale tint in
     // light themes and lifts off dark surfaces in dark themes — no per-theme
-    // token needed because --fg-1 already flips with the scheme.
-    text: `color-mix(in srgb, var(--${key}) 78%, var(--fg-1))`,
+    // token needed because --color-text already flips with the scheme.
+    text: `color-mix(in srgb, var(--domain-${key}) 78%, var(--color-text))`,
   };
 }
 
@@ -82,8 +82,7 @@ export function resolveDomainTones(domains: GraphDomain[]): Map<string, DomainTo
   colorless.forEach((domain, index) => {
     if (result.has(domain.id)) return;
     while (sweep < DOMAIN_KEYS.length && !freeKeys.has(DOMAIN_KEYS[sweep])) sweep++;
-    const key =
-      sweep < DOMAIN_KEYS.length ? DOMAIN_KEYS[sweep] : DOMAIN_KEYS[index % DOMAIN_KEYS.length];
+    const key = sweep < DOMAIN_KEYS.length ? DOMAIN_KEYS[sweep] : DOMAIN_KEYS[index % DOMAIN_KEYS.length];
     assign(domain.id, key);
   });
 
@@ -130,9 +129,9 @@ export function getMutedDomainTone(domainId: string): DomainTone {
   const tone = getDomainTone(domainId);
   return {
     ...tone,
-    color: mixColor(tone.color, 62, "var(--fg-2)"),
-    tint: mixColor(tone.tint, 40, "var(--surface)"),
-    border: mixColor(tone.border, 46, "var(--border)"),
+    color: mixColor(tone.color, 62, "var(--color-text-muted)"),
+    tint: mixColor(tone.tint, 40, "var(--color-surface)"),
+    border: mixColor(tone.border, 46, "var(--color-border)"),
   };
 }
 

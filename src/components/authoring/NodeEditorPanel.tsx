@@ -93,7 +93,7 @@ function Field({
         />
       )}
       {preview && value.trim() && (
-        <span className="mt-1 block text-ui-xs text-fg-2">
+        <span className="mt-1 block text-ui-xs text-text-muted">
           <MathText text={value} />
         </span>
       )}
@@ -152,7 +152,7 @@ function SelectField({
           aria-expanded={open}
         >
           <span className="min-w-0 truncate">{selected?.label ?? value}</span>
-          <CaretDownIcon className="h-4 w-4 shrink-0 text-fg-2" />
+          <CaretDownIcon className="h-4 w-4 shrink-0 text-text-muted" />
         </button>
         {open && (
           <div className="authoring-select-popover" role="listbox">
@@ -164,9 +164,7 @@ function SelectField({
                   type="button"
                   role="option"
                   aria-selected={active}
-                  className={
-                    active ? "authoring-select-option is-active" : "authoring-select-option"
-                  }
+                  className={active ? "authoring-select-option is-active" : "authoring-select-option"}
                   onClick={() => {
                     onChange(option.value);
                     setOpen(false);
@@ -221,8 +219,8 @@ function NodePicker({
       />
       {open && matches.length > 0 && (
         <ul
-          className="panel-scrollbar absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-3)"
-          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+          className="panel-scrollbar absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--elevation-3)"
+          style={{ background: "var(--color-surface)", borderColor: "var(--color-border)" }}
         >
           {matches.map((o) => (
             <li key={o.id}>
@@ -233,8 +231,8 @@ function NodePicker({
                   onChange(o.id);
                   setOpen(false);
                 }}
-                className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-ui-sm hover:bg-(--surface-3)"
-                style={{ color: "var(--fg-1)" }}
+                className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-ui-sm hover:bg-(--color-surface-muted)"
+                style={{ color: "var(--color-text)" }}
               >
                 <span
                   className="h-1.5 w-1.5 shrink-0 rounded-full"
@@ -288,17 +286,17 @@ function EdgeRow({
   return (
     <li
       className="rounded-md border px-2.5 py-1.5 text-ui-sm"
-      style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+      style={{ borderColor: "var(--color-border)", background: "var(--color-surface-subtle)" }}
     >
       <div className="flex items-center gap-2">
-        <span className="min-w-0 flex-1 truncate" style={{ color: "var(--fg-2)" }}>
+        <span className="min-w-0 flex-1 truncate" style={{ color: "var(--color-text-muted)" }}>
           {role === "source" ? (
             <>
-              this <em style={{ color: "var(--fg-3)" }}>{reads}</em> <MathText text={otherLabel} />
+              this <em style={{ color: "var(--color-text-subtle)" }}>{reads}</em> <MathText text={otherLabel} />
             </>
           ) : (
             <>
-              <MathText text={otherLabel} /> <em style={{ color: "var(--fg-3)" }}>{reads}</em> this
+              <MathText text={otherLabel} /> <em style={{ color: "var(--color-text-subtle)" }}>{reads}</em> this
             </>
           )}
         </span>
@@ -306,8 +304,8 @@ function EdgeRow({
           type="button"
           onClick={() => (editing ? setEditing(false) : open())}
           aria-label={editing ? "Close edit" : "Edit link"}
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-          style={{ color: editing ? "var(--accent)" : "var(--fg-3)" }}
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--color-surface-muted)"
+          style={{ color: editing ? "var(--color-accent)" : "var(--color-text-subtle)" }}
         >
           <PencilSimpleIcon className="h-3.5 w-3.5" />
         </button>
@@ -315,15 +313,15 @@ function EdgeRow({
           type="button"
           onClick={onRemove}
           aria-label="Remove link"
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-          style={{ color: "var(--fg-3)" }}
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--color-surface-muted)"
+          style={{ color: "var(--color-text-subtle)" }}
         >
           <TrashIcon className="h-3.5 w-3.5" />
         </button>
       </div>
 
       {!editing && edge.notes && (
-        <p className="mt-1 text-ui-xs italic" style={{ color: "var(--fg-3)" }}>
+        <p className="mt-1 text-ui-xs italic" style={{ color: "var(--color-text-subtle)" }}>
           {edge.notes}
         </p>
       )}
@@ -345,7 +343,7 @@ function EdgeRow({
             className="authoring-control"
           />
           {error && (
-            <p className="text-ui-xs" style={{ color: "var(--danger)" }}>
+            <p className="text-ui-xs" style={{ color: "var(--color-danger)" }}>
               {error}
             </p>
           )}
@@ -353,7 +351,7 @@ function EdgeRow({
             <button
               type="button"
               onClick={() => setEditing(false)}
-              className="authoring-action rounded-sm px-2 py-1 text-ui-xs text-fg-3"
+              className="authoring-action rounded-sm px-2 py-1 text-ui-xs text-text-subtle"
             >
               Cancel
             </button>
@@ -387,9 +385,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
 
   const incident = incidentEdges(source, nodeId);
   const nodeLabel = (id: string) => map.nodeById.get(id)?.label ?? id;
-  const others = map.data.nodes
-    .filter((n) => n.id !== nodeId)
-    .map((n) => ({ id: n.id, label: n.label }));
+  const others = map.data.nodes.filter((n) => n.id !== nodeId).map((n) => ({ id: n.id, label: n.label }));
 
   const submit = () => {
     if (!other) {
@@ -429,14 +425,14 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
 
       <div
         className="grid grid-cols-[auto_1fr] items-center gap-2 rounded-md border border-dashed p-2"
-        style={{ borderColor: "var(--border)" }}
+        style={{ borderColor: "var(--color-border)" }}
       >
         <button
           type="button"
           onClick={() => setOutgoing((o) => !o)}
           title={outgoing ? "this → concept" : "concept → this"}
-          className="flex h-8 items-center gap-1.5 rounded-sm px-2 text-ui-xs font-medium hover:bg-(--surface-3)"
-          style={{ color: "var(--fg-2)" }}
+          className="flex h-8 items-center gap-1.5 rounded-sm px-2 text-ui-xs font-medium hover:bg-(--color-surface-muted)"
+          style={{ color: "var(--color-text-muted)" }}
         >
           <ArrowsLeftRightIcon className="h-3.5 w-3.5" />
           {outgoing ? "from this" : "to this"}
@@ -468,7 +464,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           className="authoring-control col-span-2"
         />
         {error && (
-          <p className="col-span-2 text-ui-xs" style={{ color: "var(--danger)" }}>
+          <p className="col-span-2 text-ui-xs" style={{ color: "var(--color-danger)" }}>
             {error}
           </p>
         )}
@@ -498,7 +494,7 @@ function ExamplesEditor({
           <div
             key={i}
             className="space-y-1.5 rounded-md border p-2"
-            style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+            style={{ borderColor: "var(--color-border)", background: "var(--color-surface-subtle)" }}
           >
             <div className="flex items-center gap-2">
               <input
@@ -519,8 +515,8 @@ function ExamplesEditor({
                 type="button"
                 onClick={() => remove(i)}
                 aria-label="Remove example"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-                style={{ color: "var(--fg-3)" }}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--color-surface-muted)"
+                style={{ color: "var(--color-text-subtle)" }}
               >
                 <TrashIcon className="h-3.5 w-3.5" />
               </button>
@@ -533,7 +529,7 @@ function ExamplesEditor({
               className="authoring-control authoring-control-mono"
             />
             {ex.content.trim() && (
-              <span className="block text-ui-xs text-fg-2">
+              <span className="block text-ui-xs text-text-muted">
                 <MathText text={ex.content} />
               </span>
             )}
@@ -543,7 +539,7 @@ function ExamplesEditor({
           type="button"
           onClick={add}
           className="authoring-action rounded-sm px-2.5 py-1.5 text-ui-xs"
-          style={{ color: "var(--fg-2)" }}
+          style={{ color: "var(--color-text-muted)" }}
         >
           <PlusIcon className="h-3.5 w-3.5" /> Add example
         </button>
@@ -576,9 +572,9 @@ function UsesPicker({
               key={id}
               className="inline-flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-ui-xs"
               style={{
-                borderColor: "var(--border)",
-                background: "var(--surface-3)",
-                color: "var(--fg-2)",
+                borderColor: "var(--color-border)",
+                background: "var(--color-surface-muted)",
+                color: "var(--color-text-muted)",
               }}
             >
               <span
@@ -593,8 +589,8 @@ function UsesPicker({
                 type="button"
                 onClick={() => onChange(value.filter((v) => v !== id))}
                 aria-label="Remove reference"
-                className="shrink-0 hover:text-(--danger)"
-                style={{ color: "var(--fg-3)" }}
+                className="shrink-0 hover:text-(--color-danger)"
+                style={{ color: "var(--color-text-subtle)" }}
               >
                 <XIcon className="h-3 w-3" />
               </button>
@@ -644,12 +640,12 @@ function ProofStepsEditor({
           <div
             key={i}
             className="space-y-1.5 rounded-md border p-2"
-            style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+            style={{ borderColor: "var(--color-border)", background: "var(--color-surface-subtle)" }}
           >
             <div className="flex items-center gap-2">
               <span
                 className="shrink-0 font-mono text-ui-2xs tabular-nums"
-                style={{ color: "var(--fg-3)" }}
+                style={{ color: "var(--color-text-subtle)" }}
               >
                 {i + 1}
               </span>
@@ -665,8 +661,8 @@ function ProofStepsEditor({
                 onClick={() => move(i, -1)}
                 disabled={i === 0}
                 aria-label="Move step up"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3) disabled:opacity-30"
-                style={{ color: "var(--fg-3)" }}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--color-surface-muted) disabled:opacity-30"
+                style={{ color: "var(--color-text-subtle)" }}
               >
                 <ArrowUpIcon className="h-3.5 w-3.5" />
               </button>
@@ -675,8 +671,8 @@ function ProofStepsEditor({
                 onClick={() => move(i, 1)}
                 disabled={i === steps.length - 1}
                 aria-label="Move step down"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3) disabled:opacity-30"
-                style={{ color: "var(--fg-3)" }}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--color-surface-muted) disabled:opacity-30"
+                style={{ color: "var(--color-text-subtle)" }}
               >
                 <ArrowDownIcon className="h-3.5 w-3.5" />
               </button>
@@ -684,8 +680,8 @@ function ProofStepsEditor({
                 type="button"
                 onClick={() => remove(i)}
                 aria-label="Remove step"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-                style={{ color: "var(--fg-3)" }}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--color-surface-muted)"
+                style={{ color: "var(--color-text-subtle)" }}
               >
                 <TrashIcon className="h-3.5 w-3.5" />
               </button>
@@ -698,23 +694,18 @@ function ProofStepsEditor({
               className="authoring-control authoring-control-mono"
             />
             {step.content.trim() && (
-              <span className="block text-ui-xs text-fg-2">
+              <span className="block text-ui-xs text-text-muted">
                 <MathText text={step.content} />
               </span>
             )}
-            <UsesPicker
-              value={step.uses}
-              options={options}
-              map={map}
-              onChange={(uses) => patch(i, { uses })}
-            />
+            <UsesPicker value={step.uses} options={options} map={map} onChange={(uses) => patch(i, { uses })} />
           </div>
         ))}
         <button
           type="button"
           onClick={add}
           className="authoring-action rounded-sm px-2.5 py-1.5 text-ui-xs"
-          style={{ color: "var(--fg-2)" }}
+          style={{ color: "var(--color-text-muted)" }}
         >
           <PlusIcon className="h-3.5 w-3.5" /> Add step
         </button>
@@ -744,8 +735,7 @@ export function NodeEditorPanel({
   const deleteNode = useStore((s) => s.deleteNode);
   const editError = useStore((s) => s.editError);
 
-  const concept =
-    editingId !== null ? (source.concepts.find((c) => c.id === editingId) ?? null) : null;
+  const concept = editingId !== null ? (source.concepts.find((c) => c.id === editingId) ?? null) : null;
 
   const [draft, setDraft] = useState<NodeDraft>(() =>
     concept ? conceptToDraft(concept) : emptyDraft(map.data.domains[0]?.id ?? ""),
@@ -792,30 +782,30 @@ export function NodeEditorPanel({
   return (
     <>
       {/* Header */}
-      <header className="relative shrink-0 px-5 pt-3.5" style={{ background: "var(--surface)" }}>
+      <header className="relative shrink-0 px-5 pt-3.5" style={{ background: "var(--color-surface)" }}>
         <div className="mb-3 flex items-center justify-between">
-          <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
+          <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-text-subtle">
             {editingId === null ? "New concept" : "Edit concept"}
           </span>
           <div className="flex items-center gap-0.5">
             {editingId !== null &&
               (confirmDelete ? (
                 <div className="flex items-center gap-1.5">
-                  <span className="text-ui-xs" style={{ color: "var(--fg-2)" }}>
+                  <span className="text-ui-xs" style={{ color: "var(--color-text-muted)" }}>
                     Delete?
                   </span>
                   <button
                     type="button"
                     onClick={() => deleteNode(editingId)}
                     className="authoring-action rounded-sm px-2 py-1 text-ui-xs"
-                    style={{ background: "var(--danger)", color: "var(--fg-on-color)" }}
+                    style={{ background: "var(--color-danger)", color: "var(--color-text-inverse)" }}
                   >
                     Delete
                   </button>
                   <button
                     type="button"
                     onClick={() => setConfirmDelete(false)}
-                    className="authoring-action rounded-sm px-1.5 py-1 text-ui-xs text-fg-3"
+                    className="authoring-action rounded-sm px-1.5 py-1 text-ui-xs text-text-subtle"
                   >
                     Cancel
                   </button>
@@ -825,8 +815,8 @@ export function NodeEditorPanel({
                   type="button"
                   onClick={() => setConfirmDelete(true)}
                   aria-label="Delete concept"
-                  className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-                  style={{ color: "var(--fg-3)" }}
+                  className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-(--color-surface-muted)"
+                  style={{ color: "var(--color-text-subtle)" }}
                 >
                   <TrashIcon className="h-4 w-4" />
                 </button>
@@ -835,8 +825,8 @@ export function NodeEditorPanel({
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-              style={{ color: "var(--fg-2)" }}
+              className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-(--color-surface-muted)"
+              style={{ color: "var(--color-text-muted)" }}
             >
               <XIcon className="h-4 w-4" />
             </button>
@@ -844,30 +834,23 @@ export function NodeEditorPanel({
         </div>
 
         <div className="flex items-start gap-2.5 pb-3.5">
-          <span
-            aria-hidden
-            className="mt-1.75 h-9 w-0.75 shrink-0 rounded-full"
-            style={{ background: tone.color }}
-          />
+          <span aria-hidden className="mt-1.75 h-9 w-0.75 shrink-0 rounded-full" style={{ background: tone.color }} />
           <div className="min-w-0 flex-1">
             <input
               type="text"
               value={draft.label}
               onChange={(e) => set({ label: e.target.value })}
               placeholder="Concept label"
-              className="w-full bg-transparent font-serif text-node-panel-title outline-none placeholder:text-fg-3"
-              style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.015em" }}
+              className="w-full bg-transparent font-serif text-node-panel-title outline-none placeholder:text-text-subtle"
+              style={{ color: "var(--color-text)", fontWeight: 600, letterSpacing: "-0.015em" }}
               aria-label="Concept label"
             />
             {draft.label.trim() && (
-              <div className="mt-0.5 text-ui-meta text-fg-2">
+              <div className="mt-0.5 text-ui-meta text-text-muted">
                 <MathText text={draft.label} />
               </div>
             )}
-            <div
-              className="mt-2 flex items-center gap-1.5 text-ui-meta"
-              style={{ color: tone.color }}
-            >
+            <div className="mt-2 flex items-center gap-1.5 text-ui-meta" style={{ color: tone.color }}>
               {glyphId ? (
                 <DomainGlyph id={glyphId} size={14} />
               ) : (
@@ -948,19 +931,8 @@ export function NodeEditorPanel({
           hint="LaTeX"
           preview
         />
-        <Field
-          label="Intuition"
-          value={draft.intuition}
-          onChange={(v) => set({ intuition: v })}
-          area
-        />
-        <Field
-          label="Gloss"
-          value={draft.gloss}
-          onChange={(v) => set({ gloss: v })}
-          area
-          hint="dictionary one-liner"
-        />
+        <Field label="Intuition" value={draft.intuition} onChange={(v) => set({ intuition: v })} area />
+        <Field label="Gloss" value={draft.gloss} onChange={(v) => set({ gloss: v })} area hint="dictionary one-liner" />
         <Field
           label="Notation"
           value={draft.notation}
@@ -993,21 +965,14 @@ export function NodeEditorPanel({
         <ExamplesEditor examples={draft.examples} onChange={(examples) => set({ examples })} />
         <ProofStepsEditor
           steps={draft.proof}
-          options={map.data.nodes
-            .filter((n) => n.id !== editingId)
-            .map((n) => ({ id: n.id, label: n.label }))}
+          options={map.data.nodes.filter((n) => n.id !== editingId).map((n) => ({ id: n.id, label: n.label }))}
           map={map}
           onChange={(proof) => set({ proof })}
         />
-        <Field
-          label="Tags"
-          value={draft.tags}
-          onChange={(v) => set({ tags: v })}
-          hint="comma-separated"
-        />
+        <Field label="Tags" value={draft.tags} onChange={(v) => set({ tags: v })} hint="comma-separated" />
 
         {editingId !== null && (
-          <div className="border-t pt-3" style={{ borderColor: "var(--border-subtle)" }}>
+          <div className="border-t pt-3" style={{ borderColor: "var(--color-border-subtle)" }}>
             <EdgeEditor nodeId={editingId} map={map} />
           </div>
         )}
@@ -1016,10 +981,10 @@ export function NodeEditorPanel({
       {/* Footer */}
       <footer
         className="flex shrink-0 items-center gap-2 border-t px-5 py-3"
-        style={{ borderColor: "var(--border-subtle)" }}
+        style={{ borderColor: "var(--color-border-subtle)" }}
       >
         {editError && (
-          <span className="min-w-0 flex-1 truncate text-ui-xs" style={{ color: "var(--danger)" }}>
+          <span className="min-w-0 flex-1 truncate text-ui-xs" style={{ color: "var(--color-danger)" }}>
             {editError}
           </span>
         )}
@@ -1027,9 +992,7 @@ export function NodeEditorPanel({
           type="button"
           onClick={save}
           className="authoring-action authoring-action-primary ml-auto inline-flex items-center gap-1 rounded-sm px-3 py-1.5 text-ui-xs"
-          style={
-            justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined
-          }
+          style={justSaved ? { background: "var(--domain-green)", color: "var(--color-text-inverse)" } : undefined}
         >
           {justSaved ? (
             <>

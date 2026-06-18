@@ -9,19 +9,13 @@ const LABELS: Record<WaveKind, string> = {
 const ORDER: WaveKind[] = ["square", "sawtooth", "triangle"];
 
 /** Compact segmented control for picking which target waveform a figure draws. */
-export function WaveSelect({
-  value,
-  onChange,
-}: {
-  value: WaveKind;
-  onChange: (k: WaveKind) => void;
-}) {
+export function WaveSelect({ value, onChange }: { value: WaveKind; onChange: (k: WaveKind) => void }) {
   return (
     <div
       role="radiogroup"
       aria-label="Target waveform"
       className="mt-2.5 inline-flex overflow-hidden rounded-md border p-0.5"
-      style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+      style={{ borderColor: "var(--color-border)", background: "var(--color-surface-subtle)" }}
     >
       {ORDER.map((k) => {
         const active = k === value;
@@ -34,8 +28,8 @@ export function WaveSelect({
             onClick={() => onChange(k)}
             className="rounded-sm px-2.5 py-1 text-ui-meta transition-colors"
             style={{
-              background: active ? "var(--accent)" : "transparent",
-              color: active ? "var(--fg-on-color)" : "var(--fg-2)",
+              background: active ? "var(--color-accent)" : "transparent",
+              color: active ? "var(--color-text-inverse)" : "var(--color-text-muted)",
               fontWeight: active ? 600 : 400,
             }}
           >
