@@ -1,146 +1,232 @@
 /**
- * Per-user map overlays (Phase 2 — persist & sync edits).
+ * Maps as first-class entities (Stage A).
  *
- * A signed-in user's edits to a shipped map are stored server-side as the full
- * edited SourceGraph, keyed by `slug` (the shipped map id, e.g. "topology").
- * This is the server-backed equivalent of the localStorage overlay in
- * src/data/edits.ts. Sources are validated with the SAME schema + buildArtifact
- * the CLI and client use, so an invalid graph can never be persisted.
+ *   - Public/system maps (seeded, owner "system", visibility "public") are
+ *     readable by anyone — no auth — so the site stays browseable logged out.
+ *   - Signed-in users fork a map to get their own editable copy (one per slug),
+ *     save its source, and (Stage C) invite collaborators.
+ *
+ * Sources are validated with the same SourceGraphSchema + buildArtifact gate the
+ * client and CLI use, so an invalid graph can never be persisted.
  */
 import { Hono } from "hono";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../db/client";
-import { maps, mapSources } from "../db/schema";
+import { mapCollaborators, maps, mapSources } from "../db/schema";
 import { auth } from "../auth";
 import { SourceGraphSchema } from "../../src/data/sourceSchema";
 import { buildArtifact } from "../../src/data/buildArtifact";
 
-type Vars = { userId: string };
+export const mapsRoute = new Hono();
 
-export const mapsRoute = new Hono<{ Variables: Vars }>();
+type Role = "owner" | "editor" | "viewer";
 
-// Require an authenticated session (cookie in dev, bearer token in prod).
-mapsRoute.use("*", async (c, next) => {
+async function getUserId(c: { req: { raw: Request } }): Promise<string | null> {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
-  if (!session?.user) return c.json({ error: "Unauthorized" }, 401);
-  c.set("userId", session.user.id);
-  await next();
-});
+  return session?.user?.id ?? null;
+}
 
-/** GET /api/maps — list the user's map overlays (metadata only). */
-mapsRoute.get("/", async (c) => {
-  const userId = c.get("userId");
-  const rows = await db
-    .select({
-      slug: maps.slug,
-      title: maps.title,
-      baseVersion: mapSources.baseVersion,
-      updated: mapSources.updatedAt,
-    })
-    .from(maps)
-    .innerJoin(mapSources, eq(mapSources.mapId, maps.id))
-    .where(eq(maps.ownerId, userId));
-  return c.json(
-    rows.map((r) => ({
-      slug: r.slug,
-      title: r.title,
-      baseVersion: r.baseVersion,
-      updated: r.updated.toISOString(),
-    })),
-  );
-});
+type MapRow = typeof maps.$inferSelect;
 
-/** GET /api/maps/:slug — the user's overlay for one map (with source). */
-mapsRoute.get("/:slug", async (c) => {
-  const userId = c.get("userId");
-  const slug = c.req.param("slug");
-  const [row] = await db
-    .select({
-      title: maps.title,
-      baseVersion: mapSources.baseVersion,
-      updated: mapSources.updatedAt,
-      source: mapSources.source,
-    })
-    .from(maps)
-    .innerJoin(mapSources, eq(mapSources.mapId, maps.id))
-    .where(and(eq(maps.ownerId, userId), eq(maps.slug, slug)))
-    .limit(1);
-  if (!row) return c.json({ error: "Not found" }, 404);
-  return c.json({
-    slug,
-    title: row.title,
-    baseVersion: row.baseVersion,
-    updated: row.updated.toISOString(),
-    source: row.source,
-  });
-});
+/** Resolve a caller's access to a map, or null if the map doesn't exist / is hidden. */
+async function resolveAccess(
+  mapId: string,
+  userId: string | null,
+): Promise<{ map: MapRow; role: Role } | null> {
+  const [map] = await db.select().from(maps).where(eq(maps.id, mapId)).limit(1);
+  if (!map) return null;
+  if (userId && map.ownerId === userId) return { map, role: "owner" };
+  if (userId) {
+    const [collab] = await db
+      .select({ role: mapCollaborators.role })
+      .from(mapCollaborators)
+      .where(and(eq(mapCollaborators.mapId, mapId), eq(mapCollaborators.userId, userId)))
+      .limit(1);
+    if (collab) return { map, role: collab.role as Role };
+  }
+  if (map.visibility === "public") return { map, role: "viewer" };
+  return null;
+}
 
-const PutBody = z.object({
-  title: z.string().min(1),
-  baseVersion: z.number().int().nonnegative(),
-  source: z.unknown(),
-});
-
-/** PUT /api/maps/:slug — upsert the user's overlay, validating the source. */
-mapsRoute.put("/:slug", async (c) => {
-  const userId = c.get("userId");
-  const slug = c.req.param("slug");
-
-  const body = PutBody.safeParse(await c.req.json().catch(() => null));
-  if (!body.success) return c.json({ error: "Invalid request body" }, 400);
-
-  // Same gate as the client: strict schema, then buildArtifact invariants.
-  const parsed = SourceGraphSchema.safeParse(body.data.source);
+function validateSource(source: unknown): { ok: true } | { ok: false; error: string } {
+  const parsed = SourceGraphSchema.safeParse(source);
   if (!parsed.success) {
     const msg = parsed.error.issues
       .slice(0, 4)
       .map((i) => `${i.path.join(".") || "graph"}: ${i.message}`)
       .join("; ");
-    return c.json({ error: `Invalid source: ${msg}` }, 400);
+    return { ok: false, error: `Invalid source: ${msg}` };
   }
   try {
     buildArtifact(parsed.data);
   } catch (e) {
-    return c.json({ error: `Build failed: ${e instanceof Error ? e.message : String(e)}` }, 400);
+    return { ok: false, error: `Build failed: ${e instanceof Error ? e.message : String(e)}` };
   }
+  return { ok: true };
+}
 
-  const updated = await db.transaction(async (tx) => {
-    const [existing] = await tx
-      .select({ id: maps.id })
-      .from(maps)
-      .where(and(eq(maps.ownerId, userId), eq(maps.slug, slug)))
-      .limit(1);
+// ---------------------------------------------------------------------------
+// Public reads (no auth required; auth refines what's visible)
+// ---------------------------------------------------------------------------
 
-    const now = new Date();
-    if (existing) {
-      await tx.update(maps).set({ title: body.data.title, updatedAt: now }).where(eq(maps.id, existing.id));
-      await tx
-        .update(mapSources)
-        .set({ source: parsed.data, baseVersion: body.data.baseVersion, updatedAt: now })
-        .where(eq(mapSources.mapId, existing.id));
-    } else {
-      const [created] = await tx
-        .insert(maps)
-        .values({ ownerId: userId, slug, title: body.data.title })
-        .returning({ id: maps.id });
-      await tx.insert(mapSources).values({
-        mapId: created.id,
-        source: parsed.data,
-        baseVersion: body.data.baseVersion,
-        updatedAt: now,
-      });
-    }
-    return now;
-  });
+/** GET /api/maps/catalog — public maps, plus the caller's own + shared-with-me. */
+mapsRoute.get("/catalog", async (c) => {
+  const userId = await getUserId(c);
 
-  return c.json({ slug, updated: updated.toISOString() });
+  const rows = await db
+    .select({
+      id: maps.id,
+      slug: maps.slug,
+      title: maps.title,
+      visibility: maps.visibility,
+      ownerId: maps.ownerId,
+      updated: maps.updatedAt,
+    })
+    .from(maps);
+
+  const sharedIds = userId
+    ? new Set(
+        (
+          await db
+            .select({ mapId: mapCollaborators.mapId })
+            .from(mapCollaborators)
+            .where(eq(mapCollaborators.userId, userId))
+        ).map((r) => r.mapId),
+      )
+    : new Set<string>();
+
+  const catalog = rows
+    .map((m) => {
+      const role: Role | "public" | null =
+        userId && m.ownerId === userId
+          ? "owner"
+          : sharedIds.has(m.id)
+            ? "editor"
+            : m.visibility === "public"
+              ? "public"
+              : null;
+      return role ? { ...m, role, updated: m.updated.toISOString() } : null;
+    })
+    .filter((m): m is NonNullable<typeof m> => m !== null);
+
+  return c.json(catalog);
 });
 
-/** DELETE /api/maps/:slug — discard the user's overlay (revert to shipped). */
-mapsRoute.delete("/:slug", async (c) => {
-  const userId = c.get("userId");
-  const slug = c.req.param("slug");
-  await db.delete(maps).where(and(eq(maps.ownerId, userId), eq(maps.slug, slug)));
+/** GET /api/maps/:id — the map's source, if readable by the caller. */
+mapsRoute.get("/:id", async (c) => {
+  const userId = await getUserId(c);
+  const access = await resolveAccess(c.req.param("id"), userId);
+  if (!access) return c.json({ error: "Not found" }, 404);
+
+  const [src] = await db
+    .select({ source: mapSources.source, baseVersion: mapSources.baseVersion })
+    .from(mapSources)
+    .where(eq(mapSources.mapId, access.map.id))
+    .limit(1);
+
+  return c.json({
+    id: access.map.id,
+    slug: access.map.slug,
+    title: access.map.title,
+    visibility: access.map.visibility,
+    role: access.role,
+    updated: access.map.updatedAt.toISOString(),
+    baseVersion: src?.baseVersion ?? 0,
+    source: src?.source ?? null,
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Authed mutations
+// ---------------------------------------------------------------------------
+
+const ForkBody = z.object({ fromId: z.string().min(1) });
+
+/** POST /api/maps — fork a readable map into the caller's own editable copy. */
+mapsRoute.post("/", async (c) => {
+  const userId = await getUserId(c);
+  if (!userId) return c.json({ error: "Unauthorized" }, 401);
+
+  const body = ForkBody.safeParse(await c.req.json().catch(() => null));
+  if (!body.success) return c.json({ error: "Invalid request body" }, 400);
+
+  const access = await resolveAccess(body.data.fromId, userId);
+  if (!access) return c.json({ error: "Not found" }, 404);
+
+  // Idempotent: one fork per (user, slug) — return the existing copy if present.
+  const [mine] = await db
+    .select({ id: maps.id })
+    .from(maps)
+    .where(and(eq(maps.ownerId, userId), eq(maps.slug, access.map.slug)))
+    .limit(1);
+  if (mine) return c.json({ id: mine.id, slug: access.map.slug });
+
+  const [src] = await db
+    .select({ source: mapSources.source, baseVersion: mapSources.baseVersion })
+    .from(mapSources)
+    .where(eq(mapSources.mapId, access.map.id))
+    .limit(1);
+
+  const newId = await db.transaction(async (tx) => {
+    const [created] = await tx
+      .insert(maps)
+      .values({
+        ownerId: userId,
+        slug: access.map.slug,
+        title: access.map.title,
+        visibility: "private",
+      })
+      .returning({ id: maps.id });
+    await tx.insert(mapSources).values({
+      mapId: created.id,
+      source: src?.source ?? {},
+      baseVersion: src?.baseVersion ?? 0,
+    });
+    return created.id;
+  });
+
+  return c.json({ id: newId, slug: access.map.slug });
+});
+
+const PutBody = z.object({ baseVersion: z.number().int().nonnegative(), source: z.unknown() });
+
+/** PUT /api/maps/:id — save source; owner or editor only. */
+mapsRoute.put("/:id", async (c) => {
+  const userId = await getUserId(c);
+  if (!userId) return c.json({ error: "Unauthorized" }, 401);
+
+  const access = await resolveAccess(c.req.param("id"), userId);
+  if (!access || (access.role !== "owner" && access.role !== "editor")) {
+    return c.json({ error: "Forbidden" }, 403);
+  }
+
+  const body = PutBody.safeParse(await c.req.json().catch(() => null));
+  if (!body.success) return c.json({ error: "Invalid request body" }, 400);
+
+  const valid = validateSource(body.data.source);
+  if (!valid.ok) return c.json({ error: valid.error }, 400);
+
+  const now = new Date();
+  await db.transaction(async (tx) => {
+    await tx.update(maps).set({ updatedAt: now }).where(eq(maps.id, access.map.id));
+    await tx
+      .update(mapSources)
+      .set({ source: body.data.source, baseVersion: body.data.baseVersion, updatedAt: now })
+      .where(eq(mapSources.mapId, access.map.id));
+  });
+
+  return c.json({ id: access.map.id, updated: now.toISOString() });
+});
+
+/** DELETE /api/maps/:id — owner only. */
+mapsRoute.delete("/:id", async (c) => {
+  const userId = await getUserId(c);
+  if (!userId) return c.json({ error: "Unauthorized" }, 401);
+
+  const access = await resolveAccess(c.req.param("id"), userId);
+  if (!access || access.role !== "owner") return c.json({ error: "Forbidden" }, 403);
+
+  await db.delete(maps).where(eq(maps.id, access.map.id));
   return c.body(null, 204);
 });

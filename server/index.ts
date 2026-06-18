@@ -3,6 +3,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { auth } from "./auth";
+import { mapsRoute } from "./routes/maps";
 import { env, isLocalhostOrigin, webOrigins } from "./env";
 
 const app = new Hono();
@@ -30,7 +31,9 @@ app.get("/api/health", (c) => c.json({ ok: true, ts: new Date().toISOString() })
 // better-auth owns every route under /api/auth/*.
 app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 
+// Per-user map overlays (Phase 2).
+app.route("/api/maps", mapsRoute);
+
 serve({ fetch: app.fetch, port: env.PORT }, (info) => {
-  // eslint-disable-next-line no-console
   console.log(`math-atlas API listening on http://localhost:${info.port}`);
 });
