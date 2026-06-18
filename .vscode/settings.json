@@ -43,5 +43,8 @@
     "**/yarn.lock": true,
     "src/data/maps/*.source.json": false,
   },
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  }
 }

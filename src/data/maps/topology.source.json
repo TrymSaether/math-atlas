@@ -1813,7 +1813,9 @@
           {
             "role": "setup",
             "content": "The taxi cab metric satisfies the metric axioms: non-negativity, identity of indiscernibles, symmetry, and the triangle inequality.",
-            "uses": ["metric_space"]
+            "uses": [
+              "metric_space"
+            ]
           },
           {
             "role": "non-negativity",
@@ -1866,7 +1868,9 @@
           {
             "role": "setup",
             "content": "The map $d'$ satisfies the metric axioms: non-negativity, identity of indiscernibles, symmetry, and the triangle inequality.",
-            "uses": ["metric_space"]
+            "uses": [
+              "metric_space"
+            ]
           },
           {
             "role": "non-negativity",
@@ -1921,7 +1925,9 @@
           {
             "role": "argument",
             "content": "The open ball $𝖡((0, 0); 1)$ in the metric space $(\\mathbb{R}^2 , d)$ with the given metrics can be visualized as follows: \\begin{enumerate} \\item (a) For $d_1$, the open ball is a diamond-shaped region defined by the inequality $|x_1| + |x_2| < 1$. \\item (b) For $d_2$, the open ball is a circular region defined by the inequality $x_1^2 + x_2^2 < 1$. \\item (c) For $d_\\infty$, the open ball is a square region defined by the inequalities $|x_1| < 1$ and $|x_2| < 1$. \\end{enumerate}",
-            "uses": ["metric_space"]
+            "uses": [
+              "metric_space"
+            ]
           }
         ]
       },

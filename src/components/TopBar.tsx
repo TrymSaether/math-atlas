@@ -140,7 +140,7 @@ function MapBrandSelector() {
             boxShadow: "inset 0 0 0 1px var(--chrome-border)",
           }}
         >
-          <LogoMark size={18} className="text-[color:var(--fg-1)]" />
+          <LogoMark size={18} className="text-(--fg-1)" />
         </span>
         <span className="hidden whitespace-nowrap font-serif text-atlas-brand text-fg-1 sm:inline">
           Math Atlas

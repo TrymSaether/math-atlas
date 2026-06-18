@@ -1,14 +1,23 @@
 node_modules
 dist
+build
 .cache
+.vite
+.turbo
+.next
+coverage
 .venv
+
 .DS_Store
 *.tsbuildinfo
+
 package-lock.json
+pnpm-lock.yaml
+yarn.lock
 
 .claude
-.vscode
 
-src/data/maps/*.source.json
+# Generated Atlas artifacts
 src/data/maps/*.json
+src/data/maps/*.source.json
 public/atlas-assets

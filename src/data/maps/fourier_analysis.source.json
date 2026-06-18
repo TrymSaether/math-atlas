@@ -3773,7 +3773,7 @@
         "formula": "$$\\begin{aligned} f\\in C(\\mathbb T)&\\Longrightarrow \\|\\sigma_N f-f\\|_\\infty\\xrightarrow[N\\to\\infty]{}0,\\\\ \\sigma_N f&=\\frac1{N+1}\\sum_{k=0}^{N}S_k f=F_N*f. \\end{aligned}$$",
         "intuition": "Ordinary Fourier partial sums use the oscillatory Dirichlet kernel, which can behave badly. Fejér averaging replaces it by the positive Fejér kernel, so reconstruction becomes a stable local average that sharpens into the original function.",
         "notation": [
-          "$$\\sigma_N f=F_N*f$, $\\|\\sigma_N f-f\\|_\\infty\\to0$$"
+          "$$\\sigma_N f=F_N*f \\|\\sigma_N f-f\\|_\\infty\\to0$$"
         ]
       },
       "assumptions": [
