@@ -20,6 +20,7 @@ import {
 } from "mafs";
 
 import "mafs/core.css";
+import { DIA, DOT, FIGURE, STROKE } from "./tokens";
 
 export type Domain = [number, number];
 export type Vec2 = [number, number];
@@ -36,7 +37,7 @@ function finite(value: number): number {
 export function FigureFrame({
   xDomain,
   yDomain,
-  height = 180,
+  height = FIGURE.height,
   axes = true,
   grid = false,
   children,
@@ -74,7 +75,7 @@ export function FigureFrame({
 export function Axes({
   xDomain,
   yDomain,
-  color = "var(--fg-4)",
+  color = DIA.muted,
 }: {
   xDomain: Domain;
   yDomain: Domain;
@@ -83,10 +84,10 @@ export function Axes({
   return (
     <>
       {yDomain[0] <= 0 && yDomain[1] >= 0 && (
-        <Line.Segment point1={[xDomain[0], 0]} point2={[xDomain[1], 0]} color={color} weight={1} />
+        <Line.Segment point1={[xDomain[0], 0]} point2={[xDomain[1], 0]} color={color} weight={STROKE.guide} />
       )}
       {xDomain[0] <= 0 && xDomain[1] >= 0 && (
-        <Line.Segment point1={[0, yDomain[0]]} point2={[0, yDomain[1]]} color={color} weight={1} />
+        <Line.Segment point1={[0, yDomain[0]]} point2={[0, yDomain[1]]} color={color} weight={STROKE.guide} />
       )}
     </>
   );
@@ -95,8 +96,8 @@ export function Axes({
 export function FunctionCurve({
   y,
   domain,
-  color = "var(--accent)",
-  weight = 2,
+  color = DIA.accent,
+  weight = STROKE.curve,
   opacity = 1,
   style = "solid",
 }: {
@@ -130,8 +131,8 @@ export function FunctionCurve({
 export function Arrow({
   from,
   to,
-  color = "var(--accent)",
-  weight = 1.4,
+  color = DIA.accent,
+  weight = STROKE.mark,
   opacity = 1,
   style = "solid",
 }: {
@@ -158,15 +159,15 @@ export function Arrow({
   return (
     <g opacity={opacity}>
       <Line.Segment point1={from} point2={tip} color={color} weight={weight} style={style} />
-      <Polygon points={head} color={color} fillOpacity={1} strokeOpacity={1} weight={1} />
+      <Polygon points={head} color={color} fillOpacity={1} strokeOpacity={1} weight={STROKE.guide} />
     </g>
   );
 }
 
 export function SamplePoints({
   points,
-  color = "var(--accent)",
-  radius = 3.5,
+  color = DIA.accent,
+  radius = DOT.base,
   opacity = 1,
 }: {
   points: Vec2[];
@@ -190,7 +191,7 @@ export function SamplePoints({
   );
 }
 
-export { DIA, DOT, FONT, PANEL_BACKING, STROKE } from "./tokens";
+export { DIA, DOT, FIGURE, FONT, PANEL_BACKING, STROKE, UI } from "./tokens";
 
 export {
   Circle,

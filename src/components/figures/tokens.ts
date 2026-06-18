@@ -25,6 +25,9 @@
  *   fillX/fillY — the two set fills (domain / codomain)
  */
 export const DIA = {
+  surface: "var(--surface-2)",
+  frame: "var(--bg)",
+  border: "var(--border)",
   ink: "var(--dia-ink)",
   text: "var(--fg-2)",
   ref: "var(--fg-3)",
@@ -36,6 +39,14 @@ export const DIA = {
   ok: "var(--green)",
   fillX: "var(--dia-fill)",
   fillY: "var(--dia-fill2)",
+} as const;
+
+/** Shared figure-frame dimensions and radii. */
+export const FIGURE = {
+  height: 180,
+  compactHeight: 150,
+  radius: "var(--radius-md)",
+  panelRadius: "var(--radius-lg)",
 } as const;
 
 /** Stroke weights, in Mafs line units. */
@@ -60,6 +71,14 @@ export const FONT = {
   label: 12, // set / axis names (X, Y, f)
   tick: 10, // element labels and marker tags
   hint: 9, // small inline notes
+} as const;
+
+/** UI copy colors for figure captions and inline controls. */
+export const UI = {
+  text: "var(--fg-2)",
+  muted: "var(--fg-3)",
+  subtle: "var(--fg-4)",
+  onColor: "var(--fg-on-color)",
 } as const;
 
 /** A translucent panel backing for labels floating over a figure. */

@@ -2242,19 +2242,19 @@ textarea.authoring-control {
 }
 
 .concept-title {
-  max-width: fit-content;
+  max-width: 100%;
   margin: 0%;
   color: var(--fg-1);
   font-size: var(--type-atlas-display);
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   line-height: 1;
-  overflow-wrap: normal;
+  overflow-wrap: anywhere;
   /* Preserve authored casing: math labels often use intentional forms like L^p, C^*, weak-*, or x-coordinate. */
 }
 
 .concept-title-header-card .concept-title {
-  max-width: fit-content;
+  max-width: 100%;
   font-size: var(--type-atlas-card);
   line-height: 1.1;
 }
@@ -2380,6 +2380,10 @@ textarea.authoring-control {
   width: 100%;
   height: auto;
   background: var(--dia-space);
+}
+
+.node-visual-frame {
+  min-height: 128px;
 }
 
 /* SVG classes used by diagram assets. CSS custom properties still work when
@@ -3272,6 +3276,7 @@ textarea.authoring-control {
 /* Compact Mafs surfaces used by atlas node figures. */
 .atlas-mafs-frame {
   width: 100%;
+  min-height: 120px;
   overflow: hidden;
   border-radius: var(--radius-md);
   background: var(--bg);

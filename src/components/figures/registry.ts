@@ -1,6 +1,9 @@
 import { type ComponentType, type LazyExoticComponent, lazy } from "react";
 
+import type { GraphNode } from "../../types";
 import { type FigureProps } from "./types";
+
+type FigureComponent = LazyExoticComponent<ComponentType<FigureProps>>;
 
 /**
  * Node id → interactive figure component. Lazy-loaded so each figure is its own
@@ -10,7 +13,7 @@ import { type FigureProps } from "./types";
  * `FigureProps`, then add an entry here. NodePanel consults this map before
  * falling back to the static `ThemedDiagram`.
  */
-export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<FigureProps>>> = {
+export const FIGURE_REGISTRY: Record<string, FigureComponent> = {
   function: lazy(() => import("./FunctionSetFigure")),
   domain: lazy(() => import("./FunctionSetFigure")),
   codomain: lazy(() => import("./FunctionSetFigure")),
@@ -132,6 +135,55 @@ export const FIGURE_REGISTRY: Record<string, LazyExoticComponent<ComponentType<F
   ss7_3_ex3: lazy(() => import("./SamplingFigure")),
 };
 
-export function hasInteractiveFigure(nodeId: string): boolean {
-  return nodeId in FIGURE_REGISTRY;
+const CONCEPT_FIGURE_TAGS: { tags: string[]; component: FigureComponent }[] = [
+  { tags: ["unit-ball", "norm"], component: FIGURE_REGISTRY.norm },
+  { tags: ["operator", "linear"], component: FIGURE_REGISTRY.linear_operator },
+  { tags: ["weak", "weak-*"], component: FIGURE_REGISTRY.weak_topology },
+  { tags: ["hilbert", "projection"], component: FIGURE_REGISTRY.projection_operator },
+  { tags: ["hilbert", "inner-product"], component: FIGURE_REGISTRY.inner_product_space },
+  { tags: ["spectrum", "operator"], component: FIGURE_REGISTRY.spectrum },
+  { tags: ["cauchy", "sequence"], component: FIGURE_REGISTRY.cauchy_sequence },
+  { tags: ["pointwise", "convergence"], component: FIGURE_REGISTRY.convergence },
+  { tags: ["fourier", "kernel"], component: FIGURE_REGISTRY.dirichlet_kernel },
+  { tags: ["convolution"], component: FIGURE_REGISTRY.convolution },
+  { tags: ["sampling"], component: FIGURE_REGISTRY.sampling_theorem },
+  { tags: ["gaussian"], component: FIGURE_REGISTRY.gaussian_transform },
+  { tags: ["heat"], component: FIGURE_REGISTRY.heat_equation },
+];
+
+function normalizedTags(node: GraphNode): Set<string> {
+  return new Set(
+    [node.kind, node.domain, node.label, ...node.tags]
+      .flatMap((value) => {
+        const raw = value.toLowerCase().trim();
+        if (!raw) return [];
+        return [raw, raw.replace(/_/g, "-"), ...raw.split(/[\s_/.-]+/)];
+      })
+      .filter(Boolean),
+  );
+}
+
+function tagMatch(node: GraphNode): FigureComponent | null {
+  const tags = normalizedTags(node);
+  for (const candidate of CONCEPT_FIGURE_TAGS) {
+    if (candidate.tags.every((tag) => tags.has(tag))) return candidate.component;
+  }
+  return null;
+}
+
+export function exactInteractiveFigure(nodeId: string): FigureComponent | null {
+  return FIGURE_REGISTRY[nodeId] ?? null;
+}
+
+export function inferredInteractiveFigure(node: GraphNode): FigureComponent | null {
+  return tagMatch(node);
+}
+
+export function interactiveFigureForNode(node: GraphNode): FigureComponent | null {
+  return exactInteractiveFigure(node.id) ?? inferredInteractiveFigure(node);
+}
+
+export function hasInteractiveFigure(nodeOrId: GraphNode | string): boolean {
+  if (typeof nodeOrId === "string") return nodeOrId in FIGURE_REGISTRY;
+  return interactiveFigureForNode(nodeOrId) !== null;
 }
