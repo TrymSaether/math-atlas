@@ -247,7 +247,7 @@ function PanelContent({
         <div className="-mx-5 border-b" style={{ borderColor: "var(--border-subtle)" }} />
       </header>
 
-      <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+      <div ref={scrollRef} className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-5 py-4">
         {activeTab === "overview" &&
           (bodyEmpty ? (
             <p className="text-ui-sm italic" style={{ color: "var(--fg-3)" }}>

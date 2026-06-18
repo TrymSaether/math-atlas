@@ -274,7 +274,7 @@ function DirectionsPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-40 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-auto rounded-2xl p-3"
+      className="map-popover canvas-control-panel panel-scrollbar pointer-events-auto fixed z-40 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-auto rounded-[var(--radius-xl)] p-3"
       style={{
         top: position.top,
         right: position.right,
@@ -562,7 +562,7 @@ function RouteSequence({
         )}
       </div>
 
-      <ol className="flex max-h-[42vh] flex-col gap-0.5 overflow-y-auto rounded-lg border border-border bg-surface p-1">
+      <ol className="panel-scrollbar flex max-h-[42vh] flex-col gap-0.5 overflow-y-auto rounded-lg border border-border bg-surface p-1">
         {ordered.map((id, i) => {
           const node = map?.nodeById.get(id);
           const current = touring && i === tourIndex;
@@ -781,7 +781,7 @@ function Segmented<T extends string>({
 }) {
   return (
     <div
-      className="grid w-full gap-0.5 rounded-md bg-surface-2 p-0.5 ring-1 ring-inset ring-border"
+      className="map-segmented grid w-full gap-0.5"
       style={{ gridTemplateColumns: `repeat(${options.length}, 1fr)` }}
     >
       {options.map((o) => {
@@ -793,10 +793,7 @@ function Segmented<T extends string>({
             key={o.value}
             type="button"
             onClick={() => onChange(o.value)}
-            className={cn(
-              "flex items-center justify-center rounded-sm px-2 py-1.5 text-ui-meta font-semibold transition-colors",
-              active ? "bg-accent text-fg-on-color" : "text-fg-2 hover:bg-surface hover:text-fg-1",
-            )}
+            className={cn("map-segmented-option", active && "is-active")}
             aria-label={o.label}
             title={o.label}
             aria-pressed={active}
@@ -813,10 +810,10 @@ function Segmented<T extends string>({
 
 function PanelSection({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div>
-      <div className="mb-2 text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">{title}</div>
+    <section>
+      <div className="map-panel-section-title">{title}</div>
       {children}
-    </div>
+    </section>
   );
 }
 const MODES: { id: ViewMode; label: string; hint: string; icon: Icon }[] = [
@@ -841,18 +838,13 @@ function ModeTile({
     <button
       type="button"
       onClick={onClick}
-      className={cn(
-        "group relative flex flex-col gap-2 rounded-md border p-2 text-left transition-colors",
-        active
-          ? "border-accent bg-accent-soft ring-1 ring-inset ring-accent"
-          : "border-border bg-surface hover:border-border-strong hover:bg-surface-2",
-      )}
+      className={cn("map-mode-tile group relative", active && "is-active")}
       aria-pressed={active}
     >
       <span
         className={cn(
-          "flex h-14 w-full items-center justify-center rounded-sm",
-          active ? "bg-accent text-fg-on-color" : "bg-surface-2 text-fg-2",
+          "map-mode-tile-preview",
+          active ? "bg-accent-soft text-accent" : "bg-surface-2 text-fg-2",
         )}
         aria-hidden
       >
@@ -902,7 +894,7 @@ function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement |
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-40 flex w-[min(320px,calc(100vw-24px))] flex-col gap-3.5 overflow-auto rounded-2xl p-3.5"
+      className="map-popover canvas-control-panel map-panel pointer-events-auto fixed z-40 w-[min(320px,calc(100vw-24px))] overflow-hidden rounded-[var(--radius-xl)]"
       style={{
         top: position.top,
         right: position.right,
@@ -911,128 +903,121 @@ function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement |
       role="dialog"
       aria-label="Map view"
     >
-      <PanelSection title="Map Modes">
-        <div className="grid grid-cols-2 gap-2">
-          {MODES.map((m) => (
-            <ModeTile
-              key={m.id}
-              active={view === m.id}
-              label={m.label}
-              hint={m.hint}
-              icon={m.icon}
-              onClick={() => setView(m.id)}
-            />
-          ))}
-        </div>
-      </PanelSection>
+      <div className="map-panel-scroll panel-scrollbar flex flex-col gap-3.5 overflow-y-auto p-3.5">
+        <PanelSection title="Map Modes">
+          <div className="grid grid-cols-2 gap-2">
+            {MODES.map((m) => (
+              <ModeTile
+                key={m.id}
+                active={view === m.id}
+                label={m.label}
+                hint={m.hint}
+                icon={m.icon}
+                onClick={() => setView(m.id)}
+              />
+            ))}
+          </div>
+        </PanelSection>
 
-      <div className="h-px bg-border" />
+        <div className="map-panel-divider" />
 
-      <PanelSection title="Layers">
-        <div className="flex flex-col gap-1">
-          {LAYERS.map(({ key, label }) => (
-            <div key={key} className="flex items-center justify-between gap-3 py-1">
-              <span className="text-ui-control font-medium text-fg-1">{label}</span>
-              <Switch label={label} checked={checked[key]} onClick={toggle[key]} />
-            </div>
-          ))}
-        </div>
-      </PanelSection>
+        <PanelSection title="Layers">
+          <div className="flex flex-col gap-1">
+            {LAYERS.map(({ key, label }) => (
+              <div key={key} className="flex items-center justify-between gap-3 py-1">
+                <span className="text-ui-control font-medium text-fg-1">{label}</span>
+                <Switch label={label} checked={checked[key]} onClick={toggle[key]} />
+              </div>
+            ))}
+          </div>
+        </PanelSection>
 
-      <div className="h-px bg-border" />
+        <div className="map-panel-divider" />
 
-      <PanelSection title="Edge style">
-        <Segmented<EdgeStyle>
-          value={edgeStyle}
-          onChange={setEdgeStyle}
-          options={[
-            { value: "smooth", label: "Step" },
-            { value: "bezier", label: "Curve" },
-            { value: "straight", label: "Line" },
-          ]}
-        />
-      </PanelSection>
+        <PanelSection title="Edge style">
+          <Segmented<EdgeStyle>
+            value={edgeStyle}
+            onChange={setEdgeStyle}
+            options={[
+              { value: "smooth", label: "Step" },
+              { value: "bezier", label: "Curve" },
+              { value: "straight", label: "Line" },
+            ]}
+          />
+        </PanelSection>
 
-      <div className="h-px bg-border" />
+        <div className="map-panel-divider" />
 
-      <PanelSection title="Edge labels">
-        <Segmented<EdgeLabelStyle>
-          value={edgeLabelStyle}
-          onChange={setEdgeLabelStyle}
-          options={[
-            { value: "prose", label: "Prose" },
-            { value: "terse", label: "Verb" },
-          ]}
-        />
-      </PanelSection>
+        <PanelSection title="Edge labels">
+          <Segmented<EdgeLabelStyle>
+            value={edgeLabelStyle}
+            onChange={setEdgeLabelStyle}
+            options={[
+              { value: "prose", label: "Prose" },
+              { value: "terse", label: "Verb" },
+            ]}
+          />
+        </PanelSection>
 
-      {map && (
-        <>
-          <div className="h-px bg-border" />
-          <PanelSection title="Domains">
-            <div className="flex flex-wrap gap-1.5">
-              {map.data.domains.map((d) => {
-                const active = topics.size === 0 || topics.has(d.id);
-                const tone = getDomainTone(d.id);
-                const glyphId = getDomainGlyphId({ mapId, domainId: d.id });
-                return (
-                  <button
-                    key={d.id}
-                    onClick={() => toggleTopic(d.id)}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-ui-meta font-medium transition-colors",
-                      !active &&
-                        "bg-surface border-border text-fg-3 hover:border-border-strong hover:bg-surface-2 hover:text-fg-1",
-                    )}
-                    // Active domain chips carry the data-derived domain tone, which
-                    // has no static utility equivalent.
-                    style={active ? { background: tone.tint, borderColor: tone.border, color: tone.text } : undefined}
-                  >
-                    {glyphId ? (
-                      <DomainGlyph id={glyphId} size={12} />
-                    ) : (
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "currentColor" }} />
-                    )}
-                    {d.label}
-                  </button>
-                );
-              })}
-            </div>
-            {topics.size > 0 && (
-              <button onClick={resetTopics} className="mt-2 text-ui-hint text-accent hover:underline">
-                Reset domains
-              </button>
-            )}
-          </PanelSection>
+        {map && (
+          <>
+            <div className="map-panel-divider" />
+            <PanelSection title="Domains">
+              <div className="flex flex-wrap gap-1.5">
+                {map.data.domains.map((d) => {
+                  const active = topics.size === 0 || topics.has(d.id);
+                  const tone = getDomainTone(d.id);
+                  const glyphId = getDomainGlyphId({ mapId, domainId: d.id });
+                  return (
+                    <button
+                      key={d.id}
+                      onClick={() => toggleTopic(d.id)}
+                      className={cn("map-chip", !active && "is-muted")}
+                      // Active domain chips carry the data-derived domain tone, which
+                      // has no static utility equivalent.
+                      style={active ? { background: tone.tint, borderColor: tone.border, color: tone.text } : undefined}
+                    >
+                      {glyphId ? (
+                        <DomainGlyph id={glyphId} size={12} />
+                      ) : (
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "currentColor" }} />
+                      )}
+                      {d.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {topics.size > 0 && (
+                <button onClick={resetTopics} className="mt-2 text-ui-hint text-accent hover:underline">
+                  Reset domains
+                </button>
+              )}
+            </PanelSection>
 
-          <div className="h-px bg-border" />
+            <div className="map-panel-divider" />
 
-          <PanelSection title="Categories">
-            <div className="flex flex-wrap gap-1.5">
-              {kindsByCategory(map.kinds).map(({ category, kinds: groupKinds }) => {
-                const meta = CATEGORY_META[category];
-                const Icon = CATEGORY_ICON[category];
-                const active = groupKinds.every((k) => kinds.has(k));
-                return (
-                  <button
-                    key={category}
-                    onClick={() => groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))}
-                    className={cn(
-                      "flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-ui-meta font-medium transition-colors",
-                      active
-                        ? "bg-accent-soft border-accent-border text-accent"
-                        : "bg-surface border-border text-fg-3 hover:border-border-strong hover:bg-surface-2 hover:text-fg-1",
-                    )}
-                  >
-                    <Icon className="h-3 w-3" weight={active ? "bold" : "regular"} aria-hidden />
-                    {meta.label}
-                  </button>
-                );
-              })}
-            </div>
-          </PanelSection>
-        </>
-      )}
+            <PanelSection title="Categories">
+              <div className="flex flex-wrap gap-1.5">
+                {kindsByCategory(map.kinds).map(({ category, kinds: groupKinds }) => {
+                  const meta = CATEGORY_META[category];
+                  const Icon = CATEGORY_ICON[category];
+                  const active = groupKinds.every((k) => kinds.has(k));
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))}
+                      className={cn("map-chip", active ? "is-accent" : "is-muted")}
+                    >
+                      <Icon className="h-3 w-3" weight={active ? "bold" : "regular"} aria-hidden />
+                      {meta.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </PanelSection>
+          </>
+        )}
+      </div>
     </div>,
     document.body,
   );

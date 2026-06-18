@@ -207,7 +207,7 @@ function ExtraValue({ value }: { value: unknown }) {
 
   return (
     <pre
-      className="max-w-full overflow-x-auto rounded-md border px-3 py-2 font-mono text-ui-xs leading-[1.6]"
+      className="panel-scrollbar max-w-full overflow-x-auto rounded-md border px-3 py-2 font-mono text-ui-xs leading-[1.6]"
       style={{
         background: "var(--surface-2)",
         borderColor: "var(--border)",
@@ -270,7 +270,7 @@ function Environment({
       return (
         <section>
           <Eyebrow>{label}</Eyebrow>
-          <div className="max-w-full overflow-x-auto text-ui-copy" style={{ color: "var(--fg-1)" }}>
+          <div className="panel-scrollbar max-w-full overflow-x-auto text-ui-copy" style={{ color: "var(--fg-1)" }}>
             <MathText text={view.definition} asBlock />
           </div>
         </section>
@@ -372,7 +372,7 @@ function Environment({
 function DisplayBox({ children }: { children: ReactNode }) {
   return (
     <div
-      className="max-w-full overflow-x-auto rounded-md border px-4 py-3 font-math leading-[1.6]"
+      className="panel-scrollbar max-w-full overflow-x-auto rounded-md border px-4 py-3 font-math leading-[1.6]"
       style={{
         background: "var(--surface-2)",
         borderColor: "var(--border)",

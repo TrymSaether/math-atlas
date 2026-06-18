@@ -37,7 +37,7 @@ export function ExpressionPanel() {
 
   return (
     <div className="sandbox-expression-panel flex h-full flex-col">
-      <div className="sandbox-expression-list flex-1 overflow-y-auto px-1.5 pb-1.5 pt-1">
+      <div className="sandbox-expression-list panel-scrollbar flex-1 overflow-y-auto px-1.5 pb-1.5 pt-1">
         {sections.map((section) => (
           <section key={section.id} className="sandbox-section">
             <button

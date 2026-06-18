@@ -114,7 +114,7 @@ export function Facet({
 export function MathBox({ text }: { text: string }) {
   return (
     <div
-      className="block max-w-full overflow-x-auto rounded-sm border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
+      className="panel-scrollbar block max-w-full overflow-x-auto rounded-sm border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
       style={{
         background: "var(--surface-2)",
         borderColor: "var(--border)",

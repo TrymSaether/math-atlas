@@ -221,7 +221,7 @@ function NodePicker({
       />
       {open && matches.length > 0 && (
         <ul
-          className="absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-3)"
+          className="panel-scrollbar absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-3)"
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           {matches.map((o) => (
@@ -880,7 +880,7 @@ export function NodeEditorPanel({
       </header>
 
       {/* Body */}
-      <div className="min-h-0 flex-1 space-y-3.5 overflow-y-auto px-5 py-4">
+      <div className="panel-scrollbar min-h-0 flex-1 space-y-3.5 overflow-y-auto px-5 py-4">
         <div className="grid grid-cols-2 gap-3">
           <SelectField
             label="Kind"

@@ -86,7 +86,7 @@ export function CommandPalette() {
                         style={{ color: "var(--fg-1)" }}
                       />
                     </div>
-                    <Command.List className="max-h-105 overflow-y-auto p-2">
+                    <Command.List className="panel-scrollbar max-h-105 overflow-y-auto p-2">
                       <Command.Empty className="px-3 py-6 text-center text-ui-xs text-(--fg-3)">
                         No results.
                       </Command.Empty>

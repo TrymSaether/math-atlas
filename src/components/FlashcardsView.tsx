@@ -350,7 +350,7 @@ function CardShell({
       }}
     >
       <span aria-hidden className="h-1 w-full shrink-0" style={{ background: tone }} />
-      <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
+      <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto">{children}</div>
       {footer}
     </div>
   );
