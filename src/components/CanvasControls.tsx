@@ -82,8 +82,7 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
   const showMinimap = useStore((s) => s.showMinimap);
   const toggleMinimap = useStore((s) => s.toggleMinimap);
   // Prereq resolves from a single goal (`routeTo`); path needs both endpoints.
-  const routeResolved =
-    routeKind === "prereq" ? routeTo !== null : routeFrom !== null && routeTo !== null;
+  const routeResolved = routeKind === "prereq" ? routeTo !== null : routeFrom !== null && routeTo !== null;
   const routeActive = routeMode || routeResolved;
   const directionsOpen = routeActive;
 
@@ -177,11 +176,7 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
 
       {/* Minimap overlay */}
       <Pill orientation="vertical" className="canvas-dock">
-        <DockButton
-          label={showMinimap ? "Hide minimap" : "Show minimap"}
-          active={showMinimap}
-          onClick={toggleMinimap}
-        >
+        <DockButton label={showMinimap ? "Hide minimap" : "Show minimap"} active={showMinimap} onClick={toggleMinimap}>
           <MapTrifoldIcon className="h-4.25 w-4.25" weight="regular" />
         </DockButton>
       </Pill>
@@ -279,7 +274,7 @@ function DirectionsPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-40 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-hidden rounded-2xl p-3"
+      className="map-popover pointer-events-auto fixed z-40 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-auto rounded-2xl p-3"
       style={{
         top: position.top,
         right: position.right,
@@ -289,9 +284,7 @@ function DirectionsPanel({
       aria-label="Directions"
     >
       <div className="flex items-center justify-between gap-3">
-        <div className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
-          Directions
-        </div>
+        <div className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">Directions</div>
         <button
           type="button"
           onClick={clearRoute}
@@ -440,9 +433,7 @@ function DirectionsPanel({
       {resolved && summary.found === false && (
         <div className="rounded-lg border border-border bg-surface px-3 py-2">
           <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0 truncate text-ui-meta font-semibold text-fg-1">
-              No dependency path
-            </div>
+            <div className="min-w-0 truncate text-ui-meta font-semibold text-fg-1">No dependency path</div>
             <Button
               kind="text"
               onClick={clearRoute}
@@ -508,9 +499,7 @@ function RouteSequence({
       <div className="flex items-center justify-between gap-3 px-1">
         <div className="min-w-0 text-ui-meta tabular-nums text-fg-3">
           <span className="font-semibold text-fg-1">{isPrereq ? prereqCount : ordered.length}</span>{" "}
-          {isPrereq
-            ? `prerequisite${prereqCount === 1 ? "" : "s"}`
-            : `concept${ordered.length === 1 ? "" : "s"}`}
+          {isPrereq ? `prerequisite${prereqCount === 1 ? "" : "s"}` : `concept${ordered.length === 1 ? "" : "s"}`}
           {spineSteps > 0 && (
             <span className="text-fg-3">
               {" · "}
@@ -598,16 +587,11 @@ function RouteSequence({
                 </span>
                 <span className="min-w-0 flex-1">
                   <span
-                    className={cn(
-                      "block truncate text-ui-meta font-semibold",
-                      current ? "text-accent" : "text-fg-1",
-                    )}
+                    className={cn("block truncate text-ui-meta font-semibold", current ? "text-accent" : "text-fg-1")}
                   >
                     <MathText text={node?.label ?? id} />
                   </span>
-                  {node && (
-                    <span className="block truncate text-ui-hint text-fg-3">{node.kind}</span>
-                  )}
+                  {node && <span className="block truncate text-ui-hint text-fg-3">{node.kind}</span>}
                 </span>
               </button>
             </li>
@@ -618,11 +602,7 @@ function RouteSequence({
   );
 }
 
-function useRouteSearchResults(
-  nodes: import("../types").GraphNode[],
-  query: string,
-  excludedId: string | null,
-) {
+function useRouteSearchResults(nodes: import("../types").GraphNode[], query: string, excludedId: string | null) {
   return useMemo(() => {
     const normalized = query.trim().toLowerCase();
     const ranked = nodes
@@ -633,13 +613,7 @@ function useRouteSearchResults(
         const domain = node.topicCluster.toLowerCase();
         const haystack = `${label} ${kind} ${domain}`;
         if (normalized && !haystack.includes(normalized)) return null;
-        const rank = !normalized
-          ? 2
-          : label === normalized
-            ? 0
-            : label.startsWith(normalized)
-              ? 1
-              : 2;
+        const rank = !normalized ? 2 : label === normalized ? 0 : label.startsWith(normalized) ? 1 : 2;
         return { node, rank };
       })
       .filter((item): item is { node: import("../types").GraphNode; rank: number } => Boolean(item))
@@ -712,9 +686,7 @@ function RouteSearchField({
               className="flex w-full min-w-0 items-center justify-between gap-3 px-2.5 py-1.5 text-left transition-colors hover:bg-surface"
             >
               <span className="min-w-0">
-                <span className="block truncate text-ui-meta font-semibold text-fg-1">
-                  {node.label}
-                </span>
+                <span className="block truncate text-ui-meta font-semibold text-fg-1">{node.label}</span>
                 <span className="block truncate text-ui-hint text-fg-3">{node.kind}</span>
               </span>
             </button>
@@ -754,9 +726,7 @@ function DepthPicker({ value, onChange }: { value: number; onChange: (value: num
             onClick={() => onChange(depth)}
             className={cn(
               "flex h-6 w-6 items-center justify-center rounded-xs text-ui-2xs font-semibold tabular-nums transition-colors",
-              active
-                ? "bg-accent-soft text-accent ring-1 ring-inset ring-accent-border"
-                : "text-fg-2",
+              active ? "bg-accent-soft text-accent ring-1 ring-inset ring-accent-border" : "text-fg-2",
             )}
             aria-label={`Focus depth ${depth}`}
             aria-pressed={active}
@@ -772,15 +742,7 @@ function DepthPicker({ value, onChange }: { value: number; onChange: (value: num
 /* ---- Shared controls ----------------------------------------------- */
 
 /** iOS-style switch used for layer toggles. */
-function Switch({
-  checked,
-  onClick,
-  label,
-}: {
-  checked: boolean;
-  onClick: () => void;
-  label: string;
-}) {
+function Switch({ checked, onClick, label }: { checked: boolean; onClick: () => void; label: string }) {
   return (
     <button
       type="button"
@@ -839,11 +801,7 @@ function Segmented<T extends string>({
             title={o.label}
             aria-pressed={active}
           >
-            {IconComponent ? (
-              <IconComponent className="h-4 w-4" weight={active ? "bold" : "regular"} />
-            ) : (
-              o.label
-            )}
+            {IconComponent ? <IconComponent className="h-4 w-4" weight={active ? "bold" : "regular"} /> : o.label}
           </button>
         );
       })}
@@ -856,9 +814,7 @@ function Segmented<T extends string>({
 function PanelSection({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div>
-      <div className="mb-2 text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
-        {title}
-      </div>
+      <div className="mb-2 text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">{title}</div>
       {children}
     </div>
   );
@@ -904,12 +860,7 @@ function ModeTile({
       </span>
 
       <span className="px-0.5">
-        <span
-          className={cn(
-            "block text-ui-control font-semibold leading-tight",
-            active ? "text-accent" : "text-fg-1",
-          )}
-        >
+        <span className={cn("block text-ui-control font-semibold leading-tight", active ? "text-accent" : "text-fg-1")}>
           {label}
         </span>
         <span className="block text-ui-hint text-fg-3">{hint}</span>
@@ -924,13 +875,7 @@ const LAYERS: { key: "grid" | "regions" | "soft"; label: string }[] = [
   { key: "soft", label: "Soft dependencies" },
 ];
 
-function MapPanel({
-  panelRef,
-  position,
-}: {
-  panelRef: RefObject<HTMLDivElement | null>;
-  position: PanelPosition;
-}) {
+function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement | null>; position: PanelPosition }) {
   const view = useStore((s) => s.view);
   const setView = useStore((s) => s.setView);
   const showGrid = useStore((s) => s.showGrid);
@@ -957,7 +902,7 @@ function MapPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-40 flex w-[min(320px,calc(100vw-24px))] flex-col gap-3.5 overflow-hidden rounded-2xl p-3.5"
+      className="map-popover pointer-events-auto fixed z-40 flex w-[min(320px,calc(100vw-24px))] flex-col gap-3.5 overflow-auto rounded-2xl p-3.5"
       style={{
         top: position.top,
         right: position.right,
@@ -1041,19 +986,12 @@ function MapPanel({
                     )}
                     // Active domain chips carry the data-derived domain tone, which
                     // has no static utility equivalent.
-                    style={
-                      active
-                        ? { background: tone.tint, borderColor: tone.border, color: tone.text }
-                        : undefined
-                    }
+                    style={active ? { background: tone.tint, borderColor: tone.border, color: tone.text } : undefined}
                   >
                     {glyphId ? (
                       <DomainGlyph id={glyphId} size={12} />
                     ) : (
-                      <span
-                        className="h-1.5 w-1.5 shrink-0 rounded-full"
-                        style={{ background: "currentColor" }}
-                      />
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "currentColor" }} />
                     )}
                     {d.label}
                   </button>
@@ -1061,10 +999,7 @@ function MapPanel({
               })}
             </div>
             {topics.size > 0 && (
-              <button
-                onClick={resetTopics}
-                className="mt-2 text-ui-hint text-accent hover:underline"
-              >
+              <button onClick={resetTopics} className="mt-2 text-ui-hint text-accent hover:underline">
                 Reset domains
               </button>
             )}
@@ -1081,9 +1016,7 @@ function MapPanel({
                 return (
                   <button
                     key={category}
-                    onClick={() =>
-                      groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))
-                    }
+                    onClick={() => groupKinds.forEach((k) => kinds.has(k) === active && toggleKind(k))}
                     className={cn(
                       "flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-ui-meta font-medium transition-colors",
                       active
