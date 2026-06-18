@@ -1,14 +1,26 @@
 import { create } from "zustand";
-import { DEFAULT_MAP_ID, isMapId, loadMap, MAPS, type LoadedMap, type MapId } from "./data";
+import {
+  DEFAULT_MAP_ID,
+  isMapId,
+  fetchAndBuildMap,
+  fetchCatalog,
+  forkMap,
+  saveMapSource,
+  deleteMap,
+  type CatalogEntry,
+  type LoadedMap,
+  type MapId,
+  type MapRole,
+} from "./data";
 import { applyTheme, readStoredTheme, schemeFor } from "./lib/themes";
 import { defaultVisibleKinds } from "./lib/nodeCategory";
 import type { NodeKind, Relation } from "./types";
 import type { SourceGraph } from "./data/sourceSchema";
 import type { AuthorableRelation } from "./data/relations";
 import type { RouteKind } from "./lib/route";
-import { buildLoadedMapFromSource, loadShippedMap } from "./data/loadMap";
+import { buildLoadedMapFromSource } from "./data/loadMap";
 import { graphDataToSource } from "./data/toSource";
-import { clearOverlay, hasOverlay, writeOverlay } from "./data/edits";
+import { getCachedCatalog, setCachedCatalog, setCachedMap, clearCachedMap } from "./data/mapCache";
 import {
   addEdge as addSourceEdge,
   applyDraft,
@@ -202,6 +214,20 @@ interface State {
   importSource: (source: unknown) => EditResult;
   /** Discard local edits for the active map and restore the built-in. */
   revertMap: () => Promise<EditResult>;
+
+  /* ---- Account / sync ---------------------------------------------- */
+  /* ---- Account / catalog -------------------------------------------- */
+  /** Signed-in user id, or null. */
+  userId: string | null;
+  setUserId: (id: string | null) => void;
+  /** Maps the caller can open (one entry per slug; best access wins). */
+  catalog: CatalogEntry[];
+  /** Per-slug map entity meta (id / role / saved version), set when a map loads. */
+  mapMeta: Partial<Record<MapId, { id: string; role: MapRole; baseVersion: number }>>;
+  /** Fetch the catalog from the API (falls back to cache when offline). */
+  loadCatalog: () => Promise<void>;
+  /** On sign-in/out: reload the catalog and the active map (access changed). */
+  onSessionChange: () => Promise<void>;
 }
 
 function toggle<T>(set: Set<T>, v: T) {
@@ -399,12 +425,72 @@ function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefin
   };
 }
 
-function initialEditedMaps(): Set<MapId> {
-  const edited = new Set<MapId>();
-  for (const id of Object.keys(MAPS) as MapId[]) {
-    if (hasOverlay(id)) edited.add(id);
+/** Slugs the caller owns or can edit — drives the "edited" badge. */
+function editableSlugs(catalog: CatalogEntry[]): Set<MapId> {
+  return new Set(
+    catalog.filter((e) => e.role === "owner" || e.role === "editor").map((e) => e.slug),
+  );
+}
+
+/** Replace (or add) a catalog entry for a slug, preserving its title. */
+function upsertCatalog(catalog: CatalogEntry[], next: CatalogEntry): CatalogEntry[] {
+  const i = catalog.findIndex((e) => e.slug === next.slug);
+  if (i === -1) return [...catalog, next];
+  const copy = [...catalog];
+  copy[i] = { ...catalog[i], ...next };
+  return copy;
+}
+
+type Setter = (partial: Partial<State> | ((s: State) => Partial<State>)) => void;
+
+// Debounced per-slug save so rapid edits coalesce into one request.
+const saveTimers = new Map<MapId, ReturnType<typeof setTimeout>>();
+
+function scheduleSave(slug: MapId, get: () => State, set: Setter, delayMs = 800): void {
+  const existing = saveTimers.get(slug);
+  if (existing) clearTimeout(existing);
+  saveTimers.set(
+    slug,
+    setTimeout(() => {
+      saveTimers.delete(slug);
+      void saveMapToServer(slug, get, set);
+    }, delayMs),
+  );
+}
+
+/** Persist a slug's working source: fork the public map first if needed, then PUT. */
+async function saveMapToServer(slug: MapId, get: () => State, set: Setter): Promise<void> {
+  if (!get().userId) return; // editing requires sign-in to persist
+  const source = get().editSources[slug];
+  if (!source) return;
+  let meta = get().mapMeta[slug];
+  try {
+    if (!meta || (meta.role !== "owner" && meta.role !== "editor")) {
+      const fromId = meta?.id ?? get().catalog.find((e) => e.slug === slug)?.id;
+      if (!fromId) return;
+      const fork = await forkMap(fromId);
+      meta = { id: fork.id, role: "owner", baseVersion: source.version };
+      const title = get().catalog.find((e) => e.slug === slug)?.title ?? slug;
+      set((s) => ({
+        mapMeta: { ...s.mapMeta, [slug]: meta! },
+        catalog: upsertCatalog(s.catalog, { slug, id: fork.id, role: "owner", title }),
+      }));
+    }
+    const { updated } = await saveMapSource(meta.id, source.version, source);
+    set((s) => ({ mapMeta: { ...s.mapMeta, [slug]: { ...meta!, baseVersion: source.version } } }));
+    const title = get().catalog.find((e) => e.slug === slug)?.title ?? slug;
+    setCachedMap({
+      id: meta.id,
+      slug,
+      title,
+      role: meta.role,
+      updated,
+      baseVersion: source.version,
+      source,
+    });
+  } catch (e) {
+    console.warn(`[math-atlas] save failed for "${slug}":`, e);
   }
-  return edited;
 }
 
 /** The active map's working source: the session copy, else derived from the loaded map. */
@@ -438,11 +524,8 @@ function commitCandidate(
     editedMaps: new Set(s.editedMaps).add(mapId),
     editError: null,
   }));
-  writeOverlay(mapId, {
-    baseVersion: normalized.version,
-    updated: normalized.updated,
-    source: normalized,
-  });
+  // Persist to the server (debounced); forks the public map first if needed.
+  scheduleSave(mapId, get, set);
   return { ok: true, id: selectId };
 }
 
@@ -463,18 +546,26 @@ export const useStore = create<State>((set, get) => ({
 
     set({ loadingMapId: mapId, mapError: null });
     try {
-      const map = await loadMap(mapId);
+      if (get().catalog.length === 0) await get().loadCatalog();
+      const entry = get().catalog.find((e) => e.slug === mapId);
+      if (!entry) throw new Error(`Map not available: ${mapId}`);
+      const { map, payload } = await fetchAndBuildMap(entry.id);
       set((state) => {
         const loadedMaps = { ...state.loadedMaps, [mapId]: map };
+        const mapMeta = {
+          ...state.mapMeta,
+          [mapId]: { id: payload.id, role: payload.role, baseVersion: payload.baseVersion },
+        };
         if (state.mapId !== mapId) {
           return {
             loadedMaps,
+            mapMeta,
             loadingMapId: state.loadingMapId === mapId ? null : state.loadingMapId,
           };
         }
-
         return {
           loadedMaps,
+          mapMeta,
           loadingMapId: null,
           mapError: null,
           ...mapStateForLoadedMap(map, persistedMaps[mapId]),
@@ -671,7 +762,7 @@ export const useStore = create<State>((set, get) => ({
       nodeEditor: s.editMode ? null : s.nodeEditor,
       editError: null,
     })),
-  editedMaps: initialEditedMaps(),
+  editedMaps: new Set(),
   editSources: {},
   nodeEditor: null,
   editError: null,
@@ -756,30 +847,71 @@ export const useStore = create<State>((set, get) => ({
 
   revertMap: async () => {
     const mapId = get().mapId;
-    clearOverlay(mapId);
+    const meta = get().mapMeta[mapId];
+    // Discard the owned fork on the server (revert = back to the public map).
+    if (meta?.role === "owner") {
+      clearCachedMap(meta.id);
+      try {
+        await deleteMap(meta.id);
+      } catch (e) {
+        console.warn(`[math-atlas] revert delete failed for "${mapId}":`, e);
+      }
+    }
+    set((s) => {
+      const editSources = { ...s.editSources };
+      delete editSources[mapId];
+      const editedMaps = new Set(s.editedMaps);
+      editedMaps.delete(mapId);
+      const loadedMaps = { ...s.loadedMaps };
+      delete loadedMaps[mapId];
+      const mapMeta = { ...s.mapMeta };
+      delete mapMeta[mapId];
+      return { editSources, editedMaps, loadedMaps, mapMeta, nodeEditor: null, editError: null };
+    });
     try {
-      const map = await loadShippedMap(mapId);
-      set((s) => {
-        const editSources = { ...s.editSources };
-        delete editSources[mapId];
-        const editedMaps = new Set(s.editedMaps);
-        editedMaps.delete(mapId);
-        const validIds = new Set(map.data.nodes.map((n) => n.id));
-        return {
-          editSources,
-          editedMaps,
-          loadedMaps: { ...s.loadedMaps, [mapId]: map },
-          selectedId: s.selectedId && validIds.has(s.selectedId) ? s.selectedId : null,
-          nodeEditor: null,
-          editError: null,
-        };
-      });
+      await get().loadCatalog();
+      await get().ensureMapLoaded(mapId);
       return { ok: true };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       set({ editError: message });
       return { ok: false, error: message };
     }
+  },
+
+  userId: null,
+  setUserId: (id) => set({ userId: id }),
+
+  catalog: getCachedCatalog() ?? [],
+  mapMeta: {},
+
+  loadCatalog: async () => {
+    try {
+      const catalog = await fetchCatalog();
+      setCachedCatalog(catalog);
+      set({ catalog, editedMaps: editableSlugs(catalog) });
+    } catch (e) {
+      // Offline / backend asleep — keep the cached catalog if we have one.
+      const cached = getCachedCatalog();
+      if (cached && get().catalog.length === 0) set({ catalog: cached });
+      console.warn("[math-atlas] catalog load failed:", e);
+    }
+  },
+
+  onSessionChange: async () => {
+    // Sign in/out changes access — refresh the catalog and reload the active map.
+    await get().loadCatalog();
+    const mapId = get().mapId;
+    set((s) => {
+      const loadedMaps = { ...s.loadedMaps };
+      delete loadedMaps[mapId];
+      const mapMeta = { ...s.mapMeta };
+      delete mapMeta[mapId];
+      const editSources = { ...s.editSources };
+      delete editSources[mapId];
+      return { loadedMaps, mapMeta, editSources };
+    });
+    await get().ensureMapLoaded(mapId);
   },
 }));
 
