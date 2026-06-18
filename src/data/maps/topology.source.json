@@ -1776,11 +1776,17 @@
       "id": "exercise_2_1",
       "kind": "exercise",
       "domain": "spaces_constructions",
-      "label": "Exercise 2.1",
+      "label": "Exercise 2.1 - Is It a Metric?",
       "content": {
-        "statement": "Does d(𝑥, 𝑦) = (𝑥 − 𝑦)2 define a metric on X = ℝ?",
-        "intuition": "Practice problem from Chapter 2.",
-        "notation": []
+        "statement": "Does $d(x,y) = (x - y)^2$ define a metric on $X = \\mathbb{R}$?"
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "No, because the triangle inequality fails.",
+            "content": "The triangle inequality fails: $$d(0, 2) = 4 \\nleq d(0, 1) + d(1, 2) = 1 + 1 = 2.$$"
+          }
+        ]
       },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 2.1",
@@ -1797,11 +1803,44 @@
       "id": "exercise_2_2",
       "kind": "exercise",
       "domain": "spaces_constructions",
-      "label": "Exercise 2.2",
+      "label": "Exercise 2.2 - Taxi Cab Metric",
       "content": {
-        "statement": "Show that ℝ2 equipped with the taxi cab metric is a metric space.",
-        "intuition": "Practice problem from Chapter 2.",
+        "statement": "Show that $\\mathbb{R}^2$ equipped with the taxi cab metric $$d_1(x, y) = |x_1 - y_1| + |x_2 - y_2|$$ is a metric space.",
         "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "The taxi cab metric satisfies the metric axioms: non-negativity, identity of indiscernibles, symmetry, and the triangle inequality.",
+            "uses": ["metric_space"]
+          },
+          {
+            "role": "non-negativity",
+            "content": "For all $x, y \\in \\mathbb{R}^2$, $d_1(x, y) = |x_1 - y_1| + |x_2 - y_2| \\geq 0$ since absolute values are non-negative.",
+            "uses": []
+          },
+          {
+            "role": "identity of indiscernibles",
+            "content": "$d_1(x, y) = 0$ if and only if $|x_1 - y_1| + |x_2 - y_2| = 0$, which happens if and only if $x_1 = y_1$ and $x_2 = y_2$, i.e., $x = y$.",
+            "uses": []
+          },
+          {
+            "role": "symmetry",
+            "content": "$d_1(x, y) = |x_1 - y_1| + |x_2 - y_2| = |y_1 - x_1| + |y_2 - x_2| = d_1(y, x)$ for all $x, y \\in \\mathbb{R}^2$.",
+            "uses": []
+          },
+          {
+            "role": "triangle inequality",
+            "content": "For all $x, y, z \\in \\mathbb{R}^2$, we have $$\\begin{align*} d_1(x, z) &= |x_1 - z_1| + |x_2 - z_2| \\\\ &\\leq |x_1 + (y_1 - y_1) - z_1| + |x_2 + (y_2 - y_2) - z_2| \\\\ &\\leq (|x_1 - y_1| + |y_1 - z_1|) + (|x_2 - y_2| + |y_2 - z_2|) \\\\ &= (|x_1 - y_1| + |x_2 - y_2|) + (|y_1 - z_1| + |y_2 - z_2|) \\\\ &= d_1(x, y) + d_1(y, z). \\end{align*}$$",
+            "uses": []
+          },
+          {
+            "role": "conclusion",
+            "content": "Since all metric axioms are satisfied, $(\\mathbb{R}^2, d_1)$ is a metric space.",
+            "uses": []
+          }
+        ]
       },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 2.2",
@@ -1818,11 +1857,43 @@
       "id": "exercise_2_3",
       "kind": "exercise",
       "domain": "spaces_constructions",
-      "label": "Exercise 2.3",
+      "label": "Exercise 2.3 - Equivalent Metric",
       "content": {
-        "statement": "Let (X, d) be a metric space. Show that the map d ′ ∶ X × X → ℝ given by\nd(𝑥, 𝑦)\nd ′ (𝑥, 𝑦) =\n1 + d(𝑥, 𝑦)\nis also a metric on X.",
-        "intuition": "Practice problem from Chapter 2.",
-        "notation": []
+        "statement": "Let $(X, d)$ be a metric space. Show that the map $d' \\colon X \\times X \\to \\mathbb{R}$ given by,$$d'(x, y) = \\frac{d(x, y)}{1 + d(x, y)}$$is also a metric on $X$."
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "The map $d'$ satisfies the metric axioms: non-negativity, identity of indiscernibles, symmetry, and the triangle inequality.",
+            "uses": ["metric_space"]
+          },
+          {
+            "role": "non-negativity",
+            "content": "For all $x, y \\in X$, $d'(x, y) = \\frac{d(x, y)}{1 + d(x, y)} \\geq 0$ since $d(x, y) \\geq 0$.",
+            "uses": []
+          },
+          {
+            "role": "identity of indiscernibles",
+            "content": "$d'(x, y) = 0$ if and only if $\\frac{d(x, y)}{1 + d(x, y)} = 0$, which happens if and only if $d(x, y) = 0$, i.e., $x = y$.",
+            "uses": []
+          },
+          {
+            "role": "symmetry",
+            "content": "$d'(x, y) = \\frac{d(x, y)}{1 + d(x, y)} = \\frac{d(y, x)}{1 + d(y, x)} = d'(y, x)$ for all $x, y \\in X$.",
+            "uses": []
+          },
+          {
+            "role": "triangle inequality",
+            "content": "For all $x, y, z \\in X$, we have $$d'(x, z) = \\frac{d(x, z)}{1 + d(x, z)} \\leq \\frac{d(x, y) + d(y, z)}{1 + d(x, y) + d(y, z)} < \\frac{d(x, y)}{1 + d(x, y)} + \\frac{d(y, z)}{1 + d(y, z)} = d'(x, y) + d'(y, z).$$",
+            "uses": []
+          },
+          {
+            "role": "conclusion",
+            "content": "Since all metric axioms are satisfied, $(X, d')$ is a metric space.",
+            "uses": []
+          }
+        ]
       },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 2.3",
@@ -1839,11 +1910,20 @@
       "id": "exercise_2_4",
       "kind": "exercise",
       "domain": "spaces_constructions",
-      "label": "Exercise 2.4",
+      "label": "Exercise 2.4 - Open Balls in Different Metrics",
       "content": {
-        "statement": "Draw a picture of the open ball 𝖡((0, 0); 1) in the metric space (ℝ2 , d) with\n(a) d(𝑥, 𝑦) = d1 (𝑥, 𝑦) = |𝑥1 − 𝑦1 | + |𝑥2 − 𝑦2 |;\n√\n(b) d(𝑥, 𝑦) = d2 (𝑥, 𝑦) = (𝑥1 − 𝑦1 )2 + (𝑥2 − 𝑦2 )2 ;\n(c) d(𝑥, 𝑦) = d∞ (𝑥, 𝑦) = max{|𝑥1 − 𝑦1 |, |𝑥2 − 𝑦2 |}.",
+        "statement": "Draw a picture of the open ball $𝖡((0, 0); 1)$ in the metric space $(\\mathbb{R}^2 , d) with \\begin{enumerate} \\item (a) $$d(x, y) = d_1(x, y) = |x_1 − y_1 | + |x_2 − y_2 |$$\\item (b) $$d(x, y) = d_2 (x, y) = (x_1 − y_1 )^2 + (x_2 − y_2 )^2$$ \\item (c) $d(x, y) = d_\\infty (x, y) = \\max_{i=1,2} |x_i − y_i |$. \\end{enumerate}",
         "intuition": "Practice problem from Chapter 2.",
         "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "The open ball $𝖡((0, 0); 1)$ in the metric space $(\\mathbb{R}^2 , d)$ with the given metrics can be visualized as follows: \\begin{enumerate} \\item (a) For $d_1$, the open ball is a diamond-shaped region defined by the inequality $|x_1| + |x_2| < 1$. \\item (b) For $d_2$, the open ball is a circular region defined by the inequality $x_1^2 + x_2^2 < 1$. \\item (c) For $d_\\infty$, the open ball is a square region defined by the inequalities $|x_1| < 1$ and $|x_2| < 1$. \\end{enumerate}",
+            "uses": ["metric_space"]
+          }
+        ]
       },
       "source": {
         "citation": "Thaule, Introduction to Topology, Exercise 2.4",
@@ -1976,7 +2056,7 @@
       "domain": "spaces_constructions",
       "label": "Exercise 3.2",
       "content": {
-        "statement": "Let X be a non-empty set, and let 𝑥0 be an element of X. Show that\n = {𝑈 ⊆ X ∣ 𝑥0 ∉ 𝑈 or X ⧵ 𝑈 is finite}\nis a topology on X.",
+        "statement": "Let X be a non-empty set, and let x0 be an element of X. Show that\n = {𝑈 ⊆ X ∣ x0 ∉ 𝑈 or X ⧵ 𝑈 is finite}\nis a topology on X.",
         "intuition": "Practice problem from Chapter 3.",
         "notation": []
       },
@@ -2100,7 +2180,7 @@
       "domain": "spaces_constructions",
       "label": "Exercise 3.7",
       "content": {
-        "statement": "Let X be a topological space, and let 𝐴 be a subset of X. Show that 𝑥 ∈ 𝐴 if\nand only if every neighborhood of 𝑥 intersects 𝐴.",
+        "statement": "Let X be a topological space, and let 𝐴 be a subset of X. Show that x ∈ 𝐴 if\nand only if every neighborhood of x intersects 𝐴.",
         "intuition": "Practice problem from Chapter 3.",
         "notation": []
       },
@@ -2193,7 +2273,7 @@
       "domain": "spaces_constructions",
       "label": "Exercise 4.2",
       "content": {
-        "statement": "Let  be the collection of all open intervals (a, b) = {𝑥 ∈ ℝ ∣ a < 𝑥 < b} in ℝ.\n(a) Show that  is a basis for a topology on ℝ. The topology generated by  is called the\nstandard topology on ℝ denoted by std .\n(b) Show that std = d where d is the metric topology obtained from the metric d(𝑥, 𝑦) =\n|𝑥 − 𝑦|.",
+        "statement": "Let  be the collection of all open intervals (a, b) = {x ∈ ℝ ∣ a < x < b} in ℝ.\n(a) Show that  is a basis for a topology on ℝ. The topology generated by  is called the\nstandard topology on ℝ denoted by std .\n(b) Show that std = d where d is the metric topology obtained from the metric d(x, y) =\n|x − y|.",
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
@@ -2255,7 +2335,7 @@
       "domain": "spaces_constructions",
       "label": "Exercise 4.4",
       "content": {
-        "statement": "Let ℚ deonte the set of rational numbers, and let ℝ denote the set of real numbers.\nShow that\n = {(a, b) ∣ a < b, a, b ∈ ℚ}\nis a basis for the standard topology on ℝ where (a, b) = {𝑥 ∈ ℝ ∣ a < 𝑥 < b}.",
+        "statement": "Let ℚ deonte the set of rational numbers, and let ℝ denote the set of real numbers.\nShow that\n = {(a, b) ∣ a < b, a, b ∈ ℚ}\nis a basis for the standard topology on ℝ where (a, b) = {x ∈ ℝ ∣ a < x < b}.",
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
@@ -2286,7 +2366,7 @@
       "domain": "spaces_constructions",
       "label": "Exercise 4.5",
       "content": {
-        "statement": "Let  be the collection of all half-open intervals of the form [a, b) = {𝑥 ∈ ℝ ∣\na ⩽ 𝑥 < b} in ℝ.\n(a) Show that  is a basis for a topology on ℝ. The topology generated by  is called the\nlower limit topology on ℝ.\n(b) Find the closure of the subset (0, 1) of ℝ given the lower limit topology.",
+        "statement": "Let  be the collection of all half-open intervals of the form [a, b) = {x ∈ ℝ ∣\na ⩽ x < b} in ℝ.\n(a) Show that  is a basis for a topology on ℝ. The topology generated by  is called the\nlower limit topology on ℝ.\n(b) Find the closure of the subset (0, 1) of ℝ given the lower limit topology.",
         "intuition": "Practice problem from Chapter 4.",
         "notation": []
       },
@@ -2454,7 +2534,7 @@
       "domain": "spaces_constructions",
       "label": "Exercise 5.3",
       "content": {
-        "statement": "Let ℝ be the set of real numbers equipped with the standard topology, and\nconsider the set of rational numbers ℚ as a subspace of ℝ. Show that the subset\n{ √ }\n| √\n𝐴= 𝑥∈ℚ|− 5<𝑥< 5\n|\nof ℚ is both open and closed in ℚ.",
+        "statement": "Let ℝ be the set of real numbers equipped with the standard topology, and\nconsider the set of rational numbers ℚ as a subspace of ℝ. Show that the subset\n{ √ }\n| √\n𝐴= x∈ℚ|− 5<x< 5\n|\nof ℚ is both open and closed in ℚ.",
         "intuition": "Practice problem from Chapter 5.",
         "notation": []
       },
@@ -2520,7 +2600,7 @@
       "domain": "spaces_constructions",
       "label": "Exercise 5.7",
       "content": {
-        "statement": "Let X and 𝑌 be two topological spaces, and let X × 𝑌 be given the product\ntopology. Show that if 𝑓 ∶ X → 𝑌 is a continuous map, the subspace\n𝐺 = {(𝑥, 𝑦) ∈ X × 𝑌 ∣ 𝑦 = 𝑓 (𝑥)}\nof X × 𝑌 , is homeomorphic to X.",
+        "statement": "Let X and 𝑌 be two topological spaces, and let X × 𝑌 be given the product\ntopology. Show that if 𝑓 ∶ X → 𝑌 is a continuous map, the subspace\n𝐺 = {(x, y) ∈ X × 𝑌 ∣ y = 𝑓 (x)}\nof X × 𝑌 , is homeomorphic to X.",
         "intuition": "Practice problem from Chapter 5.",
         "notation": []
       },
@@ -3883,7 +3963,7 @@
       "domain": "continuity",
       "label": "Exercise 5.8",
       "content": {
-        "statement": "Let ℝ be the set of real numbers equipped with the standard topology. Let\n𝜋∶ ℝ → ℤ\nbe the map given by\n{\n𝑥 𝑥∈ℤ\n𝜋(𝑥) =\n𝑛 𝑥 ∈ (𝑛 − 1, 𝑛 + 1), and 𝑛 is an odd integer.\nShow that the quotient topology on ℤ induced by 𝜋 is equal to the digital line topology, cf.\nExercise 4.6.",
+        "statement": "Let ℝ be the set of real numbers equipped with the standard topology. Let\n𝜋∶ ℝ → ℤ\nbe the map given by\n{\nx x∈ℤ\n𝜋(x) =\n𝑛 x ∈ (𝑛 − 1, 𝑛 + 1), and 𝑛 is an odd integer.\nShow that the quotient topology on ℤ induced by 𝜋 is equal to the digital line topology, cf.\nExercise 4.6.",
         "intuition": "Practice problem from Chapter 5.",
         "notation": []
       },
@@ -4527,7 +4607,7 @@
       "domain": "compactness",
       "label": "Exercise 6.7",
       "content": {
-        "statement": "Show that the surface of the cube centered at the origin,\n𝐶 = {(𝑥, 𝑦, 𝑧) ∈ ℝ3 ∣ max{|𝑥|, |𝑦|, |𝑧|} = 1},\nand the 2-sphere, { }\n|√\n𝑆 2 = (𝑥, 𝑦, 𝑧) ∈ ℝ3 | 𝑥2 + 𝑦2 + 𝑧2 = 1 ,\n|\nare homeomorphic where they are both considered to be subspaces of ℝ3 with the standard\ntopology.",
+        "statement": "Show that the surface of the cube centered at the origin,\n𝐶 = {(x, y, 𝑧) ∈ ℝ3 ∣ max{|x|, |y|, |𝑧|} = 1},\nand the 2-sphere, { }\n|√\n𝑆 2 = (x, y, 𝑧) ∈ ℝ3 | x2 + y2 + 𝑧2 = 1 ,\n|\nare homeomorphic where they are both considered to be subspaces of ℝ3 with the standard\ntopology.",
         "intuition": "Practice problem from Chapter 6.",
         "notation": []
       },
@@ -5262,7 +5342,7 @@
       "domain": "connectedness",
       "label": "Exercise 6.3",
       "content": {
-        "statement": "Let X be a topological space, and consider 𝐼 = [0, 1] as a subspace of ℝ where ℝ\nis given the standard topology. Furthermore, let the cone on X be quotient space 𝐶X = X×𝐼∕∼,\nwhere ∼ is the equivalence relation on the product space X × 𝐼 given by (𝑥, 0) ∼ (𝑥′ , 0) for all\n𝑥, 𝑥′ ∈ X. Show that 𝐶X is path-connected.",
+        "statement": "Let X be a topological space, and consider 𝐼 = [0, 1] as a subspace of ℝ where ℝ\nis given the standard topology. Furthermore, let the cone on X be quotient space 𝐶X = X×𝐼∕∼,\nwhere ∼ is the equivalence relation on the product space X × 𝐼 given by (x, 0) ∼ (x′ , 0) for all\nx, x′ ∈ X. Show that 𝐶X is path-connected.",
         "intuition": "Practice problem from Chapter 6.",
         "notation": []
       },
@@ -5348,7 +5428,7 @@
       "domain": "connectedness",
       "label": "Exercise 7.3",
       "content": {
-        "statement": "Let X be a topological space, and let 𝑥0 , 𝑥1 and 𝑥2 be points in X. Show that if\n𝛼 ∶ 𝐼 → X is a path in X from 𝑥0 to 𝑥1 , 𝛽 ∶ 𝐼 → X is a path in X from 𝑥1 to 𝑥2 and 𝛾 = 𝛼 ∗ 𝛽,\n̂ 𝛼.\nthen 𝛾̂ = 𝛽◦̂",
+        "statement": "Let X be a topological space, and let x0 , x1 and x2 be points in X. Show that if\n𝛼 ∶ 𝐼 → X is a path in X from x0 to x1 , 𝛽 ∶ 𝐼 → X is a path in X from x1 to x2 and 𝛾 = 𝛼 ∗ 𝛽,\n̂ 𝛼.\nthen 𝛾̂ = 𝛽◦̂",
         "intuition": "Practice problem from Chapter 7.",
         "notation": []
       },
@@ -5579,7 +5659,7 @@
       "domain": "connectedness",
       "label": "Exercise 8.6",
       "content": {
-        "statement": "Let ℝ denote the set of real numbers equipped with the standard topology, and\nlet ℤ denote the set of integers. Consider 𝐸 = {(𝑥, 𝑦) ∈ ℝ2 ∣ 𝑥 − 𝑦 ∈ ℤ} as a subspace of ℝ2\nwhere ℝ2 is given the standard topology. Show that the map 𝑝 ∶ 𝐸 → ℝ given by 𝑝(𝑥, 𝑦) = 𝑥 is\na covering map.",
+        "statement": "Let ℝ denote the set of real numbers equipped with the standard topology, and\nlet ℤ denote the set of integers. Consider 𝐸 = {(x, y) ∈ ℝ2 ∣ x − y ∈ ℤ} as a subspace of ℝ2\nwhere ℝ2 is given the standard topology. Show that the map 𝑝 ∶ 𝐸 → ℝ given by 𝑝(x, y) = x is\na covering map.",
         "intuition": "Practice problem from Chapter 8.",
         "notation": []
       },
@@ -5600,7 +5680,7 @@
       "domain": "connectedness",
       "label": "Exercise 8.7",
       "content": {
-        "statement": "Let 𝑛 be a positive integer that is greater than or equal to 2. Show that for any\n𝑥0 ∈ ℝP𝑛\n𝜋1 (ℝP𝑛 , 𝑥0 ) ≅ ℤ∕2\nwhere ℝP𝑛 is real projective 𝑛-space. (You may assume as a known fact that the 𝑛-sphere 𝑆 𝑛\n(considered as a subspace of ℝ𝑛+1 where ℝ𝑛+1 is given the standard topology) is simply con-\nnected for 𝑛 ⩾ 2.)",
+        "statement": "Let 𝑛 be a positive integer that is greater than or equal to 2. Show that for any\nx0 ∈ ℝP𝑛\n𝜋1 (ℝP𝑛 , x0 ) ≅ ℤ∕2\nwhere ℝP𝑛 is real projective 𝑛-space. (You may assume as a known fact that the 𝑛-sphere 𝑆 𝑛\n(considered as a subspace of ℝ𝑛+1 where ℝ𝑛+1 is given the standard topology) is simply con-\nnected for 𝑛 ⩾ 2.)",
         "intuition": "Practice problem from Chapter 8.",
         "notation": []
       },
@@ -5621,7 +5701,7 @@
       "domain": "connectedness",
       "label": "Exercise 8.8",
       "content": {
-        "statement": "Let { √ }\n2 |\n|\n𝐴a,b = (𝑥1 , 𝑥2 ) ∈ ℝ | a ⩽ 𝑥21 + 𝑥22 ⩽ b\n|\nand consider it as a subspace of ℝ2 where ℝ2 is given the standard topology and a, b ∈ ℝ with\n0 < a < 1 < b. Compute 𝜋1 (𝐴a,b , 𝑥0 ) for any 𝑥0 ∈ 𝐴a,b .",
+        "statement": "Let { √ }\n2 |\n|\n𝐴a,b = (x1 , x2 ) ∈ ℝ | a ⩽ x21 + x22 ⩽ b\n|\nand consider it as a subspace of ℝ2 where ℝ2 is given the standard topology and a, b ∈ ℝ with\n0 < a < 1 < b. Compute 𝜋1 (𝐴a,b , x0 ) for any x0 ∈ 𝐴a,b .",
         "intuition": "Practice problem from Chapter 8.",
         "notation": []
       },
