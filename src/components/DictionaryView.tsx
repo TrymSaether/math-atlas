@@ -184,7 +184,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
             </div>
           </header>
 
-          <div className="dict-rows" ref={indexRef}>
+          <div className="dict-rows panel-scrollbar" ref={indexRef}>
             {entries.length === 0 ? (
               <p className="dict-empty">No dictionary entries for {mapTitle} yet.</p>
             ) : groups.length === 0 ? (
@@ -211,7 +211,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         </aside>
 
         {/* ---- Detail pane ---- */}
-        <main className="dict-detail">
+        <main className="dict-detail panel-scrollbar">
           {activeEntry ? (
             <DetailPane
               entry={activeEntry}

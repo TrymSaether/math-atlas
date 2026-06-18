@@ -12,12 +12,9 @@ import {
 
 import { useStore } from "../store";
 import type { LoadedMap, MapId } from "../data";
-import { MathText } from "../lib/katex";
-import { getDomainTone } from "../lib/colors";
 import { nodeAnswerText } from "../lib/nodeContent";
 import { useConceptView } from "../lib/conceptView";
 import type { GraphNode } from "../types";
-import { specimenMeta } from "./Specimen";
 import { ConceptHeader, ConceptBody } from "./concept";
 import { hasNodeVisual } from "./NodeVisual";
 
@@ -273,14 +270,14 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                         }}
                       />
                     ) : (
-                      <CardFront node={node} map={map} onFlip={flip} />
+                      <CardFront node={node} map={map} mapId={mapId} onFlip={flip} />
                     )}
                   </motion.div>
                 </AnimatePresence>
               </div>
 
               {/* Controls */}
-              <div className="mt-3 flex items-center justify-between gap-3">
+              <div className="mt-3 grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3">
                 <PagerButton
                   label="Previous card"
                   disabled={state.pos === 0}
@@ -290,7 +287,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                 </PagerButton>
 
                 {state.flipped ? (
-                  <div className="flex items-center gap-2">
+                  <div className="flex min-w-0 flex-wrap items-center justify-center gap-2">
                     <RateButton tone="again" onClick={() => rate("again")}>
                       <X className="h-4 w-4" /> Again
                       <Kbd>1</Kbd>
@@ -356,38 +353,27 @@ function CardShell({
   );
 }
 
-function CardMeta({ node, map }: { node: GraphNode; map: LoadedMap }) {
-  const tone = getDomainTone(node.domain);
-  const domain = map.domainById.get(node.domain);
+function CardFront({
+  node,
+  map,
+  mapId,
+  onFlip,
+}: {
+  node: GraphNode;
+  map: LoadedMap;
+  mapId: MapId;
+  onFlip: () => void;
+}) {
+  const view = useConceptView(node, map, mapId);
   return (
-    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-ui-meta">
-      <span className="inline-flex items-center gap-1.5 font-medium" style={{ color: tone.color }}>
-        <span className="h-2 w-2 rounded-full" style={{ background: tone.color }} />
-        {domain?.label ?? node.topicCluster}
-      </span>
-      <span aria-hidden style={{ color: "var(--fg-4)" }}>
-        ·
-      </span>
-      <span style={{ color: "var(--fg-2)" }}>{specimenMeta(node)}</span>
-    </div>
-  );
-}
-
-function CardFront({ node, map, onFlip }: { node: GraphNode; map: LoadedMap; onFlip: () => void }) {
-  const tone = getDomainTone(node.domain);
-  return (
-    <CardShell tone={tone.color}>
+    <CardShell tone={view.tone.color}>
       <button
         onClick={onFlip}
-        className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-5 px-8 py-10 text-center"
+        className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-5 px-8 py-10 text-left"
       >
-        <CardMeta node={node} map={map} />
-        <h2
-          className="font-serif text-atlas-display"
-          style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.02em" }}
-        >
-          <MathText text={node.label} />
-        </h2>
+        <div className="w-full max-w-md">
+          <ConceptHeader view={view} size="card" />
+        </div>
         <span
           className="font-mono text-ui-hint uppercase tracking-label-wide"
           style={{ color: "var(--fg-4)" }}
@@ -426,7 +412,7 @@ function CardBack({
     >
       <div className="space-y-4 px-6 py-5">
         <ConceptHeader view={view} size="card" />
-        <ConceptBody view={view} map={map} density="card" />
+        <ConceptBody view={view} map={map} density="card" showVisual={false} />
       </div>
     </CardShell>
   );

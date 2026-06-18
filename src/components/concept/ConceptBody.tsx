@@ -29,15 +29,7 @@ import { hasNodeVisual, NodeVisual } from "../NodeVisual";
  */
 export type ConceptDensity = "card" | "panel" | "full";
 
-type Field =
-  | "assumptions"
-  | "definition"
-  | "formula"
-  | "formal"
-  | "notation"
-  | "intuition"
-  | "gloss"
-  | "examples";
+type Field = "assumptions" | "definition" | "formula" | "formal" | "notation" | "intuition" | "gloss" | "examples";
 
 interface DensitySpec {
   fields: Field[];
@@ -58,16 +50,7 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
     spine: "dict",
   },
   panel: {
-    fields: [
-      "assumptions",
-      "definition",
-      "formula",
-      "formal",
-      "notation",
-      "intuition",
-      "gloss",
-      "examples",
-    ],
+    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "examples"],
     exampleLimit: 2,
     proof: false,
     proofOpen: false,
@@ -75,16 +58,7 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
     spine: "panel",
   },
   full: {
-    fields: [
-      "assumptions",
-      "definition",
-      "formula",
-      "formal",
-      "notation",
-      "intuition",
-      "gloss",
-      "examples",
-    ],
+    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "examples"],
     proof: true,
     proofOpen: true,
     proofCollapsible: true,
@@ -191,11 +165,7 @@ function ExtraValue({ value }: { value: unknown }) {
       <ul className="m-0 space-y-1.5 p-0">
         {items.map((item, index) => (
           <li key={index} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--fg-1)" }}>
-            <span
-              aria-hidden
-              className="mt-[9px] h-1 w-1 shrink-0 rounded-full"
-              style={{ background: "var(--fg-3)" }}
-            />
+            <span aria-hidden className="mt-2.25 h-1 w-1 shrink-0 rounded-full" style={{ background: "var(--fg-3)" }} />
             <span className="min-w-0">
               <MathProse text={item} />
             </span>
@@ -222,25 +192,14 @@ function ExtraValue({ value }: { value: unknown }) {
 /** A flush-left mono micro-label heading an environment. */
 function Eyebrow({ children, color }: { children: ReactNode; color?: string }) {
   return (
-    <div
-      className="mb-1.5 font-mono text-ui-2xs uppercase tracking-label"
-      style={{ color: color ?? "var(--fg-3)" }}
-    >
+    <div className="mb-1.5 font-mono text-ui-2xs uppercase tracking-label" style={{ color: color ?? "var(--fg-3)" }}>
       {children}
     </div>
   );
 }
 
 /** One facet rendered with chrome that signals its kind. */
-function Environment({
-  view,
-  field,
-  exampleLimit,
-}: {
-  view: ConceptView;
-  field: Field;
-  exampleLimit?: number;
-}) {
+function Environment({ view, field, exampleLimit }: { view: ConceptView; field: Field; exampleLimit?: number }) {
   const label = FIELD_LABEL[field];
   const tone = view.tone;
 
@@ -254,7 +213,7 @@ function Environment({
               <li key={i} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--fg-1)" }}>
                 <span
                   aria-hidden
-                  className="mt-[9px] h-1 w-1 shrink-0 rounded-full"
+                  className="mt-2.25 h-1 w-1 shrink-0 rounded-full"
                   style={{ background: tone.color }}
                 />
                 <span className="min-w-0">
@@ -321,8 +280,7 @@ function Environment({
       );
 
     case "examples": {
-      const examples =
-        exampleLimit === undefined ? view.examples : view.examples.slice(0, exampleLimit);
+      const examples = exampleLimit === undefined ? view.examples : view.examples.slice(0, exampleLimit);
       return (
         <Aside accent="var(--border-strong)" label={label}>
           <div className="space-y-3">
@@ -331,10 +289,7 @@ function Environment({
                 {(example.role || example.label) && (
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                     {example.role && (
-                      <span
-                        className="font-mono text-ui-2xs tracking-label-tight"
-                        style={{ color: "var(--fg-3)" }}
-                      >
+                      <span className="font-mono text-ui-2xs tracking-label-tight" style={{ color: "var(--fg-3)" }}>
                         <MathProse text={example.role} />
                       </span>
                     )}

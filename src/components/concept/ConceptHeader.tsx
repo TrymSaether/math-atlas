@@ -1,3 +1,4 @@
+import type { CSSProperties, ReactNode } from "react";
 import { MathText } from "../../lib/katex";
 import { DomainGlyph } from "../DomainGlyph";
 import type { ConceptView } from "../../lib/conceptView";
@@ -16,28 +17,23 @@ export function ConceptHeader({
   size?: "panel" | "card";
 }) {
   const { tone, glyphId, domainLabel, kindLabel, compactRef } = view;
-  const titleClass = size === "card" ? "text-atlas-card" : "text-node-panel-title";
   return (
-    <div className="flex items-start gap-2.5">
+    <div
+      className={`concept-title-header concept-title-header-${size}`}
+      style={{ "--concept-tone": tone.color } as CSSProperties}
+    >
       <span
         aria-hidden
-        className="mt-[6px] h-9 w-[3px] shrink-0 rounded-full"
+        className="concept-title-rail"
         style={{ background: tone.color }}
       />
-      <div className="min-w-0">
-        <h2
-          className={`font-serif ${titleClass}`}
-          style={{
-            color: "var(--fg-1)",
-            fontWeight: 600,
-            letterSpacing: "-0.015em",
-          }}
-        >
+      <div className="concept-title-stack">
+        <h2 className="concept-title font-serif">
           <MathText text={view.node.label} />
         </h2>
-        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+        <div className="concept-title-meta">
           <span
-            className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-ui-meta font-medium"
+            className="concept-title-pill concept-title-domain-pill"
             style={{ background: tone.tint, color: tone.text }}
           >
             {glyphId ? (
@@ -55,10 +51,10 @@ export function ConceptHeader({
   );
 }
 
-function MetaPill({ children, mono = false }: { children: React.ReactNode; mono?: boolean }) {
+function MetaPill({ children, mono = false }: { children: ReactNode; mono?: boolean }) {
   return (
     <span
-      className={`rounded-full px-2 py-0.5 text-ui-meta ${mono ? "font-mono text-ui-hint" : ""}`}
+      className={`concept-title-pill ${mono ? "font-mono text-ui-hint" : ""}`}
       style={{ background: "var(--surface-3)", color: "var(--fg-3)" }}
     >
       {children}

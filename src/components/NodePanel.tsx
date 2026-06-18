@@ -56,7 +56,7 @@ export function NodePanel() {
             duration: reduceMotion ? 0 : 0.22,
             ease: [0.2, 0.7, 0.2, 1],
           }}
-          className="pointer-events-auto absolute left-3 right-3 top-[72px] bottom-3 z-20 flex flex-col overflow-hidden rounded-[var(--radius-xl)] border sm:left-4 sm:top-[76px] sm:right-auto sm:w-[min(560px,calc(100vw-32px))]"
+          className="pointer-events-auto absolute left-3 right-3 top-18 bottom-3 z-20 flex flex-col overflow-hidden rounded-xl border sm:left-4 sm:top-19 sm:right-auto sm:w-[min(560px,calc(100vw-32px))]"
           style={{
             background: "var(--surface)",
             borderColor: "var(--border)",
@@ -66,12 +66,7 @@ export function NodePanel() {
           {creating ? (
             <NodeEditorPanel editingId={null} map={map} mapId={mapId} onClose={closeCreate} />
           ) : editing && node ? (
-            <NodeEditorPanel
-              editingId={node.id}
-              map={map}
-              mapId={mapId}
-              onClose={() => select(null)}
-            />
+            <NodeEditorPanel editingId={node.id} map={map} mapId={mapId} onClose={() => select(null)} />
           ) : node ? (
             <PanelContent node={node} map={map} mapId={mapId} onClose={() => select(null)} />
           ) : null}
@@ -100,10 +95,7 @@ function PanelContent({
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Ordered domain peers drive the prev/next pager in the header.
-  const peers = useMemo(
-    () => map.data.nodes.filter((n) => n.domain === node.domain),
-    [map, node.domain],
-  );
+  const peers = useMemo(() => map.data.nodes.filter((n) => n.domain === node.domain), [map, node.domain]);
   const peerIdx = peers.findIndex((n) => n.id === node.id);
   const prev = peerIdx > 0 ? peers[peerIdx - 1] : null;
   const next = peerIdx >= 0 && peerIdx < peers.length - 1 ? peers[peerIdx + 1] : null;
@@ -127,9 +119,7 @@ function PanelContent({
 
   // Tabs are content-driven: a tab only appears when it has something to show.
   const tabs = useMemo(() => {
-    const t: { id: TabId; label: string; badge?: number }[] = [
-      { id: "overview", label: "Overview" },
-    ];
+    const t: { id: TabId; label: string; badge?: number }[] = [{ id: "overview", label: "Overview" }];
     if (hasProperties) t.push({ id: "properties", label: "Properties" });
     if (hasProof) t.push({ id: "proof", label: view.proof.label });
     if (linkCount > 0) t.push({ id: "links", label: "Links", badge: linkCount });
@@ -170,18 +160,10 @@ function PanelContent({
       <header className="relative shrink-0 px-5 pt-3.5" style={{ background: "var(--surface)" }}>
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-0.5">
-            <IconButton
-              label="Previous in domain"
-              disabled={!prev}
-              onClick={() => prev && select(prev.id)}
-            >
+            <IconButton label="Previous in domain" disabled={!prev} onClick={() => prev && select(prev.id)}>
               <CaretUpIcon className="h-4 w-4" />
             </IconButton>
-            <IconButton
-              label="Next in domain"
-              disabled={!next}
-              onClick={() => next && select(next.id)}
-            >
+            <IconButton label="Next in domain" disabled={!next} onClick={() => next && select(next.id)}>
               <CaretDownIcon className="h-4 w-4" />
             </IconButton>
             {peerIdx >= 0 && (
@@ -209,7 +191,10 @@ function PanelContent({
         <ConceptHeader view={view} />
 
         {/* Tab strip */}
-        <div role="tablist" className="mt-3.5 flex items-center gap-0.5">
+        <div
+          role="tablist"
+          className="panel-scrollbar mt-3.5 flex items-center gap-0.5 overflow-x-auto overflow-y-hidden"
+        >
           {tabs.map((t) => {
             const active = t.id === activeTab;
             return (
@@ -218,7 +203,7 @@ function PanelContent({
                 role="tab"
                 aria-selected={active}
                 onClick={() => setTab(t.id)}
-                className="relative flex items-center gap-1.5 rounded-t-(--radius-sm) px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors hover:bg-(--surface-2) focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)]"
+                className="relative flex shrink-0 items-center gap-1.5 rounded-t-(--radius-sm) px-3 pb-2 pt-1.5 font-mono text-ui-xs transition-colors hover:bg-(--surface-2) focus:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-border)"
                 style={{ color: active ? "var(--fg-1)" : "var(--fg-3)" }}
               >
                 {t.label}
@@ -236,7 +221,7 @@ function PanelContent({
                 {active && (
                   <motion.span
                     layoutId="panel-tab-underline"
-                    className="absolute inset-x-2 -bottom-px h-[2px] rounded-full"
+                    className="absolute inset-x-2 -bottom-px h-0.5 rounded-full"
                     style={{ background: view.tone.color }}
                   />
                 )}
@@ -269,9 +254,7 @@ function PanelContent({
           </section>
         )}
 
-        {activeTab === "properties" && (
-          <PropertiesTab properties={view.properties} toneColor={view.tone.color} />
-        )}
+        {activeTab === "properties" && <PropertiesTab properties={view.properties} toneColor={view.tone.color} />}
 
         {activeTab === "links" && (
           <ConceptRelations
@@ -285,7 +268,7 @@ function PanelContent({
 
         {activeTab === "source" && (
           <section id="sec-metadata">
-            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-ui-xs">
+            <dl className="node-source-metadata grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-ui-xs">
               <dt style={{ color: "var(--fg-3)" }}>Tags</dt>
               <dd style={{ color: "var(--fg-2)" }}>
                 {node.tags.length > 0 ? node.tags.join(", ") : "No tags recorded."}
@@ -313,7 +296,7 @@ function PanelContent({
               {(node.source?.references ?? []).length > 0 && (
                 <>
                   <dt style={{ color: "var(--fg-3)" }}>Textbook</dt>
-                  <dd className="flex flex-wrap gap-1" style={{ color: "var(--fg-2)" }}>
+                  <dd className="flex min-w-0 flex-wrap gap-1" style={{ color: "var(--fg-2)" }}>
                     {(node.source?.references ?? []).map((r) => (
                       <span
                         key={r}
@@ -331,11 +314,7 @@ function PanelContent({
                 </>
               )}
               <dt style={{ color: "var(--fg-3)" }}>ID</dt>
-              <dd
-                className="truncate font-mono text-ui-hint"
-                style={{ color: "var(--fg-2)" }}
-                title={node.id}
-              >
+              <dd className="font-mono text-ui-hint" style={{ color: "var(--fg-2)" }} title={node.id}>
                 {node.id}
               </dd>
             </dl>
@@ -365,7 +344,7 @@ function PropertiesTab({ properties, toneColor }: { properties: string[]; toneCo
                 minus the connecting rail (properties are independent claims). */}
             <span
               aria-hidden
-              className="absolute left-0 top-px flex h-[21px] w-[21px] items-center justify-center rounded-full font-mono text-ui-2xs"
+              className="absolute left-0 top-px flex h-5.25 w-5.25 items-center justify-center rounded-full font-mono text-ui-2xs"
               style={{
                 background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
                 color: toneColor,
@@ -375,14 +354,11 @@ function PropertiesTab({ properties, toneColor }: { properties: string[]; toneCo
               {index + 1}
             </span>
             {title && (
-              <span
-                className="mb-1 block font-mono text-ui-2xs uppercase tracking-label"
-                style={{ color: toneColor }}
-              >
+              <span className="mb-1 block font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
                 {title}
               </span>
             )}
-            <div className="min-h-[21px] text-ui-copy" style={{ color: "var(--fg-1)" }}>
+            <div className="min-h-5.25 text-ui-copy" style={{ color: "var(--fg-1)" }}>
               <MathProse text={body} />
             </div>
           </li>
@@ -419,7 +395,7 @@ function IconButton({
       disabled={disabled}
       aria-label={label}
       title={label}
-      className="flex h-8 w-8 items-center justify-center rounded-sm transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-border)] disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+      className="flex h-8 w-8 items-center justify-center rounded-sm transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-(--accent-border) disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
       style={{ color: "var(--fg-2)" }}
     >
       {children}

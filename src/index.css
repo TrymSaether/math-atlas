@@ -1,12 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans:
-    "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-display: "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
   --font-serif: "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
-  --font-math:
-    "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
+  --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
   --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
 
   --text-edge-label: var(--type-edge-label);
@@ -1500,11 +1498,9 @@
 /* ---- TYPOGRAPHY ----------------------------------------------------- */
 :root {
   --font-serif: "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
-  --font-sans:
-    "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
-  --font-math:
-    "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
+  --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
 
   --type-edge-label: 9px;
   --type-ui-tiny: 9.5px;
@@ -2214,6 +2210,106 @@ textarea.authoring-control {
   .top-tools .map-icon-button {
     width: 34px;
     height: 32px;
+  }
+}
+
+/* Concept identity header — shared by NodePanel, dictionary detail, and cards. */
+.concept-title-header {
+  display: grid;
+  grid-template-columns: 4px minmax(0, 1fr);
+  align-items: stretch;
+  column-gap: 14px;
+}
+
+.concept-title-header-card {
+  grid-template-columns: 3px minmax(0, 1fr);
+  column-gap: 10px;
+}
+
+.concept-title-rail {
+  width: 100%;
+  min-height: 48px;
+  border-radius: var(--radius-pill);
+}
+
+.concept-title-header-card .concept-title-rail {
+  min-height: 34px;
+}
+
+.concept-title-stack {
+  min-width: 0;
+  align-self: start;
+}
+
+.concept-title {
+  max-width: fit-content;
+  margin: 0%;
+  color: var(--fg-1);
+  font-size: var(--type-atlas-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  overflow-wrap: normal;
+  /* Preserve authored casing: math labels often use intentional forms like L^p, C^*, weak-*, or x-coordinate. */
+}
+
+.concept-title-header-card .concept-title {
+  max-width: fit-content;
+  font-size: var(--type-atlas-card);
+  line-height: 1.1;
+}
+
+.concept-title .katex {
+  line-height: 1;
+}
+
+.concept-title-meta {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+
+.concept-title-header-card .concept-title-meta {
+  margin-top: 7px;
+  gap: 5px;
+}
+
+.concept-title-pill {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--type-ui-hint);
+  font-weight: 500;
+}
+
+.concept-title-domain-pill {
+  font-weight: 500;
+}
+
+.concept-title-header-card .concept-title-pill {
+  padding: 2px 8px;
+  font-size: var(--type-ui-2xs);
+}
+
+.node-source-metadata dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .concept-title-header {
+    column-gap: 12px;
+  }
+
+  .concept-title {
+    max-width: 100%;
+    font-size: 30px;
   }
 }
 
