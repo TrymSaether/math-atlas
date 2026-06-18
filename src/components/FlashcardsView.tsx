@@ -156,10 +156,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const node = currentId ? (map.nodeById.get(currentId) ?? null) : null;
 
   const flip = useCallback(() => dispatch({ type: "flip" }), []);
-  const go = useCallback(
-    (delta: number) => dispatch({ type: "go", pos: state.pos + delta }),
-    [state.pos],
-  );
+  const go = useCallback((delta: number) => dispatch({ type: "go", pos: state.pos + delta }), [state.pos]);
   const rate = useCallback(
     (rating: Rating) => currentId && dispatch({ type: "rate", id: currentId, rating }),
     [currentId],
@@ -206,27 +203,27 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         <div className="mb-3 flex items-center gap-3">
           <div
             className="h-1.5 flex-1 overflow-hidden rounded-full"
-            style={{ background: "var(--surface-3)" }}
+            style={{ background: "var(--color-surface-muted)" }}
           >
             <div
               className="h-full rounded-full transition-[width] duration-300"
               style={{
                 width: total ? `${(ratedCount / total) * 100}%` : "0%",
-                background: "var(--accent)",
+                background: "var(--color-accent)",
               }}
             />
           </div>
-          <span className="shrink-0 font-mono text-ui-hint" style={{ color: "var(--fg-3)" }}>
+          <span className="shrink-0 font-mono text-ui-hint" style={{ color: "var(--color-text-subtle)" }}>
             {total ? Math.min(state.pos + 1, total) : 0}/{total}
           </span>
           <button
             onClick={reshuffle}
             disabled={total === 0}
-            className="flex h-7 items-center gap-1.5 rounded-sm border px-2.5 text-ui-meta font-medium transition-colors hover:bg-(--surface-3) disabled:opacity-40"
+            className="flex h-7 items-center gap-1.5 rounded-sm border px-2.5 text-ui-meta font-medium transition-colors hover:bg-(--color-surface-muted) disabled:opacity-40"
             style={{
-              borderColor: "var(--border)",
-              color: "var(--fg-2)",
-              background: "var(--surface)",
+              borderColor: "var(--color-border)",
+              color: "var(--color-text-muted)",
+              background: "var(--color-surface)",
             }}
             title="Shuffle and restart"
           >
@@ -278,11 +275,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
               {/* Controls */}
               <div className="mt-3 grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3">
-                <PagerButton
-                  label="Previous card"
-                  disabled={state.pos === 0}
-                  onClick={() => go(-1)}
-                >
+                <PagerButton label="Previous card" disabled={state.pos === 0} onClick={() => go(-1)}>
                   <ChevronLeft className="h-4 w-4" />
                 </PagerButton>
 
@@ -302,9 +295,9 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                     onClick={flip}
                     className="flex h-11 items-center gap-2 rounded-sm px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
                     style={{
-                      background: "var(--accent)",
-                      color: "var(--surface)",
-                      boxShadow: "var(--shadow-2)",
+                      background: "var(--color-accent)",
+                      color: "var(--color-surface)",
+                      boxShadow: "var(--elevation-2)",
                     }}
                   >
                     Reveal answer
@@ -312,11 +305,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                   </button>
                 )}
 
-                <PagerButton
-                  label="Next card"
-                  disabled={state.pos >= total - 1}
-                  onClick={() => go(1)}
-                >
+                <PagerButton label="Next card" disabled={state.pos >= total - 1} onClick={() => go(1)}>
                   <ChevronRight className="h-4 w-4" />
                 </PagerButton>
               </div>
@@ -328,22 +317,14 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   );
 }
 
-function CardShell({
-  children,
-  tone,
-  footer,
-}: {
-  children: React.ReactNode;
-  tone: string;
-  footer?: React.ReactNode;
-}) {
+function CardShell({ children, tone, footer }: { children: React.ReactNode; tone: string; footer?: React.ReactNode }) {
   return (
     <div
       className="flex h-full flex-col overflow-hidden rounded-2xl border"
       style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        boxShadow: "var(--shadow-2)",
+        background: "var(--color-surface)",
+        borderColor: "var(--color-border)",
+        boxShadow: "var(--elevation-2)",
       }}
     >
       <span aria-hidden className="h-1 w-full shrink-0" style={{ background: tone }} />
@@ -376,7 +357,7 @@ function CardFront({
         </div>
         <span
           className="font-mono text-ui-hint uppercase tracking-label-wide"
-          style={{ color: "var(--fg-4)" }}
+          style={{ color: "var(--color-text-faint)" }}
         >
           Tap or press space to flip
         </span>
@@ -385,17 +366,7 @@ function CardFront({
   );
 }
 
-function CardBack({
-  node,
-  map,
-  mapId,
-  onOpen,
-}: {
-  node: GraphNode;
-  map: LoadedMap;
-  mapId: MapId;
-  onOpen: () => void;
-}) {
+function CardBack({ node, map, mapId, onOpen }: { node: GraphNode; map: LoadedMap; mapId: MapId; onOpen: () => void }) {
   const view = useConceptView(node, map, mapId);
   return (
     <CardShell
@@ -403,8 +374,8 @@ function CardBack({
       footer={
         <button
           onClick={onOpen}
-          className="flex shrink-0 items-center justify-center gap-1.5 border-t py-2.5 text-ui-xs font-medium transition-colors hover:bg-(--surface-2)"
-          style={{ borderColor: "var(--border-subtle)", color: "var(--accent)" }}
+          className="flex shrink-0 items-center justify-center gap-1.5 border-t py-2.5 text-ui-xs font-medium transition-colors hover:bg-(--color-surface-subtle)"
+          style={{ borderColor: "var(--color-border-subtle)", color: "var(--color-accent)" }}
         >
           Open full entry in dictionary
         </button>
@@ -438,26 +409,23 @@ function SummaryCard({
     <div
       className="flex flex-1 flex-col items-center justify-center gap-6 rounded-2xl border px-8 py-12 text-center"
       style={{
-        background: "var(--surface)",
-        borderColor: "var(--border)",
-        boxShadow: "var(--shadow-2)",
+        background: "var(--color-surface)",
+        borderColor: "var(--color-border)",
+        boxShadow: "var(--elevation-2)",
       }}
     >
       <div
         className="flex h-14 w-14 items-center justify-center rounded-full"
-        style={{ background: "var(--accent-soft)", color: "var(--accent)" }}
+        style={{ background: "var(--color-accent-soft)", color: "var(--color-accent)" }}
       >
         <Sparkles className="h-7 w-7" />
       </div>
       <div className="space-y-1.5">
-        <h2
-          className="font-serif text-atlas-summary"
-          style={{ color: "var(--fg-1)", fontWeight: 600 }}
-        >
+        <h2 className="font-serif text-atlas-summary" style={{ color: "var(--color-text)", fontWeight: 600 }}>
           Deck complete
         </h2>
-        <p className="text-ui-body" style={{ color: "var(--fg-2)" }}>
-          You got <strong style={{ color: "var(--fg-1)" }}>{gotCount}</strong> of {total} ({pct}%).
+        <p className="text-ui-body" style={{ color: "var(--color-text-muted)" }}>
+          You got <strong style={{ color: "var(--color-text)" }}>{gotCount}</strong> of {total} ({pct}%).
           {againCount > 0 && ` ${againCount} to review.`}
         </p>
       </div>
@@ -467,9 +435,9 @@ function SummaryCard({
             onClick={onReview}
             className="flex h-11 items-center gap-2 rounded-sm px-6 text-ui-body font-semibold transition-transform active:scale-[0.98]"
             style={{
-              background: "var(--accent)",
-              color: "var(--surface)",
-              boxShadow: "var(--shadow-2)",
+              background: "var(--color-accent)",
+              color: "var(--color-surface)",
+              boxShadow: "var(--elevation-2)",
             }}
           >
             Review {againCount} missed
@@ -477,19 +445,19 @@ function SummaryCard({
         )}
         <button
           onClick={onRestart}
-          className="flex h-11 items-center gap-2 rounded-sm border px-5 text-ui-body font-medium transition-colors hover:bg-(--surface-3)"
+          className="flex h-11 items-center gap-2 rounded-sm border px-5 text-ui-body font-medium transition-colors hover:bg-(--color-surface-muted)"
           style={{
-            borderColor: "var(--border)",
-            color: "var(--fg-1)",
-            background: "var(--surface)",
+            borderColor: "var(--color-border)",
+            color: "var(--color-text)",
+            background: "var(--color-surface)",
           }}
         >
           <RotateCcw className="h-4 w-4" /> Restart deck
         </button>
         <button
           onClick={onClose}
-          className="h-11 rounded-sm px-5 text-ui-body font-medium transition-colors hover:bg-(--surface-3)"
-          style={{ color: "var(--fg-2)" }}
+          className="h-11 rounded-sm px-5 text-ui-body font-medium transition-colors hover:bg-(--color-surface-muted)"
+          style={{ color: "var(--color-text-muted)" }}
         >
           Back to atlas
         </button>
@@ -502,18 +470,18 @@ function EmptyState({ onBack }: { onBack: () => void }) {
   return (
     <div
       className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border px-8 py-12 text-center"
-      style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+      style={{ background: "var(--color-surface)", borderColor: "var(--color-border)" }}
     >
-      <p className="text-ui-lead" style={{ color: "var(--fg-1)" }}>
+      <p className="text-ui-lead" style={{ color: "var(--color-text)" }}>
         No cards match the current filters.
       </p>
-      <p className="max-w-85 text-ui-sm" style={{ color: "var(--fg-3)" }}>
+      <p className="max-w-85 text-ui-sm" style={{ color: "var(--color-text-subtle)" }}>
         Widen the domain or category filters in the toolbar to build a study deck.
       </p>
       <button
         onClick={onBack}
-        className="mt-1 h-10 rounded-sm border px-5 text-ui-sm font-medium transition-colors hover:bg-(--surface-3)"
-        style={{ borderColor: "var(--border)", color: "var(--fg-1)", background: "var(--surface)" }}
+        className="mt-1 h-10 rounded-sm border px-5 text-ui-sm font-medium transition-colors hover:bg-(--color-surface-muted)"
+        style={{ borderColor: "var(--color-border)", color: "var(--color-text)", background: "var(--color-surface)" }}
       >
         Back to atlas
       </button>
@@ -538,32 +506,28 @@ function PagerButton({
       disabled={disabled}
       aria-label={label}
       title={label}
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors hover:bg-(--surface-3) disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
-      style={{ borderColor: "var(--border)", color: "var(--fg-2)", background: "var(--surface)" }}
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors hover:bg-(--color-surface-muted) disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+      style={{
+        borderColor: "var(--color-border)",
+        color: "var(--color-text-muted)",
+        background: "var(--color-surface)",
+      }}
     >
       {children}
     </button>
   );
 }
 
-function RateButton({
-  tone,
-  onClick,
-  children,
-}: {
-  tone: Rating;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
+function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => void; children: React.ReactNode }) {
   const got = tone === "got";
   return (
     <button
       onClick={onClick}
       className="flex h-11 items-center gap-2 rounded-sm border px-5 text-ui-body font-semibold transition-transform active:scale-[0.98]"
       style={{
-        background: got ? "var(--accent-soft)" : "var(--surface)",
-        borderColor: got ? "var(--accent-border)" : "var(--border)",
-        color: got ? "var(--accent)" : "var(--fg-2)",
+        background: got ? "var(--color-accent-soft)" : "var(--color-surface)",
+        borderColor: got ? "var(--color-accent-border)" : "var(--color-border)",
+        color: got ? "var(--color-accent)" : "var(--color-text-muted)",
       }}
     >
       {children}
@@ -578,11 +542,15 @@ function Kbd({ children, onAccent = false }: { children: React.ReactNode; onAcce
       style={
         onAccent
           ? {
-              background: "color-mix(in srgb, var(--surface) 25%, transparent)",
+              background: "color-mix(in srgb, var(--color-surface) 25%, transparent)",
               borderColor: "transparent",
-              color: "var(--surface)",
+              color: "var(--color-surface)",
             }
-          : { background: "var(--surface-3)", borderColor: "var(--border)", color: "var(--fg-3)" }
+          : {
+              background: "var(--color-surface-muted)",
+              borderColor: "var(--color-border)",
+              color: "var(--color-text-subtle)",
+            }
       }
     >
       {children}

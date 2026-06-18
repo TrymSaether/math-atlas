@@ -11,13 +11,7 @@ export default function GibbsFigure() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={[-1.35, 1.35]} grid>
-        <FunctionCurve
-          y={squareWave}
-          domain={[-Math.PI, Math.PI]}
-          color={DIA.ref}
-          weight={STROKE.ref}
-          style="dashed"
-        />
+        <FunctionCurve y={squareWave} domain={[-Math.PI, Math.PI]} color={DIA.ref} weight={STROKE.ref} style="dashed" />
         <FunctionCurve
           y={(x) => squareWavePartialSum(x, terms)}
           domain={[-Math.PI, Math.PI]}
@@ -33,7 +27,7 @@ export default function GibbsFigure() {
         label={`N = ${terms}`}
         ariaLabel="Number of harmonics in the partial sum"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--color-text-subtle)" }}>
         The ~9% overshoot at the jump narrows but never shrinks as N grows.
       </figcaption>
     </figure>

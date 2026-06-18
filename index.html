@@ -8,33 +8,8 @@
         try {
           stored = localStorage.getItem("math-map-theme");
         } catch {}
-        const prefersDark = window.matchMedia
-          ? window.matchMedia("(prefers-color-scheme: dark)").matches
-          : false;
-        const schemes = {
-          paper: "light",
-          chalkboard: "dark",
-          manuscript: "light",
-          nocturne: "dark",
-          lagoon: "light",
-          deepsea: "dark",
-          blossom: "light",
-          aubergine: "dark",
-          prism: "light",
-          neon: "dark",
-          journal: "light",
-          seminar: "dark",
-        };
-        const theme = Object.prototype.hasOwnProperty.call(schemes, stored)
-          ? stored
-          : stored === "light"
-            ? "paper"
-            : stored === "dark"
-              ? "chalkboard"
-              : prefersDark
-                ? "chalkboard"
-                : "paper";
-        document.documentElement.classList.toggle("dark", schemes[theme] === "dark");
+        const prefersDark = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)").matches : false;
+        const theme = stored || (prefersDark ? "chalkboard" : "paper");
         document.documentElement.dataset.theme = theme;
       })();
     </script>

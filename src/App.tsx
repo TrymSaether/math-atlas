@@ -10,9 +10,7 @@ import { CommandPalette } from "./components/CommandPalette";
 
 // The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
 // atlas's initial bundle stays light.
-const SandboxView = lazy(() =>
-  import("./components/sandbox/SandboxView").then((m) => ({ default: m.SandboxView })),
-);
+const SandboxView = lazy(() => import("./components/sandbox/SandboxView").then((m) => ({ default: m.SandboxView })));
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
 import { useStore } from "./store";
 import { registerDomainTones } from "./lib/colors";
@@ -44,7 +42,7 @@ export default function App() {
     <ReactFlowProvider>
       <div
         className="relative h-dvh w-screen overflow-hidden"
-        style={{ background: "var(--bg)", color: "var(--fg-1)" }}
+        style={{ background: "var(--color-canvas)", color: "var(--color-text)" }}
       >
         <Background />
         {authEnabled && <SessionBridge />}
@@ -59,7 +57,7 @@ export default function App() {
                 fallback={
                   <div
                     className="flex h-full items-center justify-center text-sm"
-                    style={{ color: "var(--fg-3)" }}
+                    style={{ color: "var(--color-text-subtle)" }}
                   >
                     Loading sandbox…
                   </div>
@@ -76,13 +74,9 @@ export default function App() {
           ) : (
             <div
               className="flex h-full items-center justify-center px-6 text-center text-sm"
-              style={{ color: "var(--fg-2)" }}
+              style={{ color: "var(--color-text-muted)" }}
             >
-              {mapError
-                ? `Could not load map: ${mapError}`
-                : loadingMapId
-                  ? "Loading atlas…"
-                  : "Preparing atlas…"}
+              {mapError ? `Could not load map: ${mapError}` : loadingMapId ? "Loading atlas…" : "Preparing atlas…"}
             </div>
           )}
         </main>

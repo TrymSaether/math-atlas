@@ -47,23 +47,16 @@ export function UserMenu() {
 
   return (
     <div className="relative" ref={ref}>
-      <DockButton
-        onClick={() => setMenuOpen((o) => !o)}
-        active={menuOpen}
-        label="Account"
-        title={user.email}
-      >
-        <span className="flex h-4 w-4 items-center justify-center text-ui-2xs font-semibold">
-          {initial}
-        </span>
+      <DockButton onClick={() => setMenuOpen((o) => !o)} active={menuOpen} label="Account" title={user.email}>
+        <span className="flex h-4 w-4 items-center justify-center text-ui-2xs font-semibold">{initial}</span>
       </DockButton>
       {menuOpen && (
         <div className="map-popover absolute right-0 top-[calc(100%+8px)] z-50 w-[min(240px,calc(100vw-24px))] rounded-2xl p-2">
           <div className="flex items-center gap-2 px-2 py-1.5">
-            <UserIcon className="h-4 w-4 shrink-0 text-fg-3" />
+            <UserIcon className="h-4 w-4 shrink-0 text-text-subtle" />
             <div className="min-w-0">
-              {user.name && <div className="truncate text-ui-control text-fg-1">{user.name}</div>}
-              <div className="truncate text-ui-hint text-fg-3">{user.email}</div>
+              {user.name && <div className="truncate text-ui-control text-text">{user.name}</div>}
+              <div className="truncate text-ui-hint text-text-subtle">{user.email}</div>
             </div>
           </div>
           <div className="map-divider my-1 h-px w-full" aria-hidden />
@@ -73,7 +66,7 @@ export function UserMenu() {
               await signOut();
               setMenuOpen(false);
             }}
-            className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-ui-control text-fg-2"
+            className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-ui-control text-text-muted"
           >
             <SignOutIcon className="h-4 w-4" />
             Sign out

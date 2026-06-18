@@ -36,7 +36,7 @@ export function ConceptRelations({
           {g.label && (
             <div
               className="mb-1.5 font-mono text-ui-2xs uppercase tracking-label"
-              style={{ color: "var(--fg-3)" }}
+              style={{ color: "var(--color-text-subtle)" }}
             >
               {g.label}
             </div>
@@ -72,7 +72,7 @@ function ChipRow({
           type="button"
           onClick={() => setExpanded(true)}
           className="self-center px-1 text-ui-xs hover:underline"
-          style={{ color: "var(--accent)" }}
+          style={{ color: "var(--color-accent)" }}
         >
           +{hidden} more
         </button>

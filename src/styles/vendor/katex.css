@@ -1,0 +1,9 @@
+/* KaTeX nudges */
+.katex {
+  font-size: 1em;
+}
+
+.katex-display {
+  margin: 0.4em 0;
+  text-align: center;
+}

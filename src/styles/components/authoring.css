@@ -1,0 +1,250 @@
+/* Authoring dialog form controls */
+.authoring-field {
+  display: block;
+}
+
+.authoring-label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--type-ui-caption);
+  font-weight: 650;
+  letter-spacing: var(--tracking-label-tight);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.authoring-hint {
+  margin-left: 8px;
+  font-family: var(--font-sans);
+  font-size: var(--type-ui-xs);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-text-faint);
+}
+
+.authoring-control {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid color-mix(in srgb, var(--color-border) 88%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-surface-subtle) 70%, var(--color-surface));
+  color: var(--color-text);
+  padding: 8px 12px;
+  font-size: var(--type-ui-control);
+  line-height: 1.35;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--color-surface) 74%, transparent),
+    0 1px 2px rgba(15, 23, 42, 0.025);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.authoring-control::placeholder {
+  color: var(--color-text-faint);
+}
+
+.authoring-control:hover {
+  border-color: color-mix(in srgb, var(--color-border-strong) 82%, transparent);
+  background: var(--color-surface);
+}
+
+.authoring-control:focus,
+.authoring-control:focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--color-accent) 74%, var(--color-accent-border));
+  background: var(--color-surface);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--color-surface) 76%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--color-accent-border) 74%, transparent),
+    var(--elevation-2);
+}
+
+textarea.authoring-control {
+  min-height: 64px;
+  resize: vertical;
+}
+
+.authoring-control-mono {
+  font-family: var(--font-mono);
+  font-size: var(--type-ui-sm);
+  letter-spacing: var(--tracking-code);
+}
+
+.authoring-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: left;
+}
+
+.authoring-select-trigger[aria-expanded="true"] {
+  border-color: color-mix(in srgb, var(--color-accent) 74%, var(--color-accent-border));
+  background: var(--color-surface);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--color-surface) 76%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--color-accent-border) 74%, transparent),
+    var(--elevation-2);
+}
+
+.authoring-select-trigger-compact {
+  min-height: 32px;
+  border-radius: var(--radius-sm);
+  padding: 5px 9px;
+  font-size: var(--type-ui-xs);
+}
+
+.authoring-select-popover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 60;
+  max-height: min(300px, 42vh);
+  overflow-y: auto;
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--radius-lg);
+  background: var(--chrome-bg-strong);
+  padding: 5px;
+  box-shadow:
+    var(--chrome-shadow-popover),
+    inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(170%) blur(20px);
+  -webkit-backdrop-filter: saturate(170%) blur(20px);
+}
+
+.authoring-select-option {
+  display: flex;
+  min-height: 34px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: var(--radius-md);
+  padding: 7px 10px;
+  text-align: left;
+  color: var(--color-text-muted);
+  font-size: var(--type-ui-sm);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.authoring-select-option:hover {
+  background: var(--chrome-hover);
+  color: var(--color-text);
+}
+
+.authoring-select-option.is-active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.authoring-chip,
+.authoring-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-weight: 650;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    transform var(--dur-micro) var(--ease-standard);
+}
+
+.authoring-chip {
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: var(--type-ui-xs);
+  text-transform: capitalize;
+}
+
+.authoring-chip:hover,
+.authoring-action:hover {
+  border-color: var(--color-border-strong);
+  background: var(--chrome-hover);
+  color: var(--color-text);
+}
+
+.authoring-chip:focus-visible,
+.authoring-action:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 16%, transparent);
+}
+
+.authoring-chip.is-active {
+  border-color: var(--color-accent-border);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.authoring-action:active {
+  transform: scale(0.98);
+}
+
+.authoring-action-primary {
+  border-color: color-mix(in srgb, var(--color-accent) 88%, var(--color-border));
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+}
+
+.authoring-action-primary:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+  filter: brightness(1.06);
+}
+
+.authoring-action-danger {
+  border-color: color-mix(in srgb, var(--color-danger) 24%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 7%, transparent);
+  color: var(--color-danger);
+}
+
+.authoring-action-danger:hover {
+  border-color: color-mix(in srgb, var(--color-danger) 42%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 11%, transparent);
+  color: var(--color-danger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-icon-button,
+  .map-text-button,
+  .map-field-button {
+    transition: none;
+  }
+
+  .map-icon-button:active,
+  .map-text-button:active,
+  .map-field-button:active {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .map-icon-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .map-control-button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .top-tools .map-icon-button {
+    width: 34px;
+    height: 32px;
+  }
+}

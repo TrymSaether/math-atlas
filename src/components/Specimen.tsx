@@ -50,7 +50,7 @@ export function Spine({
     <div
       className="relative overflow-hidden rounded-md pl-4 pr-4"
       style={{
-        background: `color-mix(in srgb, ${tone.tint} 60%, var(--surface))`,
+        background: `color-mix(in srgb, ${tone.tint} 60%, var(--color-surface))`,
         paddingBlock: size === "dict" ? "12px" : "11px",
       }}
     >
@@ -60,17 +60,14 @@ export function Spine({
         style={{ background: railBackground(tone.color, texture) }}
       />
       {label && (
-        <span
-          className="mb-1.5 block font-mono text-ui-2xs uppercase tracking-label"
-          style={{ color: tone.color }}
-        >
+        <span className="mb-1.5 block font-mono text-ui-2xs uppercase tracking-label" style={{ color: tone.color }}>
           {label}
         </span>
       )}
       <div
         className="font-math leading-[1.6]"
         style={{
-          color: "var(--fg-1)",
+          color: "var(--color-text)",
           fontSize: size === "dict" ? "15px" : "15.5px",
         }}
       >
@@ -99,11 +96,11 @@ export function Facet({
     <div>
       <span
         className="mb-1 block font-mono text-ui-2xs uppercase tracking-label"
-        style={{ color: toneColor ?? "var(--fg-3)" }}
+        style={{ color: toneColor ?? "var(--color-text-subtle)" }}
       >
         {label}
       </span>
-      <div className="text-ui-copy" style={{ color: muted ? "var(--fg-2)" : "var(--fg-1)" }}>
+      <div className="text-ui-copy" style={{ color: muted ? "var(--color-text-muted)" : "var(--color-text)" }}>
         {children}
       </div>
     </div>
@@ -116,9 +113,9 @@ export function MathBox({ text }: { text: string }) {
     <div
       className="panel-scrollbar block max-w-full overflow-x-auto rounded-sm border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
       style={{
-        background: "var(--surface-2)",
-        borderColor: "var(--border)",
-        color: "var(--fg-1)",
+        background: "var(--color-surface-subtle)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-text)",
       }}
     >
       <MathText text={text} asBlock />
@@ -160,7 +157,7 @@ export function Argument({ text, toneColor }: { text: string; toneColor: string 
     <div
       className="font-math pl-3.5 text-ui-copy leading-[1.7]"
       style={{
-        color: "var(--fg-1)",
+        color: "var(--color-text)",
         borderLeft: `1.5px dotted color-mix(in srgb, ${toneColor} 55%, transparent)`,
       }}
     >
@@ -216,10 +213,7 @@ export function Collapsible({
           aria-hidden
         />
         {label && (
-          <span
-            className="font-mono text-ui-2xs uppercase tracking-label"
-            style={{ color: toneColor }}
-          >
+          <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
             {label}
           </span>
         )}
@@ -273,12 +267,7 @@ export function Proof({
   collapsible?: boolean;
 }) {
   return (
-    <Collapsible
-      toneColor={toneColor}
-      label={label}
-      defaultOpen={defaultOpen}
-      collapsible={collapsible}
-    >
+    <Collapsible toneColor={toneColor} label={label} defaultOpen={defaultOpen} collapsible={collapsible}>
       <Argument text={text} toneColor={toneColor} />
     </Collapsible>
   );
@@ -387,7 +376,7 @@ function ProofStepItem({
         aria-hidden
         className="absolute left-0 top-0 flex h-5.25 w-5.25 items-center justify-center rounded-full font-mono text-ui-2xs"
         style={{
-          background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
+          background: `color-mix(in srgb, ${toneColor} 14%, var(--color-surface))`,
           color: toneColor,
           border: `1px solid color-mix(in srgb, ${toneColor} 40%, transparent)`,
         }}
@@ -401,13 +390,13 @@ function ProofStepItem({
         aria-expanded={showBody}
         aria-controls={bodyId}
         disabled={!collapsible}
-        className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-xs px-1 py-0.5 text-left transition-colors hover:bg-(--surface-2) focus:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-border) disabled:cursor-default disabled:hover:bg-transparent"
+        className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-xs px-1 py-0.5 text-left transition-colors hover:bg-(--color-surface-subtle) focus:outline-none focus-visible:ring-2 focus-visible:ring-(--color-accent-border) disabled:cursor-default disabled:hover:bg-transparent"
       >
         {collapsible && (
           <CaretRightIcon
             className="h-3 w-3 shrink-0 transition-transform duration-200"
             style={{
-              color: "var(--fg-3)",
+              color: "var(--color-text-subtle)",
               transform: showBody ? "rotate(90deg)" : "none",
             }}
             aria-hidden
@@ -415,18 +404,15 @@ function ProofStepItem({
         )}
         <span className="min-w-0 truncate">
           <span style={{ color: toneColor }}>
-            <MathText
-              text={role || "Step"}
-              className="block truncate font-mono text-ui-2xs tracking-label-tight"
-            />
+            <MathText text={role || "Step"} className="block truncate font-mono text-ui-2xs tracking-label-tight" />
           </span>
         </span>
         {deps.length > 0 && (
           <span
             className="ml-auto shrink-0 rounded-xs px-1.5 py-px font-mono text-ui-2xs leading-none"
             style={{
-              background: "var(--surface-3)",
-              color: "var(--fg-3)",
+              background: "var(--color-surface-muted)",
+              color: "var(--color-text-subtle)",
             }}
           >
             {deps.length} use{deps.length === 1 ? "" : "s"}
@@ -449,10 +435,7 @@ function ProofStepItem({
             className="overflow-hidden"
           >
             {step.content && (
-              <div
-                className="font-math mt-1.5 text-ui-copy leading-[1.7]"
-                style={{ color: "var(--fg-1)" }}
-              >
+              <div className="font-math mt-1.5 text-ui-copy leading-[1.7]" style={{ color: "var(--color-text)" }}>
                 <MathProse text={step.content} asBlock />
               </div>
             )}
@@ -499,12 +482,10 @@ export function ConnectionChip({
     <button
       onClick={onClick}
       title={
-        caption
-          ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}`
-          : `${node.label} · ${KIND_LABEL[node.kind]}`
+        caption ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}` : `${node.label} · ${KIND_LABEL[node.kind]}`
       }
-      className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
-      style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+      className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-(--color-surface-muted) focus:outline-none focus:ring-2 focus:ring-(--color-accent-border)"
+      style={{ borderColor: "var(--color-border)", background: "var(--color-surface-subtle)" }}
     >
       <span
         className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
@@ -512,11 +493,11 @@ export function ConnectionChip({
       >
         {createElement(icon, { className: "h-2.5 w-2.5", strokeWidth: 2.4, "aria-hidden": true })}
       </span>
-      <span className="min-w-0 truncate text-ui-control leading-4" style={{ color: "var(--fg-1)" }}>
+      <span className="min-w-0 truncate text-ui-control leading-4" style={{ color: "var(--color-text)" }}>
         <MathText text={node.label} />
       </span>
       {caption && (
-        <span className="shrink-0 font-mono text-ui-2xs lowercase" style={{ color: "var(--fg-4)" }}>
+        <span className="shrink-0 font-mono text-ui-2xs lowercase" style={{ color: "var(--color-text-faint)" }}>
           {caption}
         </span>
       )}

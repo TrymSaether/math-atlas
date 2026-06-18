@@ -27,12 +27,7 @@ export default function SpectrumFigure() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[0.25, N + 0.75]} yDomain={[-0.14, 1.08]} grid={false}>
-        <Line.Segment
-          point1={[0.5, 0]}
-          point2={[N + 0.5, 0]}
-          color={DIA.muted}
-          weight={STROKE.guide}
-        />
+        <Line.Segment point1={[0.5, 0]} point2={[N + 0.5, 0]} color={DIA.muted} weight={STROKE.guide} />
         {bars.map((v, i) => {
           const k = i + 1;
           const x0 = k - 0.28;
@@ -63,7 +58,7 @@ export default function SpectrumFigure() {
         })}
       </FigureFrame>
       <WaveSelect value={kind} onChange={setKind} />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--color-text-subtle)" }}>
         {CAPTION[kind]}
       </figcaption>
     </figure>

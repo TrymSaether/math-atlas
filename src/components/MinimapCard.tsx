@@ -114,9 +114,9 @@ export function MinimapCard({
     <div
       className="atlas-minimap-card absolute bottom-4 right-4 z-20 hidden rounded-lg border p-1.5 md:block"
       style={{
-        background: "color-mix(in srgb, var(--surface) 90%, transparent)",
-        borderColor: "color-mix(in srgb, var(--border) 82%, transparent)",
-        boxShadow: "var(--shadow-2)",
+        background: "color-mix(in srgb, var(--color-surface) 90%, transparent)",
+        borderColor: "color-mix(in srgb, var(--color-border) 82%, transparent)",
+        boxShadow: "var(--elevation-2)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
       }}
@@ -128,8 +128,8 @@ export function MinimapCard({
         onClick={handleClick}
         className="block cursor-pointer rounded-md"
         style={{
-          background: "color-mix(in srgb, var(--surface-2) 78%, var(--bg))",
-          boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--border) 68%, transparent)",
+          background: "color-mix(in srgb, var(--color-surface-subtle) 78%, var(--color-canvas))",
+          boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--color-border) 68%, transparent)",
         }}
       >
         {[...regions.entries()].map(([domainId, region]) => {
@@ -172,8 +172,8 @@ export function MinimapCard({
           width={viewW}
           height={viewH}
           rx={5}
-          fill="color-mix(in srgb, var(--accent) 4%, transparent)"
-          stroke="color-mix(in srgb, var(--accent) 72%, var(--surface))"
+          fill="color-mix(in srgb, var(--color-accent) 4%, transparent)"
+          stroke="color-mix(in srgb, var(--color-accent) 72%, var(--color-surface))"
           strokeWidth={0.95}
           opacity={0.84}
         />
@@ -183,17 +183,9 @@ export function MinimapCard({
           const tone = getMutedDomainTone(point.domainId);
           return selected ? (
             <g key={point.id}>
-              <circle cx={p.x} cy={p.y} r={3.4} fill="var(--surface)" opacity={0.94} />
+              <circle cx={p.x} cy={p.y} r={3.4} fill="var(--color-surface)" opacity={0.94} />
               <circle cx={p.x} cy={p.y} r={2.2} fill={tone.color} opacity={0.96} />
-              <circle
-                cx={p.x}
-                cy={p.y}
-                r={4.2}
-                fill="none"
-                stroke={tone.color}
-                strokeWidth={0.8}
-                opacity={0.78}
-              />
+              <circle cx={p.x} cy={p.y} r={4.2} fill="none" stroke={tone.color} strokeWidth={0.8} opacity={0.78} />
             </g>
           ) : (
             <circle key={point.id} cx={p.x} cy={p.y} r={1.35} fill={tone.color} opacity={0.66} />

@@ -33,10 +33,7 @@ function projection(point: Vec2, angle: number): Vec2 {
 
 function SpectralBars() {
   const [decay, setDecay] = useState(0.68);
-  const values = useMemo(
-    () => Array.from({ length: 9 }, (_, i) => (i === 0 ? 1 : decay ** i)),
-    [decay],
-  );
+  const values = useMemo(() => Array.from({ length: 9 }, (_, i) => (i === 0 ? 1 : decay ** i)), [decay]);
 
   return (
     <figure className="m-0">
@@ -75,7 +72,7 @@ function SpectralBars() {
         label={`r = ${decay.toFixed(2)}`}
         ariaLabel="Eigenvalue decay ratio"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--color-text-subtle)" }}>
         <MathText text="A compact self-adjoint model diagonalizes into orthonormal eigenvectors; nonzero eigenvalues can only accumulate at 0." />
       </figcaption>
     </figure>
@@ -93,12 +90,7 @@ function ProjectionModel() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[-1.75, 1.75]} yDomain={[-1.25, 1.45]} height={190} grid>
-        <Line.Segment
-          point1={lineStart}
-          point2={lineEnd}
-          color={DIA.codomain}
-          weight={STROKE.curve}
-        />
+        <Line.Segment point1={lineStart} point2={lineEnd} color={DIA.codomain} weight={STROKE.curve} />
         <Line.Segment point1={p} point2={x} color={DIA.alert} weight={STROKE.mark} style="dashed" />
         <Vector tail={[0, 0]} tip={x} color={DIA.accent} weight={STROKE.curve} />
         <Vector tail={[0, 0]} tip={p} color={DIA.ok} weight={STROKE.curve} />
@@ -117,7 +109,7 @@ function ProjectionModel() {
         label={`theta = ${degrees}^\\circ`}
         ariaLabel="Projection subspace angle"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--color-text-subtle)" }}>
         <MathText text="The nearest point $Px$ is characterized by an error vector orthogonal to the closed convex set or subspace." />
       </figcaption>
     </figure>
@@ -125,7 +117,6 @@ function ProjectionModel() {
 }
 
 export default function HilbertSpectralFigure({ nodeId }: FigureProps) {
-  if (nodeId === "projection_operator" || nodeId === "projection_theorem")
-    return <ProjectionModel />;
+  if (nodeId === "projection_operator" || nodeId === "projection_theorem") return <ProjectionModel />;
   return <SpectralBars />;
 }

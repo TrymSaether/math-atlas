@@ -7,8 +7,8 @@
  * should never spell out a raw `var(--…)` or a magic weight/radius inline; pull
  * from here instead.
  *
- * The CSS custom properties are always defined for every theme in `index.css`,
- * so no literal hex fallbacks are needed.
+ * The CSS custom properties are always defined for every theme in the token
+ * layer, so no literal hex fallbacks are needed.
  *
  * Color semantics (kept stable across the whole figure family):
  *   accent   — the primary object: the function under study, the partial sum,
@@ -25,18 +25,18 @@
  *   fillX/fillY — the two set fills (domain / codomain)
  */
 export const DIA = {
-  surface: "var(--surface-2)",
-  frame: "var(--bg)",
-  border: "var(--border)",
+  surface: "var(--color-surface-subtle)",
+  frame: "var(--color-canvas)",
+  border: "var(--color-border)",
   ink: "var(--dia-ink)",
-  text: "var(--fg-2)",
-  ref: "var(--fg-3)",
-  faint: "var(--fg-3)",
-  muted: "var(--fg-4)",
-  accent: "var(--accent)",
+  text: "var(--color-text-muted)",
+  ref: "var(--color-text-subtle)",
+  faint: "var(--color-text-subtle)",
+  muted: "var(--color-text-faint)",
+  accent: "var(--color-accent)",
   codomain: "var(--dia-acc2)",
   alert: "var(--dia-boundary)",
-  ok: "var(--green)",
+  ok: "var(--domain-green)",
   fillX: "var(--dia-fill)",
   fillY: "var(--dia-fill2)",
 } as const;
@@ -75,11 +75,11 @@ export const FONT = {
 
 /** UI copy colors for figure captions and inline controls. */
 export const UI = {
-  text: "var(--fg-2)",
-  muted: "var(--fg-3)",
-  subtle: "var(--fg-4)",
-  onColor: "var(--fg-on-color)",
+  text: "var(--color-text-muted)",
+  muted: "var(--color-text-subtle)",
+  subtle: "var(--color-text-faint)",
+  onColor: "var(--color-text-inverse)",
 } as const;
 
 /** A translucent panel backing for labels floating over a figure. */
-export const PANEL_BACKING = "color-mix(in srgb, var(--surface) 78%, transparent)";
+export const PANEL_BACKING = "color-mix(in srgb, var(--color-surface) 78%, transparent)";

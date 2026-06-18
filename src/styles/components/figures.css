@@ -1,0 +1,27 @@
+/* Compact Mafs surfaces used by atlas node figures. */
+.atlas-mafs-frame {
+  width: 100%;
+  min-height: auto;
+  overflow: auto;
+  border-radius: var(--radius-md);
+  background: var(--color-canvas);
+}
+
+.atlas-mafs-frame .MafsView {
+  --mafs-bg: transparent;
+  --mafs-fg: var(--color-text-muted);
+  --mafs-line-color: var(--canvas-grid-major);
+  --mafs-origin-color: var(--color-text-faint);
+  --grid-line-subdivision-color: var(--canvas-grid-minor);
+  --mafs-axis-stroke-width: 1px;
+  --mafs-line-stroke-dash-style: 5 5;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+}
+
+.atlas-mafs-frame .MafsView text {
+  fill: var(--color-text-subtle);
+  fill-opacity: 0.8;
+  font-size: 10px;
+}
