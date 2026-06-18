@@ -188,7 +188,7 @@ function WorkspaceMenu() {
         />
       </button>
       {open && (
-        <div className="sandbox-workspace-popover absolute left-0 top-[52px] z-40 w-[280px] overflow-hidden p-1.5">
+        <div className="sandbox-workspace-popover absolute left-0 top-[52px] z-30 w-[280px] overflow-hidden p-1.5">
           <div className="px-2.5 pb-1 pt-1.5 text-ui-2xs font-semibold uppercase tracking-label-wide">
             Examples
           </div>

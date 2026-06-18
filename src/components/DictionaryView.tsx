@@ -2,7 +2,7 @@ import { createElement, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRightIcon, ArrowLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
-import { MAPS, type LoadedMap, type MapId } from "../data";
+import { type LoadedMap, type MapId } from "../data";
 import type { GraphNode } from "../types";
 import { MathText } from "../lib/katex";
 import { KIND_LABEL } from "../types";
@@ -35,7 +35,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const toggleTopic = useStore((s) => s.toggleTopic);
   const resetTopics = useStore((s) => s.resetTopics);
   const selectedId = useStore((s) => s.selectedId);
-  const meta = MAPS[mapId];
+  const mapTitle = useStore((s) => s.catalog.find((e) => e.slug === mapId)?.title ?? mapId);
   const indexRef = useRef<HTMLDivElement>(null);
 
   const entries = useMemo(() => {
@@ -116,9 +116,9 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         {/* ---- Index column ---- */}
         <aside className="dict-index" aria-label="Dictionary index">
           <header className="dict-index-head">
-            <p className="dict-kicker">{meta.label} · Dictionary</p>
+            <p className="dict-kicker">{mapTitle} · Dictionary</p>
             <div className="dict-headrow">
-              <h1 className="dict-title font-serif">{meta.label}</h1>
+              <h1 className="dict-title font-serif">{mapTitle}</h1>
               <span className="dict-count">
                 {filtered.length}/{entries.length}
               </span>
@@ -186,7 +186,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 
           <div className="dict-rows" ref={indexRef}>
             {entries.length === 0 ? (
-              <p className="dict-empty">No dictionary entries for {meta.label} yet.</p>
+              <p className="dict-empty">No dictionary entries for {mapTitle} yet.</p>
             ) : groups.length === 0 ? (
               <p className="dict-empty">No entries match the current filters.</p>
             ) : (

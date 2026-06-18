@@ -19,7 +19,6 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import { useReactFlow } from "reactflow";
-import { MAPS, type MapId } from "../data";
 import { useStore } from "../store";
 import { cn } from "../lib/utils";
 import { THEMES, schemeFor, siblingOf } from "../lib/themes";
@@ -119,7 +118,8 @@ function MapBrandSelector() {
     };
   }, [open]);
 
-  const currentLabel = MAPS[mapId].label;
+  const catalog = useStore((s) => s.catalog);
+  const currentLabel = catalog.find((e) => e.slug === mapId)?.title ?? mapId;
 
   return (
     <div
@@ -167,7 +167,8 @@ function MapBrandSelector() {
       </Button>
       {open && (
         <div className="map-popover absolute left-0 top-[60px] w-[min(300px,calc(100vw-24px))] overflow-hidden rounded-[var(--radius-xl)] p-1.5 sm:w-[260px]">
-          {(Object.keys(MAPS) as MapId[]).map((id) => {
+          {catalog.map((entry) => {
+            const id = entry.slug;
             const active = id === mapId;
             return (
               <Button
@@ -183,7 +184,7 @@ function MapBrandSelector() {
                   !active && "text-fg-2",
                 )}
               >
-                <span className="block min-w-0 flex-1 truncate">{MAPS[id].label}</span>
+                <span className="block min-w-0 flex-1 truncate">{entry.title}</span>
                 {active && <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />}
               </Button>
             );
@@ -378,7 +379,7 @@ function DisplayPopover({
   return createPortal(
     <div
       ref={popoverRef}
-      className="map-popover pointer-events-auto fixed z-50 w-[min(260px,calc(100vw-24px))] rounded-2xl p-3"
+      className="map-popover pointer-events-auto fixed z-40 w-[min(260px,calc(100vw-24px))] rounded-2xl p-3"
       style={{ top: position.top, right: position.right }}
     >
       <div className="mb-2.5 flex items-baseline justify-between">
@@ -411,6 +412,7 @@ function EditToggle() {
   const currentEditSource = useStore((s) => s.currentEditSource);
   const importSource = useStore((s) => s.importSource);
   const revertMap = useStore((s) => s.revertMap);
+  const userId = useStore((s) => s.userId);
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState<PopoverPosition | null>(null);
   const [confirmDiscard, setConfirmDiscard] = useState(false);
@@ -451,6 +453,9 @@ function EditToggle() {
       window.removeEventListener("resize", onResize);
     };
   }, [open]);
+
+  // Editing requires sign-in (edits persist to the server).
+  if (!userId) return null;
 
   const showNotice = (message: string) => {
     setNotice(message);
@@ -590,7 +595,7 @@ function EditMapPopover({
     // `top-tools` scope for icon sizing, and shared `Button kind="icon"` states.
     <div
       ref={popoverRef}
-      className="map-chrome-soft top-tools pointer-events-auto fixed z-50 flex items-center gap-1 rounded-[var(--radius-xl)] p-1"
+      className="map-chrome-soft top-tools pointer-events-auto fixed z-40 flex items-center gap-1 rounded-[var(--radius-xl)] p-1"
       style={{ top: position.top, right: position.right }}
       role="dialog"
       aria-label="Edit map"

@@ -3,7 +3,6 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useStore } from "../store";
-import { MAPS, type MapId } from "../data";
 import { getDomainTone } from "../lib/colors";
 import { kindIcon } from "../lib/nodeCategoryIcons";
 import { KIND_LABEL } from "../types";
@@ -17,6 +16,7 @@ export function CommandPalette() {
   const setOpen = useStore((s) => s.setPaletteOpen);
   const select = useStore((s) => s.select);
   const setMap = useStore((s) => s.setMap);
+  const catalog = useStore((s) => s.catalog);
   const [query, setQuery] = useState("");
   const reduceMotion = useReducedMotion();
 
@@ -51,12 +51,12 @@ export function CommandPalette() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-50 backdrop-blur-[2px]"
+                className="fixed inset-0 z-60 backdrop-blur-[2px]"
                 style={{ background: "color-mix(in srgb, var(--bg-deep) 55%, transparent)" }}
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
-              <div className="fixed left-1/2 top-1/2 z-50 w-155 max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
+              <div className="fixed left-1/2 top-1/2 z-60 w-155 max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
                 <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
                 <Dialog.Description className="sr-only">
                   Jump to a concept or switch fields.
@@ -95,16 +95,16 @@ export function CommandPalette() {
                         heading="Fields"
                         className="px-2 pt-2 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide **:[[cmdk-group-heading]]:text-(--fg-3)"
                       >
-                        {(Object.keys(MAPS) as MapId[]).map((id) => (
+                        {catalog.map((entry) => (
                           <Item
-                            key={id}
-                            value={`field ${MAPS[id].label} ${MAPS[id].description}`}
+                            key={entry.slug}
+                            value={`field ${entry.title}`}
                             onSelect={() => {
-                              setMap(id);
+                              setMap(entry.slug);
                               setOpen(false);
                             }}
                           >
-                            <span className="text-ui-sm text-(--fg-1)">Open {MAPS[id].label}</span>
+                            <span className="text-ui-sm text-(--fg-1)">Open {entry.title}</span>
                           </Item>
                         ))}
                       </Command.Group>

@@ -61,12 +61,12 @@ export function AuthDialog({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-50 backdrop-blur-[2px]"
+                className="fixed inset-0 z-60 backdrop-blur-[2px]"
                 style={{ background: "color-mix(in srgb, var(--bg-deep) 55%, transparent)" }}
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
-              <div className="fixed left-1/2 top-1/2 z-50 w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2">
+              <div className="fixed left-1/2 top-1/2 z-60 w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2">
                 <Dialog.Title className="sr-only">
                   {isSignup ? "Create an account" : "Sign in"}
                 </Dialog.Title>

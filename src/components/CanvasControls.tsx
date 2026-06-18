@@ -279,7 +279,7 @@ function DirectionsPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-50 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-y-auto rounded-2xl p-3"
+      className="map-popover pointer-events-auto fixed z-40 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-hidden rounded-2xl p-3"
       style={{
         top: position.top,
         right: position.right,
@@ -957,7 +957,7 @@ function MapPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover pointer-events-auto fixed z-50 flex w-[min(320px,calc(100vw-24px))] flex-col gap-3.5 overflow-y-auto rounded-2xl p-3.5"
+      className="map-popover pointer-events-auto fixed z-40 flex w-[min(320px,calc(100vw-24px))] flex-col gap-3.5 overflow-hidden rounded-2xl p-3.5"
       style={{
         top: position.top,
         right: position.right,
