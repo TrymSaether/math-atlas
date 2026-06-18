@@ -3276,7 +3276,6 @@ textarea.authoring-control {
 /* Compact Mafs surfaces used by atlas node figures. */
 .atlas-mafs-frame {
   width: 100%;
-  min-height: 120px;
   overflow: hidden;
   border-radius: var(--radius-md);
   background: var(--bg);
@@ -3285,9 +3284,9 @@ textarea.authoring-control {
 .atlas-mafs-frame .MafsView {
   --mafs-bg: transparent;
   --mafs-fg: var(--fg-2);
-  --mafs-line-color: var(--grid-major);
-  --mafs-origin-color: var(--fg-4);
-  --grid-line-subdivision-color: var(--grid-minor);
+  --mafs-line-color: color-mix(in srgb, var(--fg-1) 10%, transparent);
+  --mafs-origin-color: var(--fg-2);
+  --grid-line-subdivision-color: color-mix(in srgb, var(--fg-1) 5%, transparent);
   --mafs-axis-stroke-width: 1px;
   --mafs-line-stroke-dash-style: 5 5;
   background: transparent;

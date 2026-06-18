@@ -56,13 +56,14 @@ export function FigureFrame({
         pan={false}
         zoom={false}
         preserveAspectRatio={false}
-        viewBox={{ x: xDomain, y: yDomain }}
+        viewBox={{ x: xDomain, y: yDomain, padding: 0 }}
       >
         {grid && (
+          // axis:false suppresses the Mafs origin lines; grid lines are kept
           <Coordinates.Cartesian
             subdivisions={2}
-            xAxis={{ labels: () => "" }}
-            yAxis={{ labels: () => "" }}
+            xAxis={{ axis: false, labels: () => "" }}
+            yAxis={{ axis: false, labels: () => "" }}
           />
         )}
         {axes && <Axes xDomain={xDomain} yDomain={yDomain} />}
@@ -72,15 +73,7 @@ export function FigureFrame({
   );
 }
 
-export function Axes({
-  xDomain,
-  yDomain,
-  color = DIA.muted,
-}: {
-  xDomain: Domain;
-  yDomain: Domain;
-  color?: string;
-}) {
+export function Axes({ xDomain, yDomain, color = DIA.ink }: { xDomain: Domain; yDomain: Domain; color?: string }) {
   return (
     <>
       {yDomain[0] <= 0 && yDomain[1] >= 0 && (
@@ -150,11 +143,7 @@ export function Arrow({
   const py = ux;
   const tip: Vec2 = [to[0] - 0.12 * ux, to[1] - 0.12 * uy];
   const base: Vec2 = [to[0] - 0.34 * ux, to[1] - 0.34 * uy];
-  const head: Vec2[] = [
-    tip,
-    [base[0] + 0.12 * px, base[1] + 0.12 * py],
-    [base[0] - 0.12 * px, base[1] - 0.12 * py],
-  ];
+  const head: Vec2[] = [tip, [base[0] + 0.12 * px, base[1] + 0.12 * py], [base[0] - 0.12 * px, base[1] - 0.12 * py]];
 
   return (
     <g opacity={opacity}>
