@@ -16,6 +16,8 @@ const SandboxView = lazy(() =>
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
 import { useStore } from "./store";
 import { registerDomainTones } from "./lib/colors";
+import { SessionBridge } from "./components/auth/SessionBridge";
+import { authEnabled } from "./lib/authClient";
 
 export default function App() {
   useKeyboardNav();
@@ -45,6 +47,7 @@ export default function App() {
         style={{ background: "var(--bg)", color: "var(--fg-1)" }}
       >
         <Background />
+        {authEnabled && <SessionBridge />}
         <main className="absolute inset-0">
           {map ? (
             surface === "dictionary" ? (

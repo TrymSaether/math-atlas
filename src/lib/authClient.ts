@@ -47,3 +47,18 @@ export async function signOut() {
     localStorage.removeItem(BEARER_KEY);
   }
 }
+
+/** Absolute URL for an app API path (same-origin proxy in dev, API host in prod). */
+export function apiUrl(path: string): string {
+  return (apiBaseURL ?? "") + path;
+}
+
+/** Auth + JSON headers for app API calls (the bearer token the auth client stored). */
+export function authHeaders(extra?: Record<string, string>): Record<string, string> {
+  const token = localStorage.getItem(BEARER_KEY);
+  return {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...extra,
+  };
+}
