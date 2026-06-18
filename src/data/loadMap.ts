@@ -3,10 +3,10 @@ import type { Artifact } from "./artifactSchema";
 import { computeSwimlaneLayout, type DomainBounds, type Position } from "../lib/atlasLayout";
 import { resolveDomainTones, type DomainTone } from "../lib/colors";
 import { computeGraphMetrics, type GraphMetrics } from "../lib/graphMetrics";
-import { DEFAULT_MAP_ID, MAPS, loadRawMap, type MapId } from "./mapRegistry";
 import { SourceGraphSchema } from "./sourceSchema";
 import { buildArtifact } from "./buildArtifact";
-import { readOverlay } from "./edits";
+import { fetchMap, type MapPayload } from "./mapsApi";
+import { getCachedMap, setCachedMap } from "./mapCache";
 
 /**
  * Enrich a pre-validated build artifact into the runtime GraphData by computing
@@ -163,46 +163,30 @@ export function buildLoadedMapFromSource(source: unknown): BuildResult {
   return { ok: true, map: buildLoadedMap(enrichArtifact(artifact)), warnings };
 }
 
-async function buildFromShipped(mapId: MapId): Promise<LoadedMap> {
-  const raw = await loadRawMap(mapId);
-  return buildLoadedMap(enrichArtifact(raw as Artifact));
-}
-
 /**
- * Build the runtime map, preferring a saved authoring overlay. A corrupt or
- * stale overlay never breaks the app: validation failure falls back to the
- * shipped artifact with a console warning.
+ * Fetch a map's source from the API by entity id and build the runtime map.
+ * Cache-first for instant paint + offline resilience: a cached source renders
+ * immediately while the network revalidates in the background; with no cache we
+ * await the network (and surface the error if the backend is unreachable).
  */
-async function buildPreferringOverlay(mapId: MapId): Promise<LoadedMap> {
-  const overlay = readOverlay(mapId);
-  if (overlay) {
-    const result = buildLoadedMapFromSource(overlay.source);
-    if (result.ok) return result.map;
-    console.warn(`[math-atlas] ignoring invalid edit overlay for "${mapId}": ${result.error}`);
+export async function fetchAndBuildMap(
+  id: string,
+): Promise<{ map: LoadedMap; payload: MapPayload }> {
+  const cached = getCachedMap(id);
+  if (cached) {
+    void fetchMap(id)
+      .then(setCachedMap)
+      .catch(() => {
+        /* offline / backend asleep — keep serving cache */
+      });
+    const built = buildLoadedMapFromSource(cached.source);
+    if (built.ok) return { map: built.map, payload: cached };
+    // Corrupt cache: fall through to a fresh fetch.
   }
-  return buildFromShipped(mapId);
-}
 
-const loadedMapCache = new Map<MapId, Promise<LoadedMap>>();
-
-export function loadMap(mapId: MapId = DEFAULT_MAP_ID): Promise<LoadedMap> {
-  const cached = loadedMapCache.get(mapId);
-  if (cached) return cached;
-
-  const loaded = buildPreferringOverlay(mapId);
-  loadedMapCache.set(mapId, loaded);
-  return loaded;
-}
-
-/** Load the built-in map, bypassing (and not caching) any overlay — for revert. */
-export function loadShippedMap(mapId: MapId = DEFAULT_MAP_ID): Promise<LoadedMap> {
-  loadedMapCache.delete(mapId);
-  return buildFromShipped(mapId);
-}
-
-export async function loadRegisteredMaps(): Promise<Record<MapId, LoadedMap>> {
-  const entries = await Promise.all(
-    (Object.keys(MAPS) as MapId[]).map(async (mapId) => [mapId, await loadMap(mapId)] as const),
-  );
-  return Object.fromEntries(entries) as Record<MapId, LoadedMap>;
+  const payload = await fetchMap(id);
+  setCachedMap(payload);
+  const built = buildLoadedMapFromSource(payload.source);
+  if (!built.ok) throw new Error(built.error);
+  return { map: built.map, payload };
 }
