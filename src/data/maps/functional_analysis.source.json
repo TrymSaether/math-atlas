@@ -434,6 +434,37 @@
       "priority": "standard"
     },
     {
+      "id": "scalar_limit_to_infinity",
+      "kind": "notation",
+      "domain": "foundations",
+      "label": "Scalar limit to infinity",
+      "content": {
+        "statement": "For real scalars, $\\lambda\\to+\\infty$ and $\\lambda\\to-\\infty$ are meaningful; for complex scalars, escape to infinity is written $|\\lambda|\\to\\infty$.",
+        "definition": "The real field has an order, so one-sided limits to $+\\infty$ and $-\\infty$ are meaningful. The complex field has no natural order, so unbounded escape is expressed using the modulus condition $|\\lambda|\\to\\infty$.",
+        "formal": "$$\\mathbb K=\\mathbb R:\\ \\lambda\\to+\\infty\\text{ or }\\lambda\\to-\\infty,\\qquad \\mathbb K=\\mathbb C:\\ |\\lambda|\\to\\infty.$$",
+        "formula": "$$|\\lambda_n|\\to\\infty\\iff \\forall R>0\\,\\exists N\\in\\mathbb N\\,\\forall n\\ge N:\\ |\\lambda_n|>R.$$",
+        "intuition": "Real scalars escape to the right or left on a line. Complex scalars escape every disk centered at zero; there is no distinguished positive direction.",
+        "notation": [
+          "$\\lambda\\to+\\infty$ for $\\lambda\\in\\mathbb R$",
+          "$\\lambda\\to-\\infty$ for $\\lambda\\in\\mathbb R$",
+          "$|\\lambda|\\to\\infty$ for $\\lambda\\in\\mathbb R$ or $\\mathbb C$"
+        ]
+      },
+      "assumptions": [
+        "$\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
+        "$|\\cdot|$ denotes the usual absolute value on $\\mathbb R$ or modulus on $\\mathbb C$."
+      ],
+      "tags": [
+        "complex",
+        "field",
+        "limit",
+        "notation",
+        "real",
+        "scalar"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "semantic_strength_function_operator",
       "kind": "property",
       "domain": "foundations",
@@ -502,6 +533,37 @@
         "foundations",
         "function",
         "sequence"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "sequence_limit_vs_variable_limit",
+      "kind": "notation",
+      "domain": "foundations",
+      "label": "Sequence limit versus variable limit",
+      "content": {
+        "statement": "A sequence limit varies over natural-number indices; a variable limit varies over a larger domain such as $[0,\\infty)$, $\\mathbb R$, or $\\mathbb C$.",
+        "definition": "The expression $\\lim_{n\\to\\infty}a_n$ is a limit of a sequence $a:\\mathbb N\\to S$. The expression $\\lim_{t\\to\\infty}f(t)$ is a limit of a function whose variable moves through a domain with a meaningful notion of escaping to infinity.",
+        "formal": "$$a:\\mathbb N\\to S,\\qquad a_n=a(n),\\qquad \\lim_{n\\to\\infty}a_n\\text{ is a sequence limit}.$$",
+        "formula": "$$f(t)=ct,\\ t\\in[0,\\infty),\\ c>0\\implies f(t)\\to\\infty,\\qquad a_n=f(n)=cn\\implies a_n\\to\\infty.$$",
+        "intuition": "A sequence limit samples the path at integer indices. A variable limit may use every allowed point in the domain. In proofs, the sequence version is often enough.",
+        "notation": [
+          "$\\lim_{n\\to\\infty}a_n$",
+          "$\\lim_{t\\to\\infty}f(t)$",
+          "$a_n=f(n)$"
+        ]
+      },
+      "assumptions": [
+        "$(a_n)$ is a sequence.",
+        "$f$ is a function whose domain has a meaningful notion of tending to infinity."
+      ],
+      "tags": [
+        "clarification",
+        "function",
+        "limit",
+        "notation",
+        "sequence",
+        "variable"
       ],
       "priority": "core"
     },
@@ -798,23 +860,28 @@
       "domain": "spaces_norms",
       "label": "Limit of a sequence",
       "content": {
-        "statement": "A limit is the single object that a sequence eventually gets arbitrarily close to.",
-        "definition": "In a metric space, $(x_n)$ converges to $x$ if every distance tolerance is eventually satisfied. In a normed space, distance is measured by $\\|x_n-x\\|$.",
-        "formal": "$$x_n\\to x\\iff \\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall n\\ge N:\\ d(x_n,x)<\\varepsilon.$$",
-        "formula": "$$x_n\\to x\\text{ in }(X,\\|\\cdot\\|)\\iff \\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall n\\ge N:\\ \\|x_n-x\\|<\\varepsilon.$$",
-        "intuition": "The sequence is the indexed list; the limit is a separate point that the tail of the list approaches.",
+        "statement": "A limit is the object that a sequence eventually gets arbitrarily close to, measured by the ambient metric or norm.",
+        "definition": "In a metric space, $(x_n)$ converges to $x$ if every positive distance tolerance is eventually satisfied. In a normed space, this means $\\|x_n-x\\|\\to0$ because the norm induces the metric $d(x,y)=\\|x-y\\|$.",
+        "formal": "$$x_n\\to x\\text{ in }(M,d)\\iff \\forall\\varepsilon>0\\,\\exists N\\in\\mathbb N\\,\\forall n\\ge N:\\ d(x_n,x)<\\varepsilon.$$",
+        "formula": "$$x_n\\to x\\text{ in }(X,\\|\\cdot\\|_X)\\iff \\|x_n-x\\|_X\\to0.$$",
+        "intuition": "The sequence is the indexed list; the limit is a separate point. A metric or norm is what makes the phrase 'gets close to' precise.",
         "notation": [
           "$x_n\\to x$",
-          "$\\lim_{n\\to\\infty}x_n=x$"
+          "$\\lim_{n\\to\\infty}x_n=x$",
+          "$d(x_n,x)\\to0$",
+          "$\\|x_n-x\\|_X\\to0$"
         ]
       },
       "assumptions": [
-        "$(x_n)_{n\\in\\mathbb{N}}$ is a sequence in a metric or normed space.",
-        "$x$ is an element of the ambient space."
+        "$(x_n)_{n\\in\\mathbb N}$ is a sequence in a metric or normed space.",
+        "$x$ is an element of the ambient space.",
+        "The ambient space has a metric, or has a norm inducing a metric."
       ],
       "tags": [
         "convergence",
         "definition",
+        "limit",
+        "metric",
         "norm",
         "sequence"
       ],
@@ -1515,6 +1582,36 @@
         "linear",
         "normed_space",
         "operator"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "unbounded_scalar_multiples",
+      "kind": "proof_method",
+      "domain": "operators",
+      "label": "Unbounded scalar multiples",
+      "content": {
+        "statement": "If $y\\neq0$ in a normed space, then scalar multiples of $y$ have arbitrarily large norm.",
+        "definition": "For any nonzero vector $y$ in a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$, the set $\\{\\lambda y:\\lambda\\in\\mathbb K\\}$ is unbounded because $\\|\\lambda y\\|=|\\lambda|\\|y\\|$ and $|\\lambda|$ can be made arbitrarily large.",
+        "formal": "$$y\\neq0\\quad\\Longrightarrow\\quad \\forall M>0\\,\\exists\\lambda\\in\\mathbb K:\\ \\|\\lambda y\\|>M.$$",
+        "formula": "$$\\|\\lambda y\\|=|\\lambda|\\|y\\|\\xrightarrow[|\\lambda|\\to\\infty]{}\\infty\\qquad (y\\neq0).$$",
+        "intuition": "A nonzero vector determines a line through the origin. Scaling along that line eventually leaves every bounded ball.",
+        "notation": [
+          "$\\lambda y$",
+          "$|\\lambda|\\to\\infty$",
+          "$\\|\\lambda y\\|=|\\lambda|\\|y\\|$"
+        ]
+      },
+      "assumptions": [
+        "$(Y,\\|\\cdot\\|_Y)$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
+        "$y\\in Y$ and $y\\neq0$."
+      ],
+      "tags": [
+        "boundedness",
+        "linear",
+        "norm",
+        "proof_method",
+        "scalar_multiplication"
       ],
       "priority": "core"
     },
@@ -3574,6 +3671,11 @@
     },
     {
       "source": "limit_of_sequence",
+      "target": "metric_induced_by_norm",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "limit_of_sequence",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
     },
@@ -3853,6 +3955,11 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "scalar_limit_to_infinity",
+      "target": "scalar_field_real_or_complex",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "self_adjoint_operator",
       "target": "adjoint_operator",
       "relation": "defined_in_terms_of"
@@ -3875,6 +3982,21 @@
     {
       "source": "semantic_strength_function_operator",
       "target": "operator",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "sequence_limit_vs_variable_limit",
+      "target": "function",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "sequence_limit_vs_variable_limit",
+      "target": "scalar_limit_to_infinity",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "sequence_limit_vs_variable_limit",
+      "target": "sequence",
       "relation": "defined_in_terms_of"
     },
     {
@@ -3945,6 +4067,16 @@
     {
       "source": "topology_induced_by_metric",
       "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "unbounded_scalar_multiples",
+      "target": "norm",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "unbounded_scalar_multiples",
+      "target": "normed_vector_space",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4618,6 +4750,11 @@
       "relation": "motivated_by"
     },
     {
+      "source": "unbounded_scalar_multiples",
+      "target": "bounded_function_on_domain",
+      "relation": "motivated_by"
+    },
+    {
       "source": "uniform_boundedness_principle",
       "target": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "relation": "motivated_by"
@@ -4883,6 +5020,11 @@
       "relation": "uses"
     },
     {
+      "source": "nonzero_linear_map_on_unbounded_normed_space",
+      "target": "unbounded_scalar_multiples",
+      "relation": "uses"
+    },
+    {
       "source": "open_mapping_theorem",
       "target": "baire_category_theorem",
       "relation": "uses"
@@ -4945,6 +5087,11 @@
     {
       "source": "spectral_theorem",
       "target": "riesz_representation_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "unbounded_scalar_multiples",
+      "target": "scalar_limit_to_infinity",
       "relation": "uses"
     },
     {
