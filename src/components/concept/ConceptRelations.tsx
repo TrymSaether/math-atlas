@@ -34,10 +34,7 @@ export function ConceptRelations({
       {groups.map((g) => (
         <section key={g.key}>
           {g.label && (
-            <div
-              className="mb-1.5 font-mono text-ui-2xs uppercase tracking-label"
-              style={{ color: "var(--fg-3)" }}
-            >
+            <div className="mb-1.5 font-mono text-ui-2xs uppercase tracking-label" style={{ color: "var(--fg-3)" }}>
               {g.label}
             </div>
           )}

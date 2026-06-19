@@ -97,10 +97,7 @@ export function buildCliMap(source: SourceGraph, raw: string, fileName: string):
 }
 
 /** Locate a concept across maps by exact id. */
-export function findConcept(
-  maps: CliMap[],
-  id: string,
-): { map: CliMap; node: ArtifactNode } | undefined {
+export function findConcept(maps: CliMap[], id: string): { map: CliMap; node: ArtifactNode } | undefined {
   for (const map of maps) {
     const node = map.nodeById.get(id);
     if (node) return { map, node };

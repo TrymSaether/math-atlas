@@ -26,13 +26,7 @@ import {
 } from "./nodeContent";
 import { compactNodeRef, nodeSourceCitation } from "./nodeMeta";
 import { getDomainGlyphId, type DomainGlyphKey } from "../components/DomainGlyph";
-import {
-  RELATIONS,
-  RELATION_KEYS,
-  RELATION_TERSE,
-  orientedRelation,
-  type RelationType,
-} from "../data/relations";
+import { RELATIONS, RELATION_KEYS, RELATION_TERSE, orientedRelation, type RelationType } from "../data/relations";
 
 /** Instance kinds that read as "related cases" rather than downstream results. */
 export const RELATED_CASE_KINDS = new Set(["example", "non_example", "counterexample"]);

@@ -87,8 +87,7 @@ function plotY(kind: MappingKind, raw: number, x: number): number {
 
 function propertyText(kind: MappingKind, raw: number): string {
   if (kind === "bijective") return "one input, one output, and an inverse";
-  if (kind === "surjective")
-    return raw >= 5 ? "onto: every target is hit" : "not onto: one target is missed";
+  if (kind === "surjective") return raw >= 5 ? "onto: every target is hit" : "not onto: one target is missed";
   return raw >= 6 ? "not injective: two arrows collide" : "injective: no arrows collide";
 }
 
@@ -100,17 +99,9 @@ function controlLabel(kind: MappingKind, raw: number): string {
 
 function MappingPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
   const model = useMemo(() => mappingFor(kind, raw), [kind, raw]);
-  const left = useMemo(
-    () => points(model.domainLabels.length, DOMAIN_X),
-    [model.domainLabels.length],
-  );
-  const right = useMemo(
-    () => points(model.codomainLabels.length, CODOMAIN_X),
-    [model.codomainLabels.length],
-  );
-  const hitCounts = model.codomainLabels.map(
-    (_, i) => model.targets.filter((target) => target === i).length,
-  );
+  const left = useMemo(() => points(model.domainLabels.length, DOMAIN_X), [model.domainLabels.length]);
+  const right = useMemo(() => points(model.codomainLabels.length, CODOMAIN_X), [model.codomainLabels.length]);
+  const hitCounts = model.codomainLabels.map((_, i) => model.targets.filter((target) => target === i).length);
 
   return (
     <FigureFrame xDomain={[-4.15, 4.15]} yDomain={[-1.82, 1.82]} height={168} axes={false} grid>
@@ -155,15 +146,7 @@ function MappingPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
         // (endpoint dots) and for a collision, which is the thing worth flagging.
         const collision = hitCounts[target] > 1;
         const color = collision && kind !== "surjective" ? DIA.alert : DIA.ink;
-        return (
-          <Arrow
-            key={`${i}:${target}`}
-            from={left[i]}
-            to={right[target]}
-            color={color}
-            weight={STROKE.mark}
-          />
-        );
+        return <Arrow key={`${i}:${target}`} from={left[i]} to={right[target]} color={color} weight={STROKE.mark} />;
       })}
 
       {left.map(([x, y], i) => (
@@ -224,13 +207,7 @@ function PlotPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
         </>
       )}
       {kind === "injective" && raw >= 6 && (
-        <Line.Segment
-          point1={[-2.4, 0]}
-          point2={[2.4, 0]}
-          color={DIA.alert}
-          weight={STROKE.guide}
-          style="dashed"
-        />
+        <Line.Segment point1={[-2.4, 0]} point2={[2.4, 0]} color={DIA.alert} weight={STROKE.guide} style="dashed" />
       )}
       {kind === "bijective" && (
         <FunctionCurve
@@ -242,12 +219,7 @@ function PlotPanel({ kind, raw }: { kind: MappingKind; raw: number }) {
           style="dashed"
         />
       )}
-      <FunctionCurve
-        y={(x) => plotY(kind, raw, x)}
-        domain={[-2.4, 2.4]}
-        color={DIA.accent}
-        weight={STROKE.curve}
-      />
+      <FunctionCurve y={(x) => plotY(kind, raw, x)} domain={[-2.4, 2.4]} color={DIA.accent} weight={STROKE.curve} />
       <Text x={1.75} y={kind === "bijective" ? 1.4 : -1.42} color={DIA.ref} size={FONT.tick}>
         {kind === "bijective" ? "f and inverse" : "horizontal test"}
       </Text>
@@ -275,8 +247,7 @@ export default function MappingPropertyFigure({ nodeId }: FigureProps) {
         ariaLabel={`${kind} mapping parameter`}
       />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        {propertyText(kind, raw)}. The lower plot shows the same idea with horizontal slices of a
-        real-valued function.
+        {propertyText(kind, raw)}. The lower plot shows the same idea with horizontal slices of a real-valued function.
       </figcaption>
     </figure>
   );

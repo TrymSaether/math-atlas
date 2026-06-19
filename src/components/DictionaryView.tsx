@@ -10,13 +10,7 @@ import { getDomainTone } from "../lib/colors";
 import { useConceptView } from "../lib/conceptView";
 import { kindAbbrev } from "../lib/nodeCategory";
 import { kindIcon } from "../lib/nodeCategoryIcons";
-import {
-  KIND_ORDER,
-  dictionaryEntries,
-  sectionFacet,
-  type DictSortMode,
-  type SectionFacet,
-} from "../lib/dictionary";
+import { KIND_ORDER, dictionaryEntries, sectionFacet, type DictSortMode, type SectionFacet } from "../lib/dictionary";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";
 import { hasNodeVisual } from "./NodeVisual";
 import "./DictionaryView.css";
@@ -63,12 +57,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     const items = entries.filter((e) => {
       if (kinds.size > 0 && !kinds.has(e.kind)) return false;
       if (topics.size > 0 && !topics.has(e.domain)) return false;
-      if (
-        q &&
-        !e.label.toLowerCase().includes(q) &&
-        !(e.source?.ref ?? "").toLowerCase().includes(q)
-      )
-        return false;
+      if (q && !e.label.toLowerCase().includes(q) && !(e.source?.ref ?? "").toLowerCase().includes(q)) return false;
       return true;
     });
     return items.sort((a, b) => compareEntries(a, b, sortBy, facet));
@@ -231,15 +220,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   );
 }
 
-function IndexRow({
-  entry,
-  active,
-  onClick,
-}: {
-  entry: GraphNode;
-  active: boolean;
-  onClick: () => void;
-}) {
+function IndexRow({ entry, active, onClick }: { entry: GraphNode; active: boolean; onClick: () => void }) {
   const tone = getDomainTone(entry.domain);
   const icon = kindIcon(entry.kind);
   return (
@@ -251,11 +232,7 @@ function IndexRow({
       aria-current={active}
       style={active ? { background: tone.tint } : undefined}
     >
-      <span
-        className="dict-row-rail"
-        style={{ background: active ? tone.color : "transparent" }}
-        aria-hidden
-      />
+      <span className="dict-row-rail" style={{ background: active ? tone.color : "transparent" }} aria-hidden />
       <span className="dict-row-glyph" style={{ color: tone.color }}>
         {createElement(icon, { className: "h-3.5 w-3.5", "aria-hidden": true })}
       </span>
@@ -305,12 +282,7 @@ function DetailPane({
         </div>
 
         <footer className="dict-doc-foot">
-          <ConceptRelations
-            relations={view.relations}
-            map={map}
-            onSelect={onPickRelated}
-            includeSeeAlso
-          />
+          <ConceptRelations relations={view.relations} map={map} onSelect={onPickRelated} includeSeeAlso />
           <button type="button" className="dict-open" onClick={openInAtlas}>
             Show in atlas <ArrowUpRightIcon className="h-3 w-3" aria-hidden />
           </button>
@@ -328,19 +300,10 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
   );
 }
 
-function compareEntries(
-  a: GraphNode,
-  b: GraphNode,
-  sortBy: DictSortMode,
-  facet: SectionFacet,
-): number {
-  const alpha = dictionarySortTitle(a.label).localeCompare(
-    dictionarySortTitle(b.label),
-    undefined,
-    {
-      sensitivity: "base",
-    },
-  );
+function compareEntries(a: GraphNode, b: GraphNode, sortBy: DictSortMode, facet: SectionFacet): number {
+  const alpha = dictionarySortTitle(a.label).localeCompare(dictionarySortTitle(b.label), undefined, {
+    sensitivity: "base",
+  });
   if (sortBy === "section") {
     const order = facet.values;
     return order.indexOf(facet.valueOf(a)) - order.indexOf(facet.valueOf(b)) || alpha;

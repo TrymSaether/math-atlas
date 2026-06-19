@@ -202,13 +202,9 @@ export function topoSortWithCycles(
   const leftoverNodeIds = new Set(leftover.flatMap((r) => unitMembers.get(r)!));
   const cycleComponents = [
     ...leftover.map((r) => unitMembers.get(r)!),
-    ...depComponents.filter(
-      (c) => isCycleComponent(c, adj) && !c.some((id) => leftoverNodeIds.has(id)),
-    ),
+    ...depComponents.filter((c) => isCycleComponent(c, adj) && !c.some((id) => leftoverNodeIds.has(id))),
   ];
-  const cycles = cycleComponents.map((c) =>
-    c.map((id) => byId.get(id)).filter((n): n is TopoNode => Boolean(n)),
-  );
+  const cycles = cycleComponents.map((c) => c.map((id) => byId.get(id)).filter((n): n is TopoNode => Boolean(n)));
 
   return { nodes, cycles };
 }
@@ -248,11 +244,7 @@ export function equivalenceClasses(edges: TopoEdge[], nodeIds?: Set<string>): Ma
   return reps;
 }
 
-function stronglyConnectedComponents(
-  nodeIds: Set<string>,
-  adj: Adjacency,
-  byId: Map<string, TopoNode>,
-): string[][] {
+function stronglyConnectedComponents(nodeIds: Set<string>, adj: Adjacency, byId: Map<string, TopoNode>): string[][] {
   let index = 0;
   const indexById = new Map<string, number>();
   const lowlinkById = new Map<string, number>();

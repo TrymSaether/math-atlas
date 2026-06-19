@@ -33,8 +33,7 @@ function balanceIssues(f: TexField): string[] {
     issues.push(`unbalanced environments (${begins.length} \\begin vs ${ends.length} \\end)`);
   else {
     for (let i = 0; i < begins.length; i++)
-      if (begins[i] !== ends[i])
-        issues.push(`environment mismatch: \\begin{${begins[i]}} … \\end{${ends[i]}}`);
+      if (begins[i] !== ends[i]) issues.push(`environment mismatch: \\begin{${begins[i]}} … \\end{${ends[i]}}`);
   }
   return issues;
 }

@@ -23,8 +23,7 @@ import { fileURLToPath } from "node:url";
 import { SourceGraphSchema } from "../src/data/sourceSchema";
 import { buildArtifact } from "../src/data/buildArtifact";
 
-const MAPS_DIR =
-  process.env.MAPS_DIR ?? fileURLToPath(new URL("../src/data/maps", import.meta.url));
+const MAPS_DIR = process.env.MAPS_DIR ?? fileURLToPath(new URL("../src/data/maps", import.meta.url));
 const checkOnly = process.argv.includes("--check");
 
 function formatIssues(file: string, error: import("zod").ZodError): string {

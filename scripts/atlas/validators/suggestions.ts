@@ -24,10 +24,7 @@ const STOPWORDS = new Set([
   "closed",
 ]);
 
-function conceptText(concept: {
-  content?: Record<string, unknown>;
-  proof?: { steps: { content: string }[] };
-}): string {
+function conceptText(concept: { content?: Record<string, unknown>; proof?: { steps: { content: string }[] } }): string {
   const c = concept.content ?? {};
   const parts: string[] = [];
   for (const k of ["statement", "definition", "formal", "intuition", "gloss"]) {

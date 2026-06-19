@@ -38,11 +38,7 @@ export function fuzzyScore(query: string, target: string): number {
   return score - t.length * 0.05;
 }
 
-export function fuzzySearch<T>(
-  query: string,
-  items: T[],
-  keys: (item: T) => string[],
-): FuzzyHit<T>[] {
+export function fuzzySearch<T>(query: string, items: T[], keys: (item: T) => string[]): FuzzyHit<T>[] {
   const hits: FuzzyHit<T>[] = items.map((item) => {
     let best = -1;
     for (const k of keys(item)) best = Math.max(best, fuzzyScore(query, k));

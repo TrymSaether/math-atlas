@@ -164,9 +164,7 @@ function SelectField({
                   type="button"
                   role="option"
                   aria-selected={active}
-                  className={
-                    active ? "authoring-select-option is-active" : "authoring-select-option"
-                  }
+                  className={active ? "authoring-select-option is-active" : "authoring-select-option"}
                   onClick={() => {
                     onChange(option.value);
                     setOpen(false);
@@ -387,9 +385,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
 
   const incident = incidentEdges(source, nodeId);
   const nodeLabel = (id: string) => map.nodeById.get(id)?.label ?? id;
-  const others = map.data.nodes
-    .filter((n) => n.id !== nodeId)
-    .map((n) => ({ id: n.id, label: n.label }));
+  const others = map.data.nodes.filter((n) => n.id !== nodeId).map((n) => ({ id: n.id, label: n.label }));
 
   const submit = () => {
     if (!other) {
@@ -647,10 +643,7 @@ function ProofStepsEditor({
             style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
           >
             <div className="flex items-center gap-2">
-              <span
-                className="shrink-0 font-mono text-ui-2xs tabular-nums"
-                style={{ color: "var(--fg-3)" }}
-              >
+              <span className="shrink-0 font-mono text-ui-2xs tabular-nums" style={{ color: "var(--fg-3)" }}>
                 {i + 1}
               </span>
               <input
@@ -702,12 +695,7 @@ function ProofStepsEditor({
                 <MathText text={step.content} />
               </span>
             )}
-            <UsesPicker
-              value={step.uses}
-              options={options}
-              map={map}
-              onChange={(uses) => patch(i, { uses })}
-            />
+            <UsesPicker value={step.uses} options={options} map={map} onChange={(uses) => patch(i, { uses })} />
           </div>
         ))}
         <button
@@ -744,8 +732,7 @@ export function NodeEditorPanel({
   const deleteNode = useStore((s) => s.deleteNode);
   const editError = useStore((s) => s.editError);
 
-  const concept =
-    editingId !== null ? (source.concepts.find((c) => c.id === editingId) ?? null) : null;
+  const concept = editingId !== null ? (source.concepts.find((c) => c.id === editingId) ?? null) : null;
 
   const [draft, setDraft] = useState<NodeDraft>(() =>
     concept ? conceptToDraft(concept) : emptyDraft(map.data.domains[0]?.id ?? ""),
@@ -844,11 +831,7 @@ export function NodeEditorPanel({
         </div>
 
         <div className="flex items-start gap-2.5 pb-3.5">
-          <span
-            aria-hidden
-            className="mt-1.75 h-9 w-0.75 shrink-0 rounded-full"
-            style={{ background: tone.color }}
-          />
+          <span aria-hidden className="mt-1.75 h-9 w-0.75 shrink-0 rounded-full" style={{ background: tone.color }} />
           <div className="min-w-0 flex-1">
             <input
               type="text"
@@ -864,10 +847,7 @@ export function NodeEditorPanel({
                 <MathText text={draft.label} />
               </div>
             )}
-            <div
-              className="mt-2 flex items-center gap-1.5 text-ui-meta"
-              style={{ color: tone.color }}
-            >
+            <div className="mt-2 flex items-center gap-1.5 text-ui-meta" style={{ color: tone.color }}>
               {glyphId ? (
                 <DomainGlyph id={glyphId} size={14} />
               ) : (
@@ -948,19 +928,8 @@ export function NodeEditorPanel({
           hint="LaTeX"
           preview
         />
-        <Field
-          label="Intuition"
-          value={draft.intuition}
-          onChange={(v) => set({ intuition: v })}
-          area
-        />
-        <Field
-          label="Gloss"
-          value={draft.gloss}
-          onChange={(v) => set({ gloss: v })}
-          area
-          hint="dictionary one-liner"
-        />
+        <Field label="Intuition" value={draft.intuition} onChange={(v) => set({ intuition: v })} area />
+        <Field label="Gloss" value={draft.gloss} onChange={(v) => set({ gloss: v })} area hint="dictionary one-liner" />
         <Field
           label="Notation"
           value={draft.notation}
@@ -993,18 +962,11 @@ export function NodeEditorPanel({
         <ExamplesEditor examples={draft.examples} onChange={(examples) => set({ examples })} />
         <ProofStepsEditor
           steps={draft.proof}
-          options={map.data.nodes
-            .filter((n) => n.id !== editingId)
-            .map((n) => ({ id: n.id, label: n.label }))}
+          options={map.data.nodes.filter((n) => n.id !== editingId).map((n) => ({ id: n.id, label: n.label }))}
           map={map}
           onChange={(proof) => set({ proof })}
         />
-        <Field
-          label="Tags"
-          value={draft.tags}
-          onChange={(v) => set({ tags: v })}
-          hint="comma-separated"
-        />
+        <Field label="Tags" value={draft.tags} onChange={(v) => set({ tags: v })} hint="comma-separated" />
 
         {editingId !== null && (
           <div className="border-t pt-3" style={{ borderColor: "var(--border-subtle)" }}>
@@ -1027,9 +989,7 @@ export function NodeEditorPanel({
           type="button"
           onClick={save}
           className="authoring-action authoring-action-primary ml-auto inline-flex items-center gap-1 rounded-sm px-3 py-1.5 text-ui-xs"
-          style={
-            justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined
-          }
+          style={justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined}
         >
           {justSaved ? (
             <>

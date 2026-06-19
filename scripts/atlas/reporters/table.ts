@@ -16,10 +16,7 @@ export interface Column {
 
 export function table(columns: Column[], rows: string[][]): string {
   const widths = columns.map((c, i) => {
-    const cellMax = Math.max(
-      visibleLength(c.header),
-      ...rows.map((r) => visibleLength(r[i] ?? "")),
-    );
+    const cellMax = Math.max(visibleLength(c.header), ...rows.map((r) => visibleLength(r[i] ?? "")));
     return Math.max(cellMax, c.min ?? 0);
   });
 

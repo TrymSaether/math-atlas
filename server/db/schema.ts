@@ -9,17 +9,7 @@
  *   - user_progress ............ Phase 3 (accounts + progress)
  *   - map_collaborators ........ Phase 4 (collaborative editing)
  */
-import {
-  boolean,
-  integer,
-  jsonb,
-  pgEnum,
-  pgTable,
-  primaryKey,
-  text,
-  timestamp,
-  unique,
-} from "drizzle-orm/pg-core";
+import { boolean, integer, jsonb, pgEnum, pgTable, primaryKey, text, timestamp, unique } from "drizzle-orm/pg-core";
 
 // ---------------------------------------------------------------------------
 // better-auth tables

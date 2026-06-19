@@ -39,8 +39,7 @@ export function contentValueText(value: unknown): string {
   if (typeof value === "string") return value.trim();
   if (typeof value === "number" || typeof value === "boolean") return String(value);
   if (Array.isArray(value)) return value.map(contentValueText).filter(Boolean).join(" ");
-  if (value && typeof value === "object")
-    return Object.values(value).map(contentValueText).filter(Boolean).join(" ");
+  if (value && typeof value === "object") return Object.values(value).map(contentValueText).filter(Boolean).join(" ");
   return "";
 }
 

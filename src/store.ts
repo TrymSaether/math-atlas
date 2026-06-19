@@ -21,6 +21,7 @@ import type { RouteKind } from "./lib/route";
 import { buildLoadedMapFromSource } from "./data/loadMap";
 import { graphDataToSource } from "./data/toSource";
 import { getCachedCatalog, setCachedCatalog, setCachedMap, clearCachedMap } from "./data/mapCache";
+import { fetchProgress, putProgress, deleteProgress, type ProgressStatus } from "./data/progressApi";
 import {
   addEdge as addSourceEdge,
   applyDraft,
@@ -195,17 +196,9 @@ interface State {
   /** Delete a node and all edges (and proof refs) touching it. */
   deleteNode: (id: string) => EditResult;
   /** Add a forward-relation edge, with optional author-only notes. */
-  addNodeEdge: (edge: {
-    source: string;
-    target: string;
-    relation: AuthorableRelation;
-    notes?: string;
-  }) => EditResult;
+  addNodeEdge: (edge: { source: string; target: string; relation: AuthorableRelation; notes?: string }) => EditResult;
   /** Edit an existing edge's relation and/or notes, keyed by its semantic key. */
-  updateNodeEdge: (
-    key: string,
-    patch: { relation?: AuthorableRelation; notes?: string },
-  ) => EditResult;
+  updateNodeEdge: (key: string, patch: { relation?: AuthorableRelation; notes?: string }) => EditResult;
   /** Remove an edge by its semantic key (see authoring.edgeKey). */
   removeNodeEdge: (key: string) => EditResult;
   /** Current working source for the active map (for export), or null. */
@@ -223,11 +216,25 @@ interface State {
   /** Maps the caller can open (one entry per slug; best access wins). */
   catalog: CatalogEntry[];
   /** Per-slug map entity meta (id / role / saved version), set when a map loads. */
-  mapMeta: Partial<Record<MapId, { id: string; role: MapRole; baseVersion: number }>>;
+  mapMeta: Partial<Record<MapId, { id: string; role: MapRole; baseVersion: number; updated: string }>>;
   /** Fetch the catalog from the API (falls back to cache when offline). */
   loadCatalog: () => Promise<void>;
   /** On sign-in/out: reload the catalog and the active map (access changed). */
   onSessionChange: () => Promise<void>;
+  /** Active map changed on the server (conflict or a collaborator's save). */
+  staleMap: MapId | null;
+  /** Reload the active map fresh from the server (discards unsaved local edits). */
+  reloadActiveMap: () => Promise<void>;
+  /** On window focus: flag the active map stale if the server copy is newer. */
+  checkRemoteUpdate: () => Promise<void>;
+
+  /* ---- Learning progress (Phase 3) ---------------------------------- */
+  /** Per-map node progress (slug → nodeId → status). Signed-in users only. */
+  progress: Partial<Record<MapId, Record<string, ProgressStatus>>>;
+  /** Fetch the caller's progress for a map (no-op signed out). */
+  loadProgress: (mapId: MapId) => Promise<void>;
+  /** Set or clear a node's status (optimistic + server). `null` clears it. */
+  setNodeProgress: (mapId: MapId, nodeId: string, status: ProgressStatus | null) => void;
 }
 
 function toggle<T>(set: Set<T>, v: T) {
@@ -272,9 +279,7 @@ function asBoolean(value: unknown): boolean | undefined {
 }
 
 function asStringArray(value: unknown): string[] | undefined {
-  return Array.isArray(value) && value.every((item) => typeof item === "string")
-    ? value
-    : undefined;
+  return Array.isArray(value) && value.every((item) => typeof item === "string") ? value : undefined;
 }
 
 function asNullableString(value: unknown): string | null | undefined {
@@ -299,9 +304,7 @@ function isEdgeLabelStyle(value: unknown): value is EdgeLabelStyle {
 }
 
 function isSurface(value: unknown): value is Surface {
-  return (
-    value === "atlas" || value === "dictionary" || value === "flashcards" || value === "sandbox"
-  );
+  return value === "atlas" || value === "dictionary" || value === "flashcards" || value === "sandbox";
 }
 
 function normalizedFocusDepth(value: unknown): number | undefined {
@@ -346,8 +349,7 @@ function normalizePersistedState(value: unknown | null): PersistedState | null {
     showRegions: asBoolean(value.showRegions),
     showMinimap: asBoolean(value.showMinimap),
     surface: isSurface(value.surface) ? value.surface : undefined,
-    routeKind:
-      value.routeKind === "prereq" || value.routeKind === "path" ? value.routeKind : undefined,
+    routeKind: value.routeKind === "prereq" || value.routeKind === "path" ? value.routeKind : undefined,
     routeIncludeProof: asBoolean(value.routeIncludeProof),
     maps,
   };
@@ -404,8 +406,7 @@ function setFromPersisted<T extends string>(
 
 function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefined) {
   const validNodeIds = new Set(map.data.nodes.map((node) => node.id));
-  const selectedId =
-    saved?.selectedId && validNodeIds.has(saved.selectedId) ? saved.selectedId : null;
+  const selectedId = saved?.selectedId && validNodeIds.has(saved.selectedId) ? saved.selectedId : null;
 
   return {
     search: saved?.search ?? "",
@@ -427,9 +428,7 @@ function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefin
 
 /** Slugs the caller owns or can edit — drives the "edited" badge. */
 function editableSlugs(catalog: CatalogEntry[]): Set<MapId> {
-  return new Set(
-    catalog.filter((e) => e.role === "owner" || e.role === "editor").map((e) => e.slug),
-  );
+  return new Set(catalog.filter((e) => e.role === "owner" || e.role === "editor").map((e) => e.slug));
 }
 
 /** Replace (or add) a catalog entry for a slug, preserving its title. */
@@ -469,22 +468,34 @@ async function saveMapToServer(slug: MapId, get: () => State, set: Setter): Prom
       const fromId = meta?.id ?? get().catalog.find((e) => e.slug === slug)?.id;
       if (!fromId) return;
       const fork = await forkMap(fromId);
-      meta = { id: fork.id, role: "owner", baseVersion: source.version };
+      meta = { id: fork.id, role: "owner", baseVersion: source.version, updated: "" };
       const title = get().catalog.find((e) => e.slug === slug)?.title ?? slug;
       set((s) => ({
         mapMeta: { ...s.mapMeta, [slug]: meta! },
-        catalog: upsertCatalog(s.catalog, { slug, id: fork.id, role: "owner", title }),
+        catalog: upsertCatalog(s.catalog, {
+          slug,
+          id: fork.id,
+          role: "owner",
+          title,
+          updated: "",
+        }),
       }));
     }
-    const { updated } = await saveMapSource(meta.id, source.version, source);
-    set((s) => ({ mapMeta: { ...s.mapMeta, [slug]: { ...meta!, baseVersion: source.version } } }));
+    const result = await saveMapSource(meta.id, source.version, source, meta.updated || undefined);
+    if (!result.ok) {
+      // A collaborator saved first — flag the active map for reload.
+      set({ staleMap: slug });
+      return;
+    }
+    const saved = { ...meta, baseVersion: source.version, updated: result.updated };
+    set((s) => ({ mapMeta: { ...s.mapMeta, [slug]: saved } }));
     const title = get().catalog.find((e) => e.slug === slug)?.title ?? slug;
     setCachedMap({
       id: meta.id,
       slug,
       title,
       role: meta.role,
-      updated,
+      updated: result.updated,
       baseVersion: source.version,
       source,
     });
@@ -554,7 +565,12 @@ export const useStore = create<State>((set, get) => ({
         const loadedMaps = { ...state.loadedMaps, [mapId]: map };
         const mapMeta = {
           ...state.mapMeta,
-          [mapId]: { id: payload.id, role: payload.role, baseVersion: payload.baseVersion },
+          [mapId]: {
+            id: payload.id,
+            role: payload.role,
+            baseVersion: payload.baseVersion,
+            updated: payload.updated,
+          },
         };
         if (state.mapId !== mapId) {
           return {
@@ -571,6 +587,8 @@ export const useStore = create<State>((set, get) => ({
           ...mapStateForLoadedMap(map, persistedMaps[mapId]),
         };
       });
+      // Load learning progress for this map once (signed in).
+      if (get().userId && !get().progress[mapId]) void get().loadProgress(mapId);
     } catch (error) {
       set({
         loadingMapId: null,
@@ -624,8 +642,7 @@ export const useStore = create<State>((set, get) => ({
     }),
   showSoftDeps: persistedState?.showSoftDeps ?? false,
   toggleSoftDeps: () => set((s) => ({ showSoftDeps: !s.showSoftDeps })),
-  edgeStyle:
-    persistedState?.edgeStyle ?? (persistedState?.view === "cluster" ? "bezier" : "smooth"),
+  edgeStyle: persistedState?.edgeStyle ?? (persistedState?.view === "cluster" ? "bezier" : "smooth"),
   setEdgeStyle: (edgeStyle) => set({ edgeStyle }),
   edgeLabelStyle: persistedState?.edgeLabelStyle ?? "prose",
   setEdgeLabelStyle: (edgeLabelStyle) => set({ edgeLabelStyle }),
@@ -721,8 +738,7 @@ export const useStore = create<State>((set, get) => ({
         routeRunKey: complete ? s.routeRunKey + 1 : s.routeRunKey,
       };
     }),
-  clearRoute: () =>
-    set({ routeMode: false, routeFrom: null, routeTo: null, tourIndex: null, routeSequence: [] }),
+  clearRoute: () => set({ routeMode: false, routeFrom: null, routeTo: null, tourIndex: null, routeSequence: [] }),
   replayRoute: () => set((s) => ({ routeRunKey: s.routeRunKey + 1 })),
 
   routeSequence: [],
@@ -884,6 +900,40 @@ export const useStore = create<State>((set, get) => ({
 
   catalog: getCachedCatalog() ?? [],
   mapMeta: {},
+  staleMap: null,
+
+  reloadActiveMap: async () => {
+    const slug = get().mapId;
+    const meta = get().mapMeta[slug];
+    if (meta) clearCachedMap(meta.id); // force a fresh fetch, not stale cache
+    set((s) => {
+      const loadedMaps = { ...s.loadedMaps };
+      delete loadedMaps[slug];
+      const mapMeta = { ...s.mapMeta };
+      delete mapMeta[slug];
+      const editSources = { ...s.editSources };
+      delete editSources[slug];
+      const editedMaps = new Set(s.editedMaps);
+      editedMaps.delete(slug);
+      return { loadedMaps, mapMeta, editSources, editedMaps, staleMap: null };
+    });
+    await get().loadCatalog();
+    await get().ensureMapLoaded(slug);
+  },
+
+  checkRemoteUpdate: async () => {
+    const slug = get().mapId;
+    const meta = get().mapMeta[slug];
+    if (!meta || !get().userId || get().staleMap) return;
+    try {
+      const entry = (await fetchCatalog()).find((e) => e.slug === slug && e.id === meta.id);
+      if (entry && meta.updated && new Date(entry.updated) > new Date(meta.updated)) {
+        set({ staleMap: slug });
+      }
+    } catch {
+      /* offline — ignore */
+    }
+  },
 
   loadCatalog: async () => {
     try {
@@ -911,7 +961,36 @@ export const useStore = create<State>((set, get) => ({
       delete editSources[mapId];
       return { loadedMaps, mapMeta, editSources };
     });
+    if (get().userId) await get().loadProgress(mapId);
+    else set({ progress: {} });
     await get().ensureMapLoaded(mapId);
+  },
+
+  progress: {},
+
+  loadProgress: async (mapId) => {
+    if (!get().userId) return;
+    try {
+      const rows = await fetchProgress(mapId);
+      const byNode: Record<string, ProgressStatus> = {};
+      for (const r of rows) byNode[r.nodeId] = r.status;
+      set((s) => ({ progress: { ...s.progress, [mapId]: byNode } }));
+    } catch (e) {
+      console.warn(`[math-atlas] progress load failed for "${mapId}":`, e);
+    }
+  },
+
+  setNodeProgress: (mapId, nodeId, status) => {
+    // Optimistic local update (works signed out too, just not persisted).
+    set((s) => {
+      const forMap = { ...(s.progress[mapId] ?? {}) };
+      if (status === null) delete forMap[nodeId];
+      else forMap[nodeId] = status;
+      return { progress: { ...s.progress, [mapId]: forMap } };
+    });
+    if (!get().userId) return;
+    const op = status === null ? deleteProgress(mapId, nodeId) : putProgress(mapId, nodeId, status);
+    op.catch((e) => console.warn(`[math-atlas] progress save failed for "${nodeId}":`, e));
   },
 }));
 

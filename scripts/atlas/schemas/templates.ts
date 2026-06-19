@@ -17,12 +17,7 @@ export type NewKind =
   | "corollary";
 
 /** Empty-but-valid concept skeleton; TeX bodies are placeholders to fill in. */
-export function conceptTemplate(
-  kind: NewKind | string,
-  id: string,
-  domain: string,
-  label: string,
-): SourceConcept {
+export function conceptTemplate(kind: NewKind | string, id: string, domain: string, label: string): SourceConcept {
   const c: SourceConcept = {
     id,
     kind: kind as SourceConcept["kind"],
@@ -72,11 +67,6 @@ export function conceptTemplate(
   return c;
 }
 
-export function domainTemplate(
-  id: string,
-  label: string,
-  order: number,
-  palette = "blue",
-): SourceDomain {
+export function domainTemplate(id: string, label: string, order: number, palette = "blue"): SourceDomain {
   return { id, label, order, palette: palette as SourceDomain["palette"] };
 }

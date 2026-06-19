@@ -131,56 +131,21 @@ export default function ConvergenceModesFigure() {
             />
           </>
         )}
-        <FunctionCurve
-          y={spec.limit}
-          domain={spec.xDomain}
-          color={DIA.ok}
-          weight={STROKE.ref}
-          style="dashed"
-        />
-        <FunctionCurve
-          y={(x) => spec.fn(x, n)}
-          domain={spec.xDomain}
-          color={DIA.accent}
-          weight={STROKE.curve}
-        />
+        <FunctionCurve y={spec.limit} domain={spec.xDomain} color={DIA.ok} weight={STROKE.ref} style="dashed" />
+        <FunctionCurve y={(x) => spec.fn(x, n)} domain={spec.xDomain} color={DIA.accent} weight={STROKE.curve} />
         {mode === "pointwise" && (
           <>
-            <Line.Segment
-              point1={[1, 0]}
-              point2={[1, 1]}
-              color={DIA.alert}
-              weight={STROKE.mark}
-              style="dashed"
-            />
+            <Line.Segment point1={[1, 0]} point2={[1, 1]} color={DIA.alert} weight={STROKE.mark} style="dashed" />
             <Point x={1} y={1} color={DIA.alert} svgCircleProps={{ r: 3.6 }} />
           </>
         )}
-        <LaTeX
-          at={[spec.xDomain[0] + 0.25, spec.yDomain[1] + 0.25]}
-          tex={`f_{${n}}`}
-          color={DIA.accent}
-        />
+        <LaTeX at={[spec.xDomain[0] + 0.25, spec.yDomain[1] + 0.25]} tex={`f_{${n}}`} color={DIA.accent} />
       </FigureFrame>
-      <SegmentedControl
-        value={mode}
-        options={MODE_OPTIONS}
-        onChange={(m) => setMode(m)}
-        ariaLabel="Convergence mode"
-      />
-      <RangeControl
-        min={1}
-        max={20}
-        value={n}
-        onChange={setN}
-        label={`$n = ${n}$`}
-        ariaLabel="Sequence index n"
-      />
+      <SegmentedControl value={mode} options={MODE_OPTIONS} onChange={(m) => setMode(m)} ariaLabel="Convergence mode" />
+      <RangeControl min={1} max={20} value={n} onChange={setN} label={`$n = ${n}$`} ariaLabel="Sequence index n" />
       <figcaption className="mt-1.5 space-y-1 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         <div className="font-math" style={{ color: "var(--fg-2)" }}>
-          <MathText
-            text={`$\\|f_n-f\\|_\\infty=${sup.toFixed(2)}\\quad\\|f_n-f\\|_2=${l2.toFixed(2)}$`}
-          />
+          <MathText text={`$\\|f_n-f\\|_\\infty=${sup.toFixed(2)}\\quad\\|f_n-f\\|_2=${l2.toFixed(2)}$`} />
         </div>
         <MathText text={spec.note} />
       </figcaption>

@@ -28,6 +28,8 @@ export interface CatalogEntry {
   /** The map entity id (uuid) to fetch/save. */
   id: string;
   role: MapRole;
+  /** Server-side last-modified timestamp (for remote-change detection). */
+  updated: string;
 }
 
 export interface MapPayload {
@@ -58,7 +60,13 @@ export async function fetchCatalog(): Promise<CatalogEntry[]> {
   for (const r of rows) {
     const cur = bySlug.get(r.slug);
     if (!cur || ROLE_RANK[r.role] > ROLE_RANK[cur.role]) {
-      bySlug.set(r.slug, { slug: r.slug, title: r.title, id: r.id, role: r.role });
+      bySlug.set(r.slug, {
+        slug: r.slug,
+        title: r.title,
+        id: r.id,
+        role: r.role,
+        updated: r.updated,
+      });
     }
   }
   return [...bySlug.values()];
@@ -72,28 +80,67 @@ export async function fetchMap(id: string): Promise<MapPayload> {
 
 /** Fork a readable map into the caller's own editable copy; returns the new id. */
 export async function forkMap(fromId: string): Promise<{ id: string; slug: string }> {
-  const res = await fetch(
-    apiUrl("/api/maps"),
-    opts({ method: "POST", body: JSON.stringify({ fromId }) }),
-  );
+  const res = await fetch(apiUrl("/api/maps"), opts({ method: "POST", body: JSON.stringify({ fromId }) }));
   if (!res.ok) throw new Error(`fork failed: ${res.status} ${await res.text()}`);
   return res.json();
 }
+
+export type SaveResult = { ok: true; updated: string } | { ok: false; conflict: true; updated: string };
 
 export async function saveMapSource(
   id: string,
   baseVersion: number,
   source: unknown,
-): Promise<{ updated: string }> {
+  baseUpdated?: string,
+): Promise<SaveResult> {
   const res = await fetch(
     apiUrl(`/api/maps/${id}`),
-    opts({ method: "PUT", body: JSON.stringify({ baseVersion, source }) }),
+    opts({ method: "PUT", body: JSON.stringify({ baseVersion, source, baseUpdated }) }),
   );
+  if (res.status === 409) {
+    const body = await res.json();
+    return { ok: false, conflict: true, updated: body.updated };
+  }
   if (!res.ok) throw new Error(`save failed: ${res.status} ${await res.text()}`);
-  return res.json();
+  const body = await res.json();
+  return { ok: true, updated: body.updated };
 }
 
 export async function deleteMap(id: string): Promise<void> {
   const res = await fetch(apiUrl(`/api/maps/${id}`), opts({ method: "DELETE" }));
   if (!res.ok && res.status !== 404) throw new Error(`delete failed: ${res.status}`);
+}
+
+// --- Collaborators (Phase 4) ---
+
+export interface Collaborator {
+  userId: string;
+  role: "editor" | "viewer";
+  email: string;
+  name: string;
+}
+
+export async function listCollaborators(id: string): Promise<Collaborator[]> {
+  const res = await fetch(apiUrl(`/api/maps/${id}/collaborators`), opts());
+  if (!res.ok) throw new Error(`collaborators failed: ${res.status}`);
+  return res.json();
+}
+
+export async function addCollaborator(
+  id: string,
+  email: string,
+  role: "editor" | "viewer" = "editor",
+): Promise<{ ok?: boolean; error?: string }> {
+  const res = await fetch(
+    apiUrl(`/api/maps/${id}/collaborators`),
+    opts({ method: "POST", body: JSON.stringify({ email, role }) }),
+  );
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) return { error: body.error ?? `Failed (${res.status})` };
+  return { ok: true };
+}
+
+export async function removeCollaborator(id: string, userId: string): Promise<void> {
+  const res = await fetch(apiUrl(`/api/maps/${id}/collaborators/${userId}`), opts({ method: "DELETE" }));
+  if (!res.ok && res.status !== 404) throw new Error(`remove failed: ${res.status}`);
 }

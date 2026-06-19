@@ -111,9 +111,7 @@ function banner(): void {
 
 function printHelp(): void {
   banner();
-  process.stdout.write(
-    "\n  " + dim("usage:") + " atlas " + cyan("<command>") + " [args] [--flags]\n",
-  );
+  process.stdout.write("\n  " + dim("usage:") + " atlas " + cyan("<command>") + " [args] [--flags]\n");
 
   const groups = new Map<string, Command[]>();
   for (const c of COMMANDS) {
@@ -154,12 +152,7 @@ function printHelp(): void {
       "\n",
   );
   process.stdout.write(
-    "\n  " +
-      dim("run") +
-      " atlas " +
-      cyan("<command> --help") +
-      dim(" for command detail") +
-      "\n\n",
+    "\n  " + dim("run") + " atlas " + cyan("<command> --help") + dim(" for command detail") + "\n\n",
   );
 }
 
@@ -193,11 +186,7 @@ function levenshtein(a: string, b: string): number {
   for (let j = 0; j <= b.length; j++) dp[0][j] = j;
   for (let i = 1; i <= a.length; i++)
     for (let j = 1; j <= b.length; j++)
-      dp[i][j] = Math.min(
-        dp[i - 1][j] + 1,
-        dp[i][j - 1] + 1,
-        dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1),
-      );
+      dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
   return dp[a.length][b.length];
 }
 

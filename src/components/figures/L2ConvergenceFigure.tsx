@@ -1,11 +1,6 @@
 import { useState } from "react";
 
-import {
-  type WaveKind,
-  waveCoeff,
-  wavePartialSum,
-  waveTarget,
-} from "../../lib/figures/fourierMath";
+import { type WaveKind, waveCoeff, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
 import { DIA, FigureFrame, FunctionCurve, Line, Plot, Polygon, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
@@ -49,8 +44,7 @@ const Y_DOMAIN: Record<WaveKind, [number, number]> = {
 const CAPTIONS: Record<WaveKind, string> = {
   square: "Square wave has a jump — coefficients decay like 1/n, so the L² error shrinks slowly.",
   sawtooth: "Sawtooth also jumps — same 1/n decay, same slow convergence as square.",
-  triangle:
-    "Triangle is continuous — coefficients decay like 1/n², so the error collapses much faster.",
+  triangle: "Triangle is continuous — coefficients decay like 1/n², so the error collapses much faster.",
 };
 
 const NS_BAR = Array.from({ length: N_MAX + 1 }, (_, i) => i);
@@ -73,12 +67,7 @@ export default function L2ConvergenceFigure() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={Y_DOMAIN[kind]} grid>
-        <Plot.Inequality
-          y={{ "<=": top, ">=": bottom }}
-          fillColor={DIA.alert}
-          fillOpacity={0.12}
-          strokeOpacity={0}
-        />
+        <Plot.Inequality y={{ "<=": top, ">=": bottom }} fillColor={DIA.alert} fillOpacity={0.12} strokeOpacity={0} />
         <FunctionCurve
           y={(x) => waveTarget(kind, x)}
           domain={[-Math.PI, Math.PI]}
@@ -95,10 +84,7 @@ export default function L2ConvergenceFigure() {
       </FigureFrame>
 
       <div className="mt-2 px-1">
-        <div
-          className="mb-1 flex items-baseline justify-between text-ui-hint"
-          style={{ color: "var(--fg-3)" }}
-        >
+        <div className="mb-1 flex items-baseline justify-between text-ui-hint" style={{ color: "var(--fg-3)" }}>
           <span>
             L² error ‖S<sub>N</sub>f − f‖²
           </span>
@@ -127,12 +113,7 @@ export default function L2ConvergenceFigure() {
               />
             );
           })}
-          <Line.Segment
-            point1={[0, 0]}
-            point2={[N_MAX + 1, 0]}
-            color={DIA.muted}
-            weight={STROKE.guide}
-          />
+          <Line.Segment point1={[0, 0]} point2={[N_MAX + 1, 0]} color={DIA.muted} weight={STROKE.guide} />
         </FigureFrame>
       </div>
 

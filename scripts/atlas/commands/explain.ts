@@ -40,10 +40,7 @@ function run(ctx: Ctx): number {
     )
       .slice(0, 3)
       .map((h) => h.item.id);
-    throw new CliError(
-      `concept '${id}' not found`,
-      near.length ? `did you mean: ${near.join(", ")}` : undefined,
-    );
+    throw new CliError(`concept '${id}' not found`, near.length ? `did you mean: ${near.join(", ")}` : undefined);
   }
   const { map, node } = found;
   const c = node.content;
@@ -75,8 +72,7 @@ function run(ctx: Ctx): number {
   if (c.notation?.length) section("Notation", c.notation.map((n) => texToPlain(n)).join("   "));
 
   const prereqs = map.prereqsOf.get(node.id) ?? [];
-  if (prereqs.length)
-    section("Builds on", prereqs.map((p) => `${cyan(p)} ${dim("— " + nameOf(map, p))}`).join("\n"));
+  if (prereqs.length) section("Builds on", prereqs.map((p) => `${cyan(p)} ${dim("— " + nameOf(map, p))}`).join("\n"));
 
   const deps = map.dependentsOf.get(node.id) ?? [];
   if (deps.length)
@@ -88,9 +84,7 @@ function run(ctx: Ctx): number {
         .join("\n") + (deps.length > 12 ? dim(`\n… +${deps.length - 12} more`) : ""),
     );
 
-  const related = [...(map.neighbors.get(node.id) ?? [])].filter(
-    (n) => !prereqs.includes(n) && !deps.includes(n),
-  );
+  const related = [...(map.neighbors.get(node.id) ?? [])].filter((n) => !prereqs.includes(n) && !deps.includes(n));
   if (related.length) section("Related", related.map((r) => cyan(r)).join(dim(", ")));
 
   if (node.proof?.steps.length) {
@@ -111,9 +105,7 @@ function run(ctx: Ctx): number {
   if (node.examples?.length) {
     process.stdout.write("\n  " + bold("Examples") + "\n");
     for (const ex of node.examples as ArtifactNode["examples"]) {
-      process.stdout.write(
-        "    " + (ex.label ? cyan(ex.label) + ": " : "") + dim(texToPlain(ex.content)) + "\n",
-      );
+      process.stdout.write("    " + (ex.label ? cyan(ex.label) + ": " : "") + dim(texToPlain(ex.content)) + "\n");
     }
   }
 

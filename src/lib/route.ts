@@ -106,12 +106,7 @@ export function prereqResult(map: LoadedMap, targetId: string, includeProof = fa
 }
 
 /** All dependency paths between two concepts (the connecting subgraph). */
-export function pathResult(
-  map: LoadedMap,
-  fromId: string,
-  toId: string,
-  includeProof = false,
-): RouteResult {
+export function pathResult(map: LoadedMap, fromId: string, toId: string, includeProof = false): RouteResult {
   if (!map.nodeById.has(fromId) || !map.nodeById.has(toId)) return EMPTY_ROUTE;
   const edges = depEdges(map, includeProof);
   const adj = depAdjacency(map, includeProof);

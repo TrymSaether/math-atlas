@@ -268,11 +268,7 @@ export function orientedRelation(relation: string, isDependency: boolean): Relat
  * relations table's `reads` phrase ("is used to define"); `terse` uses the short
  * verb form ("defines"). Falls back to the raw key for unknown relations.
  */
-export function edgeLabel(
-  relation: string,
-  isDependency: boolean,
-  style: "prose" | "terse",
-): string {
+export function edgeLabel(relation: string, isDependency: boolean, style: "prose" | "terse"): string {
   const oriented = orientedRelation(relation, isDependency);
   if (!oriented) return relation;
   return style === "terse" ? RELATION_TERSE[oriented] : RELATIONS[oriented].reads;

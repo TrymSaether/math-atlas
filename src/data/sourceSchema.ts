@@ -238,9 +238,7 @@ export const SourceGraphSchema = z
         });
       // Symmetric relations (e.g. related_to) read the same in either
       // direction, so A→B and B→A are the same fact — canonicalize the pair.
-      const [pa, pb] = RELATIONS[e.relation].symmetric
-        ? [e.source, e.target].sort()
-        : [e.source, e.target];
+      const [pa, pb] = RELATIONS[e.relation].symmetric ? [e.source, e.target].sort() : [e.source, e.target];
       const key = `${pa} ${pb} ${e.relation}`;
       if (semantic.has(key))
         ctx.addIssue({

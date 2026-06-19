@@ -25,5 +25,4 @@ export const webOrigins = (env.WEB_ORIGINS ?? env.APP_URL)
   .map((s) => s.trim())
   .filter(Boolean);
 
-export const isLocalhostOrigin = (origin: string): boolean =>
-  /^https?:\/\/localhost:\d+$/.test(origin);
+export const isLocalhostOrigin = (origin: string): boolean => /^https?:\/\/localhost:\d+$/.test(origin);

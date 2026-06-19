@@ -11,14 +11,7 @@
 import type { Command } from "../core/command";
 import { loadMaps, CliError, type Ctx } from "../core/context";
 import { findConcept, type CliMap } from "../core/model";
-import {
-  shortestPath,
-  prerequisiteChain,
-  orphans,
-  detectCycles,
-  topoSort,
-  betweenness,
-} from "../graph/algorithms";
+import { shortestPath, prerequisiteChain, orphans, detectCycles, topoSort, betweenness } from "../graph/algorithms";
 import { edgeLabel } from "../../../src/data/relations";
 import { renderTree, renderList } from "../reporters/tree";
 import { table } from "../reporters/table";
@@ -67,9 +60,7 @@ function cmdPath(map: CliMap, a: string, b: string): number {
     process.stdout.write("\n" + yellow(`${MARK.warning} no path between ${a} and ${b}`) + "\n\n");
     return 0;
   }
-  process.stdout.write(
-    "\n" + bold(`Path ${a} → ${b}`) + dim(`  (${steps.length - 1} hops)`) + "\n\n",
-  );
+  process.stdout.write("\n" + bold(`Path ${a} → ${b}`) + dim(`  (${steps.length - 1} hops)`) + "\n\n");
   steps.forEach((s, i) => {
     if (i === 0) {
       process.stdout.write("  " + label(map, s.id) + "\n");
@@ -77,14 +68,7 @@ function cmdPath(map: CliMap, a: string, b: string): number {
     }
     const rel = s.edge ? edgeLabel(s.edge.relation, s.edge.isDependency, "terse") : "";
     process.stdout.write(
-      "  " +
-        gray("  │ ") +
-        dim(rel) +
-        (s.forward ? " ↓" : " ↑") +
-        "\n" +
-        "  " +
-        label(map, s.id) +
-        "\n",
+      "  " + gray("  │ ") + dim(rel) + (s.forward ? " ↓" : " ↑") + "\n" + "  " + label(map, s.id) + "\n",
     );
   });
   process.stdout.write("\n");
@@ -94,9 +78,7 @@ function cmdPath(map: CliMap, a: string, b: string): number {
 function cmdChain(map: CliMap, id: string): number {
   if (!map.nodeById.has(id)) throw new CliError(`concept '${id}' not found in ${map.id}`);
   const chain = prerequisiteChain(map, id);
-  process.stdout.write(
-    "\n" + bold(`Prerequisite chain for ${id}`) + dim(`  (${chain.length} prerequisites)`) + "\n",
-  );
+  process.stdout.write("\n" + bold(`Prerequisite chain for ${id}`) + dim(`  (${chain.length} prerequisites)`) + "\n");
   if (chain.length === 0) {
     process.stdout.write("\n  " + green(`${MARK.ok} foundational — depends on nothing`) + "\n\n");
     return 0;
@@ -157,19 +139,12 @@ function cmdRank(map: CliMap, by: string): number {
   }
   const display = rows
     .slice(0, 20)
-    .map(([id, v], i) => [
-      padStart(String(i + 1), 3),
-      label(map, id),
-      by === "betweenness" ? v.toFixed(3) : String(v),
-    ]);
+    .map(([id, v], i) => [padStart(String(i + 1), 3), label(map, id), by === "betweenness" ? v.toFixed(3) : String(v)]);
   process.stdout.write(
     "\n" +
       bold(`Centrality (${by}) — top 20 of ${top}`) +
       "\n\n" +
-      table(
-        [{ header: "#", align: "right" }, { header: "concept" }, { header: by, align: "right" }],
-        display,
-      ) +
+      table([{ header: "#", align: "right" }, { header: "concept" }, { header: by, align: "right" }], display) +
       "\n\n",
   );
   return 0;
@@ -178,10 +153,7 @@ function cmdRank(map: CliMap, by: string): number {
 function cmdTopo(map: CliMap): number {
   const { order, hasCycle } = topoSort(map);
   process.stdout.write("\n" + bold(`Topological order — ${map.id}`) + "\n\n");
-  if (hasCycle)
-    process.stdout.write(
-      "  " + yellow(`${MARK.warning} graph has a cycle; order is partial`) + "\n\n",
-    );
+  if (hasCycle) process.stdout.write("  " + yellow(`${MARK.warning} graph has a cycle; order is partial`) + "\n\n");
   order.forEach((id, i) =>
     process.stdout.write("  " + gray(padStart(String(i + 1), 4)) + "  " + label(map, id) + "\n"),
   );

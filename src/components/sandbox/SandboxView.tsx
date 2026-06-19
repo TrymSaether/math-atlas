@@ -11,15 +11,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import {
-  BookmarkSimple,
-  CaretDown,
-  CornersOut,
-  FolderSimple,
-  Minus,
-  Plus,
-  X,
-} from "@phosphor-icons/react";
+import { BookmarkSimple, CaretDown, CornersOut, FolderSimple, Minus, Plus, X } from "@phosphor-icons/react";
 import { Pill, DockButton } from "../chrome/Pill";
 import { cn } from "../../lib/utils";
 import { useSandbox } from "../../lib/workspace/store";
@@ -60,13 +52,7 @@ export function SandboxView() {
     <div className="sandbox-shell absolute inset-0">
       {/* Plane */}
       <main className="sandbox-stage absolute inset-0 min-w-0">
-        <PlaneView
-          rows={ws.rows}
-          compiled={compiled}
-          viewport={ws.viewport}
-          marks={ws.marks}
-          onMovePoint={setPoint}
-        />
+        <PlaneView rows={ws.rows} compiled={compiled} viewport={ws.viewport} marks={ws.marks} onMovePoint={setPoint} />
 
         {/* Saved views + view dock, right rail */}
         <div className="pointer-events-none absolute bottom-4 right-4 flex flex-col items-end gap-2">
@@ -95,25 +81,13 @@ export function SandboxView() {
             </Pill>
           )}
           <Pill orientation="vertical" variant="soft" className="canvas-dock pointer-events-auto">
-            <DockButton
-              label="Zoom in"
-              title="Zoom in"
-              onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}
-            >
+            <DockButton label="Zoom in" title="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
               <Plus className="h-4 w-4" weight="regular" />
             </DockButton>
-            <DockButton
-              label="Zoom out"
-              title="Zoom out"
-              onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}
-            >
+            <DockButton label="Zoom out" title="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
               <Minus className="h-4 w-4" weight="regular" />
             </DockButton>
-            <DockButton
-              label="Reset view"
-              title="Reset view"
-              onClick={() => setViewport({ ...DEFAULT_RECT })}
-            >
+            <DockButton label="Reset view" title="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
               <CornersOut className="h-4 w-4" weight="regular" />
             </DockButton>
             <DockButton
@@ -189,9 +163,7 @@ function WorkspaceMenu() {
       </button>
       {open && (
         <div className="sandbox-workspace-popover absolute left-0 top-[52px] z-30 w-[280px] overflow-hidden p-1.5">
-          <div className="px-2.5 pb-1 pt-1.5 text-ui-2xs font-semibold uppercase tracking-label-wide">
-            Examples
-          </div>
+          <div className="px-2.5 pb-1 pt-1.5 text-ui-2xs font-semibold uppercase tracking-label-wide">Examples</div>
           {WORKSPACE_IDS.map((id) => {
             const active = id === ws.id;
             return (

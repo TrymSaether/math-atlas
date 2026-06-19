@@ -1,18 +1,6 @@
 import { useMemo, useState } from "react";
 
-import {
-  DIA,
-  DOT,
-  FONT,
-  FigureFrame,
-  Line,
-  Point,
-  Polygon,
-  STROKE,
-  Text,
-  type Domain,
-  type Vec2,
-} from "./FigureFrame";
+import { DIA, DOT, FONT, FigureFrame, Line, Point, Polygon, STROKE, Text, type Domain, type Vec2 } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 
 const UNIT_BALL: Vec2[] = [
@@ -34,9 +22,7 @@ function levelSet(alpha: number): [Vec2, Vec2] {
     points.push([1 - alpha * y, y]);
   }
 
-  const inside = points.filter(
-    ([x, y]) => x >= VIEW_X[0] && x <= VIEW_X[1] && y >= VIEW_Y[0] && y <= VIEW_Y[1],
-  );
+  const inside = points.filter(([x, y]) => x >= VIEW_X[0] && x <= VIEW_X[1] && y >= VIEW_Y[0] && y <= VIEW_Y[1]);
 
   if (inside.length < 2) {
     return [
@@ -62,32 +48,11 @@ export default function HahnBanachFigure() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={VIEW_X} yDomain={VIEW_Y} height={190} grid>
-        <Polygon
-          points={UNIT_BALL}
-          color={DIA.codomain}
-          fillOpacity={0.1}
-          strokeOpacity={1}
-          weight={STROKE.ref}
-        />
-        <Line.Segment
-          point1={[-1.42, 0]}
-          point2={[1.42, 0]}
-          color={DIA.accent}
-          weight={STROKE.curve}
-        />
-        <Line.Segment
-          point1={[0, -1.16]}
-          point2={[0, 1.16]}
-          color={DIA.muted}
-          weight={STROKE.guide}
-        />
+        <Polygon points={UNIT_BALL} color={DIA.codomain} fillOpacity={0.1} strokeOpacity={1} weight={STROKE.ref} />
+        <Line.Segment point1={[-1.42, 0]} point2={[1.42, 0]} color={DIA.accent} weight={STROKE.curve} />
+        <Line.Segment point1={[0, -1.16]} point2={[0, 1.16]} color={DIA.muted} weight={STROKE.guide} />
         <Line.Segment point1={a} point2={b} color={DIA.ok} weight={STROKE.curve} />
-        <Line.Segment
-          point1={[1, -0.18]}
-          point2={[1, 0.18]}
-          color={DIA.muted}
-          weight={STROKE.hair}
-        />
+        <Line.Segment point1={[1, -0.18]} point2={[1, 0.18]} color={DIA.muted} weight={STROKE.hair} />
         <Point x={1} y={0} color={DIA.ok} svgCircleProps={{ r: DOT.hub }} />
         <Point x={0} y={0} color={DIA.text} svgCircleProps={{ r: DOT.small }} />
 
@@ -120,8 +85,8 @@ export default function HahnBanachFigure() {
         ariaLabel="Extension coefficient alpha"
       />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        On the subspace, f(t,0)=t. Hahn-Banach lets F(x,y)=x+αy extend it to the whole plane while
-        preserving the same bound.
+        On the subspace, f(t,0)=t. Hahn-Banach lets F(x,y)=x+αy extend it to the whole plane while preserving the same
+        bound.
       </figcaption>
     </figure>
   );

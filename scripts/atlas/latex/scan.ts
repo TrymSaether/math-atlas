@@ -11,14 +11,7 @@ export interface TexField {
   tex: string;
 }
 
-const CONTENT_KEYS = [
-  "statement",
-  "definition",
-  "formal",
-  "formula",
-  "intuition",
-  "gloss",
-] as const;
+const CONTENT_KEYS = ["statement", "definition", "formal", "formula", "intuition", "gloss"] as const;
 
 export function scanTex(map: CliMap): TexField[] {
   const out: TexField[] = [];
@@ -26,15 +19,13 @@ export function scanTex(map: CliMap): TexField[] {
     const content = c.content ?? { notation: [] };
     for (const k of CONTENT_KEYS) {
       const v = (content as Record<string, unknown>)[k];
-      if (typeof v === "string" && v.includes("$"))
-        out.push({ conceptId: c.id, field: `content.${k}`, tex: v });
+      if (typeof v === "string" && v.includes("$")) out.push({ conceptId: c.id, field: `content.${k}`, tex: v });
     }
     (content.notation ?? []).forEach((n, i) => {
       if (typeof n === "string") out.push({ conceptId: c.id, field: `notation[${i}]`, tex: n });
     });
     (c.examples ?? []).forEach((e, i) => {
-      if (e.content.includes("$"))
-        out.push({ conceptId: c.id, field: `examples[${i}]`, tex: e.content });
+      if (e.content.includes("$")) out.push({ conceptId: c.id, field: `examples[${i}]`, tex: e.content });
     });
     c.proof?.steps.forEach((s, i) => {
       if (s.content.includes("$"))

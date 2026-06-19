@@ -60,10 +60,7 @@ export function Spine({
         style={{ background: railBackground(tone.color, texture) }}
       />
       {label && (
-        <span
-          className="mb-1.5 block font-mono text-ui-2xs uppercase tracking-label"
-          style={{ color: tone.color }}
-        >
+        <span className="mb-1.5 block font-mono text-ui-2xs uppercase tracking-label" style={{ color: tone.color }}>
           {label}
         </span>
       )}
@@ -216,10 +213,7 @@ export function Collapsible({
           aria-hidden
         />
         {label && (
-          <span
-            className="font-mono text-ui-2xs uppercase tracking-label"
-            style={{ color: toneColor }}
-          >
+          <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
             {label}
           </span>
         )}
@@ -273,12 +267,7 @@ export function Proof({
   collapsible?: boolean;
 }) {
   return (
-    <Collapsible
-      toneColor={toneColor}
-      label={label}
-      defaultOpen={defaultOpen}
-      collapsible={collapsible}
-    >
+    <Collapsible toneColor={toneColor} label={label} defaultOpen={defaultOpen} collapsible={collapsible}>
       <Argument text={text} toneColor={toneColor} />
     </Collapsible>
   );
@@ -415,10 +404,7 @@ function ProofStepItem({
         )}
         <span className="min-w-0 truncate">
           <span style={{ color: toneColor }}>
-            <MathText
-              text={role || "Step"}
-              className="block truncate font-mono text-ui-2xs tracking-label-tight"
-            />
+            <MathText text={role || "Step"} className="block truncate font-mono text-ui-2xs tracking-label-tight" />
           </span>
         </span>
         {deps.length > 0 && (
@@ -449,10 +435,7 @@ function ProofStepItem({
             className="overflow-hidden"
           >
             {step.content && (
-              <div
-                className="font-math mt-1.5 text-ui-copy leading-[1.7]"
-                style={{ color: "var(--fg-1)" }}
-              >
+              <div className="font-math mt-1.5 text-ui-copy leading-[1.7]" style={{ color: "var(--fg-1)" }}>
                 <MathProse text={step.content} asBlock />
               </div>
             )}
@@ -499,9 +482,7 @@ export function ConnectionChip({
     <button
       onClick={onClick}
       title={
-        caption
-          ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}`
-          : `${node.label} · ${KIND_LABEL[node.kind]}`
+        caption ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}` : `${node.label} · ${KIND_LABEL[node.kind]}`
       }
       className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}

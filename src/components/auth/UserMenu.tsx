@@ -47,15 +47,8 @@ export function UserMenu() {
 
   return (
     <div className="relative" ref={ref}>
-      <DockButton
-        onClick={() => setMenuOpen((o) => !o)}
-        active={menuOpen}
-        label="Account"
-        title={user.email}
-      >
-        <span className="flex h-4 w-4 items-center justify-center text-ui-2xs font-semibold">
-          {initial}
-        </span>
+      <DockButton onClick={() => setMenuOpen((o) => !o)} active={menuOpen} label="Account" title={user.email}>
+        <span className="flex h-4 w-4 items-center justify-center text-ui-2xs font-semibold">{initial}</span>
       </DockButton>
       {menuOpen && (
         <div className="map-popover absolute right-0 top-[calc(100%+8px)] z-50 w-[min(240px,calc(100vw-24px))] rounded-2xl p-2">

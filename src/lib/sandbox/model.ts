@@ -69,9 +69,7 @@ export interface MarkStyle {
  * `plane2d`. 1D is a `plane2d` preset, not its own view. `space3d` is deferred
  * to a later milestone and will be a separate renderer over the same model.
  */
-export type ViewSpec =
-  | { kind: "panel" }
-  | { kind: "plane2d"; xRange?: [number, number]; yRange?: [number, number] };
+export type ViewSpec = { kind: "panel" } | { kind: "plane2d"; xRange?: [number, number]; yRange?: [number, number] };
 
 // ---------------------------------------------------------------------------
 // Objects (the authored definition graph)
@@ -149,13 +147,7 @@ export interface AuthoredObject extends ObjectBase {
   value?: Literal;
 }
 
-export type WorkspaceObject =
-  | FreeScalar
-  | FreePoint
-  | ExprObject
-  | ConstructObject
-  | PrimitiveObject
-  | AuthoredObject;
+export type WorkspaceObject = FreeScalar | FreePoint | ExprObject | ConstructObject | PrimitiveObject | AuthoredObject;
 
 export type ObjectKind = WorkspaceObject["kind"];
 

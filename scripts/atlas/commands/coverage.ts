@@ -27,10 +27,7 @@ function score(nodes: CliMap["nodes"], facet: Facet): [number, number] {
       const den = nodes.filter((n) =>
         ["definition", "theorem", "structure", "construction"].includes(categoryOf(n.kind)),
       );
-      return [
-        den.filter((n) => has(n, "definition") || has(n, "statement") || has(n, "formal")).length,
-        den.length,
-      ];
+      return [den.filter((n) => has(n, "definition") || has(n, "statement") || has(n, "formal")).length, den.length];
     }
     case "proof": {
       const den = nodes.filter((n) => categoryOf(n.kind) === "theorem");
@@ -62,11 +59,7 @@ function renderMap(map: CliMap): void {
 
   const rows = map.domainsByOrder.map((d) => {
     const nodes = map.nodes.filter((n) => n.domain === d.id);
-    return [
-      d.label,
-      padStart(String(nodes.length), 4),
-      ...FACETS.map((f) => cell(score(nodes, f))),
-    ];
+    return [d.label, padStart(String(nodes.length), 4), ...FACETS.map((f) => cell(score(nodes, f)))];
   });
   // Overall row across the whole map.
   rows.push([

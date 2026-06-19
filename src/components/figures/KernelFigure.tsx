@@ -1,11 +1,6 @@
 import { useState } from "react";
 
-import {
-  dirichletKernel,
-  fejerKernel,
-  kernelPeak,
-  poissonKernel,
-} from "../../lib/figures/fourierMath";
+import { dirichletKernel, fejerKernel, kernelPeak, poissonKernel } from "../../lib/figures/fourierMath";
 import { DIA, FigureFrame, FunctionCurve, Line, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
@@ -56,12 +51,7 @@ export default function KernelFigure({ nodeId }: FigureProps) {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={yDomain} grid>
-        <FunctionCurve
-          y={kernel}
-          domain={[-Math.PI, Math.PI]}
-          color={DIA.accent}
-          weight={STROKE.curve}
-        />
+        <FunctionCurve y={kernel} domain={[-Math.PI, Math.PI]} color={DIA.accent} weight={STROKE.curve} />
         <Line.Segment
           point1={[-handleX, yDomain[0]]}
           point2={[-handleX, yDomain[1]]}

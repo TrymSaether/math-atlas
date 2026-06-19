@@ -21,10 +21,7 @@ export function proofEdgeId(from: string, to: string): string {
 }
 
 /** Longest prerequisite chain ending at each node, over dependency edges. */
-function computeDepths(
-  nodeIds: string[],
-  depEdges: { from: string; to: string }[],
-): Map<string, number> {
+function computeDepths(nodeIds: string[], depEdges: { from: string; to: string }[]): Map<string, number> {
   const prereqs = new Map<string, string[]>(nodeIds.map((id) => [id, []]));
   for (const e of depEdges) prereqs.get(e.to)?.push(e.from); // to depends on from
   const depth = new Map<string, number>();

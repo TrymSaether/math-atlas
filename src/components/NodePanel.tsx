@@ -7,6 +7,7 @@ import {
   BookOpenTextIcon,
   CardsIcon,
   PencilSimpleIcon,
+  CheckCircleIcon,
 } from "@phosphor-icons/react";
 
 import { useStore } from "../store";
@@ -90,6 +91,9 @@ function PanelContent({
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
   const toggleEditMode = useStore((s) => s.toggleEditMode);
+  const userId = useStore((s) => s.userId);
+  const known = useStore((s) => s.progress[mapId]?.[node.id] === "known");
+  const setNodeProgress = useStore((s) => s.setNodeProgress);
   const view = useConceptView(node, map, mapId);
   const [tab, setTab] = useState<TabId>("overview");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -173,6 +177,18 @@ function PanelContent({
             )}
           </div>
           <div className="flex items-center gap-0.5">
+            {userId && (
+              <IconButton
+                label={known ? "Mark as not known" : "Mark as known"}
+                onClick={() => setNodeProgress(mapId, node.id, known ? null : "known")}
+              >
+                <CheckCircleIcon
+                  className="h-4 w-4"
+                  weight={known ? "fill" : "regular"}
+                  style={known ? { color: "var(--green)" } : undefined}
+                />
+              </IconButton>
+            )}
             <IconButton label="Edit concept" onClick={toggleEditMode}>
               <PencilSimpleIcon className="h-4 w-4" />
             </IconButton>

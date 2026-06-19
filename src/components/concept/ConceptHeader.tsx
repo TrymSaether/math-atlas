@@ -9,24 +9,14 @@ import type { ConceptView } from "../../lib/conceptView";
  * panel, the dictionary detail, and the flashcard — so a concept looks like the
  * same object wherever it appears.
  */
-export function ConceptHeader({
-  view,
-  size = "panel",
-}: {
-  view: ConceptView;
-  size?: "panel" | "card";
-}) {
+export function ConceptHeader({ view, size = "panel" }: { view: ConceptView; size?: "panel" | "card" }) {
   const { tone, glyphId, domainLabel, kindLabel, compactRef } = view;
   return (
     <div
       className={`concept-title-header concept-title-header-${size}`}
       style={{ "--concept-tone": tone.color } as CSSProperties}
     >
-      <span
-        aria-hidden
-        className="concept-title-rail"
-        style={{ background: tone.color }}
-      />
+      <span aria-hidden className="concept-title-rail" style={{ background: tone.color }} />
       <div className="concept-title-stack">
         <h2 className="concept-title font-serif">
           <MathText text={view.node.label} />

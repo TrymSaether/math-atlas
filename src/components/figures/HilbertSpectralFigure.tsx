@@ -33,10 +33,7 @@ function projection(point: Vec2, angle: number): Vec2 {
 
 function SpectralBars() {
   const [decay, setDecay] = useState(0.68);
-  const values = useMemo(
-    () => Array.from({ length: 9 }, (_, i) => (i === 0 ? 1 : decay ** i)),
-    [decay],
-  );
+  const values = useMemo(() => Array.from({ length: 9 }, (_, i) => (i === 0 ? 1 : decay ** i)), [decay]);
 
   return (
     <figure className="m-0">
@@ -93,12 +90,7 @@ function ProjectionModel() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[-1.75, 1.75]} yDomain={[-1.25, 1.45]} height={190} grid>
-        <Line.Segment
-          point1={lineStart}
-          point2={lineEnd}
-          color={DIA.codomain}
-          weight={STROKE.curve}
-        />
+        <Line.Segment point1={lineStart} point2={lineEnd} color={DIA.codomain} weight={STROKE.curve} />
         <Line.Segment point1={p} point2={x} color={DIA.alert} weight={STROKE.mark} style="dashed" />
         <Vector tail={[0, 0]} tip={x} color={DIA.accent} weight={STROKE.curve} />
         <Vector tail={[0, 0]} tip={p} color={DIA.ok} weight={STROKE.curve} />
@@ -125,7 +117,6 @@ function ProjectionModel() {
 }
 
 export default function HilbertSpectralFigure({ nodeId }: FigureProps) {
-  if (nodeId === "projection_operator" || nodeId === "projection_theorem")
-    return <ProjectionModel />;
+  if (nodeId === "projection_operator" || nodeId === "projection_theorem") return <ProjectionModel />;
   return <SpectralBars />;
 }

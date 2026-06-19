@@ -34,10 +34,7 @@ export function RangeControl({
         className="h-1 flex-1 cursor-pointer appearance-none rounded-full"
         style={{ accentColor: "var(--accent)", background: "var(--surface-3)" }}
       />
-      <span
-        className="min-w-14 shrink-0 text-right font-math text-ui-meta"
-        style={{ color: "var(--fg-2)" }}
-      >
+      <span className="min-w-14 shrink-0 text-right font-math text-ui-meta" style={{ color: "var(--fg-2)" }}>
         <MathText text={label} />
       </span>
     </div>

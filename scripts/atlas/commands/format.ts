@@ -35,15 +35,7 @@ const CONCEPT_ORDER = [
   "tags",
   "priority",
 ];
-const CONTENT_ORDER = [
-  "statement",
-  "definition",
-  "formal",
-  "formula",
-  "intuition",
-  "gloss",
-  "notation",
-];
+const CONTENT_ORDER = ["statement", "definition", "formal", "formula", "intuition", "gloss", "notation"];
 const EXAMPLE_ORDER = ["content", "label", "role"];
 const STEP_ORDER = ["role", "content", "uses"];
 const SOURCE_ORDER = ["citation", "chapter", "ref", "references"];
@@ -73,18 +65,14 @@ function canonicalize(json: Obj): Obj {
     top.concepts = (top.concepts as Obj[])
       .map((c) => {
         const out = orderKeys(c, CONCEPT_ORDER);
-        if (out.content && typeof out.content === "object")
-          out.content = orderKeys(out.content as Obj, CONTENT_ORDER);
-        if (Array.isArray(out.examples))
-          out.examples = (out.examples as Obj[]).map((e) => orderKeys(e, EXAMPLE_ORDER));
+        if (out.content && typeof out.content === "object") out.content = orderKeys(out.content as Obj, CONTENT_ORDER);
+        if (Array.isArray(out.examples)) out.examples = (out.examples as Obj[]).map((e) => orderKeys(e, EXAMPLE_ORDER));
         if (out.proof && typeof out.proof === "object") {
           const proof = out.proof as Obj;
-          if (Array.isArray(proof.steps))
-            proof.steps = (proof.steps as Obj[]).map((s) => orderKeys(s, STEP_ORDER));
+          if (Array.isArray(proof.steps)) proof.steps = (proof.steps as Obj[]).map((s) => orderKeys(s, STEP_ORDER));
           out.proof = orderKeys(proof, ["steps"]);
         }
-        if (out.source && typeof out.source === "object")
-          out.source = orderKeys(out.source as Obj, SOURCE_ORDER);
+        if (out.source && typeof out.source === "object") out.source = orderKeys(out.source as Obj, SOURCE_ORDER);
         if (Array.isArray(out.tags)) out.tags = [...(out.tags as string[])].sort();
         return out;
       })
@@ -128,10 +116,7 @@ function run(ctx: Ctx): number {
     if (f.jsonError) throw new CliError(`${f.fileName}: malformed JSON`);
     const parsed = SourceGraphSchema.safeParse(f.json);
     if (!parsed.success) {
-      throw new CliError(
-        `${f.fileName}: fails schema — refusing to format`,
-        "run `atlas validate` first",
-      );
+      throw new CliError(`${f.fileName}: fails schema — refusing to format`, "run `atlas validate` first");
     }
     const { changed: didChange, next } = formatOne(f);
     if (didChange) {
@@ -149,9 +134,7 @@ function run(ctx: Ctx): number {
     process.stdout.write("\n" + red(`${MARK.error} ${changed} file(s) need formatting`) + "\n\n");
     return 1;
   }
-  process.stdout.write(
-    "\n" + green(`${MARK.ok} ${changed ? `${changed} formatted` : "all tidy"}`) + "\n\n",
-  );
+  process.stdout.write("\n" + green(`${MARK.ok} ${changed ? `${changed} formatted` : "all tidy"}`) + "\n\n");
   return 0;
 }
 

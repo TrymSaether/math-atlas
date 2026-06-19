@@ -91,9 +91,7 @@ function renderMap(map: CliMap): void {
       "\n" +
       "  " +
       dim("components".padEnd(18)) +
-      (connected
-        ? green(`${MARK.ok} connected`)
-        : yellow(`${MARK.warning} ${dx.comps.length} components`)) +
+      (connected ? green(`${MARK.ok} connected`) : yellow(`${MARK.warning} ${dx.comps.length} components`)) +
       "\n" +
       "  " +
       dim("cycles".padEnd(18)) +
@@ -112,10 +110,7 @@ function renderMap(map: CliMap): void {
     indent(
       table(
         [{ header: "concept" }, { header: "betweenness", align: "right" }],
-        dx.central.map(([id, v]) => [
-          `${kindGlyph(map.nodeById.get(id)!.kind)} ${id}`,
-          v.toFixed(3),
-        ]),
+        dx.central.map(([id, v]) => [`${kindGlyph(map.nodeById.get(id)!.kind)} ${id}`, v.toFixed(3)]),
       ),
     ) + "\n",
   );
@@ -125,10 +120,7 @@ function renderMap(map: CliMap): void {
     indent(
       table(
         [{ header: "concept" }, { header: "prereqs", align: "right" }],
-        dx.oversized.map((o) => [
-          `${kindGlyph(map.nodeById.get(o.id)!.kind)} ${o.id}`,
-          String(o.p),
-        ]),
+        dx.oversized.map((o) => [`${kindGlyph(map.nodeById.get(o.id)!.kind)} ${o.id}`, String(o.p)]),
       ),
     ) + "\n",
   );
@@ -136,8 +128,7 @@ function renderMap(map: CliMap): void {
   // Thin domains.
   const thin = [...dx.domainSizes].sort((a, b) => a.n - b.n).slice(0, 3);
   process.stdout.write("\n  " + bold("Thinnest domains") + "\n");
-  for (const d of thin)
-    process.stdout.write("  " + gray(padStart(String(d.n), 4)) + "  " + dim(d.label) + "\n");
+  for (const d of thin) process.stdout.write("  " + gray(padStart(String(d.n), 4)) + "  " + dim(d.label) + "\n");
 }
 
 function indent(s: string, pad = "  "): string {

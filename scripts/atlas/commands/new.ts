@@ -16,17 +16,7 @@ import { fuzzySearch } from "../utils/fuzzy";
 import { bold, dim, cyan, green, gray } from "../utils/color";
 import { MARK, kindGlyph } from "../utils/glyphs";
 
-const KINDS = [
-  "theorem",
-  "definition",
-  "proof",
-  "construction",
-  "example",
-  "exercise",
-  "lemma",
-  "corollary",
-  "domain",
-];
+const KINDS = ["theorem", "definition", "proof", "construction", "example", "exercise", "lemma", "corollary", "domain"];
 
 async function prompt(question: string, fallback?: string): Promise<string> {
   if (!process.stdin.isTTY) {
@@ -51,9 +41,7 @@ function writeSource(f: SourceFile, json: unknown, dryRun: boolean): void {
   const text = JSON.stringify(json, null, 2) + "\n";
   if (dryRun) {
     process.stdout.write("\n" + dim("── dry run: would write ──") + "\n");
-    process.stdout.write(
-      text.slice(0, 1200) + (text.length > 1200 ? dim("\n… (truncated)\n") : "\n"),
-    );
+    process.stdout.write(text.slice(0, 1200) + (text.length > 1200 ? dim("\n… (truncated)\n") : "\n"));
   } else {
     writeFileSync(f.path, text);
     process.stdout.write("\n" + green(`${MARK.ok} wrote ${f.fileName}`) + "\n");
@@ -63,10 +51,7 @@ function writeSource(f: SourceFile, json: unknown, dryRun: boolean): void {
 async function run(ctx: Ctx): Promise<number> {
   const kind = ctx.positionals[0];
   if (!kind || !KINDS.includes(kind)) {
-    throw new CliError(
-      `usage: atlas new <${KINDS.join("|")}>`,
-      kind ? `unknown kind '${kind}'` : undefined,
-    );
+    throw new CliError(`usage: atlas new <${KINDS.join("|")}>`, kind ? `unknown kind '${kind}'` : undefined);
   }
   const dryRun = ctx.flags["dry-run"] === true;
   const files = loadSourceFiles(ctx);
@@ -109,8 +94,7 @@ async function run(ctx: Ctx): Promise<number> {
     (json.domains.length === 1
       ? json.domains[0].id
       : await prompt(`domain? [${json.domains.map((d) => d.id).join(", ")}]`, json.domains[0]?.id));
-  if (!json.domains.some((d) => d.id === domain))
-    throw new CliError(`unknown domain '${domain}' in ${mapId}`);
+  if (!json.domains.some((d) => d.id === domain)) throw new CliError(`unknown domain '${domain}' in ${mapId}`);
 
   const id = uniqueSlug(slugify(label), new Set(json.concepts.map((c) => c.id)));
 
@@ -120,21 +104,15 @@ async function run(ctx: Ctx): Promise<number> {
     .map((h) => h.item.id)
     .filter((cid) => cid !== id);
   if (related.length)
-    process.stdout.write(
-      "  " + dim("related: ") + related.map((r) => cyan(r)).join(dim(", ")) + "\n",
-    );
+    process.stdout.write("  " + dim("related: ") + related.map((r) => cyan(r)).join(dim(", ")) + "\n");
 
   const concept = conceptTemplate(kind, id, domain, label);
   json.concepts.push(concept);
   json.updated = new Date().toISOString().slice(0, 10);
 
-  process.stdout.write(
-    `  ${green(MARK.ok)} ${kindGlyph(kind)} ${cyan(id)} ${gray(`(${kind} in ${domain})`)}\n`,
-  );
+  process.stdout.write(`  ${green(MARK.ok)} ${kindGlyph(kind)} ${cyan(id)} ${gray(`(${kind} in ${domain})`)}\n`);
   writeSource(f, json, dryRun);
-  process.stdout.write(
-    dim(`  next: fill in the TODO content, then `) + cyan(`atlas validate --map ${mapId}`) + "\n\n",
-  );
+  process.stdout.write(dim(`  next: fill in the TODO content, then `) + cyan(`atlas validate --map ${mapId}`) + "\n\n");
   return 0;
 }
 
@@ -143,10 +121,7 @@ const command: Command = {
   summary: "Scaffold a concept or domain into a map (interactive)",
   group: "Author",
   usage: "atlas new <kind> [--map <id>] [--domain <id>] [--label <text>] [--dry-run]",
-  help: [
-    dim("  kinds: ") + KINDS.join(", "),
-    dim("  --dry-run   print the scaffolded JSON without writing"),
-  ],
+  help: [dim("  kinds: ") + KINDS.join(", "), dim("  --dry-run   print the scaffolded JSON without writing")],
   run,
 };
 export default command;

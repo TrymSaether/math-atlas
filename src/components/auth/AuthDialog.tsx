@@ -6,13 +6,7 @@ import { Button } from "../chrome/Button";
 
 type Mode = "signin" | "signup";
 
-export function AuthDialog({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
+export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const reduceMotion = useReducedMotion();
   const [mode, setMode] = useState<Mode>("signin");
   const [name, setName] = useState("");
@@ -67,12 +61,8 @@ export function AuthDialog({
             </Dialog.Overlay>
             <Dialog.Content asChild>
               <div className="fixed left-1/2 top-1/2 z-60 w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2">
-                <Dialog.Title className="sr-only">
-                  {isSignup ? "Create an account" : "Sign in"}
-                </Dialog.Title>
-                <Dialog.Description className="sr-only">
-                  Sign in to sync and share your maps.
-                </Dialog.Description>
+                <Dialog.Title className="sr-only">{isSignup ? "Create an account" : "Sign in"}</Dialog.Title>
+                <Dialog.Description className="sr-only">Sign in to sync and share your maps.</Dialog.Description>
                 <motion.form
                   onSubmit={submit}
                   initial={reduceMotion ? false : { opacity: 0, y: -12, scale: 0.99 }}
@@ -81,9 +71,7 @@ export function AuthDialog({
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
                   className="map-popover flex flex-col gap-3 rounded-2xl p-5"
                 >
-                  <h2 className="font-serif text-lg text-fg-1">
-                    {isSignup ? "Create an account" : "Welcome back"}
-                  </h2>
+                  <h2 className="font-serif text-lg text-fg-1">{isSignup ? "Create an account" : "Welcome back"}</h2>
 
                   {isSignup && (
                     <Field
@@ -162,9 +150,7 @@ function Field({
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange">) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
-        {label}
-      </span>
+      <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">{label}</span>
       <input
         {...rest}
         value={value}

@@ -11,13 +11,7 @@ export default function GibbsFigure() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={[-1.35, 1.35]} grid>
-        <FunctionCurve
-          y={squareWave}
-          domain={[-Math.PI, Math.PI]}
-          color={DIA.ref}
-          weight={STROKE.ref}
-          style="dashed"
-        />
+        <FunctionCurve y={squareWave} domain={[-Math.PI, Math.PI]} color={DIA.ref} weight={STROKE.ref} style="dashed" />
         <FunctionCurve
           y={(x) => squareWavePartialSum(x, terms)}
           domain={[-Math.PI, Math.PI]}

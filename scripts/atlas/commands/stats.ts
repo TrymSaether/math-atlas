@@ -19,9 +19,7 @@ function mapStats(map: CliMap): Record<string, number | string> {
   const e = map.edges.length;
   const totalDeg = map.nodes.reduce((s, x) => s + x.degree, 0);
   const avgDeg = n ? totalDeg / n / 1 : 0;
-  const avgPrereq = n
-    ? map.nodes.reduce((s, x) => s + (map.prereqsOf.get(x.id)?.length ?? 0), 0) / n
-    : 0;
+  const avgPrereq = n ? map.nodes.reduce((s, x) => s + (map.prereqsOf.get(x.id)?.length ?? 0), 0) / n : 0;
   const maxDepth = map.nodes.reduce((m, x) => Math.max(m, x.depth), 0);
   const { hasCycle } = topoSort(map);
   return {
@@ -52,18 +50,12 @@ function renderMap(map: CliMap): void {
   );
 
   // Per-domain.
-  const maxDomain = Math.max(
-    ...map.domainsByOrder.map((d) => map.nodes.filter((n) => n.domain === d.id).length),
-  );
+  const maxDomain = Math.max(...map.domainsByOrder.map((d) => map.nodes.filter((n) => n.domain === d.id).length));
   process.stdout.write("\n  " + bold("By domain") + "\n");
   for (const d of map.domainsByOrder) {
     const count = map.nodes.filter((n) => n.domain === d.id).length;
     process.stdout.write(
-      "  " +
-        swatch(d.palette) +
-        " " +
-        barRow(d.label, count, maxDomain, { labelWidth: 22, barWidth: 24 }) +
-        "\n",
+      "  " + swatch(d.palette) + " " + barRow(d.label, count, maxDomain, { labelWidth: 22, barWidth: 24 }) + "\n",
     );
   }
 
@@ -74,20 +66,14 @@ function renderMap(map: CliMap): void {
     .sort((a, b) => b[1] - a[1])
     .map(([k, c]) => [`${kindGlyph(k)} ${k}`, padStart(String(c), 4)]);
   process.stdout.write("\n  " + bold("By kind") + "\n");
-  process.stdout.write(
-    indent(table([{ header: "kind" }, { header: "count", align: "right" }], kindRows)) + "\n",
-  );
+  process.stdout.write(indent(table([{ header: "kind" }, { header: "count", align: "right" }], kindRows)) + "\n");
 
   // Per-relation.
   const rels = new Map<string, number>();
   for (const e of map.edges) rels.set(e.relation, (rels.get(e.relation) ?? 0) + 1);
-  const relRows = [...rels.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .map(([r, c]) => [r, padStart(String(c), 4)]);
+  const relRows = [...rels.entries()].sort((a, b) => b[1] - a[1]).map(([r, c]) => [r, padStart(String(c), 4)]);
   process.stdout.write("\n  " + bold("By relation") + "\n");
-  process.stdout.write(
-    indent(table([{ header: "relation" }, { header: "count", align: "right" }], relRows)) + "\n",
-  );
+  process.stdout.write(indent(table([{ header: "relation" }, { header: "count", align: "right" }], relRows)) + "\n");
 }
 
 function indent(s: string, pad = "  "): string {

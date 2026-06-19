@@ -38,9 +38,7 @@ const GLYPHS: Record<DomainGlyphKey, ReactNode> = {
       <path d="M12 3v18" />
     </>
   ),
-  "generic-examples": (
-    <path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9L12 3z" />
-  ),
+  "generic-examples": <path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9L12 3z" />,
   "topology-continuity": <path d="M3 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0" />,
   "topology-connectedness": (
     <>
@@ -165,13 +163,7 @@ const MAP_DOMAIN_GLYPHS: Partial<Record<MapId, Record<string, DomainGlyphKey>>> 
 };
 
 /** Resolve a domain id to a glyph, or `null` when none fits (host shows a dot). */
-export function getDomainGlyphId({
-  mapId,
-  domainId,
-}: {
-  mapId?: MapId;
-  domainId: string;
-}): DomainGlyphKey | null {
+export function getDomainGlyphId({ mapId, domainId }: { mapId?: MapId; domainId: string }): DomainGlyphKey | null {
   const mapExact = mapId ? MAP_DOMAIN_GLYPHS[mapId]?.[domainId] : undefined;
   if (mapExact) return mapExact;
 
@@ -184,15 +176,7 @@ export function getDomainGlyphId({
   return null;
 }
 
-export function DomainGlyph({
-  id,
-  size = 16,
-  className,
-}: {
-  id: DomainGlyphKey;
-  size?: number;
-  className?: string;
-}) {
+export function DomainGlyph({ id, size = 16, className }: { id: DomainGlyphKey; size?: number; className?: string }) {
   return (
     <svg
       className={className}

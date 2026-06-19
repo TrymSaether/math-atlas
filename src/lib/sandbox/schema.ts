@@ -35,10 +35,7 @@ const freeScalar = z
     ...objectBase,
     kind: z.literal("freeScalar"),
     value: z.number(),
-    range: z
-      .object({ min: z.number(), max: z.number(), step: z.number().optional() })
-      .strict()
-      .optional(),
+    range: z.object({ min: z.number(), max: z.number(), step: z.number().optional() }).strict().optional(),
   })
   .strict();
 

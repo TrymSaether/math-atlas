@@ -227,11 +227,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
 
         {/* Controls */}
         <div className="sandbox-row-controls flex w-6 flex-col items-center justify-center gap-0.5">
-          <button
-            type="button"
-            onClick={() => toggleVisible(row.id)}
-            title={row.visible ? "Hide" : "Show"}
-          >
+          <button type="button" onClick={() => toggleVisible(row.id)} title={row.visible ? "Hide" : "Show"}>
             {row.visible ? <Eye size={14} /> : <EyeSlash size={14} />}
           </button>
           <button type="button" onClick={() => removeRow(row.id)} title="Delete">
@@ -265,15 +261,9 @@ function ParamSlider({
 
   return (
     <div className="sandbox-param-slider mt-1 flex items-center gap-1.5" style={sliderStyle}>
-      <NumBox
-        label="Minimum value"
-        value={slider.min}
-        onChange={(min) => onConfig({ ...slider, min })}
-      />
+      <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
       <div className="sandbox-slider-track min-w-0 flex-1">
-        {dragging && (
-          <span className="sandbox-slider-bubble font-mono tabular-nums">{formatValue(value)}</span>
-        )}
+        {dragging && <span className="sandbox-slider-bubble font-mono tabular-nums">{formatValue(value)}</span>}
         <input
           type="range"
           min={slider.min}
@@ -288,24 +278,12 @@ function ParamSlider({
           className="ws-slider w-full"
         />
       </div>
-      <NumBox
-        label="Maximum value"
-        value={slider.max}
-        onChange={(max) => onConfig({ ...slider, max })}
-      />
+      <NumBox label="Maximum value" value={slider.max} onChange={(max) => onConfig({ ...slider, max })} />
     </div>
   );
 }
 
-function NumBox({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: number;
-  onChange: (v: number) => void;
-}) {
+function NumBox({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
   return (
     <input
       aria-label={label}
@@ -317,15 +295,7 @@ function NumBox({
   );
 }
 
-function RowMeta({
-  row,
-  computed,
-  status,
-}: {
-  row: Row;
-  computed?: Computed;
-  status: FactStatus | "error";
-}) {
+function RowMeta({ row, computed, status }: { row: Row; computed?: Computed; status: FactStatus | "error" }) {
   const [open, setOpen] = useState(false);
   const deps = computed?.deps ?? [];
   const depNotation = deps.length > 0 ? `${computed?.name ?? "row"}←${deps.join(",")}` : "";
@@ -360,9 +330,7 @@ function RowMeta({
             <span className="truncate">{depNotation}</span>
           </span>
         )}
-        {row.provenance.note && !depNotation && (
-          <span className="sandbox-note truncate">{row.provenance.note}</span>
-        )}
+        {row.provenance.note && !depNotation && <span className="sandbox-note truncate">{row.provenance.note}</span>}
       </button>
 
       {open && (

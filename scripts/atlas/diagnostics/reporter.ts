@@ -42,9 +42,7 @@ export function reportDiagnostics(diags: Diagnostic[], opts: ReportOptions = {})
     for (const d of list) {
       const sev = SEV_STYLE[d.severity];
       const loc = d.conceptId ? ` ${dim("at")} ${d.conceptId}` : "";
-      process.stdout.write(
-        `  ${sev.paint(sev.mark + " " + sev.word)} ${gray(d.code)}${loc}\n` + `    ${d.message}\n`,
-      );
+      process.stdout.write(`  ${sev.paint(sev.mark + " " + sev.word)} ${gray(d.code)}${loc}\n` + `    ${d.message}\n`);
       const raw = opts.rawByMap?.get(d.map);
       if (frames && raw && d.conceptId) {
         const frame = frameForConcept(raw, d.conceptId);
@@ -63,12 +61,8 @@ export function printSummary(diags: Diagnostic[]): void {
   const c = countBySeverity(diags);
   const parts: string[] = [];
   if (c.error) parts.push(red(`${MARK.error} ${c.error} error${c.error === 1 ? "" : "s"}`));
-  if (c.warning)
-    parts.push(yellow(`${MARK.warning} ${c.warning} warning${c.warning === 1 ? "" : "s"}`));
-  if (c.suggestion)
-    parts.push(
-      cyan(`${MARK.suggestion} ${c.suggestion} suggestion${c.suggestion === 1 ? "" : "s"}`),
-    );
+  if (c.warning) parts.push(yellow(`${MARK.warning} ${c.warning} warning${c.warning === 1 ? "" : "s"}`));
+  if (c.suggestion) parts.push(cyan(`${MARK.suggestion} ${c.suggestion} suggestion${c.suggestion === 1 ? "" : "s"}`));
 
   process.stdout.write("\n");
   if (parts.length === 0) {

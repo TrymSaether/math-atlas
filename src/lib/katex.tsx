@@ -1,9 +1,7 @@
 import katex from "katex";
 import { useMemo } from "react";
 
-export type MathSegment =
-  | { type: "text"; value: string }
-  | { type: "math"; value: string; display: boolean };
+export type MathSegment = { type: "text"; value: string } | { type: "math"; value: string; display: boolean };
 
 /**
  * Render text with inline TeX delimited by $...$ and display TeX by $$...$$,
@@ -54,9 +52,7 @@ function renderTextMarkup(value: string): string {
 function renderProseInString(text: string): string {
   return splitMathSegments(text)
     .map((segment) =>
-      segment.type === "text"
-        ? renderTextMarkup(segment.value)
-        : renderKatex(segment.value, segment.display),
+      segment.type === "text" ? renderTextMarkup(segment.value) : renderKatex(segment.value, segment.display),
     )
     .join("");
 }
@@ -179,8 +175,6 @@ function findMathEnd(text: string, from: number, close: string): number {
 
 export function renderMathInString(text: string): string {
   return splitMathSegments(text)
-    .map((segment) =>
-      segment.type === "text" ? escape(segment.value) : renderKatex(segment.value, segment.display),
-    )
+    .map((segment) => (segment.type === "text" ? escape(segment.value) : renderKatex(segment.value, segment.display)))
     .join("");
 }

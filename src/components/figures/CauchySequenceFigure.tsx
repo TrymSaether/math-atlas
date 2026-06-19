@@ -5,19 +5,7 @@ import { MovablePoint } from "mafs";
 import "katex/dist/katex.min.css";
 
 import { MathText } from "../../lib/katex";
-import {
-  DIA,
-  DOT,
-  FONT,
-  FigureFrame,
-  LaTeX,
-  Line,
-  Point,
-  Polygon,
-  STROKE,
-  Text,
-  type Domain,
-} from "./FigureFrame";
+import { DIA, DOT, FONT, FigureFrame, LaTeX, Line, Point, Polygon, STROKE, Text, type Domain } from "./FigureFrame";
 import { SegmentedControl } from "./SegmentedControl";
 
 type Mode = "convergent" | "incomplete" | "bad";
@@ -187,11 +175,7 @@ export default function CauchySequenceFigure() {
               weight={STROKE.hair}
               opacity={0.78}
             />
-            <LaTeX
-              at={[xMax - 3.4, labelY(limit, labelGap)]}
-              tex={String.raw`\ell`}
-              color={DIA.text}
-            />
+            <LaTeX at={[xMax - 3.4, labelY(limit, labelGap)]} tex={String.raw`\ell`} color={DIA.text} />
           </>
         )}
 
@@ -233,10 +217,7 @@ export default function CauchySequenceFigure() {
               opacity={0.9}
             />
             <LaTeX
-              at={[
-                Math.min(tailStart + 1.1, xMax - 2.8),
-                yRange[1] - 0.08 * (yRange[1] - yRange[0]),
-              ]}
+              at={[Math.min(tailStart + 1.1, xMax - 2.8), yRange[1] - 0.08 * (yRange[1] - yRange[0])]}
               tex={String.raw`N=${tailStart}`}
               color={DIA.ink}
             />
@@ -245,20 +226,8 @@ export default function CauchySequenceFigure() {
 
         {n !== m && (
           <>
-            <Line.Segment
-              point1={[n, xn]}
-              point2={[m, xn]}
-              color={DIA.codomain}
-              weight={STROKE.mark}
-              opacity={0.9}
-            />
-            <Line.Segment
-              point1={[m, xn]}
-              point2={[m, xm]}
-              color={DIA.codomain}
-              weight={STROKE.mark}
-              opacity={0.9}
-            />
+            <Line.Segment point1={[n, xn]} point2={[m, xn]} color={DIA.codomain} weight={STROKE.mark} opacity={0.9} />
+            <Line.Segment point1={[m, xn]} point2={[m, xm]} color={DIA.codomain} weight={STROKE.mark} opacity={0.9} />
           </>
         )}
 
@@ -276,13 +245,7 @@ export default function CauchySequenceFigure() {
           if (selected) return null;
 
           return (
-            <Point
-              key={termN}
-              x={x}
-              y={y}
-              color={inTail ? DIA.ok : DIA.accent}
-              svgCircleProps={{ r: DOT.sample }}
-            />
+            <Point key={termN} x={x} y={y} color={inTail ? DIA.ok : DIA.accent} svgCircleProps={{ r: DOT.sample }} />
           );
         })}
 
@@ -320,12 +283,7 @@ export default function CauchySequenceFigure() {
         />
       </FigureFrame>
 
-      <SegmentedControl
-        value={mode}
-        options={MODE_OPTIONS}
-        onChange={setMode}
-        ariaLabel="Cauchy sequence example"
-      />
+      <SegmentedControl value={mode} options={MODE_OPTIONS} onChange={setMode} ariaLabel="Cauchy sequence example" />
 
       <figcaption className="mt-2 space-y-1 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         <div className="font-math" style={{ color: "var(--fg-2)" }}>

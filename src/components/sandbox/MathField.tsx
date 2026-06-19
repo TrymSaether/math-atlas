@@ -31,15 +31,7 @@ export interface MathFieldProps {
   ariaLabel?: string;
 }
 
-export function MathField({
-  value,
-  onChange,
-  onEnter,
-  onFocus,
-  autoFocus,
-  placeholder,
-  ariaLabel,
-}: MathFieldProps) {
+export function MathField({ value, onChange, onEnter, onFocus, autoFocus, placeholder, ariaLabel }: MathFieldProps) {
   const hostRef = useRef<HTMLSpanElement>(null);
   const mfRef = useRef<MathfieldElement | null>(null);
   const lastEmitted = useRef(value);

@@ -184,17 +184,7 @@ function NormModeSelect({
   );
 }
 
-function ReadoutPanel({
-  point,
-  value,
-  mode,
-  p,
-}: {
-  point: Vec2;
-  value: number;
-  mode: NormKind;
-  p: number;
-}) {
+function ReadoutPanel({ point, value, mode, p }: { point: Vec2; value: number; mode: NormKind; p: number }) {
   const inside = value <= 1 + 1e-6;
   const subscript = normSubscript(mode, p);
   const statusColor = inside ? DIA.ok : DIA.alert;
@@ -210,10 +200,7 @@ function ReadoutPanel({
       <div className="mt-2 text-ui-meta" style={{ color: "var(--fg-2)" }}>
         <MathText text={`${MODE_NAMES[mode]} $\\ell^{${subscript}}$`} />
       </div>
-      <div
-        className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-ui-meta"
-        style={{ color: "var(--fg-2)" }}
-      >
+      <div className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-ui-meta" style={{ color: "var(--fg-2)" }}>
         <span>
           <MathText text="$x=$" />
         </span>
@@ -242,10 +229,7 @@ function ReadoutPanel({
           }}
         />
       </div>
-      <div
-        className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-ui-meta"
-        style={{ color: "var(--fg-2)" }}
-      >
+      <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-ui-meta" style={{ color: "var(--fg-2)" }}>
         <span style={{ color: statusColor }}>
           <MathText text={inside ? `$x\\in ${ball}$` : `$x\\notin ${ball}$`} />
         </span>
@@ -253,10 +237,7 @@ function ReadoutPanel({
           <MathText text={`$${value.toFixed(3)} ${comparator} 1$`} />
         </span>
       </div>
-      <div
-        className="mt-3 border-t pt-2 text-ui-meta"
-        style={{ borderColor: "var(--border)", color: "var(--fg-2)" }}
-      >
+      <div className="mt-3 border-t pt-2 text-ui-meta" style={{ borderColor: "var(--border)", color: "var(--fg-2)" }}>
         <MathText
           text={`The solid outline is $\\|x\\|_{${subscript}}B_{${subscript}}$: the unit ball scaled until it reaches $x$.`}
         />
@@ -286,13 +267,7 @@ export default function NormUnitBallFigure() {
       <NormModeSelect value={mode} onChange={setMode} p={p} onPChange={setP} />
       <div className="mt-3 flex flex-col gap-3 2xl:flex-row">
         <div className="min-w-0 flex-[1.35]">
-          <FigureFrame
-            xDomain={[-2.4, 2.4]}
-            yDomain={[-2.1, 2.1]}
-            height={FIGURE_HEIGHT}
-            axes={false}
-            grid
-          >
+          <FigureFrame xDomain={[-2.4, 2.4]} yDomain={[-2.1, 2.1]} height={FIGURE_HEIGHT} axes={false} grid>
             {mode === "l2" ? (
               <Circle
                 center={[0, 0]}
@@ -329,18 +304,8 @@ export default function NormUnitBallFigure() {
                 weight={STROKE.ref}
               />
             )}
-            <Line.Segment
-              point1={AXIS_X[0]}
-              point2={AXIS_X[1]}
-              color={DIA.muted}
-              weight={STROKE.guide}
-            />
-            <Line.Segment
-              point1={AXIS_Y[0]}
-              point2={AXIS_Y[1]}
-              color={DIA.muted}
-              weight={STROKE.guide}
-            />
+            <Line.Segment point1={AXIS_X[0]} point2={AXIS_X[1]} color={DIA.muted} weight={STROKE.guide} />
+            <Line.Segment point1={AXIS_Y[0]} point2={AXIS_Y[1]} color={DIA.muted} weight={STROKE.guide} />
             <Vector tail={[0, 0]} tip={x} color={statusColor} weight={MEASURED_STROKE} />
             <Point x={0} y={0} color={DIA.faint} svgCircleProps={{ r: DOT.small }} />
             <LaTeX at={[x[0] + 0.17, x[1] + 0.17]} tex="x" color={DIA.accent} />

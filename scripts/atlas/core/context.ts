@@ -68,10 +68,7 @@ export function loadMaps(ctx: Ctx): CliMap[] {
   const maps: CliMap[] = [];
   for (const f of files) {
     if (f.jsonError) {
-      throw new CliError(
-        `${f.fileName}: malformed JSON — ${f.jsonError.message}`,
-        "run `atlas validate` for details",
-      );
+      throw new CliError(`${f.fileName}: malformed JSON — ${f.jsonError.message}`, "run `atlas validate` for details");
     }
     const parsed = SourceGraphSchema.safeParse(f.json);
     if (!parsed.success) {

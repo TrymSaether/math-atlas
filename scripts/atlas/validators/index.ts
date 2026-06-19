@@ -14,12 +14,7 @@ export interface LintOptions {
 }
 
 export function runLints(map: CliMap, ws: Workspace, opts: LintOptions = {}): Diagnostic[] {
-  const diags = [
-    ...structure.run(map),
-    ...content.run(map),
-    ...diagrams.run(map, ws),
-    ...references.run(map),
-  ];
+  const diags = [...structure.run(map), ...content.run(map), ...diagrams.run(map, ws), ...references.run(map)];
   if (opts.suggest) diags.push(...suggestions.run(map));
   return diags;
 }

@@ -96,9 +96,7 @@ function printResult(r: BuildResult): void {
     r.status === "failed"
       ? red(`${r.issues} issue(s) — run atlas validate`)
       : dim(`${r.nodes} nodes, ${r.edges} edges`);
-  process.stdout.write(
-    `  ${badge}  ${cyan(r.mapId.padEnd(22))} ${detail} ${gray(`${r.ms.toFixed(0)}ms`)}\n`,
-  );
+  process.stdout.write(`  ${badge}  ${cyan(r.mapId.padEnd(22))} ${detail} ${gray(`${r.ms.toFixed(0)}ms`)}\n`);
 }
 
 function buildAll(ctx: Ctx, label = "atlas build"): number {
@@ -118,9 +116,7 @@ function buildAll(ctx: Ctx, label = "atlas build"): number {
   const failed = results.filter((r) => r.status === "failed").length;
   process.stdout.write(
     "\n" +
-      (failed
-        ? red(`${MARK.error} ${failed} map(s) failed`)
-        : green(`${MARK.ok} ${results.length} map(s) ok`)) +
+      (failed ? red(`${MARK.error} ${failed} map(s) failed`) : green(`${MARK.ok} ${results.length} map(s) ok`)) +
       "\n\n",
   );
   return failed > 0 ? 1 : 0;

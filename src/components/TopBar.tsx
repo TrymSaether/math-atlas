@@ -16,6 +16,7 @@ import {
   DownloadSimpleIcon,
   UploadSimpleIcon,
   ArrowCounterClockwiseIcon,
+  UsersIcon,
   XIcon,
 } from "@phosphor-icons/react";
 import { useReactFlow } from "reactflow";
@@ -26,6 +27,7 @@ import { LogoMark } from "./Logo";
 import { Pill, DockButton } from "./chrome/Pill";
 import { Button } from "./chrome/Button";
 import { UserMenu } from "./auth/UserMenu";
+import { ShareDialog } from "./ShareDialog";
 import { authEnabled } from "../lib/authClient";
 
 interface PopoverPosition {
@@ -142,9 +144,7 @@ function MapBrandSelector() {
         >
           <LogoMark size={18} className="text-(--fg-1)" />
         </span>
-        <span className="hidden whitespace-nowrap font-serif text-atlas-brand text-fg-1 sm:inline">
-          Math Atlas
-        </span>
+        <span className="hidden whitespace-nowrap font-serif text-atlas-brand text-fg-1 sm:inline">Math Atlas</span>
       </Button>
       <Button
         kind="field"
@@ -224,12 +224,7 @@ function AtlasButton() {
   const setSurface = useStore((s) => s.setSurface);
   const active = surface === "atlas";
   return (
-    <DockButton
-      onClick={() => setSurface("atlas")}
-      active={active}
-      label="Atlas map"
-      title="Atlas map"
-    >
+    <DockButton onClick={() => setSurface("atlas")} active={active} label="Atlas map" title="Atlas map">
       <CompassIcon className="h-4 w-4" weight="regular" />
     </DockButton>
   );
@@ -293,12 +288,7 @@ function DisplayButton() {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
       const target = e.target as Node;
-      if (
-        ref.current &&
-        !ref.current.contains(target) &&
-        popoverRef.current &&
-        !popoverRef.current.contains(target)
-      ) {
+      if (ref.current && !ref.current.contains(target) && popoverRef.current && !popoverRef.current.contains(target)) {
         setOpen(false);
       }
     };
@@ -383,19 +373,12 @@ function DisplayPopover({
       style={{ top: position.top, right: position.right }}
     >
       <div className="mb-2.5 flex items-baseline justify-between">
-        <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
-          Theme
-        </span>
+        <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">Theme</span>
         <span className="text-ui-meta font-medium text-fg-2">{activeLabel}</span>
       </div>
       <div className="flex flex-wrap items-center gap-3">
         {THEMES.map((t) => (
-          <ThemeSwatch
-            key={t.id}
-            theme={t}
-            active={t.id === theme}
-            onClick={() => setTheme(t.id)}
-          />
+          <ThemeSwatch key={t.id} theme={t} active={t.id === theme} onClick={() => setTheme(t.id)} />
         ))}
       </div>
     </div>,
@@ -413,7 +396,10 @@ function EditToggle() {
   const importSource = useStore((s) => s.importSource);
   const revertMap = useStore((s) => s.revertMap);
   const userId = useStore((s) => s.userId);
+  const shareMeta = useStore((s) => s.mapMeta[s.mapId]);
+  const mapTitle = useStore((s) => s.catalog.find((e) => e.slug === s.mapId)?.title ?? s.mapId);
   const [open, setOpen] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   const [position, setPosition] = useState<PopoverPosition | null>(null);
   const [confirmDiscard, setConfirmDiscard] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
@@ -425,12 +411,7 @@ function EditToggle() {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
       const target = e.target as Node;
-      if (
-        ref.current &&
-        !ref.current.contains(target) &&
-        popoverRef.current &&
-        !popoverRef.current.contains(target)
-      ) {
+      if (ref.current && !ref.current.contains(target) && popoverRef.current && !popoverRef.current.contains(target)) {
         setOpen(false);
         setConfirmDiscard(false);
       }
@@ -552,12 +533,23 @@ function EditToggle() {
             setConfirmDiscard(false);
             showNotice(result.ok ? "Local edits discarded." : `Discard failed: ${result.error}`);
           }}
+          onShare={
+            shareMeta?.role === "owner"
+              ? () => {
+                  setShareOpen(true);
+                  setOpen(false);
+                }
+              : undefined
+          }
           onDone={() => {
             toggleEditMode();
             setOpen(false);
             setConfirmDiscard(false);
           }}
         />
+      )}
+      {shareMeta?.role === "owner" && (
+        <ShareDialog open={shareOpen} onOpenChange={setShareOpen} mapEntityId={shareMeta.id} title={mapTitle} />
       )}
     </div>
   );
@@ -575,6 +567,7 @@ function EditMapPopover({
   onAskDiscard,
   onKeep,
   onDiscard,
+  onShare,
   onDone,
 }: {
   popoverRef: RefObject<HTMLDivElement | null>;
@@ -588,6 +581,7 @@ function EditMapPopover({
   onAskDiscard: () => void;
   onKeep: () => void;
   onDiscard: () => void;
+  onShare?: () => void;
   onDone: () => void;
 }) {
   return createPortal(
@@ -600,13 +594,7 @@ function EditMapPopover({
       role="dialog"
       aria-label="Edit map"
     >
-      <Button
-        kind="icon"
-        accent
-        onClick={onNewConcept}
-        title="New concept"
-        aria-label="New concept"
-      >
+      <Button kind="icon" accent onClick={onNewConcept} title="New concept" aria-label="New concept">
         <PlusIcon className="h-4 w-4" weight="bold" />
       </Button>
 
@@ -618,6 +606,15 @@ function EditMapPopover({
       <Button kind="icon" onClick={onImport} title="Import source" aria-label="Import source">
         <UploadSimpleIcon className="h-4 w-4" />
       </Button>
+
+      {onShare && (
+        <>
+          <ToolDivider />
+          <Button kind="icon" onClick={onShare} title="Share map" aria-label="Share map">
+            <UsersIcon className="h-4 w-4" />
+          </Button>
+        </>
+      )}
 
       {edited &&
         (confirmDiscard ? (
@@ -685,11 +682,7 @@ function SchemeToggle() {
       label={isDark ? "Switch to light scheme" : "Switch to dark scheme"}
       title={isDark ? "Light" : "Dark"}
     >
-      {isDark ? (
-        <SunIcon className="h-4 w-4" weight="regular" />
-      ) : (
-        <MoonIcon className="h-4 w-4" weight="regular" />
-      )}
+      {isDark ? <SunIcon className="h-4 w-4" weight="regular" /> : <MoonIcon className="h-4 w-4" weight="regular" />}
     </DockButton>
   );
 }

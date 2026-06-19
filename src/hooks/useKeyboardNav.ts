@@ -14,13 +14,8 @@ export function useKeyboardNav() {
     const indexById = new Map(sorted.map((n, i) => [n.id, i]));
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
-      if (
-        target &&
-        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)
-      )
-        return;
-      const { selectedId, select, surface, routeMode, routeFrom, routeTo, clearRoute } =
-        useStore.getState();
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) return;
+      const { selectedId, select, surface, routeMode, routeFrom, routeTo, clearRoute } = useStore.getState();
       // The flashcard and sandbox surfaces own their own keyboard shortcuts.
       if (surface === "flashcards" || surface === "sandbox") return;
       if (e.key === "Escape") {

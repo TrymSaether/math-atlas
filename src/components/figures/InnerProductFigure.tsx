@@ -1,18 +1,7 @@
 import { useState } from "react";
 
 import { MathText } from "../../lib/katex";
-import {
-  DIA,
-  DOT,
-  FigureFrame,
-  LaTeX,
-  Line,
-  Point,
-  Polyline,
-  STROKE,
-  Vector,
-  type Vec2,
-} from "./FigureFrame";
+import { DIA, DOT, FigureFrame, LaTeX, Line, Point, Polyline, STROKE, Vector, type Vec2 } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
@@ -75,9 +64,7 @@ export default function InnerProductFigure({ nodeId }: FigureProps) {
       />
       <figcaption className="mt-1.5 space-y-1 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         <div className="font-math" style={{ color: "var(--fg-2)" }}>
-          <MathText
-            text={`$\\langle u,v\\rangle=\\|u\\|\\,\\|v\\|\\cos\\theta=${dotUV.toFixed(2)}$`}
-          />
+          <MathText text={`$\\langle u,v\\rangle=\\|u\\|\\,\\|v\\|\\cos\\theta=${dotUV.toFixed(2)}$`} />
         </div>
         <MathText
           text={

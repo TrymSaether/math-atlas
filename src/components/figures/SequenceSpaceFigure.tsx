@@ -1,18 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { MathText } from "../../lib/katex";
-import {
-  DIA,
-  DOT,
-  FONT,
-  FigureFrame,
-  LaTeX,
-  Line,
-  Point,
-  Polygon,
-  STROKE,
-  Text,
-} from "./FigureFrame";
+import { DIA, DOT, FONT, FigureFrame, LaTeX, Line, Point, Polygon, STROKE, Text } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
@@ -46,12 +35,7 @@ export default function SequenceSpaceFigure({ nodeId }: FigureProps) {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[0.2, TERMS + 0.8]} yDomain={[-0.18, 1.18]} height={190} grid={false}>
-        <Line.Segment
-          point1={[0.5, 0]}
-          point2={[TERMS + 0.5, 0]}
-          color={DIA.ink}
-          weight={STROKE.guide}
-        />
+        <Line.Segment point1={[0.5, 0]} point2={[TERMS + 0.5, 0]} color={DIA.ink} weight={STROKE.guide} />
         {bars.map((v, i) => {
           const k = i + 1;
           return (

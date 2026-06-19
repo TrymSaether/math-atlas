@@ -19,13 +19,7 @@ export default function HeatFigure() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={[-1.35, 1.35]} grid>
-        <FunctionCurve
-          y={squareWave}
-          domain={[-Math.PI, Math.PI]}
-          color={DIA.ref}
-          weight={STROKE.ref}
-          style="dashed"
-        />
+        <FunctionCurve y={squareWave} domain={[-Math.PI, Math.PI]} color={DIA.ref} weight={STROKE.ref} style="dashed" />
         <FunctionCurve
           y={(x) => heatProfile(x, t, TERMS)}
           domain={[-Math.PI, Math.PI]}
@@ -42,8 +36,7 @@ export default function HeatFigure() {
         ariaLabel="Diffusion time t"
       />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        Sharp edges carry the high frequencies, which decay fastest — heat flow is a low-pass
-        filter.
+        Sharp edges carry the high frequencies, which decay fastest — heat flow is a low-pass filter.
       </figcaption>
     </figure>
   );

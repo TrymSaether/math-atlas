@@ -8,9 +8,7 @@
         try {
           stored = localStorage.getItem("math-map-theme");
         } catch {}
-        const prefersDark = window.matchMedia
-          ? window.matchMedia("(prefers-color-scheme: dark)").matches
-          : false;
+        const prefersDark = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)").matches : false;
         const schemes = {
           paper: "light",
           chalkboard: "dark",

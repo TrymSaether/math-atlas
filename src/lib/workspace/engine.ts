@@ -209,9 +209,7 @@ function cleanError(e: unknown): string {
 }
 
 function texForName(name: string): string {
-  return /^[A-Za-z]+$/.test(name)
-    ? name
-    : String.raw`\mathrm{${name.replace(/_/g, String.raw`\_`)}}`;
+  return /^[A-Za-z]+$/.test(name) ? name : String.raw`\mathrm{${name.replace(/_/g, String.raw`\_`)}}`;
 }
 
 function texForValue(v: Value | undefined): string {
@@ -302,9 +300,7 @@ function buildGeom(ctor: string, vals: Value[]): GeomShape {
       return { kind: "line", a: pt(vals[0], "Line"), b: pt(vals[1], "Line") };
     case "Circle": {
       const c = pt(vals[0], "Circle");
-      const r = isNum(vals[1])
-        ? vals[1]
-        : Math.hypot(pt(vals[1], "Circle")[0] - c[0], pt(vals[1], "Circle")[1] - c[1]);
+      const r = isNum(vals[1]) ? vals[1] : Math.hypot(pt(vals[1], "Circle")[0] - c[0], pt(vals[1], "Circle")[1] - c[1]);
       return { kind: "circle", c, r };
     }
     case "Polygon":

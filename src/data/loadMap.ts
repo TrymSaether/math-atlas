@@ -143,9 +143,7 @@ export function formatSourceIssues(error: import("zod").ZodError): string {
     .join("; ");
 }
 
-export type BuildResult =
-  | { ok: true; map: LoadedMap; warnings: string[] }
-  | { ok: false; error: string };
+export type BuildResult = { ok: true; map: LoadedMap; warnings: string[] } | { ok: false; error: string };
 
 /**
  * Validate an edited source graph with the SAME strict schema the CLI build
@@ -169,9 +167,7 @@ export function buildLoadedMapFromSource(source: unknown): BuildResult {
  * immediately while the network revalidates in the background; with no cache we
  * await the network (and surface the error if the backend is unreachable).
  */
-export async function fetchAndBuildMap(
-  id: string,
-): Promise<{ map: LoadedMap; payload: MapPayload }> {
+export async function fetchAndBuildMap(id: string): Promise<{ map: LoadedMap; payload: MapPayload }> {
   const cached = getCachedMap(id);
   if (cached) {
     void fetchMap(id)

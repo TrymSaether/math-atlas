@@ -212,8 +212,7 @@ export function computeSwimlaneLayout(data: GraphData, metrics: GraphMetrics): A
     // sets the lane height.
     const cellRows = (n: number) => Math.min(n, MAX_ROWS_PER_CELL);
     let maxRows = 0;
-    for (const depth of usedDepths)
-      maxRows = Math.max(maxRows, cellRows(byDepth.get(depth)!.length));
+    for (const depth of usedDepths) maxRows = Math.max(maxRows, cellRows(byDepth.get(depth)!.length));
 
     const laneHeight = LANE_PAD_Y * 2 + maxRows * NODE_HEIGHT + Math.max(0, maxRows - 1) * ROW_GAP;
     const laneMidY = laneHeight / 2;
@@ -298,8 +297,7 @@ export function computeClusterLayout(
       }
       return compareNodeOrder(a, b);
     });
-    const domainAngle =
-      domainCount === 1 ? 0 : -Math.PI / 2 + (domainIndex / domainCount) * Math.PI * 2;
+    const domainAngle = domainCount === 1 ? 0 : -Math.PI / 2 + (domainIndex / domainCount) * Math.PI * 2;
     const cx = Math.cos(domainAngle) * domainRing;
     const cy = Math.sin(domainAngle) * domainRing;
     const itemRing = Math.max(132, 88 + Math.sqrt(members.length) * 56);
@@ -311,8 +309,7 @@ export function computeClusterLayout(
 
     members.forEach((node, itemIndex) => {
       const rand = seeded(hashString(`${domainId}:${node.id}`));
-      const angle =
-        members.length === 1 ? 0 : -Math.PI / 2 + (itemIndex / members.length) * Math.PI * 2;
+      const angle = members.length === 1 ? 0 : -Math.PI / 2 + (itemIndex / members.length) * Math.PI * 2;
       const radius = members.length === 1 ? 0 : itemRing + (rand() - 0.5) * 24;
       const x = cx + Math.cos(angle) * radius - NODE_WIDTH / 2;
       const y = cy + Math.sin(angle) * radius - NODE_HEIGHT / 2;

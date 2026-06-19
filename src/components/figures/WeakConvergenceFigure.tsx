@@ -1,18 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { MathText } from "../../lib/katex";
-import {
-  DIA,
-  DOT,
-  FONT,
-  FigureFrame,
-  LaTeX,
-  Line,
-  Point,
-  Polygon,
-  STROKE,
-  Text,
-} from "./FigureFrame";
+import { DIA, DOT, FONT, FigureFrame, LaTeX, Line, Point, Polygon, STROKE, Text } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
@@ -24,9 +13,7 @@ function probeValue(n: number): number {
 
 function isWeakStarNode(nodeId: string): boolean {
   return (
-    nodeId.includes("weak_star") ||
-    nodeId === "banach_alaoglu_theorem" ||
-    nodeId === "unit_ball_weak_star_assumption"
+    nodeId.includes("weak_star") || nodeId === "banach_alaoglu_theorem" || nodeId === "unit_ball_weak_star_assumption"
   );
 }
 
@@ -41,13 +28,7 @@ export default function WeakConvergenceFigure({ nodeId }: FigureProps) {
     <figure className="m-0">
       <FigureFrame xDomain={[0.2, 12.8]} yDomain={[-0.2, 1.2]} height={190} grid={false}>
         <Line.Segment point1={[0.5, 0]} point2={[12.5, 0]} color={DIA.ink} weight={STROKE.guide} />
-        <Line.Segment
-          point1={[0.5, 1]}
-          point2={[12.5, 1]}
-          color={DIA.ink}
-          weight={STROKE.hair}
-          style="dashed"
-        />
+        <Line.Segment point1={[0.5, 1]} point2={[12.5, 1]} color={DIA.ink} weight={STROKE.hair} style="dashed" />
         {bars.map((bar, i) => {
           const k = i + 1;
           const selected = k === n;
@@ -78,23 +59,10 @@ export default function WeakConvergenceFigure({ nodeId }: FigureProps) {
             </g>
           );
         })}
-        <LaTeX
-          at={[1.5, 1.2]}
-          tex={weakStar ? String.raw`\|x_n^*\|\le 1` : String.raw`\|e_n\|=1`}
-        />
-        <LaTeX
-          at={[8.85, 0.24]}
-          tex={weakStar ? String.raw`x_n^*(x)\to x^*(x)` : String.raw`x^*(e_n)\to 0`}
-        />
+        <LaTeX at={[1.5, 1.2]} tex={weakStar ? String.raw`\|x_n^*\|\le 1` : String.raw`\|e_n\|=1`} />
+        <LaTeX at={[8.85, 0.24]} tex={weakStar ? String.raw`x_n^*(x)\to x^*(x)` : String.raw`x^*(e_n)\to 0`} />
       </FigureFrame>
-      <RangeControl
-        min={1}
-        max={12}
-        value={n}
-        onChange={setN}
-        label={`n = ${n}`}
-        ariaLabel="Sequence index n"
-      />
+      <RangeControl min={1} max={12} value={n} onChange={setN} label={`n = ${n}`} ariaLabel="Sequence index n" />
       <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
         <MathText
           text={

@@ -31,11 +31,7 @@ function run(ctx: Ctx): number {
   const maps = loadMaps(ctx);
   const items: Hit[] = maps.flatMap((map) => map.nodes.map((node) => ({ map, node })));
   const limit = Number(ctx.flags.limit ?? 15) || 15;
-  const hits = fuzzySearch(query, items, (h) => [
-    h.node.id,
-    h.node.label,
-    h.node.content.gloss ?? "",
-  ]).slice(0, limit);
+  const hits = fuzzySearch(query, items, (h) => [h.node.id, h.node.label, h.node.content.gloss ?? ""]).slice(0, limit);
 
   if (ctx.json) {
     process.stdout.write(
@@ -52,9 +48,7 @@ function run(ctx: Ctx): number {
     return 0;
   }
 
-  process.stdout.write(
-    "\n" + bold("atlas find") + dim(`  ·  "${query}"  ·  ${hits.length} match(es)`) + "\n\n",
-  );
+  process.stdout.write("\n" + bold("atlas find") + dim(`  ·  "${query}"  ·  ${hits.length} match(es)`) + "\n\n");
   if (hits.length === 0) {
     process.stdout.write(dim("  no matches\n\n"));
     return 0;

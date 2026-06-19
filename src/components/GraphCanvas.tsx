@@ -1,11 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import ReactFlow, {
-  useReactFlow,
-  useViewport,
-  type Edge,
-  type Node,
-  type Viewport,
-} from "reactflow";
+import ReactFlow, { useReactFlow, useViewport, type Edge, type Node, type Viewport } from "reactflow";
 import type { LoadedMap, MapId } from "../data";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout } from "../lib/atlasLayout";
 import { getDomainTone } from "../lib/colors";
@@ -52,11 +46,7 @@ function isFiniteNumber(value: unknown): value is number {
 function normalizeViewport(value: unknown): Viewport | null {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
   const candidate = value as Partial<Viewport>;
-  if (
-    !isFiniteNumber(candidate.x) ||
-    !isFiniteNumber(candidate.y) ||
-    !isFiniteNumber(candidate.zoom)
-  ) {
+  if (!isFiniteNumber(candidate.x) || !isFiniteNumber(candidate.y) || !isFiniteNumber(candidate.zoom)) {
     return null;
   }
   return {
@@ -76,12 +66,7 @@ function readViewportState(): PersistedViewportState {
       return { version: 1, maps: {} };
     }
     const record = parsed as { version?: unknown; maps?: unknown };
-    if (
-      record.version !== 1 ||
-      typeof record.maps !== "object" ||
-      record.maps === null ||
-      Array.isArray(record.maps)
-    ) {
+    if (record.version !== 1 || typeof record.maps !== "object" || record.maps === null || Array.isArray(record.maps)) {
       return { version: 1, maps: {} };
     }
     return { version: 1, maps: record.maps as PersistedViewportState["maps"] };
@@ -178,10 +163,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       if (!kinds.has(node.kind)) return false;
       if (topics.size && !topics.has(node.domain)) return false;
       if (search) {
-        const haystack =
-          searchScope === "title"
-            ? `${node.label} ${node.kind}`.toLowerCase()
-            : nodeSearchText(node);
+        const haystack = searchScope === "title" ? `${node.label} ${node.kind}`.toLowerCase() : nodeSearchText(node);
         if (!haystack.includes(search)) return false;
       }
       return true;
@@ -216,11 +198,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     const tier = new Map<string, NodeEmphasis>();
     for (const node of data.nodes) {
       const v = impact.get(node.id) ?? 0;
-      let emphasis: NodeEmphasis = landmarks.has(node.id)
-        ? "landmark"
-        : v === 0
-          ? "minor"
-          : "normal";
+      let emphasis: NodeEmphasis = landmarks.has(node.id) ? "landmark" : v === 0 ? "minor" : "normal";
       if (node.priority === "core" && emphasis === "minor") emphasis = "normal";
       else if (node.priority === "peripheral" && emphasis === "normal") emphasis = "minor";
       tier.set(node.id, emphasis);
@@ -312,9 +290,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const highlightedEdgeIds = useMemo(() => {
     if (!selectedId || !visibleIds.has(selectedId)) return new Set<string>();
     return new Set(
-      filteredEdges
-        .filter((edge) => edge.from === selectedId || edge.to === selectedId)
-        .map((edge) => edge.id),
+      filteredEdges.filter((edge) => edge.from === selectedId || edge.to === selectedId).map((edge) => edge.id),
     );
   }, [selectedId, visibleIds, filteredEdges]);
 
@@ -469,20 +445,8 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       // on) are a supplementary overlay and skip reduction. Highlighted/focused/
       // route edges always stay so cones and the traced path read complete.
       const isHard = classifyEdge(edge) === "hard";
-      if (
-        view === "dependency" &&
-        isHard &&
-        !reduced.has(edge.id) &&
-        !highlight &&
-        !focused &&
-        !onRoute
-      )
-        continue;
-      const dim =
-        !onRoute &&
-        selectedId !== null &&
-        visibleIds.has(selectedId) &&
-        (focusSet ? !inFocus : !highlight);
+      if (view === "dependency" && isHard && !reduced.has(edge.id) && !highlight && !focused && !onRoute) continue;
+      const dim = !onRoute && selectedId !== null && visibleIds.has(selectedId) && (focusSet ? !inFocus : !highlight);
       // Low zoom: only keep edges incident to the selection (or whole focus set).
       if (edgeLODHidden && !highlight && !focused && !onRoute) continue;
       out.push({
@@ -494,9 +458,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
           edge,
           highlight,
           dim,
-          routeReveal: onRoute
-            ? { delay: routeDelay, runKey: routeRunKey, color: ROUTE_COLOR }
-            : undefined,
+          routeReveal: onRoute ? { delay: routeDelay, runKey: routeRunKey, color: ROUTE_COLOR } : undefined,
         },
       });
     }
@@ -571,13 +533,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         nodesConnectable={false}
         defaultEdgeOptions={{ type: "topo" }}
       />
-      {showMinimap && (
-        <MinimapCard
-          nodes={conceptNodes}
-          regions={activeLayout.domainBounds}
-          selectedId={selectedId}
-        />
-      )}
+      {showMinimap && <MinimapCard nodes={conceptNodes} regions={activeLayout.domainBounds} selectedId={selectedId} />}
       <CanvasControls
         routeSummary={{
           fromTitle: routeFrom ? map.nodeById.get(routeFrom)?.label : undefined,

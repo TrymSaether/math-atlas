@@ -9,13 +9,7 @@ const LABELS: Record<WaveKind, string> = {
 const ORDER: WaveKind[] = ["square", "sawtooth", "triangle"];
 
 /** Compact segmented control for picking which target waveform a figure draws. */
-export function WaveSelect({
-  value,
-  onChange,
-}: {
-  value: WaveKind;
-  onChange: (k: WaveKind) => void;
-}) {
+export function WaveSelect({ value, onChange }: { value: WaveKind; onChange: (k: WaveKind) => void }) {
   return (
     <div
       role="radiogroup"

@@ -51,10 +51,8 @@ const descriptions: Record<FunctionNode, string> = {
   function: "A function is total and single-valued: every input has exactly one outgoing arrow.",
   image_of_function: "The image is the part of the codomain actually hit by selected inputs.",
   preimage: "The preimage pulls a subset of the codomain back to all inputs landing inside it.",
-  inverse_of_function:
-    "The inverse relation reverses arrows; it is a function only in the bijective case.",
-  restriction_of_function:
-    "A restriction keeps the same rule and discards inputs outside the chosen subset.",
+  inverse_of_function: "The inverse relation reverses arrows; it is a function only in the bijective case.",
+  restriction_of_function: "A restriction keeps the same rule and discards inputs outside the chosen subset.",
   domain: "The domain is the whole input side: every element there must have a function value.",
   codomain: "The codomain is the declared target side; the image may occupy only part of it.",
 };
@@ -139,11 +137,7 @@ function SelectionBlob({
         weight={STROKE.mark}
       />
       {label && (
-        <LaTeX
-          at={[side === "left" ? x - xRadius - 0.34 : x + xRadius + 0.34, yCenter]}
-          tex={label}
-          color={color}
-        />
+        <LaTeX at={[side === "left" ? x - xRadius - 0.34 : x + xRadius + 0.34, yCenter]} tex={label} color={color} />
       )}
     </>
   );
@@ -212,9 +206,7 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
         ? selectedLeft.map((i) => targets[i])
         : [];
   const pulledBack =
-    kind === "preimage"
-      ? targets.flatMap((target, i) => (selectedRight.includes(target) ? [i] : []))
-      : [];
+    kind === "preimage" ? targets.flatMap((target, i) => (selectedRight.includes(target) ? [i] : [])) : [];
   const activeLeft = kind === "preimage" ? pulledBack : selectedLeft;
   const highlightedLeft = kind === "domain" ? [0, 1, 2, 3] : activeLeft;
   const highlightedRight = kind === "codomain" ? [0, 1, 2, 3] : selectedRight;
@@ -225,13 +217,7 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
   // the caption. The whole-set highlights (domain/codomain) stay unlabeled
   // because the surrounding oval already carries X / Y.
   const leftLabel =
-    kind === "restriction_of_function"
-      ? choice === "S"
-        ? "S"
-        : "A"
-      : kind === "image_of_function"
-        ? "A"
-        : undefined;
+    kind === "restriction_of_function" ? (choice === "S" ? "S" : "A") : kind === "image_of_function" ? "A" : undefined;
   const rightLabel = kind === "preimage" ? "B" : undefined;
 
   return (
@@ -272,8 +258,7 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
 
       {targets.map((target, i) => {
         if (omitted.has(i)) return null;
-        const inactive =
-          kind === "restriction_of_function" && activeLeft.length > 0 && !activeLeft.includes(i);
+        const inactive = kind === "restriction_of_function" && activeLeft.length > 0 && !activeLeft.includes(i);
         const duplicate = kind === "function" && choice === "multi" && i === 2;
         // Neutral connector by default; color only when the arrow is dropped
         // (restriction) or is the one breaking single-valuedness (two outputs).
@@ -290,22 +275,14 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
         );
       })}
 
-      {choice === "multi" && (
-        <Arrow from={left[2]} to={right[0]} color={SELECTED_COLOR} weight={STROKE.mark} />
-      )}
+      {choice === "multi" && <Arrow from={left[2]} to={right[0]} color={SELECTED_COLOR} weight={STROKE.mark} />}
 
       {left.map(([x, y], i) => (
         <g key={`left:${i}`}>
           <Point
             x={x}
             y={y}
-            color={
-              omitted.has(i)
-                ? SELECTED_COLOR
-                : highlightedLeft.includes(i)
-                  ? DOMAIN_COLOR
-                  : INK_COLOR
-            }
+            color={omitted.has(i) ? SELECTED_COLOR : highlightedLeft.includes(i) ? DOMAIN_COLOR : INK_COLOR}
             svgCircleProps={{ r: highlightedLeft.includes(i) ? DOT.hub : DOT.base }}
           />
           <Text x={x - 0.42} y={y + 0.02} color={INK_COLOR} size={FONT.tick}>
@@ -319,13 +296,7 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
           <Point
             x={x}
             y={y}
-            color={
-              highlightedRight.includes(i)
-                ? CODOMAIN_COLOR
-                : hitCounts[i] === 0
-                  ? MUTED_COLOR
-                  : INK_COLOR
-            }
+            color={highlightedRight.includes(i) ? CODOMAIN_COLOR : hitCounts[i] === 0 ? MUTED_COLOR : INK_COLOR}
             svgCircleProps={{
               r: highlightedRight.includes(i) ? DOT.hub : hitCounts[i] === 0 ? DOT.small : DOT.base,
             }}
@@ -347,18 +318,12 @@ function FunctionDiagram({ kind, choice }: { kind: FunctionNode; choice: Choice 
               : String.raw`f`
         }
       />
-      {kind === "preimage" && (
-        <LaTeX at={[0, -1.48]} color={INK_COLOR} tex={String.raw`f^{-1}(B)=\{x:f(x)\in B\}`} />
-      )}
+      {kind === "preimage" && <LaTeX at={[0, -1.48]} color={INK_COLOR} tex={String.raw`f^{-1}(B)=\{x:f(x)\in B\}`} />}
       {kind === "image_of_function" && (
         <LaTeX at={[0, -1.48]} color={INK_COLOR} tex={String.raw`f(A)=\{f(a):a\in A\}`} />
       )}
-      {kind === "domain" && (
-        <LaTeX at={[0, -1.48]} color={INK_COLOR} tex={String.raw`\operatorname{dom}(f)=X`} />
-      )}
-      {kind === "codomain" && (
-        <LaTeX at={[0, -1.48]} color={INK_COLOR} tex={String.raw`\operatorname{cod}(f)=Y`} />
-      )}
+      {kind === "domain" && <LaTeX at={[0, -1.48]} color={INK_COLOR} tex={String.raw`\operatorname{dom}(f)=X`} />}
+      {kind === "codomain" && <LaTeX at={[0, -1.48]} color={INK_COLOR} tex={String.raw`\operatorname{cod}(f)=Y`} />}
     </FigureFrame>
   );
 }

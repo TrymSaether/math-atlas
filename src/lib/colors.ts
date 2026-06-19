@@ -82,8 +82,7 @@ export function resolveDomainTones(domains: GraphDomain[]): Map<string, DomainTo
   colorless.forEach((domain, index) => {
     if (result.has(domain.id)) return;
     while (sweep < DOMAIN_KEYS.length && !freeKeys.has(DOMAIN_KEYS[sweep])) sweep++;
-    const key =
-      sweep < DOMAIN_KEYS.length ? DOMAIN_KEYS[sweep] : DOMAIN_KEYS[index % DOMAIN_KEYS.length];
+    const key = sweep < DOMAIN_KEYS.length ? DOMAIN_KEYS[sweep] : DOMAIN_KEYS[index % DOMAIN_KEYS.length];
     assign(domain.id, key);
   });
 

@@ -49,10 +49,7 @@ async function upsertSystemMap(slug: string, title: string, source: unknown, ver
 
     const now = new Date();
     if (existing) {
-      await tx
-        .update(maps)
-        .set({ title, visibility: "public", updatedAt: now })
-        .where(eq(maps.id, existing.id));
+      await tx.update(maps).set({ title, visibility: "public", updatedAt: now }).where(eq(maps.id, existing.id));
       await tx
         .update(mapSources)
         .set({ source, baseVersion: version, updatedAt: now })

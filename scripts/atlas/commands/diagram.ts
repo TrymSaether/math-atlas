@@ -15,13 +15,7 @@ import { type Diagnostic, warning, countBySeverity } from "../diagnostics/diagno
 import { bold, dim, cyan, green, yellow } from "../utils/color";
 import { MARK } from "../utils/glyphs";
 
-function lintSvg(
-  ws: Ctx["ws"],
-  map: string,
-  file: string,
-  concept: string,
-  ref: string,
-): Diagnostic[] {
+function lintSvg(ws: Ctx["ws"], map: string, file: string, concept: string, ref: string): Diagnostic[] {
   const out: Diagnostic[] = [];
   const fsPath = diagramFsPath(ws, ref);
   if (!existsSync(fsPath)) return out; // missing-file is reported by `check`
@@ -75,8 +69,7 @@ function run(ctx: Ctx): number {
 
   if (sub === "attach") {
     const [, conceptId, path] = ctx.positionals;
-    if (!conceptId || !path)
-      throw new CliError("usage: atlas diagram attach <concept-id> <svg-path>");
+    if (!conceptId || !path) throw new CliError("usage: atlas diagram attach <concept-id> <svg-path>");
     const files = loadSourceFiles(ctx);
     for (const f of files) {
       const json = f.json as { concepts: { id: string; diagram?: string }[] };
@@ -84,8 +77,7 @@ function run(ctx: Ctx): number {
       if (!c) continue;
       c.diagram = path;
       const parsed = SourceGraphSchema.safeParse(json);
-      if (!parsed.success)
-        throw new CliError("resulting source fails schema", parsed.error.issues[0]?.message);
+      if (!parsed.success) throw new CliError("resulting source fails schema", parsed.error.issues[0]?.message);
       if (!existsSync(diagramFsPath(ctx.ws, path)))
         process.stdout.write(yellow(`  ${MARK.warning} note: no file yet at public${path}`) + "\n");
       writeFileSync(f.path, JSON.stringify(json, null, 2) + "\n");
@@ -100,9 +92,7 @@ function run(ctx: Ctx): number {
   if (sub === "missing") {
     process.stdout.write("\n" + bold("atlas diagram missing") + "\n");
     for (const m of maps) {
-      const broken = m.source.concepts.filter(
-        (c) => c.diagram && !existsSync(diagramFsPath(ctx.ws, c.diagram)),
-      );
+      const broken = m.source.concepts.filter((c) => c.diagram && !existsSync(diagramFsPath(ctx.ws, c.diagram)));
       const none = m.source.concepts.filter((c) => !c.diagram);
       process.stdout.write(
         "\n  " +
@@ -110,8 +100,7 @@ function run(ctx: Ctx): number {
           dim(`  ·  ${broken.length} broken, ${none.length}/${m.nodes.length} without a diagram`) +
           "\n",
       );
-      for (const c of broken)
-        process.stdout.write(`    ${yellow(MARK.warning)} ${c.id} ${dim("→ " + c.diagram)}\n`);
+      for (const c of broken) process.stdout.write(`    ${yellow(MARK.warning)} ${c.id} ${dim("→ " + c.diagram)}\n`);
     }
     process.stdout.write("\n");
     return 0;
@@ -119,9 +108,7 @@ function run(ctx: Ctx): number {
 
   if (sub === "lint") {
     const all = maps.flatMap((m) =>
-      m.source.concepts
-        .filter((c) => c.diagram)
-        .flatMap((c) => lintSvg(ctx.ws, m.id, m.fileName, c.id, c.diagram!)),
+      m.source.concepts.filter((c) => c.diagram).flatMap((c) => lintSvg(ctx.ws, m.id, m.fileName, c.id, c.diagram!)),
     );
     if (ctx.json) {
       process.stdout.write(JSON.stringify(all, null, 2) + "\n");

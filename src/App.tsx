@@ -10,13 +10,12 @@ import { CommandPalette } from "./components/CommandPalette";
 
 // The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
 // atlas's initial bundle stays light.
-const SandboxView = lazy(() =>
-  import("./components/sandbox/SandboxView").then((m) => ({ default: m.SandboxView })),
-);
+const SandboxView = lazy(() => import("./components/sandbox/SandboxView").then((m) => ({ default: m.SandboxView })));
 import { useKeyboardNav } from "./hooks/useKeyboardNav";
 import { useStore } from "./store";
 import { registerDomainTones } from "./lib/colors";
 import { SessionBridge } from "./components/auth/SessionBridge";
+import { StaleMapBanner } from "./components/StaleMapBanner";
 import { authEnabled } from "./lib/authClient";
 
 export default function App() {
@@ -48,6 +47,7 @@ export default function App() {
       >
         <Background />
         {authEnabled && <SessionBridge />}
+        {authEnabled && <StaleMapBanner />}
         <main className="absolute inset-0">
           {map ? (
             surface === "dictionary" ? (
@@ -57,10 +57,7 @@ export default function App() {
             ) : surface === "sandbox" ? (
               <Suspense
                 fallback={
-                  <div
-                    className="flex h-full items-center justify-center text-sm"
-                    style={{ color: "var(--fg-3)" }}
-                  >
+                  <div className="flex h-full items-center justify-center text-sm" style={{ color: "var(--fg-3)" }}>
                     Loading sandbox…
                   </div>
                 }
@@ -78,11 +75,7 @@ export default function App() {
               className="flex h-full items-center justify-center px-6 text-center text-sm"
               style={{ color: "var(--fg-2)" }}
             >
-              {mapError
-                ? `Could not load map: ${mapError}`
-                : loadingMapId
-                  ? "Loading atlas…"
-                  : "Preparing atlas…"}
+              {mapError ? `Could not load map: ${mapError}` : loadingMapId ? "Loading atlas…" : "Preparing atlas…"}
             </div>
           )}
         </main>

@@ -13,7 +13,7 @@ import { Hono } from "hono";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../db/client";
-import { mapCollaborators, maps, mapSources } from "../db/schema";
+import { mapCollaborators, maps, mapSources, user } from "../db/schema";
 import { auth } from "../auth";
 import { SourceGraphSchema } from "../../src/data/sourceSchema";
 import { buildArtifact } from "../../src/data/buildArtifact";
@@ -30,10 +30,7 @@ async function getUserId(c: { req: { raw: Request } }): Promise<string | null> {
 type MapRow = typeof maps.$inferSelect;
 
 /** Resolve a caller's access to a map, or null if the map doesn't exist / is hidden. */
-async function resolveAccess(
-  mapId: string,
-  userId: string | null,
-): Promise<{ map: MapRow; role: Role } | null> {
+async function resolveAccess(mapId: string, userId: string | null): Promise<{ map: MapRow; role: Role } | null> {
   const [map] = await db.select().from(maps).where(eq(maps.id, mapId)).limit(1);
   if (!map) return null;
   if (userId && map.ownerId === userId) return { map, role: "owner" };
@@ -189,7 +186,12 @@ mapsRoute.post("/", async (c) => {
   return c.json({ id: newId, slug: access.map.slug });
 });
 
-const PutBody = z.object({ baseVersion: z.number().int().nonnegative(), source: z.unknown() });
+const PutBody = z.object({
+  baseVersion: z.number().int().nonnegative(),
+  source: z.unknown(),
+  /** The `updated` the client last saw; if the server is newer, reject (LWW). */
+  baseUpdated: z.string().optional(),
+});
 
 /** PUT /api/maps/:id — save source; owner or editor only. */
 mapsRoute.put("/:id", async (c) => {
@@ -206,6 +208,12 @@ mapsRoute.put("/:id", async (c) => {
 
   const valid = validateSource(body.data.source);
   if (!valid.ok) return c.json({ error: valid.error }, 400);
+
+  // Last-write-wins conflict guard: if the map changed since the client last saw
+  // it (a collaborator saved underneath them), reject so they can reload.
+  if (body.data.baseUpdated && access.map.updatedAt > new Date(body.data.baseUpdated)) {
+    return c.json({ error: "conflict", updated: access.map.updatedAt.toISOString() }, 409);
+  }
 
   const now = new Date();
   await db.transaction(async (tx) => {
@@ -228,5 +236,77 @@ mapsRoute.delete("/:id", async (c) => {
   if (!access || access.role !== "owner") return c.json({ error: "Forbidden" }, 403);
 
   await db.delete(maps).where(eq(maps.id, access.map.id));
+  return c.body(null, 204);
+});
+
+// ---------------------------------------------------------------------------
+// Collaborators (Phase 4 — shared maps)
+// ---------------------------------------------------------------------------
+
+/** Owner-only guard for collaborator management. Returns the map or a Response. */
+async function requireOwner(c: {
+  req: { raw: Request; param: (k: string) => string };
+}): Promise<{ map: MapRow } | Response> {
+  const userId = await getUserId(c);
+  if (!userId) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+  const access = await resolveAccess(c.req.param("id"), userId);
+  if (!access || access.role !== "owner") {
+    return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 });
+  }
+  return { map: access.map };
+}
+
+/** GET /api/maps/:id/collaborators — owner lists collaborators. */
+mapsRoute.get("/:id/collaborators", async (c) => {
+  const owned = await requireOwner(c);
+  if (owned instanceof Response) return owned;
+  const rows = await db
+    .select({
+      userId: mapCollaborators.userId,
+      role: mapCollaborators.role,
+      email: user.email,
+      name: user.name,
+    })
+    .from(mapCollaborators)
+    .innerJoin(user, eq(user.id, mapCollaborators.userId))
+    .where(eq(mapCollaborators.mapId, owned.map.id));
+  return c.json(rows);
+});
+
+const CollaboratorBody = z.object({
+  email: z.string().min(1),
+  role: z.enum(["editor", "viewer"]).default("editor"),
+});
+
+/** POST /api/maps/:id/collaborators — owner invites a user by email. */
+mapsRoute.post("/:id/collaborators", async (c) => {
+  const owned = await requireOwner(c);
+  if (owned instanceof Response) return owned;
+
+  const body = CollaboratorBody.safeParse(await c.req.json().catch(() => null));
+  if (!body.success) return c.json({ error: "Invalid request body" }, 400);
+
+  const email = body.data.email.trim().toLowerCase();
+  const [target] = await db.select({ id: user.id }).from(user).where(eq(user.email, email)).limit(1);
+  if (!target) return c.json({ error: "No account with that email" }, 404);
+  if (target.id === owned.map.ownerId) return c.json({ error: "You own this map" }, 400);
+
+  await db
+    .insert(mapCollaborators)
+    .values({ mapId: owned.map.id, userId: target.id, role: body.data.role })
+    .onConflictDoUpdate({
+      target: [mapCollaborators.mapId, mapCollaborators.userId],
+      set: { role: body.data.role },
+    });
+  return c.json({ ok: true });
+});
+
+/** DELETE /api/maps/:id/collaborators/:userId — owner removes a collaborator. */
+mapsRoute.delete("/:id/collaborators/:userId", async (c) => {
+  const owned = await requireOwner(c);
+  if (owned instanceof Response) return owned;
+  await db
+    .delete(mapCollaborators)
+    .where(and(eq(mapCollaborators.mapId, owned.map.id), eq(mapCollaborators.userId, c.req.param("userId"))));
   return c.body(null, 204);
 });

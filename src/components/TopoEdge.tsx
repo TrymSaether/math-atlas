@@ -44,11 +44,7 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
         ? getBezierPath(geom)
         : getSmoothStepPath({ ...geom, borderRadius: 14 });
 
-  const style = getEdgeStyle(
-    data?.edge ?? FALLBACK_EDGE,
-    Boolean(data?.highlight),
-    Boolean(data?.dim),
-  );
+  const style = getEdgeStyle(data?.edge ?? FALLBACK_EDGE, Boolean(data?.highlight), Boolean(data?.dim));
   const highlight = Boolean(data?.highlight);
   const dim = Boolean(data?.dim);
   const markerId = `arrow-${props.id}`;

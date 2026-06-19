@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { auth } from "./auth";
 import { mapsRoute } from "./routes/maps";
+import { progressRoute } from "./routes/progress";
 import { env, isLocalhostOrigin, webOrigins } from "./env";
 
 const app = new Hono();
@@ -31,8 +32,11 @@ app.get("/api/health", (c) => c.json({ ok: true, ts: new Date().toISOString() })
 // better-auth owns every route under /api/auth/*.
 app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 
-// Per-user map overlays (Phase 2).
+// Maps as first-class entities (Stage A).
 app.route("/api/maps", mapsRoute);
+
+// Per-user learning progress (Phase 3).
+app.route("/api/progress", progressRoute);
 
 serve({ fetch: app.fetch, port: env.PORT }, (info) => {
   console.log(`math-atlas API listening on http://localhost:${info.port}`);

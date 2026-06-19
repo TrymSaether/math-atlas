@@ -141,8 +141,7 @@ export const useSandbox = create<SandboxState>((set) => {
 
     selectRow: (id) => set({ selectedRowId: id }),
 
-    setValue: (id, value) =>
-      set((s) => recompile({ ...s.ws, values: { ...s.ws.values, [id]: value } })),
+    setValue: (id, value) => set((s) => recompile({ ...s.ws, values: { ...s.ws.values, [id]: value } })),
 
     setScalarValue: (id, value) =>
       set((s) => {
@@ -170,16 +169,14 @@ export const useSandbox = create<SandboxState>((set) => {
         return v ? { ws: { ...s.ws, viewport: { ...v.rect } } } : {};
       }),
 
-    removeView: (id) =>
-      set((s) => ({ ws: { ...s.ws, views: s.ws.views.filter((v) => v.id !== id) } })),
+    removeView: (id) => set((s) => ({ ws: { ...s.ws, views: s.ws.views.filter((v) => v.id !== id) } })),
 
     addMark: (mark) =>
       set((s) => ({
         ws: { ...s.ws, marks: [...s.ws.marks, { ...mark, id: newId("mark") } as Mark] },
       })),
 
-    removeMark: (id) =>
-      set((s) => ({ ws: { ...s.ws, marks: s.ws.marks.filter((m) => m.id !== id) } })),
+    removeMark: (id) => set((s) => ({ ws: { ...s.ws, marks: s.ws.marks.filter((m) => m.id !== id) } })),
   };
 });
 

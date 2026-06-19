@@ -46,10 +46,7 @@ function buildSuccessors(nodeIds: Set<string>, edges: GraphEdge[]): Map<string, 
  * Memoized transitive reachability set per node (excludes the node itself unless
  * it sits on a cycle). Cycle-safe via an on-stack guard.
  */
-function buildReachability(
-  nodeIds: Set<string>,
-  succ: Map<string, Set<string>>,
-): Map<string, Set<string>> {
+function buildReachability(nodeIds: Set<string>, succ: Map<string, Set<string>>): Map<string, Set<string>> {
   const reach = new Map<string, Set<string>>();
   const onStack = new Set<string>();
 

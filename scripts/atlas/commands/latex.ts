@@ -52,9 +52,7 @@ function run(ctx: Ctx): number {
   }
   reportDiagnostics(all, { rawByMap });
   if (sub !== "check")
-    process.stdout.write(
-      "\n" + dim("note: auto-fix is report-only for now; edit the flagged fields by hand") + "\n",
-    );
+    process.stdout.write("\n" + dim("note: auto-fix is report-only for now; edit the flagged fields by hand") + "\n");
   process.stdout.write("\n");
   return countBySeverity(all).error > 0 ? 1 : 0;
 }

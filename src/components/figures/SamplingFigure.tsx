@@ -77,26 +77,11 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
           color={nyquistOk ? DIA.codomain : DIA.alert}
           weight={STROKE.mark}
         />
-        <Text
-          x={NYQUIST_HANDLE_X}
-          y={1.22}
-          color={nyquistOk ? DIA.codomain : DIA.alert}
-          size={FONT.hint}
-        >
+        <Text x={NYQUIST_HANDLE_X} y={1.22} color={nyquistOk ? DIA.codomain : DIA.alert} size={FONT.hint}>
           2f
         </Text>
-        <Vector
-          tail={[HANDLE_MIN, 1.08]}
-          tip={[rate.x, 1.08]}
-          color={DIA.accent}
-          weight={STROKE.mark}
-        />
-        <Text
-          x={Math.min(rate.x, NYQUIST_HANDLE_X - 0.28)}
-          y={0.94}
-          color={DIA.accent}
-          size={FONT.tick}
-        >
+        <Vector tail={[HANDLE_MIN, 1.08]} tip={[rate.x, 1.08]} color={DIA.accent} weight={STROKE.mark} />
+        <Text x={Math.min(rate.x, NYQUIST_HANDLE_X - 0.28)} y={0.94} color={DIA.accent} size={FONT.tick}>
           f_s
         </Text>
         <Vector tail={[0, -1.08]} tip={[dt, -1.08]} color={DIA.codomain} weight={STROKE.mark} />

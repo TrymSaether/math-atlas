@@ -13,12 +13,7 @@ import { dirname, join } from "node:path";
 const here = dirname(fileURLToPath(import.meta.url)); // scripts/atlas
 const cli = join(here, "cli.ts");
 const repoRoot = join(here, "..", "..");
-const tsxBin = join(
-  repoRoot,
-  "node_modules",
-  ".bin",
-  process.platform === "win32" ? "tsx.cmd" : "tsx",
-);
+const tsxBin = join(repoRoot, "node_modules", ".bin", process.platform === "win32" ? "tsx.cmd" : "tsx");
 
 const runner = existsSync(tsxBin) ? { cmd: tsxBin, pre: [] } : { cmd: "npx", pre: ["tsx"] }; // fallback if deps not installed locally
 

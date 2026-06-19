@@ -37,13 +37,7 @@ export function NodeVisual({ node, className }: { node: GraphNode; className?: s
   }
 
   if (diagramPath) {
-    return (
-      <ThemedDiagram
-        src={diagramPath}
-        alt={`Diagram for ${node.label}`}
-        className={frameClassName}
-      />
-    );
+    return <ThemedDiagram src={diagramPath} alt={`Diagram for ${node.label}`} className={frameClassName} />;
   }
 
   return null;

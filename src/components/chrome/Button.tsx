@@ -38,13 +38,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     <button
       ref={ref}
       type={type}
-      className={cn(
-        "pointer-events-auto",
-        KIND_CLASS[kind],
-        active && "is-active",
-        accent && "is-accent",
-        className,
-      )}
+      className={cn("pointer-events-auto", KIND_CLASS[kind], active && "is-active", accent && "is-accent", className)}
       {...rest}
     />
   );

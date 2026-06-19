@@ -39,15 +39,7 @@ function namespaceSvgIds(markup: string, prefix: string): string {
   return next;
 }
 
-export function ThemedDiagram({
-  src,
-  alt,
-  className,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-}) {
+export function ThemedDiagram({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const instanceId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const resolvedSrc = useMemo(() => withBasePath(src), [src]);
   const [markup, setMarkup] = useState(() => SVG_CACHE.get(resolvedSrc) ?? "");
@@ -92,13 +84,7 @@ export function ThemedDiagram({
 
   if (failed || !renderedMarkup) {
     return (
-      <img
-        src={resolvedSrc}
-        alt={alt}
-        loading="lazy"
-        decoding="async"
-        className={cn("themed-diagram", className)}
-      />
+      <img src={resolvedSrc} alt={alt} loading="lazy" decoding="async" className={cn("themed-diagram", className)} />
     );
   }
 

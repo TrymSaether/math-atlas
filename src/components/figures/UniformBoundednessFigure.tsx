@@ -25,28 +25,15 @@ export default function UniformBoundednessFigure() {
   const [mode, setMode] = useState<Mode>("banach");
   const [count, setCount] = useState(8);
 
-  const values = useMemo(
-    () => Array.from({ length: count }, (_, i) => opNorm(mode, i + 1)),
-    [mode, count],
-  );
+  const values = useMemo(() => Array.from({ length: count }, (_, i) => opNorm(mode, i + 1)), [mode, count]);
   const peak = Math.max(...values);
   const bounded = peak <= CEILING + 1e-9;
   const yMax = Math.max(1.25, peak + 0.2);
 
   return (
     <figure className="m-0">
-      <FigureFrame
-        xDomain={[0.3, MAX_OPS + 0.7]}
-        yDomain={[-0.16 * yMax, yMax]}
-        height={190}
-        grid={false}
-      >
-        <Line.Segment
-          point1={[0.5, 0]}
-          point2={[MAX_OPS + 0.5, 0]}
-          color={DIA.ink}
-          weight={STROKE.guide}
-        />
+      <FigureFrame xDomain={[0.3, MAX_OPS + 0.7]} yDomain={[-0.16 * yMax, yMax]} height={190} grid={false}>
+        <Line.Segment point1={[0.5, 0]} point2={[MAX_OPS + 0.5, 0]} color={DIA.ink} weight={STROKE.guide} />
         {/* uniform bound (ceiling) */}
         <Line.Segment
           point1={[0.5, CEILING]}
@@ -79,19 +66,10 @@ export default function UniformBoundednessFigure() {
             </g>
           );
         })}
-        <LaTeX
-          at={[2, yMax]}
-          tex={String.raw`\sup_\alpha\|T_\alpha\|`}
-          color={bounded ? DIA.ink : DIA.alert}
-        />
+        <LaTeX at={[2, yMax]} tex={String.raw`\sup_\alpha\|T_\alpha\|`} color={bounded ? DIA.ink : DIA.alert} />
         <LaTeX at={[8.5, yMax]} tex={String.raw`\|T_n\|`} color={DIA.ink} />
       </FigureFrame>
-      <SegmentedControl
-        value={mode}
-        options={MODE_OPTIONS}
-        onChange={setMode}
-        ariaLabel="Domain completeness"
-      />
+      <SegmentedControl value={mode} options={MODE_OPTIONS} onChange={setMode} ariaLabel="Domain completeness" />
       <RangeControl
         min={3}
         max={MAX_OPS}

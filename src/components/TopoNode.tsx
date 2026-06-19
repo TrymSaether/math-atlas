@@ -3,13 +3,7 @@ import { ScrollIcon, FlaskIcon, ChartLineIcon } from "@phosphor-icons/react";
 import { Handle, Position, type NodeProps } from "reactflow";
 import { getDomainTone } from "../lib/colors";
 import { MathText } from "../lib/katex";
-import {
-  CATEGORY_META,
-  categoryOf,
-  kindAbbrev,
-  railBackground,
-  type NodeCategory,
-} from "../lib/nodeCategory";
+import { CATEGORY_META, categoryOf, kindAbbrev, railBackground, type NodeCategory } from "../lib/nodeCategory";
 import { CATEGORY_ICON, KIND_ICON_OVERRIDE } from "../lib/nodeCategoryIcons";
 import { cn, prefersReducedMotion } from "../lib/utils";
 import { useStore } from "../store";
@@ -70,10 +64,11 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
   useEffect(() => {
     const el = rootRef.current;
     if (!el || routePulseDelay === undefined || prefersReducedMotion()) return;
-    const anim = el.animate(
-      [{ transform: "scale(1)" }, { transform: "scale(1.07)" }, { transform: "scale(1)" }],
-      { duration: 380, delay: routePulseDelay, easing: "cubic-bezier(0.22,0.61,0.36,1)" },
-    );
+    const anim = el.animate([{ transform: "scale(1)" }, { transform: "scale(1.07)" }, { transform: "scale(1)" }], {
+      duration: 380,
+      delay: routePulseDelay,
+      easing: "cubic-bezier(0.22,0.61,0.36,1)",
+    });
     return () => anim.cancel();
   }, [routePulseDelay, routeRunKey]);
   const accented = isSelected || isRelated;
@@ -92,13 +87,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
   const showMeta = lod === "near" || lod === "mid";
   // At distance the card is just a label — let the title grow and use more lines.
   const titleClass =
-    lod === "far"
-      ? isLandmark
-        ? "text-atlas-card"
-        : "text-atlas-brand"
-      : isLandmark
-        ? "text-ui-body"
-        : "text-ui-sm";
+    lod === "far" ? (isLandmark ? "text-atlas-card" : "text-atlas-brand") : isLandmark ? "text-ui-body" : "text-ui-sm";
   const titleLineClamp = lod === "far" ? 3 : 2;
 
   return (
@@ -170,11 +159,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
               style={{ background: tone.color }}
               aria-hidden
             >
-              <CategoryIcon
-                className="h-[10px] w-[10px]"
-                weight="bold"
-                style={{ color: "var(--fg-on-color)" }}
-              />
+              <CategoryIcon className="h-[10px] w-[10px]" weight="bold" style={{ color: "var(--fg-on-color)" }} />
             </span>
           ) : (
             <CategoryIcon
@@ -218,11 +203,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       )}
 
       <div
-        className={cn(
-          "overflow-hidden font-semibold leading-[1.28]",
-          showMeta ? "mt-1.5" : "my-auto",
-          titleClass,
-        )}
+        className={cn("overflow-hidden font-semibold leading-[1.28]", showMeta ? "mt-1.5" : "my-auto", titleClass)}
         style={{
           color: "var(--fg-1)",
           display: "-webkit-box",

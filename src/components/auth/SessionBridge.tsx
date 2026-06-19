@@ -35,5 +35,12 @@ export function SessionBridge() {
     }
   }, [userId, isPending, setUserId]);
 
+  // Detect a collaborator's save when the window regains focus.
+  useEffect(() => {
+    const onFocus = () => void useStore.getState().checkRemoteUpdate();
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, []);
+
   return null;
 }

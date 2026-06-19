@@ -58,9 +58,7 @@ export function CommandPalette() {
             <Dialog.Content asChild>
               <div className="fixed left-1/2 top-1/2 z-60 w-155 max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
                 <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
-                <Dialog.Description className="sr-only">
-                  Jump to a concept or switch fields.
-                </Dialog.Description>
+                <Dialog.Description className="sr-only">Jump to a concept or switch fields.</Dialog.Description>
                 <motion.div
                   initial={reduceMotion ? false : { opacity: 0, y: -12, scale: 0.99 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -127,19 +125,12 @@ export function CommandPalette() {
                                 }}
                               >
                                 <span className="flex w-full items-center gap-2.5">
-                                  <span
-                                    className="h-2 w-2 shrink-0 rounded-full"
-                                    style={{ background: tone.color }}
-                                  />
+                                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: tone.color }} />
                                   <span
                                     className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
                                     style={{ background: tone.tint, color: tone.color }}
                                   >
-                                    <CategoryIcon
-                                      className="h-2.5 w-2.5"
-                                      weight="bold"
-                                      aria-hidden
-                                    />
+                                    <CategoryIcon className="h-2.5 w-2.5" weight="bold" aria-hidden />
                                   </span>
                                   <span className="w-24 shrink-0 text-ui-caption font-medium uppercase tracking-label-tight text-(--fg-3)">
                                     {KIND_LABEL[n.kind]}
@@ -176,15 +167,7 @@ export function CommandPalette() {
   );
 }
 
-function Item({
-  children,
-  onSelect,
-  value,
-}: {
-  children: React.ReactNode;
-  onSelect: () => void;
-  value?: string;
-}) {
+function Item({ children, onSelect, value }: { children: React.ReactNode; onSelect: () => void; value?: string }) {
   return (
     <Command.Item
       value={value}

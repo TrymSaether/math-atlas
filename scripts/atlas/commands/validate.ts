@@ -27,12 +27,7 @@ function anchorFor(json: unknown, path: readonly PropertyKey[]): string | undefi
   return undefined;
 }
 
-function issuesToDiagnostics(
-  mapId: string,
-  fileName: string,
-  json: unknown,
-  err: z.ZodError,
-): Diagnostic[] {
+function issuesToDiagnostics(mapId: string, fileName: string, json: unknown, err: z.ZodError): Diagnostic[] {
   return err.issues.map((i) =>
     error({
       code: `schema/${String(i.path[0] ?? "root")}`,
