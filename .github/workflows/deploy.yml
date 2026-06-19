@@ -37,6 +37,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # Absolute URL of the deployed API (Render). Baked into the SPA at build.
+          VITE_API_URL: https://math-atlas-api.onrender.com
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

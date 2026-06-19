@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "dev:server": "tsx watch server/index.ts",
+    "start:server": "tsx server/index.ts",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx server/seed.ts",
     "db:studio": "drizzle-kit studio",

@@ -1,0 +1,23 @@
+# Render blueprint for the math-atlas API (Hono on Node).
+# Deploy: Render dashboard → New → Blueprint → pick this repo/branch.
+# DATABASE_URL and BETTER_AUTH_SECRET are secrets — set them in the dashboard
+# (sync:false keeps them out of the repo).
+services:
+  - type: web
+    name: math-atlas-api
+    runtime: node
+    plan: free
+    branch: backend-maps-api
+    buildCommand: npm install
+    startCommand: npm run start:server
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: BETTER_AUTH_SECRET
+        sync: false
+      # The SPA origin (GitHub Pages) — trusted origin + auth base URL.
+      - key: APP_URL
+        value: https://trymsaether.github.io
+      - key: WEB_ORIGINS
+        value: https://trymsaether.github.io
