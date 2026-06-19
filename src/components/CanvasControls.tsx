@@ -816,6 +816,7 @@ function PanelSection({ title, children }: { title: string; children: ReactNode 
     </section>
   );
 }
+
 const MODES: { id: ViewMode; label: string; hint: string; icon: Icon }[] = [
   { id: "dependency", label: "Dependency", hint: "Logical graph", icon: GitBranchIcon },
   { id: "cluster", label: "Regions", hint: "Domain clusters", icon: CirclesThreeIcon },
@@ -842,7 +843,7 @@ function ModeTile({
       aria-pressed={active}
     >
       <span
-        className={cn("map-mode-tile-preview", active ? "bg-accent-soft text-accent" : "bg-surface-2 text-fg-2")}
+        className={cn("map-mode-tile-preview", active ? "bg-accent text-fg-on-color" : "bg-surface-2 text-fg-2")}
         aria-hidden
       >
         <IconComponent className="h-6 w-6" weight={active ? "bold" : "regular"} />
