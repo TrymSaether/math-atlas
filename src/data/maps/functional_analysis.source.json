@@ -2128,10 +2128,10 @@
       "label": "Self-adjoint operator",
       "content": {
         "definition": "An operator on a Hilbert space equal to its Hilbert-space adjoint.",
-        "formal": "T=T^*, equivalently <Tx,y>=<x,Ty>.",
+        "formal": "$T=T^\\ast$, equivalently $\\langle Tx,y\\rangle=\\langle x,Ty\\rangle$.",
         "intuition": "Infinite-dimensional analogue of a Hermitian matrix.",
         "notation": [
-          "T=T*"
+          "$T=T^\\ast$"
         ]
       },
       "tags": [
@@ -2147,7 +2147,7 @@
       "label": "Spectral Theorem",
       "content": {
         "statement": "A compact self-adjoint operator on a Hilbert space admits an orthonormal eigenbasis for the closure of its range and a spectral decomposition.",
-        "formal": "If T is compact self-adjoint on H, then nonzero spectrum consists of real eigenvalues with finite-dimensional eigenspaces accumulating only at 0, and H decomposes orthogonally into eigenspaces plus ker(T).",
+        "formal": "If $T$ is compact self-adjoint on $H$, then nonzero spectrum consists of real eigenvalues with finite-dimensional eigenspaces accumulating only at 0, and $H$ decomposes orthogonally into eigenspaces plus $\\ker(T)$.",
         "intuition": "Compact self-adjoint operators behave like diagonal Hermitian matrices.",
         "notation": []
       },
