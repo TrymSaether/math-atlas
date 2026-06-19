@@ -816,21 +816,19 @@ function PanelSection({ title, children }: { title: string; children: ReactNode 
     </section>
   );
 }
-const MODES: { id: ViewMode; label: string; hint: string; icon: Icon }[] = [
-  { id: "dependency", label: "Dependency", hint: "Logical graph", icon: GitBranchIcon },
-  { id: "cluster", label: "Regions", hint: "Domain clusters", icon: CirclesThreeIcon },
+const MODES: { id: ViewMode; label: string; icon: Icon }[] = [
+  { id: "dependency", label: "Graph", icon: GitBranchIcon },
+  { id: "cluster", label: "Regions", icon: CirclesThreeIcon },
 ];
 
 function ModeTile({
   active,
   label,
-  hint,
   icon: IconComponent,
   onClick,
 }: {
   active: boolean;
   label: string;
-  hint: string;
   icon: Icon;
   onClick: () => void;
 }) {
@@ -838,22 +836,12 @@ function ModeTile({
     <button
       type="button"
       onClick={onClick}
-      className={cn("map-mode-tile group relative", active && "is-active")}
+      className={cn("map-mode-segment", active && "is-active")}
       aria-pressed={active}
+      title={label}
     >
-      <span
-        className={cn("map-mode-tile-preview", active ? "bg-accent-soft text-accent" : "bg-surface-2 text-fg-2")}
-        aria-hidden
-      >
-        <IconComponent className="h-6 w-6" weight={active ? "bold" : "regular"} />
-      </span>
-
-      <span className="px-0.5">
-        <span className={cn("block text-ui-control font-semibold leading-tight", active ? "text-accent" : "text-fg-1")}>
-          {label}
-        </span>
-        <span className="block text-ui-hint text-fg-3">{hint}</span>
-      </span>
+      <IconComponent className="map-mode-segment-icon" weight={active ? "bold" : "regular"} />
+      <span>{label}</span>
     </button>
   );
 }
@@ -902,16 +890,9 @@ function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement |
     >
       <div className="map-panel-scroll panel-scrollbar flex flex-col gap-3.5 overflow-y-auto p-3.5">
         <PanelSection title="Map Modes">
-          <div className="grid grid-cols-2 gap-2">
+          <div className={cn("map-mode-control", view === "cluster" && "is-cluster")}>
             {MODES.map((m) => (
-              <ModeTile
-                key={m.id}
-                active={view === m.id}
-                label={m.label}
-                hint={m.hint}
-                icon={m.icon}
-                onClick={() => setView(m.id)}
-              />
+              <ModeTile key={m.id} active={view === m.id} label={m.label} icon={m.icon} onClick={() => setView(m.id)} />
             ))}
           </div>
         </PanelSection>
