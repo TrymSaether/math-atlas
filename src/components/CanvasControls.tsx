@@ -274,7 +274,7 @@ function DirectionsPanel({
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover canvas-control-panel panel-scrollbar pointer-events-auto fixed z-40 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-auto rounded-xl p-3"
+      className="canvas-control-panel panel-scrollbar pointer-events-auto fixed z-40 flex w-[min(340px,calc(100vw-24px))] flex-col gap-2.5 overflow-auto rounded-xl p-3"
       style={{
         top: position.top,
         right: position.right,
@@ -891,7 +891,7 @@ function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement |
   return createPortal(
     <div
       ref={panelRef}
-      className="map-popover canvas-control-panel map-panel pointer-events-auto fixed z-40 w-[min(320px,calc(100vw-24px))] overflow-hidden rounded-xl"
+      className="canvas-control-panel map-panel pointer-events-auto fixed z-40 w-[min(320px,calc(100vw-24px))] overflow-hidden rounded-xl"
       style={{
         top: position.top,
         right: position.right,
