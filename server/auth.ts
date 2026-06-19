@@ -9,6 +9,16 @@ import { db } from "./db/client";
 import * as schema from "./db/schema";
 import { env, isLocalhostOrigin, webOrigins } from "./env";
 
+const socialProviders =
+  env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
+    ? {
+        google: {
+          clientId: env.GOOGLE_CLIENT_ID,
+          clientSecret: env.GOOGLE_CLIENT_SECRET,
+        },
+      }
+    : undefined;
+
 export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
@@ -24,12 +34,7 @@ export const auth = betterAuth({
   },
   database: drizzleAdapter(db, { provider: "pg", schema }),
   emailAndPassword: { enabled: true },
-  socialProviders: {
-    google: {
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    },
-  },
+  socialProviders,
   // OAuth completes in a popup so the API can hand the session token back to
   // the cross-origin SPA, where the bearer client stores it for later requests.
   plugins: [bearer(), oauthPopup()],
