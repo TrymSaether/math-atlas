@@ -65,34 +65,20 @@ export function CommandPalette() {
                   exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
                 >
-                  <Command
-                    className="overflow-hidden rounded-2xl border"
-                    style={{
-                      background: "var(--surface)",
-                      borderColor: "var(--border)",
-                      boxShadow: "var(--shadow-3)",
-                    }}
-                    loop
-                  >
-                    <div className="border-b px-4 py-3" style={{ borderColor: "var(--border)" }}>
+                  <Command className="command-palette chrome-panel-solid border" loop>
+                    <div className="command-palette-input-row">
                       <Command.Input
                         data-no-focus-ring
                         value={query}
                         onValueChange={setQuery}
                         placeholder="Search concepts, definitions, theorems…"
-                        className="w-full bg-transparent text-ui-body outline-none placeholder:text-(--fg-3)"
-                        style={{ color: "var(--fg-1)" }}
+                        className="command-palette-input"
                       />
                     </div>
-                    <Command.List className="panel-scrollbar max-h-105 overflow-y-auto p-2">
-                      <Command.Empty className="px-3 py-6 text-center text-ui-xs text-(--fg-3)">
-                        No results.
-                      </Command.Empty>
+                    <Command.List className="command-palette-list panel-scrollbar">
+                      <Command.Empty className="command-palette-empty">No results.</Command.Empty>
 
-                      <Command.Group
-                        heading="Fields"
-                        className="px-2 pt-2 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide **:[[cmdk-group-heading]]:text-(--fg-3)"
-                      >
+                      <Command.Group heading="Fields" className="command-palette-group">
                         {catalog.map((entry) => (
                           <Item
                             key={entry.slug}
@@ -108,10 +94,7 @@ export function CommandPalette() {
                       </Command.Group>
 
                       {data && (
-                        <Command.Group
-                          heading="Concepts"
-                          className="px-2 pt-3 **:[[cmdk-group-heading]]:text-ui-2xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-label-wide **:[[cmdk-group-heading]]:text-(--fg-3)"
-                        >
+                        <Command.Group heading="Concepts" className="command-palette-group">
                           {data.nodes.map((n) => {
                             const tone = getDomainTone(n.domain);
                             const CategoryIcon = kindIcon(n.kind);
@@ -149,10 +132,7 @@ export function CommandPalette() {
                       )}
                     </Command.List>
 
-                    <div
-                      className="flex items-center justify-between border-t px-3 py-1.5 text-ui-caption text-(--fg-3)"
-                      style={{ borderColor: "var(--border-subtle)" }}
-                    >
+                    <div className="command-palette-footer">
                       <span>↑↓ navigate · ↵ select · esc close</span>
                       <span className="font-mono">⌘K</span>
                     </div>
@@ -172,7 +152,7 @@ function Item({ children, onSelect, value }: { children: React.ReactNode; onSele
     <Command.Item
       value={value}
       onSelect={onSelect}
-      className="cursor-pointer rounded-sm px-2 py-2 text-ui-sm text-(--fg-1) aria-selected:bg-(--accent-soft) aria-selected:text-(--fg-1)"
+      className="command-palette-item"
     >
       {children}
     </Command.Item>

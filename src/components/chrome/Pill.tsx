@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
 import { Button } from "./Button";
 
@@ -12,20 +12,21 @@ import { Button } from "./Button";
  * scope class (`top-tools` or `canvas-dock`) via `className` to pick up the
  * context-specific icon sizing defined in index.css.
  */
-export function Pill({
-  children,
-  orientation = "horizontal",
-  variant = "default",
-  className,
-}: {
+interface PillProps {
   children: ReactNode;
   orientation?: "horizontal" | "vertical";
   /** `soft` uses a lighter drop shadow — better for clusters of small pills. */
   variant?: "default" | "soft";
   className?: string;
-}) {
+}
+
+export const Pill = forwardRef<HTMLDivElement, PillProps>(function Pill(
+  { children, orientation = "horizontal", variant = "default", className },
+  ref,
+) {
   return (
     <div
+      ref={ref}
       className={cn(
         "pointer-events-auto flex items-center rounded-xl p-1",
         variant === "soft" ? "map-chrome-soft" : "map-chrome",
@@ -36,7 +37,7 @@ export function Pill({
       {children}
     </div>
   );
-}
+});
 
 /**
  * An icon button sized for a glass Pill — a thin convenience wrapper over
