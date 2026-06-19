@@ -42,15 +42,9 @@
       "palette": "orange"
     },
     {
-      "id": "applications",
-      "label": "Applications",
-      "order": 6,
-      "palette": "pink"
-    },
-    {
       "id": "number_theory",
       "label": "Number Theory",
-      "order": 7,
+      "order": 6,
       "palette": "gold"
     }
   ],
@@ -2528,6 +2522,36 @@
       "priority": "standard"
     },
     {
+      "id": "isoperimetric",
+      "kind": "application",
+      "domain": "series",
+      "label": "Isoperimetric Inequality",
+      "content": {
+        "statement": "A simple closed plane curve of fixed length encloses maximal area exactly when it is a circle.",
+        "formal": "If a sufficiently smooth simple closed plane curve has length $L$ and encloses area $A$, then $A\\le L^2/(4\\pi)$, with equality exactly for circles.",
+        "formula": "$$4\\pi A\\le L^2.$$",
+        "intuition": "Writing the boundary curve as a Fourier series turns area and length into coefficient sums. Parseval then becomes a geometric inequality.",
+        "notation": [
+          "$$A\\le L^2/(4\\pi)$$"
+        ]
+      },
+      "assumptions": [
+        "Assume a regular simple closed curve, for example piecewise $C^1$, oriented positively."
+      ],
+      "source": {
+        "citation": "Stein–Shakarchi: Ch.4 Theorem 1.1",
+        "ref": "Stein–Shakarchi: Ch.4 Theorem 1.1",
+        "references": [
+          "c4_thm_1_1"
+        ]
+      },
+      "tags": [
+        "geometry",
+        "series"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "parseval_identity",
       "kind": "theorem",
       "domain": "series",
@@ -2729,6 +2753,33 @@
       },
       "tags": [
         "series"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "separation_of_variables",
+      "kind": "proof_method",
+      "domain": "series",
+      "label": "Separation of Variables",
+      "content": {
+        "statement": "A method for solving linear PDEs by expanding in spatial eigenfunctions.",
+        "formal": "Seek $u(x,t)=\\sum_n c_n(t)e_n(x)$, where $e_n$ are eigenfunctions of the spatial operator. Orthogonality decouples the PDE into ODEs for the coefficients $c_n(t)$.",
+        "formula": "$$u(x,t)=\\sum_n c_n(t)e_n(x),\\qquad Le_n=\\lambda_ne_n.$$",
+        "intuition": "The method chooses coordinates that match the operator. In those coordinates, the PDE splits into independent one-frequency motions.",
+        "notation": [
+          "$$u(x,t)=\\sum_n c_n(t)e_n(x)$$"
+        ]
+      },
+      "diagram": "/atlas-assets/fourier/diagrams/wave-modes.svg",
+      "assumptions": [
+        "Requires a suitable eigenfunction expansion for the spatial problem."
+      ],
+      "source": {
+        "citation": "Curated concept graph",
+        "references": []
+      },
+      "tags": [
+        "pde"
       ],
       "priority": "core"
     },
@@ -3212,6 +3263,33 @@
       "priority": "standard"
     },
     {
+      "id": "wave_equation",
+      "kind": "application",
+      "domain": "series",
+      "label": "Wave Equation",
+      "content": {
+        "statement": "Vibrating strings decompose into standing harmonic waves.",
+        "formal": "For fixed-end data on $[0,\\pi]$, formal solutions have the form $u(x,t)=\\sum_{n\\ge1}(a_n\\cos nt+b_n\\sin nt)\\sin(nx)$. Periodic formulations use complex exponentials instead.",
+        "formula": "$$u(x,t)=\\sum_{n\\ge1}(a_n\\cos nt+b_n\\sin nt)\\sin(nx).$$",
+        "intuition": "The wave equation preserves oscillation rather than damping it. Each spatial harmonic evolves as a harmonic oscillator in time.",
+        "notation": [
+          "$$u_{tt}=u_{xx}$$"
+        ]
+      },
+      "diagram": "/atlas-assets/fourier/diagrams/wave-modes.svg",
+      "assumptions": [
+        "Boundary conditions determine whether sine series, cosine series, or complex Fourier series are appropriate."
+      ],
+      "source": {
+        "citation": "Curated concept graph",
+        "references": []
+      },
+      "tags": [
+        "pde"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "weierstrass_function",
       "kind": "example",
       "domain": "series",
@@ -3338,6 +3416,38 @@
         "exercise",
         "oving5",
         "series"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "oving6_p1",
+      "kind": "exercise",
+      "domain": "series",
+      "label": "Øving 6 · P1 — A heat equation with a decay term",
+      "content": {
+        "statement": "A damped heat equation solved mode-by-mode via Fourier series.",
+        "formal": "For $u(x,t)=\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{-ct-\\sigma^2n^2t}e^{inx}$: (a) show $u\\in C^\\infty((0,2\\pi)\\times(0,T))$; (b) show $u_t+cu-\\sigma^2u_{xx}=0$ in $(0,2\\pi)\\times(0,T)$.",
+        "intuition": "The Gaussian damping $e^{-\\sigma^2n^2t}$ smooths instantly (super-polynomial decay), and the PDE is just the eigenvalue relation $\\partial_t=\\sigma^2\\partial_{xx}-c$ acting mode-by-mode.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "The coefficients $\\hat f(n)$ are bounded, $|\\hat f(n)|\\le\\|f\\|_{L^1}$.\n\n\\textbf{(a)} Fix $t_0\\in(0,T)$. For $t\\ge t_0$ the factor $e^{-\\sigma^2n^2t}\\le e^{-\\sigma^2n^2t_0}$ decays faster than any power of $n$, so for all $j,m$,\n$$\\sum_n\\big|\\hat f(n)\\big|\\,|n|^{j}\\,(c+\\sigma^2n^2)^{m}\\,e^{-ct-\\sigma^2n^2t}<\\infty\\quad\\text{uniformly on }[t_0,T),$$\nwhich dominates every term-by-term $x$- and $t$-derivative. Hence the series and all its partial derivatives converge uniformly on $(0,2\\pi)\\times[t_0,T)$, so $u\\in C^\\infty((0,2\\pi)\\times(0,T))$.\n\n\\textbf{(b)} Differentiating term by term (justified by (a)): $\\partial_t$ brings down $(-c-\\sigma^2n^2)$ and $\\partial_{xx}$ brings down $(in)^2=-n^2$. The operator applied to the $n$-th term gives the factor\n$$(-c-\\sigma^2n^2)+c-\\sigma^2(-n^2)=-c-\\sigma^2n^2+c+\\sigma^2n^2=0.$$\nEvery term vanishes, so $u_t+cu-\\sigma^2u_{xx}=0$. $\\blacksquare$",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "TMA4170 Øving 6, Problem P1",
+        "ref": "TMA4170 Øving 6, Problem P1",
+        "references": []
+      },
+      "tags": [
+        "custom",
+        "exercise",
+        "oving6"
       ],
       "priority": "core"
     },
@@ -3632,6 +3742,35 @@
         "convergence"
       ],
       "priority": "core"
+    },
+    {
+      "id": "dirichlet_problem_disk",
+      "kind": "application",
+      "domain": "convergence",
+      "label": "Dirichlet Problem on the Disk",
+      "content": {
+        "statement": "The Poisson kernel gives the harmonic extension of boundary data on the disk.",
+        "formal": "If $f\\in C(\\mathbb T)$, then $u(r,\\theta)=(P_r*f)(\\theta)$ is harmonic for $0\\le r<1$ and $u(r,\\theta)\\to f(\\theta)$ as $r\\to1^-$.",
+        "formula": "$$u(r,\\theta)=(P_r*f)(\\theta),\\qquad \\Delta u=0,\\qquad \\lim_{r\\to1^-}u(r,\\theta)=f(\\theta).$$",
+        "intuition": "Boundary values are averaged with a kernel that concentrates near the boundary point as one approaches the circle.",
+        "notation": [
+          "$$u(r,\\theta)=P_r*f(\\theta)$$"
+        ]
+      },
+      "assumptions": [
+        "Boundary convergence is stated for continuous boundary data; weaker data require weaker convergence modes."
+      ],
+      "source": {
+        "citation": "Stein–Shakarchi: Ch.2 Theorem 5.7",
+        "ref": "Stein–Shakarchi: Ch.2 Theorem 5.7",
+        "references": [
+          "c2_thm_5_7"
+        ]
+      },
+      "tags": [
+        "pde"
+      ],
+      "priority": "standard"
     },
     {
       "id": "dirichlet_convergence_theorem",
@@ -4399,6 +4538,37 @@
       "priority": "standard"
     },
     {
+      "id": "ss4_5_ex11",
+      "kind": "exercise",
+      "domain": "convergence",
+      "label": "SS 4.5.11 — Heat flow converges to its data in $L^2$",
+      "content": {
+        "statement": "Heat-kernel smoothing converges to the initial data in $L^2$.",
+        "formal": "Show that if $u(x,t)=(f*H_t)(x)$, where $H_t$ is the heat kernel and $f$ is Riemann integrable, then\n$$\\int_0^1 |u(x,t)-f(x)|^2\\,dx\\to0\\qquad\\text{as }t\\to0.$$",
+        "intuition": "On the Fourier side heat flow is the multiplier $e^{-4\\pi^2k^2t}\\to1$; Parseval turns convergence of the data into termwise convergence dominated by Bessel's bound.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "On the circle $H_t(x)=\\sum_{k}e^{-4\\pi^2k^2t}e^{2\\pi ikx}$, so convolution multiplies coefficients: $\\widehat{u(\\cdot,t)}(k)=\\hat f(k)\\,e^{-4\\pi^2k^2t}$. By Parseval,\n$$\\int_0^1|u(x,t)-f(x)|^2\\,dx=\\sum_{k\\in\\mathbb Z}|\\hat f(k)|^2\\,\\big|e^{-4\\pi^2k^2t}-1\\big|^2.$$\nFor each fixed $k$, $e^{-4\\pi^2k^2t}-1\\to0$ as $t\\to0^+$. Moreover $0<e^{-4\\pi^2k^2t}\\le1$ gives $|e^{-4\\pi^2k^2t}-1|^2\\le1$, so the summand is dominated by $|\\hat f(k)|^2$, which is summable (Bessel, since $f$ is Riemann integrable). By dominated convergence the series $\\to0$, i.e.\n$$\\int_0^1|u(x,t)-f(x)|^2\\,dx\\to0\\quad(t\\to0^+).$$\nSo the heat semigroup recovers the initial data in the mean-square sense for any integrable $f$ — even before pointwise statements (which need $f$ continuous and the good-kernel property).",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Stein–Shakarchi 4.5, Exercise 11",
+        "ref": "Stein–Shakarchi 4.5, Exercise 11",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "oving6"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "summation_by_parts",
       "kind": "method",
       "domain": "convergence",
@@ -4480,6 +4650,32 @@
       "tags": [
         "signal",
         "transform"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "central_limit",
+      "kind": "application",
+      "domain": "transform",
+      "label": "Central Limit Theorem (Fourier proof)",
+      "content": {
+        "statement": "Fourier methods prove that normalized sums of independent variables converge in distribution to a Gaussian.",
+        "formal": "For i.i.d. random variables with mean $\\mu$ and variance $\\sigma^2>0$, the characteristic functions of $(X_1+\\cdots+X_n-n\\mu)/(\\sigma\\sqrt n)$ converge pointwise to $e^{-t^2/2}$, the characteristic function of the standard normal law.",
+        "formula": "$$\\varphi_{\\frac{X_1+\\cdots+X_n-n\\mu}{\\sigma\\sqrt n}}(t)\\to e^{-t^2/2}.$$",
+        "intuition": "Independence turns sums into products of characteristic functions. After normalization, those products converge to the Gaussian multiplier.",
+        "notation": [
+          "$$\\varphi_n(t)\\to e^{-t^2/2}$$"
+        ]
+      },
+      "assumptions": [
+        "Uses the probability convention $\\varphi_X(t)=\\mathbb E e^{itX}$, not the graph's $2\\pi$-Fourier transform convention."
+      ],
+      "source": {
+        "citation": "Curated concept graph",
+        "references": []
+      },
+      "tags": [
+        "probability"
       ],
       "priority": "standard"
     },
@@ -5022,6 +5218,59 @@
       "priority": "standard"
     },
     {
+      "id": "diffraction",
+      "kind": "application",
+      "domain": "transform",
+      "label": "Fraunhofer Diffraction",
+      "content": {
+        "statement": "In the Fraunhofer far-field approximation, the diffraction amplitude is essentially the Fourier transform of the aperture.",
+        "formal": "For an aperture indicator $\\mathbf 1_A$ in the aperture plane, the far-field amplitude is proportional to $\\widehat{\\mathbf 1_A}(\\xi)$, and the observed intensity is proportional to $|\\widehat{\\mathbf 1_A}(\\xi)|^2$.",
+        "formula": "$$I(\\xi)\\propto\\left|\\widehat{\\mathbf 1_A}(\\xi)\\right|^2.$$",
+        "intuition": "A lens or far-field propagation physically separates spatial frequencies. A slit produces a sinc pattern; a circular aperture produces an Airy-type pattern.",
+        "notation": [
+          "$$I(\\xi)\\propto |\\widehat{\\mathbf 1_A}(\\xi)|^2$$"
+        ]
+      },
+      "diagram": "/atlas-assets/fourier/diagrams/diffraction.svg",
+      "assumptions": [
+        "This is the scalar Fraunhofer approximation, not a full electromagnetic model."
+      ],
+      "source": {
+        "citation": "Curated concept graph",
+        "references": []
+      },
+      "tags": [
+        "optics"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "schrodinger_equation",
+      "kind": "application",
+      "domain": "transform",
+      "label": "Free Schrödinger Equation",
+      "content": {
+        "statement": "The free Schrödinger equation is solved by multiplying each Fourier mode by a dispersive phase.",
+        "formal": "For $iu_t=-u_{xx}$ on $\\mathbb R$ with initial data $u_0$, the Fourier transform satisfies $\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)$.",
+        "formula": "$$iu_t=-u_{xx},\\qquad \\widehat u(\\xi,t)=e^{-4\\pi^2i\\xi^2t}\\widehat u_0(\\xi).$$",
+        "intuition": "The Fourier transform turns the spatial second derivative into multiplication by $-4\\pi^2\\xi^2$. Unlike heat flow, the multiplier has modulus one, so waves disperse rather than decay.",
+        "notation": [
+          "$$\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)$$"
+        ]
+      },
+      "assumptions": [
+        "Uses the Fourier convention $e^{-2\\pi ix\\xi}$. Regularity assumptions depend on whether one wants classical, $L^2$, or distributional solutions."
+      ],
+      "source": {
+        "citation": "Curated concept graph",
+        "references": []
+      },
+      "tags": [
+        "pde"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "gaussian_transform",
       "kind": "example",
       "domain": "transform",
@@ -5077,6 +5326,37 @@
         "transform"
       ],
       "priority": "standard"
+    },
+    {
+      "id": "heat_equation",
+      "kind": "application",
+      "domain": "transform",
+      "label": "Heat Equation",
+      "content": {
+        "statement": "Diffusion is solved by damping each Fourier mode.",
+        "formal": "On the circle, $u_t=u_{xx}$, $u(x,0)=f(x)$, has formal solution $u(x,t)=\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{-n^2t}e^{inx}$. On $\\mathbb R$, $u(x,t)=(H_t*f)(x)$.",
+        "formula": "$$\\begin{aligned} u_t&=u_{xx},\\\\ u(x,0)&=f(x),\\\\ \\widehat u(n,t)&=e^{-n^2t}\\widehat f(n). \\end{aligned}$$",
+        "intuition": "High frequencies decay faster than low frequencies, so heat flow smooths rough data as time increases.",
+        "notation": [
+          "$$u_t=u_{xx}$$"
+        ]
+      },
+      "assumptions": [
+        "Constants depend on whether the circle basis is $e^{inx}$ or the real-line transform convention is used."
+      ],
+      "source": {
+        "citation": "Stein–Shakarchi: Ch.5 Corollary 2.2; Ch.5 Theorem 2.1; Ch.5 Theorem 2.3",
+        "ref": "Stein–Shakarchi: Ch.5 Corollary 2.2; Ch.5 Theorem 2.1; Ch.5 Theorem 2.3",
+        "references": [
+          "c5_cor_2_2",
+          "c5_thm_2_1",
+          "c5_thm_2_3"
+        ]
+      },
+      "tags": [
+        "pde"
+      ],
+      "priority": "core"
     },
     {
       "id": "heat_kernel_real_line",
@@ -5138,6 +5418,33 @@
         "transform"
       ],
       "priority": "standard"
+    },
+    {
+      "id": "laplacian",
+      "kind": "operator",
+      "domain": "transform",
+      "label": "Laplacian",
+      "content": {
+        "statement": "The second-order spatial differential operator diagonalized by the Fourier transform.",
+        "definition": "$$\\Delta f=\\sum_{j=1}^{d}\\frac{\\partial^2 f}{\\partial x_j^2},\\qquad \\widehat{\\Delta f}(\\xi)=-4\\pi^2|\\xi|^2\\widehat f(\\xi).$$",
+        "formal": "On $\\mathbb R^d$, $\\Delta f=\\sum_{j=1}^{d}\\partial_{x_j}^2f$. With the graph's Fourier convention, $\\widehat{\\Delta f}(\\xi)=-4\\pi^2|\\xi|^2\\hat f(\\xi)$ for Schwartz functions.",
+        "intuition": "The Laplacian measures curvature or diffusion pressure. Fourier transform turns it into multiplication by $-4\\pi^2|\\xi|^2$, which is why heat, wave, and Schrödinger equations reduce to scalar frequency equations.",
+        "notation": [
+          "$$\\Delta,\\ -4\\pi^2|\\xi|^2$$"
+        ]
+      },
+      "assumptions": [
+        "The multiplier identity is stated first for Schwartz functions; weaker solution theories use density or distributions."
+      ],
+      "source": {
+        "citation": "Curated concept graph",
+        "ref": "Stein–Shakarchi: Ch.5 and Ch.6 Fourier transform applications to PDE",
+        "references": []
+      },
+      "tags": [
+        "pde"
+      ],
+      "priority": "core"
     },
     {
       "id": "paley_wiener_theorem",
@@ -5311,6 +5618,38 @@
       "priority": "core"
     },
     {
+      "id": "radon_transform",
+      "kind": "application",
+      "domain": "transform",
+      "label": "Radon Transform",
+      "content": {
+        "statement": "The Radon transform reconstructs a function from its integrals over hyperplanes.",
+        "formal": "For suitable $f$ on $\\mathbb R^d$, $Rf(t,\\gamma)=\\int_{x\\cdot\\gamma=t}f(x)\\,d\\sigma(x)$. The Fourier slice theorem says the one-dimensional Fourier transform in $t$ satisfies $\\mathcal F_t(Rf)(s,\\gamma)=\\hat f(s\\gamma)$.",
+        "formula": "$$Rf(t,\\gamma)=\\int_{x\\cdot\\gamma=t}f(x)\\,d\\sigma(x),\\qquad \\mathcal F_t(Rf)(s,\\gamma)=\\widehat f(s\\gamma).$$",
+        "intuition": "Each X-ray projection reveals one slice of the Fourier transform. Combining slices over many directions reconstructs the object.",
+        "notation": [
+          "$$\\mathcal F_t(Rf)(s,\\gamma)=\\hat f(s\\gamma)$$"
+        ]
+      },
+      "assumptions": [
+        "Requires suitable decay or integrability so the hyperplane integrals and transforms are defined."
+      ],
+      "source": {
+        "citation": "Stein–Shakarchi: Ch.6 Corollary 5.3; Ch.6 Lemma 5.2; Ch.6 Proposition 5.1; Ch.6 Theorem 5.4",
+        "ref": "Stein–Shakarchi: Ch.6 Corollary 5.3; Ch.6 Lemma 5.2; Ch.6 Proposition 5.1; Ch.6 Theorem 5.4",
+        "references": [
+          "c6_cor_5_3",
+          "c6_lem_5_2",
+          "c6_prop_5_1",
+          "c6_thm_5_4"
+        ]
+      },
+      "tags": [
+        "imaging"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "fourier_scaling_rule",
       "kind": "property",
       "domain": "transform",
@@ -5338,6 +5677,32 @@
         "transform"
       ],
       "priority": "standard"
+    },
+    {
+      "id": "signal_filtering",
+      "kind": "application",
+      "domain": "transform",
+      "label": "Signal Filtering",
+      "content": {
+        "statement": "Frequency-selective processing by convolution in time or space.",
+        "formal": "For a linear time-invariant filter with impulse response $h$, $y=h*x$, so $\\hat y=\\hat h\\,\\hat x$ whenever the transforms are defined. The multiplier $\\hat h$ is the transfer function.",
+        "formula": "$$y=h*x,\\qquad \\widehat y=\\widehat h\\,\\widehat x.$$",
+        "intuition": "Filtering is easier in frequency: convolutional systems become pointwise multiplication, so passing or rejecting frequency bands becomes a multiplier design problem.",
+        "notation": [
+          "$$\\hat y=\\hat h\\,\\hat x$$"
+        ]
+      },
+      "assumptions": [
+        "Precise hypotheses depend on whether signals are modeled in $L^1$, $L^2$, distributions, or discrete spaces."
+      ],
+      "source": {
+        "citation": "Curated concept graph",
+        "references": []
+      },
+      "tags": [
+        "signal"
+      ],
+      "priority": "core"
     },
     {
       "id": "ss5_5_ex15",
@@ -5651,6 +6016,83 @@
       "priority": "standard"
     },
     {
+      "id": "ss5_6_prob1",
+      "kind": "exercise",
+      "domain": "transform",
+      "label": "SS 5.6.1 — A logarithmic variant of the heat equation",
+      "content": {
+        "statement": "Solve an Euler-type heat equation by reduction to the standard heat equation.",
+        "formal": "The equation $$x^2\\frac{\\partial^2u}{\\partial x^2}+ax\\frac{\\partial u}{\\partial x}=\\frac{\\partial u}{\\partial t},\\qquad u(x,0)=f(x),\\qquad 0<x<\\infty,\\ t>0,$$ is a variant of the heat equation. To solve it, make the change of variables $x=e^{-y}$, so $-\\infty<y<\\infty$, and set $$U(y,t)=u(e^{-y},t),\\qquad F(y)=f(e^{-y}).$$ Show that the problem reduces to $$\\frac{\\partial^2U}{\\partial y^2}+(1-a)\\frac{\\partial U}{\\partial y}=\\frac{\\partial U}{\\partial t},\\qquad U(y,0)=F(y).$$ Solve this equation by taking the Fourier transform in the $y$ variable, computing $$\\int_{-\\infty}^{\\infty}e^{(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi)t}e^{2\\pi i\\xi v}\\,d\\xi,$$ and show that the solution of the original problem is $$u(x,t)=\\frac1{(4\\pi t)^{1/2}}\\int_0^\\infty e^{-(\\log(v/x)+(1-a)t)^2/(4t)}f(v)\\,\\frac{dv}{v}.$$",
+        "intuition": "A logarithmic change of variable turns the Euler-type operator $x^2\\partial_x^2+ax\\partial_x$ into the constant-coefficient heat operator, so the solution is Gaussian smoothing in $\\log x$.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "Put $x=e^{-y}$ ($-\\infty<y<\\infty$), $U(y,t)=u(e^{-y},t)$, $F(y)=f(e^{-y})$. Since $x\\partial_x=-\\partial_y$ and $x^2\\partial_x^2=\\partial_y^2+\\partial_y$, the equation becomes the constant-coefficient\n$$U_{yy}+(1-a)U_y=U_t,\\qquad U(y,0)=F(y).$$",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "With $\\hat U(\\xi,t)=\\int U(y,t)e^{-2\\pi iy\\xi}dy$, the symbols give $\\hat U_t=\\big(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi\\big)\\hat U$, so\n$$\\hat U(\\xi,t)=\\hat F(\\xi)\\,e^{(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi)t}.$$\nThe multiplier is the transform of a shifted Gaussian: $\\int_{\\mathbb R}e^{(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi)t}e^{2\\pi i\\xi v}d\\xi=\\frac1{\\sqrt{4\\pi t}}\\,e^{-(v+(1-a)t)^2/(4t)}$ (complete the square). Hence $U=F*G_t$ with $G_t(v)=\\frac1{\\sqrt{4\\pi t}}e^{-(v+(1-a)t)^2/(4t)}$:\n$$U(y,t)=\\frac1{\\sqrt{4\\pi t}}\\int_{\\mathbb R}e^{-(y'+(1-a)t)^2/(4t)}F(y-y')\\,dy'.$$",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "$y=-\\log x$, $F(y-y')=f(e^{-(y-y')})=f(x e^{y'})$, and set $v=xe^{y'}$ so $y'=\\log(v/x)$, $dy'=dv/v$:\n$$u(x,t)=\\frac1{(4\\pi t)^{1/2}}\\int_0^\\infty e^{-(\\log(v/x)+(1-a)t)^2/(4t)}f(v)\\,\\frac{dv}{v}.$$",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Stein–Shakarchi 5.6, Problem 1",
+        "ref": "Stein–Shakarchi 5.6, Problem 1",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "oving9"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "ss5_6_prob2",
+      "kind": "exercise",
+      "domain": "transform",
+      "label": "SS 5.6.2 — The Black–Scholes equation",
+      "content": {
+        "statement": "Reduce Black–Scholes to the heat equation and read off the option price.",
+        "formal": "The Black--Scholes equation from finance theory is $$\\frac{\\partial V}{\\partial t}+rs\\frac{\\partial V}{\\partial s}+\\frac{\\sigma^2s^2}{2}\\frac{\\partial^2V}{\\partial s^2}-rV=0,\\qquad 0<t<T,$$ with final boundary condition $V(s,T)=F(s)$. An appropriate change of variables reduces this to Problem 1. Alternatively, use the substitution $$V(s,t)=e^{ax+b\\tau}U(x,\\tau),\\qquad x=\\log s,\\qquad \\tau=\\frac{\\sigma^2}{2}(T-t),$$ with $$a=\\frac12-\\frac{r}{\\sigma^2},\\qquad b=-\\left(\\frac12+\\frac{r}{\\sigma^2}\\right)^2,$$ to reduce the equation to the one-dimensional heat equation with initial condition $$U(x,0)=e^{-ax}F(e^x).$$ Conclude that a solution of the Black--Scholes equation is $$V(s,t)=\\frac{e^{-r(T-t)}}{\\sqrt{2\\pi\\sigma^2(T-t)}}\\int_0^\\infty \\exp\\left(-\\frac{(\\log(s/s^*)+(r-\\sigma^2/2)(T-t))^2}{2\\sigma^2(T-t)}\\right)F(s^*)\\,ds^*.$$",
+        "intuition": "Option pricing is heat diffusion in disguise: log-price plus a discounting/drift gauge transform turns Black–Scholes into $U_\\tau=U_{xx}$, whose Gaussian kernel is the log-normal risk-neutral density.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "Let $x=\\log s$ and $\\tau=\\frac{\\sigma^2}2(T-t)$ (so $\\tau$ runs forward from $0$ at $t=T$). In the $x$ variable, $s\\partial_s=\\partial_x$ and $s^2\\partial_s^2=\\partial_x^2-\\partial_x$; the final condition becomes an initial condition at $\\tau=0$. Substituting $V=e^{ax+b\\tau}U(x,\\tau)$ with\n$$a=\\tfrac12-\\tfrac r{\\sigma^2},\\qquad b=-\\Big(\\tfrac12+\\tfrac r{\\sigma^2}\\Big)^2,$$\nthe first-order ($V_s$) and zeroth-order ($-rV$) terms are absorbed, leaving the pure heat equation\n$$U_\\tau=U_{xx},\\qquad U(x,0)=e^{-ax}F(e^x).$$",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "The heat solution is $U(x,\\tau)=\\frac1{\\sqrt{4\\pi\\tau}}\\int_{\\mathbb R}e^{-(x-x')^2/(4\\tau)}e^{-ax'}F(e^{x'})\\,dx'$. Undoing the substitutions ($x=\\log s$, $4\\tau=2\\sigma^2(T-t)$, $s^*=e^{x'}$, $dx'=ds^*/s^*$) and simplifying the exponential prefactors gives\n$$V(s,t)=\\frac{e^{-r(T-t)}}{\\sqrt{2\\pi\\sigma^2(T-t)}}\\int_0^\\infty e^{-\\big(\\log(s/s^*)+(r-\\sigma^2/2)(T-t)\\big)^2/\\big(2\\sigma^2(T-t)\\big)}\\,F(s^*)\\,ds^*.$$\nThe kernel is log-normal: the discounted ($e^{-r(T-t)}$) expectation of the payoff $F$ under the risk-neutral price distribution.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Stein–Shakarchi 5.6, Problem 2",
+        "ref": "Stein–Shakarchi 5.6, Problem 2",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "oving9"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "ss6_6_ex1",
       "kind": "exercise",
       "domain": "transform",
@@ -5878,6 +6320,52 @@
       "priority": "standard"
     },
     {
+      "id": "ss6_6_ex9",
+      "kind": "exercise",
+      "domain": "transform",
+      "label": "SS 6.6.9 — Spherical waves ⟺ radial data",
+      "content": {
+        "statement": "Radial initial data produce radial (spherical) solutions of the wave equation, and conversely.",
+        "formal": "A spherical wave is a solution $u(x,t)$ of the Cauchy problem for the wave equation on $\\mathbb R^d$ such that, for each fixed $t$, the function $x\\mapsto u(x,t)$ is radial. Prove that $u$ is a spherical wave if and only if the initial data $f,g\\in\\mathcal S(\\mathbb R^d)$ are both radial.",
+        "intuition": "Rotational symmetry passes through the Fourier transform and the radial wave multipliers, so the wave is round exactly when its launch data are round.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "The Fourier solution of $u_{tt}=\\Delta u$, $u(\\cdot,0)=f$, $u_t(\\cdot,0)=g$ is\n$$\\hat u(\\xi,t)=\\cos(2\\pi|\\xi|t)\\,\\hat f(\\xi)+\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}\\,\\hat g(\\xi).$$\nA function is radial iff its Fourier transform is radial (rotations commute with $\\mathcal F$). The multipliers $\\cos(2\\pi|\\xi|t)$ and $\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}$ are radial in $\\xi$.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "If $f,g$ are radial, then $\\hat f,\\hat g$ are radial, so $\\hat u(\\cdot,t)$ is radial for each $t$, hence $u(\\cdot,t)$ is radial: $u$ is a spherical wave.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "If $u(\\cdot,t)$ is radial for all $t$, then so is $\\hat u(\\cdot,t)$. Setting $t=0$ gives $\\hat f=\\hat u(\\cdot,0)$ radial; differentiating at $t=0$ gives $\\hat g=\\partial_t\\hat u(\\cdot,0)$ radial. Hence $f,g$ are radial.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "Equivalently: rotations commute with the wave operator, so by uniqueness $u(R\\,\\cdot,t)$ solves the problem with data $f(R\\cdot),g(R\\cdot)$; radial $u$ $\\Leftrightarrow$ rotation-invariant data.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Stein–Shakarchi 6.6, Exercise 9",
+        "ref": "Stein–Shakarchi 6.6, Exercise 9",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "oving12"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "fourier_transform_l1_continuity_decay",
       "kind": "property",
       "domain": "transform",
@@ -6057,6 +6545,42 @@
       "tags": [
         "analysis",
         "transform"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "wave_equation_euclidean_space",
+      "kind": "application",
+      "domain": "transform",
+      "label": "Wave Equation in $\\mathbb R^d$ (Huygens, Kirchhoff)",
+      "content": {
+        "statement": "The multidimensional wave equation is solved in frequency by independent oscillators.",
+        "formal": "For $\\partial_t^2u=\\Delta u$ with $u(\\cdot,0)=f$, $u_t(\\cdot,0)=g$, the Fourier transform gives $\\hat u(\\xi,t)=\\cos(2\\pi|\\xi|t)\\hat f(\\xi)+\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}\\hat g(\\xi)$, with the second term interpreted by its limit at $\\xi=0$.",
+        "formula": "$$\\widehat u(\\xi,t)=\\cos(2\\pi|\\xi|t)\\widehat f(\\xi)+\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}\\widehat g(\\xi).$$",
+        "intuition": "Each frequency oscillates at speed proportional to $|\\xi|$. Special odd-dimensional formulas reveal Huygens' principle, where waves propagate sharply without a trailing wake.",
+        "notation": [
+          "$$\\partial_t^2u=\\Delta u$$"
+        ]
+      },
+      "assumptions": [
+        "Formula uses the $2\\pi$-frequency convention and requires suitable data or distributional interpretation."
+      ],
+      "source": {
+        "citation": "Stein–Shakarchi: Ch.6 Lemma 3.3; Ch.6 Lemma 3.4; Ch.6 Lemma 3.5; Ch.6 Theorem 2.4; Ch.6 Theorem 3.1; Ch.6 Theorem 3.2; Ch.6 Theorem 3.6; Ch.6 Theorem 3.7",
+        "ref": "Stein–Shakarchi: Ch.6 Lemma 3.3; Ch.6 Lemma 3.4; Ch.6 Lemma 3.5; Ch.6 Theorem 2.4; Ch.6 Theorem 3.1; Ch.6 Theorem 3.2; Ch.6 Theorem 3.6; Ch.6 Theorem 3.7",
+        "references": [
+          "c6_lem_3_3",
+          "c6_lem_3_4",
+          "c6_lem_3_5",
+          "c6_thm_2_4",
+          "c6_thm_3_1",
+          "c6_thm_3_2",
+          "c6_thm_3_6",
+          "c6_thm_3_7"
+        ]
+      },
+      "tags": [
+        "pde"
       ],
       "priority": "standard"
     },
@@ -6321,6 +6845,38 @@
         "exercise",
         "oving9",
         "transform"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "oving9_p3",
+      "kind": "exercise",
+      "domain": "transform",
+      "label": "Øving 9 · P3 — Wave equation and d'Alembert",
+      "content": {
+        "statement": "Solve the 1-D wave equation by Fourier methods and derive d'Alembert's formula.",
+        "formal": "For $f\\in\\mathcal S(\\mathbb R)$, $c\\in\\mathbb R$, let $u(x,t)=\\mathcal F^{-1}\\big[\\hat f(\\xi)\\cos(2\\pi c|\\xi|t)\\big](x)$. (a) Show $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$ and $u_{tt}=c^2u_{xx}$. (b) Show $u\\to f$, $u_t\\to0$ as $t\\to0^+$. (c) Show $u(x,t)=\\tfrac12\\big(f(x+ct)+f(x-ct)\\big)$.",
+        "intuition": "On the Fourier side the wave equation is the oscillator $\\partial_{tt}=-(2\\pi c\\xi)^2$; the cosine multiplier splits into two translations, giving left- and right-moving copies of the data.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "\\textbf{(a)} $\\hat u(\\xi,t)=\\hat f(\\xi)\\cos(2\\pi c|\\xi|t)$. Since $\\cos(2\\pi c|\\xi|t)$ is even and smooth in $\\xi$ and bounded by $1$, while $\\hat f\\in\\mathcal S$, the product and all its $x,t$-derivatives are Schwartz in $\\xi$ uniformly on $t$-compacts, so $u\\in C^\\infty$. Computing symbols: $\\partial_{tt}\\hat u=-(2\\pi c|\\xi|)^2\\hat u=-4\\pi^2c^2\\xi^2\\hat u$, while $\\widehat{c^2u_{xx}}=c^2(2\\pi i\\xi)^2\\hat u=-4\\pi^2c^2\\xi^2\\hat u$. Equal, so $u_{tt}=c^2u_{xx}$.\n\n\\textbf{(b)} As $t\\to0^+$, $\\cos(2\\pi c|\\xi|t)\\to1$ so $\\hat u\\to\\hat f$, hence $u\\to f$ (dominated convergence, $\\hat f\\in L^1$); and $\\hat{u_t}=-2\\pi c|\\xi|\\sin(2\\pi c|\\xi|t)\\hat f\\to0$, so $u_t\\to0$.\n\n\\textbf{(c)} Write $\\cos(2\\pi c\\xi t)=\\tfrac12(e^{2\\pi ic\\xi t}+e^{-2\\pi ic\\xi t})$ (even, so $|\\xi|\\to\\xi$ is harmless). Since $\\mathcal F^{-1}[\\hat f(\\xi)e^{2\\pi ic\\xi t}](x)=f(x+ct)$,\n$$u(x,t)=\\tfrac12\\big(f(x+ct)+f(x-ct)\\big),$$\nd'Alembert's formula. $\\blacksquare$",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "TMA4170 Øving 9, Problem P3",
+        "ref": "TMA4170 Øving 9, Problem P3",
+        "references": []
+      },
+      "tags": [
+        "custom",
+        "exercise",
+        "oving9"
       ],
       "priority": "core"
     },
@@ -7047,826 +7603,6 @@
       "priority": "standard"
     },
     {
-      "id": "central_limit",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Central Limit Theorem (Fourier proof)",
-      "content": {
-        "statement": "Fourier methods prove that normalized sums of independent variables converge in distribution to a Gaussian.",
-        "formal": "For i.i.d. random variables with mean $\\mu$ and variance $\\sigma^2>0$, the characteristic functions of $(X_1+\\cdots+X_n-n\\mu)/(\\sigma\\sqrt n)$ converge pointwise to $e^{-t^2/2}$, the characteristic function of the standard normal law.",
-        "formula": "$$\\varphi_{\\frac{X_1+\\cdots+X_n-n\\mu}{\\sigma\\sqrt n}}(t)\\to e^{-t^2/2}.$$",
-        "intuition": "Independence turns sums into products of characteristic functions. After normalization, those products converge to the Gaussian multiplier.",
-        "notation": [
-          "$$\\varphi_n(t)\\to e^{-t^2/2}$$"
-        ]
-      },
-      "assumptions": [
-        "Uses the probability convention $\\varphi_X(t)=\\mathbb E e^{itX}$, not the graph's $2\\pi$-Fourier transform convention."
-      ],
-      "source": {
-        "citation": "Curated concept graph",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "probability"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "dirichlet_problem_disk",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Dirichlet Problem on the Disk",
-      "content": {
-        "statement": "The Poisson kernel gives the harmonic extension of boundary data on the disk.",
-        "formal": "If $f\\in C(\\mathbb T)$, then $u(r,\\theta)=(P_r*f)(\\theta)$ is harmonic for $0\\le r<1$ and $u(r,\\theta)\\to f(\\theta)$ as $r\\to1^-$.",
-        "formula": "$$u(r,\\theta)=(P_r*f)(\\theta),\\qquad \\Delta u=0,\\qquad \\lim_{r\\to1^-}u(r,\\theta)=f(\\theta).$$",
-        "intuition": "Boundary values are averaged with a kernel that concentrates near the boundary point as one approaches the circle.",
-        "notation": [
-          "$$u(r,\\theta)=P_r*f(\\theta)$$"
-        ]
-      },
-      "assumptions": [
-        "Boundary convergence is stated for continuous boundary data; weaker data require weaker convergence modes."
-      ],
-      "source": {
-        "citation": "Stein–Shakarchi: Ch.2 Theorem 5.7",
-        "ref": "Stein–Shakarchi: Ch.2 Theorem 5.7",
-        "references": [
-          "c2_thm_5_7"
-        ]
-      },
-      "tags": [
-        "applications",
-        "pde"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "diffraction",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Fraunhofer Diffraction",
-      "content": {
-        "statement": "In the Fraunhofer far-field approximation, the diffraction amplitude is essentially the Fourier transform of the aperture.",
-        "formal": "For an aperture indicator $\\mathbf 1_A$ in the aperture plane, the far-field amplitude is proportional to $\\widehat{\\mathbf 1_A}(\\xi)$, and the observed intensity is proportional to $|\\widehat{\\mathbf 1_A}(\\xi)|^2$.",
-        "formula": "$$I(\\xi)\\propto\\left|\\widehat{\\mathbf 1_A}(\\xi)\\right|^2.$$",
-        "intuition": "A lens or far-field propagation physically separates spatial frequencies. A slit produces a sinc pattern; a circular aperture produces an Airy-type pattern.",
-        "notation": [
-          "$$I(\\xi)\\propto |\\widehat{\\mathbf 1_A}(\\xi)|^2$$"
-        ]
-      },
-      "diagram": "/atlas-assets/fourier/diagrams/diffraction.svg",
-      "assumptions": [
-        "This is the scalar Fraunhofer approximation, not a full electromagnetic model."
-      ],
-      "source": {
-        "citation": "Curated concept graph",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "optics"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "schrodinger_equation",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Free Schrödinger Equation",
-      "content": {
-        "statement": "The free Schrödinger equation is solved by multiplying each Fourier mode by a dispersive phase.",
-        "formal": "For $iu_t=-u_{xx}$ on $\\mathbb R$ with initial data $u_0$, the Fourier transform satisfies $\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)$.",
-        "formula": "$$iu_t=-u_{xx},\\qquad \\widehat u(\\xi,t)=e^{-4\\pi^2i\\xi^2t}\\widehat u_0(\\xi).$$",
-        "intuition": "The Fourier transform turns the spatial second derivative into multiplication by $-4\\pi^2\\xi^2$. Unlike heat flow, the multiplier has modulus one, so waves disperse rather than decay.",
-        "notation": [
-          "$$\\hat u(\\xi,t)=e^{-4\\pi^2 i\\xi^2t}\\hat u_0(\\xi)$$"
-        ]
-      },
-      "assumptions": [
-        "Uses the Fourier convention $e^{-2\\pi ix\\xi}$. Regularity assumptions depend on whether one wants classical, $L^2$, or distributional solutions."
-      ],
-      "source": {
-        "citation": "Curated concept graph",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "pde"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "heat_equation",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Heat Equation",
-      "content": {
-        "statement": "Diffusion is solved by damping each Fourier mode.",
-        "formal": "On the circle, $u_t=u_{xx}$, $u(x,0)=f(x)$, has formal solution $u(x,t)=\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{-n^2t}e^{inx}$. On $\\mathbb R$, $u(x,t)=(H_t*f)(x)$.",
-        "formula": "$$\\begin{aligned} u_t&=u_{xx},\\\\ u(x,0)&=f(x),\\\\ \\widehat u(n,t)&=e^{-n^2t}\\widehat f(n). \\end{aligned}$$",
-        "intuition": "High frequencies decay faster than low frequencies, so heat flow smooths rough data as time increases.",
-        "notation": [
-          "$$u_t=u_{xx}$$"
-        ]
-      },
-      "assumptions": [
-        "Constants depend on whether the circle basis is $e^{inx}$ or the real-line transform convention is used."
-      ],
-      "source": {
-        "citation": "Stein–Shakarchi: Ch.5 Corollary 2.2; Ch.5 Theorem 2.1; Ch.5 Theorem 2.3",
-        "ref": "Stein–Shakarchi: Ch.5 Corollary 2.2; Ch.5 Theorem 2.1; Ch.5 Theorem 2.3",
-        "references": [
-          "c5_cor_2_2",
-          "c5_thm_2_1",
-          "c5_thm_2_3"
-        ]
-      },
-      "tags": [
-        "applications",
-        "pde"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "isoperimetric",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Isoperimetric Inequality",
-      "content": {
-        "statement": "A simple closed plane curve of fixed length encloses maximal area exactly when it is a circle.",
-        "formal": "If a sufficiently smooth simple closed plane curve has length $L$ and encloses area $A$, then $A\\le L^2/(4\\pi)$, with equality exactly for circles.",
-        "formula": "$$4\\pi A\\le L^2.$$",
-        "intuition": "Writing the boundary curve as a Fourier series turns area and length into coefficient sums. Parseval then becomes a geometric inequality.",
-        "notation": [
-          "$$A\\le L^2/(4\\pi)$$"
-        ]
-      },
-      "assumptions": [
-        "Assume a regular simple closed curve, for example piecewise $C^1$, oriented positively."
-      ],
-      "source": {
-        "citation": "Stein–Shakarchi: Ch.4 Theorem 1.1",
-        "ref": "Stein–Shakarchi: Ch.4 Theorem 1.1",
-        "references": [
-          "c4_thm_1_1"
-        ]
-      },
-      "tags": [
-        "applications"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "laplacian",
-      "kind": "operator",
-      "domain": "applications",
-      "label": "Laplacian",
-      "content": {
-        "statement": "The second-order spatial differential operator diagonalized by the Fourier transform.",
-        "definition": "$$\\Delta f=\\sum_{j=1}^{d}\\frac{\\partial^2 f}{\\partial x_j^2},\\qquad \\widehat{\\Delta f}(\\xi)=-4\\pi^2|\\xi|^2\\widehat f(\\xi).$$",
-        "formal": "On $\\mathbb R^d$, $\\Delta f=\\sum_{j=1}^{d}\\partial_{x_j}^2f$. With the graph's Fourier convention, $\\widehat{\\Delta f}(\\xi)=-4\\pi^2|\\xi|^2\\hat f(\\xi)$ for Schwartz functions.",
-        "intuition": "The Laplacian measures curvature or diffusion pressure. Fourier transform turns it into multiplication by $-4\\pi^2|\\xi|^2$, which is why heat, wave, and Schrödinger equations reduce to scalar frequency equations.",
-        "notation": [
-          "$$\\Delta,\\ -4\\pi^2|\\xi|^2$$"
-        ]
-      },
-      "assumptions": [
-        "The multiplier identity is stated first for Schwartz functions; weaker solution theories use density or distributions."
-      ],
-      "source": {
-        "citation": "Curated concept graph",
-        "ref": "Stein–Shakarchi: Ch.5 and Ch.6 Fourier transform applications to PDE",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "pde"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "radon_transform",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Radon Transform",
-      "content": {
-        "statement": "The Radon transform reconstructs a function from its integrals over hyperplanes.",
-        "formal": "For suitable $f$ on $\\mathbb R^d$, $Rf(t,\\gamma)=\\int_{x\\cdot\\gamma=t}f(x)\\,d\\sigma(x)$. The Fourier slice theorem says the one-dimensional Fourier transform in $t$ satisfies $\\mathcal F_t(Rf)(s,\\gamma)=\\hat f(s\\gamma)$.",
-        "formula": "$$Rf(t,\\gamma)=\\int_{x\\cdot\\gamma=t}f(x)\\,d\\sigma(x),\\qquad \\mathcal F_t(Rf)(s,\\gamma)=\\widehat f(s\\gamma).$$",
-        "intuition": "Each X-ray projection reveals one slice of the Fourier transform. Combining slices over many directions reconstructs the object.",
-        "notation": [
-          "$$\\mathcal F_t(Rf)(s,\\gamma)=\\hat f(s\\gamma)$$"
-        ]
-      },
-      "assumptions": [
-        "Requires suitable decay or integrability so the hyperplane integrals and transforms are defined."
-      ],
-      "source": {
-        "citation": "Stein–Shakarchi: Ch.6 Corollary 5.3; Ch.6 Lemma 5.2; Ch.6 Proposition 5.1; Ch.6 Theorem 5.4",
-        "ref": "Stein–Shakarchi: Ch.6 Corollary 5.3; Ch.6 Lemma 5.2; Ch.6 Proposition 5.1; Ch.6 Theorem 5.4",
-        "references": [
-          "c6_cor_5_3",
-          "c6_lem_5_2",
-          "c6_prop_5_1",
-          "c6_thm_5_4"
-        ]
-      },
-      "tags": [
-        "applications",
-        "imaging"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "separation_of_variables",
-      "kind": "proof_method",
-      "domain": "applications",
-      "label": "Separation of Variables",
-      "content": {
-        "statement": "A method for solving linear PDEs by expanding in spatial eigenfunctions.",
-        "formal": "Seek $u(x,t)=\\sum_n c_n(t)e_n(x)$, where $e_n$ are eigenfunctions of the spatial operator. Orthogonality decouples the PDE into ODEs for the coefficients $c_n(t)$.",
-        "formula": "$$u(x,t)=\\sum_n c_n(t)e_n(x),\\qquad Le_n=\\lambda_ne_n.$$",
-        "intuition": "The method chooses coordinates that match the operator. In those coordinates, the PDE splits into independent one-frequency motions.",
-        "notation": [
-          "$$u(x,t)=\\sum_n c_n(t)e_n(x)$$"
-        ]
-      },
-      "diagram": "/atlas-assets/fourier/diagrams/wave-modes.svg",
-      "assumptions": [
-        "Requires a suitable eigenfunction expansion for the spatial problem."
-      ],
-      "source": {
-        "citation": "Curated concept graph",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "pde"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "signal_filtering",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Signal Filtering",
-      "content": {
-        "statement": "Frequency-selective processing by convolution in time or space.",
-        "formal": "For a linear time-invariant filter with impulse response $h$, $y=h*x$, so $\\hat y=\\hat h\\,\\hat x$ whenever the transforms are defined. The multiplier $\\hat h$ is the transfer function.",
-        "formula": "$$y=h*x,\\qquad \\widehat y=\\widehat h\\,\\widehat x.$$",
-        "intuition": "Filtering is easier in frequency: convolutional systems become pointwise multiplication, so passing or rejecting frequency bands becomes a multiplier design problem.",
-        "notation": [
-          "$$\\hat y=\\hat h\\,\\hat x$$"
-        ]
-      },
-      "assumptions": [
-        "Precise hypotheses depend on whether signals are modeled in $L^1$, $L^2$, distributions, or discrete spaces."
-      ],
-      "source": {
-        "citation": "Curated concept graph",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "signal"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "ss4_5_ex10",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "SS 4.5.10 — Averaging along an equidistributed sequence",
-      "content": {
-        "statement": "Averages of a mean-zero periodic function along an equidistributed sequence vanish.",
-        "formal": "Suppose that $f$ is a periodic function on $\\mathbb R$ of period $1$, and $\\{\\xi_n\\}$ is a sequence which is equidistributed in $[0,1)$. Prove the following.\n\n\textbf{(a)} If $f$ is continuous and satisfies\n$$\\int_0^1 f(x)\\,dx=0,$$\nthen\n$$\\lim_{N\\to\\infty}\\frac1N\\sum_{n=1}^{N}f(x+\\xi_n)=0$$\nuniformly in $x$.\n\nHint: Establish this result first for trigonometric polynomials.\n\n\textbf{(b)} If $f$ is merely integrable on $[0,1]$ and satisfies\n$$\\int_0^1 f(x)\\,dx=0,$$\nthen\n$$\\lim_{N\\to\\infty}\\int_0^1\\left|\\frac1N\\sum_{n=1}^{N}f(x+\\xi_n)\\right|^2 dx=0.$$",
-        "intuition": "Equidistribution makes a moving average against a mean-zero profile cancel — uniformly when $f$ is smooth (Fejér), and in mean-square when $f$ is rough (Parseval + dominated convergence).",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "case",
-            "content": "First take a trigonometric polynomial $f(y)=\\sum_{0<|k|\\le M}c_k e^{2\\pi iky}$ (no constant term, as $\\int f=0$). Then\n$$\\frac1N\\sum_{n=1}^N f(x+\\xi_n)=\\sum_{0<|k|\\le M}c_k e^{2\\pi ikx}\\Big(\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\Big).$$\nEach inner Weyl sum $\\to0$ (Exercise 7); the outer sum is finite with $|e^{2\\pi ikx}|=1$, so the whole expression $\\to0$ \\emph{uniformly in $x$}. For general continuous $f$, approximate uniformly by such a polynomial $T$ with $\\int T=0$ and $\\|f-T\\|_\\infty<\\varepsilon$ (Fejér); then $|\\frac1N\\sum f(x+\\xi_n)|\\le\\|f-T\\|_\\infty+|\\frac1N\\sum T(x+\\xi_n)|<2\\varepsilon$ for large $N$, uniformly in $x$.",
-            "uses": []
-          },
-          {
-            "role": "case",
-            "content": "Let $g_N(x)=\\frac1N\\sum_{n=1}^N f(x+\\xi_n)$. Its $k$-th Fourier coefficient is $\\widehat{g_N}(k)=\\hat f(k)\\cdot\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}$. By Parseval,\n$$\\int_0^1|g_N|^2=\\sum_{k\\in\\mathbb Z}|\\hat f(k)|^2\\Big|\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\Big|^2.$$\nThe $k=0$ term vanishes ($\\hat f(0)=\\int f=0$). For $k\\neq0$ the bracket $\\to0$ (Exercise 7) and is $\\le1$; since $\\sum_k|\\hat f(k)|^2<\\infty$ (Bessel), dominated convergence gives $\\int_0^1|g_N|^2\\to0$.",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "Stein–Shakarchi 4.5, Exercise 10",
-        "ref": "Stein–Shakarchi 4.5, Exercise 10",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "exercise",
-        "oving6"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "ss4_5_ex11",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "SS 4.5.11 — Heat flow converges to its data in $L^2$",
-      "content": {
-        "statement": "Heat-kernel smoothing converges to the initial data in $L^2$.",
-        "formal": "Show that if $u(x,t)=(f*H_t)(x)$, where $H_t$ is the heat kernel and $f$ is Riemann integrable, then\n$$\\int_0^1 |u(x,t)-f(x)|^2\\,dx\\to0\\qquad\\text{as }t\\to0.$$",
-        "intuition": "On the Fourier side heat flow is the multiplier $e^{-4\\pi^2k^2t}\\to1$; Parseval turns convergence of the data into termwise convergence dominated by Bessel's bound.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "On the circle $H_t(x)=\\sum_{k}e^{-4\\pi^2k^2t}e^{2\\pi ikx}$, so convolution multiplies coefficients: $\\widehat{u(\\cdot,t)}(k)=\\hat f(k)\\,e^{-4\\pi^2k^2t}$. By Parseval,\n$$\\int_0^1|u(x,t)-f(x)|^2\\,dx=\\sum_{k\\in\\mathbb Z}|\\hat f(k)|^2\\,\\big|e^{-4\\pi^2k^2t}-1\\big|^2.$$\nFor each fixed $k$, $e^{-4\\pi^2k^2t}-1\\to0$ as $t\\to0^+$. Moreover $0<e^{-4\\pi^2k^2t}\\le1$ gives $|e^{-4\\pi^2k^2t}-1|^2\\le1$, so the summand is dominated by $|\\hat f(k)|^2$, which is summable (Bessel, since $f$ is Riemann integrable). By dominated convergence the series $\\to0$, i.e.\n$$\\int_0^1|u(x,t)-f(x)|^2\\,dx\\to0\\quad(t\\to0^+).$$\nSo the heat semigroup recovers the initial data in the mean-square sense for any integrable $f$ — even before pointwise statements (which need $f$ continuous and the good-kernel property).",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "Stein–Shakarchi 4.5, Exercise 11",
-        "ref": "Stein–Shakarchi 4.5, Exercise 11",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "exercise",
-        "oving6"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "ss4_5_ex5",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "SS 4.5.5 — Powers of the golden ratio aren't equidistributed",
-      "content": {
-        "statement": "The golden-ratio powers cluster at $0$ and $1$, so they are not equidistributed.",
-        "formal": "Prove that the sequence $\\{\\gamma_n\\}_{n=1}^{\\infty}$, where $\\gamma_n$ is the fractional part of\n$$\\left(\frac{1+\\sqrt5}{2}\\right)^n,$$\nis not equidistributed in $[0,1]$.\n\nHint: Show that\n$$U_n=\\left(\frac{1+\\sqrt5}{2}\\right)^n+\\left(\frac{1-\\sqrt5}{2}\\right)^n$$\nis the solution of the difference equation $U_{r+1}=U_r+U_{r-1}$ with $U_0=2$ and $U_1=1$. The $U_n$ satisfy the same difference equation as the Fibonacci numbers.",
-        "intuition": "Algebraic integers betray themselves: $\\varphi^n$ is an integer minus a vanishing term, so its fractional parts pile up at the ends rather than spreading out.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "Let $\\varphi=\\frac{1+\\sqrt5}2$ and $\\psi=\\frac{1-\\sqrt5}2$, the roots of $x^2=x+1$. Then $U_n=\\varphi^n+\\psi^n$ satisfies $U_{r+1}=U_r+U_{r-1}$ with $U_0=2,\\ U_1=1$, so every $U_n$ is an \\emph{integer} (the Lucas numbers). Since $|\\psi|=\\frac{\\sqrt5-1}2\\approx0.618<1$, we have $\\psi^n\\to0$, and\n$$\\varphi^n=U_n-\\psi^n\\quad\\Longrightarrow\\quad \\langle\\varphi^n\\rangle=\\langle-\\psi^n\\rangle\\pmod1.$$\nNow $\\psi<0$, so $\\psi^n>0$ for even $n$ and $<0$ for odd $n$, both $\\to0$:\n$$n\\ \\text{even}:\\ \\langle\\varphi^n\\rangle=1-\\psi^n\\to1^-,\\qquad n\\ \\text{odd}:\\ \\langle\\varphi^n\\rangle=-\\psi^n=|\\psi|^n\\to0^+.$$\nThus the sequence accumulates only at the endpoints $0$ and $1$ and never enters, say, $[\\tfrac14,\\tfrac34]$ for large $n$. Hence it is far from equidistributed (the limiting proportion in $[\\tfrac14,\\tfrac34]$ is $0\\neq\\tfrac12$).",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "Stein–Shakarchi 4.5, Exercise 5",
-        "ref": "Stein–Shakarchi 4.5, Exercise 5",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "exercise",
-        "oving6"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "ss4_5_ex7",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "SS 4.5.7 — Weyl's criterion (necessity)",
-      "content": {
-        "statement": "Equidistribution implies the vanishing of all nonzero Weyl exponential sums.",
-        "formal": "Prove the second part of Weyl's criterion: if a sequence of numbers $\\xi_1,\\xi_2,\\dots$ in $[0,1)$ is equidistributed, then for every $k\\in\\mathbb Z\\setminus\\{0\\}$,\n$$\\frac1N\\sum_{n=1}^{N} e^{2\\pi i k\\xi_n}\\to0\\qquad\\text{as }N\\to\\infty.$$\n\nHint: It suffices to show that\n$$\\frac1N\\sum_{n=1}^{N}f(\\xi_n)\\to\\int_0^1 f(x)\\,dx$$\nfor all continuous $f$. Prove this first when $f$ is the characteristic function of an interval.",
-        "intuition": "Equidistribution is exactly 'sample-average = integral' for indicators; squeezing continuous functions between step functions promotes it to all continuous test functions, the exponentials included.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "Equidistribution means, for every subinterval $[a,b)\\subset[0,1)$,\n$$\\frac1N\\sum_{n=1}^N\\chi_{[a,b)}(\\xi_n)\\to b-a=\\int_0^1\\chi_{[a,b)}.$$\nBy linearity this extends to all step functions. Given a continuous $1$-periodic $f$ and $\\varepsilon>0$, choose step functions $s_-\\le f\\le s_+$ with $\\int_0^1(s_+-s_-)<\\varepsilon$ (uniform continuity). Then\n$$\\int_0^1 f-\\varepsilon\\le\\liminf_N\\frac1N\\sum f(\\xi_n)\\le\\limsup_N\\frac1N\\sum f(\\xi_n)\\le\\int_0^1 f+\\varepsilon,$$\nso $\\frac1N\\sum_{n\\le N}f(\\xi_n)\\to\\int_0^1 f$ for every continuous $f$. Applying this to the continuous function $f(x)=e^{2\\pi ikx}$, whose integral $\\int_0^1 e^{2\\pi ikx}dx=0$ for $k\\neq0$, gives\n$$\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\to0.$$",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "Stein–Shakarchi 4.5, Exercise 7",
-        "ref": "Stein–Shakarchi 4.5, Exercise 7",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "exercise",
-        "oving6"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "ss4_5_ex8",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "SS 4.5.8 — $\\langle an^\\sigma\\rangle$ is equidistributed $(0<\\sigma<1)$",
-      "content": {
-        "statement": "Fractional parts of $an^\\sigma$ ($0<\\sigma<1$) are equidistributed.",
-        "formal": "Show that for any $a\\ne0$ and any $\\sigma$ with $0<\\sigma<1$, the sequence $\\langle an^\\sigma\nangle$ is equidistributed in $[0,1)$.\n\nHint: Prove that\n$$\\sum_{n=1}^{N}e^{2\\pi i b n^\\sigma}=O(N^\\sigma)+O(N^{1-\\sigma})\\qquad(b\\ne0).$$\nIn fact, note the following estimate:\n$$\\sum_{n=1}^{N} e^{2\\pi i b n^\\sigma}-\\int_1^N e^{2\\pi i b x^\\sigma}\\,dx\n=O\\left(\\sum_{n=1}^{N} n^{-1+\\sigma}\\right).$$",
-        "intuition": "Sub-linear, slowly turning phases dephase: the Weyl sum is dwarfed by $N$ because neither the discretisation error ($N^\\sigma$) nor the oscillatory integral ($N^{1-\\sigma}$) keeps up.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "By Weyl's criterion it suffices to show $\\frac1N\\sum_{n=1}^N e^{2\\pi i b n^\\sigma}\\to0$ for every $b\\neq0$ (with $b=ka$, $k\\neq0$). Compare the sum with the integral $I_N=\\int_1^N e^{2\\pi i b x^\\sigma}dx$.",
-            "uses": []
-          },
-          {
-            "role": "calculation",
-            "content": "Writing $\\phi(x)=e^{2\\pi ibx^\\sigma}$, $|\\phi'(x)|=2\\pi|b|\\sigma x^{\\sigma-1}$, so\n$$\\Big|\\sum_{n=1}^N\\phi(n)-\\int_1^N\\phi(x)\\,dx\\Big|\\le\\sum_{n=1}^N\\sup_{[n,n+1]}|\\phi'|=O\\Big(\\sum_{n=1}^N n^{\\sigma-1}\\Big)=O(N^\\sigma).$$",
-            "uses": []
-          },
-          {
-            "role": "calculation",
-            "content": "The phase derivative $2\\pi b\\sigma x^{\\sigma-1}$ is monotone, so by van der Corput's lemma (integration by parts),\n$$|I_N|\\le\\frac{C}{\\min_x|2\\pi b\\sigma x^{\\sigma-1}|}=\\frac{C}{2\\pi|b|\\sigma\\,N^{\\sigma-1}}=O(N^{1-\\sigma}).$$",
-            "uses": []
-          },
-          {
-            "role": "conclusion",
-            "content": "Hence $\\sum_{n=1}^N e^{2\\pi ib n^\\sigma}=O(N^\\sigma)+O(N^{1-\\sigma})$. Both exponents are $<1$, so dividing by $N$ gives $\\to0$. By Weyl, $\\langle an^\\sigma\\rangle$ is equidistributed.",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "Stein–Shakarchi 4.5, Exercise 8",
-        "ref": "Stein–Shakarchi 4.5, Exercise 8",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "exercise",
-        "oving6"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "ss4_5_ex9",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "SS 4.5.9 — ⟨a log n⟩ is never equidistributed",
-      "content": {
-        "statement": "Fractional parts of $a\\log n$ fail to equidistribute for every $a$.",
-        "formal": "In contrast with the result in Exercise 8, prove that $\\langle a\\log n\nangle$ is not equidistributed for any $a$.\n\nHint: Compare the sum\n$$\\sum_{n=1}^{N}e^{2\\pi i b\\log n}$$\nwith the corresponding integral.",
-        "intuition": "A logarithmic phase turns too slowly: the Weyl sum keeps a fixed-size rotating tail instead of averaging away, so the orbit is biased.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "Test Weyl's criterion with $k=1$, so we examine $\\frac1N\\sum_{n=1}^N e^{2\\pi i a\\log n}=\\frac1N\\sum_{n=1}^N n^{2\\pi i a}$. Compare with the integral $\\int_1^N x^{2\\pi ia}\\,dx$; the difference is $O(\\sup|\\frac{d}{dx}x^{2\\pi ia}|\\cdot N)=O(1)$ relative error after dividing by $N$ — more precisely Euler–Maclaurin gives\n$$\\sum_{n=1}^N n^{2\\pi ia}=\\int_1^N x^{2\\pi ia}\\,dx+O(1)=\\frac{N^{1+2\\pi ia}-1}{1+2\\pi ia}+O(1).$$\nTherefore\n$$\\frac1N\\sum_{n=1}^N n^{2\\pi ia}=\\frac{N^{2\\pi ia}}{1+2\\pi ia}+o(1).$$\nThe factor $N^{2\\pi ia}=e^{2\\pi ia\\log N}$ has modulus $1$ and rotates around the circle as $N\\to\\infty$, so the right-hand side has modulus $\\to\\frac1{|1+2\\pi ia|}\\neq0$ and does \\emph{not} converge to $0$. Weyl's criterion fails, so $\\langle a\\log n\\rangle$ is not equidistributed.",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "Stein–Shakarchi 4.5, Exercise 9",
-        "ref": "Stein–Shakarchi 4.5, Exercise 9",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "exercise",
-        "oving6"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "ss5_6_prob1",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "SS 5.6.1 — A logarithmic variant of the heat equation",
-      "content": {
-        "statement": "Solve an Euler-type heat equation by reduction to the standard heat equation.",
-        "formal": "The equation $$x^2\\frac{\\partial^2u}{\\partial x^2}+ax\\frac{\\partial u}{\\partial x}=\\frac{\\partial u}{\\partial t},\\qquad u(x,0)=f(x),\\qquad 0<x<\\infty,\\ t>0,$$ is a variant of the heat equation. To solve it, make the change of variables $x=e^{-y}$, so $-\\infty<y<\\infty$, and set $$U(y,t)=u(e^{-y},t),\\qquad F(y)=f(e^{-y}).$$ Show that the problem reduces to $$\\frac{\\partial^2U}{\\partial y^2}+(1-a)\\frac{\\partial U}{\\partial y}=\\frac{\\partial U}{\\partial t},\\qquad U(y,0)=F(y).$$ Solve this equation by taking the Fourier transform in the $y$ variable, computing $$\\int_{-\\infty}^{\\infty}e^{(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi)t}e^{2\\pi i\\xi v}\\,d\\xi,$$ and show that the solution of the original problem is $$u(x,t)=\\frac1{(4\\pi t)^{1/2}}\\int_0^\\infty e^{-(\\log(v/x)+(1-a)t)^2/(4t)}f(v)\\,\\frac{dv}{v}.$$",
-        "intuition": "A logarithmic change of variable turns the Euler-type operator $x^2\\partial_x^2+ax\\partial_x$ into the constant-coefficient heat operator, so the solution is Gaussian smoothing in $\\log x$.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "Put $x=e^{-y}$ ($-\\infty<y<\\infty$), $U(y,t)=u(e^{-y},t)$, $F(y)=f(e^{-y})$. Since $x\\partial_x=-\\partial_y$ and $x^2\\partial_x^2=\\partial_y^2+\\partial_y$, the equation becomes the constant-coefficient\n$$U_{yy}+(1-a)U_y=U_t,\\qquad U(y,0)=F(y).$$",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "With $\\hat U(\\xi,t)=\\int U(y,t)e^{-2\\pi iy\\xi}dy$, the symbols give $\\hat U_t=\\big(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi\\big)\\hat U$, so\n$$\\hat U(\\xi,t)=\\hat F(\\xi)\\,e^{(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi)t}.$$\nThe multiplier is the transform of a shifted Gaussian: $\\int_{\\mathbb R}e^{(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi)t}e^{2\\pi i\\xi v}d\\xi=\\frac1{\\sqrt{4\\pi t}}\\,e^{-(v+(1-a)t)^2/(4t)}$ (complete the square). Hence $U=F*G_t$ with $G_t(v)=\\frac1{\\sqrt{4\\pi t}}e^{-(v+(1-a)t)^2/(4t)}$:\n$$U(y,t)=\\frac1{\\sqrt{4\\pi t}}\\int_{\\mathbb R}e^{-(y'+(1-a)t)^2/(4t)}F(y-y')\\,dy'.$$",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "$y=-\\log x$, $F(y-y')=f(e^{-(y-y')})=f(x e^{y'})$, and set $v=xe^{y'}$ so $y'=\\log(v/x)$, $dy'=dv/v$:\n$$u(x,t)=\\frac1{(4\\pi t)^{1/2}}\\int_0^\\infty e^{-(\\log(v/x)+(1-a)t)^2/(4t)}f(v)\\,\\frac{dv}{v}.$$",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "Stein–Shakarchi 5.6, Problem 1",
-        "ref": "Stein–Shakarchi 5.6, Problem 1",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "exercise",
-        "oving9"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "ss5_6_prob2",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "SS 5.6.2 — The Black–Scholes equation",
-      "content": {
-        "statement": "Reduce Black–Scholes to the heat equation and read off the option price.",
-        "formal": "The Black--Scholes equation from finance theory is $$\\frac{\\partial V}{\\partial t}+rs\\frac{\\partial V}{\\partial s}+\\frac{\\sigma^2s^2}{2}\\frac{\\partial^2V}{\\partial s^2}-rV=0,\\qquad 0<t<T,$$ with final boundary condition $V(s,T)=F(s)$. An appropriate change of variables reduces this to Problem 1. Alternatively, use the substitution $$V(s,t)=e^{ax+b\\tau}U(x,\\tau),\\qquad x=\\log s,\\qquad \\tau=\\frac{\\sigma^2}{2}(T-t),$$ with $$a=\\frac12-\\frac{r}{\\sigma^2},\\qquad b=-\\left(\\frac12+\\frac{r}{\\sigma^2}\\right)^2,$$ to reduce the equation to the one-dimensional heat equation with initial condition $$U(x,0)=e^{-ax}F(e^x).$$ Conclude that a solution of the Black--Scholes equation is $$V(s,t)=\\frac{e^{-r(T-t)}}{\\sqrt{2\\pi\\sigma^2(T-t)}}\\int_0^\\infty \\exp\\left(-\\frac{(\\log(s/s^*)+(r-\\sigma^2/2)(T-t))^2}{2\\sigma^2(T-t)}\\right)F(s^*)\\,ds^*.$$",
-        "intuition": "Option pricing is heat diffusion in disguise: log-price plus a discounting/drift gauge transform turns Black–Scholes into $U_\\tau=U_{xx}$, whose Gaussian kernel is the log-normal risk-neutral density.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "Let $x=\\log s$ and $\\tau=\\frac{\\sigma^2}2(T-t)$ (so $\\tau$ runs forward from $0$ at $t=T$). In the $x$ variable, $s\\partial_s=\\partial_x$ and $s^2\\partial_s^2=\\partial_x^2-\\partial_x$; the final condition becomes an initial condition at $\\tau=0$. Substituting $V=e^{ax+b\\tau}U(x,\\tau)$ with\n$$a=\\tfrac12-\\tfrac r{\\sigma^2},\\qquad b=-\\Big(\\tfrac12+\\tfrac r{\\sigma^2}\\Big)^2,$$\nthe first-order ($V_s$) and zeroth-order ($-rV$) terms are absorbed, leaving the pure heat equation\n$$U_\\tau=U_{xx},\\qquad U(x,0)=e^{-ax}F(e^x).$$",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "The heat solution is $U(x,\\tau)=\\frac1{\\sqrt{4\\pi\\tau}}\\int_{\\mathbb R}e^{-(x-x')^2/(4\\tau)}e^{-ax'}F(e^{x'})\\,dx'$. Undoing the substitutions ($x=\\log s$, $4\\tau=2\\sigma^2(T-t)$, $s^*=e^{x'}$, $dx'=ds^*/s^*$) and simplifying the exponential prefactors gives\n$$V(s,t)=\\frac{e^{-r(T-t)}}{\\sqrt{2\\pi\\sigma^2(T-t)}}\\int_0^\\infty e^{-\\big(\\log(s/s^*)+(r-\\sigma^2/2)(T-t)\\big)^2/\\big(2\\sigma^2(T-t)\\big)}\\,F(s^*)\\,ds^*.$$\nThe kernel is log-normal: the discounted ($e^{-r(T-t)}$) expectation of the payoff $F$ under the risk-neutral price distribution.",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "Stein–Shakarchi 5.6, Problem 2",
-        "ref": "Stein–Shakarchi 5.6, Problem 2",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "exercise",
-        "oving9"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "ss6_6_ex9",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "SS 6.6.9 — Spherical waves ⟺ radial data",
-      "content": {
-        "statement": "Radial initial data produce radial (spherical) solutions of the wave equation, and conversely.",
-        "formal": "A spherical wave is a solution $u(x,t)$ of the Cauchy problem for the wave equation on $\\mathbb R^d$ such that, for each fixed $t$, the function $x\\mapsto u(x,t)$ is radial. Prove that $u$ is a spherical wave if and only if the initial data $f,g\\in\\mathcal S(\\mathbb R^d)$ are both radial.",
-        "intuition": "Rotational symmetry passes through the Fourier transform and the radial wave multipliers, so the wave is round exactly when its launch data are round.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "The Fourier solution of $u_{tt}=\\Delta u$, $u(\\cdot,0)=f$, $u_t(\\cdot,0)=g$ is\n$$\\hat u(\\xi,t)=\\cos(2\\pi|\\xi|t)\\,\\hat f(\\xi)+\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}\\,\\hat g(\\xi).$$\nA function is radial iff its Fourier transform is radial (rotations commute with $\\mathcal F$). The multipliers $\\cos(2\\pi|\\xi|t)$ and $\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}$ are radial in $\\xi$.",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "If $f,g$ are radial, then $\\hat f,\\hat g$ are radial, so $\\hat u(\\cdot,t)$ is radial for each $t$, hence $u(\\cdot,t)$ is radial: $u$ is a spherical wave.",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "If $u(\\cdot,t)$ is radial for all $t$, then so is $\\hat u(\\cdot,t)$. Setting $t=0$ gives $\\hat f=\\hat u(\\cdot,0)$ radial; differentiating at $t=0$ gives $\\hat g=\\partial_t\\hat u(\\cdot,0)$ radial. Hence $f,g$ are radial.",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "Equivalently: rotations commute with the wave operator, so by uniqueness $u(R\\,\\cdot,t)$ solves the problem with data $f(R\\cdot),g(R\\cdot)$; radial $u$ $\\Leftrightarrow$ rotation-invariant data.",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "Stein–Shakarchi 6.6, Exercise 9",
-        "ref": "Stein–Shakarchi 6.6, Exercise 9",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "exercise",
-        "oving12"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "theta_function",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Theta Function & Functional Equation",
-      "content": {
-        "statement": "Poisson summation applied to the Gaussian gives the modular identity for the theta function.",
-        "formal": "For $t>0$, $\\theta(t)=\\sum_{n\\in\\mathbb Z}e^{-\\pi n^2t}$ satisfies $\\theta(1/t)=\\sqrt t\\,\\theta(t)$.",
-        "formula": "$$\\theta(t)=\\sum_{n\\in\\mathbb Z}e^{-\\pi n^2t},\\qquad \\theta(1/t)=\\sqrt t\\,\\theta(t).$$",
-        "intuition": "The Gaussian is essentially fixed by the Fourier transform, so Poisson summation turns a sum at scale $t$ into a sum at reciprocal scale $1/t$.",
-        "notation": [
-          "$$\\theta(1/t)=\\sqrt t\\,\\theta(t)$$"
-        ]
-      },
-      "assumptions": [
-        "Uses the $2\\pi$-Fourier convention where $e^{-\\pi x^2}$ is self-dual."
-      ],
-      "source": {
-        "citation": "Stein–Shakarchi: Ch.5 Theorem 3.2",
-        "ref": "Stein–Shakarchi: Ch.5 Theorem 3.2",
-        "references": [
-          "c5_thm_3_2"
-        ]
-      },
-      "tags": [
-        "applications",
-        "number-theory"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "wave_equation",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Wave Equation",
-      "content": {
-        "statement": "Vibrating strings decompose into standing harmonic waves.",
-        "formal": "For fixed-end data on $[0,\\pi]$, formal solutions have the form $u(x,t)=\\sum_{n\\ge1}(a_n\\cos nt+b_n\\sin nt)\\sin(nx)$. Periodic formulations use complex exponentials instead.",
-        "formula": "$$u(x,t)=\\sum_{n\\ge1}(a_n\\cos nt+b_n\\sin nt)\\sin(nx).$$",
-        "intuition": "The wave equation preserves oscillation rather than damping it. Each spatial harmonic evolves as a harmonic oscillator in time.",
-        "notation": [
-          "$$u_{tt}=u_{xx}$$"
-        ]
-      },
-      "diagram": "/atlas-assets/fourier/diagrams/wave-modes.svg",
-      "assumptions": [
-        "Boundary conditions determine whether sine series, cosine series, or complex Fourier series are appropriate."
-      ],
-      "source": {
-        "citation": "Curated concept graph",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "pde"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "wave_equation_euclidean_space",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Wave Equation in $\\mathbb R^d$ (Huygens, Kirchhoff)",
-      "content": {
-        "statement": "The multidimensional wave equation is solved in frequency by independent oscillators.",
-        "formal": "For $\\partial_t^2u=\\Delta u$ with $u(\\cdot,0)=f$, $u_t(\\cdot,0)=g$, the Fourier transform gives $\\hat u(\\xi,t)=\\cos(2\\pi|\\xi|t)\\hat f(\\xi)+\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}\\hat g(\\xi)$, with the second term interpreted by its limit at $\\xi=0$.",
-        "formula": "$$\\widehat u(\\xi,t)=\\cos(2\\pi|\\xi|t)\\widehat f(\\xi)+\\frac{\\sin(2\\pi|\\xi|t)}{2\\pi|\\xi|}\\widehat g(\\xi).$$",
-        "intuition": "Each frequency oscillates at speed proportional to $|\\xi|$. Special odd-dimensional formulas reveal Huygens' principle, where waves propagate sharply without a trailing wake.",
-        "notation": [
-          "$$\\partial_t^2u=\\Delta u$$"
-        ]
-      },
-      "assumptions": [
-        "Formula uses the $2\\pi$-frequency convention and requires suitable data or distributional interpretation."
-      ],
-      "source": {
-        "citation": "Stein–Shakarchi: Ch.6 Lemma 3.3; Ch.6 Lemma 3.4; Ch.6 Lemma 3.5; Ch.6 Theorem 2.4; Ch.6 Theorem 3.1; Ch.6 Theorem 3.2; Ch.6 Theorem 3.6; Ch.6 Theorem 3.7",
-        "ref": "Stein–Shakarchi: Ch.6 Lemma 3.3; Ch.6 Lemma 3.4; Ch.6 Lemma 3.5; Ch.6 Theorem 2.4; Ch.6 Theorem 3.1; Ch.6 Theorem 3.2; Ch.6 Theorem 3.6; Ch.6 Theorem 3.7",
-        "references": [
-          "c6_lem_3_3",
-          "c6_lem_3_4",
-          "c6_lem_3_5",
-          "c6_thm_2_4",
-          "c6_thm_3_1",
-          "c6_thm_3_2",
-          "c6_thm_3_6",
-          "c6_thm_3_7"
-        ]
-      },
-      "tags": [
-        "applications",
-        "pde"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "weyl_equidistribution",
-      "kind": "application",
-      "domain": "applications",
-      "label": "Weyl Equidistribution",
-      "content": {
-        "statement": "Equidistribution can be tested by checking the decay of all nonzero exponential averages.",
-        "formal": "A sequence $(x_n)$ in $\\mathbb R/\\mathbb Z$ is equidistributed iff $\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0$ for every nonzero $k\\in\\mathbb Z$. In particular, $x_n=n\\alpha$ is equidistributed when $\\alpha\\notin\\mathbb Q$.",
-        "formula": "$$\\frac1N\\sum_{n=1}^{N}e^{2\\pi i kx_n}\\to0\\quad(\\forall k\\in\\mathbb Z\\setminus\\{0\\}).$$",
-        "intuition": "Intervals can be approximated by trigonometric polynomials, so uniform distribution of points is equivalent to cancellation against every nonzero frequency.",
-        "notation": [
-          "$$\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0$$"
-        ]
-      },
-      "assumptions": [
-        "The criterion is stated on the circle $\\mathbb R/\\mathbb Z$."
-      ],
-      "source": {
-        "citation": "Stein–Shakarchi: Ch.4 Corollary 2.3; Ch.4 Lemma 2.2; Ch.4 Theorem 2.1",
-        "ref": "Stein–Shakarchi: Ch.4 Corollary 2.3; Ch.4 Lemma 2.2; Ch.4 Theorem 2.1",
-        "references": [
-          "c4_cor_2_3",
-          "c4_lem_2_2",
-          "c4_thm_2_1"
-        ]
-      },
-      "tags": [
-        "applications",
-        "number-theory"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "oving6_p1",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "Øving 6 · P1 — A heat equation with a decay term",
-      "content": {
-        "statement": "A damped heat equation solved mode-by-mode via Fourier series.",
-        "formal": "For $u(x,t)=\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{-ct-\\sigma^2n^2t}e^{inx}$: (a) show $u\\in C^\\infty((0,2\\pi)\\times(0,T))$; (b) show $u_t+cu-\\sigma^2u_{xx}=0$ in $(0,2\\pi)\\times(0,T)$.",
-        "intuition": "The Gaussian damping $e^{-\\sigma^2n^2t}$ smooths instantly (super-polynomial decay), and the PDE is just the eigenvalue relation $\\partial_t=\\sigma^2\\partial_{xx}-c$ acting mode-by-mode.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "The coefficients $\\hat f(n)$ are bounded, $|\\hat f(n)|\\le\\|f\\|_{L^1}$.\n\n\\textbf{(a)} Fix $t_0\\in(0,T)$. For $t\\ge t_0$ the factor $e^{-\\sigma^2n^2t}\\le e^{-\\sigma^2n^2t_0}$ decays faster than any power of $n$, so for all $j,m$,\n$$\\sum_n\\big|\\hat f(n)\\big|\\,|n|^{j}\\,(c+\\sigma^2n^2)^{m}\\,e^{-ct-\\sigma^2n^2t}<\\infty\\quad\\text{uniformly on }[t_0,T),$$\nwhich dominates every term-by-term $x$- and $t$-derivative. Hence the series and all its partial derivatives converge uniformly on $(0,2\\pi)\\times[t_0,T)$, so $u\\in C^\\infty((0,2\\pi)\\times(0,T))$.\n\n\\textbf{(b)} Differentiating term by term (justified by (a)): $\\partial_t$ brings down $(-c-\\sigma^2n^2)$ and $\\partial_{xx}$ brings down $(in)^2=-n^2$. The operator applied to the $n$-th term gives the factor\n$$(-c-\\sigma^2n^2)+c-\\sigma^2(-n^2)=-c-\\sigma^2n^2+c+\\sigma^2n^2=0.$$\nEvery term vanishes, so $u_t+cu-\\sigma^2u_{xx}=0$. $\\blacksquare$",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "TMA4170 Øving 6, Problem P1",
-        "ref": "TMA4170 Øving 6, Problem P1",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "custom",
-        "exercise",
-        "oving6"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "oving9_p3",
-      "kind": "exercise",
-      "domain": "applications",
-      "label": "Øving 9 · P3 — Wave equation and d'Alembert",
-      "content": {
-        "statement": "Solve the 1-D wave equation by Fourier methods and derive d'Alembert's formula.",
-        "formal": "For $f\\in\\mathcal S(\\mathbb R)$, $c\\in\\mathbb R$, let $u(x,t)=\\mathcal F^{-1}\\big[\\hat f(\\xi)\\cos(2\\pi c|\\xi|t)\\big](x)$. (a) Show $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$ and $u_{tt}=c^2u_{xx}$. (b) Show $u\\to f$, $u_t\\to0$ as $t\\to0^+$. (c) Show $u(x,t)=\\tfrac12\\big(f(x+ct)+f(x-ct)\\big)$.",
-        "intuition": "On the Fourier side the wave equation is the oscillator $\\partial_{tt}=-(2\\pi c\\xi)^2$; the cosine multiplier splits into two translations, giving left- and right-moving copies of the data.",
-        "notation": []
-      },
-      "proof": {
-        "steps": [
-          {
-            "role": "argument",
-            "content": "\\textbf{(a)} $\\hat u(\\xi,t)=\\hat f(\\xi)\\cos(2\\pi c|\\xi|t)$. Since $\\cos(2\\pi c|\\xi|t)$ is even and smooth in $\\xi$ and bounded by $1$, while $\\hat f\\in\\mathcal S$, the product and all its $x,t$-derivatives are Schwartz in $\\xi$ uniformly on $t$-compacts, so $u\\in C^\\infty$. Computing symbols: $\\partial_{tt}\\hat u=-(2\\pi c|\\xi|)^2\\hat u=-4\\pi^2c^2\\xi^2\\hat u$, while $\\widehat{c^2u_{xx}}=c^2(2\\pi i\\xi)^2\\hat u=-4\\pi^2c^2\\xi^2\\hat u$. Equal, so $u_{tt}=c^2u_{xx}$.\n\n\\textbf{(b)} As $t\\to0^+$, $\\cos(2\\pi c|\\xi|t)\\to1$ so $\\hat u\\to\\hat f$, hence $u\\to f$ (dominated convergence, $\\hat f\\in L^1$); and $\\hat{u_t}=-2\\pi c|\\xi|\\sin(2\\pi c|\\xi|t)\\hat f\\to0$, so $u_t\\to0$.\n\n\\textbf{(c)} Write $\\cos(2\\pi c\\xi t)=\\tfrac12(e^{2\\pi ic\\xi t}+e^{-2\\pi ic\\xi t})$ (even, so $|\\xi|\\to\\xi$ is harmless). Since $\\mathcal F^{-1}[\\hat f(\\xi)e^{2\\pi ic\\xi t}](x)=f(x+ct)$,\n$$u(x,t)=\\tfrac12\\big(f(x+ct)+f(x-ct)\\big),$$\nd'Alembert's formula. $\\blacksquare$",
-            "uses": []
-          }
-        ]
-      },
-      "source": {
-        "citation": "TMA4170 Øving 9, Problem P3",
-        "ref": "TMA4170 Øving 9, Problem P3",
-        "references": []
-      },
-      "tags": [
-        "applications",
-        "custom",
-        "exercise",
-        "oving9"
-      ],
-      "priority": "core"
-    },
-    {
       "id": "dirichlet_character",
       "kind": "definition",
       "domain": "number_theory",
@@ -8230,6 +7966,181 @@
       "priority": "core"
     },
     {
+      "id": "ss4_5_ex10",
+      "kind": "exercise",
+      "domain": "number_theory",
+      "label": "SS 4.5.10 — Averaging along an equidistributed sequence",
+      "content": {
+        "statement": "Averages of a mean-zero periodic function along an equidistributed sequence vanish.",
+        "formal": "Suppose that $f$ is a periodic function on $\\mathbb R$ of period $1$, and $\\{\\xi_n\\}$ is a sequence which is equidistributed in $[0,1)$. Prove the following.\n\n\textbf{(a)} If $f$ is continuous and satisfies\n$$\\int_0^1 f(x)\\,dx=0,$$\nthen\n$$\\lim_{N\\to\\infty}\\frac1N\\sum_{n=1}^{N}f(x+\\xi_n)=0$$\nuniformly in $x$.\n\nHint: Establish this result first for trigonometric polynomials.\n\n\textbf{(b)} If $f$ is merely integrable on $[0,1]$ and satisfies\n$$\\int_0^1 f(x)\\,dx=0,$$\nthen\n$$\\lim_{N\\to\\infty}\\int_0^1\\left|\\frac1N\\sum_{n=1}^{N}f(x+\\xi_n)\\right|^2 dx=0.$$",
+        "intuition": "Equidistribution makes a moving average against a mean-zero profile cancel — uniformly when $f$ is smooth (Fejér), and in mean-square when $f$ is rough (Parseval + dominated convergence).",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "case",
+            "content": "First take a trigonometric polynomial $f(y)=\\sum_{0<|k|\\le M}c_k e^{2\\pi iky}$ (no constant term, as $\\int f=0$). Then\n$$\\frac1N\\sum_{n=1}^N f(x+\\xi_n)=\\sum_{0<|k|\\le M}c_k e^{2\\pi ikx}\\Big(\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\Big).$$\nEach inner Weyl sum $\\to0$ (Exercise 7); the outer sum is finite with $|e^{2\\pi ikx}|=1$, so the whole expression $\\to0$ \\emph{uniformly in $x$}. For general continuous $f$, approximate uniformly by such a polynomial $T$ with $\\int T=0$ and $\\|f-T\\|_\\infty<\\varepsilon$ (Fejér); then $|\\frac1N\\sum f(x+\\xi_n)|\\le\\|f-T\\|_\\infty+|\\frac1N\\sum T(x+\\xi_n)|<2\\varepsilon$ for large $N$, uniformly in $x$.",
+            "uses": []
+          },
+          {
+            "role": "case",
+            "content": "Let $g_N(x)=\\frac1N\\sum_{n=1}^N f(x+\\xi_n)$. Its $k$-th Fourier coefficient is $\\widehat{g_N}(k)=\\hat f(k)\\cdot\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}$. By Parseval,\n$$\\int_0^1|g_N|^2=\\sum_{k\\in\\mathbb Z}|\\hat f(k)|^2\\Big|\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\Big|^2.$$\nThe $k=0$ term vanishes ($\\hat f(0)=\\int f=0$). For $k\\neq0$ the bracket $\\to0$ (Exercise 7) and is $\\le1$; since $\\sum_k|\\hat f(k)|^2<\\infty$ (Bessel), dominated convergence gives $\\int_0^1|g_N|^2\\to0$.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Stein–Shakarchi 4.5, Exercise 10",
+        "ref": "Stein–Shakarchi 4.5, Exercise 10",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "oving6"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "ss4_5_ex5",
+      "kind": "exercise",
+      "domain": "number_theory",
+      "label": "SS 4.5.5 — Powers of the golden ratio aren't equidistributed",
+      "content": {
+        "statement": "The golden-ratio powers cluster at $0$ and $1$, so they are not equidistributed.",
+        "formal": "Prove that the sequence $\\{\\gamma_n\\}_{n=1}^{\\infty}$, where $\\gamma_n$ is the fractional part of\n$$\\left(\frac{1+\\sqrt5}{2}\\right)^n,$$\nis not equidistributed in $[0,1]$.\n\nHint: Show that\n$$U_n=\\left(\frac{1+\\sqrt5}{2}\\right)^n+\\left(\frac{1-\\sqrt5}{2}\\right)^n$$\nis the solution of the difference equation $U_{r+1}=U_r+U_{r-1}$ with $U_0=2$ and $U_1=1$. The $U_n$ satisfy the same difference equation as the Fibonacci numbers.",
+        "intuition": "Algebraic integers betray themselves: $\\varphi^n$ is an integer minus a vanishing term, so its fractional parts pile up at the ends rather than spreading out.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "Let $\\varphi=\\frac{1+\\sqrt5}2$ and $\\psi=\\frac{1-\\sqrt5}2$, the roots of $x^2=x+1$. Then $U_n=\\varphi^n+\\psi^n$ satisfies $U_{r+1}=U_r+U_{r-1}$ with $U_0=2,\\ U_1=1$, so every $U_n$ is an \\emph{integer} (the Lucas numbers). Since $|\\psi|=\\frac{\\sqrt5-1}2\\approx0.618<1$, we have $\\psi^n\\to0$, and\n$$\\varphi^n=U_n-\\psi^n\\quad\\Longrightarrow\\quad \\langle\\varphi^n\\rangle=\\langle-\\psi^n\\rangle\\pmod1.$$\nNow $\\psi<0$, so $\\psi^n>0$ for even $n$ and $<0$ for odd $n$, both $\\to0$:\n$$n\\ \\text{even}:\\ \\langle\\varphi^n\\rangle=1-\\psi^n\\to1^-,\\qquad n\\ \\text{odd}:\\ \\langle\\varphi^n\\rangle=-\\psi^n=|\\psi|^n\\to0^+.$$\nThus the sequence accumulates only at the endpoints $0$ and $1$ and never enters, say, $[\\tfrac14,\\tfrac34]$ for large $n$. Hence it is far from equidistributed (the limiting proportion in $[\\tfrac14,\\tfrac34]$ is $0\\neq\\tfrac12$).",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Stein–Shakarchi 4.5, Exercise 5",
+        "ref": "Stein–Shakarchi 4.5, Exercise 5",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "oving6"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "ss4_5_ex7",
+      "kind": "exercise",
+      "domain": "number_theory",
+      "label": "SS 4.5.7 — Weyl's criterion (necessity)",
+      "content": {
+        "statement": "Equidistribution implies the vanishing of all nonzero Weyl exponential sums.",
+        "formal": "Prove the second part of Weyl's criterion: if a sequence of numbers $\\xi_1,\\xi_2,\\dots$ in $[0,1)$ is equidistributed, then for every $k\\in\\mathbb Z\\setminus\\{0\\}$,\n$$\\frac1N\\sum_{n=1}^{N} e^{2\\pi i k\\xi_n}\\to0\\qquad\\text{as }N\\to\\infty.$$\n\nHint: It suffices to show that\n$$\\frac1N\\sum_{n=1}^{N}f(\\xi_n)\\to\\int_0^1 f(x)\\,dx$$\nfor all continuous $f$. Prove this first when $f$ is the characteristic function of an interval.",
+        "intuition": "Equidistribution is exactly 'sample-average = integral' for indicators; squeezing continuous functions between step functions promotes it to all continuous test functions, the exponentials included.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "Equidistribution means, for every subinterval $[a,b)\\subset[0,1)$,\n$$\\frac1N\\sum_{n=1}^N\\chi_{[a,b)}(\\xi_n)\\to b-a=\\int_0^1\\chi_{[a,b)}.$$\nBy linearity this extends to all step functions. Given a continuous $1$-periodic $f$ and $\\varepsilon>0$, choose step functions $s_-\\le f\\le s_+$ with $\\int_0^1(s_+-s_-)<\\varepsilon$ (uniform continuity). Then\n$$\\int_0^1 f-\\varepsilon\\le\\liminf_N\\frac1N\\sum f(\\xi_n)\\le\\limsup_N\\frac1N\\sum f(\\xi_n)\\le\\int_0^1 f+\\varepsilon,$$\nso $\\frac1N\\sum_{n\\le N}f(\\xi_n)\\to\\int_0^1 f$ for every continuous $f$. Applying this to the continuous function $f(x)=e^{2\\pi ikx}$, whose integral $\\int_0^1 e^{2\\pi ikx}dx=0$ for $k\\neq0$, gives\n$$\\frac1N\\sum_{n=1}^N e^{2\\pi ik\\xi_n}\\to0.$$",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Stein–Shakarchi 4.5, Exercise 7",
+        "ref": "Stein–Shakarchi 4.5, Exercise 7",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "oving6"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "ss4_5_ex8",
+      "kind": "exercise",
+      "domain": "number_theory",
+      "label": "SS 4.5.8 — $\\langle an^\\sigma\\rangle$ is equidistributed $(0<\\sigma<1)$",
+      "content": {
+        "statement": "Fractional parts of $an^\\sigma$ ($0<\\sigma<1$) are equidistributed.",
+        "formal": "Show that for any $a\\ne0$ and any $\\sigma$ with $0<\\sigma<1$, the sequence $\\langle an^\\sigma\nangle$ is equidistributed in $[0,1)$.\n\nHint: Prove that\n$$\\sum_{n=1}^{N}e^{2\\pi i b n^\\sigma}=O(N^\\sigma)+O(N^{1-\\sigma})\\qquad(b\\ne0).$$\nIn fact, note the following estimate:\n$$\\sum_{n=1}^{N} e^{2\\pi i b n^\\sigma}-\\int_1^N e^{2\\pi i b x^\\sigma}\\,dx\n=O\\left(\\sum_{n=1}^{N} n^{-1+\\sigma}\\right).$$",
+        "intuition": "Sub-linear, slowly turning phases dephase: the Weyl sum is dwarfed by $N$ because neither the discretisation error ($N^\\sigma$) nor the oscillatory integral ($N^{1-\\sigma}$) keeps up.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "By Weyl's criterion it suffices to show $\\frac1N\\sum_{n=1}^N e^{2\\pi i b n^\\sigma}\\to0$ for every $b\\neq0$ (with $b=ka$, $k\\neq0$). Compare the sum with the integral $I_N=\\int_1^N e^{2\\pi i b x^\\sigma}dx$.",
+            "uses": []
+          },
+          {
+            "role": "calculation",
+            "content": "Writing $\\phi(x)=e^{2\\pi ibx^\\sigma}$, $|\\phi'(x)|=2\\pi|b|\\sigma x^{\\sigma-1}$, so\n$$\\Big|\\sum_{n=1}^N\\phi(n)-\\int_1^N\\phi(x)\\,dx\\Big|\\le\\sum_{n=1}^N\\sup_{[n,n+1]}|\\phi'|=O\\Big(\\sum_{n=1}^N n^{\\sigma-1}\\Big)=O(N^\\sigma).$$",
+            "uses": []
+          },
+          {
+            "role": "calculation",
+            "content": "The phase derivative $2\\pi b\\sigma x^{\\sigma-1}$ is monotone, so by van der Corput's lemma (integration by parts),\n$$|I_N|\\le\\frac{C}{\\min_x|2\\pi b\\sigma x^{\\sigma-1}|}=\\frac{C}{2\\pi|b|\\sigma\\,N^{\\sigma-1}}=O(N^{1-\\sigma}).$$",
+            "uses": []
+          },
+          {
+            "role": "conclusion",
+            "content": "Hence $\\sum_{n=1}^N e^{2\\pi ib n^\\sigma}=O(N^\\sigma)+O(N^{1-\\sigma})$. Both exponents are $<1$, so dividing by $N$ gives $\\to0$. By Weyl, $\\langle an^\\sigma\\rangle$ is equidistributed.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Stein–Shakarchi 4.5, Exercise 8",
+        "ref": "Stein–Shakarchi 4.5, Exercise 8",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "oving6"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "ss4_5_ex9",
+      "kind": "exercise",
+      "domain": "number_theory",
+      "label": "SS 4.5.9 — ⟨a log n⟩ is never equidistributed",
+      "content": {
+        "statement": "Fractional parts of $a\\log n$ fail to equidistribute for every $a$.",
+        "formal": "In contrast with the result in Exercise 8, prove that $\\langle a\\log n\nangle$ is not equidistributed for any $a$.\n\nHint: Compare the sum\n$$\\sum_{n=1}^{N}e^{2\\pi i b\\log n}$$\nwith the corresponding integral.",
+        "intuition": "A logarithmic phase turns too slowly: the Weyl sum keeps a fixed-size rotating tail instead of averaging away, so the orbit is biased.",
+        "notation": []
+      },
+      "proof": {
+        "steps": [
+          {
+            "role": "argument",
+            "content": "Test Weyl's criterion with $k=1$, so we examine $\\frac1N\\sum_{n=1}^N e^{2\\pi i a\\log n}=\\frac1N\\sum_{n=1}^N n^{2\\pi i a}$. Compare with the integral $\\int_1^N x^{2\\pi ia}\\,dx$; the difference is $O(\\sup|\\frac{d}{dx}x^{2\\pi ia}|\\cdot N)=O(1)$ relative error after dividing by $N$ — more precisely Euler–Maclaurin gives\n$$\\sum_{n=1}^N n^{2\\pi ia}=\\int_1^N x^{2\\pi ia}\\,dx+O(1)=\\frac{N^{1+2\\pi ia}-1}{1+2\\pi ia}+O(1).$$\nTherefore\n$$\\frac1N\\sum_{n=1}^N n^{2\\pi ia}=\\frac{N^{2\\pi ia}}{1+2\\pi ia}+o(1).$$\nThe factor $N^{2\\pi ia}=e^{2\\pi ia\\log N}$ has modulus $1$ and rotates around the circle as $N\\to\\infty$, so the right-hand side has modulus $\\to\\frac1{|1+2\\pi ia|}\\neq0$ and does \\emph{not} converge to $0$. Weyl's criterion fails, so $\\langle a\\log n\\rangle$ is not equidistributed.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Stein–Shakarchi 4.5, Exercise 9",
+        "ref": "Stein–Shakarchi 4.5, Exercise 9",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "oving6"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "ss5_5_ex18",
       "kind": "exercise",
       "domain": "number_theory",
@@ -8263,6 +8174,66 @@
         "exercise",
         "number_theory",
         "oving10"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "theta_function",
+      "kind": "application",
+      "domain": "number_theory",
+      "label": "Theta Function & Functional Equation",
+      "content": {
+        "statement": "Poisson summation applied to the Gaussian gives the modular identity for the theta function.",
+        "formal": "For $t>0$, $\\theta(t)=\\sum_{n\\in\\mathbb Z}e^{-\\pi n^2t}$ satisfies $\\theta(1/t)=\\sqrt t\\,\\theta(t)$.",
+        "formula": "$$\\theta(t)=\\sum_{n\\in\\mathbb Z}e^{-\\pi n^2t},\\qquad \\theta(1/t)=\\sqrt t\\,\\theta(t).$$",
+        "intuition": "The Gaussian is essentially fixed by the Fourier transform, so Poisson summation turns a sum at scale $t$ into a sum at reciprocal scale $1/t$.",
+        "notation": [
+          "$$\\theta(1/t)=\\sqrt t\\,\\theta(t)$$"
+        ]
+      },
+      "assumptions": [
+        "Uses the $2\\pi$-Fourier convention where $e^{-\\pi x^2}$ is self-dual."
+      ],
+      "source": {
+        "citation": "Stein–Shakarchi: Ch.5 Theorem 3.2",
+        "ref": "Stein–Shakarchi: Ch.5 Theorem 3.2",
+        "references": [
+          "c5_thm_3_2"
+        ]
+      },
+      "tags": [
+        "number-theory"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "weyl_equidistribution",
+      "kind": "application",
+      "domain": "number_theory",
+      "label": "Weyl Equidistribution",
+      "content": {
+        "statement": "Equidistribution can be tested by checking the decay of all nonzero exponential averages.",
+        "formal": "A sequence $(x_n)$ in $\\mathbb R/\\mathbb Z$ is equidistributed iff $\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0$ for every nonzero $k\\in\\mathbb Z$. In particular, $x_n=n\\alpha$ is equidistributed when $\\alpha\\notin\\mathbb Q$.",
+        "formula": "$$\\frac1N\\sum_{n=1}^{N}e^{2\\pi i kx_n}\\to0\\quad(\\forall k\\in\\mathbb Z\\setminus\\{0\\}).$$",
+        "intuition": "Intervals can be approximated by trigonometric polynomials, so uniform distribution of points is equivalent to cancellation against every nonzero frequency.",
+        "notation": [
+          "$$\\frac1N\\sum_{n=1}^N e^{2\\pi i kx_n}\\to0$$"
+        ]
+      },
+      "assumptions": [
+        "The criterion is stated on the circle $\\mathbb R/\\mathbb Z$."
+      ],
+      "source": {
+        "citation": "Stein–Shakarchi: Ch.4 Corollary 2.3; Ch.4 Lemma 2.2; Ch.4 Theorem 2.1",
+        "ref": "Stein–Shakarchi: Ch.4 Corollary 2.3; Ch.4 Lemma 2.2; Ch.4 Theorem 2.1",
+        "references": [
+          "c4_cor_2_3",
+          "c4_lem_2_2",
+          "c4_thm_2_1"
+        ]
+      },
+      "tags": [
+        "number-theory"
       ],
       "priority": "standard"
     }

@@ -1587,7 +1587,7 @@
     },
     {
       "id": "unbounded_scalar_multiples",
-      "kind": "proof_method",
+      "kind": "property",
       "domain": "operators",
       "label": "Unbounded scalar multiples",
       "content": {
@@ -1610,8 +1610,8 @@
         "boundedness",
         "linear",
         "norm",
-        "proof_method",
-        "scalar_multiplication"
+        "scalar_multiplication",
+        "unbounded"
       ],
       "priority": "core"
     },
