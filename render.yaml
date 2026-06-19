@@ -17,7 +17,15 @@ services:
         sync: false
       - key: BETTER_AUTH_SECRET
         sync: false
-      # The SPA origin (GitHub Pages) — trusted origin + auth base URL.
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      # Public API origin. Google OAuth redirect URI:
+      # https://math-atlas-api.onrender.com/api/auth/callback/google
+      - key: BETTER_AUTH_URL
+        value: https://math-atlas-api.onrender.com
+      # The SPA origin (GitHub Pages) — trusted origin for CORS / OAuth popup.
       - key: APP_URL
         value: https://trymsaether.github.io
       - key: WEB_ORIGINS

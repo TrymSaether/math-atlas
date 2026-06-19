@@ -9,6 +9,9 @@ const EnvSchema = z.object({
   // Postgres URL. Kept as a non-empty string (postgres:// URLs don't always
   // pass strict URL validation) rather than z.url().
   DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
+  GOOGLE_CLIENT_ID: z.string().min(1, "GOOGLE_CLIENT_ID is required"),
+  GOOGLE_CLIENT_SECRET: z.string().min(1, "GOOGLE_CLIENT_SECRET is required"),
+  BETTER_AUTH_URL: z.string().min(1).default("http://localhost:8787"),
   BETTER_AUTH_SECRET: z.string().min(16, "BETTER_AUTH_SECRET must be at least 16 chars"),
   PORT: z.coerce.number().int().positive().default(8787),
   APP_URL: z.string().min(1).default("http://localhost:5173"),

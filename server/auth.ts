@@ -4,14 +4,14 @@
  */
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { bearer } from "better-auth/plugins";
+import { bearer, oauthPopup } from "better-auth/plugins";
 import { db } from "./db/client";
 import * as schema from "./db/schema";
 import { env, isLocalhostOrigin, webOrigins } from "./env";
 
 export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
-  baseURL: env.APP_URL,
+  baseURL: env.BETTER_AUTH_URL,
   basePath: "/api/auth",
   // The frontend (GitHub Pages) and API live on different origins in prod, so
   // auth uses bearer tokens rather than cross-site cookies. Trust the configured
@@ -24,7 +24,13 @@ export const auth = betterAuth({
   },
   database: drizzleAdapter(db, { provider: "pg", schema }),
   emailAndPassword: { enabled: true },
-  // Emits a `set-auth-token` response header and accepts `Authorization: Bearer`
-  // so the cross-origin SPA can authenticate without third-party cookies.
-  plugins: [bearer()],
+  socialProviders: {
+    google: {
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    },
+  },
+  // OAuth completes in a popup so the API can hand the session token back to
+  // the cross-origin SPA, where the bearer client stores it for later requests.
+  plugins: [bearer(), oauthPopup()],
 });
