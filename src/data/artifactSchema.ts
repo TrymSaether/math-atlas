@@ -1,11 +1,11 @@
 /**
- * Artifact schema — the built output the app imports.
+ * Artifact schema — the normalized graph shape the app renders.
  *
- * Produced from the source graph by scripts/build-maps.ts. It is already
- * validated; the runtime does NOT re-parse it, it only builds cheap in-memory
- * indexes (adjacency, groupings) as today. Edges are stored single-direction
- * (from = prerequisite, to = dependent for dependency edges); reverse adjacency
- * and inverse labels are derived at render time via ./relations, not stored.
+ * Produced from the source graph by buildArtifact, both in the validation path
+ * and when API/database map sources are loaded in the browser. Edges are stored
+ * single-direction (from = prerequisite, to = dependent for dependency edges);
+ * reverse adjacency and inverse labels are derived at render time via
+ * ./relations, not stored.
  *
  * The node shape is *derived* from the authored `SourceConceptSchema` plus the
  * two build-time fields (`degree`, `depth`) — see ArtifactNodeSchema. Deriving

@@ -18,6 +18,7 @@ import type { ViewMode } from "../store";
 const nodeTypes = { topo: TopoNodeView, domainRegion: DomainRegionNode };
 const edgeTypes = { topo: TopoEdgeView };
 const VIEWPORT_STORAGE_KEY = "math-atlas-viewports-v1";
+type HandleSide = "left" | "right" | "top" | "bottom";
 
 interface PersistedViewportState {
   version: 1;
@@ -77,6 +78,42 @@ function readViewportState(): PersistedViewportState {
 
 function savedViewportFor(mapId: MapId, view: ViewMode): Viewport | null {
   return normalizeViewport(readViewportState().maps[mapId]?.[view]);
+}
+
+function edgeHandlePair(
+  from: string,
+  to: string,
+  positions: Map<string, { x: number; y: number }>,
+): { sourceHandle: string; targetHandle: string } | null {
+  const source = positions.get(from);
+  const target = positions.get(to);
+  if (!source || !target) return null;
+
+  const sourceCenter = {
+    x: source.x + ATLAS_NODE_WIDTH / 2,
+    y: source.y + ATLAS_NODE_HEIGHT / 2,
+  };
+  const targetCenter = {
+    x: target.x + ATLAS_NODE_WIDTH / 2,
+    y: target.y + ATLAS_NODE_HEIGHT / 2,
+  };
+  const dx = targetCenter.x - sourceCenter.x;
+  const dy = targetCenter.y - sourceCenter.y;
+
+  let sourceSide: HandleSide;
+  let targetSide: HandleSide;
+  if (Math.abs(dx) >= Math.abs(dy)) {
+    sourceSide = dx >= 0 ? "right" : "left";
+    targetSide = dx >= 0 ? "left" : "right";
+  } else {
+    sourceSide = dy >= 0 ? "bottom" : "top";
+    targetSide = dy >= 0 ? "top" : "bottom";
+  }
+
+  return {
+    sourceHandle: `source-${sourceSide}`,
+    targetHandle: `target-${targetSide}`,
+  };
 }
 
 function saveViewport(mapId: MapId, view: ViewMode, viewport: Viewport): void {
@@ -449,10 +486,13 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       const dim = !onRoute && selectedId !== null && visibleIds.has(selectedId) && (focusSet ? !inFocus : !highlight);
       // Low zoom: only keep edges incident to the selection (or whole focus set).
       if (edgeLODHidden && !highlight && !focused && !onRoute) continue;
+      const handles = edgeHandlePair(edge.from, edge.to, activeLayout.positions);
       out.push({
         id: edge.id,
         source: edge.from,
         target: edge.to,
+        sourceHandle: handles?.sourceHandle,
+        targetHandle: handles?.targetHandle,
         type: "topo",
         data: {
           edge,
@@ -472,6 +512,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     edgeLODHidden,
     view,
     map.metrics.reducedEdgeIds,
+    activeLayout.positions,
     routeViz,
     routeRunKey,
   ]);

@@ -1,21 +1,24 @@
 /**
- * build-maps — the validation + normalization gate.
- *
- *   src/data/maps/<id>.source.json   ──►   src/data/maps/<id>.json (artifact)
+ * build-maps — the source-map validation gate.
  *
  * Validation lives HERE, not in the browser. Any schema or integrity failure
- * exits non-zero so CI / the prebuild blocks a broken map from shipping.
+ * exits non-zero so CI / `npm run build` blocks a broken source map from
+ * shipping. Runtime maps are API/database-backed; `npm run seed:maps` copies
+ * validated `*.source.json` files into the database used by the app.
  *
  * Pipeline per file:
  *   1. parse with the strict SourceGraphSchema (FK + dup + contiguity checks)
  *   2. orient edges into from→to (prereq→dependent) via the relation registry
  *   3. dedupe semantically identical edges (symmetric pairs canonicalized)
  *   4. compute degree (undirected) and depth (longest prerequisite chain)
- *   5. emit the artifact
+ *   5. report the normalized graph size
  *
  * Usage:
- *   npm run build:maps           build every *.source.json
- *   npm run build:maps -- --check   validate only, write nothing (for CI)
+ *   npm run check:maps           validate every *.source.json
+ *   npm run seed:maps            validate + seed the API database copy
+ *
+ * Running this file without `--check` still writes legacy `*.json` artifacts for
+ * tooling/debugging, but those artifacts are not the app's runtime source.
  */
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { join, basename } from "node:path";

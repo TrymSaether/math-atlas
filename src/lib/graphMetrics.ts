@@ -4,12 +4,12 @@ import { classifyEdge } from "./relationStyle";
 /**
  * Derived structural metrics over the dependency DAG.
  *
- * Edge convention (post-normalization): `from → to` means "from depends on to",
- * so `to` is the more foundational concept. Following edges in the from→to
- * direction walks *toward* the foundations.
+ * Edge convention (post-normalization): `from → to` means "from is a
+ * prerequisite of to", so `from` is the more foundational concept. Following
+ * edges in the from→to direction walks toward dependents.
  *
- * - `depth`   — longest dependency chain from a node down to a root (a node that
- *               depends on nothing). Roots have depth 0. Used as the x-axis of the
+ * - `depth`   — longest prerequisite chain ending at a node. Roots have depth 0.
+ *               Used as the x-axis of the
  *               swimlane layout: foundations left, advanced results right.
  * - `impact`  — number of transitive *dependents* (nodes that, directly or
  *               indirectly, depend on this one). High impact = load-bearing.
@@ -30,7 +30,7 @@ export interface GraphMetrics {
   maxImpact: number;
 }
 
-/** Successor adjacency in the from→to ("depends on") direction. */
+/** Successor adjacency in the prerequisite→dependent direction. */
 function buildSuccessors(nodeIds: Set<string>, edges: GraphEdge[]): Map<string, Set<string>> {
   const succ = new Map<string, Set<string>>();
   for (const id of nodeIds) succ.set(id, new Set());
@@ -40,6 +40,18 @@ function buildSuccessors(nodeIds: Set<string>, edges: GraphEdge[]): Map<string, 
     succ.get(edge.from)!.add(edge.to);
   }
   return succ;
+}
+
+/** Prerequisite adjacency: node id → direct prerequisites. */
+function buildPrerequisites(nodeIds: Set<string>, edges: GraphEdge[]): Map<string, Set<string>> {
+  const prereqs = new Map<string, Set<string>>();
+  for (const id of nodeIds) prereqs.set(id, new Set());
+  for (const edge of edges) {
+    if (!nodeIds.has(edge.from) || !nodeIds.has(edge.to)) continue;
+    if (edge.from === edge.to) continue;
+    prereqs.get(edge.to)!.add(edge.from);
+  }
+  return prereqs;
 }
 
 /**
@@ -70,8 +82,8 @@ function buildReachability(nodeIds: Set<string>, succ: Map<string, Set<string>>)
   return reach;
 }
 
-/** Longest path following successors (toward foundations). Cycle-safe (back-edges ⇒ 0). */
-function computeDepths(nodeIds: Set<string>, succ: Map<string, Set<string>>): Map<string, number> {
+/** Longest path following prerequisite links. Cycle-safe (back-edges ⇒ 0). */
+function computeDepths(nodeIds: Set<string>, prereqs: Map<string, Set<string>>): Map<string, number> {
   const depth = new Map<string, number>();
   const state = new Map<string, 0 | 1 | 2>(); // 0/undef=unseen, 1=on-stack, 2=done
 
@@ -80,7 +92,7 @@ function computeDepths(nodeIds: Set<string>, succ: Map<string, Set<string>>): Ma
     if (state.get(node) === 2 && settled !== undefined) return settled;
     state.set(node, 1);
     let best = 0;
-    for (const next of succ.get(node) ?? []) {
+    for (const next of prereqs.get(node) ?? []) {
       if (state.get(next) === 1) continue; // back-edge inside a cycle: skip
       best = Math.max(best, 1 + visit(next));
     }
@@ -135,9 +147,10 @@ export function computeGraphMetrics(data: GraphData): GraphMetrics {
   // or the reduction — they're an optional overlay.
   const hardEdges = data.edges.filter((edge) => classifyEdge(edge) === "hard");
   const succ = buildSuccessors(nodeIds, hardEdges);
+  const prereqs = buildPrerequisites(nodeIds, hardEdges);
   const reach = buildReachability(nodeIds, succ);
 
-  const depthByNodeId = computeDepths(nodeIds, succ);
+  const depthByNodeId = computeDepths(nodeIds, prereqs);
 
   // impact(Y) = count of nodes that can reach Y = number of transitive dependents.
   const impactByNodeId = new Map<string, number>();

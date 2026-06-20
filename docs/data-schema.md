@@ -1,12 +1,12 @@
 # Math Atlas — target data schema
 
-Two shapes, one build step between them.
+Two shapes, one source-to-runtime transform between them.
 
 ```
-*.source.json   ──build──►   *.json (artifact)
-(authored truth,             (what the app imports;
- strict, normalized,          denormalized for render,
- edges-only)                  pre-validated, no workflow)
+*.source.json   --validate/seed-->   API/database source   --load-->   artifact in memory
+(authored truth,                    (what the app fetches)             (render shape)
+ strict, normalized,
+ edges-only)
 ```
 
 **Rules that drive the whole design**
@@ -14,9 +14,9 @@ Two shapes, one build step between them.
 1. Every fact is stored **once**, in its most normalized form. Everything else is derived.
    - One relation per pair, in its **most specific** form: a generic `uses` may not coexist with a specific dependency (`defined_in_terms_of`/`assumes`/`constructed_from`) on the same ordered pair, and `related_to` (the weakest link) may not coexist with any other relation on the same unordered pair. The strict schema rejects such subsumed parallels.
 2. **Edges are the only relationship store.** No `dependencies`, `outgoing_relations`, or `related` as separate authored fields.
-3. **Direction is fixed by relation type**, never authored per-edge. Inverses are declared once, materialized at build.
+3. **Direction is fixed by relation type**, never authored per-edge. Inverses are declared once and derived at render time.
 4. Source schema is **strict** — no `.passthrough()`. Unknown/typo keys fail the build.
-5. **Workflow, presentation, layout, and speculative fields never reach the artifact.**
+5. **Workflow, presentation, layout, and speculative fields never reach the runtime artifact.**
 
 ---
 
@@ -177,9 +177,11 @@ Gone from the source entirely: `dependencies`, `outgoing_relations`, `related`, 
 
 ---
 
-## 3. Artifact schema (what the app imports) — derived
+## 3. Artifact schema (what the app renders) — derived
 
-Built from source. **Not re-validated at runtime** — already validated in CI. Denormalized so the client does only cheap index-building.
+Built from source by `buildArtifact`. The server validates source before saving
+or seeding, and the browser builds this shape from the fetched API source.
+Denormalized so the client does only cheap index-building after construction.
 
 ```ts
 export const ArtifactNode = z.object({
@@ -194,7 +196,7 @@ export const ArtifactNode = z.object({
   source: /* same */,
   tags: z.array(z.string()),
   priority: z.string(),
-  // DERIVED, precomputed at build:
+  // DERIVED by buildArtifact:
   degree: z.number(),
   depth: z.number(),                       // longest dependency chain (x-axis)
 });
@@ -225,7 +227,9 @@ Adjacency maps, incoming/outgoing groupings, neighbor sets — keep building tho
 
 ---
 
-## 4. Build step (`scripts/build-maps.ts`)
+## 4. Validation and runtime loading
+
+`npm run check:maps` validates every authored `*.source.json`:
 
 ```
 for each *.source.json:
@@ -238,12 +242,15 @@ for each *.source.json:
   6. compute: degree, depth (longest prereq chain)
   6b. build proofEdges: each concept's proof.steps[].uses → `used → concept`
             (scope proof), skipping pairs a statement dependency already covers
-  7. emit *.json (artifact); pretty for diff or minified for ship
+  7. report normalized graph size
             (inverse edges are NOT materialized — derived at render time)
-exit non-zero on any issue  → wired into CI / prebuild
+exit non-zero on any issue  → wired into CI / npm run build
 ```
 
-Runtime `loadMap` then drops `FieldJsonSchema.parse` + `normalizeFieldGraph` and just imports the artifact and builds in-memory indexes.
+Runtime maps are API/database-backed. `npm run seed:maps` validates the authored
+source files and upserts them into the public/system database copy. The browser
+fetches that source through `/api/maps/:id`, builds the normalized artifact in
+memory, then builds cheap indexes.
 
 ---
 

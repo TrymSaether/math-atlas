@@ -25,9 +25,10 @@ export function run(map: CliMap): Diagnostic[] {
   }
 
   // Cycles are a real smell but, in this corpus, a tolerated one: the app's
-  // metrics layer is deliberately cycle-safe and `build:maps` ships maps that
-  // contain them. So validate WARNS (not errors) here — `atlas graph cycles` is
-  // the dedicated, exit-1 view. Dedupe overlapping rings to the smallest set.
+  // metrics layer is deliberately cycle-safe and source-map validation accepts
+  // maps that contain them. So validate WARNS (not errors) here — `atlas graph
+  // cycles` is the dedicated, exit-1 view. Dedupe overlapping rings to the
+  // smallest set.
   const seenRings = new Set<string>();
   for (const cycle of detectCycles(map)) {
     const key = [...cycle.nodes].sort().join("|");

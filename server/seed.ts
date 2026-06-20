@@ -7,7 +7,7 @@
  * the same SourceGraphSchema + buildArtifact gate, then upserted as a map owned
  * by the fixed `system` user with `visibility: "public"`. Idempotent.
  *
- * Run with: npm run db:seed
+ * Run with: npm run seed:maps
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";

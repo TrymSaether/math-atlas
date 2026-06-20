@@ -1915,7 +1915,7 @@ textarea.authoring-control {
   max-width: 100%;
   margin: 0%;
   color: var(--fg-1);
-  font-size: var(--type-atlas-display);
+  font-size: var(--type-dict-term);
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1;
@@ -2157,6 +2157,14 @@ textarea.authoring-control {
 
 .react-flow__handle.graph-node-handle-right {
   right: -4px !important;
+}
+
+.react-flow__handle.graph-node-handle-top {
+  top: -4px !important;
+}
+
+.react-flow__handle.graph-node-handle-bottom {
+  bottom: -4px !important;
 }
 
 .react-flow__attribution {

@@ -50,6 +50,13 @@ function handleStyle(color?: string): CSSProperties {
   return { "--handle-color": color ?? "var(--edge-ink)" } as CSSProperties;
 }
 
+const HANDLE_SIDES = [
+  { id: "left", position: Position.Left },
+  { id: "right", position: Position.Right },
+  { id: "top", position: Position.Top },
+  { id: "bottom", position: Position.Bottom },
+] as const;
+
 function TopoNodeViewComponent({ data }: NodeProps<Data>) {
   const { node, dim, isSelected, isRelated, hasIncoming, hasOutgoing, handleColor } = data;
   const select = useStore((s) => s.select);
@@ -142,14 +149,17 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
         }}
       />
 
-      {hasIncoming && (
-        <Handle
-          type="target"
-          position={Position.Left}
-          className="graph-node-handle graph-node-handle-left"
-          style={handleStyle(handleColor)}
-        />
-      )}
+      {hasIncoming &&
+        HANDLE_SIDES.map((side) => (
+          <Handle
+            key={`target-${side.id}`}
+            id={`target-${side.id}`}
+            type="target"
+            position={side.position}
+            className={`graph-node-handle graph-node-handle-${side.id}`}
+            style={handleStyle(handleColor)}
+          />
+        ))}
 
       {showMeta && (
         <div className="flex min-w-0 items-center gap-1.5">
@@ -214,14 +224,17 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
         <MathText text={node.label} />
       </div>
 
-      {hasOutgoing && (
-        <Handle
-          type="source"
-          position={Position.Right}
-          className="graph-node-handle graph-node-handle-right"
-          style={handleStyle(handleColor)}
-        />
-      )}
+      {hasOutgoing &&
+        HANDLE_SIDES.map((side) => (
+          <Handle
+            key={`source-${side.id}`}
+            id={`source-${side.id}`}
+            type="source"
+            position={side.position}
+            className={`graph-node-handle graph-node-handle-${side.id}`}
+            style={handleStyle(handleColor)}
+          />
+        ))}
     </div>
   );
 }

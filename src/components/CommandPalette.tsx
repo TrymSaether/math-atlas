@@ -149,11 +149,7 @@ export function CommandPalette() {
 
 function Item({ children, onSelect, value }: { children: React.ReactNode; onSelect: () => void; value?: string }) {
   return (
-    <Command.Item
-      value={value}
-      onSelect={onSelect}
-      className="command-palette-item"
-    >
+    <Command.Item value={value} onSelect={onSelect} className="command-palette-item">
       {children}
     </Command.Item>
   );

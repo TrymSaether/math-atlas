@@ -124,11 +124,7 @@ function MapBrandSelector() {
   const currentLabel = catalog.find((e) => e.slug === mapId)?.title ?? mapId;
 
   return (
-    <Pill
-      ref={ref}
-      variant="soft"
-      className="relative h-11 min-w-0 max-w-[calc(100vw-224px)] gap-1 sm:max-w-none"
-    >
+    <Pill ref={ref} variant="soft" className="relative h-11 min-w-0 max-w-[calc(100vw-224px)] gap-1 sm:max-w-none">
       <Button
         kind="text"
         onClick={goHome}
