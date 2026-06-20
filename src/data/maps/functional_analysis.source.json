@@ -235,10 +235,10 @@
       "id": "exercise_1_1",
       "kind": "exercise",
       "domain": "foundations",
-      "label": "Exercise 1.1: Show that in a metric space, a convergent sequence is Cauchy.",
+      "label": "In a metric space, a convergent sequence is Cauchy.",
       "content": {
         "statement": "Show that in a metric space a convergent sequence is a Cauchy sequence.",
-        "formal": "(X,d)\\text{ metric space},\\ x_n\\to x \\implies x_n \\text{ is Cauchy}.",
+        "formal": "$$(X,d)\\text{ metric space},\\ x_n\\to x \\implies x_n \\text{ is Cauchy}.$$",
         "intuition": "Convergence means the terms get arbitrarily close to the limit, so they must get arbitrarily close to each other.",
         "notation": []
       },
