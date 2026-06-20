@@ -51,12 +51,6 @@
       "id": "order_theory",
       "label": "Order Theory",
       "order": 7,
-      "palette": "brown"
-    },
-    {
-      "id": "examples_applications",
-      "label": "Examples & Applications",
-      "order": 8,
       "palette": "gold"
     }
   ],
@@ -624,6 +618,31 @@
       "priority": "core"
     },
     {
+      "id": "ell_p_spaces",
+      "kind": "example",
+      "domain": "spaces_norms",
+      "label": "$\\ell^p$ spaces",
+      "content": {
+        "definition": "Sequence spaces of $p$-summable scalar sequences, equipped with the $p$-norm.",
+        "formal": "$$\\begin{aligned}\\ell^p&=\\left\\{x=(x_n):\\sum_{n=1}^{\\infty}|x_n|^p<\\infty\\right\\},\\quad 1\\leq p<\\infty,\\\\ \\|x\\|_p&=\\left(\\sum_{n=1}^{\\infty}|x_n|^p\\right)^{1/p},\\\\ \\ell^\\infty&=\\{x=(x_n):\\sup_n |x_n|<\\infty\\},\\quad \\|x\\|_\\infty=\\sup_n |x_n|.\\end{aligned}$$",
+        "intuition": "The $\\ell^p$ spaces are discrete model Banach spaces. Their standard basis vectors all have norm one, but in infinite dimensions those points do not cluster in norm.",
+        "notation": [
+          "$\\ell^p$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "For the standard basis vector $e_n=(0,\\ldots,0,1,0,\\ldots)$, $\\|e_n\\|_p=1$ for every $n$ and every $1\\leq p\\leq\\infty$.",
+          "label": "Basis vectors witness the noncompactness of infinite-dimensional unit balls."
+        }
+      ],
+      "tags": [
+        "example",
+        "sequence spaces"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "banach_space",
       "kind": "structure",
       "domain": "spaces_norms",
@@ -644,6 +663,25 @@
         "complete",
         "normed",
         "space"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "c_k",
+      "kind": "example",
+      "domain": "spaces_norms",
+      "label": "C(K)",
+      "content": {
+        "definition": "Continuous scalar-valued functions on a compact Hausdorff space K with supremum norm.",
+        "formal": "C(K) with ||f||_infty=sup_{x in K}|f(x)|.",
+        "intuition": "Continuous functions as a Banach space.",
+        "notation": [
+          "C(K)"
+        ]
+      },
+      "tags": [
+        "example",
+        "function spaces"
       ],
       "priority": "core"
     },
@@ -829,6 +867,22 @@
       "priority": "core"
     },
     {
+      "id": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
+      "kind": "counterexample",
+      "domain": "spaces_norms",
+      "label": "Incomplete normed spaces as non-examples of Banach spaces",
+      "content": {
+        "definition": "Normed spaces with Cauchy sequences that do not converge inside the space.",
+        "intuition": "Shows completeness is not cosmetic in Banach-space theorems.",
+        "notation": []
+      },
+      "tags": [
+        "completeness",
+        "counterexample"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "noncompact_closed_unit_ball_in_infinite_dimensions",
       "kind": "counterexample",
       "domain": "spaces_norms",
@@ -851,6 +905,25 @@
         "counterexample",
         "infinite-dimensional",
         "unit-ball"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "l_p_spaces",
+      "kind": "example",
+      "domain": "spaces_norms",
+      "label": "L^p spaces",
+      "content": {
+        "definition": "Equivalence classes of p-integrable measurable functions.",
+        "formal": "L^p(\\Omega)= {f: integral |f|^p < infinity}/a.e. equality.",
+        "intuition": "Function-space analogue of ell^p.",
+        "notation": [
+          "L^p"
+        ]
+      },
+      "tags": [
+        "example",
+        "function spaces"
       ],
       "priority": "core"
     },
@@ -1165,6 +1238,26 @@
         "space"
       ],
       "priority": "core"
+    },
+    {
+      "id": "c_0",
+      "kind": "example",
+      "domain": "spaces_norms",
+      "label": "Zero-convergent sequences $c_0$",
+      "content": {
+        "definition": "The Banach space of scalar sequences converging to zero with the supremum norm.",
+        "formal": "$$c_0=\\{x \\in \\ell^\\infty: x_n \\to 0\\}.$$",
+        "intuition": "A canonical non-reflexive Banach space.",
+        "notation": [
+          "$c_0$"
+        ]
+      },
+      "tags": [
+        "example",
+        "nonreflexive",
+        "sequence spaces"
+      ],
+      "priority": "standard"
     },
     {
       "id": "bounded_linear_functional",
@@ -1877,6 +1970,23 @@
       "priority": "core"
     },
     {
+      "id": "weak_compactness_results",
+      "kind": "application",
+      "domain": "duality_weak_topologies",
+      "label": "Weak compactness results",
+      "content": {
+        "statement": "Banach-Alaoglu is the compactness source behind weak and weak-star compactness arguments.",
+        "intuition": "Compactness appears after weakening the topology.",
+        "notation": []
+      },
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
+      "tags": [
+        "application",
+        "weak topology"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "weak_convergence",
       "kind": "definition",
       "domain": "duality_weak_topologies",
@@ -1994,6 +2104,25 @@
       "priority": "core"
     },
     {
+      "id": "ell_2_as_hilbert_space",
+      "kind": "example",
+      "domain": "hilbert_spectral",
+      "label": "$\\ell^2$ as Hilbert space",
+      "content": {
+        "definition": "$$\\ell^2 \\text{ is the square-summable sequence space with inner product } \\langle x,y \\rangle = \\sum x_n \\overline{y_n}.$$",
+        "formal": "$$\\ell^2 \\text{ with } \\langle x,y \\rangle = \\sum_n x_n \\overline{y_n}.$$",
+        "intuition": "The canonical separable infinite-dimensional Hilbert space.",
+        "notation": [
+          "$\\ell^2$"
+        ]
+      },
+      "tags": [
+        "example",
+        "hilbert"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "compact_self_adjoint_operator_assumption",
       "kind": "assumption",
       "domain": "hilbert_spectral",
@@ -2083,6 +2212,22 @@
         "space"
       ],
       "priority": "core"
+    },
+    {
+      "id": "operator_spectrum_analysis",
+      "kind": "application",
+      "domain": "hilbert_spectral",
+      "label": "Operator spectrum analysis",
+      "content": {
+        "statement": "Spectral theorems reduce suitable operator questions to scalar spectral data.",
+        "intuition": "Diagonalize the operator conceptually, then analyze eigenvalues/spectrum.",
+        "notation": []
+      },
+      "tags": [
+        "application",
+        "spectral"
+      ],
+      "priority": "standard"
     },
     {
       "id": "orthonormal_basis",
@@ -2323,6 +2468,22 @@
       "priority": "standard"
     },
     {
+      "id": "separation_of_points",
+      "kind": "application",
+      "domain": "hahn_banach",
+      "label": "Separation of points by functionals",
+      "content": {
+        "statement": "Hahn-Banach gives, for x != 0, a continuous functional x* with x*(x) != 0.",
+        "intuition": "Dual functionals can detect nonzero vectors.",
+        "notation": []
+      },
+      "tags": [
+        "application",
+        "duality"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "sublinear_functional",
       "kind": "definition",
       "domain": "hahn_banach",
@@ -2517,6 +2678,101 @@
       "priority": "core"
     },
     {
+      "id": "pointwise_limit",
+      "kind": "application",
+      "domain": "baire_mapping_theorems",
+      "label": "Pointwise limits of bounded linear functionals",
+      "content": {
+        "statement": "On a Banach space, a pointwise limit of bounded linear functionals is again a bounded linear functional, and its norm is bounded by the limit inferior of the norms.",
+        "formal": "Let $X$ be a Banach space and let $(f_n)_{n\\in\\mathbb{N}}$ be a sequence in $X^*$. If $f_n(x)\\to f(x)$ for every $x\\in X$, then $f\\in X^*$ and $\\|f\\|\\le\\liminf_{n\\to\\infty}\\|f_n\\|$.",
+        "formula": "$$\\begin{aligned} &X\\text{ Banach},\\quad (f_n)_{n\\in\\mathbb{N}}\\subseteq X^*,\\\\ &\\forall x\\in X:\\ f_n(x)\\to f(x),\\\\ &\\Longrightarrow f\\in X^*\\ \\text{and}\\ \\|f\\|\\le\\liminf_{n\\to\\infty}\\|f_n\\|. \\end{aligned}$$",
+        "intuition": "Two ingredients with different requirements. Linearity passes through pointwise limits for free — no completeness, no boundedness needed. Boundedness is the real content: pointwise convergence gives $\\sup_n|f_n(x)|<\\infty$ at each $x$, and completeness of $X$ upgrades this to a *uniform* bound $\\sup_n\\|f_n\\|<\\infty$ via the uniform boundedness principle. The norm estimate is then lower semicontinuity of the norm under pointwise limits.",
+        "notation": [
+          "$(f_n)_{n\\in\\mathbb{N}}\\subseteq X^*$",
+          "$f_n\\xrightarrow[n\\to\\infty]{}f\\text{ pointwise}$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "Completeness enters only at the uniform-bound step. If $X$ is merely normed, UBP can fail and the pointwise limit may be unbounded. Standard counterexample: $X=c_{00}$ (finitely supported sequences) with the $\\ell^\\infty$ norm, $f_n(x)=\\sum_{k=1}^n x_k$. Each $f_n\\in X^*$ with $\\|f_n\\|=n$; for any fixed $x\\in c_{00}$ the sum is eventually constant, so $f_n(x)\\to\\sum_k x_k=:f(x)$ pointwise, but $f$ is unbounded on the $\\ell^\\infty$ unit ball.",
+          "label": "Failure mode without completeness",
+          "role": "failure_mode"
+        }
+      ],
+      "assumptions": [
+        "$X$ is a Banach space.",
+        "$(f_n)_{n\\in\\mathbb{N}}$ is a sequence of bounded linear functionals on $X$.",
+        "$f_n(x)$ converges for every fixed $x\\in X$."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "linearity",
+            "content": "For $x,y\\in X$ and scalars $\\alpha,\\beta$, $f(\\alpha x+\\beta y)=\\lim_n f_n(\\alpha x+\\beta y)=\\lim_n\\bigl(\\alpha f_n(x)+\\beta f_n(y)\\bigr)=\\alpha f(x)+\\beta f(y)$. So $f$ is linear.",
+            "uses": [
+              "linear_functional",
+              "convergence"
+            ]
+          },
+          {
+            "role": "pointwise bound",
+            "content": "Fix $x\\in X$. Since $(f_n(x))_n$ converges it is bounded, hence $\\sup_n|f_n(x)|<\\infty$. This holds for every $x$.",
+            "uses": [
+              "convergence",
+              "boundedness"
+            ]
+          },
+          {
+            "role": "uniform bound",
+            "content": "The pointwise bounds and completeness of $X$ give, via the uniform boundedness principle, $M:=\\sup_n\\|f_n\\|<\\infty$.",
+            "uses": [
+              "uniform_boundedness_principle",
+              "completeness"
+            ]
+          },
+          {
+            "role": "boundedness of $f$",
+            "content": "For every $x$, $|f(x)|=\\lim_n|f_n(x)|\\le M\\|x\\|$. Hence $f$ is bounded, i.e. $f\\in X^*$.",
+            "uses": [
+              "boundedness"
+            ]
+          },
+          {
+            "role": "norm estimate",
+            "content": "Taking $\\liminf_n$ in $|f_n(x)|\\le\\|f_n\\|\\,\\|x\\|$ gives $|f(x)|\\le(\\liminf_n\\|f_n\\|)\\|x\\|$ for all $x$, so $\\|f\\|\\le\\liminf_n\\|f_n\\|$.",
+            "uses": [
+              "norm",
+              "operator_norm",
+              "convergence"
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "application",
+        "banach-steinhaus",
+        "lower-semicontinuity",
+        "pointwise-convergence"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "pointwise_limits_of_operators",
+      "kind": "application",
+      "domain": "baire_mapping_theorems",
+      "label": "Pointwise limits of bounded operators",
+      "content": {
+        "statement": "Uniform boundedness shows pointwise limits of bounded linear operators on Banach domains are bounded under pointwise convergence.",
+        "intuition": "A limit operator inherits boundedness from pointwise convergence plus completeness.",
+        "notation": []
+      },
+      "tags": [
+        "application",
+        "operators"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "surjective_operator_assumption",
       "kind": "assumption",
       "domain": "baire_mapping_theorems",
@@ -2677,268 +2933,6 @@
         "hahn-banach",
         "order-theory",
         "zorns-lemma"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "ell_2_as_hilbert_space",
-      "kind": "example",
-      "domain": "examples_applications",
-      "label": "$\\ell^2$ as Hilbert space",
-      "content": {
-        "definition": "$$\\ell^2 \\text{ is the square-summable sequence space with inner product } \\langle x,y \\rangle = \\sum x_n \\overline{y_n}.$$",
-        "formal": "$$\\ell^2 \\text{ with } \\langle x,y \\rangle = \\sum_n x_n \\overline{y_n}.$$",
-        "intuition": "The canonical separable infinite-dimensional Hilbert space.",
-        "notation": [
-          "$\\ell^2$"
-        ]
-      },
-      "tags": [
-        "example",
-        "hilbert"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "ell_p_spaces",
-      "kind": "example",
-      "domain": "examples_applications",
-      "label": "$\\ell^p$ spaces",
-      "content": {
-        "definition": "Sequence spaces of $p$-summable scalar sequences, equipped with the $p$-norm.",
-        "formal": "$$\\begin{aligned}\\ell^p&=\\left\\{x=(x_n):\\sum_{n=1}^{\\infty}|x_n|^p<\\infty\\right\\},\\quad 1\\leq p<\\infty,\\\\ \\|x\\|_p&=\\left(\\sum_{n=1}^{\\infty}|x_n|^p\\right)^{1/p},\\\\ \\ell^\\infty&=\\{x=(x_n):\\sup_n |x_n|<\\infty\\},\\quad \\|x\\|_\\infty=\\sup_n |x_n|.\\end{aligned}$$",
-        "intuition": "The $\\ell^p$ spaces are discrete model Banach spaces. Their standard basis vectors all have norm one, but in infinite dimensions those points do not cluster in norm.",
-        "notation": [
-          "$\\ell^p$"
-        ]
-      },
-      "examples": [
-        {
-          "content": "For the standard basis vector $e_n=(0,\\ldots,0,1,0,\\ldots)$, $\\|e_n\\|_p=1$ for every $n$ and every $1\\leq p\\leq\\infty$.",
-          "label": "Basis vectors witness the noncompactness of infinite-dimensional unit balls."
-        }
-      ],
-      "tags": [
-        "example",
-        "sequence spaces"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "c_k",
-      "kind": "example",
-      "domain": "examples_applications",
-      "label": "C(K)",
-      "content": {
-        "definition": "Continuous scalar-valued functions on a compact Hausdorff space K with supremum norm.",
-        "formal": "C(K) with ||f||_infty=sup_{x in K}|f(x)|.",
-        "intuition": "Continuous functions as a Banach space.",
-        "notation": [
-          "C(K)"
-        ]
-      },
-      "tags": [
-        "example",
-        "function spaces"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
-      "kind": "counterexample",
-      "domain": "examples_applications",
-      "label": "Incomplete normed spaces as non-examples of Banach spaces",
-      "content": {
-        "definition": "Normed spaces with Cauchy sequences that do not converge inside the space.",
-        "intuition": "Shows completeness is not cosmetic in Banach-space theorems.",
-        "notation": []
-      },
-      "tags": [
-        "completeness",
-        "counterexample"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "l_p_spaces",
-      "kind": "example",
-      "domain": "examples_applications",
-      "label": "L^p spaces",
-      "content": {
-        "definition": "Equivalence classes of p-integrable measurable functions.",
-        "formal": "L^p(\\Omega)= {f: integral |f|^p < infinity}/a.e. equality.",
-        "intuition": "Function-space analogue of ell^p.",
-        "notation": [
-          "L^p"
-        ]
-      },
-      "tags": [
-        "example",
-        "function spaces"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "operator_spectrum_analysis",
-      "kind": "application",
-      "domain": "examples_applications",
-      "label": "Operator spectrum analysis",
-      "content": {
-        "statement": "Spectral theorems reduce suitable operator questions to scalar spectral data.",
-        "intuition": "Diagonalize the operator conceptually, then analyze eigenvalues/spectrum.",
-        "notation": []
-      },
-      "tags": [
-        "application",
-        "spectral"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "pointwise_limit",
-      "kind": "application",
-      "domain": "examples_applications",
-      "label": "Pointwise limits of bounded linear functionals",
-      "content": {
-        "statement": "On a Banach space, a pointwise limit of bounded linear functionals is again a bounded linear functional, and its norm is bounded by the limit inferior of the norms.",
-        "formal": "Let $X$ be a Banach space and let $(f_n)_{n\\in\\mathbb{N}}$ be a sequence in $X^*$. If $f_n(x)\\to f(x)$ for every $x\\in X$, then $f\\in X^*$ and $\\|f\\|\\le\\liminf_{n\\to\\infty}\\|f_n\\|$.",
-        "formula": "$$\\begin{aligned} &X\\text{ Banach},\\quad (f_n)_{n\\in\\mathbb{N}}\\subseteq X^*,\\\\ &\\forall x\\in X:\\ f_n(x)\\to f(x),\\\\ &\\Longrightarrow f\\in X^*\\ \\text{and}\\ \\|f\\|\\le\\liminf_{n\\to\\infty}\\|f_n\\|. \\end{aligned}$$",
-        "intuition": "Two ingredients with different requirements. Linearity passes through pointwise limits for free — no completeness, no boundedness needed. Boundedness is the real content: pointwise convergence gives $\\sup_n|f_n(x)|<\\infty$ at each $x$, and completeness of $X$ upgrades this to a *uniform* bound $\\sup_n\\|f_n\\|<\\infty$ via the uniform boundedness principle. The norm estimate is then lower semicontinuity of the norm under pointwise limits.",
-        "notation": [
-          "$(f_n)_{n\\in\\mathbb{N}}\\subseteq X^*$",
-          "$f_n\\xrightarrow[n\\to\\infty]{}f\\text{ pointwise}$"
-        ]
-      },
-      "examples": [
-        {
-          "content": "Completeness enters only at the uniform-bound step. If $X$ is merely normed, UBP can fail and the pointwise limit may be unbounded. Standard counterexample: $X=c_{00}$ (finitely supported sequences) with the $\\ell^\\infty$ norm, $f_n(x)=\\sum_{k=1}^n x_k$. Each $f_n\\in X^*$ with $\\|f_n\\|=n$; for any fixed $x\\in c_{00}$ the sum is eventually constant, so $f_n(x)\\to\\sum_k x_k=:f(x)$ pointwise, but $f$ is unbounded on the $\\ell^\\infty$ unit ball.",
-          "label": "Failure mode without completeness",
-          "role": "failure_mode"
-        }
-      ],
-      "assumptions": [
-        "$X$ is a Banach space.",
-        "$(f_n)_{n\\in\\mathbb{N}}$ is a sequence of bounded linear functionals on $X$.",
-        "$f_n(x)$ converges for every fixed $x\\in X$."
-      ],
-      "proof": {
-        "steps": [
-          {
-            "role": "linearity",
-            "content": "For $x,y\\in X$ and scalars $\\alpha,\\beta$, $f(\\alpha x+\\beta y)=\\lim_n f_n(\\alpha x+\\beta y)=\\lim_n\\bigl(\\alpha f_n(x)+\\beta f_n(y)\\bigr)=\\alpha f(x)+\\beta f(y)$. So $f$ is linear.",
-            "uses": [
-              "linear_functional",
-              "convergence"
-            ]
-          },
-          {
-            "role": "pointwise bound",
-            "content": "Fix $x\\in X$. Since $(f_n(x))_n$ converges it is bounded, hence $\\sup_n|f_n(x)|<\\infty$. This holds for every $x$.",
-            "uses": [
-              "convergence",
-              "boundedness"
-            ]
-          },
-          {
-            "role": "uniform bound",
-            "content": "The pointwise bounds and completeness of $X$ give, via the uniform boundedness principle, $M:=\\sup_n\\|f_n\\|<\\infty$.",
-            "uses": [
-              "uniform_boundedness_principle",
-              "completeness"
-            ]
-          },
-          {
-            "role": "boundedness of $f$",
-            "content": "For every $x$, $|f(x)|=\\lim_n|f_n(x)|\\le M\\|x\\|$. Hence $f$ is bounded, i.e. $f\\in X^*$.",
-            "uses": [
-              "boundedness"
-            ]
-          },
-          {
-            "role": "norm estimate",
-            "content": "Taking $\\liminf_n$ in $|f_n(x)|\\le\\|f_n\\|\\,\\|x\\|$ gives $|f(x)|\\le(\\liminf_n\\|f_n\\|)\\|x\\|$ for all $x$, so $\\|f\\|\\le\\liminf_n\\|f_n\\|$.",
-            "uses": [
-              "norm",
-              "operator_norm",
-              "convergence"
-            ]
-          }
-        ]
-      },
-      "tags": [
-        "application",
-        "banach-steinhaus",
-        "lower-semicontinuity",
-        "pointwise-convergence"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "pointwise_limits_of_operators",
-      "kind": "application",
-      "domain": "examples_applications",
-      "label": "Pointwise limits of bounded operators",
-      "content": {
-        "statement": "Uniform boundedness shows pointwise limits of bounded linear operators on Banach domains are bounded under pointwise convergence.",
-        "intuition": "A limit operator inherits boundedness from pointwise convergence plus completeness.",
-        "notation": []
-      },
-      "tags": [
-        "application",
-        "operators"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "separation_of_points",
-      "kind": "application",
-      "domain": "examples_applications",
-      "label": "Separation of points by functionals",
-      "content": {
-        "statement": "Hahn-Banach gives, for x != 0, a continuous functional x* with x*(x) != 0.",
-        "intuition": "Dual functionals can detect nonzero vectors.",
-        "notation": []
-      },
-      "tags": [
-        "application",
-        "duality"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "weak_compactness_results",
-      "kind": "application",
-      "domain": "examples_applications",
-      "label": "Weak compactness results",
-      "content": {
-        "statement": "Banach-Alaoglu is the compactness source behind weak and weak-star compactness arguments.",
-        "intuition": "Compactness appears after weakening the topology.",
-        "notation": []
-      },
-      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
-      "tags": [
-        "application",
-        "weak topology"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "c_0",
-      "kind": "example",
-      "domain": "examples_applications",
-      "label": "Zero-convergent sequences $c_0$",
-      "content": {
-        "definition": "The Banach space of scalar sequences converging to zero with the supremum norm.",
-        "formal": "$$c_0=\\{x \\in \\ell^\\infty: x_n \\to 0\\}.$$",
-        "intuition": "A canonical non-reflexive Banach space.",
-        "notation": [
-          "$c_0$"
-        ]
-      },
-      "tags": [
-        "example",
-        "nonreflexive",
-        "sequence spaces"
       ],
       "priority": "standard"
     }
