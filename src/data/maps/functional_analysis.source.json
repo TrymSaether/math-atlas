@@ -56,6 +56,51 @@
   ],
   "concepts": [
     {
+      "id": "exercise_1_4",
+      "kind": "exercise",
+      "domain": "foundations",
+      "label": "A nonzero bounded linear operator is not bounded on the domain",
+      "content": {
+        "statement": "Let $X$ and $Y$ be normed vector spaces. A function $f : X \\to Y$ is said to be bounded on $X$ if there exists a $M > 0$ such that $\\|f(x)\\| \\leq M$ for all $x \\in X$. Show that a nonzero bounded linear operator $T : X \\to Y$ is not bounded on $X$."
+      },
+      "assumptions": [
+        "$X$ and $Y$ are normed vector spaces.",
+        "$T : X \\to Y$ is a linear operator."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $(X, \\|\\cdot\\|_X)$ and $(Y, \\|\\cdot\\|_Y)$ be normed vector spaces, and let $T : X \\to Y$ be a nonzero bounded linear operator.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "Since $T$ is bounded, there exists an $M > 0$ such that $\\|T(x)\\|_Y \\leq M \\|x\\|_X$ for all $x \\in X$. Suppose for contradiction that $T$ is also bounded on $X$, i.e., there exists an $M' > 0$ such that $\\|T(x)\\|_Y \\leq M'$ for all $x \\in X$. Then, for any $x \\in X$, we have both $\\|T(x)\\|_Y \\leq M \\|x\\|_X$ and $\\|T(x)\\|_Y \\leq M'$. This implies that the image of the unit ball in $X$ under $T$ is contained in the ball of radius $\\min(M, M')$ in $Y$, which contradicts the assumption that $T$ is nonzero.",
+            "uses": [
+              "bounded_linear_operator",
+              "normed_vector_space"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "Therefore, a nonzero bounded linear operator from a normed vector space to another cannot be bounded on the domain space.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Bowers-Kalton Exercise 1.4",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "linear operator",
+        "normed space"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "approximation_argument",
       "kind": "proof_method",
       "domain": "foundations",
@@ -132,6 +177,58 @@
         "foundations",
         "product",
         "set-theory"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "exercise_1_10",
+      "kind": "exercise",
+      "domain": "foundations",
+      "label": "Closed sets are sequentially closed",
+      "content": {
+        "statement": "Show that a subset of a metric space $M$ is closed if and only if it is sequentially closed. That is, show that $E$ is a closed subset of $M$ if and only if every convergent sequence in $E$ has its limit in $E$."
+      },
+      "assumptions": [
+        "$M$ is a metric space.",
+        "$E$ is a subset of $M$."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $M$ be a metric space, and let $E$ be a subset of $M$.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "First, we will show that if $E$ is closed, then it is sequentially closed. Suppose $E$ is closed, and let $(x_n)$ be a sequence in $E$ that converges to some limit $x \\in M$. Since $E$ is closed, it contains all of its limit points, so $x \\in E$.",
+            "uses": [
+              "convergence"
+            ]
+          },
+          {
+            "role": "argument",
+            "content": "Next, we will show that if $E$ is sequentially closed, then it is closed. Suppose $E$ is sequentially closed, and let $x$ be a limit point of $E$. This means that every neighborhood of $x$ contains a point of $E$ different from $x$. We can construct a sequence $(x_n)$ in $E$ that converges to $x$ by choosing $x_n$ to be a point in $E$ that is within $1/n$ of $x$ for each $n \\in \\mathbb{N}$. Since $E$ is sequentially closed, the limit of this sequence must be in $E$, so $x \\in E$.",
+            "uses": [
+              "limit_of_sequence"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "We have shown that if $E$ is closed, then it is sequentially closed, and if $E$ is sequentially closed, then it is closed. Therefore, a subset of a metric space $M$ is closed if and only if it is sequentially closed.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Bowers-Kalton Exercise 1.10",
+        "references": []
+      },
+      "tags": [
+        "closed sets",
+        "exercise",
+        "metric space",
+        "sequentially closed"
       ],
       "priority": "core"
     },
@@ -226,6 +323,156 @@
       "priority": "core"
     },
     {
+      "id": "function",
+      "kind": "definition",
+      "domain": "foundations",
+      "label": "Function / map",
+      "content": {
+        "statement": "A function is a rule assigning to each element of a domain exactly one element of a codomain.",
+        "definition": "A function, also called a map or mapping, from $A$ to $B$ is a subset $f\\subseteq A\\times B$ such that every $a\\in A$ occurs as the first coordinate of exactly one ordered pair in $f$. We write $f(a)$ for that unique second coordinate.",
+        "formal": "$$f:A\\to B\\quad\\Longleftrightarrow\\quad f\\subseteq A\\times B\\ \\text{ and }\\ \\forall a\\in A\\,\\exists! b\\in B:\\ (a,b)\\in f.$$",
+        "intuition": "The bare mathematical arrow is still a set of ordered pairs under the hood. The function condition says each input is used once, so the notation $f(a)$ names one unambiguous output.",
+        "notation": [
+          "$f:A\\to B$",
+          "$x\\mapsto f(x)$",
+          "$\\operatorname{dom}(f)=A$",
+          "$\\operatorname{codom}(f)=B$"
+        ]
+      },
+      "assumptions": [
+        "$A$ is a set.",
+        "$B$ is a set.",
+        "Each $a\\in A$ has exactly one assigned value $f(a)\\in B$."
+      ],
+      "source": {
+        "citation": "standard mathematical terminology; compatible with the existing functional_analysis graph",
+        "references": []
+      },
+      "tags": [
+        "definition",
+        "foundations",
+        "function",
+        "map"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "functional_analysis",
+      "kind": "structure",
+      "domain": "foundations",
+      "label": "Functional Analysis",
+      "content": {
+        "definition": "Study of normed, topological, and infinite-dimensional linear spaces and their continuous linear maps.",
+        "intuition": "Linear algebra with topology, completeness, duality, and limits turned on.",
+        "notation": []
+      },
+      "tags": [
+        "field"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "exercise_1_9",
+      "kind": "exercise",
+      "domain": "foundations",
+      "label": "If $T$ vanishes on a vector, then $S$ must also vanish on that vector",
+      "content": {
+        "statement": "Let $X$ be a normed vector space and suppose $T$ and $S$ are in $X^*$. If $T(x) = 0$ implies that $S(x) = 0$, show that there is a constant $c$ such that $S(x) = c T(x)$ for all $x \\in X$.",
+        "formal": "$$X\\text{ normed vector space},\\ T,S \\in X^*,\\ T(x) = 0 \\implies S(x) = 0 \\implies \\exists c \\in \\mathbb{R} : S(x) = c T(x) \\forall x \\in X.$$",
+        "intuition": "If $T$ vanishes on a vector, then $S$ must also vanish on that vector. This means that the kernel of $T$ is contained in the kernel of $S$. Since both $T$ and $S$ are linear functionals, this implies that $S$ can be expressed as a scalar multiple of $T$."
+      },
+      "assumptions": [
+        "$X$ is a normed vector space.",
+        "$T$ and $S$ are linear functionals in $X^*$."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $X$ be a normed vector space, and let $T, S \\in X^*$ be linear functionals such that $T(x) = 0$ implies $S(x) = 0$ for all $x \\in X$.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "Since $T(x) = 0$ implies $S(x) = 0$, the kernel of $T$ is contained in the kernel of $S$. Let $x_0 \\in X$ be such that $T(x_0) \\neq 0$. Then for any $x \\in X$, we can write: $$x = x - \\frac{T(x)}{T(x_0)} x_0 + \\frac{T(x)}{T(x_0)} x_0.$$ Applying $S$ to both sides gives: $$S(x) = S\\left(x - \\frac{T(x)}{T(x_0)} x_0\\right) + S\\left(\\frac{T(x)}{T(x_0)} x_0\\right).$$ Since $x - \\frac{T(x)}{T(x_0)} x_0$ is in the kernel of $T$, it is also in the kernel of $S$, so $S\\left(x - \\frac{T(x)}{T(x_0)} x_0\\right) = 0$. Therefore, we have: $$S(x) = S\\left(\\frac{T(x)}{T(x_0)} x_0\\right) = \\frac{T(x)}{T(x_0)} S(x_0).$$ Letting $c = \\frac{S(x_0)}{T(x_0)}$, we get: $$S(x) = c T(x)$$ for all $x \\in X$.",
+            "uses": [
+              "normed_vector_space",
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "We have shown that there exists a constant $c$ such that $S(x) = c T(x)$ for all $x \\in X$. Hence, if $T$ vanishes on a vector, then $S$ must also vanish on that vector, and $S$ can be expressed as a scalar multiple of $T$.",
+            "uses": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "exercise_1_2",
+      "kind": "exercise",
+      "domain": "foundations",
+      "label": "If a sequence converges in a normed space, then it is bounded. Converse false.",
+      "content": {
+        "statement": "Let $X$ be a normed space. A sequence $(x_n)_{\\infty n=1}$ in $X$ is said to be bounded if there exists a $M > 0$ such that $\\|x_n\\| \\leq M$ for all $n \\in \\mathbb{N}$. Show that in a normed space a convergent sequence is bounded. Is the converse true? That is, must a bounded sequence necessarily converge?",
+        "formal": "$$(X,\\|\\cdot\\|)\\text{ normed space},\\ x_n\\to x \\implies (x_n) \\text{ is bounded}.$$",
+        "intuition": "Convergence means the terms get arbitrarily close to the limit, so they must stay within some fixed distance of the limit.",
+        "notation": []
+      },
+      "assumptions": [
+        "$(X,\\|\\cdot\\|)$ is a normed space.",
+        "$$\\lim_{n\\to\\infty} x_n = x \\quad \\Leftrightarrow \\quad \\forall \\varepsilon > 0,\\ \\exists N:\\ n\\ge N \\implies \\|x_n-x\\|<\\varepsilon$$."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $(X,\\|\\cdot\\|)$ be a normed space, and suppose $x_n \\to x$. Let $\\epsilon > 0$ be arbitrary.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "Since $x_n \\to x$, for every $\\delta > 0$ there exists N in N such that for all k >= N, \\|x_k - x\\| < \\delta. Choose $\\delta = 1$. Since $\\epsilon > 0$, $\\delta > 0$.",
+            "uses": [
+              "normed_vector_space",
+              "convergence"
+            ]
+          },
+          {
+            "role": "claim",
+            "content": "There exists $N \\in \\mathbb{N}$ such that for all $k >= N, \\|x_k - x\\| < 1$.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "Let $n >= N$. Since the bound holds for every $k >= N$, we get $\\|x_n - x\\| < 1$.",
+            "uses": []
+          },
+          {
+            "role": "calculation",
+            "content": "$$\\begin{aligned}\\|x_n\\|&=\\|x_n - x + x\\|\\\\ &\\leq \\|x_n - x\\| + \\|x\\|\\\\ &< 1 + \\|x\\|.\\end{aligned}$$",
+            "uses": []
+          },
+          {
+            "role": "conclusion",
+            "content": "Therefore, for all $n >= N$, we have $\\|x_n\\| < 1 + \\|x\\|$. Let $M = \\max(1 + \\|x\\|, \\max_{1 \\leq n < N} \\|x_n\\|)$. Then for all $n \\in \\mathbb{N}$, we have $\\|x_n\\| \\leq M$. Hence $(x_n)$ is bounded.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Bowers-Kalton Exercise 1.2",
+        "references": []
+      },
+      "tags": [
+        "bounded",
+        "convergence",
+        "exercise",
+        "normed space"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "exercise_1_1",
       "kind": "exercise",
       "domain": "foundations",
@@ -286,55 +533,6 @@
         "convergence",
         "exercise",
         "metric space"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "function",
-      "kind": "definition",
-      "domain": "foundations",
-      "label": "Function / map",
-      "content": {
-        "statement": "A function is a rule assigning to each element of a domain exactly one element of a codomain.",
-        "definition": "A function, also called a map or mapping, from $A$ to $B$ is a subset $f\\subseteq A\\times B$ such that every $a\\in A$ occurs as the first coordinate of exactly one ordered pair in $f$. We write $f(a)$ for that unique second coordinate.",
-        "formal": "$$f:A\\to B\\quad\\Longleftrightarrow\\quad f\\subseteq A\\times B\\ \\text{ and }\\ \\forall a\\in A\\,\\exists! b\\in B:\\ (a,b)\\in f.$$",
-        "intuition": "The bare mathematical arrow is still a set of ordered pairs under the hood. The function condition says each input is used once, so the notation $f(a)$ names one unambiguous output.",
-        "notation": [
-          "$f:A\\to B$",
-          "$x\\mapsto f(x)$",
-          "$\\operatorname{dom}(f)=A$",
-          "$\\operatorname{codom}(f)=B$"
-        ]
-      },
-      "assumptions": [
-        "$A$ is a set.",
-        "$B$ is a set.",
-        "Each $a\\in A$ has exactly one assigned value $f(a)\\in B$."
-      ],
-      "source": {
-        "citation": "standard mathematical terminology; compatible with the existing functional_analysis graph",
-        "references": []
-      },
-      "tags": [
-        "definition",
-        "foundations",
-        "function",
-        "map"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "functional_analysis",
-      "kind": "structure",
-      "domain": "foundations",
-      "label": "Functional Analysis",
-      "content": {
-        "definition": "Study of normed, topological, and infinite-dimensional linear spaces and their continuous linear maps.",
-        "intuition": "Linear algebra with topology, completeness, duality, and limits turned on.",
-        "notation": []
-      },
-      "tags": [
-        "field"
       ],
       "priority": "core"
     },
@@ -407,6 +605,61 @@
         "foundation",
         "function",
         "set-theory"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "exercise_1_3",
+      "kind": "exercise",
+      "domain": "foundations",
+      "label": "Reverse triangle inequality",
+      "content": {
+        "statement": "Let $X$ be a normed space. Show that $|\\|x\\| - \\|y\\|| \\leq \\|x - y\\|$ for all $x$ and $y$ in $X$. (This is sometimes called the reverse triangle inequality.)",
+        "formal": "$$(X,\\|\\cdot\\|)\\text{ normed space},\\ |\\|x\\| - \\|y\\|| \\leq \\|x - y\\| \\quad \\forall x,y \\in X.$$",
+        "intuition": "The triangle inequality says $\\|x+y\\| \\leq \\|x\\| + \\|y\\|$. The reverse triangle inequality says $\\|x-y\\| \\geq |\\|x\\| - \\|y\\||$.",
+        "notation": []
+      },
+      "assumptions": [
+        "$(X,\\|\\cdot\\|)$ is a normed space."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $(X,\\|\\cdot\\|)$ be a normed space, and let $x,y \\in X$ be arbitrary.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "Using the triangle inequality, we have $\\|x\\| = \\|y + (x - y)\\| \\leq \\|y\\| + \\|x - y\\|$. Rearranging gives $\\|x\\| - \\|y\\| \\leq \\|x - y\\|$.",
+            "uses": [
+              "normed_vector_space",
+              "triangle_inequality"
+            ]
+          },
+          {
+            "role": "argument",
+            "content": "Similarly, we have $\\|y\\| = \\|x + (y - x)\\| \\leq \\|x\\| + \\|y - x\\| = \\|x\\| + \\|x - y\\|$. Rearranging gives $\\|y\\| - \\|x\\| \\leq \\|x - y\\|$.",
+            "uses": [
+              "normed_vector_space",
+              "triangle_inequality"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "Combining the two inequalities, we get $-\\|x - y\\| \\leq \\|x\\| - \\|y\\| \\leq \\|x - y\\|$. Therefore, $|\\|x\\| - \\|y\\|| \\leq \\|x - y\\|$.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Bowers-Kalton Exercise 1.3",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "normed space",
+        "triangle inequality"
       ],
       "priority": "core"
     },
@@ -587,6 +840,141 @@
         "foundation",
         "membership",
         "set-theory"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "exercise_1_8",
+      "kind": "exercise",
+      "domain": "foundations",
+      "label": "The derivative at zero defines an unbounded linear functional on $C^{(1)}[0, 1]$",
+      "content": {
+        "statement": "Let $C^{(1)}[0, 1]$ be the space of all continuous functions on $[0, 1]$ that have continuous derivative. (This space is called the space of continuously differentiable functions.) Define a norm $\\|\\cdot\\|$ on $C^{(1)}[0, 1]$ by $\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$. Show that the map $B(f) = f'(0)$ defines a linear functional on the normed vector space $(C^{(1)}[0, 1], \\|\\cdot\\|)$ that is not bounded."
+      },
+      "assumptions": [
+        "$C^{(1)}[0, 1]$ is the space of all continuous functions on $[0, 1]$ that have continuous derivative.",
+        "$\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$ is a norm on $C^{(1)}[0, 1]$."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $C^{(1)}[0, 1]$ be the space of all continuous functions on $[0, 1]$ that have continuous derivative, equipped with the norm $\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$. Define the map $B : C^{(1)}[0, 1] \\to \\mathbb{R}$ by $B(f) = f'(0)$.",
+            "uses": []
+          },
+          {
+            "role": "step 1: linearity",
+            "content": "To show that $B$ is linear, let $f, g \\in C^{(1)}[0, 1]$ and let $\\alpha \\in \\mathbb{R}$. We have: $$B(\\alpha f + g) = (\\alpha f + g)'(0) = \\alpha f'(0) + g'(0) = \\alpha B(f) + B(g).$$ Thus, $B$ is linear.",
+            "uses": []
+          },
+          {
+            "role": "step 2: unboundedness",
+            "content": "To show that $B$ is not bounded, we need to show that for every constant $M > 0$, there exists a function $f \\in C^{(1)}[0, 1]$ such that $|B(f)| > M \\|f\\|$. Consider the family of functions defined by $f_n(t) = \\frac{t^n}{n!}$ for $n \\in \\mathbb{N}$. Each $f_n$ is in $C^{(1)}[0, 1]$, and we have: $$B(f_n) = f_n'(0) = \\frac{n t^{n-1}}{n!}\\bigg|_{t=0} = 0$$ for all $n$. However, we also have: $$\\|f_n\\| = \\max_{t \\in [0,1]} |f_n(t)| = \\max_{t \\in [0,1]} \\left|\\frac{t^n}{n!}\\right| = \\frac{1}{n!}.$$ As $n \\to \\infty$, $\\|f_n\\| \\to 0$, but $|B(f_n)| = 0$ for all $n$. Therefore, for any $M > 0$, we can choose $n$ large enough such that $\\|f_n\\| < \\frac{1}{M}$, which implies that $|B(f_n)| = 0 > M \\|f_n\\|$. Hence, $B$ is not bounded.",
+            "uses": []
+          },
+          {
+            "role": "conclusion",
+            "content": "We have shown that $B$ is linear but not bounded, so $B$ defines a linear functional on the normed vector space $(C^{(1)}[0, 1], \\|\\cdot\\|)$ that is not bounded.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Bowers-Kalton Exercise 1.8",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "functional analysis",
+        "linear functional"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "exercise_1_7",
+      "kind": "exercise",
+      "domain": "foundations",
+      "label": "The integral defines a bounded linear functional on $C[0, 1]$",
+      "content": {
+        "statement": "Let $C[0, 1]$ be the space of continuous functions on $[0, 1]$ and define a norm $\\|\\cdot\\|$ on $C[0, 1]$ by $\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$. Show that the map $A(f) = \\int_0^1 f(x) dx$ defines a bounded linear functional on the normed vector space $(C[0, 1], \\|\\cdot\\|)$.",
+        "formal": "$$C[0, 1]\\text{ space of continuous functions},\\ \\|f\\| = \\max_{t \\in [0,1]} |f(t)|,\\ A(f) = \\int_0^1 f(x) dx \\implies A \\text{ is a bounded linear functional on }(C[0, 1], \\|\\cdot\\|).$$",
+        "intuition": "The integral is linear and can be bounded by the maximum value of the function, so it defines a bounded linear functional on the space of continuous functions with the supremum norm."
+      },
+      "assumptions": [
+        "$C[0, 1]$ is the space of continuous functions on $[0, 1]$.",
+        "$\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$ is a norm on $C[0, 1]$."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $C[0, 1]$ be the space of continuous functions on $[0, 1]$ equipped with the norm $\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$. Define the map $A : C[0, 1] \\to \\mathbb{R}$ by $A(f) = \\int_0^1 f(x) dx$.",
+            "uses": []
+          },
+          {
+            "role": "step 1: linearity",
+            "content": "To show that $A$ is linear, let $f, g \\in C[0, 1]$ and let $\\alpha \\in \\mathbb{R}$. We have: $$A(\\alpha f + g) = \\int_0^1 (\\alpha f(x) + g(x)) dx = \\alpha \\int_0^1 f(x) dx + \\int_0^1 g(x) dx = \\alpha A(f) + A(g).$$ Thus, $A$ is linear.",
+            "uses": []
+          },
+          {
+            "role": "step 2: boundedness",
+            "content": "To show that $A$ is bounded, we need to find a constant $M > 0$ such that $|A(f)| \\leq M \\|f\\|$ for all $f \\in C[0, 1]$. Since $\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$, we have: $$|A(f)| = \\left|\\int_0^1 f(x) dx\\right| \\leq \\int_0^1 |f(x)| dx \\leq \\int_0^1 \\|f\\| dx = \\|f\\|.$$ Thus, we can take $M = 1$, and we have $|A(f)| \\leq M \\|f\\|$ for all $f \\in C[0, 1]$. Therefore, $A$ is a bounded linear functional on $(C[0, 1], \\|\\cdot\\|)$.",
+            "uses": []
+          },
+          {
+            "role": "conclusion",
+            "content": "We have shown that $A$ is linear and bounded, so $A$ defines a bounded linear functional on the normed vector space $(C[0, 1], \\|\\cdot\\|)$.",
+            "uses": []
+          }
+        ]
+      },
+      "source": {
+        "citation": "Bowers-Kalton Exercise 1.7",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "functional analysis",
+        "linear functional"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "triangle_inequality",
+      "kind": "theorem",
+      "domain": "foundations",
+      "label": "Triangle Inequality",
+      "content": {
+        "statement": "Let $X$ be a normed space. Then for all $x, y \\in X$, we have $\\|x + y\\| \\leq \\|x\\| + \\|y\\|$.",
+        "formal": "$$(X,\\|\\cdot\\|)\\text{ normed space},\\ \\|x + y\\| \\leq \\|x\\| + \\|y\\| \\quad \\forall x,y \\in X.$$"
+      },
+      "assumptions": [
+        "$(X,\\|\\cdot\\|)$ is a normed space."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $(X,\\|\\cdot\\|)$ be a normed space, and let $x,y \\in X$ be arbitrary.",
+            "uses": []
+          },
+          {
+            "role": "argument",
+            "content": "By the definition of a norm, we have $\\|x + y\\|^2 = \\langle x + y, x + y \\rangle = \\|x\\|^2 + 2\\langle x, y \\rangle + \\|y\\|^2$. Since $2\\langle x, y \\rangle \\leq 2\\|x\\|\\|y\\|$ by the Cauchy-Schwarz inequality, we have $\\|x + y\\|^2 \\leq \\|x\\|^2 + 2\\|x\\|\\|y\\| + \\|y\\|^2 = (\\|x\\| + \\|y\\|)^2$. Taking the square root of both sides gives the desired result.",
+            "uses": [
+              "normed_vector_space"
+            ]
+          }
+        ]
+      },
+      "source": {
+        "citation": "Bowers-Kalton Theorem 1.1",
+        "references": []
+      },
+      "tags": [
+        "normed space",
+        "theorem",
+        "triangle inequality"
       ],
       "priority": "core"
     },
@@ -3549,6 +3937,26 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "exercise_1_10",
+      "target": "cauchy_sequence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_10",
+      "target": "closed_subspace",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_10",
+      "target": "convergence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_10",
+      "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "exercise_1_1",
       "target": "cauchy_sequence",
       "relation": "defined_in_terms_of"
@@ -3561,6 +3969,76 @@
     {
       "source": "exercise_1_1",
       "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_2",
+      "target": "cauchy_sequence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_2",
+      "target": "convergence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_2",
+      "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_3",
+      "target": "cauchy_sequence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_3",
+      "target": "convergence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_3",
+      "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_4",
+      "target": "cauchy_sequence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_4",
+      "target": "convergence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_4",
+      "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_7",
+      "target": "bounded_linear_functional",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_8",
+      "target": "linear_functional",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_8",
+      "target": "normed_vector_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_9",
+      "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_9",
+      "target": "normed_vector_space",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4061,6 +4539,16 @@
     {
       "source": "topology_induced_by_metric",
       "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "triangle_inequality",
+      "target": "norm",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "triangle_inequality",
+      "target": "vector_space",
       "relation": "defined_in_terms_of"
     },
     {
