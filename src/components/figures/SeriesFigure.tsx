@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { type WaveKind, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
-import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
 
@@ -52,9 +52,7 @@ export default function SeriesFigure() {
         label={`N = ${terms}`}
         ariaLabel="Number of harmonics"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        {CAPTION[kind]}
-      </figcaption>
+      <FigureCaption>{CAPTION[kind]}</FigureCaption>
     </figure>
   );
 }

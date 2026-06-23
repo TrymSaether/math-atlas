@@ -1,4 +1,4 @@
-import { Suspense, createElement } from "react";
+import { Suspense, createElement, useEffect } from "react";
 
 import type { GraphNode } from "../types";
 import { cn } from "../lib/utils";
@@ -16,6 +16,13 @@ export function NodeVisual({ node, className }: { node: GraphNode; className?: s
   const InferredFigure = diagramPath ? null : inferredInteractiveFigure(node);
   const InteractiveFigure = ExactFigure ?? InferredFigure;
   const frameClassName = cn("node-visual-frame block w-full rounded-md border p-3", className);
+
+  useEffect(() => {
+    if (!import.meta.env.DEV || !ExactFigure || !diagramPath) return;
+    console.warn(
+      `[math-atlas] Node "${node.id}" defines both an exact interactive figure and a diagram; the interactive figure is rendered first.`,
+    );
+  }, [ExactFigure, diagramPath, node.id]);
 
   if (InteractiveFigure) {
     return (

@@ -8,8 +8,8 @@ export interface SegmentOption<T extends string> {
 
 /**
  * Compact segmented (radio-group) control shared by the interactive figures
- * that switch between a small set of named modes — convergence type, which
- * sequence space, and so on. Mirrors `WaveSelect`'s look but is generic.
+ * that switch between a small set of named modes: convergence type, waveform,
+ * sequence space, and so on.
  */
 export function SegmentedControl<T extends string>({
   value,

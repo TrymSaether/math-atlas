@@ -1,0 +1,204 @@
+/* Shared semantic token extensions.
+   The base theme blocks in index.css define raw surfaces, ink, and domain hues;
+   this file derives reusable product, data-vis, and interaction primitives. */
+
+:root,
+:root[data-theme] {
+  /* Surface roles */
+  --surface-raised: color-mix(in srgb, var(--surface) 94%, var(--bg) 6%);
+  --surface-sunken: color-mix(in srgb, var(--surface-3) 72%, var(--bg) 28%);
+  --surface-muted: color-mix(in srgb, var(--surface-2) 82%, var(--bg) 18%);
+  --surface-hover: color-mix(in srgb, var(--fg-1) 6%, var(--surface));
+  --surface-active: color-mix(in srgb, var(--fg-1) 9%, var(--surface));
+  --surface-selected: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  --surface-overlay: color-mix(in srgb, var(--surface) 92%, transparent);
+  --scrim: color-mix(in srgb, var(--bg-deep) 48%, transparent);
+
+  /* Text and border roles */
+  --fg-disabled: color-mix(in srgb, var(--fg-3) 58%, var(--surface));
+  --fg-inverse: var(--fg-on-color);
+  --border-muted: color-mix(in srgb, var(--border) 62%, transparent);
+  --border-focus: color-mix(in srgb, var(--accent) 72%, var(--accent-border));
+  --focus-ring: color-mix(in srgb, var(--accent) 28%, transparent);
+  --link: var(--accent);
+  --link-hover: color-mix(in srgb, var(--accent) 82%, var(--fg-1));
+
+  /* Product status roles */
+  --success: var(--green);
+  --success-soft: color-mix(in srgb, var(--success) 11%, var(--surface));
+  --success-border: color-mix(in srgb, var(--success) 34%, var(--surface));
+  --success-ink: color-mix(in srgb, var(--success) 76%, var(--fg-1));
+  --warning: var(--amber);
+  --warning-soft: color-mix(in srgb, var(--warning) 13%, var(--surface));
+  --warning-border: color-mix(in srgb, var(--warning) 36%, var(--surface));
+  --warning-ink: color-mix(in srgb, var(--warning) 70%, var(--fg-1));
+  --info: var(--sky);
+  --info-soft: color-mix(in srgb, var(--info) 11%, var(--surface));
+  --info-border: color-mix(in srgb, var(--info) 34%, var(--surface));
+  --info-ink: color-mix(in srgb, var(--info) 76%, var(--fg-1));
+  --danger-soft: color-mix(in srgb, var(--danger) 10%, var(--surface));
+  --danger-border: color-mix(in srgb, var(--danger) 34%, var(--surface));
+  --danger-ink: color-mix(in srgb, var(--danger) 76%, var(--fg-1));
+
+  /* Domain palette aliases for components that need stable categorical slots. */
+  --palette-1: var(--blue);
+  --palette-2: var(--teal);
+  --palette-3: var(--orange);
+  --palette-4: var(--purple);
+  --palette-5: var(--green);
+  --palette-6: var(--pink);
+  --palette-7: var(--gold);
+  --palette-8: var(--cyan);
+  --palette-9: var(--red);
+  --palette-10: var(--indigo);
+  --palette-11: var(--lime);
+  --palette-12: var(--coral);
+  --palette-13: var(--mint);
+  --palette-14: var(--violet);
+  --palette-15: var(--amber);
+  --palette-16: var(--sky);
+  --palette-17: var(--rose);
+  --palette-18: var(--magenta);
+  --palette-19: var(--brown);
+  --palette-20: var(--slate);
+
+  --palette-softness: 11%;
+  --palette-border-strength: 34%;
+  --palette-fill-strength: 18%;
+  --palette-ink-strength: 82%;
+
+  --palette-1-soft: color-mix(in srgb, var(--palette-1) var(--palette-softness), var(--surface));
+  --palette-2-soft: color-mix(in srgb, var(--palette-2) var(--palette-softness), var(--surface));
+  --palette-3-soft: color-mix(in srgb, var(--palette-3) var(--palette-softness), var(--surface));
+  --palette-4-soft: color-mix(in srgb, var(--palette-4) var(--palette-softness), var(--surface));
+  --palette-5-soft: color-mix(in srgb, var(--palette-5) var(--palette-softness), var(--surface));
+  --palette-6-soft: color-mix(in srgb, var(--palette-6) var(--palette-softness), var(--surface));
+  --palette-7-soft: color-mix(in srgb, var(--palette-7) var(--palette-softness), var(--surface));
+  --palette-8-soft: color-mix(in srgb, var(--palette-8) var(--palette-softness), var(--surface));
+  --palette-9-soft: color-mix(in srgb, var(--palette-9) var(--palette-softness), var(--surface));
+  --palette-10-soft: color-mix(in srgb, var(--palette-10) var(--palette-softness), var(--surface));
+  --palette-11-soft: color-mix(in srgb, var(--palette-11) var(--palette-softness), var(--surface));
+  --palette-12-soft: color-mix(in srgb, var(--palette-12) var(--palette-softness), var(--surface));
+
+  --palette-1-border: color-mix(in srgb, var(--palette-1) var(--palette-border-strength), var(--surface));
+  --palette-2-border: color-mix(in srgb, var(--palette-2) var(--palette-border-strength), var(--surface));
+  --palette-3-border: color-mix(in srgb, var(--palette-3) var(--palette-border-strength), var(--surface));
+  --palette-4-border: color-mix(in srgb, var(--palette-4) var(--palette-border-strength), var(--surface));
+  --palette-5-border: color-mix(in srgb, var(--palette-5) var(--palette-border-strength), var(--surface));
+  --palette-6-border: color-mix(in srgb, var(--palette-6) var(--palette-border-strength), var(--surface));
+  --palette-7-border: color-mix(in srgb, var(--palette-7) var(--palette-border-strength), var(--surface));
+  --palette-8-border: color-mix(in srgb, var(--palette-8) var(--palette-border-strength), var(--surface));
+  --palette-9-border: color-mix(in srgb, var(--palette-9) var(--palette-border-strength), var(--surface));
+  --palette-10-border: color-mix(in srgb, var(--palette-10) var(--palette-border-strength), var(--surface));
+  --palette-11-border: color-mix(in srgb, var(--palette-11) var(--palette-border-strength), var(--surface));
+  --palette-12-border: color-mix(in srgb, var(--palette-12) var(--palette-border-strength), var(--surface));
+
+  /* Data visualization roles. Keep series distinct from app accent. */
+  --plot-1: var(--palette-1);
+  --plot-2: var(--palette-2);
+  --plot-3: var(--palette-3);
+  --plot-4: var(--palette-4);
+  --plot-5: var(--palette-5);
+  --plot-6: var(--palette-6);
+  --plot-7: var(--palette-7);
+  --plot-8: var(--palette-8);
+  --plot-9: var(--palette-9);
+  --plot-10: var(--palette-10);
+  --plot-11: var(--palette-11);
+  --plot-12: var(--palette-12);
+  --plot-accent: var(--accent);
+  --plot-reference: color-mix(in srgb, var(--fg-3) 82%, var(--surface));
+  --plot-axis: color-mix(in srgb, var(--fg-2) 64%, transparent);
+  --plot-grid: color-mix(in srgb, var(--fg-3) 22%, transparent);
+  --plot-grid-strong: color-mix(in srgb, var(--fg-3) 36%, transparent);
+  --plot-band: color-mix(in srgb, var(--accent) 10%, transparent);
+  --plot-selection: color-mix(in srgb, var(--accent) 18%, transparent);
+  --plot-positive: var(--success);
+  --plot-negative: var(--danger);
+  --plot-warning: var(--warning);
+  --plot-neutral: var(--slate);
+
+  --heat-cold: var(--blue);
+  --heat-cool: var(--cyan);
+  --heat-mid: var(--gold);
+  --heat-warm: var(--orange);
+  --heat-hot: var(--red);
+
+  /* Figure chrome */
+  --figure-bg: color-mix(in srgb, var(--surface-2) 86%, var(--bg));
+  --figure-panel: color-mix(in srgb, var(--surface) 92%, transparent);
+  --figure-border: color-mix(in srgb, var(--border) 84%, transparent);
+  --figure-label-bg: color-mix(in srgb, var(--surface) 78%, transparent);
+  --figure-guide: var(--plot-grid);
+  --figure-axis: var(--plot-axis);
+
+  /* Typography primitives */
+  --leading-none: 1;
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+  --leading-copy: 1.62;
+  --leading-relaxed: 1.75;
+
+  --weight-regular: 400;
+  --weight-medium: 520;
+  --weight-semibold: 650;
+  --weight-bold: 760;
+
+  --measure-compact: 42ch;
+  --measure-reading: 68ch;
+  --measure-wide: 82ch;
+
+  /* Layout and controls */
+  --space-panel-x: 1rem;
+  --space-panel-y: 0.875rem;
+  --control-height-xs: 28px;
+  --control-height-sm: 32px;
+  --control-height-md: 40px;
+  --control-height-lg: 48px;
+  --icon-size-xs: 14px;
+  --icon-size-sm: 16px;
+  --icon-size-md: 18px;
+  --icon-size-lg: 22px;
+  --hit-target: 40px;
+
+  /* Motion */
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --dur-fast: 90ms;
+  --dur-slow: 360ms;
+}
+
+:root[data-theme="chalkboard"],
+:root[data-theme="3b1b-dark"],
+:root[data-theme="nocturne"],
+:root[data-theme="deepsea"],
+:root[data-theme="aubergine"],
+:root[data-theme="neon"],
+:root[data-theme="seminar"],
+:root[data-theme="lemma-dark"] {
+  --surface-raised: color-mix(in srgb, var(--surface) 88%, var(--fg-1) 3%);
+  --surface-sunken: color-mix(in srgb, var(--bg-deep) 64%, var(--surface) 36%);
+  --surface-hover: color-mix(in srgb, var(--fg-1) 8%, var(--surface));
+  --surface-active: color-mix(in srgb, var(--fg-1) 12%, var(--surface));
+  --surface-overlay: color-mix(in srgb, var(--surface) 88%, transparent);
+  --scrim: color-mix(in srgb, #000 58%, transparent);
+  --fg-disabled: color-mix(in srgb, var(--fg-3) 48%, var(--surface));
+  --plot-reference: color-mix(in srgb, var(--fg-3) 74%, transparent);
+  --plot-axis: color-mix(in srgb, var(--fg-2) 58%, transparent);
+  --plot-grid: color-mix(in srgb, var(--fg-3) 25%, transparent);
+  --plot-grid-strong: color-mix(in srgb, var(--fg-3) 42%, transparent);
+  --plot-band: color-mix(in srgb, var(--accent) 15%, transparent);
+  --figure-bg: color-mix(in srgb, var(--surface-2) 82%, var(--bg));
+  --figure-panel: color-mix(in srgb, var(--surface) 84%, transparent);
+  --figure-label-bg: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root,
+  :root[data-theme] {
+    --dur-fast: 1ms;
+    --dur-slow: 1ms;
+  }
+}

@@ -1,42 +1,13 @@
 import { type WaveKind } from "../../lib/figures/fourierMath";
+import { SegmentedControl, type SegmentOption } from "./SegmentedControl";
 
-const LABELS: Record<WaveKind, string> = {
-  square: "Square",
-  sawtooth: "Sawtooth",
-  triangle: "Triangle",
-};
-
-const ORDER: WaveKind[] = ["square", "sawtooth", "triangle"];
+const OPTIONS: ReadonlyArray<SegmentOption<WaveKind>> = [
+  { value: "square", label: "Square" },
+  { value: "sawtooth", label: "Sawtooth" },
+  { value: "triangle", label: "Triangle" },
+];
 
 /** Compact segmented control for picking which target waveform a figure draws. */
 export function WaveSelect({ value, onChange }: { value: WaveKind; onChange: (k: WaveKind) => void }) {
-  return (
-    <div
-      role="radiogroup"
-      aria-label="Target waveform"
-      className="mt-2.5 inline-flex overflow-hidden rounded-md border p-0.5"
-      style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
-    >
-      {ORDER.map((k) => {
-        const active = k === value;
-        return (
-          <button
-            key={k}
-            type="button"
-            role="radio"
-            aria-checked={active}
-            onClick={() => onChange(k)}
-            className="rounded-sm px-2.5 py-1 text-ui-meta transition-colors"
-            style={{
-              background: active ? "var(--accent)" : "transparent",
-              color: active ? "var(--fg-on-color)" : "var(--fg-2)",
-              fontWeight: active ? 600 : 400,
-            }}
-          >
-            {LABELS[k]}
-          </button>
-        );
-      })}
-    </div>
-  );
+  return <SegmentedControl value={value} options={OPTIONS} onChange={onChange} ariaLabel="Target waveform" />;
 }

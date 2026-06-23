@@ -3,12 +3,13 @@ import { useMemo, useState } from "react";
 import { MathText } from "../../lib/katex";
 import {
   DIA,
+  FigureCaption,
   FigureFrame,
+  FunctionBand,
   FunctionCurve,
   LaTeX,
   Line,
   Point,
-  Polygon,
   STROKE,
   type Domain,
   type Vec2,
@@ -40,7 +41,7 @@ const SPECS: Record<Mode, ModeSpec> = {
     note: "Uniform: the whole graph is trapped in a $\\pm 1/n$ band, so $\\|f_n-f\\|_\\infty\\to 0$.",
   },
   pointwise: {
-    xDomain: [0, 1.04],
+    xDomain: [0, 1],
     yDomain: [-0.1, 1.15],
     fn: (x, n) => x ** n,
     limit: () => 0,
@@ -84,19 +85,6 @@ export default function ConvergenceModesFigure() {
   const spec = SPECS[mode];
   const { sup, l2 } = useMemo(() => distances(spec, n), [spec, n]);
 
-  const band = useMemo<Vec2[] | null>(() => {
-    if (!spec.uniform) return null;
-    const [a, b] = spec.xDomain;
-    const N = 80;
-    const top: Vec2[] = [];
-    const bottom: Vec2[] = [];
-    for (let i = 0; i <= N; i++) {
-      const x = a + ((b - a) * i) / N;
-      top.push([x, spec.limit(x) + 1 / n]);
-      bottom.push([x, spec.limit(x) - 1 / n]);
-    }
-    return [...top, ...bottom.reverse()];
-  }, [spec, n]);
   const epsilonLabels = useMemo(() => {
     if (!spec.uniform) return null;
 
@@ -114,9 +102,13 @@ export default function ConvergenceModesFigure() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={spec.xDomain} yDomain={spec.yDomain} height={190} grid>
-        {band && epsilonLabels && (
+        {epsilonLabels && (
           <>
-            <Polygon points={band} color={DIA.ok} fillOpacity={0.12} strokeOpacity={0} />
+            <FunctionBand
+              upper={(x) => spec.limit(x) + 1 / n}
+              lower={(x) => spec.limit(x) - 1 / n}
+              color={DIA.ok}
+            />
 
             <LaTeX
               at={[epsilonLabels.upper[0], epsilonLabels.upper[1] + 0.15]}
@@ -139,16 +131,16 @@ export default function ConvergenceModesFigure() {
             <Point x={1} y={1} color={DIA.alert} svgCircleProps={{ r: 3.6 }} />
           </>
         )}
-        <LaTeX at={[spec.xDomain[0] + 0.25, spec.yDomain[1] + 0.25]} tex={`f_{${n}}`} color={DIA.accent} />
+        <LaTeX at={[spec.xDomain[0] + 0.25, spec.yDomain[1] - 0.12]} tex={`f_{${n}}`} color={DIA.accent} />
       </FigureFrame>
       <SegmentedControl value={mode} options={MODE_OPTIONS} onChange={(m) => setMode(m)} ariaLabel="Convergence mode" />
       <RangeControl min={1} max={20} value={n} onChange={setN} label={`$n = ${n}$`} ariaLabel="Sequence index n" />
-      <figcaption className="mt-1.5 space-y-1 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption className="space-y-1">
         <div className="font-math" style={{ color: "var(--fg-2)" }}>
           <MathText text={`$\\|f_n-f\\|_\\infty=${sup.toFixed(2)}\\quad\\|f_n-f\\|_2=${l2.toFixed(2)}$`} />
         </div>
         <MathText text={spec.note} />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

@@ -1,11 +1,9 @@
 // src/components/figures/CauchySequenceFigure.tsx
 
 import { useMemo, useState } from "react";
-import { MovablePoint } from "mafs";
-import "katex/dist/katex.min.css";
 
 import { MathText } from "../../lib/katex";
-import { DIA, DOT, FONT, FigureFrame, LaTeX, Line, Point, Polygon, STROKE, Text, type Domain } from "./FigureFrame";
+import { DIA, DOT, FONT, FigureFrame, LaTeX, Line, MovablePoint, Point, Polygon, STROKE, Text, type Domain } from "./FigureFrame";
 import { SegmentedControl } from "./SegmentedControl";
 
 type Mode = "convergent" | "incomplete" | "bad";

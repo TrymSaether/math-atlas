@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { type WaveKind, waveCoeff, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
-import { DIA, FigureFrame, FunctionCurve, Line, Plot, Polygon, STROKE } from "./FigureFrame";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, Line, Plot, Polygon, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
 
@@ -132,9 +132,7 @@ export default function L2ConvergenceFigure() {
         label={`N = ${N}`}
         ariaLabel="Number of harmonics N"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        {CAPTIONS[kind]}
-      </figcaption>
+      <FigureCaption>{CAPTIONS[kind]}</FigureCaption>
     </figure>
   );
 }

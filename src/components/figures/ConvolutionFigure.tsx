@@ -4,11 +4,12 @@ import { boxConvolution } from "../../lib/figures/fourierMath";
 import { MathText } from "../../lib/katex";
 import {
   DIA,
+  FigureCaption,
   FONT,
   FigureFrame,
+  FigureOverlayLabel,
   FunctionCurve,
   Line,
-  PANEL_BACKING,
   Point,
   Polygon,
   STROKE,
@@ -60,12 +61,9 @@ export default function ConvolutionFigure() {
           className="relative overflow-hidden rounded-lg border"
           style={{ borderColor: "var(--border)", background: "var(--bg)" }}
         >
-          <div
-            className="absolute left-3 top-2 z-10 rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
-            style={{ color: "var(--fg-2)", background: PANEL_BACKING }}
-          >
+          <FigureOverlayLabel>
             <MathText text={`$f(t)$ fixed, $g(s-t)$ sliding`} />
-          </div>
+          </FigureOverlayLabel>
 
           <FigureFrame xDomain={X_DOMAIN} yDomain={[-0.25, 1.45]} height={150} axes={false} grid>
             <Line.Segment point1={[-4, 0]} point2={[4, 0]} color={DIA.muted} />
@@ -97,24 +95,18 @@ export default function ConvolutionFigure() {
             {shift.element}
           </FigureFrame>
 
-          <div
-            className="absolute bottom-2 left-3 rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
-            style={{ background: PANEL_BACKING }}
-          >
+          <FigureOverlayLabel position="bottom-left">
             <MathText text={`$s=${s.toFixed(1)},\\quad \\operatorname{overlap}=${value.toFixed(2)}$`} />
-          </div>
+          </FigureOverlayLabel>
         </section>
 
         <section
           className="relative overflow-hidden rounded-lg border"
           style={{ borderColor: "var(--border)", background: "var(--bg)" }}
         >
-          <div
-            className="absolute left-3 top-2 z-10 rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
-            style={{ color: "var(--fg-2)", background: PANEL_BACKING }}
-          >
+          <FigureOverlayLabel>
             <MathText text={`$(f*g)(s)=\\int_{-\\infty}^{\\infty} f(t)g(s-t)\\,dt$`} />
-          </div>
+          </FigureOverlayLabel>
 
           <FigureFrame xDomain={X_DOMAIN} yDomain={[-0.35, 2.35]} height={150} axes={false} grid>
             <Line.Segment point1={[-4, 0]} point2={[4, 0]} color={DIA.muted} />
@@ -126,18 +118,15 @@ export default function ConvolutionFigure() {
             <Vector tail={[s, 0]} tip={[s, value]} color={DIA.alert} weight={STROKE.mark} />
           </FigureFrame>
 
-          <div
-            className="absolute bottom-2 left-3 rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm"
-            style={{ background: PANEL_BACKING }}
-          >
+          <FigureOverlayLabel position="bottom-left">
             <MathText text={`$s=${s.toFixed(1)},\\quad (f*g)(s)=${value.toFixed(2)}$`} />
-          </div>
+          </FigureOverlayLabel>
         </section>
       </div>
 
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         Drag the shift handle. The overlap area in the top panel is the value marked on the convolution curve below.
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

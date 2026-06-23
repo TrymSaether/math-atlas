@@ -7,6 +7,7 @@ import {
   Mafs,
   Plot,
   Line,
+  MovablePoint,
   Point,
   Polygon,
   Polyline,
@@ -20,7 +21,7 @@ import {
 } from "mafs";
 
 import "mafs/core.css";
-import { DIA, DOT, FIGURE, STROKE } from "./tokens";
+import { DIA, DOT, FIGURE, PANEL_BACKING, STROKE } from "./tokens";
 
 export type Domain = [number, number];
 export type Vec2 = [number, number];
@@ -115,6 +116,62 @@ export function FunctionCurve({
   );
 }
 
+export function FunctionBand({
+  upper,
+  lower,
+  color = DIA.ok,
+  opacity = 0.12,
+}: {
+  upper: (x: number) => number;
+  lower: (x: number) => number;
+  color?: string;
+  opacity?: number;
+}) {
+  return (
+    <Plot.Inequality
+      y={{ "<=": (x) => finite(upper(x)), ">=": (x) => finite(lower(x)) }}
+      fillColor={color}
+      fillOpacity={opacity}
+      strokeOpacity={0}
+    />
+  );
+}
+
+export function FigureCaption({
+  children,
+  className = "",
+  strong = false,
+}: {
+  children: ReactNode;
+  className?: string;
+  strong?: boolean;
+}) {
+  const spacing = className ? ` ${className}` : "";
+  return (
+    <figcaption className={`mt-1.5 text-ui-meta${spacing}`} style={{ color: strong ? "var(--fg-2)" : "var(--fg-3)" }}>
+      {children}
+    </figcaption>
+  );
+}
+
+export function FigureOverlayLabel({
+  children,
+  position = "top-left",
+}: {
+  children: ReactNode;
+  position?: "top-left" | "bottom-left";
+}) {
+  const positionClass = position === "bottom-left" ? "bottom-2 left-3" : "left-3 top-2 z-10";
+  return (
+    <div
+      className={`absolute ${positionClass} rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm`}
+      style={{ color: "var(--fg-2)", background: PANEL_BACKING }}
+    >
+      {children}
+    </div>
+  );
+}
+
 /**
  * A straight arrow between two points in figure coordinates, with a solid
  * triangular head. Shared by the set-mapping figures so every "x maps to y"
@@ -187,6 +244,7 @@ export {
   Ellipse,
   LaTeX,
   Line,
+  MovablePoint,
   Plot,
   Point,
   Polygon,

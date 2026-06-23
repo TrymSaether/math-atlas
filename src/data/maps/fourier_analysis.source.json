@@ -2263,6 +2263,33 @@
       "priority": "core"
     },
     {
+      "id": "tma4170_2026_problem_2",
+      "kind": "exercise",
+      "domain": "series",
+      "label": "Exam 2026 · Problem 2: Decay Rates of Fourier Coefficients",
+      "content": {
+        "statement": "Determine the largest guaranteed Fourier-coefficient decay exponent under several assumptions.",
+        "formal": "Let $f$ be a $2\\pi$-periodic Riemann integrable function such that for some constants $C,r>0$, $$|\\widehat f(n)|\\le \\frac{C}{|n|^r},\\qquad n\\in\\mathbb Z.$$ Determine the largest guaranteed value of $r$ in the four cases: $f\\in C^3(\\mathbb R)$ with bounded first three derivatives; $f\\in C^1(\\mathbb R)$ with bounded derivative and Hölder-$1/2$ derivative; $$f(x)=\\sum_{k=1}^{\\infty}2^{-k}\\chi_{[-1/k,\\pi]}(x),\\qquad x\\in[-\\pi,\\pi];$$ and $$f(x)=\\sum_{k=0}^{\\infty}3^{-k/4}e^{i3^kx}.$$"
+      },
+      "assumptions": [
+        "The function is $2\\pi$-periodic and Riemann integrable.",
+        "Numerical answers should be given to two decimal places.",
+        "The problem concerns guaranteed upper bounds for decay rates of Fourier coefficients."
+      ],
+      "source": {
+        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 2",
+        "ref": "tma4170v2026.pdf"
+      },
+      "tags": [
+        "decay-rates",
+        "fourier-coefficients",
+        "holder-continuity",
+        "lacunary-series",
+        "smoothness"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "decay_smoothness",
       "kind": "property",
       "domain": "series",
@@ -2322,8 +2349,8 @@
         "references": []
       },
       "tags": [
-        "exam",
-        "series"
+        "series",
+        "standard"
       ],
       "priority": "standard"
     },
@@ -2359,8 +2386,8 @@
       },
       "tags": [
         "convergence",
-        "exam",
-        "series"
+        "series",
+        "standard"
       ],
       "priority": "standard"
     },
@@ -2410,8 +2437,8 @@
         "references": []
       },
       "tags": [
-        "exam",
-        "series"
+        "series",
+        "standard"
       ],
       "priority": "standard"
     },
@@ -3871,7 +3898,34 @@
       },
       "tags": [
         "convergence",
-        "exam"
+        "standard"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "tma4170_2026_problem_3",
+      "kind": "exercise",
+      "domain": "convergence",
+      "label": "Exam 2026 · Problem 3: Fejer Kernel, Cesaro Means, and Uniform Convergence",
+      "content": {
+        "statement": "Show that the Fejér kernel is a good kernel and use it to prove uniform convergence of Cesàro means for continuous periodic functions.",
+        "formal": "For $N\\in\\mathbb N$, define the Fejér kernel by $$F_N(x)=\\frac1N\\sum_{k=0}^{N-1}D_k(x)=\\frac1N\\frac{\\sin^2\\left(\\frac N2x\\right)}{\\sin^2\\left(\\frac12x\\right)},$$ where $$D_k(x)=\\sum_{n=-k}^{k}e^{inx}.$$ Show that $$\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(x)\\,dx=1,$$ and show that $F_N$ is a good kernel on $[-\\pi,\\pi]$. For $f\\in C(\\mathbb R)$ $2\\pi$-periodic, define $$\\sigma_N(f)(x)=\\frac1N\\sum_{k=0}^{N-1}S_k(f)(x),$$ where $$S_k(f)(x)=\\sum_{n=-k}^{k}\\widehat f(n)e^{inx},\\qquad \\widehat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx.$$ Show that $$\\sigma_N(f)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(y)f(x-y)\\,dy,$$ and explain why $\\sigma_N(f)\\to f$ uniformly as $N\\to\\infty$."
+      },
+      "assumptions": [
+        "The function $f$ is continuous and $2\\pi$-periodic.",
+        "The Fourier coefficients use normalization $1/(2\\pi)$.",
+        "The Cesàro mean is the average of the first $N$ partial sums."
+      ],
+      "source": {
+        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 3",
+        "ref": "tma4170v2026.pdf"
+      },
+      "tags": [
+        "cesaro-means",
+        "fejer-kernel",
+        "fourier-series",
+        "good-kernel",
+        "uniform-convergence"
       ],
       "priority": "standard"
     },
@@ -4859,7 +4913,7 @@
         "references": []
       },
       "tags": [
-        "exam",
+        "standard",
         "transform"
       ],
       "priority": "standard"
@@ -4905,7 +4959,7 @@
         "references": []
       },
       "tags": [
-        "exam",
+        "standard",
         "transform"
       ],
       "priority": "standard"
@@ -4956,7 +5010,7 @@
         "references": []
       },
       "tags": [
-        "exam",
+        "standard",
         "transform"
       ],
       "priority": "standard"
@@ -4992,7 +5046,7 @@
         "references": []
       },
       "tags": [
-        "exam",
+        "standard",
         "transform"
       ],
       "priority": "standard"
@@ -5048,8 +5102,8 @@
         "references": []
       },
       "tags": [
-        "exam",
         "pde",
+        "standard",
         "transform"
       ],
       "priority": "standard"
@@ -5214,6 +5268,34 @@
       },
       "tags": [
         "transform"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "tma4170_2026_problem_4",
+      "kind": "exercise",
+      "domain": "transform",
+      "label": "Exam 2026 · Problem 4: Fourier Transform Solution of the Wave Equation",
+      "content": {
+        "statement": "Analyze a Fourier-defined function, prove an $L^2$ estimate, prove smoothness, and verify that it solves the wave equation with initial conditions.",
+        "formal": "Let $f$ be continuous on $\\mathbb R$ with Fourier transform $$\\widehat f(\\xi)=\\chi_{[-1,1]}(\\xi)=\\begin{cases}1, & |\\xi|\\le 1,\\\\0, & |\\xi|>1.\\end{cases}$$ Define $$u(x,t)=\\mathcal F^{-1}\\left[\\widehat f(\\xi)\\cos(\\pi |\\xi|t)\\right](x)=\\int_{-1}^{1}\\cos(\\pi |\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ Show that for $t>0$, $$\\int_{\\mathbb R}|u(x,t)|^2\\,dx\\le \\int_{\\mathbb R}|f(x)|^2\\,dx.$$ Show that $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$. Show that $$u_{tt}=\\frac14u_{xx}$$ on $\\mathbb R\\times(0,\\infty)$, and that for every $x\\in\\mathbb R$, $$\\lim_{t\\to0^+}u(x,t)=f(x),\\qquad \\lim_{t\\to0^+}u_t(x,t)=0.$$"
+      },
+      "assumptions": [
+        "$\\widehat f=\\chi_{[-1,1]}$.",
+        "The inverse Fourier transform uses the convention $e^{2\\pi i\\xi x}$.",
+        "The wave equation is considered on $\\mathbb R\\times(0,\\infty)$.",
+        "The initial limits are pointwise in $x$."
+      ],
+      "source": {
+        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 4",
+        "ref": "tma4170v2026.pdf"
+      },
+      "tags": [
+        "fourier-transform",
+        "initial-value-problem",
+        "plancherel-theorem",
+        "smoothness",
+        "wave-equation"
       ],
       "priority": "standard"
     },
@@ -5445,6 +5527,37 @@
         "pde"
       ],
       "priority": "core"
+    },
+    {
+      "id": "tma4170_2026_problem_1",
+      "kind": "exercise",
+      "domain": "transform",
+      "label": "Exam 2026 · Problem 1: Moderate Decrease and Fourier Transform Computations",
+      "content": {
+        "statement": "Work with functions of moderate decrease and compute Fourier transforms of exponential and Gaussian-product functions.",
+        "formal": "Denote the space of continuous functions of moderate decrease by $$C_m(\\mathbb R^d)=\\left\\{f\\in C(\\mathbb R^d):\\sup_{x\\in\\mathbb R^d}(1+|x|^{d+\\varepsilon})|f(x)|<\\infty \\text{ for some }\\varepsilon>0\\right\\}.$$ Let $f(x)=e^{-2\\pi |x|}$. Show that $f\\in C_m(\\mathbb R)$ and compute $$\\widehat f(\\xi)=\\int_{-\\infty}^{\\infty}f(x)e^{-2\\pi ix\\xi}\\,dx.$$ Let $$g(x_1,x_2,x_3)=e^{-\\pi x_1^2-\\pi x_2^2-2\\pi |x_3|}.$$ Show that $g\\in C_m(\\mathbb R^3)$. Compute $\\widehat g$ and show that $$\\widehat g(R(\\xi_1,\\xi_2),\\xi_3)=\\widehat g(\\xi_1,\\xi_2,\\xi_3)$$ for every rotation $R$ in $\\mathbb R^2$.",
+        "notation": [
+          "$$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi ix\\xi}\\,dx.$$",
+          "$$K(x)=e^{-\\pi x^2},\\qquad \\widehat K=K.$$"
+        ]
+      },
+      "assumptions": [
+        "The Fourier transform uses the convention $\\widehat f(\\xi)=\\int f(x)e^{-2\\pi ix\\xi}\\,dx$.",
+        "For full score, the inequality $$1+|x|^k\\le \\sqrt3(1+|x_1|)^k(1+|x_2|)^k(1+|x_3|)^k$$ should be proved.",
+        "One may use without proof that $K(x)=e^{-\\pi x^2}$ satisfies $\\widehat K=K$."
+      ],
+      "source": {
+        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 1",
+        "ref": "tma4170v2026.pdf"
+      },
+      "tags": [
+        "exponential-function",
+        "fourier-transform",
+        "gaussian",
+        "moderate-decrease",
+        "rotation-invariance"
+      ],
+      "priority": "standard"
     },
     {
       "id": "paley_wiener_theorem",
@@ -12412,6 +12525,76 @@
     {
       "source": "theta_function",
       "target": "poisson_summation_formula",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_1",
+      "target": "fourier_transform",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_1",
+      "target": "gaussian_transform",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_1",
+      "target": "moderate_decrease",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_2",
+      "target": "decay_smoothness",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_2",
+      "target": "fourier_coefficient",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_2",
+      "target": "holder_lipschitz_continuity",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_3",
+      "target": "cesaro_summation",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_3",
+      "target": "fejer_kernel",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_3",
+      "target": "fejer_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_3",
+      "target": "good_kernel",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_4",
+      "target": "fourier_inversion",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_4",
+      "target": "fourier_transform",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_4",
+      "target": "plancherel_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_4",
+      "target": "wave_equation",
       "relation": "uses"
     },
     {

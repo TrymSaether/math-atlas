@@ -25,20 +25,50 @@
  *   fillX/fillY — the two set fills (domain / codomain)
  */
 export const DIA = {
-  surface: "var(--surface-2)",
-  frame: "var(--bg)",
-  border: "var(--border)",
+  surface: "var(--figure-bg)",
+  frame: "var(--dia-space)",
+  border: "var(--figure-border)",
   ink: "var(--dia-ink)",
   text: "var(--fg-2)",
-  ref: "var(--fg-3)",
-  faint: "var(--fg-3)",
+  ref: "var(--plot-reference)",
+  faint: "var(--plot-grid-strong)",
   muted: "var(--fg-4)",
-  accent: "var(--accent)",
-  codomain: "var(--dia-acc2)",
-  alert: "var(--dia-boundary)",
-  ok: "var(--green)",
+  axis: "var(--figure-axis)",
+  grid: "var(--figure-guide)",
+  band: "var(--plot-band)",
+  accent: "var(--plot-accent)",
+  codomain: "var(--plot-2)",
+  alert: "var(--plot-negative)",
+  warning: "var(--plot-warning)",
+  ok: "var(--plot-positive)",
+  neutral: "var(--plot-neutral)",
   fillX: "var(--dia-fill)",
   fillY: "var(--dia-fill2)",
+} as const;
+
+/** Categorical plot colors for multi-series figures. */
+export const SERIES = [
+  "var(--plot-1)",
+  "var(--plot-2)",
+  "var(--plot-3)",
+  "var(--plot-4)",
+  "var(--plot-5)",
+  "var(--plot-6)",
+  "var(--plot-7)",
+  "var(--plot-8)",
+  "var(--plot-9)",
+  "var(--plot-10)",
+  "var(--plot-11)",
+  "var(--plot-12)",
+] as const;
+
+/** Continuous palette stops for heatmaps, density, and magnitude plots. */
+export const HEAT = {
+  cold: "var(--heat-cold)",
+  cool: "var(--heat-cool)",
+  mid: "var(--heat-mid)",
+  warm: "var(--heat-warm)",
+  hot: "var(--heat-hot)",
 } as const;
 
 /** Shared figure-frame dimensions and radii. */
@@ -79,7 +109,9 @@ export const UI = {
   muted: "var(--fg-3)",
   subtle: "var(--fg-4)",
   onColor: "var(--fg-on-color)",
+  focusRing: "var(--focus-ring)",
+  panel: "var(--figure-panel)",
 } as const;
 
 /** A translucent panel backing for labels floating over a figure. */
-export const PANEL_BACKING = "color-mix(in srgb, var(--surface) 78%, transparent)";
+export const PANEL_BACKING = "var(--figure-label-bg)";
