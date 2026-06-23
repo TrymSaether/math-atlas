@@ -1,0 +1,646 @@
+/* ========================================================================
+   Workspace sandbox — tuned to the atlas token system
+   ======================================================================== */
+
+:root {
+  --sandbox-bg: var(--bg);
+  --sandbox-stage: var(--bg);
+  --sandbox-rail: var(--chrome-bg);
+  --sandbox-rail-border: var(--chrome-border);
+  --sandbox-row: transparent;
+  --sandbox-row-hover: color-mix(in srgb, var(--fg-1) 5%, transparent);
+  --sandbox-row-selected: color-mix(in srgb, var(--accent-soft) 42%, transparent);
+  --sandbox-row-selected-border: color-mix(in srgb, var(--accent-border) 70%, transparent);
+  --sandbox-field: color-mix(in srgb, var(--surface) 58%, transparent);
+  --sandbox-field-focus: color-mix(in srgb, var(--accent-soft) 28%, var(--surface) 72%);
+  --sandbox-field-border: color-mix(in srgb, var(--border) 54%, transparent);
+  --sandbox-control: color-mix(in srgb, var(--fg-1) 6%, transparent);
+  --sandbox-control-hover: color-mix(in srgb, var(--fg-1) 10%, transparent);
+  --sandbox-danger-soft: color-mix(in srgb, var(--red) 11%, transparent);
+
+  /* Plane ink: subtle grid, readable axes. Derived from theme tokens so every
+     scheme retunes automatically. */
+  --plane-grid-minor: var(--grid-minor);
+  --plane-grid-major: var(--grid-major);
+  --plane-axis: color-mix(in srgb, var(--edge-ink) 42%, transparent);
+  --plane-label: var(--fg-3);
+}
+
+.sandbox-shell {
+  background: var(--sandbox-bg);
+  color: var(--fg-1);
+}
+
+.sandbox-sidebar {
+  background: var(--sandbox-rail);
+  border: 1px solid var(--sandbox-rail-border);
+  box-shadow:
+    var(--chrome-shadow),
+    inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur));
+  -webkit-backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur));
+}
+
+.sandbox-sidebar-header {
+  border-bottom: 1px solid var(--sandbox-rail-border);
+}
+
+.sandbox-stage {
+  background: var(--sandbox-stage);
+}
+
+.sandbox-workspace-button {
+  border-radius: var(--radius-sm);
+  color: var(--fg-1);
+  padding: 4px 6px;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-workspace-button:hover {
+  background: var(--sandbox-control);
+}
+
+.sandbox-workspace-button[aria-expanded="true"] {
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.sandbox-workspace-button svg {
+  color: var(--fg-3);
+}
+
+.sandbox-workspace-button[aria-expanded="true"] svg {
+  color: var(--accent);
+}
+
+.sandbox-workspace-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--sandbox-control);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 72%, transparent);
+}
+
+.sandbox-workspace-meta {
+  color: var(--fg-3);
+}
+
+.sandbox-workspace-popover {
+  background: var(--chrome-bg-strong);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    var(--chrome-shadow-popover),
+    inset 0 1px 0 var(--chrome-highlight);
+  color: var(--fg-4);
+  backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur-popover));
+  -webkit-backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur-popover));
+}
+
+.sandbox-workspace-option {
+  border-radius: var(--radius-md);
+  color: var(--fg-2);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-workspace-option svg {
+  color: var(--fg-4);
+}
+
+.sandbox-workspace-option:hover {
+  background: var(--chrome-hover);
+  color: var(--fg-1);
+}
+
+.sandbox-workspace-option.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.sandbox-workspace-option.is-active svg {
+  color: var(--accent);
+}
+
+.sandbox-menu-divider {
+  background: var(--chrome-divider);
+}
+
+.sandbox-expression-panel {
+  min-height: 0;
+}
+
+.sandbox-expression-list {
+  scrollbar-color: color-mix(in srgb, var(--fg-3) 42%, transparent) transparent;
+}
+
+.sandbox-section {
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface) 22%, transparent);
+}
+
+.sandbox-section + .sandbox-section {
+  margin-top: 5px;
+}
+
+.sandbox-section-header {
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 54%, transparent);
+  border-radius: calc(var(--radius-md) - 1px) calc(var(--radius-md) - 1px) 0 0;
+  color: var(--fg-2);
+  font-size: var(--type-ui-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label-tight);
+  line-height: 1;
+  min-height: 34px;
+  text-transform: uppercase;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-section-header:hover {
+  background: color-mix(in srgb, var(--fg-1) 4%, transparent);
+  color: var(--fg-1);
+}
+
+.sandbox-section-header:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--accent-soft) 22%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-border) 70%, transparent);
+}
+
+.sandbox-section-icon {
+  width: 17px;
+  height: 17px;
+  border-radius: var(--radius-xs);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--fg-3);
+}
+
+.sandbox-section-caret {
+  color: var(--fg-4);
+  transition: transform var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-section-header[aria-expanded="false"] .sandbox-section-caret {
+  transform: rotate(-90deg);
+}
+
+.sandbox-section-rows {
+  overflow: hidden;
+  border-radius: 0 0 calc(var(--radius-md) - 1px) calc(var(--radius-md) - 1px);
+}
+
+.sandbox-expression-row {
+  margin-bottom: 0;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--sandbox-row);
+  box-shadow: inset 2px 0 0 transparent;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-expression-row:hover {
+  background: var(--sandbox-row-hover);
+  border-color: color-mix(in srgb, var(--border) 28%, transparent);
+}
+
+.sandbox-expression-row[data-selected="true"] {
+  background: var(--sandbox-row-selected);
+  border-color: color-mix(in srgb, var(--accent-border) 36%, transparent);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.sandbox-expression-row[data-row-type="slider"] {
+  border-radius: var(--radius-sm);
+}
+
+.sandbox-row-gutter {
+  color: var(--fg-3);
+  background: transparent;
+  line-height: 1;
+}
+
+.sandbox-color-button {
+  color: var(--fg-3);
+  align-items: flex-start;
+  padding-top: 14px;
+}
+
+.sandbox-expression-row[data-row-type="slider"] .sandbox-color-button {
+  padding-top: 18px;
+}
+
+.sandbox-expression-row[data-selected="true"] .sandbox-color-button {
+  padding-top: 15px;
+}
+
+.sandbox-color-button:hover .sandbox-color-swatch {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 3px currentColor;
+}
+
+.sandbox-color-swatch {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--fg-1) 20%, transparent),
+    0 1px 2px color-mix(in srgb, var(--fg-1) 14%, transparent);
+  transition:
+    transform var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-body {
+  color: var(--fg-1);
+  overflow: hidden;
+}
+
+.sandbox-field-frame {
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--fg-1);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-field-frame:focus-within {
+  background: var(--sandbox-field-focus);
+  border-color: var(--accent-border);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-border) 26%, transparent);
+}
+
+.sandbox-row-readout {
+  min-width: 0;
+  overflow-x: auto;
+  color: var(--fg-3);
+  line-height: 1.2;
+  scrollbar-width: none;
+}
+
+.sandbox-row-readout::-webkit-scrollbar {
+  display: none;
+}
+
+.sandbox-row-readout .katex {
+  font-size: 0.96em;
+}
+
+.sandbox-row-readout svg,
+.sandbox-deps svg {
+  flex-shrink: 0;
+  color: var(--fg-4);
+}
+
+.sandbox-row-error {
+  display: inline-flex;
+  max-width: 100%;
+  border-radius: var(--radius-xs);
+  background: var(--sandbox-danger-soft);
+  color: var(--red);
+  padding: 2px 6px;
+}
+
+.sandbox-param-slider {
+  --slider-color: currentColor;
+  --slider-progress: 50%;
+  color: var(--fg-3);
+  padding-right: 1px;
+  margin-top: 2px;
+}
+
+.sandbox-slider-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 16px;
+}
+
+.sandbox-slider-bubble {
+  position: absolute;
+  left: var(--slider-progress);
+  bottom: 16px;
+  z-index: 1;
+  min-width: 28px;
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in srgb, var(--slider-color) 28%, transparent);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--fg-1) 12%, transparent);
+  color: var(--fg-1);
+  font-size: 10px;
+  line-height: 1;
+  padding: 4px 6px;
+  pointer-events: none;
+  text-align: center;
+}
+
+.sandbox-num-box {
+  appearance: textfield;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--fg-4);
+  line-height: 1.1;
+  transition:
+    border-color var(--dur-micro) var(--ease-standard),
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-num-box::-webkit-outer-spin-button,
+.sandbox-num-box::-webkit-inner-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.sandbox-num-box:hover {
+  border-color: var(--sandbox-field-border);
+  background: color-mix(in srgb, var(--surface) 42%, transparent);
+  color: var(--fg-3);
+}
+
+.sandbox-num-box:focus {
+  border-color: var(--accent-border);
+  background: var(--surface);
+  color: var(--fg-1);
+}
+
+.sandbox-row-meta {
+  color: var(--fg-4);
+  line-height: 1.15;
+}
+
+.sandbox-row-meta-toggle {
+  min-width: 0;
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  color: var(--fg-3);
+  padding: 2px 5px 2px 0;
+  text-align: left;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-meta-toggle:hover {
+  background: color-mix(in srgb, var(--fg-1) 4%, transparent);
+  color: var(--fg-2);
+}
+
+.sandbox-row-meta-toggle[aria-expanded="false"] .sandbox-row-meta-caret {
+  transform: rotate(-90deg);
+}
+
+.sandbox-row-meta-caret {
+  color: var(--fg-4);
+  transition: transform var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-meta-title {
+  color: var(--fg-3);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label-tight);
+  text-transform: uppercase;
+}
+
+.sandbox-row-meta-grid {
+  grid-template-columns: auto minmax(0, 1fr);
+  max-width: 100%;
+  border-top: 1px solid color-mix(in srgb, var(--border) 42%, transparent);
+  padding-top: 4px;
+}
+
+.sandbox-row-meta-grid dt {
+  color: var(--fg-4);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label-tight);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sandbox-row-meta-grid dd {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--fg-3);
+  font-size: var(--type-ui-2xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sandbox-note {
+  min-width: 0;
+  max-width: 116px;
+  color: var(--fg-4);
+}
+
+.sandbox-deps {
+  max-width: 168px;
+  color: var(--fg-3);
+}
+
+.sandbox-row-controls {
+  color: var(--fg-3);
+  opacity: 0;
+  transition: opacity var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-expression-row:hover .sandbox-row-controls,
+.sandbox-expression-row:focus-within .sandbox-row-controls {
+  opacity: 1;
+}
+
+.sandbox-expression-row[data-selected="true"] .sandbox-row-controls {
+  opacity: 0.5;
+}
+
+.sandbox-expression-row[data-selected="true"]:hover .sandbox-row-controls,
+.sandbox-expression-row[data-selected="true"]:focus-within .sandbox-row-controls {
+  opacity: 1;
+}
+
+.sandbox-row-controls button {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-controls button:hover {
+  background: var(--sandbox-control-hover);
+  color: var(--fg-1);
+}
+
+.sandbox-add-expression {
+  border-top: 1px solid var(--sandbox-rail-border);
+  color: var(--fg-2);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-add-expression:hover {
+  background: var(--sandbox-control);
+  color: var(--fg-1);
+}
+
+/* MathLive field — inherit the panel's ink and strip its chrome. */
+.mf-host math-field {
+  color: var(--fg-1);
+  font-family: var(--font-math);
+  min-height: 20px;
+  padding: 0 4px;
+  --selection-background-color: var(--selection);
+  --caret-color: var(--accent);
+  --primary: var(--accent);
+  --placeholder-color: var(--fg-4);
+  --smart-fence-color: var(--fg-3);
+}
+.mf-host math-field::part(virtual-keyboard-toggle),
+.mf-host math-field::part(menu-toggle) {
+  display: none;
+}
+
+/* Expression-row range slider, tinted to the row's object color (currentColor). */
+.ws-slider {
+  height: 14px;
+  cursor: pointer;
+  appearance: none;
+  background: transparent;
+  border-radius: var(--radius-pill);
+  display: block;
+}
+
+.ws-slider::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    to right,
+    var(--slider-color) 0%,
+    var(--slider-color) var(--slider-progress),
+    color-mix(in srgb, var(--fg-1) 10%, transparent) var(--slider-progress),
+    color-mix(in srgb, var(--fg-1) 10%, transparent) 100%
+  );
+}
+
+.ws-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -4.5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 2px solid var(--slider-color);
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--fg-1) 18%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--slider-color) 10%, transparent);
+}
+
+.ws-slider::-moz-range-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--fg-1) 10%, transparent);
+}
+
+.ws-slider::-moz-range-progress {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--slider-color);
+}
+
+.ws-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--surface);
+  border-radius: var(--radius-pill);
+  background: var(--slider-color);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--fg-1) 18%, transparent);
+}
+
+.ws-slider:focus-visible {
+  outline: none;
+}
+
+.ws-slider:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--fg-1) 18%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--slider-color) 18%, transparent);
+}
+
+/* The Mafs plane: fill the pane, theme axes/grid from plane tokens. */
+.sandbox-plane,
+.sandbox-plane .MafsView {
+  width: 100% !important;
+  height: 100%;
+}
+.sandbox-plane .MafsView {
+  --mafs-bg: transparent;
+  --mafs-fg: var(--plane-axis);
+  --mafs-line-color: var(--plane-grid-major);
+  --grid-line-subdivision-color: var(--plane-grid-minor);
+  --mafs-origin-color: var(--plane-axis);
+  --mafs-axis-stroke-width: 1px;
+  font-family: var(--font-sans);
+}
+
+/* Axis number labels — smaller and quieter than the Mafs default. */
+.sandbox-plane .MafsView text {
+  fill: var(--plane-label);
+  fill-opacity: 0.68;
+  font-size: 10px;
+}
+
+/* Compact Mafs surfaces used by atlas node figures. */
+.atlas-mafs-frame {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+}
+
+.atlas-mafs-frame .MafsView {
+  --mafs-bg: transparent;
+  --mafs-fg: var(--fg-2);
+  --mafs-line-color: color-mix(in srgb, var(--fg-1) 10%, transparent);
+  --mafs-origin-color: var(--fg-2);
+  --grid-line-subdivision-color: color-mix(in srgb, var(--fg-1) 5%, transparent);
+  --mafs-axis-stroke-width: 1px;
+  --mafs-line-stroke-dash-style: 5 5;
+  background: transparent;
+  color: var(--fg-2);
+  font-family: var(--font-sans);
+}
+
+.atlas-mafs-frame .MafsView text {
+  fill: var(--fg-3);
+  fill-opacity: 0.82;
+  font-size: 10px;
+}

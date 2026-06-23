@@ -1,0 +1,133 @@
+/* ---- ATLAS DIAGRAM / ENTRY CARD STYLING ----------------------------
+   Shared stylesheet support for the symbolic SVG style used by the
+   topology entries: warm paper surfaces, serif math labels, compact
+   formula-first annotations, and no miniature essay hiding inside SVG.
+------------------------------------------------------------------------ */
+.entry-card,
+.atlas-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-3);
+  color: var(--fg-1);
+}
+
+.entry-panel,
+.atlas-panel {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+}
+
+.entry-kicker,
+.atlas-kicker {
+  color: var(--dia-ok);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.entry-title,
+.atlas-title {
+  font-family: var(--font-serif);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--fg-1);
+}
+
+.entry-copy,
+.atlas-copy {
+  color: var(--fg-2);
+  line-height: 1.62;
+}
+
+.formula,
+.math-chip {
+  font-family: var(--font-mono);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--fg-1);
+}
+
+.themed-diagram {
+  background: var(--dia-space);
+  border: 1px solid var(--dia-line);
+  border-radius: var(--radius-lg);
+  color: var(--dia-ink);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+
+.themed-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--dia-space);
+}
+
+.node-visual-frame {
+  min-height: 128px;
+}
+
+/* SVG classes used by diagram assets. CSS custom properties still work when
+   the SVG is inline; external SVGs can use the same class names internally. */
+.svg-label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  fill: var(--dia-ink);
+  paint-order: stroke;
+  stroke: var(--dia-space);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.svg-symbol {
+  font-family: var(--font-serif);
+  fill: var(--dia-ink);
+}
+
+.svg-muted {
+  fill: var(--dia-mut);
+}
+
+.svg-acc {
+  fill: var(--dia-acc);
+}
+
+.svg-bound {
+  fill: var(--dia-boundary);
+}
+
+.svg-ok {
+  fill: var(--dia-ok);
+}
+
+.dia-stroke {
+  stroke: var(--dia-ink);
+}
+
+.dia-stroke-muted {
+  stroke: var(--dia-mut);
+}
+
+.dia-stroke-acc {
+  stroke: var(--dia-acc);
+}
+
+.dia-stroke-bound {
+  stroke: var(--dia-boundary);
+}
+
+.dia-fill-set {
+  fill: var(--dia-set);
+}
+
+.dia-fill-int {
+  fill: var(--dia-int);
+}
+
+.dia-fill-space {
+  fill: var(--dia-space);
+}

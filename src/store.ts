@@ -47,7 +47,7 @@ export type ViewMode = "dependency" | "cluster";
 export type EdgeStyle = "smooth" | "straight" | "bezier";
 /** How edge relationship labels read on hover/selection. */
 export type EdgeLabelStyle = "prose" | "terse";
-/** Which surface is shown: the graph canvas, the dictionary reading view, the flashcard study mode, or the geometric sandbox. */
+/** Which surface is shown: the graph canvas, reading/study tools, or sandbox. */
 export type Surface = "atlas" | "dictionary" | "flashcards" | "sandbox";
 
 const APP_STATE_STORAGE_KEY = "math-atlas-state-v1";
