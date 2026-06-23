@@ -6,6 +6,7 @@ import {
   DOT,
   Ellipse,
   FONT,
+  FigureCaption,
   FigureFrame,
   FunctionCurve,
   Line,
@@ -246,9 +247,9 @@ export default function MappingPropertyFigure({ nodeId }: FigureProps) {
         label={controlLabel(kind, raw)}
         ariaLabel={`${kind} mapping parameter`}
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         {propertyText(kind, raw)}. The lower plot shows the same idea with horizontal slices of a real-valued function.
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

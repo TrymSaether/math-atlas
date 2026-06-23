@@ -1,7 +1,20 @@
 import { useMemo, useState } from "react";
 
 import { MathText } from "../../lib/katex";
-import { DIA, DOT, FONT, FigureFrame, LaTeX, Line, Point, Polygon, STROKE, Text } from "./FigureFrame";
+import {
+  DIA,
+  DOT,
+  FONT,
+  FigureCaption,
+  FigureFrame,
+  LaTeX,
+  Line,
+  Point,
+  Polygon,
+  STROKE,
+  Text,
+  UI,
+} from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
@@ -78,8 +91,8 @@ export default function SequenceSpaceFigure({ nodeId }: FigureProps) {
           ariaLabel="Summability exponent p"
         />
       )}
-      <figcaption className="mt-1.5 space-y-1 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        <div className="font-math" style={{ color: "var(--fg-2)" }}>
+      <FigureCaption className="space-y-1">
+        <div className="font-math" style={{ color: UI.text }}>
           <MathText
             text={
               converges
@@ -95,7 +108,7 @@ export default function SequenceSpaceFigure({ nodeId }: FigureProps) {
               : "The harmonic sequence sits in $\\ell^p$ exactly when $p>1$: the spaces nest $\\ell^1\\subset\\ell^2\\subset\\cdots\\subset c_0$."
           }
         />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

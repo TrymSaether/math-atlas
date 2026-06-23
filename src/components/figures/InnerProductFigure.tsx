@@ -1,7 +1,20 @@
 import { useState } from "react";
 
 import { MathText } from "../../lib/katex";
-import { DIA, DOT, FigureFrame, LaTeX, Line, Point, Polyline, STROKE, Vector, type Vec2 } from "./FigureFrame";
+import {
+  DIA,
+  DOT,
+  FigureCaption,
+  FigureFrame,
+  LaTeX,
+  Line,
+  Point,
+  Polyline,
+  STROKE,
+  UI,
+  Vector,
+  type Vec2,
+} from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
@@ -62,8 +75,8 @@ export default function InnerProductFigure({ nodeId }: FigureProps) {
         label={`\\theta = ${degrees}^\\circ`}
         ariaLabel="Angle between vectors"
       />
-      <figcaption className="mt-1.5 space-y-1 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        <div className="font-math" style={{ color: "var(--fg-2)" }}>
+      <FigureCaption className="space-y-1">
+        <div className="font-math" style={{ color: UI.text }}>
           <MathText text={`$\\langle u,v\\rangle=\\|u\\|\\,\\|v\\|\\cos\\theta=${dotUV.toFixed(2)}$`} />
         </div>
         <MathText
@@ -75,7 +88,7 @@ export default function InnerProductFigure({ nodeId }: FigureProps) {
                 : "The inner product reads off the projection of one vector onto another; it is positive, negative, or zero as $\\theta$ is acute, obtuse, or right."
           }
         />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

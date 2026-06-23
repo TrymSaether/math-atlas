@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { heatProfile, squareWave } from "../../lib/figures/fourierMath";
-import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 
 const TERMS = 40;
@@ -35,9 +35,9 @@ export default function HeatFigure() {
         label={`t = ${t.toFixed(3)}`}
         ariaLabel="Diffusion time t"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         Sharp edges carry the high frequencies, which decay fastest — heat flow is a low-pass filter.
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

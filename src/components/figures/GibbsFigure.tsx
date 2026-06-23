@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { squareWave, squareWavePartialSum } from "../../lib/figures/fourierMath";
-import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 
 /** Square wave + its Fourier partial sum S_N, with a slider on the number of harmonics. */
@@ -27,9 +27,7 @@ export default function GibbsFigure() {
         label={`N = ${terms}`}
         ariaLabel="Number of harmonics in the partial sum"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        The ~9% overshoot at the jump narrows but never shrinks as N grows.
-      </figcaption>
+      <FigureCaption>The ~9% overshoot at the jump narrows but never shrinks as N grows.</FigureCaption>
     </figure>
   );
 }

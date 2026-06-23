@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 
 import { linspace } from "../../lib/figures/plot";
-import { DIA, FigureFrame, FunctionCurve, Line, Polygon, STROKE, type Vec2 } from "./FigureFrame";
 import { MathText } from "../../lib/katex";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, Line, Polygon, STROKE, UI, type Vec2 } from "./FigureFrame";
 
 function testFn(x: number): number {
   const tent = Math.max(0, 1 - Math.abs(x + 1.25) / 1.05);
@@ -89,7 +89,7 @@ export default function RiemannLebesgueFigure() {
       </FigureFrame>
 
       <div className="mt-2">
-        <div className="mb-1.5 flex items-baseline justify-between text-ui-sm" style={{ color: "var(--fg-1)" }}>
+        <div className="mb-1.5 flex items-baseline justify-between text-ui-sm" style={{ color: DIA.ink }}>
           <MathText text={`$c_{${n}} = \\frac{1}{\\pi} \\int_{-\\pi}^{\\pi} f(x) \\cdot \\cos(${n}x) \\, dx$`} />
           <MathText text={`$\\lvert \\hat{c}_{${n}} \\rvert = ${cn.toFixed(3)}$`} />
         </div>
@@ -119,7 +119,7 @@ export default function RiemannLebesgueFigure() {
               <Line.Segment point1={[n, 0]} point2={[n, 1]} color={DIA.muted} weight={STROKE.guide} style="dashed" />
             </FigureFrame>
           </div>
-          <span className="min-w-14 shrink-0 text-right font-math text-ui-meta" style={{ color: "var(--fg-2)" }}>
+          <span className="min-w-14 shrink-0 text-right font-math text-ui-meta" style={{ color: UI.text }}>
             <MathText text={`$n = ${n}$`} />
           </span>
         </div>
@@ -134,17 +134,17 @@ export default function RiemannLebesgueFigure() {
             aria-label="Frequency n"
             onChange={(e) => setN(Number(e.target.value))}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-full"
-            style={{ accentColor: "var(--accent)", background: "var(--surface-3)" }}
+            style={{ accentColor: DIA.accent, background: UI.sunken }}
           />
           <span className="min-w-14 shrink-0" />
         </div>
       </div>
 
-      <figcaption className="mt-2 text-ui-sm" style={{ color: "var(--fg-1)" }}>
+      <FigureCaption className="mt-2 text-ui-sm" strong>
         <MathText
           text={`As $n$ grows $f \\cdot \\cos(nx)$ oscillates faster, positive and negative lobes multiply and increasingly cancel, driving the coefficient to zero.`}
         />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

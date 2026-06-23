@@ -6,12 +6,14 @@ import {
   DOT,
   Ellipse,
   FONT,
+  FigureCaption,
   FigureFrame,
   LaTeX,
   Line,
   Point,
   STROKE,
   Text,
+  UI,
   type Vec2,
 } from "./FigureFrame";
 import { type FigureProps } from "./types";
@@ -157,7 +159,7 @@ function Control({
       role="radiogroup"
       aria-label="Figure case"
       className="mt-2.5 inline-flex flex-wrap gap-1 rounded-md border p-0.5"
-      style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+      style={{ borderColor: UI.border, background: UI.panel }}
     >
       {choices.map((choice) => {
         const active = choice === value;
@@ -168,10 +170,10 @@ function Control({
             role="radio"
             aria-checked={active}
             onClick={() => onChange(choice)}
-            className="rounded-sm px-2.5 py-1 text-ui-meta transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--surface-2)]"
+            className="rounded-sm px-2.5 py-1 text-ui-meta transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-(--focus-ring) focus-visible:ring-offset-1 focus-visible:ring-offset-(--figure-bg)"
             style={{
-              background: active ? "var(--accent)" : "transparent",
-              color: active ? "var(--fg-on-color)" : "var(--fg-2)",
+              background: active ? DIA.accent : "transparent",
+              color: active ? UI.onColor : UI.text,
               fontWeight: active ? 600 : 400,
             }}
           >
@@ -337,9 +339,7 @@ export default function FunctionSetFigure({ nodeId }: FigureProps) {
     <figure className="m-0">
       <FunctionDiagram kind={kind} choice={choice} />
       {choices.length > 1 && <Control choices={choices} value={choice} onChange={setChoice} />}
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        {descriptions[kind]}
-      </figcaption>
+      <FigureCaption>{descriptions[kind]}</FigureCaption>
     </figure>
   );
 }

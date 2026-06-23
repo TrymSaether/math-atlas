@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 
 import { MathText } from "../../lib/katex";
+import { DIA, UI } from "./FigureFrame";
 
 /** Themed slider with a KaTeX-rendered live value label. */
 export function RangeControl({
@@ -32,9 +33,9 @@ export function RangeControl({
         aria-label={ariaLabel}
         onChange={(e) => onChange(Number(e.target.value))}
         className="h-1 flex-1 cursor-pointer appearance-none rounded-full"
-        style={{ accentColor: "var(--accent)", background: "var(--surface-3)" }}
+        style={{ accentColor: DIA.accent, background: UI.sunken }}
       />
-      <span className="min-w-14 shrink-0 text-right font-math text-ui-meta" style={{ color: "var(--fg-2)" }}>
+      <span className="min-w-14 shrink-0 text-right font-math text-ui-meta" style={{ color: UI.text }}>
         <MathText text={label} />
       </span>
     </div>

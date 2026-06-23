@@ -109,6 +109,10 @@ export const UI = {
   muted: "var(--fg-3)",
   subtle: "var(--fg-4)",
   onColor: "var(--fg-on-color)",
+  onColorSoft: "color-mix(in srgb, var(--fg-on-color) 28%, transparent)",
+  border: "var(--figure-border)",
+  surface: "var(--figure-bg)",
+  sunken: "var(--surface-sunken)",
   focusRing: "var(--focus-ring)",
   panel: "var(--figure-panel)",
 } as const;

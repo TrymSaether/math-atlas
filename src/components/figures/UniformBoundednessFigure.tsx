@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { MathText } from "../../lib/katex";
-import { DIA, FONT, FigureFrame, LaTeX, Line, Polygon, STROKE, Text } from "./FigureFrame";
+import { DIA, FONT, FigureCaption, FigureFrame, LaTeX, Line, Polygon, STROKE, Text } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { SegmentedControl } from "./SegmentedControl";
 
@@ -78,7 +78,7 @@ export default function UniformBoundednessFigure() {
         label={`N = ${count}`}
         ariaLabel="Number of operators in the family"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         <MathText
           text={
             mode === "banach"
@@ -86,7 +86,7 @@ export default function UniformBoundednessFigure() {
               : "Drop completeness and the principle fails: the family can stay pointwise bounded while $\\|T_n\\|\\to\\infty$ breaks through any uniform ceiling."
           }
         />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

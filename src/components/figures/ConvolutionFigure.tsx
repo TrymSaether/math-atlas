@@ -46,7 +46,7 @@ function overlapPoints(s: number): [number, number][] | null {
 
 export default function ConvolutionFigure() {
   const shift = useMovablePoint([-1.2, 1.2], {
-    color: "var(--accent)",
+    color: DIA.accent,
     constrain: ([x]) => [Math.min(3, Math.max(-3, x)), 1.2],
   });
   const s = shift.x;
@@ -59,7 +59,7 @@ export default function ConvolutionFigure() {
       <div className="space-y-2">
         <section
           className="relative overflow-hidden rounded-lg border"
-          style={{ borderColor: "var(--border)", background: "var(--bg)" }}
+          style={{ borderColor: DIA.border, background: DIA.frame }}
         >
           <FigureOverlayLabel>
             <MathText text={`$f(t)$ fixed, $g(s-t)$ sliding`} />
@@ -102,7 +102,7 @@ export default function ConvolutionFigure() {
 
         <section
           className="relative overflow-hidden rounded-lg border"
-          style={{ borderColor: "var(--border)", background: "var(--bg)" }}
+          style={{ borderColor: DIA.border, background: DIA.frame }}
         >
           <FigureOverlayLabel>
             <MathText text={`$(f*g)(s)=\\int_{-\\infty}^{\\infty} f(t)g(s-t)\\,dt$`} />

@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 
 import { linspace } from "../../lib/figures/plot";
 import { type WaveKind, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
-import { DIA, FigureFrame, FunctionCurve, STROKE } from "./FigureFrame";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, STROKE, UI } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
 
@@ -51,7 +51,7 @@ export default function ParsevalFigure() {
 
       {/* Parseval energy balance */}
       <div className="mt-2.5 px-1">
-        <div className="mb-1.5 flex items-baseline justify-between text-ui-hint" style={{ color: "var(--fg-3)" }}>
+        <div className="mb-1.5 flex items-baseline justify-between text-ui-hint" style={{ color: UI.muted }}>
           <span>
             Energy captured by {N} harmonic{N !== 1 ? "s" : ""}
           </span>
@@ -59,17 +59,17 @@ export default function ParsevalFigure() {
             {pct}%
           </span>
         </div>
-        <div className="relative h-2.5 w-full overflow-hidden rounded-full" style={{ background: "var(--surface-3)" }}>
+        <div className="relative h-2.5 w-full overflow-hidden rounded-full" style={{ background: UI.sunken }}>
           <div
             className="h-full rounded-full"
             style={{
               width: `${fraction * 100}%`,
-              background: "var(--accent)",
+              background: DIA.accent,
               transition: "width 0.15s ease",
             }}
           />
         </div>
-        <div className="mt-1 flex justify-between font-mono text-ui-hint" style={{ color: "var(--fg-4)" }}>
+        <div className="mt-1 flex justify-between font-mono text-ui-hint" style={{ color: UI.subtle }}>
           <span>Σ|ĉₙ|² ≈ {partialE.toFixed(3)}</span>
           <span>‖f‖² = {totalE.toFixed(3)}</span>
         </div>
@@ -83,10 +83,10 @@ export default function ParsevalFigure() {
         }}
       />
       <RangeControl min={1} max={40} value={N} onChange={setN} label={`N = ${N}`} ariaLabel="Number of harmonics N" />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         Both sides of Parseval's identity update live — adding harmonics fills the bar until the partial sum captures
         all the energy.
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

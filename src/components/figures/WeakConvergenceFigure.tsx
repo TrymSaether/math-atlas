@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { MathText } from "../../lib/katex";
-import { DIA, DOT, FONT, FigureFrame, LaTeX, Line, Point, Polygon, STROKE, Text } from "./FigureFrame";
+import { DIA, DOT, FONT, FigureCaption, FigureFrame, LaTeX, Line, Point, Polygon, STROKE, Text } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
@@ -63,7 +63,7 @@ export default function WeakConvergenceFigure({ nodeId }: FigureProps) {
         <LaTeX at={[8.85, 0.24]} tex={weakStar ? String.raw`x_n^*(x)\to x^*(x)` : String.raw`x^*(e_n)\to 0`} />
       </FigureFrame>
       <RangeControl min={1} max={12} value={n} onChange={setN} label={`n = ${n}`} ariaLabel="Sequence index n" />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         <MathText
           text={
             weakStar
@@ -71,7 +71,7 @@ export default function WeakConvergenceFigure({ nodeId }: FigureProps) {
               : `Weak convergence can miss norm size: ${selectedLabel}=${value.toFixed(3)} tends to 0 even though $\\|e_n\\|=1$.`
           }
         />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

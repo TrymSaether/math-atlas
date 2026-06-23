@@ -1,5 +1,16 @@
 import { gaussian } from "../../lib/figures/fourierMath";
-import { DIA, FONT, FigureFrame, FunctionCurve, Line, STROKE, Text, Vector, useMovablePoint } from "./FigureFrame";
+import {
+  DIA,
+  FONT,
+  FigureCaption,
+  FigureFrame,
+  FunctionCurve,
+  Line,
+  STROKE,
+  Text,
+  Vector,
+  useMovablePoint,
+} from "./FigureFrame";
 import { type FigureProps } from "./types";
 
 const CAPTION: Record<string, string> = {
@@ -20,7 +31,7 @@ export default function GaussianFigure({ nodeId }: FigureProps) {
   // dashed curve hides under the solid one). At σ ≈ 0.62 the two curves are
   // clearly separated, so the space–frequency trade-off reads before any drag.
   const width = useMovablePoint([0.62, 1.06], {
-    color: "var(--accent)",
+    color: DIA.accent,
     constrain: ([x]) => [Math.min(2.2, Math.max(0.25, x)), 1.06],
   });
   const sigma = width.x;
@@ -49,10 +60,10 @@ export default function GaussianFigure({ nodeId }: FigureProps) {
         <FunctionCurve y={(x) => gaussian(x, sigma)} domain={[-6, 6]} color={DIA.accent} weight={STROKE.curve} />
         {width.element}
       </FigureFrame>
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         Drag the handle on the width marker: σ = {sigma.toFixed(2)}, so the transform width is {freqSigma.toFixed(2)}.{" "}
         {caption}
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

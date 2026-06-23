@@ -5,6 +5,7 @@ import {
   DIA,
   DOT,
   FONT,
+  FigureCaption,
   FigureFrame,
   LaTeX,
   Line,
@@ -86,9 +87,9 @@ function CompactOperatorModel() {
         label={`q = ${decay.toFixed(2)}`}
         ariaLabel="Singular value decay ratio"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         <MathText text="A compact diagonal model sends $e_n$ to $q^{n-1}e_n$; the image of the unit ball has tails that shrink toward zero." />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }
@@ -124,9 +125,9 @@ function OperatorNormModel({ nodeId }: FigureProps) {
         label={`C = ${stretch.toFixed(2)}`}
         ariaLabel="Operator stretch bound"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         <MathText text={`${label} is read from the largest radius of the image of the domain unit ball.`} />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

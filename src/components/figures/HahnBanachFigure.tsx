@@ -1,6 +1,19 @@
 import { useMemo, useState } from "react";
 
-import { DIA, DOT, FONT, FigureFrame, Line, Point, Polygon, STROKE, Text, type Domain, type Vec2 } from "./FigureFrame";
+import {
+  DIA,
+  DOT,
+  FONT,
+  FigureCaption,
+  FigureFrame,
+  Line,
+  Point,
+  Polygon,
+  STROKE,
+  Text,
+  type Domain,
+  type Vec2,
+} from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 
 const UNIT_BALL: Vec2[] = [
@@ -84,10 +97,10 @@ export default function HahnBanachFigure() {
         label={`$\\alpha = ${alpha.toFixed(2)}$`}
         ariaLabel="Extension coefficient alpha"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         On the subspace, f(t,0)=t. Hahn-Banach lets F(x,y)=x+αy extend it to the whole plane while preserving the same
         bound.
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

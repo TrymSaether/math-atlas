@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { type WaveKind, waveCoeff, wavePartialSum, waveTarget } from "../../lib/figures/fourierMath";
-import { DIA, FigureCaption, FigureFrame, FunctionCurve, Line, Plot, Polygon, STROKE } from "./FigureFrame";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, Line, Plot, Polygon, STROKE, UI } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { WaveSelect } from "./WaveSelect";
 
@@ -84,11 +84,11 @@ export default function L2ConvergenceFigure() {
       </FigureFrame>
 
       <div className="mt-2 px-1">
-        <div className="mb-1 flex items-baseline justify-between text-ui-hint" style={{ color: "var(--fg-3)" }}>
+        <div className="mb-1 flex items-baseline justify-between text-ui-hint" style={{ color: UI.muted }}>
           <span>
             L² error ‖S<sub>N</sub>f − f‖²
           </span>
-          <span className="font-mono" style={{ color: "var(--fg-2)" }}>
+          <span className="font-mono" style={{ color: UI.text }}>
             {errPct}% of ‖f‖²
           </span>
         </div>

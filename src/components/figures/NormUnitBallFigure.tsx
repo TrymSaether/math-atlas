@@ -5,6 +5,7 @@ import {
   Circle,
   DIA,
   DOT,
+  FigureCaption,
   FigureFrame,
   LaTeX,
   Line,
@@ -12,6 +13,7 @@ import {
   Polygon,
   Polyline,
   STROKE,
+  UI,
   Vector,
   type Vec2,
   useMovablePoint,
@@ -128,7 +130,7 @@ function NormModeSelect({
         role="radiogroup"
         aria-label="Norm type"
         className="inline-flex w-fit flex-wrap gap-1 rounded-md border p-1"
-        style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+        style={{ borderColor: UI.border, background: UI.panel }}
       >
         {MODES.map((mode) => {
           const active = mode.kind === value;
@@ -148,8 +150,8 @@ function NormModeSelect({
               }}
               className="flex min-h-8 cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-ui-meta transition-colors focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
               style={{
-                background: active ? "var(--accent)" : "transparent",
-                color: active ? "var(--fg-on-color)" : "var(--fg-2)",
+                background: active ? DIA.accent : "transparent",
+                color: active ? UI.onColor : UI.text,
                 fontWeight: active ? 600 : 400,
               }}
             >
@@ -168,8 +170,8 @@ function NormModeSelect({
                     onChange={(event) => onPChange(Number(event.target.value))}
                     className="h-1 w-20 cursor-pointer appearance-none rounded-full"
                     style={{
-                      accentColor: "var(--fg-on-color)",
-                      background: "color-mix(in srgb, var(--fg-on-color) 28%, transparent)",
+                      accentColor: UI.onColor,
+                      background: UI.onColorSoft,
                     }}
                     aria-label="Tunable lp exponent"
                   />
@@ -194,17 +196,17 @@ function ReadoutPanel({ point, value, mode, p }: { point: Vec2; value: number; m
   return (
     <aside
       className="flex min-w-52 flex-1 flex-col rounded-md border p-3"
-      style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+      style={{ borderColor: UI.border, background: UI.panel }}
       aria-live="polite"
     >
-      <div className="mt-2 text-ui-meta" style={{ color: "var(--fg-2)" }}>
+      <div className="mt-2 text-ui-meta" style={{ color: UI.text }}>
         <MathText text={`${MODE_NAMES[mode]} $\\ell^{${subscript}}$`} />
       </div>
-      <div className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-ui-meta" style={{ color: "var(--fg-2)" }}>
+      <div className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-ui-meta" style={{ color: UI.text }}>
         <span>
           <MathText text="$x=$" />
         </span>
-        <span className="tabular-nums" style={{ color: "var(--fg-1)" }}>
+        <span className="tabular-nums" style={{ color: DIA.ink }}>
           ({point[0].toFixed(2)}, {point[1].toFixed(2)})
         </span>
         <span>
@@ -216,11 +218,11 @@ function ReadoutPanel({ point, value, mode, p }: { point: Vec2; value: number; m
         <span>
           <MathText text={`$${ball}=$`} />
         </span>
-        <span style={{ color: "var(--fg-1)" }}>
+        <span style={{ color: DIA.ink }}>
           <MathText text={`$\\{z:\\|z\\|_{${subscript}}\\le 1\\}$`} />
         </span>
       </div>
-      <div className="mt-3 h-1.5 rounded-full" style={{ background: "var(--surface-3)" }}>
+      <div className="mt-3 h-1.5 rounded-full" style={{ background: UI.sunken }}>
         <div
           className="h-full rounded-full"
           style={{
@@ -229,7 +231,7 @@ function ReadoutPanel({ point, value, mode, p }: { point: Vec2; value: number; m
           }}
         />
       </div>
-      <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-ui-meta" style={{ color: "var(--fg-2)" }}>
+      <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-ui-meta" style={{ color: UI.text }}>
         <span style={{ color: statusColor }}>
           <MathText text={inside ? `$x\\in ${ball}$` : `$x\\notin ${ball}$`} />
         </span>
@@ -237,7 +239,7 @@ function ReadoutPanel({ point, value, mode, p }: { point: Vec2; value: number; m
           <MathText text={`$${value.toFixed(3)} ${comparator} 1$`} />
         </span>
       </div>
-      <div className="mt-3 border-t pt-2 text-ui-meta" style={{ borderColor: "var(--border)", color: "var(--fg-2)" }}>
+      <div className="mt-3 border-t pt-2 text-ui-meta" style={{ borderColor: UI.border, color: UI.text }}>
         <MathText
           text={`The solid outline is $\\|x\\|_{${subscript}}B_{${subscript}}$: the unit ball scaled until it reaches $x$.`}
         />
@@ -314,9 +316,9 @@ export default function NormUnitBallFigure() {
         </div>
         <ReadoutPanel point={x} value={value} mode={mode} p={p} />
       </div>
-      <figcaption className="mt-2 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption className="mt-2">
         <MathText text="Drag $x$ or switch norms. The norm is the scale factor that expands the unit ball until it reaches the vector." />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

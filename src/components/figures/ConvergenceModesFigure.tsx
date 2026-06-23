@@ -11,6 +11,7 @@ import {
   Line,
   Point,
   STROKE,
+  UI,
   type Domain,
   type Vec2,
 } from "./FigureFrame";
@@ -104,11 +105,7 @@ export default function ConvergenceModesFigure() {
       <FigureFrame xDomain={spec.xDomain} yDomain={spec.yDomain} height={190} grid>
         {epsilonLabels && (
           <>
-            <FunctionBand
-              upper={(x) => spec.limit(x) + 1 / n}
-              lower={(x) => spec.limit(x) - 1 / n}
-              color={DIA.ok}
-            />
+            <FunctionBand upper={(x) => spec.limit(x) + 1 / n} lower={(x) => spec.limit(x) - 1 / n} color={DIA.ok} />
 
             <LaTeX
               at={[epsilonLabels.upper[0], epsilonLabels.upper[1] + 0.15]}
@@ -136,7 +133,7 @@ export default function ConvergenceModesFigure() {
       <SegmentedControl value={mode} options={MODE_OPTIONS} onChange={(m) => setMode(m)} ariaLabel="Convergence mode" />
       <RangeControl min={1} max={20} value={n} onChange={setN} label={`$n = ${n}$`} ariaLabel="Sequence index n" />
       <FigureCaption className="space-y-1">
-        <div className="font-math" style={{ color: "var(--fg-2)" }}>
+        <div className="font-math" style={{ color: UI.text }}>
           <MathText text={`$\\|f_n-f\\|_\\infty=${sup.toFixed(2)}\\quad\\|f_n-f\\|_2=${l2.toFixed(2)}$`} />
         </div>
         <MathText text={spec.note} />

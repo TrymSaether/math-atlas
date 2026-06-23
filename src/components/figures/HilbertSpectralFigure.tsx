@@ -5,6 +5,7 @@ import {
   DIA,
   DOT,
   FONT,
+  FigureCaption,
   FigureFrame,
   LaTeX,
   Line,
@@ -72,9 +73,9 @@ function SpectralBars() {
         label={`r = ${decay.toFixed(2)}`}
         ariaLabel="Eigenvalue decay ratio"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         <MathText text="A compact self-adjoint model diagonalizes into orthonormal eigenvectors; nonzero eigenvalues can only accumulate at 0." />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }
@@ -109,9 +110,9 @@ function ProjectionModel() {
         label={`theta = ${degrees}^\\circ`}
         ariaLabel="Projection subspace angle"
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         <MathText text="The nearest point $Px$ is characterized by an error vector orthogonal to the closed convex set or subspace." />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

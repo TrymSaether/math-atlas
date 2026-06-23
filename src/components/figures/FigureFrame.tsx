@@ -21,7 +21,7 @@ import {
 } from "mafs";
 
 import "mafs/core.css";
-import { DIA, DOT, FIGURE, PANEL_BACKING, STROKE } from "./tokens";
+import { DIA, DOT, FIGURE, PANEL_BACKING, STROKE, UI } from "./tokens";
 
 export type Domain = [number, number];
 export type Vec2 = [number, number];
@@ -148,7 +148,7 @@ export function FigureCaption({
 }) {
   const spacing = className ? ` ${className}` : "";
   return (
-    <figcaption className={`mt-1.5 text-ui-meta${spacing}`} style={{ color: strong ? "var(--fg-2)" : "var(--fg-3)" }}>
+    <figcaption className={`mt-1.5 text-ui-meta${spacing}`} style={{ color: strong ? UI.text : UI.muted }}>
       {children}
     </figcaption>
   );
@@ -165,7 +165,7 @@ export function FigureOverlayLabel({
   return (
     <div
       className={`absolute ${positionClass} rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm`}
-      style={{ color: "var(--fg-2)", background: PANEL_BACKING }}
+      style={{ color: UI.text, background: PANEL_BACKING }}
     >
       {children}
     </div>
@@ -237,7 +237,7 @@ export function SamplePoints({
   );
 }
 
-export { DIA, DOT, FIGURE, FONT, PANEL_BACKING, STROKE, UI } from "./tokens";
+export { DIA, DOT, FIGURE, FONT, HEAT, PANEL_BACKING, SERIES, STROKE, UI } from "./tokens";
 
 export {
   Circle,

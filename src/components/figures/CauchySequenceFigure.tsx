@@ -3,7 +3,22 @@
 import { useMemo, useState } from "react";
 
 import { MathText } from "../../lib/katex";
-import { DIA, DOT, FONT, FigureFrame, LaTeX, Line, MovablePoint, Point, Polygon, STROKE, Text, type Domain } from "./FigureFrame";
+import {
+  DIA,
+  DOT,
+  FONT,
+  FigureCaption,
+  FigureFrame,
+  LaTeX,
+  Line,
+  MovablePoint,
+  Point,
+  Polygon,
+  STROKE,
+  Text,
+  UI,
+  type Domain,
+} from "./FigureFrame";
 import { SegmentedControl } from "./SegmentedControl";
 
 type Mode = "convergent" | "incomplete" | "bad";
@@ -283,8 +298,8 @@ export default function CauchySequenceFigure() {
 
       <SegmentedControl value={mode} options={MODE_OPTIONS} onChange={setMode} ariaLabel="Cauchy sequence example" />
 
-      <figcaption className="mt-2 space-y-1 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        <div className="font-math" style={{ color: "var(--fg-2)" }}>
+      <FigureCaption className="mt-2 space-y-1">
+        <div className="font-math" style={{ color: UI.text }}>
           <MathText
             text={`$${titleTex(mode)}\\quad \\varepsilon=${activeEpsilon.toFixed(2)}\\quad n=${n}\\quad m=${m}\\quad |x_m-x_n|=${pairwiseDistance.toFixed(3)}\\quad ${
               tailStart === undefined
@@ -302,7 +317,7 @@ export default function CauchySequenceFigure() {
                 : String.raw`The alternating sequence is not Cauchy: every long tail still contains terms separated by $2$.`
           }
         />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

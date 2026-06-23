@@ -4,6 +4,7 @@ import {
   DIA,
   DOT,
   FONT,
+  FigureCaption,
   FigureFrame,
   FunctionCurve,
   Line,
@@ -43,7 +44,7 @@ const NYQUIST_HANDLE_X = handleFromFs(NYQUIST_HZ);
  */
 export default function SamplingFigure({ nodeId }: FigureProps) {
   const rate = useMovablePoint([0.9, 1.08], {
-    color: "var(--accent)",
+    color: DIA.accent,
     constrain: ([x]) => [Math.min(HANDLE_MAX, Math.max(HANDLE_MIN, x)), 1.08],
   });
   const fs = fsFromHandle(rate.x);
@@ -107,7 +108,7 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
         <SamplePoints points={samples} radius={DOT.sample} />
         {rate.element}
       </FigureFrame>
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
+      <FigureCaption>
         <MathText
           text={
             nyquistOk
@@ -116,7 +117,7 @@ export default function SamplingFigure({ nodeId }: FigureProps) {
                 (focusAlias ? " That impostor is the alias." : "")
           }
         />
-      </figcaption>
+      </FigureCaption>
     </figure>
   );
 }

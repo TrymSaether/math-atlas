@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { dirichletKernel, fejerKernel, kernelPeak, poissonKernel } from "../../lib/figures/fourierMath";
-import { DIA, FigureFrame, FunctionCurve, Line, STROKE } from "./FigureFrame";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, Line, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 import { type FigureProps } from "./types";
 
@@ -75,9 +75,7 @@ export default function KernelFigure({ nodeId }: FigureProps) {
         label={isPoisson ? `r = ${param.toFixed(2)}` : `N = ${raw}`}
         ariaLabel={isPoisson ? "Poisson kernel radius r" : "Kernel order N"}
       />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        {CAPTION[kind]}
-      </figcaption>
+      <FigureCaption>{CAPTION[kind]}</FigureCaption>
     </figure>
   );
 }

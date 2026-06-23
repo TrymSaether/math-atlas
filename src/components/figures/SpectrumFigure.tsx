@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { type WaveKind, waveCoeff } from "../../lib/figures/fourierMath";
-import { DIA, FONT, FigureFrame, Line, Polygon, STROKE, Text } from "./FigureFrame";
+import { DIA, FONT, FigureCaption, FigureFrame, Line, Polygon, STROKE, Text } from "./FigureFrame";
 import { WaveSelect } from "./WaveSelect";
 
 const CAPTION: Record<WaveKind, string> = {
@@ -58,9 +58,7 @@ export default function SpectrumFigure() {
         })}
       </FigureFrame>
       <WaveSelect value={kind} onChange={setKind} />
-      <figcaption className="mt-1.5 text-ui-meta" style={{ color: "var(--fg-3)" }}>
-        {CAPTION[kind]}
-      </figcaption>
+      <FigureCaption>{CAPTION[kind]}</FigureCaption>
     </figure>
   );
 }
