@@ -3662,17 +3662,98 @@
       "domain": "convergence",
       "label": "Absolute Coefficients $\\Rightarrow$ Uniform Convergence",
       "content": {
-        "statement": "If the Fourier coefficients are absolutely summable, the Fourier series converges absolutely and uniformly; for continuous $f$ the limit is $f$.",
-        "formal": "If $\\sum_{n\\in\\mathbb Z}|\\hat f(n)|<\\infty$ then $\\sum_n \\hat f(n)e^{inx}$ converges absolutely and uniformly to a continuous limit $g$. If moreover $f\\in C(\\mathbb T)$ (or $f$ is continuous), then $g=f$, so $S_N[f]\\to f$ uniformly.",
-        "formula": "$$\\sum_{n\\in\\mathbb Z}|\\hat f(n)|<\\infty\\ \\Longrightarrow\\ S_N[f]\\rightrightarrows g\\in C(\\mathbb T),\\quad\\text{and}\\quad f\\in C(\\mathbb T)\\Rightarrow g=f.$$",
-        "intuition": "The Weierstrass M-test: bound each harmonic by $|\\hat f(n)|$; a summable bound forces uniform convergence. Uniqueness pins the limit to $f$.",
+        "statement": "If the Fourier coefficients are absolutely summable, the Fourier series converges absolutely and uniformly to a continuous function.",
+        "formal": "If $\\sum_{n\\in\\mathbb Z}|\\hat f(n)|<\\infty$, then the series $$\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$$ converges absolutely and uniformly on $\\mathbb T$ to a continuous limit $g$.",
+        "formula": "$$\\sum_{n\\in\\mathbb Z}|\\hat f(n)|<\\infty\\ \\Longrightarrow\\ \\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}\\rightrightarrows g\\in C(\\mathbb T).$$",
+        "intuition": "The Weierstrass M-test bounds each harmonic by $|\\hat f(n)|$. A summable coefficient bound makes the harmonic series uniformly Cauchy, so its limit is continuous.",
         "notation": [
-          "$$S_N[f]\\rightrightarrows f$$"
+          "$$\\sum_n\\hat f(n)e^{inx}\\rightrightarrows g$$",
+          "$$\\sum_n|\\hat f(n)|<\\infty$$"
         ]
       },
+      "assumptions": [
+        "This theorem only proves convergence to the function represented by the uniformly convergent series.",
+        "Identifying the limit with the original $f$ is a separate uniqueness step."
+      ],
       "source": {
-        "citation": "Stein–Shakarchi: Ch.2 §1, Ch.2 Cor. 2.3–2.4 (Weierstrass M-test + uniqueness)",
-        "ref": "Stein–Shakarchi: Ch.2 §1, Ch.2 Cor. 2.3–2.4 (Weierstrass M-test + uniqueness)",
+        "citation": "Stein–Shakarchi: Ch.2 §1 and Ch.2 Cor. 2.3 (Weierstrass M-test)",
+        "ref": "Stein–Shakarchi: Ch.2 §1 and Ch.2 Cor. 2.3",
+        "references": []
+      },
+      "tags": [
+        "convergence",
+        "series"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "absolutely_summable_fourier_coefficients",
+      "kind": "definition",
+      "domain": "series",
+      "label": "Absolute Fourier Coefficients",
+      "content": {
+        "statement": "The Fourier coefficients of $f$ are absolutely summable when their two-sided absolute-value series is finite.",
+        "definition": "$$\\widehat f\\in \\ell^1(\\mathbb Z)\\iff \\sum_{n\\in\\mathbb Z}|\\widehat f(n)|<\\infty.$$",
+        "formal": "For $f\\in L^1(\\mathbb T)$, having absolute Fourier coefficients means that the coefficient sequence $\\{\\widehat f(n)\\}_{n\\in\\mathbb Z}$ belongs to $\\ell^1(\\mathbb Z)$. This is a condition on the Fourier spectrum, not a pointwise regularity condition on $f$ itself.",
+        "formula": "$$\\sum_{n\\in\\mathbb Z}|\\widehat f(n)|<\\infty.$$",
+        "intuition": "Absolute summability is a frequency-side decay condition strong enough to dominate every harmonic uniformly in $x$.",
+        "gloss": "The condition $\\widehat f\\in\\ell^1(\\mathbb Z)$, equivalently $\\sum_n|\\widehat f(n)|<\\infty$.",
+        "notation": [
+          "$$\\widehat f\\in\\ell^1(\\mathbb Z)$$",
+          "$$\\sum_{n\\in\\mathbb Z}|\\widehat f(n)|<\\infty$$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "If $|\\widehat f(n)|=O(|n|^{-2})$, then the coefficients are absolutely summable.",
+          "label": "Fast decay",
+          "role": "example"
+        },
+        {
+          "content": "A bound $|\\widehat f(n)|=O(1/|n|)$ alone is not enough, because the harmonic series diverges.",
+          "label": "Harmonic decay",
+          "role": "non-example"
+        }
+      ],
+      "properties": [
+        "Absolute summability of coefficients implies absolute and uniform convergence of the Fourier series by the Weierstrass M-test.",
+        "If $f$ is continuous, uniqueness identifies the resulting uniform limit with $f$.",
+        "Decay estimates such as $|\\widehat f(n)|=O(|n|^{-1-\\alpha})$ with $\\alpha>0$ are common ways to prove this condition."
+      ],
+      "source": {
+        "citation": "Curated concept graph",
+        "references": []
+      },
+      "tags": [
+        "coefficients",
+        "series",
+        "convergence"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "absolute_uniform_convergence_identification",
+      "kind": "theorem",
+      "domain": "convergence",
+      "label": "Absolute Uniform Limit Equals $f$",
+      "content": {
+        "statement": "For continuous $f$, the absolutely and uniformly convergent Fourier series has limit $f$.",
+        "formal": "If $f\\in C(\\mathbb T)$ and $\\sum_{n\\in\\mathbb Z}|\\widehat f(n)|<\\infty$, then the uniform limit $g$ of $$\\sum_{n\\in\\mathbb Z}\\widehat f(n)e^{inx}$$ satisfies $g=f$. Hence $S_N[f]\\to f$ uniformly.",
+        "formula": "$$f\\in C(\\mathbb T),\\ \\widehat f\\in\\ell^1(\\mathbb Z)\\Longrightarrow S_N[f]\\rightrightarrows f.$$",
+        "intuition": "The M-test constructs a continuous limit $g$. Since the Fourier coefficients of $g$ are the original coefficients of $f$, uniqueness forces $g=f$.",
+        "notation": [
+          "$$S_N[f]\\rightrightarrows f$$",
+          "$$g=f\\text{ by uniqueness}$$"
+        ]
+      },
+      "assumptions": [
+        "$f$ is continuous on $\\mathbb T$.",
+        "The coefficient sequence is absolutely summable.",
+        "The uniqueness theorem is used to identify the uniform limit with the original function."
+      ],
+      "source": {
+        "citation": "Stein–Shakarchi: Ch.2 Cor. 2.3–2.4 (absolute convergence + uniqueness)",
+        "ref": "Stein–Shakarchi: Ch.2 Cor. 2.3–2.4",
         "references": []
       },
       "tags": [
@@ -10173,8 +10254,33 @@
       "relation": "satisfies"
     },
     {
+      "source": "absolutely_summable_fourier_coefficients",
+      "target": "decay_smoothness",
+      "relation": "related_to"
+    },
+    {
+      "source": "absolutely_summable_fourier_coefficients",
+      "target": "uniform_convergence",
+      "relation": "related_to"
+    },
+    {
+      "source": "absolutely_summable_fourier_coefficients",
+      "target": "fourier_coefficient",
+      "relation": "uses"
+    },
+    {
+      "source": "absolutely_summable_fourier_coefficients",
+      "target": "fourier_spectrum",
+      "relation": "uses"
+    },
+    {
       "source": "abel_theorem",
       "target": "abel_summation",
+      "relation": "uses"
+    },
+    {
+      "source": "absolute_uniform_convergence",
+      "target": "absolutely_summable_fourier_coefficients",
       "relation": "uses"
     },
     {
@@ -10194,11 +10300,31 @@
     },
     {
       "source": "absolute_uniform_convergence",
+      "target": "uniform_convergence",
+      "relation": "uses"
+    },
+    {
+      "source": "absolute_uniform_convergence_identification",
+      "target": "absolute_uniform_convergence",
+      "relation": "uses"
+    },
+    {
+      "source": "absolute_uniform_convergence_identification",
+      "target": "absolutely_summable_fourier_coefficients",
+      "relation": "uses"
+    },
+    {
+      "source": "absolute_uniform_convergence_identification",
+      "target": "continuous_functions_torus",
+      "relation": "uses"
+    },
+    {
+      "source": "absolute_uniform_convergence_identification",
       "target": "fourier_series_uniqueness_theorem",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence",
+      "source": "absolute_uniform_convergence_identification",
       "target": "uniform_convergence",
       "relation": "uses"
     },
@@ -10579,7 +10705,7 @@
     },
     {
       "source": "exam2025_p1b",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
@@ -10609,7 +10735,7 @@
     },
     {
       "source": "exam2025_p2",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
@@ -11364,7 +11490,7 @@
     },
     {
       "source": "oving1_p1",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
@@ -11429,7 +11555,7 @@
     },
     {
       "source": "oving3_p1",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
@@ -11484,7 +11610,7 @@
     },
     {
       "source": "oving5_p1",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
@@ -11499,7 +11625,7 @@
     },
     {
       "source": "oving5_p2",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
@@ -12074,7 +12200,7 @@
     },
     {
       "source": "ss2_6_ex3",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
@@ -12089,7 +12215,7 @@
     },
     {
       "source": "ss2_6_ex4",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
@@ -12104,7 +12230,7 @@
     },
     {
       "source": "ss2_6_ex5",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
@@ -12199,7 +12325,7 @@
     },
     {
       "source": "ss3_3_ex16",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_uniform_convergence_identification",
       "relation": "uses"
     },
     {
