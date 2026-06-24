@@ -41,13 +41,15 @@ export function FigureFrame({
   height = FIGURE.height,
   axes = true,
   grid = false,
+  preserveAspectRatio = false,
   children,
 }: {
   xDomain: Domain;
   yDomain: Domain;
   height?: number;
   axes?: boolean;
-  grid?: boolean;
+  grid?: boolean | "polar";
+  preserveAspectRatio?: "contain" | false;
   children: ReactNode;
 }) {
   return (
@@ -56,10 +58,11 @@ export function FigureFrame({
         height={height}
         pan={false}
         zoom={false}
-        preserveAspectRatio={false}
+        preserveAspectRatio={preserveAspectRatio}
         viewBox={{ x: xDomain, y: yDomain, padding: 0 }}
       >
-        {grid && (
+        {grid === "polar" && <Coordinates.Polar subdivisions={4} lines={0.5} />}
+        {grid === true && (
           // axis:false suppresses the Mafs origin lines; grid lines are kept
           <Coordinates.Cartesian
             subdivisions={2}

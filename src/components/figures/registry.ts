@@ -33,6 +33,7 @@ export const FIGURE_REGISTRY: Record<string, FigureComponent> = {
   convolution: lazy(() => import("./ConvolutionFigure")),
   convolution_theorem: lazy(() => import("./ConvolutionFigure")),
   circular_convolution: lazy(() => import("./ConvolutionFigure")),
+  integer_frequency: lazy(() => import("./IntegerFrequencyFigure")),
   fourier_coefficient: lazy(() => import("./SpectrumFigure")),
   fourier_spectrum: lazy(() => import("./SpectrumFigure")),
   fourier_series: lazy(() => import("./SeriesFigure")),

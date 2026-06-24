@@ -678,7 +678,6 @@
           "$$n\\in\\mathbb Z$$"
         ]
       },
-      "diagram": "/atlas-assets/fourier/diagrams/integer-frequency.svg",
       "assumptions": [
         "This node uses the $2\\pi$-periodic convention; period-$1$ conventions use $e^{2\\pi inx}$ instead."
       ],
@@ -4206,7 +4205,7 @@
       "label": "Good Kernel",
       "content": {
         "statement": "A good kernel is an approximate identity on the circle: a normalized family of integrable kernels whose absolute mass concentrates near the origin and whose total absolute mass remains uniformly bounded.",
-        "definition": "$\\{K_n\\}_{n\\ge1}\\subset L^1(\\mathbb T)$ is a good kernel if $$\\begin{align} \\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi}K_n(t)\\,dt &= 1,\\tag{GK1}\\label{eq:normalized} \\\\ \\sup_{n\\ge1}\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(t)|\\,dt&<\\infty, \\tag{GK2}\\label{eq:uniformly_bounded} \\\\ \\forall\\delta\\in(0,\\pi):\\quad \\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}|K_n(t)|\\,dt&\\xrightarrow[n\\to\\infty]{}0. \\tag{GK3}\\label{eq:vanishing_mass} \\end{align}$$",
+        "definition": "$\\{K_n\\}_{n\\ge1}\\subset L^1(\\mathbb T)$ is a good kernel if $$\\begin{align} \\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi}K_n(t)\\,dt &= 1,\\tag{GK1} \\\\ \\sup_{n\\ge1}\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(t)|\\,dt&<\\infty, \\tag{GK2}\\\\ \\forall\\delta\\in(0,\\pi):\\quad \\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}|K_n(t)|\\,dt&\\xrightarrow[n\\to\\infty]{}0. \\tag{GK3} \\end{align}$$",
         "formal": "A family $\\{K_n\\}_{n\\ge1}\\subset L^1(\\mathbb T)$ is a good kernel if it is normalized, uniformly bounded in $L^1(dm)$, and has vanishing $L^1(dm)$ mass away from $0$. Convolution with $K_n$ is defined by $$ (f*K_n)(x)=\\int_{\\mathbb T}f(x-t)K_n(t)\\,dm(t), $$ where $dm(t)=dt/(2\\pi)$.",
         "formula": "$$(f*K_n)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)K_n(t)\\,dt.$$",
         "intuition": "A good kernel behaves like a controlled averaging weight that becomes increasingly localized near $0$. The value $K_n(t)$ weights the nearby value $f(x-t)$ in the average at $x$. For every fixed neighborhood of $0$, the absolute mass outside that neighborhood tends to $0$, so $f*K_n$ mostly samples values of $f$ close to $x$. The uniform $L^1$ bound prevents large hidden oscillations from destroying this averaging behavior.",
