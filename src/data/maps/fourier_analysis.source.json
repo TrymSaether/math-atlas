@@ -2283,6 +2283,48 @@
       "priority": "core"
     },
     {
+      "id": "convolution_on_circle",
+      "kind": "definition",
+      "domain": "series",
+      "label": "Convolution on the Circle",
+      "content": {
+        "statement": "Convolution on $\\mathbb T$ combines two periodic functions by averaging one function against translated copies of the other.",
+        "definition": "$$(f*g)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)g(t)\\,dt.$$",
+        "formal": "Let $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$ and let $dm(t)=dt/(2\\pi)$. For $f,g\\in L^1(\\mathbb T)$, their convolution is defined by $$(f*g)(x)=\\int_{\\mathbb T}f(x-t)g(t)\\,dm(t)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)g(t)\\,dt.$$",
+        "formula": "$$(f*K)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)K(t)\\,dt.$$",
+        "intuition": "Convolution is a sliding weighted average. The kernel $g(t)$ tells how much the nearby value $f(x-t)$ contributes to the output at $x$. This is why kernels in Fourier analysis act like averaging devices.",
+        "gloss": "The normalized sliding-average operation for periodic functions on $\\mathbb T$.",
+        "notation": [
+          "$$f*g$$",
+          "$$(f*g)(x)=\\int_{\\mathbb T}f(x-t)g(t)\\,dm(t)$$",
+          "$$dm(t)=\\frac{dt}{2\\pi}$$"
+        ]
+      },
+      "assumptions": [
+        "Functions are interpreted as $2\\pi$-periodic functions on $\\mathbb R$.",
+        "The circle measure is normalized by $dm(t)=dt/(2\\pi)$.",
+        "At minimum, $f,g\\in L^1(\\mathbb T)$."
+      ],
+      "properties": [
+        "Convolution with a kernel can be viewed as averaging translated values of a function.",
+        "The normalization ensures that convolution with a kernel of integral one preserves constant functions.",
+        "Under the normalized Fourier-series convention, Fourier coefficients turn convolution into multiplication."
+      ],
+      "source": {
+        "citation": "Stein–Shakarchi, Fourier Analysis: An Introduction, Chapter 2",
+        "ref": "Ch.2 convolution and summability kernels",
+        "references": []
+      },
+      "tags": [
+        "circle",
+        "convolution",
+        "fourier-series",
+        "kernel",
+        "periodic-functions"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "decay_smoothness",
       "kind": "property",
       "domain": "series",
@@ -3618,7 +3660,7 @@
       "id": "absolute_uniform_convergence",
       "kind": "theorem",
       "domain": "convergence",
-      "label": "Absolute Coefficients ⟹ Uniform Convergence",
+      "label": "Absolute Coefficients $\\Longrightarrow$ Uniform Convergence",
       "content": {
         "statement": "If the Fourier coefficients are absolutely summable, the Fourier series converges absolutely and uniformly; for continuous $f$ the limit is $f$.",
         "formal": "If $\\sum_{n\\in\\mathbb Z}|\\hat f(n)|<\\infty$ then $\\sum_n \\hat f(n)e^{inx}$ converges absolutely and uniformly to a continuous limit $g$. If moreover $f\\in C(\\mathbb T)$ (or $f$ is continuous), then $g=f$, so $S_N[f]\\to f$ uniformly.",
@@ -4080,30 +4122,67 @@
       "id": "good_kernel",
       "kind": "definition",
       "domain": "convergence",
-      "label": "Good Kernel (Approximate Identity)",
+      "label": "Good Kernel",
       "content": {
-        "statement": "A normalized family of kernels whose mass concentrates near $0$, so convolution approximates the identity.",
-        "definition": "$$\\begin{aligned} \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(x)\\,dx&=1,\\\\ \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(x)|\\,dx&\\le M,\\\\ \\forall\\delta>0:\\quad \\frac1{2\\pi}\\int_{\\delta\\le |x|\\le\\pi}|K_n(x)|\\,dx&\\xrightarrow[n\\to\\infty]{}0. \\end{aligned}$$",
-        "formal": "A family $\\{K_n\\}$ on $\\mathbb T$ is a good kernel if $\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(x)\\,dx=1$, $\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(x)|\\,dx\\le M$, and for every $\\delta>0$, $\\frac1{2\\pi}\\int_{\\delta\\le |x|\\le\\pi}|K_n(x)|\\,dx\\to0$.",
-        "intuition": "A good kernel is a controlled bump whose mass collapses to the origin. Convolution replaces $f(x)$ by a weighted local average near $x$, and the average becomes exact in the limit.",
+        "statement": "A good kernel is a normalized family of kernels on the circle whose mass concentrates at the origin while its total absolute mass stays uniformly bounded.",
+        "definition": "$$\\begin{aligned} \\{K_n\\}_{n\\ge1}\\subset L^1(\\mathbb T)\\text{ is a good kernel if}\\quad &\\\\ \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(t)\\,dt&=1,\\\\ \\sup_{n\\ge1}\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(t)|\\,dt&<\\infty,\\\\ \\forall\\delta\\in(0,\\pi):\\quad \\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}|K_n(t)|\\,dt&\\xrightarrow[n\\to\\infty]{}0. \\end{aligned}$$",
+        "formal": "On $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$ with normalized measure $dm(t)=dt/(2\\pi)$, a sequence $\\{K_n\\}\\subset L^1(\\mathbb T)$ is a good kernel if $\\int_{\\mathbb T}K_n\\,dm=1$, $\\sup_n\\|K_n\\|_{L^1(dm)}<\\infty$, and for every neighborhood $U$ of $0$, $\\int_{\\mathbb T\\setminus U}|K_n|\\,dm\\to0$.",
+        "formula": "$$(f*K_n)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)K_n(t)\\,dt\\longrightarrow f(x)$$ at every point $x$ where $f$ is continuous; if $f\\in C(\\mathbb T)$, then the convergence is uniform.",
+        "intuition": "A good kernel acts like a controlled bump collapsing to a point. Convolution replaces $f(x)$ by a weighted average of nearby values $f(x-t)$; as the kernel concentrates near $t=0$, the average sees less of the far-away behavior and more of the value at $x$. The bounded $L^1$ condition prevents hidden oscillatory mass from ruining this averaging.",
+        "gloss": "An approximate identity on the circle: normalized, uniformly $L^1$-bounded, and concentrating at $0$.",
         "notation": [
-          "$$\\{K_n\\}_{n\\ge 1}$$"
+          "$$\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$$",
+          "$$dm(t)=\\frac{dt}{2\\pi}$$",
+          "$$\\{K_n\\}_{n\\ge1}$$",
+          "$$(f*K_n)(x)=\\int_{\\mathbb T}f(x-t)K_n(t)\\,dm(t)$$"
         ]
       },
+      "examples": [
+        {
+          "content": "$$F_N(t)=\\frac1N\\frac{\\sin^2(Nt/2)}{\\sin^2(t/2)}$$",
+          "label": "Fejer kernels",
+          "role": "standard positive example"
+        },
+        {
+          "content": "$$P_r(t)=\\frac{1-r^2}{1-2r\\cos t+r^2},\\qquad 0\\le r<1,\\qquad r\\to1^-$$",
+          "label": "Poisson kernels",
+          "role": "Abel summability example"
+        },
+        {
+          "content": "$$D_N(t)=\\sum_{|k|\\le N}e^{ikt}$$ is normalized but not a good kernel because the $L^1$ norms are not uniformly bounded.",
+          "label": "Dirichlet kernels",
+          "role": "non-example"
+        }
+      ],
       "assumptions": [
-        "Kernels are normalized using the circle measure $\\frac1{2\\pi}dx$."
+        "Functions on $\\mathbb T$ are identified with $2\\pi$-periodic functions on $\\mathbb R$.",
+        "Convolution on the circle is normalized by $dt/(2\\pi)$.",
+        "The kernels belong to $L^1(\\mathbb T)$.",
+        "Pointwise convergence of $f*K_n$ requires continuity of $f$ at the point; uniform convergence requires $f\\in C(\\mathbb T)$."
+      ],
+      "properties": [
+        "Normalization preserves constants: $1*K_n=1$.",
+        "Uniform $L^1$ boundedness controls the near-origin error term in the convolution estimate.",
+        "Tail concentration makes the contribution from $\\delta\\le |t|\\le\\pi$ vanish.",
+        "Nonnegativity is sufficient but not required for being a good kernel."
       ],
       "source": {
-        "citation": "Stein–Shakarchi: Ch.2 Theorem 4.1; Ch.5 Corollary 1.7; Ch.5 Theorem 1.6",
-        "ref": "Stein–Shakarchi: Ch.2 Theorem 4.1; Ch.5 Corollary 1.7; Ch.5 Theorem 1.6",
+        "citation": "Stein–Shakarchi, Fourier Analysis: An Introduction, Chapter 2 §4 and §5",
+        "ref": "Ch.2 §4 Good kernels; Ch.2 §5 Fejer and Poisson kernels",
         "references": [
-          "c2_thm_4_1",
-          "c5_cor_1_7",
-          "c5_thm_1_6"
+          "ss_ch2_sec4_good_kernels",
+          "ss_ch2_thm_4_1",
+          "ss_ch2_lemma_5_1",
+          "ss_ch2_lemma_5_5"
         ]
       },
       "tags": [
-        "convergence"
+        "approximate-identity",
+        "convergence",
+        "convolution",
+        "fourier-series",
+        "kernel",
+        "summability"
       ],
       "priority": "core"
     },
@@ -4668,6 +4747,47 @@
         "convergence"
       ],
       "priority": "standard"
+    },
+    {
+      "id": "uniform_convergence",
+      "kind": "definition",
+      "domain": "convergence",
+      "label": "Uniform Convergence",
+      "content": {
+        "statement": "A sequence of functions converges uniformly if one index works for all points of the domain at once.",
+        "definition": "$$f_n\\to f\\ \\text{uniformly on }E\\iff \\forall\\varepsilon>0\\,\\exists N\\in\\mathbb N\\,\\forall n\\ge N\\,\\forall x\\in E:\\ |f_n(x)-f(x)|<\\varepsilon.$$",
+        "formal": "Let $E$ be a set and let $f_n,f:E\\to\\mathbb C$. The sequence $f_n$ converges uniformly to $f$ on $E$ if $$\\sup_{x\\in E}|f_n(x)-f(x)|\\xrightarrow[n\\to\\infty]{}0.$$",
+        "formula": "$$\\|f_n-f\\|_{\\infty,E}=\\sup_{x\\in E}|f_n(x)-f(x)|\\to0.$$",
+        "intuition": "Pointwise convergence lets the required index depend on the point $x$. Uniform convergence is stronger: after one large enough $N$, the whole graph of $f_n$ lies inside an $\\varepsilon$-tube around the graph of $f$.",
+        "gloss": "Convergence of functions with one error bound valid simultaneously at every point.",
+        "notation": [
+          "$$f_n\\rightrightarrows f$$",
+          "$$f_n\\to f\\ \\text{uniformly}$$",
+          "$$\\|f_n-f\\|_\\infty\\to0$$"
+        ]
+      },
+      "assumptions": [
+        "The functions share the same domain $E$.",
+        "The codomain is usually $\\mathbb R$ or $\\mathbb C$ with the absolute-value metric.",
+        "For compact domains such as $\\mathbb T$, the supremum norm is the natural norm on continuous functions."
+      ],
+      "properties": [
+        "Uniform convergence implies pointwise convergence.",
+        "A uniform limit of continuous functions is continuous.",
+        "For good kernels, continuity of $f$ on compact $\\mathbb T$ upgrades pointwise convergence of $f*K_n$ to uniform convergence."
+      ],
+      "source": {
+        "citation": "Standard analysis terminology; used in Stein–Shakarchi, Fourier Analysis: An Introduction, Chapter 2 §4",
+        "ref": "Uniform convergence in the good-kernel approximation theorem",
+        "references": []
+      },
+      "tags": [
+        "convergence",
+        "function-sequences",
+        "supremum-norm",
+        "uniform-convergence"
+      ],
+      "priority": "core"
     },
     {
       "id": "weierstrass_approximation_theorem",
@@ -8508,6 +8628,21 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "convolution_on_circle",
+      "target": "l1_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "convolution_on_circle",
+      "target": "torus_circle",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "convolution_theorem",
+      "target": "convolution_on_circle",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "dct",
       "target": "dft",
       "relation": "defined_in_terms_of"
@@ -8644,7 +8779,17 @@
     },
     {
       "source": "good_kernel",
+      "target": "convolution_on_circle",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "good_kernel",
       "target": "l1_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "good_kernel",
+      "target": "torus_circle",
       "relation": "defined_in_terms_of"
     },
     {
@@ -10008,8 +10153,18 @@
       "relation": "satisfies"
     },
     {
+      "source": "fejer_kernel",
+      "target": "good_kernel",
+      "relation": "satisfies"
+    },
+    {
       "source": "gaussian_transform",
       "target": "schwartz_space",
+      "relation": "satisfies"
+    },
+    {
+      "source": "poisson_kernel",
+      "target": "good_kernel",
       "relation": "satisfies"
     },
     {
@@ -10040,6 +10195,11 @@
     {
       "source": "absolute_uniform_convergence",
       "target": "fourier_series_uniqueness_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "absolute_uniform_convergence",
+      "target": "uniform_convergence",
       "relation": "uses"
     },
     {
@@ -10895,6 +11055,11 @@
     {
       "source": "gibbs_phenomenon",
       "target": "partial_sum",
+      "relation": "uses"
+    },
+    {
+      "source": "good_kernel",
+      "target": "uniform_convergence",
       "relation": "uses"
     },
     {
@@ -12781,6 +12946,11 @@
       "source": "weyl_equidistribution",
       "target": "weierstrass_approximation_theorem",
       "relation": "uses"
+    },
+    {
+      "source": "dirichlet_kernel",
+      "target": "good_kernel",
+      "relation": "violates"
     },
     {
       "source": "du_bois_reymond_counterexample",

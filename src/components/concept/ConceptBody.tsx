@@ -68,7 +68,7 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
 
 const FIELD_LABEL: Record<Field, string> = {
   assumptions: "Assumes",
-  definition: "Define",
+  definition: "Definition",
   formula: "Formula",
   formal: "Formal",
   notation: "Notation",
