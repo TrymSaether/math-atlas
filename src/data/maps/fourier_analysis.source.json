@@ -3657,10 +3657,10 @@
       "priority": "standard"
     },
     {
-      "id": "absolute_uniform_convergence",
+      "id": "absolute_coefficients_uniform_convergence",
       "kind": "theorem",
       "domain": "convergence",
-      "label": "Absolute Coefficients $\\Rightarrow$ Uniform Convergence",
+      "label": "Absolute Summability Gives Uniform Convergence",
       "content": {
         "statement": "If the Fourier coefficients are absolutely summable, the Fourier series converges absolutely and uniformly to a continuous function.",
         "formal": "If $\\sum_{n\\in\\mathbb Z}|\\hat f(n)|<\\infty$, then the series $$\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$$ converges absolutely and uniformly on $\\mathbb T$ to a continuous limit $g$.",
@@ -3687,10 +3687,10 @@
       "priority": "core"
     },
     {
-      "id": "absolutely_summable_fourier_coefficients",
+      "id": "absolute_coefficients",
       "kind": "definition",
       "domain": "series",
-      "label": "Absolute Fourier Coefficients",
+      "label": "Absolutely Summable Coefficients",
       "content": {
         "statement": "The Fourier coefficients of $f$ are absolutely summable when their two-sided absolute-value series is finite.",
         "definition": "$$\\widehat f\\in \\ell^1(\\mathbb Z)\\iff \\sum_{n\\in\\mathbb Z}|\\widehat f(n)|<\\infty.$$",
@@ -3732,10 +3732,10 @@
       "priority": "core"
     },
     {
-      "id": "absolute_uniform_convergence_identification",
+      "id": "absolute_coefficients_recover_f",
       "kind": "theorem",
       "domain": "convergence",
-      "label": "Absolute Uniform Limit Equals $f$",
+      "label": "Absolute Summability Recovers $f$",
       "content": {
         "statement": "For continuous $f$, the absolutely and uniformly convergent Fourier series has limit $f$.",
         "formal": "If $f\\in C(\\mathbb T)$ and $\\sum_{n\\in\\mathbb Z}|\\widehat f(n)|<\\infty$, then the uniform limit $g$ of $$\\sum_{n\\in\\mathbb Z}\\widehat f(n)e^{inx}$$ satisfies $g=f$. Hence $S_N[f]\\to f$ uniformly.",
@@ -9124,17 +9124,17 @@
       "relation": "motivated_by"
     },
     {
-      "source": "absolute_uniform_convergence",
+      "source": "absolute_coefficients_uniform_convergence",
       "target": "dini_criterion",
       "relation": "related_to"
     },
     {
-      "source": "absolute_uniform_convergence",
+      "source": "absolute_coefficients_uniform_convergence",
       "target": "mean_square_convergence",
       "relation": "related_to"
     },
     {
-      "source": "absolute_uniform_convergence",
+      "source": "absolute_coefficients_uniform_convergence",
       "target": "weierstrass_approximation_theorem",
       "relation": "related_to"
     },
@@ -10200,7 +10200,7 @@
     },
     {
       "source": "ss7_3_ex3",
-      "target": "absolute_uniform_convergence",
+      "target": "absolute_coefficients_uniform_convergence",
       "relation": "related_to"
     },
     {
@@ -10254,22 +10254,22 @@
       "relation": "satisfies"
     },
     {
-      "source": "absolutely_summable_fourier_coefficients",
+      "source": "absolute_coefficients",
       "target": "decay_smoothness",
       "relation": "related_to"
     },
     {
-      "source": "absolutely_summable_fourier_coefficients",
+      "source": "absolute_coefficients",
       "target": "uniform_convergence",
       "relation": "related_to"
     },
     {
-      "source": "absolutely_summable_fourier_coefficients",
+      "source": "absolute_coefficients",
       "target": "fourier_coefficient",
       "relation": "uses"
     },
     {
-      "source": "absolutely_summable_fourier_coefficients",
+      "source": "absolute_coefficients",
       "target": "fourier_spectrum",
       "relation": "uses"
     },
@@ -10279,52 +10279,52 @@
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence",
-      "target": "absolutely_summable_fourier_coefficients",
+      "source": "absolute_coefficients_uniform_convergence",
+      "target": "absolute_coefficients",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence",
+      "source": "absolute_coefficients_uniform_convergence",
       "target": "decay_smoothness",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence",
+      "source": "absolute_coefficients_uniform_convergence",
       "target": "fourier_coefficient",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence",
+      "source": "absolute_coefficients_uniform_convergence",
       "target": "fourier_series",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence",
+      "source": "absolute_coefficients_uniform_convergence",
       "target": "uniform_convergence",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence_identification",
-      "target": "absolute_uniform_convergence",
+      "source": "absolute_coefficients_recover_f",
+      "target": "absolute_coefficients_uniform_convergence",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence_identification",
-      "target": "absolutely_summable_fourier_coefficients",
+      "source": "absolute_coefficients_recover_f",
+      "target": "absolute_coefficients",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence_identification",
+      "source": "absolute_coefficients_recover_f",
       "target": "continuous_functions_torus",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence_identification",
+      "source": "absolute_coefficients_recover_f",
       "target": "fourier_series_uniqueness_theorem",
       "relation": "uses"
     },
     {
-      "source": "absolute_uniform_convergence_identification",
+      "source": "absolute_coefficients_recover_f",
       "target": "uniform_convergence",
       "relation": "uses"
     },
@@ -10705,7 +10705,7 @@
     },
     {
       "source": "exam2025_p1b",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
@@ -10735,7 +10735,7 @@
     },
     {
       "source": "exam2025_p2",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
@@ -11490,7 +11490,7 @@
     },
     {
       "source": "oving1_p1",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
@@ -11555,7 +11555,7 @@
     },
     {
       "source": "oving3_p1",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
@@ -11610,7 +11610,7 @@
     },
     {
       "source": "oving5_p1",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
@@ -11625,7 +11625,7 @@
     },
     {
       "source": "oving5_p2",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
@@ -12200,7 +12200,7 @@
     },
     {
       "source": "ss2_6_ex3",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
@@ -12215,7 +12215,7 @@
     },
     {
       "source": "ss2_6_ex4",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
@@ -12230,7 +12230,7 @@
     },
     {
       "source": "ss2_6_ex5",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
@@ -12325,7 +12325,7 @@
     },
     {
       "source": "ss3_3_ex16",
-      "target": "absolute_uniform_convergence_identification",
+      "target": "absolute_coefficients_recover_f",
       "relation": "uses"
     },
     {
