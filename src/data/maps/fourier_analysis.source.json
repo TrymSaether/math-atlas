@@ -2143,7 +2143,7 @@
         "gloss": "The condition $\\widehat f\\in\\ell^1(\\mathbb Z)$, equivalently $\\sum_n|\\widehat f(n)|<\\infty$.",
         "notation": [
           "$$\\widehat f\\in\\ell^1(\\mathbb Z)$$",
-          "$$\\sum_{n\\in\\mathbb Z}|\\widehat f(n)|<\\infty$$"
+          "$$\\|\\widehat f\\|_{\\ell^1}=\\sum_{n\\in\\mathbb Z}|\\widehat f(n)|$$"
         ]
       },
       "examples": [
@@ -3709,11 +3709,11 @@
       "content": {
         "statement": "If the Fourier coefficients are absolutely summable, the Fourier series converges absolutely and uniformly to a continuous function.",
         "formal": "If $\\sum_{n\\in\\mathbb Z}|\\hat f(n)|<\\infty$, then the series $$\\sum_{n\\in\\mathbb Z}\\hat f(n)e^{inx}$$ converges absolutely and uniformly on $\\mathbb T$ to a continuous limit $g$.",
-        "formula": "$$\\begin{align} \\tag{H1} \\sum_{n\\in\\mathbb Z}|\\widehat f(n)|&<\\infty,\\\\[4pt] \\tag{D1} S_N[f](x)&:=\\sum_{|n|\\le N}\\widehat f(n)e^{inx},\\\\[4pt] \\tag{C1} \\lim_{N\\to\\infty}\\|S_N[f]-g\\|_\\infty&=0,\\qquad g\\in C(\\mathbb T). \\end{align}$$",
+        "formula": "$$\\begin{align} \\tag{H1} \\sum_{n\\in\\mathbb Z}|\\widehat f(n)|&<\\infty,\\\\ \\tag{D1} S_N[f](x)&:=\\sum_{|n|\\le N}\\widehat f(n)e^{inx},\\\\ \\tag{C1} \\lim_{N\\to\\infty}\\|S_N[f]-g\\|_\\infty&=0,\\qquad g\\in C(\\mathbb T). \\end{align}$$",
         "intuition": "The Weierstrass M-test bounds each harmonic by $|\\hat f(n)|$. A summable coefficient bound makes the harmonic series uniformly Cauchy, so its limit is continuous.",
         "notation": [
-          "$$\\sum_n\\hat f(n)e^{inx}\\rightrightarrows g$$",
-          "$$\\sum_n|\\hat f(n)|<\\infty$$"
+          "$$S_N[f](x)=\\sum_{|n|\\le N}\\widehat f(n)e^{inx}$$",
+          "$$\\lim_{N\\to\\infty}\\|S_N[f]-g\\|_\\infty=0$$"
         ]
       },
       "assumptions": [
@@ -3739,11 +3739,11 @@
       "content": {
         "statement": "For continuous $f$, the absolutely and uniformly convergent Fourier series has limit $f$.",
         "formal": "If $f\\in C(\\mathbb T)$ and $\\sum_{n\\in\\mathbb Z}|\\widehat f(n)|<\\infty$, then the uniform limit $g$ of $$\\sum_{n\\in\\mathbb Z}\\widehat f(n)e^{inx}$$ satisfies $g=f$. Hence $S_N[f]\\to f$ uniformly.",
-        "formula": "$$\\begin{aligned} f&\\in C(\\mathbb T),\\quad \\widehat f\\in\\ell^1(\\mathbb Z),\\\\ S_N[f](x)&:=\\sum_{|n|\\le N}\\widehat f(n)e^{inx},\\\\ S_N[f]&\\xrightarrow[N\\to\\infty]{\\|\\cdot\\|_\\infty}f. \\end{aligned}$$",
+        "formula": "$$\\begin{align} \\tag{H1} f&\\in C(\\mathbb T),\\quad \\widehat f\\in\\ell^1(\\mathbb Z),\\\\[4pt] \\tag{D1} S_N[f](x)&:=\\sum_{|n|\\le N}\\widehat f(n)e^{inx},\\\\[4pt] \\tag{C1} \\lim_{N\\to\\infty}\\|S_N[f]-f\\|_\\infty&=0. \\end{align}$$",
         "intuition": "The M-test constructs a continuous limit $g$. Since the Fourier coefficients of $g$ are the original coefficients of $f$, uniqueness forces $g=f$.",
         "notation": [
-          "$$S_N[f]\\rightrightarrows f$$",
-          "$$g=f\\text{ by uniqueness}$$"
+          "$$S_N[f](x)=\\sum_{|n|\\le N}\\widehat f(n)e^{inx}$$",
+          "$$\\lim_{N\\to\\infty}\\|S_N[f]-f\\|_\\infty=0$$"
         ]
       },
       "assumptions": [
