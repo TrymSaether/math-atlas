@@ -388,20 +388,32 @@
       "domain": "foundations",
       "label": "Essential Supremum",
       "content": {
-        "statement": "The almost-everywhere version of a maximum size.",
-        "definition": "$$\\operatorname*{ess\\,sup}|f|=\\inf\\{M\\in[0,\\infty]: |f(x)|\\le M\\ \\text{a.e.}\\}.$$",
-        "formal": "For a measurable function $f$, $\\operatorname*{ess\\,sup}|f|$ is the least $M\\in[0,\\infty]$ such that $|f(x)|\\le M$ for almost every $x$.",
-        "intuition": "It ignores values on sets of measure zero, so it is the correct maximum-size notion for $L^\\infty$.",
+        "statement": "The smallest upper bound that holds almost everywhere.",
+        "definition": "$$\\begin{aligned}\\operatorname*{ess\\,sup}_{x\\in X}|f(x)| := \\inf\\Bigl\\{M\\in[0,\\infty] : |f(x)|\\le M \\text{ for almost every } x\\in X\\Bigr\\}.\\end{aligned}$$",
+        "formal": "Let $(X,\\mathcal M,\\mu)$ be a measure space and let $f:X\\to\\mathbb R$ be measurable. The essential supremum of $|f|$ is the least extended nonnegative number $M\\in[0,\\infty]$ such that $$\\begin{aligned}\\mu\\bigl(\\{x\\in X:|f(x)|>M\\}\\bigr)=0.\\end{aligned}$$ Equivalently, it is the smallest almost-everywhere upper bound of $|f|$.",
+        "intuition": "The ordinary supremum records every value of a function, even values occurring only at negligible exceptions. The essential supremum ignores behavior on sets of measure zero and measures the largest size that persists in the measure-theoretic sense. This is why it is the correct maximum-size notion for $L^\\infty$.",
         "notation": [
-          "$$\\operatorname*{ess\\,sup}|f|$$"
+          "$$\\begin{aligned}\\operatorname*{ess\\,sup}_{x\\in X}|f(x)|\\end{aligned}$$",
+          "$$\\begin{aligned}\\|f\\|_{L^\\infty} = \\operatorname*{ess\\,sup}_{x\\in X}|f(x)|\\end{aligned}$$"
         ]
       },
+      "examples": [
+        {
+          "content": "Suppose a temperature sensor records values over one hour, modeled by a measurable function $f:[0,60]\\to\\mathbb R$, where $t$ is measured in minutes. Assume the room temperature is stable at $22^\\circ\\!\\mathrm C$, except for one instantaneous faulty reading at exactly $t=30$: $$\\begin{aligned} f(t) &= \\begin{cases} 1000, & t=30, \\\\ 22, & t\\in[0,60]\\setminus\\{30\\}. \\end{cases} \\end{aligned}$$ The ordinary supremum sees the faulty reading: $$\\begin{aligned} \\sup_{t\\in[0,60]} |f(t)| &= 1000. \\end{aligned}$$ But this does not reflect the actual temperature behavior, because the sensor glitched only at one instant. Using Lebesgue measure $\\lambda$, a single time point has zero duration: $$\\begin{aligned} \\lambda(\\{30\\}) &= 0. \\end{aligned}$$ A set of measure zero is called a null set. Thus the glitch occurs on a null set. Since $$\\begin{aligned} \\{t\\in[0,60]:|f(t)|>22\\} &= \\{30\\}, \\\\ \\lambda\\bigl(\\{t\\in[0,60]:|f(t)|>22\\}\\bigr) &= 0, \\end{aligned}$$ we have $|f(t)|\\le 22$ for almost every $t\\in[0,60]$. No smaller number works: if $M<22$, then $$\\begin{aligned} \\{t\\in[0,60]:|f(t)|>M\\} &= [0,60], \\\\ \\lambda\\bigl(\\{t\\in[0,60]:|f(t)|>M\\}\\bigr) &= 60. \\end{aligned}$$ Hence $$\\begin{aligned} \\operatorname*{ess\\,sup}_{t\\in[0,60]} |f(t)| &= 22. \\end{aligned}$$ The essential supremum captures the meaningful maximum temperature by ignoring the isolated faulty reading.",
+          "label": "Sensor readings with a measurement glitch"
+        },
+        {
+          "content": "Suppose a stock price feed is modeled by a measurable function $p:[0,1]\\to\\mathbb R$ over one trading day. Normally the stock trades steadily at $50$, but due to transmission errors, the feed reports increasingly large spikes at isolated times $t_n=1/n$: $$\\begin{aligned} p(t) &= \\begin{cases} n, & t=\\frac1n \\text{ for some } n\\in\\mathbb N, \\\\ 50, & t\\in[0,1]\\setminus A, \\end{cases} \\\\ A &= \\left\\{\\frac1n:n\\in\\mathbb N\\right\\}. \\end{aligned}$$ Pointwise, the reported prices become arbitrarily large: $$\\begin{aligned} p\\left(\\frac1n\\right) &= n \\longrightarrow \\infty, \\end{aligned}$$ so the ordinary supremum is infinite: $$\\begin{aligned} \\sup_{t\\in[0,1]} |p(t)| &= \\infty. \\end{aligned}$$ But these spikes occur only at the countable set $A$. Countable subsets of $\\mathbb R$ have Lebesgue measure zero, so $$\\begin{aligned} \\lambda(A) &= 0. \\end{aligned}$$ Thus, although there are infinitely many erroneous spikes, they occupy no measurable duration of the trading day. Since $$\\begin{aligned} \\{t\\in[0,1]:|p(t)|>50\\} &= A, \\\\ \\lambda\\bigl(\\{t\\in[0,1]:|p(t)|>50\\}\\bigr) &= 0, \\end{aligned}$$ we have $|p(t)|\\le 50$ for almost every $t\\in[0,1]$. No smaller bound works: if $M<50$, then $|p(t)|=50>M$ for every $t\\in[0,1]\\setminus A$, and $$\\begin{aligned} \\lambda([0,1]\\setminus A) &= 1. \\end{aligned}$$ Therefore $$\\begin{aligned} \\operatorname*{ess\\,sup}_{t\\in[0,1]} |p(t)| &= 50. \\end{aligned}$$ This example shows that the essential supremum can be finite even when the ordinary supremum is infinite, provided the unbounded behavior is confined to a set of measure zero.",
+          "label": "Infinite price spikes in a market feed"
+        }
+      ],
       "source": {
         "citation": "Curated concept graph",
         "references": []
       },
       "tags": [
         "foundations",
+        "linfinity",
         "measure"
       ],
       "priority": "standard"
@@ -2263,33 +2275,6 @@
       "priority": "core"
     },
     {
-      "id": "tma4170_2026_problem_2",
-      "kind": "exercise",
-      "domain": "series",
-      "label": "Exam 2026 · Problem 2: Decay Rates of Fourier Coefficients",
-      "content": {
-        "statement": "Determine the largest guaranteed Fourier-coefficient decay exponent under several assumptions.",
-        "formal": "Let $f$ be a $2\\pi$-periodic Riemann integrable function such that for some constants $C,r>0$, $$|\\widehat f(n)|\\le \\frac{C}{|n|^r},\\qquad n\\in\\mathbb Z.$$ Determine the largest guaranteed value of $r$ in the four cases: $f\\in C^3(\\mathbb R)$ with bounded first three derivatives; $f\\in C^1(\\mathbb R)$ with bounded derivative and Hölder-$1/2$ derivative; $$f(x)=\\sum_{k=1}^{\\infty}2^{-k}\\chi_{[-1/k,\\pi]}(x),\\qquad x\\in[-\\pi,\\pi];$$ and $$f(x)=\\sum_{k=0}^{\\infty}3^{-k/4}e^{i3^kx}.$$"
-      },
-      "assumptions": [
-        "The function is $2\\pi$-periodic and Riemann integrable.",
-        "Numerical answers should be given to two decimal places.",
-        "The problem concerns guaranteed upper bounds for decay rates of Fourier coefficients."
-      ],
-      "source": {
-        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 2",
-        "ref": "tma4170v2026.pdf"
-      },
-      "tags": [
-        "decay-rates",
-        "fourier-coefficients",
-        "holder-continuity",
-        "lacunary-series",
-        "smoothness"
-      ],
-      "priority": "standard"
-    },
-    {
       "id": "decay_smoothness",
       "kind": "property",
       "domain": "series",
@@ -2439,6 +2424,33 @@
       "tags": [
         "series",
         "standard"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "tma4170_2026_problem_2",
+      "kind": "exercise",
+      "domain": "series",
+      "label": "Exam 2026 · Problem 2: Decay Rates of Fourier Coefficients",
+      "content": {
+        "statement": "Determine the largest guaranteed Fourier-coefficient decay exponent under several assumptions.",
+        "formal": "Let $f$ be a $2\\pi$-periodic Riemann integrable function such that for some constants $C,r>0$, $$|\\widehat f(n)|\\le \\frac{C}{|n|^r},\\qquad n\\in\\mathbb Z.$$ Determine the largest guaranteed value of $r$ in the four cases: $f\\in C^3(\\mathbb R)$ with bounded first three derivatives; $f\\in C^1(\\mathbb R)$ with bounded derivative and Hölder-$1/2$ derivative; $$f(x)=\\sum_{k=1}^{\\infty}2^{-k}\\chi_{[-1/k,\\pi]}(x),\\qquad x\\in[-\\pi,\\pi];$$ and $$f(x)=\\sum_{k=0}^{\\infty}3^{-k/4}e^{i3^kx}.$$"
+      },
+      "assumptions": [
+        "The function is $2\\pi$-periodic and Riemann integrable.",
+        "Numerical answers should be given to two decimal places.",
+        "The problem concerns guaranteed upper bounds for decay rates of Fourier coefficients."
+      ],
+      "source": {
+        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 2",
+        "ref": "tma4170v2026.pdf"
+      },
+      "tags": [
+        "decay-rates",
+        "fourier-coefficients",
+        "holder-continuity",
+        "lacunary-series",
+        "smoothness"
       ],
       "priority": "standard"
     },
@@ -5109,6 +5121,65 @@
       "priority": "standard"
     },
     {
+      "id": "tma4170_2026_problem_1",
+      "kind": "exercise",
+      "domain": "transform",
+      "label": "Exam 2026 · Problem 1: Moderate Decrease and Fourier Transform Computations",
+      "content": {
+        "statement": "Work with functions of moderate decrease and compute Fourier transforms of exponential and Gaussian-product functions.",
+        "formal": "Denote the space of continuous functions of moderate decrease by $$C_m(\\mathbb R^d)=\\left\\{f\\in C(\\mathbb R^d):\\sup_{x\\in\\mathbb R^d}(1+|x|^{d+\\varepsilon})|f(x)|<\\infty \\text{ for some }\\varepsilon>0\\right\\}.$$ Let $f(x)=e^{-2\\pi |x|}$. Show that $f\\in C_m(\\mathbb R)$ and compute $$\\widehat f(\\xi)=\\int_{-\\infty}^{\\infty}f(x)e^{-2\\pi ix\\xi}\\,dx.$$ Let $$g(x_1,x_2,x_3)=e^{-\\pi x_1^2-\\pi x_2^2-2\\pi |x_3|}.$$ Show that $g\\in C_m(\\mathbb R^3)$. Compute $\\widehat g$ and show that $$\\widehat g(R(\\xi_1,\\xi_2),\\xi_3)=\\widehat g(\\xi_1,\\xi_2,\\xi_3)$$ for every rotation $R$ in $\\mathbb R^2$.",
+        "notation": [
+          "$$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi ix\\xi}\\,dx.$$",
+          "$$K(x)=e^{-\\pi x^2},\\qquad \\widehat K=K.$$"
+        ]
+      },
+      "assumptions": [
+        "The Fourier transform uses the convention $\\widehat f(\\xi)=\\int f(x)e^{-2\\pi ix\\xi}\\,dx$.",
+        "For full score, the inequality $$1+|x|^k\\le \\sqrt3(1+|x_1|)^k(1+|x_2|)^k(1+|x_3|)^k$$ should be proved.",
+        "One may use without proof that $K(x)=e^{-\\pi x^2}$ satisfies $\\widehat K=K$."
+      ],
+      "source": {
+        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 1",
+        "ref": "tma4170v2026.pdf"
+      },
+      "tags": [
+        "exponential-function",
+        "fourier-transform",
+        "gaussian",
+        "moderate-decrease",
+        "rotation-invariance"
+      ],
+      "priority": "standard"
+    },
+    {
+      "id": "tma4170_2026_problem_4",
+      "kind": "exercise",
+      "domain": "transform",
+      "label": "Exam 2026 · Problem 4: Fourier Transform Solution of the Wave Equation",
+      "content": {
+        "statement": "Analyze a Fourier-defined function, prove an $L^2$ estimate, prove smoothness, and verify that it solves the wave equation with initial conditions.",
+        "formal": "Let $f$ be continuous on $\\mathbb R$ with Fourier transform $$\\widehat f(\\xi)=\\chi_{[-1,1]}(\\xi)=\\begin{cases}1, & |\\xi|\\le 1,\\\\0, & |\\xi|>1.\\end{cases}$$ Define $$u(x,t)=\\mathcal F^{-1}\\left[\\widehat f(\\xi)\\cos(\\pi |\\xi|t)\\right](x)=\\int_{-1}^{1}\\cos(\\pi |\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ Show that for $t>0$, $$\\int_{\\mathbb R}|u(x,t)|^2\\,dx\\le \\int_{\\mathbb R}|f(x)|^2\\,dx.$$ Show that $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$. Show that $$u_{tt}=\\frac14u_{xx}$$ on $\\mathbb R\\times(0,\\infty)$, and that for every $x\\in\\mathbb R$, $$\\lim_{t\\to0^+}u(x,t)=f(x),\\qquad \\lim_{t\\to0^+}u_t(x,t)=0.$$"
+      },
+      "assumptions": [
+        "$\\widehat f=\\chi_{[-1,1]}$.",
+        "The inverse Fourier transform uses the convention $e^{2\\pi i\\xi x}$.",
+        "The wave equation is considered on $\\mathbb R\\times(0,\\infty)$.",
+        "The initial limits are pointwise in $x$."
+      ],
+      "source": {
+        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 4",
+        "ref": "tma4170v2026.pdf"
+      },
+      "tags": [
+        "fourier-transform",
+        "initial-value-problem",
+        "plancherel-theorem",
+        "smoothness",
+        "wave-equation"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "fourier_inversion",
       "kind": "theorem",
       "domain": "transform",
@@ -5268,34 +5339,6 @@
       },
       "tags": [
         "transform"
-      ],
-      "priority": "standard"
-    },
-    {
-      "id": "tma4170_2026_problem_4",
-      "kind": "exercise",
-      "domain": "transform",
-      "label": "Exam 2026 · Problem 4: Fourier Transform Solution of the Wave Equation",
-      "content": {
-        "statement": "Analyze a Fourier-defined function, prove an $L^2$ estimate, prove smoothness, and verify that it solves the wave equation with initial conditions.",
-        "formal": "Let $f$ be continuous on $\\mathbb R$ with Fourier transform $$\\widehat f(\\xi)=\\chi_{[-1,1]}(\\xi)=\\begin{cases}1, & |\\xi|\\le 1,\\\\0, & |\\xi|>1.\\end{cases}$$ Define $$u(x,t)=\\mathcal F^{-1}\\left[\\widehat f(\\xi)\\cos(\\pi |\\xi|t)\\right](x)=\\int_{-1}^{1}\\cos(\\pi |\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ Show that for $t>0$, $$\\int_{\\mathbb R}|u(x,t)|^2\\,dx\\le \\int_{\\mathbb R}|f(x)|^2\\,dx.$$ Show that $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$. Show that $$u_{tt}=\\frac14u_{xx}$$ on $\\mathbb R\\times(0,\\infty)$, and that for every $x\\in\\mathbb R$, $$\\lim_{t\\to0^+}u(x,t)=f(x),\\qquad \\lim_{t\\to0^+}u_t(x,t)=0.$$"
-      },
-      "assumptions": [
-        "$\\widehat f=\\chi_{[-1,1]}$.",
-        "The inverse Fourier transform uses the convention $e^{2\\pi i\\xi x}$.",
-        "The wave equation is considered on $\\mathbb R\\times(0,\\infty)$.",
-        "The initial limits are pointwise in $x$."
-      ],
-      "source": {
-        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 4",
-        "ref": "tma4170v2026.pdf"
-      },
-      "tags": [
-        "fourier-transform",
-        "initial-value-problem",
-        "plancherel-theorem",
-        "smoothness",
-        "wave-equation"
       ],
       "priority": "standard"
     },
@@ -5527,37 +5570,6 @@
         "pde"
       ],
       "priority": "core"
-    },
-    {
-      "id": "tma4170_2026_problem_1",
-      "kind": "exercise",
-      "domain": "transform",
-      "label": "Exam 2026 · Problem 1: Moderate Decrease and Fourier Transform Computations",
-      "content": {
-        "statement": "Work with functions of moderate decrease and compute Fourier transforms of exponential and Gaussian-product functions.",
-        "formal": "Denote the space of continuous functions of moderate decrease by $$C_m(\\mathbb R^d)=\\left\\{f\\in C(\\mathbb R^d):\\sup_{x\\in\\mathbb R^d}(1+|x|^{d+\\varepsilon})|f(x)|<\\infty \\text{ for some }\\varepsilon>0\\right\\}.$$ Let $f(x)=e^{-2\\pi |x|}$. Show that $f\\in C_m(\\mathbb R)$ and compute $$\\widehat f(\\xi)=\\int_{-\\infty}^{\\infty}f(x)e^{-2\\pi ix\\xi}\\,dx.$$ Let $$g(x_1,x_2,x_3)=e^{-\\pi x_1^2-\\pi x_2^2-2\\pi |x_3|}.$$ Show that $g\\in C_m(\\mathbb R^3)$. Compute $\\widehat g$ and show that $$\\widehat g(R(\\xi_1,\\xi_2),\\xi_3)=\\widehat g(\\xi_1,\\xi_2,\\xi_3)$$ for every rotation $R$ in $\\mathbb R^2$.",
-        "notation": [
-          "$$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi ix\\xi}\\,dx.$$",
-          "$$K(x)=e^{-\\pi x^2},\\qquad \\widehat K=K.$$"
-        ]
-      },
-      "assumptions": [
-        "The Fourier transform uses the convention $\\widehat f(\\xi)=\\int f(x)e^{-2\\pi ix\\xi}\\,dx$.",
-        "For full score, the inequality $$1+|x|^k\\le \\sqrt3(1+|x_1|)^k(1+|x_2|)^k(1+|x_3|)^k$$ should be proved.",
-        "One may use without proof that $K(x)=e^{-\\pi x^2}$ satisfies $\\widehat K=K$."
-      ],
-      "source": {
-        "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 1",
-        "ref": "tma4170v2026.pdf"
-      },
-      "tags": [
-        "exponential-function",
-        "fourier-transform",
-        "gaussian",
-        "moderate-decrease",
-        "rotation-invariance"
-      ],
-      "priority": "standard"
     },
     {
       "id": "paley_wiener_theorem",
