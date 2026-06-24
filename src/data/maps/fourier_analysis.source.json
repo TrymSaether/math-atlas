@@ -4125,28 +4125,27 @@
       "label": "Good Kernel",
       "content": {
         "statement": "A good kernel is a normalized family of kernels on the circle whose mass concentrates at the origin while its total absolute mass stays uniformly bounded.",
-        "definition": "$$\\begin{aligned} \\{K_n\\}_{n\\ge1}\\subset L^1(\\mathbb T)\\text{ is a good kernel if}\\quad &\\\\ \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}K_n(t)\\,dt&=1,\\\\ \\sup_{n\\ge1}\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(t)|\\,dt&<\\infty,\\\\ \\forall\\delta\\in(0,\\pi):\\quad \\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}|K_n(t)|\\,dt&\\xrightarrow[n\\to\\infty]{}0. \\end{aligned}$$",
-        "formal": "On $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$ with normalized measure $dm(t)=dt/(2\\pi)$, a sequence $\\{K_n\\}\\subset L^1(\\mathbb T)$ is a good kernel if $\\int_{\\mathbb T}K_n\\,dm=1$, $\\sup_n\\|K_n\\|_{L^1(dm)}<\\infty$, and for every neighborhood $U$ of $0$, $\\int_{\\mathbb T\\setminus U}|K_n|\\,dm\\to0$.",
-        "formula": "$$(f*K_n)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)K_n(t)\\,dt\\longrightarrow f(x)$$ at every point $x$ where $f$ is continuous; if $f\\in C(\\mathbb T)$, then the convergence is uniform.",
-        "intuition": "A good kernel acts like a controlled bump collapsing to a point. Convolution replaces $f(x)$ by a weighted average of nearby values $f(x-t)$; as the kernel concentrates near $t=0$, the average sees less of the far-away behavior and more of the value at $x$. The bounded $L^1$ condition prevents hidden oscillatory mass from ruining this averaging.",
+        "definition": "$\\{K_n\\}_{n\\ge1}\\subset L^1(\\mathbb T)$ is a good kernel if, $$\\begin{align} \\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi}K_n(t)\\,dt &= 1,\\tag{\\mathrm{GK1}} \\\\ \\sup_{n\\ge1}\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(t)|\\,dt&<\\infty \\tag{\\mathrm{GK2}} \\\\ \\forall\\delta\\in(0,\\pi):\\quad \\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}|K_n(t)|\\,dt&\\xrightarrow[n\\to\\infty]{}0. \\tag{\\mathrm{GK3}} \\end{align}$$",
+        "formal": "A good kernel is a family of functions $K_n\\in L^1(\\mathbb T)$ satisfying three properties: (GK1) normalization $$\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi}K_n(t)\\,dt = 1,$$ (GK2) uniform $L^1$ boundedness $$\\sup_{n\\ge1}\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|K_n(t)|\\,dt<\\infty,$$ and (GK3) tail concentration $$\\forall\\delta\\in(0,\\pi):\\quad \\frac1{2\\pi}\\int_{\\delta\\le |t|\\le\\pi}|K_n(t)|\\,dt \\xrightarrow[n\\to\\infty]{}0.$$ The convolution of $f$ with $K_n$ is defined by $$ (f*K_n)(x)=\\int_{\\mathbb T}f(x-t)K_n(t)\\,dm(t), $$ where $dm(t)=dt/(2\\pi)$.",
+        "formula": "$$(f*K_n)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)K_n(t)\\,dt.$$",
+        "intuition": "A good kernel acts like a controlled bump collapsing to a point. The function $K_n(t)$ is the $n$-th averaging weight: it tells how much the nearby value $f(x-t)$ contributes to the average at $x$. As $n$ grows, the kernel places almost all its mass near $t=0$, so convolution sees mostly values of $f$ near $x$. The bounded $L^1$ condition prevents hidden oscillatory mass from ruining this averaging.",
         "gloss": "An approximate identity on the circle: normalized, uniformly $L^1$-bounded, and concentrating at $0$.",
         "notation": [
           "$$\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$$",
           "$$dm(t)=\\frac{dt}{2\\pi}$$",
           "$$\\{K_n\\}_{n\\ge1}$$",
+          "$$K_n(t)\\text{ is the }n\\text{-th averaging weight/kernel}$$",
           "$$(f*K_n)(x)=\\int_{\\mathbb T}f(x-t)K_n(t)\\,dm(t)$$"
         ]
       },
       "examples": [
         {
           "content": "$$F_N(t)=\\frac1N\\frac{\\sin^2(Nt/2)}{\\sin^2(t/2)}$$",
-          "label": "Fejer kernels",
-          "role": "standard positive example"
+          "role": "Fejer kernels"
         },
         {
           "content": "$$P_r(t)=\\frac{1-r^2}{1-2r\\cos t+r^2},\\qquad 0\\le r<1,\\qquad r\\to1^-$$",
-          "label": "Poisson kernels",
-          "role": "Abel summability example"
+          "role": "Poisson kernels"
         },
         {
           "content": "$$D_N(t)=\\sum_{|k|\\le N}e^{ikt}$$ is normalized but not a good kernel because the $L^1$ norms are not uniformly bounded.",
@@ -4158,13 +4157,15 @@
         "Functions on $\\mathbb T$ are identified with $2\\pi$-periodic functions on $\\mathbb R$.",
         "Convolution on the circle is normalized by $dt/(2\\pi)$.",
         "The kernels belong to $L^1(\\mathbb T)$.",
-        "Pointwise convergence of $f*K_n$ requires continuity of $f$ at the point; uniform convergence requires $f\\in C(\\mathbb T)$."
+        "The parameter $n$ indexes a family of kernels whose mass becomes increasingly concentrated near $0$."
       ],
       "properties": [
         "Normalization preserves constants: $1*K_n=1$.",
         "Uniform $L^1$ boundedness controls the near-origin error term in the convolution estimate.",
         "Tail concentration makes the contribution from $\\delta\\le |t|\\le\\pi$ vanish.",
-        "Nonnegativity is sufficient but not required for being a good kernel."
+        "Nonnegativity is sufficient but not required for being a good kernel.",
+        "If $f$ is integrable on $\\mathbb T$ and continuous at $x$, then $(f*K_n)(x)\\to f(x)$.",
+        "If $f\\in C(\\mathbb T)$, then $f*K_n\\to f$ uniformly on $\\mathbb T$."
       ],
       "source": {
         "citation": "Stein–Shakarchi, Fourier Analysis: An Introduction, Chapter 2 §4 and §5",
