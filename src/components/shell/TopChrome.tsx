@@ -69,7 +69,7 @@ function MapMenu() {
         </span>
         <button
           type="button"
-          className="shell-btn h-9 max-w-[42vw] gap-1.5 rounded-full px-2.5 sm:max-w-[260px]"
+          className="shell-btn min-h-[44px] max-w-[42vw] gap-1.5 rounded-full px-3 sm:max-w-[260px]"
           onClick={() => setOpen((v) => !v)}
           aria-haspopup="listbox"
           aria-expanded={open}
@@ -93,7 +93,7 @@ function MapMenu() {
                 role="option"
                 aria-selected={active}
                 className={cn(
-                  "flex w-full items-center gap-2 rounded-[10px] px-2.5 py-2 text-left text-ui-sm",
+                  "flex min-h-[44px] w-full items-center gap-2 rounded-r-md px-2.5 py-2 text-left text-ui-sm",
                   active ? "text-fg-1" : "text-fg-2 hover:bg-surface-hover hover:text-fg-1",
                 )}
                 onClick={() => {

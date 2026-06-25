@@ -93,8 +93,8 @@
   box-shadow: inset 0 0 0 1px var(--accent-border);
 }
 .shell-btn-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
 }
 .shell-btn-accent {
   background: var(--accent);
@@ -151,7 +151,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  height: 34px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0 0.7rem;
   border-radius: var(--radius-pill);
   color: var(--fg-2);
@@ -180,7 +181,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  height: 30px;
+  min-height: 44px;
   padding: 0 0.65rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
@@ -193,6 +194,40 @@
     background-color var(--dur-micro) var(--ease-standard),
     border-color var(--dur-micro) var(--ease-standard),
     color var(--dur-micro) var(--ease-standard);
+}
+
+.glass-group {
+  overflow: hidden;
+  border-radius: var(--radius-r-lg);
+  background: color-mix(in srgb, var(--surface) 46%, transparent);
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--border) 55%, transparent),
+    inset 0 1px 0 var(--glass-edge-light-soft);
+}
+
+.glass-group-pad {
+  padding: 0.75rem;
+}
+
+.glass-row {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.8rem;
+}
+
+.glass-row + .glass-row {
+  box-shadow: inset 0 0.5px 0 color-mix(in srgb, var(--border) 48%, transparent);
+}
+
+.glass-field-label {
+  color: var(--fg-3);
+  font-size: var(--type-ui-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.004em;
+  line-height: 1.2;
 }
 .shell-chip:hover {
   border-color: var(--border-strong);
@@ -256,6 +291,9 @@
   transition:
     background-color var(--dur-std) var(--ease-standard),
     box-shadow var(--dur-std) var(--ease-standard);
+}
+.shell-switch-btn {
+  min-height: 44px;
 }
 .shell-switch::after {
   content: "";

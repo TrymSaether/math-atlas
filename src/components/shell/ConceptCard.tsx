@@ -42,7 +42,7 @@ function HeaderButton({
       aria-label={label}
       title={label}
       className={cn(
-        "flex h-8 w-8 items-center justify-center rounded-full text-fg-2 outline-none transition-colors",
+        "shell-btn shell-btn-icon rounded-full text-fg-2 outline-none",
         "hover:bg-surface-hover hover:text-fg-1 focus-visible:outline-2 focus-visible:outline-accent",
         "disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent",
         active && "bg-accent-soft text-accent",

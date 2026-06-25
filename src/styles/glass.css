@@ -49,7 +49,13 @@
   --glass-inner-glow: rgba(255, 255, 255, 0.12);
   --glass-inner-shadow: rgba(15, 23, 42, 0.06);
   --glass-sheen: rgba(255, 255, 255, 0.5);
+  --glass-sheen-fade: rgba(255, 255, 255, 0);
   --glass-top-light: rgba(255, 255, 255, 0.4);
+  --glass-flow: rgba(255, 255, 255, 0.22);
+  --glass-spot: rgba(255, 255, 255, 0.42);
+  --glass-spot-strength: 0%;
+  --glass-x: 30%;
+  --glass-y: 0%;
 }
 
 :root.dark,
@@ -67,7 +73,25 @@
   --glass-inner-glow: rgba(255, 255, 255, 0.07);
   --glass-inner-shadow: rgba(0, 0, 0, 0.32);
   --glass-sheen: rgba(255, 255, 255, 0.2);
+  --glass-sheen-fade: rgba(255, 255, 255, 0);
   --glass-top-light: rgba(255, 255, 255, 0.18);
+  --glass-flow: rgba(255, 255, 255, 0.1);
+  --glass-spot: rgba(255, 255, 255, 0.2);
+}
+
+@property --glass-drift {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+@keyframes glass-flow {
+  from {
+    --glass-drift: 16%;
+  }
+  to {
+    --glass-drift: 84%;
+  }
 }
 
 /* Base treatment — opaque fallback. */
@@ -107,10 +131,39 @@
     linear-gradient(
       133deg,
       var(--glass-sheen) 0%,
-      transparent 34%,
-      transparent 66%,
+      var(--glass-sheen-fade) 34%,
+      var(--glass-sheen-fade) 66%,
       color-mix(in srgb, var(--glass-sheen) 30%, transparent) 100%
     );
+}
+
+.glass::after,
+.glass-thin::after,
+.glass-regular::after,
+.glass-thick::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      120px 120px at var(--glass-x) var(--glass-y),
+      color-mix(in srgb, var(--glass-spot) var(--glass-spot-strength), transparent),
+      transparent 66%
+    ),
+    radial-gradient(58% 80% at var(--glass-drift) -12%, var(--glass-flow), transparent 62%),
+    radial-gradient(46% 70% at calc(100% - var(--glass-drift)) 112%, var(--glass-flow), transparent 64%);
+  animation: glass-flow 15s var(--ease-standard) infinite alternate;
+  transition: --glass-spot-strength var(--dur-std) var(--ease-standard);
+}
+
+.glass:hover::after,
+.glass-thin:hover::after,
+.glass-regular:hover::after,
+.glass-thick:hover::after {
+  --glass-spot-strength: 85%;
 }
 
 .glass-thin {
@@ -147,6 +200,19 @@
   }
 }
 
+@supports (backdrop-filter: url("#liquid-glass")) {
+  .glass-thin {
+    backdrop-filter: url("#liquid-glass") saturate(var(--glass-saturate)) blur(var(--glass-blur-thin));
+  }
+  .glass,
+  .glass-regular {
+    backdrop-filter: url("#liquid-glass") saturate(var(--glass-saturate)) blur(var(--glass-blur-regular));
+  }
+  .glass-thick {
+    backdrop-filter: url("#liquid-glass-strong") saturate(var(--glass-saturate)) blur(var(--glass-blur-thick));
+  }
+}
+
 /* Performance guard: while the canvas is actively panning/zooming, drop the
    (expensive) backdrop blur so compositing never fights the transform. The
    translucent fill stays, so the swap is cheap and barely perceptible. */
@@ -175,5 +241,21 @@
     background: var(--glass-fill-thick-solid);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+  }
+
+  .glass::after,
+  .glass-thin::after,
+  .glass-regular::after,
+  .glass-thick::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass::after,
+  .glass-thin::after,
+  .glass-regular::after,
+  .glass-thick::after {
+    animation: none;
   }
 }

@@ -18,6 +18,7 @@ import { ConceptCard } from "./ConceptCard";
 import { ModeSwitch } from "./ModeSwitch";
 import { PathsPanel } from "./PathsPanel";
 import { Glass } from "./Glass";
+import { LiquidGlassFilters } from "./LiquidGlassFilters";
 
 // The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
 // atlas's initial bundle stays light.
@@ -93,6 +94,7 @@ export function AppShell() {
 
   return (
     <div className="relative h-dvh w-screen overflow-hidden bg-bg text-fg-1">
+      <LiquidGlassFilters />
       <Background />
       {authEnabled && <SessionBridge />}
       {authEnabled && <StaleMapBanner />}

@@ -19,7 +19,7 @@ function CtlButton({
   return (
     <button
       type="button"
-      className={cn("shell-btn shell-btn-icon rounded-[12px]", active && "is-active")}
+      className={cn("shell-btn shell-btn-icon rounded-r-lg", active && "is-active")}
       onClick={onClick}
       aria-label={label}
       aria-pressed={active}

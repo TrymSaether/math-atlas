@@ -12,7 +12,7 @@ function Switch({ label, on, onToggle }: { label: string; on: boolean; onToggle:
       role="switch"
       aria-checked={on}
       onClick={onToggle}
-      className="shell-switch-btn flex w-full items-center justify-between gap-3 rounded-[10px] px-1 py-1.5 text-ui-sm text-fg-1 outline-none"
+      className="shell-switch-btn flex w-full items-center justify-between gap-3 rounded-r-md text-ui-sm text-fg-1 outline-none"
     >
       <span className="font-medium">{label}</span>
       <span className={cn("shell-switch", on && "is-on")} aria-hidden />
@@ -32,14 +32,14 @@ function Segment<T extends string>({
   label: string;
 }) {
   return (
-    <div className="shell-seg w-full rounded-[12px] bg-surface-3/60" role="group" aria-label={label}>
+    <div className="shell-seg w-full rounded-r-lg bg-surface-3/60" role="group" aria-label={label}>
       {options.map((o) => (
         <button
           key={o.id}
           type="button"
           aria-pressed={value === o.id}
           onClick={() => onChange(o.id)}
-          className={cn("shell-seg-opt flex-1 rounded-[10px]", value === o.id && "is-active")}
+          className={cn("shell-seg-opt flex-1 rounded-r-md", value === o.id && "is-active")}
         >
           {o.label}
         </button>
@@ -87,7 +87,12 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
     >
       <div className="flex items-center justify-between px-3.5 pb-2 pt-3">
         <span className="shell-panel-title">Filters</span>
-        <button type="button" className="shell-btn h-7 w-7 rounded-full" onClick={onClose} aria-label="Close filters">
+        <button
+          type="button"
+          className="shell-btn shell-btn-icon rounded-full"
+          onClick={onClose}
+          aria-label="Close filters"
+        >
           <XIcon className="h-4 w-4" weight="bold" />
         </button>
       </div>
@@ -154,7 +159,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
               { id: "cluster", label: "Cluster" },
             ]}
           />
-          <div className="space-y-0.5">
+          <div className="glass-group">
             <Switch label="Domain regions" on={showRegions} onToggle={toggleRegions} />
             <Switch label="Soft links" on={showSoftDeps} onToggle={toggleSoftDeps} />
             <Switch label="Grid" on={showGrid} onToggle={toggleGrid} />
@@ -162,8 +167,10 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
           </div>
         </section>
 
-        <section className="mt-4 space-y-1.5 border-t border-border-muted pt-3">
-          <Switch label="Focus neighborhood" on={focusMode} onToggle={toggleFocusMode} />
+        <section className="mt-4 space-y-2.5 border-t border-border-muted pt-3">
+          <div className="glass-group">
+            <Switch label="Focus neighborhood" on={focusMode} onToggle={toggleFocusMode} />
+          </div>
           {focusMode && (
             <Segment
               label="Focus depth"

@@ -1,4 +1,5 @@
-import { forwardRef, type HTMLAttributes } from "react";
+import { forwardRef, type HTMLAttributes, type MutableRefObject, type Ref } from "react";
+import { useGlassPointer } from "../../hooks/useGlassPointer";
 import { cn } from "../../lib/utils";
 
 export type GlassMaterial = "thin" | "regular" | "thick";
@@ -14,6 +15,15 @@ const MATERIAL_CLASS: Record<GlassMaterial, string> = {
   thick: "glass-thick",
 };
 
+function mergeRefs<T>(...refs: Array<Ref<T> | undefined>) {
+  return (node: T | null) => {
+    for (const ref of refs) {
+      if (typeof ref === "function") ref(node);
+      else if (ref) (ref as MutableRefObject<T | null>).current = node;
+    }
+  };
+}
+
 /**
  * The Liquid Glass material primitive. Every floating surface in the shell —
  * search field, control cluster, popovers, the concept card — is a `Glass`, so
@@ -27,5 +37,6 @@ export const Glass = forwardRef<HTMLDivElement, GlassProps>(function Glass(
   { material = "regular", className, ...rest },
   ref,
 ) {
-  return <div ref={ref} className={cn(MATERIAL_CLASS[material], className)} {...rest} />;
+  const glassRef = useGlassPointer<HTMLDivElement>();
+  return <div ref={mergeRefs(glassRef, ref)} className={cn(MATERIAL_CLASS[material], className)} {...rest} />;
 });

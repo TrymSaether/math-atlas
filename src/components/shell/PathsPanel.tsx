@@ -27,10 +27,10 @@ function Slot({
   onClear: () => void;
 }) {
   return (
-    <div className="flex items-center gap-2.5 rounded-[12px] border border-border bg-surface-2 px-3 py-2">
+    <div className="glass-row">
       <span className="shrink-0 text-fg-3">{icon}</span>
       <div className="min-w-0 flex-1">
-        <div className="text-ui-2xs uppercase tracking-label text-fg-3">{label}</div>
+        <div className="glass-field-label">{label}</div>
         <div className={cn("truncate text-ui-sm", value ? "text-fg-1" : "italic text-fg-3")}>
           {value ? <MathText text={value} /> : "Pick on the map"}
         </div>
@@ -40,7 +40,7 @@ function Slot({
           type="button"
           aria-label={`Clear ${label}`}
           onClick={onClear}
-          className="shell-btn h-6 w-6 rounded-full"
+          className="shell-btn shell-btn-icon rounded-full"
         >
           <XIcon className="h-3.5 w-3.5" weight="bold" />
         </button>
@@ -89,7 +89,7 @@ export function PathsPanel() {
           <span className="shell-panel-title">Paths</span>
           <button
             type="button"
-            className="shell-btn h-7 w-7 rounded-full"
+            className="shell-btn shell-btn-icon rounded-full"
             onClick={() => setMode("explore")}
             aria-label="Close paths"
           >
@@ -98,7 +98,7 @@ export function PathsPanel() {
         </header>
 
         <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-4 pb-4">
-          <div className="shell-seg w-full rounded-[12px] bg-surface-3/60" role="group" aria-label="Route kind">
+          <div className="shell-seg w-full rounded-r-lg bg-surface-3/60" role="group" aria-label="Route kind">
             {(
               [
                 { id: "prereq", label: "Prerequisites" },
@@ -110,14 +110,14 @@ export function PathsPanel() {
                 type="button"
                 aria-pressed={routeKind === o.id}
                 onClick={() => setRouteKind(o.id)}
-                className={cn("shell-seg-opt flex-1 rounded-[10px]", routeKind === o.id && "is-active")}
+                className={cn("shell-seg-opt flex-1 rounded-r-md", routeKind === o.id && "is-active")}
               >
                 {o.label}
               </button>
             ))}
           </div>
 
-          <div className="mt-3 space-y-2">
+          <div className="glass-group mt-3">
             {routeKind === "path" && (
               <Slot
                 icon={<MapPinIcon className="h-4 w-4" />}
@@ -130,7 +130,7 @@ export function PathsPanel() {
               <div className="flex justify-center">
                 <button
                   type="button"
-                  className="shell-btn h-7 w-7 rounded-full"
+                  className="shell-btn shell-btn-icon rounded-full"
                   onClick={swapRouteEndpoints}
                   aria-label="Swap endpoints"
                   disabled={!routeFrom && !routeTo}
@@ -152,14 +152,14 @@ export function PathsPanel() {
             role="switch"
             aria-checked={includeProof}
             onClick={() => setIncludeProof(!includeProof)}
-            className="shell-switch-btn mt-3 flex w-full items-center justify-between gap-3 rounded-[10px] px-1 py-1.5 text-ui-sm text-fg-1 outline-none"
+            className="shell-switch-btn mt-3 flex w-full items-center justify-between gap-3 rounded-r-md px-3 text-ui-sm text-fg-1 outline-none"
           >
             <span className="font-medium">Include proof prerequisites</span>
             <span className={cn("shell-switch", includeProof && "is-on")} aria-hidden />
           </button>
 
           {noPath && (
-            <p className="mt-4 rounded-[10px] bg-surface-2 px-3 py-2.5 text-ui-sm text-fg-2">
+            <p className="mt-4 rounded-r-md bg-surface-2 px-3 py-2.5 text-ui-sm text-fg-2">
               No dependency path connects these two concepts.
             </p>
           )}
@@ -181,7 +181,7 @@ export function PathsPanel() {
                 {!touring ? (
                   <button
                     type="button"
-                    className="shell-btn shell-btn-accent h-7 gap-1 rounded-full px-2.5 text-ui-meta"
+                    className="shell-btn shell-btn-accent min-h-[44px] gap-1 rounded-full px-3 text-ui-meta"
                     onClick={startTour}
                   >
                     <PlayIcon className="h-3.5 w-3.5" weight="fill" /> Tour
@@ -190,7 +190,7 @@ export function PathsPanel() {
                   <div className="flex items-center gap-0.5">
                     <button
                       type="button"
-                      className="shell-btn h-7 w-7 rounded-full"
+                      className="shell-btn shell-btn-icon rounded-full"
                       onClick={() => tourStep(-1)}
                       aria-label="Previous step"
                     >
@@ -201,13 +201,17 @@ export function PathsPanel() {
                     </span>
                     <button
                       type="button"
-                      className="shell-btn h-7 w-7 rounded-full"
+                      className="shell-btn shell-btn-icon rounded-full"
                       onClick={() => tourStep(1)}
                       aria-label="Next step"
                     >
                       <CaretRightIcon className="h-4 w-4" weight="bold" />
                     </button>
-                    <button type="button" className="shell-btn h-7 rounded-full px-2 text-ui-meta" onClick={endTour}>
+                    <button
+                      type="button"
+                      className="shell-btn min-h-[44px] rounded-full px-3 text-ui-meta"
+                      onClick={endTour}
+                    >
                       Done
                     </button>
                   </div>
@@ -224,7 +228,7 @@ export function PathsPanel() {
                         type="button"
                         onClick={() => select(id)}
                         className={cn(
-                          "flex w-full items-center gap-2.5 rounded-[10px] px-2 py-1.5 text-left",
+                          "flex min-h-[44px] w-full items-center gap-2.5 rounded-r-md px-2 py-1.5 text-left",
                           active ? "bg-accent-soft" : "hover:bg-surface-hover",
                         )}
                       >
