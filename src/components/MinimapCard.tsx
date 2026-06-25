@@ -111,27 +111,8 @@ export function MinimapCard({
   };
 
   return (
-    <div
-      className="atlas-minimap-card absolute bottom-4 right-4 z-20 hidden rounded-lg border p-1.5 md:block"
-      style={{
-        background: "color-mix(in srgb, var(--surface) 90%, transparent)",
-        borderColor: "color-mix(in srgb, var(--border) 82%, transparent)",
-        boxShadow: "var(--shadow-2)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-      }}
-    >
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        width={W}
-        height={H}
-        onClick={handleClick}
-        className="block cursor-pointer rounded-md"
-        style={{
-          background: "color-mix(in srgb, var(--surface-2) 78%, var(--bg))",
-          boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--border) 68%, transparent)",
-        }}
-      >
+    <div className="atlas-minimap-card">
+      <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} onClick={handleClick} className="atlas-minimap-canvas">
         {[...regions.entries()].map(([domainId, region]) => {
           const tone = getMutedDomainTone(domainId);
           const a = layout.toMini(region.x, region.y);

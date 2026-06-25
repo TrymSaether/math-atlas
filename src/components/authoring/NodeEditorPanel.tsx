@@ -1,6 +1,6 @@
 /**
- * Inline concept editor that lives inside the NodePanel side sheet (replacing
- * the old centered modal). Same glass aesthetic as the rest of the map chrome;
+ * Inline concept editor hosted by the shell-native Edit Mode inspector. Same
+ * glass aesthetic as the rest of the map chrome;
  * reuses the entire authoring engine — store actions and the pure draft helpers
  * in `src/data/authoring.ts` — so nothing about validation or persistence
  * changes, only the host surface.
@@ -779,7 +779,7 @@ export function NodeEditorPanel({
   return (
     <>
       {/* Header */}
-      <header className="relative shrink-0 px-5 pt-3.5" style={{ background: "var(--surface)" }}>
+      <header className="relative shrink-0 px-5 pt-3.5">
         <div className="mb-3 flex items-center justify-between">
           <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
             {editingId === null ? "New concept" : "Edit concept"}
@@ -794,8 +794,7 @@ export function NodeEditorPanel({
                   <button
                     type="button"
                     onClick={() => deleteNode(editingId)}
-                    className="authoring-action rounded-sm px-2 py-1 text-ui-xs"
-                    style={{ background: "var(--danger)", color: "var(--fg-on-color)" }}
+                    className="authoring-action authoring-action-danger rounded-sm px-2 py-1 text-ui-xs"
                   >
                     Delete
                   </button>
@@ -988,7 +987,7 @@ export function NodeEditorPanel({
         <button
           type="button"
           onClick={save}
-          className="authoring-action authoring-action-primary ml-auto inline-flex items-center gap-1 rounded-sm px-3 py-1.5 text-ui-xs"
+          className="authoring-action authoring-action-primary ml-auto inline-flex min-h-[36px] items-center gap-1 rounded-full px-3 text-ui-xs"
           style={justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined}
         >
           {justSaved ? (

@@ -6,12 +6,12 @@
 .authoring-label {
   display: block;
   margin-bottom: 6px;
-  font-family: var(--font-mono);
-  font-size: var(--type-ui-caption);
-  font-weight: 650;
-  letter-spacing: var(--tracking-label-tight);
-  line-height: 1;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  font-size: var(--type-ui-meta);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.004em;
+  line-height: 1.25;
+  text-transform: none;
   color: var(--fg-3);
 }
 
@@ -27,10 +27,10 @@
 
 .authoring-control {
   width: 100%;
-  min-height: 40px;
+  min-height: var(--hit-target);
   border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--surface-2) 70%, var(--surface));
+  border-radius: var(--shell-control-radius);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
   color: var(--fg-1);
   padding: 8px 12px;
   font-size: var(--type-ui-control);
@@ -50,17 +50,17 @@
 
 .authoring-control:hover {
   border-color: color-mix(in srgb, var(--border-strong) 82%, transparent);
-  background: var(--surface);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
 }
 
 .authoring-control:focus,
 .authoring-control:focus-visible {
   outline: none;
-  border-color: color-mix(in srgb, var(--accent) 74%, var(--accent-border));
+  border-color: var(--border-focus);
   background: var(--surface);
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--surface) 76%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--accent-border) 74%, transparent),
+    0 0 0 1px var(--border-focus),
     var(--shadow-2);
 }
 
@@ -84,11 +84,11 @@ textarea.authoring-control {
 }
 
 .authoring-select-trigger[aria-expanded="true"] {
-  border-color: color-mix(in srgb, var(--accent) 74%, var(--accent-border));
+  border-color: var(--border-focus);
   background: var(--surface);
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--surface) 76%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--accent-border) 74%, transparent),
+    0 0 0 1px var(--border-focus),
     var(--shadow-2);
 }
 
@@ -107,15 +107,15 @@ textarea.authoring-control {
   z-index: 60;
   max-height: min(300px, 42vh);
   overflow-y: auto;
-  border: 1px solid var(--chrome-border);
-  border-radius: var(--radius-lg);
-  background: var(--chrome-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--shell-panel-radius);
+  background: var(--glass-fill-thick-solid);
   padding: 5px;
   box-shadow:
-    var(--chrome-shadow-popover),
-    inset 0 1px 0 var(--chrome-highlight);
-  backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur-popover));
-  -webkit-backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur-popover));
+    var(--glass-shadow-2),
+    inset 0 1px 0 var(--glass-highlight);
+  backdrop-filter: saturate(var(--glass-saturate)) blur(var(--glass-blur-thick));
+  -webkit-backdrop-filter: saturate(var(--glass-saturate)) blur(var(--glass-blur-thick));
 }
 
 .authoring-select-option {
@@ -141,8 +141,8 @@ textarea.authoring-control {
 }
 
 .authoring-select-option.is-active {
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: var(--shell-control-selected);
+  color: var(--fg-1);
 }
 
 .authoring-chip,
@@ -184,9 +184,9 @@ textarea.authoring-control {
 }
 
 .authoring-chip.is-active {
-  border-color: var(--accent-border);
-  background: var(--accent-soft);
-  color: var(--accent);
+  border-color: var(--shell-control-selected-border);
+  background: var(--shell-control-selected);
+  color: var(--fg-1);
 }
 
 .authoring-action:active {
@@ -203,7 +203,6 @@ textarea.authoring-control {
   border-color: var(--accent);
   background: var(--accent);
   color: var(--fg-on-color);
-  filter: brightness(1.06);
 }
 
 .authoring-action-danger {

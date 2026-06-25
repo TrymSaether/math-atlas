@@ -155,7 +155,7 @@
     ),
     radial-gradient(58% 80% at var(--glass-drift) -12%, var(--glass-flow), transparent 62%),
     radial-gradient(46% 70% at calc(100% - var(--glass-drift)) 112%, var(--glass-flow), transparent 64%);
-  animation: glass-flow 15s var(--ease-standard) infinite alternate;
+  animation: glass-flow 10s var(--ease-standard) infinite alternate;
   transition: --glass-spot-strength var(--dur-std) var(--ease-standard);
 }
 
@@ -163,7 +163,7 @@
 .glass-thin:hover::after,
 .glass-regular:hover::after,
 .glass-thick:hover::after {
-  --glass-spot-strength: 85%;
+  --glass-spot-strength: 75%;
 }
 
 .glass-thin {
