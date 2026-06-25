@@ -10,9 +10,9 @@
  * exposes prepared workspaces through the workspace menu only.
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BookmarkSimple, CaretDown, CornersOut, FolderSimple, Minus, Plus, X } from "@phosphor-icons/react";
-import { Pill, DockButton } from "../chrome/Pill";
+import { Glass } from "../shell/Glass";
 import { cn } from "../../lib/utils";
 import { useSandbox } from "../../lib/workspace/store";
 import { WORKSPACES, WORKSPACE_IDS } from "../../lib/workspace/library";
@@ -30,6 +30,16 @@ function zoomRect(r: ViewRect, factor: number): ViewRect {
   const hw = ((r.xmax - r.xmin) / 2) * factor;
   const hh = ((r.ymax - r.ymin) / 2) * factor;
   return { xmin: cx - hw, xmax: cx + hw, ymin: cy - hh, ymax: cy + hh };
+}
+
+/** Icon button for the sandbox view dock — same shell tool-button as the atlas
+ *  canvas controls, so the two canvases share one button family. */
+function DockBtn({ label, onClick, children }: { label: string; onClick: () => void; children: ReactNode }) {
+  return (
+    <button type="button" className="shell-tool-button" onClick={onClick} aria-label={label} title={label}>
+      {children}
+    </button>
+  );
 }
 
 export function SandboxView() {
@@ -57,7 +67,7 @@ export function SandboxView() {
         {/* Saved views + view dock, right rail */}
         <div className="pointer-events-none absolute bottom-4 right-4 flex flex-col items-end gap-2">
           {ws.views.length > 0 && (
-            <Pill variant="soft" className="canvas-dock pointer-events-auto !p-1">
+            <Glass material="regular" className="pointer-events-auto flex items-center gap-0.5 rounded-full p-1">
               {ws.views.map((v) => (
                 <span key={v.id} className="flex items-center">
                   <button
@@ -78,26 +88,22 @@ export function SandboxView() {
                   </button>
                 </span>
               ))}
-            </Pill>
+            </Glass>
           )}
-          <Pill orientation="vertical" variant="soft" className="canvas-dock pointer-events-auto">
-            <DockButton label="Zoom in" title="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
-              <Plus className="h-4 w-4" weight="regular" />
-            </DockButton>
-            <DockButton label="Zoom out" title="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
-              <Minus className="h-4 w-4" weight="regular" />
-            </DockButton>
-            <DockButton label="Reset view" title="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
-              <CornersOut className="h-4 w-4" weight="regular" />
-            </DockButton>
-            <DockButton
-              label="Save view"
-              title="Save current view"
-              onClick={() => saveView(`view ${ws.views.length + 1}`)}
-            >
-              <BookmarkSimple className="h-4 w-4" weight="regular" />
-            </DockButton>
-          </Pill>
+          <Glass material="regular" className="shell-zoom-rail pointer-events-auto">
+            <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
+              <Plus className="h-[18px] w-[18px]" weight="regular" />
+            </DockBtn>
+            <DockBtn label="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
+              <Minus className="h-[18px] w-[18px]" weight="regular" />
+            </DockBtn>
+            <DockBtn label="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
+              <CornersOut className="h-[18px] w-[18px]" weight="regular" />
+            </DockBtn>
+            <DockBtn label="Save view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
+              <BookmarkSimple className="h-[18px] w-[18px]" weight="regular" />
+            </DockBtn>
+          </Glass>
         </div>
       </main>
 

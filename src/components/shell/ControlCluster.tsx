@@ -19,7 +19,7 @@ function CtlButton({
   return (
     <button
       type="button"
-      className={cn("map-tool-button", active && "is-active")}
+      className={cn("shell-tool-button", active && "is-active")}
       onClick={onClick}
       aria-label={label}
       aria-pressed={active}
@@ -56,29 +56,29 @@ export function ControlCluster() {
   }, [layersOpen]);
 
   return (
-    <div className="map-tools" ref={ref}>
+    <div className="shell-tools" ref={ref}>
       {layersOpen && (
-        <div className="map-tools-popover">
+        <div className="shell-tools-popover">
           <LayersPanel onClose={() => setLayersOpen(false)} />
         </div>
       )}
-      <div className="map-tools-stack">
-        <Glass material="regular" className="map-tool-bubble">
+      <div className="shell-tools-stack">
+        <Glass material="regular" className="shell-tool-bubble">
           <CtlButton label="Filters" active={layersOpen} onClick={() => setLayersOpen((v) => !v)}>
             <FunnelSimpleIcon className="h-[18px] w-[18px]" weight={layersOpen ? "fill" : "regular"} />
           </CtlButton>
         </Glass>
-        <Glass material="regular" className="map-zoom-rail">
+        <Glass material="regular" className="shell-zoom-rail">
           <CtlButton label="Zoom in" onClick={() => rf.zoomIn({ duration: 200 })}>
             <PlusIcon className="h-[18px] w-[18px]" weight="bold" />
           </CtlButton>
-          <span className="map-zoom-readout" aria-label={`Zoom ${Math.round(zoom * 100)} percent`}>
+          <span className="shell-zoom-readout" aria-label={`Zoom ${Math.round(zoom * 100)} percent`}>
             {Math.round(zoom * 100)}%
           </span>
           <CtlButton label="Zoom out" onClick={() => rf.zoomOut({ duration: 200 })}>
             <MinusIcon className="h-[18px] w-[18px]" weight="bold" />
           </CtlButton>
-          <div className="map-tool-divider" />
+          <div className="shell-tool-divider" />
           <CtlButton label="Fit to view" onClick={() => rf.fitView({ padding: 0.12, duration: 400 })}>
             <CornersOutIcon className="h-[18px] w-[18px]" weight="regular" />
           </CtlButton>

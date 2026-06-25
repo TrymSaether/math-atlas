@@ -148,11 +148,4 @@
   --color-plot-grid: var(--plot-grid);
   --color-plot-band: var(--plot-band);
 
-  --radius-r-xs: 4px;
-  --radius-r-sm: 7px;
-  --radius-r-md: 10px;
-  --radius-r-lg: 14px;
-  --radius-r-xl: 16px;
-  --radius-r-2xl: 20px;
-  --radius-pill: 999px;
 }

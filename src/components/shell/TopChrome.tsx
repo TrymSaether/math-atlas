@@ -46,6 +46,7 @@ function SearchField() {
 function MapMenu() {
   const mapId = useStore((s) => s.mapId);
   const setMap = useStore((s) => s.setMap);
+  const setSurface = useStore((s) => s.setSurface);
   const catalog = useStore((s) => s.catalog);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -68,9 +69,15 @@ function MapMenu() {
   return (
     <div className="relative" ref={ref}>
       <Glass material="regular" className="shell-map-menu">
-        <span className="shell-map-mark" aria-hidden>
+        <button
+          type="button"
+          className="shell-map-mark shell-btn shell-btn-round"
+          onClick={() => setSurface("atlas")}
+          aria-label="Go to Atlas"
+          title="Atlas"
+        >
           <img src={BRAND_SRC} alt="" className="h-7 w-7" />
-        </span>
+        </button>
         <ShellButton
           type="button"
           className="shell-map-title"
@@ -224,9 +231,9 @@ function ThemeToggle() {
       title={isDark ? "Light" : "Dark"}
     >
       {isDark ? (
-        <SunIcon className="h-[18px] w-[18px]" weight="regular" />
+        <SunIcon className="h-4 w-4" weight="regular" />
       ) : (
-        <MoonIcon className="h-[18px] w-[18px]" weight="regular" />
+        <MoonIcon className="h-4 w-4" weight="regular" />
       )}
     </ShellIconButton>
   );

@@ -161,13 +161,6 @@
   --icon-size-md: 18px;
   --icon-size-lg: 22px;
   --hit-target: 44px;
-
-  /* Motion */
-  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
-  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
-  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
-  --dur-fast: 90ms;
-  --dur-slow: 360ms;
 }
 
 :root[data-theme="chalkboard"],
@@ -198,7 +191,7 @@
 @media (prefers-reduced-motion: reduce) {
   :root,
   :root[data-theme] {
-    --dur-fast: 1ms;
-    --dur-slow: 1ms;
+    --dur-micro: 1ms;
+    --dur-std: 1ms;
   }
 }

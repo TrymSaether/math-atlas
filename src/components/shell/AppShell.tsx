@@ -49,7 +49,7 @@ function MapStatus() {
       <div className="flex h-full items-center justify-center p-6">
         <Glass
           material="thick"
-          className="shell-panel flex max-w-sm flex-col items-center gap-3 rounded-r-2xl px-7 py-8 text-center"
+          className="shell-panel flex max-w-sm flex-col items-center gap-3 px-7 py-8 text-center"
         >
           <WarningCircleIcon className="h-9 w-9 text-danger" weight="regular" />
           <h2 className="font-serif text-lg text-fg-1">Couldn’t load this map</h2>

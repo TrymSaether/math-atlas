@@ -18,15 +18,17 @@
 
 :root,
 :root[data-theme] {
-  --glass-blur-thin: 14px;
-  --glass-blur-regular: 20px;
-  --glass-blur-thick: 30px;
-  --glass-saturate: 180%;
+  --glass-blur-thin: 16px;
+  --glass-blur-regular: 24px;
+  --glass-blur-thick: 32px;
+  --glass-saturate: 200%;
 
-  /* Translucent fills (used only where backdrop-filter is supported & allowed). */
-  --glass-fill-thin: color-mix(in srgb, var(--surface) 56%, transparent);
-  --glass-fill-regular: color-mix(in srgb, var(--surface) 72%, transparent);
-  --glass-fill-thick: color-mix(in srgb, var(--surface) 85%, transparent);
+  /* Translucent fills (used only where backdrop-filter is supported & allowed).
+     Light mode leans MORE translucent so the canvas reads through the chrome as
+     real Liquid Glass; the dark block below restores its heavier fills. */
+  --glass-fill-thin: color-mix(in srgb, var(--surface) 42%, transparent);
+  --glass-fill-regular: color-mix(in srgb, var(--surface) 56%, transparent);
+  --glass-fill-thick: color-mix(in srgb, var(--surface) 74%, transparent);
 
   /* Near-opaque fallbacks (reduced transparency / no backdrop-filter). */
   --glass-fill-thin-solid: color-mix(in srgb, var(--surface) 93%, var(--bg));
@@ -60,6 +62,12 @@
 
 :root.dark,
 :root.dark[data-theme] {
+  /* Dark already read well, so keep its heavier fills (the light values above
+     would wash out over the deep backdrop). */
+  --glass-fill-thin: color-mix(in srgb, var(--surface) 56%, transparent);
+  --glass-fill-regular: color-mix(in srgb, var(--surface) 72%, transparent);
+  --glass-fill-thick: color-mix(in srgb, var(--surface) 85%, transparent);
+
   --glass-border: color-mix(in srgb, var(--fg-1) 15%, transparent);
   --glass-highlight: color-mix(in srgb, #ffffff 12%, transparent);
   --glass-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0, 0, 0, 0.42);
@@ -199,7 +207,6 @@
     backdrop-filter: saturate(var(--glass-saturate)) blur(var(--glass-blur-thick));
   }
 }
-
 @supports (backdrop-filter: url("#liquid-glass")) {
   .glass-thin {
     backdrop-filter: url("#liquid-glass") saturate(var(--glass-saturate)) blur(var(--glass-blur-thin));
