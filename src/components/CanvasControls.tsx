@@ -199,7 +199,9 @@ export function CanvasControls({ routeSummary }: { routeSummary?: RouteSummary }
         </DockButton>
       </Pill>
 
-      {mapPanelOpen && panelPosition && <MapPanel panelRef={panelRef} position={panelPosition} />}
+      {mapPanelOpen && panelPosition && (
+        <MapPanel panelRef={panelRef} position={panelPosition} onClose={() => setMapPanelOpen(false)} />
+      )}
       {directionsOpen && directionsPosition && (
         <DirectionsPanel
           panelRef={directionsRef}
@@ -808,10 +810,29 @@ function Segmented<T extends string>({
 
 /* ---- Apple-Maps "Map Modes" panel ---------------------------------- */
 
-function PanelSection({ title, children }: { title: string; children: ReactNode }) {
+function PanelSection({
+  title,
+  action,
+  children,
+}: {
+  title: string;
+  action?: { label: string; onClick: () => void };
+  children: ReactNode;
+}) {
   return (
-    <section>
-      <div className="map-panel-section-title">{title}</div>
+    <section className="flex flex-col gap-2">
+      <div className="flex items-center justify-between gap-3">
+        <div className="map-panel-section-title !mb-0">{title}</div>
+        {action && (
+          <button
+            type="button"
+            onClick={action.onClick}
+            className="text-ui-hint font-semibold text-accent transition-opacity hover:opacity-80"
+          >
+            {action.label}
+          </button>
+        )}
+      </div>
       {children}
     </section>
   );
@@ -865,7 +886,15 @@ const LAYERS: { key: "grid" | "regions" | "soft"; label: string }[] = [
   { key: "soft", label: "Soft dependencies" },
 ];
 
-function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement | null>; position: PanelPosition }) {
+function MapPanel({
+  panelRef,
+  position,
+  onClose,
+}: {
+  panelRef: RefObject<HTMLDivElement | null>;
+  position: PanelPosition;
+  onClose: () => void;
+}) {
   const view = useStore((s) => s.view);
   const setView = useStore((s) => s.setView);
   const showGrid = useStore((s) => s.showGrid);
@@ -892,7 +921,7 @@ function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement |
   return createPortal(
     <div
       ref={panelRef}
-      className="canvas-control-panel map-panel pointer-events-auto fixed z-40 w-[min(320px,calc(100vw-24px))] overflow-hidden rounded-xl"
+      className="map-popover map-panel glass-panel pointer-events-auto fixed z-40 w-[min(330px,calc(100vw-24px))] overflow-hidden rounded-3xl"
       style={{
         top: position.top,
         right: position.right,
@@ -901,28 +930,39 @@ function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement |
       role="dialog"
       aria-label="Map view"
     >
-      <div className="map-panel-scroll panel-scrollbar flex flex-col gap-3.5 overflow-y-auto p-3.5">
-        <PanelSection title="Map Modes">
-          <div className="grid grid-cols-2 gap-2">
-            {MODES.map((m) => (
-              <ModeTile
-                key={m.id}
-                active={view === m.id}
-                label={m.label}
-                hint={m.hint}
-                icon={m.icon}
-                onClick={() => setView(m.id)}
-              />
-            ))}
-          </div>
-        </PanelSection>
+      <div className="map-panel-scroll panel-scrollbar flex flex-col gap-4 overflow-y-auto p-4">
+        <header className="flex items-center justify-between pl-0.5">
+          <h2 className="text-ui-body font-semibold tracking-tight text-fg-1">Map</h2>
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-7 w-7 items-center justify-center rounded-pill text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg-1"
+            aria-label="Close map view"
+            title="Close"
+          >
+            <XIcon className="h-4 w-4" weight="bold" />
+          </button>
+        </header>
 
-        <div className="map-panel-divider" />
+        {/* View mode — large Apple-Maps style tiles. */}
+        <div className="grid grid-cols-2 gap-2.5">
+          {MODES.map((m) => (
+            <ModeTile
+              key={m.id}
+              active={view === m.id}
+              label={m.label}
+              hint={m.hint}
+              icon={m.icon}
+              onClick={() => setView(m.id)}
+            />
+          ))}
+        </div>
 
+        {/* Layers — grouped iOS-style list of toggles. */}
         <PanelSection title="Layers">
-          <div className="flex flex-col gap-1">
+          <div className="glass-group">
             {LAYERS.map(({ key, label }) => (
-              <div key={key} className="flex items-center justify-between gap-3 py-1">
+              <div key={key} className="glass-row">
                 <span className="text-ui-control font-medium text-fg-1">{label}</span>
                 <Switch label={label} checked={checked[key]} onClick={toggle[key]} />
               </div>
@@ -930,37 +970,38 @@ function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement |
           </div>
         </PanelSection>
 
-        <div className="map-panel-divider" />
-
-        <PanelSection title="Edge style">
-          <Segmented<EdgeStyle>
-            value={edgeStyle}
-            onChange={setEdgeStyle}
-            options={[
-              { value: "smooth", label: "Step" },
-              { value: "bezier", label: "Curve" },
-              { value: "straight", label: "Line" },
-            ]}
-          />
-        </PanelSection>
-
-        <div className="map-panel-divider" />
-
-        <PanelSection title="Edge labels">
-          <Segmented<EdgeLabelStyle>
-            value={edgeLabelStyle}
-            onChange={setEdgeLabelStyle}
-            options={[
-              { value: "prose", label: "Prose" },
-              { value: "terse", label: "Verb" },
-            ]}
-          />
+        {/* Edges — paired segmented controls in one grouped card. */}
+        <PanelSection title="Edges">
+          <div className="glass-group glass-group-pad flex flex-col gap-3">
+            <div className="flex flex-col gap-1.5">
+              <span className="glass-field-label">Style</span>
+              <Segmented<EdgeStyle>
+                value={edgeStyle}
+                onChange={setEdgeStyle}
+                options={[
+                  { value: "smooth", label: "Step" },
+                  { value: "bezier", label: "Curve" },
+                  { value: "straight", label: "Line" },
+                ]}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <span className="glass-field-label">Labels</span>
+              <Segmented<EdgeLabelStyle>
+                value={edgeLabelStyle}
+                onChange={setEdgeLabelStyle}
+                options={[
+                  { value: "prose", label: "Prose" },
+                  { value: "terse", label: "Verb" },
+                ]}
+              />
+            </div>
+          </div>
         </PanelSection>
 
         {map && (
           <>
-            <div className="map-panel-divider" />
-            <PanelSection title="Domains">
+            <PanelSection title="Domains" action={topics.size > 0 ? { label: "Reset", onClick: resetTopics } : undefined}>
               <div className="flex flex-wrap gap-1.5">
                 {map.data.domains.map((d) => {
                   const active = topics.size === 0 || topics.has(d.id);
@@ -985,14 +1026,7 @@ function MapPanel({ panelRef, position }: { panelRef: RefObject<HTMLDivElement |
                   );
                 })}
               </div>
-              {topics.size > 0 && (
-                <button onClick={resetTopics} className="mt-2 text-ui-hint text-accent hover:underline">
-                  Reset domains
-                </button>
-              )}
             </PanelSection>
-
-            <div className="map-panel-divider" />
 
             <PanelSection title="Categories">
               <div className="flex flex-wrap gap-1.5">

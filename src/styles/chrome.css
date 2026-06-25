@@ -1,5 +1,12 @@
-/* Floating map chrome */
+/* Floating map chrome — the Liquid Glass material.
+   Each surface stacks: a refracting backdrop (blur + saturate, optionally an
+   SVG displacement map), a specular rim and diagonal gloss painted by ::before,
+   and a pointer-tracked highlight painted by ::after. The two pseudo layers sit
+   below the chrome's own children (z-index: -1 inside an isolated context) so
+   controls stay crisp while the glass reacts underneath them. */
 .map-chrome {
+  position: relative;
+  isolation: isolate;
   background: var(--chrome-bg);
   border: 1px solid var(--chrome-border);
   box-shadow:
@@ -10,6 +17,8 @@
 }
 
 .map-chrome-soft {
+  position: relative;
+  isolation: isolate;
   background: var(--chrome-bg);
   border: 1px solid var(--chrome-border);
   box-shadow:
@@ -20,6 +29,8 @@
 }
 
 .map-popover {
+  position: relative;
+  isolation: isolate;
   background: var(--chrome-bg-strong);
   border: 1px solid var(--chrome-border);
   box-shadow:
@@ -27,6 +38,134 @@
     inset 0 1px 0 var(--chrome-highlight);
   backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur-popover));
   -webkit-backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur-popover));
+}
+
+/* Specular rim, inner glass depth, and the gloss / top-light highlights.
+   The box-shadow stack reads outer→inner: a crisp hairline ring around the
+   whole edge, a bright top lip, a soft bottom-inner shade for thickness, and a
+   faint inner glow that gives the glass volume. The background layers a top
+   light pool over a diagonal gloss sweep. */
+.map-chrome::before,
+.map-chrome-soft::before,
+.map-popover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 0.5px var(--glass-edge-light-soft),
+    inset 0 1.2px 0.5px -0.3px var(--glass-edge-light),
+    inset 0 -1px 1px -0.5px var(--glass-edge-shadow),
+    inset 0 0 14px var(--glass-inner-glow),
+    inset 0 -8px 16px -10px var(--glass-inner-shadow);
+  background:
+    radial-gradient(
+      130% 80% at 50% -22%,
+      var(--glass-top-light) 0%,
+      transparent 46%
+    ),
+    linear-gradient(
+      133deg,
+      var(--glass-sheen) 0%,
+      var(--glass-sheen-fade) 34%,
+      var(--glass-sheen-fade) 66%,
+      color-mix(in srgb, var(--glass-sheen) 32%, transparent) 100%
+    );
+}
+
+/* Liquid motion + pointer highlight.
+   The first layer is a soft light pool that drifts across the surface forever
+   (the "liquid" — its position is the animated --glass-drift property), giving
+   the glass a slow living shimmer. The second is the pointer-tracked specular
+   spot that brightens on hover and follows the cursor via --glass-x/--glass-y
+   (set by useGlassPointer). */
+@property --glass-drift {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+@keyframes glass-flow {
+  from {
+    --glass-drift: 16%;
+  }
+  to {
+    --glass-drift: 84%;
+  }
+}
+
+.map-chrome::after,
+.map-chrome-soft::after,
+.map-popover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      120px 120px at var(--glass-x) var(--glass-y),
+      color-mix(in srgb, var(--glass-spot) var(--glass-spot-strength, 55%), transparent),
+      transparent 66%
+    ),
+    radial-gradient(58% 80% at var(--glass-drift) -12%, var(--glass-flow), transparent 62%),
+    radial-gradient(46% 70% at calc(100% - var(--glass-drift)) 112%, var(--glass-flow), transparent 64%);
+  animation: glass-flow 15s var(--ease-standard) infinite alternate;
+  transition: --glass-spot-strength var(--dur-std) var(--ease-standard);
+}
+
+.map-chrome:hover::after,
+.map-chrome-soft:hover::after,
+.map-popover:hover::after {
+  --glass-spot-strength: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-chrome::after,
+  .map-chrome-soft::after,
+  .map-popover::after {
+    animation: none;
+  }
+}
+
+/* True refraction where the browser supports url() backdrop filters
+   (Chromium/Edge). Safari and Firefox ignore this block and keep the
+   blur + specular fallback above. */
+@supports (backdrop-filter: url("#liquid-glass")) {
+  .map-chrome {
+    backdrop-filter: url(#liquid-glass) saturate(var(--chrome-saturate)) blur(var(--chrome-blur));
+  }
+
+  .map-chrome-soft {
+    backdrop-filter: url(#liquid-glass) saturate(var(--chrome-saturate-soft))
+      blur(var(--chrome-blur-soft));
+  }
+
+  .map-popover {
+    backdrop-filter: url(#liquid-glass-strong) saturate(var(--chrome-saturate))
+      blur(var(--chrome-blur-popover));
+  }
+}
+
+/* Accessibility: drop the translucency and refraction for users who ask for
+   reduced transparency — fall back to a solid, legible surface. */
+@media (prefers-reduced-transparency: reduce) {
+  .map-chrome,
+  .map-chrome-soft,
+  .map-popover {
+    background: var(--chrome-bg-strong);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .map-chrome::after,
+  .map-chrome-soft::after,
+  .map-popover::after {
+    display: none;
+  }
 }
 
 .canvas-control-panel,
@@ -43,6 +182,49 @@
   --map-panel-control-bg-hover: var(--surface-3);
   --map-panel-chip-bg: var(--surface);
   --map-panel-chip-muted: color-mix(in srgb, var(--fg-3) 92%, var(--fg-1));
+}
+
+/* Liquid Glass settings panel: keep the flowing highlight gently present at
+   rest so the panel reads as living glass, not a static sheet. */
+.glass-panel {
+  --glass-spot-strength: 65%;
+}
+
+/* iOS-style grouped "inset card": a faint translucent fill with a hairline
+   bezel, holding a stack of rows divided by hairlines. */
+.glass-group {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--glass-group-bg);
+  box-shadow:
+    inset 0 0 0 0.5px var(--glass-group-border),
+    inset 0 1px 0 var(--glass-edge-light-soft);
+}
+
+.glass-group-pad {
+  padding: 0.75rem;
+}
+
+.glass-row {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.8rem;
+}
+
+.glass-row + .glass-row {
+  box-shadow: inset 0 0.5px 0 var(--glass-row-divider);
+}
+
+.glass-field-label {
+  color: var(--fg-3);
+  font-size: var(--type-ui-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label-wide);
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .map-panel-scroll {

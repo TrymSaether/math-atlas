@@ -1,6 +1,17 @@
-import { forwardRef, type ReactNode } from "react";
+import { forwardRef, type ReactNode, type Ref, type MutableRefObject } from "react";
 import { cn } from "../../lib/utils";
+import { useGlassPointer } from "../../hooks/useGlassPointer";
 import { Button } from "./Button";
+
+/** Merge the internal glass-pointer ref with any forwarded ref. */
+function mergeRefs<T>(...refs: Array<Ref<T> | undefined>) {
+  return (node: T | null) => {
+    for (const ref of refs) {
+      if (typeof ref === "function") ref(node);
+      else if (ref) (ref as MutableRefObject<T | null>).current = node;
+    }
+  };
+}
 
 /**
  * A single floating glass pill, Apple-Maps style. Groups one or more related
@@ -24,9 +35,10 @@ export const Pill = forwardRef<HTMLDivElement, PillProps>(function Pill(
   { children, orientation = "horizontal", variant = "default", className },
   ref,
 ) {
+  const glassRef = useGlassPointer<HTMLDivElement>();
   return (
     <div
-      ref={ref}
+      ref={mergeRefs(glassRef, ref)}
       className={cn(
         "pointer-events-auto flex items-center rounded-xl p-1",
         variant === "soft" ? "map-chrome-soft" : "map-chrome",

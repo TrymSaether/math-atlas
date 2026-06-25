@@ -1487,13 +1487,13 @@
   --dur-micro: 120ms;
   --dur-std: 220ms;
 
-  --chrome-bg: color-mix(in srgb, var(--surface) 88%, transparent);
-  --chrome-bg-strong: color-mix(in srgb, var(--surface) 98%, transparent);
-  --chrome-saturate: 170%;
-  --chrome-saturate-soft: 160%;
-  --chrome-blur: 18px;
-  --chrome-blur-soft: 16px;
-  --chrome-blur-popover: 20px;
+  --chrome-bg: color-mix(in srgb, var(--surface) 40%, transparent);
+  --chrome-bg-strong: color-mix(in srgb, var(--surface) 62%, transparent);
+  --chrome-saturate: 200%;
+  --chrome-saturate-soft: 190%;
+  --chrome-blur: 11px;
+  --chrome-blur-soft: 9px;
+  --chrome-blur-popover: 15px;
   --chrome-hover: color-mix(in srgb, var(--fg-1) 7%, transparent);
   --chrome-active: color-mix(in srgb, var(--fg-1) 9%, var(--surface) 88%);
   --chrome-border: color-mix(in srgb, var(--border) 78%, transparent);
@@ -1502,6 +1502,32 @@
   --chrome-shadow: 0 8px 22px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
   --chrome-shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
   --chrome-shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.13), 0 4px 10px rgba(15, 23, 42, 0.07);
+
+  /* Liquid Glass material.
+     `--glass-edge-*` paint the refracted specular rim (bright top-left, soft
+     bottom-right); `--glass-sheen` is the diagonal gloss sweep; `--glass-spot`
+     is the pointer-tracked highlight. `--glass-x/--glass-y` are updated per
+     surface by useGlassPointer and default to the top-left rest position. */
+  --glass-edge-light: rgba(255, 255, 255, 0.95);
+  --glass-edge-light-soft: rgba(255, 255, 255, 0.6);
+  --glass-edge-shadow: rgba(15, 23, 42, 0.18);
+  --glass-inner-glow: rgba(255, 255, 255, 0.14);
+  --glass-inner-shadow: rgba(15, 23, 42, 0.07);
+  --glass-sheen: rgba(255, 255, 255, 0.6);
+  --glass-sheen-fade: rgba(255, 255, 255, 0);
+  --glass-top-light: rgba(255, 255, 255, 0.45);
+  --glass-flow: rgba(255, 255, 255, 0.28);
+  --glass-spot: rgba(255, 255, 255, 0.5);
+  --glass-tint: rgba(255, 255, 255, 0.04);
+  --glass-x: 50%;
+  --glass-y: 0%;
+
+  /* Grouped "inset card" surfaces inside a glass panel (iOS Settings style).
+     A faint translucent fill restores local legibility over the clear panel
+     without going opaque. */
+  --glass-group-bg: color-mix(in srgb, var(--surface) 46%, transparent);
+  --glass-group-border: color-mix(in srgb, var(--border) 55%, transparent);
+  --glass-row-divider: color-mix(in srgb, var(--border) 48%, transparent);
 }
 
 :root[data-theme="chalkboard"],
@@ -1512,8 +1538,8 @@
 :root[data-theme="neon"],
 :root[data-theme="seminar"],
 :root[data-theme="lemma-dark"] {
-  --chrome-bg: color-mix(in srgb, var(--surface) 86%, transparent);
-  --chrome-bg-strong: color-mix(in srgb, var(--surface) 97%, transparent);
+  --chrome-bg: color-mix(in srgb, var(--surface) 32%, transparent);
+  --chrome-bg-strong: color-mix(in srgb, var(--surface) 56%, transparent);
   --chrome-hover: color-mix(in srgb, var(--fg-1) 10%, transparent);
   --chrome-active: color-mix(in srgb, var(--fg-1) 14%, var(--surface) 84%);
   --chrome-border: color-mix(in srgb, var(--border-strong) 70%, transparent);
@@ -1522,4 +1548,20 @@
   --chrome-shadow: 0 10px 28px rgba(0, 0, 0, 0.34), 0 1px 5px rgba(0, 0, 0, 0.26);
   --chrome-shadow-soft: 0 5px 16px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.22);
   --chrome-shadow-popover: 0 22px 54px rgba(0, 0, 0, 0.46), 0 5px 14px rgba(0, 0, 0, 0.34);
+
+  /* Dark schemes: brighter specular rim against the deep backdrop, dimmer
+     diagonal sheen so the gloss does not blow out. */
+  --glass-edge-light: rgba(255, 255, 255, 0.62);
+  --glass-edge-light-soft: rgba(255, 255, 255, 0.24);
+  --glass-edge-shadow: rgba(0, 0, 0, 0.55);
+  --glass-inner-glow: rgba(255, 255, 255, 0.08);
+  --glass-inner-shadow: rgba(0, 0, 0, 0.35);
+  --glass-group-bg: color-mix(in srgb, var(--surface) 42%, transparent);
+  --glass-group-border: color-mix(in srgb, var(--border-strong) 50%, transparent);
+  --glass-row-divider: color-mix(in srgb, var(--border-strong) 42%, transparent);
+  --glass-sheen: rgba(255, 255, 255, 0.22);
+  --glass-top-light: rgba(255, 255, 255, 0.2);
+  --glass-flow: rgba(255, 255, 255, 0.12);
+  --glass-spot: rgba(255, 255, 255, 0.22);
+  --glass-tint: rgba(255, 255, 255, 0.05);
 }
