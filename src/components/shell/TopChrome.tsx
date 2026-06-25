@@ -9,12 +9,16 @@ import {
   MoonIcon,
   CaretDownIcon,
   CheckIcon,
+  PencilSimpleIcon,
+  PlusIcon,
+  ArrowCounterClockwiseIcon,
 } from "@phosphor-icons/react";
 import { useStore, type Surface } from "../../store";
 import { schemeFor, siblingOf } from "../../lib/themes";
 import { authEnabled } from "../../lib/authClient";
 import { cn } from "../../lib/utils";
 import { Glass } from "./Glass";
+import { ShellButton, ShellIconButton } from "./Controls";
 import { UserMenu } from "../auth/UserMenu";
 
 const BRAND_SRC = `${import.meta.env.BASE_URL}atlas-assets/logo-mark.svg`;
@@ -23,7 +27,7 @@ const BRAND_SRC = `${import.meta.env.BASE_URL}atlas-assets/logo-mark.svg`;
 function SearchField() {
   const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   return (
-    <Glass material="regular" className="shell-search rounded-full">
+    <Glass material="regular" className="shell-search">
       <button
         type="button"
         className="flex h-full w-full items-center gap-2 outline-none"
@@ -63,20 +67,20 @@ function MapMenu() {
 
   return (
     <div className="relative" ref={ref}>
-      <Glass material="regular" className="flex items-center rounded-full p-1">
-        <span className="ml-1 flex h-8 w-8 items-center justify-center" aria-hidden>
+      <Glass material="regular" className="shell-map-menu">
+        <span className="shell-map-mark" aria-hidden>
           <img src={BRAND_SRC} alt="" className="h-7 w-7" />
         </span>
-        <button
+        <ShellButton
           type="button"
-          className="shell-btn min-h-[44px] max-w-[42vw] gap-1.5 rounded-full px-3 sm:max-w-[260px]"
+          className="shell-map-title"
           onClick={() => setOpen((v) => !v)}
           aria-haspopup="listbox"
           aria-expanded={open}
         >
           <span className="truncate font-semibold text-fg-1">{title}</span>
           <CaretDownIcon className="h-3.5 w-3.5 shrink-0 opacity-70" weight="bold" />
-        </button>
+        </ShellButton>
       </Glass>
       {open && (
         <Glass
@@ -93,7 +97,7 @@ function MapMenu() {
                 role="option"
                 aria-selected={active}
                 className={cn(
-                  "flex min-h-[44px] w-full items-center gap-2 rounded-r-md px-2.5 py-2 text-left text-ui-sm",
+                  "shell-menu-option",
                   active ? "text-fg-1" : "text-fg-2 hover:bg-surface-hover hover:text-fg-1",
                 )}
                 onClick={() => {
@@ -102,7 +106,7 @@ function MapMenu() {
                 }}
               >
                 <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
-                {active && <CheckIcon className="h-4 w-4 shrink-0 text-accent" weight="bold" />}
+                {active && <CheckIcon className="h-4 w-4 shrink-0 text-fg-2" weight="bold" />}
               </button>
             );
           })}
@@ -125,7 +129,7 @@ function SurfaceNav() {
   const surface = useStore((s) => s.surface);
   const setSurface = useStore((s) => s.setSurface);
   return (
-    <Glass material="regular" className="shell-seg rounded-full" role="tablist" aria-label="View">
+    <div className="shell-seg shell-surface-nav" role="tablist" aria-label="View">
       {SURFACES.map(({ id, label, Icon }) => {
         const active = surface === id;
         return (
@@ -143,7 +147,68 @@ function SurfaceNav() {
           </button>
         );
       })}
-    </Glass>
+    </div>
+  );
+}
+
+function EditControls() {
+  const surface = useStore((s) => s.surface);
+  const mode = useStore((s) => s.mode);
+  const setMode = useStore((s) => s.setMode);
+  const mapId = useStore((s) => s.mapId);
+  const map = useStore((s) => s.loadedMaps[s.mapId]);
+  const editMode = useStore((s) => s.editMode);
+  const toggleEditMode = useStore((s) => s.toggleEditMode);
+  const edited = useStore((s) => s.editedMaps.has(s.mapId));
+  const selectedId = useStore((s) => s.selectedId);
+  const openNodeEditor = useStore((s) => s.openNodeEditor);
+  const revertMap = useStore((s) => s.revertMap);
+
+  if (surface !== "atlas" || mode === "paths" || !map) return null;
+
+  const toggle = () => {
+    if (!editMode) setMode("explore");
+    toggleEditMode();
+  };
+
+  const revert = () => {
+    if (!window.confirm(`Revert local edits to ${mapId}?`)) return;
+    void revertMap();
+  };
+
+  return (
+    <div className="shell-edit-controls">
+      <ShellButton active={editMode} onClick={toggle} className="shell-edit-toggle" aria-pressed={editMode}>
+        <PencilSimpleIcon className="h-4 w-4" weight={editMode ? "fill" : "regular"} />
+        <span>Edit</span>
+        {edited && <span className="shell-status-dot" aria-label="Edited map" />}
+      </ShellButton>
+      {editMode && (
+        <>
+          <ShellIconButton
+            aria-label="New concept"
+            title="New concept"
+            onClick={() => openNodeEditor({ mode: "create" })}
+          >
+            <PlusIcon className="h-4 w-4" weight="bold" />
+          </ShellIconButton>
+          {selectedId && (
+            <ShellIconButton
+              aria-label="Edit selected concept"
+              title="Edit selected concept"
+              onClick={() => openNodeEditor({ mode: "edit", nodeId: selectedId })}
+            >
+              <PencilSimpleIcon className="h-4 w-4" />
+            </ShellIconButton>
+          )}
+          {edited && (
+            <ShellIconButton aria-label="Revert edits" title="Revert edits" onClick={revert}>
+              <ArrowCounterClockwiseIcon className="h-4 w-4" />
+            </ShellIconButton>
+          )}
+        </>
+      )}
+    </div>
   );
 }
 
@@ -152,20 +217,39 @@ function ThemeToggle() {
   const setTheme = useStore((s) => s.setTheme);
   const isDark = schemeFor(theme) === "dark";
   return (
-    <Glass material="regular" className="rounded-full p-1">
-      <button
-        type="button"
-        className="shell-btn shell-btn-icon rounded-full"
-        onClick={() => setTheme(siblingOf(theme))}
-        aria-label={isDark ? "Switch to light appearance" : "Switch to dark appearance"}
-        title={isDark ? "Light" : "Dark"}
-      >
-        {isDark ? (
-          <SunIcon className="h-[18px] w-[18px]" weight="regular" />
-        ) : (
-          <MoonIcon className="h-[18px] w-[18px]" weight="regular" />
-        )}
-      </button>
+    <ShellIconButton
+      type="button"
+      onClick={() => setTheme(siblingOf(theme))}
+      aria-label={isDark ? "Switch to light appearance" : "Switch to dark appearance"}
+      title={isDark ? "Light" : "Dark"}
+    >
+      {isDark ? (
+        <SunIcon className="h-[18px] w-[18px]" weight="regular" />
+      ) : (
+        <MoonIcon className="h-[18px] w-[18px]" weight="regular" />
+      )}
+    </ShellIconButton>
+  );
+}
+
+function TopToolbar() {
+  const surface = useStore((s) => s.surface);
+  const mode = useStore((s) => s.mode);
+  const map = useStore((s) => s.loadedMaps[s.mapId]);
+  const showEditControls = surface === "atlas" && mode !== "paths" && Boolean(map);
+
+  return (
+    <Glass material="regular" className="top-toolbar">
+      {showEditControls && (
+        <>
+          <EditControls />
+          <div className="top-toolbar-divider" aria-hidden />
+        </>
+      )}
+      <SurfaceNav />
+      <div className="top-toolbar-divider" aria-hidden />
+      <ThemeToggle />
+      {authEnabled && <UserMenu />}
     </Glass>
   );
 }
@@ -177,19 +261,15 @@ function ThemeToggle() {
  */
 export function TopChrome() {
   return (
-    <div className="absolute inset-x-0 top-0 z-20 flex items-start gap-2 px-3 py-3 sm:gap-3 sm:px-4">
-      <MapMenu />
-      <div className="mx-auto hidden min-w-0 max-w-[420px] flex-1 sm:block">
+    <div className="top-chrome">
+      <div className="top-chrome-leading">
+        <MapMenu />
+      </div>
+      <div className="top-chrome-search">
         <SearchField />
       </div>
-      <div className="ml-auto flex items-center gap-2 sm:gap-3">
-        <SurfaceNav />
-        <ThemeToggle />
-        {authEnabled && (
-          <Glass material="regular" className="flex items-center rounded-full p-1">
-            <UserMenu />
-          </Glass>
-        )}
+      <div className="top-chrome-trailing">
+        <TopToolbar />
       </div>
     </div>
   );

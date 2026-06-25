@@ -17,8 +17,10 @@ import { ControlCluster } from "./ControlCluster";
 import { ConceptCard } from "./ConceptCard";
 import { ModeSwitch } from "./ModeSwitch";
 import { PathsPanel } from "./PathsPanel";
+import { EditInspector } from "./EditInspector";
 import { Glass } from "./Glass";
 import { LiquidGlassFilters } from "./LiquidGlassFilters";
+import { ShellButton } from "./Controls";
 
 // The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
 // atlas's initial bundle stays light.
@@ -52,13 +54,13 @@ function MapStatus() {
           <WarningCircleIcon className="h-9 w-9 text-danger" weight="regular" />
           <h2 className="font-serif text-lg text-fg-1">Couldn’t load this map</h2>
           <p className="text-ui-sm leading-relaxed text-fg-3">{mapError}</p>
-          <button
-            type="button"
-            className="shell-btn shell-btn-accent mt-1 h-9 rounded-full px-4 text-ui-control"
+          <ShellButton
+            primary
+            className="mt-1 min-h-[44px] rounded-full px-4 text-ui-control"
             onClick={() => void ensureMapLoaded(mapId)}
           >
             Try again
-          </button>
+          </ShellButton>
         </Glass>
       </div>
     );
@@ -79,6 +81,7 @@ export function AppShell() {
   const ensureMapLoaded = useStore((s) => s.ensureMapLoaded);
   const surface = useStore((s) => s.surface);
   const mode = useStore((s) => s.mode);
+  const editMode = useStore((s) => s.editMode);
 
   useEffect(() => {
     void ensureMapLoaded(mapId);
@@ -112,7 +115,7 @@ export function AppShell() {
           ) : (
             <>
               <GraphCanvas />
-              {mode === "explore" ? <ConceptCard /> : <PathsPanel />}
+              {mode === "explore" ? editMode ? <EditInspector /> : <ConceptCard /> : <PathsPanel />}
             </>
           )
         ) : (

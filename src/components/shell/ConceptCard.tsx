@@ -18,6 +18,7 @@ import { ConceptHeader, ConceptBody, ConceptRelations } from "../concept";
 import { shareUrl } from "../../hooks/useUrlSync";
 import { cn } from "../../lib/utils";
 import { Glass } from "./Glass";
+import { ShellIconButton } from "./Controls";
 
 const USED_BY_INITIAL = 8;
 
@@ -35,21 +36,20 @@ function HeaderButton({
   children: ReactNode;
 }) {
   return (
-    <button
-      type="button"
+    <ShellIconButton
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
       title={label}
       className={cn(
-        "shell-btn shell-btn-icon rounded-full text-fg-2 outline-none",
-        "hover:bg-surface-hover hover:text-fg-1 focus-visible:outline-2 focus-visible:outline-accent",
+        "text-fg-2 outline-none",
+        "hover:text-fg-1 focus-visible:outline-2 focus-visible:outline-accent",
         "disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent",
-        active && "bg-accent-soft text-accent",
+        active && "is-active",
       )}
     >
       {children}
-    </button>
+    </ShellIconButton>
   );
 }
 

@@ -4,49 +4,7 @@ import { getDomainTone } from "../../lib/colors";
 import { KIND_LABEL, type NodeKind } from "../../types";
 import { cn } from "../../lib/utils";
 import { Glass } from "./Glass";
-
-function Switch({ label, on, onToggle }: { label: string; on: boolean; onToggle: () => void }) {
-  return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={on}
-      onClick={onToggle}
-      className="shell-switch-btn flex w-full items-center justify-between gap-3 rounded-r-md text-ui-sm text-fg-1 outline-none"
-    >
-      <span className="font-medium">{label}</span>
-      <span className={cn("shell-switch", on && "is-on")} aria-hidden />
-    </button>
-  );
-}
-
-function Segment<T extends string>({
-  options,
-  value,
-  onChange,
-  label,
-}: {
-  options: { id: T; label: string }[];
-  value: T;
-  onChange: (id: T) => void;
-  label: string;
-}) {
-  return (
-    <div className="shell-seg w-full rounded-r-lg bg-surface-3/60" role="group" aria-label={label}>
-      {options.map((o) => (
-        <button
-          key={o.id}
-          type="button"
-          aria-pressed={value === o.id}
-          onClick={() => onChange(o.id)}
-          className={cn("shell-seg-opt flex-1 rounded-r-md", value === o.id && "is-active")}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
-  );
-}
+import { ShellIconButton, ShellSegmented, ShellSwitch } from "./Controls";
 
 /**
  * Filters & display — the Liquid Glass control popover anchored to the control
@@ -87,14 +45,9 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
     >
       <div className="flex items-center justify-between px-3.5 pb-2 pt-3">
         <span className="shell-panel-title">Filters</span>
-        <button
-          type="button"
-          className="shell-btn shell-btn-icon rounded-full"
-          onClick={onClose}
-          aria-label="Close filters"
-        >
+        <ShellIconButton onClick={onClose} aria-label="Close filters">
           <XIcon className="h-4 w-4" weight="bold" />
-        </button>
+        </ShellIconButton>
       </div>
 
       <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-3.5 pb-3.5">
@@ -104,7 +57,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
             <span className="shell-panel-title">Domains</span>
             <button
               type="button"
-              className="text-ui-meta font-semibold text-accent hover:underline"
+              className="text-ui-meta font-semibold text-fg-2 hover:text-fg-1 hover:underline"
               onClick={resetTopics}
             >
               All
@@ -150,32 +103,36 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
         {/* Secondary: how the map is drawn. */}
         <section className="mt-4 space-y-2.5 border-t border-border-muted pt-3">
           <span className="shell-panel-title">Display</span>
-          <Segment
+          <ShellSegmented
             label="Layout"
             value={view}
             onChange={setView}
+            className="w-full"
+            selectionRole="button"
             options={[
               { id: "dependency", label: "Dependency" },
               { id: "cluster", label: "Cluster" },
             ]}
           />
           <div className="glass-group">
-            <Switch label="Domain regions" on={showRegions} onToggle={toggleRegions} />
-            <Switch label="Soft links" on={showSoftDeps} onToggle={toggleSoftDeps} />
-            <Switch label="Grid" on={showGrid} onToggle={toggleGrid} />
-            <Switch label="Minimap" on={showMinimap} onToggle={toggleMinimap} />
+            <ShellSwitch label="Domain regions" on={showRegions} onToggle={toggleRegions} />
+            <ShellSwitch label="Soft links" on={showSoftDeps} onToggle={toggleSoftDeps} />
+            <ShellSwitch label="Grid" on={showGrid} onToggle={toggleGrid} />
+            <ShellSwitch label="Minimap" on={showMinimap} onToggle={toggleMinimap} />
           </div>
         </section>
 
         <section className="mt-4 space-y-2.5 border-t border-border-muted pt-3">
           <div className="glass-group">
-            <Switch label="Focus neighborhood" on={focusMode} onToggle={toggleFocusMode} />
+            <ShellSwitch label="Focus neighborhood" on={focusMode} onToggle={toggleFocusMode} />
           </div>
           {focusMode && (
-            <Segment
+            <ShellSegmented
               label="Focus depth"
               value={String(focusDepth)}
               onChange={(d) => setFocusDepth(Number(d))}
+              className="w-full"
+              selectionRole="button"
               options={[
                 { id: "1", label: "1 hop" },
                 { id: "2", label: "2 hops" },

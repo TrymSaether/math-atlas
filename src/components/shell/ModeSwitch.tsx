@@ -1,7 +1,6 @@
 import { CompassIcon, PathIcon } from "@phosphor-icons/react";
 import { useStore, type AtlasMode } from "../../store";
-import { cn } from "../../lib/utils";
-import { Glass } from "./Glass";
+import { ShellSegmented, GlassControlGroup } from "./Controls";
 
 const MODES: { id: AtlasMode; label: string; Icon: typeof CompassIcon }[] = [
   { id: "explore", label: "Explore", Icon: CompassIcon },
@@ -17,24 +16,18 @@ export function ModeSwitch() {
   const setMode = useStore((s) => s.setMode);
   return (
     <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2">
-      <Glass material="regular" className="shell-seg rounded-full" role="tablist" aria-label="Atlas mode">
-        {MODES.map(({ id, label, Icon }) => {
-          const active = mode === id;
-          return (
-            <button
-              key={id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              className={cn("shell-seg-opt", active && "is-active")}
-              onClick={() => setMode(id)}
-            >
-              <Icon className="h-4 w-4" weight={active ? "fill" : "regular"} />
-              {label}
-            </button>
-          );
-        })}
-      </Glass>
+      <GlassControlGroup className="p-0">
+        <ShellSegmented
+          label="Atlas mode"
+          value={mode}
+          onChange={setMode}
+          options={MODES.map(({ id, label, Icon }) => ({
+            id,
+            label,
+            icon: <Icon className="h-4 w-4" weight={mode === id ? "fill" : "regular"} />,
+          }))}
+        />
+      </GlassControlGroup>
     </div>
   );
 }

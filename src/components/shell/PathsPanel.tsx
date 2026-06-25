@@ -14,6 +14,7 @@ import { MathText } from "../../lib/katex";
 import { getDomainTone } from "../../lib/colors";
 import { cn } from "../../lib/utils";
 import { Glass } from "./Glass";
+import { ShellButton, ShellIconButton, ShellSegmented, ShellSwitch } from "./Controls";
 
 function Slot({
   icon,
@@ -36,14 +37,9 @@ function Slot({
         </div>
       </div>
       {value && (
-        <button
-          type="button"
-          aria-label={`Clear ${label}`}
-          onClick={onClear}
-          className="shell-btn shell-btn-icon rounded-full"
-        >
+        <ShellIconButton aria-label={`Clear ${label}`} onClick={onClear}>
           <XIcon className="h-3.5 w-3.5" weight="bold" />
-        </button>
+        </ShellIconButton>
       )}
     </div>
   );
@@ -87,35 +83,23 @@ export function PathsPanel() {
       <Glass material="thick" className="shell-panel flex h-full w-[min(340px,calc(100vw-24px))] flex-col">
         <header className="flex items-center justify-between px-4 pb-2 pt-3">
           <span className="shell-panel-title">Paths</span>
-          <button
-            type="button"
-            className="shell-btn shell-btn-icon rounded-full"
-            onClick={() => setMode("explore")}
-            aria-label="Close paths"
-          >
+          <ShellIconButton onClick={() => setMode("explore")} aria-label="Close paths">
             <XIcon className="h-4 w-4" weight="bold" />
-          </button>
+          </ShellIconButton>
         </header>
 
         <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-4 pb-4">
-          <div className="shell-seg w-full rounded-r-lg bg-surface-3/60" role="group" aria-label="Route kind">
-            {(
-              [
-                { id: "prereq", label: "Prerequisites" },
-                { id: "path", label: "Between two" },
-              ] as const
-            ).map((o) => (
-              <button
-                key={o.id}
-                type="button"
-                aria-pressed={routeKind === o.id}
-                onClick={() => setRouteKind(o.id)}
-                className={cn("shell-seg-opt flex-1 rounded-r-md", routeKind === o.id && "is-active")}
-              >
-                {o.label}
-              </button>
-            ))}
-          </div>
+          <ShellSegmented
+            label="Route kind"
+            value={routeKind}
+            onChange={setRouteKind}
+            className="w-full"
+            selectionRole="button"
+            options={[
+              { id: "prereq", label: "Prerequisites" },
+              { id: "path", label: "Between two" },
+            ]}
+          />
 
           <div className="glass-group mt-3">
             {routeKind === "path" && (
@@ -128,15 +112,13 @@ export function PathsPanel() {
             )}
             {routeKind === "path" && (
               <div className="flex justify-center">
-                <button
-                  type="button"
-                  className="shell-btn shell-btn-icon rounded-full"
+                <ShellIconButton
                   onClick={swapRouteEndpoints}
                   aria-label="Swap endpoints"
                   disabled={!routeFrom && !routeTo}
                 >
                   <ArrowsDownUpIcon className="h-4 w-4" />
-                </button>
+                </ShellIconButton>
               </div>
             )}
             <Slot
@@ -147,19 +129,15 @@ export function PathsPanel() {
             />
           </div>
 
-          <button
-            type="button"
-            role="switch"
-            aria-checked={includeProof}
-            onClick={() => setIncludeProof(!includeProof)}
-            className="shell-switch-btn mt-3 flex w-full items-center justify-between gap-3 rounded-r-md px-3 text-ui-sm text-fg-1 outline-none"
-          >
-            <span className="font-medium">Include proof prerequisites</span>
-            <span className={cn("shell-switch", includeProof && "is-on")} aria-hidden />
-          </button>
+          <ShellSwitch
+            label="Include proof prerequisites"
+            on={includeProof}
+            onToggle={() => setIncludeProof(!includeProof)}
+            className="mt-3"
+          />
 
           {noPath && (
-            <p className="mt-4 rounded-r-md bg-surface-2 px-3 py-2.5 text-ui-sm text-fg-2">
+            <p className="mt-4 rounded-[var(--shell-control-radius)] bg-surface-2 px-3 py-2.5 text-ui-sm text-fg-2">
               No dependency path connects these two concepts.
             </p>
           )}
@@ -179,41 +157,27 @@ export function PathsPanel() {
                   {ordered.length} {ordered.length === 1 ? "concept" : "concepts"} · study order
                 </span>
                 {!touring ? (
-                  <button
-                    type="button"
-                    className="shell-btn shell-btn-accent min-h-[44px] gap-1 rounded-full px-3 text-ui-meta"
+                  <ShellButton
+                    primary
+                    className="min-h-[44px] gap-1 rounded-full px-3 text-ui-meta"
                     onClick={startTour}
                   >
                     <PlayIcon className="h-3.5 w-3.5" weight="fill" /> Tour
-                  </button>
+                  </ShellButton>
                 ) : (
                   <div className="flex items-center gap-0.5">
-                    <button
-                      type="button"
-                      className="shell-btn shell-btn-icon rounded-full"
-                      onClick={() => tourStep(-1)}
-                      aria-label="Previous step"
-                    >
+                    <ShellIconButton onClick={() => tourStep(-1)} aria-label="Previous step">
                       <CaretLeftIcon className="h-4 w-4" weight="bold" />
-                    </button>
+                    </ShellIconButton>
                     <span className="min-w-[44px] text-center font-mono text-ui-meta tabular-nums text-fg-2">
                       {(tourIndex ?? 0) + 1}/{ordered.length}
                     </span>
-                    <button
-                      type="button"
-                      className="shell-btn shell-btn-icon rounded-full"
-                      onClick={() => tourStep(1)}
-                      aria-label="Next step"
-                    >
+                    <ShellIconButton onClick={() => tourStep(1)} aria-label="Next step">
                       <CaretRightIcon className="h-4 w-4" weight="bold" />
-                    </button>
-                    <button
-                      type="button"
-                      className="shell-btn min-h-[44px] rounded-full px-3 text-ui-meta"
-                      onClick={endTour}
-                    >
+                    </ShellIconButton>
+                    <ShellButton className="min-h-[44px] rounded-full px-3 text-ui-meta" onClick={endTour}>
                       Done
-                    </button>
+                    </ShellButton>
                   </div>
                 )}
               </div>
@@ -228,8 +192,8 @@ export function PathsPanel() {
                         type="button"
                         onClick={() => select(id)}
                         className={cn(
-                          "flex min-h-[44px] w-full items-center gap-2.5 rounded-r-md px-2 py-1.5 text-left",
-                          active ? "bg-accent-soft" : "hover:bg-surface-hover",
+                          "flex min-h-[44px] w-full items-center gap-2.5 rounded-[var(--shell-control-radius)] px-2 py-1.5 text-left",
+                          active ? "bg-surface-active text-fg-1" : "hover:bg-surface-hover",
                         )}
                       >
                         <span className="w-5 shrink-0 text-right font-mono text-ui-2xs tabular-nums text-fg-3">

@@ -19,7 +19,7 @@ function CtlButton({
   return (
     <button
       type="button"
-      className={cn("shell-btn shell-btn-icon rounded-r-lg", active && "is-active")}
+      className={cn("map-tool-button", active && "is-active")}
       onClick={onClick}
       aria-label={label}
       aria-pressed={active}
@@ -56,29 +56,29 @@ export function ControlCluster() {
   }, [layersOpen]);
 
   return (
-    <div className="absolute bottom-4 right-4 z-20 flex items-end gap-2.5" ref={ref}>
+    <div className="map-tools" ref={ref}>
       {layersOpen && (
-        <div className="mb-0.5 self-end">
+        <div className="map-tools-popover">
           <LayersPanel onClose={() => setLayersOpen(false)} />
         </div>
       )}
-      <div className="flex flex-col gap-2.5">
-        <Glass material="regular" className="flex flex-col rounded-[14px] p-1">
+      <div className="map-tools-stack">
+        <Glass material="regular" className="map-tool-bubble">
           <CtlButton label="Filters" active={layersOpen} onClick={() => setLayersOpen((v) => !v)}>
             <FunnelSimpleIcon className="h-[18px] w-[18px]" weight={layersOpen ? "fill" : "regular"} />
           </CtlButton>
         </Glass>
-        <Glass material="regular" className="flex flex-col items-center rounded-[14px] p-1">
+        <Glass material="regular" className="map-zoom-rail">
           <CtlButton label="Zoom in" onClick={() => rf.zoomIn({ duration: 200 })}>
             <PlusIcon className="h-[18px] w-[18px]" weight="bold" />
           </CtlButton>
-          <span className="select-none py-0.5 text-center text-ui-2xs font-semibold tabular-nums text-fg-3">
+          <span className="map-zoom-readout" aria-label={`Zoom ${Math.round(zoom * 100)} percent`}>
             {Math.round(zoom * 100)}%
           </span>
           <CtlButton label="Zoom out" onClick={() => rf.zoomOut({ duration: 200 })}>
             <MinusIcon className="h-[18px] w-[18px]" weight="bold" />
           </CtlButton>
-          <div className="my-1 h-px w-6 self-center bg-border-muted" />
+          <div className="map-tool-divider" />
           <CtlButton label="Fit to view" onClick={() => rf.fitView({ padding: 0.12, duration: 400 })}>
             <CornersOutIcon className="h-[18px] w-[18px]" weight="regular" />
           </CtlButton>
