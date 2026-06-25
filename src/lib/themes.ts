@@ -23,10 +23,16 @@ export interface ThemeDef {
   preview: ThemePreview;
 }
 
+/**
+ * The signature pair. The redesign ships one Apple-grade Light + Dark theme
+ * (plus the system-follow toggle in the UI); the prototype's other palettes are
+ * retired. Ids stay `paper`/`chalkboard` so persisted prefs and the existing
+ * `[data-theme]` CSS blocks keep resolving; only the labels change.
+ */
 export const THEMES: ThemeDef[] = [
   {
     id: "paper",
-    label: "Paper",
+    label: "Light",
     scheme: "light",
     family: "slate",
     preview: {
@@ -38,7 +44,7 @@ export const THEMES: ThemeDef[] = [
   },
   {
     id: "chalkboard",
-    label: "Chalkboard",
+    label: "Dark",
     scheme: "dark",
     family: "slate",
     preview: {
@@ -46,174 +52,6 @@ export const THEMES: ThemeDef[] = [
       surface: "#1F2740",
       ink: "#ECEEF4",
       accent: "#58C4DD",
-    },
-  },
-  {
-    id: "3b1b-light",
-    label: "3B1B Light",
-    scheme: "light",
-    family: "3b1b",
-    preview: {
-      bg: "#F7F3EA",
-      surface: "#FFFDF7",
-      ink: "#1F2328",
-      accent: "#236B8E",
-    },
-  },
-  {
-    id: "3b1b-dark",
-    label: "3B1B Dark",
-    scheme: "dark",
-    family: "3b1b",
-    preview: {
-      bg: "#101214",
-      surface: "#1C2227",
-      ink: "#F2EFE6",
-      accent: "#58C4DD",
-    },
-  },
-  {
-    id: "manuscript",
-    label: "Manuscript",
-    scheme: "light",
-    family: "sepia",
-    preview: {
-      bg: "#F4EFE6",
-      surface: "#FBF8F1",
-      ink: "#211D18",
-      accent: "#A8431D",
-    },
-  },
-  {
-    id: "nocturne",
-    label: "Nocturne",
-    scheme: "dark",
-    family: "sepia",
-    preview: {
-      bg: "#16140F",
-      surface: "#2A261E",
-      ink: "#ECE4D4",
-      accent: "#E08A4F",
-    },
-  },
-  {
-    id: "lagoon",
-    label: "Lagoon",
-    scheme: "light",
-    family: "aqua",
-    preview: {
-      bg: "#EFF6F6",
-      surface: "#FFFFFF",
-      ink: "#0C2A2E",
-      accent: "#0E7C86",
-    },
-  },
-  {
-    id: "deepsea",
-    label: "Deepsea",
-    scheme: "dark",
-    family: "aqua",
-    preview: {
-      bg: "#0A1A1F",
-      surface: "#163840",
-      ink: "#E4EEF0",
-      accent: "#5CD0B3",
-    },
-  },
-  {
-    id: "blossom",
-    label: "Blossom",
-    scheme: "light",
-    family: "rose",
-    preview: {
-      bg: "#FBF1F3",
-      surface: "#FFFBFC",
-      ink: "#2C1620",
-      accent: "#BE2D5A",
-    },
-  },
-  {
-    id: "aubergine",
-    label: "Aubergine",
-    scheme: "dark",
-    family: "rose",
-    preview: {
-      bg: "#18101C",
-      surface: "#2F2237",
-      ink: "#ECE2F0",
-      accent: "#E07AC0",
-    },
-  },
-  {
-    id: "prism",
-    label: "Prism",
-    scheme: "light",
-    family: "spectrum",
-    preview: {
-      bg: "#F7F8FA",
-      surface: "#FFFFFF",
-      ink: "#14151A",
-      accent: "#4F46E5",
-    },
-  },
-  {
-    id: "neon",
-    label: "Neon",
-    scheme: "dark",
-    family: "spectrum",
-    preview: {
-      bg: "#0A0A0E",
-      surface: "#1C1C23",
-      ink: "#F2F3F7",
-      accent: "#22D3EE",
-    },
-  },
-  {
-    id: "lemma",
-    label: "Lemma",
-    scheme: "light",
-    family: "lemma",
-    preview: {
-      bg: "#F4EFE0",
-      surface: "#FFFDF8",
-      ink: "#1A1814",
-      accent: "#C2410C",
-    },
-  },
-  {
-    id: "lemma-dark",
-    label: "Lemma Dark",
-    scheme: "dark",
-    family: "lemma",
-    preview: {
-      bg: "#15130F",
-      surface: "#1C1A15",
-      ink: "#F0EAD8",
-      accent: "#E26B30",
-    },
-  },
-  {
-    id: "journal",
-    label: "Journal",
-    scheme: "light",
-    family: "academic",
-    preview: {
-      bg: "#FBFAF7",
-      surface: "#FFFFFF",
-      ink: "#1C1B18",
-      accent: "#1F3A5F",
-    },
-  },
-  {
-    id: "seminar",
-    label: "Seminar",
-    scheme: "dark",
-    family: "academic",
-    preview: {
-      bg: "#1A1815",
-      surface: "#2C2A25",
-      ink: "#ECEAE3",
-      accent: "#7FA8DC",
     },
   },
 ];

@@ -60,7 +60,7 @@ export function Spine({
         style={{ background: railBackground(tone.color, texture) }}
       />
       {label && (
-        <span className="mb-1.5 block font-mono text-ui-2xs uppercase tracking-label" style={{ color: tone.color }}>
+        <span className="mb-1.5 block reading-label" style={{ color: tone.color }}>
           {label}
         </span>
       )}
@@ -94,10 +94,7 @@ export function Facet({
 }) {
   return (
     <div>
-      <span
-        className="mb-1 block font-mono text-ui-2xs uppercase tracking-label"
-        style={{ color: toneColor ?? "var(--fg-3)" }}
-      >
+      <span className="mb-1 block reading-label" style={{ color: toneColor ?? "var(--fg-3)" }}>
         {label}
       </span>
       <div className="text-ui-copy" style={{ color: muted ? "var(--fg-2)" : "var(--fg-1)" }}>
@@ -131,7 +128,7 @@ export function MathBox({ text }: { text: string }) {
 export function StepLabel({ label, toneColor }: { label: string; toneColor: string }) {
   return (
     <div className="mb-3 flex items-center gap-2">
-      <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
+      <span className="reading-label" style={{ color: toneColor }}>
         {label}
       </span>
       <span
@@ -213,7 +210,7 @@ export function Collapsible({
           aria-hidden
         />
         {label && (
-          <span className="font-mono text-ui-2xs uppercase tracking-label" style={{ color: toneColor }}>
+          <span className="reading-label" style={{ color: toneColor }}>
             {label}
           </span>
         )}

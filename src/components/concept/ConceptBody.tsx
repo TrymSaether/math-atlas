@@ -192,7 +192,7 @@ function ExtraValue({ value }: { value: unknown }) {
 /** A flush-left mono micro-label heading an environment. */
 function Eyebrow({ children, color }: { children: ReactNode; color?: string }) {
   return (
-    <div className="mb-1.5 font-mono text-ui-2xs uppercase tracking-label" style={{ color: color ?? "var(--fg-3)" }}>
+    <div className="mb-1.5 reading-label" style={{ color: color ?? "var(--fg-3)" }}>
       {children}
     </div>
   );
