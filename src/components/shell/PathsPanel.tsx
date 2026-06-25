@@ -1,0 +1,249 @@
+import { type ReactNode } from "react";
+import {
+  XIcon,
+  ArrowsDownUpIcon,
+  PlayIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+  MapPinIcon,
+  FlagIcon,
+} from "@phosphor-icons/react";
+import { useStore } from "../../store";
+import { useRouteResult } from "../../lib/route";
+import { MathText } from "../../lib/katex";
+import { getDomainTone } from "../../lib/colors";
+import { cn } from "../../lib/utils";
+import { Glass } from "./Glass";
+
+function Slot({
+  icon,
+  label,
+  value,
+  onClear,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string | null;
+  onClear: () => void;
+}) {
+  return (
+    <div className="flex items-center gap-2.5 rounded-[12px] border border-border bg-surface-2 px-3 py-2">
+      <span className="shrink-0 text-fg-3">{icon}</span>
+      <div className="min-w-0 flex-1">
+        <div className="text-ui-2xs uppercase tracking-label text-fg-3">{label}</div>
+        <div className={cn("truncate text-ui-sm", value ? "text-fg-1" : "italic text-fg-3")}>
+          {value ? <MathText text={value} /> : "Pick on the map"}
+        </div>
+      </div>
+      {value && (
+        <button
+          type="button"
+          aria-label={`Clear ${label}`}
+          onClick={onClear}
+          className="shell-btn h-6 w-6 rounded-full"
+        >
+          <XIcon className="h-3.5 w-3.5" weight="bold" />
+        </button>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Paths — the guided study mode. Reuses the dependency-route engine
+ * (`useRouteResult` over the full DAG) and tour state: pick a goal (its
+ * prerequisite cone) or two endpoints (the connecting paths), then walk the
+ * ordered itinerary step by step. Endpoints are picked by clicking concepts on
+ * the map (the canvas is in route-planning mode here).
+ */
+export function PathsPanel() {
+  const map = useStore((s) => s.loadedMaps[s.mapId]);
+  const setMode = useStore((s) => s.setMode);
+  const routeKind = useStore((s) => s.routeKind);
+  const setRouteKind = useStore((s) => s.setRouteKind);
+  const routeFrom = useStore((s) => s.routeFrom);
+  const routeTo = useStore((s) => s.routeTo);
+  const setRouteEndpoint = useStore((s) => s.setRouteEndpoint);
+  const swapRouteEndpoints = useStore((s) => s.swapRouteEndpoints);
+  const includeProof = useStore((s) => s.routeIncludeProof);
+  const setIncludeProof = useStore((s) => s.setRouteIncludeProof);
+  const select = useStore((s) => s.select);
+  const selectedId = useStore((s) => s.selectedId);
+  const startTour = useStore((s) => s.startTour);
+  const tourStep = useStore((s) => s.tourStep);
+  const endTour = useStore((s) => s.endTour);
+  const tourIndex = useStore((s) => s.tourIndex);
+  const route = useRouteResult();
+
+  if (!map) return null;
+  const labelFor = (id: string) => map.nodeById.get(id)?.label ?? id;
+  const ordered = route.ordered;
+  const touring = tourIndex !== null;
+  const hasGoal = routeKind === "prereq" ? Boolean(routeTo) : Boolean(routeFrom && routeTo);
+  const noPath = routeKind === "path" && Boolean(routeFrom && routeTo) && !route.found;
+
+  return (
+    <aside className="shell-dock shell-dock-left pointer-events-auto">
+      <Glass material="thick" className="shell-panel flex h-full w-[min(340px,calc(100vw-24px))] flex-col">
+        <header className="flex items-center justify-between px-4 pb-2 pt-3">
+          <span className="shell-panel-title">Paths</span>
+          <button
+            type="button"
+            className="shell-btn h-7 w-7 rounded-full"
+            onClick={() => setMode("explore")}
+            aria-label="Close paths"
+          >
+            <XIcon className="h-4 w-4" weight="bold" />
+          </button>
+        </header>
+
+        <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-4 pb-4">
+          <div className="shell-seg w-full rounded-[12px] bg-surface-3/60" role="group" aria-label="Route kind">
+            {(
+              [
+                { id: "prereq", label: "Prerequisites" },
+                { id: "path", label: "Between two" },
+              ] as const
+            ).map((o) => (
+              <button
+                key={o.id}
+                type="button"
+                aria-pressed={routeKind === o.id}
+                onClick={() => setRouteKind(o.id)}
+                className={cn("shell-seg-opt flex-1 rounded-[10px]", routeKind === o.id && "is-active")}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-3 space-y-2">
+            {routeKind === "path" && (
+              <Slot
+                icon={<MapPinIcon className="h-4 w-4" />}
+                label="From"
+                value={routeFrom ? labelFor(routeFrom) : null}
+                onClear={() => setRouteEndpoint("from", null)}
+              />
+            )}
+            {routeKind === "path" && (
+              <div className="flex justify-center">
+                <button
+                  type="button"
+                  className="shell-btn h-7 w-7 rounded-full"
+                  onClick={swapRouteEndpoints}
+                  aria-label="Swap endpoints"
+                  disabled={!routeFrom && !routeTo}
+                >
+                  <ArrowsDownUpIcon className="h-4 w-4" />
+                </button>
+              </div>
+            )}
+            <Slot
+              icon={<FlagIcon className="h-4 w-4" />}
+              label={routeKind === "prereq" ? "Goal" : "To"}
+              value={routeTo ? labelFor(routeTo) : null}
+              onClear={() => setRouteEndpoint("to", null)}
+            />
+          </div>
+
+          <button
+            type="button"
+            role="switch"
+            aria-checked={includeProof}
+            onClick={() => setIncludeProof(!includeProof)}
+            className="shell-switch-btn mt-3 flex w-full items-center justify-between gap-3 rounded-[10px] px-1 py-1.5 text-ui-sm text-fg-1 outline-none"
+          >
+            <span className="font-medium">Include proof prerequisites</span>
+            <span className={cn("shell-switch", includeProof && "is-on")} aria-hidden />
+          </button>
+
+          {noPath && (
+            <p className="mt-4 rounded-[10px] bg-surface-2 px-3 py-2.5 text-ui-sm text-fg-2">
+              No dependency path connects these two concepts.
+            </p>
+          )}
+
+          {!hasGoal && !noPath && (
+            <p className="mt-4 text-ui-sm leading-relaxed text-fg-3">
+              {routeKind === "prereq"
+                ? "Click a concept on the map to trace everything you need to understand it first, in study order."
+                : "Pick two concepts on the map to see every dependency path between them."}
+            </p>
+          )}
+
+          {hasGoal && ordered.length > 0 && (
+            <>
+              <div className="mt-4 flex items-center justify-between">
+                <span className="text-ui-meta font-semibold text-fg-2">
+                  {ordered.length} {ordered.length === 1 ? "concept" : "concepts"} · study order
+                </span>
+                {!touring ? (
+                  <button
+                    type="button"
+                    className="shell-btn shell-btn-accent h-7 gap-1 rounded-full px-2.5 text-ui-meta"
+                    onClick={startTour}
+                  >
+                    <PlayIcon className="h-3.5 w-3.5" weight="fill" /> Tour
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-0.5">
+                    <button
+                      type="button"
+                      className="shell-btn h-7 w-7 rounded-full"
+                      onClick={() => tourStep(-1)}
+                      aria-label="Previous step"
+                    >
+                      <CaretLeftIcon className="h-4 w-4" weight="bold" />
+                    </button>
+                    <span className="min-w-[44px] text-center font-mono text-ui-meta tabular-nums text-fg-2">
+                      {(tourIndex ?? 0) + 1}/{ordered.length}
+                    </span>
+                    <button
+                      type="button"
+                      className="shell-btn h-7 w-7 rounded-full"
+                      onClick={() => tourStep(1)}
+                      aria-label="Next step"
+                    >
+                      <CaretRightIcon className="h-4 w-4" weight="bold" />
+                    </button>
+                    <button type="button" className="shell-btn h-7 rounded-full px-2 text-ui-meta" onClick={endTour}>
+                      Done
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <ol className="mt-2 space-y-0.5">
+                {ordered.map((id, i) => {
+                  const active = selectedId === id;
+                  const tone = getDomainTone(map.nodeById.get(id)?.domain ?? "");
+                  return (
+                    <li key={id}>
+                      <button
+                        type="button"
+                        onClick={() => select(id)}
+                        className={cn(
+                          "flex w-full items-center gap-2.5 rounded-[10px] px-2 py-1.5 text-left",
+                          active ? "bg-accent-soft" : "hover:bg-surface-hover",
+                        )}
+                      >
+                        <span className="w-5 shrink-0 text-right font-mono text-ui-2xs tabular-nums text-fg-3">
+                          {i + 1}
+                        </span>
+                        <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: tone.color }} />
+                        <span className={cn("min-w-0 flex-1 truncate text-ui-sm", active ? "text-fg-1" : "text-fg-2")}>
+                          <MathText text={labelFor(id)} />
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          )}
+        </div>
+      </Glass>
+    </aside>
+  );
+}

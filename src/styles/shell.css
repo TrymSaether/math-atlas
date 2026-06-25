@@ -1,0 +1,295 @@
+/* ========================================================================
+   Shell — the Liquid Glass control layer
+   ------------------------------------------------------------------------
+   Reusable treatments for the floating controls that sit ABOVE the content
+   layer (search field, segmented switches, control cluster, filter chips,
+   popovers). Materials live in glass.css; this file owns the interactive
+   states, sizing, and rhythm so every control reads as one family. Near-
+   monochrome by design — color is reserved for the active/selected state.
+   ======================================================================== */
+
+/* Shell geometry — the single source of truth for the floating layer's spacing.
+   Change the chrome height or edge inset here and every dock follows. */
+:root {
+  --shell-edge: 16px; /* viewport inset for floating controls + docks */
+  --shell-chrome-h: 56px; /* top chrome height (44px search field + insets) */
+  --shell-dock-top: calc(var(--shell-chrome-h) + var(--shell-edge)); /* where side docks begin */
+}
+
+/* The glass layer fills the viewport but only its children catch pointer
+   events, so the canvas underneath stays fully interactive. */
+.shell-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+.shell-layer > * {
+  pointer-events: auto;
+}
+
+/* Indeterminate loading ring — the calm default for map/surface loads. */
+@keyframes shell-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.shell-spinner {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-pill);
+  border: 2px solid color-mix(in srgb, var(--fg-1) 14%, transparent);
+  border-top-color: var(--accent);
+  animation: shell-spin 0.7s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shell-spinner {
+    animation-duration: 1.6s;
+  }
+}
+
+/* A full-height side dock (concept card, paths panel) below the top chrome. */
+.shell-dock {
+  position: absolute;
+  top: var(--shell-dock-top);
+  bottom: var(--shell-edge);
+  z-index: 20;
+}
+.shell-dock-left {
+  left: var(--shell-edge);
+}
+
+/* --- Buttons ----------------------------------------------------------- */
+.shell-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: var(--radius-r-md);
+  color: var(--fg-2);
+  font-size: var(--type-ui-control);
+  font-weight: 590;
+  line-height: 1;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    transform var(--dur-micro) var(--ease-standard);
+}
+.shell-btn:hover {
+  background: var(--surface-hover);
+  color: var(--fg-1);
+}
+.shell-btn:active {
+  transform: scale(0.96);
+}
+.shell-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.shell-btn.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+.shell-btn-icon {
+  width: 40px;
+  height: 40px;
+}
+.shell-btn-accent {
+  background: var(--accent);
+  color: var(--fg-on-color);
+}
+.shell-btn-accent:hover {
+  background: var(--accent);
+  color: var(--fg-on-color);
+  filter: brightness(1.06);
+}
+
+/* --- Search field ------------------------------------------------------ */
+.shell-search {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  height: 44px;
+  padding: 0 0.75rem 0 0.9rem;
+  border-radius: var(--radius-pill);
+  color: var(--fg-3);
+  font-size: var(--type-ui-sm);
+  transition:
+    box-shadow var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+.shell-search:hover {
+  color: var(--fg-2);
+}
+.shell-search:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.shell-search-kbd {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 0.4rem;
+  border-radius: var(--radius-r-xs);
+  background: var(--surface-3);
+  color: var(--fg-3);
+  font-size: var(--type-ui-2xs);
+  font-weight: 600;
+}
+
+/* --- Segmented control ------------------------------------------------- */
+.shell-seg {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+}
+.shell-seg-opt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 34px;
+  padding: 0 0.7rem;
+  border-radius: var(--radius-pill);
+  color: var(--fg-2);
+  font-size: var(--type-ui-control);
+  font-weight: 590;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+.shell-seg-opt:hover {
+  color: var(--fg-1);
+}
+.shell-seg-opt.is-active {
+  background: color-mix(in srgb, var(--surface) 92%, var(--fg-1) 8%);
+  color: var(--fg-1);
+  box-shadow: var(--glass-shadow-1);
+}
+.shell-seg-opt:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --- Filter chips ------------------------------------------------------ */
+.shell-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 30px;
+  padding: 0 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  color: var(--fg-2);
+  font-size: var(--type-ui-meta);
+  font-weight: 560;
+  line-height: 1;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+.shell-chip:hover {
+  border-color: var(--border-strong);
+  color: var(--fg-1);
+}
+.shell-chip.is-active {
+  border-color: transparent;
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+.shell-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.shell-chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  flex: none;
+}
+
+/* Reading-surface section label — a calm, title-case eyebrow (HIG section
+   headers) replacing the prototype's mono ALL-CAPS specimen labels. One class,
+   so the concept card, Index detail, and Study back read identically. Tone-
+   colored variants pass a `color` inline; the default is the secondary ink. */
+.reading-label {
+  display: block;
+  font-size: var(--type-ui-meta);
+  font-weight: var(--weight-semibold);
+  line-height: 1.3;
+  letter-spacing: 0.004em;
+  color: var(--fg-3);
+}
+
+/* --- Popover panel ----------------------------------------------------- */
+.shell-panel {
+  border-radius: var(--radius-r-xl);
+  overflow: hidden;
+}
+.shell-panel-section + .shell-panel-section {
+  border-top: 1px solid var(--border-muted);
+}
+.shell-panel-title {
+  color: var(--fg-3);
+  font-size: var(--type-ui-meta);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.004em;
+  text-transform: none;
+}
+
+/* --- Switch row -------------------------------------------------------- */
+.shell-switch {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  box-shadow: inset 0 0 0 1px var(--border);
+  transition:
+    background-color var(--dur-std) var(--ease-standard),
+    box-shadow var(--dur-std) var(--ease-standard);
+}
+.shell-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.28);
+  transition: transform var(--dur-std) var(--ease-standard);
+}
+.shell-switch.is-on {
+  background: var(--accent);
+  box-shadow: inset 0 0 0 1px transparent;
+}
+.shell-switch.is-on::after {
+  transform: translateX(16px);
+}
+.shell-switch-btn:focus-visible .shell-switch {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell-btn,
+  .shell-seg-opt,
+  .shell-chip,
+  .shell-switch,
+  .shell-switch::after {
+    transition: none;
+  }
+  .shell-btn:active {
+    transform: none;
+  }
+}
