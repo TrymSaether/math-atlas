@@ -8,7 +8,6 @@ import { nodeSearchText } from "../lib/nodeContent";
 import { classifyEdge } from "../lib/relationStyle";
 import { categoryOf, type NodeCategory } from "../lib/nodeCategory";
 import { useStore } from "../store";
-import { CanvasControls } from "./CanvasControls";
 import { DomainRegionNode } from "./DomainRegionNode";
 import { MinimapCard } from "./MinimapCard";
 import { TopoEdgeView } from "./TopoEdge";
@@ -564,6 +563,10 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onPaneClick={() => useStore.getState().select(null)}
+        // Drop the glass blur while the canvas is actively panning/zooming so
+        // backdrop-filter never fights the transform (see styles/glass.css).
+        onMoveStart={() => document.documentElement.classList.add("is-panning")}
+        onMoveEnd={() => document.documentElement.classList.remove("is-panning")}
         proOptions={{ hideAttribution: true }}
         minZoom={0.08}
         maxZoom={2.4}
@@ -575,16 +578,6 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         defaultEdgeOptions={{ type: "topo" }}
       />
       {showMinimap && <MinimapCard nodes={conceptNodes} regions={activeLayout.domainBounds} selectedId={selectedId} />}
-      <CanvasControls
-        routeSummary={{
-          fromTitle: routeFrom ? map.nodeById.get(routeFrom)?.label : undefined,
-          toTitle: routeTo ? map.nodeById.get(routeTo)?.label : undefined,
-          count: route.ordered.length,
-          found: routeTo ? route.found : null,
-          ordered: route.ordered,
-          spine: route.spine,
-        }}
-      />
     </>
   );
 }

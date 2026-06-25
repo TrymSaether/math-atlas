@@ -105,7 +105,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         {/* ---- Index column ---- */}
         <aside className="dict-index" aria-label="Dictionary index">
           <header className="dict-index-head">
-            <p className="dict-kicker">{mapTitle} · Dictionary</p>
+            <p className="dict-kicker">{mapTitle} · Index</p>
             <div className="dict-headrow">
               <h1 className="dict-title font-serif">{mapTitle}</h1>
               <span className="dict-count">

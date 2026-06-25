@@ -1,8 +1,9 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { TrashIcon } from "@phosphor-icons/react";
+import { TrashIcon, LinkSimpleIcon, CheckIcon } from "@phosphor-icons/react";
 import { listCollaborators, addCollaborator, removeCollaborator, type Collaborator } from "../data/mapsApi";
+import { shareUrl } from "../hooks/useUrlSync";
 import { Button } from "./chrome/Button";
 
 /**
@@ -25,6 +26,17 @@ export function ShareDialog({
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl());
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1400);
+    } catch {
+      /* clipboard blocked — ignore */
+    }
+  };
 
   const refresh = () => {
     listCollaborators(mapEntityId)
@@ -76,12 +88,29 @@ export function ShareDialog({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
-                  className="map-popover flex flex-col gap-3 rounded-2xl p-5"
+                  className="glass-thick flex flex-col gap-3 rounded-2xl p-5"
                 >
                   <h2 className="font-serif text-lg text-fg-1">Share “{title}”</h2>
                   <p className="text-ui-hint text-fg-3">
                     Invite people by the email they signed up with. They’ll be able to edit.
                   </p>
+
+                  <button
+                    type="button"
+                    onClick={copyLink}
+                    className="flex items-center justify-center gap-2 rounded-md px-3 py-2 text-ui-control font-medium text-fg-1"
+                    style={{
+                      background: "color-mix(in srgb, var(--surface) 70%, transparent)",
+                      boxShadow: "inset 0 0 0 1px var(--chrome-border)",
+                    }}
+                  >
+                    {copied ? (
+                      <CheckIcon className="h-4 w-4 text-accent" weight="bold" />
+                    ) : (
+                      <LinkSimpleIcon className="h-4 w-4" />
+                    )}
+                    {copied ? "Link copied" : "Copy link to this view"}
+                  </button>
 
                   <form onSubmit={invite} className="flex items-end gap-2">
                     <label className="flex flex-1 flex-col gap-1">

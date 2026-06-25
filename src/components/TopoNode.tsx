@@ -110,7 +110,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       tabIndex={0}
       aria-label={`${KIND_LABEL[node.kind]}: ${node.label}`}
       className={cn(
-        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-lg border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
+        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[13px] border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
         "focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
         // Hover affordance: a quiet lift + soft elevation, nothing more. Selected
         // nodes own their own shadow below, so the hover shadow only applies at rest.

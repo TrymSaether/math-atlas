@@ -9,30 +9,17 @@
           stored = localStorage.getItem("math-map-theme");
         } catch {}
         const prefersDark = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)").matches : false;
-        const schemes = {
-          paper: "light",
-          chalkboard: "dark",
-          manuscript: "light",
-          nocturne: "dark",
-          lagoon: "light",
-          deepsea: "dark",
-          blossom: "light",
-          aubergine: "dark",
-          prism: "light",
-          neon: "dark",
-          journal: "light",
-          seminar: "dark",
-        };
-        const theme = Object.prototype.hasOwnProperty.call(schemes, stored)
-          ? stored
-          : stored === "light"
+        // Signature pair only: Atlas Light (paper) + Atlas Dark (chalkboard).
+        // Any retired theme id falls back to the system preference.
+        const theme =
+          stored === "paper" || stored === "light"
             ? "paper"
-            : stored === "dark"
+            : stored === "chalkboard" || stored === "dark"
               ? "chalkboard"
               : prefersDark
                 ? "chalkboard"
                 : "paper";
-        document.documentElement.classList.toggle("dark", schemes[theme] === "dark");
+        document.documentElement.classList.toggle("dark", theme === "chalkboard");
         document.documentElement.dataset.theme = theme;
       })();
     </script>

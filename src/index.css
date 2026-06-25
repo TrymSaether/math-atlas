@@ -2,6 +2,8 @@
 @import "./styles/tailwind-theme.css";
 @import "./styles/tokens.css";
 @import "./styles/chrome.css";
+@import "./styles/glass.css";
+@import "./styles/shell.css";
 @import "./styles/base.css";
 @import "./styles/components/authoring.css";
 @import "./styles/components/concept-title.css";
@@ -1445,7 +1447,7 @@
   --type-ui-xs: 12px;
   --type-ui-control: 12.5px;
   --type-ui-sm: 13px;
-  --type-ui-copy: 14.25px;
+  --type-ui-copy: 15px;
   --type-ui-body: 14px;
   --type-ui-lead: 15px;
   --type-atlas-brand: 20px;

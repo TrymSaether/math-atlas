@@ -65,7 +65,7 @@ export function CommandPalette() {
                   exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
                 >
-                  <Command className="command-palette chrome-panel-solid border" loop>
+                  <Command className="command-palette glass-thick" loop>
                     <div className="command-palette-input-row">
                       <Command.Input
                         data-no-focus-ring
