@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { SignInIcon, SignOutIcon, UserIcon } from "@phosphor-icons/react";
 import { signOut, useSession } from "../../lib/authClient";
-import { DockButton } from "../chrome/Pill";
-import { Button } from "../chrome/Button";
+import { Glass } from "../shell/Glass";
+import { ShellButton, ShellIconButton } from "../shell/Controls";
 import { AuthDialog } from "./AuthDialog";
 
 /**
@@ -35,9 +35,9 @@ export function UserMenu() {
   if (!user) {
     return (
       <>
-        <DockButton onClick={() => setDialogOpen(true)} label="Sign in" title="Sign in">
+        <ShellIconButton onClick={() => setDialogOpen(true)} aria-label="Sign in" title="Sign in">
           <SignInIcon className="h-4 w-4" weight="regular" />
-        </DockButton>
+        </ShellIconButton>
         <AuthDialog open={dialogOpen} onOpenChange={setDialogOpen} />
       </>
     );
@@ -47,11 +47,14 @@ export function UserMenu() {
 
   return (
     <div className="relative" ref={ref}>
-      <DockButton onClick={() => setMenuOpen((o) => !o)} active={menuOpen} label="Account" title={user.email}>
+      <ShellIconButton onClick={() => setMenuOpen((o) => !o)} active={menuOpen} aria-label="Account" title={user.email}>
         <span className="flex h-4 w-4 items-center justify-center text-ui-2xs font-semibold">{initial}</span>
-      </DockButton>
+      </ShellIconButton>
       {menuOpen && (
-        <div className="map-popover absolute right-0 top-[calc(100%+8px)] z-50 w-[min(240px,calc(100vw-24px))] rounded-2xl p-2">
+        <Glass
+          material="thick"
+          className="shell-panel absolute right-0 top-[calc(100%+8px)] z-50 w-[min(240px,calc(100vw-24px))] p-2"
+        >
           <div className="flex items-center gap-2 px-2 py-1.5">
             <UserIcon className="h-4 w-4 shrink-0 text-fg-3" />
             <div className="min-w-0">
@@ -59,9 +62,8 @@ export function UserMenu() {
               <div className="truncate text-ui-hint text-fg-3">{user.email}</div>
             </div>
           </div>
-          <div className="map-divider my-1 h-px w-full" aria-hidden />
-          <Button
-            kind="text"
+          <div className="my-1 h-px w-full bg-border-muted" aria-hidden />
+          <ShellButton
             onClick={async () => {
               await signOut();
               setMenuOpen(false);
@@ -70,8 +72,8 @@ export function UserMenu() {
           >
             <SignOutIcon className="h-4 w-4" />
             Sign out
-          </Button>
-        </div>
+          </ShellButton>
+        </Glass>
       )}
     </div>
   );

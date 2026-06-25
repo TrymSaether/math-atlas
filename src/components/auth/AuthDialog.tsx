@@ -2,7 +2,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { signIn, signInWithGoogle, signUp } from "../../lib/authClient";
-import { Button } from "../chrome/Button";
+import { ShellButton } from "../shell/Controls";
 
 type Mode = "signin" | "signup";
 
@@ -87,20 +87,19 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
                   className="glass-thick flex flex-col gap-3 rounded-2xl p-5"
                 >
                   <h2 className="font-serif text-lg text-fg-1">{isSignup ? "Create an account" : "Welcome back"}</h2>
-                  <Button
-                    kind="field"
+                  <ShellButton
                     type="button"
                     disabled={busy || googleBusy}
                     onClick={continueWithGoogle}
-                    className="flex h-10 items-center justify-center gap-2 rounded-md px-3 text-ui-control font-semibold text-fg-1"
+                    className="shell-field-control flex h-11 items-center justify-center gap-2 rounded-md px-3 text-ui-control font-semibold text-fg-1"
                   >
                     <GoogleGIcon className="h-4.5 w-4.5 shrink-0" />
                     {googleBusy ? "Opening Google..." : "Continue with Google"}
-                  </Button>
+                  </ShellButton>
                   <div className="flex items-center gap-2 text-ui-2xs font-semibold uppercase tracking-label-wide text-fg-3">
-                    <span className="map-divider h-px flex-1" aria-hidden />
+                    <span className="h-px flex-1 bg-border-muted" aria-hidden />
                     <span>or</span>
-                    <span className="map-divider h-px flex-1" aria-hidden />
+                    <span className="h-px flex-1 bg-border-muted" aria-hidden />
                   </div>
                   {isSignup && (
                     <Field
@@ -137,15 +136,14 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
                     </p>
                   )}
 
-                  <Button
-                    kind="field"
-                    accent
+                  <ShellButton
+                    primary
                     type="submit"
                     disabled={busy || googleBusy}
-                    className="mt-1 h-10 justify-center rounded-md text-ui-control font-medium text-fg-on-color"
+                    className="mt-1 h-11 justify-center rounded-md text-ui-control font-medium text-fg-on-color"
                   >
                     {busy ? "Please wait..." : isSignup ? "Create account" : "Sign in"}
-                  </Button>
+                  </ShellButton>
 
                   <button
                     type="button"
@@ -207,10 +205,10 @@ function Field({
         {...rest}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-10 rounded-md px-3 text-ui-control text-fg-1 outline-none"
+        className="h-11 rounded-md px-3 text-ui-control text-fg-1 outline-none"
         style={{
           background: "color-mix(in srgb, var(--surface) 80%, transparent)",
-          boxShadow: "inset 0 0 0 1px var(--chrome-border)",
+          boxShadow: "inset 0 0 0 1px var(--glass-border)",
         }}
       />
     </label>

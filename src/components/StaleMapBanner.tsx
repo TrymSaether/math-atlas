@@ -1,5 +1,6 @@
 import { useStore } from "../store";
-import { Button } from "./chrome/Button";
+import { Glass } from "./shell/Glass";
+import { ShellButton } from "./shell/Controls";
 
 /**
  * Shown when the active map changed on the server (a collaborator saved, or a
@@ -15,17 +16,16 @@ export function StaleMapBanner() {
 
   return (
     <div className="pointer-events-auto fixed left-1/2 top-16 z-50 -translate-x-1/2">
-      <div className="map-popover flex items-center gap-3 rounded-full py-2 pl-4 pr-2 text-ui-control text-fg-1 shadow-(--shadow-3)">
+      <Glass material="thick" className="flex items-center gap-3 rounded-full py-2 pl-4 pr-2 text-ui-control text-fg-1">
         <span>A collaborator updated this map.</span>
-        <Button
-          kind="field"
-          accent
+        <ShellButton
+          primary
           onClick={() => void reload()}
           className="h-8 justify-center rounded-full px-3 text-ui-hint font-medium text-fg-on-color"
         >
           Reload
-        </Button>
-      </div>
+        </ShellButton>
+      </Glass>
     </div>
   );
 }

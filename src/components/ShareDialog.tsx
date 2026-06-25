@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { TrashIcon, LinkSimpleIcon, CheckIcon } from "@phosphor-icons/react";
 import { listCollaborators, addCollaborator, removeCollaborator, type Collaborator } from "../data/mapsApi";
 import { shareUrl } from "../hooks/useUrlSync";
-import { Button } from "./chrome/Button";
+import { ShellButton } from "./shell/Controls";
 
 /**
  * Manage collaborators on an owned map (Phase 4). Invite by email; collaborators
@@ -98,14 +98,14 @@ export function ShareDialog({
                   <button
                     type="button"
                     onClick={copyLink}
-                    className="flex items-center justify-center gap-2 rounded-md px-3 py-2 text-ui-control font-medium text-fg-1"
+                    className="shell-field-control flex min-h-[44px] items-center justify-center gap-2 rounded-md px-3 py-2 text-ui-control font-medium text-fg-1"
                     style={{
                       background: "color-mix(in srgb, var(--surface) 70%, transparent)",
-                      boxShadow: "inset 0 0 0 1px var(--chrome-border)",
+                      boxShadow: "inset 0 0 0 1px var(--glass-border)",
                     }}
                   >
                     {copied ? (
-                      <CheckIcon className="h-4 w-4 text-accent" weight="bold" />
+                      <CheckIcon className="h-4 w-4 text-success" weight="bold" />
                     ) : (
                       <LinkSimpleIcon className="h-4 w-4" />
                     )}
@@ -122,22 +122,21 @@ export function ShareDialog({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="collaborator@example.com"
-                        className="h-10 rounded-md px-3 text-ui-control text-fg-1 outline-none"
+                        className="h-11 rounded-md px-3 text-ui-control text-fg-1 outline-none"
                         style={{
                           background: "color-mix(in srgb, var(--surface) 80%, transparent)",
-                          boxShadow: "inset 0 0 0 1px var(--chrome-border)",
+                          boxShadow: "inset 0 0 0 1px var(--glass-border)",
                         }}
                       />
                     </label>
-                    <Button
-                      kind="field"
-                      accent
+                    <ShellButton
+                      primary
                       type="submit"
                       disabled={busy}
-                      className="h-10 justify-center rounded-md px-4 text-ui-control font-medium text-fg-on-color"
+                      className="h-11 justify-center rounded-md px-4 text-ui-control font-medium text-fg-on-color"
                     >
                       {busy ? "…" : "Invite"}
-                    </Button>
+                    </ShellButton>
                   </form>
 
                   {error && (
