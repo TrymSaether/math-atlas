@@ -30,8 +30,7 @@
   --shell-control-selected: var(--surface);
   --shell-control-selected-border: color-mix(in srgb, var(--border) 64%, transparent);
   --shell-control-selected-shadow:
-    0 1px 1px color-mix(in srgb, #000 5%, transparent),
-    0 3px 8px color-mix(in srgb, #000 9%, transparent);
+    0 1px 1px color-mix(in srgb, #000 5%, transparent), 0 3px 8px color-mix(in srgb, #000 9%, transparent);
   --shell-control-hover: color-mix(in srgb, var(--fg-1) 5%, transparent);
   --shell-control-radius: var(--radius-md);
   --shell-cluster-radius: var(--radius-lg);
@@ -47,8 +46,7 @@
   --shell-control-selected: color-mix(in srgb, var(--surface) 62%, var(--fg-1) 16%);
   --shell-control-selected-border: color-mix(in srgb, var(--fg-1) 20%, transparent);
   --shell-control-selected-shadow:
-    0 1px 2px color-mix(in srgb, #000 44%, transparent),
-    0 4px 10px color-mix(in srgb, #000 32%, transparent);
+    0 1px 2px color-mix(in srgb, #000 44%, transparent), 0 4px 10px color-mix(in srgb, #000 32%, transparent);
 }
 
 /* The glass layer fills the viewport but only its children catch pointer
@@ -160,8 +158,8 @@
   min-height: var(--shell-bar-h);
   align-items: center;
   justify-content: flex-end;
-  gap: 3px;
-  padding: 3px;
+  gap: 2px;
+  padding: 2px;
   border-radius: var(--shell-toolbar-radius);
 }
 
@@ -176,15 +174,23 @@
 .shell-edit-controls {
   display: inline-flex;
   align-items: center;
+  gap: 0px;
+}
+.shell-edit-controls {
+  display: inline-flex;
+  align-items: center;
   gap: 2px;
 }
 
 /* Compound selector for the same reason as `.shell-map-title` — keep the pill
    radius from being clobbered by the base `.shell-btn` rule below. */
 .shell-btn.shell-edit-toggle {
+  width: var(--shell-control-h);
+  height: var(--shell-control-h);
+  min-width: var(--shell-control-h);
   min-height: var(--shell-control-h);
+  padding: 0;
   border-radius: var(--radius-pill);
-  padding: 0 0.75rem;
 }
 
 .shell-surface-nav {

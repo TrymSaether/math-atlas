@@ -105,9 +105,8 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         {/* ---- Index column ---- */}
         <aside className="dict-index" aria-label="Dictionary index">
           <header className="dict-index-head">
-            <p className="dict-kicker">{mapTitle} · Index</p>
             <div className="dict-headrow">
-              <h1 className="dict-title font-serif">{mapTitle}</h1>
+              <h1 className="dict-title">{mapTitle}</h1>
               <span className="dict-count">
                 {filtered.length}/{entries.length}
               </span>
@@ -236,7 +235,7 @@ function IndexRow({ entry, active, onClick }: { entry: GraphNode; active: boolea
       <span className="dict-row-glyph" style={{ color: tone.color }}>
         {createElement(icon, { className: "h-3.5 w-3.5", "aria-hidden": true })}
       </span>
-      <span className="dict-row-term font-serif">
+      <span className="dict-row-term">
         <MathText text={entry.label} />
       </span>
       <span className="dict-row-meta">{kindAbbrev(entry.kind)}</span>

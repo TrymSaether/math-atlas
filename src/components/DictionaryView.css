@@ -57,8 +57,7 @@
 
 .dictionary-view .dict-title {
   margin: 4px 0 0;
-  font-family: var(--font-serif);
-  font-size: var(--type-dict-term);
+  font-size: var(--type-title-3);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: 0;

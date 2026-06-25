@@ -398,7 +398,7 @@ function SummaryCard({
         <SparkleIcon className="h-7 w-7" />
       </div>
       <div className="space-y-1.5">
-        <h2 className="font-serif text-atlas-summary text-fg-1" style={{ fontWeight: 600 }}>
+        <h2 className="text-atlas-summary text-fg-1" style={{ fontWeight: 600 }}>
           Deck complete
         </h2>
         <p className="text-ui-body text-fg-2">

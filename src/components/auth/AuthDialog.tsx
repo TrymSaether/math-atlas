@@ -86,7 +86,7 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
                   className="glass-thick flex flex-col gap-3 rounded-2xl p-5"
                 >
-                  <h2 className="font-serif text-lg text-fg-1">{isSignup ? "Create an account" : "Welcome back"}</h2>
+                  <h2 className="text-lg text-fg-1">{isSignup ? "Create an account" : "Welcome back"}</h2>
                   <ShellButton
                     type="button"
                     disabled={busy || googleBusy}

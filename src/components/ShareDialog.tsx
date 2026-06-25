@@ -90,7 +90,7 @@ export function ShareDialog({
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
                   className="glass-thick flex flex-col gap-3 rounded-2xl p-5"
                 >
-                  <h2 className="font-serif text-lg text-fg-1">Share “{title}”</h2>
+                  <h2 className="text-lg text-fg-1">Share “{title}”</h2>
                   <p className="text-ui-hint text-fg-3">
                     Invite people by the email they signed up with. They’ll be able to edit.
                   </p>
@@ -98,7 +98,7 @@ export function ShareDialog({
                   <button
                     type="button"
                     onClick={copyLink}
-                    className="shell-field-control flex min-h-[44px] items-center justify-center gap-2 rounded-md px-3 py-2 text-ui-control font-medium text-fg-1"
+                    className="shell-field-control flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 text-ui-control font-medium text-fg-1"
                     style={{
                       background: "color-mix(in srgb, var(--surface) 70%, transparent)",
                       boxShadow: "inset 0 0 0 1px var(--glass-border)",

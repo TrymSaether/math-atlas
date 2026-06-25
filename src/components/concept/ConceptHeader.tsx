@@ -18,7 +18,7 @@ export function ConceptHeader({ view, size = "panel" }: { view: ConceptView; siz
     >
       <span aria-hidden className="concept-title-rail" style={{ background: tone.color }} />
       <div className="concept-title-stack">
-        <h2 className="concept-title font-serif">
+        <h2 className="concept-title">
           <MathText text={view.node.label} />
         </h2>
         <div className="concept-title-meta">

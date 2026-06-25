@@ -837,7 +837,7 @@ export function NodeEditorPanel({
               value={draft.label}
               onChange={(e) => set({ label: e.target.value })}
               placeholder="Concept label"
-              className="w-full bg-transparent font-serif text-node-panel-title outline-none placeholder:text-fg-3"
+              className="w-full bg-transparent text-node-panel-title outline-none placeholder:text-fg-3"
               style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.015em" }}
               aria-label="Concept label"
             />

@@ -153,7 +153,7 @@ function ExtraEnvironment({ entry }: { entry: ConceptView["extraContent"][number
 function ExtraValue({ value }: { value: unknown }) {
   if (typeof value === "string") {
     return (
-      <div className="text-ui-copy" style={{ color: "var(--fg-1)" }}>
+      <div className="text-ui-copy text-fg-1">
         <MathProse text={value} />
       </div>
     );
@@ -164,8 +164,8 @@ function ExtraValue({ value }: { value: unknown }) {
     return (
       <ul className="m-0 space-y-1.5 p-0">
         {items.map((item, index) => (
-          <li key={index} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--fg-1)" }}>
-            <span aria-hidden className="mt-2.25 h-1 w-1 shrink-0 rounded-full" style={{ background: "var(--fg-3)" }} />
+          <li key={index} className="flex gap-2.5 text-ui-copy text-fg-1">
+            <span aria-hidden className="mt-2.25 h-1 w-1 shrink-0 rounded-full bg-fg-3" />
             <span className="min-w-0">
               <MathProse text={item} />
             </span>
@@ -176,14 +176,7 @@ function ExtraValue({ value }: { value: unknown }) {
   }
 
   return (
-    <pre
-      className="panel-scrollbar max-w-full overflow-x-auto rounded-md border px-3 py-2 font-mono text-ui-xs leading-[1.6]"
-      style={{
-        background: "var(--surface-2)",
-        borderColor: "var(--border)",
-        color: "var(--fg-2)",
-      }}
-    >
+    <pre className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-surface-2 px-3 py-2 font-mono text-ui-xs leading-[1.6] text-fg-2">
       {JSON.stringify(value, null, 2)}
     </pre>
   );
@@ -210,7 +203,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
           <Eyebrow>{label}</Eyebrow>
           <ul className="m-0 space-y-1.5 p-0">
             {view.assumptions.map((a, i) => (
-              <li key={i} className="flex gap-2.5 text-ui-copy" style={{ color: "var(--fg-1)" }}>
+              <li key={i} className="flex gap-2.5 text-ui-copy text-fg-1">
                 <span
                   aria-hidden
                   className="mt-2.25 h-1 w-1 shrink-0 rounded-full"
@@ -229,7 +222,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
       return (
         <section>
           <Eyebrow>{label}</Eyebrow>
-          <div className="panel-scrollbar max-w-full overflow-x-auto text-ui-copy" style={{ color: "var(--fg-1)" }}>
+          <div className="panel-scrollbar max-w-full overflow-x-auto text-ui-copy text-fg-1">
             <MathText text={view.definition} asBlock />
           </div>
         </section>
@@ -258,12 +251,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
             {view.notation.map((n, i) => (
               <span
                 key={i}
-                className="inline-flex items-center rounded-sm border px-2 py-1 font-math leading-none"
-                style={{
-                  background: "var(--surface-2)",
-                  borderColor: "var(--border)",
-                  color: "var(--fg-1)",
-                }}
+                className="inline-flex items-center rounded-sm border border-border bg-surface-2 px-2 py-1 font-math leading-none text-fg-1"
               >
                 <MathText text={n} />
               </span>

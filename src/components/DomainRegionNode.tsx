@@ -41,12 +41,12 @@ export function DomainRegionNode({ data }: NodeProps<Data>) {
         {/* Colored left rail — mirrors the per-card rail convention while sitting
             inside the clipped domain frame, so no gap appears between rail, fill,
             and border. */}
-        {!isCircle && <span className="absolute inset-y-0 left-[-1px] w-[4px]" style={{ background: data.border }} />}
+        {!isCircle && <span className="absolute inset-y-0 -left-px w-1" style={{ background: data.border }} />}
       </div>
       {/* Faint oversized domain name — the label of last resort at low zoom. */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden px-8" aria-hidden>
         <span
-          className="font-serif leading-none"
+          className="leading-none"
           style={{
             fontSize: watermarkSize,
             color: data.color,

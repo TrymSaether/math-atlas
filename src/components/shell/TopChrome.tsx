@@ -92,7 +92,7 @@ function MapMenu() {
       {open && (
         <Glass
           material="thick"
-          className="shell-panel absolute left-0 top-[calc(100%+8px)] z-30 w-[280px] p-1.5"
+          className="shell-panel absolute left-0 top-[calc(100%+8px)] z-30 w-70 p-1.5"
           role="listbox"
         >
           {catalog.map((entry) => {
@@ -187,7 +187,6 @@ function EditControls() {
     <div className="shell-edit-controls">
       <ShellButton active={editMode} onClick={toggle} className="shell-edit-toggle" aria-pressed={editMode}>
         <PencilSimpleIcon className="h-4 w-4" weight={editMode ? "fill" : "regular"} />
-        <span>Edit</span>
         {edited && <span className="shell-status-dot" aria-label="Edited map" />}
       </ShellButton>
       {editMode && (
@@ -204,9 +203,7 @@ function EditControls() {
               aria-label="Edit selected concept"
               title="Edit selected concept"
               onClick={() => openNodeEditor({ mode: "edit", nodeId: selectedId })}
-            >
-              <PencilSimpleIcon className="h-4 w-4" />
-            </ShellIconButton>
+            ></ShellIconButton>
           )}
           {edited && (
             <ShellIconButton aria-label="Revert edits" title="Revert edits" onClick={revert}>
@@ -230,11 +227,7 @@ function ThemeToggle() {
       aria-label={isDark ? "Switch to light appearance" : "Switch to dark appearance"}
       title={isDark ? "Light" : "Dark"}
     >
-      {isDark ? (
-        <SunIcon className="h-4 w-4" weight="regular" />
-      ) : (
-        <MoonIcon className="h-4 w-4" weight="regular" />
-      )}
+      {isDark ? <SunIcon className="h-4 w-4" weight="regular" /> : <MoonIcon className="h-4 w-4" weight="regular" />}
     </ShellIconButton>
   );
 }
@@ -246,7 +239,7 @@ function TopToolbar() {
   const showEditControls = surface === "atlas" && mode !== "paths" && Boolean(map);
 
   return (
-    <Glass material="regular" className="top-toolbar">
+    <Glass material="regular" className={cn("top-toolbar", showEditControls && "has-edit-controls")}>
       {showEditControls && (
         <>
           <EditControls />
