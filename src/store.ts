@@ -49,6 +49,8 @@ export type EdgeStyle = "smooth" | "straight" | "bezier";
 export type EdgeLabelStyle = "prose" | "terse";
 /** Which surface is shown: the graph canvas, reading/study tools, or sandbox. */
 export type Surface = "atlas" | "dictionary" | "flashcards" | "sandbox";
+/** Atlas interaction mode: free graph exploration vs guided dependency paths. */
+export type AtlasMode = "explore" | "paths";
 
 const APP_STATE_STORAGE_KEY = "math-atlas-state-v1";
 const PERSISTED_STATE_VERSION = 1;
@@ -77,6 +79,7 @@ interface PersistedState {
   showRegions?: boolean;
   showMinimap?: boolean;
   surface?: Surface;
+  mode?: AtlasMode;
   routeKind?: RouteKind;
   routeIncludeProof?: boolean;
   maps?: Partial<Record<MapId, PersistedMapState>>;
@@ -173,6 +176,10 @@ interface State {
 
   surface: Surface;
   setSurface: (s: Surface) => void;
+
+  /** Atlas mode: free Explore vs guided Paths (the hybrid exploration model). */
+  mode: AtlasMode;
+  setMode: (mode: AtlasMode) => void;
 
   paletteOpen: boolean;
   setPaletteOpen: (o: boolean) => void;
@@ -349,6 +356,7 @@ function normalizePersistedState(value: unknown | null): PersistedState | null {
     showRegions: asBoolean(value.showRegions),
     showMinimap: asBoolean(value.showMinimap),
     surface: isSurface(value.surface) ? value.surface : undefined,
+    mode: value.mode === "explore" || value.mode === "paths" ? value.mode : undefined,
     routeKind: value.routeKind === "prereq" || value.routeKind === "path" ? value.routeKind : undefined,
     routeIncludeProof: asBoolean(value.routeIncludeProof),
     maps,
@@ -359,6 +367,31 @@ const persistedState = normalizePersistedState(readPersistedState());
 const persistedMaps: Partial<Record<MapId, PersistedMapState>> = {
   ...(persistedState?.maps ?? {}),
 };
+
+/**
+ * Deep link: URL query params (?map=&node=&view=) take precedence over persisted
+ * state on first load, so a shared link opens the exact map / concept / surface
+ * it encodes. The node is injected into the per-map state so it survives the
+ * map-load reset in `mapStateForLoadedMap` (which validates it against the map).
+ */
+function readUrlState(): { mapId?: MapId; node?: string; surface?: Surface } {
+  if (typeof window === "undefined") return {};
+  const p = new URLSearchParams(window.location.search);
+  const map = p.get("map");
+  const node = p.get("node");
+  const view = p.get("view");
+  return {
+    mapId: map && isMapId(map) ? map : undefined,
+    node: node || undefined,
+    surface: isSurface(view) ? view : undefined,
+  };
+}
+const urlState = readUrlState();
+const initialMapId: MapId = urlState.mapId ?? persistedState?.mapId ?? DEFAULT_MAP_ID;
+const initialSurface: Surface = urlState.surface ?? persistedState?.surface ?? "atlas";
+if (urlState.node) {
+  persistedMaps[initialMapId] = { ...(persistedMaps[initialMapId] ?? {}), selectedId: urlState.node };
+}
 
 function rememberMapState(state: State): void {
   if (!state.loadedMaps[state.mapId]) return;
@@ -388,6 +421,7 @@ function persistedStateFor(state: State): PersistedState {
     showRegions: state.showRegions,
     showMinimap: state.showMinimap,
     surface: state.surface,
+    mode: state.mode,
     routeKind: state.routeKind,
     routeIncludeProof: state.routeIncludeProof,
     maps: persistedMaps,
@@ -548,7 +582,7 @@ export const useStore = create<State>((set, get) => ({
   },
   scheme: () => schemeFor(get().theme),
 
-  mapId: persistedState?.mapId ?? DEFAULT_MAP_ID,
+  mapId: initialMapId,
   loadedMaps: {},
   loadingMapId: null,
   mapError: null,
@@ -619,7 +653,7 @@ export const useStore = create<State>((set, get) => ({
     void get().ensureMapLoaded(mapId);
   },
 
-  search: persistedMaps[persistedState?.mapId ?? DEFAULT_MAP_ID]?.search ?? "",
+  search: persistedMaps[initialMapId]?.search ?? "",
   setSearch: (s) => set({ search: s }),
   searchScope: persistedState?.searchScope ?? "all",
   setSearchScope: (s) => set({ searchScope: s }),
@@ -763,8 +797,18 @@ export const useStore = create<State>((set, get) => ({
     }),
   endTour: () => set({ tourIndex: null }),
 
-  surface: persistedState?.surface ?? "atlas",
+  surface: initialSurface,
   setSurface: (surface) => set({ surface }),
+
+  mode: persistedState?.mode ?? "explore",
+  setMode: (mode) =>
+    set((s) =>
+      mode === "paths"
+        ? // Enter Paths: begin planning unless a complete route is already set.
+          { mode, routeMode: !(s.routeFrom && s.routeTo) }
+        : // Back to Explore: clear the route overlay and any tour.
+          { mode: "explore", routeMode: false, routeFrom: null, routeTo: null, routeSequence: [], tourIndex: null },
+    ),
 
   paletteOpen: false,
   setPaletteOpen: (o) => set({ paletteOpen: o }),
