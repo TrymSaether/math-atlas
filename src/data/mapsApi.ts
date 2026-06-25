@@ -8,6 +8,7 @@
  */
 import { apiUrl, authHeaders } from "../lib/authClient";
 import type { MapId } from "./mapRegistry";
+import { DEV_OFFLINE_FALLBACK, devCatalog, devMap } from "./devFallback";
 
 export type MapRole = "owner" | "editor" | "viewer" | "public";
 
@@ -52,30 +53,43 @@ const opts = (extra?: RequestInit): RequestInit => ({
 
 /** Fetch the catalog and collapse to one entry per slug (best access wins). */
 export async function fetchCatalog(): Promise<CatalogEntry[]> {
-  const res = await fetch(apiUrl("/api/maps/catalog"), opts());
-  if (!res.ok) throw new Error(`catalog failed: ${res.status}`);
-  const rows: ServerCatalogRow[] = await res.json();
+  try {
+    const res = await fetch(apiUrl("/api/maps/catalog"), opts());
+    if (!res.ok) throw new Error(`catalog failed: ${res.status}`);
+    const rows: ServerCatalogRow[] = await res.json();
 
-  const bySlug = new Map<string, CatalogEntry>();
-  for (const r of rows) {
-    const cur = bySlug.get(r.slug);
-    if (!cur || ROLE_RANK[r.role] > ROLE_RANK[cur.role]) {
-      bySlug.set(r.slug, {
-        slug: r.slug,
-        title: r.title,
-        id: r.id,
-        role: r.role,
-        updated: r.updated,
-      });
+    const bySlug = new Map<string, CatalogEntry>();
+    for (const r of rows) {
+      const cur = bySlug.get(r.slug);
+      if (!cur || ROLE_RANK[r.role] > ROLE_RANK[cur.role]) {
+        bySlug.set(r.slug, {
+          slug: r.slug,
+          title: r.title,
+          id: r.id,
+          role: r.role,
+          updated: r.updated,
+        });
+      }
     }
+    return [...bySlug.values()];
+  } catch (err) {
+    if (DEV_OFFLINE_FALLBACK) return devCatalog();
+    throw err;
   }
-  return [...bySlug.values()];
 }
 
 export async function fetchMap(id: string): Promise<MapPayload> {
-  const res = await fetch(apiUrl(`/api/maps/${id}`), opts());
-  if (!res.ok) throw new Error(`map fetch failed: ${res.status}`);
-  return res.json();
+  try {
+    const res = await fetch(apiUrl(`/api/maps/${id}`), opts());
+    if (!res.ok) throw new Error(`map fetch failed: ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    if (DEV_OFFLINE_FALLBACK) {
+      const fallback = await devMap(id);
+      if (fallback) return fallback;
+    }
+    throw err;
+  }
 }
 
 /** Fork a readable map into the caller's own editable copy; returns the new id. */
