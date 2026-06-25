@@ -160,7 +160,7 @@
   --icon-size-sm: 16px;
   --icon-size-md: 18px;
   --icon-size-lg: 22px;
-  --hit-target: 40px;
+  --hit-target: 44px;
 
   /* Motion */
   --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);

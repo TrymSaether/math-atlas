@@ -14,6 +14,17 @@
   --shell-edge: 16px; /* viewport inset for floating controls + docks */
   --shell-chrome-h: 56px; /* top chrome height (44px search field + insets) */
   --shell-dock-top: calc(var(--shell-chrome-h) + var(--shell-edge)); /* where side docks begin */
+  --map-tools-w: 52px;
+  --map-tools-gap: 10px;
+  --shell-control-selected: color-mix(in srgb, var(--surface) 90%, var(--fg-1) 10%);
+  --shell-control-selected-border: color-mix(in srgb, var(--border-strong) 78%, transparent);
+  --shell-control-hover: color-mix(in srgb, var(--fg-1) 5%, transparent);
+  --shell-control-radius: var(--radius-r-md);
+  --shell-cluster-radius: var(--radius-r-lg);
+  --shell-panel-radius: var(--radius-r-xl);
+  --shell-toolbar-radius: var(--radius-pill);
+  --shell-divider: color-mix(in srgb, var(--border) 58%, transparent);
+  --shell-toggle-on: var(--success);
 }
 
 /* The glass layer fills the viewport but only its children catch pointer
@@ -59,13 +70,109 @@
   left: var(--shell-edge);
 }
 
+/* --- Top chrome --------------------------------------------------------- */
+.top-chrome {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: minmax(176px, 280px) minmax(260px, 520px) minmax(360px, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 12px 16px;
+  pointer-events: none;
+}
+
+.top-chrome-leading,
+.top-chrome-search,
+.top-chrome-trailing {
+  min-width: 0;
+  pointer-events: auto;
+}
+
+.top-chrome-search {
+  justify-self: center;
+  width: min(100%, 520px);
+}
+
+.top-chrome-trailing {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shell-map-menu {
+  display: inline-flex;
+  max-width: min(280px, 42vw);
+  min-height: 52px;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border-radius: var(--shell-toolbar-radius);
+}
+
+.shell-map-mark {
+  display: flex;
+  width: var(--hit-target);
+  height: var(--hit-target);
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.shell-map-title {
+  min-width: 0;
+  max-width: 220px;
+  min-height: var(--hit-target);
+  border-radius: var(--radius-pill);
+  padding: 0 0.75rem 0 0.6rem;
+}
+
+.top-toolbar {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 52px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  padding: 4px;
+  border-radius: var(--shell-toolbar-radius);
+}
+
+.top-toolbar-divider {
+  width: 1px;
+  height: 28px;
+  margin: 0 2px;
+  flex: none;
+  background: var(--shell-divider);
+}
+
+.shell-edit-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.shell-edit-toggle {
+  min-height: var(--hit-target);
+  border-radius: var(--radius-pill);
+  padding: 0 0.75rem;
+}
+
+.shell-surface-nav {
+  padding: 0;
+}
+
+.shell-surface-nav .shell-seg-opt {
+  padding-inline: 0.75rem;
+}
+
 /* --- Buttons ----------------------------------------------------------- */
 .shell-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  border-radius: var(--radius-r-md);
+  border-radius: var(--shell-control-radius);
   color: var(--fg-2);
   font-size: var(--type-ui-control);
   font-weight: 590;
@@ -77,7 +184,7 @@
     transform var(--dur-micro) var(--ease-standard);
 }
 .shell-btn:hover {
-  background: var(--surface-hover);
+  background: var(--shell-control-hover);
   color: var(--fg-1);
 }
 .shell-btn:active {
@@ -88,22 +195,35 @@
   outline-offset: 2px;
 }
 .shell-btn.is-active {
-  background: var(--accent-soft);
-  color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent-border);
+  background: var(--shell-control-selected);
+  color: var(--fg-1);
+  box-shadow:
+    inset 0 0 0 1px var(--shell-control-selected-border),
+    var(--glass-shadow-1);
 }
 .shell-btn-icon {
-  width: 44px;
-  height: 44px;
+  width: var(--hit-target);
+  height: var(--hit-target);
 }
-.shell-btn-accent {
+.shell-btn-round {
+  border-radius: var(--radius-pill);
+}
+.shell-btn-primary {
   background: var(--accent);
   color: var(--fg-on-color);
 }
-.shell-btn-accent:hover {
+.shell-btn-primary:hover {
   background: var(--accent);
   color: var(--fg-on-color);
-  filter: brightness(1.06);
+}
+
+.shell-field-control {
+  min-height: var(--hit-target);
+  background: color-mix(in srgb, var(--surface) 76%, transparent);
+  box-shadow: inset 0 0 0 1px var(--glass-border);
+}
+.shell-field-control:hover {
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
 }
 
 /* --- Search field ------------------------------------------------------ */
@@ -116,6 +236,7 @@
   border-radius: var(--radius-pill);
   color: var(--fg-3);
   font-size: var(--type-ui-sm);
+  width: 100%;
   transition:
     box-shadow var(--dur-micro) var(--ease-standard),
     color var(--dur-micro) var(--ease-standard);
@@ -139,6 +260,34 @@
   font-weight: 600;
 }
 
+.shell-control-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: var(--radius-pill);
+  padding: 3px;
+}
+
+.shell-menu-option {
+  display: flex;
+  min-height: var(--hit-target);
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--shell-control-radius);
+  padding: 0.5rem 0.625rem;
+  text-align: left;
+  font-size: var(--type-ui-sm);
+}
+
+.shell-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--shell-toggle-on);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--shell-toggle-on) 16%, transparent);
+}
+
 /* --- Segmented control ------------------------------------------------- */
 .shell-seg {
   display: inline-flex;
@@ -146,18 +295,22 @@
   padding: 3px;
   border-radius: var(--radius-pill);
 }
+.shell-control-group.shell-seg {
+  gap: 2px;
+}
 .shell-seg-opt {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  min-width: 44px;
-  min-height: 44px;
+  min-width: var(--hit-target);
+  min-height: var(--hit-target);
   padding: 0 0.7rem;
   border-radius: var(--radius-pill);
   color: var(--fg-2);
   font-size: var(--type-ui-control);
   font-weight: 590;
+  white-space: nowrap;
   transition:
     background-color var(--dur-micro) var(--ease-standard),
     color var(--dur-micro) var(--ease-standard),
@@ -167,9 +320,11 @@
   color: var(--fg-1);
 }
 .shell-seg-opt.is-active {
-  background: color-mix(in srgb, var(--surface) 92%, var(--fg-1) 8%);
+  background: var(--shell-control-selected);
   color: var(--fg-1);
-  box-shadow: var(--glass-shadow-1);
+  box-shadow:
+    inset 0 0 0 1px var(--shell-control-selected-border),
+    var(--glass-shadow-1);
 }
 .shell-seg-opt:focus-visible {
   outline: 2px solid var(--accent);
@@ -181,7 +336,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  min-height: 44px;
+  min-height: var(--hit-target);
   padding: 0 0.65rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
@@ -198,7 +353,7 @@
 
 .glass-group {
   overflow: hidden;
-  border-radius: var(--radius-r-lg);
+  border-radius: var(--shell-cluster-radius);
   background: color-mix(in srgb, var(--surface) 46%, transparent);
   box-shadow:
     inset 0 0 0 0.5px color-mix(in srgb, var(--border) 55%, transparent),
@@ -235,9 +390,9 @@
 }
 .shell-chip.is-active {
   border-color: transparent;
-  background: var(--accent-soft);
-  color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent-border);
+  background: var(--shell-control-selected);
+  color: var(--fg-1);
+  box-shadow: inset 0 0 0 1px var(--shell-control-selected-border);
 }
 .shell-chip:focus-visible {
   outline: 2px solid var(--accent);
@@ -265,7 +420,7 @@
 
 /* --- Popover panel ----------------------------------------------------- */
 .shell-panel {
-  border-radius: var(--radius-r-xl);
+  border-radius: var(--shell-panel-radius);
   overflow: hidden;
 }
 .shell-panel-section + .shell-panel-section {
@@ -286,14 +441,27 @@
   height: 22px;
   flex: none;
   border-radius: var(--radius-pill);
-  background: var(--surface-3);
+  background: color-mix(in srgb, var(--fg-1) 8%, var(--surface));
   box-shadow: inset 0 0 0 1px var(--border);
   transition:
     background-color var(--dur-std) var(--ease-standard),
     box-shadow var(--dur-std) var(--ease-standard);
 }
 .shell-switch-btn {
-  min-height: 44px;
+  display: flex;
+  min-height: var(--hit-target);
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-radius: var(--shell-control-radius);
+  padding: 0 0.75rem;
+  color: var(--fg-1);
+  font-size: var(--type-ui-sm);
+  outline: none;
+}
+.shell-switch-btn:hover {
+  background: var(--shell-control-hover);
 }
 .shell-switch::after {
   content: "";
@@ -308,7 +476,7 @@
   transition: transform var(--dur-std) var(--ease-standard);
 }
 .shell-switch.is-on {
-  background: var(--accent);
+  background: var(--shell-toggle-on);
   box-shadow: inset 0 0 0 1px transparent;
 }
 .shell-switch.is-on::after {
@@ -319,15 +487,190 @@
   outline-offset: 2px;
 }
 
+/* --- Canvas map tools --------------------------------------------------- */
+.map-tools {
+  position: absolute;
+  right: var(--shell-edge);
+  bottom: var(--shell-edge);
+  z-index: 24;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--map-tools-gap);
+  pointer-events: auto;
+}
+
+.map-tools-stack {
+  display: flex;
+  width: var(--map-tools-w);
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.map-tools-popover {
+  margin-right: 2px;
+  margin-bottom: 0;
+  align-self: flex-end;
+}
+
+.map-tool-bubble,
+.map-zoom-rail {
+  display: flex;
+  width: var(--map-tools-w);
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.map-tool-bubble {
+  height: var(--map-tools-w);
+  border-radius: var(--radius-pill);
+}
+
+.map-zoom-rail {
+  flex-direction: column;
+  border-radius: var(--radius-pill);
+}
+
+.map-tool-button {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--fg-2);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    transform var(--dur-micro) var(--ease-standard);
+}
+
+.map-tool-button:hover {
+  background: var(--shell-control-hover);
+  color: var(--fg-1);
+}
+
+.map-tool-button:active {
+  transform: scale(0.96);
+}
+
+.map-tool-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.map-tool-button.is-active {
+  background: var(--shell-control-selected);
+  color: var(--fg-1);
+  box-shadow:
+    inset 0 0 0 1px var(--shell-control-selected-border),
+    var(--glass-shadow-1);
+}
+
+.map-zoom-readout {
+  display: flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-3);
+  font-size: var(--type-ui-2xs);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+.map-tool-divider {
+  width: 24px;
+  height: 1px;
+  margin: 4px 0;
+  background: var(--border-muted);
+}
+
+.atlas-minimap-card {
+  position: absolute;
+  right: calc(var(--shell-edge) + var(--map-tools-w) + var(--map-tools-gap));
+  bottom: var(--shell-edge);
+  z-index: 20;
+  display: none;
+  padding: 6px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--shell-panel-radius);
+  background: var(--glass-fill-regular-solid);
+  box-shadow:
+    var(--glass-shadow-1),
+    inset 0 1px 0 var(--glass-highlight);
+}
+
+.atlas-minimap-canvas {
+  display: block;
+  cursor: pointer;
+  border-radius: calc(var(--shell-panel-radius) - 6px);
+  background: color-mix(in srgb, var(--surface-2) 78%, var(--bg));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 68%, transparent);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .atlas-minimap-card {
+    background: var(--glass-fill-regular);
+    -webkit-backdrop-filter: saturate(var(--glass-saturate)) blur(var(--glass-blur-regular));
+    backdrop-filter: saturate(var(--glass-saturate)) blur(var(--glass-blur-regular));
+  }
+}
+
+@media (min-width: 768px) {
+  .atlas-minimap-card {
+    display: block;
+  }
+}
+
+@media (max-width: 980px) {
+  .top-chrome {
+    grid-template-columns: minmax(180px, auto) 1fr;
+  }
+
+  .top-chrome-search {
+    display: none;
+  }
+
+  .top-chrome-trailing {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --shell-edge: 12px;
+    --map-tools-w: 48px;
+  }
+
+  .top-chrome {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .shell-surface-nav .shell-seg-opt span {
+    display: none;
+  }
+
+  .atlas-minimap-card {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .shell-btn,
   .shell-seg-opt,
   .shell-chip,
   .shell-switch,
-  .shell-switch::after {
+  .shell-switch::after,
+  .map-tool-button {
     transition: none;
   }
-  .shell-btn:active {
+  .shell-btn:active,
+  .map-tool-button:active {
     transform: none;
   }
 }
