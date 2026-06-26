@@ -1,93 +1,86 @@
 /* ========================================================================
-   Shell — the Liquid Glass control layer
-   ------------------------------------------------------------------------
-   Reusable treatments for the floating controls that sit ABOVE the content
-   layer (search field, segmented switches, control cluster, filter chips,
-   popovers). Materials live in glass.css; this file owns the interactive
-   states, sizing, and rhythm so every control reads as one family. Near-
-   monochrome by design — color is reserved for the active/selected state.
+   Shell — coherent Liquid Glass control layer
    ======================================================================== */
 
-/* Shell geometry — the single source of truth for the floating layer's spacing.
-   Change the chrome height or edge inset here and every dock follows. */
 :root {
-  --shell-edge: 16px; /* viewport inset for floating controls + docks */
-  --shell-chrome-h: 52px; /* top chrome height */
-  --shell-dock-top: calc(var(--shell-chrome-h) + var(--shell-edge)); /* where side docks begin */
-  --shell-tools-w: calc(var(--shell-tool-size) + 8px);
-  --shell-tools-gap: 10px;
+  --shell-edge: 16px;
+  --shell-chrome-h: 60px;
+  --shell-dock-top: calc(var(--shell-chrome-h) + var(--shell-edge));
+  --shell-control-h: var(--hit-target);
+  --shell-bar-h: calc(var(--shell-control-h) + 10px);
+  --shell-tools-w: calc(var(--shell-control-h) + 10px);
+  --shell-tools-gap: 12px;
+  --shell-search-w: clamp(280px, 34vw, 520px);
+  --shell-icon-size: 18px;
+  --shell-icon-size-sm: 14px;
 
-  /* Control density. Bars and the controls inside them run trimmer than the
-     44px touch floor — this is a pointer-first canvas app, so the chrome reads
-     as slim Apple-style glass rather than chunky mobile bars. */
-  --shell-bar-h: calc(var(--shell-control-h) + 8px); /* floating bar container height */
-  --shell-control-h: var(--hit-target); /* buttons + segments inside a bar */
-  --shell-tool-size: var(--hit-target); /* round canvas tool buttons */
-
-  /* Selected state — a crisp raised capsule (the Apple "segmented" selection):
-     an opaque surface lifted above the translucent track with a soft drop and a
-     hairline rim, NOT a heavy filled box with an inset ring. */
-  --shell-control-selected: var(--surface);
-  --shell-control-selected-border: color-mix(in srgb, var(--border) 64%, transparent);
-  --shell-control-selected-shadow:
-    0 1px 1px color-mix(in srgb, #000 5%, transparent), 0 3px 8px color-mix(in srgb, #000 9%, transparent);
-  --shell-control-hover: color-mix(in srgb, var(--fg-1) 5%, transparent);
   --shell-control-radius: var(--radius-md);
+  --shell-island-radius: var(--radius-pill);
   --shell-cluster-radius: var(--radius-lg);
   --shell-panel-radius: var(--radius-xl);
-  --shell-toolbar-radius: var(--radius-pill);
-  --shell-divider: color-mix(in srgb, var(--border) 58%, transparent);
-  --shell-toggle-on: var(--success);
-}
 
-/* Dark: the raised capsule becomes a lifted translucent gray (an opaque white
-   pill would glare), with a deeper drop so it still reads as raised. */
-:root.dark {
-  --shell-control-selected: color-mix(in srgb, var(--surface) 62%, var(--fg-1) 16%);
-  --shell-control-selected-border: color-mix(in srgb, var(--fg-1) 20%, transparent);
+  --shell-control-hover: color-mix(in srgb, var(--fg-1) 6%, transparent);
+  --shell-control-pressed: color-mix(in srgb, var(--fg-1) 10%, transparent);
+  --shell-control-selected: color-mix(in srgb, var(--surface) 94%, #fff 6%);
+  --shell-control-selected-border: color-mix(in srgb, var(--fg-1) 9%, transparent);
   --shell-control-selected-shadow:
-    0 1px 2px color-mix(in srgb, #000 44%, transparent), 0 4px 10px color-mix(in srgb, #000 32%, transparent);
+    0 1px 1px color-mix(in srgb, #000 6%, transparent), 0 10px 26px color-mix(in srgb, #000 13%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 76%, transparent),
+    inset 0 -8px 18px -14px color-mix(in srgb, var(--fg-1) 16%, transparent);
+  --shell-control-disabled: color-mix(in srgb, var(--fg-3) 45%, transparent);
+  --shell-focus-ring: color-mix(in srgb, var(--fg-1) 34%, transparent);
+  --shell-primary-bg: color-mix(in srgb, var(--fg-1) 90%, var(--surface));
+  --shell-primary-fg: var(--fg-on-color);
+  --shell-toggle-on: color-mix(in srgb, var(--fg-1) 84%, var(--surface));
 }
 
-/* The glass layer fills the viewport but only its children catch pointer
-   events, so the canvas underneath stays fully interactive. */
+:root.dark {
+  --shell-control-hover: color-mix(in srgb, var(--fg-1) 8%, transparent);
+  --shell-control-pressed: color-mix(in srgb, var(--fg-1) 12%, transparent);
+  --shell-control-selected: color-mix(in srgb, var(--surface) 76%, var(--fg-1) 14%);
+  --shell-control-selected-border: color-mix(in srgb, var(--fg-1) 18%, transparent);
+  --shell-control-selected-shadow:
+    0 1px 2px color-mix(in srgb, #000 42%, transparent), 0 10px 26px color-mix(in srgb, #000 40%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 16%, transparent),
+    inset 0 -8px 18px -14px color-mix(in srgb, #000 68%, transparent);
+  --shell-focus-ring: color-mix(in srgb, var(--fg-1) 42%, transparent);
+  --shell-primary-bg: color-mix(in srgb, var(--fg-1) 86%, var(--surface));
+  --shell-toggle-on: color-mix(in srgb, var(--fg-1) 78%, var(--surface));
+}
+
 .shell-layer {
   position: absolute;
   inset: 0;
   z-index: 20;
   pointer-events: none;
 }
+
 .shell-layer > * {
   pointer-events: auto;
 }
 
-/* Indeterminate loading ring — the calm default for map/surface loads. */
 @keyframes shell-spin {
   to {
     transform: rotate(360deg);
   }
 }
+
 .shell-spinner {
   width: 22px;
   height: 22px;
   border-radius: var(--radius-pill);
   border: 2px solid color-mix(in srgb, var(--fg-1) 14%, transparent);
-  border-top-color: var(--accent);
+  border-top-color: var(--fg-2);
   animation: shell-spin 0.7s linear infinite;
 }
-@media (prefers-reduced-motion: reduce) {
-  .shell-spinner {
-    animation-duration: 1.6s;
-  }
-}
 
-/* A full-height side dock (concept card, paths panel) below the top chrome. */
 .shell-dock {
   position: absolute;
   top: var(--shell-dock-top);
   bottom: var(--shell-edge);
   z-index: 20;
 }
+
 .shell-dock-left {
   left: var(--shell-edge);
 }
@@ -98,77 +91,148 @@
   inset: 0 0 auto;
   z-index: 20;
   display: grid;
-  grid-template-columns: minmax(176px, 280px) minmax(260px, 520px) minmax(360px, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, var(--shell-search-w)) minmax(0, 1fr);
+  grid-template-areas: "map search right";
   align-items: start;
   gap: 12px;
   padding: 12px 16px;
   pointer-events: none;
 }
 
-.top-chrome-leading,
+.top-chrome-map,
 .top-chrome-search,
-.top-chrome-trailing {
+.top-chrome-right {
   min-width: 0;
   pointer-events: auto;
 }
 
-.top-chrome-search {
-  justify-self: center;
-  width: min(100%, 520px);
+.top-chrome-map {
+  grid-area: map;
+  justify-self: start;
 }
 
-.top-chrome-trailing {
-  display: flex;
-  justify-content: flex-end;
+.top-chrome-search {
+  grid-area: search;
+  width: 100%;
+  justify-self: center;
+}
+
+.top-chrome-right {
+  grid-area: right;
+  justify-self: end;
+}
+
+.shell-map-menu,
+.shell-control-group {
+  display: inline-flex;
+  min-height: var(--shell-bar-h);
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--shell-island-radius);
+  padding: 5px;
 }
 
 .shell-map-menu {
-  display: inline-flex;
-  max-width: min(280px, 42vw);
-  min-height: var(--shell-bar-h);
-  align-items: center;
-  gap: 3px;
-  padding: 3px;
-  border-radius: var(--shell-toolbar-radius);
+  max-width: min(320px, 42vw);
 }
 
 .shell-map-mark {
-  display: flex;
-  width: var(--shell-control-h);
-  height: var(--shell-control-h);
   flex: none;
-  align-items: center;
-  justify-content: center;
 }
 
-/* Compound selector so the pill radius wins over the later `.shell-btn` base
-   rule — otherwise the title reverts to the rounded-rect default and reads as a
-   different shape from the pill segments beside it. */
-.shell-btn.shell-map-title {
+.shell-map-title {
   min-width: 0;
-  max-width: 220px;
+  max-width: 240px;
   min-height: var(--shell-control-h);
-  border-radius: var(--radius-pill);
-  padding: 0 0.75rem 0 0.6rem;
+  padding: 0 0.75rem 0 0.7rem;
 }
 
-.top-toolbar {
-  display: inline-flex;
-  max-width: 100%;
-  min-height: var(--shell-bar-h);
-  align-items: center;
-  justify-content: flex-end;
-  gap: 4px;
-  padding: 4px;
-  border-radius: var(--shell-toolbar-radius);
+.shell-map-title-label {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--fg-1);
+  font-weight: 590;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.top-toolbar-divider {
-  width: 1px;
-  height: 22px;
-  margin: 0 2px;
+.shell-search-label {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shell-caret-icon {
+  width: 13px;
+  height: 13px;
   flex: none;
-  background: var(--shell-divider);
+  opacity: 0.62;
+}
+
+.shell-search {
+  width: 100%;
+  height: var(--shell-bar-h);
+  border-radius: var(--shell-island-radius);
+  color: var(--fg-3);
+  font-size: var(--type-footnote);
+  transition: color var(--dur-micro) var(--ease-standard);
+}
+
+.shell-search:hover {
+  color: var(--fg-2);
+}
+
+.shell-search-button {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.55rem;
+  padding: 0 0.7rem;
+  border-radius: inherit;
+  outline: none;
+}
+
+.shell-search-button.shell-search-button:focus-visible {
+  outline: 2px solid var(--shell-focus-ring);
+  outline-offset: 3px;
+}
+
+.shell-search-kbd {
+  flex: none;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--fg-1) 7%, transparent);
+  color: var(--fg-3);
+  font-family: var(--font-mono);
+  font-size: var(--type-caption-2);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  padding: 0.18rem 0.32rem;
+}
+
+.shell-top-right-island {
+  max-width: 100%;
+  gap: 4px;
+}
+
+.shell-island-divider {
+  width: 1px;
+  height: 30px;
+  margin: 0 4px;
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--fg-1) 10%, transparent) 22%,
+    color-mix(in srgb, var(--fg-1) 16%, transparent) 50%,
+    color-mix(in srgb, var(--fg-1) 10%, transparent) 78%,
+    transparent
+  );
 }
 
 .shell-edit-controls {
@@ -176,16 +240,9 @@
   align-items: center;
   gap: 2px;
 }
-/* Compound selector for the same reason as `.shell-map-title` — keep the pill
-   radius from being clobbered by the base `.shell-btn` rule below. */
-.shell-btn.shell-edit-toggle {
+
+.shell-edit-toggle {
   position: relative;
-  width: var(--shell-control-h);
-  height: var(--shell-control-h);
-  min-width: var(--shell-control-h);
-  min-height: var(--shell-control-h);
-  padding: 0;
-  border-radius: var(--radius-pill);
 }
 
 .shell-edit-badge {
@@ -197,215 +254,250 @@
   translate: -50% 0;
   border-radius: 50%;
   background: var(--success);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--success) 14%, transparent);
 }
 
-.shell-surface-nav {
-  padding: 0;
+/* --- Shared controls ---------------------------------------------------- */
+.shell-icon,
+.shell-icon-sm {
+  display: block;
+  flex: none;
 }
 
-.shell-surface-nav .shell-seg-opt {
-  padding-inline: 0.75rem;
+.shell-icon {
+  width: var(--shell-icon-size);
+  height: var(--shell-icon-size);
 }
 
-/* --- Buttons ----------------------------------------------------------- */
-.shell-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  border-radius: var(--shell-control-radius);
+.shell-icon-sm {
+  width: var(--shell-icon-size-sm);
+  height: var(--shell-icon-size-sm);
+}
+
+.shell-btn,
+.shell-seg-opt,
+.shell-chip,
+.shell-menu-option,
+.shell-switch-btn {
   color: var(--fg-2);
-  font-size: var(--type-footnote);
-  font-weight: 590;
-  line-height: 1;
   transition:
     background-color var(--dur-micro) var(--ease-standard),
     color var(--dur-micro) var(--ease-standard),
     box-shadow var(--dur-micro) var(--ease-standard),
     transform var(--dur-micro) var(--ease-standard);
 }
-.shell-btn:hover {
+
+.shell-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  border-radius: var(--shell-control-radius);
+  font-size: var(--type-footnote);
+  font-weight: 590;
+  line-height: 1;
+}
+
+.shell-btn-pill,
+.shell-btn-circle {
+  border-radius: var(--radius-pill);
+}
+
+.shell-btn-icon {
+  width: var(--shell-control-h);
+  height: var(--shell-control-h);
+  min-width: var(--shell-control-h);
+  min-height: var(--shell-control-h);
+  padding: 0;
+}
+
+.shell-btn:hover,
+.shell-seg-opt:not(.is-active):hover,
+.shell-chip:hover,
+.shell-menu-option:not(.is-active):hover,
+.shell-switch-btn:hover {
   background: var(--shell-control-hover);
   color: var(--fg-1);
 }
-.shell-btn:active {
-  transform: scale(0.96);
+
+.shell-btn:active,
+.shell-seg-opt:active,
+.shell-chip:active,
+.shell-menu-option:active,
+.shell-switch-btn:active {
+  transform: scale(0.965);
+  background: var(--shell-control-pressed);
 }
+
 .shell-btn:disabled,
 .shell-btn[aria-disabled="true"] {
-  color: var(--fg-disabled);
+  color: var(--shell-control-disabled);
   background: transparent;
   box-shadow: none;
   pointer-events: none;
 }
-.shell-btn:focus-visible {
-  outline: 2px solid var(--accent);
+
+.shell-btn.shell-btn:focus-visible,
+.shell-seg-opt.shell-seg-opt:focus-visible,
+.shell-chip.shell-chip:focus-visible,
+.shell-menu-option.shell-menu-option:focus-visible {
+  outline: 2px solid var(--shell-focus-ring);
   outline-offset: 2px;
 }
-.shell-btn.is-active {
+
+.shell-btn.is-active,
+.shell-chip.is-active,
+.shell-menu-option.is-active {
   background: var(--shell-control-selected);
   color: var(--fg-1);
   box-shadow:
     inset 0 0 0 0.5px var(--shell-control-selected-border),
     var(--shell-control-selected-shadow);
 }
-.shell-btn-icon {
-  width: var(--shell-control-h);
-  height: var(--shell-control-h);
-}
-.shell-btn-round {
-  border-radius: var(--radius-pill);
-}
+
 .shell-btn-primary {
-  background: var(--accent);
-  color: var(--fg-on-color);
+  background: var(--shell-primary-bg);
+  color: var(--shell-primary-fg);
+  box-shadow: var(--shell-control-selected-shadow);
 }
+
 .shell-btn-primary:hover {
-  background: var(--accent);
-  color: var(--fg-on-color);
+  background: var(--shell-primary-bg);
+  color: var(--shell-primary-fg);
 }
 
 .shell-field-control {
   min-height: 40px;
-  background: color-mix(in srgb, var(--surface) 76%, transparent);
-  box-shadow: inset 0 0 0 1px var(--glass-border);
+  background: color-mix(in srgb, var(--surface) 74%, transparent);
+  box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 12%, transparent);
 }
+
 .shell-field-control:hover {
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
 }
 
-/* --- Search field ------------------------------------------------------ */
-.shell-search {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  height: var(--shell-bar-h);
-  padding: 0 0.75rem 0 0.9rem;
-  border-radius: var(--radius-pill);
-  color: var(--fg-3);
-  font-size: var(--type-footnote);
-  width: 100%;
-  transition:
-    box-shadow var(--dur-micro) var(--ease-standard),
-    color var(--dur-micro) var(--ease-standard);
-}
-.shell-search:hover {
-  color: var(--fg-2);
-}
-.shell-search:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-.shell-search-kbd {
-  display: inline-flex;
-  align-items: center;
-  height: 20px;
-  padding: 0 0.4rem;
-  border-radius: var(--radius-xs);
-  background: var(--surface-3);
-  color: var(--fg-3);
-  font-size: var(--type-caption-2);
-  font-weight: 600;
-}
-
-.shell-control-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  border-radius: var(--radius-pill);
-  padding: 3px;
-}
-
+/* --- Menus and segmented controls -------------------------------------- */
 .shell-menu-option {
   display: flex;
   min-height: var(--hit-target);
   width: 100%;
   align-items: center;
-  gap: 0.5rem;
-  border-radius: var(--shell-control-radius);
+  gap: 0.55rem;
+  border-radius: var(--radius-pill);
   padding: 0.5rem 0.625rem;
   text-align: left;
   font-size: var(--type-footnote);
 }
 
-.shell-status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: var(--radius-pill);
-  background: var(--shell-toggle-on);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--shell-toggle-on) 16%, transparent);
+.shell-menu-action {
+  justify-content: flex-start;
 }
 
-/* --- Segmented control ------------------------------------------------- */
 .shell-seg {
   display: inline-flex;
-  gap: 2px;
-  padding: 3px;
+  gap: 4px;
+  padding: 5px;
   border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface) 36%, transparent);
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 7%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 30%, transparent);
 }
-.shell-control-group.shell-seg {
-  gap: 2px;
-}
+
 .shell-seg-opt {
+  position: relative;
   display: inline-flex;
+  min-width: calc(var(--shell-control-h) - 6px);
+  min-height: calc(var(--shell-control-h) - 6px);
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
-  min-width: var(--shell-control-h);
-  min-height: var(--shell-control-h);
-  padding: 0 0.7rem;
+  gap: 0.4rem;
+  padding: 0 0.8rem;
   border-radius: var(--radius-pill);
-  color: var(--fg-2);
   font-size: var(--type-footnote);
   font-weight: 590;
   white-space: nowrap;
-  transition:
-    background-color var(--dur-micro) var(--ease-standard),
-    color var(--dur-micro) var(--ease-standard),
-    box-shadow var(--dur-micro) var(--ease-standard);
-}
-.shell-seg-opt:not(.is-active):hover {
-  background: var(--shell-control-hover);
-  color: var(--fg-1);
-}
-.shell-seg-opt.is-active {
-  background: var(--shell-control-selected);
-  color: var(--fg-1);
-  box-shadow:
-    inset 0 0 0 0.5px var(--shell-control-selected-border),
-    var(--shell-control-selected-shadow);
-}
-.shell-seg-opt:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
 }
 
-/* --- Filter chips ------------------------------------------------------ */
+.shell-seg-opt.is-active {
+  z-index: 1;
+  background: transparent;
+  color: var(--fg-1);
+  box-shadow: none;
+}
+
+.shell-seg-opt.is-active::before,
+.shell-switch::after {
+  background:
+    radial-gradient(120% 80% at 50% -18%, rgba(255, 255, 255, 0.74), transparent 58%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--surface) 96%, #fff 4%),
+      color-mix(in srgb, var(--surface) 82%, transparent)
+    );
+}
+
+.shell-seg-opt.is-active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    0 1px 1px color-mix(in srgb, #000 5%, transparent),
+    0 8px 18px color-mix(in srgb, #000 11%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 68%, transparent);
+}
+
+.shell-surface-nav .shell-seg-opt {
+  padding-inline: 0.8rem;
+}
+
+.shell-top-right-island .shell-seg {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.shell-seg.w-full .shell-seg-opt,
+.shell-seg[class*="w-full"] .shell-seg-opt {
+  flex: 1 1 0;
+}
+
+.shell-seg-label-responsive {
+  display: none;
+}
+
+/* --- Chips, rows, switches --------------------------------------------- */
 .shell-chip {
   display: inline-flex;
+  min-height: 34px;
   align-items: center;
-  gap: 0.35rem;
-  min-height: var(--shell-control-h);
-  padding: 0 0.65rem;
-  border: 1px solid var(--border);
+  gap: 0.4rem;
+  padding: 0 0.7rem;
   border-radius: var(--radius-pill);
-  background: var(--surface-2);
+  background: color-mix(in srgb, var(--surface) 50%, transparent);
   color: var(--fg-2);
   font-size: var(--type-caption-1);
   font-weight: 560;
   line-height: 1;
-  transition:
-    background-color var(--dur-micro) var(--ease-standard),
-    border-color var(--dur-micro) var(--ease-standard),
-    color var(--dur-micro) var(--ease-standard);
+  box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 9%, transparent);
+}
+
+.shell-chip-dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: var(--radius-pill);
 }
 
 .glass-group {
   overflow: hidden;
   border-radius: var(--shell-cluster-radius);
-  background: color-mix(in srgb, var(--surface) 46%, transparent);
+  background: color-mix(in srgb, var(--surface) 38%, transparent);
   box-shadow:
-    inset 0 0 0 0.5px color-mix(in srgb, var(--border) 55%, transparent),
+    inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 8%, transparent),
     inset 0 1px 0 var(--glass-edge-light-soft);
 }
 
@@ -423,7 +515,7 @@
 }
 
 .glass-row + .glass-row {
-  box-shadow: inset 0 0.5px 0 color-mix(in srgb, var(--border) 48%, transparent);
+  box-shadow: inset 0 0.5px 0 color-mix(in srgb, var(--fg-1) 8%, transparent);
 }
 
 .glass-field-label {
@@ -433,71 +525,31 @@
   letter-spacing: 0.004em;
   line-height: 1.2;
 }
-.shell-chip:hover {
-  border-color: var(--border-strong);
-  color: var(--fg-1);
-}
-.shell-chip.is-active {
-  border-color: transparent;
-  background: var(--shell-control-selected);
-  color: var(--fg-1);
-  box-shadow:
-    inset 0 0 0 0.5px var(--shell-control-selected-border),
-    var(--shell-control-selected-shadow);
-}
-.shell-chip:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-.shell-chip-dot {
-  width: 8px;
-  height: 8px;
+
+.shell-status-dot {
+  width: 6px;
+  height: 6px;
   border-radius: var(--radius-pill);
-  flex: none;
+  background: var(--success);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--success) 16%, transparent);
 }
 
-/* Reading-surface section label — a calm, title-case eyebrow (HIG section
-   headers) replacing the prototype's mono ALL-CAPS specimen labels. One class,
-   so the concept card, Index detail, and Study back read identically. Tone-
-   colored variants pass a `color` inline; the default is the secondary ink. */
-.reading-label {
-  display: block;
-  font-size: var(--type-caption-1);
-  font-weight: var(--weight-semibold);
-  line-height: 1.3;
-  letter-spacing: 0.004em;
-  color: var(--fg-3);
-}
-
-/* --- Popover panel ----------------------------------------------------- */
-.shell-panel {
-  border-radius: var(--shell-panel-radius);
-  overflow: hidden;
-}
-.shell-panel-section + .shell-panel-section {
-  border-top: 1px solid var(--border-muted);
-}
-.shell-panel-title {
-  color: var(--fg-3);
-  font-size: var(--type-caption-1);
-  font-weight: var(--weight-semibold);
-  letter-spacing: 0.004em;
-  text-transform: none;
-}
-
-/* --- Switch row -------------------------------------------------------- */
 .shell-switch {
   position: relative;
-  width: 38px;
-  height: 22px;
+  width: 48px;
+  height: 28px;
   flex: none;
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--fg-1) 8%, var(--surface));
-  box-shadow: inset 0 0 0 1px var(--border);
+  background: color-mix(in srgb, var(--fg-1) 10%, var(--surface));
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 11%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 34%, transparent),
+    inset 0 -8px 16px -12px color-mix(in srgb, var(--fg-1) 20%, transparent);
   transition:
     background-color var(--dur-std) var(--ease-standard),
     box-shadow var(--dur-std) var(--ease-standard);
 }
+
 .shell-switch-btn {
   display: flex;
   min-height: var(--hit-target);
@@ -505,42 +557,194 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  border-radius: var(--shell-control-radius);
-  padding: 0 0.75rem;
+  border-radius: var(--radius-pill);
+  padding: 0.35rem 0.55rem 0.35rem 0.75rem;
   color: var(--fg-1);
   font-size: var(--type-footnote);
   outline: none;
 }
-.shell-switch-btn:hover {
-  background: var(--shell-control-hover);
-}
+
 .shell-switch::after {
   content: "";
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
   border-radius: var(--radius-pill);
-  /* iOS-style switch: the knob stays light on both the off-track and the green
-     on-track; only the lift shadow adapts so it reads on dark themes too. */
-  background: #fff;
-  box-shadow: 0 1px 2px color-mix(in srgb, #000 26%, transparent);
-  transition: transform var(--dur-std) var(--ease-standard);
+  box-shadow:
+    0 1px 1px color-mix(in srgb, #000 10%, transparent),
+    0 4px 10px color-mix(in srgb, #000 18%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 76%, transparent),
+    inset 0 -7px 14px -12px color-mix(in srgb, var(--fg-1) 32%, transparent);
+  transition:
+    width var(--dur-std) var(--ease-standard),
+    transform var(--dur-std) var(--ease-standard),
+    box-shadow var(--dur-std) var(--ease-standard);
 }
+
 .shell-switch.is-on {
   background: var(--shell-toggle-on);
-  box-shadow: inset 0 0 0 1px transparent;
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 9%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent),
+    inset 0 -8px 16px -12px color-mix(in srgb, #000 45%, transparent);
 }
+
 .shell-switch.is-on::after {
-  transform: translateX(16px);
+  transform: translateX(20px);
 }
-.shell-switch-btn:focus-visible .shell-switch {
-  outline: 2px solid var(--accent);
+
+.shell-switch-btn:active .shell-switch::after {
+  width: 28px;
+}
+
+.shell-switch-btn:active .shell-switch.is-on::after {
+  transform: translateX(14px);
+}
+
+.shell-switch-btn.shell-switch-btn:focus-visible {
+  outline: 2px solid var(--shell-focus-ring);
   outline-offset: 2px;
 }
 
-/* --- Canvas map tools --------------------------------------------------- */
+.shell-switch-btn.shell-switch-btn:focus-visible .shell-switch {
+  outline: 2px solid var(--shell-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Reading-surface section label. */
+.reading-label {
+  display: block;
+  color: var(--fg-3);
+  font-size: var(--type-caption-1);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.004em;
+  line-height: 1.3;
+}
+
+/* --- Panels ------------------------------------------------------------- */
+.shell-panel {
+  border-radius: var(--shell-panel-radius);
+  overflow: hidden;
+}
+
+.shell-panel-header {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.875rem 0.35rem 1rem;
+}
+
+.shell-panel-header-card {
+  padding: 0.45rem 0.75rem 0.35rem;
+}
+
+.shell-panel-actions,
+.shell-panel-pager {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 2px;
+}
+
+.shell-panel-count {
+  margin-left: 0.35rem;
+  color: var(--fg-3);
+  font-family: var(--font-mono);
+  font-size: var(--type-caption-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.shell-panel-title {
+  min-width: 0;
+  color: var(--fg-3);
+  font-size: var(--type-caption-1);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.004em;
+  text-transform: none;
+}
+
+.shell-panel-action {
+  min-height: 28px;
+  padding: 0 0.6rem;
+  font-size: var(--type-caption-1);
+}
+
+.shell-panel-section {
+  margin-top: 1rem;
+}
+
+.shell-panel-section:first-child {
+  margin-top: 0;
+}
+
+.shell-panel-soft-rule {
+  height: 1px;
+  margin: 0.85rem 1rem 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--fg-1) 10%, transparent), transparent);
+}
+
+.shell-account-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.45rem;
+}
+
+.shell-account-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.55rem 0.35rem;
+}
+
+.shell-account-initial {
+  display: flex;
+  width: var(--shell-icon-size);
+  height: var(--shell-icon-size);
+  align-items: center;
+  justify-content: center;
+  font-size: var(--type-caption-2);
+  font-weight: var(--weight-semibold);
+}
+
+/* --- Bottom dock and utility rail -------------------------------------- */
+.shell-mode-switch {
+  position: absolute;
+  bottom: var(--shell-edge);
+  left: 50%;
+  z-index: 20;
+  transform: translateX(-50%);
+}
+
+.shell-mode-island {
+  min-height: calc(var(--shell-control-h) + 14px);
+  padding: 6px;
+}
+
+.shell-mode-island .shell-seg {
+  gap: 4px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.shell-mode-island .shell-seg-opt {
+  min-width: 144px;
+  min-height: calc(var(--shell-control-h) + 2px);
+  gap: 0.65rem;
+  padding-inline: 1.15rem;
+  font-size: var(--type-body);
+}
+
+.shell-mode-island .shell-seg-opt:not(.is-active):hover {
+  background: transparent;
+  color: var(--fg-1);
+}
+
 .shell-tools {
   position: absolute;
   right: var(--shell-edge);
@@ -552,82 +756,27 @@
   pointer-events: auto;
 }
 
-.shell-tools-stack {
-  display: flex;
-  width: var(--shell-tools-w);
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
 .shell-tools-popover {
-  margin-right: 2px;
-  margin-bottom: 0;
   align-self: flex-end;
+  margin-right: 2px;
 }
 
-.shell-tool-bubble,
-.shell-zoom-rail {
-  display: flex;
-  width: var(--shell-tools-w);
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-}
-
-.shell-tool-bubble {
-  height: var(--shell-tools-w);
-  border-radius: var(--radius-pill);
-}
-
-.shell-zoom-rail {
-  flex-direction: column;
-  border-radius: var(--radius-pill);
-}
-
-.shell-tool-button {
+.shell-utility-rail {
   display: inline-flex;
-  width: var(--shell-tool-size);
-  height: var(--shell-tool-size);
+  width: var(--shell-tools-w);
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 4px;
+  padding: 5px;
   border-radius: var(--radius-pill);
-  color: var(--fg-2);
-  transition:
-    background-color var(--dur-micro) var(--ease-standard),
-    color var(--dur-micro) var(--ease-standard),
-    box-shadow var(--dur-micro) var(--ease-standard),
-    transform var(--dur-micro) var(--ease-standard);
 }
 
-.shell-tool-button:hover {
-  background: var(--shell-control-hover);
-  color: var(--fg-1);
-}
-
-.shell-tool-button:active {
-  transform: scale(0.96);
-}
-
-.shell-tool-button:disabled,
-.shell-tool-button[aria-disabled="true"] {
-  color: var(--fg-disabled);
-  background: transparent;
-  box-shadow: none;
-  pointer-events: none;
-}
-
-.shell-tool-button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.shell-tool-button.is-active {
-  background: var(--shell-control-selected);
-  color: var(--fg-1);
-  box-shadow:
-    inset 0 0 0 0.5px var(--shell-control-selected-border),
-    var(--shell-control-selected-shadow);
+.shell-rail-cluster {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  margin: 0.1rem 0;
 }
 
 .shell-zoom-readout {
@@ -640,13 +789,6 @@
   font-weight: var(--weight-semibold);
   font-variant-numeric: tabular-nums;
   user-select: none;
-}
-
-.shell-tool-divider {
-  width: 24px;
-  height: 1px;
-  margin: 4px 0;
-  background: var(--border-muted);
 }
 
 .atlas-minimap-card {
@@ -688,32 +830,49 @@
 
 @media (max-width: 980px) {
   .top-chrome {
-    grid-template-columns: minmax(180px, auto) 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "map right";
   }
 
   .top-chrome-search {
     display: none;
-  }
-
-  .top-chrome-trailing {
-    min-width: 0;
   }
 }
 
 @media (max-width: 720px) {
   :root {
     --shell-edge: 12px;
+    --shell-chrome-h: 112px;
     --shell-tools-w: 48px;
   }
 
   .top-chrome {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "map"
+      "right";
     gap: 8px;
     padding: 10px 12px;
   }
 
-  .shell-surface-nav .shell-seg-opt span {
-    display: none;
+  .top-chrome-map {
+    grid-area: map;
+  }
+
+  .top-chrome-right {
+    justify-self: center;
+  }
+
+  .shell-map-menu {
+    max-width: none;
+  }
+
+  .shell-top-right-island {
+    max-width: calc(100vw - 24px);
+  }
+
+  .shell-top-right-island .shell-seg-opt {
+    padding-inline: 0.62rem;
   }
 
   .atlas-minimap-card {
@@ -722,24 +881,33 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .shell-spinner {
+    animation-duration: 1.6s;
+  }
+
   .shell-btn,
   .shell-seg-opt,
   .shell-chip,
+  .shell-menu-option,
   .shell-switch,
   .shell-switch::after,
-  .shell-tool-button {
+  .shell-switch-btn {
     transition: none;
   }
+
   .shell-btn:active,
-  .shell-tool-button:active {
+  .shell-seg-opt:active,
+  .shell-chip:active,
+  .shell-menu-option:active,
+  .shell-switch-btn:active {
     transform: none;
   }
 }
 
 /* --- Command palette --------------------------------------------------- */
 /* The ⌘K palette is a thick-glass popover (the component wraps `.glass-thick`);
-   these rules own only its internal rhythm. Near-monochrome — the only color is
-   the accent-tinted selected row, matching the shell's selection semantics. */
+   these rules own only its internal rhythm. Rows reuse the same rounded shell
+   selection material as dropdown/menu rows. */
 .command-palette {
   overflow: hidden;
   border-radius: var(--radius-2xl);
@@ -797,15 +965,29 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   padding: 0.5rem 0.625rem;
   color: var(--fg-1);
   font-size: var(--type-footnote);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    transform var(--dur-micro) var(--ease-standard);
 }
 
+.command-palette-item:hover,
 .command-palette-item[aria-selected="true"] {
-  background: var(--accent-soft);
+  background: var(--shell-control-selected);
   color: var(--fg-1);
+  box-shadow:
+    inset 0 0 0 0.5px var(--shell-control-selected-border),
+    var(--shell-control-selected-shadow);
+}
+
+.command-palette-item:active {
+  transform: scale(0.965);
+  background: var(--shell-control-pressed);
 }
 
 .command-palette-footer {

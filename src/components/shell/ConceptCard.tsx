@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   XIcon,
@@ -18,40 +18,9 @@ import { ConceptHeader, ConceptBody, ConceptRelations } from "../concept";
 import { shareUrl } from "../../hooks/useUrlSync";
 import { cn } from "../../lib/utils";
 import { Glass } from "./Glass";
-import { ShellIconButton } from "./Controls";
+import { ShellIconButton, ShellPanelHeader } from "./Controls";
 
 const USED_BY_INITIAL = 8;
-
-function HeaderButton({
-  label,
-  onClick,
-  disabled,
-  active,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  disabled?: boolean;
-  active?: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <ShellIconButton
-      onClick={onClick}
-      disabled={disabled}
-      aria-label={label}
-      title={label}
-      className={cn(
-        "text-fg-2 outline-none",
-        "hover:text-fg-1 focus-visible:outline-2 focus-visible:outline-accent",
-        "disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent",
-        active && "is-active",
-      )}
-    >
-      {children}
-    </ShellIconButton>
-  );
-}
 
 /**
  * The concept place-card — the deep-study surface. A left-docked Liquid Glass
@@ -136,50 +105,74 @@ function CardContent({ nodeId }: { nodeId: string }) {
       role="dialog"
       aria-label={`${view.kindLabel}: ${node.label}`}
     >
-      <header className="shrink-0 px-4 pt-2.5">
-        <div className="mb-2.5 flex items-center justify-between">
-          <div className="flex items-center gap-0.5">
-            <HeaderButton label="Previous in domain" disabled={!prev} onClick={() => prev && select(prev.id)}>
-              <CaretUpIcon className="h-4 w-4" weight="bold" />
-            </HeaderButton>
-            <HeaderButton label="Next in domain" disabled={!next} onClick={() => next && select(next.id)}>
-              <CaretDownIcon className="h-4 w-4" weight="bold" />
-            </HeaderButton>
-            {peerIdx >= 0 && (
-              <span className="ml-1.5 font-mono text-caption-1 text-fg-3">
-                {peerIdx + 1}/{peers.length}
-              </span>
-            )}
-          </div>
-          <div className="flex items-center gap-0.5">
-            {userId && (
-              <HeaderButton
-                label={known ? "Mark as not known" : "Mark as known"}
-                active={known}
-                onClick={() => setNodeProgress(mapId, nodeId, known ? null : "known")}
+      <header className="shrink-0">
+        <ShellPanelHeader
+          title={
+            <span className="shell-panel-pager">
+              <ShellIconButton
+                aria-label="Previous in domain"
+                title="Previous in domain"
+                disabled={!prev}
+                onClick={() => prev && select(prev.id)}
               >
-                <CheckCircleIcon className="h-4 w-4" weight={known ? "fill" : "regular"} />
-              </HeaderButton>
-            )}
-            <HeaderButton label="Open in Index" onClick={() => openIn("dictionary")}>
-              <BookOpenTextIcon className="h-4 w-4" />
-            </HeaderButton>
-            <HeaderButton label="Open in Study" onClick={() => openIn("flashcards")}>
-              <CardsIcon className="h-4 w-4" />
-            </HeaderButton>
-            <HeaderButton label={copied ? "Link copied" : "Copy link"} active={copied} onClick={copyLink}>
-              {copied ? <CheckIcon className="h-4 w-4" weight="bold" /> : <LinkSimpleIcon className="h-4 w-4" />}
-            </HeaderButton>
-            <HeaderButton label={expanded ? "Collapse card" : "Expand card"} onClick={() => setExpanded((v) => !v)}>
-              {expanded ? <ArrowsInSimpleIcon className="h-4 w-4" /> : <ArrowsOutSimpleIcon className="h-4 w-4" />}
-            </HeaderButton>
-            <HeaderButton label="Close" onClick={() => select(null)}>
-              <XIcon className="h-4 w-4" weight="bold" />
-            </HeaderButton>
-          </div>
+                <CaretUpIcon className="shell-icon" weight="regular" />
+              </ShellIconButton>
+              <ShellIconButton
+                aria-label="Next in domain"
+                title="Next in domain"
+                disabled={!next}
+                onClick={() => next && select(next.id)}
+              >
+                <CaretDownIcon className="shell-icon" weight="regular" />
+              </ShellIconButton>
+              {peerIdx >= 0 && (
+                <span className="shell-panel-count">
+                  {peerIdx + 1}/{peers.length}
+                </span>
+              )}
+            </span>
+          }
+          className="shell-panel-header-card"
+        >
+          {userId && (
+            <ShellIconButton
+              aria-label={known ? "Mark as not known" : "Mark as known"}
+              title={known ? "Mark as not known" : "Mark as known"}
+              active={known}
+              onClick={() => setNodeProgress(mapId, nodeId, known ? null : "known")}
+            >
+              <CheckCircleIcon className="shell-icon" weight="regular" />
+            </ShellIconButton>
+          )}
+          <ShellIconButton aria-label="Open in Index" title="Open in Index" onClick={() => openIn("dictionary")}>
+            <BookOpenTextIcon className="shell-icon" weight="regular" />
+          </ShellIconButton>
+          <ShellIconButton aria-label="Open in Study" title="Open in Study" onClick={() => openIn("flashcards")}>
+            <CardsIcon className="shell-icon" weight="regular" />
+          </ShellIconButton>
+          <ShellIconButton
+            aria-label={copied ? "Link copied" : "Copy link"}
+            title="Copy link"
+            active={copied}
+            onClick={copyLink}
+          >
+            {copied ? <CheckIcon className="shell-icon" weight="regular" /> : <LinkSimpleIcon className="shell-icon" />}
+          </ShellIconButton>
+          <ShellIconButton
+            aria-label={expanded ? "Collapse card" : "Expand card"}
+            title={expanded ? "Collapse card" : "Expand card"}
+            onClick={() => setExpanded((v) => !v)}
+          >
+            {expanded ? <ArrowsInSimpleIcon className="shell-icon" /> : <ArrowsOutSimpleIcon className="shell-icon" />}
+          </ShellIconButton>
+          <ShellIconButton aria-label="Close" title="Close" onClick={() => select(null)}>
+            <XIcon className="shell-icon" weight="regular" />
+          </ShellIconButton>
+        </ShellPanelHeader>
+        <div className="px-4">
+          <ConceptHeader view={view} />
         </div>
-        <ConceptHeader view={view} />
-        <div className="-mx-4 mt-3 border-b border-border-subtle" />
+        <div className="shell-panel-soft-rule" />
       </header>
 
       <div ref={scrollRef} className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-4 py-4">

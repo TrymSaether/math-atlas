@@ -2,9 +2,8 @@ import { XIcon } from "@phosphor-icons/react";
 import { useStore } from "../../store";
 import { getDomainTone } from "../../lib/colors";
 import { KIND_LABEL, type NodeKind } from "../../types";
-import { cn } from "../../lib/utils";
 import { Glass } from "./Glass";
-import { ShellIconButton, ShellSegmented, ShellSwitch } from "./Controls";
+import { ShellButton, ShellChip, ShellIconButton, ShellPanelHeader, ShellSegmented, ShellSwitch } from "./Controls";
 import { useEffect, useRef } from "react";
 
 /**
@@ -49,65 +48,52 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
       role="dialog"
       aria-label="Filters and display"
     >
-      <div className="flex items-center justify-between px-3.5 pb-2 pt-3">
-        <span className="shell-panel-title">Filters</span>
+      <ShellPanelHeader title="Filters">
         <ShellIconButton ref={initialFocusRef} onClick={onClose} aria-label="Close filters">
-          <XIcon className="h-4 w-4" weight="bold" />
+          <XIcon className="shell-icon" weight="regular" />
         </ShellIconButton>
-      </div>
+      </ShellPanelHeader>
 
       <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-3.5 pb-3.5">
         {/* Content filters first — the load-bearing controls. */}
-        <section>
+        <section className="shell-panel-section">
           <div className="mb-2 flex items-center justify-between">
             <span className="shell-panel-title">Domains</span>
-            <button
-              type="button"
-              className="text-caption-1 font-semibold text-fg-2 hover:text-fg-1 hover:underline"
-              onClick={resetTopics}
-            >
+            <ShellButton shape="pill" className="shell-panel-action" onClick={resetTopics}>
               All
-            </button>
+            </ShellButton>
           </div>
           <div className="flex flex-wrap gap-1.5">
             {map.data.domains.map((domain) => {
               const dimmed = topics.size > 0 && !topics.has(domain.id);
               return (
-                <button
+                <ShellChip
                   key={domain.id}
-                  type="button"
-                  aria-pressed={topics.has(domain.id)}
-                  className={cn("shell-chip", topics.has(domain.id) && "is-active")}
+                  active={topics.has(domain.id)}
                   onClick={() => toggleTopic(domain.id)}
+                  dotColor={getDomainTone(domain.id).color}
                   style={{ opacity: dimmed ? 0.55 : 1 }}
                 >
-                  <span className="shell-chip-dot" style={{ background: getDomainTone(domain.id).color }} />
                   <span className="max-w-35 truncate">{domain.label}</span>
-                </button>
+                </ShellChip>
               );
             })}
           </div>
         </section>
 
-        <section className="mt-4 border-t border-border-muted pt-3">
+        <section className="shell-panel-section">
           <span className="shell-panel-title">Concept kinds</span>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {map.kinds.map((kind) => (
-              <button
-                key={kind}
-                type="button"
-                aria-pressed={kinds.has(kind as NodeKind)}
-                className={cn("shell-chip", kinds.has(kind as NodeKind) && "is-active")}
-                onClick={() => toggleKind(kind as NodeKind)}
-              >
+              <ShellChip key={kind} active={kinds.has(kind as NodeKind)} onClick={() => toggleKind(kind as NodeKind)}>
                 {KIND_LABEL[kind as NodeKind] ?? kind}
-              </button>
+              </ShellChip>
             ))}
           </div>
         </section>
 
         {/* Secondary: how the map is drawn. */}
-        <section className="mt-4 space-y-2.5 border-t border-border-muted pt-3">
+        <section className="shell-panel-section space-y-2.5">
           <span className="shell-panel-title">Display</span>
           <ShellSegmented
             label="Layout"
@@ -128,7 +114,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
           </div>
         </section>
 
-        <section className="mt-4 space-y-2.5 border-t border-border-muted pt-3">
+        <section className="shell-panel-section space-y-2.5">
           <div className="glass-group">
             <ShellSwitch label="Focus neighborhood" on={focusMode} onToggle={toggleFocusMode} />
           </div>

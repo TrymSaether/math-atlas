@@ -14,7 +14,7 @@ import { MathText } from "../../lib/katex";
 import { getDomainTone } from "../../lib/colors";
 import { cn } from "../../lib/utils";
 import { Glass } from "./Glass";
-import { ShellButton, ShellIconButton, ShellSegmented, ShellSwitch } from "./Controls";
+import { ShellButton, ShellIconButton, ShellPanelHeader, ShellSegmented, ShellSwitch } from "./Controls";
 
 function Slot({
   icon,
@@ -38,7 +38,7 @@ function Slot({
       </div>
       {value && (
         <ShellIconButton aria-label={`Clear ${label}`} onClick={onClear}>
-          <XIcon className="h-3.5 w-3.5" weight="bold" />
+          <XIcon className="shell-icon-sm" weight="regular" />
         </ShellIconButton>
       )}
     </div>
@@ -81,12 +81,11 @@ export function PathsPanel() {
   return (
     <aside className="shell-dock shell-dock-left pointer-events-auto">
       <Glass material="thick" className="shell-panel flex h-full w-[min(340px,calc(100vw-24px))] flex-col">
-        <header className="flex items-center justify-between px-4 pb-2 pt-3">
-          <span className="shell-panel-title">Paths</span>
+        <ShellPanelHeader title="Paths">
           <ShellIconButton onClick={() => setMode("explore")} aria-label="Close paths">
-            <XIcon className="h-4 w-4" weight="bold" />
+            <XIcon className="shell-icon" weight="regular" />
           </ShellIconButton>
-        </header>
+        </ShellPanelHeader>
 
         {/* Announce tour progress to assistive tech as the step (and selected
             concept) changes — the visual cue is the map pan, which a screen
@@ -111,7 +110,7 @@ export function PathsPanel() {
           <div className="glass-group mt-3">
             {routeKind === "path" && (
               <Slot
-                icon={<MapPinIcon className="h-4 w-4" />}
+                icon={<MapPinIcon className="shell-icon" />}
                 label="From"
                 value={routeFrom ? labelFor(routeFrom) : null}
                 onClear={() => setRouteEndpoint("from", null)}
@@ -124,12 +123,12 @@ export function PathsPanel() {
                   aria-label="Swap endpoints"
                   disabled={!routeFrom && !routeTo}
                 >
-                  <ArrowsDownUpIcon className="h-4 w-4" />
+                  <ArrowsDownUpIcon className="shell-icon" />
                 </ShellIconButton>
               </div>
             )}
             <Slot
-              icon={<FlagIcon className="h-4 w-4" />}
+              icon={<FlagIcon className="shell-icon" />}
               label={routeKind === "prereq" ? "Goal" : "To"}
               value={routeTo ? labelFor(routeTo) : null}
               onClear={() => setRouteEndpoint("to", null)}
@@ -169,18 +168,18 @@ export function PathsPanel() {
                     className="min-h-[44px] gap-1 rounded-full px-3 text-caption-1"
                     onClick={startTour}
                   >
-                    <PlayIcon className="h-3.5 w-3.5" weight="fill" /> Tour
+                    <PlayIcon className="shell-icon-sm" weight="regular" /> Tour
                   </ShellButton>
                 ) : (
                   <div className="flex items-center gap-0.5">
                     <ShellIconButton onClick={() => tourStep(-1)} aria-label="Previous step">
-                      <CaretLeftIcon className="h-4 w-4" weight="bold" />
+                      <CaretLeftIcon className="shell-icon" weight="regular" />
                     </ShellIconButton>
                     <span className="min-w-[44px] text-center font-mono text-caption-1 tabular-nums text-fg-2">
                       {(tourIndex ?? 0) + 1}/{ordered.length}
                     </span>
                     <ShellIconButton onClick={() => tourStep(1)} aria-label="Next step">
-                      <CaretRightIcon className="h-4 w-4" weight="bold" />
+                      <CaretRightIcon className="shell-icon" weight="regular" />
                     </ShellIconButton>
                     <ShellButton className="min-h-[44px] rounded-full px-3 text-caption-1" onClick={endTour}>
                       Done
@@ -207,7 +206,9 @@ export function PathsPanel() {
                           {i + 1}
                         </span>
                         <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: tone.color }} />
-                        <span className={cn("min-w-0 flex-1 truncate text-footnote", active ? "text-fg-1" : "text-fg-2")}>
+                        <span
+                          className={cn("min-w-0 flex-1 truncate text-footnote", active ? "text-fg-1" : "text-fg-2")}
+                        >
                           <MathText text={labelFor(id)} />
                         </span>
                       </button>

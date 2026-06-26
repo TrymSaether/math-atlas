@@ -36,7 +36,7 @@ export function UserMenu() {
     return (
       <>
         <ShellIconButton onClick={() => setDialogOpen(true)} aria-label="Sign in" title="Sign in">
-          <SignInIcon className="h-4 w-4" weight="regular" />
+          <SignInIcon className="shell-icon" weight="regular" />
         </ShellIconButton>
         <AuthDialog open={dialogOpen} onOpenChange={setDialogOpen} />
       </>
@@ -48,29 +48,29 @@ export function UserMenu() {
   return (
     <div className="relative" ref={ref}>
       <ShellIconButton onClick={() => setMenuOpen((o) => !o)} active={menuOpen} aria-label="Account" title={user.email}>
-        <span className="flex h-4 w-4 items-center justify-center text-caption-2 font-semibold">{initial}</span>
+        <span className="shell-account-initial">{initial}</span>
       </ShellIconButton>
       {menuOpen && (
         <Glass
           material="thick"
-          className="shell-panel absolute right-0 top-[calc(100%+8px)] z-50 w-[min(240px,calc(100vw-24px))] p-2"
+          className="shell-panel shell-account-menu absolute right-0 top-[calc(100%+8px)] z-50 w-[min(240px,calc(100vw-24px))]"
         >
-          <div className="flex items-center gap-2 px-2 py-1.5">
-            <UserIcon className="h-4 w-4 shrink-0 text-fg-3" />
+          <div className="shell-account-summary">
+            <UserIcon className="shell-icon shrink-0 text-fg-3" />
             <div className="min-w-0">
               {user.name && <div className="truncate text-footnote text-fg-1">{user.name}</div>}
               <div className="truncate text-caption-2 text-fg-3">{user.email}</div>
             </div>
           </div>
-          <div className="my-1 h-px w-full bg-border-muted" aria-hidden />
           <ShellButton
             onClick={async () => {
               await signOut();
               setMenuOpen(false);
             }}
-            className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-footnote text-fg-2"
+            shape="pill"
+            className="shell-menu-option shell-menu-action"
           >
-            <SignOutIcon className="h-4 w-4" />
+            <SignOutIcon className="shell-icon" />
             Sign out
           </ShellButton>
         </Glass>

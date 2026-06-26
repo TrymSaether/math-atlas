@@ -19,7 +19,7 @@ import { authEnabled } from "../../lib/authClient";
 import { cn } from "../../lib/utils";
 import { usePopoverDismiss } from "../../hooks/usePopover";
 import { Glass } from "./Glass";
-import { ShellButton, ShellIconButton } from "./Controls";
+import { GlassControlGroup, ShellButton, ShellIconButton, ShellSegmented } from "./Controls";
 import { UserMenu } from "../auth/UserMenu";
 
 const BRAND_SRC = `${import.meta.env.BASE_URL}atlas-assets/logo-mark.svg`;
@@ -31,12 +31,13 @@ function SearchField() {
     <Glass material="regular" className="shell-search">
       <button
         type="button"
-        className="flex h-full w-full items-center gap-2 outline-none"
+        className="shell-search-button"
         onClick={() => setPaletteOpen(true)}
         aria-label="Search concepts and theorems"
+        title="Search concepts and theorems"
       >
-        <MagnifyingGlassIcon className="h-4 w-4 shrink-0" weight="bold" />
-        <span className="min-w-0 flex-1 truncate text-left">Search concepts, theorems…</span>
+        <MagnifyingGlassIcon className="shell-icon" weight="regular" />
+        <span className="shell-search-label">Search concepts, theorems…</span>
         <kbd className="shell-search-kbd">⌘K</kbd>
       </button>
     </Glass>
@@ -105,25 +106,27 @@ function MapMenu() {
   return (
     <div className="relative" ref={ref}>
       <Glass material="regular" className="shell-map-menu">
-        <button
-          type="button"
-          className="shell-map-mark shell-btn shell-btn-round"
+        <ShellIconButton
+          className="shell-map-mark"
           onClick={() => setSurface("atlas")}
           aria-label="Go to Atlas"
           title="Atlas"
         >
           <img src={BRAND_SRC} alt="" className="h-7 w-7" />
-        </button>
+        </ShellIconButton>
         <ShellButton
           ref={triggerRef}
           type="button"
+          shape="pill"
           className="shell-map-title"
           onClick={() => setOpen((v) => !v)}
           aria-haspopup="listbox"
           aria-expanded={open}
+          aria-label="Choose active map"
+          title="Choose active map"
         >
-          <span className="truncate font-semibold text-fg-1">{title}</span>
-          <CaretDownIcon className="h-3.5 w-3.5 shrink-0 opacity-70" weight="bold" />
+          <span className="shell-map-title-label">{title}</span>
+          <CaretDownIcon className="shell-caret-icon" weight="bold" />
         </ShellButton>
       </Glass>
       {open && (
@@ -146,10 +149,7 @@ function MapMenu() {
                 role="option"
                 aria-selected={active}
                 tabIndex={active ? 0 : -1}
-                className={cn(
-                  "shell-menu-option",
-                  active ? "text-fg-1" : "text-fg-2 hover:bg-surface-hover hover:text-fg-1",
-                )}
+                className={cn("shell-menu-option", active && "is-active")}
                 onClick={() => choose(entry.slug)}
               >
                 <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
@@ -176,25 +176,18 @@ function SurfaceNav() {
   const surface = useStore((s) => s.surface);
   const setSurface = useStore((s) => s.setSurface);
   return (
-    <div className="shell-seg shell-surface-nav" role="tablist" aria-label="View">
-      {SURFACES.map(({ id, label, Icon }) => {
-        const active = surface === id;
-        return (
-          <button
-            key={id}
-            type="button"
-            role="tab"
-            aria-selected={active}
-            title={label}
-            className={cn("shell-seg-opt", active && "is-active")}
-            onClick={() => setSurface(id)}
-          >
-            <Icon className="h-4 w-4" weight={active ? "fill" : "regular"} />
-            <span className="hidden lg:inline">{label}</span>
-          </button>
-        );
-      })}
-    </div>
+    <ShellSegmented
+      label="Surface navigation"
+      value={surface}
+      onChange={setSurface}
+      hideLabels="responsive"
+      className="shell-surface-nav"
+      options={SURFACES.map(({ id, label, Icon }) => ({
+        id,
+        label,
+        icon: <Icon className="shell-icon" weight="regular" />,
+      }))}
+    />
   );
 }
 
@@ -224,16 +217,16 @@ function EditControls() {
 
   return (
     <div className="shell-edit-controls">
-      <ShellButton
+      <ShellIconButton
         active={editMode}
         onClick={toggle}
         className="shell-edit-toggle"
         aria-pressed={editMode}
         aria-label={edited ? "Edit mode, unsaved changes" : "Edit mode"}
       >
-        <PencilSimpleIcon className="h-4 w-4" weight={editMode ? "fill" : "regular"} />
+        <PencilSimpleIcon className="shell-icon" weight="regular" />
         {edited && <span className="shell-edit-badge" aria-hidden />}
-      </ShellButton>
+      </ShellIconButton>
       {editMode && (
         <>
           <ShellIconButton
@@ -241,12 +234,12 @@ function EditControls() {
             title="New concept"
             onClick={() => openNodeEditor({ mode: "create" })}
           >
-            <PlusIcon className="h-4 w-4" weight="bold" />
+            <PlusIcon className="shell-icon" weight="regular" />
           </ShellIconButton>
 
           {edited && (
             <ShellIconButton aria-label="Revert edits" title="Revert edits" onClick={revert}>
-              <ArrowCounterClockwiseIcon className="h-4 w-4" />
+              <ArrowCounterClockwiseIcon className="shell-icon" />
             </ShellIconButton>
           )}
         </>
@@ -266,49 +259,48 @@ function ThemeToggle() {
       aria-label={isDark ? "Switch to light appearance" : "Switch to dark appearance"}
       title={isDark ? "Light" : "Dark"}
     >
-      {isDark ? <SunIcon className="h-4 w-4" weight="regular" /> : <MoonIcon className="h-4 w-4" weight="regular" />}
+      {isDark ? (
+        <SunIcon className="shell-icon" weight="regular" />
+      ) : (
+        <MoonIcon className="shell-icon" weight="regular" />
+      )}
     </ShellIconButton>
   );
 }
 
-function TopToolbar() {
+function TopRightControls() {
   const surface = useStore((s) => s.surface);
   const mode = useStore((s) => s.mode);
   const map = useStore((s) => s.loadedMaps[s.mapId]);
   const showEditControls = surface === "atlas" && mode !== "paths" && Boolean(map);
 
   return (
-    <Glass material="regular" className={cn("top-toolbar", showEditControls && "has-edit-controls")}>
-      {showEditControls && (
-        <>
-          <EditControls />
-          <div className="top-toolbar-divider" aria-hidden />
-        </>
-      )}
+    <GlassControlGroup className="shell-top-right-island">
       <SurfaceNav />
-      <div className="top-toolbar-divider" aria-hidden />
+      <span className="shell-island-divider" aria-hidden />
+      {showEditControls && <EditControls />}
       <ThemeToggle />
       {authEnabled && <UserMenu />}
-    </Glass>
+    </GlassControlGroup>
   );
 }
 
 /**
- * The top Liquid Glass bar: the active-map menu and search field on the leading
- * side, the surface switch and appearance/account controls trailing. Floats
- * above the content layer; on narrow widths it wraps gracefully.
+ * Top Liquid Glass islands: map leading, search centered, and surface/global
+ * controls merged trailing. Floats above the content layer; on narrow widths it
+ * wraps gracefully.
  */
 export function TopChrome() {
   return (
     <div className="top-chrome">
-      <div className="top-chrome-leading">
+      <div className="top-chrome-map">
         <MapMenu />
       </div>
       <div className="top-chrome-search">
         <SearchField />
       </div>
-      <div className="top-chrome-trailing">
-        <TopToolbar />
+      <div className="top-chrome-right">
+        <TopRightControls />
       </div>
     </div>
   );

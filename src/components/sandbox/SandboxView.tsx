@@ -13,6 +13,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BookmarkSimple, CaretDown, CornersOut, FolderSimple, Minus, Plus, X } from "@phosphor-icons/react";
 import { Glass } from "../shell/Glass";
+import { ShellIconButton } from "../shell/Controls";
 import { cn } from "../../lib/utils";
 import { useSandbox } from "../../lib/workspace/store";
 import { WORKSPACES, WORKSPACE_IDS } from "../../lib/workspace/library";
@@ -32,13 +33,12 @@ function zoomRect(r: ViewRect, factor: number): ViewRect {
   return { xmin: cx - hw, xmax: cx + hw, ymin: cy - hh, ymax: cy + hh };
 }
 
-/** Icon button for the sandbox view dock — same shell tool-button as the atlas
- *  canvas controls, so the two canvases share one button family. */
+/** Icon button for the sandbox view dock — same shell icon button as atlas canvas controls. */
 function DockBtn({ label, onClick, children }: { label: string; onClick: () => void; children: ReactNode }) {
   return (
-    <button type="button" className="shell-tool-button" onClick={onClick} aria-label={label} title={label}>
+    <ShellIconButton onClick={onClick} aria-label={label} title={label}>
       {children}
-    </button>
+    </ShellIconButton>
   );
 }
 
@@ -90,18 +90,18 @@ export function SandboxView() {
               ))}
             </Glass>
           )}
-          <Glass material="regular" className="shell-zoom-rail pointer-events-auto">
+          <Glass material="regular" className="shell-utility-rail pointer-events-auto">
             <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
-              <Plus className="h-[18px] w-[18px]" weight="regular" />
+              <Plus className="shell-icon" weight="regular" />
             </DockBtn>
             <DockBtn label="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
-              <Minus className="h-[18px] w-[18px]" weight="regular" />
+              <Minus className="shell-icon" weight="regular" />
             </DockBtn>
             <DockBtn label="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
-              <CornersOut className="h-[18px] w-[18px]" weight="regular" />
+              <CornersOut className="shell-icon" weight="regular" />
             </DockBtn>
             <DockBtn label="Save view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
-              <BookmarkSimple className="h-[18px] w-[18px]" weight="regular" />
+              <BookmarkSimple className="shell-icon" weight="regular" />
             </DockBtn>
           </Glass>
         </div>

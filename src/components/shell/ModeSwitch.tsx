@@ -15,8 +15,8 @@ export function ModeSwitch() {
   const mode = useStore((s) => s.mode);
   const setMode = useStore((s) => s.setMode);
   return (
-    <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2">
-      <GlassControlGroup className="p-0">
+    <div className="shell-mode-switch">
+      <GlassControlGroup className="shell-mode-island">
         <ShellSegmented
           label="Atlas mode"
           value={mode}
@@ -24,7 +24,7 @@ export function ModeSwitch() {
           options={MODES.map(({ id, label, Icon }) => ({
             id,
             label,
-            icon: <Icon className="h-4 w-4" weight={mode === id ? "fill" : "regular"} />,
+            icon: <Icon className="shell-icon" weight="regular" />,
           }))}
         />
       </GlassControlGroup>

@@ -77,7 +77,7 @@ export function EditInspector() {
               className="min-h-11 rounded-full px-3"
               onClick={() => openNodeEditor({ mode: "create" })}
             >
-              <PlusIcon className="h-4 w-4" weight="bold" />
+              <PlusIcon className="shell-icon" weight="regular" />
               New concept
             </ShellButton>
           </Glass>

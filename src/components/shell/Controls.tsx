@@ -12,21 +12,36 @@ import { Glass, type GlassMaterial } from "./Glass";
 export interface ShellButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
   primary?: boolean;
+  shape?: "default" | "pill" | "circle";
   ref?: Ref<HTMLButtonElement>;
 }
 
-export function ShellButton({ active, primary, className, type = "button", ...rest }: ShellButtonProps) {
+export function ShellButton({
+  active,
+  primary,
+  shape = "default",
+  className,
+  type = "button",
+  ...rest
+}: ShellButtonProps) {
   return (
     <button
       type={type}
-      className={cn("shell-btn", active && "is-active", primary && "shell-btn-primary", className)}
+      className={cn(
+        "shell-btn",
+        active && "is-active",
+        primary && "shell-btn-primary",
+        shape === "pill" && "shell-btn-pill",
+        shape === "circle" && "shell-btn-circle",
+        className,
+      )}
       {...rest}
     />
   );
 }
 
-export function ShellIconButton({ className, ...rest }: ShellButtonProps) {
-  return <ShellButton className={cn("shell-btn-icon shell-btn-round", className)} {...rest} />;
+export function ShellIconButton({ className, shape = "circle", ...rest }: ShellButtonProps) {
+  return <ShellButton shape={shape} className={cn("shell-btn-icon", className)} {...rest} />;
 }
 
 export function GlassControlGroup({
@@ -51,13 +66,15 @@ export function ShellSegmented<T extends string>({
   options,
   onChange,
   className,
+  hideLabels = false,
   selectionRole = "tab",
 }: {
   label: string;
   value: T;
-  options: readonly { id: T; label: string; icon?: ReactNode }[];
+  options: readonly { id: T; label: string; icon?: ReactNode; ariaLabel?: string; title?: string }[];
   onChange: (id: T) => void;
   className?: string;
+  hideLabels?: boolean | "responsive";
   selectionRole?: "tab" | "button";
 }) {
   const selectedIndex = Math.max(
@@ -118,6 +135,8 @@ export function ShellSegmented<T extends string>({
             role={selectionRole === "tab" ? "tab" : undefined}
             aria-selected={selectionRole === "tab" ? active : undefined}
             aria-pressed={selectionRole === "button" ? active : undefined}
+            aria-label={hideLabels ? (option.ariaLabel ?? option.label) : option.ariaLabel}
+            title={option.title ?? option.label}
             tabIndex={active ? 0 : -1}
             className={cn("shell-seg-opt", active && "is-active")}
             onClick={() => onChange(option.id)}
@@ -126,7 +145,14 @@ export function ShellSegmented<T extends string>({
             }}
           >
             {option.icon}
-            <span>{option.label}</span>
+            <span
+              className={cn(
+                hideLabels === true && "sr-only",
+                hideLabels === "responsive" && "shell-seg-label-responsive",
+              )}
+            >
+              {option.label}
+            </span>
           </button>
         );
       })}
@@ -155,5 +181,44 @@ export function ShellSwitch({
       <span className="font-medium">{label}</span>
       <span className={cn("shell-switch", on && "is-on")} aria-hidden />
     </button>
+  );
+}
+
+export interface ShellChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  active?: boolean;
+  dotColor?: string;
+  ref?: Ref<HTMLButtonElement>;
+}
+
+export function ShellChip({ active, dotColor, className, type = "button", children, ...rest }: ShellChipProps) {
+  const ariaPressed = rest["aria-pressed"] ?? active;
+
+  return (
+    <button
+      type={type}
+      aria-pressed={ariaPressed}
+      className={cn("shell-chip", active && "is-active", className)}
+      {...rest}
+    >
+      {dotColor && <span className="shell-chip-dot" style={{ background: dotColor }} aria-hidden />}
+      {children}
+    </button>
+  );
+}
+
+export function ShellPanelHeader({
+  title,
+  children,
+  className,
+  ...rest
+}: Omit<HTMLAttributes<HTMLElement>, "title"> & {
+  title: ReactNode;
+  children?: ReactNode;
+}) {
+  return (
+    <header className={cn("shell-panel-header", className)} {...rest}>
+      <span className="shell-panel-title">{title}</span>
+      {children && <div className="shell-panel-actions">{children}</div>}
+    </header>
   );
 }

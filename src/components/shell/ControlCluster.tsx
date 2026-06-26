@@ -1,43 +1,14 @@
-import { useCallback, useRef, useState, type ReactNode, type RefObject } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useReactFlow, useViewport } from "reactflow";
 import { PlusIcon, MinusIcon, CornersOutIcon, FunnelSimpleIcon } from "@phosphor-icons/react";
-import { cn } from "../../lib/utils";
 import { usePopoverDismiss } from "../../hooks/usePopover";
 import { Glass } from "./Glass";
+import { ShellIconButton } from "./Controls";
 import { LayersPanel } from "./LayersPanel";
 
-function CtlButton({
-  label,
-  onClick,
-  active,
-  btnRef,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  active?: boolean;
-  btnRef?: RefObject<HTMLButtonElement | null>;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      ref={btnRef}
-      type="button"
-      className={cn("shell-tool-button", active && "is-active")}
-      onClick={onClick}
-      aria-label={label}
-      aria-pressed={active}
-      title={label}
-    >
-      {children}
-    </button>
-  );
-}
-
 /**
- * Bottom-trailing control cluster, Apple-Maps style: zoom, fit-to-view, and the
- * Map-layers toggle in one vertical Liquid Glass stack. The layers popover
- * anchors to its leading edge.
+ * Bottom-trailing utility rail: filters, zoom, and fit-to-view in one vertical
+ * Liquid Glass island. The layers popover anchors to the rail's leading edge.
  */
 export function ControlCluster() {
   const rf = useReactFlow();
@@ -56,28 +27,36 @@ export function ControlCluster() {
           <LayersPanel onClose={() => setLayersOpen(false)} />
         </div>
       )}
-      <div className="shell-tools-stack">
-        <Glass material="regular" className="shell-tool-bubble">
-          <CtlButton label="Filters" active={layersOpen} onClick={() => setLayersOpen((v) => !v)} btnRef={triggerRef}>
-            <FunnelSimpleIcon className="h-[18px] w-[18px]" weight={layersOpen ? "fill" : "regular"} />
-          </CtlButton>
-        </Glass>
-        <Glass material="regular" className="shell-zoom-rail">
-          <CtlButton label="Zoom in" onClick={() => rf.zoomIn({ duration: 200 })}>
-            <PlusIcon className="h-[18px] w-[18px]" weight="bold" />
-          </CtlButton>
+      <Glass material="regular" className="shell-utility-rail">
+        <ShellIconButton
+          ref={triggerRef}
+          active={layersOpen}
+          onClick={() => setLayersOpen((v) => !v)}
+          aria-label="Filters"
+          aria-pressed={layersOpen}
+          title="Filters"
+        >
+          <FunnelSimpleIcon className="shell-icon" weight="regular" />
+        </ShellIconButton>
+        <div className="shell-rail-cluster" aria-label="Zoom controls">
+          <ShellIconButton aria-label="Zoom in" title="Zoom in" onClick={() => rf.zoomIn({ duration: 200 })}>
+            <PlusIcon className="shell-icon" weight="regular" />
+          </ShellIconButton>
           <span className="shell-zoom-readout" aria-label={`Zoom ${Math.round(zoom * 100)} percent`}>
             {Math.round(zoom * 100)}%
           </span>
-          <CtlButton label="Zoom out" onClick={() => rf.zoomOut({ duration: 200 })}>
-            <MinusIcon className="h-[18px] w-[18px]" weight="bold" />
-          </CtlButton>
-          <div className="shell-tool-divider" />
-          <CtlButton label="Fit to view" onClick={() => rf.fitView({ padding: 0.12, duration: 400 })}>
-            <CornersOutIcon className="h-[18px] w-[18px]" weight="regular" />
-          </CtlButton>
-        </Glass>
-      </div>
+          <ShellIconButton aria-label="Zoom out" title="Zoom out" onClick={() => rf.zoomOut({ duration: 200 })}>
+            <MinusIcon className="shell-icon" weight="regular" />
+          </ShellIconButton>
+        </div>
+        <ShellIconButton
+          aria-label="Fit to view"
+          title="Fit to view"
+          onClick={() => rf.fitView({ padding: 0.12, duration: 400 })}
+        >
+          <CornersOutIcon className="shell-icon" weight="regular" />
+        </ShellIconButton>
+      </Glass>
     </div>
   );
 }
