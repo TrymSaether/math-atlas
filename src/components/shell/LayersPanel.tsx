@@ -5,6 +5,7 @@ import { KIND_LABEL, type NodeKind } from "../../types";
 import { cn } from "../../lib/utils";
 import { Glass } from "./Glass";
 import { ShellIconButton, ShellSegmented, ShellSwitch } from "./Controls";
+import { useEffect, useRef } from "react";
 
 /**
  * Filters & display — the Liquid Glass control popover anchored to the control
@@ -33,19 +34,24 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
   const toggleFocusMode = useStore((s) => s.toggleFocusMode);
   const focusDepth = useStore((s) => s.focusDepth);
   const setFocusDepth = useStore((s) => s.setFocusDepth);
+  const initialFocusRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    initialFocusRef.current?.focus();
+  }, []);
 
   if (!map) return null;
 
   return (
     <Glass
       material="thick"
-      className="shell-panel flex max-h-[min(78vh,580px)] w-[300px] flex-col"
+      className="shell-panel flex max-h-[min(78vh,580px)] w-75 flex-col"
       role="dialog"
       aria-label="Filters and display"
     >
       <div className="flex items-center justify-between px-3.5 pb-2 pt-3">
         <span className="shell-panel-title">Filters</span>
-        <ShellIconButton onClick={onClose} aria-label="Close filters">
+        <ShellIconButton ref={initialFocusRef} onClick={onClose} aria-label="Close filters">
           <XIcon className="h-4 w-4" weight="bold" />
         </ShellIconButton>
       </div>
@@ -76,7 +82,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
                   style={{ opacity: dimmed ? 0.55 : 1 }}
                 >
                   <span className="shell-chip-dot" style={{ background: getDomainTone(domain.id).color }} />
-                  <span className="max-w-[140px] truncate">{domain.label}</span>
+                  <span className="max-w-35 truncate">{domain.label}</span>
                 </button>
               );
             })}

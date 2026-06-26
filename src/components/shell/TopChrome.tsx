@@ -59,7 +59,7 @@ function MapMenu() {
     0,
     catalog.findIndex((e) => e.slug === mapId),
   );
-  const [activeIndex, setActiveIndex] = useState(selectedIndex);
+  const activeIndexRef = useRef(selectedIndex);
 
   usePopoverDismiss({ open, onClose: close, containerRef: ref, triggerRef });
 
@@ -67,22 +67,33 @@ function MapMenu() {
   // is operable from the keyboard (HIG/WCAG listbox pattern).
   useEffect(() => {
     if (!open) return;
-    setActiveIndex(selectedIndex);
-    const raf = requestAnimationFrame(() => optionRefs.current[selectedIndex]?.focus());
+
+    activeIndexRef.current = selectedIndex;
+
+    const raf = requestAnimationFrame(() => {
+      optionRefs.current[selectedIndex]?.focus();
+    });
+
     return () => cancelAnimationFrame(raf);
   }, [open, selectedIndex]);
 
   const onListKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
     if (catalog.length === 0) return;
-    let next = activeIndex;
-    if (e.key === "ArrowDown") next = (activeIndex + 1) % catalog.length;
-    else if (e.key === "ArrowUp") next = (activeIndex - 1 + catalog.length) % catalog.length;
-    else if (e.key === "Home") next = 0;
-    else if (e.key === "End") next = catalog.length - 1;
+
+    const currentIndex = optionRefs.current.findIndex((el) => el === document.activeElement);
+    const fromIndex = currentIndex >= 0 ? currentIndex : activeIndexRef.current;
+
+    let nextIndex: number;
+
+    if (e.key === "ArrowDown") nextIndex = (fromIndex + 1) % catalog.length;
+    else if (e.key === "ArrowUp") nextIndex = (fromIndex - 1 + catalog.length) % catalog.length;
+    else if (e.key === "Home") nextIndex = 0;
+    else if (e.key === "End") nextIndex = catalog.length - 1;
     else return;
+
     e.preventDefault();
-    setActiveIndex(next);
-    optionRefs.current[next]?.focus();
+    activeIndexRef.current = nextIndex;
+    optionRefs.current[nextIndex]?.focus();
   };
 
   const choose = (slug: string) => {
@@ -134,7 +145,7 @@ function MapMenu() {
                 type="button"
                 role="option"
                 aria-selected={active}
-                tabIndex={i === activeIndex ? 0 : -1}
+                tabIndex={active ? 0 : -1}
                 className={cn(
                   "shell-menu-option",
                   active ? "text-fg-1" : "text-fg-2 hover:bg-surface-hover hover:text-fg-1",
@@ -196,7 +207,6 @@ function EditControls() {
   const editMode = useStore((s) => s.editMode);
   const toggleEditMode = useStore((s) => s.toggleEditMode);
   const edited = useStore((s) => s.editedMaps.has(s.mapId));
-  const selectedId = useStore((s) => s.selectedId);
   const openNodeEditor = useStore((s) => s.openNodeEditor);
   const revertMap = useStore((s) => s.revertMap);
 
@@ -214,9 +224,15 @@ function EditControls() {
 
   return (
     <div className="shell-edit-controls">
-      <ShellButton active={editMode} onClick={toggle} className="shell-edit-toggle" aria-pressed={editMode}>
+      <ShellButton
+        active={editMode}
+        onClick={toggle}
+        className="shell-edit-toggle"
+        aria-pressed={editMode}
+        aria-label={edited ? "Edit mode, unsaved changes" : "Edit mode"}
+      >
         <PencilSimpleIcon className="h-4 w-4" weight={editMode ? "fill" : "regular"} />
-        {edited && <span className="shell-status-dot" aria-label="Edited map" />}
+        {edited && <span className="shell-edit-badge" aria-hidden />}
       </ShellButton>
       {editMode && (
         <>
@@ -227,13 +243,7 @@ function EditControls() {
           >
             <PlusIcon className="h-4 w-4" weight="bold" />
           </ShellIconButton>
-          {selectedId && (
-            <ShellIconButton
-              aria-label="Edit selected concept"
-              title="Edit selected concept"
-              onClick={() => openNodeEditor({ mode: "edit", nodeId: selectedId })}
-            ></ShellIconButton>
-          )}
+
           {edited && (
             <ShellIconButton aria-label="Revert edits" title="Revert edits" onClick={revert}>
               <ArrowCounterClockwiseIcon className="h-4 w-4" />

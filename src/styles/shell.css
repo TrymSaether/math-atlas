@@ -14,15 +14,15 @@
   --shell-edge: 16px; /* viewport inset for floating controls + docks */
   --shell-chrome-h: 52px; /* top chrome height */
   --shell-dock-top: calc(var(--shell-chrome-h) + var(--shell-edge)); /* where side docks begin */
-  --shell-tools-w: 44px;
+  --shell-tools-w: calc(var(--shell-tool-size) + 8px);
   --shell-tools-gap: 10px;
 
   /* Control density. Bars and the controls inside them run trimmer than the
      44px touch floor — this is a pointer-first canvas app, so the chrome reads
      as slim Apple-style glass rather than chunky mobile bars. */
-  --shell-bar-h: 44px; /* floating bar container height */
-  --shell-control-h: 36px; /* buttons + segments inside a bar */
-  --shell-tool-size: 36px; /* round canvas tool buttons */
+  --shell-bar-h: calc(var(--shell-control-h) + 8px); /* floating bar container height */
+  --shell-control-h: var(--hit-target); /* buttons + segments inside a bar */
+  --shell-tool-size: var(--hit-target); /* round canvas tool buttons */
 
   /* Selected state — a crisp raised capsule (the Apple "segmented" selection):
      an opaque surface lifted above the translucent track with a soft drop and a
@@ -185,12 +185,25 @@
 /* Compound selector for the same reason as `.shell-map-title` — keep the pill
    radius from being clobbered by the base `.shell-btn` rule below. */
 .shell-btn.shell-edit-toggle {
+  position: relative;
   width: var(--shell-control-h);
   height: var(--shell-control-h);
   min-width: var(--shell-control-h);
   min-height: var(--shell-control-h);
   padding: 0;
   border-radius: var(--radius-pill);
+}
+
+.shell-edit-badge {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-pill);
+  background: var(--success);
+  box-shadow: 0 0 0 2px var(--surface);
+  pointer-events: none;
 }
 
 .shell-surface-nav {
@@ -787,9 +800,12 @@
 }
 
 .command-palette-item {
+  min-height: var(--hit-target);
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  border-radius: var(--radius-sm);
-  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.625rem;
   color: var(--fg-1);
   font-size: var(--type-footnote);
 }

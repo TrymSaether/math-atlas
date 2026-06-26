@@ -150,17 +150,17 @@
   --measure-wide: 82ch;
 
   /* Layout and controls */
+  --hit-target: 44px;
   --space-panel-x: 1rem;
   --space-panel-y: 0.875rem;
   --control-height-xs: 28px;
   --control-height-sm: 32px;
-  --control-height-md: 40px;
-  --control-height-lg: 48px;
+  --control-height-md: var(--hit-target);
+  --control-height-lg: 52px;
   --icon-size-xs: 14px;
   --icon-size-sm: 16px;
   --icon-size-md: 18px;
   --icon-size-lg: 22px;
-  --hit-target: 44px;
 }
 
 :root[data-theme="chalkboard"] {

@@ -108,13 +108,11 @@ function SelectField({
   value,
   onChange,
   options,
-  compact,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   options: SelectOption[];
-  compact?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -142,11 +140,7 @@ function SelectField({
       <div className="relative">
         <button
           type="button"
-          className={
-            compact
-              ? "authoring-control authoring-select-trigger authoring-select-trigger-compact"
-              : "authoring-control authoring-select-trigger"
-          }
+          className="authoring-control authoring-select-trigger"
           onClick={() => setOpen((o) => !o)}
           aria-haspopup="listbox"
           aria-expanded={open}
@@ -231,7 +225,7 @@ function NodePicker({
                   onChange(o.id);
                   setOpen(false);
                 }}
-                className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-footnote hover:bg-(--surface-3)"
+                className="authoring-picker-option"
                 style={{ color: "var(--fg-1)" }}
               >
                 <span
@@ -332,7 +326,6 @@ function EdgeRow({
             label=""
             value={relation}
             onChange={(next) => setRelation(next as AuthorableRelation)}
-            compact
             options={AUTHORABLE_RELATIONS.map((r) => ({ value: r, label: RELATIONS[r].reads }))}
           />
           <textarea
@@ -441,7 +434,6 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           label=""
           value={relation}
           onChange={(next) => setRelation(next as AuthorableRelation)}
-          compact
           options={AUTHORABLE_RELATIONS.map((r) => ({ value: r, label: RELATIONS[r].reads }))}
         />
         <div className="col-span-2 flex items-center gap-2">
@@ -987,12 +979,12 @@ export function NodeEditorPanel({
         <button
           type="button"
           onClick={save}
-          className="authoring-action authoring-action-primary ml-auto inline-flex min-h-[36px] items-center gap-1 rounded-full px-3 text-caption-1"
+          className="authoring-action authoring-action-primary ml-auto inline-flex min-h-9 items-center gap-1 rounded-full px-3 text-caption-1"
           style={justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined}
         >
           {justSaved ? (
             <>
-              <CheckIcon className="h-3.5 w-3.5" weight="bold" /> Saved
+              <CheckIcon className="h-4 w-4" weight="bold" /> Saved
             </>
           ) : editingId === null ? (
             "Create"
