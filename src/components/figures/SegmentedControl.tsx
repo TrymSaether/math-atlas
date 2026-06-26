@@ -39,7 +39,7 @@ export function SegmentedControl<T extends string>({
             role="radio"
             aria-checked={active}
             onClick={() => onChange(opt.value)}
-            className="rounded-sm px-2.5 py-1 text-ui-meta transition-colors"
+            className="rounded-sm px-2.5 py-1 text-caption-1 transition-colors"
             style={{
               background: active ? DIA.accent : "transparent",
               color: active ? UI.onColor : UI.text,

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import {
   MagnifyingGlassIcon,
   CompassIcon,
@@ -17,6 +17,7 @@ import { useStore, type Surface } from "../../store";
 import { schemeFor, siblingOf } from "../../lib/themes";
 import { authEnabled } from "../../lib/authClient";
 import { cn } from "../../lib/utils";
+import { usePopoverDismiss } from "../../hooks/usePopover";
 import { Glass } from "./Glass";
 import { ShellButton, ShellIconButton } from "./Controls";
 import { UserMenu } from "../auth/UserMenu";
@@ -46,32 +47,64 @@ function SearchField() {
 function MapMenu() {
   const mapId = useStore((s) => s.mapId);
   const setMap = useStore((s) => s.setMap);
+  const setSurface = useStore((s) => s.setSurface);
   const catalog = useStore((s) => s.catalog);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const close = useCallback(() => setOpen(false), []);
   const title = catalog.find((e) => e.slug === mapId)?.title ?? mapId;
+  const selectedIndex = Math.max(
+    0,
+    catalog.findIndex((e) => e.slug === mapId),
+  );
+  const [activeIndex, setActiveIndex] = useState(selectedIndex);
 
+  usePopoverDismiss({ open, onClose: close, containerRef: ref, triggerRef });
+
+  // Open the listbox on the current map and move focus into it, so the dropdown
+  // is operable from the keyboard (HIG/WCAG listbox pattern).
   useEffect(() => {
     if (!open) return;
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
+    setActiveIndex(selectedIndex);
+    const raf = requestAnimationFrame(() => optionRefs.current[selectedIndex]?.focus());
+    return () => cancelAnimationFrame(raf);
+  }, [open, selectedIndex]);
+
+  const onListKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (catalog.length === 0) return;
+    let next = activeIndex;
+    if (e.key === "ArrowDown") next = (activeIndex + 1) % catalog.length;
+    else if (e.key === "ArrowUp") next = (activeIndex - 1 + catalog.length) % catalog.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = catalog.length - 1;
+    else return;
+    e.preventDefault();
+    setActiveIndex(next);
+    optionRefs.current[next]?.focus();
+  };
+
+  const choose = (slug: string) => {
+    if (slug !== mapId) setMap(slug);
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
 
   return (
     <div className="relative" ref={ref}>
       <Glass material="regular" className="shell-map-menu">
-        <span className="shell-map-mark" aria-hidden>
+        <button
+          type="button"
+          className="shell-map-mark shell-btn shell-btn-round"
+          onClick={() => setSurface("atlas")}
+          aria-label="Go to Atlas"
+          title="Atlas"
+        >
           <img src={BRAND_SRC} alt="" className="h-7 w-7" />
-        </span>
+        </button>
         <ShellButton
+          ref={triggerRef}
           type="button"
           className="shell-map-title"
           onClick={() => setOpen((v) => !v)}
@@ -85,32 +118,35 @@ function MapMenu() {
       {open && (
         <Glass
           material="thick"
-          className="shell-panel absolute left-0 top-[calc(100%+8px)] z-30 w-[280px] p-1.5"
+          className="shell-panel absolute left-0 top-[calc(100%+8px)] z-30 w-70 p-1.5"
           role="listbox"
+          aria-label="Active map"
+          onKeyDown={onListKeyDown}
         >
-          {catalog.map((entry) => {
+          {catalog.map((entry, i) => {
             const active = entry.slug === mapId;
             return (
               <button
                 key={entry.slug}
+                ref={(el) => {
+                  optionRefs.current[i] = el;
+                }}
                 type="button"
                 role="option"
                 aria-selected={active}
+                tabIndex={i === activeIndex ? 0 : -1}
                 className={cn(
                   "shell-menu-option",
                   active ? "text-fg-1" : "text-fg-2 hover:bg-surface-hover hover:text-fg-1",
                 )}
-                onClick={() => {
-                  if (!active) setMap(entry.slug);
-                  setOpen(false);
-                }}
+                onClick={() => choose(entry.slug)}
               >
                 <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
                 {active && <CheckIcon className="h-4 w-4 shrink-0 text-fg-2" weight="bold" />}
               </button>
             );
           })}
-          {catalog.length === 0 && <p className="px-2.5 py-3 text-ui-xs text-fg-3">Loading maps…</p>}
+          {catalog.length === 0 && <p className="px-2.5 py-3 text-caption-1 text-fg-3">Loading maps…</p>}
         </Glass>
       )}
     </div>
@@ -180,7 +216,6 @@ function EditControls() {
     <div className="shell-edit-controls">
       <ShellButton active={editMode} onClick={toggle} className="shell-edit-toggle" aria-pressed={editMode}>
         <PencilSimpleIcon className="h-4 w-4" weight={editMode ? "fill" : "regular"} />
-        <span>Edit</span>
         {edited && <span className="shell-status-dot" aria-label="Edited map" />}
       </ShellButton>
       {editMode && (
@@ -197,9 +232,7 @@ function EditControls() {
               aria-label="Edit selected concept"
               title="Edit selected concept"
               onClick={() => openNodeEditor({ mode: "edit", nodeId: selectedId })}
-            >
-              <PencilSimpleIcon className="h-4 w-4" />
-            </ShellIconButton>
+            ></ShellIconButton>
           )}
           {edited && (
             <ShellIconButton aria-label="Revert edits" title="Revert edits" onClick={revert}>
@@ -223,11 +256,7 @@ function ThemeToggle() {
       aria-label={isDark ? "Switch to light appearance" : "Switch to dark appearance"}
       title={isDark ? "Light" : "Dark"}
     >
-      {isDark ? (
-        <SunIcon className="h-[18px] w-[18px]" weight="regular" />
-      ) : (
-        <MoonIcon className="h-[18px] w-[18px]" weight="regular" />
-      )}
+      {isDark ? <SunIcon className="h-4 w-4" weight="regular" /> : <MoonIcon className="h-4 w-4" weight="regular" />}
     </ShellIconButton>
   );
 }
@@ -239,7 +268,7 @@ function TopToolbar() {
   const showEditControls = surface === "atlas" && mode !== "paths" && Boolean(map);
 
   return (
-    <Glass material="regular" className="top-toolbar">
+    <Glass material="regular" className={cn("top-toolbar", showEditControls && "has-edit-controls")}>
       {showEditControls && (
         <>
           <EditControls />

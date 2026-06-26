@@ -49,7 +49,7 @@ export function NodeVisual({ node, className }: { node: GraphNode; className?: s
       >
         <Suspense
           fallback={
-            <div className="py-8 text-center text-ui-meta" style={{ color: UI.muted }}>
+            <div className="py-8 text-center text-caption-1" style={{ color: UI.muted }}>
               Loading figure...
             </div>
           }
@@ -57,7 +57,7 @@ export function NodeVisual({ node, className }: { node: GraphNode; className?: s
           {hasWidth ? (
             createElement(InteractiveFigure, { nodeId: node.id })
           ) : (
-            <div className="py-8 text-center text-ui-meta" style={{ color: UI.muted }}>
+            <div className="py-8 text-center text-caption-1" style={{ color: UI.muted }}>
               Loading figure...
             </div>
           )}

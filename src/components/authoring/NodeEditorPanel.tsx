@@ -93,7 +93,7 @@ function Field({
         />
       )}
       {preview && value.trim() && (
-        <span className="mt-1 block text-ui-xs text-fg-2">
+        <span className="mt-1 block text-caption-1 text-fg-2">
           <MathText text={value} />
         </span>
       )}
@@ -231,7 +231,7 @@ function NodePicker({
                   onChange(o.id);
                   setOpen(false);
                 }}
-                className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-ui-sm hover:bg-(--surface-3)"
+                className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-footnote hover:bg-(--surface-3)"
                 style={{ color: "var(--fg-1)" }}
               >
                 <span
@@ -285,7 +285,7 @@ function EdgeRow({
 
   return (
     <li
-      className="rounded-md border px-2.5 py-1.5 text-ui-sm"
+      className="rounded-md border px-2.5 py-1.5 text-footnote"
       style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
     >
       <div className="flex items-center gap-2">
@@ -321,7 +321,7 @@ function EdgeRow({
       </div>
 
       {!editing && edge.notes && (
-        <p className="mt-1 text-ui-xs italic" style={{ color: "var(--fg-3)" }}>
+        <p className="mt-1 text-caption-1 italic" style={{ color: "var(--fg-3)" }}>
           {edge.notes}
         </p>
       )}
@@ -343,7 +343,7 @@ function EdgeRow({
             className="authoring-control"
           />
           {error && (
-            <p className="text-ui-xs" style={{ color: "var(--danger)" }}>
+            <p className="text-caption-1" style={{ color: "var(--danger)" }}>
               {error}
             </p>
           )}
@@ -351,14 +351,14 @@ function EdgeRow({
             <button
               type="button"
               onClick={() => setEditing(false)}
-              className="authoring-action rounded-sm px-2 py-1 text-ui-xs text-fg-3"
+              className="authoring-action rounded-sm px-2 py-1 text-caption-1 text-fg-3"
             >
               Cancel
             </button>
             <button
               type="button"
               onClick={save}
-              className="authoring-action authoring-action-primary rounded-sm px-2.5 py-1 text-ui-xs"
+              className="authoring-action authoring-action-primary rounded-sm px-2.5 py-1 text-caption-1"
             >
               <CheckIcon className="h-3.5 w-3.5" /> Save
             </button>
@@ -431,7 +431,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           type="button"
           onClick={() => setOutgoing((o) => !o)}
           title={outgoing ? "this → concept" : "concept → this"}
-          className="flex h-8 items-center gap-1.5 rounded-sm px-2 text-ui-xs font-medium hover:bg-(--surface-3)"
+          className="flex h-8 items-center gap-1.5 rounded-sm px-2 text-caption-1 font-medium hover:bg-(--surface-3)"
           style={{ color: "var(--fg-2)" }}
         >
           <ArrowsLeftRightIcon className="h-3.5 w-3.5" />
@@ -451,7 +451,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           <button
             type="button"
             onClick={submit}
-            className="authoring-action authoring-action-primary h-8 rounded-sm px-2.5 text-ui-xs"
+            className="authoring-action authoring-action-primary h-8 rounded-sm px-2.5 text-caption-1"
           >
             <PlusIcon className="h-3.5 w-3.5" /> Link
           </button>
@@ -464,7 +464,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           className="authoring-control col-span-2"
         />
         {error && (
-          <p className="col-span-2 text-ui-xs" style={{ color: "var(--danger)" }}>
+          <p className="col-span-2 text-caption-1" style={{ color: "var(--danger)" }}>
             {error}
           </p>
         )}
@@ -529,7 +529,7 @@ function ExamplesEditor({
               className="authoring-control authoring-control-mono"
             />
             {ex.content.trim() && (
-              <span className="block text-ui-xs text-fg-2">
+              <span className="block text-caption-1 text-fg-2">
                 <MathText text={ex.content} />
               </span>
             )}
@@ -538,7 +538,7 @@ function ExamplesEditor({
         <button
           type="button"
           onClick={add}
-          className="authoring-action rounded-sm px-2.5 py-1.5 text-ui-xs"
+          className="authoring-action rounded-sm px-2.5 py-1.5 text-caption-1"
           style={{ color: "var(--fg-2)" }}
         >
           <PlusIcon className="h-3.5 w-3.5" /> Add example
@@ -570,7 +570,7 @@ function UsesPicker({
           {value.map((id) => (
             <span
               key={id}
-              className="inline-flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-ui-xs"
+              className="inline-flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-caption-1"
               style={{
                 borderColor: "var(--border)",
                 background: "var(--surface-3)",
@@ -643,7 +643,7 @@ function ProofStepsEditor({
             style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
           >
             <div className="flex items-center gap-2">
-              <span className="shrink-0 font-mono text-ui-2xs tabular-nums" style={{ color: "var(--fg-3)" }}>
+              <span className="shrink-0 font-mono text-caption-2 tabular-nums" style={{ color: "var(--fg-3)" }}>
                 {i + 1}
               </span>
               <input
@@ -691,7 +691,7 @@ function ProofStepsEditor({
               className="authoring-control authoring-control-mono"
             />
             {step.content.trim() && (
-              <span className="block text-ui-xs text-fg-2">
+              <span className="block text-caption-1 text-fg-2">
                 <MathText text={step.content} />
               </span>
             )}
@@ -701,7 +701,7 @@ function ProofStepsEditor({
         <button
           type="button"
           onClick={add}
-          className="authoring-action rounded-sm px-2.5 py-1.5 text-ui-xs"
+          className="authoring-action rounded-sm px-2.5 py-1.5 text-caption-1"
           style={{ color: "var(--fg-2)" }}
         >
           <PlusIcon className="h-3.5 w-3.5" /> Add step
@@ -781,27 +781,27 @@ export function NodeEditorPanel({
       {/* Header */}
       <header className="relative shrink-0 px-5 pt-3.5">
         <div className="mb-3 flex items-center justify-between">
-          <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
+          <span className="text-caption-1 font-semibold uppercase tracking-label-wide text-fg-3">
             {editingId === null ? "New concept" : "Edit concept"}
           </span>
           <div className="flex items-center gap-0.5">
             {editingId !== null &&
               (confirmDelete ? (
                 <div className="flex items-center gap-1.5">
-                  <span className="text-ui-xs" style={{ color: "var(--fg-2)" }}>
+                  <span className="text-caption-1" style={{ color: "var(--fg-2)" }}>
                     Delete?
                   </span>
                   <button
                     type="button"
                     onClick={() => deleteNode(editingId)}
-                    className="authoring-action authoring-action-danger rounded-sm px-2 py-1 text-ui-xs"
+                    className="authoring-action authoring-action-danger rounded-sm px-2 py-1 text-caption-1"
                   >
                     Delete
                   </button>
                   <button
                     type="button"
                     onClick={() => setConfirmDelete(false)}
-                    className="authoring-action rounded-sm px-1.5 py-1 text-ui-xs text-fg-3"
+                    className="authoring-action rounded-sm px-1.5 py-1 text-caption-1 text-fg-3"
                   >
                     Cancel
                   </button>
@@ -837,16 +837,16 @@ export function NodeEditorPanel({
               value={draft.label}
               onChange={(e) => set({ label: e.target.value })}
               placeholder="Concept label"
-              className="w-full bg-transparent font-serif text-node-panel-title outline-none placeholder:text-fg-3"
+              className="w-full bg-transparent text-title-2 outline-none placeholder:text-fg-3"
               style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.015em" }}
               aria-label="Concept label"
             />
             {draft.label.trim() && (
-              <div className="mt-0.5 text-ui-meta text-fg-2">
+              <div className="mt-0.5 text-caption-1 text-fg-2">
                 <MathText text={draft.label} />
               </div>
             )}
-            <div className="mt-2 flex items-center gap-1.5 text-ui-meta" style={{ color: tone.color }}>
+            <div className="mt-2 flex items-center gap-1.5 text-caption-1" style={{ color: tone.color }}>
               {glyphId ? (
                 <DomainGlyph id={glyphId} size={14} />
               ) : (
@@ -980,14 +980,14 @@ export function NodeEditorPanel({
         style={{ borderColor: "var(--border-subtle)" }}
       >
         {editError && (
-          <span className="min-w-0 flex-1 truncate text-ui-xs" style={{ color: "var(--danger)" }}>
+          <span className="min-w-0 flex-1 truncate text-caption-1" style={{ color: "var(--danger)" }}>
             {editError}
           </span>
         )}
         <button
           type="button"
           onClick={save}
-          className="authoring-action authoring-action-primary ml-auto inline-flex min-h-[36px] items-center gap-1 rounded-full px-3 text-ui-xs"
+          className="authoring-action authoring-action-primary ml-auto inline-flex min-h-[36px] items-center gap-1 rounded-full px-3 text-caption-1"
           style={justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined}
         >
           {justSaved ? (

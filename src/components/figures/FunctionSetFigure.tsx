@@ -170,7 +170,7 @@ function Control({
             role="radio"
             aria-checked={active}
             onClick={() => onChange(choice)}
-            className="rounded-sm px-2.5 py-1 text-ui-meta transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-(--focus-ring) focus-visible:ring-offset-1 focus-visible:ring-offset-(--figure-bg)"
+            className="rounded-sm px-2.5 py-1 text-caption-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-(--focus-ring) focus-visible:ring-offset-1 focus-visible:ring-offset-(--figure-bg)"
             style={{
               background: active ? DIA.accent : "transparent",
               color: active ? UI.onColor : UI.text,

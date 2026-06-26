@@ -67,14 +67,14 @@ export function EditInspector() {
               <PencilSimpleIcon className="h-4 w-4" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-fg-1">Edit mode</h2>
-              <p className="mt-1 text-ui-sm leading-relaxed text-fg-3">
+              <h2 className="text-lg text-fg-1">Edit mode</h2>
+              <p className="mt-1 text-footnote leading-relaxed text-fg-3">
                 Select a concept to inspect its source, relations, proof steps, and examples.
               </p>
             </div>
             <ShellButton
               primary
-              className="min-h-[44px] rounded-full px-3"
+              className="min-h-11 rounded-full px-3"
               onClick={() => openNodeEditor({ mode: "create" })}
             >
               <PlusIcon className="h-4 w-4" weight="bold" />

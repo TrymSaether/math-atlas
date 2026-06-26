@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useRef, useState, type ReactNode, type RefObject } from "react";
 import { useReactFlow, useViewport } from "reactflow";
 import { PlusIcon, MinusIcon, CornersOutIcon, FunnelSimpleIcon } from "@phosphor-icons/react";
 import { cn } from "../../lib/utils";
+import { usePopoverDismiss } from "../../hooks/usePopover";
 import { Glass } from "./Glass";
 import { LayersPanel } from "./LayersPanel";
 
@@ -9,17 +10,20 @@ function CtlButton({
   label,
   onClick,
   active,
+  btnRef,
   children,
 }: {
   label: string;
   onClick: () => void;
   active?: boolean;
+  btnRef?: RefObject<HTMLButtonElement | null>;
   children: ReactNode;
 }) {
   return (
     <button
+      ref={btnRef}
       type="button"
-      className={cn("map-tool-button", active && "is-active")}
+      className={cn("shell-tool-button", active && "is-active")}
       onClick={onClick}
       aria-label={label}
       aria-pressed={active}
@@ -40,45 +44,35 @@ export function ControlCluster() {
   const { zoom } = useViewport();
   const [layersOpen, setLayersOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeLayers = useCallback(() => setLayersOpen(false), []);
 
-  useEffect(() => {
-    if (!layersOpen) return;
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setLayersOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setLayersOpen(false);
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [layersOpen]);
+  usePopoverDismiss({ open: layersOpen, onClose: closeLayers, containerRef: ref, triggerRef });
 
   return (
-    <div className="map-tools" ref={ref}>
+    <div className="shell-tools" ref={ref}>
       {layersOpen && (
-        <div className="map-tools-popover">
+        <div className="shell-tools-popover">
           <LayersPanel onClose={() => setLayersOpen(false)} />
         </div>
       )}
-      <div className="map-tools-stack">
-        <Glass material="regular" className="map-tool-bubble">
-          <CtlButton label="Filters" active={layersOpen} onClick={() => setLayersOpen((v) => !v)}>
+      <div className="shell-tools-stack">
+        <Glass material="regular" className="shell-tool-bubble">
+          <CtlButton label="Filters" active={layersOpen} onClick={() => setLayersOpen((v) => !v)} btnRef={triggerRef}>
             <FunnelSimpleIcon className="h-[18px] w-[18px]" weight={layersOpen ? "fill" : "regular"} />
           </CtlButton>
         </Glass>
-        <Glass material="regular" className="map-zoom-rail">
+        <Glass material="regular" className="shell-zoom-rail">
           <CtlButton label="Zoom in" onClick={() => rf.zoomIn({ duration: 200 })}>
             <PlusIcon className="h-[18px] w-[18px]" weight="bold" />
           </CtlButton>
-          <span className="map-zoom-readout" aria-label={`Zoom ${Math.round(zoom * 100)} percent`}>
+          <span className="shell-zoom-readout" aria-label={`Zoom ${Math.round(zoom * 100)} percent`}>
             {Math.round(zoom * 100)}%
           </span>
           <CtlButton label="Zoom out" onClick={() => rf.zoomOut({ duration: 200 })}>
             <MinusIcon className="h-[18px] w-[18px]" weight="bold" />
           </CtlButton>
-          <div className="map-tool-divider" />
+          <div className="shell-tool-divider" />
           <CtlButton label="Fit to view" onClick={() => rf.fitView({ padding: 0.12, duration: 400 })}>
             <CornersOutIcon className="h-[18px] w-[18px]" weight="regular" />
           </CtlButton>

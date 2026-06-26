@@ -2,10 +2,11 @@ import clsx, { type ClassValue } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
 
 /**
- * tailwind-merge configured with our custom font-size tokens. Without this it
- * doesn't recognise `text-ui-*` / `text-atlas-*` etc. as sizes, so combining a
- * size class with a color class (e.g. `cn("text-ui-control", "text-accent")`)
- * makes it treat both as `text-*` conflicts and silently drop the size.
+ * tailwind-merge configured with our HIG text-style ladder font-size tokens.
+ * Without this it doesn't recognise `text-body` / `text-caption-1` etc. as
+ * sizes, so combining a size class with a color class (e.g.
+ * `cn("text-footnote", "text-accent")`) makes it treat both as `text-*`
+ * conflicts and silently drop the size.
  */
 const twMerge = extendTailwindMerge({
   extend: {
@@ -13,24 +14,17 @@ const twMerge = extendTailwindMerge({
       "font-size": [
         {
           text: [
-            "edge-label",
-            "ui-tiny",
-            "ui-2xs",
-            "ui-caption",
-            "ui-hint",
-            "ui-meta",
-            "ui-xs",
-            "ui-control",
-            "ui-sm",
-            "ui-copy",
-            "ui-body",
-            "ui-lead",
-            "atlas-brand",
-            "atlas-card",
-            "node-panel-title",
-            "atlas-panel",
-            "atlas-summary",
-            "atlas-display",
+            "large-title",
+            "title-1",
+            "title-2",
+            "title-3",
+            "headline",
+            "body",
+            "callout",
+            "subhead",
+            "footnote",
+            "caption-1",
+            "caption-2",
           ],
         },
       ],

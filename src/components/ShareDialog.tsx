@@ -90,15 +90,15 @@ export function ShareDialog({
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
                   className="glass-thick flex flex-col gap-3 rounded-2xl p-5"
                 >
-                  <h2 className="font-serif text-lg text-fg-1">Share “{title}”</h2>
-                  <p className="text-ui-hint text-fg-3">
+                  <h2 className="text-lg text-fg-1">Share “{title}”</h2>
+                  <p className="text-caption-2 text-fg-3">
                     Invite people by the email they signed up with. They’ll be able to edit.
                   </p>
 
                   <button
                     type="button"
                     onClick={copyLink}
-                    className="shell-field-control flex min-h-[44px] items-center justify-center gap-2 rounded-md px-3 py-2 text-ui-control font-medium text-fg-1"
+                    className="shell-field-control flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 text-footnote font-medium text-fg-1"
                     style={{
                       background: "color-mix(in srgb, var(--surface) 70%, transparent)",
                       boxShadow: "inset 0 0 0 1px var(--glass-border)",
@@ -114,7 +114,7 @@ export function ShareDialog({
 
                   <form onSubmit={invite} className="flex items-end gap-2">
                     <label className="flex flex-1 flex-col gap-1">
-                      <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">
+                      <span className="text-caption-1 font-semibold uppercase tracking-label-wide text-fg-3">
                         Email
                       </span>
                       <input
@@ -122,7 +122,7 @@ export function ShareDialog({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="collaborator@example.com"
-                        className="h-11 rounded-md px-3 text-ui-control text-fg-1 outline-none"
+                        className="h-11 rounded-md px-3 text-footnote text-fg-1 outline-none"
                         style={{
                           background: "color-mix(in srgb, var(--surface) 80%, transparent)",
                           boxShadow: "inset 0 0 0 1px var(--glass-border)",
@@ -133,21 +133,21 @@ export function ShareDialog({
                       primary
                       type="submit"
                       disabled={busy}
-                      className="h-11 justify-center rounded-md px-4 text-ui-control font-medium text-fg-on-color"
+                      className="h-11 justify-center rounded-md px-4 text-footnote font-medium text-fg-on-color"
                     >
                       {busy ? "…" : "Invite"}
                     </ShellButton>
                   </form>
 
                   {error && (
-                    <p className="text-ui-hint font-medium text-danger" role="alert">
+                    <p className="text-caption-2 font-medium text-danger" role="alert">
                       {error}
                     </p>
                   )}
 
                   <div className="flex flex-col gap-1">
                     {collabs.length === 0 ? (
-                      <p className="text-ui-hint text-fg-3">No collaborators yet.</p>
+                      <p className="text-caption-2 text-fg-3">No collaborators yet.</p>
                     ) : (
                       collabs.map((c) => (
                         <div
@@ -156,8 +156,8 @@ export function ShareDialog({
                           style={{ background: "color-mix(in srgb, var(--surface) 60%, transparent)" }}
                         >
                           <div className="min-w-0 flex-1">
-                            <div className="truncate text-ui-control text-fg-1">{c.email}</div>
-                            <div className="text-ui-2xs uppercase tracking-label-wide text-fg-3">{c.role}</div>
+                            <div className="truncate text-footnote text-fg-1">{c.email}</div>
+                            <div className="text-caption-2 uppercase tracking-label-wide text-fg-3">{c.role}</div>
                           </div>
                           <button
                             type="button"

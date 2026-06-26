@@ -51,7 +51,7 @@ export default function ParsevalFigure() {
 
       {/* Parseval energy balance */}
       <div className="mt-2.5 px-1">
-        <div className="mb-1.5 flex items-baseline justify-between text-ui-hint" style={{ color: UI.muted }}>
+        <div className="mb-1.5 flex items-baseline justify-between text-caption-2" style={{ color: UI.muted }}>
           <span>
             Energy captured by {N} harmonic{N !== 1 ? "s" : ""}
           </span>
@@ -69,7 +69,7 @@ export default function ParsevalFigure() {
             }}
           />
         </div>
-        <div className="mt-1 flex justify-between font-mono text-ui-hint" style={{ color: UI.subtle }}>
+        <div className="mt-1 flex justify-between font-mono text-caption-2" style={{ color: UI.subtle }}>
           <span>Σ|ĉₙ|² ≈ {partialE.toFixed(3)}</span>
           <span>‖f‖² = {totalE.toFixed(3)}</span>
         </div>

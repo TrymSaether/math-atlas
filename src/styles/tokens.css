@@ -161,23 +161,9 @@
   --icon-size-md: 18px;
   --icon-size-lg: 22px;
   --hit-target: 44px;
-
-  /* Motion */
-  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
-  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
-  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
-  --dur-fast: 90ms;
-  --dur-slow: 360ms;
 }
 
-:root[data-theme="chalkboard"],
-:root[data-theme="3b1b-dark"],
-:root[data-theme="nocturne"],
-:root[data-theme="deepsea"],
-:root[data-theme="aubergine"],
-:root[data-theme="neon"],
-:root[data-theme="seminar"],
-:root[data-theme="lemma-dark"] {
+:root[data-theme="chalkboard"] {
   --surface-raised: color-mix(in srgb, var(--surface) 88%, var(--fg-1) 3%);
   --surface-sunken: color-mix(in srgb, var(--bg-deep) 64%, var(--surface) 36%);
   --surface-hover: color-mix(in srgb, var(--fg-1) 8%, var(--surface));
@@ -198,7 +184,7 @@
 @media (prefers-reduced-motion: reduce) {
   :root,
   :root[data-theme] {
-    --dur-fast: 1ms;
-    --dur-slow: 1ms;
+    --dur-micro: 1ms;
+    --dur-std: 1ms;
   }
 }

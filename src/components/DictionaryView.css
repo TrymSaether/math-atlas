@@ -12,6 +12,8 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  background: var(--bg);
+  color: var(--fg-1);
 }
 
 /* ---- Master/detail frame ------------------------------------------- */
@@ -43,7 +45,7 @@
 .dictionary-view .dict-kicker {
   margin: 0;
   color: var(--fg-3);
-  font-size: var(--type-ui-meta);
+  font-size: var(--type-caption-1);
   font-weight: var(--weight-semibold);
   letter-spacing: 0.004em;
 }
@@ -57,8 +59,7 @@
 
 .dictionary-view .dict-title {
   margin: 4px 0 0;
-  font-family: var(--font-serif);
-  font-size: var(--type-dict-term);
+  font-size: var(--type-title-3);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: 0;
@@ -69,7 +70,7 @@
   flex-shrink: 0;
   color: var(--fg-3);
   font-family: var(--font-mono);
-  font-size: var(--type-ui-hint);
+  font-size: var(--type-caption-2);
   white-space: nowrap;
 }
 
@@ -99,7 +100,7 @@
   background: var(--surface-2);
   color: var(--fg-1);
   font-family: var(--font-sans);
-  font-size: var(--type-ui-sm);
+  font-size: var(--type-footnote);
   outline: none;
   transition:
     border-color 0.12s ease,
@@ -135,7 +136,7 @@
   background: var(--surface);
   color: var(--fg-3);
   cursor: pointer;
-  font-size: var(--type-ui-2xs);
+  font-size: var(--type-caption-2);
   font-weight: 500;
   padding: 3px 8px 3px 7px;
   transition:
@@ -164,7 +165,7 @@
 
 .dictionary-view .dict-facet-n {
   font-family: var(--font-mono);
-  font-size: var(--type-ui-tiny);
+  font-size: var(--type-caption-2);
   opacity: 0.7;
 }
 
@@ -173,7 +174,7 @@
   background: none;
   color: var(--accent);
   cursor: pointer;
-  font-size: var(--type-ui-2xs);
+  font-size: var(--type-caption-2);
   padding: 3px 5px;
 }
 
@@ -193,7 +194,7 @@
   margin-right: 2px;
   color: var(--fg-3);
   font-family: var(--font-mono);
-  font-size: var(--type-ui-2xs);
+  font-size: var(--type-caption-2);
   letter-spacing: var(--tracking-label-tight);
   text-transform: uppercase;
 }
@@ -206,7 +207,7 @@
   background: var(--surface);
   color: var(--fg-2);
   font-family: var(--font-mono);
-  font-size: var(--type-ui-tiny);
+  font-size: var(--type-caption-2);
   letter-spacing: var(--tracking-code);
   padding: 3px 9px;
   transition:
@@ -250,7 +251,7 @@
   padding: 6px 10px 4px;
   color: var(--fg-3);
   font-family: var(--font-mono);
-  font-size: var(--type-ui-2xs);
+  font-size: var(--type-caption-2);
   font-weight: 600;
   letter-spacing: var(--tracking-label-tight);
   text-transform: uppercase;
@@ -262,7 +263,7 @@
 
 .dictionary-view .dict-group-n {
   color: var(--fg-4);
-  font-size: var(--type-ui-tiny);
+  font-size: var(--type-caption-2);
   font-weight: 500;
 }
 
@@ -310,7 +311,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: var(--font-sans);
-  font-size: var(--type-ui-copy);
+  font-size: var(--type-body);
   line-height: 1.35;
   font-weight: 450;
   color: var(--fg-1);
@@ -319,7 +320,7 @@
 .dictionary-view .dict-row-meta {
   flex-shrink: 0;
   font-family: var(--font-mono);
-  font-size: var(--type-ui-caption);
+  font-size: var(--type-caption-1);
   letter-spacing: var(--tracking-code);
   color: var(--fg-3);
 }
@@ -359,7 +360,7 @@
   color: var(--accent);
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: var(--type-ui-xs);
+  font-size: var(--type-caption-1);
   padding: 0;
 }
 
@@ -417,7 +418,7 @@
   color: var(--accent);
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: var(--type-ui-caption);
+  font-size: var(--type-caption-1);
   padding: 5px 12px;
   transition: background-color 0.12s ease;
 }

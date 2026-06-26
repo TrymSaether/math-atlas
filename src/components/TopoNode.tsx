@@ -94,7 +94,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
   const showMeta = lod === "near" || lod === "mid";
   // At distance the card is just a label — let the title grow and use more lines.
   const titleClass =
-    lod === "far" ? (isLandmark ? "text-atlas-card" : "text-atlas-brand") : isLandmark ? "text-ui-body" : "text-ui-sm";
+    lod === "far" ? (isLandmark ? "text-title-3" : "text-title-3") : isLandmark ? "text-body" : "text-footnote";
   const titleLineClamp = lod === "far" ? 3 : 2;
 
   return (
@@ -110,7 +110,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
       tabIndex={0}
       aria-label={`${KIND_LABEL[node.kind]}: ${node.label}`}
       className={cn(
-        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[13px] border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
+        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[var(--radius-lg)] border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
         "focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
         // Hover affordance: a quiet lift + soft elevation, nothing more. Selected
         // nodes own their own shadow below, so the hover shadow only applies at rest.
@@ -179,20 +179,16 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
               aria-hidden
             />
           )}
-          {/* Short kind pill (THM / DEF / …) + reference number. */}
-          <span
-            className="inline-flex h-[18px] shrink-0 items-center rounded-xs border px-1.5 text-ui-tiny font-bold uppercase tracking-label-tight"
-            style={{
-              background: "var(--surface-2)",
-              borderColor: "var(--border)",
-              color: "var(--fg-2)",
-            }}
-          >
+          {/* Precise kind (Thm / Lem / …) + reference number. The icon already
+              carries the category; this word disambiguates within it, told in
+              the same calm title-case voice as the reading vocabulary rather
+              than a loud bordered, ALL-CAPS chip. */}
+          <span className="shrink-0 text-caption-2 font-semibold tracking-tight" style={{ color: "var(--fg-2)" }}>
             {kindAbbrev(node.kind)}
           </span>
           {node.number && (
             <span
-              className="min-w-0 truncate font-mono text-ui-caption font-semibold tabular-nums"
+              className="min-w-0 truncate font-mono text-caption-1 font-semibold tabular-nums"
               style={{ color: "var(--fg-3)" }}
               title={node.id}
             >

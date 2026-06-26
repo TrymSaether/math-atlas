@@ -7,7 +7,7 @@
   display: block;
   margin-bottom: 6px;
   font-family: var(--font-sans);
-  font-size: var(--type-ui-meta);
+  font-size: var(--type-caption-1);
   font-weight: var(--weight-semibold);
   letter-spacing: 0.004em;
   line-height: 1.25;
@@ -18,7 +18,7 @@
 .authoring-hint {
   margin-left: 8px;
   font-family: var(--font-sans);
-  font-size: var(--type-ui-xs);
+  font-size: var(--type-caption-1);
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
@@ -33,7 +33,7 @@
   background: color-mix(in srgb, var(--surface) 78%, transparent);
   color: var(--fg-1);
   padding: 8px 12px;
-  font-size: var(--type-ui-control);
+  font-size: var(--type-footnote);
   line-height: 1.35;
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--surface) 74%, transparent),
@@ -71,7 +71,7 @@ textarea.authoring-control {
 
 .authoring-control-mono {
   font-family: var(--font-mono);
-  font-size: var(--type-ui-sm);
+  font-size: var(--type-footnote);
   letter-spacing: var(--tracking-code);
 }
 
@@ -96,7 +96,7 @@ textarea.authoring-control {
   min-height: 32px;
   border-radius: var(--radius-sm);
   padding: 5px 9px;
-  font-size: var(--type-ui-xs);
+  font-size: var(--type-caption-1);
 }
 
 .authoring-select-popover {
@@ -129,7 +129,7 @@ textarea.authoring-control {
   padding: 7px 10px;
   text-align: left;
   color: var(--fg-2);
-  font-size: var(--type-ui-sm);
+  font-size: var(--type-footnote);
   transition:
     background-color var(--dur-micro) var(--ease-standard),
     color var(--dur-micro) var(--ease-standard);
@@ -166,7 +166,7 @@ textarea.authoring-control {
 .authoring-chip {
   border-radius: var(--radius-sm);
   padding: 6px 10px;
-  font-size: var(--type-ui-xs);
+  font-size: var(--type-caption-1);
   text-transform: capitalize;
 }
 

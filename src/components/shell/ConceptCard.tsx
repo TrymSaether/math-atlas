@@ -146,7 +146,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
               <CaretDownIcon className="h-4 w-4" weight="bold" />
             </HeaderButton>
             {peerIdx >= 0 && (
-              <span className="ml-1.5 font-mono text-ui-meta text-fg-3">
+              <span className="ml-1.5 font-mono text-caption-1 text-fg-3">
                 {peerIdx + 1}/{peers.length}
               </span>
             )}
@@ -199,7 +199,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             )}
           </div>
         ) : (
-          <p className="text-ui-sm italic text-fg-3">No written content recorded for this concept yet.</p>
+          <p className="text-footnote italic text-fg-3">No written content recorded for this concept yet.</p>
         )}
       </div>
     </Glass>

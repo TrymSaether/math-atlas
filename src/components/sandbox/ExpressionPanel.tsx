@@ -66,7 +66,7 @@ export function ExpressionPanel() {
       <button
         type="button"
         onClick={() => addRow()}
-        className="sandbox-add-expression flex items-center gap-2 px-3.5 py-2.5 text-ui-xs"
+        className="sandbox-add-expression flex items-center gap-2 px-3.5 py-2.5 text-caption-1"
       >
         <Plus size={14} weight="bold" />
         New expression
@@ -166,7 +166,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
       <div className="flex min-h-[44px] items-stretch">
         {/* Index gutter */}
         <div
-          className="sandbox-row-gutter flex w-6 items-center justify-center py-1 font-mono text-ui-2xs tabular-nums"
+          className="sandbox-row-gutter flex w-6 items-center justify-center py-1 font-mono text-caption-2 tabular-nums"
           title={statusTitle(status)}
         >
           <span>{index}</span>
@@ -196,12 +196,12 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
           </div>
 
           {computed?.error ? (
-            <div className="sandbox-row-error mt-1 flex items-center gap-1 text-ui-2xs">
+            <div className="sandbox-row-error mt-1 flex items-center gap-1 text-caption-2">
               <WarningCircle size={12} weight="bold" />
               {computed.error}
             </div>
           ) : selected && (evaluatedTex || summary) ? (
-            <div className="sandbox-row-readout mt-0.5 flex items-center gap-1 font-mono text-ui-2xs">
+            <div className="sandbox-row-readout mt-0.5 flex items-center gap-1 font-mono text-caption-2">
               {evaluatedTex ? (
                 <MathText text={`$${evaluatedTex}$`} />
               ) : (
@@ -290,7 +290,7 @@ function NumBox({ label, value, onChange }: { label: string; value: number; onCh
       type="number"
       value={value}
       onChange={(e) => onChange(Number(e.target.value))}
-      className="sandbox-num-box w-9 px-1 py-0.5 text-center font-mono text-ui-2xs tabular-nums outline-none"
+      className="sandbox-num-box w-9 px-1 py-0.5 text-center font-mono text-caption-2 tabular-nums outline-none"
     />
   );
 }
@@ -313,7 +313,7 @@ function RowMeta({ row, computed, status }: { row: Row; computed?: Computed; sta
   if (details.length === 0 && status !== "error") return null;
 
   return (
-    <div className="sandbox-row-meta mt-1.5 text-ui-2xs">
+    <div className="sandbox-row-meta mt-1.5 text-caption-2">
       <button
         type="button"
         className="sandbox-row-meta-toggle flex max-w-full items-center gap-1.5"
