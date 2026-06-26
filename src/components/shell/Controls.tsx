@@ -1,10 +1,11 @@
-import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode, Ref } from "react";
 import { cn } from "../../lib/utils";
 import { Glass, type GlassMaterial } from "./Glass";
 
 export interface ShellButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
   primary?: boolean;
+  ref?: Ref<HTMLButtonElement>;
 }
 
 export function ShellButton({ active, primary, className, type = "button", ...rest }: ShellButtonProps) {

@@ -213,13 +213,13 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
               style={{ width: total ? `${(ratedCount / total) * 100}%` : "0%" }}
             />
           </div>
-          <span className="shrink-0 font-mono text-ui-hint text-fg-3">
+          <span className="shrink-0 font-mono text-caption-2 text-fg-3">
             {total ? Math.min(state.pos + 1, total) : 0}/{total}
           </span>
           <button
             onClick={reshuffle}
             disabled={total === 0}
-            className="flex h-7 items-center gap-1.5 rounded-sm border border-border bg-surface px-2.5 text-ui-meta font-medium text-fg-2 transition-colors hover:bg-surface-3 disabled:opacity-40"
+            className="flex h-7 items-center gap-1.5 rounded-sm border border-border bg-surface px-2.5 text-caption-1 font-medium text-fg-2 transition-colors hover:bg-surface-3 disabled:opacity-40"
             title="Shuffle and restart"
           >
             <ShuffleIcon className="h-3 w-3" />
@@ -288,7 +288,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                 ) : (
                   <button
                     onClick={flip}
-                    className="flex h-11 items-center justify-center gap-2 rounded-sm border border-transparent bg-accent px-5 text-ui-body font-semibold text-fg-on-color transition-transform active:scale-[0.98]"
+                    className="flex h-11 items-center justify-center gap-2 rounded-sm border border-transparent bg-accent px-5 text-body font-semibold text-fg-on-color transition-transform active:scale-[0.98]"
                     style={{ boxShadow: "var(--shadow-2)" }}
                   >
                     <span>Show answer</span>
@@ -342,7 +342,7 @@ function CardFront({
         <div className="w-full max-w-md">
           <ConceptHeader view={view} size="card" />
         </div>
-        <span className="font-mono text-ui-hint uppercase tracking-label-wide text-fg-4">
+        <span className="font-mono text-caption-2 uppercase tracking-label-wide text-fg-4">
           Tap or press space to flip
         </span>
       </button>
@@ -358,8 +358,7 @@ function CardBack({ node, map, mapId, onOpen }: { node: GraphNode; map: LoadedMa
       footer={
         <button
           onClick={onOpen}
-          className="flex shrink-0 items-center justify-center gap-1.5 border-t py-2.5 text-ui-xs font-medium text-accent transition-colors hover:bg-surface-2"
-          style={{ borderColor: "var(--border-subtle)" }}
+          className="flex shrink-0 items-center justify-center gap-1.5 border-t border-(--border-subtle) py-2.5 text-caption-1 font-medium text-accent transition-colors hover:bg-surface-2"
         >
           Open full entry in dictionary
         </button>
@@ -398,10 +397,8 @@ function SummaryCard({
         <SparkleIcon className="h-7 w-7" />
       </div>
       <div className="space-y-1.5">
-        <h2 className="text-atlas-summary text-fg-1" style={{ fontWeight: 600 }}>
-          Deck complete
-        </h2>
-        <p className="text-ui-body text-fg-2">
+        <h2 className="text-title-1 font-semibold text-fg-1">Deck complete</h2>
+        <p className="text-body text-fg-2">
           You got <strong className="text-fg-1">{gotCount}</strong> of {total} ({pct}%).
           {againCount > 0 && ` ${againCount} to review.`}
         </p>
@@ -410,7 +407,7 @@ function SummaryCard({
         {againCount > 0 && (
           <button
             onClick={onReview}
-            className="flex h-11 items-center gap-2 rounded-sm bg-accent px-6 text-ui-body font-semibold text-fg-on-color transition-transform active:scale-[0.98]"
+            className="flex h-11 items-center gap-2 rounded-sm bg-accent px-6 text-body font-semibold text-fg-on-color transition-transform active:scale-[0.98]"
             style={{ boxShadow: "var(--shadow-2)" }}
           >
             Review {againCount} missed
@@ -418,13 +415,13 @@ function SummaryCard({
         )}
         <button
           onClick={onRestart}
-          className="flex h-11 items-center gap-2 rounded-sm border border-border bg-surface px-5 text-ui-body font-medium text-fg-1 transition-colors hover:bg-surface-3"
+          className="flex h-11 items-center gap-2 rounded-sm border border-border bg-surface px-5 text-body font-medium text-fg-1 transition-colors hover:bg-surface-3"
         >
           <ArrowCounterClockwiseIcon className="h-4 w-4" /> Restart deck
         </button>
         <button
           onClick={onClose}
-          className="h-11 rounded-sm px-5 text-ui-body font-medium text-fg-2 transition-colors hover:bg-surface-3"
+          className="h-11 rounded-sm px-5 text-body font-medium text-fg-2 transition-colors hover:bg-surface-3"
         >
           Back to atlas
         </button>
@@ -436,13 +433,13 @@ function SummaryCard({
 function EmptyState({ onBack }: { onBack: () => void }) {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-surface px-8 py-12 text-center">
-      <p className="text-ui-lead text-fg-1">No cards match the current filters.</p>
-      <p className="max-w-85 text-ui-sm text-fg-3">
+      <p className="text-callout text-fg-1">No cards match the current filters.</p>
+      <p className="max-w-85 text-footnote text-fg-3">
         Widen the domain or category filters in the toolbar to build a study deck.
       </p>
       <button
         onClick={onBack}
-        className="mt-1 h-10 rounded-sm border border-border bg-surface px-5 text-ui-sm font-medium text-fg-1 transition-colors hover:bg-surface-3"
+        className="mt-1 h-10 rounded-sm border border-border bg-surface px-5 text-footnote font-medium text-fg-1 transition-colors hover:bg-surface-3"
       >
         Back to atlas
       </button>
@@ -479,7 +476,7 @@ function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => 
   return (
     <button
       onClick={onClick}
-      className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-ui-body font-semibold transition-transform active:scale-[0.98] ${got ? "border-accent-border bg-accent-soft text-accent" : "border-border bg-surface text-fg-2"}`}
+      className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-body font-semibold transition-transform active:scale-[0.98] ${got ? "border-accent-border bg-accent-soft text-accent" : "border-border bg-surface text-fg-2"}`}
     >
       {children}
     </button>
@@ -489,7 +486,7 @@ function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => 
 function Kbd({ children, onAccent = false }: { children: React.ReactNode; onAccent?: boolean }) {
   return (
     <kbd
-      className={`ml-0.5 hidden h-5 items-center rounded border px-1.5 font-mono text-ui-2xs sm:inline-flex ${onAccent ? "border-transparent text-fg-on-color" : "border-border bg-surface-3 text-fg-3"}`}
+      className={`ml-0.5 hidden h-5 items-center rounded border px-1.5 font-mono text-caption-2 sm:inline-flex ${onAccent ? "border-transparent text-fg-on-color" : "border-border bg-surface-3 text-fg-3"}`}
       style={onAccent ? { background: "color-mix(in srgb, var(--surface) 25%, transparent)" } : undefined}
     >
       {children}

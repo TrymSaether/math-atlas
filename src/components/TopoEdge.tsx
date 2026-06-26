@@ -173,7 +173,7 @@ export function TopoEdgeView(props: EdgeProps<Data>) {
       {!dim && highlight && (
         <EdgeLabelRenderer>
           <div
-            className="rounded-xs border px-2 py-0.5 text-edge-label font-medium lowercase tracking-label-tight shadow-[var(--shadow-1)]"
+            className="rounded-xs border px-2 py-0.5 text-caption-2 font-medium lowercase tracking-label-tight shadow-[var(--shadow-1)]"
             style={{
               position: "absolute",
               transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,

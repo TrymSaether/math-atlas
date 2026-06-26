@@ -148,7 +148,7 @@ function NormModeSelect({
                   onChange(mode.kind);
                 }
               }}
-              className="flex min-h-8 cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-ui-meta transition-colors focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
+              className="flex min-h-8 cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-caption-1 transition-colors focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
               style={{
                 background: active ? DIA.accent : "transparent",
                 color: active ? UI.onColor : UI.text,
@@ -199,10 +199,10 @@ function ReadoutPanel({ point, value, mode, p }: { point: Vec2; value: number; m
       style={{ borderColor: UI.border, background: UI.panel }}
       aria-live="polite"
     >
-      <div className="mt-2 text-ui-meta" style={{ color: UI.text }}>
+      <div className="mt-2 text-caption-1" style={{ color: UI.text }}>
         <MathText text={`${MODE_NAMES[mode]} $\\ell^{${subscript}}$`} />
       </div>
-      <div className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-ui-meta" style={{ color: UI.text }}>
+      <div className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-caption-1" style={{ color: UI.text }}>
         <span>
           <MathText text="$x=$" />
         </span>
@@ -231,7 +231,7 @@ function ReadoutPanel({ point, value, mode, p }: { point: Vec2; value: number; m
           }}
         />
       </div>
-      <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-ui-meta" style={{ color: UI.text }}>
+      <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-caption-1" style={{ color: UI.text }}>
         <span style={{ color: statusColor }}>
           <MathText text={inside ? `$x\\in ${ball}$` : `$x\\notin ${ball}$`} />
         </span>
@@ -239,7 +239,7 @@ function ReadoutPanel({ point, value, mode, p }: { point: Vec2; value: number; m
           <MathText text={`$${value.toFixed(3)} ${comparator} 1$`} />
         </span>
       </div>
-      <div className="mt-3 border-t pt-2 text-ui-meta" style={{ borderColor: UI.border, color: UI.text }}>
+      <div className="mt-3 border-t pt-2 text-caption-1" style={{ borderColor: UI.border, color: UI.text }}>
         <MathText
           text={`The solid outline is $\\|x\\|_{${subscript}}B_{${subscript}}$: the unit ball scaled until it reaches $x$.`}
         />

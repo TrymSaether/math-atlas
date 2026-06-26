@@ -31,7 +31,7 @@ function LoadingState({ label }: { label: string }) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-3.5" role="status" aria-live="polite">
       <span className="shell-spinner" aria-hidden />
-      <p className="text-ui-sm text-fg-3">{label}</p>
+      <p className="text-footnote text-fg-3">{label}</p>
     </div>
   );
 }
@@ -50,10 +50,10 @@ function MapStatus() {
         <Glass material="thick" className="shell-panel flex max-w-sm flex-col items-center gap-3 px-7 py-8 text-center">
           <WarningCircleIcon className="h-9 w-9 text-danger" weight="regular" />
           <h2 className="text-lg text-fg-1">Couldn’t load this map</h2>
-          <p className="text-ui-sm leading-relaxed text-fg-3">{mapError}</p>
+          <p className="text-footnote leading-relaxed text-fg-3">{mapError}</p>
           <ShellButton
             primary
-            className="mt-1 min-h-11 rounded-full px-4 text-ui-control"
+            className="mt-1 min-h-11 rounded-full px-4 text-footnote"
             onClick={() => void ensureMapLoaded(mapId)}
           >
             Try again

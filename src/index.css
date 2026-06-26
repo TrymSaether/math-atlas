@@ -262,56 +262,31 @@
 
 /* ---- TYPOGRAPHY ----------------------------------------------------- */
 :root {
-  /* Apple system typography. SF Pro / New York / SF Mono aren't licensable as
-     webfonts, so we lead with the native system stack — these render the real
-     Apple faces on Apple platforms and fall back cleanly elsewhere (Inter for
-     sans). Math keeps STIX Two: there is no Apple math face. */
+  /* Apple system typography. SF Pro / SF Mono aren't licensable as webfonts, so
+     we lead with the native system stack — these render the real Apple faces on
+     Apple platforms and fall back cleanly elsewhere (Inter for sans). One sans
+     for all UI and reading text per HIG ("minimize the number of typefaces");
+     mono for numerals/code; STIX Two for math (there is no Apple math face). */
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Inter", "Helvetica Neue", "Segoe UI", Roboto, system-ui, sans-serif;
-  --font-serif: ui-serif, "New York", "Iowan Old Style", "Palatino", "Georgia", serif;
   --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
   --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
 
-  /* Type ramp = the Apple HIG iOS text-style ladder (Large Title 34/41 …
-     Caption 2 11/13). HIG points map 1:1 to CSS px. Per-step leading lives with
-     the Tailwind text utilities in tailwind-theme.css. HIG rules honored here:
-     a small, fixed set of sizes; an 11px legible floor for UI text; weights stay
-     Regular→Bold (no Light/Thin — audited clean). The canonical ladder: */
-  --type-large-title: 34px;
-  --type-title-1: 28px;
-  --type-title-2: 22px;
-  --type-title-3: 20px;
-  --type-headline: 17px;
-  --type-body: 17px;
-  --type-callout: 16px;
-  --type-subhead: 15px;
-  --type-footnote: 13px;
-  --type-caption-1: 12px;
-  --type-caption-2: 11px;
-  /* Sub-ladder exception: dense-canvas labels (graph edge tags) read like map
-     street names — intentionally below the 11px UI floor, non-essential text. */
-  --type-micro: 10px;
-
-  /* Role aliases → ladder step. These collapse the old idiosyncratic 0.5px ramp
-     onto the fixed ladder so every surface snaps to a HIG size; consumers keep
-     using the role names. (Legacy names — new code should prefer ladder names.) */
-  --type-edge-label: var(--type-micro);
-  --type-ui-tiny: var(--type-caption-2);
-  --type-ui-2xs: var(--type-caption-2);
-  --type-ui-caption: var(--type-caption-1);
-  --type-ui-hint: var(--type-caption-2);
-  --type-ui-meta: var(--type-caption-1);
-  --type-ui-xs: var(--type-caption-1);
-  --type-ui-control: var(--type-footnote);
-  --type-ui-sm: var(--type-footnote);
-  --type-ui-body: var(--type-subhead);
-  --type-ui-copy: var(--type-subhead);
-  --type-ui-lead: var(--type-callout);
-  --type-atlas-brand: var(--type-title-3);
-  --type-atlas-card: var(--type-title-3);
-  --type-node-panel-title: var(--type-title-2);
-  --type-atlas-panel: var(--type-title-1);
-  --type-atlas-summary: var(--type-title-1);
-  --type-atlas-display: var(--type-large-title);
+  /* Type ramp = the Apple HIG iOS text-style ladder, and the only type vocabulary
+     (Large Title 34/41 … Caption 2 11/13). Sizes are in `rem` so they track the
+     user's preferred/root font size — the web equivalent of Dynamic Type — and
+     1rem = 16px keeps them 1:1 with HIG points. Per-step leading lives with the
+     Tailwind text utilities in tailwind-theme.css. Weights stay Regular→Bold. */
+  --type-large-title: 2.125rem;
+  --type-title-1: 1.75rem;
+  --type-title-2: 1.375rem;
+  --type-title-3: 1.25rem;
+  --type-headline: 1.0625rem;
+  --type-body: 1.0625rem;
+  --type-callout: 1rem;
+  --type-subhead: 0.9375rem;
+  --type-footnote: 0.8125rem;
+  --type-caption-1: 0.75rem;
+  --type-caption-2: 0.6875rem;
 
   /* Semantic status color. Aliases the theme-tuned --red so danger affordances
      retune across every theme — no per-theme block needed (same pattern as the

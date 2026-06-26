@@ -68,7 +68,7 @@ export function EditInspector() {
             </div>
             <div>
               <h2 className="text-lg text-fg-1">Edit mode</h2>
-              <p className="mt-1 text-ui-sm leading-relaxed text-fg-3">
+              <p className="mt-1 text-footnote leading-relaxed text-fg-3">
                 Select a concept to inspect its source, relations, proof steps, and examples.
               </p>
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   MagnifyingGlassIcon,
   CompassIcon,
@@ -17,6 +17,7 @@ import { useStore, type Surface } from "../../store";
 import { schemeFor, siblingOf } from "../../lib/themes";
 import { authEnabled } from "../../lib/authClient";
 import { cn } from "../../lib/utils";
+import { usePopoverDismiss } from "../../hooks/usePopover";
 import { Glass } from "./Glass";
 import { ShellButton, ShellIconButton } from "./Controls";
 import { UserMenu } from "../auth/UserMenu";
@@ -50,21 +51,11 @@ function MapMenu() {
   const catalog = useStore((s) => s.catalog);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const close = useCallback(() => setOpen(false), []);
   const title = catalog.find((e) => e.slug === mapId)?.title ?? mapId;
 
-  useEffect(() => {
-    if (!open) return;
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
+  usePopoverDismiss({ open, onClose: close, containerRef: ref, triggerRef });
 
   return (
     <div className="relative" ref={ref}>
@@ -79,6 +70,7 @@ function MapMenu() {
           <img src={BRAND_SRC} alt="" className="h-7 w-7" />
         </button>
         <ShellButton
+          ref={triggerRef}
           type="button"
           className="shell-map-title"
           onClick={() => setOpen((v) => !v)}
@@ -117,7 +109,7 @@ function MapMenu() {
               </button>
             );
           })}
-          {catalog.length === 0 && <p className="px-2.5 py-3 text-ui-xs text-fg-3">Loading maps…</p>}
+          {catalog.length === 0 && <p className="px-2.5 py-3 text-caption-1 text-fg-3">Loading maps…</p>}
         </Glass>
       )}
     </div>

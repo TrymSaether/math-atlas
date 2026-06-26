@@ -153,7 +153,7 @@ function ExtraEnvironment({ entry }: { entry: ConceptView["extraContent"][number
 function ExtraValue({ value }: { value: unknown }) {
   if (typeof value === "string") {
     return (
-      <div className="text-ui-copy text-fg-1">
+      <div className="text-body text-fg-1">
         <MathProse text={value} />
       </div>
     );
@@ -164,7 +164,7 @@ function ExtraValue({ value }: { value: unknown }) {
     return (
       <ul className="m-0 space-y-1.5 p-0">
         {items.map((item, index) => (
-          <li key={index} className="flex gap-2.5 text-ui-copy text-fg-1">
+          <li key={index} className="flex gap-2.5 text-body text-fg-1">
             <span aria-hidden className="mt-2.25 h-1 w-1 shrink-0 rounded-full bg-fg-3" />
             <span className="min-w-0">
               <MathProse text={item} />
@@ -176,7 +176,7 @@ function ExtraValue({ value }: { value: unknown }) {
   }
 
   return (
-    <pre className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-surface-2 px-3 py-2 font-mono text-ui-xs leading-[1.6] text-fg-2">
+    <pre className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-surface-2 px-3 py-2 font-mono text-caption-1 leading-[1.6] text-fg-2">
       {JSON.stringify(value, null, 2)}
     </pre>
   );
@@ -203,7 +203,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
           <Eyebrow>{label}</Eyebrow>
           <ul className="m-0 space-y-1.5 p-0">
             {view.assumptions.map((a, i) => (
-              <li key={i} className="flex gap-2.5 text-ui-copy text-fg-1">
+              <li key={i} className="flex gap-2.5 text-body text-fg-1">
                 <span
                   aria-hidden
                   className="mt-2.25 h-1 w-1 shrink-0 rounded-full"
@@ -222,7 +222,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
       return (
         <section>
           <Eyebrow>{label}</Eyebrow>
-          <div className="panel-scrollbar max-w-full overflow-x-auto text-ui-copy text-fg-1">
+          <div className="panel-scrollbar max-w-full overflow-x-auto text-body text-fg-1">
             <MathText text={view.definition} asBlock />
           </div>
         </section>
@@ -277,12 +277,12 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
                 {(example.role || example.label) && (
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                     {example.role && (
-                      <span className="font-mono text-ui-2xs tracking-label-tight" style={{ color: "var(--fg-3)" }}>
+                      <span className="font-mono text-caption-2 tracking-label-tight text-fg-3">
                         <MathProse text={example.role} />
                       </span>
                     )}
                     {example.label && (
-                      <span className="text-ui-sm font-medium" style={{ color: "var(--fg-2)" }}>
+                      <span className="text-footnote font-medium text-fg-2">
                         <MathProse text={example.label} />
                       </span>
                     )}
@@ -300,7 +300,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
       return (
         <section>
           <Eyebrow>{label}</Eyebrow>
-          <div className="text-ui-copy" style={{ color: "var(--fg-2)" }}>
+          <div className="text-body text-fg-2">
             <MathProse text={view.gloss} />
           </div>
         </section>
@@ -314,14 +314,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
 /** Bordered display block for formal statements / formulas — wide math scrolls within. */
 function DisplayBox({ children }: { children: ReactNode }) {
   return (
-    <div
-      className="panel-scrollbar max-w-full overflow-x-auto rounded-md border px-4 py-3 font-math leading-[1.6]"
-      style={{
-        background: "var(--surface-2)",
-        borderColor: "var(--border)",
-        color: "var(--fg-1)",
-      }}
-    >
+    <div className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-surface-2 px-4 py-3 font-math leading-[1.6] text-fg-1">
       {children}
     </div>
   );
@@ -342,9 +335,7 @@ function Aside({
   return (
     <section className="border-l-2 pl-3.5" style={{ borderColor: accent }}>
       <Eyebrow color={eyebrow}>{label}</Eyebrow>
-      <div className="text-ui-copy" style={{ color: "var(--fg-1)" }}>
-        {children}
-      </div>
+      <div className="text-body text-fg-1">{children}</div>
     </section>
   );
 }

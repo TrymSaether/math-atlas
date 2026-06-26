@@ -88,7 +88,7 @@ export function CommandPalette() {
                               setOpen(false);
                             }}
                           >
-                            <span className="text-ui-sm text-(--fg-1)">Open {entry.title}</span>
+                            <span className="text-footnote text-(--fg-1)">Open {entry.title}</span>
                           </Item>
                         ))}
                       </Command.Group>
@@ -115,13 +115,13 @@ export function CommandPalette() {
                                   >
                                     <CategoryIcon className="h-2.5 w-2.5" weight="bold" aria-hidden />
                                   </span>
-                                  <span className="w-24 shrink-0 text-ui-caption font-medium uppercase tracking-label-tight text-(--fg-3)">
+                                  <span className="w-24 shrink-0 text-caption-1 font-medium uppercase tracking-label-tight text-(--fg-3)">
                                     {KIND_LABEL[n.kind]}
                                   </span>
-                                  <span className="min-w-0 flex-1 truncate text-ui-sm text-(--fg-1)">
+                                  <span className="min-w-0 flex-1 truncate text-footnote text-(--fg-1)">
                                     <MathText text={n.label} />
                                   </span>
-                                  <span className="ml-2 max-w-35 truncate text-ui-caption text-(--fg-3)">
+                                  <span className="ml-2 max-w-35 truncate text-caption-1 text-(--fg-3)">
                                     {n.topicCluster}
                                   </span>
                                 </span>

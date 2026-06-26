@@ -30,7 +30,7 @@
 
 .entry-title,
 .atlas-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   letter-spacing: -0.04em;
   line-height: 1;
   color: var(--fg-1);
@@ -74,7 +74,7 @@
 /* SVG classes used by diagram assets. CSS custom properties still work when
    the SVG is inline; external SVGs can use the same class names internally. */
 .svg-label {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-style: italic;
   fill: var(--dia-ink);
   paint-order: stroke;
@@ -84,7 +84,7 @@
 }
 
 .svg-symbol {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   fill: var(--dia-ink);
 }
 

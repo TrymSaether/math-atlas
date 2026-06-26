@@ -72,7 +72,7 @@ export function SandboxView() {
                 <span key={v.id} className="flex items-center">
                   <button
                     onClick={() => applyView(v.id)}
-                    className="rounded-sm px-2 py-1 text-ui-2xs"
+                    className="rounded-sm px-2 py-1 text-caption-2"
                     style={{ color: "var(--fg-2)" }}
                     title="Apply saved view"
                   >
@@ -156,8 +156,8 @@ function WorkspaceMenu() {
           <FolderSimple className="h-4 w-4" weight="duotone" />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-ui-sm font-semibold">{ws.title}</span>
-          <span className="sandbox-workspace-meta block truncate font-mono text-ui-2xs uppercase tracking-label-tight">
+          <span className="block truncate text-footnote font-semibold">{ws.title}</span>
+          <span className="sandbox-workspace-meta block truncate font-mono text-caption-2 uppercase tracking-label-tight">
             {ws.rows.length} expressions ·{" "}
             {issueCount > 0 ? `${issueCount} issue${issueCount === 1 ? "" : "s"}` : "ready"}
           </span>
@@ -169,7 +169,7 @@ function WorkspaceMenu() {
       </button>
       {open && (
         <div className="sandbox-workspace-popover absolute left-0 top-[52px] z-30 w-[280px] overflow-hidden p-1.5">
-          <div className="px-2.5 pb-1 pt-1.5 text-ui-2xs font-semibold uppercase tracking-label-wide">Examples</div>
+          <div className="px-2.5 pb-1 pt-1.5 text-caption-2 font-semibold uppercase tracking-label-wide">Examples</div>
           {WORKSPACE_IDS.map((id) => {
             const active = id === ws.id;
             return (
@@ -181,7 +181,7 @@ function WorkspaceMenu() {
                   setOpen(false);
                 }}
                 className={cn(
-                  "sandbox-workspace-option flex w-full items-center gap-2 px-2.5 py-2 text-left text-ui-control",
+                  "sandbox-workspace-option flex w-full items-center gap-2 px-2.5 py-2 text-left text-footnote",
                   active && "is-active",
                 )}
               >
@@ -197,7 +197,7 @@ function WorkspaceMenu() {
               reset();
               setOpen(false);
             }}
-            className="sandbox-workspace-option flex w-full items-center gap-2 px-2.5 py-2 text-left text-ui-control"
+            className="sandbox-workspace-option flex w-full items-center gap-2 px-2.5 py-2 text-left text-footnote"
           >
             <Plus className="h-3.5 w-3.5 shrink-0" weight="bold" />
             <span>New blank workspace</span>

@@ -100,7 +100,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   };
 
   return (
-    <div className="dictionary-view" style={{ background: "var(--bg)", color: "var(--fg-1)" }}>
+    <div className="dictionary-view">
       <div className={`dict-md${mobileDetail ? " dict-md--detail" : ""}`}>
         {/* ---- Index column ---- */}
         <aside className="dict-index" aria-label="Dictionary index">

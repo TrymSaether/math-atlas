@@ -32,7 +32,7 @@ function Slot({
       <span className="shrink-0 text-fg-3">{icon}</span>
       <div className="min-w-0 flex-1">
         <div className="glass-field-label">{label}</div>
-        <div className={cn("truncate text-ui-sm", value ? "text-fg-1" : "italic text-fg-3")}>
+        <div className={cn("truncate text-footnote", value ? "text-fg-1" : "italic text-fg-3")}>
           {value ? <MathText text={value} /> : "Pick on the map"}
         </div>
       </div>
@@ -137,13 +137,13 @@ export function PathsPanel() {
           />
 
           {noPath && (
-            <p className="mt-4 rounded-[var(--shell-control-radius)] bg-surface-2 px-3 py-2.5 text-ui-sm text-fg-2">
+            <p className="mt-4 rounded-[var(--shell-control-radius)] bg-surface-2 px-3 py-2.5 text-footnote text-fg-2">
               No dependency path connects these two concepts.
             </p>
           )}
 
           {!hasGoal && !noPath && (
-            <p className="mt-4 text-ui-sm leading-relaxed text-fg-3">
+            <p className="mt-4 text-footnote leading-relaxed text-fg-3">
               {routeKind === "prereq"
                 ? "Click a concept on the map to trace everything you need to understand it first, in study order."
                 : "Pick two concepts on the map to see every dependency path between them."}
@@ -153,13 +153,13 @@ export function PathsPanel() {
           {hasGoal && ordered.length > 0 && (
             <>
               <div className="mt-4 flex items-center justify-between">
-                <span className="text-ui-meta font-semibold text-fg-2">
+                <span className="text-caption-1 font-semibold text-fg-2">
                   {ordered.length} {ordered.length === 1 ? "concept" : "concepts"} · study order
                 </span>
                 {!touring ? (
                   <ShellButton
                     primary
-                    className="min-h-[44px] gap-1 rounded-full px-3 text-ui-meta"
+                    className="min-h-[44px] gap-1 rounded-full px-3 text-caption-1"
                     onClick={startTour}
                   >
                     <PlayIcon className="h-3.5 w-3.5" weight="fill" /> Tour
@@ -169,13 +169,13 @@ export function PathsPanel() {
                     <ShellIconButton onClick={() => tourStep(-1)} aria-label="Previous step">
                       <CaretLeftIcon className="h-4 w-4" weight="bold" />
                     </ShellIconButton>
-                    <span className="min-w-[44px] text-center font-mono text-ui-meta tabular-nums text-fg-2">
+                    <span className="min-w-[44px] text-center font-mono text-caption-1 tabular-nums text-fg-2">
                       {(tourIndex ?? 0) + 1}/{ordered.length}
                     </span>
                     <ShellIconButton onClick={() => tourStep(1)} aria-label="Next step">
                       <CaretRightIcon className="h-4 w-4" weight="bold" />
                     </ShellIconButton>
-                    <ShellButton className="min-h-[44px] rounded-full px-3 text-ui-meta" onClick={endTour}>
+                    <ShellButton className="min-h-[44px] rounded-full px-3 text-caption-1" onClick={endTour}>
                       Done
                     </ShellButton>
                   </div>
@@ -196,11 +196,11 @@ export function PathsPanel() {
                           active ? "bg-surface-active text-fg-1" : "hover:bg-surface-hover",
                         )}
                       >
-                        <span className="w-5 shrink-0 text-right font-mono text-ui-2xs tabular-nums text-fg-3">
+                        <span className="w-5 shrink-0 text-right font-mono text-caption-2 tabular-nums text-fg-3">
                           {i + 1}
                         </span>
                         <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: tone.color }} />
-                        <span className={cn("min-w-0 flex-1 truncate text-ui-sm", active ? "text-fg-1" : "text-fg-2")}>
+                        <span className={cn("min-w-0 flex-1 truncate text-footnote", active ? "text-fg-1" : "text-fg-2")}>
                           <MathText text={labelFor(id)} />
                         </span>
                       </button>

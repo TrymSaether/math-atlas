@@ -44,7 +44,7 @@ export function ConceptHeader({ view, size = "panel" }: { view: ConceptView; siz
 function MetaPill({ children, mono = false }: { children: ReactNode; mono?: boolean }) {
   return (
     <span
-      className={`concept-title-pill ${mono ? "font-mono text-ui-hint" : ""}`}
+      className={`concept-title-pill ${mono ? "font-mono text-caption-2" : ""}`}
       style={{ background: "var(--surface-3)", color: "var(--fg-3)" }}
     >
       {children}

@@ -151,7 +151,7 @@ export function FigureCaption({
 }) {
   const spacing = className ? ` ${className}` : "";
   return (
-    <figcaption className={`mt-1.5 text-ui-meta${spacing}`} style={{ color: strong ? UI.text : UI.muted }}>
+    <figcaption className={`mt-1.5 text-caption-1${spacing}`} style={{ color: strong ? UI.text : UI.muted }}>
       {children}
     </figcaption>
   );
@@ -167,7 +167,7 @@ export function FigureOverlayLabel({
   const positionClass = position === "bottom-left" ? "bottom-2 left-3" : "left-3 top-2 z-10";
   return (
     <div
-      className={`absolute ${positionClass} rounded-xs px-1.5 py-0.5 text-ui-meta backdrop-blur-sm`}
+      className={`absolute ${positionClass} rounded-xs px-1.5 py-0.5 text-caption-1 backdrop-blur-sm`}
       style={{ color: UI.text, background: PANEL_BACKING }}
     >
       {children}

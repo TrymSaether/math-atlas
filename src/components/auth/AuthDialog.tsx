@@ -91,12 +91,12 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
                     type="button"
                     disabled={busy || googleBusy}
                     onClick={continueWithGoogle}
-                    className="shell-field-control flex h-11 items-center justify-center gap-2 rounded-md px-3 text-ui-control font-semibold text-fg-1"
+                    className="shell-field-control flex h-11 items-center justify-center gap-2 rounded-md px-3 text-footnote font-semibold text-fg-1"
                   >
                     <GoogleGIcon className="h-4.5 w-4.5 shrink-0" />
                     {googleBusy ? "Opening Google..." : "Continue with Google"}
                   </ShellButton>
-                  <div className="flex items-center gap-2 text-ui-2xs font-semibold uppercase tracking-label-wide text-fg-3">
+                  <div className="flex items-center gap-2 text-caption-2 font-semibold uppercase tracking-label-wide text-fg-3">
                     <span className="h-px flex-1 bg-border-muted" aria-hidden />
                     <span>or</span>
                     <span className="h-px flex-1 bg-border-muted" aria-hidden />
@@ -131,7 +131,7 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
                   />
 
                   {error && (
-                    <p className="text-ui-hint font-medium text-danger" role="alert">
+                    <p className="text-caption-2 font-medium text-danger" role="alert">
                       {error}
                     </p>
                   )}
@@ -140,14 +140,14 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
                     primary
                     type="submit"
                     disabled={busy || googleBusy}
-                    className="mt-1 h-11 justify-center rounded-md text-ui-control font-medium text-fg-on-color"
+                    className="mt-1 h-11 justify-center rounded-md text-footnote font-medium text-fg-on-color"
                   >
                     {busy ? "Please wait..." : isSignup ? "Create account" : "Sign in"}
                   </ShellButton>
 
                   <button
                     type="button"
-                    className="text-ui-hint text-fg-2 underline-offset-2 hover:underline"
+                    className="text-caption-2 text-fg-2 underline-offset-2 hover:underline"
                     onClick={() => {
                       setMode(isSignup ? "signin" : "signup");
                       setError(null);
@@ -200,12 +200,12 @@ function Field({
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange">) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="text-ui-caption font-semibold uppercase tracking-label-wide text-fg-3">{label}</span>
+      <span className="text-caption-1 font-semibold uppercase tracking-label-wide text-fg-3">{label}</span>
       <input
         {...rest}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-11 rounded-md px-3 text-ui-control text-fg-1 outline-none"
+        className="h-11 rounded-md px-3 text-footnote text-fg-1 outline-none"
         style={{
           background: "color-mix(in srgb, var(--surface) 80%, transparent)",
           boxShadow: "inset 0 0 0 1px var(--glass-border)",

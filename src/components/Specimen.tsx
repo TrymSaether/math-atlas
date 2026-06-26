@@ -65,11 +65,8 @@ export function Spine({
         </span>
       )}
       <div
-        className="font-math leading-[1.6]"
-        style={{
-          color: "var(--fg-1)",
-          fontSize: size === "dict" ? "15px" : "15.5px",
-        }}
+        className="font-math leading-[1.6] text-fg-1"
+        style={{ fontSize: size === "dict" ? "15px" : "15.5px" }}
       >
         {children}
       </div>
@@ -97,9 +94,7 @@ export function Facet({
       <span className="mb-1 block reading-label" style={{ color: toneColor ?? "var(--fg-3)" }}>
         {label}
       </span>
-      <div className="text-ui-copy" style={{ color: muted ? "var(--fg-2)" : "var(--fg-1)" }}>
-        {children}
-      </div>
+      <div className={`text-body ${muted ? "text-fg-2" : "text-fg-1"}`}>{children}</div>
     </div>
   );
 }
@@ -107,14 +102,7 @@ export function Facet({
 /** A boxed math block used for formal statement / definition / formula facets. */
 export function MathBox({ text }: { text: string }) {
   return (
-    <div
-      className="panel-scrollbar block max-w-full overflow-x-auto rounded-sm border px-3.5 py-2.5 font-math text-ui-body leading-[1.6]"
-      style={{
-        background: "var(--surface-2)",
-        borderColor: "var(--border)",
-        color: "var(--fg-1)",
-      }}
-    >
+    <div className="panel-scrollbar block max-w-full overflow-x-auto rounded-sm border border-border bg-surface-2 px-3.5 py-2.5 font-math text-body leading-[1.6] text-fg-1">
       <MathText text={text} asBlock />
     </div>
   );
@@ -152,14 +140,11 @@ export function StepLabel({ label, toneColor }: { label: string; toneColor: stri
 export function Argument({ text, toneColor }: { text: string; toneColor: string }) {
   return (
     <div
-      className="font-math pl-3.5 text-ui-copy leading-[1.7]"
-      style={{
-        color: "var(--fg-1)",
-        borderLeft: `1.5px dotted color-mix(in srgb, ${toneColor} 55%, transparent)`,
-      }}
+      className="font-math pl-3.5 text-body leading-[1.7] text-fg-1"
+      style={{ borderLeft: `1.5px dotted color-mix(in srgb, ${toneColor} 55%, transparent)` }}
     >
       <MathProse text={tidyMathText(text)} asBlock />
-      <span aria-hidden className="mt-1.5 block text-right text-ui-sm" style={{ color: toneColor }}>
+      <span aria-hidden className="mt-1.5 block text-right text-footnote" style={{ color: toneColor }}>
         ∎
       </span>
     </div>
@@ -371,7 +356,7 @@ function ProofStepItem({
       )}
       <span
         aria-hidden
-        className="absolute left-0 top-0 flex h-5.25 w-5.25 items-center justify-center rounded-full font-mono text-ui-2xs"
+        className="absolute left-0 top-0 flex h-5.25 w-5.25 items-center justify-center rounded-full font-mono text-caption-2"
         style={{
           background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
           color: toneColor,
@@ -391,27 +376,18 @@ function ProofStepItem({
       >
         {collapsible && (
           <CaretRightIcon
-            className="h-3 w-3 shrink-0 transition-transform duration-200"
-            style={{
-              color: "var(--fg-3)",
-              transform: showBody ? "rotate(90deg)" : "none",
-            }}
+            className="h-3 w-3 shrink-0 text-fg-3 transition-transform duration-200"
+            style={{ transform: showBody ? "rotate(90deg)" : "none" }}
             aria-hidden
           />
         )}
         <span className="min-w-0 truncate">
           <span style={{ color: toneColor }}>
-            <MathText text={role || "Step"} className="block truncate font-mono text-ui-2xs tracking-label-tight" />
+            <MathText text={role || "Step"} className="block truncate font-mono text-caption-2 tracking-label-tight" />
           </span>
         </span>
         {deps.length > 0 && (
-          <span
-            className="ml-auto shrink-0 rounded-xs px-1.5 py-px font-mono text-ui-2xs leading-none"
-            style={{
-              background: "var(--surface-3)",
-              color: "var(--fg-3)",
-            }}
-          >
+          <span className="ml-auto shrink-0 rounded-xs bg-surface-3 px-1.5 py-px font-mono text-caption-2 leading-none text-fg-3">
             {deps.length} use{deps.length === 1 ? "" : "s"}
           </span>
         )}
@@ -432,7 +408,7 @@ function ProofStepItem({
             className="overflow-hidden"
           >
             {step.content && (
-              <div className="font-math mt-1.5 text-ui-copy leading-[1.7]" style={{ color: "var(--fg-1)" }}>
+              <div className="font-math mt-1.5 text-body leading-[1.7] text-fg-1">
                 <MathProse text={step.content} asBlock />
               </div>
             )}
@@ -444,7 +420,7 @@ function ProofStepItem({
               </div>
             )}
             {last && (
-              <span aria-hidden className="mt-2 block text-ui-sm" style={{ color: toneColor }}>
+              <span aria-hidden className="mt-2 block text-footnote" style={{ color: toneColor }}>
                 ∎
               </span>
             )}
@@ -481,8 +457,7 @@ export function ConnectionChip({
       title={
         caption ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}` : `${node.label} · ${KIND_LABEL[node.kind]}`
       }
-      className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
-      style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+      className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border border-border bg-surface-2 py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
     >
       <span
         className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
@@ -490,11 +465,11 @@ export function ConnectionChip({
       >
         {createElement(icon, { className: "h-2.5 w-2.5", strokeWidth: 2.4, "aria-hidden": true })}
       </span>
-      <span className="min-w-0 truncate text-ui-control leading-4" style={{ color: "var(--fg-1)" }}>
+      <span className="min-w-0 truncate text-footnote leading-4 text-fg-1">
         <MathText text={node.label} />
       </span>
       {caption && (
-        <span className="shrink-0 font-mono text-ui-2xs lowercase" style={{ color: "var(--fg-4)" }}>
+        <span className="shrink-0 font-mono text-caption-2 lowercase text-fg-4">
           {caption}
         </span>
       )}

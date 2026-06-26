@@ -94,7 +94,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
   const showMeta = lod === "near" || lod === "mid";
   // At distance the card is just a label — let the title grow and use more lines.
   const titleClass =
-    lod === "far" ? (isLandmark ? "text-atlas-card" : "text-atlas-brand") : isLandmark ? "text-ui-body" : "text-ui-sm";
+    lod === "far" ? (isLandmark ? "text-title-3" : "text-title-3") : isLandmark ? "text-body" : "text-footnote";
   const titleLineClamp = lod === "far" ? 3 : 2;
 
   return (
@@ -183,12 +183,12 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
               carries the category; this word disambiguates within it, told in
               the same calm title-case voice as the reading vocabulary rather
               than a loud bordered, ALL-CAPS chip. */}
-          <span className="shrink-0 text-ui-tiny font-semibold tracking-tight" style={{ color: "var(--fg-2)" }}>
+          <span className="shrink-0 text-caption-2 font-semibold tracking-tight" style={{ color: "var(--fg-2)" }}>
             {kindAbbrev(node.kind)}
           </span>
           {node.number && (
             <span
-              className="min-w-0 truncate font-mono text-ui-caption font-semibold tabular-nums"
+              className="min-w-0 truncate font-mono text-caption-1 font-semibold tabular-nums"
               style={{ color: "var(--fg-3)" }}
               title={node.id}
             >

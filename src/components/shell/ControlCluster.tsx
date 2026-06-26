@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useRef, useState, type ReactNode, type RefObject } from "react";
 import { useReactFlow, useViewport } from "reactflow";
 import { PlusIcon, MinusIcon, CornersOutIcon, FunnelSimpleIcon } from "@phosphor-icons/react";
 import { cn } from "../../lib/utils";
+import { usePopoverDismiss } from "../../hooks/usePopover";
 import { Glass } from "./Glass";
 import { LayersPanel } from "./LayersPanel";
 
@@ -9,15 +10,18 @@ function CtlButton({
   label,
   onClick,
   active,
+  btnRef,
   children,
 }: {
   label: string;
   onClick: () => void;
   active?: boolean;
+  btnRef?: RefObject<HTMLButtonElement | null>;
   children: ReactNode;
 }) {
   return (
     <button
+      ref={btnRef}
       type="button"
       className={cn("shell-tool-button", active && "is-active")}
       onClick={onClick}
@@ -40,20 +44,10 @@ export function ControlCluster() {
   const { zoom } = useViewport();
   const [layersOpen, setLayersOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeLayers = useCallback(() => setLayersOpen(false), []);
 
-  useEffect(() => {
-    if (!layersOpen) return;
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setLayersOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setLayersOpen(false);
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [layersOpen]);
+  usePopoverDismiss({ open: layersOpen, onClose: closeLayers, containerRef: ref, triggerRef });
 
   return (
     <div className="shell-tools" ref={ref}>
@@ -64,7 +58,7 @@ export function ControlCluster() {
       )}
       <div className="shell-tools-stack">
         <Glass material="regular" className="shell-tool-bubble">
-          <CtlButton label="Filters" active={layersOpen} onClick={() => setLayersOpen((v) => !v)}>
+          <CtlButton label="Filters" active={layersOpen} onClick={() => setLayersOpen((v) => !v)} btnRef={triggerRef}>
             <FunnelSimpleIcon className="h-[18px] w-[18px]" weight={layersOpen ? "fill" : "regular"} />
           </CtlButton>
         </Glass>

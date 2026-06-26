@@ -84,7 +84,7 @@ export default function L2ConvergenceFigure() {
       </FigureFrame>
 
       <div className="mt-2 px-1">
-        <div className="mb-1 flex items-baseline justify-between text-ui-hint" style={{ color: UI.muted }}>
+        <div className="mb-1 flex items-baseline justify-between text-caption-2" style={{ color: UI.muted }}>
           <span>
             L² error ‖S<sub>N</sub>f − f‖²
           </span>

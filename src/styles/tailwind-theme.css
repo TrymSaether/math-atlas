@@ -1,16 +1,13 @@
 @theme {
-  /* Apple system typography — see index.css for the rationale. SF Pro / New York
-     / SF Mono via the native stack; Inter is the non-Apple sans fallback; math
-     keeps STIX Two. */
+  /* Apple system typography — see index.css for the rationale. One sans (SF Pro)
+     for UI and reading text; SF Mono for numerals/code; STIX Two for math. */
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Inter", "Helvetica Neue", "Segoe UI", Roboto, system-ui, sans-serif;
-  --font-serif: ui-serif, "New York", "Iowan Old Style", "Palatino", "Georgia", serif;
   --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
   --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
 
-  /* Apple HIG iOS text-style ladder — first-class utilities (`text-body`,
-     `text-headline`, …) with the HIG leading for each step. New code should
-     reach for these; the role-named `ui-*`/`atlas-*` set below are legacy
-     aliases onto the same ladder, kept until consumers are migrated over. */
+  /* Apple HIG iOS text-style ladder — the only type vocabulary (`text-body`,
+     `text-headline`, `text-caption-1`, …) with the HIG leading for each step.
+     Sizes come from the rem ladder in index.css (Dynamic-Type-tracking). */
   --text-large-title: var(--type-large-title);
   --text-large-title--line-height: 1.21;
   --text-title-1: var(--type-title-1);
@@ -33,43 +30,6 @@
   --text-caption-1--line-height: 1.33;
   --text-caption-2: var(--type-caption-2);
   --text-caption-2--line-height: 1.18;
-
-  --text-edge-label: var(--type-edge-label);
-  --text-edge-label--line-height: 1.1;
-  --text-ui-tiny: var(--type-ui-tiny);
-  --text-ui-tiny--line-height: 1.15;
-  --text-ui-2xs: var(--type-ui-2xs);
-  --text-ui-2xs--line-height: 1.15;
-  --text-ui-caption: var(--type-ui-caption);
-  --text-ui-caption--line-height: 1.25;
-  --text-ui-hint: var(--type-ui-hint);
-  --text-ui-hint--line-height: 1.35;
-  --text-ui-meta: var(--type-ui-meta);
-  --text-ui-meta--line-height: 1.35;
-  --text-ui-xs: var(--type-ui-xs);
-  --text-ui-xs--line-height: 1.4;
-  --text-ui-control: var(--type-ui-control);
-  --text-ui-control--line-height: 1.25;
-  --text-ui-sm: var(--type-ui-sm);
-  --text-ui-sm--line-height: 1.5;
-  --text-ui-copy: var(--type-ui-copy);
-  --text-ui-copy--line-height: 1.6;
-  --text-ui-body: var(--type-ui-body);
-  --text-ui-body--line-height: 1.5;
-  --text-ui-lead: var(--type-ui-lead);
-  --text-ui-lead--line-height: 1.5;
-  --text-atlas-brand: var(--type-atlas-brand);
-  --text-atlas-brand--line-height: 1;
-  --text-atlas-card: var(--type-atlas-card);
-  --text-atlas-card--line-height: 1.15;
-  --text-node-panel-title: var(--type-node-panel-title);
-  --text-node-panel-title--line-height: 1.08;
-  --text-atlas-panel: var(--type-atlas-panel);
-  --text-atlas-panel--line-height: 1.06;
-  --text-atlas-summary: var(--type-atlas-summary);
-  --text-atlas-summary--line-height: 1.25;
-  --text-atlas-display: var(--type-atlas-display);
-  --text-atlas-display--line-height: 1.1;
 
   --tracking-label: 0.13em;
   --tracking-label-wide: 0.14em;

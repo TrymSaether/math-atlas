@@ -57,7 +57,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
             <span className="shell-panel-title">Domains</span>
             <button
               type="button"
-              className="text-ui-meta font-semibold text-fg-2 hover:text-fg-1 hover:underline"
+              className="text-caption-1 font-semibold text-fg-2 hover:text-fg-1 hover:underline"
               onClick={resetTopics}
             >
               All
