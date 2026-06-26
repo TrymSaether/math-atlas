@@ -158,8 +158,8 @@
   min-height: var(--shell-bar-h);
   align-items: center;
   justify-content: flex-end;
-  gap: 2px;
-  padding: 2px;
+  gap: 4px;
+  padding: 4px;
   border-radius: var(--shell-toolbar-radius);
 }
 
@@ -174,14 +174,8 @@
 .shell-edit-controls {
   display: inline-flex;
   align-items: center;
-  gap: 0px;
-}
-.shell-edit-controls {
-  display: inline-flex;
-  align-items: center;
   gap: 2px;
 }
-
 /* Compound selector for the same reason as `.shell-map-title` — keep the pill
    radius from being clobbered by the base `.shell-btn` rule below. */
 .shell-btn.shell-edit-toggle {
@@ -196,14 +190,13 @@
 
 .shell-edit-badge {
   position: absolute;
-  right: 7px;
-  top: 7px;
-  width: 9px;
-  height: 9px;
-  border-radius: var(--radius-pill);
+  left: 50%;
+  bottom: 5px;
+  width: 5px;
+  height: 5px;
+  translate: -50% 0;
+  border-radius: 50%;
   background: var(--success);
-  box-shadow: 0 0 0 2px var(--surface);
-  pointer-events: none;
 }
 
 .shell-surface-nav {
