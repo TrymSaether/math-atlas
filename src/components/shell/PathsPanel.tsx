@@ -88,6 +88,13 @@ export function PathsPanel() {
           </ShellIconButton>
         </header>
 
+        {/* Announce tour progress to assistive tech as the step (and selected
+            concept) changes — the visual cue is the map pan, which a screen
+            reader can't see. */}
+        <div className="sr-only" role="status" aria-live="polite">
+          {touring ? `Step ${(tourIndex ?? 0) + 1} of ${ordered.length}: ${labelFor(ordered[tourIndex ?? 0])}` : ""}
+        </div>
+
         <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-4 pb-4">
           <ShellSegmented
             label="Route kind"

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import {
   MagnifyingGlassIcon,
   CompassIcon,
@@ -52,10 +52,44 @@ function MapMenu() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const close = useCallback(() => setOpen(false), []);
   const title = catalog.find((e) => e.slug === mapId)?.title ?? mapId;
+  const selectedIndex = Math.max(
+    0,
+    catalog.findIndex((e) => e.slug === mapId),
+  );
+  const [activeIndex, setActiveIndex] = useState(selectedIndex);
 
   usePopoverDismiss({ open, onClose: close, containerRef: ref, triggerRef });
+
+  // Open the listbox on the current map and move focus into it, so the dropdown
+  // is operable from the keyboard (HIG/WCAG listbox pattern).
+  useEffect(() => {
+    if (!open) return;
+    setActiveIndex(selectedIndex);
+    const raf = requestAnimationFrame(() => optionRefs.current[selectedIndex]?.focus());
+    return () => cancelAnimationFrame(raf);
+  }, [open, selectedIndex]);
+
+  const onListKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (catalog.length === 0) return;
+    let next = activeIndex;
+    if (e.key === "ArrowDown") next = (activeIndex + 1) % catalog.length;
+    else if (e.key === "ArrowUp") next = (activeIndex - 1 + catalog.length) % catalog.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = catalog.length - 1;
+    else return;
+    e.preventDefault();
+    setActiveIndex(next);
+    optionRefs.current[next]?.focus();
+  };
+
+  const choose = (slug: string) => {
+    if (slug !== mapId) setMap(slug);
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
 
   return (
     <div className="relative" ref={ref}>
@@ -86,23 +120,26 @@ function MapMenu() {
           material="thick"
           className="shell-panel absolute left-0 top-[calc(100%+8px)] z-30 w-70 p-1.5"
           role="listbox"
+          aria-label="Active map"
+          onKeyDown={onListKeyDown}
         >
-          {catalog.map((entry) => {
+          {catalog.map((entry, i) => {
             const active = entry.slug === mapId;
             return (
               <button
                 key={entry.slug}
+                ref={(el) => {
+                  optionRefs.current[i] = el;
+                }}
                 type="button"
                 role="option"
                 aria-selected={active}
+                tabIndex={i === activeIndex ? 0 : -1}
                 className={cn(
                   "shell-menu-option",
                   active ? "text-fg-1" : "text-fg-2 hover:bg-surface-hover hover:text-fg-1",
                 )}
-                onClick={() => {
-                  if (!active) setMap(entry.slug);
-                  setOpen(false);
-                }}
+                onClick={() => choose(entry.slug)}
               >
                 <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
                 {active && <CheckIcon className="h-4 w-4 shrink-0 text-fg-2" weight="bold" />}
