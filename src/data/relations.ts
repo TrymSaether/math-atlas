@@ -231,6 +231,37 @@ export const RELATION_TERSE: Record<RelationType, string> = {
   proved_by: "proved by",
 };
 
+/**
+ * Math-operator glyph for each relation, read in the *forward* (arrow)
+ * direction. Powers the "Notation" edge skin and the operators annotation:
+ * the symbol — not hue — carries the relation type, which keeps color reserved
+ * for domains and reads natively in a math encyclopedia. Forward/inverse share
+ * a glyph except where the relation is genuinely directional under inversion
+ * (generalizes ⊃ vs specializes ⊂); the edge geometry already conveys direction.
+ */
+export const RELATION_OPERATOR: Record<RelationType, string> = {
+  defined_in_terms_of: "≔",
+  defines: "≔",
+  uses: "⊢",
+  used_by: "⊢",
+  assumes: "⊨",
+  assumed_by: "⊨",
+  constructed_from: "⊕",
+  constructs: "⊕",
+  generalizes: "⊃",
+  specializes: "⊂",
+  motivated_by: "↝",
+  motivates: "↝",
+  equivalent_to: "≅",
+  related_to: "∼",
+  satisfies: "⊧",
+  satisfied_by: "⊧",
+  violates: "⊬",
+  violated_by: "⊬",
+  proves: "∴",
+  proved_by: "∴",
+};
+
 function isRelationType(relation: string): relation is RelationType {
   return relation in RELATIONS;
 }
@@ -272,6 +303,15 @@ export function edgeLabel(relation: string, isDependency: boolean, style: "prose
   const oriented = orientedRelation(relation, isDependency);
   if (!oriented) return relation;
   return style === "terse" ? RELATION_TERSE[oriented] : RELATIONS[oriented].reads;
+}
+
+/**
+ * Math-operator glyph for an edge, oriented along the drawn arrow (mirrors
+ * `edgeLabel`). Falls back to a neutral mid-dot for unknown relations.
+ */
+export function edgeOperator(relation: string, isDependency: boolean): string {
+  const oriented = orientedRelation(relation, isDependency);
+  return oriented ? RELATION_OPERATOR[oriented] : "·";
 }
 
 /**

@@ -85,3 +85,121 @@ export function getEdgeStyle(
     symmetric: isSymmetricRelation(edge.relation),
   };
 }
+
+/* ========================================================================
+   Edge "skins" — five interchangeable visual languages for relations, each
+   selectable from the canvas controls. None reuse the blueprint marker grammar
+   above; all but `typed` keep hue reserved for domains (color encodes nothing,
+   the morphology does). See TopoEdge for the per-skin SVG rendering.
+   ======================================================================== */
+
+/** Five relation families, the encoding axis shared by every skin. */
+export type EdgeKind = "backbone" | "generalization" | "equivalence" | "association" | "soft";
+
+/**
+ * Coarser than `familyOf`: splits the symmetric relations (equivalent_to,
+ * related_to) into their own kinds so every skin can give them a distinct,
+ * head-less treatment (double rule / contour / dashed pair).
+ */
+export function edgeKindOf(edge: { relation: string; isDependency: boolean }): EdgeKind {
+  if (edge.relation === "generalizes" || edge.relation === "specializes") return "generalization";
+  if (edge.relation === "equivalent_to") return "equivalence";
+  if (edge.relation === "related_to") return "association";
+  return edge.isDependency ? "backbone" : "soft";
+}
+
+export interface EdgeVisual {
+  kind: EdgeKind;
+  symmetric: boolean;
+  /** Stroke color: neutral ink for every skin except `typed` (relation hue). */
+  color: string;
+  width: number;
+  opacity: number;
+  dash?: string;
+}
+
+/** Per-kind ink weights for the monochrome skins (flow / ink / notation / glass). */
+const INK_BASE: Record<EdgeKind, { width: number; opacity: number; dash?: string }> = {
+  backbone: { width: 1.8, opacity: 0.66 },
+  generalization: { width: 1.7, opacity: 0.64 },
+  equivalence: { width: 1.5, opacity: 0.66 },
+  association: { width: 1.4, opacity: 0.46, dash: "5 5" },
+  soft: { width: 1.3, opacity: 0.38, dash: "1.5 5" },
+};
+
+/**
+ * The `typed` skin recolors the imported design system's typed connections with
+ * math-atlas palette tokens (color is deliberate here — this is the one skin
+ * that opts out of the hue-reserved-for-domains rule). Soft links split by their
+ * semantic charge: counterexamples red, proofs purple, satisfies teal, etc.
+ */
+function typedColor(edge: { relation: string }, kind: EdgeKind): string {
+  // Blue is reserved for the active-edge accent and amber for the route trail,
+  // so the typed palette steers clear of both to stay unambiguous.
+  switch (kind) {
+    case "backbone":
+      return "var(--teal)";
+    case "generalization":
+      return "var(--green)";
+    case "equivalence":
+      return "var(--violet)";
+    case "association":
+      return "var(--slate)";
+    case "soft":
+      if (edge.relation === "violates" || edge.relation === "violated_by") return "var(--red)";
+      if (edge.relation === "proves" || edge.relation === "proved_by") return "var(--purple)";
+      if (edge.relation === "satisfies" || edge.relation === "satisfied_by") return "var(--cyan)";
+      if (edge.relation === "motivated_by" || edge.relation === "motivates") return "var(--pink)";
+      return "var(--rose)";
+  }
+}
+
+const TYPED_DASH: Record<EdgeKind, string | undefined> = {
+  backbone: undefined,
+  generalization: undefined,
+  equivalence: "8 4 2 4",
+  association: "2 4",
+  soft: "2 4",
+};
+
+export type EdgeSkin = "flow" | "ink" | "notation" | "glass" | "typed";
+
+/**
+ * Resolve the base stroke parameters for a skin. The structural rendering
+ * (gradients, grooves, tapers, double rules, markers) lives in TopoEdge; this
+ * supplies the shared color / weight / dash and the highlight + dim overrides.
+ */
+export function getEdgeVisual(
+  skin: EdgeSkin,
+  edge: { relation: string; isDependency: boolean },
+  highlighted = false,
+  dimmed = false,
+): EdgeVisual {
+  const kind = edgeKindOf(edge);
+  const symmetric = isSymmetricRelation(edge.relation);
+
+  if (skin === "typed") {
+    return {
+      kind,
+      symmetric,
+      color: highlighted ? "var(--edge-highlight)" : typedColor(edge, kind),
+      width: highlighted ? 3 : 2,
+      opacity: dimmed ? 0.08 : highlighted ? 1 : kind === "soft" ? 0.85 : 0.92,
+      dash: highlighted ? undefined : TYPED_DASH[kind],
+    };
+  }
+
+  const base = INK_BASE[kind];
+  // Notation keeps every line a quiet hairline so the operator chip is the star;
+  // soft still hints with a dotted stroke.
+  const width = skin === "notation" ? (kind === "soft" ? 0.75 : 0.9) : base.width;
+  const opacity = skin === "notation" ? (kind === "soft" ? 0.32 : 0.42) : base.opacity;
+  return {
+    kind,
+    symmetric,
+    color: highlighted ? "var(--edge-highlight)" : "var(--edge-ink)",
+    width: highlighted ? Math.max(width + 1.4, 2.8) : width,
+    opacity: dimmed ? 0.06 : highlighted ? 0.95 : opacity,
+    dash: highlighted ? undefined : skin === "notation" && kind !== "soft" ? undefined : base.dash,
+  };
+}

@@ -70,6 +70,10 @@
   /* Edges are monochrome ink — color is reserved for domains. */
   --edge-ink: #64748b;
   --edge-highlight: var(--blue);
+  /* Bevel highlight for the engraved "glass" edge skin. */
+  --edge-glass-light: rgba(255, 255, 255, 0.7);
+  /* Learning-route trail — a warm amber, distinct from the blue active accent. */
+  --route: #e08600;
 
   --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-2: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
@@ -165,6 +169,10 @@
   /* Edges are monochrome ink — color is reserved for domains. */
   --edge-ink: #6b7689;
   --edge-highlight: var(--blue);
+  /* Bevel highlight for the engraved "glass" edge skin. */
+  --edge-glass-light: rgba(255, 255, 255, 0.16);
+  /* Learning-route trail — a warm amber, distinct from the blue active accent. */
+  --route: #f0a23c;
 
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.5);

@@ -12,6 +12,14 @@ import { useEffect, useRef } from "react";
  * (domains, then concept kinds); the layout/overlay preferences sit below in a
  * clearly secondary "Display" group.
  */
+const EDGE_SKINS = [
+  { id: "flow", label: "Flow" },
+  { id: "ink", label: "Ink" },
+  { id: "notation", label: "Notation" },
+  { id: "glass", label: "Glass" },
+  { id: "typed", label: "Typed" },
+] as const;
+
 export function LayersPanel({ onClose }: { onClose: () => void }) {
   const map = useStore((s) => s.loadedMaps[s.mapId]);
   const topics = useStore((s) => s.topics);
@@ -25,6 +33,12 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
   const toggleRegions = useStore((s) => s.toggleRegions);
   const showSoftDeps = useStore((s) => s.showSoftDeps);
   const toggleSoftDeps = useStore((s) => s.toggleSoftDeps);
+  const edgeSkin = useStore((s) => s.edgeSkin);
+  const setEdgeSkin = useStore((s) => s.setEdgeSkin);
+  const edgeAnnotation = useStore((s) => s.edgeAnnotation);
+  const setEdgeAnnotation = useStore((s) => s.setEdgeAnnotation);
+  const edgeLabelStyle = useStore((s) => s.edgeLabelStyle);
+  const setEdgeLabelStyle = useStore((s) => s.setEdgeLabelStyle);
   const showGrid = useStore((s) => s.showGrid);
   const toggleGrid = useStore((s) => s.toggleGrid);
   const showMinimap = useStore((s) => s.showMinimap);
@@ -112,6 +126,46 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
             <ShellSwitch label="Grid" on={showGrid} onToggle={toggleGrid} />
             <ShellSwitch label="Minimap" on={showMinimap} onToggle={toggleMinimap} />
           </div>
+        </section>
+
+        {/* How edges read: the relation visual language + its mid-edge labels. */}
+        <section className="shell-panel-section space-y-2.5">
+          <span className="shell-panel-title">Edges</span>
+          <div>
+            <div className="glass-field-label mb-1.5">Style</div>
+            <div className="flex flex-wrap gap-1.5">
+              {EDGE_SKINS.map((skin) => (
+                <ShellChip key={skin.id} active={edgeSkin === skin.id} onClick={() => setEdgeSkin(skin.id)}>
+                  {skin.label}
+                </ShellChip>
+              ))}
+            </div>
+          </div>
+          <ShellSegmented
+            label="Edge labels"
+            value={edgeAnnotation}
+            onChange={setEdgeAnnotation}
+            className="w-full"
+            selectionRole="button"
+            options={[
+              { id: "off", label: "Off" },
+              { id: "operators", label: "Operators" },
+              { id: "words", label: "Words" },
+            ]}
+          />
+          {edgeAnnotation === "words" && (
+            <ShellSegmented
+              label="Wording"
+              value={edgeLabelStyle}
+              onChange={setEdgeLabelStyle}
+              className="w-full"
+              selectionRole="button"
+              options={[
+                { id: "prose", label: "Prose" },
+                { id: "terse", label: "Terse" },
+              ]}
+            />
+          )}
         </section>
 
         <section className="shell-panel-section space-y-2.5">

@@ -7,6 +7,21 @@
   stroke-linecap: round;
 }
 
+/* Operator chip for the "operators" edge annotation — a compact math glyph on a
+   surface chip. Sized tighter than the word label since glyphs read at a glance. */
+.atlas-edge-op {
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: var(--radius-xs, 4px);
+  font-family: var(--font-math, ui-serif, Georgia, "Times New Roman", serif);
+  font-size: 12px;
+  line-height: 1;
+  box-shadow: var(--shadow-1);
+}
+
 .react-flow__handle {
   width: 6px !important;
   height: 6px !important;

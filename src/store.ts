@@ -18,6 +18,7 @@ import type { NodeKind, Relation } from "./types";
 import type { SourceGraph } from "./data/sourceSchema";
 import type { AuthorableRelation } from "./data/relations";
 import type { RouteKind } from "./lib/route";
+import type { EdgeSkin } from "./lib/relationStyle";
 import { buildLoadedMapFromSource } from "./data/loadMap";
 import { graphDataToSource } from "./data/toSource";
 import { getCachedCatalog, setCachedCatalog, setCachedMap, clearCachedMap } from "./data/mapCache";
@@ -47,6 +48,10 @@ export type ViewMode = "dependency" | "cluster";
 export type EdgeStyle = "smooth" | "straight" | "bezier";
 /** How edge relationship labels read on hover/selection. */
 export type EdgeLabelStyle = "prose" | "terse";
+/** Visual language for edges: see lib/relationStyle (EdgeSkin) + TopoEdge. */
+export type { EdgeSkin } from "./lib/relationStyle";
+/** Mid-edge annotation overlay: nothing, a math operator, or the relation word. */
+export type EdgeAnnotation = "off" | "operators" | "words";
 /** Which surface is shown: the graph canvas, reading/study tools, or sandbox. */
 export type Surface = "atlas" | "dictionary" | "flashcards" | "sandbox";
 /** Atlas interaction mode: free graph exploration vs guided dependency paths. */
@@ -73,6 +78,8 @@ interface PersistedState {
   showSoftDeps?: boolean;
   edgeStyle?: EdgeStyle;
   edgeLabelStyle?: EdgeLabelStyle;
+  edgeSkin?: EdgeSkin;
+  edgeAnnotation?: EdgeAnnotation;
   focusMode?: boolean;
   focusDepth?: number;
   showGrid?: boolean;
@@ -125,6 +132,12 @@ interface State {
   /** Wording of the relationship label shown on hover/selection. */
   edgeLabelStyle: EdgeLabelStyle;
   setEdgeLabelStyle: (s: EdgeLabelStyle) => void;
+  /** Edge visual language (Flow / Ink / Notation / Glass / Typed). */
+  edgeSkin: EdgeSkin;
+  setEdgeSkin: (s: EdgeSkin) => void;
+  /** Mid-edge annotation overlay (off / math operator / relation word). */
+  edgeAnnotation: EdgeAnnotation;
+  setEdgeAnnotation: (a: EdgeAnnotation) => void;
   focusMode: boolean;
   toggleFocusMode: () => void;
   focusDepth: number;
@@ -310,6 +323,16 @@ function isEdgeLabelStyle(value: unknown): value is EdgeLabelStyle {
   return value === "prose" || value === "terse";
 }
 
+function isEdgeSkin(value: unknown): value is EdgeSkin {
+  return (
+    value === "flow" || value === "ink" || value === "notation" || value === "glass" || value === "typed"
+  );
+}
+
+function isEdgeAnnotation(value: unknown): value is EdgeAnnotation {
+  return value === "off" || value === "operators" || value === "words";
+}
+
 function isSurface(value: unknown): value is Surface {
   return value === "atlas" || value === "dictionary" || value === "flashcards" || value === "sandbox";
 }
@@ -350,6 +373,8 @@ function normalizePersistedState(value: unknown | null): PersistedState | null {
     showSoftDeps: asBoolean(value.showSoftDeps),
     edgeStyle: isEdgeStyle(value.edgeStyle) ? value.edgeStyle : undefined,
     edgeLabelStyle: isEdgeLabelStyle(value.edgeLabelStyle) ? value.edgeLabelStyle : undefined,
+    edgeSkin: isEdgeSkin(value.edgeSkin) ? value.edgeSkin : undefined,
+    edgeAnnotation: isEdgeAnnotation(value.edgeAnnotation) ? value.edgeAnnotation : undefined,
     focusMode: asBoolean(value.focusMode),
     focusDepth: normalizedFocusDepth(value.focusDepth),
     showGrid: asBoolean(value.showGrid),
@@ -415,6 +440,8 @@ function persistedStateFor(state: State): PersistedState {
     showSoftDeps: state.showSoftDeps,
     edgeStyle: state.edgeStyle,
     edgeLabelStyle: state.edgeLabelStyle,
+    edgeSkin: state.edgeSkin,
+    edgeAnnotation: state.edgeAnnotation,
     focusMode: state.focusMode,
     focusDepth: state.focusDepth,
     showGrid: state.showGrid,
@@ -680,6 +707,10 @@ export const useStore = create<State>((set, get) => ({
   setEdgeStyle: (edgeStyle) => set({ edgeStyle }),
   edgeLabelStyle: persistedState?.edgeLabelStyle ?? "prose",
   setEdgeLabelStyle: (edgeLabelStyle) => set({ edgeLabelStyle }),
+  edgeSkin: persistedState?.edgeSkin ?? "flow",
+  setEdgeSkin: (edgeSkin) => set({ edgeSkin }),
+  edgeAnnotation: persistedState?.edgeAnnotation ?? "operators",
+  setEdgeAnnotation: (edgeAnnotation) => set({ edgeAnnotation }),
   focusMode: persistedState?.focusMode ?? false,
   toggleFocusMode: () => set((s) => ({ focusMode: !s.focusMode })),
   focusDepth: persistedState?.focusDepth ?? 1,

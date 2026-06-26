@@ -147,8 +147,9 @@ interface NodeData {
   routeEndpoint: "from" | "to" | undefined;
 }
 
-/** Cohesive "route" overlay color — the academic accent, distinct from domains. */
-const ROUTE_COLOR = "var(--accent)";
+/** Route overlay color — a warm "trail" hue, deliberately distinct from the
+ *  blue active-edge accent so a traced path never reads as just a selection. */
+const ROUTE_COLOR = "var(--route)";
 
 function InnerGraph() {
   const mapId = useStore((s) => s.mapId);
@@ -189,6 +190,9 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   const { x, y, zoom } = useViewport();
   // Hide non-highlighted edges only at extreme zoom-out where they become noise.
   const edgeLODHidden = zoom < 0.18;
+  // Mid-edge annotations (operator / word chips) only appear once zoomed in
+  // enough to be legible; quantized so edges rebuild only on threshold crossing.
+  const annotationZoomOk = zoom >= 0.55;
   const lod = lodForZoom(zoom);
 
   const filteredNodes = useMemo(() => {
@@ -497,6 +501,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
           edge,
           highlight,
           dim,
+          labelZoomOk: annotationZoomOk,
           routeReveal: onRoute ? { delay: routeDelay, runKey: routeRunKey, color: ROUTE_COLOR } : undefined,
         },
       });
@@ -509,6 +514,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
     selectedId,
     visibleIds,
     edgeLODHidden,
+    annotationZoomOk,
     view,
     map.metrics.reducedEdgeIds,
     activeLayout.positions,
