@@ -129,11 +129,32 @@ a:focus-visible,
   border-radius: var(--shell-island-radius);
 }
 
+.shell-top-right-stack {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: var(--shell-gap-md);
+}
+
+.shell-surface-island,
+.shell-edit-island,
+.shell-global-island {
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-island-radius);
+}
+
+.shell-edit-island,
+.shell-global-island {
+  gap: var(--shell-gap-xs);
+}
+
 .shell-top-right-island {
   gap: var(--shell-gap-sm);
 }
 
 .shell-island-divider {
+  display: none;
   margin: 0 var(--shell-gap-sm);
 }
 
@@ -188,6 +209,7 @@ a:focus-visible,
   min-height: var(--shell-control-h);
 }
 
+.shell-surface-island .shell-seg,
 .shell-top-right-island .shell-seg,
 .shell-mode-island .shell-seg {
   padding: 0;
@@ -233,5 +255,12 @@ a:focus-visible,
   .top-chrome {
     gap: var(--shell-gap-md);
     padding: 10px var(--shell-edge);
+  }
+
+  .shell-top-right-stack {
+    max-width: calc(100vw - 24px);
+    justify-content: center;
+    gap: var(--shell-gap-sm);
+    flex-wrap: wrap;
   }
 }
