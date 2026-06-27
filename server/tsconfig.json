@@ -9,6 +9,7 @@
   "//": "Includes the React-free src modules the server reuses (mirrors tsconfig.node.json) so cross-imports typecheck. Run via `npm run typecheck:server`.",
   "include": [
     "**/*.ts",
+    "../shared/**/*.ts",
     "../src/lib/palette.ts",
     "../src/data/sourceSchema.ts",
     "../src/data/relations.ts",

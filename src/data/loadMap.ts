@@ -5,8 +5,6 @@ import { resolveDomainTones, type DomainTone } from "../lib/colors";
 import { computeGraphMetrics, type GraphMetrics } from "../lib/graphMetrics";
 import { SourceGraphSchema } from "./sourceSchema";
 import { buildArtifact } from "./buildArtifact";
-import { fetchMap, type MapPayload } from "./mapsApi";
-import { getCachedMap, setCachedMap } from "./mapCache";
 
 /**
  * Enrich a pre-validated build artifact into the runtime GraphData by computing
@@ -159,30 +157,4 @@ export function buildLoadedMapFromSource(source: unknown): BuildResult {
   }
   const { artifact, warnings } = buildArtifact(parsed.data);
   return { ok: true, map: buildLoadedMap(enrichArtifact(artifact)), warnings };
-}
-
-/**
- * Fetch a map's source from the API by entity id and build the runtime map.
- * Cache-first for instant paint + offline resilience: a cached source renders
- * immediately while the network revalidates in the background; with no cache we
- * await the network (and surface the error if the backend is unreachable).
- */
-export async function fetchAndBuildMap(id: string): Promise<{ map: LoadedMap; payload: MapPayload }> {
-  const cached = getCachedMap(id);
-  if (cached) {
-    void fetchMap(id)
-      .then(setCachedMap)
-      .catch(() => {
-        /* offline / backend asleep — keep serving cache */
-      });
-    const built = buildLoadedMapFromSource(cached.source);
-    if (built.ok) return { map: built.map, payload: cached };
-    // Corrupt cache: fall through to a fresh fetch.
-  }
-
-  const payload = await fetchMap(id);
-  setCachedMap(payload);
-  const built = buildLoadedMapFromSource(payload.source);
-  if (!built.ok) throw new Error(built.error);
-  return { map: built.map, payload };
 }

@@ -1,17 +1,7 @@
 import { create } from "zustand";
-import {
-  DEFAULT_MAP_ID,
-  isMapId,
-  fetchAndBuildMap,
-  fetchCatalog,
-  forkMap,
-  saveMapSource,
-  deleteMap,
-  type CatalogEntry,
-  type LoadedMap,
-  type MapId,
-  type MapRole,
-} from "./data";
+import { DEFAULT_MAP_ID, isMapId, type CatalogEntry, type LoadedMap, type MapId } from "./data";
+import { mapService, type MapMeta } from "./application/maps/mapService";
+import { mapSaveScheduler } from "./application/maps/saveScheduler";
 import { applyTheme, readStoredTheme, schemeFor } from "./lib/themes";
 import { defaultVisibleKinds } from "./lib/nodeCategory";
 import type { NodeKind, Relation } from "./types";
@@ -20,8 +10,6 @@ import type { AuthorableRelation } from "./data/relations";
 import type { RouteKind } from "./lib/route";
 import { buildLoadedMapFromSource } from "./data/loadMap";
 import { graphDataToSource } from "./data/toSource";
-import { getCachedCatalog, setCachedCatalog, setCachedMap, clearCachedMap } from "./data/mapCache";
-import { fetchProgress, putProgress, deleteProgress, type ProgressStatus } from "./data/progressApi";
 import {
   addEdge as addSourceEdge,
   applyDraft,
@@ -31,6 +19,16 @@ import {
   uniqueSlug,
   type NodeDraft,
 } from "./data/authoring";
+import {
+  PERSISTED_STATE_VERSION,
+  normalizePersistedState,
+  readPersistedState,
+  writePersistedState,
+  type PersistedMapState,
+  type PersistedState,
+} from "./infrastructure/storage/appStateStorage";
+import { createMapWorkflowSlice, type MapWorkflowSlice, type RestoredMapState } from "./store/slices/mapWorkflowSlice";
+import { createProgressSlice, type ProgressSlice } from "./store/slices/progressSlice";
 
 /** Result of an authoring mutation; `error` is a human-facing validation message. */
 export interface EditResult {
@@ -52,40 +50,7 @@ export type Surface = "atlas" | "dictionary" | "flashcards" | "sandbox";
 /** Atlas interaction mode: free graph exploration vs guided dependency paths. */
 export type AtlasMode = "explore" | "paths";
 
-const APP_STATE_STORAGE_KEY = "math-atlas-state-v1";
-const PERSISTED_STATE_VERSION = 1;
-
-interface PersistedMapState {
-  search?: string;
-  kinds?: NodeKind[];
-  topics?: string[];
-  relations?: Relation[];
-  selectedId?: string | null;
-  routeFrom?: string | null;
-  routeTo?: string | null;
-}
-
-interface PersistedState {
-  version: typeof PERSISTED_STATE_VERSION;
-  mapId?: MapId;
-  searchScope?: SearchScope;
-  view?: ViewMode;
-  showSoftDeps?: boolean;
-  edgeStyle?: EdgeStyle;
-  edgeLabelStyle?: EdgeLabelStyle;
-  focusMode?: boolean;
-  focusDepth?: number;
-  showGrid?: boolean;
-  showRegions?: boolean;
-  showMinimap?: boolean;
-  surface?: Surface;
-  mode?: AtlasMode;
-  routeKind?: RouteKind;
-  routeIncludeProof?: boolean;
-  maps?: Partial<Record<MapId, PersistedMapState>>;
-}
-
-interface State {
+export interface State extends MapWorkflowSlice, ProgressSlice {
   /** Active theme id (see src/lib/themes.ts). */
   theme: string;
   setTheme: (id: string) => void;
@@ -93,11 +58,9 @@ interface State {
   scheme: () => "light" | "dark";
 
   mapId: MapId;
-  setMap: (mapId: MapId) => void;
   loadedMaps: Partial<Record<MapId, LoadedMap>>;
   loadingMapId: MapId | null;
   mapError: string | null;
-  ensureMapLoaded: (mapId?: MapId) => Promise<void>;
 
   search: string;
   setSearch: (s: string) => void;
@@ -223,25 +186,9 @@ interface State {
   /** Maps the caller can open (one entry per slug; best access wins). */
   catalog: CatalogEntry[];
   /** Per-slug map entity meta (id / role / saved version), set when a map loads. */
-  mapMeta: Partial<Record<MapId, { id: string; role: MapRole; baseVersion: number; updated: string }>>;
-  /** Fetch the catalog from the API (falls back to cache when offline). */
-  loadCatalog: () => Promise<void>;
-  /** On sign-in/out: reload the catalog and the active map (access changed). */
-  onSessionChange: () => Promise<void>;
+  mapMeta: Partial<Record<MapId, MapMeta>>;
   /** Active map changed on the server (conflict or a collaborator's save). */
   staleMap: MapId | null;
-  /** Reload the active map fresh from the server (discards unsaved local edits). */
-  reloadActiveMap: () => Promise<void>;
-  /** On window focus: flag the active map stale if the server copy is newer. */
-  checkRemoteUpdate: () => Promise<void>;
-
-  /* ---- Learning progress (Phase 3) ---------------------------------- */
-  /** Per-map node progress (slug → nodeId → status). Signed-in users only. */
-  progress: Partial<Record<MapId, Record<string, ProgressStatus>>>;
-  /** Fetch the caller's progress for a map (no-op signed out). */
-  loadProgress: (mapId: MapId) => Promise<void>;
-  /** Set or clear a node's status (optimistic + server). `null` clears it. */
-  setNodeProgress: (mapId: MapId, nodeId: string, status: ProgressStatus | null) => void;
 }
 
 function toggle<T>(set: Set<T>, v: T) {
@@ -251,116 +198,8 @@ function toggle<T>(set: Set<T>, v: T) {
   return next;
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function readPersistedState(): unknown | null {
-  if (typeof localStorage === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(APP_STATE_STORAGE_KEY);
-    if (!raw) return null;
-    const parsed: unknown = JSON.parse(raw);
-    if (!isRecord(parsed) || parsed.version !== PERSISTED_STATE_VERSION) return null;
-    return parsed;
-  } catch {
-    return null;
-  }
-}
-
-function writePersistedState(state: PersistedState): void {
-  if (typeof localStorage === "undefined") return;
-  try {
-    localStorage.setItem(APP_STATE_STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    /* ignore private-mode / quota failures */
-  }
-}
-
-function asString(value: unknown): string | undefined {
-  return typeof value === "string" ? value : undefined;
-}
-
-function asBoolean(value: unknown): boolean | undefined {
-  return typeof value === "boolean" ? value : undefined;
-}
-
-function asStringArray(value: unknown): string[] | undefined {
-  return Array.isArray(value) && value.every((item) => typeof item === "string") ? value : undefined;
-}
-
-function asNullableString(value: unknown): string | null | undefined {
-  if (value === null) return null;
-  return typeof value === "string" ? value : undefined;
-}
-
-function isSearchScope(value: unknown): value is SearchScope {
-  return value === "all" || value === "title";
-}
-
-function isViewMode(value: unknown): value is ViewMode {
-  return value === "dependency" || value === "cluster";
-}
-
-function isEdgeStyle(value: unknown): value is EdgeStyle {
-  return value === "smooth" || value === "straight" || value === "bezier";
-}
-
-function isEdgeLabelStyle(value: unknown): value is EdgeLabelStyle {
-  return value === "prose" || value === "terse";
-}
-
 function isSurface(value: unknown): value is Surface {
   return value === "atlas" || value === "dictionary" || value === "flashcards" || value === "sandbox";
-}
-
-function normalizedFocusDepth(value: unknown): number | undefined {
-  if (typeof value !== "number" || !Number.isFinite(value)) return undefined;
-  return Math.min(3, Math.max(1, Math.round(value)));
-}
-
-function normalizePersistedMapState(value: unknown): PersistedMapState | undefined {
-  if (!isRecord(value)) return undefined;
-  return {
-    search: asString(value.search),
-    kinds: asStringArray(value.kinds),
-    topics: asStringArray(value.topics),
-    relations: asStringArray(value.relations),
-    selectedId: asNullableString(value.selectedId),
-    routeFrom: asNullableString(value.routeFrom),
-    routeTo: asNullableString(value.routeTo),
-  };
-}
-
-function normalizePersistedState(value: unknown | null): PersistedState | null {
-  if (!isRecord(value)) return null;
-  const maps: Partial<Record<MapId, PersistedMapState>> = {};
-  if (isRecord(value.maps)) {
-    for (const [key, mapState] of Object.entries(value.maps)) {
-      if (!isMapId(key)) continue;
-      const normalized = normalizePersistedMapState(mapState);
-      if (normalized) maps[key] = normalized;
-    }
-  }
-  return {
-    version: PERSISTED_STATE_VERSION,
-    mapId: typeof value.mapId === "string" && isMapId(value.mapId) ? value.mapId : undefined,
-    searchScope: isSearchScope(value.searchScope) ? value.searchScope : undefined,
-    view: isViewMode(value.view) ? value.view : undefined,
-    showSoftDeps: asBoolean(value.showSoftDeps),
-    edgeStyle: isEdgeStyle(value.edgeStyle) ? value.edgeStyle : undefined,
-    edgeLabelStyle: isEdgeLabelStyle(value.edgeLabelStyle) ? value.edgeLabelStyle : undefined,
-    focusMode: asBoolean(value.focusMode),
-    focusDepth: normalizedFocusDepth(value.focusDepth),
-    showGrid: asBoolean(value.showGrid),
-    showRegions: asBoolean(value.showRegions),
-    showMinimap: asBoolean(value.showMinimap),
-    surface: isSurface(value.surface) ? value.surface : undefined,
-    mode: value.mode === "explore" || value.mode === "paths" ? value.mode : undefined,
-    routeKind: value.routeKind === "prereq" || value.routeKind === "path" ? value.routeKind : undefined,
-    routeIncludeProof: asBoolean(value.routeIncludeProof),
-    maps,
-  };
 }
 
 const persistedState = normalizePersistedState(readPersistedState());
@@ -438,7 +277,7 @@ function setFromPersisted<T extends string>(
   return new Set(saved.filter((value) => valid.has(value)));
 }
 
-function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefined) {
+function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefined): RestoredMapState {
   const validNodeIds = new Set(map.data.nodes.map((node) => node.id));
   const selectedId = saved?.selectedId && validNodeIds.has(saved.selectedId) ? saved.selectedId : null;
 
@@ -460,11 +299,6 @@ function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefin
   };
 }
 
-/** Slugs the caller owns or can edit — drives the "edited" badge. */
-function editableSlugs(catalog: CatalogEntry[]): Set<MapId> {
-  return new Set(catalog.filter((e) => e.role === "owner" || e.role === "editor").map((e) => e.slug));
-}
-
 /** Replace (or add) a catalog entry for a slug, preserving its title. */
 function upsertCatalog(catalog: CatalogEntry[], next: CatalogEntry): CatalogEntry[] {
   const i = catalog.findIndex((e) => e.slug === next.slug);
@@ -476,19 +310,8 @@ function upsertCatalog(catalog: CatalogEntry[], next: CatalogEntry): CatalogEntr
 
 type Setter = (partial: Partial<State> | ((s: State) => Partial<State>)) => void;
 
-// Debounced per-slug save so rapid edits coalesce into one request.
-const saveTimers = new Map<MapId, ReturnType<typeof setTimeout>>();
-
 function scheduleSave(slug: MapId, get: () => State, set: Setter, delayMs = 800): void {
-  const existing = saveTimers.get(slug);
-  if (existing) clearTimeout(existing);
-  saveTimers.set(
-    slug,
-    setTimeout(() => {
-      saveTimers.delete(slug);
-      void saveMapToServer(slug, get, set);
-    }, delayMs),
-  );
+  mapSaveScheduler.schedule(slug, () => saveMapToServer(slug, get, set), delayMs);
 }
 
 /** Persist a slug's working source: fork the public map first if needed, then PUT. */
@@ -496,43 +319,23 @@ async function saveMapToServer(slug: MapId, get: () => State, set: Setter): Prom
   if (!get().userId) return; // editing requires sign-in to persist
   const source = get().editSources[slug];
   if (!source) return;
-  let meta = get().mapMeta[slug];
   try {
-    if (!meta || (meta.role !== "owner" && meta.role !== "editor")) {
-      const fromId = meta?.id ?? get().catalog.find((e) => e.slug === slug)?.id;
-      if (!fromId) return;
-      const fork = await forkMap(fromId);
-      meta = { id: fork.id, role: "owner", baseVersion: source.version, updated: "" };
-      const title = get().catalog.find((e) => e.slug === slug)?.title ?? slug;
-      set((s) => ({
-        mapMeta: { ...s.mapMeta, [slug]: meta! },
-        catalog: upsertCatalog(s.catalog, {
-          slug,
-          id: fork.id,
-          role: "owner",
-          title,
-          updated: "",
-        }),
-      }));
-    }
-    const result = await saveMapSource(meta.id, source.version, source, meta.updated || undefined);
-    if (!result.ok) {
-      // A collaborator saved first — flag the active map for reload.
-      set({ staleMap: slug });
-      return;
-    }
-    const saved = { ...meta, baseVersion: source.version, updated: result.updated };
-    set((s) => ({ mapMeta: { ...s.mapMeta, [slug]: saved } }));
-    const title = get().catalog.find((e) => e.slug === slug)?.title ?? slug;
-    setCachedMap({
-      id: meta.id,
+    const outcome = await mapService.saveMap({
       slug,
-      title,
-      role: meta.role,
-      updated: result.updated,
-      baseVersion: source.version,
       source,
+      meta: get().mapMeta[slug],
+      catalog: get().catalog,
+      onForked: (meta, entry) => {
+        set((state) => ({
+          mapMeta: { ...state.mapMeta, [slug]: meta },
+          catalog: upsertCatalog(state.catalog, entry),
+        }));
+      },
     });
+    if (outcome.status === "conflict") set({ staleMap: slug });
+    if (outcome.status === "saved") {
+      set((state) => ({ mapMeta: { ...state.mapMeta, [slug]: outcome.meta } }));
+    }
   } catch (e) {
     console.warn(`[math-atlas] save failed for "${slug}":`, e);
   }
@@ -586,72 +389,6 @@ export const useStore = create<State>((set, get) => ({
   loadedMaps: {},
   loadingMapId: null,
   mapError: null,
-  ensureMapLoaded: async (mapId = get().mapId) => {
-    if (get().loadedMaps[mapId]) return;
-
-    set({ loadingMapId: mapId, mapError: null });
-    try {
-      if (get().catalog.length === 0) await get().loadCatalog();
-      const entry = get().catalog.find((e) => e.slug === mapId);
-      if (!entry) throw new Error(`Map not available: ${mapId}`);
-      const { map, payload } = await fetchAndBuildMap(entry.id);
-      set((state) => {
-        const loadedMaps = { ...state.loadedMaps, [mapId]: map };
-        const mapMeta = {
-          ...state.mapMeta,
-          [mapId]: {
-            id: payload.id,
-            role: payload.role,
-            baseVersion: payload.baseVersion,
-            updated: payload.updated,
-          },
-        };
-        if (state.mapId !== mapId) {
-          return {
-            loadedMaps,
-            mapMeta,
-            loadingMapId: state.loadingMapId === mapId ? null : state.loadingMapId,
-          };
-        }
-        return {
-          loadedMaps,
-          mapMeta,
-          loadingMapId: null,
-          mapError: null,
-          ...mapStateForLoadedMap(map, persistedMaps[mapId]),
-        };
-      });
-      // Load learning progress for this map once (signed in).
-      if (get().userId && !get().progress[mapId]) void get().loadProgress(mapId);
-    } catch (error) {
-      set({
-        loadingMapId: null,
-        mapError: error instanceof Error ? error.message : String(error),
-      });
-    }
-  },
-  setMap: (mapId) => {
-    rememberMapState(get());
-    const map = get().loadedMaps[mapId];
-    set({
-      mapId,
-      ...(map
-        ? mapStateForLoadedMap(map, persistedMaps[mapId])
-        : {
-            search: persistedMaps[mapId]?.search ?? "",
-            kinds: new Set<NodeKind>(),
-            topics: new Set<string>(),
-            relations: new Set<Relation>(),
-            selectedId: null,
-            routeFrom: null,
-            routeTo: null,
-          }),
-      routeMode: false,
-      tourIndex: null,
-      routeSequence: [],
-    });
-    void get().ensureMapLoaded(mapId);
-  },
 
   search: persistedMaps[initialMapId]?.search ?? "",
   setSearch: (s) => set({ search: s }),
@@ -910,9 +647,8 @@ export const useStore = create<State>((set, get) => ({
     const meta = get().mapMeta[mapId];
     // Discard the owned fork on the server (revert = back to the public map).
     if (meta?.role === "owner") {
-      clearCachedMap(meta.id);
       try {
-        await deleteMap(meta.id);
+        await mapService.revertOwnedMap(meta);
       } catch (e) {
         console.warn(`[math-atlas] revert delete failed for "${mapId}":`, e);
       }
@@ -942,100 +678,16 @@ export const useStore = create<State>((set, get) => ({
   userId: null,
   setUserId: (id) => set({ userId: id }),
 
-  catalog: getCachedCatalog() ?? [],
+  catalog: mapService.cachedCatalog() ?? [],
   mapMeta: {},
   staleMap: null,
 
-  reloadActiveMap: async () => {
-    const slug = get().mapId;
-    const meta = get().mapMeta[slug];
-    if (meta) clearCachedMap(meta.id); // force a fresh fetch, not stale cache
-    set((s) => {
-      const loadedMaps = { ...s.loadedMaps };
-      delete loadedMaps[slug];
-      const mapMeta = { ...s.mapMeta };
-      delete mapMeta[slug];
-      const editSources = { ...s.editSources };
-      delete editSources[slug];
-      const editedMaps = new Set(s.editedMaps);
-      editedMaps.delete(slug);
-      return { loadedMaps, mapMeta, editSources, editedMaps, staleMap: null };
-    });
-    await get().loadCatalog();
-    await get().ensureMapLoaded(slug);
-  },
-
-  checkRemoteUpdate: async () => {
-    const slug = get().mapId;
-    const meta = get().mapMeta[slug];
-    if (!meta || !get().userId || get().staleMap) return;
-    try {
-      const entry = (await fetchCatalog()).find((e) => e.slug === slug && e.id === meta.id);
-      if (entry && meta.updated && new Date(entry.updated) > new Date(meta.updated)) {
-        set({ staleMap: slug });
-      }
-    } catch {
-      /* offline — ignore */
-    }
-  },
-
-  loadCatalog: async () => {
-    try {
-      const catalog = await fetchCatalog();
-      setCachedCatalog(catalog);
-      set({ catalog, editedMaps: editableSlugs(catalog) });
-    } catch (e) {
-      // Offline / backend asleep — keep the cached catalog if we have one.
-      const cached = getCachedCatalog();
-      if (cached && get().catalog.length === 0) set({ catalog: cached });
-      console.warn("[math-atlas] catalog load failed:", e);
-    }
-  },
-
-  onSessionChange: async () => {
-    // Sign in/out changes access — refresh the catalog and reload the active map.
-    await get().loadCatalog();
-    const mapId = get().mapId;
-    set((s) => {
-      const loadedMaps = { ...s.loadedMaps };
-      delete loadedMaps[mapId];
-      const mapMeta = { ...s.mapMeta };
-      delete mapMeta[mapId];
-      const editSources = { ...s.editSources };
-      delete editSources[mapId];
-      return { loadedMaps, mapMeta, editSources };
-    });
-    if (get().userId) await get().loadProgress(mapId);
-    else set({ progress: {} });
-    await get().ensureMapLoaded(mapId);
-  },
-
-  progress: {},
-
-  loadProgress: async (mapId) => {
-    if (!get().userId) return;
-    try {
-      const rows = await fetchProgress(mapId);
-      const byNode: Record<string, ProgressStatus> = {};
-      for (const r of rows) byNode[r.nodeId] = r.status;
-      set((s) => ({ progress: { ...s.progress, [mapId]: byNode } }));
-    } catch (e) {
-      console.warn(`[math-atlas] progress load failed for "${mapId}":`, e);
-    }
-  },
-
-  setNodeProgress: (mapId, nodeId, status) => {
-    // Optimistic local update (works signed out too, just not persisted).
-    set((s) => {
-      const forMap = { ...(s.progress[mapId] ?? {}) };
-      if (status === null) delete forMap[nodeId];
-      else forMap[nodeId] = status;
-      return { progress: { ...s.progress, [mapId]: forMap } };
-    });
-    if (!get().userId) return;
-    const op = status === null ? deleteProgress(mapId, nodeId) : putProgress(mapId, nodeId, status);
-    op.catch((e) => console.warn(`[math-atlas] progress save failed for "${nodeId}":`, e));
-  },
+  ...createProgressSlice(set, get),
+  ...createMapWorkflowSlice(set, get, {
+    persistedMaps,
+    rememberMapState,
+    mapStateForLoadedMap,
+  }),
 }));
 
 useStore.subscribe((state) => {

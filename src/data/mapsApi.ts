@@ -6,21 +6,27 @@
  * caller can access — their own editable fork if they have one, else a shared
  * copy, else the public/system map. Editing a public map forks it first.
  */
+import {
+  AddCollaboratorRequestSchema,
+  ApiErrorSchema,
+  CollaboratorsResponseSchema,
+  ForkMapRequestSchema,
+  ForkMapResponseSchema,
+  MapCatalogResponseSchema,
+  MapPayloadSchema,
+  OkResponseSchema,
+  SaveMapConflictResponseSchema,
+  SaveMapRequestSchema,
+  SaveMapResponseSchema,
+  type Collaborator,
+  type MapPayload,
+  type MapRole,
+} from "../../shared/atlas/contracts";
 import { apiUrl, authHeaders } from "../lib/authClient";
 import type { MapId } from "./mapRegistry";
 import { DEV_OFFLINE_FALLBACK, devCatalog, devMap } from "./devFallback";
 
-export type MapRole = "owner" | "editor" | "viewer" | "public";
-
-/** A catalog row as the server returns it (one per map entity). */
-interface ServerCatalogRow {
-  id: string;
-  slug: string;
-  title: string;
-  visibility: "private" | "unlisted" | "public";
-  role: "owner" | "editor" | "public";
-  updated: string;
-}
+export type { Collaborator, MapPayload, MapRole };
 
 /** A resolved catalog entry (one per slug, best access wins). */
 export interface CatalogEntry {
@@ -31,16 +37,6 @@ export interface CatalogEntry {
   role: MapRole;
   /** Server-side last-modified timestamp (for remote-change detection). */
   updated: string;
-}
-
-export interface MapPayload {
-  id: string;
-  slug: MapId;
-  title: string;
-  role: MapRole;
-  updated: string;
-  baseVersion: number;
-  source: unknown;
 }
 
 const ROLE_RANK: Record<string, number> = { owner: 3, editor: 2, viewer: 1, public: 0 };
@@ -56,7 +52,7 @@ export async function fetchCatalog(): Promise<CatalogEntry[]> {
   try {
     const res = await fetch(apiUrl("/api/maps/catalog"), opts());
     if (!res.ok) throw new Error(`catalog failed: ${res.status}`);
-    const rows: ServerCatalogRow[] = await res.json();
+    const rows = MapCatalogResponseSchema.parse(await res.json());
 
     const bySlug = new Map<string, CatalogEntry>();
     for (const r of rows) {
@@ -82,7 +78,7 @@ export async function fetchMap(id: string): Promise<MapPayload> {
   try {
     const res = await fetch(apiUrl(`/api/maps/${id}`), opts());
     if (!res.ok) throw new Error(`map fetch failed: ${res.status}`);
-    return await res.json();
+    return MapPayloadSchema.parse(await res.json());
   } catch (err) {
     if (DEV_OFFLINE_FALLBACK) {
       const fallback = await devMap(id);
@@ -94,9 +90,10 @@ export async function fetchMap(id: string): Promise<MapPayload> {
 
 /** Fork a readable map into the caller's own editable copy; returns the new id. */
 export async function forkMap(fromId: string): Promise<{ id: string; slug: string }> {
-  const res = await fetch(apiUrl("/api/maps"), opts({ method: "POST", body: JSON.stringify({ fromId }) }));
+  const body = ForkMapRequestSchema.parse({ fromId });
+  const res = await fetch(apiUrl("/api/maps"), opts({ method: "POST", body: JSON.stringify(body) }));
   if (!res.ok) throw new Error(`fork failed: ${res.status} ${await res.text()}`);
-  return res.json();
+  return ForkMapResponseSchema.parse(await res.json());
 }
 
 export type SaveResult = { ok: true; updated: string } | { ok: false; conflict: true; updated: string };
@@ -107,17 +104,15 @@ export async function saveMapSource(
   source: unknown,
   baseUpdated?: string,
 ): Promise<SaveResult> {
-  const res = await fetch(
-    apiUrl(`/api/maps/${id}`),
-    opts({ method: "PUT", body: JSON.stringify({ baseVersion, source, baseUpdated }) }),
-  );
+  const body = SaveMapRequestSchema.parse({ baseVersion, source, baseUpdated });
+  const res = await fetch(apiUrl(`/api/maps/${id}`), opts({ method: "PUT", body: JSON.stringify(body) }));
   if (res.status === 409) {
-    const body = await res.json();
-    return { ok: false, conflict: true, updated: body.updated };
+    const conflict = SaveMapConflictResponseSchema.parse(await res.json());
+    return { ok: false, conflict: true, updated: conflict.updated };
   }
   if (!res.ok) throw new Error(`save failed: ${res.status} ${await res.text()}`);
-  const body = await res.json();
-  return { ok: true, updated: body.updated };
+  const saved = SaveMapResponseSchema.parse(await res.json());
+  return { ok: true, updated: saved.updated };
 }
 
 export async function deleteMap(id: string): Promise<void> {
@@ -127,17 +122,10 @@ export async function deleteMap(id: string): Promise<void> {
 
 // --- Collaborators (Phase 4) ---
 
-export interface Collaborator {
-  userId: string;
-  role: "editor" | "viewer";
-  email: string;
-  name: string;
-}
-
 export async function listCollaborators(id: string): Promise<Collaborator[]> {
   const res = await fetch(apiUrl(`/api/maps/${id}/collaborators`), opts());
   if (!res.ok) throw new Error(`collaborators failed: ${res.status}`);
-  return res.json();
+  return CollaboratorsResponseSchema.parse(await res.json());
 }
 
 export async function addCollaborator(
@@ -145,12 +133,17 @@ export async function addCollaborator(
   email: string,
   role: "editor" | "viewer" = "editor",
 ): Promise<{ ok?: boolean; error?: string }> {
+  const request = AddCollaboratorRequestSchema.parse({ email, role });
   const res = await fetch(
     apiUrl(`/api/maps/${id}/collaborators`),
-    opts({ method: "POST", body: JSON.stringify({ email, role }) }),
+    opts({ method: "POST", body: JSON.stringify(request) }),
   );
-  const body = await res.json().catch(() => ({}));
-  if (!res.ok) return { error: body.error ?? `Failed (${res.status})` };
+  const body: unknown = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const error = ApiErrorSchema.safeParse(body);
+    return { error: error.success ? error.data.error : `Failed (${res.status})` };
+  }
+  OkResponseSchema.parse(body);
   return { ok: true };
 }
 

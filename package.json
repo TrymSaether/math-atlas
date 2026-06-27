@@ -13,6 +13,8 @@
     "db:push": "drizzle-kit push",
     "db:seed": "npm run seed:maps",
     "db:studio": "drizzle-kit studio",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck:server": "tsc -p server/tsconfig.json",
     "atlas": "tsx scripts/atlas/cli.ts",
     "check:maps": "tsx scripts/build-maps.ts --check",
@@ -68,6 +70,7 @@
     "tailwindcss": "^4.3.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.1",
-    "vite": "^8.0.16"
+    "vite": "^8.0.16",
+    "vitest": "^4.1.9"
   }
 }

@@ -6,6 +6,6 @@
     "jsx": "react-jsx",
     "noEmit": true
   },
-  "include": ["src"],
+  "include": ["src", "shared"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

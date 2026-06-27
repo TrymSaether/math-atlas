@@ -9,10 +9,15 @@ import type { CatalogEntry, MapPayload } from "./mapsApi";
 const CATALOG_KEY = "math-atlas-catalog-v1";
 const SOURCE_PREFIX = "math-atlas-mapsrc-v1:";
 
+function browserStorage(): Storage | null {
+  return typeof window === "undefined" ? null : window.localStorage;
+}
+
 function read<T>(key: string): T | null {
-  if (typeof localStorage === "undefined") return null;
+  const storage = browserStorage();
+  if (!storage) return null;
   try {
-    const raw = localStorage.getItem(key);
+    const raw = storage.getItem(key);
     return raw ? (JSON.parse(raw) as T) : null;
   } catch {
     return null;
@@ -20,9 +25,10 @@ function read<T>(key: string): T | null {
 }
 
 function write(key: string, value: unknown): void {
-  if (typeof localStorage === "undefined") return;
+  const storage = browserStorage();
+  if (!storage) return;
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    storage.setItem(key, JSON.stringify(value));
   } catch {
     /* ignore quota / private-mode failures */
   }
@@ -45,9 +51,10 @@ export function setCachedMap(payload: MapPayload): void {
 }
 
 export function clearCachedMap(id: string): void {
-  if (typeof localStorage === "undefined") return;
+  const storage = browserStorage();
+  if (!storage) return;
   try {
-    localStorage.removeItem(SOURCE_PREFIX + id);
+    storage.removeItem(SOURCE_PREFIX + id);
   } catch {
     /* ignore */
   }

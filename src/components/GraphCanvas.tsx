@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
-import ReactFlow, { useReactFlow, useViewport, type Edge, type Node, type Viewport } from "reactflow";
+import ReactFlow, { useReactFlow, useViewport, type Edge, type Node } from "reactflow";
 import type { LoadedMap, MapId } from "../data";
+import { savedViewportFor, saveViewport } from "../infrastructure/storage/viewportStorage";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout } from "../lib/atlasLayout";
 import { getDomainTone } from "../lib/colors";
 import { useRouteResult } from "../lib/route";
@@ -12,17 +13,10 @@ import { DomainRegionNode } from "./DomainRegionNode";
 import { MinimapCard } from "./MinimapCard";
 import { TopoEdgeView } from "./TopoEdge";
 import { TopoNodeView } from "./TopoNode";
-import type { ViewMode } from "../store";
 
 const nodeTypes = { topo: TopoNodeView, domainRegion: DomainRegionNode };
 const edgeTypes = { topo: TopoEdgeView };
-const VIEWPORT_STORAGE_KEY = "math-atlas-viewports-v1";
 type HandleSide = "left" | "right" | "top" | "bottom";
-
-interface PersistedViewportState {
-  version: 1;
-  maps: Partial<Record<MapId, Partial<Record<ViewMode, Viewport>>>>;
-}
 
 export type NodeEmphasis = "landmark" | "normal" | "minor";
 
@@ -37,46 +31,6 @@ function lodForZoom(zoom: number): NodeLOD {
   if (zoom < 0.32) return "far";
   if (zoom < 0.62) return "mid";
   return "near";
-}
-
-function isFiniteNumber(value: unknown): value is number {
-  return typeof value === "number" && Number.isFinite(value);
-}
-
-function normalizeViewport(value: unknown): Viewport | null {
-  if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
-  const candidate = value as Partial<Viewport>;
-  if (!isFiniteNumber(candidate.x) || !isFiniteNumber(candidate.y) || !isFiniteNumber(candidate.zoom)) {
-    return null;
-  }
-  return {
-    x: candidate.x,
-    y: candidate.y,
-    zoom: Math.min(2.4, Math.max(0.08, candidate.zoom)),
-  };
-}
-
-function readViewportState(): PersistedViewportState {
-  if (typeof localStorage === "undefined") return { version: 1, maps: {} };
-  try {
-    const raw = localStorage.getItem(VIEWPORT_STORAGE_KEY);
-    if (!raw) return { version: 1, maps: {} };
-    const parsed: unknown = JSON.parse(raw);
-    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
-      return { version: 1, maps: {} };
-    }
-    const record = parsed as { version?: unknown; maps?: unknown };
-    if (record.version !== 1 || typeof record.maps !== "object" || record.maps === null || Array.isArray(record.maps)) {
-      return { version: 1, maps: {} };
-    }
-    return { version: 1, maps: record.maps as PersistedViewportState["maps"] };
-  } catch {
-    return { version: 1, maps: {} };
-  }
-}
-
-function savedViewportFor(mapId: MapId, view: ViewMode): Viewport | null {
-  return normalizeViewport(readViewportState().maps[mapId]?.[view]);
 }
 
 function edgeHandlePair(
@@ -113,20 +67,6 @@ function edgeHandlePair(
     sourceHandle: `source-${sourceSide}`,
     targetHandle: `target-${targetSide}`,
   };
-}
-
-function saveViewport(mapId: MapId, view: ViewMode, viewport: Viewport): void {
-  if (typeof localStorage === "undefined") return;
-  const state = readViewportState();
-  state.maps[mapId] = {
-    ...(state.maps[mapId] ?? {}),
-    [view]: normalizeViewport(viewport) ?? viewport,
-  };
-  try {
-    localStorage.setItem(VIEWPORT_STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    /* ignore private-mode / quota failures */
-  }
 }
 
 interface NodeData {

@@ -11,7 +11,19 @@
  */
 import { Hono } from "hono";
 import { and, eq } from "drizzle-orm";
-import { z } from "zod";
+import {
+  AddCollaboratorRequestSchema,
+  ApiErrorSchema,
+  CollaboratorsResponseSchema,
+  ForkMapRequestSchema,
+  ForkMapResponseSchema,
+  MapCatalogResponseSchema,
+  MapDetailResponseSchema,
+  OkResponseSchema,
+  SaveMapConflictResponseSchema,
+  SaveMapRequestSchema,
+  SaveMapResponseSchema,
+} from "../../shared/atlas/contracts";
 import { db } from "../db/client";
 import { mapCollaborators, maps, mapSources, user } from "../db/schema";
 import { auth } from "../auth";
@@ -21,6 +33,8 @@ import { buildArtifact } from "../../src/data/buildArtifact";
 export const mapsRoute = new Hono();
 
 type Role = "owner" | "editor" | "viewer";
+
+const apiError = (error: string) => ApiErrorSchema.parse({ error });
 
 async function getUserId(c: { req: { raw: Request } }): Promise<string | null> {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
@@ -107,14 +121,14 @@ mapsRoute.get("/catalog", async (c) => {
     })
     .filter((m): m is NonNullable<typeof m> => m !== null);
 
-  return c.json(catalog);
+  return c.json(MapCatalogResponseSchema.parse(catalog));
 });
 
 /** GET /api/maps/:id — the map's source, if readable by the caller. */
 mapsRoute.get("/:id", async (c) => {
   const userId = await getUserId(c);
   const access = await resolveAccess(c.req.param("id"), userId);
-  if (!access) return c.json({ error: "Not found" }, 404);
+  if (!access) return c.json(apiError("Not found"), 404);
 
   const [src] = await db
     .select({ source: mapSources.source, baseVersion: mapSources.baseVersion })
@@ -122,34 +136,34 @@ mapsRoute.get("/:id", async (c) => {
     .where(eq(mapSources.mapId, access.map.id))
     .limit(1);
 
-  return c.json({
-    id: access.map.id,
-    slug: access.map.slug,
-    title: access.map.title,
-    visibility: access.map.visibility,
-    role: access.role,
-    updated: access.map.updatedAt.toISOString(),
-    baseVersion: src?.baseVersion ?? 0,
-    source: src?.source ?? null,
-  });
+  return c.json(
+    MapDetailResponseSchema.parse({
+      id: access.map.id,
+      slug: access.map.slug,
+      title: access.map.title,
+      visibility: access.map.visibility,
+      role: access.role,
+      updated: access.map.updatedAt.toISOString(),
+      baseVersion: src?.baseVersion ?? 0,
+      source: src?.source ?? null,
+    }),
+  );
 });
 
 // ---------------------------------------------------------------------------
 // Authed mutations
 // ---------------------------------------------------------------------------
 
-const ForkBody = z.object({ fromId: z.string().min(1) });
-
 /** POST /api/maps — fork a readable map into the caller's own editable copy. */
 mapsRoute.post("/", async (c) => {
   const userId = await getUserId(c);
-  if (!userId) return c.json({ error: "Unauthorized" }, 401);
+  if (!userId) return c.json(apiError("Unauthorized"), 401);
 
-  const body = ForkBody.safeParse(await c.req.json().catch(() => null));
-  if (!body.success) return c.json({ error: "Invalid request body" }, 400);
+  const body = ForkMapRequestSchema.safeParse(await c.req.json().catch(() => null));
+  if (!body.success) return c.json(apiError("Invalid request body"), 400);
 
   const access = await resolveAccess(body.data.fromId, userId);
-  if (!access) return c.json({ error: "Not found" }, 404);
+  if (!access) return c.json(apiError("Not found"), 404);
 
   // Idempotent: one fork per (user, slug) — return the existing copy if present.
   const [mine] = await db
@@ -157,7 +171,7 @@ mapsRoute.post("/", async (c) => {
     .from(maps)
     .where(and(eq(maps.ownerId, userId), eq(maps.slug, access.map.slug)))
     .limit(1);
-  if (mine) return c.json({ id: mine.id, slug: access.map.slug });
+  if (mine) return c.json(ForkMapResponseSchema.parse({ id: mine.id, slug: access.map.slug }));
 
   const [src] = await db
     .select({ source: mapSources.source, baseVersion: mapSources.baseVersion })
@@ -183,36 +197,32 @@ mapsRoute.post("/", async (c) => {
     return created.id;
   });
 
-  return c.json({ id: newId, slug: access.map.slug });
-});
-
-const PutBody = z.object({
-  baseVersion: z.number().int().nonnegative(),
-  source: z.unknown(),
-  /** The `updated` the client last saw; if the server is newer, reject (LWW). */
-  baseUpdated: z.string().optional(),
+  return c.json(ForkMapResponseSchema.parse({ id: newId, slug: access.map.slug }));
 });
 
 /** PUT /api/maps/:id — save source; owner or editor only. */
 mapsRoute.put("/:id", async (c) => {
   const userId = await getUserId(c);
-  if (!userId) return c.json({ error: "Unauthorized" }, 401);
+  if (!userId) return c.json(apiError("Unauthorized"), 401);
 
   const access = await resolveAccess(c.req.param("id"), userId);
   if (!access || (access.role !== "owner" && access.role !== "editor")) {
-    return c.json({ error: "Forbidden" }, 403);
+    return c.json(apiError("Forbidden"), 403);
   }
 
-  const body = PutBody.safeParse(await c.req.json().catch(() => null));
-  if (!body.success) return c.json({ error: "Invalid request body" }, 400);
+  const body = SaveMapRequestSchema.safeParse(await c.req.json().catch(() => null));
+  if (!body.success) return c.json(apiError("Invalid request body"), 400);
 
   const valid = validateSource(body.data.source);
-  if (!valid.ok) return c.json({ error: valid.error }, 400);
+  if (!valid.ok) return c.json(apiError(valid.error), 400);
 
   // Last-write-wins conflict guard: if the map changed since the client last saw
   // it (a collaborator saved underneath them), reject so they can reload.
   if (body.data.baseUpdated && access.map.updatedAt > new Date(body.data.baseUpdated)) {
-    return c.json({ error: "conflict", updated: access.map.updatedAt.toISOString() }, 409);
+    return c.json(
+      SaveMapConflictResponseSchema.parse({ error: "conflict", updated: access.map.updatedAt.toISOString() }),
+      409,
+    );
   }
 
   const now = new Date();
@@ -224,16 +234,16 @@ mapsRoute.put("/:id", async (c) => {
       .where(eq(mapSources.mapId, access.map.id));
   });
 
-  return c.json({ id: access.map.id, updated: now.toISOString() });
+  return c.json(SaveMapResponseSchema.parse({ id: access.map.id, updated: now.toISOString() }));
 });
 
 /** DELETE /api/maps/:id — owner only. */
 mapsRoute.delete("/:id", async (c) => {
   const userId = await getUserId(c);
-  if (!userId) return c.json({ error: "Unauthorized" }, 401);
+  if (!userId) return c.json(apiError("Unauthorized"), 401);
 
   const access = await resolveAccess(c.req.param("id"), userId);
-  if (!access || access.role !== "owner") return c.json({ error: "Forbidden" }, 403);
+  if (!access || access.role !== "owner") return c.json(apiError("Forbidden"), 403);
 
   await db.delete(maps).where(eq(maps.id, access.map.id));
   return c.body(null, 204);
@@ -248,10 +258,10 @@ async function requireOwner(c: {
   req: { raw: Request; param: (k: string) => string };
 }): Promise<{ map: MapRow } | Response> {
   const userId = await getUserId(c);
-  if (!userId) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+  if (!userId) return new Response(JSON.stringify(apiError("Unauthorized")), { status: 401 });
   const access = await resolveAccess(c.req.param("id"), userId);
   if (!access || access.role !== "owner") {
-    return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 });
+    return new Response(JSON.stringify(apiError("Forbidden")), { status: 403 });
   }
   return { map: access.map };
 }
@@ -270,12 +280,7 @@ mapsRoute.get("/:id/collaborators", async (c) => {
     .from(mapCollaborators)
     .innerJoin(user, eq(user.id, mapCollaborators.userId))
     .where(eq(mapCollaborators.mapId, owned.map.id));
-  return c.json(rows);
-});
-
-const CollaboratorBody = z.object({
-  email: z.string().min(1),
-  role: z.enum(["editor", "viewer"]).default("editor"),
+  return c.json(CollaboratorsResponseSchema.parse(rows));
 });
 
 /** POST /api/maps/:id/collaborators — owner invites a user by email. */
@@ -283,13 +288,13 @@ mapsRoute.post("/:id/collaborators", async (c) => {
   const owned = await requireOwner(c);
   if (owned instanceof Response) return owned;
 
-  const body = CollaboratorBody.safeParse(await c.req.json().catch(() => null));
-  if (!body.success) return c.json({ error: "Invalid request body" }, 400);
+  const body = AddCollaboratorRequestSchema.safeParse(await c.req.json().catch(() => null));
+  if (!body.success) return c.json(apiError("Invalid request body"), 400);
 
   const email = body.data.email.trim().toLowerCase();
   const [target] = await db.select({ id: user.id }).from(user).where(eq(user.email, email)).limit(1);
-  if (!target) return c.json({ error: "No account with that email" }, 404);
-  if (target.id === owned.map.ownerId) return c.json({ error: "You own this map" }, 400);
+  if (!target) return c.json(apiError("No account with that email"), 404);
+  if (target.id === owned.map.ownerId) return c.json(apiError("You own this map"), 400);
 
   await db
     .insert(mapCollaborators)
@@ -298,7 +303,7 @@ mapsRoute.post("/:id/collaborators", async (c) => {
       target: [mapCollaborators.mapId, mapCollaborators.userId],
       set: { role: body.data.role },
     });
-  return c.json({ ok: true });
+  return c.json(OkResponseSchema.parse({ ok: true }));
 });
 
 /** DELETE /api/maps/:id/collaborators/:userId — owner removes a collaborator. */

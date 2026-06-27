@@ -1,4 +1,5 @@
-export { fetchAndBuildMap, type LoadedMap } from "./data/loadMap";
+export { type LoadedMap } from "./data/loadMap";
+export { fetchAndBuildMap } from "./application/maps/mapService";
 export { DEFAULT_MAP_ID, isMapId, type MapId } from "./data/mapRegistry";
 export {
   fetchCatalog,
