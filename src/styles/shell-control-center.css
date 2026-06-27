@@ -3,29 +3,30 @@
    ------------------------------------------------------------------------
    Canonicalizes floating-control geometry and state treatment after shell.css.
    The target is pillowy Control Center material: large rounded hit areas, milky
-   glass body, crisp inactive outline icons, and stronger active icon material.
+   glass body, crisp inactive outline icons, and active state carried by the icon
+   disk instead of stacking capsule + disk + focus rings.
    ======================================================================== */
 
 :root,
 :root[data-theme] {
   --shell-edge: 14px;
-  --shell-chrome-h: 72px;
+  --shell-chrome-h: 70px;
   --shell-gap-2xs: 1px;
   --shell-gap-xs: 2px;
   --shell-gap-sm: 5px;
   --shell-gap-md: 10px;
   --shell-gap-lg: 14px;
 
-  --shell-control-h: 48px;
+  --shell-control-h: 46px;
   --shell-island-pad: 6px;
   --shell-bar-h: calc(var(--shell-control-h) + 2 * var(--shell-island-pad));
   --shell-tools-w: var(--shell-bar-h);
   --shell-tools-gap: 14px;
   --shell-search-w: clamp(320px, 34vw, 520px);
 
-  --shell-icon-size: 20px;
+  --shell-icon-size: 19px;
   --shell-icon-size-sm: 15px;
-  --shell-icon-disk: 40px;
+  --shell-icon-disk: 36px;
 
   --shell-radius-control: 20px;
   --shell-radius-pill: 999px;
@@ -42,45 +43,37 @@
   --shell-type-weight-active: 720;
   --shell-type-leading: 1;
 
-  --shell-icon-muted: color-mix(in srgb, var(--fg-1) 68%, transparent);
-  --shell-icon-strong: color-mix(in srgb, var(--fg-1) 92%, transparent);
+  --shell-icon-muted: color-mix(in srgb, var(--fg-1) 72%, transparent);
+  --shell-icon-strong: color-mix(in srgb, var(--fg-1) 96%, transparent);
   --shell-icon-active: #007aff;
-  --shell-icon-active-fg: #ffffff;
   --shell-icon-active-disk: #ffffff;
   --shell-icon-active-disk-shadow:
-    inset 0 0 0 0.5px rgba(255, 255, 255, 0.92),
-    inset 0 -10px 18px -14px rgba(15, 23, 42, 0.32),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.95),
+    inset 0 -8px 16px -13px rgba(15, 23, 42, 0.32),
     0 1px 2px rgba(15, 23, 42, 0.1);
 
   --shell-control-hover: rgba(255, 255, 255, 0.34);
   --shell-control-pressed: rgba(255, 255, 255, 0.48);
-  --shell-control-selected: rgba(255, 255, 255, 0.56);
-  --shell-control-selected-border: rgba(255, 255, 255, 0.8);
-  --shell-control-selected-shadow:
-    inset 0 0 0 0.5px var(--shell-control-selected-border),
-    inset 0 1px 0 rgba(255, 255, 255, 0.82),
-    inset 0 -16px 28px -18px rgba(15, 23, 42, 0.34),
-    0 1px 2px rgba(15, 23, 42, 0.1);
-  --shell-focus-ring: color-mix(in srgb, var(--accent) 54%, transparent);
+  --shell-control-selected: transparent;
+  --shell-control-selected-border: transparent;
+  --shell-control-selected-shadow: none;
+  --shell-focus-ring: rgba(15, 23, 42, 0.18);
   --shell-toggle-on: color-mix(in srgb, var(--accent) 76%, #9ec8ff);
 }
 
 :root.dark,
 :root.dark[data-theme] {
-  --shell-icon-muted: color-mix(in srgb, var(--fg-1) 74%, transparent);
-  --shell-icon-strong: color-mix(in srgb, var(--fg-1) 96%, transparent);
+  --shell-icon-muted: rgba(255, 255, 255, 0.7);
+  --shell-icon-strong: rgba(255, 255, 255, 0.92);
   --shell-icon-active: #0a84ff;
   --shell-icon-active-disk: #ffffff;
 
   --shell-control-hover: rgba(255, 255, 255, 0.08);
   --shell-control-pressed: rgba(255, 255, 255, 0.13);
-  --shell-control-selected: rgba(255, 255, 255, 0.14);
-  --shell-control-selected-border: rgba(255, 255, 255, 0.24);
-  --shell-control-selected-shadow:
-    inset 0 0 0 0.5px var(--shell-control-selected-border),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 -16px 30px -18px rgba(0, 0, 0, 0.72),
-    0 1px 2px rgba(0, 0, 0, 0.3);
+  --shell-control-selected: transparent;
+  --shell-control-selected-border: transparent;
+  --shell-control-selected-shadow: none;
+  --shell-focus-ring: rgba(255, 255, 255, 0.24);
   --shell-toggle-on: color-mix(in srgb, var(--accent) 72%, var(--surface));
 }
 
@@ -261,8 +254,19 @@
 }
 
 .shell-seg-opt.is-active {
+  background: transparent;
   color: var(--shell-icon-active);
   font-weight: var(--shell-type-weight-active);
+  box-shadow: none;
+}
+
+.shell-seg-opt.is-active::before {
+  background: transparent;
+  box-shadow: none;
+}
+
+.shell-seg-opt.is-active:focus-visible {
+  outline: none;
 }
 
 .shell-seg-opt.is-active .shell-control-icon {
@@ -271,24 +275,27 @@
   box-shadow: var(--shell-icon-active-disk-shadow);
 }
 
-.shell-seg-opt.is-active::before,
+.shell-seg-opt:not(.is-active) .shell-control-icon,
+.shell-btn-icon:not(.is-active):not([data-active="true"]) {
+  color: var(--shell-icon-muted);
+}
+
+.shell-seg-opt:not(.is-active):hover .shell-control-icon,
+.shell-btn-icon:not(.is-active):not([data-active="true"]):hover {
+  color: var(--shell-icon-strong);
+}
+
 .shell-switch::after {
   background:
     radial-gradient(120% 90% at 50% -18%, rgba(255, 255, 255, 0.9), transparent 58%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.3));
 }
 
-:root.dark .shell-seg-opt.is-active::before,
 :root.dark .shell-switch::after,
-:root.dark[data-theme] .shell-seg-opt.is-active::before,
 :root.dark[data-theme] .shell-switch::after {
   background:
     radial-gradient(120% 90% at 50% -18%, rgba(255, 255, 255, 0.22), transparent 58%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
-}
-
-.shell-seg-opt.is-active::before {
-  box-shadow: var(--shell-control-selected-shadow);
 }
 
 .shell-map-mark.shell-btn-icon {
