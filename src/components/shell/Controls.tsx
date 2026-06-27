@@ -27,6 +27,7 @@ export function ShellButton({
   return (
     <button
       type={type}
+      data-active={active ? "true" : undefined}
       className={cn(
         "shell-btn",
         active && "is-active",
@@ -138,13 +139,14 @@ export function ShellSegmented<T extends string>({
             aria-label={hideLabels ? (option.ariaLabel ?? option.label) : option.ariaLabel}
             title={option.title ?? option.label}
             tabIndex={active ? 0 : -1}
+            data-active={active ? "true" : undefined}
             className={cn("shell-seg-opt", active && "is-active")}
             onClick={() => onChange(option.id)}
             onFocus={() => {
               focusIndexRef.current = index;
             }}
           >
-            {option.icon}
+            {option.icon && <span className="shell-control-icon" aria-hidden>{option.icon}</span>}
             <span
               className={cn(
                 hideLabels === true && "sr-only",
@@ -197,6 +199,7 @@ export function ShellChip({ active, dotColor, className, type = "button", childr
     <button
       type={type}
       aria-pressed={ariaPressed}
+      data-active={active ? "true" : undefined}
       className={cn("shell-chip", active && "is-active", className)}
       {...rest}
     >
