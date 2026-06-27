@@ -15,9 +15,6 @@ import {
   Theme,
   Transform,
   Vector,
-  useMovablePoint,
-  useStopwatch,
-  vec,
 } from "mafs";
 
 import "mafs/core.css";
@@ -242,21 +239,4 @@ export function SamplePoints({
 
 export { DIA, DOT, FIGURE, FONT, HEAT, PANEL_BACKING, SERIES, STROKE, UI } from "./tokens";
 
-export {
-  Circle,
-  Ellipse,
-  LaTeX,
-  Line,
-  MovablePoint,
-  Plot,
-  Point,
-  Polygon,
-  Polyline,
-  Text,
-  Theme,
-  Transform,
-  Vector,
-  useMovablePoint,
-  useStopwatch,
-  vec,
-};
+export { Circle, Ellipse, LaTeX, Line, MovablePoint, Plot, Point, Polygon, Polyline, Text, Theme, Transform, Vector };

@@ -1,16 +1,6 @@
 import { gaussian } from "../../lib/figures/fourierMath";
-import {
-  DIA,
-  FONT,
-  FigureCaption,
-  FigureFrame,
-  FunctionCurve,
-  Line,
-  STROKE,
-  Text,
-  Vector,
-  useMovablePoint,
-} from "./FigureFrame";
+import { DIA, FONT, FigureCaption, FigureFrame, FunctionCurve, Line, STROKE, Text, Vector } from "./FigureFrame";
+import { useMovablePoint } from "./mafs";
 import { type FigureProps } from "./types";
 
 const CAPTION: Record<string, string> = {

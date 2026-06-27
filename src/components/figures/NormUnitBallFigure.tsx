@@ -16,8 +16,8 @@ import {
   UI,
   Vector,
   type Vec2,
-  useMovablePoint,
 } from "./FigureFrame";
+import { useMovablePoint } from "./mafs";
 
 type NormKind = "l2" | "l1" | "linf" | "lp";
 

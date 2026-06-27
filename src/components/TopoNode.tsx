@@ -8,7 +8,7 @@ import { CATEGORY_ICON, KIND_ICON_OVERRIDE } from "../lib/nodeCategoryIcons";
 import { cn, prefersReducedMotion } from "../lib/utils";
 import { useStore } from "../store";
 import { KIND_LABEL, type TopoNode as TopoNodeT } from "../types";
-import { hasNodeVisual } from "./NodeVisual";
+import { hasNodeVisual } from "./nodeVisualModel";
 import type { NodeEmphasis, NodeLOD } from "./GraphCanvas";
 
 /**

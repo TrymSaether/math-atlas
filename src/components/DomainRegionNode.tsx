@@ -1,7 +1,8 @@
 import type { NodeProps } from "reactflow";
 import type { MapId } from "../data";
 
-import { DomainGlyph, getDomainGlyphId } from "./DomainGlyph";
+import { DomainGlyph } from "./DomainGlyph";
+import { getDomainGlyphId } from "./domainGlyphRegistry";
 
 interface Data {
   mapId?: MapId;

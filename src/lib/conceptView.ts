@@ -25,7 +25,7 @@ import {
   KNOWN_CONTENT_KEYS,
 } from "./nodeContent";
 import { compactNodeRef, nodeSourceCitation } from "./nodeMeta";
-import { getDomainGlyphId, type DomainGlyphKey } from "../components/DomainGlyph";
+import { getDomainGlyphId, type DomainGlyphKey } from "../components/domainGlyphRegistry";
 import { RELATIONS, RELATION_KEYS, RELATION_TERSE, orientedRelation, type RelationType } from "../data/relations";
 
 /** Instance kinds that read as "related cases" rather than downstream results. */

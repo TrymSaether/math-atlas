@@ -12,7 +12,7 @@ import { kindAbbrev } from "../lib/nodeCategory";
 import { kindIcon } from "../lib/nodeCategoryIcons";
 import { KIND_ORDER, dictionaryEntries, sectionFacet, type DictSortMode, type SectionFacet } from "../lib/dictionary";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";
-import { hasNodeVisual } from "./NodeVisual";
+import { hasNodeVisual } from "./nodeVisualModel";
 import "./DictionaryView.css";
 
 export function DictionaryView() {

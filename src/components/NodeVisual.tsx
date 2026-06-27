@@ -6,10 +6,6 @@ import { exactInteractiveFigure, inferredInteractiveFigure } from "./figures/reg
 import { DIA, UI } from "./figures/tokens";
 import { ThemedDiagram } from "./ThemedDiagram";
 
-export function hasNodeVisual(node: GraphNode): boolean {
-  return Boolean(exactInteractiveFigure(node.id) || node.diagram?.trim() || inferredInteractiveFigure(node));
-}
-
 export function NodeVisual({ node, className }: { node: GraphNode; className?: string }) {
   const ExactFigure = exactInteractiveFigure(node.id);
   const diagramPath = node.diagram?.trim() ?? "";

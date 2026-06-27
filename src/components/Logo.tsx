@@ -1,14 +1,19 @@
-/** Math Atlas compass-rose mark. Single-color via currentColor. */
+/** Math Atlas "Vertex A" mark — the brand letter built from a prerequisite graph.
+ *  Structure uses currentColor (inherits text color); the crossbar edge and its
+ *  nodes use the accent so the mark tracks the in-app theme. */
 export function LogoMark({ className, size = 28 }: { className?: string; size?: number }) {
   return (
-    <svg className={className} width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
-      <circle cx="24" cy="24" r="21" stroke="currentColor" strokeWidth="2" />
-      <circle cx="24" cy="24" r="15" stroke="currentColor" strokeWidth="1.2" opacity="0.45" />
-      <path d="M24 5 L27.5 24 L24 21 L20.5 24 Z" fill="currentColor" />
-      <path d="M24 43 L20.5 24 L24 27 L27.5 24 Z" fill="currentColor" opacity="0.55" />
-      <path d="M43 24 L24 27.5 L27 24 L24 20.5 Z" fill="currentColor" opacity="0.85" />
-      <path d="M5 24 L24 20.5 L21 24 L24 27.5 Z" fill="currentColor" opacity="0.55" />
-      <circle cx="24" cy="24" r="1.8" fill="currentColor" />
+    <svg className={className} width={size} height={size} viewBox="0 0 100 100" fill="none" aria-hidden>
+      <g stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M50 18 L24 82" />
+        <path d="M50 18 L76 82" />
+      </g>
+      <path d="M37 50 L63 50" stroke="var(--accent)" strokeWidth="3.4" strokeLinecap="round" />
+      <circle cx="50" cy="18" r="7" fill="currentColor" />
+      <circle cx="24" cy="82" r="7" fill="var(--surface)" stroke="currentColor" strokeWidth="3.4" />
+      <circle cx="76" cy="82" r="7" fill="var(--surface)" stroke="currentColor" strokeWidth="3.4" />
+      <circle cx="37" cy="50" r="5.5" fill="var(--accent)" />
+      <circle cx="63" cy="50" r="5.5" fill="var(--accent)" />
     </svg>
   );
 }

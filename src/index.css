@@ -267,7 +267,9 @@
      Apple platforms and fall back cleanly elsewhere (Inter for sans). One sans
      for all UI and reading text per HIG ("minimize the number of typefaces");
      mono for numerals/code; STIX Two for math (there is no Apple math face). */
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Inter", "Helvetica Neue", "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Inter", "Helvetica Neue", "Segoe UI", Roboto,
+    system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
   --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
 

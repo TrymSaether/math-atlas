@@ -151,7 +151,7 @@ describe("map service", () => {
             slug: "topology",
             title: "Topology",
             id: "owned-map",
-            role: "owner",
+            role: "owner" as const,
             updated: "2026-06-27T12:10:00.000Z",
           },
         ]),

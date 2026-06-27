@@ -16,7 +16,7 @@ import { nodeAnswerText } from "../lib/nodeContent";
 import { useConceptView } from "../lib/conceptView";
 import type { GraphNode } from "../types";
 import { ConceptHeader, ConceptBody } from "./concept";
-import { hasNodeVisual } from "./NodeVisual";
+import { hasNodeVisual } from "./nodeVisualModel";
 
 /** A node carries enough to drill if it has a title and at least one answer-side facet. */
 function answerText(n: GraphNode): string {

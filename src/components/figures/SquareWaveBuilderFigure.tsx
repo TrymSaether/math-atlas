@@ -2,16 +2,7 @@ import { useMemo, useState } from "react";
 
 import { squareWavePartialSum } from "../../lib/figures/fourierMath";
 import { MathText } from "../../lib/katex";
-import {
-  DIA,
-  FigureCaption,
-  FigureFrame,
-  FunctionCurve,
-  LaTeX,
-  Line,
-  Polygon,
-  STROKE,
-} from "./FigureFrame";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, LaTeX, Line, Polygon, STROKE } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
 
 const X_DOMAIN: [number, number] = [-Math.PI, Math.PI];
@@ -62,20 +53,8 @@ export default function SquareWaveBuilderFigure() {
   return (
     <figure className="m-0">
       <FigureFrame xDomain={X_DOMAIN} yDomain={Y_DOMAIN} height={230} grid>
-        <Line.Segment
-          point1={[-Math.PI, -1]}
-          point2={[0, -1]}
-          color={DIA.ref}
-          weight={STROKE.ref}
-          style="dashed"
-        />
-        <Line.Segment
-          point1={[0, 1]}
-          point2={[Math.PI, 1]}
-          color={DIA.ref}
-          weight={STROKE.ref}
-          style="dashed"
-        />
+        <Line.Segment point1={[-Math.PI, -1]} point2={[0, -1]} color={DIA.ref} weight={STROKE.ref} style="dashed" />
+        <Line.Segment point1={[0, 1]} point2={[Math.PI, 1]} color={DIA.ref} weight={STROKE.ref} style="dashed" />
         <Line.Segment
           point1={[0, -1]}
           point2={[0, 1]}
@@ -93,10 +72,7 @@ export default function SquareWaveBuilderFigure() {
         />
 
         <LaTeX at={[-2.85, 1.25]} tex={String.raw`f(x)=\operatorname{sgn}(\sin x)`} />
-        <LaTeX
-          at={[-2.85, -1.35]}
-          tex={String.raw`S_N(x)=\frac4\pi\sum_{j=0}^{N-1}\frac{\sin((2j+1)x)}{2j+1}`}
-        />
+        <LaTeX at={[-2.85, -1.35]} tex={String.raw`S_N(x)=\frac4\pi\sum_{j=0}^{N-1}\frac{\sin((2j+1)x)}{2j+1}`} />
         <LaTeX at={[Math.PI - 0.25, -0.22]} tex={String.raw`x`} />
       </FigureFrame>
 

@@ -16,7 +16,8 @@ import { createElement, useId, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CaretRightIcon } from "@phosphor-icons/react";
 import type { LoadedMap } from "../data";
-import { MathText, MathProse, tidyMathText } from "../lib/katex";
+import { MathText, MathProse } from "../lib/katex";
+import { tidyMathText } from "../lib/katexText";
 import { getDomainTone, type DomainTone } from "../lib/colors";
 import { CATEGORY_META, categoryOf, kindAbbrev, railBackground } from "../lib/nodeCategory";
 import { kindIcon } from "../lib/nodeCategoryIcons";
@@ -64,10 +65,7 @@ export function Spine({
           {label}
         </span>
       )}
-      <div
-        className="font-math leading-[1.6] text-fg-1"
-        style={{ fontSize: size === "dict" ? "15px" : "15.5px" }}
-      >
+      <div className="font-math leading-[1.6] text-fg-1" style={{ fontSize: size === "dict" ? "15px" : "15.5px" }}>
         {children}
       </div>
     </div>
@@ -468,11 +466,7 @@ export function ConnectionChip({
       <span className="min-w-0 truncate text-footnote leading-4 text-fg-1">
         <MathText text={node.label} />
       </span>
-      {caption && (
-        <span className="shrink-0 font-mono text-caption-2 lowercase text-fg-4">
-          {caption}
-        </span>
-      )}
+      {caption && <span className="shrink-0 font-mono text-caption-2 lowercase text-fg-4">{caption}</span>}
     </button>
   );
 }

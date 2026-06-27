@@ -16,8 +16,8 @@ import {
   Text,
   Transform,
   Vector,
-  useMovablePoint,
 } from "./FigureFrame";
+import { useMovablePoint } from "./mafs";
 
 const X_DOMAIN: [number, number] = [-4, 4];
 

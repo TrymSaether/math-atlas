@@ -16,6 +16,9 @@ export default defineConfig({
     dedupe: ["react", "react-dom"],
   },
   build: {
+    // The on-demand sandbox intentionally bundles mathjs, MathLive, and Mafs.
+    // Its isolated lazy chunk is larger than Vite's generic application limit.
+    chunkSizeWarningLimit: 1600,
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, "index.html"),

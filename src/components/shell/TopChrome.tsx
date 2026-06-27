@@ -21,8 +21,7 @@ import { usePopoverDismiss } from "../../hooks/usePopover";
 import { Glass } from "./Glass";
 import { GlassControlGroup, ShellButton, ShellIconButton, ShellSegmented } from "./Controls";
 import { UserMenu } from "../auth/UserMenu";
-
-const BRAND_SRC = `${import.meta.env.BASE_URL}atlas-assets/logo-mark.svg`;
+import { LogoMark } from "../Logo";
 
 /** The single most-important affordance: a Maps-style search field → palette. */
 function SearchField() {
@@ -112,7 +111,7 @@ function MapMenu() {
           aria-label="Go to Atlas"
           title="Atlas"
         >
-          <img src={BRAND_SRC} alt="" className="h-7 w-7" />
+          <LogoMark className="h-7 w-7" size={28} />
         </ShellIconButton>
         <ShellButton
           ref={triggerRef}

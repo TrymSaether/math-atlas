@@ -3,7 +3,8 @@ import { MathText, MathProse } from "../../lib/katex";
 import type { LoadedMap } from "../../data";
 import type { ConceptView } from "../../lib/conceptView";
 import { Spine, Steps, Collapsible } from "../Specimen";
-import { hasNodeVisual, NodeVisual } from "../NodeVisual";
+import { NodeVisual } from "../NodeVisual";
+import { hasNodeVisual } from "../nodeVisualModel";
 
 /**
  * The shared concept body: one emphasized statement (the Spine anchor) over a

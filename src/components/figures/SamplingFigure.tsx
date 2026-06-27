@@ -12,8 +12,8 @@ import {
   STROKE,
   Text,
   Vector,
-  useMovablePoint,
 } from "./FigureFrame";
+import { useMovablePoint } from "./mafs";
 import { type FigureProps } from "./types";
 
 const T_MAX = 4; // seconds shown
