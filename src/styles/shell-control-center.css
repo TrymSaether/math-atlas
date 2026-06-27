@@ -1,70 +1,87 @@
 /* ========================================================================
    Floating shell tuning — Apple Control Center inspired
    ------------------------------------------------------------------------
-   This layer intentionally sits after shell.css. It canonicalizes the floating
-   control geometry and active-state treatment without changing component APIs.
+   Canonicalizes floating-control geometry and state treatment after shell.css.
+   The target is pillowy Control Center material: large rounded hit areas, milky
+   glass body, crisp inactive outline icons, and stronger active icon material.
    ======================================================================== */
 
 :root,
 :root[data-theme] {
   --shell-edge: 14px;
-  --shell-chrome-h: 60px;
+  --shell-chrome-h: 72px;
   --shell-gap-2xs: 1px;
   --shell-gap-xs: 2px;
-  --shell-gap-sm: 4px;
-  --shell-gap-md: 8px;
-  --shell-gap-lg: 12px;
+  --shell-gap-sm: 5px;
+  --shell-gap-md: 10px;
+  --shell-gap-lg: 14px;
 
-  --shell-control-h: 42px;
-  --shell-island-pad: 5px;
+  --shell-control-h: 48px;
+  --shell-island-pad: 6px;
   --shell-bar-h: calc(var(--shell-control-h) + 2 * var(--shell-island-pad));
   --shell-tools-w: var(--shell-bar-h);
-  --shell-tools-gap: 12px;
-  --shell-search-w: clamp(300px, 34vw, 540px);
+  --shell-tools-gap: 14px;
+  --shell-search-w: clamp(320px, 34vw, 520px);
 
-  --shell-icon-size: 18px;
-  --shell-icon-size-sm: 14px;
+  --shell-icon-size: 20px;
+  --shell-icon-size-sm: 15px;
+  --shell-icon-disk: 40px;
 
-  --shell-radius-control: 18px;
+  --shell-radius-control: 20px;
   --shell-radius-pill: 999px;
   --shell-radius-island: 999px;
-  --shell-radius-panel: 28px;
+  --shell-radius-panel: 30px;
   --shell-control-radius: var(--shell-radius-control);
   --shell-island-radius: var(--shell-radius-island);
-  --shell-cluster-radius: 24px;
+  --shell-cluster-radius: 26px;
   --shell-panel-radius: var(--shell-radius-panel);
 
   --shell-type-size: var(--type-footnote);
   --shell-type-size-sm: var(--type-caption-1);
-  --shell-type-weight: 620;
-  --shell-type-weight-active: 690;
+  --shell-type-weight: 650;
+  --shell-type-weight-active: 720;
   --shell-type-leading: 1;
 
-  --shell-control-hover: rgba(255, 255, 255, 0.3);
-  --shell-control-pressed: rgba(255, 255, 255, 0.42);
-  --shell-control-selected: rgba(255, 255, 255, 0.48);
-  --shell-control-selected-border: rgba(255, 255, 255, 0.72);
+  --shell-icon-muted: color-mix(in srgb, var(--fg-1) 68%, transparent);
+  --shell-icon-strong: color-mix(in srgb, var(--fg-1) 92%, transparent);
+  --shell-icon-active: #007aff;
+  --shell-icon-active-fg: #ffffff;
+  --shell-icon-active-disk: #ffffff;
+  --shell-icon-active-disk-shadow:
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.92),
+    inset 0 -10px 18px -14px rgba(15, 23, 42, 0.32),
+    0 1px 2px rgba(15, 23, 42, 0.1);
+
+  --shell-control-hover: rgba(255, 255, 255, 0.34);
+  --shell-control-pressed: rgba(255, 255, 255, 0.48);
+  --shell-control-selected: rgba(255, 255, 255, 0.56);
+  --shell-control-selected-border: rgba(255, 255, 255, 0.8);
   --shell-control-selected-shadow:
     inset 0 0 0 0.5px var(--shell-control-selected-border),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    inset 0 -12px 22px -16px rgba(15, 23, 42, 0.28),
-    0 1px 2px rgba(15, 23, 42, 0.08);
-  --shell-focus-ring: color-mix(in srgb, var(--accent) 46%, transparent);
-  --shell-toggle-on: color-mix(in srgb, var(--accent) 72%, #9ec8ff);
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    inset 0 -16px 28px -18px rgba(15, 23, 42, 0.34),
+    0 1px 2px rgba(15, 23, 42, 0.1);
+  --shell-focus-ring: color-mix(in srgb, var(--accent) 54%, transparent);
+  --shell-toggle-on: color-mix(in srgb, var(--accent) 76%, #9ec8ff);
 }
 
 :root.dark,
 :root.dark[data-theme] {
+  --shell-icon-muted: color-mix(in srgb, var(--fg-1) 74%, transparent);
+  --shell-icon-strong: color-mix(in srgb, var(--fg-1) 96%, transparent);
+  --shell-icon-active: #0a84ff;
+  --shell-icon-active-disk: #ffffff;
+
   --shell-control-hover: rgba(255, 255, 255, 0.08);
   --shell-control-pressed: rgba(255, 255, 255, 0.13);
-  --shell-control-selected: rgba(255, 255, 255, 0.13);
-  --shell-control-selected-border: rgba(255, 255, 255, 0.22);
+  --shell-control-selected: rgba(255, 255, 255, 0.14);
+  --shell-control-selected-border: rgba(255, 255, 255, 0.24);
   --shell-control-selected-shadow:
     inset 0 0 0 0.5px var(--shell-control-selected-border),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    inset 0 -12px 24px -16px rgba(0, 0, 0, 0.68),
-    0 1px 2px rgba(0, 0, 0, 0.28);
-  --shell-toggle-on: color-mix(in srgb, var(--accent) 68%, var(--surface));
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -16px 30px -18px rgba(0, 0, 0, 0.72),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+  --shell-toggle-on: color-mix(in srgb, var(--accent) 72%, var(--surface));
 }
 
 .top-chrome {
@@ -108,6 +125,34 @@
 .shell-icon-sm {
   display: block;
   flex: none;
+  color: currentColor;
+}
+
+.shell-icon {
+  width: var(--shell-icon-size);
+  height: var(--shell-icon-size);
+}
+
+.shell-icon-sm {
+  width: var(--shell-icon-size-sm);
+  height: var(--shell-icon-size-sm);
+}
+
+.shell-control-icon {
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  width: var(--shell-icon-disk);
+  height: var(--shell-icon-disk);
+  flex: none;
+  place-items: center;
+  border-radius: var(--shell-radius-pill);
+  color: currentColor;
+}
+
+.shell-control-icon > .shell-icon {
+  width: var(--shell-icon-size);
+  height: var(--shell-icon-size);
 }
 
 .shell-btn,
@@ -116,9 +161,11 @@
 .shell-menu-option,
 .shell-switch-btn,
 .command-palette-item {
+  color: var(--shell-icon-muted);
   font-size: var(--shell-type-size);
   font-weight: var(--shell-type-weight);
   line-height: var(--shell-type-leading);
+  letter-spacing: -0.01em;
 }
 
 .shell-btn,
@@ -150,7 +197,7 @@
 .shell-menu-option:not(.is-active):hover,
 .shell-switch-btn:hover {
   background: var(--shell-control-hover);
-  color: var(--fg-1);
+  color: var(--shell-icon-strong);
 }
 
 .shell-btn:active,
@@ -169,9 +216,16 @@
 .command-palette-item:hover,
 .command-palette-item[aria-selected="true"] {
   background: var(--shell-control-selected);
-  color: var(--fg-1);
+  color: var(--shell-icon-strong);
   font-weight: var(--shell-type-weight-active);
   box-shadow: var(--shell-control-selected-shadow);
+}
+
+.shell-btn-icon.is-active,
+.shell-btn-icon[data-active="true"] {
+  background: var(--shell-icon-active-disk);
+  color: var(--shell-icon-active);
+  box-shadow: var(--shell-icon-active-disk-shadow);
 }
 
 .shell-seg {
@@ -180,8 +234,8 @@
   border-radius: var(--shell-radius-island);
   background: rgba(255, 255, 255, 0.18);
   box-shadow:
-    inset 0 0 0 0.5px rgba(255, 255, 255, 0.45),
-    inset 0 -10px 20px -16px rgba(15, 23, 42, 0.26);
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.5),
+    inset 0 -14px 28px -18px rgba(15, 23, 42, 0.32);
 }
 
 :root.dark .shell-seg,
@@ -189,7 +243,7 @@
   background: rgba(255, 255, 255, 0.05);
   box-shadow:
     inset 0 0 0 0.5px rgba(255, 255, 255, 0.12),
-    inset 0 -10px 20px -14px rgba(0, 0, 0, 0.6);
+    inset 0 -12px 24px -16px rgba(0, 0, 0, 0.68);
 }
 
 .shell-surface-island .shell-seg,
@@ -203,19 +257,25 @@
 .shell-seg-opt {
   min-width: var(--shell-control-h);
   min-height: var(--shell-control-h);
-  padding-inline: 0.9rem;
+  padding-inline: 0.52rem 0.9rem;
 }
 
 .shell-seg-opt.is-active {
-  color: var(--fg-1);
+  color: var(--shell-icon-active);
   font-weight: var(--shell-type-weight-active);
+}
+
+.shell-seg-opt.is-active .shell-control-icon {
+  background: var(--shell-icon-active-disk);
+  color: var(--shell-icon-active);
+  box-shadow: var(--shell-icon-active-disk-shadow);
 }
 
 .shell-seg-opt.is-active::before,
 .shell-switch::after {
   background:
-    radial-gradient(120% 90% at 50% -18%, rgba(255, 255, 255, 0.86), transparent 58%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.28));
+    radial-gradient(120% 90% at 50% -18%, rgba(255, 255, 255, 0.9), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.3));
 }
 
 :root.dark .shell-seg-opt.is-active::before,
@@ -231,14 +291,27 @@
   box-shadow: var(--shell-control-selected-shadow);
 }
 
+.shell-map-mark.shell-btn-icon {
+  background: var(--shell-icon-active-disk);
+  color: var(--shell-icon-active);
+  box-shadow: var(--shell-icon-active-disk-shadow);
+}
+
+.shell-map-mark img {
+  width: 30px;
+  height: 30px;
+}
+
 .shell-map-title {
   min-height: var(--shell-control-h);
   padding-inline: 0.9rem 0.78rem;
 }
 
 .shell-map-title-label {
+  color: var(--fg-1);
+  font-size: var(--type-footnote);
   font-weight: var(--shell-type-weight-active);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
 }
 
 .shell-search {
@@ -246,20 +319,26 @@
 }
 
 .shell-search-button {
-  gap: 0.62rem;
-  padding-inline: 0.82rem;
+  gap: 0.68rem;
+  padding-inline: 0.9rem;
 }
 
 .shell-search-label {
+  color: color-mix(in srgb, var(--fg-2) 82%, transparent);
+  font-size: var(--type-footnote);
   font-weight: var(--shell-type-weight);
-  letter-spacing: -0.005em;
+  letter-spacing: -0.008em;
+}
+
+.shell-search-button:hover .shell-search-label {
+  color: var(--fg-1);
 }
 
 .shell-search-kbd {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.45);
   box-shadow:
-    inset 0 0 0 0.5px rgba(255, 255, 255, 0.7),
-    inset 0 -6px 12px -10px rgba(15, 23, 42, 0.22);
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.78),
+    inset 0 -6px 12px -10px rgba(15, 23, 42, 0.28);
 }
 
 :root.dark .shell-search-kbd,
@@ -269,37 +348,37 @@
 }
 
 .shell-edit-badge {
-  bottom: 6px;
+  bottom: 7px;
   width: 4px;
   height: 4px;
 }
 
 .shell-switch {
-  width: 50px;
-  height: 30px;
+  width: 54px;
+  height: 32px;
   background: rgba(255, 255, 255, 0.28);
 }
 
 .shell-switch::after {
   top: 3px;
   left: 3px;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
 }
 
 .shell-switch.is-on::after {
-  transform: translateX(20px);
+  transform: translateX(22px);
 }
 
 .shell-switch-btn:active .shell-switch.is-on::after {
-  transform: translateX(14px);
+  transform: translateX(16px);
 }
 
 .shell-mode-island .shell-seg-opt {
-  min-width: 150px;
+  min-width: 162px;
   min-height: var(--shell-control-h);
-  gap: 0.65rem;
-  padding-inline: 1.2rem;
+  gap: 0.72rem;
+  padding-inline: 0.64rem 1.25rem;
   font-size: var(--type-body);
 }
 
@@ -314,7 +393,8 @@
 }
 
 .shell-zoom-readout {
-  min-height: 30px;
+  min-height: 32px;
+  color: color-mix(in srgb, var(--fg-1) 70%, transparent);
   font-size: var(--type-caption-2);
   font-weight: var(--shell-type-weight-active);
 }
@@ -341,7 +421,7 @@
   :root,
   :root[data-theme] {
     --shell-edge: 12px;
-    --shell-chrome-h: 112px;
+    --shell-chrome-h: 124px;
     --shell-tools-w: var(--shell-bar-h);
   }
 
@@ -358,6 +438,6 @@
   }
 
   .shell-surface-island .shell-seg-opt {
-    padding-inline: 0.62rem;
+    padding-inline: 0.52rem;
   }
 }
