@@ -12,7 +12,6 @@
   --surface-active: color-mix(in srgb, var(--fg-1) 9%, var(--surface));
   --surface-selected: color-mix(in srgb, var(--accent) 12%, var(--surface));
   --surface-overlay: color-mix(in srgb, var(--surface) 92%, transparent);
-  --scrim: color-mix(in srgb, var(--bg-deep) 48%, transparent);
 
   /* Text and border roles */
   --fg-disabled: color-mix(in srgb, var(--fg-3) 58%, var(--surface));
@@ -27,18 +26,17 @@
   --success: var(--green);
   --success-soft: color-mix(in srgb, var(--success) 11%, var(--surface));
   --success-border: color-mix(in srgb, var(--success) 34%, var(--surface));
-  --success-ink: color-mix(in srgb, var(--success) 76%, var(--fg-1));
   --warning: var(--amber);
   --warning-soft: color-mix(in srgb, var(--warning) 13%, var(--surface));
   --warning-border: color-mix(in srgb, var(--warning) 36%, var(--surface));
-  --warning-ink: color-mix(in srgb, var(--warning) 70%, var(--fg-1));
   --info: var(--sky);
   --info-soft: color-mix(in srgb, var(--info) 11%, var(--surface));
   --info-border: color-mix(in srgb, var(--info) 34%, var(--surface));
-  --info-ink: color-mix(in srgb, var(--info) 76%, var(--fg-1));
+  /* Aliases the theme-tuned --red so danger affordances retune across every
+     theme — no per-theme block needed. */
+  --danger: var(--red);
   --danger-soft: color-mix(in srgb, var(--danger) 10%, var(--surface));
   --danger-border: color-mix(in srgb, var(--danger) 34%, var(--surface));
-  --danger-ink: color-mix(in srgb, var(--danger) 76%, var(--fg-1));
 
   /* Domain palette aliases for components that need stable categorical slots. */
   --palette-1: var(--blue);
@@ -64,8 +62,6 @@
 
   --palette-softness: 11%;
   --palette-border-strength: 34%;
-  --palette-fill-strength: 18%;
-  --palette-ink-strength: 82%;
 
   --palette-1-soft: color-mix(in srgb, var(--palette-1) var(--palette-softness), var(--surface));
   --palette-2-soft: color-mix(in srgb, var(--palette-2) var(--palette-softness), var(--surface));
@@ -112,7 +108,6 @@
   --plot-grid: color-mix(in srgb, var(--fg-3) 22%, transparent);
   --plot-grid-strong: color-mix(in srgb, var(--fg-3) 36%, transparent);
   --plot-band: color-mix(in srgb, var(--accent) 10%, transparent);
-  --plot-selection: color-mix(in srgb, var(--accent) 18%, transparent);
   --plot-positive: var(--success);
   --plot-negative: var(--danger);
   --plot-warning: var(--warning);
@@ -132,35 +127,13 @@
   --figure-guide: var(--plot-grid);
   --figure-axis: var(--plot-axis);
 
-  /* Typography primitives */
-  --leading-none: 1;
-  --leading-tight: 1.15;
-  --leading-snug: 1.3;
-  --leading-normal: 1.5;
-  --leading-copy: 1.62;
-  --leading-relaxed: 1.75;
+  /* Typography primitives (type ramp, leading, weight, measure) live in
+     foundation.css. */
 
-  --weight-regular: 400;
-  --weight-medium: 520;
-  --weight-semibold: 650;
-  --weight-bold: 760;
-
-  --measure-compact: 42ch;
-  --measure-reading: 68ch;
-  --measure-wide: 82ch;
-
-  /* Layout and controls */
+  /* Minimum touch-target height (WCAG). Shell control geometry lives in
+     shell.css; the old generic control-height and icon-size scales were unused
+     and have been removed. */
   --hit-target: 44px;
-  --space-panel-x: 1rem;
-  --space-panel-y: 0.875rem;
-  --control-height-xs: 28px;
-  --control-height-sm: 32px;
-  --control-height-md: var(--hit-target);
-  --control-height-lg: 52px;
-  --icon-size-xs: 14px;
-  --icon-size-sm: 16px;
-  --icon-size-md: 18px;
-  --icon-size-lg: 22px;
 }
 
 :root.dark,
@@ -170,7 +143,6 @@
   --surface-hover: color-mix(in srgb, var(--fg-1) 8%, var(--surface));
   --surface-active: color-mix(in srgb, var(--fg-1) 12%, var(--surface));
   --surface-overlay: color-mix(in srgb, var(--surface) 88%, transparent);
-  --scrim: color-mix(in srgb, #000 58%, transparent);
   --fg-disabled: color-mix(in srgb, var(--fg-3) 48%, var(--surface));
   --plot-reference: color-mix(in srgb, var(--fg-3) 74%, transparent);
   --plot-axis: color-mix(in srgb, var(--fg-2) 58%, transparent);
