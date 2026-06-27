@@ -274,20 +274,29 @@ function TopRightControls() {
   const showEditControls = surface === "atlas" && mode !== "paths" && Boolean(map);
 
   return (
-    <GlassControlGroup className="shell-top-right-island">
-      <SurfaceNav />
-      <span className="shell-island-divider" aria-hidden />
-      {showEditControls && <EditControls />}
-      <ThemeToggle />
-      {authEnabled && <UserMenu />}
-    </GlassControlGroup>
+    <div className="shell-top-right-stack">
+      <GlassControlGroup className="shell-surface-island">
+        <SurfaceNav />
+      </GlassControlGroup>
+
+      {showEditControls && (
+        <GlassControlGroup className="shell-edit-island">
+          <EditControls />
+        </GlassControlGroup>
+      )}
+
+      <GlassControlGroup className="shell-global-island">
+        <ThemeToggle />
+        {authEnabled && <UserMenu />}
+      </GlassControlGroup>
+    </div>
   );
 }
 
 /**
- * Top Liquid Glass islands: map leading, search centered, and surface/global
- * controls merged trailing. Floats above the content layer; on narrow widths it
- * wraps gracefully.
+ * Top Liquid Glass islands: map leading, search centered, and semantically split
+ * trailing controls. Floats above the content layer; on narrow widths it wraps
+ * gracefully.
  */
 export function TopChrome() {
   return (
