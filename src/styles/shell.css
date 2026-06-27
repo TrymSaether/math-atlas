@@ -3,30 +3,44 @@
    ======================================================================== */
 
 :root {
-  --shell-edge: 16px;
+  /* Shell layout edges and rhythm. One owner for the floating control layer —
+     the prior `base.css` "normalization overrides" block has been folded in
+     here so geometry is defined once, not patched by import order. */
+  --shell-edge: 14px;
   --shell-chrome-h: 60px;
   --shell-dock-top: calc(var(--shell-chrome-h) + var(--shell-edge));
-  --shell-control-h: var(--hit-target);
-  --shell-bar-h: calc(var(--shell-control-h) + 10px);
-  --shell-tools-w: calc(var(--shell-control-h) + 10px);
-  --shell-tools-gap: 12px;
+
+  /* Island padding + control height drive every derived dimension below. */
+  --shell-island-pad: 4px;
+  --shell-control-h: 40px;
+  --shell-bar-h: calc(var(--shell-control-h) + 2 * var(--shell-island-pad));
+  --shell-tools-w: var(--shell-bar-h);
+  --shell-tools-gap: 10px;
   --shell-search-w: clamp(280px, 34vw, 520px);
-  --shell-icon-size: 18px;
+
+  /* Internal gap scale for clusters/islands. */
+  --shell-gap-xs: 2px;
+  --shell-gap-sm: 4px;
+  --shell-gap-md: 8px;
+  --shell-gap-lg: 12px;
+
+  --shell-icon-size: 17px;
   --shell-icon-size-sm: 14px;
 
-  --shell-control-radius: var(--radius-md);
+  --shell-control-radius: 12px;
+  --shell-control-pill: var(--radius-pill);
   --shell-island-radius: var(--radius-pill);
-  --shell-cluster-radius: var(--radius-lg);
-  --shell-panel-radius: var(--radius-xl);
+  --shell-cluster-radius: 18px;
+  --shell-panel-radius: 22px;
 
-  --shell-control-hover: color-mix(in srgb, var(--fg-1) 6%, transparent);
-  --shell-control-pressed: color-mix(in srgb, var(--fg-1) 10%, transparent);
-  --shell-control-selected: color-mix(in srgb, var(--surface) 94%, #fff 6%);
+  --shell-control-hover: color-mix(in srgb, var(--fg-1) 4%, transparent);
+  --shell-control-pressed: color-mix(in srgb, var(--fg-1) 8%, transparent);
+  --shell-control-selected: color-mix(in srgb, var(--surface) 94%, var(--fg-1) 6%);
   --shell-control-selected-border: color-mix(in srgb, var(--fg-1) 9%, transparent);
   --shell-control-selected-shadow:
-    0 1px 1px color-mix(in srgb, #000 6%, transparent), 0 10px 26px color-mix(in srgb, #000 13%, transparent),
-    inset 0 1px 0 color-mix(in srgb, #fff 76%, transparent),
-    inset 0 -8px 18px -14px color-mix(in srgb, var(--fg-1) 16%, transparent);
+    0 1px 1px rgb(var(--elevation-ink) / 0.05), 0 5px 14px rgb(var(--elevation-ink) / 0.08),
+    inset 0 1px 0 color-mix(in srgb, var(--surface) 58%, #fff),
+    inset 0 -6px 14px -12px color-mix(in srgb, var(--fg-1) 14%, transparent);
   --shell-control-disabled: color-mix(in srgb, var(--fg-3) 45%, transparent);
   --shell-focus-ring: color-mix(in srgb, var(--fg-1) 34%, transparent);
   --shell-primary-bg: color-mix(in srgb, var(--fg-1) 90%, var(--surface));
@@ -35,14 +49,13 @@
 }
 
 :root.dark {
-  --shell-control-hover: color-mix(in srgb, var(--fg-1) 8%, transparent);
-  --shell-control-pressed: color-mix(in srgb, var(--fg-1) 12%, transparent);
+  --shell-control-hover: color-mix(in srgb, var(--fg-1) 6%, transparent);
+  --shell-control-pressed: color-mix(in srgb, var(--fg-1) 10%, transparent);
   --shell-control-selected: color-mix(in srgb, var(--surface) 76%, var(--fg-1) 14%);
   --shell-control-selected-border: color-mix(in srgb, var(--fg-1) 18%, transparent);
   --shell-control-selected-shadow:
-    0 1px 2px color-mix(in srgb, #000 42%, transparent), 0 10px 26px color-mix(in srgb, #000 40%, transparent),
-    inset 0 1px 0 color-mix(in srgb, #fff 16%, transparent),
-    inset 0 -8px 18px -14px color-mix(in srgb, #000 68%, transparent);
+    0 1px 2px rgb(var(--elevation-ink) / 0.34), 0 6px 16px rgb(var(--elevation-ink) / 0.32),
+    inset 0 1px 0 color-mix(in srgb, var(--surface) 12%, #fff), inset 0 -6px 14px -12px rgb(var(--elevation-ink) / 0.6);
   --shell-focus-ring: color-mix(in srgb, var(--fg-1) 42%, transparent);
   --shell-primary-bg: color-mix(in srgb, var(--fg-1) 86%, var(--surface));
   --shell-toggle-on: color-mix(in srgb, var(--fg-1) 78%, var(--surface));
@@ -51,7 +64,7 @@
 .shell-layer {
   position: absolute;
   inset: 0;
-  z-index: 20;
+  z-index: var(--z-shell);
   pointer-events: none;
 }
 
@@ -78,7 +91,7 @@
   position: absolute;
   top: var(--shell-dock-top);
   bottom: var(--shell-edge);
-  z-index: 20;
+  z-index: var(--z-shell);
 }
 
 .shell-dock-left {
@@ -89,7 +102,7 @@
 .top-chrome {
   position: absolute;
   inset: 0 0 auto;
-  z-index: 20;
+  z-index: var(--z-shell);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, var(--shell-search-w)) minmax(0, 1fr);
   grid-template-areas: "map search right";
@@ -441,7 +454,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: var(--z-below);
   border-radius: inherit;
   pointer-events: none;
   box-shadow:
@@ -716,7 +729,7 @@
   position: absolute;
   bottom: var(--shell-edge);
   left: 50%;
-  z-index: 20;
+  z-index: var(--z-shell);
   transform: translateX(-50%);
 }
 
@@ -749,7 +762,7 @@
   position: absolute;
   right: var(--shell-edge);
   bottom: var(--shell-edge);
-  z-index: 24;
+  z-index: var(--z-shell-raised);
   display: flex;
   align-items: flex-end;
   gap: var(--shell-tools-gap);
@@ -795,7 +808,7 @@
   position: absolute;
   right: calc(var(--shell-edge) + var(--shell-tools-w) + var(--shell-tools-gap));
   bottom: var(--shell-edge);
-  z-index: 20;
+  z-index: var(--z-shell);
   display: none;
   padding: 6px;
   border: 1px solid var(--glass-border);
@@ -1028,4 +1041,153 @@
 
 .panel-scrollbar::-webkit-scrollbar-thumb:active {
   background-color: color-mix(in srgb, var(--fg-2) 72%, transparent);
+}
+
+/* ========================================================================
+   Shell geometry normalization
+   ------------------------------------------------------------------------
+   Folded in from the former base.css override block. Snaps every island,
+   control, and cluster onto the shared `--shell-*` geometry tokens above
+   (gaps, island padding, pill radii, hit area) so the floating chrome has
+   one consistent geometry instead of per-element magic numbers.
+   ======================================================================== */
+
+.top-chrome {
+  gap: var(--shell-gap-lg);
+  padding: 12px var(--shell-edge);
+}
+
+.shell-map-menu,
+.shell-control-group {
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-island-radius);
+}
+
+.shell-top-right-stack {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: var(--shell-gap-md);
+}
+
+.shell-surface-island,
+.shell-edit-island,
+.shell-global-island {
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-island-radius);
+}
+
+.shell-edit-island,
+.shell-global-island {
+  gap: var(--shell-gap-xs);
+}
+
+.shell-top-right-island {
+  gap: var(--shell-gap-sm);
+}
+
+.shell-island-divider {
+  display: none;
+  margin: 0 var(--shell-gap-sm);
+}
+
+.shell-edit-controls,
+.shell-panel-actions,
+.shell-panel-pager {
+  gap: var(--shell-gap-xs);
+}
+
+.shell-btn {
+  gap: var(--shell-gap-sm);
+}
+
+.shell-btn-pill,
+.shell-btn-circle,
+.shell-btn-icon,
+.shell-seg-opt,
+.shell-chip,
+.shell-menu-option,
+.shell-switch-btn,
+.command-palette-item {
+  border-radius: var(--shell-control-pill);
+}
+
+.shell-btn-icon {
+  width: var(--shell-control-h);
+  height: var(--shell-control-h);
+  min-width: var(--shell-control-h);
+  min-height: var(--shell-control-h);
+}
+
+.shell-edit-badge {
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+}
+
+.shell-seg {
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-island-radius);
+}
+
+.shell-seg-opt {
+  min-width: var(--shell-control-h);
+  min-height: var(--shell-control-h);
+}
+
+.shell-surface-island .shell-seg,
+.shell-top-right-island .shell-seg,
+.shell-mode-island .shell-seg {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.shell-mode-island {
+  min-height: calc(var(--shell-control-h) + 2 * var(--shell-island-pad));
+  padding: var(--shell-island-pad);
+}
+
+.shell-mode-island .shell-seg-opt {
+  min-height: var(--shell-control-h);
+}
+
+.shell-utility-rail {
+  width: var(--shell-tools-w);
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-island-radius);
+}
+
+.shell-rail-cluster {
+  gap: var(--shell-gap-xs);
+  margin: 0;
+}
+
+.shell-map-menu::after,
+.shell-control-group::after,
+.shell-search::after,
+.shell-utility-rail::after {
+  animation: none;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --shell-edge: 12px;
+  }
+
+  .top-chrome {
+    gap: var(--shell-gap-md);
+    padding: 10px var(--shell-edge);
+  }
+
+  .shell-top-right-stack {
+    max-width: calc(100vw - 24px);
+    justify-content: center;
+    gap: var(--shell-gap-sm);
+    flex-wrap: wrap;
+  }
 }

@@ -37,8 +37,10 @@
 
   --glass-border: color-mix(in srgb, var(--fg-1) 11%, transparent);
   --glass-highlight: color-mix(in srgb, #ffffff 60%, transparent);
-  --glass-shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.07);
-  --glass-shadow-2: 0 4px 14px rgba(15, 23, 42, 0.09), 0 18px 48px rgba(15, 23, 42, 0.14);
+  /* Glass elevation rides the foundation `--elevation-ink` channel so it
+     retunes with the rest of the system on theme change. */
+  --glass-shadow-1: 0 1px 2px rgb(var(--elevation-ink) / 0.05), 0 6px 18px rgb(var(--elevation-ink) / 0.07);
+  --glass-shadow-2: 0 4px 14px rgb(var(--elevation-ink) / 0.09), 0 18px 48px rgb(var(--elevation-ink) / 0.14);
 
   /* Specular rim + lensing depth (the "Liquid Glass" optics). Painted once by
      ::before — a bright top lip, a soft bottom-inner shade for thickness, an
@@ -70,8 +72,9 @@
 
   --glass-border: color-mix(in srgb, var(--fg-1) 15%, transparent);
   --glass-highlight: color-mix(in srgb, #ffffff 12%, transparent);
-  --glass-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0, 0, 0, 0.42);
-  --glass-shadow-2: 0 6px 18px rgba(0, 0, 0, 0.45), 0 22px 56px rgba(0, 0, 0, 0.6);
+  /* Dark: --elevation-ink is already 0 0 0, deeper alphas for the deep canvas. */
+  --glass-shadow-1: 0 1px 2px rgb(var(--elevation-ink) / 0.3), 0 6px 18px rgb(var(--elevation-ink) / 0.42);
+  --glass-shadow-2: 0 6px 18px rgb(var(--elevation-ink) / 0.45), 0 22px 56px rgb(var(--elevation-ink) / 0.6);
 
   /* Dark: a brighter rim against the deep backdrop, dimmer gloss so it never
      blows out. */
@@ -125,7 +128,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: var(--z-below);
   border-radius: inherit;
   pointer-events: none;
   box-shadow:
@@ -152,7 +155,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: var(--z-below);
   border-radius: inherit;
   pointer-events: none;
   background:

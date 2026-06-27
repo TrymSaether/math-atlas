@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./styles/tailwind-theme.css";
 @import "./styles/tokens.css";
+@import "./styles/foundation.css";
 @import "./styles/glass.css";
 @import "./styles/shell.css";
 @import "./styles/base.css";
@@ -71,9 +72,7 @@
   --edge-ink: #64748b;
   --edge-highlight: var(--blue);
 
-  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-2: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-3: 0 12px 32px rgba(15, 23, 42, 0.1), 0 2px 6px rgba(15, 23, 42, 0.05);
+  /* Elevation lives in foundation.css (one tonal ramp + legacy aliases). */
 
   --grid-dot: #e5e7eb;
   --grid-major: rgba(15, 23, 42, 0.05);
@@ -113,6 +112,7 @@
   /* ○ no input yet */
 }
 
+:root.dark,
 :root[data-theme="chalkboard"] {
   color-scheme: dark;
 
@@ -166,9 +166,7 @@
   --edge-ink: #6b7689;
   --edge-highlight: var(--blue);
 
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.5);
-  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.55);
+  /* Elevation: see foundation.css (dark overrides --elevation-ink). */
 
   --grid-dot: rgba(255, 255, 255, 0.08);
   --grid-major: rgba(255, 255, 255, 0.05);
@@ -332,11 +330,10 @@
   --chrome-border: color-mix(in srgb, var(--border) 78%, transparent);
   --chrome-divider: color-mix(in srgb, var(--border) 72%, transparent);
   --chrome-highlight: color-mix(in srgb, var(--surface) 82%, transparent);
-  --chrome-shadow: 0 8px 22px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
-  --chrome-shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --chrome-shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.13), 0 4px 10px rgba(15, 23, 42, 0.07);
+  /* --chrome-shadow* are elevation aliases (foundation.css): e3 / e2 / e5. */
 }
 
+:root.dark,
 :root[data-theme="chalkboard"] {
   --chrome-bg: color-mix(in srgb, var(--surface) 86%, transparent);
   --chrome-bg-strong: color-mix(in srgb, var(--surface) 97%, transparent);
@@ -345,7 +342,4 @@
   --chrome-border: color-mix(in srgb, var(--border-strong) 70%, transparent);
   --chrome-divider: color-mix(in srgb, var(--border-strong) 58%, transparent);
   --chrome-highlight: color-mix(in srgb, var(--fg-1) 12%, transparent);
-  --chrome-shadow: 0 10px 28px rgba(0, 0, 0, 0.34), 0 1px 5px rgba(0, 0, 0, 0.26);
-  --chrome-shadow-soft: 0 5px 16px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.22);
-  --chrome-shadow-popover: 0 22px 54px rgba(0, 0, 0, 0.46), 0 5px 14px rgba(0, 0, 0, 0.34);
 }
