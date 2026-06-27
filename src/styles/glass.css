@@ -1,60 +1,53 @@
 /* ========================================================================
    Liquid Glass material system
    ------------------------------------------------------------------------
-   A small, BUDGETED set of translucent surfaces composited above the content
-   layer (the graph canvas). Three thicknesses, per Apple's Materials HIG:
-     • thin    — transient popovers / hovers
-     • regular — bars, control clusters, the mode switch
-     • thick   — the concept card and command palette (most opaque → best text
-                 contrast: "thicker materials … provide better contrast for text")
-
-   Fills derive from the active theme's --surface/--bg, so light & dark adapt
-   with no per-theme duplication. Every class ships an OPAQUE fallback first,
-   then layers backdrop-filter only where supported — and drops it entirely
-   during canvas pan/zoom (.is-panning) and when the user asks for reduced
-   transparency. Color is intentionally absent here; per the Color HIG, glass
-   stays near-monochrome and color lives in the content layer.
+   Three composited material thicknesses used by the floating shell. The light
+   treatment intentionally follows Apple Control Center more than white frosted
+   glass: a neutral gray translucent body, crisp white/top rim, darker lower
+   refraction, and broad soft elevation. Color remains absent from the default
+   material; accent belongs to active/semantic states.
    ======================================================================== */
 
 :root,
 :root[data-theme] {
-  --glass-blur-thin: 16px;
-  --glass-blur-regular: 24px;
-  --glass-blur-thick: 32px;
-  --glass-saturate: 200%;
+  --glass-blur-thin: 18px;
+  --glass-blur-regular: 30px;
+  --glass-blur-thick: 38px;
+  --glass-saturate: 180%;
 
-  /* Translucent fills (used only where backdrop-filter is supported & allowed).
-     Light mode leans MORE translucent so the canvas reads through the chrome as
-     real Liquid Glass; the dark block below restores its heavier fills. */
-  --glass-fill-thin: color-mix(in srgb, var(--surface) 42%, transparent);
-  --glass-fill-regular: color-mix(in srgb, var(--surface) 56%, transparent);
-  --glass-fill-thick: color-mix(in srgb, var(--surface) 74%, transparent);
+  /* Light Control Center style: gray translucent material, not white-on-white. */
+  --glass-fill-thin: color-mix(in srgb, #d8dbe0 50%, transparent);
+  --glass-fill-regular: color-mix(in srgb, #d4d7dc 68%, transparent);
+  --glass-fill-thick: color-mix(in srgb, #cfd3d8 78%, transparent);
 
-  /* Near-opaque fallbacks (reduced transparency / no backdrop-filter). */
-  --glass-fill-thin-solid: color-mix(in srgb, var(--surface) 93%, var(--bg));
-  --glass-fill-regular-solid: color-mix(in srgb, var(--surface) 97%, var(--bg));
-  --glass-fill-thick-solid: var(--surface);
+  --glass-fill-thin-solid: color-mix(in srgb, #e2e4e8 92%, var(--bg));
+  --glass-fill-regular-solid: color-mix(in srgb, #d8dbe0 94%, var(--bg));
+  --glass-fill-thick-solid: color-mix(in srgb, #d0d4d9 96%, var(--bg));
 
-  --glass-border: color-mix(in srgb, var(--fg-1) 11%, transparent);
-  --glass-highlight: color-mix(in srgb, #ffffff 60%, transparent);
-  --glass-shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.07);
-  --glass-shadow-2: 0 4px 14px rgba(15, 23, 42, 0.09), 0 18px 48px rgba(15, 23, 42, 0.14);
+  --glass-border: color-mix(in srgb, var(--fg-1) 18%, transparent);
+  --glass-highlight: rgba(255, 255, 255, 0.82);
+  --glass-ring:
+    0 0 0 0.5px rgba(255, 255, 255, 0.95),
+    0 0 0 1px rgba(15, 23, 42, 0.12);
+  --glass-shadow-1:
+    0 1px 2px rgba(15, 23, 42, 0.08),
+    0 8px 22px rgba(15, 23, 42, 0.13),
+    0 24px 60px rgba(15, 23, 42, 0.08);
+  --glass-shadow-2:
+    0 2px 4px rgba(15, 23, 42, 0.1),
+    0 14px 34px rgba(15, 23, 42, 0.16),
+    0 36px 80px rgba(15, 23, 42, 0.12);
 
-  /* Specular rim + lensing depth (the "Liquid Glass" optics). Painted once by
-     ::before — a bright top lip, a soft bottom-inner shade for thickness, an
-     inner glow for volume, over a quiet top-light pool and a faint diagonal
-     gloss. Static (no per-frame work) so it never costs anything over the
-     canvas. Adapted from the prototype material exploration. */
-  --glass-edge-light: rgba(255, 255, 255, 0.92);
-  --glass-edge-light-soft: rgba(255, 255, 255, 0.55);
-  --glass-edge-shadow: rgba(15, 23, 42, 0.16);
-  --glass-inner-glow: rgba(255, 255, 255, 0.12);
-  --glass-inner-shadow: rgba(15, 23, 42, 0.06);
-  --glass-sheen: rgba(255, 255, 255, 0.5);
+  --glass-edge-light: rgba(255, 255, 255, 0.96);
+  --glass-edge-light-soft: rgba(255, 255, 255, 0.62);
+  --glass-edge-shadow: rgba(15, 23, 42, 0.34);
+  --glass-inner-glow: rgba(255, 255, 255, 0.18);
+  --glass-inner-shadow: rgba(15, 23, 42, 0.18);
+  --glass-sheen: rgba(255, 255, 255, 0.34);
   --glass-sheen-fade: rgba(255, 255, 255, 0);
-  --glass-top-light: rgba(255, 255, 255, 0.4);
-  --glass-flow: rgba(255, 255, 255, 0.22);
-  --glass-spot: rgba(255, 255, 255, 0.42);
+  --glass-top-light: rgba(255, 255, 255, 0.32);
+  --glass-flow: rgba(255, 255, 255, 0.12);
+  --glass-spot: rgba(255, 255, 255, 0.34);
   --glass-spot-strength: 0%;
   --glass-x: 30%;
   --glass-y: 0%;
@@ -62,19 +55,32 @@
 
 :root.dark,
 :root.dark[data-theme] {
-  /* Dark already read well, so keep its heavier fills (the light values above
-     would wash out over the deep backdrop). */
-  --glass-fill-thin: color-mix(in srgb, var(--surface) 56%, transparent);
-  --glass-fill-regular: color-mix(in srgb, var(--surface) 72%, transparent);
-  --glass-fill-thick: color-mix(in srgb, var(--surface) 85%, transparent);
+  --glass-blur-thin: 18px;
+  --glass-blur-regular: 30px;
+  --glass-blur-thick: 38px;
+  --glass-saturate: 190%;
 
-  --glass-border: color-mix(in srgb, var(--fg-1) 15%, transparent);
+  --glass-fill-thin: color-mix(in srgb, var(--surface) 54%, transparent);
+  --glass-fill-regular: color-mix(in srgb, var(--surface) 70%, transparent);
+  --glass-fill-thick: color-mix(in srgb, var(--surface) 84%, transparent);
+
+  --glass-fill-thin-solid: color-mix(in srgb, var(--surface) 90%, var(--bg));
+  --glass-fill-regular-solid: color-mix(in srgb, var(--surface) 94%, var(--bg));
+  --glass-fill-thick-solid: var(--surface);
+
+  --glass-border: color-mix(in srgb, var(--fg-1) 16%, transparent);
   --glass-highlight: color-mix(in srgb, #ffffff 12%, transparent);
-  --glass-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0, 0, 0, 0.42);
-  --glass-shadow-2: 0 6px 18px rgba(0, 0, 0, 0.45), 0 22px 56px rgba(0, 0, 0, 0.6);
+  --glass-ring:
+    0 0 0 0.5px rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  --glass-shadow-1:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 6px 18px rgba(0, 0, 0, 0.42),
+    0 22px 54px rgba(0, 0, 0, 0.32);
+  --glass-shadow-2:
+    0 6px 18px rgba(0, 0, 0, 0.45),
+    0 22px 56px rgba(0, 0, 0, 0.6);
 
-  /* Dark: a brighter rim against the deep backdrop, dimmer gloss so it never
-     blows out. */
   --glass-edge-light: rgba(255, 255, 255, 0.6);
   --glass-edge-light-soft: rgba(255, 255, 255, 0.22);
   --glass-edge-shadow: rgba(0, 0, 0, 0.5);
@@ -102,7 +108,6 @@
   }
 }
 
-/* Base treatment — opaque fallback. */
 .glass,
 .glass-thin,
 .glass-regular,
@@ -111,13 +116,11 @@
   isolation: isolate;
   border: 1px solid var(--glass-border);
   box-shadow:
+    var(--glass-ring),
     var(--glass-shadow-1),
     inset 0 1px 0 var(--glass-highlight);
 }
 
-/* Specular rim + lensing depth, painted under the surface's own children (an
-   isolated z-index:-1 layer) so controls stay crisp while the edge refracts.
-   Static — no per-frame cost. */
 .glass::before,
 .glass-thin::before,
 .glass-regular::before,
@@ -132,8 +135,8 @@
     inset 0 0 0 0.5px var(--glass-edge-light-soft),
     inset 0 1.2px 0.5px -0.3px var(--glass-edge-light),
     inset 0 -1px 1px -0.5px var(--glass-edge-shadow),
-    inset 0 0 14px var(--glass-inner-glow),
-    inset 0 -8px 16px -10px var(--glass-inner-shadow);
+    inset 0 0 16px var(--glass-inner-glow),
+    inset 0 -14px 28px -16px var(--glass-inner-shadow);
   background:
     radial-gradient(130% 80% at 50% -22%, var(--glass-top-light) 0%, transparent 46%),
     linear-gradient(
@@ -163,7 +166,7 @@
     ),
     radial-gradient(58% 80% at var(--glass-drift) -12%, var(--glass-flow), transparent 62%),
     radial-gradient(46% 70% at calc(100% - var(--glass-drift)) 112%, var(--glass-flow), transparent 64%);
-  animation: glass-flow 10s var(--ease-standard) infinite alternate;
+  animation: glass-flow 16s var(--ease-standard) infinite alternate;
   transition: --glass-spot-strength var(--dur-std) var(--ease-standard);
 }
 
@@ -171,7 +174,7 @@
 .glass-thin:hover::after,
 .glass-regular:hover::after,
 .glass-thick:hover::after {
-  --glass-spot-strength: 75%;
+  --glass-spot-strength: 56%;
 }
 
 .glass-thin {
@@ -184,11 +187,11 @@
 .glass-thick {
   background: var(--glass-fill-thick-solid);
   box-shadow:
+    var(--glass-ring),
     var(--glass-shadow-2),
     inset 0 1px 0 var(--glass-highlight);
 }
 
-/* Translucent material — only where backdrop-filter actually works. */
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass-thin {
     background: var(--glass-fill-thin);
@@ -220,9 +223,6 @@
   }
 }
 
-/* Performance guard: while the canvas is actively panning/zooming, drop the
-   (expensive) backdrop blur so compositing never fights the transform. The
-   translucent fill stays, so the swap is cheap and barely perceptible. */
 .is-panning .glass,
 .is-panning .glass-thin,
 .is-panning .glass-regular,
@@ -231,7 +231,6 @@
   backdrop-filter: none;
 }
 
-/* Accessibility: honor reduced transparency by going fully opaque. */
 @media (prefers-reduced-transparency: reduce) {
   .glass-thin {
     background: var(--glass-fill-thin-solid);
