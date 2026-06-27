@@ -1,0 +1,363 @@
+/* ========================================================================
+   Floating shell tuning — Apple Control Center inspired
+   ------------------------------------------------------------------------
+   This layer intentionally sits after shell.css. It canonicalizes the floating
+   control geometry and active-state treatment without changing component APIs.
+   ======================================================================== */
+
+:root,
+:root[data-theme] {
+  --shell-edge: 14px;
+  --shell-chrome-h: 60px;
+  --shell-gap-2xs: 1px;
+  --shell-gap-xs: 2px;
+  --shell-gap-sm: 4px;
+  --shell-gap-md: 8px;
+  --shell-gap-lg: 12px;
+
+  --shell-control-h: 42px;
+  --shell-island-pad: 5px;
+  --shell-bar-h: calc(var(--shell-control-h) + 2 * var(--shell-island-pad));
+  --shell-tools-w: var(--shell-bar-h);
+  --shell-tools-gap: 12px;
+  --shell-search-w: clamp(300px, 34vw, 540px);
+
+  --shell-icon-size: 18px;
+  --shell-icon-size-sm: 14px;
+
+  --shell-radius-control: 18px;
+  --shell-radius-pill: 999px;
+  --shell-radius-island: 999px;
+  --shell-radius-panel: 28px;
+  --shell-control-radius: var(--shell-radius-control);
+  --shell-island-radius: var(--shell-radius-island);
+  --shell-cluster-radius: 24px;
+  --shell-panel-radius: var(--shell-radius-panel);
+
+  --shell-type-size: var(--type-footnote);
+  --shell-type-size-sm: var(--type-caption-1);
+  --shell-type-weight: 620;
+  --shell-type-weight-active: 690;
+  --shell-type-leading: 1;
+
+  --shell-control-hover: rgba(255, 255, 255, 0.3);
+  --shell-control-pressed: rgba(255, 255, 255, 0.42);
+  --shell-control-selected: rgba(255, 255, 255, 0.48);
+  --shell-control-selected-border: rgba(255, 255, 255, 0.72);
+  --shell-control-selected-shadow:
+    inset 0 0 0 0.5px var(--shell-control-selected-border),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -12px 22px -16px rgba(15, 23, 42, 0.28),
+    0 1px 2px rgba(15, 23, 42, 0.08);
+  --shell-focus-ring: color-mix(in srgb, var(--accent) 46%, transparent);
+  --shell-toggle-on: color-mix(in srgb, var(--accent) 72%, #9ec8ff);
+}
+
+:root.dark,
+:root.dark[data-theme] {
+  --shell-control-hover: rgba(255, 255, 255, 0.08);
+  --shell-control-pressed: rgba(255, 255, 255, 0.13);
+  --shell-control-selected: rgba(255, 255, 255, 0.13);
+  --shell-control-selected-border: rgba(255, 255, 255, 0.22);
+  --shell-control-selected-shadow:
+    inset 0 0 0 0.5px var(--shell-control-selected-border),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -12px 24px -16px rgba(0, 0, 0, 0.68),
+    0 1px 2px rgba(0, 0, 0, 0.28);
+  --shell-toggle-on: color-mix(in srgb, var(--accent) 68%, var(--surface));
+}
+
+.top-chrome {
+  gap: var(--shell-gap-lg);
+  padding: 12px var(--shell-edge);
+}
+
+.shell-map-menu,
+.shell-control-group,
+.shell-surface-island,
+.shell-edit-island,
+.shell-global-island,
+.shell-utility-rail,
+.shell-mode-island {
+  min-height: var(--shell-bar-h);
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-radius-island);
+}
+
+.shell-top-right-stack {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: var(--shell-gap-md);
+}
+
+.shell-edit-island,
+.shell-global-island,
+.shell-edit-controls,
+.shell-panel-actions,
+.shell-panel-pager {
+  gap: var(--shell-gap-xs);
+}
+
+.shell-island-divider {
+  display: none;
+}
+
+.shell-icon,
+.shell-icon-sm {
+  display: block;
+  flex: none;
+}
+
+.shell-btn,
+.shell-seg-opt,
+.shell-chip,
+.shell-menu-option,
+.shell-switch-btn,
+.command-palette-item {
+  font-size: var(--shell-type-size);
+  font-weight: var(--shell-type-weight);
+  line-height: var(--shell-type-leading);
+}
+
+.shell-btn,
+.shell-seg-opt {
+  gap: var(--shell-gap-sm);
+}
+
+.shell-btn-pill,
+.shell-btn-circle,
+.shell-btn-icon,
+.shell-seg-opt,
+.shell-chip,
+.shell-menu-option,
+.shell-switch-btn,
+.command-palette-item {
+  border-radius: var(--shell-radius-pill);
+}
+
+.shell-btn-icon {
+  width: var(--shell-control-h);
+  height: var(--shell-control-h);
+  min-width: var(--shell-control-h);
+  min-height: var(--shell-control-h);
+}
+
+.shell-btn:hover,
+.shell-seg-opt:not(.is-active):hover,
+.shell-chip:hover,
+.shell-menu-option:not(.is-active):hover,
+.shell-switch-btn:hover {
+  background: var(--shell-control-hover);
+  color: var(--fg-1);
+}
+
+.shell-btn:active,
+.shell-seg-opt:active,
+.shell-chip:active,
+.shell-menu-option:active,
+.shell-switch-btn:active,
+.command-palette-item:active {
+  transform: scale(0.975);
+  background: var(--shell-control-pressed);
+}
+
+.shell-btn.is-active,
+.shell-chip.is-active,
+.shell-menu-option.is-active,
+.command-palette-item:hover,
+.command-palette-item[aria-selected="true"] {
+  background: var(--shell-control-selected);
+  color: var(--fg-1);
+  font-weight: var(--shell-type-weight-active);
+  box-shadow: var(--shell-control-selected-shadow);
+}
+
+.shell-seg {
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-radius-island);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.45),
+    inset 0 -10px 20px -16px rgba(15, 23, 42, 0.26);
+}
+
+:root.dark .shell-seg,
+:root.dark[data-theme] .shell-seg {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow:
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.12),
+    inset 0 -10px 20px -14px rgba(0, 0, 0, 0.6);
+}
+
+.shell-surface-island .shell-seg,
+.shell-top-right-island .shell-seg,
+.shell-mode-island .shell-seg {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.shell-seg-opt {
+  min-width: var(--shell-control-h);
+  min-height: var(--shell-control-h);
+  padding-inline: 0.9rem;
+}
+
+.shell-seg-opt.is-active {
+  color: var(--fg-1);
+  font-weight: var(--shell-type-weight-active);
+}
+
+.shell-seg-opt.is-active::before,
+.shell-switch::after {
+  background:
+    radial-gradient(120% 90% at 50% -18%, rgba(255, 255, 255, 0.86), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.28));
+}
+
+:root.dark .shell-seg-opt.is-active::before,
+:root.dark .shell-switch::after,
+:root.dark[data-theme] .shell-seg-opt.is-active::before,
+:root.dark[data-theme] .shell-switch::after {
+  background:
+    radial-gradient(120% 90% at 50% -18%, rgba(255, 255, 255, 0.22), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+}
+
+.shell-seg-opt.is-active::before {
+  box-shadow: var(--shell-control-selected-shadow);
+}
+
+.shell-map-title {
+  min-height: var(--shell-control-h);
+  padding-inline: 0.9rem 0.78rem;
+}
+
+.shell-map-title-label {
+  font-weight: var(--shell-type-weight-active);
+  letter-spacing: -0.01em;
+}
+
+.shell-search {
+  height: var(--shell-bar-h);
+}
+
+.shell-search-button {
+  gap: 0.62rem;
+  padding-inline: 0.82rem;
+}
+
+.shell-search-label {
+  font-weight: var(--shell-type-weight);
+  letter-spacing: -0.005em;
+}
+
+.shell-search-kbd {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow:
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.7),
+    inset 0 -6px 12px -10px rgba(15, 23, 42, 0.22);
+}
+
+:root.dark .shell-search-kbd,
+:root.dark[data-theme] .shell-search-kbd {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
+}
+
+.shell-edit-badge {
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+}
+
+.shell-switch {
+  width: 50px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.shell-switch::after {
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+}
+
+.shell-switch.is-on::after {
+  transform: translateX(20px);
+}
+
+.shell-switch-btn:active .shell-switch.is-on::after {
+  transform: translateX(14px);
+}
+
+.shell-mode-island .shell-seg-opt {
+  min-width: 150px;
+  min-height: var(--shell-control-h);
+  gap: 0.65rem;
+  padding-inline: 1.2rem;
+  font-size: var(--type-body);
+}
+
+.shell-utility-rail {
+  width: var(--shell-tools-w);
+  gap: var(--shell-gap-sm);
+}
+
+.shell-rail-cluster {
+  gap: var(--shell-gap-xs);
+  margin: 0;
+}
+
+.shell-zoom-readout {
+  min-height: 30px;
+  font-size: var(--type-caption-2);
+  font-weight: var(--shell-type-weight-active);
+}
+
+.shell-panel,
+.command-palette {
+  border-radius: var(--shell-radius-panel);
+}
+
+.shell-map-menu::after,
+.shell-control-group::after,
+.shell-search::after,
+.shell-utility-rail::after {
+  animation: none;
+}
+
+@media (max-width: 980px) {
+  .shell-search {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  :root,
+  :root[data-theme] {
+    --shell-edge: 12px;
+    --shell-chrome-h: 112px;
+    --shell-tools-w: var(--shell-bar-h);
+  }
+
+  .top-chrome {
+    gap: var(--shell-gap-md);
+    padding: 10px var(--shell-edge);
+  }
+
+  .shell-top-right-stack {
+    max-width: calc(100vw - 24px);
+    justify-content: center;
+    gap: var(--shell-gap-sm);
+    flex-wrap: wrap;
+  }
+
+  .shell-surface-island .shell-seg-opt {
+    padding-inline: 0.62rem;
+  }
+}
