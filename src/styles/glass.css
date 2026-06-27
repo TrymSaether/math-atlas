@@ -10,44 +10,44 @@
 
 :root,
 :root[data-theme] {
-  --glass-blur-thin: 18px;
-  --glass-blur-regular: 30px;
-  --glass-blur-thick: 38px;
-  --glass-saturate: 180%;
+  --glass-blur-thin: 20px;
+  --glass-blur-regular: 34px;
+  --glass-blur-thick: 42px;
+  --glass-saturate: 185%;
 
   /* Light Control Center style: gray translucent material, not white-on-white. */
-  --glass-fill-thin: color-mix(in srgb, #d8dbe0 50%, transparent);
-  --glass-fill-regular: color-mix(in srgb, #d4d7dc 68%, transparent);
-  --glass-fill-thick: color-mix(in srgb, #cfd3d8 78%, transparent);
+  --glass-fill-thin: color-mix(in srgb, #d0d3d8 76%, transparent);
+  --glass-fill-regular: color-mix(in srgb, #c8cbd0 82%, transparent);
+  --glass-fill-thick: color-mix(in srgb, #c3c7cc 88%, transparent);
 
-  --glass-fill-thin-solid: color-mix(in srgb, #e2e4e8 92%, var(--bg));
-  --glass-fill-regular-solid: color-mix(in srgb, #d8dbe0 94%, var(--bg));
-  --glass-fill-thick-solid: color-mix(in srgb, #d0d4d9 96%, var(--bg));
+  --glass-fill-thin-solid: color-mix(in srgb, #d7dadd 94%, var(--bg));
+  --glass-fill-regular-solid: color-mix(in srgb, #ccd0d4 96%, var(--bg));
+  --glass-fill-thick-solid: color-mix(in srgb, #c5c9ce 98%, var(--bg));
 
-  --glass-border: color-mix(in srgb, var(--fg-1) 18%, transparent);
-  --glass-highlight: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(15, 23, 42, 0.22);
+  --glass-highlight: rgba(255, 255, 255, 0.88);
   --glass-ring:
-    0 0 0 0.5px rgba(255, 255, 255, 0.95),
-    0 0 0 1px rgba(15, 23, 42, 0.12);
+    0 0 0 0.5px rgba(255, 255, 255, 0.98),
+    0 0 0 1px rgba(15, 23, 42, 0.16);
   --glass-shadow-1:
-    0 1px 2px rgba(15, 23, 42, 0.08),
-    0 8px 22px rgba(15, 23, 42, 0.13),
-    0 24px 60px rgba(15, 23, 42, 0.08);
+    0 1px 2px rgba(15, 23, 42, 0.1),
+    0 10px 28px rgba(15, 23, 42, 0.16),
+    0 32px 80px rgba(15, 23, 42, 0.1);
   --glass-shadow-2:
-    0 2px 4px rgba(15, 23, 42, 0.1),
-    0 14px 34px rgba(15, 23, 42, 0.16),
-    0 36px 80px rgba(15, 23, 42, 0.12);
+    0 2px 4px rgba(15, 23, 42, 0.12),
+    0 16px 40px rgba(15, 23, 42, 0.18),
+    0 42px 90px rgba(15, 23, 42, 0.13);
 
-  --glass-edge-light: rgba(255, 255, 255, 0.96);
-  --glass-edge-light-soft: rgba(255, 255, 255, 0.62);
-  --glass-edge-shadow: rgba(15, 23, 42, 0.34);
-  --glass-inner-glow: rgba(255, 255, 255, 0.18);
-  --glass-inner-shadow: rgba(15, 23, 42, 0.18);
-  --glass-sheen: rgba(255, 255, 255, 0.34);
+  --glass-edge-light: rgba(255, 255, 255, 0.98);
+  --glass-edge-light-soft: rgba(255, 255, 255, 0.72);
+  --glass-edge-shadow: rgba(15, 23, 42, 0.42);
+  --glass-inner-glow: rgba(255, 255, 255, 0.2);
+  --glass-inner-shadow: rgba(15, 23, 42, 0.28);
+  --glass-sheen: rgba(255, 255, 255, 0.28);
   --glass-sheen-fade: rgba(255, 255, 255, 0);
-  --glass-top-light: rgba(255, 255, 255, 0.32);
-  --glass-flow: rgba(255, 255, 255, 0.12);
-  --glass-spot: rgba(255, 255, 255, 0.34);
+  --glass-top-light: rgba(255, 255, 255, 0.28);
+  --glass-flow: rgba(255, 255, 255, 0.08);
+  --glass-spot: rgba(255, 255, 255, 0.28);
   --glass-spot-strength: 0%;
   --glass-x: 30%;
   --glass-y: 0%;
@@ -134,9 +134,9 @@
   box-shadow:
     inset 0 0 0 0.5px var(--glass-edge-light-soft),
     inset 0 1.2px 0.5px -0.3px var(--glass-edge-light),
-    inset 0 -1px 1px -0.5px var(--glass-edge-shadow),
-    inset 0 0 16px var(--glass-inner-glow),
-    inset 0 -14px 28px -16px var(--glass-inner-shadow);
+    inset 0 -1.2px 1.2px -0.5px var(--glass-edge-shadow),
+    inset 0 0 18px var(--glass-inner-glow),
+    inset 0 -22px 34px -18px var(--glass-inner-shadow);
   background:
     radial-gradient(130% 80% at 50% -22%, var(--glass-top-light) 0%, transparent 46%),
     linear-gradient(
@@ -174,7 +174,7 @@
 .glass-thin:hover::after,
 .glass-regular:hover::after,
 .glass-thick:hover::after {
-  --glass-spot-strength: 56%;
+  --glass-spot-strength: 42%;
 }
 
 .glass-thin {
