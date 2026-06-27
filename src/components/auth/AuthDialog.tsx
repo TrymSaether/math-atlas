@@ -2,7 +2,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { signIn, signInWithGoogle, signUp } from "../../lib/authClient";
-import { ShellButton } from "../shell/Controls";
+import { ShellButton } from "../primitives";
 
 type Mode = "signin" | "signup";
 

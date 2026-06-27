@@ -18,9 +18,8 @@ import { ConceptCard } from "./ConceptCard";
 import { ModeSwitch } from "./ModeSwitch";
 import { PathsPanel } from "./PathsPanel";
 import { EditInspector } from "./EditInspector";
-import { Glass } from "./Glass";
+import { Glass, ShellButton } from "../primitives";
 import { LiquidGlassFilters } from "./LiquidGlassFilters";
-import { ShellButton } from "./Controls";
 
 // The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
 // atlas's initial bundle stays light.

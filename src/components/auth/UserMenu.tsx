@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SignInIcon, SignOutIcon, UserIcon } from "@phosphor-icons/react";
 import { signOut, useSession } from "../../lib/authClient";
-import { Glass } from "../shell/Glass";
-import { ShellButton, ShellIconButton } from "../shell/Controls";
+import { Glass, ShellButton, ShellIconButton } from "../primitives";
 import { AuthDialog } from "./AuthDialog";
 
 /**

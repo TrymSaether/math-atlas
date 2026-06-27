@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { TrashIcon, LinkSimpleIcon, CheckIcon } from "@phosphor-icons/react";
 import { listCollaborators, addCollaborator, removeCollaborator, type Collaborator } from "../data/mapsApi";
 import { shareUrl } from "../hooks/useUrlSync";
-import { ShellButton } from "./shell/Controls";
+import { ShellButton } from "./primitives";
 
 /**
  * Manage collaborators on an owned map (Phase 4). Invite by email; collaborators

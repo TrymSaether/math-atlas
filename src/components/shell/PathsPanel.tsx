@@ -13,8 +13,7 @@ import { useRouteResult } from "../../lib/route";
 import { MathText } from "../../lib/katex";
 import { getDomainTone } from "../../lib/colors";
 import { cn } from "../../lib/utils";
-import { Glass } from "./Glass";
-import { ShellButton, ShellIconButton, ShellPanelHeader, ShellSegmented, ShellSwitch } from "./Controls";
+import { Glass, ShellButton, ShellIconButton, ShellPanelHeader, ShellSegmented, ShellSwitch } from "../primitives";
 
 function Slot({
   icon,

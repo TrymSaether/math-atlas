@@ -2,8 +2,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { PlusIcon, PencilSimpleIcon } from "@phosphor-icons/react";
 import { useStore } from "../../store";
 import { NodeEditorPanel } from "../authoring/NodeEditorPanel";
-import { Glass } from "./Glass";
-import { ShellButton } from "./Controls";
+import { Glass, ShellButton } from "../primitives";
 
 /**
  * Shell-native Edit Mode inspector. The authoring engine still lives in

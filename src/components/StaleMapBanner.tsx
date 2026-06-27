@@ -1,6 +1,6 @@
 import { useStore } from "../store";
-import { Glass } from "./shell/Glass";
-import { ShellButton } from "./shell/Controls";
+import { Glass } from "./primitives";
+import { ShellButton } from "./primitives";
 
 /**
  * Shown when the active map changed on the server (a collaborator saved, or a

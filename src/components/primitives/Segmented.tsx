@@ -1,65 +1,10 @@
-import {
-  useRef,
-  type ButtonHTMLAttributes,
-  type HTMLAttributes,
-  type KeyboardEvent,
-  type ReactNode,
-  type Ref,
-} from "react";
+import { useRef, type KeyboardEvent, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
-import { Glass, type GlassMaterial } from "./Glass";
 
-export interface ShellButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  active?: boolean;
-  primary?: boolean;
-  shape?: "default" | "pill" | "circle";
-  ref?: Ref<HTMLButtonElement>;
-}
-
-export function ShellButton({
-  active,
-  primary,
-  shape = "default",
-  className,
-  type = "button",
-  ...rest
-}: ShellButtonProps) {
-  return (
-    <button
-      type={type}
-      className={cn(
-        "shell-btn",
-        active && "is-active",
-        primary && "shell-btn-primary",
-        shape === "pill" && "shell-btn-pill",
-        shape === "circle" && "shell-btn-circle",
-        className,
-      )}
-      {...rest}
-    />
-  );
-}
-
-export function ShellIconButton({ className, shape = "circle", ...rest }: ShellButtonProps) {
-  return <ShellButton shape={shape} className={cn("shell-btn-icon", className)} {...rest} />;
-}
-
-export function GlassControlGroup({
-  children,
-  material = "regular",
-  className,
-  ...rest
-}: HTMLAttributes<HTMLDivElement> & {
-  children: ReactNode;
-  material?: GlassMaterial;
-}) {
-  return (
-    <Glass material={material} className={cn("shell-control-group", className)} {...rest}>
-      {children}
-    </Glass>
-  );
-}
-
+/**
+ * Roving-focus segmented control (tablist or button group). Owns keyboard
+ * navigation and ARIA wiring; geometry/theming come from `.shell-seg*`.
+ */
 export function ShellSegmented<T extends string>({
   label,
   value,
@@ -157,68 +102,5 @@ export function ShellSegmented<T extends string>({
         );
       })}
     </div>
-  );
-}
-export function ShellSwitch({
-  label,
-  on,
-  onToggle,
-  className,
-}: {
-  label: string;
-  on: boolean;
-  onToggle: () => void;
-  className?: string;
-}) {
-  return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={on}
-      onClick={onToggle}
-      className={cn("shell-switch-btn", className)}
-    >
-      <span className="font-medium">{label}</span>
-      <span className={cn("shell-switch", on && "is-on")} aria-hidden />
-    </button>
-  );
-}
-
-export interface ShellChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  active?: boolean;
-  dotColor?: string;
-  ref?: Ref<HTMLButtonElement>;
-}
-
-export function ShellChip({ active, dotColor, className, type = "button", children, ...rest }: ShellChipProps) {
-  const ariaPressed = rest["aria-pressed"] ?? active;
-
-  return (
-    <button
-      type={type}
-      aria-pressed={ariaPressed}
-      className={cn("shell-chip", active && "is-active", className)}
-      {...rest}
-    >
-      {dotColor && <span className="shell-chip-dot" style={{ background: dotColor }} aria-hidden />}
-      {children}
-    </button>
-  );
-}
-
-export function ShellPanelHeader({
-  title,
-  children,
-  className,
-  ...rest
-}: Omit<HTMLAttributes<HTMLElement>, "title"> & {
-  title: ReactNode;
-  children?: ReactNode;
-}) {
-  return (
-    <header className={cn("shell-panel-header", className)} {...rest}>
-      <span className="shell-panel-title">{title}</span>
-      {children && <div className="shell-panel-actions">{children}</div>}
-    </header>
   );
 }

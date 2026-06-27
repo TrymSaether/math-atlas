@@ -2,8 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { useReactFlow, useViewport } from "reactflow";
 import { PlusIcon, MinusIcon, CornersOutIcon, FunnelSimpleIcon } from "@phosphor-icons/react";
 import { usePopoverDismiss } from "../../hooks/usePopover";
-import { Glass } from "./Glass";
-import { ShellIconButton } from "./Controls";
+import { Glass, ShellIconButton } from "../primitives";
 import { LayersPanel } from "./LayersPanel";
 
 /**

@@ -1,6 +1,6 @@
 import { CompassIcon, PathIcon } from "@phosphor-icons/react";
 import { useStore, type AtlasMode } from "../../store";
-import { ShellSegmented, GlassControlGroup } from "./Controls";
+import { ShellSegmented, GlassControlGroup } from "../primitives";
 
 const MODES: { id: AtlasMode; label: string; Icon: typeof CompassIcon }[] = [
   { id: "explore", label: "Explore", Icon: CompassIcon },

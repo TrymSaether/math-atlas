@@ -12,8 +12,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BookmarkSimple, CaretDown, CornersOut, FolderSimple, Minus, Plus, X } from "@phosphor-icons/react";
-import { Glass } from "../shell/Glass";
-import { ShellIconButton } from "../shell/Controls";
+import { Glass, ShellIconButton } from "../primitives";
 import { cn } from "../../lib/utils";
 import { useSandbox } from "../../lib/workspace/store";
 import { WORKSPACES, WORKSPACE_IDS } from "../../lib/workspace/library";

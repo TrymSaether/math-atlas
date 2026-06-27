@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes, type MutableRefObject, type Ref } from "react";
+import { forwardRef, type HTMLAttributes, type MutableRefObject, type ReactNode, type Ref } from "react";
 import { useGlassPointer } from "../../hooks/useGlassPointer";
 import { cn } from "../../lib/utils";
 
@@ -40,3 +40,24 @@ export const Glass = forwardRef<HTMLDivElement, GlassProps>(function Glass(
   const glassRef = useGlassPointer<HTMLDivElement>();
   return <div ref={mergeRefs(glassRef, ref)} className={cn(MATERIAL_CLASS[material], className)} {...rest} />;
 });
+
+/**
+ * A horizontal cluster of controls sharing a single glass island — the top-bar
+ * control groups and the mode switch. Owns the island geometry (`.shell-control-group`)
+ * over the glass material.
+ */
+export function GlassControlGroup({
+  children,
+  material = "regular",
+  className,
+  ...rest
+}: HTMLAttributes<HTMLDivElement> & {
+  children: ReactNode;
+  material?: GlassMaterial;
+}) {
+  return (
+    <Glass material={material} className={cn("shell-control-group", className)} {...rest}>
+      {children}
+    </Glass>
+  );
+}

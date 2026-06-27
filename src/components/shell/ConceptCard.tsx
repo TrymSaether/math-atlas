@@ -17,8 +17,7 @@ import { useConceptView } from "../../lib/conceptView";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "../concept";
 import { shareUrl } from "../../hooks/useUrlSync";
 import { cn } from "../../lib/utils";
-import { Glass } from "./Glass";
-import { ShellIconButton, ShellPanelHeader } from "./Controls";
+import { Glass, ShellIconButton, ShellPanelHeader } from "../primitives";
 
 const USED_BY_INITIAL = 8;
 

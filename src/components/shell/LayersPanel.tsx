@@ -2,8 +2,15 @@ import { XIcon } from "@phosphor-icons/react";
 import { useStore } from "../../store";
 import { getDomainTone } from "../../lib/colors";
 import { KIND_LABEL, type NodeKind } from "../../types";
-import { Glass } from "./Glass";
-import { ShellButton, ShellChip, ShellIconButton, ShellPanelHeader, ShellSegmented, ShellSwitch } from "./Controls";
+import {
+  Glass,
+  ShellButton,
+  ShellChip,
+  ShellIconButton,
+  ShellPanelHeader,
+  ShellSegmented,
+  ShellSwitch,
+} from "../primitives";
 import { useEffect, useRef } from "react";
 
 /**

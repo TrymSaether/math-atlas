@@ -18,8 +18,7 @@ import { schemeFor, siblingOf } from "../../lib/themes";
 import { authEnabled } from "../../lib/authClient";
 import { cn } from "../../lib/utils";
 import { usePopoverDismiss } from "../../hooks/usePopover";
-import { Glass } from "./Glass";
-import { GlassControlGroup, ShellButton, ShellIconButton, ShellSegmented } from "./Controls";
+import { Glass, GlassControlGroup, ShellButton, ShellIconButton, ShellSegmented } from "../primitives";
 import { UserMenu } from "../auth/UserMenu";
 import { LogoMark } from "../Logo";
 
