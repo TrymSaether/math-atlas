@@ -65,3 +65,173 @@ a:focus-visible,
 .font-mono {
   font-family: var(--font-mono);
 }
+
+/* ========================================================================
+   Shell visual normalization overrides
+   ------------------------------------------------------------------------
+   Imported after shell.css. Keeps the shell component structure stable while
+   normalizing floating-map chrome geometry through explicit spacing/radius
+   tokens instead of local magic numbers such as +10px, -6px, 5px, and 0.1rem.
+   ======================================================================== */
+
+:root,
+:root[data-theme] {
+  --shell-edge: 14px;
+  --shell-gap-xs: 2px;
+  --shell-gap-sm: 4px;
+  --shell-gap-md: 8px;
+  --shell-gap-lg: 12px;
+
+  --shell-control-h: 40px;
+  --shell-island-pad: 4px;
+  --shell-bar-h: calc(var(--shell-control-h) + 2 * var(--shell-island-pad));
+  --shell-tools-w: var(--shell-bar-h);
+  --shell-tools-gap: 10px;
+
+  --shell-icon-size: 17px;
+  --shell-icon-size-sm: 14px;
+
+  --shell-control-radius: 12px;
+  --shell-control-pill: 999px;
+  --shell-island-radius: 999px;
+  --shell-cluster-radius: 18px;
+  --shell-panel-radius: 22px;
+
+  --shell-control-hover: color-mix(in srgb, var(--fg-1) 4%, transparent);
+  --shell-control-pressed: color-mix(in srgb, var(--fg-1) 8%, transparent);
+  --shell-control-selected-shadow:
+    0 1px 1px color-mix(in srgb, #000 5%, transparent),
+    0 5px 14px color-mix(in srgb, #000 8%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 58%, transparent),
+    inset 0 -6px 14px -12px color-mix(in srgb, var(--fg-1) 14%, transparent);
+}
+
+:root.dark,
+:root.dark[data-theme] {
+  --shell-control-hover: color-mix(in srgb, var(--fg-1) 6%, transparent);
+  --shell-control-pressed: color-mix(in srgb, var(--fg-1) 10%, transparent);
+  --shell-control-selected-shadow:
+    0 1px 2px color-mix(in srgb, #000 34%, transparent),
+    0 6px 16px color-mix(in srgb, #000 32%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 12%, transparent),
+    inset 0 -6px 14px -12px color-mix(in srgb, #000 60%, transparent);
+}
+
+.top-chrome {
+  gap: var(--shell-gap-lg);
+  padding: 12px var(--shell-edge);
+}
+
+.shell-map-menu,
+.shell-control-group {
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-island-radius);
+}
+
+.shell-top-right-island {
+  gap: var(--shell-gap-sm);
+}
+
+.shell-island-divider {
+  margin: 0 var(--shell-gap-sm);
+}
+
+.shell-edit-controls,
+.shell-panel-actions,
+.shell-panel-pager {
+  gap: var(--shell-gap-xs);
+}
+
+.shell-icon,
+.shell-icon-sm {
+  display: block;
+  flex: none;
+}
+
+.shell-btn {
+  gap: var(--shell-gap-sm);
+}
+
+.shell-btn-pill,
+.shell-btn-circle,
+.shell-btn-icon,
+.shell-seg-opt,
+.shell-chip,
+.shell-menu-option,
+.shell-switch-btn,
+.command-palette-item {
+  border-radius: var(--shell-control-pill);
+}
+
+.shell-btn-icon {
+  width: var(--shell-control-h);
+  height: var(--shell-control-h);
+  min-width: var(--shell-control-h);
+  min-height: var(--shell-control-h);
+}
+
+.shell-edit-badge {
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+}
+
+.shell-seg {
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-island-radius);
+}
+
+.shell-seg-opt {
+  min-width: var(--shell-control-h);
+  min-height: var(--shell-control-h);
+}
+
+.shell-top-right-island .shell-seg,
+.shell-mode-island .shell-seg {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.shell-mode-island {
+  min-height: calc(var(--shell-control-h) + 2 * var(--shell-island-pad));
+  padding: var(--shell-island-pad);
+}
+
+.shell-mode-island .shell-seg-opt {
+  min-height: var(--shell-control-h);
+}
+
+.shell-utility-rail {
+  width: var(--shell-tools-w);
+  gap: var(--shell-gap-sm);
+  padding: var(--shell-island-pad);
+  border-radius: var(--shell-island-radius);
+}
+
+.shell-rail-cluster {
+  gap: var(--shell-gap-xs);
+  margin: 0;
+}
+
+.shell-map-menu::after,
+.shell-control-group::after,
+.shell-search::after,
+.shell-utility-rail::after {
+  animation: none;
+}
+
+@media (max-width: 720px) {
+  :root,
+  :root[data-theme] {
+    --shell-edge: 12px;
+    --shell-tools-w: var(--shell-bar-h);
+  }
+
+  .top-chrome {
+    gap: var(--shell-gap-md);
+    padding: 10px var(--shell-edge);
+  }
+}
