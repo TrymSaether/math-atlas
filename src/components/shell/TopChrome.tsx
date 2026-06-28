@@ -18,7 +18,7 @@ import { schemeFor, siblingOf } from "../../lib/themes";
 import { authEnabled } from "../../lib/authClient";
 import { cn } from "../../lib/utils";
 import { usePopoverDismiss } from "../../hooks/usePopover";
-import { Glass, GlassControlGroup, ShellButton, ShellIconButton, ShellSegmented } from "../primitives";
+import { ConfirmDialog, Glass, GlassControlGroup, ShellButton, ShellIconButton, ShellSegmented } from "../primitives";
 import { UserMenu } from "../auth/UserMenu";
 import { LogoMark } from "../Logo";
 
@@ -200,6 +200,7 @@ function EditControls() {
   const edited = useStore((s) => s.editedMaps.has(s.mapId));
   const openNodeEditor = useStore((s) => s.openNodeEditor);
   const revertMap = useStore((s) => s.revertMap);
+  const [revertOpen, setRevertOpen] = useState(false);
 
   if (surface !== "atlas" || mode === "paths" || !map) return null;
 
@@ -208,10 +209,7 @@ function EditControls() {
     toggleEditMode();
   };
 
-  const revert = () => {
-    if (!window.confirm(`Revert local edits to ${mapId}?`)) return;
-    void revertMap();
-  };
+  const mapTitle = map.data.label || mapId;
 
   return (
     <div className="shell-edit-controls">
@@ -236,12 +234,29 @@ function EditControls() {
           </ShellIconButton>
 
           {edited && (
-            <ShellIconButton aria-label="Revert edits" title="Revert edits" onClick={revert}>
+            <ShellIconButton
+              aria-label="Revert edits"
+              title="Revert edits"
+              aria-haspopup="dialog"
+              onClick={() => setRevertOpen(true)}
+            >
               <ArrowCounterClockwiseIcon className="shell-icon" />
             </ShellIconButton>
           )}
         </>
       )}
+      <ConfirmDialog
+        open={revertOpen}
+        onOpenChange={setRevertOpen}
+        title="Revert local edits?"
+        description={<>This restores “{mapTitle}” to its last saved version. Your local changes can’t be recovered.</>}
+        confirmLabel="Revert"
+        destructive
+        icon={<ArrowCounterClockwiseIcon weight="regular" />}
+        onConfirm={async () => {
+          await revertMap();
+        }}
+      />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { cn } from "../../lib/utils";
 export interface ShellButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
   primary?: boolean;
+  destructive?: boolean;
   shape?: "default" | "pill" | "circle";
   ref?: Ref<HTMLButtonElement>;
 }
@@ -16,6 +17,7 @@ export interface ShellButtonProps extends ButtonHTMLAttributes<HTMLButtonElement
 export function ShellButton({
   active,
   primary,
+  destructive,
   shape = "default",
   className,
   type = "button",
@@ -28,6 +30,7 @@ export function ShellButton({
         "shell-btn",
         active && "is-active",
         primary && "shell-btn-primary",
+        destructive && "shell-btn-destructive",
         shape === "pill" && "shell-btn-pill",
         shape === "circle" && "shell-btn-circle",
         className,

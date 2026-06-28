@@ -405,6 +405,20 @@
   color: var(--shell-primary-fg);
 }
 
+.shell-btn-destructive {
+  background: var(--danger);
+  color: #fff;
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--danger) 30%, transparent),
+    0 5px 14px color-mix(in srgb, var(--danger) 20%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 35%, transparent);
+}
+
+.shell-btn-destructive:hover {
+  background: color-mix(in srgb, var(--danger) 90%, #000);
+  color: #fff;
+}
+
 .shell-field-control {
   min-height: 40px;
   background: color-mix(in srgb, var(--surface) 74%, transparent);
@@ -726,6 +740,102 @@
   height: 1px;
   margin: 0.85rem 1rem 0;
   background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--fg-1) 10%, transparent), transparent);
+}
+
+/* --- Alerts and dialogs ------------------------------------------------ */
+.shell-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: color-mix(in srgb, var(--bg-deep) 48%, transparent);
+  -webkit-backdrop-filter: blur(3px) saturate(120%);
+  backdrop-filter: blur(3px) saturate(120%);
+}
+
+.shell-alert-position {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: calc(var(--z-modal) + 1);
+  width: min(390px, calc(100vw - 32px));
+  translate: -50% -50%;
+  outline: none;
+}
+
+.shell-alert-dialog {
+  overflow: hidden;
+  border-radius: var(--shell-panel-radius);
+  padding: 1.25rem;
+}
+
+.shell-alert-copy {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: start;
+  gap: 0.875rem;
+}
+
+.shell-alert-icon {
+  display: flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--danger) 12%, var(--surface));
+  color: var(--danger);
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--danger) 24%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 52%, transparent);
+}
+
+.shell-alert-icon > svg {
+  width: 22px;
+  height: 22px;
+}
+
+.shell-alert-title {
+  color: var(--fg-1);
+  font-size: var(--type-headline);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+.shell-alert-description {
+  margin-top: 0.35rem;
+  color: var(--fg-2);
+  font-size: var(--type-footnote);
+  line-height: var(--leading-normal);
+}
+
+.shell-alert-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--shell-gap-md);
+  margin-top: 1.25rem;
+}
+
+.shell-alert-action {
+  min-height: var(--shell-control-h);
+  padding-inline: 1rem;
+  background: color-mix(in srgb, var(--surface) 64%, transparent);
+  box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 10%, transparent);
+}
+
+.shell-alert-action.shell-btn-primary {
+  box-shadow: var(--shell-control-selected-shadow);
+}
+
+.shell-alert-action:not(.shell-btn-primary, .shell-btn-destructive):hover {
+  background: color-mix(in srgb, var(--fg-1) 6%, var(--surface));
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .shell-dialog-overlay {
+    background: color-mix(in srgb, var(--bg-deep) 72%, transparent);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 .shell-account-menu {
