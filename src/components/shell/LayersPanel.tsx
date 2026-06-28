@@ -107,7 +107,6 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
             value={view}
             onChange={setView}
             className="w-full"
-            selectionRole="button"
             options={[
               { id: "dependency", label: "Dependency" },
               { id: "cluster", label: "Cluster" },
@@ -131,7 +130,6 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
               value={String(focusDepth)}
               onChange={(d) => setFocusDepth(Number(d))}
               className="w-full"
-              selectionRole="button"
               options={[
                 { id: "1", label: "1 hop" },
                 { id: "2", label: "2 hops" },

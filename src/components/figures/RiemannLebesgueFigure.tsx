@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 
 import { linspace } from "../../lib/figures/plot";
 import { MathText } from "../../lib/katex";
+import { ShellSlider } from "../primitives";
 import { DIA, FigureCaption, FigureFrame, FunctionCurve, Line, Polygon, STROKE, UI, type Vec2 } from "./FigureFrame";
 
 function testFn(x: number): number {
@@ -125,16 +126,15 @@ export default function RiemannLebesgueFigure() {
         </div>
 
         <div className="mt-1.5 flex items-center gap-3">
-          <input
-            type="range"
+          <ShellSlider
             min={1}
             max={20}
             step={1}
             value={n}
             aria-label="Frequency n"
             onChange={(e) => setN(Number(e.target.value))}
-            className="h-1 flex-1 cursor-pointer appearance-none rounded-full"
-            style={{ accentColor: DIA.accent, background: UI.sunken }}
+            accent={DIA.accent}
+            className="flex-1"
           />
           <span className="min-w-14 shrink-0" />
         </div>

@@ -3,8 +3,12 @@ import { cn } from "../../lib/utils";
 
 export interface ShellButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
+  /** @deprecated Prefer `variant="preferred"`. */
   primary?: boolean;
+  /** @deprecated Prefer `variant="destructive"`. */
   destructive?: boolean;
+  variant?: "borderless" | "standard" | "preferred" | "tinted" | "toggle" | "destructive";
+  size?: "mini" | "small" | "regular" | "large";
   shape?: "default" | "pill" | "circle";
   ref?: Ref<HTMLButtonElement>;
 }
@@ -18,19 +22,23 @@ export function ShellButton({
   active,
   primary,
   destructive,
+  variant = "borderless",
+  size = "regular",
   shape = "default",
   className,
   type = "button",
   ...rest
 }: ShellButtonProps) {
+  const resolvedVariant = destructive ? "destructive" : primary ? "preferred" : variant;
+
   return (
     <button
       type={type}
       className={cn(
         "shell-btn",
         active && "is-active",
-        primary && "shell-btn-primary",
-        destructive && "shell-btn-destructive",
+        `shell-btn-${resolvedVariant}`,
+        `shell-btn-size-${size}`,
         shape === "pill" && "shell-btn-pill",
         shape === "circle" && "shell-btn-circle",
         className,
