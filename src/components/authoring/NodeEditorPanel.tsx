@@ -214,7 +214,7 @@ function NodePicker({
       />
       {open && matches.length > 0 && (
         <ul
-          className="panel-scrollbar absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-3)"
+          className="panel-scrollbar absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-e4)"
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           {matches.map((o) => (
@@ -981,7 +981,7 @@ export function NodeEditorPanel({
           type="button"
           onClick={save}
           className="authoring-action authoring-action-primary ml-auto inline-flex min-h-9 items-center gap-1 rounded-full px-3 text-caption-1"
-          style={justSaved ? { background: "var(--green)", color: "var(--fg-on-color)" } : undefined}
+          style={justSaved ? { background: "var(--success)", color: "var(--fg-on-color)" } : undefined}
         >
           {justSaved ? (
             <>

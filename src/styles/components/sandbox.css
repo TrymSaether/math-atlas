@@ -10,13 +10,11 @@
   --sandbox-row: transparent;
   --sandbox-row-hover: color-mix(in srgb, var(--fg-1) 5%, transparent);
   --sandbox-row-selected: color-mix(in srgb, var(--accent-soft) 42%, transparent);
-  --sandbox-row-selected-border: color-mix(in srgb, var(--accent-border) 70%, transparent);
-  --sandbox-field: color-mix(in srgb, var(--surface) 58%, transparent);
   --sandbox-field-focus: color-mix(in srgb, var(--accent-soft) 28%, var(--surface) 72%);
   --sandbox-field-border: color-mix(in srgb, var(--border) 54%, transparent);
   --sandbox-control: color-mix(in srgb, var(--fg-1) 6%, transparent);
   --sandbox-control-hover: color-mix(in srgb, var(--fg-1) 10%, transparent);
-  --sandbox-danger-soft: color-mix(in srgb, var(--red) 11%, transparent);
+  --sandbox-danger-soft: color-mix(in srgb, var(--danger) 11%, transparent);
 
   /* Plane ink: subtle grid, readable axes. Derived from theme tokens so every
      scheme retunes automatically. */
@@ -35,7 +33,7 @@
   background: var(--sandbox-rail);
   border: 1px solid var(--sandbox-rail-border);
   box-shadow:
-    var(--chrome-shadow),
+    var(--shadow-e3),
     inset 0 1px 0 var(--chrome-highlight);
   backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur));
   -webkit-backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur));
@@ -93,7 +91,7 @@
   border: 1px solid var(--chrome-border);
   border-radius: var(--radius-xl);
   box-shadow:
-    var(--chrome-shadow-popover),
+    var(--shadow-e5),
     inset 0 1px 0 var(--chrome-highlight);
   color: var(--fg-4);
   backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur-popover));
@@ -316,7 +314,7 @@
   max-width: 100%;
   border-radius: var(--radius-xs);
   background: var(--sandbox-danger-soft);
-  color: var(--red);
+  color: var(--danger);
   padding: 2px 6px;
 }
 

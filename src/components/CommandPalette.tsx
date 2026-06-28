@@ -51,12 +51,12 @@ export function CommandPalette() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-60 backdrop-blur-[2px]"
+                className="fixed inset-0 z-(--z-modal) backdrop-blur-[2px]"
                 style={{ background: "color-mix(in srgb, var(--bg-deep) 55%, transparent)" }}
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
-              <div className="fixed left-1/2 top-1/2 z-60 w-155 max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
+              <div className="fixed left-1/2 top-1/2 z-(--z-modal) w-155 max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
                 <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
                 <Dialog.Description className="sr-only">Jump to a concept or switch fields.</Dialog.Description>
                 <motion.div

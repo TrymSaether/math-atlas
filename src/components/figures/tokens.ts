@@ -7,8 +7,8 @@
  * should never spell out a raw `var(--…)` or a magic weight/radius inline; pull
  * from here instead.
  *
- * The CSS custom properties are always defined for every theme in `index.css`,
- * so no literal hex fallbacks are needed.
+ * The CSS custom properties are defined by the design-system token layers, so
+ * no literal hex fallbacks are needed.
  *
  * Color semantics (kept stable across the whole figure family):
  *   accent   — the primary object: the function under study, the partial sum,

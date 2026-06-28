@@ -8,7 +8,7 @@ export function Background() {
   if (!showGrid) return null;
   return (
     <div
-      className={`pointer-events-none fixed inset-0 -z-10 ${schemeFor(theme) === "dark" ? "atlas-grid" : "atlas-dots"}`}
+      className={`pointer-events-none fixed inset-0 z-(--z-background) ${schemeFor(theme) === "dark" ? "atlas-grid" : "atlas-dots"}`}
     />
   );
 }

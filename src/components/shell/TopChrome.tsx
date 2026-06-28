@@ -130,7 +130,7 @@ function MapMenu() {
       {open && (
         <Glass
           material="thick"
-          className="shell-panel absolute left-0 top-[calc(100%+8px)] z-30 w-70 p-1.5"
+          className="shell-panel absolute left-0 top-[calc(100%+8px)] z-(--z-popover) w-70 p-1.5"
           role="listbox"
           aria-label="Active map"
           onKeyDown={onListKeyDown}

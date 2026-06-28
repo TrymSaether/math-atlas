@@ -1,5 +1,5 @@
 @theme {
-  /* Apple system typography — see index.css for the rationale. One sans (SF Pro)
+  /* Apple system typography. One sans (SF Pro)
      for UI and reading text; SF Mono for numerals/code; STIX Two for math. */
   --font-sans:
     -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Inter", "Helvetica Neue", "Segoe UI", Roboto,
@@ -9,7 +9,7 @@
 
   /* Apple HIG iOS text-style ladder — the only type vocabulary (`text-body`,
      `text-headline`, `text-caption-1`, …) with the HIG leading for each step.
-     Sizes come from the rem ladder in index.css (Dynamic-Type-tracking). */
+     Sizes come from the rem ladder in foundation.css (Dynamic-Type-tracking). */
   --text-large-title: var(--type-large-title);
   --text-large-title--line-height: 1.21;
   --text-title-1: var(--type-title-1);
@@ -37,6 +37,11 @@
   --tracking-label-wide: 0.14em;
   --tracking-label-tight: 0.06em;
 
+  --font-weight-normal: var(--weight-regular);
+  --font-weight-medium: var(--weight-medium);
+  --font-weight-semibold: var(--weight-semibold);
+  --font-weight-bold: var(--weight-bold);
+
   --color-bg: var(--bg);
   --color-bg-deep: var(--bg-deep);
   --color-surface: var(--surface);
@@ -55,12 +60,10 @@
   --color-fg-4: var(--fg-4);
   --color-fg-on-color: var(--fg-on-color);
   --color-fg-disabled: var(--fg-disabled);
-  --color-fg-inverse: var(--fg-inverse);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-border-muted: var(--border-muted);
   --color-border-focus: var(--border-focus);
-  --color-hairline: var(--hairline);
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
   --color-danger-border: var(--danger-border);
@@ -79,63 +82,4 @@
   --color-focus-ring: var(--focus-ring);
   --color-link: var(--link);
   --color-link-hover: var(--link-hover);
-  --color-palette-1: var(--palette-1);
-  --color-palette-2: var(--palette-2);
-  --color-palette-3: var(--palette-3);
-  --color-palette-4: var(--palette-4);
-  --color-palette-5: var(--palette-5);
-  --color-palette-6: var(--palette-6);
-  --color-palette-7: var(--palette-7);
-  --color-palette-8: var(--palette-8);
-  --color-palette-9: var(--palette-9);
-  --color-palette-10: var(--palette-10);
-  --color-palette-11: var(--palette-11);
-  --color-palette-12: var(--palette-12);
-  --color-palette-13: var(--palette-13);
-  --color-palette-14: var(--palette-14);
-  --color-palette-15: var(--palette-15);
-  --color-palette-16: var(--palette-16);
-  --color-palette-17: var(--palette-17);
-  --color-palette-18: var(--palette-18);
-  --color-palette-19: var(--palette-19);
-  --color-palette-20: var(--palette-20);
-  --color-palette-1-soft: var(--palette-1-soft);
-  --color-palette-2-soft: var(--palette-2-soft);
-  --color-palette-3-soft: var(--palette-3-soft);
-  --color-palette-4-soft: var(--palette-4-soft);
-  --color-palette-5-soft: var(--palette-5-soft);
-  --color-palette-6-soft: var(--palette-6-soft);
-  --color-palette-7-soft: var(--palette-7-soft);
-  --color-palette-8-soft: var(--palette-8-soft);
-  --color-palette-9-soft: var(--palette-9-soft);
-  --color-palette-10-soft: var(--palette-10-soft);
-  --color-palette-11-soft: var(--palette-11-soft);
-  --color-palette-12-soft: var(--palette-12-soft);
-  --color-palette-1-border: var(--palette-1-border);
-  --color-palette-2-border: var(--palette-2-border);
-  --color-palette-3-border: var(--palette-3-border);
-  --color-palette-4-border: var(--palette-4-border);
-  --color-palette-5-border: var(--palette-5-border);
-  --color-palette-6-border: var(--palette-6-border);
-  --color-palette-7-border: var(--palette-7-border);
-  --color-palette-8-border: var(--palette-8-border);
-  --color-palette-9-border: var(--palette-9-border);
-  --color-palette-10-border: var(--palette-10-border);
-  --color-palette-11-border: var(--palette-11-border);
-  --color-palette-12-border: var(--palette-12-border);
-  --color-plot-1: var(--plot-1);
-  --color-plot-2: var(--plot-2);
-  --color-plot-3: var(--plot-3);
-  --color-plot-4: var(--plot-4);
-  --color-plot-5: var(--plot-5);
-  --color-plot-6: var(--plot-6);
-  --color-plot-7: var(--plot-7);
-  --color-plot-8: var(--plot-8);
-  --color-plot-9: var(--plot-9);
-  --color-plot-10: var(--plot-10);
-  --color-plot-11: var(--plot-11);
-  --color-plot-12: var(--plot-12);
-  --color-plot-axis: var(--plot-axis);
-  --color-plot-grid: var(--plot-grid);
-  --color-plot-band: var(--plot-band);
 }

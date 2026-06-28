@@ -37,7 +37,7 @@
   line-height: 1.35;
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--surface) 74%, transparent),
-    0 1px 2px rgba(15, 23, 42, 0.025);
+    0 1px 2px rgb(var(--elevation-ink) / 0.025);
   transition:
     background-color var(--dur-micro) var(--ease-standard),
     border-color var(--dur-micro) var(--ease-standard),
@@ -61,7 +61,7 @@
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--surface) 76%, transparent),
     0 0 0 1px var(--border-focus),
-    var(--shadow-2);
+    var(--shadow-e2);
 }
 
 textarea.authoring-control {
@@ -89,7 +89,7 @@ textarea.authoring-control {
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--surface) 76%, transparent),
     0 0 0 1px var(--border-focus),
-    var(--shadow-2);
+    var(--shadow-e2);
 }
 
 .authoring-select-popover {
@@ -97,7 +97,7 @@ textarea.authoring-control {
   left: 0;
   right: 0;
   top: calc(100% + 6px);
-  z-index: 60;
+  z-index: var(--z-modal);
   max-height: min(300px, 42vh);
   overflow-y: auto;
   border: 1px solid var(--glass-border);

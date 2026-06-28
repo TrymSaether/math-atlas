@@ -115,7 +115,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
         // Hover affordance: a quiet lift + soft elevation, nothing more. Selected
         // nodes own their own shadow below, so the hover shadow only applies at rest.
         "hover:-translate-y-px",
-        !isSelected && !routeEndpoint && "hover:shadow-[var(--shadow-2)]",
+        !isSelected && !routeEndpoint && "hover:shadow-[var(--shadow-e2)]",
         dim && "opacity-30",
         isMinor && !accented && !dim && "opacity-[0.82]",
       )}
@@ -136,7 +136,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Data>) {
         boxShadow: routeEndpoint
           ? "0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent)"
           : isSelected
-            ? "var(--shadow-2)"
+            ? "var(--shadow-e2)"
             : undefined,
       }}
     >

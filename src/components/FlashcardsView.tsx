@@ -289,7 +289,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                   <button
                     onClick={flip}
                     className="flex h-11 items-center justify-center gap-2 rounded-sm border border-transparent bg-accent px-5 text-body font-semibold text-fg-on-color transition-transform active:scale-[0.98]"
-                    style={{ boxShadow: "var(--shadow-2)" }}
+                    style={{ boxShadow: "var(--shadow-e2)" }}
                   >
                     <span>Show answer</span>
                     <Kbd onAccent>Space</Kbd>
@@ -312,7 +312,7 @@ function CardShell({ children, tone, footer }: { children: React.ReactNode; tone
   return (
     <div
       className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface"
-      style={{ boxShadow: "var(--shadow-2)" }}
+      style={{ boxShadow: "var(--shadow-e2)" }}
     >
       <span aria-hidden className="h-1 w-full shrink-0" style={{ background: tone }} />
       <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto">{children}</div>
@@ -391,7 +391,7 @@ function SummaryCard({
   return (
     <div
       className="flex flex-1 flex-col items-center justify-center gap-6 rounded-2xl border border-border bg-surface px-8 py-12 text-center"
-      style={{ boxShadow: "var(--shadow-2)" }}
+      style={{ boxShadow: "var(--shadow-e2)" }}
     >
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-accent-soft text-accent">
         <SparkleIcon className="h-7 w-7" />
@@ -408,7 +408,7 @@ function SummaryCard({
           <button
             onClick={onReview}
             className="flex h-11 items-center gap-2 rounded-sm bg-accent px-6 text-body font-semibold text-fg-on-color transition-transform active:scale-[0.98]"
-            style={{ boxShadow: "var(--shadow-2)" }}
+            style={{ boxShadow: "var(--shadow-e2)" }}
           >
             Review {againCount} missed
           </button>

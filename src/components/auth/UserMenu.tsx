@@ -52,7 +52,7 @@ export function UserMenu() {
       {menuOpen && (
         <Glass
           material="thick"
-          className="shell-panel shell-account-menu absolute right-0 top-[calc(100%+8px)] z-50 w-[min(240px,calc(100vw-24px))]"
+          className="shell-panel shell-account-menu absolute right-0 top-[calc(100%+8px)] z-(--z-banner) w-[min(240px,calc(100vw-24px))]"
         >
           <div className="shell-account-summary">
             <UserIcon className="shell-icon shrink-0 text-fg-3" />

@@ -1,10 +1,9 @@
 /* ========================================================================
    Foundation — scheme-agnostic structural scales
    ------------------------------------------------------------------------
-   Single owner for the non-color foundations that everything else composes
-   against: stacking order (z-index) and elevation (shadow). Color roles live
-   in tokens.css; theme hues/surfaces live in index.css; geometry lives in
-   shell.css. Imported before glass/shell so both can consume these scales.
+   Single owner for scheme-agnostic scales: radius, motion, typography,
+   stacking order, and elevation. Theme values live in theme.css and derived
+   color roles live in tokens.css.
 
    Light/dark is a FIRST-CLASS concern here: shadows are parameterized by a
    single `--elevation-ink` channel (+ alpha ramp) so a theme retunes its whole
@@ -12,13 +11,26 @@
    ======================================================================== */
 
 :root {
+  /* ---- Geometry and motion ------------------------------------------ */
+  --radius-xs: 4px;
+  --radius-sm: 7px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-pill: 999px;
+
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-micro: 120ms;
+  --dur-std: 220ms;
+  --hit-target: 44px;
+
   /* ---- Stacking order -------------------------------------------------
-     One ordered scale. Components reference these tokens (or the matching
-     Tailwind `z-*` utilities mapped in tailwind-theme.css) instead of raw
+     One ordered scale. Components reference these tokens directly (including
+     through Tailwind's CSS-variable shorthand) instead of raw app-level
      integers, so the layering story is legible in one place. */
   --z-below: -1; /* component-internal under-layers (glass rim, grid wash) */
   --z-background: -10; /* fixed page background behind the canvas */
-  --z-canvas: 0; /* graph canvas / content plane */
   --z-shell: 20; /* floating shell: chrome, dock, utility rail, islands */
   --z-shell-raised: 24; /* raised shell affordances within the shell layer */
   --z-popover: 30; /* menus & popovers anchored to shell controls */
@@ -26,29 +38,20 @@
   --z-modal: 60; /* command palette, dialogs, modal scrims */
 
   /* ---- Elevation ------------------------------------------------------
-     One tonal shadow ramp, e0 (flat) → e5 (modal). `--elevation-ink` is the
+     One tonal shadow ramp, e1 (low) → e5 (modal). `--elevation-ink` is the
      shadow color channel (space-separated RGB for rgb()/alpha syntax); the
-     dark theme overrides it below. Every product surface picks an e-step;
-     the legacy aliases at the bottom keep older references resolving. */
+     dark theme overrides it below. Every product surface picks an e-step. */
   --elevation-ink: 15 23 42; /* slate-900 — light-theme shadow color */
 
-  --shadow-e0: none;
   --shadow-e1: 0 1px 2px rgb(var(--elevation-ink) / 0.04);
   --shadow-e2: 0 4px 12px rgb(var(--elevation-ink) / 0.06), 0 1px 2px rgb(var(--elevation-ink) / 0.04);
   --shadow-e3: 0 8px 22px rgb(var(--elevation-ink) / 0.08), 0 1px 3px rgb(var(--elevation-ink) / 0.05);
   --shadow-e4: 0 12px 32px rgb(var(--elevation-ink) / 0.1), 0 2px 6px rgb(var(--elevation-ink) / 0.05);
   --shadow-e5: 0 18px 44px rgb(var(--elevation-ink) / 0.13), 0 4px 10px rgb(var(--elevation-ink) / 0.07);
-
-  /* Legacy aliases → elevation scale. Single source of truth; existing
-     `var(--shadow-N)` / `var(--chrome-shadow*)` call sites keep working. */
-  --shadow-1: var(--shadow-e1);
-  --shadow-2: var(--shadow-e2);
-  --shadow-3: var(--shadow-e4);
-  --chrome-shadow: var(--shadow-e3);
-  --chrome-shadow-popover: var(--shadow-e5);
 }
 
-:root.dark {
+:root.dark,
+:root[data-theme="chalkboard"] {
   /* Dark elevation: black ink, deeper alphas read the canvas behind the
      translucent chrome. One override retunes the whole ramp. */
   --elevation-ink: 0 0 0;
@@ -95,12 +98,16 @@
   --weight-semibold: 650;
   --weight-bold: 760;
 
-  --measure-compact: 42ch;
-  --measure-reading: 68ch;
-  --measure-wide: 82ch;
-
   /* Tracking. label/wide/tight are also emitted by the Tailwind bridge; kicker
      and code are foundation-only (no Tailwind utility needed). */
   --tracking-kicker: 0.16em;
   --tracking-code: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root,
+  :root[data-theme] {
+    --dur-micro: 1ms;
+    --dur-std: 1ms;
+  }
 }

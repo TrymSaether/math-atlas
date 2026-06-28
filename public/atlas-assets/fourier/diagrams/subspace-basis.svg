@@ -8,7 +8,7 @@
                   <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)" />
             </marker>
             <marker id="sb-arr-blue" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-                  <path d="M0,0 L7,3 L0,6 Z" fill="var(--blue,#2563EB)" />
+                  <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2563EB)" />
             </marker>
       </defs>
 
@@ -33,17 +33,17 @@
       <path d="M110,228 L118,222 L112,214 L104,221 Z" fill="none" stroke="var(--dia-mut,#8c8274)" stroke-width="1.2" />
 
       <!-- Sₙf: projection foot (separate from origin, upper-right of plane) -->
-      <circle cx="248" cy="178" r="5.5" fill="var(--green,#16A34A)" />
+      <circle cx="248" cy="178" r="5.5" fill="var(--dia-ok,#16A34A)" />
 
       <!-- f above the plane -->
-      <circle cx="248" cy="65" r="5.5" fill="var(--blue,#2563EB)" />
+      <circle cx="248" cy="65" r="5.5" fill="var(--dia-acc,#2563EB)" />
 
       <!-- projection line f → Sₙf -->
-      <line x1="248" y1="75" x2="248" y2="169" stroke="var(--blue,#2563EB)" stroke-width="2" stroke-dasharray="4,3"
+      <line x1="248" y1="75" x2="248" y2="169" stroke="var(--dia-acc,#2563EB)" stroke-width="2" stroke-dasharray="4,3"
             marker-end="url(#sb-arr-blue)" />
 
       <!-- right angle marker at Sₙf -->
-      <path d="M248,178 L248,164 L262,161 L262,175 Z" fill="none" stroke="var(--green,#16A34A)" stroke-width="1.4" />
+      <path d="M248,178 L248,164 L262,161 L262,175 Z" fill="none" stroke="var(--dia-ok,#16A34A)" stroke-width="1.4" />
 
       <!-- labels -->
       <text x="258" y="64" font-size="14" font-style="italic" fill="var(--dia-ink,#27221d)">f</text>

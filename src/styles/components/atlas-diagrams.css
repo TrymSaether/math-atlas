@@ -8,7 +8,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-3);
+  box-shadow: var(--shadow-e4);
   color: var(--fg-1);
 }
 
@@ -57,7 +57,7 @@
   border-radius: var(--radius-lg);
   color: var(--dia-ink);
   overflow: hidden;
-  box-shadow: var(--shadow-1);
+  box-shadow: var(--shadow-e1);
 }
 
 .themed-diagram svg {

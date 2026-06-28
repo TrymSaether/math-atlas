@@ -25,7 +25,7 @@ export interface Provenance {
 
 /**
  * Confidence/verification state of a row, rendered as a glyph (★ ✓ ≅ ○).
- * Mirrors the `--fact-*` design tokens already defined in index.css.
+ * Mirrors the fact-category design tokens exposed by the design system.
  */
 export type FactStatus = "computed" | "recognized" | "user" | "pending";
 

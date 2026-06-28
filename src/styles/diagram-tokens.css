@@ -1,0 +1,34 @@
+/* ========================================================================
+   Diagram token contract
+   ------------------------------------------------------------------------
+   Public SVG assets and interactive figures share this small semantic API.
+   Keep asset-facing --dia-* names stable; derive every value from app roles.
+   ======================================================================== */
+
+:root,
+:root[data-theme] {
+  --dia-paper: color-mix(in srgb, var(--surface) 92%, var(--bg));
+  --dia-space: color-mix(in srgb, var(--surface) 94%, var(--bg));
+  --dia-fill: color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --dia-fill2: color-mix(in srgb, var(--palette-2) 11%, var(--surface));
+  --dia-domain: var(--dia-fill);
+  --dia-open: color-mix(in srgb, var(--accent) 18%, var(--surface));
+  --dia-int: var(--dia-open);
+  --dia-set: var(--dia-fill);
+
+  --dia-boundary: var(--danger);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--success);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--palette-2);
+  --dia-acc3: var(--palette-4);
+  --dia-mut: var(--fg-3);
+
+  --dia-acc-fill: color-mix(in srgb, var(--dia-acc) 18%, transparent);
+  --dia-acc2-fill: color-mix(in srgb, var(--dia-acc2) 18%, transparent);
+  --dia-acc3-fill: color-mix(in srgb, var(--dia-acc3) 10%, var(--surface));
+  --dia-boundary-fill: color-mix(in srgb, var(--dia-boundary) 16%, transparent);
+  --dia-muted-fill: color-mix(in srgb, var(--fg-3) 16%, var(--surface));
+}

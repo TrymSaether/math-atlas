@@ -1,10 +1,9 @@
 /**
  * Math Atlas domain palette + domain->tone resolution.
  *
- * Base hues live in CSS variables and all visible tones are derived from them,
- * so every theme retunes the same 20-color palette without duplicating tint and
- * border tokens. Authored `palette` keys win; collisions and missing keys fall
- * through the shuffled palette order.
+ * Base hues live in `--domain-*` CSS variables and all visible tones are
+ * derived at the point of use. This keeps one token per hue while every theme
+ * retunes the same 20-color palette.
  */
 
 import type { GraphDomain } from "../types";
@@ -27,15 +26,16 @@ export interface DomainTone {
 export const DOMAIN_KEYS = DOMAIN_PALETTE_KEYS;
 
 function makeTone(key: DomainKey): DomainTone {
+  const color = `var(--domain-${key})`;
   return {
     key,
-    color: `var(--${key})`,
-    tint: `var(--${key}-50)`,
-    border: `var(--${key}-200)`,
+    color,
+    tint: `color-mix(in srgb, ${color} 11%, var(--surface))`,
+    border: `color-mix(in srgb, ${color} 34%, var(--surface))`,
     // Deepen the hue toward the page ink so it stays legible on the pale tint in
     // light themes and lifts off dark surfaces in dark themes — no per-theme
     // token needed because --fg-1 already flips with the scheme.
-    text: `color-mix(in srgb, var(--${key}) 78%, var(--fg-1))`,
+    text: `color-mix(in srgb, ${color} 78%, var(--fg-1))`,
   };
 }
 

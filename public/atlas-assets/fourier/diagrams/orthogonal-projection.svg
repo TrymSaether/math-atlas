@@ -2,10 +2,10 @@
       <title>Orthogonal projection: f − Sₙf is perpendicular to every vector in Vₙ</title>
       <defs>
             <marker id="op-arr-blue" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-                  <path d="M0,0 L7,3 L0,6 Z" fill="var(--blue,#2563EB)" />
+                  <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2563EB)" />
             </marker>
             <marker id="op-arr-gold" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-                  <path d="M0,0 L7,3 L0,6 Z" fill="var(--gold,#EAB308)" />
+                  <path d="M0,0 L7,3 L0,6 Z" fill="var(--plot-warning,#EAB308)" />
             </marker>
             <marker id="op-arr-acc" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
                   <path d="M0,0 L7,3 L0,6 Z" fill="var(--dia-acc,#2457c5)" />
@@ -25,11 +25,11 @@
       <path d="M80,156 L180,205" stroke="var(--dia-line,#d8d0c2)" stroke-width="0.8" opacity="0.45" />
 
       <!-- projection vector: f → Sₙf (blue, perpendicular to plane) -->
-      <line x1="172" y1="72" x2="172" y2="186" stroke="var(--blue,#2563EB)" stroke-width="2.2"
+      <line x1="172" y1="72" x2="172" y2="186" stroke="var(--dia-acc,#2563EB)" stroke-width="2.2"
             marker-end="url(#op-arr-blue)" />
 
       <!-- in-plane vector: Sₙf → p (gold) -->
-      <line x1="172" y1="195" x2="251" y2="178" stroke="var(--gold,#EAB308)" stroke-width="2"
+      <line x1="172" y1="195" x2="251" y2="178" stroke="var(--plot-warning,#EAB308)" stroke-width="2"
             marker-end="url(#op-arr-gold)" />
 
       <!-- hypotenuse: f → p (dashed, muted) -->
@@ -37,11 +37,11 @@
             marker-end="url(#op-arr-acc)" opacity="0.75" />
 
       <!-- right angle marker at Sₙf (172, 195) -->
-      <path d="M172,195 L172,181 L186,178 L186,192 Z" fill="none" stroke="var(--green,#16A34A)" stroke-width="1.6" />
+      <path d="M172,195 L172,181 L186,178 L186,192 Z" fill="none" stroke="var(--dia-ok,#16A34A)" stroke-width="1.6" />
 
       <!-- dots -->
-      <circle cx="172" cy="62" r="5.5" fill="var(--blue,#2563EB)" />
-      <circle cx="172" cy="195" r="5.5" fill="var(--green,#16A34A)" />
+      <circle cx="172" cy="62" r="5.5" fill="var(--dia-acc,#2563EB)" />
+      <circle cx="172" cy="195" r="5.5" fill="var(--dia-ok,#16A34A)" />
       <circle cx="258" cy="178" r="5.5" fill="var(--dia-acc,#2457c5)" />
 
       <!-- labels -->

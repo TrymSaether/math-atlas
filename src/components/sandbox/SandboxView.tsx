@@ -107,7 +107,7 @@ export function SandboxView() {
       </main>
 
       {/* Floating expression panel */}
-      <aside className="sandbox-sidebar pointer-events-auto absolute bottom-3 left-3 top-[68px] z-20 flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-lg sm:left-4 sm:w-[340px]">
+      <aside className="sandbox-sidebar pointer-events-auto absolute bottom-3 left-3 top-[68px] z-(--z-shell) flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-lg sm:left-4 sm:w-[340px]">
         <div className="sandbox-sidebar-header flex items-center gap-1 px-2 py-2">
           <WorkspaceMenu />
         </div>
@@ -167,7 +167,7 @@ function WorkspaceMenu() {
         />
       </button>
       {open && (
-        <div className="sandbox-workspace-popover absolute left-0 top-[52px] z-30 w-[280px] overflow-hidden p-1.5">
+        <div className="sandbox-workspace-popover absolute left-0 top-[52px] z-(--z-popover) w-[280px] overflow-hidden p-1.5">
           <div className="px-2.5 pb-1 pt-1.5 text-caption-2 font-semibold uppercase tracking-label-wide">Examples</div>
           {WORKSPACE_IDS.map((id) => {
             const active = id === ws.id;
