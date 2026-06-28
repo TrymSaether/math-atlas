@@ -34,9 +34,13 @@ token or a shadow outside these files, that's the smell the consolidation remove
   stacking story stays legible.
 - **Radius** — `--radius-xs…2xl` + `--radius-pill` (index.css). Shell radii alias
   these; don't introduce off-scale px radii.
-- **Control geometry** — `--shell-control-h`, `--shell-icon-size`,
-  `--shell-island-pad`, `--shell-gap-*` (shell.css). Every island/control derives
-  its size from these.
+- **Materials** — `ultraThin / thin / regular / thick / ultraThick`. Menu bars
+  use ultra-thin, docks and navigation use regular, focused cards use thick,
+  and blocking dialogs use ultra-thick. Every level has translucent and solid
+  accessibility fallbacks.
+- **Control geometry** — shared controls expose macOS size variants rather than
+  one-off dimensions: buttons use `mini / small / regular / large`; segmented
+  controls use `small / regular / large`; sliders use `small / regular`.
 
 ## Light / dark
 
@@ -50,7 +54,8 @@ shared `:root.dark` rules handle the scheme — don't copy scheme overrides.
 
 Use a primitive from `src/components/primitives` (`ShellButton`,
 `ShellIconButton`, `ShellSegmented`, `ShellSwitch`, `ShellChip`,
-`ShellPanelHeader`, `Glass`, `GlassControlGroup`). If a new variant is needed, add
-it to the primitive + its `.shell-*` rule — not as a one-off `className` at the
-call site. The interactive figures keep their own `figures/SegmentedControl`
-(KaTeX-labelled, figure token vocabulary) on purpose; it is not the shell control.
+`ShellSlider`, `ShellPanelHeader`, `Glass`, `GlassControlGroup`). Buttons support
+`borderless / standard / preferred / tinted / toggle / destructive`; select the
+semantic variant instead of composing fills at the call site. Figure sliders and
+KaTeX-labelled segmented controls wrap the same primitives, so focus, sizing,
+track rendering, and selected states stay consistent across the product.

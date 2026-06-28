@@ -7,14 +7,14 @@
      the prior `base.css` "normalization overrides" block has been folded in
      here so geometry is defined once, not patched by import order. */
   --shell-edge: 14px;
-  --shell-chrome-h: 60px;
+  --shell-chrome-h: 50px;
   --shell-dock-top: calc(var(--shell-chrome-h) + var(--shell-edge));
 
   /* Island padding + control height drive every derived dimension below. */
   --shell-island-pad: 4px;
-  --shell-control-h: 40px;
+  --shell-control-h: 34px;
   --shell-bar-h: calc(var(--shell-control-h) + 2 * var(--shell-island-pad));
-  --shell-tools-w: var(--shell-bar-h);
+  --shell-tools-w: 44px;
   --shell-tools-gap: 10px;
   --shell-search-w: clamp(280px, 34vw, 520px);
 
@@ -27,38 +27,56 @@
   --shell-icon-size: 17px;
   --shell-icon-size-sm: 14px;
 
-  --shell-control-radius: 12px;
+  --shell-control-radius: 10px;
   --shell-control-pill: var(--radius-pill);
-  --shell-island-radius: var(--radius-pill);
-  --shell-cluster-radius: 18px;
-  --shell-panel-radius: 22px;
+  --shell-island-radius: 14px;
+  --shell-cluster-radius: 16px;
+  --shell-panel-radius: 20px;
+
+  /* macOS system colors stay independent from authored map colors. */
+  --macos-blue: #007aff;
+  --macos-blue-hover: #006ee6;
+  --macos-blue-pressed: #0062cc;
+  --macos-green: #34c759;
+  --macos-red: #ff3b30;
+  --macos-control-fill: color-mix(in srgb, var(--surface) 68%, transparent);
+  --macos-control-border: color-mix(in srgb, var(--fg-1) 12%, transparent);
+  --macos-separator: color-mix(in srgb, var(--fg-1) 16%, transparent);
 
   --shell-control-hover: color-mix(in srgb, var(--fg-1) 4%, transparent);
   --shell-control-pressed: color-mix(in srgb, var(--fg-1) 8%, transparent);
-  --shell-control-selected: color-mix(in srgb, var(--surface) 94%, var(--fg-1) 6%);
-  --shell-control-selected-border: color-mix(in srgb, var(--fg-1) 9%, transparent);
+  --shell-control-selected: var(--macos-blue);
+  --shell-control-selected-border: color-mix(in srgb, var(--macos-blue) 72%, #fff);
   --shell-control-selected-shadow:
     0 1px 1px rgb(var(--elevation-ink) / 0.05), 0 5px 14px rgb(var(--elevation-ink) / 0.08),
     inset 0 1px 0 color-mix(in srgb, var(--surface) 58%, #fff),
     inset 0 -6px 14px -12px color-mix(in srgb, var(--fg-1) 14%, transparent);
   --shell-control-disabled: color-mix(in srgb, var(--fg-3) 45%, transparent);
-  --shell-focus-ring: color-mix(in srgb, var(--fg-1) 34%, transparent);
-  --shell-primary-bg: color-mix(in srgb, var(--fg-1) 90%, var(--surface));
-  --shell-primary-fg: var(--fg-on-color);
-  --shell-toggle-on: color-mix(in srgb, var(--fg-1) 84%, var(--surface));
+  --shell-focus-ring: color-mix(in srgb, var(--macos-blue) 58%, transparent);
+  --shell-primary-bg: var(--macos-blue);
+  --shell-primary-fg: #fff;
+  --shell-toggle-on: var(--macos-green);
 }
 
 :root.dark {
+  --macos-blue: #0a84ff;
+  --macos-blue-hover: #2994ff;
+  --macos-blue-pressed: #0071e3;
+  --macos-green: #30d158;
+  --macos-red: #ff453a;
+  --macos-control-fill: color-mix(in srgb, var(--surface) 58%, transparent);
+  --macos-control-border: color-mix(in srgb, var(--fg-1) 18%, transparent);
+  --macos-separator: color-mix(in srgb, var(--fg-1) 20%, transparent);
   --shell-control-hover: color-mix(in srgb, var(--fg-1) 6%, transparent);
   --shell-control-pressed: color-mix(in srgb, var(--fg-1) 10%, transparent);
-  --shell-control-selected: color-mix(in srgb, var(--surface) 76%, var(--fg-1) 14%);
+  --shell-control-selected: var(--macos-blue);
   --shell-control-selected-border: color-mix(in srgb, var(--fg-1) 18%, transparent);
   --shell-control-selected-shadow:
     0 1px 2px rgb(var(--elevation-ink) / 0.34), 0 6px 16px rgb(var(--elevation-ink) / 0.32),
     inset 0 1px 0 color-mix(in srgb, var(--surface) 12%, #fff), inset 0 -6px 14px -12px rgb(var(--elevation-ink) / 0.6);
-  --shell-focus-ring: color-mix(in srgb, var(--fg-1) 42%, transparent);
-  --shell-primary-bg: color-mix(in srgb, var(--fg-1) 86%, var(--surface));
-  --shell-toggle-on: color-mix(in srgb, var(--fg-1) 78%, var(--surface));
+  --shell-focus-ring: color-mix(in srgb, var(--macos-blue) 66%, transparent);
+  --shell-primary-bg: var(--macos-blue);
+  --shell-toggle-on: var(--macos-green);
 }
 
 .shell-layer {
@@ -106,10 +124,16 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, var(--shell-search-w)) minmax(0, 1fr);
   grid-template-areas: "map search right";
-  align-items: start;
+  height: var(--shell-chrome-h);
+  align-items: center;
   gap: var(--shell-gap-lg);
-  padding: 12px var(--shell-edge);
-  pointer-events: none;
+  padding: 5px 10px;
+  border-width: 0 0 1px;
+  border-radius: 0 0 14px 14px;
+  pointer-events: auto;
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #fff 32%, transparent),
+    0 8px 28px rgb(var(--elevation-ink) / 0.08);
 }
 
 .top-chrome-map,
@@ -138,7 +162,7 @@
 .shell-map-menu,
 .shell-control-group {
   display: inline-flex;
-  min-height: var(--shell-bar-h);
+  min-height: 38px;
   align-items: center;
   gap: var(--shell-gap-sm);
   border-radius: var(--shell-island-radius);
@@ -147,6 +171,7 @@
 
 .shell-map-menu {
   max-width: min(320px, 42vw);
+  padding: 0;
 }
 
 .shell-map-mark {
@@ -156,7 +181,7 @@
 .shell-map-title {
   min-width: 0;
   max-width: 240px;
-  min-height: var(--shell-control-h);
+  min-height: 32px;
   padding: 0 0.75rem 0 0.7rem;
 }
 
@@ -187,14 +212,19 @@
 
 .shell-search {
   width: 100%;
-  height: var(--shell-bar-h);
-  border-radius: var(--shell-island-radius);
+  height: 36px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--surface) 50%, transparent);
   color: var(--fg-3);
   font-size: var(--type-footnote);
+  box-shadow:
+    inset 0 0 0 0.5px var(--macos-control-border),
+    inset 0 1px 0 color-mix(in srgb, #fff 38%, transparent);
   transition: color var(--dur-micro) var(--ease-standard);
 }
 
 .shell-search:hover {
+  background: color-mix(in srgb, var(--surface) 64%, transparent);
   color: var(--fg-2);
 }
 
@@ -227,19 +257,15 @@
   padding: 0.18rem 0.32rem;
 }
 
-.shell-top-right-island {
-  max-width: 100%;
-  gap: var(--shell-gap-sm);
-}
-
 .shell-top-right-stack {
   display: inline-flex;
   max-width: 100%;
   align-items: center;
-  gap: var(--shell-gap-md);
+  gap: var(--shell-gap-xs);
+  min-height: 38px;
+  padding: 2px;
 }
 
-.shell-surface-island,
 .shell-edit-island,
 .shell-global-island {
   gap: var(--shell-gap-sm);
@@ -250,23 +276,16 @@
 .shell-edit-island,
 .shell-global-island {
   gap: var(--shell-gap-xs);
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
 }
 
-.shell-island-divider {
-  display: none;
+.shell-menu-divider {
   width: 1px;
-  height: 30px;
-  margin: 0 var(--shell-gap-sm);
-  flex: none;
-  border-radius: var(--radius-pill);
-  background: linear-gradient(
-    180deg,
-    transparent,
-    color-mix(in srgb, var(--fg-1) 10%, transparent) 22%,
-    color-mix(in srgb, var(--fg-1) 16%, transparent) 50%,
-    color-mix(in srgb, var(--fg-1) 10%, transparent) 78%,
-    transparent
-  );
+  height: 20px;
+  margin: 0 4px;
+  background: var(--macos-separator);
 }
 
 .shell-edit-controls {
@@ -322,14 +341,39 @@
 }
 
 .shell-btn {
+  --button-h: var(--shell-control-h);
   display: inline-flex;
+  min-height: var(--button-h);
   align-items: center;
   justify-content: center;
   gap: var(--shell-gap-sm);
   border-radius: var(--shell-control-radius);
+  padding-inline: 0.75rem;
   font-size: var(--type-footnote);
   font-weight: 590;
   line-height: 1;
+}
+
+.shell-btn-size-mini {
+  --button-h: 24px;
+  padding-inline: 0.5rem;
+  font-size: var(--type-caption-2);
+}
+
+.shell-btn-size-small {
+  --button-h: 28px;
+  padding-inline: 0.625rem;
+  font-size: var(--type-caption-1);
+}
+
+.shell-btn-size-regular {
+  --button-h: 34px;
+}
+
+.shell-btn-size-large {
+  --button-h: 40px;
+  padding-inline: 0.95rem;
+  font-size: var(--type-subhead);
 }
 
 .shell-btn-pill,
@@ -343,10 +387,10 @@
 }
 
 .shell-btn-icon {
-  width: var(--shell-control-h);
-  height: var(--shell-control-h);
-  min-width: var(--shell-control-h);
-  min-height: var(--shell-control-h);
+  width: var(--button-h);
+  height: var(--button-h);
+  min-width: var(--button-h);
+  min-height: var(--button-h);
   padding: 0;
 }
 
@@ -373,6 +417,7 @@
   color: var(--shell-control-disabled);
   background: transparent;
   box-shadow: none;
+  opacity: 0.55;
   pointer-events: none;
 }
 
@@ -388,34 +433,74 @@
 .shell-chip.is-active,
 .shell-menu-option.is-active {
   background: var(--shell-control-selected);
-  color: var(--fg-1);
+  color: #fff;
   box-shadow:
     inset 0 0 0 0.5px var(--shell-control-selected-border),
     var(--shell-control-selected-shadow);
 }
 
+.shell-btn-standard {
+  background: var(--macos-control-fill);
+  color: var(--fg-1);
+  box-shadow:
+    inset 0 0 0 0.5px var(--macos-control-border),
+    inset 0 1px 0 color-mix(in srgb, #fff 42%, transparent),
+    0 1px 2px rgb(var(--elevation-ink) / 0.08);
+}
+
+.shell-btn-preferred,
 .shell-btn-primary {
   background: var(--shell-primary-bg);
   color: var(--shell-primary-fg);
-  box-shadow: var(--shell-control-selected-shadow);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 26%, transparent),
+    0 1px 2px color-mix(in srgb, var(--macos-blue) 30%, transparent),
+    0 4px 12px color-mix(in srgb, var(--macos-blue) 18%, transparent);
 }
 
+.shell-btn-preferred:hover,
 .shell-btn-primary:hover {
-  background: var(--shell-primary-bg);
+  background: var(--macos-blue-hover);
   color: var(--shell-primary-fg);
 }
 
+.shell-btn-preferred:active,
+.shell-btn-primary:active {
+  background: var(--macos-blue-pressed);
+}
+
+.shell-btn-tinted {
+  background: color-mix(in srgb, var(--macos-blue) 13%, transparent);
+  color: var(--macos-blue);
+  box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--macos-blue) 20%, transparent);
+}
+
+.shell-btn-tinted:hover {
+  background: color-mix(in srgb, var(--macos-blue) 19%, transparent);
+  color: var(--macos-blue);
+}
+
+.shell-btn-borderless,
+.shell-btn-toggle {
+  background: transparent;
+}
+
+.shell-btn-toggle.is-active {
+  background: var(--macos-blue);
+  color: #fff;
+}
+
 .shell-btn-destructive {
-  background: var(--danger);
+  background: var(--macos-red);
   color: #fff;
   box-shadow:
-    0 1px 2px color-mix(in srgb, var(--danger) 30%, transparent),
-    0 5px 14px color-mix(in srgb, var(--danger) 20%, transparent),
+    0 1px 2px color-mix(in srgb, var(--macos-red) 30%, transparent),
+    0 5px 14px color-mix(in srgb, var(--macos-red) 20%, transparent),
     inset 0 1px 0 color-mix(in srgb, #fff 35%, transparent);
 }
 
 .shell-btn-destructive:hover {
-  background: color-mix(in srgb, var(--danger) 90%, #000);
+  background: color-mix(in srgb, var(--macos-red) 90%, #000);
   color: #fff;
 }
 
@@ -448,38 +533,57 @@
 
 .shell-seg {
   display: inline-flex;
-  gap: var(--shell-gap-sm);
-  padding: var(--shell-island-pad);
-  border-radius: var(--shell-island-radius);
-  background: color-mix(in srgb, var(--surface) 36%, transparent);
+  gap: 1px;
+  padding: 3px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--fg-1) 7%, var(--surface) 30%);
   box-shadow:
-    inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 7%, transparent),
-    inset 0 1px 0 color-mix(in srgb, #fff 30%, transparent);
+    inset 0 0 0 0.5px var(--macos-control-border),
+    inset 0 1px 1px color-mix(in srgb, var(--fg-1) 7%, transparent),
+    0 1px 0 color-mix(in srgb, #fff 24%, transparent);
 }
 
 .shell-seg-opt {
   position: relative;
   display: inline-flex;
-  min-width: var(--shell-control-h);
-  min-height: var(--shell-control-h);
+  min-width: 32px;
+  min-height: 28px;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
   padding: 0 0.8rem;
-  border-radius: var(--radius-pill);
+  border-radius: 8px;
   font-size: var(--type-footnote);
   font-weight: 590;
   white-space: nowrap;
 }
 
-.shell-seg-opt.is-active {
-  z-index: 1;
-  background: transparent;
-  color: var(--fg-1);
-  box-shadow: none;
+.shell-seg-small .shell-seg-opt {
+  min-height: 24px;
+  padding-inline: 0.6rem;
+  font-size: var(--type-caption-2);
 }
 
-.shell-seg-opt.is-active::before,
+.shell-seg-regular .shell-seg-opt {
+  min-height: 28px;
+}
+
+.shell-seg-large .shell-seg-opt {
+  min-height: 36px;
+  padding-inline: 1rem;
+  font-size: var(--type-footnote);
+}
+
+.shell-seg-opt.is-active {
+  z-index: 1;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--macos-blue) 88%, #fff), var(--macos-blue));
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 30%, transparent),
+    inset 0 0 0 0.5px color-mix(in srgb, var(--macos-blue) 64%, #fff),
+    0 1px 2px color-mix(in srgb, var(--macos-blue) 28%, transparent);
+}
+
 .shell-switch::after {
   background:
     radial-gradient(120% 80% at 50% -18%, rgba(255, 255, 255, 0.74), transparent 58%),
@@ -488,31 +592,6 @@
       color-mix(in srgb, var(--surface) 96%, #fff 4%),
       color-mix(in srgb, var(--surface) 82%, transparent)
     );
-}
-
-.shell-seg-opt.is-active::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: var(--z-below);
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow:
-    0 1px 1px color-mix(in srgb, #000 5%, transparent),
-    0 8px 18px color-mix(in srgb, #000 11%, transparent),
-    inset 0 1px 0 color-mix(in srgb, #fff 68%, transparent);
-}
-
-.shell-surface-nav .shell-seg-opt {
-  padding-inline: 0.8rem;
-}
-
-.shell-surface-island .shell-seg,
-.shell-top-right-island .shell-seg,
-.shell-mode-island .shell-seg {
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
 }
 
 .shell-seg.w-full .shell-seg-opt,
@@ -822,11 +901,28 @@
   box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 10%, transparent);
 }
 
+.shell-alert-action.shell-btn-preferred,
 .shell-alert-action.shell-btn-primary {
+  background: var(--macos-blue);
+  color: #fff;
   box-shadow: var(--shell-control-selected-shadow);
 }
 
-.shell-alert-action:not(.shell-btn-primary, .shell-btn-destructive):hover {
+.shell-alert-action.shell-btn-destructive {
+  background: var(--macos-red);
+  color: #fff;
+}
+
+.shell-alert-action.shell-btn-preferred:hover,
+.shell-alert-action.shell-btn-primary:hover {
+  background: var(--macos-blue-hover);
+}
+
+.shell-alert-action.shell-btn-destructive:hover {
+  background: color-mix(in srgb, var(--macos-red) 90%, #000);
+}
+
+.shell-alert-action:not(.shell-btn-preferred, .shell-btn-primary, .shell-btn-destructive):hover {
   background: color-mix(in srgb, var(--fg-1) 6%, var(--surface));
 }
 
@@ -862,38 +958,190 @@
   font-weight: var(--weight-semibold);
 }
 
+/* --- Sliders ----------------------------------------------------------- */
+.shell-slider {
+  --slider-accent: var(--macos-blue);
+  --slider-progress: 50%;
+  display: block;
+  width: 100%;
+  height: 20px;
+  cursor: pointer;
+  appearance: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+
+.shell-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    to right,
+    var(--slider-accent) 0%,
+    var(--slider-accent) var(--slider-progress),
+    color-mix(in srgb, var(--fg-1) 14%, transparent) var(--slider-progress),
+    color-mix(in srgb, var(--fg-1) 14%, transparent) 100%
+  );
+  box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 8%, transparent);
+}
+
+.shell-slider::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  margin-top: -7px;
+  appearance: none;
+  border: 0.5px solid color-mix(in srgb, var(--fg-1) 16%, transparent);
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, #fff, color-mix(in srgb, #fff 90%, var(--surface)));
+  box-shadow:
+    0 1px 2px rgb(var(--elevation-ink) / 0.18),
+    0 2px 5px rgb(var(--elevation-ink) / 0.15),
+    inset 0 1px 0 #fff;
+  transition:
+    scale var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.shell-slider:hover::-webkit-slider-thumb {
+  scale: 1.06;
+}
+
+.shell-slider:active::-webkit-slider-thumb {
+  scale: 1.12;
+}
+
+.shell-slider-small {
+  height: 16px;
+}
+
+.shell-slider-small::-webkit-slider-runnable-track {
+  height: 3px;
+}
+
+.shell-slider-small::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  margin-top: -5.5px;
+}
+
+.shell-slider::-moz-range-track {
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--fg-1) 14%, transparent);
+}
+
+.shell-slider::-moz-range-progress {
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--slider-accent);
+}
+
+.shell-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0.5px solid color-mix(in srgb, var(--fg-1) 16%, transparent);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  box-shadow: 0 2px 5px rgb(var(--elevation-ink) / 0.18);
+}
+
+.shell-slider:focus-visible {
+  outline: none;
+}
+
+.shell-slider:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 1px 2px rgb(var(--elevation-ink) / 0.18),
+    0 0 0 4px color-mix(in srgb, var(--slider-accent) 24%, transparent);
+}
+
+.shell-slider:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
 /* --- Bottom dock and utility rail -------------------------------------- */
 .shell-mode-switch {
   position: absolute;
   bottom: var(--shell-edge);
   left: 50%;
   z-index: var(--z-shell);
+  max-width: calc(100vw - 2 * var(--shell-edge));
   transform: translateX(-50%);
 }
 
-.shell-mode-island {
-  min-height: calc(var(--shell-control-h) + 2 * var(--shell-island-pad));
-  padding: var(--shell-island-pad);
+.shell-app-dock {
+  display: inline-flex;
+  min-height: 52px;
+  max-width: 100%;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 18px;
+  box-shadow:
+    0 12px 36px rgb(var(--elevation-ink) / 0.18),
+    0 2px 8px rgb(var(--elevation-ink) / 0.12),
+    inset 0 1px 0 color-mix(in srgb, #fff 54%, transparent);
 }
 
-.shell-mode-island .shell-seg {
-  gap: 4px;
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
+.shell-dock-surfaces {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
-.shell-mode-island .shell-seg-opt {
-  min-width: 144px;
-  min-height: var(--shell-control-h);
-  gap: 0.65rem;
-  padding-inline: 1.15rem;
-  font-size: var(--type-body);
+.shell-dock-item {
+  position: relative;
+  border-radius: 12px;
+  transition:
+    transform var(--dur-micro) var(--ease-standard),
+    background-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
 }
 
-.shell-mode-island .shell-seg-opt:not(.is-active):hover {
-  background: transparent;
-  color: var(--fg-1);
+.shell-dock-item:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+.shell-dock-item.is-active {
+  background: color-mix(in srgb, var(--macos-blue) 18%, var(--surface));
+  color: var(--macos-blue);
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--macos-blue) 24%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 44%, transparent);
+}
+
+.shell-dock-item.is-active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  translate: -50% 0;
+  border-radius: var(--radius-pill);
+  background: var(--fg-2);
+}
+
+.shell-dock-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.shell-dock-divider {
+  width: 1px;
+  height: 34px;
+  margin-inline: 2px;
+  flex: none;
+  background: var(--macos-separator);
+}
+
+.shell-dock-modes {
+  flex: none;
+}
+
+.shell-dock-modes .shell-seg-opt {
+  min-width: 104px;
+  gap: 0.55rem;
 }
 
 .shell-tools {
@@ -933,7 +1181,9 @@
 .shell-map-menu::after,
 .shell-control-group::after,
 .shell-search::after,
-.shell-utility-rail::after {
+.shell-utility-rail::after,
+.top-chrome::after,
+.shell-app-dock::after {
   animation: none;
 }
 
@@ -1000,17 +1250,15 @@
 @media (max-width: 720px) {
   :root {
     --shell-edge: 12px;
-    --shell-chrome-h: 112px;
+    --shell-chrome-h: 50px;
     --shell-tools-w: 48px;
   }
 
   .top-chrome {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "map"
-      "right";
-    gap: var(--shell-gap-md);
-    padding: 10px var(--shell-edge);
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "map right";
+    gap: var(--shell-gap-sm);
+    padding: 5px 8px;
   }
 
   .top-chrome-map {
@@ -1018,29 +1266,52 @@
   }
 
   .top-chrome-right {
-    justify-self: center;
+    justify-self: end;
   }
 
   .shell-map-menu {
     max-width: none;
   }
 
-  .shell-top-right-island {
-    max-width: calc(100vw - 24px);
-  }
-
   .shell-top-right-stack {
-    max-width: calc(100vw - 24px);
-    justify-content: center;
-    gap: var(--shell-gap-sm);
-    flex-wrap: wrap;
+    max-width: 48vw;
+    justify-content: flex-end;
   }
 
-  .shell-top-right-island .shell-seg-opt {
-    padding-inline: 0.62rem;
+  .shell-map-title {
+    max-width: 34vw;
   }
 
   .atlas-minimap-card {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .shell-dock-modes .shell-seg-opt {
+    min-width: 42px;
+    padding-inline: 0.65rem;
+  }
+
+  .shell-dock-modes .shell-seg-opt > span {
+    display: none;
+  }
+
+  .shell-app-dock {
+    gap: 3px;
+    padding: 5px;
+  }
+
+  .shell-dock-surfaces {
+    gap: 1px;
+  }
+
+  .shell-dock-item {
+    --button-h: 36px;
+  }
+
+  .shell-edit-island .shell-btn:not(.shell-edit-toggle),
+  .shell-menu-divider {
     display: none;
   }
 }
