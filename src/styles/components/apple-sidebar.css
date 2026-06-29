@@ -6,21 +6,23 @@
 
 .apple-sidebar-dock {
   position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
+  inset-block: var(--shell-edge);
+  inset-inline-start: var(--shell-edge);
   width: var(--hig-sidebar-w);
   z-index: var(--z-shell);
   font-family: var(--sf-pro);
 }
 
+/* A floating Liquid Glass island over the map (HIG 27), not a flush full-height
+   rail — rounded on every edge, inset from the window, with elevation. */
 .apple-sidebar {
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-width: 0 0.5px 0 0;
-  border-radius: 0;
+  border: 0.5px solid var(--glass-border);
+  border-radius: var(--mac27-corner-container);
   overflow: hidden;
-  box-shadow: 8px 0 28px rgb(var(--elevation-ink) / 0.09);
+  box-shadow: var(--glass-shadow-2);
 }
 
 /* ---- Header: collapse toggle + account avatar ----------------------- */
@@ -28,7 +30,30 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: var(--shell-gap-xs);
   padding: 10px 12px 4px;
+}
+
+/* Header chips — borderless icon buttons: a soft-shadowed surface disc, the
+   icon monochrome at rest and accent on hover (no fill change). Smaller and
+   tighter than the standard control. */
+.apple-head-btn.shell-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border: 0;
+  color: var(--sys-label);
+}
+.apple-head-btn .shell-icon {
+  width: 15px;
+  height: 15px;
+}
+.apple-head-btn.shell-btn:hover {
+  background: var(--sys-fill);
+}
+.apple-head-btn.shell-btn:active {
+  background: var(--glass-fill-thick-solid);
 }
 
 /* ---- Search: capsule field that opens the palette ------------------- */
@@ -39,22 +64,22 @@
 .apple-search {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   width: 100%;
-  height: 44px;
-  padding: 0 13px;
-  border-radius: 12px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--mac27-corner-capsule);
   background: var(--sys-fill);
   color: var(--sys-label-2);
   cursor: text;
-  transition: background var(--dur-micro) var(--ease-standard);
+  transition: background var(--mac27-duration-interactive) var(--mac27-ease-interactive);
 }
 .apple-search:hover {
   background: color-mix(in srgb, var(--sys-fill) 70%, var(--sys-label) 6%);
 }
 .apple-search-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
 .apple-search-label {
@@ -88,12 +113,63 @@
   scrollbar-width: thin;
 }
 
+/* Group header — one aligned row: gray caption label + optional trailing
+   disclosure. Matches Maps' "Places"/"Recents" headers (no leading caret). */
+.apple-sec {
+  margin-top: 2px;
+}
+
 .apple-section {
-  font-size: var(--sf-subhead);
-  font-weight: var(--sf-weight-semibold);
-  color: var(--sys-label);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
   padding: 14px 8px 5px;
   margin: 0;
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+}
+
+.apple-section-title {
+  font-size: var(--sf-footnote);
+  font-weight: var(--sf-weight-semibold);
+  letter-spacing: 0.02em;
+  color: var(--sys-label-3);
+}
+
+.apple-section-caret {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  color: var(--sys-label-3);
+  opacity: 0;
+  transition:
+    transform var(--mac27-duration-interactive) var(--mac27-ease-interactive),
+    opacity var(--mac27-duration-interactive) var(--mac27-ease-interactive);
+}
+
+.apple-section:hover .apple-section-caret {
+  opacity: 0.7;
+}
+
+.apple-section-caret.is-collapsed {
+  transform: rotate(-90deg);
+  opacity: 0.7;
+}
+
+/* Inline text action on the right of a header (e.g. "Clear"). */
+.apple-section-action {
+  flex-shrink: 0;
+  font-size: var(--sf-footnote);
+  font-weight: var(--sf-weight-medium);
+  color: var(--accent-label);
+  background: transparent;
+  cursor: pointer;
+}
+.apple-section-action:hover {
+  text-decoration: underline;
 }
 
 .apple-row-list {
@@ -126,23 +202,32 @@
 .apple-foot-row:hover {
   background: var(--sys-fill);
 }
+.apple-row:active,
+.apple-foot-row:active {
+  background: color-mix(in srgb, var(--sys-label) 10%, transparent);
+}
 
+/* Selected row: accent tint with accent icon + label (Maps idiom). */
 .apple-row.is-active {
-  background: color-mix(in srgb, var(--mac27-accent) 18%, transparent);
-  color: var(--mac27-label);
+  background: var(--fill-accent);
 }
-.apple-row.is-active .apple-row-icon {
-  color: var(--mac27-accent);
+.apple-row.is-active:hover {
+  background: var(--fill-accent-hover);
+}
+.apple-row.is-active .apple-row-icon,
+.apple-row.is-active .apple-row-label {
+  color: var(--accent-label);
+}
+.apple-row.is-active .apple-row-label {
+  font-weight: var(--mac27-sidebar-selection-weight);
 }
 
+/* Nav icons read monochrome at rest, accent only when selected. */
 .apple-row-icon {
   width: 21px;
   height: 21px;
   flex-shrink: 0;
-  color: var(--sys-blue);
-}
-.apple-row.is-active .apple-row-label {
-  font-weight: var(--mac27-sidebar-selection-weight);
+  color: var(--sys-label-2);
 }
 .apple-row-label {
   font-size: var(--sf-subhead);
@@ -155,6 +240,108 @@
   border-radius: 50%;
   flex-shrink: 0;
   margin: 0 5px;
+}
+
+/* ---- Two-line place cell (Recents / Recently Added) ----------------- */
+.apple-cell {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: 52px;
+  padding: 7px 8px 7px 10px;
+  border-radius: 10px;
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+  transition: background var(--mac27-duration-interactive) var(--mac27-ease-interactive);
+}
+.apple-cell:hover {
+  background: var(--sys-fill);
+}
+.apple-cell:active {
+  background: color-mix(in srgb, var(--sys-label) 10%, transparent);
+}
+
+/* Filled circular category glyph — domain-toned disc with a white symbol. */
+.apple-glyph {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--apple-glyph-tone, var(--sys-gray));
+  box-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.28);
+}
+.apple-glyph > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.apple-cell-text {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 1px;
+}
+.apple-cell-title {
+  font-size: var(--sf-subhead);
+  font-weight: var(--sf-weight-medium);
+  line-height: 1.25;
+  color: var(--sys-label);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.apple-cell-sub {
+  font-size: var(--sf-caption-1);
+  line-height: 1.25;
+  color: var(--sys-label-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hairline separator between cells, inset past the glyph (Maps list style). */
+.apple-cell-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.apple-cell-list > li + li .apple-cell {
+  border-top: 0.5px solid var(--sys-separator);
+  border-radius: 0;
+}
+.apple-cell-list > li:hover + li .apple-cell,
+.apple-cell-list > li:has(.apple-cell:hover) + li .apple-cell {
+  border-top-color: transparent;
+}
+
+/* Trailing "more" affordance, revealed on row hover. */
+.apple-cell-more {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--sys-label-3);
+  opacity: 0;
+  transition:
+    opacity var(--mac27-duration-interactive) var(--mac27-ease-interactive),
+    background var(--mac27-duration-interactive) var(--mac27-ease-interactive);
+}
+.apple-cell:hover .apple-cell-more {
+  opacity: 1;
+}
+.apple-cell-more:hover {
+  background: color-mix(in srgb, var(--sys-label) 12%, transparent);
+  color: var(--sys-label);
 }
 
 /* ---- Footer --------------------------------------------------------- */

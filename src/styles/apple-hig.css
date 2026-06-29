@@ -26,6 +26,16 @@
   --mac27-control-highlight: color-mix(in srgb, white 62%, transparent);
   --mac27-control-disabled: 0.42;
 
+  /* Semantic accent/destructive tints — one source for selection backgrounds,
+     tinted buttons, and active rows (was hand-rolled color-mix at the call
+     site). --accent-label is accent text tuned to stay legible per surface. */
+  --fill-accent: color-mix(in srgb, var(--accent) 12%, transparent);
+  --fill-accent-hover: color-mix(in srgb, var(--accent) 18%, transparent);
+  --fill-accent-strong: color-mix(in srgb, var(--accent) 22%, transparent);
+  --fill-destructive: color-mix(in srgb, var(--danger) 12%, transparent);
+  --fill-destructive-hover: color-mix(in srgb, var(--danger) 18%, transparent);
+  --accent-label: var(--accent);
+
   --mac27-text-title: 20px;
   --mac27-text-headline: 13px;
   --mac27-text-body: 13px;
@@ -98,6 +108,17 @@
   --hig-stack-gap: var(--mac27-control-gap);
   --hig-ease-bounce: var(--mac27-ease-interactive);
   --hig-dur-morph: 280ms;
+}
+
+:root.dark,
+:root.dark[data-theme] {
+  --fill-accent: color-mix(in srgb, var(--accent) 20%, transparent);
+  --fill-accent-hover: color-mix(in srgb, var(--accent) 28%, transparent);
+  --fill-accent-strong: color-mix(in srgb, var(--accent) 34%, transparent);
+  --fill-destructive: color-mix(in srgb, var(--danger) 22%, transparent);
+  --fill-destructive-hover: color-mix(in srgb, var(--danger) 30%, transparent);
+  /* Lift accent text off the deep surface so it reads as a clear label. */
+  --accent-label: color-mix(in srgb, var(--accent) 88%, white);
 }
 
 @media (prefers-contrast: more) {

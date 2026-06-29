@@ -1,5 +1,5 @@
 import { MathText } from "../../lib/katex";
-import { DIA, UI } from "./FigureFrame";
+import { ShellSegmented } from "../primitives";
 
 export interface SegmentOption<T extends string> {
   value: T;
@@ -10,7 +10,9 @@ export interface SegmentOption<T extends string> {
 /**
  * Compact segmented (radio-group) control shared by the interactive figures
  * that switch between a small set of named modes: convergence type, waveform,
- * sequence space, and so on.
+ * sequence space, and so on. Wraps the shared macOS Liquid Glass primitive so
+ * figures inherit the same sliding pill, stretch, and state styling as the
+ * rest of the shell.
  */
 export function SegmentedControl<T extends string>({
   value,
@@ -24,32 +26,17 @@ export function SegmentedControl<T extends string>({
   ariaLabel: string;
 }) {
   return (
-    <div
-      role="radiogroup"
-      aria-label={ariaLabel}
-      className="mt-2.5 inline-flex overflow-hidden rounded-md border p-0.5"
-      style={{ borderColor: UI.border, background: UI.panel }}
-    >
-      {options.map((opt) => {
-        const active = opt.value === value;
-        return (
-          <button
-            key={opt.value}
-            type="button"
-            role="radio"
-            aria-checked={active}
-            onClick={() => onChange(opt.value)}
-            className="rounded-sm px-2.5 py-1 text-caption-1 transition-colors"
-            style={{
-              background: active ? DIA.accent : "transparent",
-              color: active ? UI.onColor : UI.text,
-              fontWeight: active ? 600 : 400,
-            }}
-          >
-            <MathText text={opt.label} />
-          </button>
-        );
-      })}
-    </div>
+    <ShellSegmented
+      className="mt-2.5"
+      label={ariaLabel}
+      value={value}
+      size="small"
+      onChange={onChange}
+      options={options.map((opt) => ({
+        id: opt.value,
+        label: opt.label,
+        content: <MathText text={opt.label} />,
+      }))}
+    />
   );
 }

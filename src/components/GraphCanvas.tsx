@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import ReactFlow, { useReactFlow, useViewport } from "reactflow";
 import type { LoadedMap, MapId } from "../data";
 import { savedViewportFor, saveViewport } from "../infrastructure/storage/viewportStorage";
@@ -55,6 +55,28 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
   useEffect(() => {
     setRouteSequence(route.ordered);
   }, [route, setRouteSequence]);
+
+  // Drop Liquid Glass blur while the canvas moves (it's expensive to recompute
+  // over a moving backdrop). Driven by `onMove` with a debounced clear rather
+  // than paired start/end events — a dropped `onMoveEnd` (interrupted animation,
+  // initial fit) would otherwise leave `is-panning` stuck and kill all glass
+  // translucency. The timer self-heals: the class always clears once motion stops.
+  const panTimerRef = useRef<number | null>(null);
+  const markPanning = useCallback(() => {
+    document.documentElement.classList.add("is-panning");
+    if (panTimerRef.current) clearTimeout(panTimerRef.current);
+    panTimerRef.current = window.setTimeout(() => {
+      document.documentElement.classList.remove("is-panning");
+      panTimerRef.current = null;
+    }, 160);
+  }, []);
+  useEffect(
+    () => () => {
+      if (panTimerRef.current) clearTimeout(panTimerRef.current);
+      document.documentElement.classList.remove("is-panning");
+    },
+    [],
+  );
 
   // Preserve stable per-node data references so selection changes only update
   // concept nodes whose projected state actually changed.
@@ -152,8 +174,7 @@ function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onPaneClick={() => useStore.getState().select(null)}
-        onMoveStart={() => document.documentElement.classList.add("is-panning")}
-        onMoveEnd={() => document.documentElement.classList.remove("is-panning")}
+        onMove={markPanning}
         proOptions={{ hideAttribution: true }}
         minZoom={0.08}
         maxZoom={2.4}

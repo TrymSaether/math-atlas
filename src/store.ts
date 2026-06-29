@@ -104,6 +104,10 @@ export interface State extends MapWorkflowSlice, ProgressSlice {
 
   selectedId: string | null;
   select: (id: string | null) => void;
+  /** Recently selected concept ids for the active map, most-recent first. */
+  recents: string[];
+  /** Clear the active map's recents list. */
+  clearRecents: () => void;
 
   /**
    * Directions. Two build modes over the dependency DAG:
@@ -202,6 +206,9 @@ function isSurface(value: unknown): value is Surface {
   return value === "atlas" || value === "dictionary" || value === "flashcards" || value === "sandbox";
 }
 
+/** Cap on the active map's remembered recents list. */
+const RECENTS_LIMIT = 15;
+
 const persistedState = normalizePersistedState(readPersistedState());
 const persistedMaps: Partial<Record<MapId, PersistedMapState>> = {
   ...(persistedState?.maps ?? {}),
@@ -240,6 +247,7 @@ function rememberMapState(state: State): void {
     topics: [...state.topics],
     relations: [...state.relations],
     selectedId: state.selectedId,
+    recents: [...state.recents],
     routeFrom: state.routeFrom,
     routeTo: state.routeTo,
   };
@@ -280,6 +288,7 @@ function setFromPersisted<T extends string>(
 function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefined): RestoredMapState {
   const validNodeIds = new Set(map.data.nodes.map((node) => node.id));
   const selectedId = saved?.selectedId && validNodeIds.has(saved.selectedId) ? saved.selectedId : null;
+  const recents = (saved?.recents ?? []).filter((id) => validNodeIds.has(id));
 
   return {
     search: saved?.search ?? "",
@@ -291,6 +300,7 @@ function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefin
     ),
     relations: setFromPersisted(saved?.relations, map.relations, map.relations),
     selectedId,
+    recents,
     // Routes are transient exploration state — never restored, so the map opens
     // on the fit-all overview rather than a highlighted cone.
     routeMode: false,
@@ -430,7 +440,13 @@ export const useStore = create<State>((set, get) => ({
   toggleMinimap: () => set((s) => ({ showMinimap: !s.showMinimap })),
 
   selectedId: null,
-  select: (id) => set({ selectedId: id }),
+  select: (id) =>
+    set((s) => ({
+      selectedId: id,
+      recents: id ? [id, ...s.recents.filter((r) => r !== id)].slice(0, RECENTS_LIMIT) : s.recents,
+    })),
+  recents: [],
+  clearRecents: () => set({ recents: [] }),
 
   routeKind: persistedState?.routeKind ?? "prereq",
   setRouteKind: (routeKind) =>

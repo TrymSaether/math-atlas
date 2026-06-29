@@ -179,10 +179,24 @@
   }
 }
 
+/* While panning the canvas, blur is dropped for performance — but the fill must
+   become solid too, otherwise the panel turns into a flat see-through wash with
+   the moving graph bleeding through. Mirror the reduced-transparency fallback. */
 .is-panning .liquid-glass,
 .is-panning .standard-material {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
+}
+.is-panning .liquid-glass-regular,
+.is-panning .standard-material-regular {
+  background: var(--glass-fill-regular-solid);
+}
+.is-panning .liquid-glass-clear,
+.is-panning .standard-material-thin {
+  background: var(--glass-fill-clear-solid);
+}
+.is-panning .standard-material-thick {
+  background: var(--glass-fill-thick-solid);
 }
 
 @media (prefers-reduced-transparency: reduce) {

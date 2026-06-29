@@ -47,10 +47,16 @@ export function ShellButton({
 }
 
 /** Square-hit-area icon button — a `ShellButton` locked to the control height. */
-export function ShellIconButton({ className, shape = "circle", controlSize = "large", ...rest }: ShellButtonProps) {
+export function ShellIconButton({
+  className,
+  shape = "circle",
+  controlSize = "large",
+  variant = "plain",
+  ...rest
+}: ShellButtonProps) {
   return (
     <ShellButton
-      variant="plain"
+      variant={variant}
       shape={shape}
       controlSize={controlSize}
       className={cn("shell-btn-icon", className)}

@@ -11,6 +11,11 @@ import {
   LinkSimpleIcon,
   ArrowsOutSimpleIcon,
   ArrowsInSimpleIcon,
+  ShareNetworkIcon,
+  StackIcon,
+  ListNumbersIcon,
+  FlaskIcon,
+  type Icon,
 } from "@phosphor-icons/react";
 import { useStore } from "../../store";
 import { useConceptView } from "../../lib/conceptView";
@@ -84,6 +89,23 @@ function CardContent({ nodeId }: { nodeId: string }) {
   const peerIdx = peers.findIndex((n) => n.id === node.id);
   const prev = peerIdx > 0 ? peers[peerIdx - 1] : null;
   const next = peerIdx >= 0 && peerIdx < peers.length - 1 ? peers[peerIdx + 1] : null;
+
+  // Maps-style stat row: three always-present metrics. The third adapts to the
+  // concept's most salient body — proof steps, then worked examples, then
+  // recorded properties — so a definition doesn't read "0 Proof steps".
+  const stats: { icon: Icon; value: number; label: string }[] = [
+    { icon: ShareNetworkIcon, value: view.relations.count, label: "Relations" },
+    { icon: StackIcon, value: peers.length, label: "In domain" },
+    view.proof.hasProof
+      ? {
+          icon: ListNumbersIcon,
+          value: view.proof.steps.length,
+          label: view.proof.label === "Solution" ? "Steps" : "Proof steps",
+        }
+      : view.examples.length > 0
+        ? { icon: FlaskIcon, value: view.examples.length, label: view.examples.length === 1 ? "Example" : "Examples" }
+        : { icon: ListNumbersIcon, value: view.properties.length, label: "Properties" },
+  ];
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 });
@@ -170,6 +192,17 @@ function CardContent({ nodeId }: { nodeId: string }) {
         </ShellPanelHeader>
         <div className="px-4">
           <ConceptHeader view={view} />
+          <dl className="shell-card-stats">
+            {stats.map((stat) => (
+              <div className="shell-card-stat" key={stat.label}>
+                <dd className="shell-card-stat-value">
+                  <stat.icon weight="regular" aria-hidden />
+                  {stat.value}
+                </dd>
+                <dt className="shell-card-stat-label">{stat.label}</dt>
+              </div>
+            ))}
+          </dl>
         </div>
         <div className="shell-panel-soft-rule" />
       </header>

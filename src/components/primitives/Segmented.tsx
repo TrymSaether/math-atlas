@@ -1,4 +1,4 @@
-import { useRef, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
+import { useEffect, useRef, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
 
 export type SegmentedSelectionRole = "radio" | "tab" | "button";
@@ -88,6 +88,27 @@ export function ShellSegmented<T extends string>({
     0,
     options.findIndex((option) => option.id === value),
   );
+
+  // Liquid stretch: when the selection slides between segments, scale it from
+  // the trailing edge so the pill reaches toward the incoming segment, then
+  // settles. Driven imperatively to avoid an extra render on every change.
+  const groupRef = useRef<HTMLDivElement>(null);
+  const previousIndexRef = useRef(selectedVisualIndex);
+  const slideTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => {
+    const group = groupRef.current;
+    const previousIndex = previousIndexRef.current;
+    if (group && selectedVisualIndex !== previousIndex) {
+      const direction = selectedVisualIndex > previousIndex ? 1 : -1;
+      group.style.setProperty("--shell-seg-origin", direction > 0 ? "left center" : "right center");
+      group.classList.add("is-sliding");
+      clearTimeout(slideTimer.current);
+      slideTimer.current = setTimeout(() => group.classList.remove("is-sliding"), 260);
+    }
+    previousIndexRef.current = selectedVisualIndex;
+  }, [selectedVisualIndex]);
+  useEffect(() => () => clearTimeout(slideTimer.current), []);
+
   const segmentStyle = {
     "--shell-seg-count": Math.max(1, options.length),
     "--shell-seg-index": selectedVisualIndex,
@@ -95,6 +116,7 @@ export function ShellSegmented<T extends string>({
 
   return (
     <div
+      ref={groupRef}
       className={cn(
         "shell-seg",
         `shell-seg-${size}`,

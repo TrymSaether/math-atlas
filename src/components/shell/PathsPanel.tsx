@@ -7,36 +7,44 @@ import {
   CaretRightIcon,
   MapPinIcon,
   FlagIcon,
+  TreeStructureIcon,
+  PathIcon,
+  CheckIcon,
 } from "@phosphor-icons/react";
 import { useStore } from "../../store";
 import { useRouteResult } from "../../lib/route";
 import { MathText } from "../../lib/katex";
 import { getDomainTone } from "../../lib/colors";
 import { cn } from "../../lib/utils";
-import { Material, ShellButton, ShellIconButton, ShellPanelHeader, ShellSegmented, ShellSwitch } from "../primitives";
+import { Material, ShellButton, ShellIconButton, ShellSegmented } from "../primitives";
 
-function Slot({
+/** A From / To / Goal endpoint row — leading toned glyph, label + value. */
+function Endpoint({
   icon,
+  tone,
   label,
   value,
   onClear,
 }: {
   icon: ReactNode;
+  tone: string;
   label: string;
   value: string | null;
   onClear: () => void;
 }) {
   return (
-    <div className="glass-row">
-      <span className="shrink-0 text-fg-3">{icon}</span>
-      <div className="min-w-0 flex-1">
-        <div className="glass-field-label">{label}</div>
-        <div className={cn("truncate text-footnote", value ? "text-fg-1" : "italic text-fg-3")}>
+    <div className="paths-endpoint">
+      <span className="paths-endpoint-glyph" style={{ background: tone }}>
+        {icon}
+      </span>
+      <div className="paths-endpoint-text">
+        <div className="paths-endpoint-label">{label}</div>
+        <div className={cn("paths-endpoint-value", !value && "is-placeholder")}>
           {value ? <MathText text={value} /> : "Pick on the map"}
         </div>
       </div>
       {value && (
-        <ShellIconButton aria-label={`Clear ${label}`} onClick={onClear}>
+        <ShellIconButton className="paths-endpoint-clear" aria-label={`Clear ${label}`} onClick={onClear}>
           <XIcon className="shell-icon-sm" weight="regular" />
         </ShellIconButton>
       )}
@@ -45,11 +53,11 @@ function Slot({
 }
 
 /**
- * Paths — the guided study mode. Reuses the dependency-route engine
- * (`useRouteResult` over the full DAG) and tour state: pick a goal (its
- * prerequisite cone) or two endpoints (the connecting paths), then walk the
- * ordered itinerary step by step. Endpoints are picked by clicking concepts on
- * the map (the canvas is in route-planning mode here).
+ * Paths — the guided study mode, presented in the macOS Maps "Directions"
+ * idiom: a bold title, an icon mode picker, From/To endpoint rows, route
+ * options, then a primary itinerary card over the ordered study list. Reuses
+ * the dependency-route engine (`useRouteResult`) and tour state unchanged;
+ * endpoints are picked by clicking concepts on the map.
  */
 export function PathsPanel() {
   const map = useStore((s) => s.loadedMaps[s.mapId]);
@@ -74,17 +82,19 @@ export function PathsPanel() {
   const labelFor = (id: string) => map.nodeById.get(id)?.label ?? id;
   const ordered = route.ordered;
   const touring = tourIndex !== null;
-  const hasGoal = routeKind === "prereq" ? Boolean(routeTo) : Boolean(routeFrom && routeTo);
-  const noPath = routeKind === "path" && Boolean(routeFrom && routeTo) && !route.found;
+  const isPath = routeKind === "path";
+  const hasGoal = isPath ? Boolean(routeFrom && routeTo) : Boolean(routeTo);
+  const noPath = isPath && Boolean(routeFrom && routeTo) && !route.found;
 
   return (
     <aside className="shell-dock shell-dock-left pointer-events-auto">
-      <Material thickness="thick" className="shell-panel flex h-full w-[min(340px,calc(100vw-24px))] flex-col">
-        <ShellPanelHeader title="Paths">
-          <ShellIconButton onClick={() => setMode("explore")} aria-label="Close paths">
+      <Material thickness="thick" className="shell-panel flex h-full w-[min(360px,calc(100vw-24px))] flex-col">
+        <header className="paths-head">
+          <h2 className="paths-title">Paths</h2>
+          <ShellIconButton className="apple-head-btn" onClick={() => setMode("explore")} aria-label="Close paths">
             <XIcon className="shell-icon" weight="regular" />
           </ShellIconButton>
-        </ShellPanelHeader>
+        </header>
 
         {/* Announce tour progress to assistive tech as the step (and selected
             concept) changes — the visual cue is the map pan, which a screen
@@ -98,89 +108,99 @@ export function PathsPanel() {
             label="Route kind"
             value={routeKind}
             onChange={setRouteKind}
+            size="large"
             className="w-full"
             options={[
-              { id: "prereq", label: "Prerequisites" },
-              { id: "path", label: "Between two" },
+              { id: "prereq", label: "Prerequisites", icon: <TreeStructureIcon weight="bold" /> },
+              { id: "path", label: "Between two", icon: <PathIcon weight="bold" /> },
             ]}
           />
 
-          <div className="glass-group mt-3">
-            {routeKind === "path" && (
-              <Slot
-                icon={<MapPinIcon className="shell-icon" />}
+          <div className="paths-endpoints">
+            {isPath && (
+              <Endpoint
+                icon={<MapPinIcon weight="fill" />}
+                tone="var(--accent)"
                 label="From"
                 value={routeFrom ? labelFor(routeFrom) : null}
                 onClear={() => setRouteEndpoint("from", null)}
               />
             )}
-            {routeKind === "path" && (
-              <div className="flex justify-center">
-                <ShellIconButton
-                  onClick={swapRouteEndpoints}
-                  aria-label="Swap endpoints"
-                  disabled={!routeFrom && !routeTo}
-                >
-                  <ArrowsDownUpIcon className="shell-icon" />
-                </ShellIconButton>
-              </div>
-            )}
-            <Slot
-              icon={<FlagIcon className="shell-icon" />}
-              label={routeKind === "prereq" ? "Goal" : "To"}
+            <Endpoint
+              icon={<FlagIcon weight="fill" />}
+              tone="var(--danger)"
+              label={isPath ? "To" : "Goal"}
               value={routeTo ? labelFor(routeTo) : null}
               onClear={() => setRouteEndpoint("to", null)}
             />
+            {isPath && (
+              <ShellIconButton
+                className="paths-reorder apple-head-btn"
+                onClick={swapRouteEndpoints}
+                aria-label="Swap endpoints"
+                disabled={!routeFrom && !routeTo}
+              >
+                <ArrowsDownUpIcon className="shell-icon" />
+              </ShellIconButton>
+            )}
           </div>
 
-          <ShellSwitch
-            label="Include proof prerequisites"
-            on={includeProof}
-            onToggle={() => setIncludeProof(!includeProof)}
-            className="mt-3"
-          />
+          <div className="paths-options">
+            <button
+              type="button"
+              className={cn("paths-pill", includeProof && "is-on")}
+              aria-pressed={includeProof}
+              onClick={() => setIncludeProof(!includeProof)}
+            >
+              {includeProof && <CheckIcon className="shell-icon-sm" weight="bold" />}
+              Proof prerequisites
+            </button>
+          </div>
 
           {noPath && (
-            <p className="mt-4 rounded-[var(--shell-control-radius)] bg-surface-2 px-3 py-2.5 text-footnote text-fg-2">
-              No dependency path connects these two concepts.
-            </p>
+            <p className="paths-hint paths-hint-card">No dependency path connects these two concepts.</p>
           )}
 
           {!hasGoal && !noPath && (
-            <p className="mt-4 text-footnote leading-relaxed text-fg-3">
-              {routeKind === "prereq"
-                ? "Click a concept on the map to trace everything you need to understand it first, in study order."
-                : "Pick two concepts on the map to see every dependency path between them."}
+            <p className="paths-hint">
+              {isPath
+                ? "Pick two concepts on the map to see every dependency path between them."
+                : "Click a concept on the map to trace everything you need to understand it first, in study order."}
             </p>
           )}
 
           {hasGoal && ordered.length > 0 && (
             <>
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-caption-1 font-semibold text-fg-2">
-                  {ordered.length} {ordered.length === 1 ? "concept" : "concepts"} · study order
-                </span>
+              <div className="paths-summary">
+                <div className="paths-summary-text">
+                  <span className="paths-summary-count">
+                    {ordered.length} {ordered.length === 1 ? "concept" : "concepts"}
+                  </span>
+                  <span className="paths-summary-sub">study order</span>
+                </div>
                 {!touring ? (
-                  <ShellButton primary className="gap-1" onClick={startTour}>
-                    <PlayIcon className="shell-icon-sm" weight="regular" /> Tour
+                  <ShellButton primary shape="pill" className="gap-1.5" onClick={startTour}>
+                    <PlayIcon className="shell-icon-sm" weight="fill" /> Tour
                   </ShellButton>
                 ) : (
                   <div className="flex items-center gap-0.5">
                     <ShellIconButton onClick={() => tourStep(-1)} aria-label="Previous step">
                       <CaretLeftIcon className="shell-icon" weight="regular" />
                     </ShellIconButton>
-                    <span className="min-w-[44px] text-center font-mono text-caption-1 tabular-nums text-fg-2">
+                    <span className="min-w-[40px] text-center font-mono text-caption-1 tabular-nums text-fg-2">
                       {(tourIndex ?? 0) + 1}/{ordered.length}
                     </span>
                     <ShellIconButton onClick={() => tourStep(1)} aria-label="Next step">
                       <CaretRightIcon className="shell-icon" weight="regular" />
                     </ShellIconButton>
-                    <ShellButton onClick={endTour}>Done</ShellButton>
+                    <ShellButton shape="pill" onClick={endTour}>
+                      Done
+                    </ShellButton>
                   </div>
                 )}
               </div>
 
-              <ol className="mt-2 space-y-0.5">
+              <ol className="paths-steps">
                 {ordered.map((id, i) => {
                   const active = selectedId === id;
                   const tone = getDomainTone(map.nodeById.get(id)?.domain ?? "");
@@ -189,18 +209,11 @@ export function PathsPanel() {
                       <button
                         type="button"
                         onClick={() => select(id)}
-                        className={cn(
-                          "flex min-h-[44px] w-full items-center gap-2.5 rounded-[var(--shell-control-radius)] px-2 py-1.5 text-left",
-                          active ? "bg-surface-active text-fg-1" : "hover:bg-surface-hover",
-                        )}
+                        className={cn("paths-step", active && "is-active")}
                       >
-                        <span className="w-5 shrink-0 text-right font-mono text-caption-2 tabular-nums text-fg-3">
-                          {i + 1}
-                        </span>
-                        <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: tone.color }} />
-                        <span
-                          className={cn("min-w-0 flex-1 truncate text-footnote", active ? "text-fg-1" : "text-fg-2")}
-                        >
+                        <span className="paths-step-index">{i + 1}</span>
+                        <span className="paths-step-dot" style={{ background: tone.color }} />
+                        <span className="paths-step-label">
                           <MathText text={labelFor(id)} />
                         </span>
                       </button>

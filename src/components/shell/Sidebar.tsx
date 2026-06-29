@@ -1,7 +1,18 @@
-import { useState, type ReactNode } from "react";
-import { SidebarSimpleIcon, MagnifyingGlassIcon, CaretDownIcon, SunIcon, MoonIcon } from "@phosphor-icons/react";
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
+import {
+  SidebarSimpleIcon,
+  MagnifyingGlassIcon,
+  CaretDownIcon,
+  SunIcon,
+  MoonIcon,
+  MapPinIcon,
+} from "@phosphor-icons/react";
 import { useStore } from "../../store";
 import { schemeFor, siblingOf } from "../../lib/themes";
+import { getDomainTone } from "../../lib/colors";
+import { getDomainGlyphId } from "../domainGlyphRegistry";
+import { DomainGlyph } from "../DomainGlyph";
+import { MathText } from "../../lib/katex";
 import { cn } from "../../lib/utils";
 import { Glass, ShellIconButton } from "../primitives";
 import { LIBRARY_DESTINATIONS, TOOL_DESTINATIONS, type ShellDestination } from "./destinations";
@@ -76,6 +87,7 @@ function ThemeToggle() {
   const isDark = schemeFor(theme) === "dark";
   return (
     <ShellIconButton
+      className="apple-head-btn"
       aria-label={isDark ? "Switch to light appearance" : "Switch to dark appearance"}
       title={isDark ? "Light" : "Dark"}
       onClick={() => setTheme(siblingOf(theme))}
@@ -89,6 +101,63 @@ function ThemeToggle() {
   );
 }
 
+/** A domain-toned circular glyph badge for a concept (Maps place-pin idiom). */
+function ConceptGlyph({ mapId, domainId }: { mapId: string; domainId: string }) {
+  const tone = getDomainTone(domainId);
+  const glyphId = getDomainGlyphId({ mapId, domainId });
+  return (
+    <span className="apple-glyph" style={{ "--apple-glyph-tone": tone.color } as CSSProperties}>
+      {glyphId ? <DomainGlyph id={glyphId} size={16} /> : <MapPinIcon weight="fill" />}
+    </span>
+  );
+}
+
+/** Recents — two-line place cells over the active map's selection history. */
+function RecentsSection() {
+  const mapId = useStore((s) => s.mapId);
+  const map = useStore((s) => s.loadedMaps[mapId]);
+  const recents = useStore((s) => s.recents);
+  const select = useStore((s) => s.select);
+  const clearRecents = useStore((s) => s.clearRecents);
+
+  const items = useMemo(
+    () =>
+      recents
+        .map((id) => map?.nodeById.get(id))
+        .filter((n): n is NonNullable<typeof n> => Boolean(n))
+        .slice(0, 8),
+    [recents, map],
+  );
+
+  if (items.length === 0) return null;
+
+  return (
+    <div className="apple-sec">
+      <div className="apple-section">
+        <span className="apple-section-title">Recents</span>
+        <button type="button" className="apple-section-action" onClick={clearRecents}>
+          Clear
+        </button>
+      </div>
+      <ul className="apple-cell-list">
+        {items.map((node) => (
+          <li key={node.id}>
+            <button type="button" className="apple-cell" onClick={() => select(node.id)} title={node.label}>
+              <ConceptGlyph mapId={mapId} domainId={node.domain} />
+              <span className="apple-cell-text">
+                <span className="apple-cell-title">
+                  <MathText text={node.label} />
+                </span>
+                <span className="apple-cell-sub">{map?.domainById.get(node.domain)?.label ?? node.topicCluster}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function Sidebar() {
   const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   const mapId = useStore((s) => s.mapId);
@@ -97,6 +166,17 @@ export function Sidebar() {
 
   const [collapsed, setCollapsed] = useState(false);
   const [closedSecs, setClosedSecs] = useState<Set<string>>(() => new Set());
+
+  // Let the left-docked panels (concept card, paths, inspector) reflow to the
+  // screen edge when the sidebar is hidden — see .shell-dock-left in shell.css.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (collapsed) root.dataset.sidebarCollapsed = "true";
+    else delete root.dataset.sidebarCollapsed;
+    return () => {
+      delete root.dataset.sidebarCollapsed;
+    };
+  }, [collapsed]);
   const toggleSec = (id: string) =>
     setClosedSecs((prev) => {
       const next = new Set(prev);
@@ -108,7 +188,12 @@ export function Sidebar() {
   if (collapsed) {
     return (
       <div className="apple-sidebar-reveal">
-        <ShellIconButton aria-label="Show sidebar" title="Show sidebar" onClick={() => setCollapsed(false)}>
+        <ShellIconButton
+          className="apple-head-btn"
+          aria-label="Show sidebar"
+          title="Show sidebar"
+          onClick={() => setCollapsed(false)}
+        >
           <SidebarSimpleIcon className="shell-icon" weight="regular" />
         </ShellIconButton>
       </div>
@@ -120,7 +205,12 @@ export function Sidebar() {
       <Glass variant="regular" className="apple-sidebar">
         <header className="apple-sidebar-head">
           <ThemeToggle />
-          <ShellIconButton aria-label="Hide sidebar" title="Hide sidebar" onClick={() => setCollapsed(true)}>
+          <ShellIconButton
+            className="apple-head-btn"
+            aria-label="Hide sidebar"
+            title="Hide sidebar"
+            onClick={() => setCollapsed(true)}
+          >
             <SidebarSimpleIcon className="shell-icon" weight="regular" />
           </ShellIconButton>
         </header>
@@ -164,6 +254,8 @@ export function Sidebar() {
               </ul>
             </Section>
           )}
+
+          <RecentsSection />
         </nav>
       </Glass>
     </aside>

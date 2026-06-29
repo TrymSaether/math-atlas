@@ -11,6 +11,7 @@ export interface RestoredMapState {
   topics: Set<string>;
   relations: Set<Relation>;
   selectedId: string | null;
+  recents: string[];
   routeMode: false;
   routeFrom: null;
   routeTo: null;
@@ -101,6 +102,7 @@ export function createMapWorkflowSlice(
               topics: new Set<string>(),
               relations: new Set<Relation>(),
               selectedId: null,
+              recents: options.persistedMaps[mapId]?.recents ?? [],
               routeFrom: null,
               routeTo: null,
             }),

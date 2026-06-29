@@ -9,6 +9,7 @@ export interface PersistedMapState {
   topics?: string[];
   relations?: string[];
   selectedId?: string | null;
+  recents?: string[];
   routeFrom?: string | null;
   routeTo?: string | null;
 }
