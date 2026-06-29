@@ -1,3 +1,4 @@
+import { type KeyboardEvent } from "react";
 import { cn } from "../../lib/utils";
 
 /** Labeled toggle switch (role="switch"); track/thumb styling from `.shell-switch`. */
@@ -6,11 +7,15 @@ export function ShellSwitch({
   on,
   onToggle,
   className,
+  size = "mini",
+  disabled = false,
 }: {
   label: string;
   on: boolean;
   onToggle: () => void;
   className?: string;
+  size?: "mini" | "regular";
+  disabled?: boolean;
 }) {
   return (
     <button
@@ -18,10 +23,18 @@ export function ShellSwitch({
       role="switch"
       aria-checked={on}
       onClick={onToggle}
-      className={cn("shell-switch-btn", className)}
+      onKeyDown={(event: KeyboardEvent<HTMLButtonElement>) => {
+        if (event.key !== " " && event.key !== "Enter") return;
+        event.preventDefault();
+        onToggle();
+      }}
+      disabled={disabled}
+      className={cn("shell-switch-btn", `shell-switch-btn-${size}`, className)}
     >
-      <span className="font-medium">{label}</span>
-      <span className={cn("shell-switch", on && "is-on")} aria-hidden />
+      <span className="shell-switch-label">{label}</span>
+      <span className={cn("shell-switch", `shell-switch-${size}`, on && "is-on")} aria-hidden>
+        <span className="shell-switch-thumb" />
+      </span>
     </button>
   );
 }

@@ -6,8 +6,8 @@ import { Glass, ShellIconButton } from "../primitives";
 import { LayersPanel } from "./LayersPanel";
 
 /**
- * Bottom-trailing utility rail: filters, zoom, and fit-to-view in one vertical
- * Liquid Glass island. The layers popover anchors to the rail's leading edge.
+ * Bottom-trailing utility stack. Each unrelated action gets its own glass
+ * shape; only the tightly related zoom controls share a capsule.
  */
 export function ControlCluster() {
   const rf = useReactFlow();
@@ -26,18 +26,20 @@ export function ControlCluster() {
           <LayersPanel onClose={() => setLayersOpen(false)} />
         </div>
       )}
-      <Glass variant="regular" interactive className="shell-utility-rail">
-        <ShellIconButton
-          ref={triggerRef}
-          active={layersOpen}
-          onClick={() => setLayersOpen((v) => !v)}
-          aria-label="Filters"
-          aria-pressed={layersOpen}
-          title="Filters"
-        >
-          <FunnelSimpleIcon className="shell-icon" weight="regular" />
-        </ShellIconButton>
-        <div className="shell-rail-cluster" aria-label="Zoom controls">
+      <div className="shell-utility-stack">
+        <Glass variant="regular" interactive className="shell-utility-button">
+          <ShellIconButton
+            ref={triggerRef}
+            active={layersOpen}
+            onClick={() => setLayersOpen((v) => !v)}
+            aria-label="Filters"
+            aria-pressed={layersOpen}
+            title="Filters"
+          >
+            <FunnelSimpleIcon className="shell-icon" weight="regular" />
+          </ShellIconButton>
+        </Glass>
+        <Glass variant="regular" interactive className="shell-zoom-cluster" aria-label="Zoom controls">
           <ShellIconButton aria-label="Zoom in" title="Zoom in" onClick={() => rf.zoomIn({ duration: 200 })}>
             <PlusIcon className="shell-icon" weight="regular" />
           </ShellIconButton>
@@ -47,15 +49,17 @@ export function ControlCluster() {
           <ShellIconButton aria-label="Zoom out" title="Zoom out" onClick={() => rf.zoomOut({ duration: 200 })}>
             <MinusIcon className="shell-icon" weight="regular" />
           </ShellIconButton>
-        </div>
-        <ShellIconButton
-          aria-label="Fit to view"
-          title="Fit to view"
-          onClick={() => rf.fitView({ padding: 0.12, duration: 400 })}
-        >
-          <CornersOutIcon className="shell-icon" weight="regular" />
-        </ShellIconButton>
-      </Glass>
+        </Glass>
+        <Glass variant="regular" interactive className="shell-utility-button">
+          <ShellIconButton
+            aria-label="Fit to view"
+            title="Fit to view"
+            onClick={() => rf.fitView({ padding: 0.12, duration: 400 })}
+          >
+            <CornersOutIcon className="shell-icon" weight="regular" />
+          </ShellIconButton>
+        </Glass>
+      </div>
     </div>
   );
 }

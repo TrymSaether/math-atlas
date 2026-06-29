@@ -71,11 +71,7 @@ export function EditInspector() {
                 Select a concept to inspect its source, relations, proof steps, and examples.
               </p>
             </div>
-            <ShellButton
-              primary
-              className="min-h-11 rounded-full px-3"
-              onClick={() => openNodeEditor({ mode: "create" })}
-            >
+            <ShellButton primary onClick={() => openNodeEditor({ mode: "create" })}>
               <PlusIcon className="shell-icon" weight="regular" />
               New concept
             </ShellButton>

@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent, type ReactNode } from "react";
+import { useRef, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
 
 export type SegmentedSelectionRole = "radio" | "tab" | "button";
@@ -84,6 +84,14 @@ export function ShellSegmented<T extends string>({
   };
 
   const groupRole = selectionRole === "tab" ? "tablist" : selectionRole === "radio" ? "radiogroup" : "group";
+  const selectedVisualIndex = Math.max(
+    0,
+    options.findIndex((option) => option.id === value),
+  );
+  const segmentStyle = {
+    "--shell-seg-count": Math.max(1, options.length),
+    "--shell-seg-index": selectedVisualIndex,
+  } as CSSProperties;
 
   return (
     <div
@@ -99,7 +107,9 @@ export function ShellSegmented<T extends string>({
       aria-orientation="horizontal"
       aria-disabled={disabled || undefined}
       onKeyDown={onKeyDown}
+      style={segmentStyle}
     >
+      {equalWidth && selectionRole !== "button" && <span className="shell-seg-selection" aria-hidden="true" />}
       {options.map((option, index) => {
         const active = option.id === value;
         const optionDisabled = disabled || Boolean(option.disabled);

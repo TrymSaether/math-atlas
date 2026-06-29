@@ -52,11 +52,7 @@ function MapStatus() {
           <WarningCircleIcon className="h-9 w-9 text-danger" weight="regular" />
           <h2 className="text-lg text-fg-1">Couldn’t load this map</h2>
           <p className="text-footnote leading-relaxed text-fg-3">{mapError}</p>
-          <ShellButton
-            primary
-            className="mt-1 min-h-11 rounded-full px-4 text-footnote"
-            onClick={() => void ensureMapLoaded(mapId)}
-          >
+          <ShellButton primary className="mt-1" onClick={() => void ensureMapLoaded(mapId)}>
             Try again
           </ShellButton>
         </Material>

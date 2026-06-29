@@ -93,20 +93,24 @@ export function SandboxView() {
               ))}
             </Glass>
           )}
-          <Glass variant="regular" interactive className="shell-utility-rail pointer-events-auto">
-            <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
-              <Plus className="shell-icon" weight="regular" />
-            </DockBtn>
-            <DockBtn label="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
-              <Minus className="shell-icon" weight="regular" />
-            </DockBtn>
-            <DockBtn label="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
-              <CornersOut className="shell-icon" weight="regular" />
-            </DockBtn>
-            <DockBtn label="Save view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
-              <BookmarkSimple className="shell-icon" weight="regular" />
-            </DockBtn>
-          </Glass>
+          <div className="shell-utility-stack pointer-events-auto">
+            <Glass variant="regular" interactive className="shell-zoom-cluster">
+              <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
+                <Plus className="shell-icon" weight="regular" />
+              </DockBtn>
+              <DockBtn label="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
+                <Minus className="shell-icon" weight="regular" />
+              </DockBtn>
+              <DockBtn label="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
+                <CornersOut className="shell-icon" weight="regular" />
+              </DockBtn>
+            </Glass>
+            <Glass variant="regular" interactive className="shell-utility-button">
+              <DockBtn label="Save view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
+                <BookmarkSimple className="shell-icon" weight="regular" />
+              </DockBtn>
+            </Glass>
+          </div>
         </div>
       </main>
 

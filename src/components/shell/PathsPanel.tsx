@@ -99,7 +99,6 @@ export function PathsPanel() {
             value={routeKind}
             onChange={setRouteKind}
             className="w-full"
-            selectionRole="button"
             options={[
               { id: "prereq", label: "Prerequisites" },
               { id: "path", label: "Between two" },
@@ -162,11 +161,7 @@ export function PathsPanel() {
                   {ordered.length} {ordered.length === 1 ? "concept" : "concepts"} · study order
                 </span>
                 {!touring ? (
-                  <ShellButton
-                    primary
-                    className="min-h-[44px] gap-1 rounded-full px-3 text-caption-1"
-                    onClick={startTour}
-                  >
+                  <ShellButton primary className="gap-1" onClick={startTour}>
                     <PlayIcon className="shell-icon-sm" weight="regular" /> Tour
                   </ShellButton>
                 ) : (
@@ -180,9 +175,7 @@ export function PathsPanel() {
                     <ShellIconButton onClick={() => tourStep(1)} aria-label="Next step">
                       <CaretRightIcon className="shell-icon" weight="regular" />
                     </ShellIconButton>
-                    <ShellButton className="min-h-[44px] rounded-full px-3 text-caption-1" onClick={endTour}>
-                      Done
-                    </ShellButton>
+                    <ShellButton onClick={endTour}>Done</ShellButton>
                   </div>
                 )}
               </div>

@@ -19,6 +19,11 @@
   --mac27-fill-hover: color-mix(in srgb, var(--fg-1) 12%, transparent);
   --mac27-control-track: color-mix(in srgb, var(--fg-1) 13%, transparent);
   --mac27-control-track-pressed: color-mix(in srgb, var(--fg-1) 18%, transparent);
+  --mac27-control-surface: color-mix(in srgb, var(--surface) 88%, var(--fg-1) 3%);
+  --mac27-control-surface-hover: color-mix(in srgb, var(--surface) 94%, var(--fg-1) 5%);
+  --mac27-control-surface-pressed: color-mix(in srgb, var(--surface) 78%, var(--fg-1) 10%);
+  --mac27-control-border: color-mix(in srgb, var(--fg-1) 16%, transparent);
+  --mac27-control-highlight: color-mix(in srgb, white 62%, transparent);
   --mac27-control-disabled: 0.42;
 
   --mac27-text-title: 20px;
@@ -45,6 +50,21 @@
 
   --mac27-ease-interactive: cubic-bezier(0.2, 0.8, 0.2, 1);
   --mac27-duration-interactive: 160ms;
+  --mac27-duration-spring: 260ms;
+  --mac27-ease-spring: linear(
+    0,
+    0.008 1%,
+    0.032 2.1%,
+    0.126 4.4%,
+    0.644 12.7%,
+    0.902 18.5%,
+    1.031 24.8%,
+    1.066 30.5%,
+    1.059 36.6%,
+    1.006 52.7%,
+    0.994 63.4%,
+    1
+  );
 
   /* Compatibility aliases used by the in-progress sidebar. */
   --sf-pro: var(--mac27-font);

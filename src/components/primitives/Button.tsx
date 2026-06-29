@@ -3,8 +3,11 @@ import { cn } from "../../lib/utils";
 
 export interface ShellButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
+  /** @deprecated Use `variant="prominent"`. */
   primary?: boolean;
   destructive?: boolean;
+  variant?: "plain" | "bordered" | "prominent" | "glass";
+  controlSize?: "mini" | "small" | "regular" | "large";
   shape?: "default" | "pill" | "circle";
   ref?: Ref<HTMLButtonElement>;
 }
@@ -18,6 +21,8 @@ export function ShellButton({
   active,
   primary,
   destructive,
+  variant = "bordered",
+  controlSize = "regular",
   shape = "default",
   className,
   type = "button",
@@ -28,8 +33,9 @@ export function ShellButton({
       type={type}
       className={cn(
         "shell-btn",
+        `shell-btn-${primary ? "prominent" : variant}`,
+        `shell-btn-${controlSize}`,
         active && "is-active",
-        primary && "shell-btn-primary",
         destructive && "shell-btn-destructive",
         shape === "pill" && "shell-btn-pill",
         shape === "circle" && "shell-btn-circle",
@@ -41,6 +47,14 @@ export function ShellButton({
 }
 
 /** Square-hit-area icon button — a `ShellButton` locked to the control height. */
-export function ShellIconButton({ className, shape = "circle", ...rest }: ShellButtonProps) {
-  return <ShellButton shape={shape} className={cn("shell-btn-icon", className)} {...rest} />;
+export function ShellIconButton({ className, shape = "circle", controlSize = "large", ...rest }: ShellButtonProps) {
+  return (
+    <ShellButton
+      variant="plain"
+      shape={shape}
+      controlSize={controlSize}
+      className={cn("shell-btn-icon", className)}
+      {...rest}
+    />
+  );
 }

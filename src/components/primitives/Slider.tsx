@@ -19,6 +19,8 @@ export interface ShellSliderProps extends Omit<
   ticks?: readonly SliderTick[];
   leadingAccessory?: ReactNode;
   trailingAccessory?: ReactNode;
+  showValue?: "hover" | "always" | false;
+  formatValue?: (value: number) => ReactNode;
 }
 
 /**
@@ -36,11 +38,15 @@ export function ShellSlider({
   ticks,
   leadingAccessory,
   trailingAccessory,
+  showValue = "hover",
+  formatValue = (currentValue) => currentValue,
   className,
   style,
+  id,
   ...rest
 }: ShellSliderProps) {
   const generatedId = useId();
+  const inputId = id ?? generatedId;
   const listId = ticks?.length ? `${generatedId}-ticks` : undefined;
   const range = max - min;
   const progress = range > 0 ? Math.min(100, Math.max(0, ((value - min) / range) * 100)) : 0;
@@ -53,24 +59,47 @@ export function ShellSlider({
   return (
     <div className={cn("shell-slider-field", `shell-slider-field-${size}`, className)}>
       {leadingAccessory && <span className="shell-slider-accessory">{leadingAccessory}</span>}
-      <input
-        {...rest}
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        list={listId}
-        className="shell-slider"
-        style={sliderStyle}
-      />
-      {ticks?.length ? (
-        <datalist id={listId}>
-          {ticks.map((tick) => (
-            <option key={tick.value} value={tick.value} label={tick.label} />
-          ))}
-        </datalist>
-      ) : null}
+      <span className={cn("shell-slider-control", showValue === "always" && "shows-value")} style={sliderStyle}>
+        <input
+          {...rest}
+          id={inputId}
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          list={listId}
+          className="shell-slider"
+        />
+        {showValue && (
+          <output className="shell-slider-value" htmlFor={inputId}>
+            {formatValue(value)}
+          </output>
+        )}
+        {ticks?.length ? (
+          <>
+            <datalist id={listId}>
+              {ticks.map((tick) => (
+                <option key={tick.value} value={tick.value} label={tick.label} />
+              ))}
+            </datalist>
+            <span className="shell-slider-ticks" aria-hidden="true">
+              {ticks.map((tick) => {
+                const tickProgress = range > 0 ? ((tick.value - min) / range) * 100 : 0;
+                return (
+                  <span
+                    key={tick.value}
+                    className="shell-slider-tick"
+                    style={{ "--slider-tick": `${tickProgress}%` } as CSSProperties}
+                  >
+                    {tick.label && <span className="shell-slider-tick-label">{tick.label}</span>}
+                  </span>
+                );
+              })}
+            </span>
+          </>
+        ) : null}
+      </span>
       {trailingAccessory && <span className="shell-slider-accessory">{trailingAccessory}</span>}
     </div>
   );
