@@ -4058,6 +4058,40 @@
         "The Fourier coefficients use normalization $1/(2\\pi)$.",
         "The Cesàro mean is the average of the first $N$ partial sums."
       ],
+      "proof": {
+        "steps": [
+          {
+            "role": "part (a)",
+            "content": "Show that $F_N\\ge0$, $\\frac1{2\\pi}\\int F_N=1$, $\\int |F_N|$ is uniformly bounded, and the tail mass outside $|x|<\\delta$ tends to $0$.",
+            "uses": [
+              "fejer_kernel",
+              "good_kernel",
+              "dirichlet_kernel"
+            ]
+          },
+          {
+            "role": "part (b)",
+            "content": "Write $S_k(f)=f*D_k$, average over $k=0,\\dots,N-1$, and use $F_N=\\frac1N\\sum_{k=0}^{N-1}D_k$ to get $\\sigma_N(f)=f*F_N$.",
+            "uses": [
+              "partial_sum",
+              "fourier_coefficient",
+              "dirichlet_kernel",
+              "fejer_kernel",
+              "convolution",
+              "cesaro_summation"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "Since $F_N$ is a good kernel and $f\\in C(\\mathbb T)$, the good-kernel theorem gives $f*F_N\\to f$ uniformly. Therefore $\\sigma_N(f)\\to f$ uniformly.",
+            "uses": [
+              "good_kernel",
+              "fejer_theorem",
+              "continuous_functions_torus"
+            ]
+          }
+        ]
+      },
       "source": {
         "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 3",
         "ref": "tma4170v2026.pdf"
@@ -12874,6 +12908,21 @@
     },
     {
       "source": "tma4170_2026_problem_3",
+      "target": "continuous_functions_torus",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_3",
+      "target": "convolution",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_3",
+      "target": "dirichlet_kernel",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_3",
       "target": "fejer_kernel",
       "relation": "uses"
     },
@@ -12884,7 +12933,17 @@
     },
     {
       "source": "tma4170_2026_problem_3",
+      "target": "fourier_coefficient",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_3",
       "target": "good_kernel",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_3",
+      "target": "partial_sum",
       "relation": "uses"
     },
     {
