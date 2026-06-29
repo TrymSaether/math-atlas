@@ -1,19 +1,24 @@
-import { forwardRef, type HTMLAttributes, type MutableRefObject, type ReactNode, type Ref } from "react";
+import {
+  forwardRef,
+  type CSSProperties,
+  type HTMLAttributes,
+  type MutableRefObject,
+  type ReactNode,
+  type Ref,
+} from "react";
 import { useGlassPointer } from "../../hooks/useGlassPointer";
 import { cn } from "../../lib/utils";
 
-export type GlassMaterial = "thin" | "regular" | "thick";
+export type GlassVariant = "regular" | "clear";
 
 export interface GlassProps extends HTMLAttributes<HTMLDivElement> {
-  /** Material thickness — maps to the .glass-* classes in styles/glass.css. */
-  material?: GlassMaterial;
+  /** Liquid Glass variants exposed by Apple's Glass API. */
+  variant?: GlassVariant;
+  /** Enables the macOS 27 interactive press response. Use only on controls. */
+  interactive?: boolean;
+  /** Optional semantic tint; avoid tinting large navigation surfaces. */
+  tint?: string;
 }
-
-const MATERIAL_CLASS: Record<GlassMaterial, string> = {
-  thin: "glass-thin",
-  regular: "glass-regular",
-  thick: "glass-thick",
-};
 
 function mergeRefs<T>(...refs: Array<Ref<T> | undefined>) {
   return (node: T | null) => {
@@ -24,39 +29,35 @@ function mergeRefs<T>(...refs: Array<Ref<T> | undefined>) {
   };
 }
 
-/**
- * The Liquid Glass material primitive. Every floating surface in the shell —
- * search field, control cluster, popovers, the concept card — is a `Glass`, so
- * the translucency, blur budget, opaque fallback, panning guard, and
- * reduced-transparency degradation all live in one place (styles/glass.css).
- *
- * Owns only the material; radius, padding, and layout are the caller's via
- * `className`.
- */
+/** Liquid Glass for the functional layer: navigation and interactive chrome. */
 export const Glass = forwardRef<HTMLDivElement, GlassProps>(function Glass(
-  { material = "regular", className, ...rest },
+  { variant = "regular", interactive = false, tint, className, style, ...rest },
   ref,
 ) {
   const glassRef = useGlassPointer<HTMLDivElement>();
-  return <div ref={mergeRefs(glassRef, ref)} className={cn(MATERIAL_CLASS[material], className)} {...rest} />;
+  const glassStyle = tint ? ({ "--glass-tint": tint, ...style } as CSSProperties) : style;
+  return (
+    <div
+      ref={mergeRefs(glassRef, ref)}
+      className={cn("liquid-glass", `liquid-glass-${variant}`, interactive && "is-interactive", className)}
+      style={glassStyle}
+      {...rest}
+    />
+  );
 });
 
-/**
- * A horizontal cluster of controls sharing a single glass island — the top-bar
- * control groups and the mode switch. Owns the island geometry (`.shell-control-group`)
- * over the glass material.
- */
+/** A group of related controls that shares one morphable glass container. */
 export function GlassControlGroup({
   children,
-  material = "regular",
+  variant = "regular",
   className,
   ...rest
 }: HTMLAttributes<HTMLDivElement> & {
   children: ReactNode;
-  material?: GlassMaterial;
+  variant?: GlassVariant;
 }) {
   return (
-    <Glass material={material} className={cn("shell-control-group", className)} {...rest}>
+    <Glass variant={variant} interactive className={cn("shell-control-group", className)} {...rest}>
       {children}
     </Glass>
   );
