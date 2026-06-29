@@ -99,7 +99,6 @@ export function PathsPanel() {
             value={routeKind}
             onChange={setRouteKind}
             className="w-full"
-            selectionRole="button"
             options={[
               { id: "prereq", label: "Prerequisites" },
               { id: "path", label: "Between two" },
