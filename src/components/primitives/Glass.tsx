@@ -2,7 +2,7 @@ import { forwardRef, type HTMLAttributes, type MutableRefObject, type ReactNode,
 import { useGlassPointer } from "../../hooks/useGlassPointer";
 import { cn } from "../../lib/utils";
 
-export type GlassMaterial = "thin" | "regular" | "thick";
+export type GlassMaterial = "ultraThin" | "thin" | "regular" | "thick" | "ultraThick";
 
 export interface GlassProps extends HTMLAttributes<HTMLDivElement> {
   /** Material thickness — maps to the .glass-* classes in styles/glass.css. */
@@ -10,9 +10,11 @@ export interface GlassProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const MATERIAL_CLASS: Record<GlassMaterial, string> = {
+  ultraThin: "glass-ultra-thin",
   thin: "glass-thin",
   regular: "glass-regular",
   thick: "glass-thick",
+  ultraThick: "glass-ultra-thick",
 };
 
 function mergeRefs<T>(...refs: Array<Ref<T> | undefined>) {
@@ -42,9 +44,8 @@ export const Glass = forwardRef<HTMLDivElement, GlassProps>(function Glass(
 });
 
 /**
- * A horizontal cluster of controls sharing a single glass island — the top-bar
- * control groups and the mode switch. Owns the island geometry (`.shell-control-group`)
- * over the glass material.
+ * A horizontal cluster of controls sharing a glass island. Owns the common
+ * island geometry (`.shell-control-group`) over the selected material.
  */
 export function GlassControlGroup({
   children,

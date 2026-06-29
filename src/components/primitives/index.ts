@@ -6,8 +6,9 @@
  */
 export { Glass, GlassControlGroup, type GlassMaterial, type GlassProps } from "./Glass";
 export { ShellButton, ShellIconButton, type ShellButtonProps } from "./Button";
-export { ShellSegmented } from "./Segmented";
+export { ShellSegmented, type SegmentedOption, type SegmentedSelectionRole } from "./Segmented";
 export { ShellSwitch } from "./Switch";
 export { ShellChip, type ShellChipProps } from "./Chip";
 export { ShellPanelHeader } from "./Panel";
 export { ConfirmDialog } from "./ConfirmDialog";
+export { ShellSlider, type ShellSliderProps } from "./Slider";
