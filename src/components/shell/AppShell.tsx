@@ -15,7 +15,7 @@ import { StaleMapBanner } from "../StaleMapBanner";
 import { TopChrome } from "./TopChrome";
 import { ControlCluster } from "./ControlCluster";
 import { ConceptCard } from "./ConceptCard";
-import { ModeSwitch } from "./ModeSwitch";
+import { AppDock } from "./AppDock";
 import { PathsPanel } from "./PathsPanel";
 import { EditInspector } from "./EditInspector";
 import { Glass, ShellButton } from "../primitives";
@@ -120,7 +120,7 @@ export function AppShell() {
       </main>
 
       <TopChrome />
-      {onAtlas && map && <ModeSwitch />}
+      {map && <AppDock />}
       {onAtlas && map && <ControlCluster />}
       <CommandPalette />
     </div>

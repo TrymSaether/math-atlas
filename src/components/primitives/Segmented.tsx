@@ -13,14 +13,23 @@ export function ShellSegmented<T extends string>({
   className,
   hideLabels = false,
   selectionRole = "tab",
+  size = "regular",
 }: {
   label: string;
   value: T;
-  options: readonly { id: T; label: string; icon?: ReactNode; ariaLabel?: string; title?: string }[];
+  options: readonly {
+    id: T;
+    label: string;
+    content?: ReactNode;
+    icon?: ReactNode;
+    ariaLabel?: string;
+    title?: string;
+  }[];
   onChange: (id: T) => void;
   className?: string;
   hideLabels?: boolean | "responsive";
   selectionRole?: "tab" | "button";
+  size?: "small" | "regular" | "large";
 }) {
   const selectedIndex = Math.max(
     0,
@@ -62,7 +71,7 @@ export function ShellSegmented<T extends string>({
 
   return (
     <div
-      className={cn("shell-seg", className)}
+      className={cn("shell-seg", `shell-seg-${size}`, className)}
       role={selectionRole === "tab" ? "tablist" : "group"}
       aria-label={label}
       onKeyDown={onKeyDown}
@@ -96,7 +105,7 @@ export function ShellSegmented<T extends string>({
                 hideLabels === "responsive" && "shell-seg-label-responsive",
               )}
             >
-              {option.label}
+              {option.content ?? option.label}
             </span>
           </button>
         );

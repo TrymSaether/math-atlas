@@ -67,7 +67,7 @@ export function ConfirmDialog({
                 exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.99 }}
                 transition={{ duration: reduceMotion ? 0 : 0.18, ease: [0.2, 0.7, 0.2, 1] }}
               >
-                <Glass material="thick" className="shell-alert-dialog">
+                <Glass material="ultraThick" className="shell-alert-dialog">
                   <div className="shell-alert-copy">
                     <div className="shell-alert-icon" aria-hidden>
                       {icon ?? <WarningCircleIcon weight="regular" />}

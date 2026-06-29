@@ -11,3 +11,4 @@ export { ShellSwitch } from "./Switch";
 export { ShellChip, type ShellChipProps } from "./Chip";
 export { ShellPanelHeader } from "./Panel";
 export { ConfirmDialog } from "./ConfirmDialog";
+export { ShellSlider, type ShellSliderProps } from "./Slider";

@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import {
   MagnifyingGlassIcon,
-  CompassIcon,
-  BookOpenIcon,
-  CardsIcon,
-  FunctionIcon,
   SunIcon,
   MoonIcon,
   CaretDownIcon,
@@ -13,12 +9,12 @@ import {
   PlusIcon,
   ArrowCounterClockwiseIcon,
 } from "@phosphor-icons/react";
-import { useStore, type Surface } from "../../store";
+import { useStore } from "../../store";
 import { schemeFor, siblingOf } from "../../lib/themes";
 import { authEnabled } from "../../lib/authClient";
 import { cn } from "../../lib/utils";
 import { usePopoverDismiss } from "../../hooks/usePopover";
-import { ConfirmDialog, Glass, GlassControlGroup, ShellButton, ShellIconButton, ShellSegmented } from "../primitives";
+import { ConfirmDialog, Glass, ShellButton, ShellIconButton } from "../primitives";
 import { UserMenu } from "../auth/UserMenu";
 import { LogoMark } from "../Logo";
 
@@ -26,7 +22,7 @@ import { LogoMark } from "../Logo";
 function SearchField() {
   const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   return (
-    <Glass material="regular" className="shell-search">
+    <div className="shell-search">
       <button
         type="button"
         className="shell-search-button"
@@ -38,7 +34,7 @@ function SearchField() {
         <span className="shell-search-label">Search concepts, theorems…</span>
         <kbd className="shell-search-kbd">⌘K</kbd>
       </button>
-    </Glass>
+    </div>
   );
 }
 
@@ -103,7 +99,7 @@ function MapMenu() {
 
   return (
     <div className="relative" ref={ref}>
-      <Glass material="regular" className="shell-map-menu">
+      <div className="shell-map-menu">
         <ShellIconButton
           className="shell-map-mark"
           onClick={() => setSurface("atlas")}
@@ -126,11 +122,11 @@ function MapMenu() {
           <span className="shell-map-title-label">{title}</span>
           <CaretDownIcon className="shell-caret-icon" weight="bold" />
         </ShellButton>
-      </Glass>
+      </div>
       {open && (
         <Glass
           material="thick"
-          className="shell-panel absolute left-0 top-[calc(100%+8px)] z-(--z-popover) w-70 p-1.5"
+          className="shell-panel absolute left-0 top-[calc(100%+var(--shell-popover-gap))] z-(--z-popover) w-70 p-1.5"
           role="listbox"
           aria-label="Active map"
           onKeyDown={onListKeyDown}
@@ -151,7 +147,7 @@ function MapMenu() {
                 onClick={() => choose(entry.slug)}
               >
                 <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
-                {active && <CheckIcon className="h-4 w-4 shrink-0 text-fg-2" weight="bold" />}
+                {active && <CheckIcon className="h-4 w-4 shrink-0 text-white" weight="bold" />}
               </button>
             );
           })}
@@ -159,33 +155,6 @@ function MapMenu() {
         </Glass>
       )}
     </div>
-  );
-}
-
-const SURFACES: { id: Surface; label: string; Icon: typeof CompassIcon }[] = [
-  { id: "atlas", label: "Atlas", Icon: CompassIcon },
-  { id: "dictionary", label: "Index", Icon: BookOpenIcon },
-  { id: "flashcards", label: "Study", Icon: CardsIcon },
-  { id: "sandbox", label: "Sandbox", Icon: FunctionIcon },
-];
-
-/** Primary surface switch: Atlas (graph) / Index / Study / Sandbox. */
-function SurfaceNav() {
-  const surface = useStore((s) => s.surface);
-  const setSurface = useStore((s) => s.setSurface);
-  return (
-    <ShellSegmented
-      label="Surface navigation"
-      value={surface}
-      onChange={setSurface}
-      hideLabels="responsive"
-      className="shell-surface-nav"
-      options={SURFACES.map(({ id, label, Icon }) => ({
-        id,
-        label,
-        icon: <Icon className="shell-icon" weight="regular" />,
-      }))}
-    />
   );
 }
 
@@ -289,32 +258,25 @@ function TopRightControls() {
 
   return (
     <div className="shell-top-right-stack">
-      <GlassControlGroup className="shell-surface-island">
-        <SurfaceNav />
-      </GlassControlGroup>
-
       {showEditControls && (
-        <GlassControlGroup className="shell-edit-island">
+        <div className="shell-edit-island">
           <EditControls />
-        </GlassControlGroup>
+        </div>
       )}
 
-      <GlassControlGroup className="shell-global-island">
+      {showEditControls && <span className="shell-menu-divider" aria-hidden />}
+      <div className="shell-global-island">
         <ThemeToggle />
         {authEnabled && <UserMenu />}
-      </GlassControlGroup>
+      </div>
     </div>
   );
 }
 
-/**
- * Top Liquid Glass islands: map leading, search centered, and semantically split
- * trailing controls. Floats above the content layer; on narrow widths it wraps
- * gracefully.
- */
+/** Continuous ultra-thin menu bar: map, search, and window-level actions. */
 export function TopChrome() {
   return (
-    <div className="top-chrome">
+    <Glass material="ultraThin" className="top-chrome">
       <div className="top-chrome-map">
         <MapMenu />
       </div>
@@ -324,6 +286,6 @@ export function TopChrome() {
       <div className="top-chrome-right">
         <TopRightControls />
       </div>
-    </div>
+    </Glass>
   );
 }
