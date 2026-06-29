@@ -26,6 +26,7 @@ import { formatValue } from "../../lib/workspace/engine";
 import { PALETTE } from "../../lib/workspace/library";
 import type { Computed, FactStatus, GeomShape, Row } from "../../lib/workspace/types";
 import { MathText } from "../../lib/katex";
+import { ShellSlider } from "../primitives";
 import { MathField } from "./MathField";
 
 export function ExpressionPanel() {
@@ -252,20 +253,17 @@ function ParamSlider({
 }) {
   const [dragging, setDragging] = useState(false);
   const slider = row.slider ?? DEFAULT_SLIDER;
-  const progress = sliderProgress(value, slider.min, slider.max);
+  const progress = slider.max > slider.min ? ((value - slider.min) / (slider.max - slider.min)) * 100 : 0;
   const sliderStyle = {
-    color: row.color,
     "--slider-color": row.color,
-    "--slider-progress": `${progress}%`,
+    "--slider-progress": `${Math.min(100, Math.max(0, progress))}%`,
   } as CSSProperties;
-
   return (
     <div className="sandbox-param-slider mt-1 flex items-center gap-1.5" style={sliderStyle}>
       <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
       <div className="sandbox-slider-track min-w-0 flex-1">
         {dragging && <span className="sandbox-slider-bubble font-mono tabular-nums">{formatValue(value)}</span>}
-        <input
-          type="range"
+        <ShellSlider
           min={slider.min}
           max={slider.max}
           step={slider.step}
@@ -275,7 +273,9 @@ function ParamSlider({
           onPointerCancel={() => setDragging(false)}
           onPointerDown={() => setDragging(true)}
           onPointerUp={() => setDragging(false)}
-          className="ws-slider w-full"
+          accent={row.color}
+          size="small"
+          className="w-full"
         />
       </div>
       <NumBox label="Maximum value" value={slider.max} onChange={(max) => onConfig({ ...slider, max })} />
@@ -448,8 +448,3 @@ function statusLabel(status: FactStatus | "error"): string {
 }
 
 const asNumber = (v: unknown): number => (typeof v === "number" ? v : 0);
-
-function sliderProgress(value: number, min: number, max: number): number {
-  if (max <= min) return 0;
-  return Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100));
-}

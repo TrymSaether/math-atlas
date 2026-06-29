@@ -21,7 +21,6 @@ import {
   type Vec2,
 } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
-import { type FigureProps } from "./types";
 
 const X_DOMAIN: [number, number] = [-Math.PI, Math.PI];
 const KERNEL_Y: [number, number] = [-0.34, 1.12];
@@ -118,13 +117,7 @@ function tailBound(N: number, delta: number): number {
   return 1 / (N * Math.sin(delta / 2) ** 2);
 }
 
-function Sym({
-  color,
-  children,
-}: {
-  color: string;
-  children: ReactNode;
-}) {
+function Sym({ color, children }: { color: string; children: ReactNode }) {
   return (
     <span className="font-math" style={{ color }}>
       {children}
@@ -188,9 +181,13 @@ function KernelAssemblyPanel({ N }: { N: number }) {
 
       <div className="mt-2">
         <FormulaCard>
-          <Sym color={C.fejer}>F<sub>N</sub></Sym>
+          <Sym color={C.fejer}>
+            F<sub>N</sub>
+          </Sym>
           {" = (1/N) average of "}
-          <Sym color={C.dirichlet}>D<sub>0</sub>, …, D<sub>N−1</sub></Sym>
+          <Sym color={C.dirichlet}>
+            D<sub>0</sub>, …, D<sub>N−1</sub>
+          </Sym>
           {". The off-centre oscillations cancel, while the common peak at "}
           <Sym color={C.marker}>0</Sym>
           {" survives."}
@@ -224,12 +221,17 @@ function CesaroPanel({ N }: { N: number }) {
 
       <div className="mt-2">
         <FormulaCard>
-          <Sym color={C.sigma}>σ<sub>N</sub>(f)(x)</Sym>
+          <Sym color={C.sigma}>
+            σ<sub>N</sub>(f)(x)
+          </Sym>
           {" = (1/N)Σ"}
-          <Sym color={C.dirichlet}>S<sub>k</sub>(f)(x)</Sym>
+          <Sym color={C.dirichlet}>
+            S<sub>k</sub>(f)(x)
+          </Sym>
           {" = (1/2π)∫ "}
-          <Sym color={C.fejer}>F<sub>N</sub>(y)</Sym>
-          {" "}
+          <Sym color={C.fejer}>
+            F<sub>N</sub>(y)
+          </Sym>{" "}
           <Sym color={C.target}>f(x−y)</Sym>
           {" dy."}
         </FormulaCard>
@@ -250,14 +252,34 @@ function GoodKernelPanel({ N, delta, setDelta }: { N: number; delta: number; set
           <Polygon key={i} points={points} color={C.dirichlet} fillOpacity={0.1} strokeOpacity={0} />
         ))}
         <Line.Segment point1={[-Math.PI, 0]} point2={[Math.PI, 0]} color={DIA.ink} weight={STROKE.guide} />
-        <Line.Segment point1={[-delta, PROPERTY_Y[0]]} point2={[-delta, PROPERTY_Y[1]]} color={C.marker} weight={STROKE.guide} style="dashed" />
-        <Line.Segment point1={[delta, PROPERTY_Y[0]]} point2={[delta, PROPERTY_Y[1]]} color={C.marker} weight={STROKE.guide} style="dashed" />
+        <Line.Segment
+          point1={[-delta, PROPERTY_Y[0]]}
+          point2={[-delta, PROPERTY_Y[1]]}
+          color={C.marker}
+          weight={STROKE.guide}
+          style="dashed"
+        />
+        <Line.Segment
+          point1={[delta, PROPERTY_Y[0]]}
+          point2={[delta, PROPERTY_Y[1]]}
+          color={C.marker}
+          weight={STROKE.guide}
+          style="dashed"
+        />
         <FunctionCurve y={(x) => normalizedFejer(x, N)} domain={X_DOMAIN} color={C.fejer} weight={STROKE.curve} />
         <LaTeX at={[-delta - 0.2, 0.95]} tex={String.raw`-\delta`} color={C.marker} />
         <LaTeX at={[delta + 0.2, 0.95]} tex={String.raw`\delta`} color={C.marker} />
       </FigureFrame>
 
-      <RangeControl min={0.2} max={2.4} step={0.05} value={delta} onChange={setDelta} label={`\\delta = ${delta.toFixed(2)}`} ariaLabel="Good-kernel tail cutoff delta" />
+      <RangeControl
+        min={0.2}
+        max={2.4}
+        step={0.05}
+        value={delta}
+        onChange={setDelta}
+        label={`\\delta = ${delta.toFixed(2)}`}
+        ariaLabel="Good-kernel tail cutoff delta"
+      />
 
       <div className="mt-3 grid gap-2 text-caption-1 text-fg-2 md:grid-cols-3">
         <FormulaCard>
@@ -287,7 +309,7 @@ function GoodKernelPanel({ N, delta, setDelta }: { N: number; delta: number; set
  * standalone SVG artifact: formulas, plot colors, controls, and light/dark
  * behavior all inherit from the Math Atlas figure tokens.
  */
-export default function FejerExplorerFigure(_props: FigureProps) {
+export default function FejerExplorerFigure() {
   const [N, setN] = useState(8);
   const [delta, setDelta] = useState(0.65);
 

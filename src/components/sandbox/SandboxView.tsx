@@ -66,7 +66,11 @@ export function SandboxView() {
         {/* Saved views + view dock, right rail */}
         <div className="pointer-events-none absolute bottom-4 right-4 flex flex-col items-end gap-2">
           {ws.views.length > 0 && (
-            <Glass material="regular" className="pointer-events-auto flex items-center gap-0.5 rounded-full p-1">
+            <Glass
+              variant="regular"
+              interactive
+              className="pointer-events-auto flex items-center gap-0.5 rounded-full p-1"
+            >
               {ws.views.map((v) => (
                 <span key={v.id} className="flex items-center">
                   <button
@@ -89,7 +93,7 @@ export function SandboxView() {
               ))}
             </Glass>
           )}
-          <Glass material="regular" className="shell-utility-rail pointer-events-auto">
+          <Glass variant="regular" interactive className="shell-utility-rail pointer-events-auto">
             <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
               <Plus className="shell-icon" weight="regular" />
             </DockBtn>
