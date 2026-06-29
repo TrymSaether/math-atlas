@@ -17,12 +17,12 @@ import { useConceptView } from "../../lib/conceptView";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "../concept";
 import { shareUrl } from "../../hooks/useUrlSync";
 import { cn } from "../../lib/utils";
-import { Glass, ShellIconButton, ShellPanelHeader } from "../primitives";
+import { Material, ShellIconButton, ShellPanelHeader } from "../primitives";
 
 const USED_BY_INITIAL = 8;
 
 /**
- * The concept place-card — the deep-study surface. A left-docked Liquid Glass
+ * The concept place-card — the deep-study surface. A left-docked standard-material
  * card built entirely on the shared `useConceptView` + concept/* renderers
  * (same content as the Index detail and Study back), presented as one calm
  * scroll: identity, statement, figure, the facet stack, proof, then navigable
@@ -95,8 +95,8 @@ function CardContent({ nodeId }: { nodeId: string }) {
   };
 
   return (
-    <Glass
-      material="thick"
+    <Material
+      thickness="thick"
       className={cn(
         "shell-panel flex h-full flex-col transition-[width] duration-200",
         expanded ? "w-[min(580px,calc(100vw-24px))]" : "w-[min(400px,calc(100vw-24px))]",
@@ -194,6 +194,6 @@ function CardContent({ nodeId }: { nodeId: string }) {
           <p className="text-footnote italic text-fg-3">No written content recorded for this concept yet.</p>
         )}
       </div>
-    </Glass>
+    </Material>
   );
 }

@@ -2,11 +2,11 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { PlusIcon, PencilSimpleIcon } from "@phosphor-icons/react";
 import { useStore } from "../../store";
 import { NodeEditorPanel } from "../authoring/NodeEditorPanel";
-import { Glass, ShellButton } from "../primitives";
+import { Material, ShellButton } from "../primitives";
 
 /**
  * Shell-native Edit Mode inspector. The authoring engine still lives in
- * `NodeEditorPanel`; this component owns where editing appears in the Liquid Glass
+ * `NodeEditorPanel`; this component owns where editing appears in the material
  * shell and how empty/selected/create states are entered.
  */
 export function EditInspector() {
@@ -40,12 +40,12 @@ export function EditInspector() {
           transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.2, 0.7, 0.2, 1] }}
           className="shell-dock shell-dock-left pointer-events-auto"
         >
-          <Glass
-            material="thick"
+          <Material
+            thickness="thick"
             className="shell-panel edit-inspector flex h-full w-[min(460px,calc(100vw-24px))] flex-col"
           >
             <NodeEditorPanel editingId={editingId} map={map} mapId={mapId} onClose={close} />
-          </Glass>
+          </Material>
         </motion.aside>
       ) : (
         <motion.aside
@@ -56,8 +56,8 @@ export function EditInspector() {
           transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.2, 0.7, 0.2, 1] }}
           className="shell-dock shell-dock-left pointer-events-auto"
         >
-          <Glass
-            material="thick"
+          <Material
+            thickness="thick"
             className="shell-panel flex w-[min(340px,calc(100vw-24px))] flex-col gap-3 px-4 py-4"
             role="dialog"
             aria-label="Edit mode"
@@ -79,7 +79,7 @@ export function EditInspector() {
               <PlusIcon className="shell-icon" weight="regular" />
               New concept
             </ShellButton>
-          </Glass>
+          </Material>
         </motion.aside>
       )}
     </AnimatePresence>

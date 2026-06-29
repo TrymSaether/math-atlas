@@ -50,7 +50,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
 
   return (
     <Glass
-      material="thick"
+      variant="regular"
       className="shell-panel flex max-h-[min(78vh,580px)] w-75 flex-col"
       role="dialog"
       aria-label="Filters and display"

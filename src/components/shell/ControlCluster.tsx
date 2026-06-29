@@ -26,7 +26,7 @@ export function ControlCluster() {
           <LayersPanel onClose={() => setLayersOpen(false)} />
         </div>
       )}
-      <Glass material="regular" className="shell-utility-rail">
+      <Glass variant="regular" interactive className="shell-utility-rail">
         <ShellIconButton
           ref={triggerRef}
           active={layersOpen}

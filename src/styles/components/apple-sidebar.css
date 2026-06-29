@@ -6,8 +6,8 @@
 
 .apple-sidebar-dock {
   position: absolute;
-  inset-block: 12px;
-  inset-inline-start: 12px;
+  inset-block: 0;
+  inset-inline-start: 0;
   width: var(--hig-sidebar-w);
   z-index: var(--z-shell);
   font-family: var(--sf-pro);
@@ -17,8 +17,10 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-radius: var(--hig-radius-card);
+  border-width: 0 0.5px 0 0;
+  border-radius: 0;
   overflow: hidden;
+  box-shadow: 8px 0 28px rgb(var(--elevation-ink) / 0.09);
 }
 
 /* ---- Header: collapse toggle + account avatar ----------------------- */
@@ -90,7 +92,7 @@
   font-size: var(--sf-subhead);
   font-weight: var(--sf-weight-semibold);
   color: var(--sys-label);
-  padding: 16px 8px 5px;
+  padding: 14px 8px 5px;
   margin: 0;
 }
 
@@ -126,11 +128,11 @@
 }
 
 .apple-row.is-active {
-  background: var(--sys-blue);
-  color: #ffffff;
+  background: color-mix(in srgb, var(--mac27-accent) 18%, transparent);
+  color: var(--mac27-label);
 }
 .apple-row.is-active .apple-row-icon {
-  color: #ffffff;
+  color: var(--mac27-accent);
 }
 
 .apple-row-icon {
@@ -140,7 +142,7 @@
   color: var(--sys-blue);
 }
 .apple-row.is-active .apple-row-label {
-  font-weight: var(--sf-weight-medium);
+  font-weight: var(--mac27-sidebar-selection-weight);
 }
 .apple-row-label {
   font-size: var(--sf-subhead);

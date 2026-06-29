@@ -13,7 +13,7 @@ import { useRouteResult } from "../../lib/route";
 import { MathText } from "../../lib/katex";
 import { getDomainTone } from "../../lib/colors";
 import { cn } from "../../lib/utils";
-import { Glass, ShellButton, ShellIconButton, ShellPanelHeader, ShellSegmented, ShellSwitch } from "../primitives";
+import { Material, ShellButton, ShellIconButton, ShellPanelHeader, ShellSegmented, ShellSwitch } from "../primitives";
 
 function Slot({
   icon,
@@ -79,7 +79,7 @@ export function PathsPanel() {
 
   return (
     <aside className="shell-dock shell-dock-left pointer-events-auto">
-      <Glass material="thick" className="shell-panel flex h-full w-[min(340px,calc(100vw-24px))] flex-col">
+      <Material thickness="thick" className="shell-panel flex h-full w-[min(340px,calc(100vw-24px))] flex-col">
         <ShellPanelHeader title="Paths">
           <ShellIconButton onClick={() => setMode("explore")} aria-label="Close paths">
             <XIcon className="shell-icon" weight="regular" />
@@ -218,7 +218,7 @@ export function PathsPanel() {
             </>
           )}
         </div>
-      </Glass>
+      </Material>
     </aside>
   );
 }

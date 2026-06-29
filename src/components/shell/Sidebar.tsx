@@ -1,20 +1,10 @@
 import { useState, type ReactNode } from "react";
-import {
-  SidebarSimpleIcon,
-  MagnifyingGlassIcon,
-  CompassIcon,
-  PathIcon,
-  BookOpenIcon,
-  CardsIcon,
-  FunctionIcon,
-  CaretDownIcon,
-  SunIcon,
-  MoonIcon,
-} from "@phosphor-icons/react";
-import { useStore, type Surface, type AtlasMode } from "../../store";
+import { SidebarSimpleIcon, MagnifyingGlassIcon, CaretDownIcon, SunIcon, MoonIcon } from "@phosphor-icons/react";
+import { useStore } from "../../store";
 import { schemeFor, siblingOf } from "../../lib/themes";
 import { cn } from "../../lib/utils";
 import { Glass, ShellIconButton } from "../primitives";
+import { LIBRARY_DESTINATIONS, TOOL_DESTINATIONS, type ShellDestination } from "./destinations";
 
 /**
  * The Apple-Maps-style docked Liquid Glass sidebar — the shell's single
@@ -27,57 +17,35 @@ import { Glass, ShellIconButton } from "../primitives";
  * styles/components/apple-sidebar.css.
  */
 
-type Destination = {
-  id: string;
-  label: string;
-  Icon: typeof CompassIcon;
-  active: (s: { surface: Surface; mode: AtlasMode }) => boolean;
-  go: (set: { setSurface: (s: Surface) => void; setMode: (m: AtlasMode) => void }) => void;
-};
+function DestinationList({ destinations }: { destinations: readonly ShellDestination[] }) {
+  const surface = useStore((state) => state.surface);
+  const mode = useStore((state) => state.mode);
+  const setSurface = useStore((state) => state.setSurface);
+  const setMode = useStore((state) => state.setMode);
 
-const LIBRARY: Destination[] = [
-  {
-    id: "atlas",
-    label: "Atlas",
-    Icon: CompassIcon,
-    active: (s) => s.surface === "atlas" && s.mode === "explore",
-    go: ({ setSurface, setMode }) => {
-      setSurface("atlas");
-      setMode("explore");
-    },
-  },
-  {
-    id: "paths",
-    label: "Paths",
-    Icon: PathIcon,
-    active: (s) => s.surface === "atlas" && s.mode === "paths",
-    go: ({ setSurface, setMode }) => {
-      setSurface("atlas");
-      setMode("paths");
-    },
-  },
-  {
-    id: "dictionary",
-    label: "Index",
-    Icon: BookOpenIcon,
-    active: (s) => s.surface === "dictionary",
-    go: ({ setSurface }) => setSurface("dictionary"),
-  },
-  {
-    id: "flashcards",
-    label: "Study",
-    Icon: CardsIcon,
-    active: (s) => s.surface === "flashcards",
-    go: ({ setSurface }) => setSurface("flashcards"),
-  },
-  {
-    id: "sandbox",
-    label: "Sandbox",
-    Icon: FunctionIcon,
-    active: (s) => s.surface === "sandbox",
-    go: ({ setSurface }) => setSurface("sandbox"),
-  },
-];
+  return (
+    <ul className="apple-row-list">
+      {destinations.map((destination) => {
+        const Icon = destination.icon;
+        const isActive = destination.isActive({ surface, mode });
+        return (
+          <li key={destination.id}>
+            <button
+              type="button"
+              className={cn("apple-row", isActive && "is-active")}
+              aria-current={isActive ? "page" : undefined}
+              title={destination.description}
+              onClick={() => destination.activate({ setSurface, setMode })}
+            >
+              <Icon className="apple-row-icon" weight={isActive ? "fill" : "regular"} />
+              <span className="apple-row-label">{destination.label}</span>
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 
 /** A collapsible sidebar group with an Apple-style disclosure header. */
 function Section({
@@ -122,10 +90,6 @@ function ThemeToggle() {
 }
 
 export function Sidebar() {
-  const surface = useStore((s) => s.surface);
-  const mode = useStore((s) => s.mode);
-  const setSurface = useStore((s) => s.setSurface);
-  const setMode = useStore((s) => s.setMode);
   const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   const mapId = useStore((s) => s.mapId);
   const mapTitle = useStore((s) => s.catalog.find((e) => e.slug === mapId)?.title ?? mapId);
@@ -136,7 +100,8 @@ export function Sidebar() {
   const toggleSec = (id: string) =>
     setClosedSecs((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
 
@@ -152,7 +117,7 @@ export function Sidebar() {
 
   return (
     <aside className="apple-sidebar-dock" aria-label="Atlas navigation">
-      <Glass material="regular" className="apple-sidebar">
+      <Glass variant="regular" className="apple-sidebar">
         <header className="apple-sidebar-head">
           <ThemeToggle />
           <ShellIconButton aria-label="Hide sidebar" title="Hide sidebar" onClick={() => setCollapsed(true)}>
@@ -175,24 +140,11 @@ export function Sidebar() {
 
         <nav className="apple-sidebar-scroll" aria-label="Library">
           <Section title="Library" collapsed={closedSecs.has("library")} onToggle={() => toggleSec("library")}>
-            <ul className="apple-row-list">
-              {LIBRARY.map(({ id, label, Icon, active, go }) => {
-                const isActive = active({ surface, mode });
-                return (
-                  <li key={id}>
-                    <button
-                      type="button"
-                      className={cn("apple-row", isActive && "is-active")}
-                      aria-current={isActive ? "page" : undefined}
-                      onClick={() => go({ setSurface, setMode })}
-                    >
-                      <Icon className="apple-row-icon" weight={isActive ? "fill" : "regular"} />
-                      <span className="apple-row-label">{label}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+            <DestinationList destinations={LIBRARY_DESTINATIONS} />
+          </Section>
+
+          <Section title="Tools" collapsed={closedSecs.has("tools")} onToggle={() => toggleSec("tools")}>
+            <DestinationList destinations={TOOL_DESTINATIONS} />
           </Section>
 
           {domains.length > 0 && (

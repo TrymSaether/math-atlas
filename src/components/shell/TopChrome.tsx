@@ -26,7 +26,7 @@ import { LogoMark } from "../Logo";
 function SearchField() {
   const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   return (
-    <Glass material="regular" className="shell-search">
+    <Glass variant="regular" className="shell-search">
       <button
         type="button"
         className="shell-search-button"
@@ -103,7 +103,7 @@ function MapMenu() {
 
   return (
     <div className="relative" ref={ref}>
-      <Glass material="regular" className="shell-map-menu">
+      <Glass variant="regular" className="shell-map-menu">
         <ShellIconButton
           className="shell-map-mark"
           onClick={() => setSurface("atlas")}
@@ -129,7 +129,7 @@ function MapMenu() {
       </Glass>
       {open && (
         <Glass
-          material="thick"
+          variant="regular"
           className="shell-panel absolute left-0 top-[calc(100%+8px)] z-(--z-popover) w-70 p-1.5"
           role="listbox"
           aria-label="Active map"

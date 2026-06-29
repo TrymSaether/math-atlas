@@ -18,8 +18,7 @@ import { ControlCluster } from "./ControlCluster";
 import { ConceptCard } from "./ConceptCard";
 import { PathsPanel } from "./PathsPanel";
 import { EditInspector } from "./EditInspector";
-import { Glass, ShellButton } from "../primitives";
-import { LiquidGlassFilters } from "./LiquidGlassFilters";
+import { Material, ShellButton } from "../primitives";
 
 // The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
 // atlas's initial bundle stays light.
@@ -46,7 +45,10 @@ function MapStatus() {
   if (mapError) {
     return (
       <div className="flex h-full items-center justify-center p-6">
-        <Glass material="thick" className="shell-panel flex max-w-sm flex-col items-center gap-3 px-7 py-8 text-center">
+        <Material
+          thickness="thick"
+          className="shell-panel flex max-w-sm flex-col items-center gap-3 px-7 py-8 text-center"
+        >
           <WarningCircleIcon className="h-9 w-9 text-danger" weight="regular" />
           <h2 className="text-lg text-fg-1">Couldn’t load this map</h2>
           <p className="text-footnote leading-relaxed text-fg-3">{mapError}</p>
@@ -57,7 +59,7 @@ function MapStatus() {
           >
             Try again
           </ShellButton>
-        </Glass>
+        </Material>
       </div>
     );
   }
@@ -93,7 +95,6 @@ export function AppShell() {
 
   return (
     <div className="relative h-dvh w-screen overflow-hidden bg-bg text-fg-1">
-      <LiquidGlassFilters />
       <Background />
       {authEnabled && <SessionBridge />}
       {authEnabled && <StaleMapBanner />}

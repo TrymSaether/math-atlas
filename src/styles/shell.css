@@ -447,81 +447,243 @@
 }
 
 .shell-seg {
-  display: inline-flex;
-  gap: var(--shell-gap-sm);
-  padding: var(--shell-island-pad);
-  border-radius: var(--shell-island-radius);
-  background: color-mix(in srgb, var(--surface) 36%, transparent);
-  box-shadow:
-    inset 0 0 0 0.5px color-mix(in srgb, var(--fg-1) 7%, transparent),
-    inset 0 1px 0 color-mix(in srgb, #fff 30%, transparent);
+  --shell-seg-height: var(--mac27-control-regular);
+  --shell-seg-padding-x: 12px;
+  --shell-seg-radius: 7px;
+  --shell-seg-separator-height: 16px;
+  --shell-seg-font-size: var(--mac27-text-body);
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  overflow: hidden;
+  border: 0.5px solid color-mix(in srgb, var(--mac27-label) 12%, transparent);
+  border-radius: var(--shell-seg-radius);
+  background: var(--mac27-control-track);
+  font-family: var(--mac27-font);
+}
+
+.shell-seg-equal {
+  grid-auto-columns: minmax(0, 1fr);
 }
 
 .shell-seg-opt {
   position: relative;
+  z-index: 0;
   display: inline-flex;
-  min-width: var(--shell-control-h);
-  min-height: var(--shell-control-h);
+  min-width: 32px;
+  min-height: var(--shell-seg-height);
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  padding: 0 0.8rem;
-  border-radius: var(--radius-pill);
-  font-size: var(--type-footnote);
-  font-weight: 590;
+  padding: 0 var(--shell-seg-padding-x);
+  overflow: hidden;
+  border-radius: calc(var(--shell-seg-radius) - 1px);
+  color: var(--mac27-label);
+  font-size: var(--shell-seg-font-size);
+  font-weight: var(--mac27-weight-medium);
+  line-height: 16px;
+  text-overflow: ellipsis;
   white-space: nowrap;
+  outline: none;
+  transition: background-color var(--mac27-duration-interactive) var(--mac27-ease-interactive);
+}
+
+.shell-seg-opt + .shell-seg-opt::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0.5px;
+  height: var(--shell-seg-separator-height);
+  translate: 0 -50%;
+  background: var(--mac27-separator);
+  content: "";
+}
+
+.shell-seg-opt.is-active::before,
+.shell-seg-opt.is-active + .shell-seg-opt::before {
+  opacity: 0;
+}
+
+.shell-seg-icon {
+  display: inline-flex;
+  flex: none;
+}
+
+.shell-seg-icon > svg {
+  width: 1.05em;
+  height: 1.05em;
+}
+
+.shell-seg-mini {
+  --shell-seg-height: var(--mac27-control-mini);
+  --shell-seg-padding-x: 7px;
+  --shell-seg-radius: 5px;
+  --shell-seg-separator-height: 12px;
+  --shell-seg-font-size: var(--mac27-text-caption);
+}
+
+.shell-seg-small {
+  --shell-seg-height: var(--mac27-control-small);
+  --shell-seg-padding-x: 9px;
+  --shell-seg-radius: 6px;
+  --shell-seg-separator-height: 14px;
+  --shell-seg-font-size: var(--mac27-text-callout);
+}
+
+.shell-seg-large {
+  --shell-seg-height: var(--mac27-control-large);
+  --shell-seg-padding-x: 14px;
+  --shell-seg-radius: 9px;
+  --shell-seg-separator-height: 20px;
 }
 
 .shell-seg-opt.is-active {
   z-index: 1;
-  background: transparent;
-  color: var(--fg-1);
-  box-shadow: none;
+  background: var(--mac27-accent);
+  color: var(--fg-on-color);
 }
 
-.shell-seg-opt.is-active::before,
-.shell-switch::after {
-  background:
-    radial-gradient(120% 80% at 50% -18%, rgba(255, 255, 255, 0.74), transparent 58%),
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--surface) 96%, #fff 4%),
-      color-mix(in srgb, var(--surface) 82%, transparent)
-    );
+.shell-seg-opt:not(.is-active, :disabled):hover {
+  background: var(--mac27-fill-hover);
 }
 
-.shell-seg-opt.is-active::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: var(--z-below);
-  border-radius: inherit;
+.shell-seg-opt:not(:disabled):active {
+  background: var(--mac27-control-track-pressed);
+}
+
+.shell-seg-opt.is-active:not(:disabled):active {
+  background: color-mix(in srgb, var(--mac27-accent) 84%, black);
+}
+
+.shell-seg:has(.shell-seg-opt:focus-visible) {
+  outline: 3px solid color-mix(in srgb, var(--mac27-accent) 30%, transparent);
+  outline-offset: 2px;
+}
+
+.shell-seg-opt:disabled {
+  cursor: default;
+  opacity: var(--mac27-control-disabled);
+}
+
+.shell-seg.is-disabled {
   pointer-events: none;
-  box-shadow:
-    0 1px 1px color-mix(in srgb, #000 5%, transparent),
-    0 8px 18px color-mix(in srgb, #000 11%, transparent),
-    inset 0 1px 0 color-mix(in srgb, #fff 68%, transparent);
+  opacity: var(--mac27-control-disabled);
 }
 
-.shell-surface-nav .shell-seg-opt {
-  padding-inline: 0.8rem;
-}
-
-.shell-surface-island .shell-seg,
-.shell-top-right-island .shell-seg,
-.shell-mode-island .shell-seg {
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
+.shell-seg.w-full,
+.shell-seg[class*="w-full"] {
+  display: grid;
+  width: 100%;
 }
 
 .shell-seg.w-full .shell-seg-opt,
 .shell-seg[class*="w-full"] .shell-seg-opt {
-  flex: 1 1 0;
+  min-width: 0;
 }
 
 .shell-seg-label-responsive {
   display: none;
+}
+
+/* --- Sliders ----------------------------------------------------------- */
+.shell-slider-field {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--mac27-control-gap);
+  color: var(--mac27-secondary-label);
+}
+
+.shell-slider-accessory {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.shell-slider {
+  --slider-accent: var(--mac27-accent);
+  --slider-progress: 50%;
+  width: 100%;
+  min-width: 72px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+  appearance: none;
+  background: transparent;
+}
+
+.shell-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: var(--mac27-corner-capsule);
+  background: linear-gradient(
+    to right,
+    var(--slider-accent) 0 var(--slider-progress),
+    var(--mac27-control-track) var(--slider-progress) 100%
+  );
+  box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--mac27-label) 9%, transparent);
+}
+
+/* AppKit's linear slider uses a narrow lozenge rather than the iOS round thumb. */
+.shell-slider::-webkit-slider-thumb {
+  width: 7px;
+  height: 18px;
+  margin-top: -7px;
+  appearance: none;
+  border: 0.5px solid color-mix(in srgb, var(--mac27-label) 18%, transparent);
+  border-radius: 3.5px;
+  background: color-mix(in srgb, var(--surface) 96%, white);
+  box-shadow:
+    0 1px 2px rgb(var(--elevation-ink) / 0.2),
+    0 2px 5px rgb(var(--elevation-ink) / 0.16);
+}
+
+.shell-slider::-moz-range-track {
+  height: 4px;
+  border-radius: var(--mac27-corner-capsule);
+  background: var(--mac27-control-track);
+}
+
+.shell-slider::-moz-range-progress {
+  height: 4px;
+  border-radius: var(--mac27-corner-capsule);
+  background: var(--slider-accent);
+}
+
+.shell-slider::-moz-range-thumb {
+  width: 7px;
+  height: 18px;
+  border: 0.5px solid color-mix(in srgb, var(--mac27-label) 18%, transparent);
+  border-radius: 3.5px;
+  background: color-mix(in srgb, var(--surface) 96%, white);
+  box-shadow:
+    0 1px 2px rgb(var(--elevation-ink) / 0.2),
+    0 2px 5px rgb(var(--elevation-ink) / 0.16);
+}
+
+.shell-slider:focus-visible {
+  outline: none;
+}
+
+.shell-slider:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 1px 2px rgb(var(--elevation-ink) / 0.2),
+    0 0 0 4px color-mix(in srgb, var(--slider-accent) 24%, transparent);
+}
+
+.shell-slider:disabled {
+  cursor: default;
+  opacity: var(--mac27-control-disabled);
+}
+
+.shell-slider-field-small {
+  gap: 6px;
+}
+
+.shell-slider-field-small .shell-slider {
+  height: 16px;
 }
 
 /* --- Chips, rows, switches --------------------------------------------- */
