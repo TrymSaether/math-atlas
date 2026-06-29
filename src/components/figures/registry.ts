@@ -110,7 +110,7 @@ export const FIGURE_REGISTRY: Record<string, FigureComponent> = {
   ss2_6_ex5: lazy(() => import("./SeriesFigure")),
   ss2_6_ex8: lazy(() => import("./SeriesFigure")),
   // Summability kernels (Dirichlet / Fejér).
-  exam2026_p3: lazy(() => import("./FejerExplorerFigure")),
+  tma4170_2026_problem_3: lazy(() => import("./FejerExplorerFigure")),
   exam2025_p2: lazy(() => import("./FejerExplorerFigure")),
   ss2_6_ex15: lazy(() => import("./FejerExplorerFigure")),
   ss2_6_ex17b: lazy(() => import("./FejerExplorerFigure")),

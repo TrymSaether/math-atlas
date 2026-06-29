@@ -1,0 +1,107 @@
+/* ========================================================================
+   Apple HIG token layer — iOS 26 / macOS 26 "Tahoe" (Liquid Glass)
+   ------------------------------------------------------------------------
+   Canonical Apple design values, expressed as named tokens for the
+   Apple-Maps-style shell (docked sidebar + floating glass control stack).
+
+   Apple ships ADAPTIVE SEMANTIC colors (systemBlue, label, separator…), not
+   guaranteed hex — the rendered value depends on the trait environment. The
+   hex below are the standard community-measured equivalents for the default
+   light/dark environments, which is the best a web target can do. Sources:
+     • HIG → Materials, Color, Typography, Layout
+       https://developer.apple.com/design/human-interface-guidelines/materials
+     • Liquid Glass (WWDC25): functional-layer-only material; "lensing" optics;
+       .regular vs .clear; capsule controls; concentric containers.
+     • SF Pro: Text ≤19pt / Display ≥20pt; 9 weights.
+
+   HIG rule honored structurally: Liquid Glass is the FUNCTIONAL layer
+   (sidebar, controls, navigation) — never the content layer. The graph canvas
+   stays plain; only the chrome in this file's components is glass.
+
+   These are additive, Apple-namespaced tokens (--sys-*, --sf-*, --hig-*). They
+   do not override the foundation/theme cascade; shell components opt in.
+   ======================================================================== */
+
+:root {
+  /* ---- System font (SF Pro via the platform font) -------------------- */
+  --sf-pro: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro",
+    system-ui, "Helvetica Neue", sans-serif;
+
+  /* ---- System colors — light environment ----------------------------- */
+  --sys-blue: #007aff; /* systemBlue   — accent / active selection */
+  --sys-indigo: #5856d6; /* systemIndigo */
+  --sys-teal: #30b0c7; /* systemTeal   */
+  --sys-green: #34c759; /* systemGreen  */
+  --sys-red: #ff3b30; /* systemRed    — destructive */
+
+  --sys-label: #000000; /* label            — primary text */
+  --sys-label-2: rgba(60, 60, 67, 0.6); /* secondaryLabel  — section headers */
+  --sys-label-3: rgba(60, 60, 67, 0.3); /* tertiaryLabel   — hints */
+  --sys-separator: rgba(60, 60, 67, 0.29); /* separator      — hairlines */
+  --sys-fill: rgba(120, 120, 128, 0.2); /* tertiarySystemFill — hover wash */
+  --sys-bg: #ffffff; /* systemBackground */
+  --sys-grouped-bg: #f2f2f7; /* systemGroupedBackground — sidebar base (systemGray6) */
+
+  --sys-gray: #8e8e93;
+  --sys-gray-2: #aeaeb2;
+  --sys-gray-3: #c7c7cc;
+  --sys-gray-4: #d1d1d6;
+  --sys-gray-5: #e5e5ea;
+  --sys-gray-6: #f2f2f7;
+
+  /* ---- SF type scale (default Dynamic Type, pt≈px) ------------------- */
+  --sf-large-title: 34px;
+  --sf-title-1: 28px;
+  --sf-title-2: 22px; /* concept name in the detail state */
+  --sf-title-3: 20px;
+  --sf-headline: 17px; /* semibold */
+  --sf-body: 17px; /* sidebar rows */
+  --sf-callout: 16px;
+  --sf-subhead: 15px;
+  --sf-footnote: 13px; /* section headers, secondary rows */
+  --sf-caption-1: 12px;
+  --sf-caption-2: 11px;
+  --sf-weight-regular: 400;
+  --sf-weight-medium: 500;
+  --sf-weight-semibold: 600;
+
+  /* ---- HIG layout & control sizing ----------------------------------- */
+  --hig-sidebar-w: 280px; /* floating sidebar width (Liquid Glass spec) */
+  --hig-tap: 44px; /* minimum hit target & sidebar row height */
+  --hig-control: 44px; /* icon-only glass control (circle) */
+  --hig-control-lg: 56px; /* large floating action button */
+  --hig-control-sm: 28px; /* compact control / search height */
+  --hig-radius-card: 16px; /* concentric container corners */
+  --hig-radius-control: 999px; /* capsule — the default control shape */
+  --hig-inset: 16px; /* standard sidebar content inset */
+  --hig-row-gap: 2px; /* gap between sidebar rows */
+  --hig-stack-gap: 12px; /* gap between floating glass controls */
+
+  /* ---- Motion (Liquid Glass "bouncy" morphs) ------------------------- */
+  --hig-ease-bounce: cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  --hig-dur-morph: 350ms;
+}
+
+:root.dark {
+  /* ---- System colors — dark environment ------------------------------ */
+  --sys-blue: #0a84ff;
+  --sys-indigo: #5e5ce6;
+  --sys-teal: #40c8e0;
+  --sys-green: #30d158;
+  --sys-red: #ff453a;
+
+  --sys-label: #ffffff;
+  --sys-label-2: rgba(235, 235, 245, 0.6);
+  --sys-label-3: rgba(235, 235, 245, 0.3);
+  --sys-separator: rgba(84, 84, 88, 0.65);
+  --sys-fill: rgba(120, 120, 128, 0.36);
+  --sys-bg: #000000;
+  --sys-grouped-bg: #1c1c1e;
+
+  --sys-gray: #8e8e93;
+  --sys-gray-2: #636366;
+  --sys-gray-3: #48484a;
+  --sys-gray-4: #3a3a3c;
+  --sys-gray-5: #2c2c2e;
+  --sys-gray-6: #1c1c1e;
+}

@@ -1,0 +1,177 @@
+/* ========================================================================
+   Apple-Maps docked sidebar — the shell's single navigation+search surface.
+   Liquid Glass functional layer (material from glass.css), HIG geometry and
+   type from apple-hig.css. Floats inset above the graph content layer.
+   ======================================================================== */
+
+.apple-sidebar-dock {
+  position: absolute;
+  inset-block: 12px;
+  inset-inline-start: 12px;
+  width: var(--hig-sidebar-w);
+  z-index: var(--z-shell);
+  font-family: var(--sf-pro);
+}
+
+.apple-sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: var(--hig-radius-card);
+  overflow: hidden;
+}
+
+/* ---- Header: collapse toggle + account avatar ----------------------- */
+.apple-sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px 12px 4px;
+}
+
+/* ---- Search: capsule field that opens the palette ------------------- */
+.apple-sidebar-search {
+  padding: 4px 12px 8px;
+}
+
+.apple-search {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  height: 44px;
+  padding: 0 13px;
+  border-radius: 12px;
+  background: var(--sys-fill);
+  color: var(--sys-label-2);
+  cursor: text;
+  transition: background var(--dur-micro) var(--ease-standard);
+}
+.apple-search:hover {
+  background: color-mix(in srgb, var(--sys-fill) 70%, var(--sys-label) 6%);
+}
+.apple-search-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.apple-search-label {
+  flex: 1;
+  min-width: 0;
+  text-align: start;
+  font-size: var(--sf-body);
+  color: var(--sys-label-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.apple-search-kbd {
+  flex-shrink: 0;
+}
+.apple-search-kbd {
+  font-family: var(--sf-pro);
+  font-size: var(--sf-caption-1);
+  color: var(--sys-label-3);
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--sys-label) 6%, transparent);
+}
+
+/* ---- Scroll region: sections + rows --------------------------------- */
+.apple-sidebar-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 8px 8px;
+  scrollbar-width: thin;
+}
+
+.apple-section {
+  font-size: var(--sf-subhead);
+  font-weight: var(--sf-weight-semibold);
+  color: var(--sys-label);
+  padding: 16px 8px 5px;
+  margin: 0;
+}
+
+.apple-row-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hig-row-gap);
+}
+
+.apple-row,
+.apple-foot-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: var(--hig-tap);
+  padding: 0 10px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--sys-label);
+  cursor: pointer;
+  text-align: start;
+  transition:
+    background var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+.apple-row:hover,
+.apple-foot-row:hover {
+  background: var(--sys-fill);
+}
+
+.apple-row.is-active {
+  background: var(--sys-blue);
+  color: #ffffff;
+}
+.apple-row.is-active .apple-row-icon {
+  color: #ffffff;
+}
+
+.apple-row-icon {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+  color: var(--sys-blue);
+}
+.apple-row.is-active .apple-row-label {
+  font-weight: var(--sf-weight-medium);
+}
+.apple-row-label {
+  font-size: var(--sf-subhead);
+  line-height: 1.2;
+}
+
+.apple-row-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin: 0 5px;
+}
+
+/* ---- Footer --------------------------------------------------------- */
+.apple-sidebar-foot {
+  padding: 6px 8px 10px;
+  border-top: 0.5px solid var(--sys-separator);
+}
+.apple-foot-row {
+  min-height: 36px;
+  color: var(--sys-label-2);
+}
+.apple-foot-row .apple-row-icon {
+  color: var(--sys-label-2);
+}
+
+/* ---- Collapsed: a single floating reveal control -------------------- */
+.apple-sidebar-reveal {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: var(--z-shell);
+}

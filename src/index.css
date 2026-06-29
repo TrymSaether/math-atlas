@@ -4,6 +4,7 @@
 /* Design-system dependency order: sources -> foundations -> roles -> bridges. */
 @import "./styles/theme.css";
 @import "./styles/foundation.css";
+@import "./styles/apple-hig.css";
 @import "./styles/tokens.css";
 @import "./styles/diagram-tokens.css";
 @import "./styles/tailwind-theme.css";
@@ -12,6 +13,7 @@
 @import "./styles/base.css";
 @import "./styles/glass.css";
 @import "./styles/shell.css";
+@import "./styles/components/apple-sidebar.css";
 @import "./styles/components/command-palette.css";
 @import "./styles/utilities.css";
 

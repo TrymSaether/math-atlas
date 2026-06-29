@@ -13,9 +13,9 @@ import { CommandPalette } from "../CommandPalette";
 import { SessionBridge } from "../auth/SessionBridge";
 import { StaleMapBanner } from "../StaleMapBanner";
 import { TopChrome } from "./TopChrome";
+import { Sidebar } from "./Sidebar";
 import { ControlCluster } from "./ControlCluster";
 import { ConceptCard } from "./ConceptCard";
-import { ModeSwitch } from "./ModeSwitch";
 import { PathsPanel } from "./PathsPanel";
 import { EditInspector } from "./EditInspector";
 import { Glass, ShellButton } from "../primitives";
@@ -119,8 +119,8 @@ export function AppShell() {
         )}
       </main>
 
-      <TopChrome />
-      {onAtlas && map && <ModeSwitch />}
+      {!onAtlas && <TopChrome />}
+      {onAtlas && map && <Sidebar />}
       {onAtlas && map && <ControlCluster />}
       <CommandPalette />
     </div>
