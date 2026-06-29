@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SignInIcon, SignOutIcon, UserIcon } from "@phosphor-icons/react";
 import { signOut, useSession } from "../../lib/authClient";
-import { Glass, ShellButton, ShellIconButton } from "../primitives";
+import { Material, ShellButton, ShellIconButton } from "../primitives";
 import { AuthDialog } from "./AuthDialog";
 
 /**
@@ -50,8 +50,8 @@ export function UserMenu() {
         <span className="shell-account-initial">{initial}</span>
       </ShellIconButton>
       {menuOpen && (
-        <Glass
-          material="thick"
+        <Material
+          thickness="thick"
           className="shell-panel shell-account-menu absolute right-0 top-[calc(100%+8px)] z-(--z-banner) w-[min(240px,calc(100vw-24px))]"
         >
           <div className="shell-account-summary">
@@ -72,7 +72,7 @@ export function UserMenu() {
             <SignOutIcon className="shell-icon" />
             Sign out
           </ShellButton>
-        </Glass>
+        </Material>
       )}
     </div>
   );

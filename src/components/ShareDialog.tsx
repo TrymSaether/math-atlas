@@ -88,7 +88,7 @@ export function ShareDialog({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
                   transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
-                  className="glass-thick flex flex-col gap-3 rounded-2xl p-5"
+                  className="standard-material standard-material-thick flex flex-col gap-3 rounded-2xl p-5"
                 >
                   <h2 className="text-lg text-fg-1">Share “{title}”</h2>
                   <p className="text-caption-2 text-fg-3">

@@ -11,10 +11,10 @@ token, a control, or a floating surface.
 | **Foundation**         | Structural scales that are _not_ color: elevation (shadow) and z-index (stacking order)                        | `src/styles/foundation.css`     |
 | **Semantic color**     | Surface/status/palette/plot/figure roles derived from theme hues                                               | `src/styles/tokens.css`         |
 | **Tailwind bridge**    | Exposes tokens as `--color-*` / `--text-*` utilities                                                           | `src/styles/tailwind-theme.css` |
-| **Material**           | The Liquid Glass surfaces (`.glass*`)                                                                          | `src/styles/glass.css`          |
+| **Materials**          | Liquid Glass (`regular`/`clear`) for functional chrome; standard material thickness for content panels         | `src/styles/glass.css`          |
 | **Shell**              | The floating control layer: geometry tokens + `.shell-*` rules                                                 | `src/styles/shell.css`          |
 | **Global resets**      | Element defaults, focus ring, selection                                                                        | `src/styles/base.css`           |
-| **Primitives (React)** | Behavior + ARIA for controls, mapped to `.shell-*` / `.glass-*`                                                | `src/components/primitives/`    |
+| **Primitives (React)** | Behavior + ARIA for controls, Liquid Glass, and standard materials                                             | `src/components/primitives/`    |
 | **Feature UI**         | Panels, dialogs, the graph canvas                                                                              | `src/components/**`             |
 
 The rule: a layer may consume tokens/classes from the layers above it, never
@@ -49,8 +49,10 @@ shared `:root.dark` rules handle the scheme — don't copy scheme overrides.
 ## Adding a control
 
 Use a primitive from `src/components/primitives` (`ShellButton`,
-`ShellIconButton`, `ShellSegmented`, `ShellSwitch`, `ShellChip`,
-`ShellPanelHeader`, `Glass`, `GlassControlGroup`). If a new variant is needed, add
+`ShellIconButton`, `ShellSegmented`, `ShellSlider`, `ShellSwitch`, `ShellChip`,
+`ShellPanelHeader`, `Glass`, `GlassControlGroup`, `Material`). `Glass` is only for
+navigation and interactive chrome; use `Material` for content panels and dialogs.
+If a new variant is needed, add
 it to the primitive + its `.shell-*` rule — not as a one-off `className` at the
 call site. The interactive figures keep their own `figures/SegmentedControl`
 (KaTeX-labelled, figure token vocabulary) on purpose; it is not the shell control.
