@@ -20,6 +20,20 @@ export function fejerKernel(x: number, N: number): number {
   return (r * r) / (N + 1);
 }
 
+/**
+ * Fejér kernel in the common exam convention
+ * F_N(x) = (1/N)(sin(Nx/2)/sin(x/2))², with F_N(0)=N.
+ *
+ * The existing `fejerKernel(x, N)` uses the shifted spectral convention with
+ * peak N+1. Keep this separate so figures can match a problem statement exactly.
+ */
+export function fejerExamKernel(x: number, N: number): number {
+  const denom = Math.sin(x / 2);
+  if (Math.abs(denom) < EPS) return N;
+  const r = Math.sin((N * x) / 2) / denom;
+  return (r * r) / N;
+}
+
 /** Poisson kernel P_r(θ) = (1−r²)/(1−2r cosθ + r²), 0 ≤ r < 1; P_r(0) = (1+r)/(1−r). */
 export function poissonKernel(theta: number, r: number): number {
   return (1 - r * r) / (1 - 2 * r * Math.cos(theta) + r * r);
@@ -48,6 +62,26 @@ export function squareWavePartialSum(x: number, terms: number): number {
     s += Math.sin(k * x) / k;
   }
   return (4 / Math.PI) * s;
+}
+
+/**
+ * Symmetric Fourier partial sum order for the square wave:
+ * S_N(x) keeps all odd sine modes k ≤ N.
+ */
+export function squareWavePartialSumOrder(x: number, N: number): number {
+  let s = 0;
+  for (let k = 1; k <= N; k += 2) s += Math.sin(k * x) / k;
+  return (4 / Math.PI) * s;
+}
+
+/**
+ * Cesàro mean σ_N = (1/N)Σ_{k=0}^{N−1}S_k for the square wave, where S_k is the
+ * symmetric partial sum of order k. Used to compare Dirichlet and Fejér behavior.
+ */
+export function cesaroSquareWaveOrder(x: number, N: number): number {
+  let s = 0;
+  for (let k = 0; k < N; k++) s += squareWavePartialSumOrder(x, k);
+  return s / N;
 }
 
 // ---------------------------------------------------------------------------
