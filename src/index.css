@@ -23,3 +23,7 @@
 @import "./styles/components/atlas-diagrams.css";
 @import "./styles/components/sandbox.css";
 @import "./styles/vendor/react-flow.css";
+
+/* Rebuilt design system — canonical token layer (delete legacy imports above
+   as surfaces migrate onto this; see src/design/README.md). */
+@import "./design/tokens.css";

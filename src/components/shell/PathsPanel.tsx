@@ -157,9 +157,7 @@ export function PathsPanel() {
             </button>
           </div>
 
-          {noPath && (
-            <p className="paths-hint paths-hint-card">No dependency path connects these two concepts.</p>
-          )}
+          {noPath && <p className="paths-hint paths-hint-card">No dependency path connects these two concepts.</p>}
 
           {!hasGoal && !noPath && (
             <p className="paths-hint">
