@@ -1,5 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { signIn, signInWithGoogle, signUp } from "../../lib/authClient";
 import { ShellButton } from "../primitives";

@@ -5,8 +5,9 @@ import {
   getBezierPath,
   getSmoothStepPath,
   getStraightPath,
+  type Edge,
   type EdgeProps,
-} from "reactflow";
+} from "@xyflow/react";
 import { edgeLabel } from "../data/relations";
 import { getEdgeStyle } from "../lib/relationStyle";
 import { prefersReducedMotion } from "../lib/utils";
@@ -26,13 +27,14 @@ interface Data {
   dim?: boolean;
   highlight?: boolean;
   routeReveal?: RouteReveal;
+  [key: string]: unknown;
 }
 
 /**
  * Each edge declares its own <marker> so the arrowhead inherits the edge color.
  * Marker ids are namespaced by edge id to avoid SVG id collisions.
  */
-export function TopoEdgeView(props: EdgeProps<Data>) {
+export function TopoEdgeView(props: EdgeProps<Edge<Data>>) {
   const { sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data } = props;
   const edgeStyle = useStore((s) => s.edgeStyle);
   const edgeLabelStyle = useStore((s) => s.edgeLabelStyle);

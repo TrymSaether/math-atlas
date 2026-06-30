@@ -1,5 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { TrashIcon, LinkSimpleIcon, CheckIcon } from "@phosphor-icons/react";
 import { listCollaborators, addCollaborator, removeCollaborator, type Collaborator } from "../data/mapsApi";

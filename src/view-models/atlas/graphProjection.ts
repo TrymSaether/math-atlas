@@ -1,4 +1,4 @@
-import type { Edge, Node } from "reactflow";
+import type { Edge, Node } from "@xyflow/react";
 import type { LoadedMap, MapId } from "../../data";
 import {
   ATLAS_NODE_HEIGHT,
@@ -35,6 +35,15 @@ export interface GraphNodeViewData {
   routePulseDelay: number | undefined;
   routeRunKey: number;
   routeEndpoint: "from" | "to" | undefined;
+  [key: string]: unknown;
+}
+
+export interface GraphEdgeViewData {
+  edge: LoadedMap["data"]["edges"][number];
+  highlight: boolean;
+  dim: boolean;
+  routeReveal: { delay: number; runKey: number; color: string } | undefined;
+  [key: string]: unknown;
 }
 
 export interface GraphProjectionInput {
@@ -63,7 +72,7 @@ export interface GraphProjectionInput {
 export interface GraphProjection {
   nodes: Node[];
   conceptNodes: Node<GraphNodeViewData>[];
-  edges: Edge[];
+  edges: Edge<GraphEdgeViewData>[];
   activeLayout: AtlasLayout;
   nodeDataCache: Map<string, GraphNodeViewData>;
   visibleIds: Set<string>;
@@ -367,7 +376,7 @@ export function buildGraphProjection(input: GraphProjectionInput): GraphProjecti
     };
   });
 
-  const edges: Edge[] = [];
+  const edges: Edge<GraphEdgeViewData>[] = [];
   for (const edge of filteredEdges) {
     const highlight = highlightedEdgeIds.has(edge.id);
     const inFocus = !focusIds || (focusIds.has(edge.from) && focusIds.has(edge.to));

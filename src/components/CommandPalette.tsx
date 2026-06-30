@@ -1,6 +1,6 @@
 import { Command } from "cmdk";
 import * as Dialog from "@radix-ui/react-dialog";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useStore } from "../store";
 import { getDomainTone } from "../lib/colors";

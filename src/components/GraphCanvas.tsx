@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import ReactFlow, { useReactFlow, useViewport } from "reactflow";
+import { ReactFlow, useReactFlow, useViewport } from "@xyflow/react";
 import type { LoadedMap, MapId } from "../data";
 import { savedViewportFor, saveViewport } from "../infrastructure/storage/viewportStorage";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH } from "../lib/atlasLayout";

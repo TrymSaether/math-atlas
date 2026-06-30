@@ -1,4 +1,4 @@
-import type { NodeProps } from "reactflow";
+import type { Node, NodeProps } from "@xyflow/react";
 import type { MapId } from "../data";
 
 import { DomainGlyph } from "./DomainGlyph";
@@ -15,9 +15,10 @@ interface Data {
   tint: string;
   border: string;
   shape?: "rect" | "circle";
+  [key: string]: unknown;
 }
 
-export function DomainRegionNode({ data }: NodeProps<Data>) {
+export function DomainRegionNode({ data }: NodeProps<Node<Data>>) {
   const isCircle = data.shape === "circle";
   const glyphId = data.domainId ? getDomainGlyphId({ mapId: data.mapId, domainId: data.domainId }) : null;
 

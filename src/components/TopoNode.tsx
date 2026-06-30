@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef, type CSSProperties } from "react";
 import { ScrollIcon, FlaskIcon, ChartLineIcon } from "@phosphor-icons/react";
-import { Handle, Position, type NodeProps } from "reactflow";
+import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 import { getDomainTone } from "../lib/colors";
 import { MathText } from "../lib/katex";
 import { CATEGORY_META, categoryOf, kindAbbrev, railBackground, type NodeCategory } from "../lib/nodeCategory";
@@ -44,6 +44,7 @@ interface Data {
   routePulseDelay?: number;
   routeRunKey?: number;
   routeEndpoint?: "from" | "to";
+  [key: string]: unknown;
 }
 
 function handleStyle(color?: string): CSSProperties {
@@ -57,7 +58,7 @@ const HANDLE_SIDES = [
   { id: "bottom", position: Position.Bottom },
 ] as const;
 
-function TopoNodeViewComponent({ data }: NodeProps<Data>) {
+function TopoNodeViewComponent({ data }: NodeProps<Node<Data>>) {
   const { node, dim, isSelected, isRelated, hasIncoming, hasOutgoing, handleColor } = data;
   const select = useStore((s) => s.select);
   const routeMode = useStore((s) => s.routeMode);

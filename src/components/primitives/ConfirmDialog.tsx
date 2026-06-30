@@ -1,6 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { WarningCircleIcon } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState, type ReactNode } from "react";
 import { Material } from "./Material";
 import { ShellButton } from "./Button";

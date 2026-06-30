@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { useReactFlow, useViewport } from "reactflow";
+import { useReactFlow, useViewport } from "@xyflow/react";
 import { PlusIcon, MinusIcon, CornersOutIcon, FunnelSimpleIcon } from "@phosphor-icons/react";
 import { usePopoverDismiss } from "../../hooks/usePopover";
 import { Glass, ShellIconButton } from "../primitives";

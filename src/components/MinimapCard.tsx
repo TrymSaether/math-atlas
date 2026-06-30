@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { MouseEvent } from "react";
-import { useReactFlow, useStore as useReactFlowStore, useViewport, type Node } from "reactflow";
+import { useReactFlow, useStore as useReactFlowStore, useViewport, type Node } from "@xyflow/react";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, type DomainBounds } from "../lib/atlasLayout";
 import { getMutedDomainTone } from "../lib/colors";
 import type { GraphNode } from "../types";
