@@ -170,15 +170,10 @@ function TopoNodeViewComponent({ data }: NodeProps<Node<Data>>) {
               style={{ background: tone.color }}
               aria-hidden
             >
-              <CategoryIcon className="h-[10px] w-[10px]" weight="bold" style={{ color: "var(--fg-on-color)" }} />
+              <CategoryIcon className="h-[10px] w-[10px]" style={{ color: "var(--fg-on-color)" }} />
             </span>
           ) : (
-            <CategoryIcon
-              className="h-[13px] w-[13px] shrink-0"
-              weight="regular"
-              style={{ color: "var(--fg-3)" }}
-              aria-hidden
-            />
+            <CategoryIcon className="h-[13px] w-[13px] shrink-0" style={{ color: "var(--fg-3)" }} aria-hidden />
           )}
           {/* Precise kind (Thm / Lem / …) + reference number. The icon already
               carries the category; this word disambiguates within it, told in

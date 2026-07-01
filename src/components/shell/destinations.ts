@@ -1,4 +1,4 @@
-import { BookOpenIcon, CardsIcon, CompassIcon, FunctionIcon, PathIcon, type Icon } from "@phosphor-icons/react";
+import { BookOpen, Compass, Route, Variable, WalletCards, type LucideIcon } from "lucide-react";
 import type { AtlasMode, Surface } from "../../store";
 
 export interface ShellDestinationState {
@@ -15,7 +15,7 @@ export interface ShellDestination {
   id: "atlas" | "paths" | "dictionary" | "flashcards" | "sandbox";
   label: string;
   description: string;
-  icon: Icon;
+  icon: LucideIcon;
   section: "library" | "tools";
   isActive: (state: ShellDestinationState) => boolean;
   activate: (actions: ShellDestinationActions) => void;
@@ -26,7 +26,7 @@ export const SHELL_DESTINATIONS: readonly ShellDestination[] = [
     id: "atlas",
     label: "Atlas",
     description: "Explore the concept map",
-    icon: CompassIcon,
+    icon: Compass,
     section: "library",
     isActive: ({ surface, mode }) => surface === "atlas" && mode === "explore",
     activate: ({ setSurface, setMode }) => {
@@ -38,7 +38,7 @@ export const SHELL_DESTINATIONS: readonly ShellDestination[] = [
     id: "paths",
     label: "Paths",
     description: "Plan a guided study route",
-    icon: PathIcon,
+    icon: Route,
     section: "library",
     isActive: ({ surface, mode }) => surface === "atlas" && mode === "paths",
     activate: ({ setSurface, setMode }) => {
@@ -50,7 +50,7 @@ export const SHELL_DESTINATIONS: readonly ShellDestination[] = [
     id: "dictionary",
     label: "Index",
     description: "Browse concepts and collections",
-    icon: BookOpenIcon,
+    icon: BookOpen,
     section: "library",
     isActive: ({ surface }) => surface === "dictionary",
     activate: ({ setSurface }) => setSurface("dictionary"),
@@ -59,7 +59,7 @@ export const SHELL_DESTINATIONS: readonly ShellDestination[] = [
     id: "flashcards",
     label: "Study",
     description: "Review saved concepts",
-    icon: CardsIcon,
+    icon: WalletCards,
     section: "library",
     isActive: ({ surface }) => surface === "flashcards",
     activate: ({ setSurface }) => setSurface("flashcards"),
@@ -68,7 +68,7 @@ export const SHELL_DESTINATIONS: readonly ShellDestination[] = [
     id: "sandbox",
     label: "Sandbox",
     description: "Experiment with expressions",
-    icon: FunctionIcon,
+    icon: Variable,
     section: "tools",
     isActive: ({ surface }) => surface === "sandbox",
     activate: ({ setSurface }) => setSurface("sandbox"),

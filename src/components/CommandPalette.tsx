@@ -1,7 +1,8 @@
-import { Command } from "cmdk";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Surface, spring } from "@/design";
 import { useStore } from "../store";
 import { getDomainTone } from "../lib/colors";
 import { kindIcon } from "../lib/nodeCategoryIcons";
@@ -51,36 +52,31 @@ export function CommandPalette() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-(--z-modal) backdrop-blur-[2px]"
-                style={{ background: "color-mix(in srgb, var(--bg-deep) 55%, transparent)" }}
+                className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px]"
               />
             </Dialog.Overlay>
-            <Dialog.Content asChild>
-              <div className="fixed left-1/2 top-1/2 z-(--z-modal) w-155 max-w-[92vw] -translate-x-1/2 -translate-y-1/2">
+            <Dialog.Content asChild aria-describedby={undefined}>
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: -8, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.98 }}
+                transition={reduceMotion ? { duration: 0 } : spring.gentle}
+                className="fixed left-1/2 top-[16%] z-50 w-[620px] max-w-[92vw] -translate-x-1/2"
+              >
                 <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
-                <Dialog.Description className="sr-only">Jump to a concept or switch fields.</Dialog.Description>
-                <motion.div
-                  initial={reduceMotion ? false : { opacity: 0, y: -12, scale: 0.99 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
-                >
-                  <Command className="command-palette standard-material standard-material-thick" loop>
-                    <div className="command-palette-input-row">
-                      <Command.Input
-                        data-no-focus-ring
-                        value={query}
-                        onValueChange={setQuery}
-                        placeholder="Search concepts, definitions, theorems…"
-                        className="command-palette-input"
-                      />
-                    </div>
-                    <Command.List className="command-palette-list panel-scrollbar">
-                      <Command.Empty className="command-palette-empty">No results.</Command.Empty>
+                <Surface material="thick" reactive className="overflow-hidden">
+                  <Command loop className="bg-transparent text-foreground">
+                    <CommandInput
+                      value={query}
+                      onValueChange={setQuery}
+                      placeholder="Search concepts, definitions, theorems…"
+                    />
+                    <CommandList className="max-h-[min(60vh,420px)]">
+                      <CommandEmpty>No results.</CommandEmpty>
 
-                      <Command.Group heading="Fields" className="command-palette-group">
+                      <CommandGroup heading="Fields">
                         {catalog.map((entry) => (
-                          <Item
+                          <CommandItem
                             key={entry.slug}
                             value={`field ${entry.title}`}
                             onSelect={() => {
@@ -88,69 +84,60 @@ export function CommandPalette() {
                               setOpen(false);
                             }}
                           >
-                            <span className="text-footnote text-(--fg-1)">Open {entry.title}</span>
-                          </Item>
+                            Open {entry.title}
+                          </CommandItem>
                         ))}
-                      </Command.Group>
+                      </CommandGroup>
 
                       {data && (
-                        <Command.Group heading="Concepts" className="command-palette-group">
+                        <CommandGroup heading="Concepts">
                           {data.nodes.map((n) => {
                             const tone = getDomainTone(n.domain);
-                            const CategoryIcon = kindIcon(n.kind);
+                            const Icon = kindIcon(n.kind);
                             return (
-                              <Item
+                              <CommandItem
                                 key={n.id}
                                 value={`${n.label} ${n.kind} ${n.tags.join(" ")}`}
                                 onSelect={() => {
                                   select(n.id);
                                   setOpen(false);
                                 }}
+                                className="gap-2.5"
                               >
-                                <span className="flex w-full items-center gap-2.5">
-                                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: tone.color }} />
-                                  <span
-                                    className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
-                                    style={{ background: tone.tint, color: tone.color }}
-                                  >
-                                    <CategoryIcon className="h-2.5 w-2.5" weight="bold" aria-hidden />
-                                  </span>
-                                  <span className="w-24 shrink-0 text-caption-1 font-medium uppercase tracking-label-tight text-(--fg-3)">
-                                    {KIND_LABEL[n.kind]}
-                                  </span>
-                                  <span className="min-w-0 flex-1 truncate text-footnote text-(--fg-1)">
-                                    <MathText text={n.label} />
-                                  </span>
-                                  <span className="ml-2 max-w-35 truncate text-caption-1 text-(--fg-3)">
-                                    {n.topicCluster}
-                                  </span>
+                                <span className="size-2 shrink-0 rounded-full" style={{ background: tone.color }} />
+                                <span
+                                  className="flex size-4 shrink-0 items-center justify-center rounded-full"
+                                  style={{ background: tone.tint, color: tone.color }}
+                                >
+                                  <Icon className="size-2.5" aria-hidden />
                                 </span>
-                              </Item>
+                                <span className="w-24 shrink-0 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                                  {KIND_LABEL[n.kind]}
+                                </span>
+                                <span className="min-w-0 flex-1 truncate text-sm text-foreground">
+                                  <MathText text={n.label} />
+                                </span>
+                                <span className="ml-2 max-w-36 truncate text-xs text-muted-foreground">
+                                  {n.topicCluster}
+                                </span>
+                              </CommandItem>
                             );
                           })}
-                        </Command.Group>
+                        </CommandGroup>
                       )}
-                    </Command.List>
+                    </CommandList>
 
-                    <div className="command-palette-footer">
+                    <div className="flex items-center justify-between border-t border-border px-3 py-2 text-xs text-muted-foreground">
                       <span>↑↓ navigate · ↵ select · esc close</span>
                       <span className="font-mono">⌘K</span>
                     </div>
                   </Command>
-                </motion.div>
-              </div>
+                </Surface>
+              </motion.div>
             </Dialog.Content>
           </Dialog.Portal>
         )}
       </AnimatePresence>
     </Dialog.Root>
-  );
-}
-
-function Item({ children, onSelect, value }: { children: React.ReactNode; onSelect: () => void; value?: string }) {
-  return (
-    <Command.Item value={value} onSelect={onSelect} className="command-palette-item">
-      {children}
-    </Command.Item>
   );
 }

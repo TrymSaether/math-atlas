@@ -34,8 +34,11 @@
   --muted: #eeeef1;
   --muted-foreground: #6e6e73; /* Apple secondary label */
 
-  --accent: #e9e9ee; /* shadcn neutral hover surface (NOT the brand) */
-  --accent-foreground: #1d1d1f;
+  /* shadcn "accent" = the neutral hover surface. Named -surface so it can't
+     collide with the legacy brand `--accent` (which wins specificity under
+     [data-theme]); brand lives in --primary. */
+  --accent-surface: #e9e9ee;
+  --accent-surface-foreground: #1d1d1f;
 
   --destructive: #ff3b30; /* Apple system red */
   --destructive-foreground: #ffffff;
@@ -93,8 +96,8 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent-surface);
+  --color-accent-foreground: var(--accent-surface-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);

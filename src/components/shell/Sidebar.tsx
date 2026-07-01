@@ -1,12 +1,5 @@
-import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
-import {
-  SidebarSimpleIcon,
-  MagnifyingGlassIcon,
-  CaretDownIcon,
-  SunIcon,
-  MoonIcon,
-  MapPinIcon,
-} from "@phosphor-icons/react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { ChevronDown, MapPin, Moon, PanelLeft, Search, Sun } from "lucide-react";
 import { useStore } from "../../store";
 import { schemeFor, siblingOf } from "../../lib/themes";
 import { getDomainTone } from "../../lib/colors";
@@ -14,28 +7,26 @@ import { getDomainGlyphId } from "../domainGlyphRegistry";
 import { DomainGlyph } from "../DomainGlyph";
 import { MathText } from "../../lib/katex";
 import { cn } from "../../lib/utils";
-import { Glass, ShellIconButton } from "../primitives";
+import { Button } from "@/components/ui/button";
+import { Surface } from "@/design";
 import { LIBRARY_DESTINATIONS, TOOL_DESTINATIONS, type ShellDestination } from "./destinations";
 
 /**
- * The Apple-Maps-style docked Liquid Glass sidebar — the shell's single
- * navigation+search surface. Per the HIG, Liquid Glass is the functional layer
- * floating above the content (the graph canvas stays plain). Surfaces, search,
- * and (later) the selected-concept detail all live here as one scroll, the way
- * Maps folds Pinned/Guides/Routes/Recents/place-cards into one sidebar.
- *
- * Token grounding lives in styles/apple-hig.css; layout in
- * styles/components/apple-sidebar.css.
+ * The docked liquid-glass sidebar — the shell's single navigation + search
+ * surface. Built on the rebuilt design system: a `thin` glass Surface, shadcn
+ * Button, lucide icons, and design tokens. Structural dock geometry still reads
+ * the legacy shell metrics (--shell-edge / --hig-sidebar-w / --z-shell) until a
+ * layout-token layer replaces them.
  */
 
 function DestinationList({ destinations }: { destinations: readonly ShellDestination[] }) {
-  const surface = useStore((state) => state.surface);
-  const mode = useStore((state) => state.mode);
-  const setSurface = useStore((state) => state.setSurface);
-  const setMode = useStore((state) => state.setMode);
+  const surface = useStore((s) => s.surface);
+  const mode = useStore((s) => s.mode);
+  const setSurface = useStore((s) => s.setSurface);
+  const setMode = useStore((s) => s.setMode);
 
   return (
-    <ul className="apple-row-list">
+    <ul className="flex flex-col gap-0.5">
       {destinations.map((destination) => {
         const Icon = destination.icon;
         const isActive = destination.isActive({ surface, mode });
@@ -43,13 +34,16 @@ function DestinationList({ destinations }: { destinations: readonly ShellDestina
           <li key={destination.id}>
             <button
               type="button"
-              className={cn("apple-row", isActive && "is-active")}
               aria-current={isActive ? "page" : undefined}
               title={destination.description}
               onClick={() => destination.activate({ setSurface, setMode })}
+              className={cn(
+                "flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left transition-colors",
+                isActive ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent",
+              )}
             >
-              <Icon className="apple-row-icon" weight={isActive ? "fill" : "regular"} />
-              <span className="apple-row-label">{destination.label}</span>
+              <Icon className={cn("size-[19px] shrink-0", isActive ? "text-primary" : "text-muted-foreground")} />
+              <span className={cn("text-subhead", isActive && "font-medium")}>{destination.label}</span>
             </button>
           </li>
         );
@@ -58,7 +52,7 @@ function DestinationList({ destinations }: { destinations: readonly ShellDestina
   );
 }
 
-/** A collapsible sidebar group with an Apple-style disclosure header. */
+/** A collapsible sidebar group with a disclosure header. */
 function Section({
   title,
   collapsed,
@@ -71,10 +65,20 @@ function Section({
   children: ReactNode;
 }) {
   return (
-    <div className="apple-sec">
-      <button type="button" className="apple-section" onClick={onToggle} aria-expanded={!collapsed}>
-        <span className="apple-section-title">{title}</span>
-        <CaretDownIcon className={cn("apple-section-caret", collapsed && "is-collapsed")} weight="bold" />
+    <div className="mt-0.5">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={!collapsed}
+        className="group flex w-full items-center gap-1.5 px-2 pt-3.5 pb-1 text-left"
+      >
+        <span className="text-footnote font-semibold tracking-wide text-muted-foreground">{title}</span>
+        <ChevronDown
+          className={cn(
+            "size-3 text-muted-foreground opacity-0 transition-[transform,opacity] group-hover:opacity-70",
+            collapsed && "-rotate-90 opacity-70",
+          )}
+        />
       </button>
       {!collapsed && children}
     </div>
@@ -86,18 +90,16 @@ function ThemeToggle() {
   const setTheme = useStore((s) => s.setTheme);
   const isDark = schemeFor(theme) === "dark";
   return (
-    <ShellIconButton
-      className="apple-head-btn"
+    <Button
+      variant="ghost"
+      size="icon"
+      className="size-8 text-muted-foreground"
       aria-label={isDark ? "Switch to light appearance" : "Switch to dark appearance"}
       title={isDark ? "Light" : "Dark"}
       onClick={() => setTheme(siblingOf(theme))}
     >
-      {isDark ? (
-        <SunIcon className="shell-icon" weight="regular" />
-      ) : (
-        <MoonIcon className="shell-icon" weight="regular" />
-      )}
-    </ShellIconButton>
+      {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+    </Button>
   );
 }
 
@@ -106,8 +108,11 @@ function ConceptGlyph({ mapId, domainId }: { mapId: string; domainId: string }) 
   const tone = getDomainTone(domainId);
   const glyphId = getDomainGlyphId({ mapId, domainId });
   return (
-    <span className="apple-glyph" style={{ "--apple-glyph-tone": tone.color } as CSSProperties}>
-      {glyphId ? <DomainGlyph id={glyphId} size={16} /> : <MapPinIcon weight="fill" />}
+    <span
+      className="flex size-[30px] shrink-0 items-center justify-center rounded-full text-white"
+      style={{ background: tone.color, boxShadow: "inset 0 0.5px 0 rgb(255 255 255 / 0.28)" }}
+    >
+      {glyphId ? <DomainGlyph id={glyphId} size={16} /> : <MapPin className="size-4" />}
     </span>
   );
 }
@@ -132,23 +137,30 @@ function RecentsSection() {
   if (items.length === 0) return null;
 
   return (
-    <div className="apple-sec">
-      <div className="apple-section">
-        <span className="apple-section-title">Recents</span>
-        <button type="button" className="apple-section-action" onClick={clearRecents}>
+    <div className="mt-0.5">
+      <div className="flex items-center justify-between gap-2 px-2 pt-3.5 pb-1">
+        <span className="text-footnote font-semibold tracking-wide text-muted-foreground">Recents</span>
+        <button type="button" className="text-footnote font-medium text-primary hover:underline" onClick={clearRecents}>
           Clear
         </button>
       </div>
-      <ul className="apple-cell-list">
+      <ul className="[&>li+li>button]:border-t [&>li+li>button]:border-border">
         {items.map((node) => (
           <li key={node.id}>
-            <button type="button" className="apple-cell" onClick={() => select(node.id)} title={node.label}>
+            <button
+              type="button"
+              onClick={() => select(node.id)}
+              title={node.label}
+              className="flex min-h-[52px] w-full items-center gap-3 rounded-[10px] px-2.5 py-[7px] text-left transition-colors hover:bg-accent"
+            >
               <ConceptGlyph mapId={mapId} domainId={node.domain} />
-              <span className="apple-cell-text">
-                <span className="apple-cell-title">
+              <span className="flex min-w-0 flex-1 flex-col gap-px">
+                <span className="truncate text-subhead font-medium text-foreground">
                   <MathText text={node.label} />
                 </span>
-                <span className="apple-cell-sub">{map?.domainById.get(node.domain)?.label ?? node.topicCluster}</span>
+                <span className="truncate text-caption text-muted-foreground">
+                  {map?.domainById.get(node.domain)?.label ?? node.topicCluster}
+                </span>
               </span>
             </button>
           </li>
@@ -167,8 +179,8 @@ export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [closedSecs, setClosedSecs] = useState<Set<string>>(() => new Set());
 
-  // Let the left-docked panels (concept card, paths, inspector) reflow to the
-  // screen edge when the sidebar is hidden — see .shell-dock-left in shell.css.
+  // Let the left-docked panels reflow to the screen edge when the sidebar is
+  // hidden — see .shell-dock-left in shell.css.
   useEffect(() => {
     const root = document.documentElement;
     if (collapsed) root.dataset.sidebarCollapsed = "true";
@@ -177,6 +189,7 @@ export function Sidebar() {
       delete root.dataset.sidebarCollapsed;
     };
   }, [collapsed]);
+
   const toggleSec = (id: string) =>
     setClosedSecs((prev) => {
       const next = new Set(prev);
@@ -187,48 +200,57 @@ export function Sidebar() {
 
   if (collapsed) {
     return (
-      <div className="apple-sidebar-reveal">
-        <ShellIconButton
-          className="apple-head-btn"
+      <div className="absolute top-4 left-4 z-[var(--z-shell,30)]">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-8 text-muted-foreground"
           aria-label="Show sidebar"
           title="Show sidebar"
           onClick={() => setCollapsed(false)}
         >
-          <SidebarSimpleIcon className="shell-icon" weight="regular" />
-        </ShellIconButton>
+          <PanelLeft className="size-4" />
+        </Button>
       </div>
     );
   }
 
   return (
-    <aside className="apple-sidebar-dock" aria-label="Atlas navigation">
-      <Glass variant="regular" className="apple-sidebar">
-        <header className="apple-sidebar-head">
+    <aside
+      className="absolute inset-[var(--shell-edge,12px)] z-[var(--z-shell,30)] w-[var(--hig-sidebar-w,290px)]"
+      aria-label="Atlas navigation"
+    >
+      <Surface material="thin" className="flex h-full flex-col overflow-hidden">
+        <header className="flex items-center justify-end gap-1 px-3 pt-2.5 pb-1">
           <ThemeToggle />
-          <ShellIconButton
-            className="apple-head-btn"
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-8 text-muted-foreground"
             aria-label="Hide sidebar"
             title="Hide sidebar"
             onClick={() => setCollapsed(true)}
           >
-            <SidebarSimpleIcon className="shell-icon" weight="regular" />
-          </ShellIconButton>
+            <PanelLeft className="size-4" />
+          </Button>
         </header>
 
-        <div className="apple-sidebar-search">
+        <div className="px-3 pt-1 pb-2">
           <button
             type="button"
-            className="apple-search"
             onClick={() => setPaletteOpen(true)}
             aria-label="Search concepts and theorems"
+            className="flex h-10 w-full items-center gap-2 rounded-full bg-muted px-3.5 text-muted-foreground transition-colors hover:bg-accent"
           >
-            <MagnifyingGlassIcon className="apple-search-icon" weight="regular" />
-            <span className="apple-search-label">Search concepts, theorems…</span>
-            <kbd className="apple-search-kbd">⌘K</kbd>
+            <Search className="size-[18px] shrink-0" />
+            <span className="min-w-0 flex-1 truncate text-left text-body">Search concepts, theorems…</span>
+            <kbd className="shrink-0 rounded bg-foreground/[0.06] px-1.5 py-px text-caption text-muted-foreground">
+              ⌘K
+            </kbd>
           </button>
         </div>
 
-        <nav className="apple-sidebar-scroll" aria-label="Library">
+        <nav className="min-h-0 flex-1 overflow-y-auto px-2 pt-1 pb-2" aria-label="Library">
           <Section title="Library" collapsed={closedSecs.has("library")} onToggle={() => toggleSec("library")}>
             <DestinationList destinations={LIBRARY_DESTINATIONS} />
           </Section>
@@ -239,15 +261,18 @@ export function Sidebar() {
 
           {domains.length > 0 && (
             <Section title={mapTitle} collapsed={closedSecs.has("domains")} onToggle={() => toggleSec("domains")}>
-              <ul className="apple-row-list">
+              <ul className="flex flex-col gap-0.5">
                 {domains.map((d) => (
                   <li key={d.id}>
-                    <button type="button" className="apple-row">
+                    <button
+                      type="button"
+                      className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-foreground transition-colors hover:bg-accent"
+                    >
                       <span
-                        className="apple-row-dot"
-                        style={{ background: `var(--domain-${d.palette}, var(--sys-gray))` }}
+                        className="mx-[5px] size-[11px] shrink-0 rounded-full"
+                        style={{ background: getDomainTone(d.id).color }}
                       />
-                      <span className="apple-row-label">{d.label}</span>
+                      <span className="text-subhead">{d.label}</span>
                     </button>
                   </li>
                 ))}
@@ -257,7 +282,7 @@ export function Sidebar() {
 
           <RecentsSection />
         </nav>
-      </Glass>
+      </Surface>
     </aside>
   );
 }

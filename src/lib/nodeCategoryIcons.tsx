@@ -1,31 +1,31 @@
 /**
- * Category → Phosphor icon mapping. Kept separate from ./nodeCategory so that the
- * (React-free) category data can be reused by Node tooling; this is the view half
- * that pulls in the icon components.
+ * Category → icon mapping. Kept separate from ./nodeCategory so that the
+ * (React-free) category data can be reused by node tooling; this is the view half
+ * that pulls in the icon components. Uses lucide-react (the app's icon library).
  */
 import {
-  CircleIcon,
-  DiamondIcon,
-  CompassToolIcon,
-  CubeIcon,
-  PencilLineIcon,
-  ProhibitIcon,
-  ScrollIcon,
-  FlaskIcon,
-  TagIcon,
-  type Icon,
-} from "@phosphor-icons/react";
+  Ban,
+  Box,
+  Circle,
+  Diamond,
+  DraftingCompass,
+  FlaskConical,
+  PencilLine,
+  Scroll,
+  Tag,
+  type LucideIcon,
+} from "lucide-react";
 import { categoryOf, type NodeCategory } from "./nodeCategory";
 
-export const CATEGORY_ICON: Record<NodeCategory, Icon> = {
-  definition: CircleIcon,
-  structure: CubeIcon,
-  theorem: DiamondIcon,
-  property: TagIcon,
-  construction: CompassToolIcon,
-  example: FlaskIcon,
-  proof: ScrollIcon,
-  exercise: PencilLineIcon,
+export const CATEGORY_ICON: Record<NodeCategory, LucideIcon> = {
+  definition: Circle,
+  structure: Box,
+  theorem: Diamond,
+  property: Tag,
+  construction: DraftingCompass,
+  example: FlaskConical,
+  proof: Scroll,
+  exercise: PencilLine,
 };
 
 /**
@@ -35,12 +35,12 @@ export const CATEGORY_ICON: Record<NodeCategory, Icon> = {
  * ("where the property fails"), so they get a prohibition glyph instead of the
  * example flask.
  */
-export const KIND_ICON_OVERRIDE: Record<string, Icon> = {
-  counterexample: ProhibitIcon,
-  non_example: ProhibitIcon,
+export const KIND_ICON_OVERRIDE: Record<string, LucideIcon> = {
+  counterexample: Ban,
+  non_example: Ban,
 };
 
 /** Icon for a raw concept kind: a per-kind override if any, else its category icon. */
-export function kindIcon(kind: string): Icon {
+export function kindIcon(kind: string): LucideIcon {
   return KIND_ICON_OVERRIDE[kind] ?? CATEGORY_ICON[categoryOf(kind)];
 }
