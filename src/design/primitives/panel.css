@@ -1,0 +1,24 @@
+/*
+ * Panel dock geometry — positions a Surface as one of the shell's side columns
+ * (concept card, paths, inspector). The left dock opens as a second column beside
+ * the navigation sidebar and reflows to the window edge when the sidebar
+ * collapses. Shell metrics are read with fallbacks so the panel survives the
+ * legacy layer's removal (Phase 5); reconcile the fallbacks into design tokens
+ * when --shell-edge / --hig-sidebar-w retire.
+ */
+
+.ds-panel {
+  pointer-events: auto;
+}
+
+.ds-panel--left {
+  position: absolute;
+  top: var(--shell-edge, 14px);
+  bottom: var(--shell-edge, 14px);
+  left: calc(var(--shell-edge, 14px) + var(--hig-sidebar-w, 280px) + var(--shell-gap-md, 8px));
+  z-index: var(--z-shell, 20);
+}
+
+:root[data-sidebar-collapsed="true"] .ds-panel--left {
+  left: var(--shell-edge, 14px);
+}

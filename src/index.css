@@ -13,7 +13,6 @@
 @import "./styles/base.css";
 @import "./styles/glass.css";
 @import "./styles/shell.css";
-@import "./styles/components/apple-sidebar.css";
 @import "./styles/utilities.css";
 
 /* Feature and integration styles. */
