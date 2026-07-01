@@ -1,23 +1,95 @@
-import { XIcon } from "@phosphor-icons/react";
+import { type CSSProperties, type ReactNode } from "react";
+import { X } from "lucide-react";
 import { useStore } from "../../store";
 import { getDomainTone } from "../../lib/colors";
 import { KIND_LABEL, type NodeKind } from "../../types";
-import {
-  Glass,
-  ShellButton,
-  ShellChip,
-  ShellIconButton,
-  ShellPanelHeader,
-  ShellSegmented,
-  ShellSwitch,
-} from "../primitives";
-import { useEffect, useRef } from "react";
+import { cn } from "../../lib/utils";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Surface } from "@/design";
+
+/** A filter pill with an active (brand-tinted) state and an optional tone dot. */
+function Chip({
+  active,
+  onClick,
+  dotColor,
+  style,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  dotColor?: string;
+  style?: CSSProperties;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      style={style}
+      className={cn(
+        "flex items-center gap-1.5 rounded-full border px-3 py-1 text-footnote transition-colors",
+        active
+          ? "border-primary/25 bg-primary/10 text-primary"
+          : "border-transparent bg-muted text-foreground hover:bg-accent",
+      )}
+    >
+      {dotColor && <span className="size-2 shrink-0 rounded-full" style={{ background: dotColor }} />}
+      {children}
+    </button>
+  );
+}
+
+/** A labelled row with a trailing shadcn Switch. */
+function SwitchRow({ label, checked, onToggle }: { label: string; checked: boolean; onToggle: () => void }) {
+  return (
+    <label className="flex cursor-pointer items-center justify-between gap-3 py-1.5 text-subhead text-foreground">
+      <span>{label}</span>
+      <Switch checked={checked} onCheckedChange={() => onToggle()} />
+    </label>
+  );
+}
+
+/** A full-width segmented control built on shadcn ToggleGroup. */
+function Segmented({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: readonly { id: string; label: string }[];
+}) {
+  return (
+    <div className="space-y-1.5">
+      <span className="text-caption text-muted-foreground">{label}</span>
+      <ToggleGroup
+        type="single"
+        value={value}
+        onValueChange={(v) => v && onChange(v)}
+        className="w-full gap-0.5 rounded-lg bg-muted p-0.5"
+      >
+        {options.map((option) => (
+          <ToggleGroupItem
+            key={option.id}
+            value={option.id}
+            className="flex-1 rounded-md text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
+          >
+            {option.label}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+    </div>
+  );
+}
 
 /**
- * Filters & display — the Liquid Glass control popover anchored to the control
- * cluster. Information hierarchy leads with what a learner actually narrows by
- * (domains, then concept kinds); the layout/overlay preferences sit below in a
- * clearly secondary "Display" group.
+ * Filters & display — the control popover anchored to the control cluster.
+ * Hierarchy leads with what a learner narrows by (domains, then concept kinds);
+ * layout/overlay preferences sit below in a secondary "Display" group.
  */
 export function LayersPanel({ onClose }: { onClose: () => void }) {
   const map = useStore((s) => s.loadedMaps[s.mapId]);
@@ -40,41 +112,48 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
   const toggleFocusMode = useStore((s) => s.toggleFocusMode);
   const focusDepth = useStore((s) => s.focusDepth);
   const setFocusDepth = useStore((s) => s.setFocusDepth);
-  const initialFocusRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    initialFocusRef.current?.focus();
-  }, []);
 
   if (!map) return null;
 
   return (
-    <Glass
-      variant="regular"
-      className="shell-panel flex max-h-[min(78vh,580px)] w-75 flex-col"
+    <Surface
+      material="regular"
       role="dialog"
       aria-label="Filters and display"
+      className="flex max-h-[min(78vh,580px)] w-[300px] flex-col"
     >
-      <ShellPanelHeader title="Filters">
-        <ShellIconButton ref={initialFocusRef} onClick={onClose} aria-label="Close filters">
-          <XIcon className="shell-icon" weight="regular" />
-        </ShellIconButton>
-      </ShellPanelHeader>
+      <header className="flex items-center justify-between px-3.5 pt-3 pb-1.5">
+        <span className="text-headline font-semibold text-foreground">Filters</span>
+        <Button
+          autoFocus
+          variant="ghost"
+          size="icon"
+          className="size-8 text-muted-foreground"
+          onClick={onClose}
+          aria-label="Close filters"
+        >
+          <X className="size-4" />
+        </Button>
+      </header>
 
-      <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-3.5 pb-3.5">
+      <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-3.5 pt-1 pb-3.5">
         {/* Content filters first — the load-bearing controls. */}
-        <section className="shell-panel-section">
+        <section>
           <div className="mb-2 flex items-center justify-between">
-            <span className="shell-panel-title">Domains</span>
-            <ShellButton controlSize="small" className="shell-panel-action" onClick={resetTopics}>
+            <span className="text-caption font-semibold tracking-wide text-muted-foreground uppercase">Domains</span>
+            <button
+              type="button"
+              className="text-footnote font-medium text-primary hover:underline"
+              onClick={resetTopics}
+            >
               All
-            </ShellButton>
+            </button>
           </div>
           <div className="flex flex-wrap gap-1.5">
             {map.data.domains.map((domain) => {
               const dimmed = topics.size > 0 && !topics.has(domain.id);
               return (
-                <ShellChip
+                <Chip
                   key={domain.id}
                   active={topics.has(domain.id)}
                   onClick={() => toggleTopic(domain.id)}
@@ -82,54 +161,56 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
                   style={{ opacity: dimmed ? 0.55 : 1 }}
                 >
                   <span className="max-w-35 truncate">{domain.label}</span>
-                </ShellChip>
+                </Chip>
               );
             })}
           </div>
         </section>
 
-        <section className="shell-panel-section">
-          <span className="shell-panel-title">Concept kinds</span>
-          <div className="mt-2 flex flex-wrap gap-1.5">
+        <section>
+          <span className="mb-2 block text-caption font-semibold tracking-wide text-muted-foreground uppercase">
+            Concept kinds
+          </span>
+          <div className="flex flex-wrap gap-1.5">
             {map.kinds.map((kind) => (
-              <ShellChip key={kind} active={kinds.has(kind as NodeKind)} onClick={() => toggleKind(kind as NodeKind)}>
+              <Chip key={kind} active={kinds.has(kind as NodeKind)} onClick={() => toggleKind(kind as NodeKind)}>
                 {KIND_LABEL[kind as NodeKind] ?? kind}
-              </ShellChip>
+              </Chip>
             ))}
           </div>
         </section>
 
         {/* Secondary: how the map is drawn. */}
-        <section className="shell-panel-section space-y-2.5">
-          <span className="shell-panel-title">Display</span>
-          <ShellSegmented
+        <section className="space-y-2.5">
+          <span className="block text-caption font-semibold tracking-wide text-muted-foreground uppercase">
+            Display
+          </span>
+          <Segmented
             label="Layout"
             value={view}
-            onChange={setView}
-            className="w-full"
+            onChange={(v) => setView(v as typeof view)}
             options={[
               { id: "dependency", label: "Dependency" },
               { id: "cluster", label: "Cluster" },
             ]}
           />
-          <div className="glass-group">
-            <ShellSwitch label="Domain regions" on={showRegions} onToggle={toggleRegions} />
-            <ShellSwitch label="Soft links" on={showSoftDeps} onToggle={toggleSoftDeps} />
-            <ShellSwitch label="Grid" on={showGrid} onToggle={toggleGrid} />
-            <ShellSwitch label="Minimap" on={showMinimap} onToggle={toggleMinimap} />
+          <div className="rounded-lg bg-muted/60 px-3 py-0.5">
+            <SwitchRow label="Domain regions" checked={showRegions} onToggle={toggleRegions} />
+            <SwitchRow label="Soft links" checked={showSoftDeps} onToggle={toggleSoftDeps} />
+            <SwitchRow label="Grid" checked={showGrid} onToggle={toggleGrid} />
+            <SwitchRow label="Minimap" checked={showMinimap} onToggle={toggleMinimap} />
           </div>
         </section>
 
-        <section className="shell-panel-section space-y-2.5">
-          <div className="glass-group">
-            <ShellSwitch label="Focus neighborhood" on={focusMode} onToggle={toggleFocusMode} />
+        <section className="space-y-2.5">
+          <div className="rounded-lg bg-muted/60 px-3 py-0.5">
+            <SwitchRow label="Focus neighborhood" checked={focusMode} onToggle={toggleFocusMode} />
           </div>
           {focusMode && (
-            <ShellSegmented
+            <Segmented
               label="Focus depth"
               value={String(focusDepth)}
-              onChange={(d) => setFocusDepth(Number(d))}
-              className="w-full"
+              onChange={(v) => setFocusDepth(Number(v))}
               options={[
                 { id: "1", label: "1 hop" },
                 { id: "2", label: "2 hops" },
@@ -139,6 +220,6 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
           )}
         </section>
       </div>
-    </Glass>
+    </Surface>
   );
 }
