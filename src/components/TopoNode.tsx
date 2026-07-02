@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, type CSSProperties } from "react";
-import { ScrollIcon, FlaskIcon, ChartLineIcon } from "@phosphor-icons/react";
+import { Scroll, FlaskConical, LineChart } from "lucide-react";
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 import { getDomainTone } from "../lib/colors";
 import { MathText } from "../lib/katex";
@@ -23,9 +23,9 @@ function RichnessGlyphs({ node }: { node: TopoNodeT }) {
   if (!hasProof && !hasExample && !hasFigure) return null;
   return (
     <span className="flex shrink-0 items-center gap-1" style={{ color: "var(--fg-3)" }} aria-hidden>
-      {hasProof && <ScrollIcon className="h-3 w-3" weight="regular" />}
-      {hasExample && <FlaskIcon className="h-3 w-3" weight="regular" />}
-      {hasFigure && <ChartLineIcon className="h-3 w-3" weight="regular" />}
+      {hasProof && <Scroll className="h-3 w-3" />}
+      {hasExample && <FlaskConical className="h-3 w-3" />}
+      {hasFigure && <LineChart className="h-3 w-3" />}
     </span>
   );
 }

@@ -11,7 +11,7 @@
  */
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { BookmarkSimple, CaretDown, CornersOut, FolderSimple, Minus, Plus, X } from "@phosphor-icons/react";
+import { Bookmark, ChevronDown, Maximize, Folder, Minus, Plus, X } from "lucide-react";
 import { Glass, ShellIconButton } from "../primitives";
 import { cn } from "../../lib/utils";
 import { useSandbox } from "../../lib/workspace/store";
@@ -96,18 +96,18 @@ export function SandboxView() {
           <div className="shell-utility-stack pointer-events-auto">
             <Glass variant="regular" interactive className="shell-zoom-cluster">
               <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
-                <Plus className="shell-icon" weight="regular" />
+                <Plus className="shell-icon" />
               </DockBtn>
               <DockBtn label="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
-                <Minus className="shell-icon" weight="regular" />
+                <Minus className="shell-icon" />
               </DockBtn>
               <DockBtn label="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
-                <CornersOut className="shell-icon" weight="regular" />
+                <Maximize className="shell-icon" />
               </DockBtn>
             </Glass>
             <Glass variant="regular" interactive className="shell-utility-button">
               <DockBtn label="Save view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
-                <BookmarkSimple className="shell-icon" weight="regular" />
+                <Bookmark className="shell-icon" />
               </DockBtn>
             </Glass>
           </div>
@@ -160,7 +160,7 @@ function WorkspaceMenu() {
         aria-expanded={open}
       >
         <span className="sandbox-workspace-icon flex shrink-0 items-center justify-center">
-          <FolderSimple className="h-4 w-4" weight="duotone" />
+          <Folder className="h-4 w-4" />
         </span>
         <span className="min-w-0 flex-1">
           <span className="block truncate text-footnote font-semibold">{ws.title}</span>
@@ -169,7 +169,7 @@ function WorkspaceMenu() {
             {issueCount > 0 ? `${issueCount} issue${issueCount === 1 ? "" : "s"}` : "ready"}
           </span>
         </span>
-        <CaretDown
+        <ChevronDown
           className="h-3.5 w-3.5 shrink-0 transition-transform duration-150"
           style={{ transform: open ? "rotate(180deg)" : "none" }}
         />
@@ -192,7 +192,7 @@ function WorkspaceMenu() {
                   active && "is-active",
                 )}
               >
-                <FolderSimple className="h-3.5 w-3.5 shrink-0" />
+                <Folder className="h-3.5 w-3.5 shrink-0" />
                 <span className="min-w-0 flex-1 truncate">{WORKSPACES[id].title}</span>
               </button>
             );
@@ -206,7 +206,7 @@ function WorkspaceMenu() {
             }}
             className="sandbox-workspace-option flex w-full items-center gap-2 px-2.5 py-2 text-left text-footnote"
           >
-            <Plus className="h-3.5 w-3.5 shrink-0" weight="bold" />
+            <Plus className="h-3.5 w-3.5 shrink-0" />
             <span>New blank workspace</span>
           </button>
         </div>

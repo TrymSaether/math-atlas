@@ -10,17 +10,17 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import {
   Calculator,
-  CaretDown,
+  ChevronDown,
   Eye,
-  EyeSlash,
-  Function as FunctionIcon,
-  Graph,
-  LinkSimple,
+  EyeOff,
+  Variable,
+  LineChart,
+  Link2,
   Plus,
   SlidersHorizontal,
   Trash,
-  WarningCircle,
-} from "@phosphor-icons/react";
+  CircleAlert,
+} from "lucide-react";
 import { useSandbox, DEFAULT_SLIDER } from "../../lib/workspace/store";
 import { formatValue } from "../../lib/workspace/engine";
 import { PALETTE } from "../../lib/workspace/library";
@@ -48,11 +48,11 @@ export function ExpressionPanel() {
               onClick={() => setCollapsed((next) => ({ ...next, [section.id]: !next[section.id] }))}
             >
               <span className="sandbox-section-icon flex items-center justify-center">
-                <SectionIcon id={section.id} />
+                <Sigma id={section.id} />
               </span>
               <span className="min-w-0 flex-1 truncate">{section.title}</span>
               <span className="font-mono tabular-nums">{section.rows.length}</span>
-              <CaretDown className="sandbox-section-caret h-3 w-3 shrink-0" weight="bold" />
+              <ChevronDown className="sandbox-section-caret h-3 w-3 shrink-0" />
             </button>
             {!collapsed[section.id] && (
               <div className="sandbox-section-rows">
@@ -69,7 +69,7 @@ export function ExpressionPanel() {
         onClick={() => addRow()}
         className="sandbox-add-expression flex items-center gap-2 px-3.5 py-2.5 text-caption-1"
       >
-        <Plus size={14} weight="bold" />
+        <Plus size={14} />
         New expression
       </button>
     </div>
@@ -119,17 +119,17 @@ function groupRows(rows: Row[], byId: Record<string, Computed | undefined>): Row
   return sections.filter((section) => section.rows.length > 0);
 }
 
-function SectionIcon({ id }: { id: SectionId }) {
+function Sigma({ id }: { id: SectionId }) {
   const props = { size: 12, weight: "bold" as const };
   switch (id) {
     case "inputs":
       return <SlidersHorizontal {...props} />;
     case "definitions":
-      return <FunctionIcon {...props} />;
+      return <Variable {...props} />;
     case "objects":
-      return <Graph {...props} />;
+      return <LineChart {...props} />;
     case "issues":
-      return <WarningCircle {...props} />;
+      return <CircleAlert {...props} />;
   }
 }
 
@@ -198,7 +198,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
 
           {computed?.error ? (
             <div className="sandbox-row-error mt-1 flex items-center gap-1 text-caption-2">
-              <WarningCircle size={12} weight="bold" />
+              <CircleAlert size={12} />
               {computed.error}
             </div>
           ) : selected && (evaluatedTex || summary) ? (
@@ -207,7 +207,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
                 <MathText text={`$${evaluatedTex}$`} />
               ) : (
                 <>
-                  <RowTypeIcon kind={rowType} />
+                  <Rows3 kind={rowType} />
                   {summary}
                 </>
               )}
@@ -229,7 +229,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
         {/* Controls */}
         <div className="sandbox-row-controls flex w-6 flex-col items-center justify-center gap-0.5">
           <button type="button" onClick={() => toggleVisible(row.id)} title={row.visible ? "Hide" : "Show"}>
-            {row.visible ? <Eye size={14} /> : <EyeSlash size={14} />}
+            {row.visible ? <Eye size={14} /> : <EyeOff size={14} />}
           </button>
           <button type="button" onClick={() => removeRow(row.id)} title="Delete">
             <Trash size={14} />
@@ -321,12 +321,12 @@ function RowMeta({ row, computed, status }: { row: Row; computed?: Computed; sta
         onMouseDown={(e) => e.stopPropagation()}
         onClick={() => setOpen((next) => !next)}
       >
-        <CaretDown className="sandbox-row-meta-caret h-3 w-3 shrink-0" weight="bold" />
+        <ChevronDown className="sandbox-row-meta-caret h-3 w-3 shrink-0" />
         <span className="sandbox-row-meta-title">Details</span>
-        {status === "error" && <WarningCircle className="shrink-0" size={12} weight="bold" />}
+        {status === "error" && <CircleAlert className="shrink-0" size={12} />}
         {depNotation && (
           <span className="sandbox-deps flex min-w-0 items-center gap-1 font-mono">
-            <LinkSimple size={11} />
+            <Link2 size={11} />
             <span className="truncate">{depNotation}</span>
           </span>
         )}
@@ -349,15 +349,15 @@ function RowMeta({ row, computed, status }: { row: Row; computed?: Computed; sta
 
 type RowType = "slider" | "function" | "graph" | "value" | "blank";
 
-function RowTypeIcon({ kind }: { kind: RowType }) {
+function Rows3({ kind }: { kind: RowType }) {
   const props = { size: 12, weight: "bold" as const };
   switch (kind) {
     case "slider":
       return <SlidersHorizontal {...props} />;
     case "function":
-      return <FunctionIcon {...props} />;
+      return <Variable {...props} />;
     case "graph":
-      return <Graph {...props} />;
+      return <LineChart {...props} />;
     case "value":
       return <Calculator {...props} />;
     case "blank":

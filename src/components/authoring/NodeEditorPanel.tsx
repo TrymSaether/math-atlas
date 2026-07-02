@@ -6,17 +6,7 @@
  * changes, only the host surface.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  XIcon,
-  TrashIcon,
-  PlusIcon,
-  ArrowsLeftRightIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  CaretDownIcon,
-  CheckIcon,
-  PencilSimpleIcon,
-} from "@phosphor-icons/react";
+import { XIcon, Trash2, Plus, ArrowLeftRight, ArrowUp, ArrowDown, ChevronDown, Check, Pencil } from "lucide-react";
 
 import { useStore } from "../../store";
 import type { LoadedMap, MapId } from "../../data";
@@ -147,7 +137,7 @@ function SelectField({
           aria-expanded={open}
         >
           <span className="min-w-0 truncate">{selected?.label ?? value}</span>
-          <CaretDownIcon className="h-4 w-4 shrink-0 text-fg-2" />
+          <ChevronDown className="h-4 w-4 shrink-0 text-fg-2" />
         </button>
         {open && (
           <div className="authoring-select-popover" role="listbox">
@@ -166,7 +156,7 @@ function SelectField({
                   }}
                 >
                   <span className="min-w-0 truncate">{option.label}</span>
-                  {active && <CheckIcon className="h-4 w-4 shrink-0" weight="bold" />}
+                  {active && <Check className="h-4 w-4 shrink-0" />}
                 </button>
               );
             })}
@@ -302,7 +292,7 @@ function EdgeRow({
           className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
           style={{ color: editing ? "var(--accent)" : "var(--fg-3)" }}
         >
-          <PencilSimpleIcon className="h-3.5 w-3.5" />
+          <Pencil className="h-3.5 w-3.5" />
         </button>
         <button
           type="button"
@@ -311,7 +301,7 @@ function EdgeRow({
           className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
           style={{ color: "var(--fg-3)" }}
         >
-          <TrashIcon className="h-3.5 w-3.5" />
+          <Trash2 className="h-3.5 w-3.5" />
         </button>
       </div>
 
@@ -354,7 +344,7 @@ function EdgeRow({
               onClick={save}
               className="authoring-action authoring-action-primary rounded-sm px-2.5 py-1 text-caption-1"
             >
-              <CheckIcon className="h-3.5 w-3.5" /> Save
+              <Check className="h-3.5 w-3.5" /> Save
             </button>
           </div>
         </div>
@@ -428,7 +418,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           className="flex h-8 items-center gap-1.5 rounded-sm px-2 text-caption-1 font-medium hover:bg-(--surface-3)"
           style={{ color: "var(--fg-2)" }}
         >
-          <ArrowsLeftRightIcon className="h-3.5 w-3.5" />
+          <ArrowLeftRight className="h-3.5 w-3.5" />
           {outgoing ? "from this" : "to this"}
         </button>
         <SelectField
@@ -446,7 +436,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
             onClick={submit}
             className="authoring-action authoring-action-primary h-8 rounded-sm px-2.5 text-caption-1"
           >
-            <PlusIcon className="h-3.5 w-3.5" /> Link
+            <Plus className="h-3.5 w-3.5" /> Link
           </button>
         </div>
         <textarea
@@ -511,7 +501,7 @@ function ExamplesEditor({
                 className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
                 style={{ color: "var(--fg-3)" }}
               >
-                <TrashIcon className="h-3.5 w-3.5" />
+                <Trash2 className="h-3.5 w-3.5" />
               </button>
             </div>
             <textarea
@@ -534,7 +524,7 @@ function ExamplesEditor({
           className="authoring-action rounded-sm px-2.5 py-1.5 text-caption-1"
           style={{ color: "var(--fg-2)" }}
         >
-          <PlusIcon className="h-3.5 w-3.5" /> Add example
+          <Plus className="h-3.5 w-3.5" /> Add example
         </button>
       </div>
     </div>
@@ -654,7 +644,7 @@ function ProofStepsEditor({
                 className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3) disabled:opacity-30"
                 style={{ color: "var(--fg-3)" }}
               >
-                <ArrowUpIcon className="h-3.5 w-3.5" />
+                <ArrowUp className="h-3.5 w-3.5" />
               </button>
               <button
                 type="button"
@@ -664,7 +654,7 @@ function ProofStepsEditor({
                 className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3) disabled:opacity-30"
                 style={{ color: "var(--fg-3)" }}
               >
-                <ArrowDownIcon className="h-3.5 w-3.5" />
+                <ArrowDown className="h-3.5 w-3.5" />
               </button>
               <button
                 type="button"
@@ -673,7 +663,7 @@ function ProofStepsEditor({
                 className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
                 style={{ color: "var(--fg-3)" }}
               >
-                <TrashIcon className="h-3.5 w-3.5" />
+                <Trash2 className="h-3.5 w-3.5" />
               </button>
             </div>
             <textarea
@@ -697,7 +687,7 @@ function ProofStepsEditor({
           className="authoring-action rounded-sm px-2.5 py-1.5 text-caption-1"
           style={{ color: "var(--fg-2)" }}
         >
-          <PlusIcon className="h-3.5 w-3.5" /> Add step
+          <Plus className="h-3.5 w-3.5" /> Add step
         </button>
       </div>
     </div>
@@ -807,7 +797,7 @@ export function NodeEditorPanel({
                   className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-(--surface-3)"
                   style={{ color: "var(--fg-3)" }}
                 >
-                  <TrashIcon className="h-4 w-4" />
+                  <Trash2 className="h-4 w-4" />
                 </button>
               ))}
             <button
@@ -985,7 +975,7 @@ export function NodeEditorPanel({
         >
           {justSaved ? (
             <>
-              <CheckIcon className="h-4 w-4" weight="bold" /> Saved
+              <Check className="h-4 w-4" /> Saved
             </>
           ) : editingId === null ? (
             "Create"

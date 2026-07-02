@@ -1,5 +1,5 @@
 import { createElement, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRightIcon, ArrowLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { ArrowUpRight, ArrowLeft, Search } from "lucide-react";
 
 import { useStore } from "../store";
 import { type LoadedMap, type MapId } from "../data";
@@ -113,7 +113,7 @@ function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
             </div>
 
             <div className="dict-search">
-              <MagnifyingGlassIcon className="dict-search-icon" aria-hidden />
+              <Search className="dict-search-icon" aria-hidden />
               <input
                 type="text"
                 value={query}
@@ -269,7 +269,7 @@ function DetailPane({
     <article className="dict-doc" key={entry.id}>
       <div className="dict-doc-inner">
         <button type="button" className="dict-back" onClick={onBack}>
-          <ArrowLeftIcon className="h-3.5 w-3.5" aria-hidden /> All entries
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden /> All entries
         </button>
 
         <header className="dict-doc-head">
@@ -283,7 +283,7 @@ function DetailPane({
         <footer className="dict-doc-foot">
           <ConceptRelations relations={view.relations} map={map} onSelect={onPickRelated} includeSeeAlso />
           <button type="button" className="dict-open" onClick={openInAtlas}>
-            Show in atlas <ArrowUpRightIcon className="h-3 w-3" aria-hidden />
+            Show in atlas <ArrowUpRight className="h-3 w-3" aria-hidden />
           </button>
         </footer>
       </div>

@@ -14,7 +14,7 @@
  */
 import { createElement, useId, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { CaretRightIcon } from "@phosphor-icons/react";
+import { ChevronRight } from "lucide-react";
 import type { LoadedMap } from "../data";
 import { MathText, MathProse } from "../lib/katex";
 import { tidyMathText } from "../lib/katexText";
@@ -184,7 +184,7 @@ export function Collapsible({
         aria-label={label ? undefined : open ? "Collapse" : "Expand"}
         className="group mb-1 flex w-full items-center gap-1.5 focus:outline-none"
       >
-        <CaretRightIcon
+        <ChevronRight
           className="h-3 w-3 shrink-0 transition-transform duration-200"
           style={{
             color: toneColor,
@@ -373,7 +373,7 @@ function ProofStepItem({
         className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-xs px-1 py-0.5 text-left transition-colors hover:bg-(--surface-2) focus:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-border) disabled:cursor-default disabled:hover:bg-transparent"
       >
         {collapsible && (
-          <CaretRightIcon
+          <ChevronRight
             className="h-3 w-3 shrink-0 text-fg-3 transition-transform duration-200"
             style={{ transform: showBody ? "rotate(90deg)" : "none" }}
             aria-hidden

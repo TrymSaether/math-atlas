@@ -121,7 +121,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
 
   return (
     <Surface
-      material="thick"
+      material="thin"
       role="dialog"
       aria-label={`${view.kindLabel}: ${node.label}`}
       className={cn(

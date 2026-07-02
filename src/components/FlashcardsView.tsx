@@ -1,14 +1,6 @@
 import { useCallback, useEffect, useMemo, useReducer } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import {
-  CheckIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
-  ArrowCounterClockwiseIcon,
-  ShuffleIcon,
-  SparkleIcon,
-  XIcon,
-} from "@phosphor-icons/react";
+import { Check, ChevronLeft, ChevronRight, RotateCcw, Shuffle, Sparkles, XIcon } from "lucide-react";
 
 import { useStore } from "../store";
 import type { LoadedMap, MapId } from "../data";
@@ -222,7 +214,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
             className="flex h-7 items-center gap-1.5 rounded-sm border border-border bg-surface px-2.5 text-caption-1 font-medium text-fg-2 transition-colors hover:bg-surface-3 disabled:opacity-40"
             title="Shuffle and restart"
           >
-            <ShuffleIcon className="h-3 w-3" />
+            <Shuffle className="h-3 w-3" />
             Shuffle
           </button>
         </div>
@@ -271,7 +263,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
               {/* Controls */}
               <div className="mt-3 grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3">
                 <PagerButton label="Previous card" disabled={state.pos === 0} onClick={() => go(-1)}>
-                  <CaretLeftIcon className="h-4 w-4" />
+                  <ChevronLeft className="h-4 w-4" />
                 </PagerButton>
 
                 {state.flipped ? (
@@ -281,7 +273,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                       <Kbd>1</Kbd>
                     </RateButton>
                     <RateButton tone="got" onClick={() => rate("got")}>
-                      <CheckIcon className="h-4 w-4" /> Got it
+                      <Check className="h-4 w-4" /> Got it
                       <Kbd>2</Kbd>
                     </RateButton>
                   </div>
@@ -297,7 +289,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                 )}
 
                 <PagerButton label="Next card" disabled={state.pos >= total - 1} onClick={() => go(1)}>
-                  <CaretRightIcon className="h-4 w-4" />
+                  <ChevronRight className="h-4 w-4" />
                 </PagerButton>
               </div>
             </>
@@ -394,7 +386,7 @@ function SummaryCard({
       style={{ boxShadow: "var(--shadow-e2)" }}
     >
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-accent-soft text-accent">
-        <SparkleIcon className="h-7 w-7" />
+        <Sparkles className="h-7 w-7" />
       </div>
       <div className="space-y-1.5">
         <h2 className="text-title-1 font-semibold text-fg-1">Deck complete</h2>
@@ -417,7 +409,7 @@ function SummaryCard({
           onClick={onRestart}
           className="flex h-11 items-center gap-2 rounded-sm border border-border bg-surface px-5 text-body font-medium text-fg-1 transition-colors hover:bg-surface-3"
         >
-          <ArrowCounterClockwiseIcon className="h-4 w-4" /> Restart deck
+          <RotateCcw className="h-4 w-4" /> Restart deck
         </button>
         <button
           onClick={onClose}

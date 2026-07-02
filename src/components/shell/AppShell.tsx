@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo } from "react";
-import { WarningCircleIcon } from "@phosphor-icons/react";
+import { CircleAlert } from "lucide-react";
 import { useStore } from "../../store";
 import { registerDomainTones } from "../../lib/colors";
 import { authEnabled } from "../../lib/authClient";
@@ -18,7 +18,8 @@ import { ControlCluster } from "./ControlCluster";
 import { ConceptCard } from "./ConceptCard";
 import { PathsPanel } from "./PathsPanel";
 import { EditInspector } from "./EditInspector";
-import { Material, ShellButton } from "../primitives";
+import { Button } from "@/components/ui/button";
+import { Surface } from "@/design";
 
 // The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
 // atlas's initial bundle stays light.
@@ -29,7 +30,7 @@ function LoadingState({ label }: { label: string }) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-3.5" role="status" aria-live="polite">
       <span className="shell-spinner" aria-hidden />
-      <p className="text-footnote text-fg-3">{label}</p>
+      <p className="text-footnote text-muted-foreground">{label}</p>
     </div>
   );
 }
@@ -45,17 +46,14 @@ function MapStatus() {
   if (mapError) {
     return (
       <div className="flex h-full items-center justify-center p-6">
-        <Material
-          thickness="thick"
-          className="shell-panel flex max-w-sm flex-col items-center gap-3 px-7 py-8 text-center"
-        >
-          <WarningCircleIcon className="h-9 w-9 text-danger" weight="regular" />
-          <h2 className="text-lg text-fg-1">Couldn’t load this map</h2>
-          <p className="text-footnote leading-relaxed text-fg-3">{mapError}</p>
-          <ShellButton primary className="mt-1" onClick={() => void ensureMapLoaded(mapId)}>
+        <Surface material="thick" className="flex max-w-sm flex-col items-center gap-3 px-7 py-8 text-center">
+          <CircleAlert className="size-9 text-destructive" />
+          <h2 className="text-title-3 font-semibold text-foreground">Couldn’t load this map</h2>
+          <p className="text-footnote leading-relaxed text-muted-foreground">{mapError}</p>
+          <Button className="mt-1" onClick={() => void ensureMapLoaded(mapId)}>
             Try again
-          </ShellButton>
-        </Material>
+          </Button>
+        </Surface>
       </div>
     );
   }
