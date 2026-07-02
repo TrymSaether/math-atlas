@@ -1,14 +1,16 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
-import { TrashIcon, LinkSimpleIcon, CheckIcon } from "@phosphor-icons/react";
+import { Check, Link2, Trash2 } from "lucide-react";
 import { listCollaborators, addCollaborator, removeCollaborator, type Collaborator } from "../data/mapsApi";
 import { shareUrl } from "../hooks/useUrlSync";
-import { ShellButton } from "./primitives";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Surface, spring } from "@/design";
 
 /**
- * Manage collaborators on an owned map (Phase 4). Invite by email; collaborators
- * get editor access and the map appears under "shared with me" for them.
+ * Manage collaborators on an owned map. Invite by email; collaborators get editor
+ * access and the map appears under "shared with me" for them.
  */
 export function ShareDialog({
   open,
@@ -75,107 +77,82 @@ export function ShareDialog({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-(--z-modal) backdrop-blur-[2px]"
-                style={{ background: "color-mix(in srgb, var(--bg-deep) 55%, transparent)" }}
+                className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px]"
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
-              <div className="fixed left-1/2 top-1/2 z-(--z-modal) w-[min(420px,92vw)] -translate-x-1/2 -translate-y-1/2">
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: -12, scale: 0.99 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
+                transition={reduceMotion ? { duration: 0 } : spring.gentle}
+                className="fixed top-1/2 left-1/2 z-50 w-[min(420px,92vw)] -translate-x-1/2 -translate-y-1/2"
+              >
                 <Dialog.Title className="sr-only">Share {title}</Dialog.Title>
                 <Dialog.Description className="sr-only">Invite collaborators to edit this map.</Dialog.Description>
-                <motion.div
-                  initial={reduceMotion ? false : { opacity: 0, y: -12, scale: 0.99 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
-                  className="standard-material standard-material-thick flex flex-col gap-3 rounded-2xl p-5"
-                >
-                  <h2 className="text-lg text-fg-1">Share “{title}”</h2>
-                  <p className="text-caption-2 text-fg-3">
+                <Surface material="thick" className="flex flex-col gap-3 p-5">
+                  <h2 className="text-title-3 font-semibold text-foreground">Share “{title}”</h2>
+                  <p className="text-caption text-muted-foreground">
                     Invite people by the email they signed up with. They’ll be able to edit.
                   </p>
 
-                  <button
-                    type="button"
-                    onClick={copyLink}
-                    className="shell-field-control flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 text-footnote font-medium text-fg-1"
-                    style={{
-                      background: "color-mix(in srgb, var(--surface) 70%, transparent)",
-                      boxShadow: "inset 0 0 0 1px var(--glass-border)",
-                    }}
-                  >
-                    {copied ? (
-                      <CheckIcon className="h-4 w-4 text-success" weight="bold" />
-                    ) : (
-                      <LinkSimpleIcon className="h-4 w-4" />
-                    )}
+                  <Button type="button" variant="secondary" onClick={copyLink} className="h-11 gap-2">
+                    {copied ? <Check className="size-4 text-primary" /> : <Link2 className="size-4" />}
                     {copied ? "Link copied" : "Copy link to this view"}
-                  </button>
+                  </Button>
 
                   <form onSubmit={invite} className="flex items-end gap-2">
                     <label className="flex flex-1 flex-col gap-1">
-                      <span className="text-caption-1 font-semibold uppercase tracking-label-wide text-fg-3">
+                      <span className="text-caption font-semibold tracking-wide text-muted-foreground uppercase">
                         Email
                       </span>
-                      <input
+                      <Input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="collaborator@example.com"
-                        className="h-11 rounded-md px-3 text-footnote text-fg-1 outline-none"
-                        style={{
-                          background: "color-mix(in srgb, var(--surface) 80%, transparent)",
-                          boxShadow: "inset 0 0 0 1px var(--glass-border)",
-                        }}
+                        className="h-11"
                       />
                     </label>
-                    <ShellButton
-                      primary
-                      type="submit"
-                      disabled={busy}
-                      className="h-11 justify-center rounded-md px-4 text-footnote font-medium text-fg-on-color"
-                    >
+                    <Button type="submit" disabled={busy} className="h-11">
                       {busy ? "…" : "Invite"}
-                    </ShellButton>
+                    </Button>
                   </form>
 
                   {error && (
-                    <p className="text-caption-2 font-medium text-danger" role="alert">
+                    <p className="text-caption font-medium text-destructive" role="alert">
                       {error}
                     </p>
                   )}
 
                   <div className="flex flex-col gap-1">
                     {collabs.length === 0 ? (
-                      <p className="text-caption-2 text-fg-3">No collaborators yet.</p>
+                      <p className="text-caption text-muted-foreground">No collaborators yet.</p>
                     ) : (
                       collabs.map((c) => (
-                        <div
-                          key={c.userId}
-                          className="flex items-center gap-2 rounded-md px-2 py-1.5"
-                          style={{ background: "color-mix(in srgb, var(--surface) 60%, transparent)" }}
-                        >
+                        <div key={c.userId} className="flex items-center gap-2 rounded-md bg-muted px-2 py-1.5">
                           <div className="min-w-0 flex-1">
-                            <div className="truncate text-footnote text-fg-1">{c.email}</div>
-                            <div className="text-caption-2 uppercase tracking-label-wide text-fg-3">{c.role}</div>
+                            <div className="truncate text-footnote text-foreground">{c.email}</div>
+                            <div className="text-caption tracking-wide text-muted-foreground uppercase">{c.role}</div>
                           </div>
-                          <button
-                            type="button"
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-7 text-muted-foreground hover:text-destructive"
                             aria-label={`Remove ${c.email}`}
                             onClick={async () => {
                               await removeCollaborator(mapEntityId, c.userId);
                               refresh();
                             }}
-                            className="flex h-7 w-7 items-center justify-center rounded-sm text-fg-3 hover:bg-(--surface-3) hover:text-(--danger)"
                           >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
+                            <Trash2 className="size-4" />
+                          </Button>
                         </div>
                       ))
                     )}
                   </div>
-                </motion.div>
-              </div>
+                </Surface>
+              </motion.div>
             </Dialog.Content>
           </Dialog.Portal>
         )}

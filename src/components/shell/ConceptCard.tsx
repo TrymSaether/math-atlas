@@ -1,37 +1,37 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
-  XIcon,
-  CaretUpIcon,
-  CaretDownIcon,
-  BookOpenTextIcon,
-  CardsIcon,
-  CheckCircleIcon,
-  CheckIcon,
-  LinkSimpleIcon,
-  ArrowsOutSimpleIcon,
-  ArrowsInSimpleIcon,
-  ShareNetworkIcon,
-  StackIcon,
-  ListNumbersIcon,
-  FlaskIcon,
-  type Icon,
-} from "@phosphor-icons/react";
+  BookText,
+  Check,
+  ChevronDown,
+  ChevronUp,
+  CircleCheck,
+  FlaskConical,
+  Layers,
+  Link2,
+  ListOrdered,
+  Maximize2,
+  Minimize2,
+  Share2,
+  WalletCards,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 import { useStore } from "../../store";
 import { useConceptView } from "../../lib/conceptView";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "../concept";
 import { shareUrl } from "../../hooks/useUrlSync";
 import { cn } from "../../lib/utils";
-import { Material, ShellIconButton, ShellPanelHeader } from "../primitives";
+import { Button } from "@/components/ui/button";
+import { Surface } from "@/design";
 
 const USED_BY_INITIAL = 8;
 
 /**
- * The concept place-card — the deep-study surface. A left-docked standard-material
- * card built entirely on the shared `useConceptView` + concept/* renderers
- * (same content as the Index detail and Study back), presented as one calm
- * scroll: identity, statement, figure, the facet stack, proof, then navigable
- * relations. Replaces the prototype's tabbed NodePanel.
+ * The concept place-card — the deep-study surface. A left-docked thick-glass card
+ * built on the shared `useConceptView` + concept/* renderers, presented as one
+ * calm scroll: identity, statement, figure, the facet stack, proof, then
+ * navigable relations.
  */
 export function ConceptCard() {
   const mapId = useStore((s) => s.mapId);
@@ -51,7 +51,7 @@ export function ConceptCard() {
           animate={{ opacity: 1, x: 0 }}
           exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -14 }}
           transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.2, 0.7, 0.2, 1] }}
-          className="shell-dock shell-dock-left pointer-events-auto"
+          className="ds-panel ds-panel--left"
         >
           <CardContent nodeId={node.id} />
         </motion.aside>
@@ -90,21 +90,24 @@ function CardContent({ nodeId }: { nodeId: string }) {
   const prev = peerIdx > 0 ? peers[peerIdx - 1] : null;
   const next = peerIdx >= 0 && peerIdx < peers.length - 1 ? peers[peerIdx + 1] : null;
 
-  // Maps-style stat row: three always-present metrics. The third adapts to the
-  // concept's most salient body — proof steps, then worked examples, then
-  // recorded properties — so a definition doesn't read "0 Proof steps".
-  const stats: { icon: Icon; value: number; label: string }[] = [
-    { icon: ShareNetworkIcon, value: view.relations.count, label: "Relations" },
-    { icon: StackIcon, value: peers.length, label: "In domain" },
+  // Maps-style stat row: three metrics; the third adapts to the concept's most
+  // salient body — proof steps, then worked examples, then recorded properties.
+  const stats: { icon: LucideIcon; value: number; label: string }[] = [
+    { icon: Share2, value: view.relations.count, label: "Relations" },
+    { icon: Layers, value: peers.length, label: "In domain" },
     view.proof.hasProof
       ? {
-          icon: ListNumbersIcon,
+          icon: ListOrdered,
           value: view.proof.steps.length,
           label: view.proof.label === "Solution" ? "Steps" : "Proof steps",
         }
       : view.examples.length > 0
-        ? { icon: FlaskIcon, value: view.examples.length, label: view.examples.length === 1 ? "Example" : "Examples" }
-        : { icon: ListNumbersIcon, value: view.properties.length, label: "Properties" },
+        ? {
+            icon: FlaskConical,
+            value: view.examples.length,
+            label: view.examples.length === 1 ? "Example" : "Examples",
+          }
+        : { icon: ListOrdered, value: view.properties.length, label: "Properties" },
   ];
 
   useEffect(() => {
@@ -117,102 +120,134 @@ function CardContent({ nodeId }: { nodeId: string }) {
   };
 
   return (
-    <Material
-      thickness="thick"
-      className={cn(
-        "shell-panel flex h-full flex-col transition-[width] duration-200",
-        expanded ? "w-[min(580px,calc(100vw-24px))]" : "w-[min(400px,calc(100vw-24px))]",
-      )}
+    <Surface
+      material="thick"
       role="dialog"
       aria-label={`${view.kindLabel}: ${node.label}`}
+      className={cn(
+        "flex h-full flex-col transition-[width] duration-200",
+        expanded ? "w-[min(580px,calc(100vw-24px))]" : "w-[min(400px,calc(100vw-24px))]",
+      )}
     >
       <header className="shrink-0">
-        <ShellPanelHeader
-          title={
-            <span className="shell-panel-pager">
-              <ShellIconButton
-                aria-label="Previous in domain"
-                title="Previous in domain"
-                disabled={!prev}
-                onClick={() => prev && select(prev.id)}
-              >
-                <CaretUpIcon className="shell-icon" weight="regular" />
-              </ShellIconButton>
-              <ShellIconButton
-                aria-label="Next in domain"
-                title="Next in domain"
-                disabled={!next}
-                onClick={() => next && select(next.id)}
-              >
-                <CaretDownIcon className="shell-icon" weight="regular" />
-              </ShellIconButton>
-              {peerIdx >= 0 && (
-                <span className="shell-panel-count">
-                  {peerIdx + 1}/{peers.length}
-                </span>
-              )}
-            </span>
-          }
-          className="shell-panel-header-card"
-        >
-          {userId && (
-            <ShellIconButton
-              aria-label={known ? "Mark as not known" : "Mark as known"}
-              title={known ? "Mark as not known" : "Mark as known"}
-              active={known}
-              onClick={() => setNodeProgress(mapId, nodeId, known ? null : "known")}
+        <div className="flex min-h-[44px] items-center justify-between gap-3 px-3 pt-2 pb-1">
+          <div className="inline-flex items-center gap-0.5">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8 text-muted-foreground"
+              aria-label="Previous in domain"
+              title="Previous in domain"
+              disabled={!prev}
+              onClick={() => prev && select(prev.id)}
             >
-              <CheckCircleIcon className="shell-icon" weight="regular" />
-            </ShellIconButton>
-          )}
-          <ShellIconButton aria-label="Open in Index" title="Open in Index" onClick={() => openIn("dictionary")}>
-            <BookOpenTextIcon className="shell-icon" weight="regular" />
-          </ShellIconButton>
-          <ShellIconButton aria-label="Open in Study" title="Open in Study" onClick={() => openIn("flashcards")}>
-            <CardsIcon className="shell-icon" weight="regular" />
-          </ShellIconButton>
-          <ShellIconButton
-            aria-label={copied ? "Link copied" : "Copy link"}
-            title="Copy link"
-            active={copied}
-            onClick={copyLink}
-          >
-            {copied ? <CheckIcon className="shell-icon" weight="regular" /> : <LinkSimpleIcon className="shell-icon" />}
-          </ShellIconButton>
-          <ShellIconButton
-            aria-label={expanded ? "Collapse card" : "Expand card"}
-            title={expanded ? "Collapse card" : "Expand card"}
-            onClick={() => setExpanded((v) => !v)}
-          >
-            {expanded ? <ArrowsInSimpleIcon className="shell-icon" /> : <ArrowsOutSimpleIcon className="shell-icon" />}
-          </ShellIconButton>
-          <ShellIconButton aria-label="Close" title="Close" onClick={() => select(null)}>
-            <XIcon className="shell-icon" weight="regular" />
-          </ShellIconButton>
-        </ShellPanelHeader>
+              <ChevronUp className="size-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8 text-muted-foreground"
+              aria-label="Next in domain"
+              title="Next in domain"
+              disabled={!next}
+              onClick={() => next && select(next.id)}
+            >
+              <ChevronDown className="size-4" />
+            </Button>
+            {peerIdx >= 0 && (
+              <span className="ml-1 font-mono text-caption tabular-nums text-muted-foreground">
+                {peerIdx + 1}/{peers.length}
+              </span>
+            )}
+          </div>
+          <div className="inline-flex items-center gap-0.5">
+            {userId && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn("size-8", known ? "text-primary" : "text-muted-foreground")}
+                aria-label={known ? "Mark as not known" : "Mark as known"}
+                title={known ? "Mark as not known" : "Mark as known"}
+                onClick={() => setNodeProgress(mapId, nodeId, known ? null : "known")}
+              >
+                <CircleCheck className="size-4" />
+              </Button>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8 text-muted-foreground"
+              aria-label="Open in Index"
+              title="Open in Index"
+              onClick={() => openIn("dictionary")}
+            >
+              <BookText className="size-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8 text-muted-foreground"
+              aria-label="Open in Study"
+              title="Open in Study"
+              onClick={() => openIn("flashcards")}
+            >
+              <WalletCards className="size-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn("size-8", copied ? "text-primary" : "text-muted-foreground")}
+              aria-label={copied ? "Link copied" : "Copy link"}
+              title="Copy link"
+              onClick={copyLink}
+            >
+              {copied ? <Check className="size-4" /> : <Link2 className="size-4" />}
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8 text-muted-foreground"
+              aria-label={expanded ? "Collapse card" : "Expand card"}
+              title={expanded ? "Collapse card" : "Expand card"}
+              onClick={() => setExpanded((v) => !v)}
+            >
+              {expanded ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8 text-muted-foreground"
+              aria-label="Close"
+              title="Close"
+              onClick={() => select(null)}
+            >
+              <X className="size-4" />
+            </Button>
+          </div>
+        </div>
         <div className="px-4">
           <ConceptHeader view={view} />
-          <dl className="shell-card-stats">
+          <dl className="mt-3 grid grid-cols-3 gap-2">
             {stats.map((stat) => (
-              <div className="shell-card-stat" key={stat.label}>
-                <dd className="shell-card-stat-value">
-                  <stat.icon weight="regular" aria-hidden />
+              <div className="flex flex-col gap-0.5" key={stat.label}>
+                <dd className="flex items-center gap-1.5 text-title-3 font-semibold text-foreground">
+                  <stat.icon className="size-4 text-muted-foreground" aria-hidden />
                   {stat.value}
                 </dd>
-                <dt className="shell-card-stat-label">{stat.label}</dt>
+                <dt className="text-caption text-muted-foreground">{stat.label}</dt>
               </div>
             ))}
           </dl>
         </div>
-        <div className="shell-panel-soft-rule" />
+        <div className="mx-4 mt-3 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       </header>
 
-      <div ref={scrollRef} className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-4 py-4">
+      <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
         {view.hasContent ? (
           <div className="space-y-5">
             <ConceptBody view={view} map={map} density="full" onSelect={select} />
             {view.relations.count > 0 && (
-              <div className="border-t border-border-subtle pt-4">
+              <div className="border-t border-border pt-4">
                 <ConceptRelations
                   relations={view.relations}
                   map={map}
@@ -224,9 +259,11 @@ function CardContent({ nodeId }: { nodeId: string }) {
             )}
           </div>
         ) : (
-          <p className="text-footnote italic text-fg-3">No written content recorded for this concept yet.</p>
+          <p className="text-footnote text-muted-foreground italic">
+            No written content recorded for this concept yet.
+          </p>
         )}
       </div>
-    </Material>
+    </Surface>
   );
 }

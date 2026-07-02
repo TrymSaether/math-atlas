@@ -1,14 +1,14 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { WarningCircleIcon } from "@phosphor-icons/react";
+import { CircleAlert } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState, type ReactNode } from "react";
-import { Material } from "./Material";
-import { ShellButton } from "./Button";
+import { Button } from "@/components/ui/button";
+import { Surface, spring } from "@/design";
 
 /**
- * Small, blocking confirmation alert. It follows the macOS alert hierarchy:
- * one compact thick-material surface, a single decision, and trailing actions
- * ordered cancel → default/destructive.
+ * Small, blocking confirmation alert following the macOS alert hierarchy: one
+ * compact thick-glass surface, a single decision, trailing actions ordered
+ * cancel → default/destructive.
  */
 export function ConfirmDialog({
   open,
@@ -51,7 +51,7 @@ export function ConfirmDialog({
           <Dialog.Portal forceMount>
             <Dialog.Overlay asChild>
               <motion.div
-                className="shell-dialog-overlay"
+                className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -61,40 +61,40 @@ export function ConfirmDialog({
             <Dialog.Content asChild onEscapeKeyDown={(event) => busy && event.preventDefault()}>
               <motion.div
                 role="alertdialog"
-                className="shell-alert-position"
+                className="fixed top-1/2 left-1/2 z-50 w-[min(340px,92vw)] -translate-x-1/2 -translate-y-1/2"
                 initial={reduceMotion ? false : { opacity: 0, y: -10, scale: 0.985 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.99 }}
-                transition={{ duration: reduceMotion ? 0 : 0.18, ease: [0.2, 0.7, 0.2, 1] }}
+                transition={reduceMotion ? { duration: 0 } : spring.gentle}
               >
-                <Material thickness="thick" className="shell-alert-dialog">
-                  <div className="shell-alert-copy">
-                    <div className="shell-alert-icon" aria-hidden>
-                      {icon ?? <WarningCircleIcon weight="regular" />}
+                <Surface material="thick" className="flex flex-col gap-4 p-5">
+                  <div className="flex gap-3">
+                    <div className={destructive ? "text-destructive" : "text-primary"} aria-hidden>
+                      {icon ?? <CircleAlert className="size-6" />}
                     </div>
                     <div className="min-w-0">
-                      <Dialog.Title className="shell-alert-title">{title}</Dialog.Title>
-                      <Dialog.Description className="shell-alert-description">{description}</Dialog.Description>
+                      <Dialog.Title className="text-headline font-semibold text-foreground">{title}</Dialog.Title>
+                      <Dialog.Description className="mt-1 text-footnote leading-relaxed text-muted-foreground">
+                        {description}
+                      </Dialog.Description>
                     </div>
                   </div>
-                  <div className="shell-alert-actions">
+                  <div className="flex justify-end gap-2">
                     <Dialog.Close asChild>
-                      <ShellButton type="button" disabled={busy} className="shell-alert-action">
+                      <Button type="button" variant="secondary" disabled={busy}>
                         {cancelLabel}
-                      </ShellButton>
+                      </Button>
                     </Dialog.Close>
-                    <ShellButton
+                    <Button
                       type="button"
-                      primary={!destructive}
-                      destructive={destructive}
+                      variant={destructive ? "destructive" : "default"}
                       disabled={busy}
-                      className="shell-alert-action"
                       onClick={() => void confirm()}
                     >
                       {busy ? "Working…" : confirmLabel}
-                    </ShellButton>
+                    </Button>
                   </div>
-                </Material>
+                </Surface>
               </motion.div>
             </Dialog.Content>
           </Dialog.Portal>

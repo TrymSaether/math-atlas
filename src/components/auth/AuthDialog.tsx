@@ -2,7 +2,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { signIn, signInWithGoogle, signUp } from "../../lib/authClient";
-import { ShellButton } from "../primitives";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Surface, spring } from "@/design";
 
 type Mode = "signin" | "signup";
 
@@ -31,7 +33,6 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
   const continueWithGoogle = async () => {
     setError(null);
     setGoogleBusy(true);
-
     const result = await signInWithGoogle();
     setGoogleBusy(false);
     if (result.error) {
@@ -70,93 +71,91 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-(--z-modal) backdrop-blur-[2px]"
-                style={{ background: "color-mix(in srgb, var(--bg-deep) 55%, transparent)" }}
+                className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px]"
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
-              <div className="fixed left-1/2 top-1/2 z-(--z-modal) w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2">
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: -12, scale: 0.99 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
+                transition={reduceMotion ? { duration: 0 } : spring.gentle}
+                className="fixed top-1/2 left-1/2 z-50 w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2"
+              >
                 <Dialog.Title className="sr-only">{isSignup ? "Create an account" : "Sign in"}</Dialog.Title>
                 <Dialog.Description className="sr-only">Sign in to sync and share your maps.</Dialog.Description>
-                <motion.form
-                  onSubmit={submit}
-                  initial={reduceMotion ? false : { opacity: 0, y: -12, scale: 0.99 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.16, ease: [0.2, 0.7, 0.2, 1] }}
-                  className="standard-material standard-material-thick flex flex-col gap-3 rounded-2xl p-5"
-                >
-                  <h2 className="text-lg text-fg-1">{isSignup ? "Create an account" : "Welcome back"}</h2>
-                  <ShellButton
-                    type="button"
-                    disabled={busy || googleBusy}
-                    onClick={continueWithGoogle}
-                    className="shell-field-control flex h-11 items-center justify-center gap-2 rounded-md px-3 text-footnote font-semibold text-fg-1"
-                  >
-                    <GoogleGIcon className="h-4.5 w-4.5 shrink-0" />
-                    {googleBusy ? "Opening Google..." : "Continue with Google"}
-                  </ShellButton>
-                  <div className="flex items-center gap-2 text-caption-2 font-semibold uppercase tracking-label-wide text-fg-3">
-                    <span className="h-px flex-1 bg-border-muted" aria-hidden />
-                    <span>or</span>
-                    <span className="h-px flex-1 bg-border-muted" aria-hidden />
-                  </div>
-                  {isSignup && (
+                <Surface material="thick" className="p-0">
+                  <form onSubmit={submit} className="flex flex-col gap-3 p-5">
+                    <h2 className="text-title-3 font-semibold text-foreground">
+                      {isSignup ? "Create an account" : "Welcome back"}
+                    </h2>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      disabled={busy || googleBusy}
+                      onClick={continueWithGoogle}
+                      className="h-11 gap-2"
+                    >
+                      <GoogleGIcon className="size-[18px] shrink-0" />
+                      {googleBusy ? "Opening Google…" : "Continue with Google"}
+                    </Button>
+                    <div className="flex items-center gap-2 text-caption font-medium tracking-wide text-muted-foreground uppercase">
+                      <span className="h-px flex-1 bg-border" aria-hidden />
+                      <span>or</span>
+                      <span className="h-px flex-1 bg-border" aria-hidden />
+                    </div>
+                    {isSignup && (
+                      <Field
+                        label="Name"
+                        type="text"
+                        autoComplete="name"
+                        value={name}
+                        onChange={setName}
+                        placeholder="Ada Lovelace"
+                      />
+                    )}
                     <Field
-                      label="Name"
-                      type="text"
-                      autoComplete="name"
-                      value={name}
-                      onChange={setName}
-                      placeholder="Ada Lovelace"
+                      label="Email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      value={email}
+                      onChange={setEmail}
+                      placeholder="you@example.com"
                     />
-                  )}
-                  <Field
-                    label="Email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    value={email}
-                    onChange={setEmail}
-                    placeholder="you@example.com"
-                  />
-                  <Field
-                    label="Password"
-                    type="password"
-                    autoComplete={isSignup ? "new-password" : "current-password"}
-                    required
-                    value={password}
-                    onChange={setPassword}
-                    placeholder="••••••••"
-                  />
+                    <Field
+                      label="Password"
+                      type="password"
+                      autoComplete={isSignup ? "new-password" : "current-password"}
+                      required
+                      value={password}
+                      onChange={setPassword}
+                      placeholder="••••••••"
+                    />
 
-                  {error && (
-                    <p className="text-caption-2 font-medium text-danger" role="alert">
-                      {error}
-                    </p>
-                  )}
+                    {error && (
+                      <p className="text-caption font-medium text-destructive" role="alert">
+                        {error}
+                      </p>
+                    )}
 
-                  <ShellButton
-                    primary
-                    type="submit"
-                    disabled={busy || googleBusy}
-                    className="mt-1 h-11 justify-center rounded-md text-footnote font-medium text-fg-on-color"
-                  >
-                    {busy ? "Please wait..." : isSignup ? "Create account" : "Sign in"}
-                  </ShellButton>
+                    <Button type="submit" disabled={busy || googleBusy} className="mt-1 h-11">
+                      {busy ? "Please wait…" : isSignup ? "Create account" : "Sign in"}
+                    </Button>
 
-                  <button
-                    type="button"
-                    className="text-caption-2 text-fg-2 underline-offset-2 hover:underline"
-                    onClick={() => {
-                      setMode(isSignup ? "signin" : "signup");
-                      setError(null);
-                    }}
-                  >
-                    {isSignup ? "Already have an account? Sign in" : "No account yet? Create one"}
-                  </button>
-                </motion.form>
-              </div>
+                    <button
+                      type="button"
+                      className="text-caption text-muted-foreground underline-offset-2 hover:underline"
+                      onClick={() => {
+                        setMode(isSignup ? "signin" : "signup");
+                        setError(null);
+                      }}
+                    >
+                      {isSignup ? "Already have an account? Sign in" : "No account yet? Create one"}
+                    </button>
+                  </form>
+                </Surface>
+              </motion.div>
             </Dialog.Content>
           </Dialog.Portal>
         )}
@@ -200,17 +199,8 @@ function Field({
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange">) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="text-caption-1 font-semibold uppercase tracking-label-wide text-fg-3">{label}</span>
-      <input
-        {...rest}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="h-11 rounded-md px-3 text-footnote text-fg-1 outline-none"
-        style={{
-          background: "color-mix(in srgb, var(--surface) 80%, transparent)",
-          boxShadow: "inset 0 0 0 1px var(--glass-border)",
-        }}
-      />
+      <span className="text-caption font-semibold tracking-wide text-muted-foreground uppercase">{label}</span>
+      <Input {...rest} value={value} onChange={(e) => onChange(e.target.value)} className="h-11" />
     </label>
   );
 }
