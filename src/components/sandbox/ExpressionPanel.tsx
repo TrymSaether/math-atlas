@@ -26,7 +26,7 @@ import { formatValue } from "../../lib/workspace/engine";
 import { PALETTE } from "../../lib/workspace/library";
 import type { Computed, FactStatus, GeomShape, Row } from "../../lib/workspace/types";
 import { MathText } from "../../lib/katex";
-import { ShellSlider } from "../primitives";
+import { Slider } from "@/components/ui/slider";
 import { MathField } from "./MathField";
 
 export function ExpressionPanel() {
@@ -263,19 +263,16 @@ function ParamSlider({
       <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
       <div className="sandbox-slider-track min-w-0 flex-1">
         {dragging && <span className="sandbox-slider-bubble font-mono tabular-nums">{formatValue(value)}</span>}
-        <ShellSlider
+        <Slider
           min={slider.min}
           max={slider.max}
           step={slider.step}
-          value={value}
-          onBlur={() => setDragging(false)}
-          onChange={(e) => onChange(Number(e.target.value))}
-          onPointerCancel={() => setDragging(false)}
+          value={[value]}
+          onValueChange={(v) => onChange(v[0])}
+          onValueCommit={() => setDragging(false)}
           onPointerDown={() => setDragging(true)}
-          onPointerUp={() => setDragging(false)}
-          accent={row.color}
-          size="small"
           className="w-full"
+          style={{ "--primary": row.color } as CSSProperties}
         />
       </div>
       <NumBox label="Maximum value" value={slider.max} onChange={(max) => onConfig({ ...slider, max })} />

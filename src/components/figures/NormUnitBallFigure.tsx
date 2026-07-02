@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 
 import { MathText } from "../../lib/katex";
-import { ShellSlider } from "../primitives";
+import { Slider } from "@/components/ui/slider";
 import {
   Circle,
   DIA,
@@ -161,17 +161,16 @@ function NormModeSelect({
               </span>
               {mode.kind === "lp" && active && (
                 <>
-                  <ShellSlider
+                  <Slider
                     min={P_MIN}
                     max={P_MAX}
                     step={P_STEP}
-                    value={p}
-                    onClick={(event) => event.stopPropagation()}
-                    onChange={(event) => onPChange(Number(event.target.value))}
-                    accent={UI.onColor}
-                    size="small"
+                    value={[p]}
+                    onPointerDown={(event) => event.stopPropagation()}
+                    onValueChange={(v) => onPChange(v[0])}
                     className="w-20"
                     aria-label="Tunable lp exponent"
+                    style={{ "--primary": UI.onColor } as CSSProperties}
                   />
                   <span className="min-w-7 text-right tabular-nums">{formatCoord(p)}</span>
                 </>

@@ -12,7 +12,8 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Bookmark, ChevronDown, Maximize, Folder, Minus, Plus, X } from "lucide-react";
-import { Glass, ShellIconButton } from "../primitives";
+import { Button } from "@/components/ui/button";
+import { Surface } from "@/design";
 import { cn } from "../../lib/utils";
 import { useSandbox } from "../../lib/workspace/store";
 import { WORKSPACES, WORKSPACE_IDS } from "../../lib/workspace/library";
@@ -35,9 +36,16 @@ function zoomRect(r: ViewRect, factor: number): ViewRect {
 /** Icon button for the sandbox view dock — same shell icon button as atlas canvas controls. */
 function DockBtn({ label, onClick, children }: { label: string; onClick: () => void; children: ReactNode }) {
   return (
-    <ShellIconButton onClick={onClick} aria-label={label} title={label}>
+    <Button
+      variant="ghost"
+      size="icon"
+      className="size-9 rounded-full text-foreground"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+    >
       {children}
-    </ShellIconButton>
+    </Button>
   );
 }
 
@@ -66,11 +74,7 @@ export function SandboxView() {
         {/* Saved views + view dock, right rail */}
         <div className="pointer-events-none absolute bottom-4 right-4 flex flex-col items-end gap-2">
           {ws.views.length > 0 && (
-            <Glass
-              variant="regular"
-              interactive
-              className="pointer-events-auto flex items-center gap-0.5 rounded-full p-1"
-            >
+            <Surface material="regular" className="pointer-events-auto flex items-center gap-0.5 rounded-full p-1">
               {ws.views.map((v) => (
                 <span key={v.id} className="flex items-center">
                   <button
@@ -91,10 +95,10 @@ export function SandboxView() {
                   </button>
                 </span>
               ))}
-            </Glass>
+            </Surface>
           )}
           <div className="shell-utility-stack pointer-events-auto">
-            <Glass variant="regular" interactive className="shell-zoom-cluster">
+            <Surface material="regular" className="shell-zoom-cluster">
               <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
                 <Plus className="shell-icon" />
               </DockBtn>
@@ -104,12 +108,12 @@ export function SandboxView() {
               <DockBtn label="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
                 <Maximize className="shell-icon" />
               </DockBtn>
-            </Glass>
-            <Glass variant="regular" interactive className="shell-utility-button">
+            </Surface>
+            <Surface material="regular" className="shell-utility-button">
               <DockBtn label="Save view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
                 <Bookmark className="shell-icon" />
               </DockBtn>
-            </Glass>
+            </Surface>
           </div>
         </div>
       </main>

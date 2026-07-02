@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 
 import { linspace } from "../../lib/figures/plot";
 import { MathText } from "../../lib/katex";
-import { ShellSlider } from "../primitives";
+import { Slider } from "@/components/ui/slider";
 import { DIA, FigureCaption, FigureFrame, FunctionCurve, Line, Polygon, STROKE, UI, type Vec2 } from "./FigureFrame";
 
 function testFn(x: number): number {
@@ -126,15 +126,15 @@ export default function RiemannLebesgueFigure() {
         </div>
 
         <div className="mt-1.5 flex items-center gap-3">
-          <ShellSlider
+          <Slider
             min={1}
             max={20}
             step={1}
-            value={n}
+            value={[n]}
             aria-label="Frequency n"
-            onChange={(e) => setN(Number(e.target.value))}
-            accent={DIA.accent}
+            onValueChange={(v) => setN(v[0])}
             className="flex-1"
+            style={{ "--primary": DIA.accent } as CSSProperties}
           />
           <span className="min-w-14 shrink-0" />
         </div>
