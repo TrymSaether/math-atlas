@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { SignInIcon, SignOutIcon, UserIcon } from "@phosphor-icons/react";
+import { LogIn, LogOut, User } from "lucide-react";
 import { signOut, useSession } from "../../lib/authClient";
-import { Material, ShellButton, ShellIconButton } from "../primitives";
+import { Button } from "@/components/ui/button";
+import { Surface } from "@/design";
 import { AuthDialog } from "./AuthDialog";
 
 /**
@@ -34,9 +35,16 @@ export function UserMenu() {
   if (!user) {
     return (
       <>
-        <ShellIconButton onClick={() => setDialogOpen(true)} aria-label="Sign in" title="Sign in">
-          <SignInIcon className="shell-icon" weight="regular" />
-        </ShellIconButton>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-9 text-foreground"
+          onClick={() => setDialogOpen(true)}
+          aria-label="Sign in"
+          title="Sign in"
+        >
+          <LogIn className="size-[18px]" />
+        </Button>
         <AuthDialog open={dialogOpen} onOpenChange={setDialogOpen} />
       </>
     );
@@ -46,33 +54,42 @@ export function UserMenu() {
 
   return (
     <div className="relative" ref={ref}>
-      <ShellIconButton onClick={() => setMenuOpen((o) => !o)} active={menuOpen} aria-label="Account" title={user.email}>
-        <span className="shell-account-initial">{initial}</span>
-      </ShellIconButton>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="size-9"
+        onClick={() => setMenuOpen((o) => !o)}
+        aria-label="Account"
+        title={user.email}
+      >
+        <span className="flex size-7 items-center justify-center rounded-full bg-primary text-[13px] font-semibold text-primary-foreground">
+          {initial}
+        </span>
+      </Button>
       {menuOpen && (
-        <Material
-          thickness="thick"
-          className="shell-panel shell-account-menu absolute right-0 top-[calc(100%+8px)] z-(--z-banner) w-[min(240px,calc(100vw-24px))]"
+        <Surface
+          material="thick"
+          className="absolute top-[calc(100%+8px)] right-0 z-[var(--z-banner,60)] w-[min(240px,calc(100vw-24px))] p-1.5"
         >
-          <div className="shell-account-summary">
-            <UserIcon className="shell-icon shrink-0 text-fg-3" />
+          <div className="flex items-center gap-2 px-2 py-1.5">
+            <User className="size-[18px] shrink-0 text-muted-foreground" />
             <div className="min-w-0">
-              {user.name && <div className="truncate text-footnote text-fg-1">{user.name}</div>}
-              <div className="truncate text-caption-2 text-fg-3">{user.email}</div>
+              {user.name && <div className="truncate text-footnote text-foreground">{user.name}</div>}
+              <div className="truncate text-caption text-muted-foreground">{user.email}</div>
             </div>
           </div>
-          <ShellButton
+          <Button
+            variant="ghost"
+            className="mt-1 w-full justify-start gap-2 font-normal"
             onClick={async () => {
               await signOut();
               setMenuOpen(false);
             }}
-            shape="pill"
-            className="shell-menu-option shell-menu-action"
           >
-            <SignOutIcon className="shell-icon" />
+            <LogOut className="size-4" />
             Sign out
-          </ShellButton>
-        </Material>
+          </Button>
+        </Surface>
       )}
     </div>
   );

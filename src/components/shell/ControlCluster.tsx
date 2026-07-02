@@ -1,13 +1,16 @@
 import { useCallback, useRef, useState } from "react";
 import { useReactFlow, useViewport } from "@xyflow/react";
-import { PlusIcon, MinusIcon, CornersOutIcon, FunnelSimpleIcon } from "@phosphor-icons/react";
+import { Maximize, Minus, Plus, SlidersHorizontal } from "lucide-react";
 import { usePopoverDismiss } from "../../hooks/usePopover";
-import { Glass, ShellIconButton } from "../primitives";
+import { cn } from "../../lib/utils";
+import { Button } from "@/components/ui/button";
+import { Surface } from "@/design";
 import { LayersPanel } from "./LayersPanel";
 
 /**
- * Bottom-trailing utility stack. Each unrelated action gets its own glass
- * shape; only the tightly related zoom controls share a capsule.
+ * Bottom-trailing utility stack. Each unrelated action gets its own glass shape;
+ * only the tightly related zoom controls share a capsule. Positioning still reads
+ * the legacy shell layout classes until a shell-layout pass replaces them.
  */
 export function ControlCluster() {
   const rf = useReactFlow();
@@ -27,38 +30,62 @@ export function ControlCluster() {
         </div>
       )}
       <div className="shell-utility-stack">
-        <Glass variant="regular" interactive className="shell-utility-button">
-          <ShellIconButton
+        <Surface material="regular" className="rounded-full">
+          <Button
             ref={triggerRef}
-            active={layersOpen}
+            variant="ghost"
+            size="icon"
+            className={cn("size-11 rounded-full", layersOpen ? "text-primary" : "text-foreground")}
             onClick={() => setLayersOpen((v) => !v)}
             aria-label="Filters"
             aria-pressed={layersOpen}
             title="Filters"
           >
-            <FunnelSimpleIcon className="shell-icon" weight="regular" />
-          </ShellIconButton>
-        </Glass>
-        <Glass variant="regular" interactive className="shell-zoom-cluster" aria-label="Zoom controls">
-          <ShellIconButton aria-label="Zoom in" title="Zoom in" onClick={() => rf.zoomIn({ duration: 200 })}>
-            <PlusIcon className="shell-icon" weight="regular" />
-          </ShellIconButton>
-          <span className="shell-zoom-readout" aria-label={`Zoom ${Math.round(zoom * 100)} percent`}>
+            <SlidersHorizontal className="size-[18px]" />
+          </Button>
+        </Surface>
+
+        <Surface material="regular" className="flex flex-col items-center rounded-full py-1" aria-label="Zoom controls">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-9 rounded-full text-foreground"
+            aria-label="Zoom in"
+            title="Zoom in"
+            onClick={() => rf.zoomIn({ duration: 200 })}
+          >
+            <Plus className="size-[18px]" />
+          </Button>
+          <span
+            className="py-0.5 font-mono text-[11px] tabular-nums text-muted-foreground"
+            aria-label={`Zoom ${Math.round(zoom * 100)} percent`}
+          >
             {Math.round(zoom * 100)}%
           </span>
-          <ShellIconButton aria-label="Zoom out" title="Zoom out" onClick={() => rf.zoomOut({ duration: 200 })}>
-            <MinusIcon className="shell-icon" weight="regular" />
-          </ShellIconButton>
-        </Glass>
-        <Glass variant="regular" interactive className="shell-utility-button">
-          <ShellIconButton
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-9 rounded-full text-foreground"
+            aria-label="Zoom out"
+            title="Zoom out"
+            onClick={() => rf.zoomOut({ duration: 200 })}
+          >
+            <Minus className="size-[18px]" />
+          </Button>
+        </Surface>
+
+        <Surface material="regular" className="rounded-full">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-11 rounded-full text-foreground"
             aria-label="Fit to view"
             title="Fit to view"
             onClick={() => rf.fitView({ padding: 0.12, duration: 400 })}
           >
-            <CornersOutIcon className="shell-icon" weight="regular" />
-          </ShellIconButton>
-        </Glass>
+            <Maximize className="size-[18px]" />
+          </Button>
+        </Surface>
       </div>
     </div>
   );

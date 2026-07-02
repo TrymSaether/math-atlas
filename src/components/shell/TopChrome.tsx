@@ -1,24 +1,27 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import {
-  MagnifyingGlassIcon,
-  CompassIcon,
-  BookOpenIcon,
-  CardsIcon,
-  FunctionIcon,
-  SunIcon,
-  MoonIcon,
-  CaretDownIcon,
-  CheckIcon,
-  PencilSimpleIcon,
-  PlusIcon,
-  ArrowCounterClockwiseIcon,
-} from "@phosphor-icons/react";
-import { useStore, type Surface } from "../../store";
+  BookOpen,
+  Check,
+  ChevronDown,
+  Compass,
+  Moon,
+  Pencil,
+  Plus,
+  RotateCcw,
+  Search,
+  Sun,
+  Variable,
+  WalletCards,
+} from "lucide-react";
+import { useStore, type Surface as SurfaceId } from "../../store";
 import { schemeFor, siblingOf } from "../../lib/themes";
 import { authEnabled } from "../../lib/authClient";
 import { cn } from "../../lib/utils";
 import { usePopoverDismiss } from "../../hooks/usePopover";
-import { ConfirmDialog, Glass, GlassControlGroup, ShellButton, ShellIconButton, ShellSegmented } from "../primitives";
+import { ConfirmDialog } from "../primitives";
+import { Button } from "@/components/ui/button";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Surface } from "@/design";
 import { UserMenu } from "../auth/UserMenu";
 import { LogoMark } from "../Logo";
 
@@ -26,19 +29,19 @@ import { LogoMark } from "../Logo";
 function SearchField() {
   const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   return (
-    <Glass variant="regular" className="shell-search">
+    <Surface material="regular" className="rounded-full">
       <button
         type="button"
-        className="shell-search-button"
+        className="flex h-11 w-full items-center gap-2 rounded-full px-4 text-muted-foreground transition-colors hover:bg-accent"
         onClick={() => setPaletteOpen(true)}
         aria-label="Search concepts and theorems"
         title="Search concepts and theorems"
       >
-        <MagnifyingGlassIcon className="shell-icon" weight="regular" />
-        <span className="shell-search-label">Search concepts, theorems…</span>
-        <kbd className="shell-search-kbd">⌘K</kbd>
+        <Search className="size-[18px] shrink-0" />
+        <span className="min-w-0 flex-1 truncate text-left text-body">Search concepts, theorems…</span>
+        <kbd className="shrink-0 rounded bg-foreground/[0.06] px-1.5 py-px font-mono text-caption">⌘K</kbd>
       </button>
-    </Glass>
+    </Surface>
   );
 }
 
@@ -62,34 +65,24 @@ function MapMenu() {
 
   usePopoverDismiss({ open, onClose: close, containerRef: ref, triggerRef });
 
-  // Open the listbox on the current map and move focus into it, so the dropdown
-  // is operable from the keyboard (HIG/WCAG listbox pattern).
+  // Open the listbox on the current map and move focus into it (HIG/WCAG listbox).
   useEffect(() => {
     if (!open) return;
-
     activeIndexRef.current = selectedIndex;
-
-    const raf = requestAnimationFrame(() => {
-      optionRefs.current[selectedIndex]?.focus();
-    });
-
+    const raf = requestAnimationFrame(() => optionRefs.current[selectedIndex]?.focus());
     return () => cancelAnimationFrame(raf);
   }, [open, selectedIndex]);
 
   const onListKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
     if (catalog.length === 0) return;
-
     const currentIndex = optionRefs.current.findIndex((el) => el === document.activeElement);
     const fromIndex = currentIndex >= 0 ? currentIndex : activeIndexRef.current;
-
     let nextIndex: number;
-
     if (e.key === "ArrowDown") nextIndex = (fromIndex + 1) % catalog.length;
     else if (e.key === "ArrowUp") nextIndex = (fromIndex - 1 + catalog.length) % catalog.length;
     else if (e.key === "Home") nextIndex = 0;
     else if (e.key === "End") nextIndex = catalog.length - 1;
     else return;
-
     e.preventDefault();
     activeIndexRef.current = nextIndex;
     optionRefs.current[nextIndex]?.focus();
@@ -103,34 +96,35 @@ function MapMenu() {
 
   return (
     <div className="relative" ref={ref}>
-      <Glass variant="regular" className="shell-map-menu">
-        <ShellIconButton
-          className="shell-map-mark"
+      <Surface material="regular" className="flex items-center rounded-full py-1 pr-1 pl-1.5">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-9 rounded-full"
           onClick={() => setSurface("atlas")}
           aria-label="Go to Atlas"
           title="Atlas"
         >
-          <LogoMark className="h-7 w-7" size={28} />
-        </ShellIconButton>
-        <ShellButton
+          <LogoMark className="size-7" size={28} />
+        </Button>
+        <button
           ref={triggerRef}
           type="button"
-          shape="pill"
-          className="shell-map-title"
+          className="flex h-9 items-center gap-1 rounded-full px-2.5 text-subhead font-medium text-foreground transition-colors hover:bg-accent"
           onClick={() => setOpen((v) => !v)}
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-label="Choose active map"
           title="Choose active map"
         >
-          <span className="shell-map-title-label">{title}</span>
-          <CaretDownIcon className="shell-caret-icon" weight="bold" />
-        </ShellButton>
-      </Glass>
+          <span className="max-w-[180px] truncate">{title}</span>
+          <ChevronDown className="size-3.5 shrink-0 text-muted-foreground" />
+        </button>
+      </Surface>
       {open && (
-        <Glass
-          variant="regular"
-          className="shell-panel absolute left-0 top-[calc(100%+8px)] z-(--z-popover) w-70 p-1.5"
+        <Surface
+          material="thick"
+          className="absolute top-[calc(100%+8px)] left-0 z-[var(--z-popover,40)] w-[280px] p-1.5"
           role="listbox"
           aria-label="Active map"
           onKeyDown={onListKeyDown}
@@ -147,26 +141,29 @@ function MapMenu() {
                 role="option"
                 aria-selected={active}
                 tabIndex={active ? 0 : -1}
-                className={cn("shell-menu-option", active && "is-active")}
+                className={cn(
+                  "flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-subhead transition-colors",
+                  active ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent",
+                )}
                 onClick={() => choose(entry.slug)}
               >
                 <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
-                {active && <CheckIcon className="h-4 w-4 shrink-0 text-fg-2" weight="bold" />}
+                {active && <Check className="size-4 shrink-0" />}
               </button>
             );
           })}
-          {catalog.length === 0 && <p className="px-2.5 py-3 text-caption-1 text-fg-3">Loading maps…</p>}
-        </Glass>
+          {catalog.length === 0 && <p className="px-2.5 py-3 text-caption text-muted-foreground">Loading maps…</p>}
+        </Surface>
       )}
     </div>
   );
 }
 
-const SURFACES: { id: Surface; label: string; Icon: typeof CompassIcon }[] = [
-  { id: "atlas", label: "Atlas", Icon: CompassIcon },
-  { id: "dictionary", label: "Index", Icon: BookOpenIcon },
-  { id: "flashcards", label: "Study", Icon: CardsIcon },
-  { id: "sandbox", label: "Sandbox", Icon: FunctionIcon },
+const SURFACES: { id: SurfaceId; label: string; Icon: typeof Compass }[] = [
+  { id: "atlas", label: "Atlas", Icon: Compass },
+  { id: "dictionary", label: "Index", Icon: BookOpen },
+  { id: "flashcards", label: "Study", Icon: WalletCards },
+  { id: "sandbox", label: "Sandbox", Icon: Variable },
 ];
 
 /** Primary surface switch: Atlas (graph) / Index / Study / Sandbox. */
@@ -174,18 +171,25 @@ function SurfaceNav() {
   const surface = useStore((s) => s.surface);
   const setSurface = useStore((s) => s.setSurface);
   return (
-    <ShellSegmented
-      label="Surface navigation"
+    <ToggleGroup
+      type="single"
       value={surface}
-      onChange={setSurface}
-      hideLabels="responsive"
-      className="shell-surface-nav"
-      options={SURFACES.map(({ id, label, Icon }) => ({
-        id,
-        label,
-        icon: <Icon className="shell-icon" weight="regular" />,
-      }))}
-    />
+      onValueChange={(v) => v && setSurface(v as SurfaceId)}
+      aria-label="Surface navigation"
+      className="gap-0.5"
+    >
+      {SURFACES.map(({ id, label, Icon }) => (
+        <ToggleGroupItem
+          key={id}
+          value={id}
+          title={label}
+          className="h-9 gap-1.5 rounded-full px-3 text-footnote font-medium data-[state=on]:bg-card data-[state=on]:text-foreground data-[state=on]:shadow-sm"
+        >
+          <Icon className="size-4 shrink-0" />
+          <span className="hidden md:inline">{label}</span>
+        </ToggleGroupItem>
+      ))}
+    </ToggleGroup>
   );
 }
 
@@ -212,36 +216,42 @@ function EditControls() {
   const mapTitle = map.data.label || mapId;
 
   return (
-    <div className="shell-edit-controls">
-      <ShellIconButton
-        active={editMode}
+    <div className="flex items-center gap-0.5">
+      <Button
+        variant="ghost"
+        size="icon"
+        className={cn("relative size-9", editMode ? "text-primary" : "text-foreground")}
         onClick={toggle}
-        className="shell-edit-toggle"
         aria-pressed={editMode}
         aria-label={edited ? "Edit mode, unsaved changes" : "Edit mode"}
       >
-        <PencilSimpleIcon className="shell-icon" weight="regular" />
-        {edited && <span className="shell-edit-badge" aria-hidden />}
-      </ShellIconButton>
+        <Pencil className="size-[18px]" />
+        {edited && <span className="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-primary" aria-hidden />}
+      </Button>
       {editMode && (
         <>
-          <ShellIconButton
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-9 text-foreground"
             aria-label="New concept"
             title="New concept"
             onClick={() => openNodeEditor({ mode: "create" })}
           >
-            <PlusIcon className="shell-icon" weight="regular" />
-          </ShellIconButton>
-
+            <Plus className="size-[18px]" />
+          </Button>
           {edited && (
-            <ShellIconButton
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-9 text-foreground"
               aria-label="Revert edits"
               title="Revert edits"
               aria-haspopup="dialog"
               onClick={() => setRevertOpen(true)}
             >
-              <ArrowCounterClockwiseIcon className="shell-icon" />
-            </ShellIconButton>
+              <RotateCcw className="size-[18px]" />
+            </Button>
           )}
         </>
       )}
@@ -252,7 +262,7 @@ function EditControls() {
         description={<>This restores “{mapTitle}” to its last saved version. Your local changes can’t be recovered.</>}
         confirmLabel="Revert"
         destructive
-        icon={<ArrowCounterClockwiseIcon weight="regular" />}
+        icon={<RotateCcw className="size-6" />}
         onConfirm={async () => {
           await revertMap();
         }}
@@ -266,18 +276,16 @@ function ThemeToggle() {
   const setTheme = useStore((s) => s.setTheme);
   const isDark = schemeFor(theme) === "dark";
   return (
-    <ShellIconButton
-      type="button"
+    <Button
+      variant="ghost"
+      size="icon"
+      className="size-9 text-foreground"
       onClick={() => setTheme(siblingOf(theme))}
       aria-label={isDark ? "Switch to light appearance" : "Switch to dark appearance"}
       title={isDark ? "Light" : "Dark"}
     >
-      {isDark ? (
-        <SunIcon className="shell-icon" weight="regular" />
-      ) : (
-        <MoonIcon className="shell-icon" weight="regular" />
-      )}
-    </ShellIconButton>
+      {isDark ? <Sun className="size-[18px]" /> : <Moon className="size-[18px]" />}
+    </Button>
   );
 }
 
@@ -288,29 +296,28 @@ function TopRightControls() {
   const showEditControls = surface === "atlas" && mode !== "paths" && Boolean(map);
 
   return (
-    <div className="shell-top-right-stack">
-      <GlassControlGroup className="shell-surface-island">
+    <div className="flex items-center gap-2">
+      <Surface material="regular" className="rounded-full p-1">
         <SurfaceNav />
-      </GlassControlGroup>
+      </Surface>
 
       {showEditControls && (
-        <GlassControlGroup className="shell-edit-island">
+        <Surface material="regular" className="rounded-full p-1">
           <EditControls />
-        </GlassControlGroup>
+        </Surface>
       )}
 
-      <GlassControlGroup className="shell-global-island">
+      <Surface material="regular" className="flex items-center rounded-full p-1">
         <ThemeToggle />
         {authEnabled && <UserMenu />}
-      </GlassControlGroup>
+      </Surface>
     </div>
   );
 }
 
 /**
- * Top Liquid Glass islands: map leading, search centered, and semantically split
- * trailing controls. Floats above the content layer; on narrow widths it wraps
- * gracefully.
+ * Top glass islands: map leading, search centered, and semantically split
+ * trailing controls. Floats above the content layer via the `top-chrome` grid.
  */
 export function TopChrome() {
   return (

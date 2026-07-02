@@ -1,33 +1,41 @@
-import { CompassIcon, PathIcon } from "@phosphor-icons/react";
+import { Compass, Route } from "lucide-react";
 import { useStore, type AtlasMode } from "../../store";
-import { ShellSegmented, GlassControlGroup } from "../primitives";
+import { Surface } from "@/design";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-const MODES: { id: AtlasMode; label: string; Icon: typeof CompassIcon }[] = [
-  { id: "explore", label: "Explore", Icon: CompassIcon },
-  { id: "paths", label: "Paths", Icon: PathIcon },
-];
+const MODES = [
+  { id: "explore", label: "Explore", Icon: Compass },
+  { id: "paths", label: "Paths", Icon: Route },
+] as const;
 
 /**
- * The hybrid's prominent mode switch: free graph Explore vs guided Paths. A
- * floating Liquid Glass segmented control, bottom-center over the canvas.
+ * The prominent mode switch: free graph Explore vs guided Paths — a floating
+ * glass segmented control, bottom-center over the canvas.
  */
 export function ModeSwitch() {
   const mode = useStore((s) => s.mode);
   const setMode = useStore((s) => s.setMode);
   return (
     <div className="shell-mode-switch">
-      <GlassControlGroup className="shell-mode-island">
-        <ShellSegmented
-          label="Atlas mode"
+      <Surface material="regular" className="rounded-full p-1">
+        <ToggleGroup
+          type="single"
           value={mode}
-          onChange={setMode}
-          options={MODES.map(({ id, label, Icon }) => ({
-            id,
-            label,
-            icon: <Icon className="shell-icon" weight="regular" />,
-          }))}
-        />
-      </GlassControlGroup>
+          onValueChange={(v) => v && setMode(v as AtlasMode)}
+          aria-label="Atlas mode"
+          className="gap-0.5"
+        >
+          {MODES.map(({ id, label, Icon }) => (
+            <ToggleGroupItem
+              key={id}
+              value={id}
+              className="gap-1.5 rounded-full px-4 text-footnote font-medium data-[state=on]:bg-card data-[state=on]:text-foreground data-[state=on]:shadow-sm"
+            >
+              <Icon className="size-4" /> {label}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+      </Surface>
     </div>
   );
 }

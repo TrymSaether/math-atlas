@@ -1,8 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { PlusIcon, PencilSimpleIcon } from "@phosphor-icons/react";
+import { Pencil, Plus } from "lucide-react";
 import { useStore } from "../../store";
 import { NodeEditorPanel } from "../authoring/NodeEditorPanel";
-import { Material, ShellButton } from "../primitives";
+import { Button } from "@/components/ui/button";
+import { Surface } from "@/design";
 
 /**
  * Shell-native Edit Mode inspector. The authoring engine still lives in
@@ -29,6 +30,8 @@ export function EditInspector() {
     else select(null);
   };
 
+  const transition = { duration: reduceMotion ? 0 : 0.2, ease: [0.2, 0.7, 0.2, 1] } as const;
+
   return (
     <AnimatePresence>
       {open ? (
@@ -37,15 +40,12 @@ export function EditInspector() {
           initial={reduceMotion ? false : { opacity: 0, x: -14 }}
           animate={{ opacity: 1, x: 0 }}
           exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -14 }}
-          transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.2, 0.7, 0.2, 1] }}
-          className="shell-dock shell-dock-left pointer-events-auto"
+          transition={transition}
+          className="ds-panel ds-panel--left"
         >
-          <Material
-            thickness="thick"
-            className="shell-panel edit-inspector flex h-full w-[min(460px,calc(100vw-24px))] flex-col"
-          >
+          <Surface material="thick" className="flex h-full w-[min(460px,calc(100vw-24px))] flex-col">
             <NodeEditorPanel editingId={editingId} map={map} mapId={mapId} onClose={close} />
-          </Material>
+          </Surface>
         </motion.aside>
       ) : (
         <motion.aside
@@ -53,29 +53,29 @@ export function EditInspector() {
           initial={reduceMotion ? false : { opacity: 0, x: -14 }}
           animate={{ opacity: 1, x: 0 }}
           exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -14 }}
-          transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.2, 0.7, 0.2, 1] }}
-          className="shell-dock shell-dock-left pointer-events-auto"
+          transition={transition}
+          className="ds-panel ds-panel--left"
         >
-          <Material
-            thickness="thick"
-            className="shell-panel flex w-[min(340px,calc(100vw-24px))] flex-col gap-3 px-4 py-4"
+          <Surface
+            material="thick"
+            className="flex w-[min(340px,calc(100vw-24px))] flex-col gap-3 px-4 py-4"
             role="dialog"
             aria-label="Edit mode"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-3 text-fg-2">
-              <PencilSimpleIcon className="h-4 w-4" />
+            <div className="flex size-9 items-center justify-center rounded-full bg-muted text-foreground">
+              <Pencil className="size-4" />
             </div>
             <div>
-              <h2 className="text-lg text-fg-1">Edit mode</h2>
-              <p className="mt-1 text-footnote leading-relaxed text-fg-3">
+              <h2 className="text-title-3 font-semibold text-foreground">Edit mode</h2>
+              <p className="mt-1 text-footnote leading-relaxed text-muted-foreground">
                 Select a concept to inspect its source, relations, proof steps, and examples.
               </p>
             </div>
-            <ShellButton primary onClick={() => openNodeEditor({ mode: "create" })}>
-              <PlusIcon className="shell-icon" weight="regular" />
+            <Button className="gap-1.5" onClick={() => openNodeEditor({ mode: "create" })}>
+              <Plus className="size-4" />
               New concept
-            </ShellButton>
-          </Material>
+            </Button>
+          </Surface>
         </motion.aside>
       )}
     </AnimatePresence>
