@@ -121,7 +121,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
 
   return (
     <Surface
-      material="thin"
+      material="thick"
       role="dialog"
       aria-label={`${view.kindLabel}: ${node.label}`}
       className={cn(
@@ -130,7 +130,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
       )}
     >
       <header className="shrink-0">
-        <div className="flex min-h-[44px] items-center justify-between gap-3 px-3 pt-2 pb-1">
+        <div className="flex min-h-11 items-center justify-between gap-3 px-3 pt-2 pb-1">
           <div className="inline-flex items-center gap-0.5">
             <Button
               variant="ghost"
@@ -239,7 +239,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             ))}
           </dl>
         </div>
-        <div className="mx-4 mt-3 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="mx-4 mt-3 h-px bg-linear-to-r from-transparent via-border to-transparent" />
       </header>
 
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-4">

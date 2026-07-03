@@ -9,6 +9,7 @@ import { MathText } from "@/math/MathText";
 import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
 import { Surface } from "@/design";
+
 import { LIBRARY_DESTINATIONS, TOOL_DESTINATIONS, type ShellDestination } from "./destinations";
 
 /**
@@ -42,7 +43,7 @@ function DestinationList({ destinations }: { destinations: readonly ShellDestina
                 isActive ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent",
               )}
             >
-              <Icon className={cn("size-[19px] shrink-0", isActive ? "text-primary" : "text-muted-foreground")} />
+              <Icon className={cn("size-4.75 shrink-0", isActive ? "text-primary" : "text-muted-foreground")} />
               <span className={cn("text-subhead", isActive && "font-medium")}>{destination.label}</span>
             </button>
           </li>
@@ -109,7 +110,7 @@ function ConceptGlyph({ mapId, domainId }: { mapId: string; domainId: string }) 
   const glyphId = getDomainGlyphId({ mapId, domainId });
   return (
     <span
-      className="flex size-[30px] shrink-0 items-center justify-center rounded-full text-white"
+      className="flex size-7.5 shrink-0 items-center justify-center rounded-full text-white"
       style={{ background: tone.color, boxShadow: "inset 0 0.5px 0 rgb(255 255 255 / 0.28)" }}
     >
       {glyphId ? <DomainGlyph id={glyphId} size={16} /> : <MapPin className="size-4" />}
@@ -151,7 +152,7 @@ function RecentsSection() {
               type="button"
               onClick={() => select(node.id)}
               title={node.label}
-              className="flex min-h-[52px] w-full items-center gap-3 rounded-[10px] px-2.5 py-[7px] text-left transition-colors hover:bg-accent"
+              className="flex min-h-13 w-full items-center gap-3 rounded-sm px-2.5 py-1.75 text-left transition-colors hover:bg-accent"
             >
               <ConceptGlyph mapId={mapId} domainId={node.domain} />
               <span className="flex min-w-0 flex-1 flex-col gap-px">
@@ -200,24 +201,27 @@ export function Sidebar() {
 
   if (collapsed) {
     return (
-      <div className="absolute top-4 left-4 z-[var(--z-shell,30)]">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="size-8 text-muted-foreground"
-          aria-label="Show sidebar"
-          title="Show sidebar"
-          onClick={() => setCollapsed(false)}
-        >
-          <PanelLeft className="size-4" />
-        </Button>
+      <div className="absolute top-4 left-4 z-(--z-shell,30)">
+        <Surface material="thin" className="flex size-10 items-center justify-center rounded-full">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-10 rounded-full text-muted-foreground hover:bg-accent/60"
+            aria-label="Show sidebar"
+            title="Show sidebar"
+            onClick={() => setCollapsed(false)}
+          >
+            <PanelLeft className="size-4" />
+          </Button>
+        </Surface>
       </div>
     );
   }
 
   return (
     <aside
-      className="absolute inset-[var(--shell-edge,12px)] z-[var(--z-shell,30)] w-[var(--hig-sidebar-w,290px)]"
+      className="absolute inset-(--shell-edge,12px) z-(--z-shell,30) w-(--hig-sidebar-w,290px)"
       aria-label="Atlas navigation"
     >
       <Surface material="thin" className="flex h-full flex-col overflow-hidden">
@@ -242,11 +246,9 @@ export function Sidebar() {
             aria-label="Search concepts and theorems"
             className="flex h-10 w-full items-center gap-2 rounded-full bg-muted px-3.5 text-muted-foreground transition-colors hover:bg-accent"
           >
-            <Search className="size-[18px] shrink-0" />
+            <Search className="size-4.5 shrink-0" />
             <span className="min-w-0 flex-1 truncate text-left text-body">Search concepts, theorems…</span>
-            <kbd className="shrink-0 rounded bg-foreground/[0.06] px-1.5 py-px text-caption text-muted-foreground">
-              ⌘K
-            </kbd>
+            <kbd className="shrink-0 rounded bg-foreground/6 px-1.5 py-px text-caption text-muted-foreground">⌘K</kbd>
           </button>
         </div>
 
@@ -269,7 +271,7 @@ export function Sidebar() {
                       className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-foreground transition-colors hover:bg-accent"
                     >
                       <span
-                        className="mx-[5px] size-[11px] shrink-0 rounded-full"
+                        className="mx-1.25 size-2.75 shrink-0 rounded-full"
                         style={{ background: getDomainTone(d.id).color }}
                       />
                       <span className="text-subhead">{d.label}</span>

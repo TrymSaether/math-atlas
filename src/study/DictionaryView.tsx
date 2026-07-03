@@ -101,7 +101,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-background text-foreground">
-      <div className="absolute inset-x-0 bottom-0 top-[var(--shell-dock-top)] grid h-[calc(100%-var(--shell-dock-top))] grid-cols-[minmax(300px,360px)_minmax(0,1fr)] max-[860px]:grid-cols-1">
+      <div className="absolute inset-x-0 bottom-0 top-(--shell-dock-top) grid h-[calc(100%-var(--shell-dock-top))] grid-cols-[minmax(300px,360px)_minmax(0,1fr)] max-[860px]:grid-cols-1">
         {/* ---- Index column ---- */}
         <aside
           className={`flex min-h-0 flex-col border-r border-border bg-muted ${mobileDetail ? "max-[860px]:hidden" : ""}`}

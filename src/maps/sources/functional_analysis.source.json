@@ -1123,8 +1123,7 @@
       ],
       "tags": [
         "banach_space",
-        "closed",
-        "subspace"
+        "closed"
       ],
       "priority": "core"
     },
@@ -2713,80 +2712,74 @@
       "id": "hahn_banach_theorem",
       "kind": "theorem",
       "domain": "hahn_banach",
-      "label": "Hahn-Banach theorem",
+      "label": "Hahn-Banach extension theorem",
       "content": {
-        "statement": "A linear functional dominated by a sublinear functional on a subspace extends to the whole space while preserving domination.",
-        "formal": "Let $E$ be a real vector space, let $V\\leq E$ be a linear subspace, let $p:E\\to\\mathbb{R}$ be sublinear, and let $f:V\\to\\mathbb{R}$ be linear with $f(v)\\leq p(v)$ for all $v\\in V$. Then there exists a linear functional $F:E\\to\\mathbb{R}$ such that $F|_V=f$ and $F(x)\\leq p(x)$ for all $x\\in E$. If $E$ is normed and $|f(v)|\\leq C\\|v\\|$ for all $v\\in V$, then $F$ may be chosen so that $|F(x)|\\leq C\\|x\\|$ for all $x\\in E$; in particular, taking $C=\\|f\\|$ gives $\\|F\\|=\\|f\\|$.",
-        "intuition": "A linear measurement defined on a subspace can be extended globally without exceeding the same controlling bound.",
+        "statement": "A real linear functional dominated by a sublinear functional on a subspace extends to the whole vector space while remaining dominated by the same sublinear functional.",
+        "formal": "Let $E$ be a real vector space and let $p:E\\to\\mathbb R$ be sublinear. If $V$ is a subspace of $E$ and if $f:V\\to\\mathbb R$ is a linear functional such that $f(x)\\leq p(x)$ for every $x\\in V$, then there exists an extension $\\widehat f:E\\to\\mathbb R$ of $f$ that is linear and satisfies $\\widehat f(x)\\leq p(x)$ for every $x\\in E$.",
+        "formula": "$$\\begin{aligned} &E\\text{ real vector space},\\quad V\\leq E,\\quad p:E\\to\\mathbb R\\text{ sublinear},\\\\ &f:V\\to\\mathbb R\\text{ linear},\\quad f(x)\\leq p(x)\\quad(x\\in V),\\\\ &\\Longrightarrow \\exists\\widehat f:E\\to\\mathbb R\\text{ linear}:\\quad \\widehat f|_V=f\\quad\\text{and}\\quad \\widehat f(x)\\leq p(x)\\quad(x\\in E). \\end{aligned}$$",
+        "intuition": "The functional $f$ is a linear height function defined only on the slice $V$. The sublinear functional $p$ is a one-sided ceiling over all of $E$. Hahn-Banach says that the height function can be extended to the whole space without crossing that ceiling.",
         "notation": [
           "$E$: real vector space",
           "$V\\leq E$: linear subspace",
-          "$p:E\\to\\mathbb{R}$: sublinear functional",
-          "$f:V\\to\\mathbb{R}$: dominated linear functional",
-          "$F:E\\to\\mathbb{R}$: dominated extension of $f$"
+          "$p:E\\to\\mathbb R$: sublinear dominating functional",
+          "$f:V\\to\\mathbb R$: original linear functional",
+          "$\\widehat f:E\\to\\mathbb R$: linear extension of $f$"
         ]
       },
+      "examples": [
+        {
+          "content": "If $p$ is a norm or a norm multiple, then domination by $p$ becomes a norm estimate. This is how the norm-preserving Hahn-Banach theorem for normed spaces follows from the extension theorem.",
+          "label": "Norm control from sublinear domination",
+          "role": "application"
+        },
+        {
+          "content": "The theorem guarantees existence, not uniqueness. Hahn-Banach extensions are generally non-constructive.",
+          "label": "Non-uniqueness",
+          "role": "failure_mode"
+        }
+      ],
+      "assumptions": [
+        "$E$ is a real vector space.",
+        "$V\\leq E$ is a linear subspace.",
+        "$p:E\\to\\mathbb R$ is sublinear.",
+        "$f:V\\to\\mathbb R$ is linear.",
+        "$f(x)\\leq p(x)$ for every $x\\in V$."
+      ],
       "proof": {
         "steps": [
           {
-            "role": "setup",
-            "content": "Let $\\mathcal P$ be the set of all pairs $(W,g)$ such that $V\\subseteq W\\subseteq E$, $W$ is a linear subspace, $g:W\\to\\mathbb{R}$ is linear, $g|_V=f$, and $g(w)\\leq p(w)$ for all $w\\in W$. Order $\\mathcal P$ by $(W_1,g_1)\\leq (W_2,g_2)$ iff $W_1\\subseteq W_2$ and $g_2|_{W_1}=g_1$. Then $(V,f)\\in\\mathcal P$, so $\\mathcal P$ is nonempty.",
+            "role": "sublinear extension",
+            "content": "Construct a sublinear functional $q$ on $E$ such that $q|_V=f$ and $q\\leq p$.",
             "uses": [
-              "partially_ordered_set"
+              "sublinear_functional"
             ]
           },
           {
-            "role": "argument",
-            "content": "Let $\\mathcal C$ be a chain in $\\mathcal P$. Define $$W_{\\mathcal C}=\\bigcup_{(W,g)\\in\\mathcal C}W.$$ Since $\\mathcal C$ is totally ordered by extension, $W_{\\mathcal C}$ is a linear subspace. Define $g_{\\mathcal C}(x)=g(x)$ whenever $x\\in W$ for some $(W,g)\\in\\mathcal C$. This is well-defined because any two members of a chain agree on their common domain. The map $g_{\\mathcal C}$ is linear, extends $f$, and satisfies $g_{\\mathcal C}(x)\\leq p(x)$ for every $x\\in W_{\\mathcal C}$. Hence $(W_{\\mathcal C},g_{\\mathcal C})$ is an upper bound for $\\mathcal C$.",
+            "role": "minimal sublinear functional",
+            "content": "Use the order on sublinear functionals to choose a minimal sublinear functional $q_0$ on $E$ satisfying $q_0\\leq q$.",
             "uses": [
-              "upper_bound",
-              "chain"
+              "zorns_lemma",
+              "sublinear_functional"
             ]
           },
           {
-            "role": "claim",
-            "content": "By Zorn's lemma, $\\mathcal P$ has a maximal element $(M,h)$. We claim that $M=E$.",
-            "uses": [
-              "zorns_lemma"
-            ]
-          },
-          {
-            "role": "argument",
-            "content": "Assume for contradiction that $M\\neq E$, and choose $x_0\\in E\\setminus M$. Any linear extension of $h$ to $M+\\mathbb{R}x_0$ has the form $$H(m+t x_0)=h(m)+t\\alpha$$ for some $\\alpha\\in\\mathbb{R}$. For $m,n\\in M$, sublinearity and domination give $$h(m)-h(n)=h(m-n)\\leq p(m-n)\\leq p(m+x_0)+p(-n-x_0).$$ Therefore $$-p(-n-x_0)-h(n)\\leq p(m+x_0)-h(m).$$ Hence $$\\sup_{n\\in M}\\{-p(-n-x_0)-h(n)\\}\\leq\\inf_{m\\in M}\\{p(m+x_0)-h(m)\\}.$$ Choose $\\alpha$ between these two quantities.",
+            "role": "linearity",
+            "content": "The minimality of $q_0$ implies that $q_0$ is linear.",
             "uses": [
               "sublinear_functional",
-              "positive_homogeneity"
+              "linear_functional"
             ]
           },
           {
-            "role": "calculation",
-            "content": "We show that $H\\leq p$ on $M+\\mathbb{R}x_0$. By the choice of $\\alpha$, for all $m\\in M$ we have $$h(m)+\\alpha\\leq p(m+x_0)$$ and $$h(m)-\\alpha\\leq p(m-x_0).$$ If $t>0$, apply the first inequality to $m/t$ and multiply by $t$: $$h(m)+t\\alpha\\leq p(m+t x_0).$$ If $t<0$, apply the second inequality to $m/(-t)$ and multiply by $-t$: $$h(m)+t\\alpha\\leq p(m+t x_0).$$ The case $t=0$ is exactly $h(m)\\leq p(m)$. Thus $H(m+t x_0)\\leq p(m+t x_0)$ for all $m\\in M$ and $t\\in\\mathbb{R}$.",
+            "role": "extension",
+            "content": "Set $\\widehat f=q_0$. Then $\\widehat f$ is linear and $\\widehat f\\leq p$ on $E$.",
             "uses": [
-              "sublinear_functional",
-              "positive_homogeneity"
+              "linear_functional"
             ]
           },
           {
-            "role": "argument",
-            "content": "Thus $(M+\\mathbb{R}x_0,H)$ belongs to $\\mathcal P$ and strictly extends $(M,h)$, since $x_0\\notin M$. This contradicts the maximality of $(M,h)$.",
-            "uses": [
-              "maximal_element"
-            ]
-          },
-          {
-            "role": "conclusion",
-            "content": "Therefore $M=E$. Hence $h$ is a linear functional on all of $E$, extends $f$, and satisfies $h(x)\\leq p(x)$ for all $x\\in E$. Set $F=h$.",
-            "uses": [
-              "zorns_lemma"
-            ]
-          },
-          {
-            "role": "conclusion",
-            "content": "For the norm-preserving version, set $p(x)=C\\|x\\|$. Since $|f(v)|\\leq C\\|v\\|$, the dominated extension theorem gives an extension $F$ with $F(x)\\leq C\\|x\\|$. Applying this inequality to $-x$ gives $-F(x)=F(-x)\\leq C\\|x\\|$, so $|F(x)|\\leq C\\|x\\|$. Thus $\\|F\\|\\leq C$. Taking $C=\\|f\\|$ gives $\\|F\\|\\leq\\|f\\|$. Since $F|_V=f$, $$\\|f\\|=\\sup_{\\|v\\|\\leq 1,\\,v\\in V}|F(v)|\\leq \\|F\\|.$$ Therefore $\\|F\\|=\\|f\\|$.",
-            "uses": [
-              "norm",
-              "operator_norm"
-            ]
+            "role": "restriction",
+            "content": "Since $\\widehat f\\leq q$ and $q|_V=f$, one gets $\\widehat f\\leq f$ on $V$. Applying the same inequality to $-x$ gives $\\widehat f(x)\\geq f(x)$ for $x\\in V$. Hence $\\widehat f|_V=f$."
           }
         ]
       },
@@ -2795,7 +2788,171 @@
         "functional-analysis",
         "hahn-banach",
         "linear-extension",
-        "normed-spaces"
+        "sublinear-functionals",
+        "theorem",
+        "zorns-lemma"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "hahn_banach_complex_normed_spaces",
+      "kind": "theorem",
+      "domain": "hahn_banach",
+      "label": "Hahn-Banach theorem for complex normed spaces",
+      "content": {
+        "statement": "A bounded complex-linear functional on a subspace of a complex normed space extends to the whole space with the same norm.",
+        "formal": "Suppose $X$ is a complex normed vector space and let $V$ be a complex linear subspace of $X$. If $f\\in V^*$, then there exists an extension $\\widehat f\\in X^*$ such that $\\widehat f|_V=f$ and $\\|\\widehat f\\|=\\|f\\|$.",
+        "formula": "$$X\\text{ complex normed},\\quad V\\leq X,\\quad f\\in V^*\\quad\\Longrightarrow\\quad \\exists\\widehat f\\in X^*: \\widehat f|_V=f,\\ \\|\\widehat f\\| = \\|f\\|.$$",
+        "intuition": "The complex theorem is reduced to the real theorem. First extend the real part of $f$. Then recover the full complex-linear functional using multiplication by $i$.",
+        "notation": [
+          "$X$: complex normed vector space",
+          "$V\\leq X$: complex linear subspace",
+          "$f\\in V^*$: bounded complex-linear functional",
+          "$f_0=\\operatorname{Re}f$: real part of $f$",
+          "$\\widehat f_0$: real Hahn-Banach extension of $f_0$",
+          "$\\widehat f(x)=\\widehat f_0(x)-i\\widehat f_0(ix)$: reconstructed complex-linear extension"
+        ]
+      },
+      "examples": [
+        {
+          "content": "For $x_0\\neq0$, set $V=\\operatorname{span}_{\\mathbb C}\\{x_0\\}$ and define $f(\\alpha x_0)=\\alpha\\|x_0\\|$. Hahn-Banach gives $\\widehat f\\in X^*$ with $\\|\\widehat f\\|=1$ and $\\widehat f(x_0)=\\|x_0\\|$.",
+          "label": "Complex norming functional",
+          "role": "application"
+        },
+        {
+          "content": "The real theorem is not applied directly to the complex-valued map $f$. It is applied to $f_0=\\operatorname{Re}f$, and the complex-linear extension is reconstructed afterward.",
+          "label": "Reduction to the real case",
+          "role": "failure_mode"
+        }
+      ],
+      "assumptions": [
+        "$X$ is a complex normed vector space.",
+        "$V\\leq X$ is a complex linear subspace.",
+        "$f\\in V^*$ is bounded and complex-linear."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "real part",
+            "content": "Define $f_0:V\\to\\mathbb R$ by $f_0(x)=\\operatorname{Re}f(x)$, and regard $X$ and $V$ as real normed spaces.",
+            "uses": [
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "real extension",
+            "content": "By the real Hahn-Banach theorem, extend $f_0$ to a real-linear functional $\\widehat f_0:X\\to\\mathbb R$ with the same norm.",
+            "uses": [
+              "hahn_banach_real_normed_spaces"
+            ]
+          },
+          {
+            "role": "complex reconstruction",
+            "content": "Define $\\widehat f:X\\to\\mathbb C$ by $\\widehat f(x)=\\widehat f_0(x)-i\\widehat f_0(ix)$.",
+            "uses": [
+              "vector_space"
+            ]
+          },
+          {
+            "role": "extension and linearity",
+            "content": "For $x\\in V$, complex-linearity of $f$ gives $f_0(ix)=-\\operatorname{Im}f(x)$, so $\\widehat f(x)=f(x)$. Also $\\widehat f(ix)=i\\widehat f(x)$; together with real-linearity, this gives complex-linearity.",
+            "uses": [
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "norm equality",
+            "content": "The construction gives $\\|\\widehat f\\|\\leq\\|f\\|$. Since $\\widehat f$ extends $f$, also $\\|\\widehat f\\|\\geq\\|f\\|$. Therefore $\\|\\widehat f\\|=\\|f\\|$.",
+            "uses": [
+              "operator_norm"
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "complex-normed-spaces",
+        "duality",
+        "hahn-banach",
+        "linear-extension",
+        "norm-preserving-extension",
+        "theorem"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "hahn_banach_real_normed_spaces",
+      "kind": "theorem",
+      "domain": "hahn_banach",
+      "label": "Hahn-Banach theorem for real normed spaces",
+      "content": {
+        "statement": "A bounded real-linear functional on a subspace of a real normed space extends to the whole space with the same norm.",
+        "formal": "Suppose $X$ is a real normed vector space and let $V$ be a linear subspace of $X$. If $f\\in V^*$, then there exists an extension $\\widehat f\\in X^*$ such that $\\widehat f|_V=f$ and $\\|\\widehat f\\|=\\|f\\|$.",
+        "formula": "$$X\\text{ real normed},\\quad V\\leq X,\\quad f\\in V^*\\quad\\Longrightarrow\\quad \\exists\\widehat f\\in X^*: \\widehat f|_V=f,\\ \\|\\widehat f\\|=\\|f\\|.$$",
+        "intuition": "The functional $f$ measures vectors on the slice $V$. Hahn-Banach extends this measurement to all of $X$ without increasing its maximal slope. The proof uses the ceiling $p(x)=\\|f\\|\\|x\\|$.",
+        "notation": [
+          "$X$: real normed vector space",
+          "$V\\leq X$: linear subspace",
+          "$f\\in V^*$: bounded real-linear functional",
+          "$\\widehat f\\in X^*$: norm-preserving extension"
+        ]
+      },
+      "examples": [
+        {
+          "content": "For $x_0\\neq0$, set $V=\\operatorname{span}\\{x_0\\}$ and define $f(\\alpha x_0)=\\alpha\\|x_0\\|$. Then $\\|f\\|=1$. Hahn-Banach gives $\\widehat f\\in X^*$ with $\\|\\widehat f\\|=1$ and $\\widehat f(x_0)=\\|x_0\\|$.",
+          "label": "Norming functional",
+          "role": "application"
+        },
+        {
+          "content": "The extension need not be unique. Hahn-Banach gives existence of a norm-preserving extension, not a canonical formula.",
+          "label": "Non-uniqueness",
+          "role": "failure_mode"
+        }
+      ],
+      "assumptions": [
+        "$X$ is a real normed vector space.",
+        "$V\\leq X$ is a linear subspace.",
+        "$f\\in V^*$ is bounded and real-linear."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "majorant",
+            "content": "Define $p:X\\to\\mathbb R$ by $p(x)=\\|f\\|\\|x\\|$. This is sublinear.",
+            "uses": [
+              "sublinear_functional",
+              "norm"
+            ]
+          },
+          {
+            "role": "domination",
+            "content": "For $x\\in V$, $f(x)\\leq |f(x)|\\leq\\|f\\|\\|x\\|=p(x)$. Hence $f\\leq p$ on $V$.",
+            "uses": [
+              "operator_norm"
+            ]
+          },
+          {
+            "role": "extension",
+            "content": "By the Hahn-Banach extension theorem, there exists a linear extension $\\widehat f:X\\to\\mathbb R$ such that $\\widehat f|_V=f$ and $\\widehat f\\leq p$ on $X$.",
+            "uses": [
+              "hahn_banach_theorem"
+            ]
+          },
+          {
+            "role": "norm equality",
+            "content": "The domination estimate gives $\\|\\widehat f\\|\\leq\\|f\\|$. Since $\\widehat f$ extends $f$, also $\\|\\widehat f\\|\\geq\\|f\\|$. Hence $\\|\\widehat f\\|=\\|f\\|$.",
+            "uses": [
+              "operator_norm"
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "duality",
+        "hahn-banach",
+        "linear-extension",
+        "norm-preserving-extension",
+        "real-normed-spaces",
+        "theorem"
       ],
       "priority": "core"
     },
@@ -3374,6 +3531,16 @@
     {
       "source": "dual_space",
       "target": "scalar_field_real_or_complex",
+      "relation": "assumes"
+    },
+    {
+      "source": "hahn_banach_complex_normed_spaces",
+      "target": "normed_vector_space",
+      "relation": "assumes"
+    },
+    {
+      "source": "hahn_banach_real_normed_spaces",
+      "target": "normed_vector_space",
       "relation": "assumes"
     },
     {
@@ -4054,6 +4221,41 @@
     {
       "source": "function",
       "target": "relation",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hahn_banach_complex_normed_spaces",
+      "target": "bounded_linear_functional",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hahn_banach_complex_normed_spaces",
+      "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hahn_banach_complex_normed_spaces",
+      "target": "linear_functional",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hahn_banach_complex_normed_spaces",
+      "target": "operator_norm",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hahn_banach_real_normed_spaces",
+      "target": "bounded_linear_functional",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hahn_banach_real_normed_spaces",
+      "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hahn_banach_real_normed_spaces",
+      "target": "operator_norm",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4754,6 +4956,16 @@
     {
       "source": "function",
       "target": "operator",
+      "relation": "generalizes"
+    },
+    {
+      "source": "hahn_banach_theorem",
+      "target": "hahn_banach_complex_normed_spaces",
+      "relation": "generalizes"
+    },
+    {
+      "source": "hahn_banach_theorem",
+      "target": "hahn_banach_real_normed_spaces",
       "relation": "generalizes"
     },
     {
@@ -5477,6 +5689,21 @@
       "relation": "uses"
     },
     {
+      "source": "hahn_banach_complex_normed_spaces",
+      "target": "hahn_banach_real_normed_spaces",
+      "relation": "uses"
+    },
+    {
+      "source": "hahn_banach_real_normed_spaces",
+      "target": "norm_as_sublinear_functional",
+      "relation": "uses"
+    },
+    {
+      "source": "hahn_banach_real_normed_spaces",
+      "target": "sublinear_functional",
+      "relation": "uses"
+    },
+    {
       "source": "hahn_banach_theorem",
       "target": "partially_ordered_set",
       "relation": "uses"
@@ -5554,6 +5781,16 @@
     {
       "source": "separation_of_points",
       "target": "dual_space",
+      "relation": "uses"
+    },
+    {
+      "source": "separation_of_points",
+      "target": "hahn_banach_complex_normed_spaces",
+      "relation": "uses"
+    },
+    {
+      "source": "separation_of_points",
+      "target": "hahn_banach_real_normed_spaces",
       "relation": "uses"
     },
     {
