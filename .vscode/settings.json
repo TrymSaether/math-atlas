@@ -22,6 +22,7 @@
     "src/data/maps/topology.json": true,
     "src/data/maps/functional_analysis.json": true,
     "src/data/maps/fourier_analysis.json": true,
+    "**/*/*.nojekyll": true
   },
   "files.watcherExclude": {
     "**/node_modules/**": true,
@@ -41,7 +42,7 @@
     "**/package-lock.json": true,
     "**/pnpm-lock.yaml": true,
     "**/yarn.lock": true,
-    "src/data/maps/*.source.json": false,
+    "src/data/maps/*.source.json": false
   },
   "css.lint.unknownAtRules": "ignore",
   "[svg]": {
