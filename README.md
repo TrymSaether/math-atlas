@@ -5,7 +5,7 @@ Personal hobby project for browsing math concepts as dependency graphs.
 Live version: <https://trymsaether.github.io/math-atlas/>
 
 The app is built with React, TypeScript, React Flow, and a small Hono/Postgres
-backend. The main content lives in `src/data/maps/*.source.json`.
+backend. The main content lives in `src/maps/content/*.source.json`.
 
 ## Run Locally
 
@@ -51,7 +51,7 @@ Live app:
 
 Repo/source maps:
 
-Edit `src/data/maps/*.source.json`, then run:
+Edit `src/maps/content/*.source.json`, then run:
 
 ```sh
 npm run check:maps
@@ -61,16 +61,32 @@ npm run seed:maps
 `seed:maps` writes to the configured `DATABASE_URL`. `npm run build` validates
 the repo, but does not publish map data.
 
-## Repo Shape
+## Frontend Shape
 
 ```text
-src/       frontend, graph UI, map schemas, map content
-server/    API, auth, database schema, map/progress routes
-scripts/   map validation and diagnostics
-docs/      Schemas & Repo Cheat Sheet
+src/
+  app/        startup, shell, global store, navigation, persistence
+  atlas/      graph canvas, nodes/edges, layout, routing, viewport
+  maps/       map schemas, API/service code, loading, source content
+  study/      concept cards, dictionary, flashcards, node visuals
+  authoring/  map editing UI and source mutations
+  sandbox/    self-contained interactive math workspace
+  figures/    reusable mathematical figures and their registry
+  auth/       session client and sign-in UI
+  ui/         small generic UI components
+  design/     visual tokens and surface primitives
+  shared/     dependency-light helpers used by several areas
+server/       API, auth, database schema, map/progress routes
+scripts/      map validation and diagnostics
+shared/       API contracts shared with the server
 ```
+
+Keep code with the product area that owns it. Use relative imports inside an
+area and `@/…` imports across areas. Add something to `shared/` only when it is
+generic and already used by multiple areas; do not recreate `application`,
+`infrastructure`, or `view-model` layers for one-off code. Tests live beside the
+module they cover.
 
 ## Docs
 
-- [Beginner cheat sheet](docs/beginner-cheat-sheet.md)
 - [Data schema](docs/data-schema.md)

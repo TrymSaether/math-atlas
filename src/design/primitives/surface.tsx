@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, type HTMLAttributes, type PointerEvent } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/cn";
 import "./surface.css";
 
 /**

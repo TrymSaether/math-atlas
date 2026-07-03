@@ -70,13 +70,13 @@ design/
     supports.ts         feature detection
   index.ts              public barrel — import from "@/design"
 
-components/ui/          shadcn primitives (Button, Dialog, Popover, Tooltip,
+ui/                     shadcn primitives (Button, Dialog, Popover, Tooltip,
                         Slider, ToggleGroup, Command, …) — owned code, themed by tokens
 ```
 
 ## Conventions
 
-- Import design primitives from `@/design`; shadcn primitives from `@/components/ui`.
+- Import design primitives from `@/design`; shadcn primitives from `@/ui`.
 - Add shadcn primitives with `npx shadcn@latest add <name>` — they pick up the
   tokens automatically.
 - **Icons:** `lucide-react` only, everywhere (phosphor is fully removed).

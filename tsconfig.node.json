@@ -7,16 +7,16 @@
     "allowSyntheticDefaultImports": true,
     "outDir": ".cache/tsconfig-node"
   },
-  "//": "The tools build (vite.config + scripts/) deliberately lists individual src files rather than whole dirs: it keeps React/DOM modules (e.g. src/lib/katex.tsx) out of this Node-only program. Add a file here when a script imports a new, React-free src module.",
+  "//": "Only include the React-free map modules reused by Node scripts.",
   "include": [
     "vite.config.ts",
     "scripts/**/*.ts",
-    "src/lib/palette.ts",
-    "src/lib/nodeCategory.ts",
-    "src/data/sourceSchema.ts",
-    "src/data/relations.ts",
-    "src/data/artifactSchema.ts",
-    "src/data/buildArtifact.ts",
-    "src/data/authoring.ts"
+    "src/maps/palette.ts",
+    "src/maps/nodeCategory.ts",
+    "src/maps/source.ts",
+    "src/maps/relations.ts",
+    "src/maps/artifact.ts",
+    "src/maps/build.ts",
+    "src/authoring/model.ts"
   ]
 }

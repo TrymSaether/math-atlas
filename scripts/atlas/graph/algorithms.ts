@@ -6,7 +6,7 @@
  * components) ignore direction.
  */
 import type { CliMap } from "../core/model";
-import type { ArtifactEdge } from "../../../src/data/artifactSchema";
+import type { ArtifactEdge } from "@/maps/artifact";
 
 /** All concept ids reachable as prerequisites of `start` (transitive, excl. start). */
 export function prerequisiteChain(map: CliMap, start: string): string[] {

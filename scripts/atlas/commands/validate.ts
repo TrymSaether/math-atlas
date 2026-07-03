@@ -5,11 +5,11 @@
  * codeframed ERROR/WARNING/SUGGESTION and a summary; non-zero exit on any error.
  */
 import { z } from "zod";
-import { SourceGraphSchema } from "../../../src/data/sourceSchema";
+import { SourceGraphSchema } from "@/maps/source";
 import type { Command } from "../core/command";
 import { loadSourceFiles, type Ctx } from "../core/context";
 import { buildCliMap } from "../core/model";
-import { runLints } from "../validators/index";
+import { runLints } from "../validators";
 import { type Diagnostic, error, countBySeverity } from "../diagnostics/diagnostic";
 import { reportDiagnostics } from "../diagnostics/reporter";
 import { bold, dim, cyan } from "../utils/color";

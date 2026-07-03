@@ -11,7 +11,7 @@ import { kindGlyph } from "../utils/glyphs";
 import { swatch, bold, dim, cyan, gray, italic } from "../utils/color";
 import { texToPlain, wrap } from "../utils/text";
 import { fuzzySearch } from "../utils/fuzzy";
-import type { ArtifactNode } from "../../../src/data/artifactSchema";
+import type { ArtifactNode } from "@/maps/artifact";
 
 function section(title: string, body: string): void {
   process.stdout.write("\n  " + bold(title) + "\n");

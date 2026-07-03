@@ -12,7 +12,7 @@ import type { Command } from "../core/command";
 import { loadMaps, CliError, type Ctx } from "../core/context";
 import { findConcept, type CliMap } from "../core/model";
 import { shortestPath, prerequisiteChain, orphans, detectCycles, topoSort, betweenness } from "../graph/algorithms";
-import { edgeLabel } from "../../../src/data/relations";
+import { edgeLabel } from "@/maps/relations";
 import { renderTree, renderList } from "../reporters/tree";
 import { table } from "../reporters/table";
 import { bold, dim, cyan, gray, red, yellow, green } from "../utils/color";

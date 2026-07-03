@@ -51,7 +51,7 @@
   --ring: #007aff;
 
   /* ---- domain palette ----------------------------------------------------
-     Base hues for the knowledge graph. `getDomainTone()` (src/lib/colors.ts)
+     Base hues for the knowledge graph. `getDomainTone()` (src/atlas/colors.ts)
      derives every visible tone (tint/border/text) from these at the point of
      use, so one token per hue retunes across light/dark. */
   --domain-blue: #2563eb;

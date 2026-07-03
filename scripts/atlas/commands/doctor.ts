@@ -8,7 +8,7 @@ import type { Command } from "../core/command";
 import { loadMaps, type Ctx } from "../core/context";
 import type { CliMap } from "../core/model";
 import { components, betweenness, roots, detectCycles } from "../graph/algorithms";
-import { categoryOf } from "../../../src/lib/nodeCategory";
+import { categoryOf } from "@/maps/nodeCategory";
 import { meter } from "../reporters/bars";
 import { table } from "../reporters/table";
 import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color";

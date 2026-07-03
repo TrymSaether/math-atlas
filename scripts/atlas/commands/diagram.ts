@@ -6,7 +6,7 @@
  *   attach   set a concept's diagram field to an SVG path, then re-validate
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { SourceGraphSchema } from "../../../src/data/sourceSchema";
+import { SourceGraphSchema } from "@/maps/source";
 import type { Command } from "../core/command";
 import { loadMaps, loadSourceFiles, CliError, type Ctx } from "../core/context";
 import { run as diagramLints, diagramFsPath } from "../validators/diagrams";
