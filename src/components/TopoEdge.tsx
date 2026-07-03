@@ -96,7 +96,7 @@ export function TopoEdgeView(props: EdgeProps<Edge<Data>>) {
           ) : style.marker === "open-triangle" ? (
             <path
               d="M2.4,2.4 L10.4,6 L2.4,9.6 z"
-              fill="var(--surface)"
+              fill="var(--card)"
               stroke={style.color}
               strokeWidth={1.4}
               strokeLinejoin="round"
@@ -107,7 +107,7 @@ export function TopoEdgeView(props: EdgeProps<Edge<Data>>) {
               cx="6"
               cy="6"
               r="3.2"
-              fill="var(--surface)"
+              fill="var(--card)"
               stroke={style.color}
               strokeWidth={1.4}
               opacity={style.opacity}
@@ -119,7 +119,7 @@ export function TopoEdgeView(props: EdgeProps<Edge<Data>>) {
         <path
           d={path}
           fill="none"
-          stroke="var(--bg)"
+          stroke="var(--background)"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={style.width + 3.2}
@@ -168,7 +168,7 @@ export function TopoEdgeView(props: EdgeProps<Edge<Data>>) {
           style={{
             strokeDasharray: "1 1",
             strokeDashoffset: 1,
-            filter: "drop-shadow(0 0 3px var(--accent))",
+            filter: "drop-shadow(0 0 3px var(--primary))",
           }}
         />
       )}
@@ -180,7 +180,7 @@ export function TopoEdgeView(props: EdgeProps<Edge<Data>>) {
               position: "absolute",
               transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
               pointerEvents: "none",
-              background: "var(--surface)",
+              background: "var(--card)",
               borderColor: "color-mix(in srgb, var(--edge-highlight) 35%, var(--border))",
               color: "var(--edge-highlight)",
             }}

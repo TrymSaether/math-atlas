@@ -34,7 +34,10 @@ export function ConceptRelations({
       {groups.map((g) => (
         <section key={g.key}>
           {g.label && (
-            <div className="mb-1.5 font-mono text-caption-2 uppercase tracking-label" style={{ color: "var(--fg-3)" }}>
+            <div
+              className="mb-1.5 font-mono text-caption-2 uppercase tracking-label"
+              style={{ color: "var(--muted-foreground)" }}
+            >
               {g.label}
             </div>
           )}
@@ -69,7 +72,7 @@ function ChipRow({
           type="button"
           onClick={() => setExpanded(true)}
           className="self-center px-1 text-caption-1 hover:underline"
-          style={{ color: "var(--accent)" }}
+          style={{ color: "var(--primary)" }}
         >
           +{hidden} more
         </button>

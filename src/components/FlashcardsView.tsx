@@ -199,19 +199,19 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
       <div className="flex w-full max-w-170 flex-1 flex-col">
         {/* Progress rail */}
         <div className="mb-3 flex items-center gap-3">
-          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-3">
+          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
             <div
-              className="h-full rounded-full bg-accent transition-[width] duration-300"
+              className="h-full rounded-full bg-primary transition-[width] duration-300"
               style={{ width: total ? `${(ratedCount / total) * 100}%` : "0%" }}
             />
           </div>
-          <span className="shrink-0 font-mono text-caption-2 text-fg-3">
+          <span className="shrink-0 font-mono text-caption-2 text-muted-foreground">
             {total ? Math.min(state.pos + 1, total) : 0}/{total}
           </span>
           <button
             onClick={reshuffle}
             disabled={total === 0}
-            className="flex h-7 items-center gap-1.5 rounded-sm border border-border bg-surface px-2.5 text-caption-1 font-medium text-fg-2 transition-colors hover:bg-surface-3 disabled:opacity-40"
+            className="flex h-7 items-center gap-1.5 rounded-sm border border-border bg-card px-2.5 text-caption-1 font-medium text-muted-foreground transition-colors hover:bg-secondary disabled:opacity-40"
             title="Shuffle and restart"
           >
             <Shuffle className="h-3 w-3" />
@@ -280,7 +280,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
                 ) : (
                   <button
                     onClick={flip}
-                    className="flex h-11 items-center justify-center gap-2 rounded-sm border border-transparent bg-accent px-5 text-body font-semibold text-fg-on-color transition-transform active:scale-[0.98]"
+                    className="flex h-11 items-center justify-center gap-2 rounded-sm border border-transparent bg-primary px-5 text-body font-semibold text-primary-foreground transition-transform active:scale-[0.98]"
                     style={{ boxShadow: "var(--shadow-e2)" }}
                   >
                     <span>Show answer</span>
@@ -303,7 +303,7 @@ function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
 function CardShell({ children, tone, footer }: { children: React.ReactNode; tone: string; footer?: React.ReactNode }) {
   return (
     <div
-      className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface"
+      className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card"
       style={{ boxShadow: "var(--shadow-e2)" }}
     >
       <span aria-hidden className="h-1 w-full shrink-0" style={{ background: tone }} />
@@ -334,7 +334,7 @@ function CardFront({
         <div className="w-full max-w-md">
           <ConceptHeader view={view} size="card" />
         </div>
-        <span className="font-mono text-caption-2 uppercase tracking-label-wide text-fg-4">
+        <span className="font-mono text-caption-2 uppercase tracking-label-wide text-muted-foreground">
           Tap or press space to flip
         </span>
       </button>
@@ -350,7 +350,7 @@ function CardBack({ node, map, mapId, onOpen }: { node: GraphNode; map: LoadedMa
       footer={
         <button
           onClick={onOpen}
-          className="flex shrink-0 items-center justify-center gap-1.5 border-t border-(--border-subtle) py-2.5 text-caption-1 font-medium text-accent transition-colors hover:bg-surface-2"
+          className="flex shrink-0 items-center justify-center gap-1.5 border-t border-border py-2.5 text-caption-1 font-medium text-primary transition-colors hover:bg-muted"
         >
           Open full entry in dictionary
         </button>
@@ -382,16 +382,16 @@ function SummaryCard({
   const pct = Math.round((gotCount / total) * 100);
   return (
     <div
-      className="flex flex-1 flex-col items-center justify-center gap-6 rounded-2xl border border-border bg-surface px-8 py-12 text-center"
+      className="flex flex-1 flex-col items-center justify-center gap-6 rounded-2xl border border-border bg-card px-8 py-12 text-center"
       style={{ boxShadow: "var(--shadow-e2)" }}
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-accent-soft text-accent">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
         <Sparkles className="h-7 w-7" />
       </div>
       <div className="space-y-1.5">
-        <h2 className="text-title-1 font-semibold text-fg-1">Deck complete</h2>
-        <p className="text-body text-fg-2">
-          You got <strong className="text-fg-1">{gotCount}</strong> of {total} ({pct}%).
+        <h2 className="text-title-1 font-semibold text-foreground">Deck complete</h2>
+        <p className="text-body text-muted-foreground">
+          You got <strong className="text-foreground">{gotCount}</strong> of {total} ({pct}%).
           {againCount > 0 && ` ${againCount} to review.`}
         </p>
       </div>
@@ -399,7 +399,7 @@ function SummaryCard({
         {againCount > 0 && (
           <button
             onClick={onReview}
-            className="flex h-11 items-center gap-2 rounded-sm bg-accent px-6 text-body font-semibold text-fg-on-color transition-transform active:scale-[0.98]"
+            className="flex h-11 items-center gap-2 rounded-sm bg-primary px-6 text-body font-semibold text-primary-foreground transition-transform active:scale-[0.98]"
             style={{ boxShadow: "var(--shadow-e2)" }}
           >
             Review {againCount} missed
@@ -407,13 +407,13 @@ function SummaryCard({
         )}
         <button
           onClick={onRestart}
-          className="flex h-11 items-center gap-2 rounded-sm border border-border bg-surface px-5 text-body font-medium text-fg-1 transition-colors hover:bg-surface-3"
+          className="flex h-11 items-center gap-2 rounded-sm border border-border bg-card px-5 text-body font-medium text-foreground transition-colors hover:bg-secondary"
         >
           <RotateCcw className="h-4 w-4" /> Restart deck
         </button>
         <button
           onClick={onClose}
-          className="h-11 rounded-sm px-5 text-body font-medium text-fg-2 transition-colors hover:bg-surface-3"
+          className="h-11 rounded-sm px-5 text-body font-medium text-muted-foreground transition-colors hover:bg-secondary"
         >
           Back to atlas
         </button>
@@ -424,14 +424,14 @@ function SummaryCard({
 
 function EmptyState({ onBack }: { onBack: () => void }) {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-surface px-8 py-12 text-center">
-      <p className="text-callout text-fg-1">No cards match the current filters.</p>
-      <p className="max-w-85 text-footnote text-fg-3">
+    <div className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-card px-8 py-12 text-center">
+      <p className="text-callout text-foreground">No cards match the current filters.</p>
+      <p className="max-w-85 text-footnote text-muted-foreground">
         Widen the domain or category filters in the toolbar to build a study deck.
       </p>
       <button
         onClick={onBack}
-        className="mt-1 h-10 rounded-sm border border-border bg-surface px-5 text-footnote font-medium text-fg-1 transition-colors hover:bg-surface-3"
+        className="mt-1 h-10 rounded-sm border border-border bg-card px-5 text-footnote font-medium text-foreground transition-colors hover:bg-secondary"
       >
         Back to atlas
       </button>
@@ -456,7 +456,7 @@ function PagerButton({
       disabled={disabled}
       aria-label={label}
       title={label}
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-fg-2 transition-colors hover:bg-surface-3 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-secondary disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
     >
       {children}
     </button>
@@ -468,7 +468,7 @@ function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => 
   return (
     <button
       onClick={onClick}
-      className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-body font-semibold transition-transform active:scale-[0.98] ${got ? "border-accent-border bg-accent-soft text-accent" : "border-border bg-surface text-fg-2"}`}
+      className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-body font-semibold transition-transform active:scale-[0.98] ${got ? "border-primary/40 bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground"}`}
     >
       {children}
     </button>
@@ -478,8 +478,8 @@ function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => 
 function Kbd({ children, onAccent = false }: { children: React.ReactNode; onAccent?: boolean }) {
   return (
     <kbd
-      className={`ml-0.5 hidden h-5 items-center rounded border px-1.5 font-mono text-caption-2 sm:inline-flex ${onAccent ? "border-transparent text-fg-on-color" : "border-border bg-surface-3 text-fg-3"}`}
-      style={onAccent ? { background: "color-mix(in srgb, var(--surface) 25%, transparent)" } : undefined}
+      className={`ml-0.5 hidden h-5 items-center rounded border px-1.5 font-mono text-caption-2 sm:inline-flex ${onAccent ? "border-transparent text-primary-foreground" : "border-border bg-secondary text-muted-foreground"}`}
+      style={onAccent ? { background: "color-mix(in srgb, var(--card) 25%, transparent)" } : undefined}
     >
       {children}
     </kbd>

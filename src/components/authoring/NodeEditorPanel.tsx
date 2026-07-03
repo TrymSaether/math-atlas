@@ -10,7 +10,9 @@ import { XIcon, Trash2, Plus, ArrowLeftRight, ArrowUp, ArrowDown, ChevronDown, C
 
 import { useStore } from "../../store";
 import type { LoadedMap, MapId } from "../../data";
+import { Surface } from "@/design";
 import { MathText } from "../../lib/katex";
+import { cn } from "../../lib/utils";
 import { getDomainTone } from "../../lib/colors";
 import { DomainGlyph } from "../DomainGlyph";
 import { getDomainGlyphId } from "../domainGlyphRegistry";
@@ -33,12 +35,37 @@ import {
 
 const PRIORITIES: Priority[] = ["core", "standard", "peripheral"];
 
+/* Shared authoring form-control class recipes (was styles/components/authoring.css). */
+const FIELD = "block";
+const LABEL =
+  "mb-1.5 block font-sans text-caption-1 font-semibold leading-tight tracking-[0.004em] text-muted-foreground";
+const HINT = "ml-2 font-sans text-caption-1 font-medium text-muted-foreground/70";
+const CONTROL =
+  "min-h-[44px] w-full rounded-md border border-border/90 bg-card/80 px-3 py-2 text-footnote leading-[1.35] text-foreground outline-none transition placeholder:text-muted-foreground/70 hover:border-input/80 hover:bg-card/90 focus:border-ring focus:bg-card focus:shadow-[0_0_0_1px_var(--ring)]";
+const CONTROL_MONO = "font-mono text-footnote";
+const SELECT_TRIGGER =
+  "flex items-center justify-between gap-2.5 text-left aria-expanded:border-ring aria-expanded:bg-card aria-expanded:shadow-[0_0_0_1px_var(--ring)]";
+const SELECT_OPTION =
+  "flex min-h-[44px] w-full items-center justify-between gap-2.5 rounded-md px-2.5 py-1.5 text-left text-footnote text-muted-foreground transition hover:bg-accent hover:text-foreground";
+const SELECT_OPTION_ACTIVE = "bg-primary/10 text-foreground";
+const PICKER_OPTION =
+  "flex min-h-[44px] w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-footnote text-foreground hover:bg-secondary";
+const ACTION =
+  "inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-md border border-border bg-card font-semibold text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground focus-visible:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_16%,transparent)] focus-visible:outline-none active:scale-[0.98]";
+const ACTION_PRIMARY =
+  "border-primary bg-primary text-primary-foreground hover:border-primary hover:bg-primary hover:text-primary-foreground";
+const ACTION_DANGER =
+  "border-destructive/30 bg-destructive/[0.07] text-destructive hover:border-destructive/50 hover:bg-destructive/10 hover:text-destructive";
+const CHIP =
+  "inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-md border border-border bg-card px-3 text-caption-1 font-semibold capitalize text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground";
+const CHIP_ACTIVE = "border-primary/50 bg-primary/10 text-foreground";
+
 function FieldLabel({ label, hint }: { label?: string; hint?: string }) {
   if (!label) return null;
   return (
-    <span className="authoring-label">
+    <span className={LABEL}>
       {label}
-      {hint && <span className="authoring-hint">{hint}</span>}
+      {hint && <span className={HINT}>{hint}</span>}
     </span>
   );
 }
@@ -64,7 +91,7 @@ function Field({
   preview?: boolean;
 }) {
   return (
-    <label className="authoring-field">
+    <label className={FIELD}>
       <FieldLabel label={label} hint={hint} />
       {area ? (
         <textarea
@@ -72,7 +99,7 @@ function Field({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           rows={2}
-          className={mono ? "authoring-control authoring-control-mono" : "authoring-control"}
+          className={cn(CONTROL, mono && CONTROL_MONO)}
         />
       ) : (
         <input
@@ -80,11 +107,11 @@ function Field({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className={mono ? "authoring-control authoring-control-mono" : "authoring-control"}
+          className={cn(CONTROL, mono && CONTROL_MONO)}
         />
       )}
       {preview && value.trim() && (
-        <span className="mt-1 block text-caption-1 text-fg-2">
+        <span className="mt-1 block text-caption-1 text-muted-foreground">
           <MathText text={value} />
         </span>
       )}
@@ -126,21 +153,25 @@ function SelectField({
   }, [open]);
 
   return (
-    <div className="authoring-field" ref={ref}>
+    <div className={FIELD} ref={ref}>
       <FieldLabel label={label} />
       <div className="relative">
         <button
           type="button"
-          className="authoring-control authoring-select-trigger"
+          className={cn(CONTROL, SELECT_TRIGGER)}
           onClick={() => setOpen((o) => !o)}
           aria-haspopup="listbox"
           aria-expanded={open}
         >
           <span className="min-w-0 truncate">{selected?.label ?? value}</span>
-          <ChevronDown className="h-4 w-4 shrink-0 text-fg-2" />
+          <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
         </button>
         {open && (
-          <div className="authoring-select-popover" role="listbox">
+          <Surface
+            material="thick"
+            role="listbox"
+            className="absolute inset-x-0 top-[calc(100%+6px)] z-(--z-modal) max-h-[min(300px,42vh)] overflow-y-auto rounded-lg p-1.5"
+          >
             {options.map((option) => {
               const active = option.value === value;
               return (
@@ -149,7 +180,7 @@ function SelectField({
                   type="button"
                   role="option"
                   aria-selected={active}
-                  className={active ? "authoring-select-option is-active" : "authoring-select-option"}
+                  className={cn(SELECT_OPTION, active && SELECT_OPTION_ACTIVE)}
                   onClick={() => {
                     onChange(option.value);
                     setOpen(false);
@@ -160,7 +191,7 @@ function SelectField({
                 </button>
               );
             })}
-          </div>
+          </Surface>
         )}
       </div>
     </div>
@@ -200,12 +231,12 @@ function NodePicker({
         }}
         onBlur={() => window.setTimeout(() => setOpen(false), 120)}
         onChange={(e) => setQuery(e.target.value)}
-        className="authoring-control"
+        className={CONTROL}
       />
       {open && matches.length > 0 && (
         <ul
           className="panel-scrollbar absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-e4)"
-          style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+          style={{ background: "var(--card)", borderColor: "var(--border)" }}
         >
           {matches.map((o) => (
             <li key={o.id}>
@@ -216,8 +247,8 @@ function NodePicker({
                   onChange(o.id);
                   setOpen(false);
                 }}
-                className="authoring-picker-option"
-                style={{ color: "var(--fg-1)" }}
+                className={PICKER_OPTION}
+                style={{ color: "var(--foreground)" }}
               >
                 <span
                   className="h-1.5 w-1.5 shrink-0 rounded-full"
@@ -271,17 +302,17 @@ function EdgeRow({
   return (
     <li
       className="rounded-md border px-2.5 py-1.5 text-footnote"
-      style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+      style={{ borderColor: "var(--border)", background: "var(--muted)" }}
     >
       <div className="flex items-center gap-2">
-        <span className="min-w-0 flex-1 truncate" style={{ color: "var(--fg-2)" }}>
+        <span className="min-w-0 flex-1 truncate" style={{ color: "var(--muted-foreground)" }}>
           {role === "source" ? (
             <>
-              this <em style={{ color: "var(--fg-3)" }}>{reads}</em> <MathText text={otherLabel} />
+              this <em style={{ color: "var(--muted-foreground)" }}>{reads}</em> <MathText text={otherLabel} />
             </>
           ) : (
             <>
-              <MathText text={otherLabel} /> <em style={{ color: "var(--fg-3)" }}>{reads}</em> this
+              <MathText text={otherLabel} /> <em style={{ color: "var(--muted-foreground)" }}>{reads}</em> this
             </>
           )}
         </span>
@@ -289,8 +320,8 @@ function EdgeRow({
           type="button"
           onClick={() => (editing ? setEditing(false) : open())}
           aria-label={editing ? "Close edit" : "Edit link"}
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-          style={{ color: editing ? "var(--accent)" : "var(--fg-3)" }}
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-secondary"
+          style={{ color: editing ? "var(--primary)" : "var(--muted-foreground)" }}
         >
           <Pencil className="h-3.5 w-3.5" />
         </button>
@@ -298,15 +329,15 @@ function EdgeRow({
           type="button"
           onClick={onRemove}
           aria-label="Remove link"
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-          style={{ color: "var(--fg-3)" }}
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm hover:bg-secondary"
+          style={{ color: "var(--muted-foreground)" }}
         >
           <Trash2 className="h-3.5 w-3.5" />
         </button>
       </div>
 
       {!editing && edge.notes && (
-        <p className="mt-1 text-caption-1 italic" style={{ color: "var(--fg-3)" }}>
+        <p className="mt-1 text-caption-1 italic" style={{ color: "var(--muted-foreground)" }}>
           {edge.notes}
         </p>
       )}
@@ -324,10 +355,10 @@ function EdgeRow({
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Author notes (optional) — rationale, not surfaced in the public map"
             rows={2}
-            className="authoring-control"
+            className={CONTROL}
           />
           {error && (
-            <p className="text-caption-1" style={{ color: "var(--danger)" }}>
+            <p className="text-caption-1" style={{ color: "var(--destructive)" }}>
               {error}
             </p>
           )}
@@ -335,14 +366,14 @@ function EdgeRow({
             <button
               type="button"
               onClick={() => setEditing(false)}
-              className="authoring-action rounded-sm px-2 py-1 text-caption-1 text-fg-3"
+              className={cn(ACTION, "rounded-sm px-2 py-1 text-caption-1 text-muted-foreground")}
             >
               Cancel
             </button>
             <button
               type="button"
               onClick={save}
-              className="authoring-action authoring-action-primary rounded-sm px-2.5 py-1 text-caption-1"
+              className={cn(ACTION, ACTION_PRIMARY, "rounded-sm px-2.5 py-1 text-caption-1")}
             >
               <Check className="h-3.5 w-3.5" /> Save
             </button>
@@ -415,8 +446,8 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           type="button"
           onClick={() => setOutgoing((o) => !o)}
           title={outgoing ? "this → concept" : "concept → this"}
-          className="flex h-8 items-center gap-1.5 rounded-sm px-2 text-caption-1 font-medium hover:bg-(--surface-3)"
-          style={{ color: "var(--fg-2)" }}
+          className="flex h-8 items-center gap-1.5 rounded-sm px-2 text-caption-1 font-medium hover:bg-secondary"
+          style={{ color: "var(--muted-foreground)" }}
         >
           <ArrowLeftRight className="h-3.5 w-3.5" />
           {outgoing ? "from this" : "to this"}
@@ -434,7 +465,7 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           <button
             type="button"
             onClick={submit}
-            className="authoring-action authoring-action-primary h-8 rounded-sm px-2.5 text-caption-1"
+            className={cn(ACTION, ACTION_PRIMARY, "h-8 rounded-sm px-2.5 text-caption-1")}
           >
             <Plus className="h-3.5 w-3.5" /> Link
           </button>
@@ -444,10 +475,10 @@ function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Author notes (optional)"
           rows={1}
-          className="authoring-control col-span-2"
+          className={cn(CONTROL, "col-span-2")}
         />
         {error && (
-          <p className="col-span-2 text-caption-1" style={{ color: "var(--danger)" }}>
+          <p className="col-span-2 text-caption-1" style={{ color: "var(--destructive)" }}>
             {error}
           </p>
         )}
@@ -470,14 +501,14 @@ function ExamplesEditor({
   const add = () => onChange([...examples, emptyExample()]);
 
   return (
-    <div className="authoring-field">
+    <div className={FIELD}>
       <FieldLabel label="Examples" hint="worked instances" />
       <div className="space-y-2">
         {examples.map((ex, i) => (
           <div
             key={i}
             className="space-y-1.5 rounded-md border p-2"
-            style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+            style={{ borderColor: "var(--border)", background: "var(--muted)" }}
           >
             <div className="flex items-center gap-2">
               <input
@@ -485,21 +516,21 @@ function ExamplesEditor({
                 value={ex.label}
                 onChange={(e) => patch(i, { label: e.target.value })}
                 placeholder="Label (optional)"
-                className="authoring-control flex-1"
+                className={cn(CONTROL, "flex-1")}
               />
               <input
                 type="text"
                 value={ex.role}
                 onChange={(e) => patch(i, { role: e.target.value })}
                 placeholder="Role (optional)"
-                className="authoring-control flex-1"
+                className={cn(CONTROL, "flex-1")}
               />
               <button
                 type="button"
                 onClick={() => remove(i)}
                 aria-label="Remove example"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-                style={{ color: "var(--fg-3)" }}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-secondary"
+                style={{ color: "var(--muted-foreground)" }}
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </button>
@@ -509,10 +540,10 @@ function ExamplesEditor({
               onChange={(e) => patch(i, { content: e.target.value })}
               placeholder="Example content (LaTeX)"
               rows={2}
-              className="authoring-control authoring-control-mono"
+              className={cn(CONTROL, CONTROL_MONO)}
             />
             {ex.content.trim() && (
-              <span className="block text-caption-1 text-fg-2">
+              <span className="block text-caption-1 text-muted-foreground">
                 <MathText text={ex.content} />
               </span>
             )}
@@ -521,8 +552,8 @@ function ExamplesEditor({
         <button
           type="button"
           onClick={add}
-          className="authoring-action rounded-sm px-2.5 py-1.5 text-caption-1"
-          style={{ color: "var(--fg-2)" }}
+          className={cn(ACTION, "rounded-sm px-2.5 py-1.5 text-caption-1")}
+          style={{ color: "var(--muted-foreground)" }}
         >
           <Plus className="h-3.5 w-3.5" /> Add example
         </button>
@@ -556,8 +587,8 @@ function UsesPicker({
               className="inline-flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-caption-1"
               style={{
                 borderColor: "var(--border)",
-                background: "var(--surface-3)",
-                color: "var(--fg-2)",
+                background: "var(--secondary)",
+                color: "var(--muted-foreground)",
               }}
             >
               <span
@@ -573,7 +604,7 @@ function UsesPicker({
                 onClick={() => onChange(value.filter((v) => v !== id))}
                 aria-label="Remove reference"
                 className="shrink-0 hover:text-(--danger)"
-                style={{ color: "var(--fg-3)" }}
+                style={{ color: "var(--muted-foreground)" }}
               >
                 <XIcon className="h-3 w-3" />
               </button>
@@ -616,17 +647,20 @@ function ProofStepsEditor({
   };
 
   return (
-    <div className="authoring-field">
+    <div className={FIELD}>
       <FieldLabel label="Proof / solution" hint="ordered steps" />
       <div className="space-y-2">
         {steps.map((step, i) => (
           <div
             key={i}
             className="space-y-1.5 rounded-md border p-2"
-            style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+            style={{ borderColor: "var(--border)", background: "var(--muted)" }}
           >
             <div className="flex items-center gap-2">
-              <span className="shrink-0 font-mono text-caption-2 tabular-nums" style={{ color: "var(--fg-3)" }}>
+              <span
+                className="shrink-0 font-mono text-caption-2 tabular-nums"
+                style={{ color: "var(--muted-foreground)" }}
+              >
                 {i + 1}
               </span>
               <input
@@ -634,15 +668,15 @@ function ProofStepsEditor({
                 value={step.role}
                 onChange={(e) => patch(i, { role: e.target.value })}
                 placeholder="Role (e.g. Setup, Claim, Conclude)"
-                className="authoring-control flex-1"
+                className={cn(CONTROL, "flex-1")}
               />
               <button
                 type="button"
                 onClick={() => move(i, -1)}
                 disabled={i === 0}
                 aria-label="Move step up"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3) disabled:opacity-30"
-                style={{ color: "var(--fg-3)" }}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-secondary disabled:opacity-30"
+                style={{ color: "var(--muted-foreground)" }}
               >
                 <ArrowUp className="h-3.5 w-3.5" />
               </button>
@@ -651,8 +685,8 @@ function ProofStepsEditor({
                 onClick={() => move(i, 1)}
                 disabled={i === steps.length - 1}
                 aria-label="Move step down"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3) disabled:opacity-30"
-                style={{ color: "var(--fg-3)" }}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-secondary disabled:opacity-30"
+                style={{ color: "var(--muted-foreground)" }}
               >
                 <ArrowDown className="h-3.5 w-3.5" />
               </button>
@@ -660,8 +694,8 @@ function ProofStepsEditor({
                 type="button"
                 onClick={() => remove(i)}
                 aria-label="Remove step"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-                style={{ color: "var(--fg-3)" }}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-secondary"
+                style={{ color: "var(--muted-foreground)" }}
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </button>
@@ -671,10 +705,10 @@ function ProofStepsEditor({
               onChange={(e) => patch(i, { content: e.target.value })}
               placeholder="Step content (LaTeX)"
               rows={2}
-              className="authoring-control authoring-control-mono"
+              className={cn(CONTROL, CONTROL_MONO)}
             />
             {step.content.trim() && (
-              <span className="block text-caption-1 text-fg-2">
+              <span className="block text-caption-1 text-muted-foreground">
                 <MathText text={step.content} />
               </span>
             )}
@@ -684,8 +718,8 @@ function ProofStepsEditor({
         <button
           type="button"
           onClick={add}
-          className="authoring-action rounded-sm px-2.5 py-1.5 text-caption-1"
-          style={{ color: "var(--fg-2)" }}
+          className={cn(ACTION, "rounded-sm px-2.5 py-1.5 text-caption-1")}
+          style={{ color: "var(--muted-foreground)" }}
         >
           <Plus className="h-3.5 w-3.5" /> Add step
         </button>
@@ -764,27 +798,27 @@ export function NodeEditorPanel({
       {/* Header */}
       <header className="relative shrink-0 px-5 pt-3.5">
         <div className="mb-3 flex items-center justify-between">
-          <span className="text-caption-1 font-semibold uppercase tracking-label-wide text-fg-3">
+          <span className="text-caption-1 font-semibold uppercase tracking-label-wide text-muted-foreground">
             {editingId === null ? "New concept" : "Edit concept"}
           </span>
           <div className="flex items-center gap-0.5">
             {editingId !== null &&
               (confirmDelete ? (
                 <div className="flex items-center gap-1.5">
-                  <span className="text-caption-1" style={{ color: "var(--fg-2)" }}>
+                  <span className="text-caption-1" style={{ color: "var(--muted-foreground)" }}>
                     Delete?
                   </span>
                   <button
                     type="button"
                     onClick={() => deleteNode(editingId)}
-                    className="authoring-action authoring-action-danger rounded-sm px-2 py-1 text-caption-1"
+                    className={cn(ACTION, ACTION_DANGER, "rounded-sm px-2 py-1 text-caption-1")}
                   >
                     Delete
                   </button>
                   <button
                     type="button"
                     onClick={() => setConfirmDelete(false)}
-                    className="authoring-action rounded-sm px-1.5 py-1 text-caption-1 text-fg-3"
+                    className={cn(ACTION, "rounded-sm px-1.5 py-1 text-caption-1 text-muted-foreground")}
                   >
                     Cancel
                   </button>
@@ -794,8 +828,8 @@ export function NodeEditorPanel({
                   type="button"
                   onClick={() => setConfirmDelete(true)}
                   aria-label="Delete concept"
-                  className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-                  style={{ color: "var(--fg-3)" }}
+                  className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-secondary"
+                  style={{ color: "var(--muted-foreground)" }}
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -804,8 +838,8 @@ export function NodeEditorPanel({
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-(--surface-3)"
-              style={{ color: "var(--fg-2)" }}
+              className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-secondary"
+              style={{ color: "var(--muted-foreground)" }}
             >
               <XIcon className="h-4 w-4" />
             </button>
@@ -820,12 +854,12 @@ export function NodeEditorPanel({
               value={draft.label}
               onChange={(e) => set({ label: e.target.value })}
               placeholder="Concept label"
-              className="w-full bg-transparent text-title-2 outline-none placeholder:text-fg-3"
-              style={{ color: "var(--fg-1)", fontWeight: 600, letterSpacing: "-0.015em" }}
+              className="w-full bg-transparent text-title-2 outline-none placeholder:text-muted-foreground"
+              style={{ color: "var(--foreground)", fontWeight: 600, letterSpacing: "-0.015em" }}
               aria-label="Concept label"
             />
             {draft.label.trim() && (
-              <div className="mt-0.5 text-caption-1 text-fg-2">
+              <div className="mt-0.5 text-caption-1 text-muted-foreground">
                 <MathText text={draft.label} />
               </div>
             )}
@@ -866,7 +900,7 @@ export function NodeEditorPanel({
                 key={p}
                 type="button"
                 onClick={() => set({ priority: p })}
-                className={draft.priority === p ? "authoring-chip is-active" : "authoring-chip"}
+                className={cn(CHIP, draft.priority === p && CHIP_ACTIVE)}
               >
                 {p}
               </button>
@@ -951,27 +985,28 @@ export function NodeEditorPanel({
         <Field label="Tags" value={draft.tags} onChange={(v) => set({ tags: v })} hint="comma-separated" />
 
         {editingId !== null && (
-          <div className="border-t pt-3" style={{ borderColor: "var(--border-subtle)" }}>
+          <div className="border-t pt-3" style={{ borderColor: "var(--border)" }}>
             <EdgeEditor nodeId={editingId} map={map} />
           </div>
         )}
       </div>
 
       {/* Footer */}
-      <footer
-        className="flex shrink-0 items-center gap-2 border-t px-5 py-3"
-        style={{ borderColor: "var(--border-subtle)" }}
-      >
+      <footer className="flex shrink-0 items-center gap-2 border-t px-5 py-3" style={{ borderColor: "var(--border)" }}>
         {editError && (
-          <span className="min-w-0 flex-1 truncate text-caption-1" style={{ color: "var(--danger)" }}>
+          <span className="min-w-0 flex-1 truncate text-caption-1" style={{ color: "var(--destructive)" }}>
             {editError}
           </span>
         )}
         <button
           type="button"
           onClick={save}
-          className="authoring-action authoring-action-primary ml-auto inline-flex min-h-9 items-center gap-1 rounded-full px-3 text-caption-1"
-          style={justSaved ? { background: "var(--success)", color: "var(--fg-on-color)" } : undefined}
+          className={cn(
+            ACTION,
+            ACTION_PRIMARY,
+            "ml-auto inline-flex min-h-9 items-center gap-1 rounded-full px-3 text-caption-1",
+          )}
+          style={justSaved ? { background: "var(--success)", color: "var(--success-foreground)" } : undefined}
         >
           {justSaved ? (
             <>

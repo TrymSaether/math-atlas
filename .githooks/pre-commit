@@ -1,0 +1,8 @@
+#!/bin/sh
+# Auto-format staged files with Prettier before each commit.
+# Enabled via `core.hooksPath = .githooks` (set once with the prepare script).
+staged=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|css|js|mjs|json|html|md)$' || true)
+[ -z "$staged" ] && exit 0
+echo "$staged" | xargs ./node_modules/.bin/prettier --write --ignore-unknown
+echo "$staged" | xargs git add
+exit 0

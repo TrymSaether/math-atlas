@@ -154,7 +154,7 @@ function ExtraEnvironment({ entry }: { entry: ConceptView["extraContent"][number
 function ExtraValue({ value }: { value: unknown }) {
   if (typeof value === "string") {
     return (
-      <div className="text-body text-fg-1">
+      <div className="text-body text-foreground">
         <MathProse text={value} />
       </div>
     );
@@ -165,8 +165,8 @@ function ExtraValue({ value }: { value: unknown }) {
     return (
       <ul className="m-0 space-y-1.5 p-0">
         {items.map((item, index) => (
-          <li key={index} className="flex gap-2.5 text-body text-fg-1">
-            <span aria-hidden className="mt-2.25 h-1 w-1 shrink-0 rounded-full bg-fg-3" />
+          <li key={index} className="flex gap-2.5 text-body text-foreground">
+            <span aria-hidden className="mt-2.25 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />
             <span className="min-w-0">
               <MathProse text={item} />
             </span>
@@ -177,7 +177,7 @@ function ExtraValue({ value }: { value: unknown }) {
   }
 
   return (
-    <pre className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-surface-2 px-3 py-2 font-mono text-caption-1 leading-[1.6] text-fg-2">
+    <pre className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-muted px-3 py-2 font-mono text-caption-1 leading-[1.6] text-muted-foreground">
       {JSON.stringify(value, null, 2)}
     </pre>
   );
@@ -186,7 +186,7 @@ function ExtraValue({ value }: { value: unknown }) {
 /** A flush-left mono micro-label heading an environment. */
 function Eyebrow({ children, color }: { children: ReactNode; color?: string }) {
   return (
-    <div className="mb-1.5 reading-label" style={{ color: color ?? "var(--fg-3)" }}>
+    <div className="mb-1.5 reading-label" style={{ color: color ?? "var(--muted-foreground)" }}>
       {children}
     </div>
   );
@@ -204,7 +204,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
           <Eyebrow>{label}</Eyebrow>
           <ul className="m-0 space-y-1.5 p-0">
             {view.assumptions.map((a, i) => (
-              <li key={i} className="flex gap-2.5 text-body text-fg-1">
+              <li key={i} className="flex gap-2.5 text-body text-foreground">
                 <span
                   aria-hidden
                   className="mt-2.25 h-1 w-1 shrink-0 rounded-full"
@@ -223,7 +223,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
       return (
         <section>
           <Eyebrow>{label}</Eyebrow>
-          <div className="panel-scrollbar max-w-full overflow-x-auto text-body text-fg-1">
+          <div className="panel-scrollbar max-w-full overflow-x-auto text-body text-foreground">
             <MathText text={view.definition} asBlock />
           </div>
         </section>
@@ -252,7 +252,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
             {view.notation.map((n, i) => (
               <span
                 key={i}
-                className="inline-flex items-center rounded-sm border border-border bg-surface-2 px-2 py-1 font-math leading-none text-fg-1"
+                className="inline-flex items-center rounded-sm border border-border bg-muted px-2 py-1 font-math leading-none text-foreground"
               >
                 <MathText text={n} />
               </span>
@@ -271,19 +271,19 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
     case "examples": {
       const examples = exampleLimit === undefined ? view.examples : view.examples.slice(0, exampleLimit);
       return (
-        <Aside accent="var(--border-strong)" label={label}>
+        <Aside accent="var(--border)" label={label}>
           <div className="space-y-3">
             {examples.map((example, index) => (
               <div key={index} className="space-y-1">
                 {(example.role || example.label) && (
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                     {example.role && (
-                      <span className="font-mono text-caption-2 tracking-label-tight text-fg-3">
+                      <span className="font-mono text-caption-2 tracking-label-tight text-muted-foreground">
                         <MathProse text={example.role} />
                       </span>
                     )}
                     {example.label && (
-                      <span className="text-footnote font-medium text-fg-2">
+                      <span className="text-footnote font-medium text-muted-foreground">
                         <MathProse text={example.label} />
                       </span>
                     )}
@@ -301,7 +301,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
       return (
         <section>
           <Eyebrow>{label}</Eyebrow>
-          <div className="text-body text-fg-2">
+          <div className="text-body text-muted-foreground">
             <MathProse text={view.gloss} />
           </div>
         </section>
@@ -315,7 +315,7 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
 /** Bordered display block for formal statements / formulas — wide math scrolls within. */
 function DisplayBox({ children }: { children: ReactNode }) {
   return (
-    <div className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-surface-2 px-4 py-3 font-math leading-[1.6] text-fg-1">
+    <div className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-muted px-4 py-3 font-math leading-[1.6] text-foreground">
       {children}
     </div>
   );
@@ -336,7 +336,7 @@ function Aside({
   return (
     <section className="border-l-2 pl-3.5" style={{ borderColor: accent }}>
       <Eyebrow color={eyebrow}>{label}</Eyebrow>
-      <div className="text-body text-fg-1">{children}</div>
+      <div className="text-body text-foreground">{children}</div>
     </section>
   );
 }

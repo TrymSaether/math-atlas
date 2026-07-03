@@ -1,27 +1,8 @@
-/* Application stylesheet manifest. Keep rules in their owning layer. */
+/* Application stylesheet manifest. The rebuilt design system is the single
+   source of truth; there is no legacy layer left to override. */
 @import "tailwindcss";
 
-/* Design-system dependency order: sources -> foundations -> roles -> bridges. */
-@import "./styles/theme.css";
-@import "./styles/foundation.css";
-@import "./styles/apple-hig.css";
-@import "./styles/tokens.css";
-@import "./styles/diagram-tokens.css";
-@import "./styles/tailwind-theme.css";
-
-/* Global behavior and reusable materials. */
-@import "./styles/base.css";
-@import "./styles/glass.css";
-@import "./styles/shell.css";
-@import "./styles/utilities.css";
-
-/* Feature and integration styles. */
-@import "./styles/components/authoring.css";
-@import "./styles/components/concept-title.css";
-@import "./styles/components/atlas-diagrams.css";
-@import "./styles/components/sandbox.css";
-@import "./styles/vendor/react-flow.css";
-
-/* Rebuilt design system — canonical token layer (delete legacy imports above
-   as surfaces migrate onto this; see src/design/README.md). */
-@import "./design/tokens.css";
+@import "./design/tokens.css"; /* canonical token layer (light + dark) */
+@import "./design/base.css"; /* global resets, focus, shared utilities */
+@import "./design/vendor.css"; /* MathLive / Mafs / @xyflow / global theming */
+@import "./design/figures.css"; /* figure + diagram token contract & classes */

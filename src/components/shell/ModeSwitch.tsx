@@ -16,7 +16,7 @@ export function ModeSwitch() {
   const mode = useStore((s) => s.mode);
   const setMode = useStore((s) => s.setMode);
   return (
-    <div className="shell-mode-switch">
+    <div className="absolute bottom-[var(--shell-edge)] left-1/2 z-(--z-shell) -translate-x-1/2">
       <Surface material="regular" className="rounded-full p-1">
         <ToggleGroup
           type="single"

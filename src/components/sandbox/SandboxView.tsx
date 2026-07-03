@@ -66,9 +66,9 @@ export function SandboxView() {
   }, []);
 
   return (
-    <div className="sandbox-shell absolute inset-0">
+    <div className="absolute inset-0 bg-background text-foreground">
       {/* Plane */}
-      <main className="sandbox-stage absolute inset-0 min-w-0">
+      <main className="absolute inset-0 min-w-0 bg-background">
         <PlaneView rows={ws.rows} compiled={compiled} viewport={ws.viewport} marks={ws.marks} onMovePoint={setPoint} />
 
         {/* Saved views + view dock, right rail */}
@@ -79,16 +79,14 @@ export function SandboxView() {
                 <span key={v.id} className="flex items-center">
                   <button
                     onClick={() => applyView(v.id)}
-                    className="rounded-sm px-2 py-1 text-caption-2"
-                    style={{ color: "var(--fg-2)" }}
+                    className="rounded-sm px-2 py-1 text-caption-2 text-muted-foreground"
                     title="Apply saved view"
                   >
                     {v.name}
                   </button>
                   <button
                     onClick={() => removeView(v.id)}
-                    className="px-0.5"
-                    style={{ color: "var(--fg-4)" }}
+                    className="px-0.5 text-muted-foreground/70"
                     title="Remove view"
                   >
                     <X size={11} />
@@ -97,21 +95,21 @@ export function SandboxView() {
               ))}
             </Surface>
           )}
-          <div className="shell-utility-stack pointer-events-auto">
-            <Surface material="regular" className="shell-zoom-cluster">
+          <div className="pointer-events-auto inline-flex w-12 flex-col items-center gap-2.5">
+            <Surface material="regular" className="flex w-12 flex-col items-center gap-0.5 rounded-[24px] p-1">
               <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
-                <Plus className="shell-icon" />
+                <Plus className="size-[17px]" />
               </DockBtn>
               <DockBtn label="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
-                <Minus className="shell-icon" />
+                <Minus className="size-[17px]" />
               </DockBtn>
               <DockBtn label="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
-                <Maximize className="shell-icon" />
+                <Maximize className="size-[17px]" />
               </DockBtn>
             </Surface>
-            <Surface material="regular" className="shell-utility-button">
+            <Surface material="regular" className="flex size-12 items-center justify-center rounded-full">
               <DockBtn label="Save view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
-                <Bookmark className="shell-icon" />
+                <Bookmark className="size-[17px]" />
               </DockBtn>
             </Surface>
           </div>
@@ -119,14 +117,17 @@ export function SandboxView() {
       </main>
 
       {/* Floating expression panel */}
-      <aside className="sandbox-sidebar pointer-events-auto absolute bottom-3 left-3 top-[68px] z-(--z-shell) flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-lg sm:left-4 sm:w-[340px]">
-        <div className="sandbox-sidebar-header flex items-center gap-1 px-2 py-2">
+      <Surface
+        material="regular"
+        className="pointer-events-auto absolute bottom-3 left-3 top-[68px] z-(--z-shell) flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-lg sm:left-4 sm:w-[340px]"
+      >
+        <div className="flex items-center gap-1 border-b border-border/60 px-2 py-2">
           <WorkspaceMenu />
         </div>
         <div className="min-h-0 flex-1">
           <ExpressionPanel />
         </div>
-      </aside>
+      </Surface>
     </div>
   );
 }
@@ -160,15 +161,15 @@ function WorkspaceMenu() {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="sandbox-workspace-button flex w-full min-w-0 items-center gap-2.5 text-left"
+        className="flex w-full min-w-0 items-center gap-2.5 rounded-sm px-1.5 py-1 text-left text-foreground transition hover:bg-foreground/[0.06] aria-expanded:bg-primary/10 aria-expanded:shadow-[inset_0_0_0_1px_var(--primary)] [&_svg]:text-muted-foreground aria-expanded:[&_svg]:text-primary"
         aria-expanded={open}
       >
-        <span className="sandbox-workspace-icon flex shrink-0 items-center justify-center">
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm bg-foreground/[0.06] shadow-[inset_0_0_0_1px_var(--border)]">
           <Folder className="h-4 w-4" />
         </span>
         <span className="min-w-0 flex-1">
           <span className="block truncate text-footnote font-semibold">{ws.title}</span>
-          <span className="sandbox-workspace-meta block truncate font-mono text-caption-2 uppercase tracking-label-tight">
+          <span className="block truncate font-mono text-caption-2 uppercase tracking-label-tight text-muted-foreground">
             {ws.rows.length} expressions ·{" "}
             {issueCount > 0 ? `${issueCount} issue${issueCount === 1 ? "" : "s"}` : "ready"}
           </span>
@@ -179,8 +180,13 @@ function WorkspaceMenu() {
         />
       </button>
       {open && (
-        <div className="sandbox-workspace-popover absolute left-0 top-[52px] z-(--z-popover) w-[280px] overflow-hidden p-1.5">
-          <div className="px-2.5 pb-1 pt-1.5 text-caption-2 font-semibold uppercase tracking-label-wide">Examples</div>
+        <Surface
+          material="thick"
+          className="absolute left-0 top-[52px] z-(--z-popover) w-[280px] overflow-hidden rounded-xl p-1.5"
+        >
+          <div className="px-2.5 pb-1 pt-1.5 text-caption-2 font-semibold uppercase tracking-label-wide text-muted-foreground">
+            Examples
+          </div>
           {WORKSPACE_IDS.map((id) => {
             const active = id === ws.id;
             return (
@@ -192,8 +198,9 @@ function WorkspaceMenu() {
                   setOpen(false);
                 }}
                 className={cn(
-                  "sandbox-workspace-option flex w-full items-center gap-2 px-2.5 py-2 text-left text-footnote",
-                  active && "is-active",
+                  "flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-footnote text-muted-foreground transition hover:bg-accent hover:text-foreground [&_svg]:text-muted-foreground/70",
+                  active &&
+                    "bg-primary/10 text-primary shadow-[inset_0_0_0_1px_var(--primary)] [&_svg]:text-primary hover:bg-primary/10 hover:text-primary",
                 )}
               >
                 <Folder className="h-3.5 w-3.5 shrink-0" />
@@ -201,19 +208,19 @@ function WorkspaceMenu() {
               </button>
             );
           })}
-          <div className="sandbox-menu-divider my-1 h-px" />
+          <div className="my-1 h-px bg-border" />
           <button
             type="button"
             onClick={() => {
               reset();
               setOpen(false);
             }}
-            className="sandbox-workspace-option flex w-full items-center gap-2 px-2.5 py-2 text-left text-footnote"
+            className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-footnote text-muted-foreground transition hover:bg-accent hover:text-foreground [&_svg]:text-muted-foreground/70"
           >
             <Plus className="h-3.5 w-3.5 shrink-0" />
             <span>New blank workspace</span>
           </button>
-        </div>
+        </Surface>
       )}
     </div>
   );

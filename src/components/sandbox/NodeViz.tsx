@@ -54,7 +54,7 @@ export function NodeViz({
   return (
     <figure
       className="overflow-hidden rounded-lg border"
-      style={{ borderColor: "var(--border)", background: "var(--surface)" }}
+      style={{ borderColor: "var(--border)", background: "var(--card)" }}
     >
       <PlaneView
         rows={ws.rows}
@@ -69,7 +69,7 @@ export function NodeViz({
       {caption && (
         <figcaption
           className="border-t px-3 py-1.5 text-[11px]"
-          style={{ borderColor: "var(--border)", color: "var(--fg-3)" }}
+          style={{ borderColor: "var(--border)", color: "var(--muted-foreground)" }}
         >
           {caption}
         </figcaption>

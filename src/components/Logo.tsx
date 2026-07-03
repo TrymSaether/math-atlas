@@ -8,12 +8,12 @@ export function LogoMark({ className, size = 28 }: { className?: string; size?: 
         <path d="M50 18 L24 82" />
         <path d="M50 18 L76 82" />
       </g>
-      <path d="M37 50 L63 50" stroke="var(--accent)" strokeWidth="3.4" strokeLinecap="round" />
+      <path d="M37 50 L63 50" stroke="var(--primary)" strokeWidth="3.4" strokeLinecap="round" />
       <circle cx="50" cy="18" r="7" fill="currentColor" />
-      <circle cx="24" cy="82" r="7" fill="var(--surface)" stroke="currentColor" strokeWidth="3.4" />
-      <circle cx="76" cy="82" r="7" fill="var(--surface)" stroke="currentColor" strokeWidth="3.4" />
-      <circle cx="37" cy="50" r="5.5" fill="var(--accent)" />
-      <circle cx="63" cy="50" r="5.5" fill="var(--accent)" />
+      <circle cx="24" cy="82" r="7" fill="var(--card)" stroke="currentColor" strokeWidth="3.4" />
+      <circle cx="76" cy="82" r="7" fill="var(--card)" stroke="currentColor" strokeWidth="3.4" />
+      <circle cx="37" cy="50" r="5.5" fill="var(--primary)" />
+      <circle cx="63" cy="50" r="5.5" fill="var(--primary)" />
     </svg>
   );
 }

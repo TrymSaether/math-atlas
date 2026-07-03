@@ -30,12 +30,12 @@ function makeTone(key: DomainKey): DomainTone {
   return {
     key,
     color,
-    tint: `color-mix(in srgb, ${color} 11%, var(--surface))`,
-    border: `color-mix(in srgb, ${color} 34%, var(--surface))`,
+    tint: `color-mix(in srgb, ${color} 11%, var(--card))`,
+    border: `color-mix(in srgb, ${color} 34%, var(--card))`,
     // Deepen the hue toward the page ink so it stays legible on the pale tint in
     // light themes and lifts off dark surfaces in dark themes — no per-theme
-    // token needed because --fg-1 already flips with the scheme.
-    text: `color-mix(in srgb, ${color} 78%, var(--fg-1))`,
+    // token needed because --foreground already flips with the scheme.
+    text: `color-mix(in srgb, ${color} 78%, var(--foreground))`,
   };
 }
 
@@ -129,8 +129,8 @@ export function getMutedDomainTone(domainId: string): DomainTone {
   const tone = getDomainTone(domainId);
   return {
     ...tone,
-    color: mixColor(tone.color, 62, "var(--fg-2)"),
-    tint: mixColor(tone.tint, 40, "var(--surface)"),
+    color: mixColor(tone.color, 62, "var(--muted-foreground)"),
+    tint: mixColor(tone.tint, 40, "var(--card)"),
     border: mixColor(tone.border, 46, "var(--border)"),
   };
 }

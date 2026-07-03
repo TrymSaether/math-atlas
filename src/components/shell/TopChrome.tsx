@@ -321,14 +321,14 @@ function TopRightControls() {
  */
 export function TopChrome() {
   return (
-    <div className="top-chrome">
-      <div className="top-chrome-map">
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-(--z-shell) grid grid-cols-[minmax(0,1fr)_minmax(260px,clamp(280px,34vw,520px))_minmax(0,1fr)] items-start gap-3 px-[var(--shell-edge)] py-3 max-[980px]:grid-cols-1 max-[980px]:gap-2 max-[980px]:py-2.5">
+      <div className="pointer-events-auto min-w-0 justify-self-start max-[980px]:justify-self-start">
         <MapMenu />
       </div>
-      <div className="top-chrome-search">
+      <div className="pointer-events-auto w-full min-w-0 justify-self-center max-[980px]:hidden">
         <SearchField />
       </div>
-      <div className="top-chrome-right">
+      <div className="pointer-events-auto min-w-0 justify-self-end max-[980px]:justify-self-center">
         <TopRightControls />
       </div>
     </div>

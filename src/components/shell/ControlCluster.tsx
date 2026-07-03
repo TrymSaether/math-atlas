@@ -9,8 +9,7 @@ import { LayersPanel } from "./LayersPanel";
 
 /**
  * Bottom-trailing utility stack. Each unrelated action gets its own glass shape;
- * only the tightly related zoom controls share a capsule. Positioning still reads
- * the legacy shell layout classes until a shell-layout pass replaces them.
+ * only the tightly related zoom controls share a capsule.
  */
 export function ControlCluster() {
   const rf = useReactFlow();
@@ -23,13 +22,16 @@ export function ControlCluster() {
   usePopoverDismiss({ open: layersOpen, onClose: closeLayers, containerRef: ref, triggerRef });
 
   return (
-    <div className="shell-tools" ref={ref}>
+    <div
+      className="pointer-events-auto absolute bottom-[var(--shell-edge)] right-[var(--shell-edge)] z-(--z-shell-raised) flex items-end gap-2.5"
+      ref={ref}
+    >
       {layersOpen && (
-        <div className="shell-tools-popover">
+        <div className="mr-0.5 self-end">
           <LayersPanel onClose={() => setLayersOpen(false)} />
         </div>
       )}
-      <div className="shell-utility-stack">
+      <div className="inline-flex w-12 flex-col items-center gap-2.5">
         <Surface material="regular" className="rounded-full">
           <Button
             ref={triggerRef}

@@ -43,9 +43,37 @@
   --destructive: #ff3b30; /* Apple system red */
   --destructive-foreground: #ffffff;
 
+  --success: #34c759; /* Apple system green */
+  --success-foreground: #ffffff;
+
   --border: rgba(0, 0, 0, 0.1);
   --input: rgba(0, 0, 0, 0.12);
   --ring: #007aff;
+
+  /* ---- domain palette ----------------------------------------------------
+     Base hues for the knowledge graph. `getDomainTone()` (src/lib/colors.ts)
+     derives every visible tone (tint/border/text) from these at the point of
+     use, so one token per hue retunes across light/dark. */
+  --domain-blue: #2563eb;
+  --domain-orange: #f97316;
+  --domain-green: #16a34a;
+  --domain-magenta: #c026d3;
+  --domain-teal: #0d9488;
+  --domain-red: #dc2626;
+  --domain-purple: #7c3aed;
+  --domain-gold: #eab308;
+  --domain-cyan: #0891b2;
+  --domain-brown: #8b5e34;
+  --domain-pink: #db2777;
+  --domain-lime: #65a30d;
+  --domain-indigo: #4f46e5;
+  --domain-coral: #f05d5e;
+  --domain-mint: #10b981;
+  --domain-violet: #8b5cf6;
+  --domain-amber: #d97706;
+  --domain-sky: #0284c7;
+  --domain-rose: #e11d48;
+  --domain-slate: #64748b;
 
   /* ---- radius scale (visual bar: xs6 sm10 md14 lg20 xl28) ---- */
   --radius: 0.875rem; /* 14px — the base; shadcn `rounded-lg` */
@@ -81,6 +109,35 @@
   --duration-fast: 120ms;
   --duration-base: 200ms;
   --duration-slow: 320ms;
+
+  /* ---- extra radii referenced as raw vars (squircle cards, pills) ---- */
+  --radius-2xl: 1.25rem; /* 20px */
+  --radius-pill: 999px;
+
+  /* ---- floating-shell layout geometry ----------------------------------
+     The docked columns (sidebar, left panels) and content offsets read these
+     as arbitrary values (e.g. top-[var(--shell-dock-top)]). */
+  --shell-edge: 14px;
+  --shell-chrome-h: 60px;
+  --shell-dock-top: calc(var(--shell-chrome-h) + var(--shell-edge));
+  --shell-gap-md: 8px;
+  --hig-sidebar-w: 280px;
+
+  /* ---- stacking order --------------------------------------------------- */
+  --z-below: -1;
+  --z-background: -10;
+  --z-shell: 20;
+  --z-shell-raised: 24;
+  --z-popover: 30;
+  --z-banner: 50;
+  --z-modal: 60;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --shell-edge: 12px;
+    --shell-chrome-h: 112px;
+  }
 }
 
 @theme inline {
@@ -100,6 +157,8 @@
   --color-accent-foreground: var(--accent-surface-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -116,14 +175,21 @@
   --font-sans:
     -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
 
-  /* SF type scale (size / line-height) from the visual bar */
-  --text-caption: 0.75rem; /* 12 */
+  /* SF type scale (size / line-height) — the Apple HIG text-style ladder. */
+  --text-caption-2: 0.6875rem; /* 11 */
+  --text-caption-2--line-height: 1.18;
+  --text-caption-1: 0.75rem; /* 12 */
+  --text-caption-1--line-height: 1.33;
+  --text-caption: 0.75rem; /* 12 — alias of caption-1 */
   --text-caption--line-height: 1.33;
   --text-footnote: 0.8125rem; /* 13 */
   --text-footnote--line-height: 1.38;
   --text-subhead: 0.9375rem; /* 15 */
   --text-subhead--line-height: 1.33;
+  --text-callout: 1rem; /* 16 */
+  --text-callout--line-height: 1.31;
   --text-body: 1.0625rem; /* 17 */
   --text-body--line-height: 1.29;
   --text-headline: 1.0625rem; /* 17, used semibold */
@@ -136,4 +202,83 @@
   --text-title-1--line-height: 1.21;
   --text-large-title: 2.125rem; /* 34 */
   --text-large-title--line-height: 1.21;
+
+  /* Micro-label tracking (mono eyebrows, segmented labels). */
+  --tracking-label: 0.13em;
+  --tracking-label-wide: 0.14em;
+  --tracking-label-tight: 0.06em;
+}
+
+/*
+ * Dark scheme. `applyTheme()` sets `data-theme="chalkboard"` and toggles the
+ * `.dark` class on <html>; either selector activates this block. Values retune
+ * the shadcn contract, the glass fills (deepened so they read as dark glass, not
+ * milky white), and the domain palette (lifted hues for dark surfaces).
+ */
+:root.dark,
+:root[data-theme="chalkboard"] {
+  color-scheme: dark;
+
+  --background: #0e1322;
+  --foreground: #eceef4;
+
+  --card: #161d2f;
+  --card-foreground: #eceef4;
+  --popover: #1f2740;
+  --popover-foreground: #eceef4;
+
+  --primary: #0a84ff; /* Apple dark system blue */
+  --primary-foreground: #ffffff;
+
+  --secondary: #28324f;
+  --secondary-foreground: #eceef4;
+
+  --muted: #1f2740;
+  --muted-foreground: #a8b0c0;
+
+  --accent-surface: #28324f;
+  --accent-surface-foreground: #eceef4;
+
+  --destructive: #ff453a; /* Apple dark system red */
+  --destructive-foreground: #ffffff;
+
+  --success: #30d158; /* Apple dark system green */
+  --success-foreground: #08120a;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.16);
+  --ring: #0a84ff;
+
+  /* Glass fills deepen toward the canvas so chrome reads as smoked glass. */
+  --glass-ultrathin-fill: rgba(28, 34, 54, 0.55);
+  --glass-thin-fill: rgba(28, 34, 54, 0.62);
+  --glass-regular-fill: rgba(24, 30, 48, 0.72);
+  --glass-thick-fill: rgba(20, 26, 42, 0.82);
+  --glass-chrome-fill: rgba(22, 29, 47, 0.94);
+
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-specular: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+
+  /* Domain hues — lifted for legibility on dark surfaces. */
+  --domain-blue: #58c4dd;
+  --domain-orange: #f0ac5f;
+  --domain-green: #83c167;
+  --domain-magenta: #e879f9;
+  --domain-teal: #5cd0b3;
+  --domain-red: #fc6255;
+  --domain-purple: #b594d6;
+  --domain-gold: #ffd93d;
+  --domain-cyan: #22d3ee;
+  --domain-brown: #c49a6c;
+  --domain-pink: #d147bd;
+  --domain-lime: #a3e635;
+  --domain-indigo: #818cf8;
+  --domain-coral: #fb7f75;
+  --domain-mint: #6ee7b7;
+  --domain-violet: #c4b5fd;
+  --domain-amber: #fbbf24;
+  --domain-sky: #38bdf8;
+  --domain-rose: #fb7185;
+  --domain-slate: #94a3b8;
 }

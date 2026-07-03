@@ -37,25 +37,32 @@ export function ExpressionPanel() {
   const [collapsed, setCollapsed] = useState<Partial<Record<SectionId, boolean>>>({});
 
   return (
-    <div className="sandbox-expression-panel flex h-full flex-col">
-      <div className="sandbox-expression-list panel-scrollbar flex-1 overflow-y-auto px-1.5 pb-1.5 pt-1">
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="panel-scrollbar flex-1 overflow-y-auto px-1.5 pb-1.5 pt-1">
         {sections.map((section) => (
-          <section key={section.id} className="sandbox-section">
+          <section
+            key={section.id}
+            className="overflow-hidden rounded-md border border-transparent bg-card/20 [&+&]:mt-[5px]"
+          >
             <button
               type="button"
-              className="sandbox-section-header flex w-full items-center gap-1.5 px-2 pb-1.5 pt-2 text-left"
+              className="flex min-h-[34px] w-full items-center gap-1.5 rounded-t-md border-b border-border/50 px-2 pb-1.5 pt-2 text-left text-caption-2 font-bold uppercase leading-none tracking-label-tight text-muted-foreground transition-colors hover:bg-foreground/[0.04] hover:text-foreground focus-visible:bg-primary/10 focus-visible:shadow-[inset_0_0_0_1px_var(--primary)] focus-visible:outline-none"
               aria-expanded={!collapsed[section.id]}
               onClick={() => setCollapsed((next) => ({ ...next, [section.id]: !next[section.id] }))}
             >
-              <span className="sandbox-section-icon flex items-center justify-center">
+              <span className="flex h-[17px] w-[17px] items-center justify-center rounded-xs bg-primary/[0.08] text-muted-foreground">
                 <Sigma id={section.id} />
               </span>
               <span className="min-w-0 flex-1 truncate">{section.title}</span>
               <span className="font-mono tabular-nums">{section.rows.length}</span>
-              <ChevronDown className="sandbox-section-caret h-3 w-3 shrink-0" />
+              <ChevronDown
+                className={`h-3 w-3 shrink-0 text-muted-foreground/70 transition-transform ${
+                  collapsed[section.id] ? "-rotate-90" : ""
+                }`}
+              />
             </button>
             {!collapsed[section.id] && (
-              <div className="sandbox-section-rows">
+              <div className="overflow-hidden rounded-b-md">
                 {section.rows.map(({ row, index, computed }) => (
                   <ExpressionRow key={row.id} row={row} index={index} computed={computed} />
                 ))}
@@ -67,7 +74,7 @@ export function ExpressionPanel() {
       <button
         type="button"
         onClick={() => addRow()}
-        className="sandbox-add-expression flex items-center gap-2 px-3.5 py-2.5 text-caption-1"
+        className="flex items-center gap-2 border-t border-border px-3.5 py-2.5 text-caption-1 text-muted-foreground transition-colors hover:bg-foreground/[0.06] hover:text-foreground"
       >
         <Plus size={14} />
         New expression
@@ -159,7 +166,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
   return (
     <div
       onMouseDown={() => selectRow(row.id)}
-      className="sandbox-expression-row group relative"
+      className="group relative mb-0 overflow-hidden rounded-sm border border-transparent bg-transparent transition-colors hover:border-border/30 hover:bg-foreground/5 data-[selected=true]:border-primary/25 data-[selected=true]:bg-primary/[0.06] data-[selected=true]:shadow-[inset_2px_0_0_var(--primary)]"
       data-selected={selected ? "true" : undefined}
       data-status={status}
       data-row-type={rowType}
@@ -167,7 +174,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
       <div className="flex min-h-[44px] items-stretch">
         {/* Index gutter */}
         <div
-          className="sandbox-row-gutter flex w-6 items-center justify-center py-1 font-mono text-caption-2 tabular-nums"
+          className="flex w-6 items-center justify-center py-1 font-mono text-caption-2 leading-none tabular-nums text-muted-foreground"
           title={statusTitle(status)}
         >
           <span>{index}</span>
@@ -178,14 +185,17 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
           type="button"
           onClick={cycleColor}
           title="Cycle color"
-          className="sandbox-color-button flex w-5 items-center justify-center"
+          className="group/swatch flex w-5 items-start justify-center pt-3.5 text-muted-foreground"
         >
-          <span className="sandbox-color-swatch" style={{ background: row.color }} />
+          <span
+            className="block h-3 w-3 rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.2),0_1px_2px_rgba(0,0,0,0.14)] transition-transform group-hover/swatch:scale-110"
+            style={{ background: row.color }}
+          />
         </button>
 
         {/* Editor + readout */}
-        <div className="sandbox-row-body min-w-0 flex-1 py-0.5 pr-1">
-          <div className="sandbox-field-frame">
+        <div className="min-w-0 flex-1 overflow-hidden py-0.5 pr-1 text-foreground">
+          <div className="rounded-xs border border-transparent transition focus-within:border-primary/40 focus-within:bg-primary/[0.08]">
             <MathField
               value={row.source}
               onChange={(src) => updateRow(row.id, src)}
@@ -197,12 +207,12 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
           </div>
 
           {computed?.error ? (
-            <div className="sandbox-row-error mt-1 flex items-center gap-1 text-caption-2">
+            <div className="mt-1 inline-flex max-w-full items-center gap-1 rounded-xs bg-destructive/10 px-1.5 py-0.5 text-caption-2 text-destructive">
               <CircleAlert size={12} />
               {computed.error}
             </div>
           ) : selected && (evaluatedTex || summary) ? (
-            <div className="sandbox-row-readout mt-0.5 flex items-center gap-1 font-mono text-caption-2">
+            <div className="mt-0.5 flex min-w-0 items-center gap-1 overflow-x-auto font-mono text-caption-2 leading-[1.2] text-muted-foreground [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [&_svg]:shrink-0 [&_svg]:text-muted-foreground/70">
               {evaluatedTex ? (
                 <MathText text={`$${evaluatedTex}$`} />
               ) : (
@@ -227,7 +237,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
         </div>
 
         {/* Controls */}
-        <div className="sandbox-row-controls flex w-6 flex-col items-center justify-center gap-0.5">
+        <div className="flex w-6 flex-col items-center justify-center gap-0.5 text-muted-foreground opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 group-data-[selected=true]:opacity-50 group-data-[selected=true]:group-hover:opacity-100 [&_button:hover]:bg-foreground/10 [&_button:hover]:text-foreground [&_button]:inline-flex [&_button]:h-5 [&_button]:w-5 [&_button]:items-center [&_button]:justify-center [&_button]:rounded-sm [&_button]:transition">
           <button type="button" onClick={() => toggleVisible(row.id)} title={row.visible ? "Hide" : "Show"}>
             {row.visible ? <Eye size={14} /> : <EyeOff size={14} />}
           </button>
@@ -259,10 +269,14 @@ function ParamSlider({
     "--slider-progress": `${Math.min(100, Math.max(0, progress))}%`,
   } as CSSProperties;
   return (
-    <div className="sandbox-param-slider mt-1 flex items-center gap-1.5" style={sliderStyle}>
+    <div className="mt-1 flex items-center gap-1.5 pr-px text-muted-foreground" style={sliderStyle}>
       <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
-      <div className="sandbox-slider-track min-w-0 flex-1">
-        {dragging && <span className="sandbox-slider-bubble font-mono tabular-nums">{formatValue(value)}</span>}
+      <div className="relative flex min-h-[16px] min-w-0 flex-1 items-center">
+        {dragging && (
+          <span className="pointer-events-none absolute bottom-4 left-[var(--slider-progress)] z-[1] min-w-[28px] -translate-x-1/2 rounded-full border border-[color-mix(in_srgb,var(--slider-color)_28%,transparent)] bg-card px-1.5 py-1 text-center font-mono text-[10px] leading-none tabular-nums text-foreground shadow-[0_4px_10px_rgba(0,0,0,0.12)]">
+            {formatValue(value)}
+          </span>
+        )}
         <Slider
           min={slider.min}
           max={slider.max}
@@ -287,7 +301,7 @@ function NumBox({ label, value, onChange }: { label: string; value: number; onCh
       type="number"
       value={value}
       onChange={(e) => onChange(Number(e.target.value))}
-      className="sandbox-num-box w-9 px-1 py-0.5 text-center font-mono text-caption-2 tabular-nums outline-none"
+      className="w-9 [appearance:textfield] rounded-full border border-transparent bg-transparent px-1 py-0.5 text-center font-mono text-caption-2 tabular-nums text-muted-foreground/70 outline-none transition hover:border-border/50 hover:bg-card/40 hover:text-muted-foreground focus:border-primary/40 focus:bg-card focus:text-foreground [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
     />
   );
 }
@@ -310,28 +324,34 @@ function RowMeta({ row, computed, status }: { row: Row; computed?: Computed; sta
   if (details.length === 0 && status !== "error") return null;
 
   return (
-    <div className="sandbox-row-meta mt-1.5 text-caption-2">
+    <div className="mt-1.5 text-caption-2 leading-[1.15] text-muted-foreground/70">
       <button
         type="button"
-        className="sandbox-row-meta-toggle flex max-w-full items-center gap-1.5"
+        className="flex min-w-0 max-w-full items-center gap-1.5 rounded-sm py-0.5 pr-1.5 text-left text-muted-foreground transition hover:bg-foreground/[0.04]"
         aria-expanded={open}
         onMouseDown={(e) => e.stopPropagation()}
         onClick={() => setOpen((next) => !next)}
       >
-        <ChevronDown className="sandbox-row-meta-caret h-3 w-3 shrink-0" />
-        <span className="sandbox-row-meta-title">Details</span>
+        <ChevronDown
+          className={`h-3 w-3 shrink-0 text-muted-foreground/70 transition-transform ${open ? "" : "-rotate-90"}`}
+        />
+        <span className="font-mono text-[9.5px] font-bold uppercase tracking-label-tight text-muted-foreground">
+          Details
+        </span>
         {status === "error" && <CircleAlert className="shrink-0" size={12} />}
         {depNotation && (
-          <span className="sandbox-deps flex min-w-0 items-center gap-1 font-mono">
+          <span className="flex min-w-0 max-w-[168px] items-center gap-1 font-mono text-muted-foreground [&_svg]:text-muted-foreground/70">
             <Link2 size={11} />
             <span className="truncate">{depNotation}</span>
           </span>
         )}
-        {row.provenance.note && !depNotation && <span className="sandbox-note truncate">{row.provenance.note}</span>}
+        {row.provenance.note && !depNotation && (
+          <span className="min-w-0 max-w-[116px] truncate text-muted-foreground/70">{row.provenance.note}</span>
+        )}
       </button>
 
       {open && (
-        <dl className="sandbox-row-meta-grid mt-1.5 grid gap-x-2 gap-y-1">
+        <dl className="mt-1.5 grid max-w-full grid-cols-[auto_minmax(0,1fr)] gap-x-2 gap-y-1 border-t border-border/40 pt-1 [&_dd]:min-w-0 [&_dd]:overflow-hidden [&_dd]:text-ellipsis [&_dd]:whitespace-nowrap [&_dd]:text-caption-2 [&_dd]:text-muted-foreground [&_dt]:whitespace-nowrap [&_dt]:font-mono [&_dt]:text-[9.5px] [&_dt]:font-bold [&_dt]:uppercase [&_dt]:tracking-label-tight [&_dt]:text-muted-foreground/70">
           {details.map((detail) => (
             <div key={detail.label} className="contents">
               <dt>{detail.label}</dt>

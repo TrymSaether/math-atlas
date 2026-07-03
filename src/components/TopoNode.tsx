@@ -22,7 +22,7 @@ function RichnessGlyphs({ node }: { node: TopoNodeT }) {
   const hasFigure = hasNodeVisual(node);
   if (!hasProof && !hasExample && !hasFigure) return null;
   return (
-    <span className="flex shrink-0 items-center gap-1" style={{ color: "var(--fg-3)" }} aria-hidden>
+    <span className="flex shrink-0 items-center gap-1" style={{ color: "var(--muted-foreground)" }} aria-hidden>
       {hasProof && <Scroll className="h-3 w-3" />}
       {hasExample && <FlaskConical className="h-3 w-3" />}
       {hasFigure && <LineChart className="h-3 w-3" />}
@@ -112,7 +112,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Node<Data>>) {
       aria-label={`${KIND_LABEL[node.kind]}: ${node.label}`}
       className={cn(
         "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[var(--radius-lg)] border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
-        "focus-visible:ring-2 focus-visible:ring-[color:var(--accent-border)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
+        "focus-visible:ring-2 focus-visible:ring-[color:color-mix(in srgb, var(--primary) 34%, var(--card))] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--background)]",
         // Hover affordance: a quiet lift + soft elevation, nothing more. Selected
         // nodes own their own shadow below, so the hover shadow only applies at rest.
         "hover:-translate-y-px",
@@ -121,9 +121,9 @@ function TopoNodeViewComponent({ data }: NodeProps<Node<Data>>) {
         isMinor && !accented && !dim && "opacity-[0.82]",
       )}
       style={{
-        background: "var(--surface)",
+        background: "var(--card)",
         borderColor: routeEndpoint
-          ? "var(--accent)"
+          ? "var(--primary)"
           : isSelected
             ? tone.color
             : isRelated
@@ -135,7 +135,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Node<Data>>) {
         // Selected: domain-hue border + a soft neutral lift, no ring. Related
         // neighbours stay quiet (border tint only) so the focus reads clearly.
         boxShadow: routeEndpoint
-          ? "0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent)"
+          ? "0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent)"
           : isSelected
             ? "var(--shadow-e2)"
             : undefined,
@@ -170,22 +170,29 @@ function TopoNodeViewComponent({ data }: NodeProps<Node<Data>>) {
               style={{ background: tone.color }}
               aria-hidden
             >
-              <CategoryIcon className="h-[10px] w-[10px]" style={{ color: "var(--fg-on-color)" }} />
+              <CategoryIcon className="h-[10px] w-[10px]" style={{ color: "var(--primary-foreground)" }} />
             </span>
           ) : (
-            <CategoryIcon className="h-[13px] w-[13px] shrink-0" style={{ color: "var(--fg-3)" }} aria-hidden />
+            <CategoryIcon
+              className="h-[13px] w-[13px] shrink-0"
+              style={{ color: "var(--muted-foreground)" }}
+              aria-hidden
+            />
           )}
           {/* Precise kind (Thm / Lem / …) + reference number. The icon already
               carries the category; this word disambiguates within it, told in
               the same calm title-case voice as the reading vocabulary rather
               than a loud bordered, ALL-CAPS chip. */}
-          <span className="shrink-0 text-caption-2 font-semibold tracking-tight" style={{ color: "var(--fg-2)" }}>
+          <span
+            className="shrink-0 text-caption-2 font-semibold tracking-tight"
+            style={{ color: "var(--muted-foreground)" }}
+          >
             {kindAbbrev(node.kind)}
           </span>
           {node.number && (
             <span
               className="min-w-0 truncate font-mono text-caption-1 font-semibold tabular-nums"
-              style={{ color: "var(--fg-3)" }}
+              style={{ color: "var(--muted-foreground)" }}
               title={node.id}
             >
               {node.number}
@@ -207,7 +214,7 @@ function TopoNodeViewComponent({ data }: NodeProps<Node<Data>>) {
       <div
         className={cn("overflow-hidden font-semibold leading-[1.28]", showMeta ? "mt-1.5" : "my-auto", titleClass)}
         style={{
-          color: "var(--fg-1)",
+          color: "var(--foreground)",
           display: "-webkit-box",
           WebkitLineClamp: titleLineClamp,
           WebkitBoxOrient: "vertical",

@@ -29,7 +29,10 @@ const SandboxView = lazy(() => import("../sandbox/SandboxView").then((m) => ({ d
 function LoadingState({ label }: { label: string }) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-3.5" role="status" aria-live="polite">
-      <span className="shell-spinner" aria-hidden />
+      <span
+        className="size-[22px] animate-spin rounded-full border-2 border-foreground/15 border-t-muted-foreground [animation-duration:0.7s]"
+        aria-hidden
+      />
       <p className="text-footnote text-muted-foreground">{label}</p>
     </div>
   );
@@ -88,7 +91,7 @@ export function AppShell() {
   const onAtlas = surface === "atlas";
 
   return (
-    <div className="relative h-dvh w-screen overflow-hidden bg-bg text-fg-1">
+    <div className="relative h-dvh w-screen overflow-hidden bg-background text-foreground">
       <Background />
       {authEnabled && <SessionBridge />}
       {authEnabled && <StaleMapBanner />}

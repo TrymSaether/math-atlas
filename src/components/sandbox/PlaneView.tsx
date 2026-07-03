@@ -169,7 +169,7 @@ function DepPoint({ point, color, name }: { point: Pt; color: string; name?: str
 }
 
 function MarkLayer({ mark, viewport, compact }: { mark: Mark; viewport: ViewRect; compact: boolean }) {
-  const color = mark.color ?? "var(--fg-3)";
+  const color = mark.color ?? "var(--muted-foreground)";
   switch (mark.kind) {
     case "label":
       return <LaTeX at={m(mark.at)} tex={`\\textsf{${escapeTex(mark.text)}}`} color={color} />;

@@ -63,7 +63,7 @@ export function DomainRegionNode({ data }: NodeProps<Node<Data>>) {
       <div
         className="absolute left-4 top-3 inline-flex max-w-[calc(100%-32px)] items-center gap-2 rounded-sm border px-2 py-1 text-caption-1 font-bold uppercase"
         style={{
-          background: "color-mix(in srgb, var(--surface) 78%, transparent)",
+          background: "color-mix(in srgb, var(--card) 78%, transparent)",
           borderColor: "color-mix(in srgb, var(--border) 70%, transparent)",
           color: data.color,
           boxShadow: "var(--shadow-e1)",
@@ -75,7 +75,7 @@ export function DomainRegionNode({ data }: NodeProps<Node<Data>>) {
           <span className="h-1.5 w-1.5 rounded-full" style={{ background: data.color }} />
         )}
         <span className="min-w-0 truncate">{data.label}</span>
-        <span className="font-mono text-caption-2 font-semibold" style={{ color: "var(--fg-3)" }}>
+        <span className="font-mono text-caption-2 font-semibold" style={{ color: "var(--muted-foreground)" }}>
           {data.count}
         </span>
       </div>

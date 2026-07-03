@@ -29,10 +29,10 @@ export const DIA = {
   frame: "var(--dia-space)",
   border: "var(--figure-border)",
   ink: "var(--dia-ink)",
-  text: "var(--fg-2)",
+  text: "var(--muted-foreground)",
   ref: "var(--plot-reference)",
   faint: "var(--plot-grid-strong)",
-  muted: "var(--fg-4)",
+  muted: "var(--muted-foreground)",
   axis: "var(--figure-axis)",
   grid: "var(--figure-guide)",
   band: "var(--plot-band)",
@@ -105,15 +105,15 @@ export const FONT = {
 
 /** UI copy colors for figure captions and inline controls. */
 export const UI = {
-  text: "var(--fg-2)",
-  muted: "var(--fg-3)",
-  subtle: "var(--fg-4)",
-  onColor: "var(--fg-on-color)",
-  onColorSoft: "color-mix(in srgb, var(--fg-on-color) 28%, transparent)",
+  text: "var(--muted-foreground)",
+  muted: "var(--muted-foreground)",
+  subtle: "var(--muted-foreground)",
+  onColor: "var(--primary-foreground)",
+  onColorSoft: "color-mix(in srgb, var(--primary-foreground) 28%, transparent)",
   border: "var(--figure-border)",
   surface: "var(--figure-bg)",
   sunken: "var(--surface-sunken)",
-  focusRing: "var(--focus-ring)",
+  focusRing: "var(--ring)",
   panel: "var(--figure-panel)",
 } as const;
 

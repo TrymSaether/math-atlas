@@ -80,7 +80,7 @@ export interface GraphProjection {
 }
 
 /** Cohesive route overlay color, distinct from domain colors. */
-const ROUTE_COLOR = "var(--accent)";
+const ROUTE_COLOR = "var(--primary)";
 
 export function lodForZoom(zoom: number): NodeLOD {
   if (zoom < 0.32) return "far";

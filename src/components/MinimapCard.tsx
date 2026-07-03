@@ -3,6 +3,7 @@ import type { MouseEvent } from "react";
 import { useReactFlow, useStore as useReactFlowStore, useViewport, type Node } from "@xyflow/react";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, type DomainBounds } from "../lib/atlasLayout";
 import { getMutedDomainTone } from "../lib/colors";
+import { Surface } from "@/design";
 import type { GraphNode } from "../types";
 
 const MAX_W = 148;
@@ -111,8 +112,17 @@ export function MinimapCard({
   };
 
   return (
-    <div className="atlas-minimap-card">
-      <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} onClick={handleClick} className="atlas-minimap-canvas">
+    <Surface
+      material="regular"
+      className="absolute bottom-[var(--shell-edge)] right-[72px] z-(--z-shell) hidden rounded-[22px] p-1.5 md:block"
+    >
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        width={W}
+        height={H}
+        onClick={handleClick}
+        className="block cursor-pointer rounded-[16px] bg-muted shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_68%,transparent)]"
+      >
         {[...regions.entries()].map(([domainId, region]) => {
           const tone = getMutedDomainTone(domainId);
           const a = layout.toMini(region.x, region.y);
@@ -153,8 +163,8 @@ export function MinimapCard({
           width={viewW}
           height={viewH}
           rx={5}
-          fill="color-mix(in srgb, var(--accent) 4%, transparent)"
-          stroke="color-mix(in srgb, var(--accent) 72%, var(--surface))"
+          fill="color-mix(in srgb, var(--primary) 4%, transparent)"
+          stroke="color-mix(in srgb, var(--primary) 72%, var(--card))"
           strokeWidth={0.95}
           opacity={0.84}
         />
@@ -164,7 +174,7 @@ export function MinimapCard({
           const tone = getMutedDomainTone(point.domainId);
           return selected ? (
             <g key={point.id}>
-              <circle cx={p.x} cy={p.y} r={3.4} fill="var(--surface)" opacity={0.94} />
+              <circle cx={p.x} cy={p.y} r={3.4} fill="var(--card)" opacity={0.94} />
               <circle cx={p.x} cy={p.y} r={2.2} fill={tone.color} opacity={0.96} />
               <circle cx={p.x} cy={p.y} r={4.2} fill="none" stroke={tone.color} strokeWidth={0.8} opacity={0.78} />
             </g>
@@ -173,6 +183,6 @@ export function MinimapCard({
           );
         })}
       </svg>
-    </div>
+    </Surface>
   );
 }

@@ -127,7 +127,7 @@ function Sym({ color, children }: { color: string; children: ReactNode }) {
 
 function FormulaCard({ children }: { children: ReactNode }) {
   return (
-    <div className="rounded-md border border-border bg-surface-2 px-3 py-2 text-caption-1 leading-[1.75] text-fg-2">
+    <div className="rounded-md border border-border bg-muted px-3 py-2 text-caption-1 leading-[1.75] text-muted-foreground">
       {children}
     </div>
   );
@@ -135,8 +135,8 @@ function FormulaCard({ children }: { children: ReactNode }) {
 
 function Panel({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="rounded-lg border border-border bg-surface-2 p-3">
-      <h4 className="mb-2 text-footnote font-semibold text-fg-1">{title}</h4>
+    <section className="rounded-lg border border-border bg-muted p-3">
+      <h4 className="mb-2 text-footnote font-semibold text-foreground">{title}</h4>
       {children}
     </section>
   );
@@ -281,7 +281,7 @@ function GoodKernelPanel({ N, delta, setDelta }: { N: number; delta: number; set
         ariaLabel="Good-kernel tail cutoff delta"
       />
 
-      <div className="mt-3 grid gap-2 text-caption-1 text-fg-2 md:grid-cols-3">
+      <div className="mt-3 grid gap-2 text-caption-1 text-muted-foreground md:grid-cols-3">
         <FormulaCard>
           <Sym color={C.good}>mass</Sym>
           {": (2π)⁻¹∫F_N ≈ "}

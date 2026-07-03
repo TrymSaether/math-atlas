@@ -51,7 +51,7 @@ export function Spine({
     <div
       className="relative overflow-hidden rounded-md pl-4 pr-4"
       style={{
-        background: `color-mix(in srgb, ${tone.tint} 60%, var(--surface))`,
+        background: `color-mix(in srgb, ${tone.tint} 60%, var(--card))`,
         paddingBlock: size === "dict" ? "12px" : "11px",
       }}
     >
@@ -65,7 +65,10 @@ export function Spine({
           {label}
         </span>
       )}
-      <div className="font-math leading-[1.6] text-fg-1" style={{ fontSize: size === "dict" ? "15px" : "15.5px" }}>
+      <div
+        className="font-math leading-[1.6] text-foreground"
+        style={{ fontSize: size === "dict" ? "15px" : "15.5px" }}
+      >
         {children}
       </div>
     </div>
@@ -89,10 +92,10 @@ export function Facet({
 }) {
   return (
     <div>
-      <span className="mb-1 block reading-label" style={{ color: toneColor ?? "var(--fg-3)" }}>
+      <span className="mb-1 block reading-label" style={{ color: toneColor ?? "var(--muted-foreground)" }}>
         {label}
       </span>
-      <div className={`text-body ${muted ? "text-fg-2" : "text-fg-1"}`}>{children}</div>
+      <div className={`text-body ${muted ? "text-muted-foreground" : "text-foreground"}`}>{children}</div>
     </div>
   );
 }
@@ -100,7 +103,7 @@ export function Facet({
 /** A boxed math block used for formal statement / definition / formula facets. */
 export function MathBox({ text }: { text: string }) {
   return (
-    <div className="panel-scrollbar block max-w-full overflow-x-auto rounded-sm border border-border bg-surface-2 px-3.5 py-2.5 font-math text-body leading-[1.6] text-fg-1">
+    <div className="panel-scrollbar block max-w-full overflow-x-auto rounded-sm border border-border bg-muted px-3.5 py-2.5 font-math text-body leading-[1.6] text-foreground">
       <MathText text={text} asBlock />
     </div>
   );
@@ -138,7 +141,7 @@ export function StepLabel({ label, toneColor }: { label: string; toneColor: stri
 export function Argument({ text, toneColor }: { text: string; toneColor: string }) {
   return (
     <div
-      className="font-math pl-3.5 text-body leading-[1.7] text-fg-1"
+      className="font-math pl-3.5 text-body leading-[1.7] text-foreground"
       style={{ borderLeft: `1.5px dotted color-mix(in srgb, ${toneColor} 55%, transparent)` }}
     >
       <MathProse text={tidyMathText(text)} asBlock />
@@ -356,7 +359,7 @@ function ProofStepItem({
         aria-hidden
         className="absolute left-0 top-0 flex h-5.25 w-5.25 items-center justify-center rounded-full font-mono text-caption-2"
         style={{
-          background: `color-mix(in srgb, ${toneColor} 14%, var(--surface))`,
+          background: `color-mix(in srgb, ${toneColor} 14%, var(--card))`,
           color: toneColor,
           border: `1px solid color-mix(in srgb, ${toneColor} 40%, transparent)`,
         }}
@@ -370,11 +373,11 @@ function ProofStepItem({
         aria-expanded={showBody}
         aria-controls={bodyId}
         disabled={!collapsible}
-        className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-xs px-1 py-0.5 text-left transition-colors hover:bg-(--surface-2) focus:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-border) disabled:cursor-default disabled:hover:bg-transparent"
+        className="group -ml-1 flex min-h-6 w-[calc(100%+4px)] items-center gap-1.5 rounded-xs px-1 py-0.5 text-left transition-colors hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-default disabled:hover:bg-transparent"
       >
         {collapsible && (
           <ChevronRight
-            className="h-3 w-3 shrink-0 text-fg-3 transition-transform duration-200"
+            className="h-3 w-3 shrink-0 text-muted-foreground transition-transform duration-200"
             style={{ transform: showBody ? "rotate(90deg)" : "none" }}
             aria-hidden
           />
@@ -385,7 +388,7 @@ function ProofStepItem({
           </span>
         </span>
         {deps.length > 0 && (
-          <span className="ml-auto shrink-0 rounded-xs bg-surface-3 px-1.5 py-px font-mono text-caption-2 leading-none text-fg-3">
+          <span className="ml-auto shrink-0 rounded-xs bg-secondary px-1.5 py-px font-mono text-caption-2 leading-none text-muted-foreground">
             {deps.length} use{deps.length === 1 ? "" : "s"}
           </span>
         )}
@@ -406,7 +409,7 @@ function ProofStepItem({
             className="overflow-hidden"
           >
             {step.content && (
-              <div className="font-math mt-1.5 text-body leading-[1.7] text-fg-1">
+              <div className="font-math mt-1.5 text-body leading-[1.7] text-foreground">
                 <MathProse text={step.content} asBlock />
               </div>
             )}
@@ -455,7 +458,7 @@ export function ConnectionChip({
       title={
         caption ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}` : `${node.label} · ${KIND_LABEL[node.kind]}`
       }
-      className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border border-border bg-surface-2 py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-(--surface-3) focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
+      className="group inline-flex max-w-full items-center gap-1.5 rounded-sm border border-border bg-muted py-1 pl-1.5 pr-2.5 text-left transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/40"
     >
       <span
         className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
@@ -463,10 +466,10 @@ export function ConnectionChip({
       >
         {createElement(icon, { className: "h-2.5 w-2.5", strokeWidth: 2.4, "aria-hidden": true })}
       </span>
-      <span className="min-w-0 truncate text-footnote leading-4 text-fg-1">
+      <span className="min-w-0 truncate text-footnote leading-4 text-foreground">
         <MathText text={node.label} />
       </span>
-      {caption && <span className="shrink-0 font-mono text-caption-2 lowercase text-fg-4">{caption}</span>}
+      {caption && <span className="shrink-0 font-mono text-caption-2 lowercase text-muted-foreground">{caption}</span>}
     </button>
   );
 }

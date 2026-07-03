@@ -1,0 +1,212 @@
+/*
+ * Figure & diagram token contract + shared diagram classes.
+ *
+ * Interactive figures (src/components/figures/tokens.ts) and inline SVG diagram
+ * assets (.svg-*, .dia-*) consume this small semantic API. Every value derives
+ * from the canonical roles in tokens.css, so the whole figure family re-themes
+ * with the app. Also home to the elevation ramp and the derived surface roles
+ * a few chrome surfaces still read.
+ */
+
+:root {
+  /* ---- elevation ramp (tonal shadow scale) ---- */
+  --elevation-ink: 15 23 42;
+  --shadow-e1: 0 1px 2px rgb(var(--elevation-ink) / 0.04);
+  --shadow-e2: 0 4px 12px rgb(var(--elevation-ink) / 0.06), 0 1px 2px rgb(var(--elevation-ink) / 0.04);
+  --shadow-e3: 0 8px 22px rgb(var(--elevation-ink) / 0.08), 0 1px 3px rgb(var(--elevation-ink) / 0.05);
+  --shadow-e4: 0 12px 32px rgb(var(--elevation-ink) / 0.1), 0 2px 6px rgb(var(--elevation-ink) / 0.05);
+  --shadow-e5: 0 18px 44px rgb(var(--elevation-ink) / 0.13), 0 4px 10px rgb(var(--elevation-ink) / 0.07);
+
+  /* ---- derived surface roles ---- */
+  --surface-raised: color-mix(in srgb, var(--card) 94%, var(--background) 6%);
+  --surface-sunken: color-mix(in srgb, var(--secondary) 72%, var(--background) 28%);
+  --surface-muted: color-mix(in srgb, var(--muted) 82%, var(--background) 18%);
+
+  /* ---- categorical palette (figures) ---- */
+  --palette-1: var(--domain-blue);
+  --palette-2: var(--domain-teal);
+  --palette-3: var(--domain-orange);
+  --palette-4: var(--domain-purple);
+  --palette-5: var(--domain-green);
+  --palette-6: var(--domain-pink);
+  --palette-7: var(--domain-gold);
+  --palette-8: var(--domain-cyan);
+  --palette-9: var(--domain-red);
+  --palette-10: var(--domain-indigo);
+  --palette-11: var(--domain-lime);
+  --palette-12: var(--domain-coral);
+
+  /* ---- data-viz roles ---- */
+  --plot-1: var(--palette-1);
+  --plot-2: var(--palette-2);
+  --plot-3: var(--palette-3);
+  --plot-4: var(--palette-4);
+  --plot-5: var(--palette-5);
+  --plot-6: var(--palette-6);
+  --plot-7: var(--palette-7);
+  --plot-8: var(--palette-8);
+  --plot-9: var(--palette-9);
+  --plot-10: var(--palette-10);
+  --plot-11: var(--palette-11);
+  --plot-12: var(--palette-12);
+  --plot-accent: var(--primary);
+  --plot-reference: color-mix(in srgb, var(--muted-foreground) 82%, var(--card));
+  --plot-axis: color-mix(in srgb, var(--muted-foreground) 64%, transparent);
+  --plot-grid: color-mix(in srgb, var(--muted-foreground) 22%, transparent);
+  --plot-grid-strong: color-mix(in srgb, var(--muted-foreground) 36%, transparent);
+  --plot-band: color-mix(in srgb, var(--primary) 10%, transparent);
+  --plot-positive: var(--success);
+  --plot-negative: var(--destructive);
+  --plot-warning: var(--domain-amber);
+  --plot-neutral: var(--domain-slate);
+
+  --heat-cold: var(--domain-blue);
+  --heat-cool: var(--domain-cyan);
+  --heat-mid: var(--domain-gold);
+  --heat-warm: var(--domain-orange);
+  --heat-hot: var(--domain-red);
+
+  /* ---- canvas & figure frame roles ---- */
+  --edge-ink: var(--domain-slate);
+  --edge-highlight: var(--primary);
+  --grid-dot: color-mix(in srgb, var(--muted-foreground) 22%, transparent);
+  --grid-major: color-mix(in srgb, var(--foreground) 5%, transparent);
+  --grid-minor: color-mix(in srgb, var(--foreground) 2.5%, transparent);
+  --figure-bg: color-mix(in srgb, var(--card) 86%, var(--background));
+  --figure-panel: color-mix(in srgb, var(--card) 92%, transparent);
+  --figure-border: color-mix(in srgb, var(--border) 84%, transparent);
+  --figure-label-bg: color-mix(in srgb, var(--card) 78%, transparent);
+  --figure-guide: var(--plot-grid);
+  --figure-axis: var(--plot-axis);
+
+  /* ---- diagram (SVG asset) contract ---- */
+  --dia-paper: color-mix(in srgb, var(--card) 92%, var(--background));
+  --dia-space: color-mix(in srgb, var(--card) 94%, var(--background));
+  --dia-fill: color-mix(in srgb, var(--primary) 13%, var(--card));
+  --dia-fill2: color-mix(in srgb, var(--palette-2) 11%, var(--card));
+  --dia-domain: var(--dia-fill);
+  --dia-open: color-mix(in srgb, var(--primary) 18%, var(--card));
+  --dia-int: var(--dia-open);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--destructive);
+  --dia-ext: var(--muted-foreground);
+  --dia-ok: var(--success);
+  --dia-line: var(--border);
+  --dia-ink: var(--foreground);
+  --dia-acc: var(--primary);
+  --dia-acc2: var(--palette-2);
+  --dia-acc3: var(--palette-4);
+  --dia-mut: var(--muted-foreground);
+  --dia-acc-fill: color-mix(in srgb, var(--dia-acc) 18%, transparent);
+  --dia-acc2-fill: color-mix(in srgb, var(--dia-acc2) 18%, transparent);
+  --dia-acc3-fill: color-mix(in srgb, var(--dia-acc3) 10%, var(--card));
+  --dia-boundary-fill: color-mix(in srgb, var(--dia-boundary) 16%, transparent);
+  --dia-muted-fill: color-mix(in srgb, var(--muted-foreground) 16%, var(--card));
+}
+
+:root.dark,
+:root[data-theme="chalkboard"] {
+  /* Dark elevation: black ink, deeper alphas read the canvas behind chrome. */
+  --elevation-ink: 0 0 0;
+  --shadow-e1: 0 1px 2px rgb(var(--elevation-ink) / 0.4);
+  --shadow-e2: 0 4px 16px rgb(var(--elevation-ink) / 0.5);
+  --shadow-e3: 0 6px 18px rgb(var(--elevation-ink) / 0.42), 0 1px 4px rgb(var(--elevation-ink) / 0.3);
+  --shadow-e4: 0 18px 48px rgb(var(--elevation-ink) / 0.55);
+  --shadow-e5: 0 22px 54px rgb(var(--elevation-ink) / 0.46), 0 5px 14px rgb(var(--elevation-ink) / 0.34);
+
+  --surface-sunken: color-mix(in srgb, var(--background) 64%, var(--card) 36%);
+  --plot-band: color-mix(in srgb, var(--primary) 15%, transparent);
+  --figure-bg: color-mix(in srgb, var(--card) 82%, var(--background));
+  --figure-panel: color-mix(in srgb, var(--card) 84%, transparent);
+  --figure-label-bg: color-mix(in srgb, var(--card) 72%, transparent);
+}
+
+/* ---- shared diagram / entry-card classes ------------------------------ */
+.themed-diagram {
+  background: var(--dia-space);
+  border: 1px solid var(--dia-line);
+  border-radius: var(--radius-lg);
+  color: var(--dia-ink);
+  overflow: hidden;
+  box-shadow: var(--shadow-e1);
+}
+
+.themed-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--dia-space);
+}
+
+.node-visual-frame {
+  min-height: 128px;
+}
+
+.formula,
+.math-chip {
+  font-family: var(--font-mono);
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--foreground);
+}
+
+/* SVG asset classes — custom properties resolve when the SVG is inlined. */
+.svg-label {
+  font-family: var(--font-sans);
+  font-style: italic;
+  fill: var(--dia-ink);
+  paint-order: stroke;
+  stroke: var(--dia-space);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.svg-symbol {
+  font-family: var(--font-sans);
+  fill: var(--dia-ink);
+}
+
+.svg-muted {
+  fill: var(--dia-mut);
+}
+
+.svg-acc {
+  fill: var(--dia-acc);
+}
+
+.svg-bound {
+  fill: var(--dia-boundary);
+}
+
+.svg-ok {
+  fill: var(--dia-ok);
+}
+
+.dia-stroke {
+  stroke: var(--dia-ink);
+}
+
+.dia-stroke-muted {
+  stroke: var(--dia-mut);
+}
+
+.dia-stroke-acc {
+  stroke: var(--dia-acc);
+}
+
+.dia-stroke-bound {
+  stroke: var(--dia-boundary);
+}
+
+.dia-fill-set {
+  fill: var(--dia-set);
+}
+
+.dia-fill-int {
+  fill: var(--dia-int);
+}
+
+.dia-fill-space {
+  fill: var(--dia-space);
+}
