@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.0.5",
-    "@phosphor-icons/react": "^2.1.10",
     "@radix-ui/react-dialog": "^1.1.17",
     "@xyflow/react": "^12.11.1",
     "better-auth": "^1.6.19",
