@@ -10,7 +10,10 @@ export default defineConfig({
   base: "/math-atlas/",
   plugins: [react(), tailwindcss()],
   resolve: {
-    alias: { "@": path.resolve(__dirname, "./src") },
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@shared": path.resolve(__dirname, "./shared"),
+    },
     // better-auth/react must share the app's single React instance, otherwise
     // its hooks trigger "Invalid hook call" from a duplicate copy.
     dedupe: ["react", "react-dom"],

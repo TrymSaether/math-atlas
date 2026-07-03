@@ -9,7 +9,7 @@
  * order within each object, 2-space indent. `--check` reports drift and exits 1.
  */
 import { writeFileSync } from "node:fs";
-import { SourceGraphSchema } from "@/maps/source";
+import { SourceGraphSchema } from "@shared/maps/source";
 import type { Command } from "../core/command";
 import { loadSourceFiles, CliError, type Ctx } from "../core/context";
 import type { SourceFile } from "../core/loadSources";

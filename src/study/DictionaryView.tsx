@@ -8,7 +8,7 @@ import { MathText } from "@/shared/math";
 import { KIND_LABEL } from "@/maps/types";
 import { getDomainTone } from "@/atlas/colors";
 import { useConceptView } from "./conceptView";
-import { kindAbbrev } from "@/maps/nodeCategory";
+import { kindAbbrev } from "@shared/maps/nodeCategory";
 import { kindIcon } from "@/atlas/nodeCategoryIcons";
 import { KIND_ORDER, dictionaryEntries, sectionFacet, type DictSortMode, type SectionFacet } from "./dictionary";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";

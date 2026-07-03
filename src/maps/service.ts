@@ -1,4 +1,4 @@
-import type { SourceGraph } from "./source";
+import type { SourceGraph } from "@shared/maps/source";
 import { buildLoadedMapFromSource, type LoadedMap } from "./load";
 import {
   deleteMap,

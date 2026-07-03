@@ -8,7 +8,7 @@
  * touch (edge `notes`, dropped at build, are author-only and never surfaced).
  */
 import type { GraphData } from "./types";
-import type { SourceEdge, SourceGraph } from "./source";
+import type { SourceEdge, SourceGraph } from "@shared/maps/source";
 
 const TODAY = (): string => new Date().toISOString().slice(0, 10);
 

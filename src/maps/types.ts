@@ -1,5 +1,5 @@
-import type { ArtifactNode, ArtifactEdge } from "./artifact";
-import type { DomainKey } from "./palette";
+import type { ArtifactNode, ArtifactEdge } from "@shared/maps/artifact";
+import type { DomainKey } from "@shared/maps/palette";
 
 export type NodeKind = string;
 export type Relation = string;

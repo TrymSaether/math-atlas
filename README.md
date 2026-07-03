@@ -5,7 +5,7 @@ Personal hobby project for browsing math concepts as dependency graphs.
 Live version: <https://trymsaether.github.io/math-atlas/>
 
 The app is built with React, TypeScript, React Flow, and a small Hono/Postgres
-backend. The main content lives in `src/maps/content/*.source.json`.
+backend. The main content lives in `src/maps/sources/*.source.json`.
 
 ## Run Locally
 
@@ -51,7 +51,7 @@ Live app:
 
 Repo/source maps:
 
-Edit `src/maps/content/*.source.json`, then run:
+Edit `src/maps/sources/*.source.json`, then run:
 
 ```sh
 npm run check:maps
@@ -67,7 +67,7 @@ the repo, but does not publish map data.
 src/
   app/        startup, shell, global store, navigation, persistence
   atlas/      graph canvas, nodes/edges, layout, routing, viewport
-  maps/       map schemas, API/service code, loading, source content
+  maps/       frontend map API/service code, loading, source content
   study/      concept cards, dictionary, flashcards, node visuals
   authoring/  map editing UI and source mutations
   sandbox/    self-contained interactive math workspace
@@ -78,7 +78,7 @@ src/
   shared/     dependency-light helpers used by several areas
 server/       API, auth, database schema, map/progress routes
 scripts/      map validation and diagnostics
-shared/       API contracts shared with the server
+shared/       map schemas/build logic and API contracts shared with the server
 ```
 
 Keep code with the product area that owns it. Use relative imports inside an

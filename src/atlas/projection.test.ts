@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { buildArtifact } from "@/maps/build";
+import { buildArtifact } from "@shared/maps/build";
 import { buildLoadedMap, enrichArtifact, type LoadedMap } from "@/maps/load";
-import type { SourceConcept, SourceGraph } from "@/maps/source";
+import type { SourceConcept, SourceGraph } from "@shared/maps/source";
 import { EMPTY_ROUTE, type RouteResult } from "./route";
 import { buildGraphProjection, edgeHandlePair, lodForZoom, type GraphProjectionInput } from "./projection";
 

@@ -1,5 +1,6 @@
 import { BookOpen, Compass, Route, Variable, WalletCards, type LucideIcon } from "lucide-react";
-import type { AtlasMode, Surface } from "./store";
+import type { AtlasMode } from "@/atlas/state";
+import type { Surface } from "./store";
 
 export interface ShellDestinationState {
   surface: Surface;

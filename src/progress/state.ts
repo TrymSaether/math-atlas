@@ -1,8 +1,8 @@
 import type { StoreApi } from "zustand";
-import { progressService } from "@/progress/service";
+import { progressService } from "./service";
 import type { MapId } from "@/maps";
-import type { ProgressStatus } from "@/progress/api";
-import type { State } from "./store";
+import type { State } from "@/app/store";
+import type { ProgressStatus } from "./api";
 
 export interface ProgressSlice {
   progress: Partial<Record<MapId, Record<string, ProgressStatus>>>;

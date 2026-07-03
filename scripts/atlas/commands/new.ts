@@ -6,7 +6,7 @@
  */
 import { writeFileSync } from "node:fs";
 import { createInterface } from "node:readline/promises";
-import { SourceGraphSchema } from "@/maps/source";
+import { SourceGraphSchema } from "@shared/maps/source";
 import { slugify, uniqueSlug } from "@/authoring/model";
 import type { Command } from "../core/command";
 import { loadSourceFiles, CliError, stringFlag, type Ctx } from "../core/context";

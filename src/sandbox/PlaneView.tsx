@@ -3,8 +3,8 @@
  * plotted functions, geometry constructions, draggable free points, dependent
  * points, and marks.
  *
- * It is intentionally a *pure function of the compiled workspace*, so the same
- * component backs both the full sandbox and the embeddable `NodeViz` chip.
+ * It is intentionally a *pure function of the compiled workspace* so rendering
+ * stays separate from expression editing and persistence.
  *
  * Draw order is deliberate: marks (axes/guides) sit behind, then curves and
  * geometry, then points and their labels on top.

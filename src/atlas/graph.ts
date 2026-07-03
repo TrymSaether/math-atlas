@@ -1,5 +1,5 @@
 import type { TopoEdge, TopoNode, Relation } from "@/maps/types";
-import { isEquivalenceRelation } from "@/maps/relations";
+import { isEquivalenceRelation } from "@shared/maps/relations";
 
 export interface Adjacency {
   out: Map<string, { id: string; rel: Relation }[]>;

@@ -4,7 +4,7 @@
  * which content facets are pre-stubbed (a theorem gets statement+proof, a
  * definition gets definition, etc.).
  */
-import type { SourceConcept, SourceDomain } from "@/maps/source";
+import type { SourceConcept, SourceDomain } from "@shared/maps/source";
 
 export type NewKind =
   | "theorem"

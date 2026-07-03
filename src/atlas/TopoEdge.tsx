@@ -8,7 +8,7 @@ import {
   type Edge,
   type EdgeProps,
 } from "@xyflow/react";
-import { edgeLabel } from "@/maps/relations";
+import { edgeLabel } from "@shared/maps/relations";
 import { getEdgeStyle } from "./relationStyle";
 import { prefersReducedMotion } from "@/shared/cn";
 import { useStore } from "@/app/store";

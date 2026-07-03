@@ -19,7 +19,7 @@ import type { LoadedMap } from "@/maps";
 import { MathText, MathProse } from "@/shared/math";
 import { tidyMathText } from "@/shared/mathMarkup";
 import { getDomainTone, type DomainTone } from "@/atlas/colors";
-import { CATEGORY_META, categoryOf, kindAbbrev, railBackground } from "@/maps/nodeCategory";
+import { CATEGORY_META, categoryOf, kindAbbrev, railBackground } from "@shared/maps/nodeCategory";
 import { kindIcon } from "@/atlas/nodeCategoryIcons";
 import { compactNodeRef } from "./nodeMeta";
 import { KIND_LABEL, type GraphNode, type ProofStep } from "@/maps/types";

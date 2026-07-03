@@ -3,7 +3,7 @@ import type { LoadedMap, MapId } from "@/maps";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout, type AtlasLayout, type Position } from "./layout";
 import type { DomainTone } from "./colors";
 import { nodeSearchText } from "@/study/nodeContent";
-import { categoryOf, type NodeCategory } from "@/maps/nodeCategory";
+import { categoryOf, type NodeCategory } from "@shared/maps/nodeCategory";
 import { classifyEdge } from "./relationStyle";
 import type { RouteResult } from "./route";
 import type { TopoNode } from "@/maps/types";

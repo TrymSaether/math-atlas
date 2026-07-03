@@ -28,5 +28,7 @@ describe("useStore characterization", () => {
     expect(state.onSessionChange).toEqual(expect.any(Function));
     expect(state.loadProgress).toEqual(expect.any(Function));
     expect(state.setNodeProgress).toEqual(expect.any(Function));
+    expect(state.pickRoutePoint).toEqual(expect.any(Function));
+    expect(state.commitNode).toEqual(expect.any(Function));
   });
 });

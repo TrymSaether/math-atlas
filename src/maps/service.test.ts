@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import type { SourceGraph } from "./source";
+import type { SourceGraph } from "@shared/maps/source";
 import type { MapPayload } from "./api";
 import { createMapService, type MapServiceDependencies } from "./service";
 

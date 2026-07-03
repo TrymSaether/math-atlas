@@ -70,8 +70,8 @@ design/
     supports.ts         feature detection
   index.ts              public barrel — import from "@/design"
 
-ui/                     shadcn primitives (Button, Dialog, Popover, Tooltip,
-                        Slider, ToggleGroup, Command, …) — owned code, themed by tokens
+ui/                     generic primitives (Button, Dialog, Slider,
+                        ToggleGroup, Command, …) — owned code, themed by tokens
 ```
 
 ## Conventions

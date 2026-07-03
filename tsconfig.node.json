@@ -8,15 +8,5 @@
     "outDir": ".cache/tsconfig-node"
   },
   "//": "Only include the React-free map modules reused by Node scripts.",
-  "include": [
-    "vite.config.ts",
-    "scripts/**/*.ts",
-    "src/maps/palette.ts",
-    "src/maps/nodeCategory.ts",
-    "src/maps/source.ts",
-    "src/maps/relations.ts",
-    "src/maps/artifact.ts",
-    "src/maps/build.ts",
-    "src/authoring/model.ts"
-  ]
+  "include": ["vite.config.ts", "scripts/**/*.ts", "shared/maps/**/*.ts", "src/authoring/model.ts"]
 }

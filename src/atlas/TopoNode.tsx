@@ -3,7 +3,7 @@ import { Scroll, FlaskConical, LineChart } from "lucide-react";
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 import { getDomainTone } from "./colors";
 import { MathText } from "@/shared/math";
-import { CATEGORY_META, categoryOf, kindAbbrev, railBackground, type NodeCategory } from "@/maps/nodeCategory";
+import { CATEGORY_META, categoryOf, kindAbbrev, railBackground, type NodeCategory } from "@shared/maps/nodeCategory";
 import { CATEGORY_ICON, KIND_ICON_OVERRIDE } from "./nodeCategoryIcons";
 import { cn, prefersReducedMotion } from "@/shared/cn";
 import { useStore } from "@/app/store";

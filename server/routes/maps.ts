@@ -27,8 +27,8 @@ import {
 import { db } from "../db/client";
 import { mapCollaborators, maps, mapSources, user } from "../db/schema";
 import { auth } from "../auth";
-import { SourceGraphSchema } from "@/maps/source";
-import { buildArtifact } from "@/maps/build";
+import { SourceGraphSchema } from "@shared/maps/source";
+import { buildArtifact } from "@shared/maps/build";
 
 export const mapsRoute = new Hono();
 

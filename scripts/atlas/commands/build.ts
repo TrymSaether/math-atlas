@@ -9,8 +9,8 @@
  */
 import { writeFileSync, existsSync, watch } from "node:fs";
 import { join } from "node:path";
-import { SourceGraphSchema } from "@/maps/source";
-import { buildArtifact } from "@/maps/build";
+import { SourceGraphSchema } from "@shared/maps/source";
+import { buildArtifact } from "@shared/maps/build";
 import type { Command } from "../core/command";
 import { type Ctx } from "../core/context";
 import { listSourceFiles, filterByMap, type SourceFile } from "../core/loadSources";

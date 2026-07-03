@@ -9,11 +9,6 @@
   "//": "Includes the React-free map modules reused by the server.",
   "include": [
     "**/*.ts",
-    "../shared/**/*.ts",
-    "../src/maps/palette.ts",
-    "../src/maps/source.ts",
-    "../src/maps/relations.ts",
-    "../src/maps/artifact.ts",
-    "../src/maps/build.ts"
+    "../shared/**/*.ts"
   ]
 }

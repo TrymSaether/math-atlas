@@ -11,7 +11,7 @@ import { kindGlyph } from "../utils/glyphs";
 import { swatch, bold, dim, cyan, gray } from "../utils/color";
 import { truncate, padEnd, texToPlain } from "../utils/text";
 import { CliError } from "../core/context";
-import type { ArtifactNode } from "@/maps/artifact";
+import type { ArtifactNode } from "@shared/maps/artifact";
 
 interface Hit {
   map: CliMap;

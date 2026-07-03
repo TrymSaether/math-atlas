@@ -5,7 +5,7 @@
  * pointing at `atlas validate`, so individual commands never operate on a map
  * the schema would reject.
  */
-import { SourceGraphSchema } from "@/maps/source";
+import { SourceGraphSchema } from "@shared/maps/source";
 import { resolveWorkspace, type Workspace } from "./workspace";
 import { listSourceFiles, filterByMap, type SourceFile } from "./loadSources";
 import { buildCliMap, type CliMap } from "./model";

@@ -15,7 +15,7 @@ import {
   Tag,
   type LucideIcon,
 } from "lucide-react";
-import { categoryOf, type NodeCategory } from "@/maps/nodeCategory";
+import { categoryOf, type NodeCategory } from "@shared/maps/nodeCategory";
 
 export const CATEGORY_ICON: Record<NodeCategory, LucideIcon> = {
   definition: Circle,

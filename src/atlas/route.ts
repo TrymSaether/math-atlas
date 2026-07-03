@@ -19,7 +19,7 @@
 import { useMemo } from "react";
 import type { LoadedMap } from "@/maps/load";
 import type { GraphEdge } from "@/maps/types";
-import { RELATION_KEYS, RELATIONS, type RelationType } from "@/maps/relations";
+import { RELATION_KEYS, RELATIONS, type RelationType } from "@shared/maps/relations";
 import {
   ancestors,
   buildAdjacency,

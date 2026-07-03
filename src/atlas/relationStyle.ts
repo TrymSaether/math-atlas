@@ -1,4 +1,4 @@
-import { isSymmetricRelation } from "@/maps/relations";
+import { isSymmetricRelation } from "@shared/maps/relations";
 import type { GraphEdge } from "@/maps/types";
 
 export interface RelationStyle {

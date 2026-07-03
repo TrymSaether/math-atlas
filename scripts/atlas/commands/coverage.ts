@@ -7,7 +7,7 @@
 import type { Command } from "../core/command";
 import { loadMaps, type Ctx } from "../core/context";
 import type { CliMap } from "../core/model";
-import { categoryOf } from "@/maps/nodeCategory";
+import { categoryOf } from "@shared/maps/nodeCategory";
 import { table } from "../reporters/table";
 import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color";
 import { pct, padStart } from "../utils/text";

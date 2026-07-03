@@ -5,7 +5,7 @@
  * codeframed ERROR/WARNING/SUGGESTION and a summary; non-zero exit on any error.
  */
 import { z } from "zod";
-import { SourceGraphSchema } from "@/maps/source";
+import { SourceGraphSchema } from "@shared/maps/source";
 import type { Command } from "../core/command";
 import { loadSourceFiles, type Ctx } from "../core/context";
 import { buildCliMap } from "../core/model";

@@ -1,9 +1,9 @@
 import type { StoreApi } from "zustand";
-import type { PersistedMapState } from "./storage";
-import { mapService, type MapMeta } from "@/maps/service";
-import type { CatalogEntry, LoadedMap, MapId } from "@/maps";
-import type { NodeKind, Relation } from "@/maps/types";
-import type { State } from "./store";
+import type { PersistedMapState } from "@/app/storage";
+import type { State } from "@/app/store";
+import { mapService, type MapMeta } from "./service";
+import type { CatalogEntry, LoadedMap, MapId } from ".";
+import type { NodeKind, Relation } from "./types";
 
 export interface RestoredMapState {
   search: string;

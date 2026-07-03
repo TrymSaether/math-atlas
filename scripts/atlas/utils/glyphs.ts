@@ -1,9 +1,9 @@
 /**
  * Unicode glyph vocabulary. Mirrors the app's category encoding (see
- * src/maps/nodeCategory.ts) so a `theorem` reads the same in the terminal as on
+ * shared/maps/nodeCategory.ts) so a `theorem` reads the same in the terminal as on
  * the canvas — color is reserved for domains, shape distinguishes kinds.
  */
-import { categoryOf, type NodeCategory } from "@/maps/nodeCategory";
+import { categoryOf, type NodeCategory } from "@shared/maps/nodeCategory";
 
 export const CATEGORY_GLYPH: Record<NodeCategory, string> = {
   definition: "○",

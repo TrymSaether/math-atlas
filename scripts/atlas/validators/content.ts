@@ -6,7 +6,7 @@
  */
 import type { CliMap } from "../core/model";
 import { type Diagnostic, warning, suggestion } from "../diagnostics/diagnostic";
-import { categoryOf } from "@/maps/nodeCategory";
+import { categoryOf } from "@shared/maps/nodeCategory";
 
 export function run(map: CliMap): Diagnostic[] {
   const out: Diagnostic[] = [];

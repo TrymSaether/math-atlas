@@ -1,10 +1,10 @@
 import type { GraphData, GraphDomain, GraphEdge, GraphNode } from "./types";
-import type { Artifact } from "./artifact";
+import type { Artifact } from "@shared/maps/artifact";
 import { computeSwimlaneLayout, type DomainBounds, type Position } from "@/atlas/layout";
 import { resolveDomainTones, type DomainTone } from "@/atlas/colors";
 import { computeGraphMetrics, type GraphMetrics } from "@/atlas/graphMetrics";
-import { SourceGraphSchema } from "./source";
-import { buildArtifact } from "./build";
+import { SourceGraphSchema } from "@shared/maps/source";
+import { buildArtifact } from "@shared/maps/build";
 
 /**
  * Enrich a pre-validated build artifact into the runtime GraphData by computing

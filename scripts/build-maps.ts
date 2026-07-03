@@ -23,10 +23,10 @@
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { join, basename } from "node:path";
 import { fileURLToPath } from "node:url";
-import { SourceGraphSchema } from "@/maps/source";
-import { buildArtifact } from "@/maps/build";
+import { SourceGraphSchema } from "@shared/maps/source";
+import { buildArtifact } from "@shared/maps/build";
 
-const MAPS_DIR = process.env.MAPS_DIR ?? fileURLToPath(new URL("../src/maps/content", import.meta.url));
+const MAPS_DIR = process.env.MAPS_DIR ?? fileURLToPath(new URL("../src/maps/sources", import.meta.url));
 const checkOnly = process.argv.includes("--check");
 
 function formatIssues(file: string, error: import("zod").ZodError): string {

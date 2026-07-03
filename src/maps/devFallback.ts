@@ -4,7 +4,7 @@
  * Maps normally load from the API (see api.ts), which needs the Hono server
  * + Postgres running. To keep the SPA runnable for local UI work without a
  * backend, this module serves the bundled authoring sources in
- * `src/maps/content/*.source.json` when an API call fails **in dev only**.
+ * `src/maps/sources/*.source.json` when an API call fails **in dev only**.
  *
  * The glob is lazy, so the source JSON is emitted as separate chunks that the
  * production bundle never imports (the fallback is gated on `import.meta.env.DEV`).
@@ -14,9 +14,9 @@ import type { CatalogEntry, MapPayload } from "./api";
 
 type SourceLoader = () => Promise<{ default: unknown }>;
 
-const sourceLoaders = import.meta.glob("./content/*.source.json") as Record<string, SourceLoader>;
+const sourceLoaders = import.meta.glob("./sources/*.source.json") as Record<string, SourceLoader>;
 
-/** `./content/topology.source.json` → `topology` (the historical map slug). */
+/** `./sources/topology.source.json` → `topology` (the historical map slug). */
 function slugFromPath(path: string): string {
   return path.replace(/^.*\//, "").replace(/\.source\.json$/, "");
 }

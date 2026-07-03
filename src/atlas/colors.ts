@@ -7,7 +7,7 @@
  */
 
 import type { GraphDomain } from "@/maps/types";
-import { DOMAIN_PALETTE_KEYS, isDomainKey, type DomainKey } from "@/maps/palette";
+import { DOMAIN_PALETTE_KEYS, isDomainKey, type DomainKey } from "@shared/maps/palette";
 
 export interface DomainTone {
   /** Solid color (stroke, ID, dot, rail). */
