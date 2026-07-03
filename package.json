@@ -24,6 +24,7 @@
     "build": "npm run check:maps && npm run build:app",
     "preview": "vite preview",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"shared/**/*.ts\" \"server/**/*.ts\" \"scripts/**/*.{ts,js,mjs}\" \"*.{js,ts,json,html}\" \"docs/**/*.md\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"shared/**/*.ts\" \"server/**/*.ts\" \"scripts/**/*.{ts,js,mjs}\" \"*.{js,ts,json,html}\" \"docs/**/*.md\"",
     "format:maps": "atlas format",

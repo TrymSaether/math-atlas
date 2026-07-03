@@ -1,18 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 48" role="img" aria-label="Math Atlas">
   <style>
-    .stk { stroke: #0f172a; }
-    .fil { fill: #0f172a; }
-    .acc-s { stroke: #2563eb; }
-    .acc-f { fill: #2563eb; }
-    .node { fill: #ffffff; }
-    .word { fill: #0f172a; }
-    @media (prefers-color-scheme: dark) {
-      .stk { stroke: #e8eef7; }
-      .fil { fill: #e8eef7; }
-      .acc-s { stroke: #58c4dd; }
-      .acc-f { fill: #58c4dd; }
-      .node { fill: #161d2f; }
-      .word { fill: #e8eef7; }
+    .stk {
+      stroke: #0f172a;
+    }
+
+    .fil {
+      fill: #0f172a;
+    }
+
+    .acc-s {
+      stroke: #2563eb;
+    }
+
+    .acc-f {
+      fill: #2563eb;
+    }
+
+    .node {
+      fill: #0f172a;
+    }
+
+    .word {
+      fill: #0f172a;
     }
   </style>
   <g transform="scale(0.48)">
@@ -22,9 +31,9 @@
     </g>
     <path class="acc-s" d="M37 50 L63 50" fill="none" stroke-width="3.4" stroke-linecap="round" />
     <circle class="fil" cx="50" cy="18" r="7" />
-    <g class="node stk" stroke-width="3.4">
-      <circle cx="24" cy="82" r="7" />
-      <circle cx="76" cy="82" r="7" />
+    <g class="stk node" stroke-width="3.4">
+      <circle cx="24" cy="82" r="5.5" />
+      <circle cx="76" cy="82" r="5.5" />
     </g>
     <g class="acc-f">
       <circle cx="37" cy="50" r="5.5" />
@@ -32,6 +41,7 @@
     </g>
   </g>
   <text x="56" y="33" font-family="STIX Two Text, Georgia, serif" font-size="26" letter-spacing="-0.5">
-    <tspan class="word">Math</tspan><tspan class="acc-f">Atlas</tspan>
+    <tspan class="word">Math</tspan>
+    <tspan class="acc-f">Atlas</tspan>
   </text>
 </svg>
