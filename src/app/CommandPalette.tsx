@@ -1,4 +1,4 @@
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "radix-ui";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/ui/command";
@@ -7,7 +7,7 @@ import { useStore } from "./store";
 import { getDomainTone } from "@/atlas/colors";
 import { kindIcon } from "@/atlas/nodeCategoryIcons";
 import { KIND_LABEL } from "@/maps/types";
-import { MathText } from "@/shared/math";
+import { MathText } from "@/math/MathText";
 
 export function CommandPalette() {
   const mapId = useStore((s) => s.mapId);

@@ -3,12 +3,13 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Check, ChevronLeft, ChevronRight, RotateCcw, Shuffle, Sparkles, XIcon } from "lucide-react";
 
 import { useStore } from "@/app/store";
-import type { LoadedMap, MapId } from "@/maps";
-import { nodeAnswerText } from "./nodeContent";
-import { useConceptView } from "./conceptView";
+import type { AtlasMap } from "@/atlas/model";
+import type { MapId } from "@/maps";
+import { nodeAnswerText } from "./concept/content";
+import { useConceptView } from "./concept/view";
 import type { GraphNode } from "@/maps/types";
 import { ConceptHeader, ConceptBody } from "./concept";
-import { hasNodeVisual } from "./nodeVisualModel";
+import { hasNodeVisual } from "./concept/visualModel";
 
 /** A node carries enough to drill if it has a title and at least one answer-side facet. */
 function answerText(n: GraphNode): string {
@@ -100,7 +101,7 @@ export function FlashcardsView() {
   return <FlashcardsBody map={map} mapId={mapId} />;
 }
 
-function FlashcardsBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
+function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   // Share the TopBar/dictionary filter state so a narrowed atlas narrows the deck.
   const kinds = useStore((s) => s.kinds);
   const topics = useStore((s) => s.topics);
@@ -313,17 +314,7 @@ function CardShell({ children, tone, footer }: { children: React.ReactNode; tone
   );
 }
 
-function CardFront({
-  node,
-  map,
-  mapId,
-  onFlip,
-}: {
-  node: GraphNode;
-  map: LoadedMap;
-  mapId: MapId;
-  onFlip: () => void;
-}) {
+function CardFront({ node, map, mapId, onFlip }: { node: GraphNode; map: AtlasMap; mapId: MapId; onFlip: () => void }) {
   const view = useConceptView(node, map, mapId);
   return (
     <CardShell tone={view.tone.color}>
@@ -342,7 +333,7 @@ function CardFront({
   );
 }
 
-function CardBack({ node, map, mapId, onOpen }: { node: GraphNode; map: LoadedMap; mapId: MapId; onOpen: () => void }) {
+function CardBack({ node, map, mapId, onOpen }: { node: GraphNode; map: AtlasMap; mapId: MapId; onOpen: () => void }) {
   const view = useConceptView(node, map, mapId);
   return (
     <CardShell

@@ -16,18 +16,14 @@
  * Usage:
  *   npm run check:maps           validate every *.source.json
  *   npm run seed:maps            validate + seed the API database copy
- *
- * Running this file without `--check` still writes legacy `*.json` artifacts for
- * tooling/debugging, but those artifacts are not the app's runtime source.
  */
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { SourceGraphSchema } from "@shared/maps/source";
 import { buildArtifact } from "@shared/maps/build";
 
 const MAPS_DIR = process.env.MAPS_DIR ?? fileURLToPath(new URL("../src/maps/sources", import.meta.url));
-const checkOnly = process.argv.includes("--check");
 
 function formatIssues(file: string, error: import("zod").ZodError): string {
   const lines = error.issues.map((i) => `  ✗ ${i.path.join(".") || "(root)"}: ${i.message}`);
@@ -52,14 +48,7 @@ function main(): void {
     }
     const { artifact, warnings } = buildArtifact(parsed.data);
     for (const w of warnings) console.warn(`  ⚠ ${file}: ${w}`);
-    const outName = file.replace(/\.source\.json$/, ".json");
-    if (!checkOnly) {
-      writeFileSync(join(MAPS_DIR, outName), JSON.stringify(artifact) + "\n");
-    }
-    console.log(
-      `  ✓ ${basename(file)} → ${checkOnly ? "(check only)" : outName}  ` +
-        `[${artifact.nodes.length} nodes, ${artifact.edges.length} edges]`,
-    );
+    console.log(`  ✓ ${basename(file)}  [${artifact.nodes.length} nodes, ${artifact.edges.length} edges]`);
   }
 
   if (failed > 0) {

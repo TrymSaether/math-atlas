@@ -21,7 +21,7 @@ import {
   type Collaborator,
   type MapPayload,
   type MapRole,
-} from "../../shared/atlas/contracts";
+} from "../../shared/contracts";
 import { apiUrl, authHeaders } from "@/auth/client";
 import type { MapId } from "./registry";
 import { DEV_OFFLINE_FALLBACK, devCatalog, devMap } from "./devFallback";

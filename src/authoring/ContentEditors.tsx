@@ -1,9 +1,9 @@
 import { ArrowDown, ArrowUp, Plus, Trash2, XIcon } from "lucide-react";
 
 import { getDomainTone } from "@/atlas/colors";
-import type { LoadedMap } from "@/maps";
-import { cn } from "@/shared/cn";
-import { MathText } from "@/shared/math";
+import type { AtlasMap } from "@/atlas/model";
+import { cn } from "@/ui/cn";
+import { MathText } from "@/math/MathText";
 import { emptyExample, emptyProofStep, type ExampleDraft, type ProofStepDraft } from "./model";
 import { ACTION, CONTROL, CONTROL_MONO, FIELD, FieldLabel, NodePicker } from "./editorControls";
 
@@ -91,7 +91,7 @@ function UsesPicker({
 }: {
   value: string[];
   options: { id: string; label: string }[];
-  map: LoadedMap;
+  map: AtlasMap;
   onChange: (next: string[]) => void;
 }) {
   const remaining = options.filter((o) => !value.includes(o.id));
@@ -151,7 +151,7 @@ export function ProofStepsEditor({
 }: {
   steps: ProofStepDraft[];
   options: { id: string; label: string }[];
-  map: LoadedMap;
+  map: AtlasMap;
   onChange: (next: ProofStepDraft[]) => void;
 }) {
   const patch = (i: number, p: Partial<ProofStepDraft>) =>

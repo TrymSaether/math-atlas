@@ -1,10 +1,10 @@
 import { type ReactNode } from "react";
-import { MathText, MathProse } from "@/shared/math";
-import type { LoadedMap } from "@/maps";
-import type { ConceptView } from "../conceptView";
-import { Spine, Steps, Collapsible } from "../Specimen";
-import { NodeVisual } from "../NodeVisual";
-import { hasNodeVisual } from "../nodeVisualModel";
+import { MathText, MathProse } from "@/math/MathText";
+import type { AtlasMap } from "@/atlas/model";
+import type { ConceptView } from "./view";
+import { Spine, Steps, Collapsible } from "./Specimen";
+import { NodeVisual } from "./NodeVisual";
+import { hasNodeVisual } from "./visualModel";
 
 /**
  * The shared concept body: one emphasized statement (the Spine anchor) over a
@@ -86,7 +86,7 @@ export function ConceptBody({
   showVisual = true,
 }: {
   view: ConceptView;
-  map: LoadedMap;
+  map: AtlasMap;
   density: ConceptDensity;
   onSelect?: (id: string) => void;
   showVisual?: boolean;

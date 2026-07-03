@@ -12,10 +12,11 @@ import { useStore } from "@/app/store";
 import { DomainGlyph } from "@/atlas/DomainGlyph";
 import { getDomainTone } from "@/atlas/colors";
 import { getDomainGlyphId } from "@/atlas/domainGlyphs";
-import type { LoadedMap, MapId } from "@/maps";
+import type { AtlasMap } from "@/atlas/model";
+import type { MapId } from "@/maps";
 import { graphDataToSource } from "@/maps/serialize";
-import { cn } from "@/shared/cn";
-import { MathText } from "@/shared/math";
+import { cn } from "@/ui/cn";
+import { MathText } from "@/math/MathText";
 import { KIND_VALUES } from "@shared/maps/source";
 import { KIND_LABEL } from "@/maps/types";
 import { conceptToDraft, emptyDraft, type NodeDraft, type Priority } from "./model";
@@ -45,7 +46,7 @@ export function NodeEditorPanel({
   onClose,
 }: {
   editingId: string | null;
-  map: LoadedMap;
+  map: AtlasMap;
   mapId: MapId;
   onClose: () => void;
 }) {

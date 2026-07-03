@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { LoadedMap } from "@/maps";
-import type { ConceptRelations as Relations, RelationLink } from "../conceptView";
-import { ConnectionChip } from "../Specimen";
+import type { AtlasMap } from "@/atlas/model";
+import type { ConceptRelations as Relations, RelationLink } from "./view";
+import { ConnectionChip } from "./Specimen";
 
 /**
  * The single "connections" treatment. Renders the view-model's faithful relation
@@ -20,7 +20,7 @@ export function ConceptRelations({
   initialPerGroup = Infinity,
 }: {
   relations: Relations;
-  map: LoadedMap;
+  map: AtlasMap;
   onSelect: (id: string) => void;
   includeSeeAlso?: boolean;
   /** Collapse long groups behind a "+N more" toggle (the panel uses 8). */
@@ -55,7 +55,7 @@ function ChipRow({
   initial,
 }: {
   links: RelationLink[];
-  map: LoadedMap;
+  map: AtlasMap;
   onSelect: (id: string) => void;
   initial: number;
 }) {

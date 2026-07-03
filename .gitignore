@@ -22,11 +22,6 @@ output
 # Editor / OS
 .DS_Store
 
-# Generated map artifacts — built from *.source.json by `npm run build:maps`.
-# The source files are the tracked truth; never commit the generated output.
-/src/maps/sources/*.json
-!/src/maps/sources/*.source.json
-
 # Local reference material (not part of the app)
 content/
 _archive/

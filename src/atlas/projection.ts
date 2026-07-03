@@ -1,8 +1,9 @@
 import type { Edge, Node } from "@xyflow/react";
-import type { LoadedMap, MapId } from "@/maps";
+import type { MapId } from "@/maps";
+import type { AtlasMap } from "./model";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, computeClusterLayout, type AtlasLayout, type Position } from "./layout";
 import type { DomainTone } from "./colors";
-import { nodeSearchText } from "@/study/nodeContent";
+import { nodeSearchText } from "@/study/concept/content";
 import { categoryOf, type NodeCategory } from "@shared/maps/nodeCategory";
 import { classifyEdge } from "./relationStyle";
 import type { RouteResult } from "./route";
@@ -33,7 +34,7 @@ export interface GraphNodeViewData {
 }
 
 export interface GraphEdgeViewData {
-  edge: LoadedMap["data"]["edges"][number];
+  edge: AtlasMap["data"]["edges"][number];
   highlight: boolean;
   dim: boolean;
   routeReveal: { delay: number; runKey: number; color: string } | undefined;
@@ -41,7 +42,7 @@ export interface GraphEdgeViewData {
 }
 
 export interface GraphProjectionInput {
-  map: LoadedMap;
+  map: AtlasMap;
   mapId: MapId;
   view: "dependency" | "cluster";
   search: string;
@@ -118,7 +119,7 @@ export function edgeHandlePair(
   };
 }
 
-function emphasisByNodeId(map: LoadedMap): Map<string, NodeEmphasis> {
+function emphasisByNodeId(map: AtlasMap): Map<string, NodeEmphasis> {
   const impact = map.metrics.impactByNodeId;
   const ranked = [...impact.entries()].filter(([, value]) => value > 0).sort((a, b) => b[1] - a[1]);
   const landmarkCount = Math.min(14, Math.ceil(ranked.length * 0.1));
@@ -136,7 +137,7 @@ function emphasisByNodeId(map: LoadedMap): Map<string, NodeEmphasis> {
   return tiers;
 }
 
-function filteredAdjacency(edges: LoadedMap["data"]["edges"]): Map<string, Set<string>> {
+function filteredAdjacency(edges: AtlasMap["data"]["edges"]): Map<string, Set<string>> {
   const adjacency = new Map<string, Set<string>>();
   const link = (from: string, to: string) => {
     const neighbors = adjacency.get(from) ?? new Set<string>();

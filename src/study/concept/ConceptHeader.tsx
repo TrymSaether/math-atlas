@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import { MathText } from "@/shared/math";
+import { MathText } from "@/math/MathText";
 import { DomainGlyph } from "@/atlas/DomainGlyph";
-import type { ConceptView } from "../conceptView";
+import type { ConceptView } from "./view";
 
 /**
  * The unified concept identity block: domain-colored rail + serif title + a

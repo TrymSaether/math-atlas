@@ -3,8 +3,8 @@ import { Check, ChevronDown } from "lucide-react";
 
 import { getDomainTone } from "@/atlas/colors";
 import { Surface } from "@/design";
-import { cn } from "@/shared/cn";
-import { MathText } from "@/shared/math";
+import { cn } from "@/ui/cn";
+import { MathText } from "@/math/MathText";
 
 /* Shared authoring form-control class recipes (was styles/components/authoring.css). */
 export const FIELD = "block";

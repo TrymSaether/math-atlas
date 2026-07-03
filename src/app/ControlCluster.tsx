@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { useReactFlow, useViewport } from "@xyflow/react";
 import { Maximize, Minus, Plus, SlidersHorizontal } from "lucide-react";
 import { usePopoverDismiss } from "./usePopover";
-import { cn } from "@/shared/cn";
+import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
 import { Surface } from "@/design";
 import { LayersPanel } from "./LayersPanel";

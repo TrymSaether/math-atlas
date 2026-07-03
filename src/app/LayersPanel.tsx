@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { useStore } from "./store";
 import { getDomainTone } from "@/atlas/colors";
 import { KIND_LABEL, type NodeKind } from "@/maps/types";
-import { cn } from "@/shared/cn";
+import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
 import { Switch } from "@/ui/switch";
 import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";

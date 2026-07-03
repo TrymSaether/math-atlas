@@ -3,7 +3,7 @@ import type { StoreApi } from "zustand";
 import type { State } from "@/app/store";
 import { mapSaveScheduler } from "@/maps/saveScheduler";
 import { mapService } from "@/maps/service";
-import { buildLoadedMapFromSource } from "@/maps/load";
+import { buildAtlasMapFromSource } from "@/atlas/model";
 import { graphDataToSource } from "@/maps/serialize";
 import type { CatalogEntry, MapId } from "@/maps";
 import type { SourceGraph } from "@shared/maps/source";
@@ -70,17 +70,38 @@ function upsertCatalog(catalog: CatalogEntry[], next: CatalogEntry): CatalogEntr
 
 type Setter = (partial: Partial<State> | ((s: State) => Partial<State>)) => void;
 
-function scheduleSave(slug: MapId, get: () => State, set: Setter, delayMs = 800): void {
-  mapSaveScheduler.schedule(slug, () => saveMapToServer(slug, get, set), delayMs);
+export interface AuthoringDependencies {
+  service: Pick<typeof mapService, "saveMap" | "revertOwnedMap">;
+  schedule: (slug: MapId, task: () => Promise<void>, delayMs: number) => void;
+}
+
+const defaultDependencies: AuthoringDependencies = {
+  service: mapService,
+  schedule: (slug, task, delayMs) => mapSaveScheduler.schedule(slug, task, delayMs),
+};
+
+function scheduleSave(
+  slug: MapId,
+  get: () => State,
+  set: Setter,
+  dependencies: AuthoringDependencies,
+  delayMs = 800,
+): void {
+  dependencies.schedule(slug, () => saveMapToServer(slug, get, set, dependencies), delayMs);
 }
 
 /** Persist a slug's working source: fork the public map first if needed, then PUT. */
-async function saveMapToServer(slug: MapId, get: () => State, set: Setter): Promise<void> {
+async function saveMapToServer(
+  slug: MapId,
+  get: () => State,
+  set: Setter,
+  dependencies: AuthoringDependencies,
+): Promise<void> {
   if (!get().userId) return; // editing requires sign-in to persist
   const source = get().editSources[slug];
   if (!source) return;
   try {
-    const outcome = await mapService.saveMap({
+    const outcome = await dependencies.service.saveMap({
       slug,
       source,
       meta: get().mapMeta[slug],
@@ -117,9 +138,10 @@ function commitCandidate(
   get: () => State,
   set: (partial: Partial<State> | ((s: State) => Partial<State>)) => void,
   candidate: unknown,
+  dependencies: AuthoringDependencies,
   selectId?: string,
 ): EditResult {
-  const result = buildLoadedMapFromSource(candidate);
+  const result = buildAtlasMapFromSource(candidate);
   if (!result.ok) {
     set({ editError: result.error });
     return { ok: false, error: result.error };
@@ -133,13 +155,14 @@ function commitCandidate(
     editError: null,
   }));
   // Persist to the server (debounced); forks the public map first if needed.
-  scheduleSave(mapId, get, set);
+  scheduleSave(mapId, get, set, dependencies);
   return { ok: true, id: selectId };
 }
 
 export function createAuthoringSlice(
   set: StoreApi<State>["setState"],
   get: StoreApi<State>["getState"],
+  dependencies: AuthoringDependencies = defaultDependencies,
 ): AuthoringSlice {
   return {
     editMode: false,
@@ -177,7 +200,7 @@ export function createAuthoringSlice(
         id = uniqueSlug(slugify(draft.label), taken);
         concepts = [...base.concepts, applyDraft(draft, id)];
       }
-      const result = commitCandidate(get, set, { ...base, concepts }, id);
+      const result = commitCandidate(get, set, { ...base, concepts }, dependencies, id);
       if (result.ok) set({ selectedId: id, nodeEditor: null });
       return result;
     },
@@ -205,7 +228,7 @@ export function createAuthoringSlice(
           ),
         edges: base.edges.filter((e) => e.source !== id && e.target !== id),
       };
-      const result = commitCandidate(get, set, candidate);
+      const result = commitCandidate(get, set, candidate, dependencies);
       if (result.ok && get().selectedId === id) set({ selectedId: null });
       if (result.ok && get().nodeEditor?.mode === "edit") set({ nodeEditor: null });
       return result;
@@ -214,24 +237,24 @@ export function createAuthoringSlice(
     addNodeEdge: (edge) => {
       const base = workingSource(get());
       if (!base) return { ok: false, error: "Map not loaded." };
-      return commitCandidate(get, set, addSourceEdge(base, edge));
+      return commitCandidate(get, set, addSourceEdge(base, edge), dependencies);
     },
 
     updateNodeEdge: (key, patch) => {
       const base = workingSource(get());
       if (!base) return { ok: false, error: "Map not loaded." };
-      return commitCandidate(get, set, updateSourceEdge(base, key, patch));
+      return commitCandidate(get, set, updateSourceEdge(base, key, patch), dependencies);
     },
 
     removeNodeEdge: (key) => {
       const base = workingSource(get());
       if (!base) return { ok: false, error: "Map not loaded." };
-      return commitCandidate(get, set, removeSourceEdge(base, key));
+      return commitCandidate(get, set, removeSourceEdge(base, key), dependencies);
     },
 
     currentEditSource: () => workingSource(get()),
 
-    importSource: (source) => commitCandidate(get, set, source),
+    importSource: (source) => commitCandidate(get, set, source, dependencies),
 
     revertMap: async () => {
       const mapId = get().mapId;
@@ -239,7 +262,7 @@ export function createAuthoringSlice(
       // Discard the owned fork on the server (revert = back to the public map).
       if (meta?.role === "owner") {
         try {
-          await mapService.revertOwnedMap(meta);
+          await dependencies.service.revertOwnedMap(meta);
         } catch (e) {
           console.warn(`[math-atlas] revert delete failed for "${mapId}":`, e);
         }

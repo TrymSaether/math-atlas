@@ -36,7 +36,7 @@ npm run dev:server       # API server
 npm run check:maps       # validate map source files
 npm run seed:maps        # write built-in maps to the database
 npm run build            # map validation + app build
-npm run check            # format check + lint + server typecheck + build
+npm run check            # format + lint + typecheck + tests + build
 npm run format           # format code and docs
 ```
 
@@ -66,24 +66,24 @@ the repo, but does not publish map data.
 ```text
 src/
   app/        startup, shell, global store, navigation, persistence
-  atlas/      graph canvas, nodes/edges, layout, routing, viewport
-  maps/       frontend map API/service code, loading, source content
-  study/      concept cards, dictionary, flashcards, node visuals
+  atlas/      runtime graph model, canvas, layout, routing, viewport
+  maps/       map API/cache/service code and authored source content
+  study/      dictionary, flashcards, and co-located concept presentation
   authoring/  map editing UI and source mutations
   sandbox/    self-contained interactive math workspace
-  figures/    reusable mathematical figures and their registry
+  figures/    core, Fourier, and functional-analysis figures
   auth/       session client and sign-in UI
   ui/         small generic UI components
+  math/       shared mathematical text rendering
   design/     visual tokens and surface primitives
-  shared/     dependency-light helpers used by several areas
 server/       API, auth, database schema, map/progress routes
 scripts/      map validation and diagnostics
-shared/       map schemas/build logic and API contracts shared with the server
+shared/       cross-runtime map schemas, build logic, and API contracts
 ```
 
 Keep code with the product area that owns it. Use relative imports inside an
-area and `@/…` imports across areas. Add something to `shared/` only when it is
-generic and already used by multiple areas; do not recreate `application`,
+area and `@/…` imports across frontend areas. Top-level `shared/` is reserved for
+React-free code used by both frontend and server. Do not recreate `application`,
 `infrastructure`, or `view-model` layers for one-off code. Tests live beside the
 module they cover.
 

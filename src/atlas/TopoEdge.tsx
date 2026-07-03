@@ -10,7 +10,7 @@ import {
 } from "@xyflow/react";
 import { edgeLabel } from "@shared/maps/relations";
 import { getEdgeStyle } from "./relationStyle";
-import { prefersReducedMotion } from "@/shared/cn";
+import { prefersReducedMotion } from "@/ui/cn";
 import { useStore } from "@/app/store";
 import type { GraphEdge } from "@/maps/types";
 

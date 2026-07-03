@@ -18,7 +18,7 @@
     "test:watch": "vitest",
     "typecheck:server": "tsc -p server/tsconfig.json",
     "atlas": "tsx scripts/atlas/cli.ts",
-    "check:maps": "tsx scripts/build-maps.ts --check",
+    "check:maps": "tsx scripts/build-maps.ts",
     "seed:maps": "tsx server/seed.ts",
     "build:app": "tsc -b && vite build",
     "build": "npm run check:maps && npm run build:app",
@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.0.5",
-    "@radix-ui/react-dialog": "^1.1.17",
     "@xyflow/react": "^12.11.1",
     "better-auth": "^1.6.19",
     "clsx": "^2.1.1",

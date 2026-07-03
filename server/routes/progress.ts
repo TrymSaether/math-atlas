@@ -12,7 +12,7 @@ import {
   OkResponseSchema,
   ProgressResponseSchema,
   PutProgressRequestSchema,
-} from "../../shared/atlas/contracts";
+} from "../../shared/contracts";
 import { db } from "../db/client";
 import { userProgress } from "../db/schema";
 import { auth } from "../auth";

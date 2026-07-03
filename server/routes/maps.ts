@@ -23,7 +23,7 @@ import {
   SaveMapConflictResponseSchema,
   SaveMapRequestSchema,
   SaveMapResponseSchema,
-} from "../../shared/atlas/contracts";
+} from "../../shared/contracts";
 import { db } from "../db/client";
 import { mapCollaborators, maps, mapSources, user } from "../db/schema";
 import { auth } from "../auth";

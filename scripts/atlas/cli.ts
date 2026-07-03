@@ -16,7 +16,6 @@ import statsCmd from "./commands/stats";
 import findCmd from "./commands/find";
 import explainCmd from "./commands/explain";
 import graphCmd from "./commands/graph";
-import buildCmd from "./commands/build";
 import doctorCmd from "./commands/doctor";
 import coverageCmd from "./commands/coverage";
 import newCmd from "./commands/new";
@@ -32,7 +31,6 @@ const COMMANDS: Command[] = [
   explainCmd,
   graphCmd,
   routeCmd,
-  buildCmd,
   doctorCmd,
   coverageCmd,
   newCmd,
@@ -117,7 +115,7 @@ function printHelp(): void {
   for (const c of COMMANDS) {
     (groups.get(c.group) ?? groups.set(c.group, []).get(c.group)!).push(c);
   }
-  const order = ["Inspect", "Graph", "Build", "Author", "Quality"];
+  const order = ["Inspect", "Graph", "Author", "Quality"];
   for (const g of order) {
     const cmds = groups.get(g);
     if (!cmds) continue;

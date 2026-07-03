@@ -16,7 +16,7 @@ import {
 import { useStore, type Surface as SurfaceId } from "./store";
 import { schemeFor, siblingOf } from "./themes";
 import { authEnabled } from "@/auth/client";
-import { cn } from "@/shared/cn";
+import { cn } from "@/ui/cn";
 import { usePopoverDismiss } from "./usePopover";
 import { ConfirmDialog } from "@/ui/ConfirmDialog";
 import { Button } from "@/ui/button";

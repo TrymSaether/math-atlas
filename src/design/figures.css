@@ -1,7 +1,7 @@
 /*
  * Figure & diagram token contract + shared diagram classes.
  *
- * Interactive figures (src/figures/tokens.ts) and inline SVG diagram
+ * Interactive figures (src/figures/core/tokens.ts) and inline SVG diagram
  * assets (.svg-*, .dia-*) consume this small semantic API. Every value derives
  * from the canonical roles in tokens.css, so the whole figure family re-themes
  * with the app. Also home to the elevation ramp and the derived surface roles

@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { DEFAULT_MAP_ID, isMapId, type CatalogEntry, type LoadedMap, type MapId } from "@/maps";
+import { DEFAULT_MAP_ID, isMapId, type CatalogEntry, type MapId } from "@/maps";
+import type { AtlasMap } from "@/atlas/model";
 import { mapService, type MapMeta } from "@/maps/service";
 import { applyTheme, readStoredTheme, schemeFor } from "./themes";
 import { defaultVisibleKinds } from "@shared/maps/nodeCategory";
@@ -14,7 +15,7 @@ import {
   type PersistedMapState,
   type PersistedState,
 } from "./storage";
-import { createMapWorkflowSlice, type MapWorkflowSlice, type RestoredMapState } from "@/maps/state";
+import { createMapWorkflowSlice, type MapWorkflowSlice, type RestoredMapState } from "./mapState";
 import { createProgressSlice, type ProgressSlice } from "@/progress/state";
 
 export type SearchScope = "all" | "title";
@@ -32,7 +33,7 @@ export interface State extends MapWorkflowSlice, ProgressSlice, AtlasSlice, Auth
   scheme: () => "light" | "dark";
 
   mapId: MapId;
-  loadedMaps: Partial<Record<MapId, LoadedMap>>;
+  loadedMaps: Partial<Record<MapId, AtlasMap>>;
   loadingMapId: MapId | null;
   mapError: string | null;
 
@@ -125,7 +126,7 @@ const persistedMaps: Partial<Record<MapId, PersistedMapState>> = {
  * Deep link: URL query params (?map=&node=&view=) take precedence over persisted
  * state on first load, so a shared link opens the exact map / concept / surface
  * it encodes. The node is injected into the per-map state so it survives the
- * map-load reset in `mapStateForLoadedMap` (which validates it against the map).
+ * map-load reset in `mapStateForAtlasMap` (which validates it against the map).
  */
 function readUrlState(): { mapId?: MapId; node?: string; surface?: Surface } {
   if (typeof window === "undefined") return {};
@@ -192,7 +193,7 @@ function setFromPersisted<T extends string>(
   return new Set(saved.filter((value) => valid.has(value)));
 }
 
-function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefined): RestoredMapState {
+function mapStateForAtlasMap(map: AtlasMap, saved: PersistedMapState | undefined): RestoredMapState {
   const validNodeIds = new Set(map.data.nodes.map((node) => node.id));
   const selectedId = saved?.selectedId && validNodeIds.has(saved.selectedId) ? saved.selectedId : null;
   const recents = (saved?.recents ?? []).filter((id) => validNodeIds.has(id));
@@ -300,7 +301,7 @@ export const useStore = create<State>((set, get) => ({
   ...createMapWorkflowSlice(set, get, {
     persistedMaps,
     rememberMapState,
-    mapStateForLoadedMap,
+    mapStateForAtlasMap,
   }),
 }));
 

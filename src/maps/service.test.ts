@@ -69,8 +69,7 @@ describe("map service", () => {
     const loaded = await service.loadMap("public-map");
     await Promise.resolve();
 
-    expect(loaded.payload).toBe(cached);
-    expect(loaded.map.data.id).toBe("topology");
+    expect(loaded).toBe(cached);
     expect(deps.fetchMap).toHaveBeenCalledWith("public-map");
     expect(deps.setCachedMap).toHaveBeenCalledWith(remote);
   });
@@ -88,6 +87,17 @@ describe("map service", () => {
     );
 
     await expect(service.loadCatalog()).resolves.toEqual({ ok: false, cached, error });
+  });
+
+  it("ignores an invalid cached source and fetches a fresh payload", async () => {
+    const remote = payload();
+    const deps = dependencies({
+      getCachedMap: vi.fn(() => payload({ source: { broken: true } })),
+      fetchMap: vi.fn(async () => remote),
+    });
+
+    await expect(createMapService(deps).loadMap("public-map")).resolves.toBe(remote);
+    expect(deps.setCachedMap).toHaveBeenCalledWith(remote);
   });
 
   it("preserves the public edit → fork → save → cache → reload workflow", async () => {
@@ -122,7 +132,7 @@ describe("map service", () => {
     service.clearMapCache("owned-map");
     const reloaded = await service.loadMap("owned-map");
     expect(deps.clearCachedMap).toHaveBeenCalledWith("owned-map");
-    expect(reloaded.payload.id).toBe("owned-map");
+    expect(reloaded.id).toBe("owned-map");
   });
 
   it("surfaces save conflicts without updating the cache", async () => {

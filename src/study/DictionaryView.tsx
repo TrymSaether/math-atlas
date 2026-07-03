@@ -2,17 +2,18 @@ import { createElement, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ArrowLeft, Search } from "lucide-react";
 
 import { useStore } from "@/app/store";
-import { type LoadedMap, type MapId } from "@/maps";
+import type { AtlasMap } from "@/atlas/model";
+import type { MapId } from "@/maps";
 import type { GraphNode } from "@/maps/types";
-import { MathText } from "@/shared/math";
+import { MathText } from "@/math/MathText";
 import { KIND_LABEL } from "@/maps/types";
 import { getDomainTone } from "@/atlas/colors";
-import { useConceptView } from "./conceptView";
+import { useConceptView } from "./concept/view";
 import { kindAbbrev } from "@shared/maps/nodeCategory";
 import { kindIcon } from "@/atlas/nodeCategoryIcons";
 import { KIND_ORDER, dictionaryEntries, sectionFacet, type DictSortMode, type SectionFacet } from "./dictionary";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";
-import { hasNodeVisual } from "./nodeVisualModel";
+import { hasNodeVisual } from "./concept/visualModel";
 
 export function DictionaryView() {
   const mapId = useStore((s) => s.mapId);
@@ -21,7 +22,7 @@ export function DictionaryView() {
   return <DictionaryBody map={map} mapId={mapId} />;
 }
 
-function DictionaryBody({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
+function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const select = useStore((s) => s.select);
   const kinds = useStore((s) => s.kinds);
   const topics = useStore((s) => s.topics);
@@ -280,7 +281,7 @@ function DetailPane({
   onPickRelated,
 }: {
   entry: GraphNode;
-  map: LoadedMap;
+  map: AtlasMap;
   mapId: MapId;
   onBack: () => void;
   onPickRelated: (id: string) => void;

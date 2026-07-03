@@ -1,6 +1,6 @@
-import type { LoadedMap } from "@/maps";
+import type { AtlasMap } from "@/atlas/model";
 import type { GraphNode } from "@/maps/types";
-import { nodeAnswerText, nodeFormalStatement, nodeStatement } from "./nodeContent";
+import { nodeAnswerText, nodeFormalStatement, nodeStatement } from "./concept/content";
 
 /**
  * The dictionary is a field-agnostic projection of the active atlas map: every
@@ -38,7 +38,7 @@ export function isDictionaryEntry(node: GraphNode): boolean {
   return Boolean(nodeAnswerText(node) || node.diagram);
 }
 
-export function dictionaryEntries(map: LoadedMap): GraphNode[] {
+export function dictionaryEntries(map: AtlasMap): GraphNode[] {
   return map.data.nodes.filter(isDictionaryEntry);
 }
 
@@ -76,7 +76,7 @@ export interface SectionFacet {
   chipLabelOf: (value: string) => string;
 }
 
-export function sectionFacet(map: LoadedMap, entries: GraphNode[]): SectionFacet {
+export function sectionFacet(map: AtlasMap, entries: GraphNode[]): SectionFacet {
   const hasChapters = entries.some((e) => e.dictChapter);
 
   if (hasChapters) {

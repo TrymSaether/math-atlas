@@ -9,7 +9,7 @@ import {
   PutProgressRequestSchema,
   type ProgressEntry,
   type ProgressStatus,
-} from "../../shared/atlas/contracts";
+} from "../../shared/contracts";
 import { apiUrl, authHeaders } from "@/auth/client";
 import type { MapId } from "@/maps/registry";
 

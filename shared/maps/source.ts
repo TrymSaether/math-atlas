@@ -19,7 +19,7 @@ const Prose = z.string().min(1);
 
 // Full observed kind vocabulary. Kept inclusive (identity passthrough from the
 // source) because the UI assigns distinct glyphs/categories per kind in
-// lib/nodeCategory.ts — collapsing kinds here would erase those distinctions.
+// nodeCategory.ts — collapsing kinds here would erase those distinctions.
 export const KIND_VALUES = [
   "object",
   "definition",

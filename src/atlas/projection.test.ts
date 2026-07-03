@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildArtifact } from "@shared/maps/build";
-import { buildLoadedMap, enrichArtifact, type LoadedMap } from "@/maps/load";
+import { buildAtlasMap, enrichArtifact, type AtlasMap } from "@/atlas/model";
 import type { SourceConcept, SourceGraph } from "@shared/maps/source";
 import { EMPTY_ROUTE, type RouteResult } from "./route";
 import { buildGraphProjection, edgeHandlePair, lodForZoom, type GraphProjectionInput } from "./projection";
@@ -21,7 +21,7 @@ function concept(id: string, overrides: Partial<SourceConcept> = {}): SourceConc
   };
 }
 
-function fixtureMap(): LoadedMap {
+function fixtureMap(): AtlasMap {
   const source: SourceGraph = {
     id: "projection_fixture",
     label: "Projection fixture",
@@ -45,10 +45,10 @@ function fixtureMap(): LoadedMap {
       { source: "d", target: "b", relation: "motivated_by" },
     ],
   };
-  return buildLoadedMap(enrichArtifact(buildArtifact(source).artifact));
+  return buildAtlasMap(enrichArtifact(buildArtifact(source).artifact));
 }
 
-function baseInput(map: LoadedMap, overrides: Partial<GraphProjectionInput> = {}): GraphProjectionInput {
+function baseInput(map: AtlasMap, overrides: Partial<GraphProjectionInput> = {}): GraphProjectionInput {
   return {
     map,
     mapId: map.data.id,
@@ -77,7 +77,7 @@ function baseInput(map: LoadedMap, overrides: Partial<GraphProjectionInput> = {}
   };
 }
 
-function route(map: LoadedMap): RouteResult {
+function route(map: AtlasMap): RouteResult {
   const edgeIds = new Set(map.data.edges.filter((edge) => edge.isDependency).map((edge) => edge.id));
   return {
     nodeIds: new Set(["a", "b", "c"]),

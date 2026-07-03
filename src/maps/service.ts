@@ -1,5 +1,5 @@
 import type { SourceGraph } from "@shared/maps/source";
-import { buildLoadedMapFromSource, type LoadedMap } from "./load";
+import { SourceGraphSchema } from "@shared/maps/source";
 import {
   deleteMap,
   fetchCatalog,
@@ -63,24 +63,21 @@ export function createMapService(deps: MapServiceDependencies) {
       }
     },
 
-    async loadMap(id: string): Promise<{ map: LoadedMap; payload: MapPayload }> {
+    async loadMap(id: string): Promise<MapPayload> {
       const cached = deps.getCachedMap(id);
-      if (cached) {
+      if (cached && SourceGraphSchema.safeParse(cached.source).success) {
         void deps
           .fetchMap(id)
           .then(deps.setCachedMap)
           .catch(() => {
             /* offline / backend asleep — keep serving cache */
           });
-        const built = buildLoadedMapFromSource(cached.source);
-        if (built.ok) return { map: built.map, payload: cached };
+        return cached;
       }
 
       const payload = await deps.fetchMap(id);
       deps.setCachedMap(payload);
-      const built = buildLoadedMapFromSource(payload.source);
-      if (!built.ok) throw new Error(built.error);
-      return { map: built.map, payload };
+      return payload;
     },
 
     async saveMap(input: SaveMapInput): Promise<SaveMapOutcome> {
@@ -148,6 +145,3 @@ export const mapService = createMapService({
   setCachedMap,
   clearCachedMap,
 });
-
-/** Compatibility entry point retained for callers of the former data-layer helper. */
-export const fetchAndBuildMap = (id: string) => mapService.loadMap(id);

@@ -15,7 +15,7 @@ import { StaleMapBanner } from "@/maps/StaleMapBanner";
 import { TopChrome } from "./TopChrome";
 import { Sidebar } from "./Sidebar";
 import { ControlCluster } from "./ControlCluster";
-import { ConceptCard } from "@/study/ConceptCard";
+import { ConceptCard } from "@/study/concept/ConceptCard";
 import { PathsPanel } from "@/atlas/PathsPanel";
 import { EditInspector } from "@/authoring/EditInspector";
 import { Button } from "@/ui/button";

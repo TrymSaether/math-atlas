@@ -25,7 +25,7 @@ import { useSandbox, DEFAULT_SLIDER } from "./store";
 import { formatValue } from "./engine";
 import { PALETTE } from "./library";
 import type { Computed, FactStatus, GeomShape, Row } from "./types";
-import { MathText } from "@/shared/math";
+import { MathText } from "@/math/MathText";
 import { Slider } from "@/ui/slider";
 import { MathField } from "./MathField";
 

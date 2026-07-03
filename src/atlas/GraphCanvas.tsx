@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { ReactFlow, useReactFlow, useViewport } from "@xyflow/react";
-import type { LoadedMap, MapId } from "@/maps";
+import type { MapId } from "@/maps";
+import type { AtlasMap } from "./model";
 import { savedViewportFor, saveViewport } from "./viewportStorage";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH } from "./layout";
 import { getDomainTone } from "./colors";
@@ -24,7 +25,7 @@ function InnerGraph() {
   return <LoadedGraph map={map} mapId={mapId} key={mapId} />;
 }
 
-function LoadedGraph({ map, mapId }: { map: LoadedMap; mapId: MapId }) {
+function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const view = useStore((state) => state.view);
   const search = useStore((state) => state.search)
     .toLowerCase()

@@ -14,7 +14,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Bookmark, ChevronDown, Maximize, Folder, Minus, Plus, X } from "lucide-react";
 import { Button } from "@/ui/button";
 import { Surface } from "@/design";
-import { cn } from "@/shared/cn";
+import { cn } from "@/ui/cn";
 import { useSandbox } from "./store";
 import { WORKSPACES, WORKSPACE_IDS } from "./library";
 import type { ViewRect } from "./types";

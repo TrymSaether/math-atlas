@@ -17,7 +17,7 @@
  * exactly the study order we want.
  */
 import { useMemo } from "react";
-import type { LoadedMap } from "@/maps/load";
+import type { AtlasMap } from "@/atlas/model";
 import type { GraphEdge } from "@/maps/types";
 import { RELATION_KEYS, RELATIONS, type RelationType } from "@shared/maps/relations";
 import {
@@ -67,17 +67,17 @@ const DEP_RELATIONS = new Set<RelationType>(RELATION_KEYS.filter((k) => RELATION
  * `includeProof`, the proof-dependency overlay is added too — what you need to
  * also be able to *prove* it.
  */
-function depEdges(map: LoadedMap, includeProof: boolean): GraphEdge[] {
+function depEdges(map: AtlasMap, includeProof: boolean): GraphEdge[] {
   return includeProof ? [...map.data.edges, ...map.data.proofEdges] : map.data.edges;
 }
 
-function depAdjacency(map: LoadedMap, includeProof: boolean): Adjacency {
+function depAdjacency(map: AtlasMap, includeProof: boolean): Adjacency {
   return buildAdjacency(depEdges(map, includeProof), DEP_RELATIONS);
 }
 
 /** Topo-order a node set and collect the dependency edges inside it. */
 function orderAndEdges(
-  map: LoadedMap,
+  map: AtlasMap,
   adj: Adjacency,
   nodeIds: Set<string>,
   edges: GraphEdge[],
@@ -95,7 +95,7 @@ function orderAndEdges(
 }
 
 /** Upstream prerequisite cone of a single goal concept. */
-export function prereqResult(map: LoadedMap, targetId: string, includeProof = false): RouteResult {
+export function prereqResult(map: AtlasMap, targetId: string, includeProof = false): RouteResult {
   if (!map.nodeById.has(targetId)) return EMPTY_ROUTE;
   const edges = depEdges(map, includeProof);
   const adj = depAdjacency(map, includeProof);
@@ -106,7 +106,7 @@ export function prereqResult(map: LoadedMap, targetId: string, includeProof = fa
 }
 
 /** All dependency paths between two concepts (the connecting subgraph). */
-export function pathResult(map: LoadedMap, fromId: string, toId: string, includeProof = false): RouteResult {
+export function pathResult(map: AtlasMap, fromId: string, toId: string, includeProof = false): RouteResult {
   if (!map.nodeById.has(fromId) || !map.nodeById.has(toId)) return EMPTY_ROUTE;
   const edges = depEdges(map, includeProof);
   const adj = depAdjacency(map, includeProof);

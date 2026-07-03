@@ -1,0 +1,92 @@
+import { useMemo, useState } from "react";
+
+import { linspace } from "../core/plot";
+import { type WaveKind, wavePartialSum, waveTarget } from "./fourierMath";
+import { DIA, FigureCaption, FigureFrame, FunctionCurve, STROKE, UI } from "../core/FigureFrame";
+import { RangeControl } from "../core/RangeControl";
+import { WaveSelect } from "./WaveSelect";
+
+const XS = linspace(-Math.PI, Math.PI, 600);
+const DX = (2 * Math.PI) / XS.length;
+
+function numericalEnergy(ys: number[]): number {
+  return (ys.reduce((s, y) => s + y * y, 0) * DX) / Math.PI;
+}
+
+const Y_DOMAIN: Record<WaveKind, [number, number]> = {
+  square: [-1.4, 1.4],
+  sawtooth: [-Math.PI - 0.4, Math.PI + 0.4],
+  triangle: [-0.3, Math.PI + 0.3],
+};
+
+export default function ParsevalFigure() {
+  const [kind, setKind] = useState<WaveKind>("square");
+  const [N, setN] = useState(5);
+
+  const target = useMemo(() => XS.map((x) => waveTarget(kind, x)), [kind]);
+  const approx = useMemo(() => XS.map((x) => wavePartialSum(kind, x, N)), [kind, N]);
+  const totalE = useMemo(() => numericalEnergy(target), [target]);
+  const partialE = useMemo(() => numericalEnergy(approx), [approx]);
+
+  const fraction = totalE > 0 ? Math.min(partialE / totalE, 1) : 0;
+  const pct = (fraction * 100).toFixed(1);
+
+  return (
+    <figure className="m-0">
+      <FigureFrame xDomain={[-Math.PI, Math.PI]} yDomain={Y_DOMAIN[kind]} grid>
+        <FunctionCurve
+          y={(x) => waveTarget(kind, x)}
+          domain={[-Math.PI, Math.PI]}
+          color={DIA.ref}
+          weight={STROKE.ref}
+          style="dashed"
+        />
+        <FunctionCurve
+          y={(x) => wavePartialSum(kind, x, N)}
+          domain={[-Math.PI, Math.PI]}
+          color={DIA.accent}
+          weight={STROKE.curve}
+        />
+      </FigureFrame>
+
+      {/* Parseval energy balance */}
+      <div className="mt-2.5 px-1">
+        <div className="mb-1.5 flex items-baseline justify-between text-caption-2" style={{ color: UI.muted }}>
+          <span>
+            Energy captured by {N} harmonic{N !== 1 ? "s" : ""}
+          </span>
+          <span className="font-mono" style={{ color: fraction > 0.95 ? DIA.ok : DIA.text }}>
+            {pct}%
+          </span>
+        </div>
+        <div className="relative h-2.5 w-full overflow-hidden rounded-full" style={{ background: UI.sunken }}>
+          <div
+            className="h-full rounded-full"
+            style={{
+              width: `${fraction * 100}%`,
+              background: DIA.accent,
+              transition: "width 0.15s ease",
+            }}
+          />
+        </div>
+        <div className="mt-1 flex justify-between font-mono text-caption-2" style={{ color: UI.subtle }}>
+          <span>Σ|ĉₙ|² ≈ {partialE.toFixed(3)}</span>
+          <span>‖f‖² = {totalE.toFixed(3)}</span>
+        </div>
+      </div>
+
+      <WaveSelect
+        value={kind}
+        onChange={(k) => {
+          setKind(k);
+          setN(5);
+        }}
+      />
+      <RangeControl min={1} max={40} value={N} onChange={setN} label={`N = ${N}`} ariaLabel="Number of harmonics N" />
+      <FigureCaption>
+        Both sides of Parseval's identity update live — adding harmonics fills the bar until the partial sum captures
+        all the energy.
+      </FigureCaption>
+    </figure>
+  );
+}

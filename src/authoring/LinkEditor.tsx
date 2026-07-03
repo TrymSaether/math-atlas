@@ -2,11 +2,11 @@ import { useMemo, useState } from "react";
 import { ArrowLeftRight, Check, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { useStore } from "@/app/store";
-import type { LoadedMap } from "@/maps";
+import type { AtlasMap } from "@/atlas/model";
 import { graphDataToSource } from "@/maps/serialize";
 import { AUTHORABLE_RELATIONS, RELATIONS, type AuthorableRelation } from "@shared/maps/relations";
-import { MathText } from "@/shared/math";
-import { cn } from "@/shared/cn";
+import { MathText } from "@/math/MathText";
+import { cn } from "@/ui/cn";
 import { edgeKey, incidentEdges } from "./model";
 import { ACTION, ACTION_PRIMARY, CONTROL, FieldLabel, NodePicker, SelectField } from "./editorControls";
 
@@ -127,7 +127,7 @@ function EdgeRow({
   );
 }
 
-export function EdgeEditor({ nodeId, map }: { nodeId: string; map: LoadedMap }) {
+export function EdgeEditor({ nodeId, map }: { nodeId: string; map: AtlasMap }) {
   const mapId = useStore((s) => s.mapId);
   const editSource = useStore((s) => s.editSources[mapId]);
   const source = useMemo(() => editSource ?? graphDataToSource(map.data), [editSource, map]);

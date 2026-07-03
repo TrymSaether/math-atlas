@@ -2,13 +2,13 @@ import { memo, useEffect, useRef, type CSSProperties } from "react";
 import { Scroll, FlaskConical, LineChart } from "lucide-react";
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 import { getDomainTone } from "./colors";
-import { MathText } from "@/shared/math";
+import { MathText } from "@/math/MathText";
 import { CATEGORY_META, categoryOf, kindAbbrev, railBackground, type NodeCategory } from "@shared/maps/nodeCategory";
 import { CATEGORY_ICON, KIND_ICON_OVERRIDE } from "./nodeCategoryIcons";
-import { cn, prefersReducedMotion } from "@/shared/cn";
+import { cn, prefersReducedMotion } from "@/ui/cn";
 import { useStore } from "@/app/store";
 import { KIND_LABEL, type TopoNode as TopoNodeT } from "@/maps/types";
-import { hasNodeVisual } from "@/study/nodeVisualModel";
+import { hasNodeVisual } from "@/study/concept/visualModel";
 import type { NodeEmphasis, NodeLOD } from "./GraphCanvas";
 
 /**
