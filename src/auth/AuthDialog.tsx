@@ -71,7 +71,7 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px]"
+                className="fixed inset-0 z-(--z-modal) bg-black/40 backdrop-blur-[2px]"
               />
             </Dialog.Overlay>
             <Dialog.Content asChild>
@@ -80,7 +80,7 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
                 transition={reduceMotion ? { duration: 0 } : spring.gentle}
-                className="fixed top-1/2 left-1/2 z-50 w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2"
+                className="fixed top-1/2 left-1/2 z-(--z-modal) w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2"
               >
                 <Dialog.Title className="sr-only">{isSignup ? "Create an account" : "Sign in"}</Dialog.Title>
                 <Dialog.Description className="sr-only">Sign in to sync and share your maps.</Dialog.Description>

@@ -190,7 +190,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
           className="group/swatch flex w-5 items-start justify-center pt-3.5 text-muted-foreground"
         >
           <span
-            className="block h-3 w-3 rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.2),0_1px_2px_rgba(0,0,0,0.14)] transition-transform group-hover/swatch:scale-110"
+            className="block h-3 w-3 rounded-full shadow-[inset_0_0_0_1px_var(--border),var(--elevation-subtle)] transition-transform group-hover/swatch:scale-110"
             style={{ background: row.color }}
           />
         </button>
@@ -325,7 +325,7 @@ function ParamSlider({
       <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
       <div className="relative flex min-h-[16px] min-w-0 flex-1 items-center">
         {dragging && (
-          <span className="pointer-events-none absolute bottom-4 left-[var(--slider-progress)] z-[1] min-w-[28px] -translate-x-1/2 rounded-full border border-[color-mix(in_srgb,var(--slider-color)_28%,transparent)] bg-card px-1.5 py-1 text-center font-mono text-[10px] leading-none tabular-nums text-foreground shadow-[0_4px_10px_rgba(0,0,0,0.12)]">
+          <span className="pointer-events-none absolute bottom-4 left-[var(--slider-progress)] z-[1] min-w-[28px] -translate-x-1/2 rounded-full border border-[color-mix(in_srgb,var(--slider-color)_28%,transparent)] bg-card px-1.5 py-1 text-center font-mono text-[10px] leading-none tabular-nums text-foreground shadow-[var(--elevation-card)]">
             {formatValue(value)}
           </span>
         )}

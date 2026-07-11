@@ -13,6 +13,7 @@ import { ConceptHeader, ConceptBody } from "./concept";
 import { hasNodeVisual } from "./concept/visualModel";
 import { useDrill, shuffle, type CardDirection, type DeckScope, type Rating } from "./drill";
 import { useSrs, isDue, srsKey } from "./srs";
+import { Chip, KbdKey, Paper } from "@/design";
 
 /** A node carries enough to drill if it has a title and at least one answer-side facet. */
 function answerText(n: GraphNode): string {
@@ -266,8 +267,7 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 ) : (
                   <button
                     onClick={flip}
-                    className="flex h-11 items-center justify-center gap-2 rounded-sm border border-transparent bg-primary px-5 text-body font-semibold text-primary-foreground transition-transform active:scale-[0.98]"
-                    style={{ boxShadow: "var(--shadow-e2)" }}
+                    className="flex h-11 items-center justify-center gap-2 rounded-sm border border-transparent bg-primary px-5 text-body font-semibold text-primary-foreground shadow-[var(--elevation-card)] transition-transform active:scale-[var(--state-pressed-scale)]"
                   >
                     <span>Show answer</span>
                     <Kbd onAccent>Space</Kbd>
@@ -349,15 +349,10 @@ function ScopeChip({
   onClick: () => void;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className="inline-flex min-h-[26px] items-center gap-1.5 rounded-sm border border-border bg-card px-2.5 py-0.5 text-caption-1 font-medium text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary"
-    >
+    <Chip active={active} onClick={onClick}>
       {label}
       <span className="font-mono text-caption-2 opacity-70">{count}</span>
-    </button>
+    </Chip>
   );
 }
 
@@ -376,28 +371,24 @@ function DirectionChip({
   onPick: (d: CardDirection) => void;
 }) {
   return (
-    <button
-      type="button"
+    <Chip
+      active={current === value}
       onClick={() => onPick(value)}
-      aria-pressed={current === value}
       title={value === "statement" ? "Show the statement and recall the name" : "Show the name and recall the statement"}
-      className="min-h-[26px] rounded-sm border border-border bg-card px-2.5 py-0.5 font-mono text-caption-2 text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary"
+      className="font-mono text-caption-2"
     >
       {DIRECTION_LABEL[value]}
-    </button>
+    </Chip>
   );
 }
 
 function CardShell({ children, tone, footer }: { children: React.ReactNode; tone: string; footer?: React.ReactNode }) {
   return (
-    <div
-      className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card"
-      style={{ boxShadow: "var(--shadow-e2)" }}
-    >
+    <Paper elevation="card" className="flex h-full flex-col overflow-hidden">
       <span aria-hidden className="h-1 w-full shrink-0" style={{ background: tone }} />
       <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto">{children}</div>
       {footer}
-    </div>
+    </Paper>
   );
 }
 
@@ -488,10 +479,7 @@ function SummaryCard({
 }) {
   const pct = Math.round((gotCount / total) * 100);
   return (
-    <div
-      className="flex flex-1 flex-col items-center justify-center gap-6 rounded-2xl border border-border bg-card px-8 py-12 text-center"
-      style={{ boxShadow: "var(--shadow-e2)" }}
-    >
+    <Paper elevation="card" className="flex flex-1 flex-col items-center justify-center gap-6 px-8 py-12 text-center">
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
         <Sparkles className="h-7 w-7" />
       </div>
@@ -506,8 +494,7 @@ function SummaryCard({
         {againCount > 0 && (
           <button
             onClick={onReview}
-            className="flex h-11 items-center gap-2 rounded-sm bg-primary px-6 text-body font-semibold text-primary-foreground transition-transform active:scale-[0.98]"
-            style={{ boxShadow: "var(--shadow-e2)" }}
+            className="flex h-11 items-center gap-2 rounded-sm bg-primary px-6 text-body font-semibold text-primary-foreground shadow-[var(--elevation-card)] transition-transform active:scale-[var(--state-pressed-scale)]"
           >
             Review {againCount} missed
           </button>
@@ -525,7 +512,7 @@ function SummaryCard({
           Back to atlas
         </button>
       </div>
-    </div>
+    </Paper>
   );
 }
 
@@ -541,7 +528,7 @@ function EmptyState({ scope, onBack }: { scope: DeckScope; onBack: () => void })
       ? "Widen the domain or category filters in the toolbar to build a study deck."
       : "Switch the deck scope to All to keep drilling anyway.";
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-card px-8 py-12 text-center">
+    <Paper className="flex flex-1 flex-col items-center justify-center gap-4 px-8 py-12 text-center">
       <p className="text-callout text-foreground">{message}</p>
       <p className="max-w-85 text-footnote text-muted-foreground">{hint}</p>
       <button
@@ -550,7 +537,7 @@ function EmptyState({ scope, onBack }: { scope: DeckScope; onBack: () => void })
       >
         Back to atlas
       </button>
-    </div>
+    </Paper>
   );
 }
 
@@ -583,7 +570,7 @@ function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => 
   return (
     <button
       onClick={onClick}
-      className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-body font-semibold transition-transform active:scale-[0.98] ${got ? "border-primary/40 bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground"}`}
+      className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-body font-semibold transition-transform active:scale-[var(--state-pressed-scale)] ${got ? "border-primary/40 bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground"}`}
     >
       {children}
     </button>
@@ -591,12 +578,5 @@ function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => 
 }
 
 function Kbd({ children, onAccent = false }: { children: React.ReactNode; onAccent?: boolean }) {
-  return (
-    <kbd
-      className={`ml-0.5 hidden h-5 items-center rounded border px-1.5 font-mono text-caption-2 sm:inline-flex ${onAccent ? "border-transparent text-primary-foreground" : "border-border bg-secondary text-muted-foreground"}`}
-      style={onAccent ? { background: "color-mix(in srgb, var(--card) 25%, transparent)" } : undefined}
-    >
-      {children}
-    </kbd>
-  );
+  return <KbdKey onAccent={onAccent}>{children}</KbdKey>;
 }

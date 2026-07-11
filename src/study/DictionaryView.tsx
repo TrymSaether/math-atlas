@@ -25,6 +25,7 @@ import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";
 import { hasNodeVisual } from "./concept/visualModel";
 import { useDrill, prerequisiteDeck } from "./drill";
 import type { ProgressStatus } from "@/progress/api";
+import { Chip as DsChip } from "@/design";
 
 export function DictionaryView() {
   const mapId = useStore((s) => s.mapId);
@@ -196,11 +197,11 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                   const tone = getDomainTone(d.id);
                   const active = topics.has(d.id);
                   return (
-                    <button
+                    <DsChip
                       key={d.id}
-                      type="button"
-                      className="inline-flex min-h-[24px] max-w-full items-center gap-1.5 rounded-sm border border-border bg-card px-2 py-[3px] text-caption-2 font-medium text-muted-foreground transition hover:border-input"
-                      aria-pressed={active}
+                      size="xs"
+                      active={active}
+                      className="max-w-full"
                       onClick={() => toggleTopic(d.id)}
                       style={
                         active
@@ -212,11 +213,11 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                           : undefined
                       }
                       title={d.label}
+                      dotColor={tone.color}
                     >
-                      <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: tone.color }} />
                       <span className="max-w-[12ch] overflow-hidden text-ellipsis whitespace-nowrap">{d.label}</span>
                       <span className="font-mono text-caption-2 opacity-70">{d.count}</span>
-                    </button>
+                    </DsChip>
                   );
                 })}
                 {topics.size > 0 && (
@@ -519,14 +520,9 @@ function DetailPane({
 
 function Chip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
-    <button
-      type="button"
-      className="min-h-[24px] rounded-sm border border-border bg-card px-2.5 py-[3px] font-mono text-caption-2 text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary"
-      aria-pressed={active}
-      onClick={onClick}
-    >
+    <DsChip size="xs" active={active} onClick={onClick} className="font-mono text-caption-2">
       {label}
-    </button>
+    </DsChip>
   );
 }
 

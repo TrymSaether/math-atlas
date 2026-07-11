@@ -124,7 +124,7 @@ function MapMenu() {
       {open && (
         <Surface
           material="thick"
-          className="absolute top-[calc(100%+8px)] left-0 z-[var(--z-popover,40)] w-[280px] p-1.5"
+          className="absolute top-[calc(100%+8px)] left-0 z-(--z-popover) w-[280px] p-1.5"
           role="listbox"
           aria-label="Active map"
           onKeyDown={onListKeyDown}

@@ -11,7 +11,7 @@
 .surface {
   position: relative;
   isolation: isolate;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-panel);
   border: 0.5px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
   color: var(--foreground);

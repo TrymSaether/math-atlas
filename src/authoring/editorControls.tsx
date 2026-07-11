@@ -22,7 +22,7 @@ const SELECT_OPTION_ACTIVE = "bg-primary/10 text-foreground";
 const PICKER_OPTION =
   "flex min-h-[44px] w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-footnote text-foreground hover:bg-secondary";
 export const ACTION =
-  "inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-md border border-border bg-card font-semibold text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground focus-visible:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_16%,transparent)] focus-visible:outline-none active:scale-[0.98]";
+  "inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-md border border-border bg-card font-semibold text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground focus-visible:shadow-[0_0_0_3px_var(--state-focus-ring)] focus-visible:outline-none active:scale-[var(--state-pressed-scale)]";
 export const ACTION_PRIMARY =
   "border-primary bg-primary text-primary-foreground hover:border-primary hover:bg-primary hover:text-primary-foreground";
 export const ACTION_DANGER =

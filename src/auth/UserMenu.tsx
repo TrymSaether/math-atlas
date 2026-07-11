@@ -69,7 +69,7 @@ export function UserMenu() {
       {menuOpen && (
         <Surface
           material="thick"
-          className="absolute top-[calc(100%+8px)] right-0 z-[var(--z-banner,60)] w-[min(240px,calc(100vw-24px))] p-1.5"
+          className="absolute top-[calc(100%+8px)] right-0 z-(--z-banner) w-[min(240px,calc(100vw-24px))] p-1.5"
         >
           <div className="flex items-center gap-2 px-2 py-1.5">
             <User className="size-[18px] shrink-0 text-muted-foreground" />

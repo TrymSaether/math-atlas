@@ -7,7 +7,7 @@ import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
 import { Switch } from "@/ui/switch";
 import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
-import { Surface } from "@/design";
+import { Chip as DsChip, Surface } from "@/design";
 
 /** A filter pill with an active (brand-tinted) state and an optional tone dot. */
 function Chip({
@@ -24,20 +24,17 @@ function Chip({
   children: ReactNode;
 }) {
   return (
-    <button
-      type="button"
+    <DsChip
+      shape="pill"
+      size="md"
       onClick={onClick}
+      active={active}
+      dotColor={dotColor}
       style={style}
-      className={cn(
-        "flex items-center gap-1.5 rounded-full border px-3 py-1 text-footnote transition-colors",
-        active
-          ? "border-primary/25 bg-primary/10 text-primary"
-          : "border-transparent bg-muted text-foreground hover:bg-accent",
-      )}
+      className={cn(!active && "border-transparent bg-muted text-foreground hover:bg-accent")}
     >
-      {dotColor && <span className="size-2 shrink-0 rounded-full" style={{ background: dotColor }} />}
       {children}
-    </button>
+    </DsChip>
   );
 }
 

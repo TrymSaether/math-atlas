@@ -143,7 +143,7 @@ export function SandboxView() {
             </Surface>
           )}
           <div className="pointer-events-auto inline-flex w-12 flex-col items-center gap-2.5">
-            <Surface material="regular" className="flex w-12 flex-col items-center gap-0.5 rounded-[24px] p-1">
+            <Surface material="regular" className="flex w-12 flex-col items-center gap-0.5 rounded-full p-1">
               <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
                 <Plus className="size-[17px]" />
               </DockBtn>
@@ -167,7 +167,7 @@ export function SandboxView() {
       {panelOpen ? (
         <Surface
           material="regular"
-          className="pointer-events-auto absolute bottom-3 left-3 top-[68px] z-(--z-shell) flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-lg sm:left-4 sm:w-[340px]"
+          className="pointer-events-auto absolute bottom-3 left-3 top-[68px] z-(--z-shell) flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-[var(--radius-panel)] sm:left-4 sm:w-[340px]"
         >
           <div className="flex items-center gap-1 border-b border-border/60 px-2 py-2">
             <WorkspaceMenu />

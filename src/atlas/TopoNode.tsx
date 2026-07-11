@@ -111,12 +111,12 @@ function TopoNodeViewComponent({ data }: NodeProps<Node<Data>>) {
       tabIndex={0}
       aria-label={`${KIND_LABEL[node.kind]}: ${node.label}`}
       className={cn(
-        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[var(--radius-lg)] border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
-        "focus-visible:ring-2 focus-visible:ring-[color:color-mix(in srgb, var(--primary) 34%, var(--card))] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--background)]",
+        "group relative flex min-h-[80px] w-[200px] cursor-pointer flex-col overflow-hidden rounded-[var(--radius-card)] border px-3 py-2 outline-none transition-[transform,box-shadow,border-color] duration-150",
+        "focus-visible:ring-2 focus-visible:ring-[var(--state-focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--background)]",
         // Hover affordance: a quiet lift + soft elevation, nothing more. Selected
         // nodes own their own shadow below, so the hover shadow only applies at rest.
         "hover:-translate-y-px",
-        !isSelected && !routeEndpoint && "hover:shadow-[var(--shadow-e2)]",
+        !isSelected && !routeEndpoint && "hover:shadow-[var(--elevation-card)]",
         dim && "opacity-30",
         isMinor && !accented && !dim && "opacity-[0.82]",
       )}
@@ -135,9 +135,9 @@ function TopoNodeViewComponent({ data }: NodeProps<Node<Data>>) {
         // Selected: domain-hue border + a soft neutral lift, no ring. Related
         // neighbours stay quiet (border tint only) so the focus reads clearly.
         boxShadow: routeEndpoint
-          ? "0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent)"
+          ? "0 0 0 3px var(--state-selected-bg)"
           : isSelected
-            ? "var(--shadow-e2)"
+            ? "var(--elevation-card)"
             : undefined,
       }}
     >

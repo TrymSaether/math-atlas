@@ -4,24 +4,11 @@
  * Interactive figures (src/figures/core/tokens.ts) and inline SVG diagram
  * assets (.svg-*, .dia-*) consume this small semantic API. Every value derives
  * from the canonical roles in tokens.css, so the whole figure family re-themes
- * with the app. Also home to the elevation ramp and the derived surface roles
- * a few chrome surfaces still read.
+ * with the app. Elevation and app surface roles live in tokens.css; this file
+ * owns figure, plot, and diagram semantics only.
  */
 
 :root {
-  /* ---- elevation ramp (tonal shadow scale) ---- */
-  --elevation-ink: 15 23 42;
-  --shadow-e1: 0 1px 2px rgb(var(--elevation-ink) / 0.04);
-  --shadow-e2: 0 4px 12px rgb(var(--elevation-ink) / 0.06), 0 1px 2px rgb(var(--elevation-ink) / 0.04);
-  --shadow-e3: 0 8px 22px rgb(var(--elevation-ink) / 0.08), 0 1px 3px rgb(var(--elevation-ink) / 0.05);
-  --shadow-e4: 0 12px 32px rgb(var(--elevation-ink) / 0.1), 0 2px 6px rgb(var(--elevation-ink) / 0.05);
-  --shadow-e5: 0 18px 44px rgb(var(--elevation-ink) / 0.13), 0 4px 10px rgb(var(--elevation-ink) / 0.07);
-
-  /* ---- derived surface roles ---- */
-  --surface-raised: color-mix(in srgb, var(--card) 94%, var(--background) 6%);
-  --surface-sunken: color-mix(in srgb, var(--secondary) 72%, var(--background) 28%);
-  --surface-muted: color-mix(in srgb, var(--muted) 82%, var(--background) 18%);
-
   /* ---- categorical palette (figures) ---- */
   --palette-1: var(--domain-blue);
   --palette-2: var(--domain-teal);
@@ -106,15 +93,6 @@
 
 :root.dark,
 :root[data-theme="chalkboard"] {
-  /* Dark elevation: black ink, deeper alphas read the canvas behind chrome. */
-  --elevation-ink: 0 0 0;
-  --shadow-e1: 0 1px 2px rgb(var(--elevation-ink) / 0.4);
-  --shadow-e2: 0 4px 16px rgb(var(--elevation-ink) / 0.5);
-  --shadow-e3: 0 6px 18px rgb(var(--elevation-ink) / 0.42), 0 1px 4px rgb(var(--elevation-ink) / 0.3);
-  --shadow-e4: 0 18px 48px rgb(var(--elevation-ink) / 0.55);
-  --shadow-e5: 0 22px 54px rgb(var(--elevation-ink) / 0.46), 0 5px 14px rgb(var(--elevation-ink) / 0.34);
-
-  --surface-sunken: color-mix(in srgb, var(--background) 64%, var(--card) 36%);
   --plot-band: color-mix(in srgb, var(--primary) 15%, transparent);
   --figure-bg: color-mix(in srgb, var(--card) 82%, var(--background));
   --figure-panel: color-mix(in srgb, var(--card) 84%, transparent);
@@ -128,7 +106,7 @@
   border-radius: var(--radius-lg);
   color: var(--dia-ink);
   overflow: hidden;
-  box-shadow: var(--shadow-e1);
+  box-shadow: var(--elevation-subtle);
 }
 
 .themed-diagram svg {

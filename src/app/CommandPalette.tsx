@@ -52,7 +52,7 @@ export function CommandPalette() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px]"
+                className="fixed inset-0 z-(--z-modal) bg-black/40 backdrop-blur-[2px]"
               />
             </Dialog.Overlay>
             <Dialog.Content asChild aria-describedby={undefined}>
@@ -61,7 +61,7 @@ export function CommandPalette() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.98 }}
                 transition={reduceMotion ? { duration: 0 } : spring.gentle}
-                className="fixed left-1/2 top-[16%] z-50 w-[620px] max-w-[92vw] -translate-x-1/2"
+                className="fixed left-1/2 top-[16%] z-(--z-modal) w-[620px] max-w-[92vw] -translate-x-1/2"
               >
                 <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
                 <Surface material="thick" reactive className="overflow-hidden">

@@ -114,14 +114,14 @@ export function MinimapCard({
   return (
     <Surface
       material="regular"
-      className="absolute bottom-[var(--shell-edge)] right-[72px] z-(--z-shell) hidden rounded-[22px] p-1.5 md:block"
+      className="absolute bottom-[var(--shell-edge)] right-[72px] z-(--z-shell) hidden rounded-[var(--radius-panel)] p-1.5 md:block"
     >
       <svg
         viewBox={`0 0 ${W} ${H}`}
         width={W}
         height={H}
         onClick={handleClick}
-        className="block cursor-pointer rounded-[16px] bg-muted shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_68%,transparent)]"
+        className="block cursor-pointer rounded-[var(--radius-md)] bg-muted shadow-[inset_0_0_0_1px_var(--border)]"
       >
         {[...regions.entries()].map(([domainId, region]) => {
           const tone = getMutedDomainTone(domainId);

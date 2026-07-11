@@ -66,7 +66,7 @@ export function DomainRegionNode({ data }: NodeProps<Node<Data>>) {
           background: "color-mix(in srgb, var(--card) 78%, transparent)",
           borderColor: "color-mix(in srgb, var(--border) 70%, transparent)",
           color: data.color,
-          boxShadow: "var(--shadow-e1)",
+          boxShadow: "var(--elevation-subtle)",
         }}
       >
         {glyphId ? (

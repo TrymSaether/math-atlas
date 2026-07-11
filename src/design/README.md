@@ -7,11 +7,12 @@ directory plus `src/index.css` is now the entire styling layer.
 
 ## Principles
 
-1. **Tokens are the only source of truth.** Every visual decision resolves to a
-   CSS variable in `tokens.css`. No magic numbers, no hex literals in components.
+1. **Tokens are the source of truth.** Themeable roles, elevation, radii, state
+   colors, motion timing, shell metrics, and z-indexes resolve through
+   `tokens.css`. Dynamic data colors may still be passed at the point of use.
 2. **One way to style.** Tailwind utilities for layout/spacing/type; the
-   `<Surface>` primitive for glass; tokens for everything themeable. No inline
-   `style` for visual decisions, and no per-component stylesheets. The only
+   `<Surface>` primitive for glass; `<Paper>` for flat content cards; tokens for
+   everything themeable. Avoid inline `style` for static visual decisions. The only
    global stylesheets are the four in this directory — `tokens.css` (tokens),
    `base.css` (resets + shared utilities), `vendor.css` (third-party/web-component
    theming Tailwind can't reach), and `figures.css` (the figure/diagram token
@@ -48,6 +49,12 @@ their intended surfaces (from the ratified visual bar):
 - `GlassFilter` + `supportsDisplacement()` add Apple's refraction on **Chromium
   only**, for one or two hero surfaces — never across the canvas.
 
+## Paper
+
+`<Paper elevation="…">` is the non-glass content surface: study cards, result
+cards, empty states, and other flat panels that should not inherit the floating
+chrome blur. It consumes the same elevation scale as the rest of the app.
+
 ## Motion
 
 `spring` presets (`snappy` / `smooth` / `gentle`), `easing`, and `duration` in
@@ -65,6 +72,8 @@ design/
   motion.ts             spring / easing / duration presets
   primitives/
     surface.tsx + .css  the glass primitive
+    paper.tsx + .css    flat content/card primitive
+    control.tsx         shared chip and keyboard-key primitives
     panel.tsx + .css    docked Surface for the shell's side columns
     glass-filter.tsx    Chromium-only displacement enhancement
     supports.ts         feature detection

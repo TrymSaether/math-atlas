@@ -98,10 +98,39 @@
   /* near-solid material for graph nodes (content, not chrome) */
   --glass-chrome-fill: rgba(252, 252, 253, 0.94);
 
+  /* ---- elevation --------------------------------------------------------- */
+  --elevation-ink: 15 23 42;
+  --elevation-flat: none;
+  --elevation-subtle: 0 1px 2px rgb(var(--elevation-ink) / 0.04);
+  --elevation-card: 0 4px 12px rgb(var(--elevation-ink) / 0.06), 0 1px 2px rgb(var(--elevation-ink) / 0.04);
+  --elevation-raised: 0 8px 22px rgb(var(--elevation-ink) / 0.08), 0 1px 3px rgb(var(--elevation-ink) / 0.05);
+  --elevation-popover: 0 12px 32px rgb(var(--elevation-ink) / 0.1), 0 2px 6px rgb(var(--elevation-ink) / 0.05);
+  --elevation-dialog: 0 18px 44px rgb(var(--elevation-ink) / 0.13), 0 4px 10px rgb(var(--elevation-ink) / 0.07);
+  --elevation-glass: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.08), 0 12px 32px -8px rgba(0, 0, 0, 0.18);
+
+  /* Backward-compatible aliases while components migrate. */
+  --shadow-e1: var(--elevation-subtle);
+  --shadow-e2: var(--elevation-card);
+  --shadow-e3: var(--elevation-raised);
+  --shadow-e4: var(--elevation-popover);
+  --shadow-e5: var(--elevation-dialog);
+
+  /* ---- derived surface roles ------------------------------------------- */
+  --surface-raised: color-mix(in srgb, var(--card) 94%, var(--background) 6%);
+  --surface-sunken: color-mix(in srgb, var(--secondary) 72%, var(--background) 28%);
+  --surface-muted: color-mix(in srgb, var(--muted) 82%, var(--background) 18%);
+
+  /* ---- shared component state ------------------------------------------ */
+  --state-hover-bg: var(--accent-surface);
+  --state-selected-bg: color-mix(in srgb, var(--primary) 10%, transparent);
+  --state-selected-border: color-mix(in srgb, var(--primary) 40%, transparent);
+  --state-focus-ring: color-mix(in srgb, var(--primary) 50%, transparent);
+  --state-pressed-scale: 0.98;
+
   /* shared glass edge + shadow recipe */
   --glass-border: rgba(255, 255, 255, 0.18);
   --glass-specular: rgba(255, 255, 255, 0.55);
-  --glass-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.08), 0 12px 32px -8px rgba(0, 0, 0, 0.18);
+  --glass-shadow: var(--elevation-glass);
 
   /* ---- motion (Apple spring + signature easing) ---- */
   --ease-apple: cubic-bezier(0.32, 0.72, 0, 1);
@@ -111,6 +140,10 @@
   --duration-slow: 320ms;
 
   /* ---- extra radii referenced as raw vars (squircle cards, pills) ---- */
+  --radius-control: var(--radius-sm);
+  --radius-card: var(--radius-lg);
+  --radius-panel: var(--radius-lg);
+  --radius-popover: var(--radius-lg);
   --radius-2xl: 1.25rem; /* 20px */
   --radius-pill: 999px;
 
@@ -258,7 +291,22 @@
 
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-specular: rgba(255, 255, 255, 0.12);
-  --glass-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+  --elevation-ink: 0 0 0;
+  --elevation-subtle: 0 1px 2px rgb(var(--elevation-ink) / 0.4);
+  --elevation-card: 0 4px 16px rgb(var(--elevation-ink) / 0.5);
+  --elevation-raised: 0 6px 18px rgb(var(--elevation-ink) / 0.42), 0 1px 4px rgb(var(--elevation-ink) / 0.3);
+  --elevation-popover: 0 18px 48px rgb(var(--elevation-ink) / 0.55);
+  --elevation-dialog: 0 22px 54px rgb(var(--elevation-ink) / 0.46), 0 5px 14px rgb(var(--elevation-ink) / 0.34);
+  --elevation-glass: 0 0 0 0.5px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+
+  --surface-sunken: color-mix(in srgb, var(--background) 64%, var(--card) 36%);
+
+  --state-hover-bg: var(--accent-surface);
+  --state-selected-bg: color-mix(in srgb, var(--primary) 14%, transparent);
+  --state-selected-border: color-mix(in srgb, var(--primary) 48%, transparent);
+  --state-focus-ring: color-mix(in srgb, var(--primary) 58%, transparent);
+
+  --glass-shadow: var(--elevation-glass);
 
   /* Domain hues — lifted for legibility on dark surfaces. */
   --domain-blue: #58c4dd;
