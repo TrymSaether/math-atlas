@@ -7,7 +7,7 @@
  * readouts) so the sandbox reads as part of the same product.
  */
 
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import {
   Calculator,
   ChevronDown,
@@ -16,6 +16,8 @@ import {
   Variable,
   LineChart,
   Link2,
+  Pause,
+  Play,
   Plus,
   SlidersHorizontal,
   Trash,
@@ -250,6 +252,9 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
   );
 }
 
+/** Seconds for an animated parameter to sweep its full range once. */
+const SWEEP_SECONDS = 4;
+
 function ParamSlider({
   row,
   value,
@@ -262,7 +267,41 @@ function ParamSlider({
   onConfig: (s: { min: number; max: number; step: number }) => void;
 }) {
   const [dragging, setDragging] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const slider = row.slider ?? DEFAULT_SLIDER;
+
+  // Ping-pong animation between min and max, driven by rAF. Refs keep the
+  // loop reading the live value/callback without restarting every frame.
+  const valueRef = useRef(value);
+  const onChangeRef = useRef(onChange);
+  useEffect(() => {
+    valueRef.current = value;
+    onChangeRef.current = onChange;
+  });
+  const dirRef = useRef(1);
+  useEffect(() => {
+    if (!playing) return;
+    let raf: number;
+    let prev = performance.now();
+    const tick = (t: number) => {
+      const dt = Math.min(0.1, (t - prev) / 1000);
+      prev = t;
+      const range = slider.max - slider.min;
+      let v = valueRef.current + dirRef.current * (range / SWEEP_SECONDS) * dt;
+      if (v >= slider.max) {
+        v = slider.max;
+        dirRef.current = -1;
+      } else if (v <= slider.min) {
+        v = slider.min;
+        dirRef.current = 1;
+      }
+      onChangeRef.current(v);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [playing, slider.min, slider.max]);
+
   const progress = slider.max > slider.min ? ((value - slider.min) / (slider.max - slider.min)) * 100 : 0;
   const sliderStyle = {
     "--slider-color": row.color,
@@ -270,6 +309,19 @@ function ParamSlider({
   } as CSSProperties;
   return (
     <div className="mt-1 flex items-center gap-1.5 pr-px text-muted-foreground" style={sliderStyle}>
+      <button
+        type="button"
+        onClick={() => setPlaying((p) => !p)}
+        aria-label={playing ? "Pause animation" : "Animate parameter"}
+        aria-pressed={playing}
+        title={playing ? "Pause" : "Animate"}
+        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full transition ${
+          playing ? "text-foreground" : "text-muted-foreground/70 hover:text-foreground"
+        }`}
+        style={playing ? { background: "color-mix(in srgb, var(--slider-color) 22%, transparent)" } : undefined}
+      >
+        {playing ? <Pause size={11} /> : <Play size={11} />}
+      </button>
       <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
       <div className="relative flex min-h-[16px] min-w-0 flex-1 items-center">
         {dragging && (

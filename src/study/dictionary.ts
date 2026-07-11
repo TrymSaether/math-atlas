@@ -1,6 +1,6 @@
 import type { AtlasMap } from "@/atlas/model";
 import type { GraphNode } from "@/maps/types";
-import { nodeAnswerText, nodeFormalStatement, nodeStatement } from "./concept/content";
+import { nodeAnswerText, nodeFormalStatement, nodeSearchText, nodeStatement } from "./concept/content";
 
 /**
  * The dictionary is a field-agnostic projection of the active atlas map: every
@@ -49,6 +49,40 @@ export function entryStatement(node: GraphNode): string {
 
 export function entryFormalStatement(node: GraphNode): string {
   return nodeFormalStatement(node);
+}
+
+/**
+ * Normalize text for dictionary search so queries hit through LaTeX markup:
+ * commands lose their backslash (`\ell` matches "ell"), grouping/markup
+ * characters become spaces, and whitespace collapses. Applied to both the
+ * query and the haystack.
+ */
+export function normalizeSearchText(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/\\([a-z]+)/gi, "$1")
+    .replace(/[${}()[\]^_~]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export type SearchHit = "label" | "text";
+
+/**
+ * Full-text index over the entries: id → normalized haystack of every content
+ * field (statement, formal, gloss, examples, …). Built once per entry set.
+ */
+export function buildSearchIndex(entries: GraphNode[]): Map<string, string> {
+  return new Map(entries.map((node) => [node.id, normalizeSearchText(nodeSearchText(node))]));
+}
+
+/** Where (if anywhere) the normalized query matches this entry. */
+export function searchHit(node: GraphNode, normQuery: string, index: Map<string, string>): SearchHit | null {
+  if (!normQuery) return "label";
+  if (normalizeSearchText(node.label).includes(normQuery)) return "label";
+  if ((node.source?.ref ?? "").toLowerCase().includes(normQuery)) return "label";
+  if ((index.get(node.id) ?? "").includes(normQuery)) return "text";
+  return null;
 }
 
 export function chapterLabel(chapter: string): string {

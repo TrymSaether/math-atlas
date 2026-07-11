@@ -3,7 +3,7 @@
   "label": "Functional Analysis mini knowledge graph",
   "field": "functional_analysis",
   "version": 1,
-  "updated": "2026-06-14",
+  "updated": "2026-07-04",
   "domains": [
     {
       "id": "foundations",
@@ -61,30 +61,40 @@
       "domain": "foundations",
       "label": "A nonzero bounded linear operator is not bounded on the domain",
       "content": {
-        "statement": "Let $X$ and $Y$ be normed vector spaces. A function $f : X \\to Y$ is said to be bounded on $X$ if there exists a $M > 0$ such that $\\|f(x)\\| \\leq M$ for all $x \\in X$. Show that a nonzero bounded linear operator $T : X \\to Y$ is not bounded on $X$."
+        "statement": "Let $X$ and $Y$ be normed vector spaces. A function $f:X\\to Y$ is said to be bounded on $X$ if there exists $M>0$ such that $\\|f(x)\\|\\leq M$ for all $x\\in X$. Show that a nonzero bounded linear operator $T:X\\to Y$ is not bounded on $X$.",
+        "intuition": "Linearity lets one scale a single nonzero output without bound. Bounded linear operator means controlled growth relative to input norm, not bounded image on all of $X$."
       },
       "assumptions": [
-        "$X$ and $Y$ are normed vector spaces.",
-        "$T : X \\to Y$ is a linear operator."
+        "$X$ and $Y$ are normed vector spaces over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
+        "$T:X\\to Y$ is a nonzero bounded linear operator."
       ],
       "proof": {
         "steps": [
           {
             "role": "setup",
-            "content": "Let $(X, \\|\\cdot\\|_X)$ and $(Y, \\|\\cdot\\|_Y)$ be normed vector spaces, and let $T : X \\to Y$ be a nonzero bounded linear operator.",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "Since $T$ is bounded, there exists an $M > 0$ such that $\\|T(x)\\|_Y \\leq M \\|x\\|_X$ for all $x \\in X$. Suppose for contradiction that $T$ is also bounded on $X$, i.e., there exists an $M' > 0$ such that $\\|T(x)\\|_Y \\leq M'$ for all $x \\in X$. Then, for any $x \\in X$, we have both $\\|T(x)\\|_Y \\leq M \\|x\\|_X$ and $\\|T(x)\\|_Y \\leq M'$. This implies that the image of the unit ball in $X$ under $T$ is contained in the ball of radius $\\min(M, M')$ in $Y$, which contradicts the assumption that $T$ is nonzero.",
+            "content": "Since $T\\neq0$, there exists $x_0\\in X$ such that $Tx_0\\neq0$.",
             "uses": [
               "bounded_linear_operator",
               "normed_vector_space"
             ]
           },
           {
+            "role": "scaling",
+            "content": "For every scalar $\\lambda\\in\\mathbb K$, linearity gives $T(\\lambda x_0)=\\lambda Tx_0$.",
+            "uses": [
+              "bounded_linear_operator"
+            ]
+          },
+          {
+            "role": "unboundedness",
+            "content": "Taking norms gives $$\\|T(\\lambda x_0)\\|=\\|\\lambda Tx_0\\|=|\\lambda|\\,\\|Tx_0\\|.$$ Since $\\|Tx_0\\|>0$ and $|\\lambda|$ can be arbitrarily large, the set $\\{\\|Tx\\|:x\\in X\\}$ is unbounded.",
+            "uses": [
+              "normed_vector_space"
+            ]
+          },
+          {
             "role": "conclusion",
-            "content": "Therefore, a nonzero bounded linear operator from a normed vector space to another cannot be bounded on the domain space.",
+            "content": "Therefore there is no $M>0$ such that $\\|Tx\\|\\leq M$ for all $x\\in X$. Hence $T$ is not bounded as a function on its whole domain.",
             "uses": []
           }
         ]
@@ -94,9 +104,10 @@
         "references": []
       },
       "tags": [
+        "boundedness",
         "exercise",
-        "linear operator",
-        "normed space"
+        "linear-operator",
+        "normed-space"
       ],
       "priority": "core"
     },
@@ -186,7 +197,8 @@
       "domain": "foundations",
       "label": "Closed sets are sequentially closed",
       "content": {
-        "statement": "Show that a subset of a metric space $M$ is closed if and only if it is sequentially closed. That is, show that $E$ is a closed subset of $M$ if and only if every convergent sequence in $E$ has its limit in $E$."
+        "statement": "Show that a subset of a metric space $M$ is closed if and only if it is sequentially closed. That is, show that $E$ is a closed subset of $M$ if and only if every convergent sequence in $E$ has its limit in $E$.",
+        "intuition": "Closedness can be tested by sequences in metric spaces: if a sequence stays in the set and converges, its limit cannot escape the set."
       },
       "assumptions": [
         "$M$ is a metric space.",
@@ -847,34 +859,46 @@
       "id": "exercise_1_8",
       "kind": "exercise",
       "domain": "foundations",
-      "label": "The derivative at zero defines an unbounded linear functional on $C^{(1)}[0, 1]$",
+      "label": "The derivative at zero defines an unbounded linear functional on $C^{(1)}[0,1]$",
       "content": {
-        "statement": "Let $C^{(1)}[0, 1]$ be the space of all continuous functions on $[0, 1]$ that have continuous derivative. (This space is called the space of continuously differentiable functions.) Define a norm $\\|\\cdot\\|$ on $C^{(1)}[0, 1]$ by $\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$. Show that the map $B(f) = f'(0)$ defines a linear functional on the normed vector space $(C^{(1)}[0, 1], \\|\\cdot\\|)$ that is not bounded."
+        "statement": "Let $C^{(1)}[0,1]$ be the space of continuously differentiable functions on $[0,1]$, equipped with $\\|f\\|=\\max_{t\\in[0,1]}|f(t)|$. Show that $B(f)=f'(0)$ defines a linear functional that is not bounded.",
+        "intuition": "The supremum norm controls function height, but not derivative steepness. Functions can stay uniformly bounded while their derivative at one point becomes arbitrarily large."
       },
       "assumptions": [
-        "$C^{(1)}[0, 1]$ is the space of all continuous functions on $[0, 1]$ that have continuous derivative.",
-        "$\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$ is a norm on $C^{(1)}[0, 1]$."
+        "$C^{(1)}[0,1]$ is equipped with the norm $\\|f\\|=\\max_{t\\in[0,1]}|f(t)|$.",
+        "$B:C^{(1)}[0,1]\\to\\mathbb R$ is defined by $B(f)=f'(0)$."
       ],
       "proof": {
         "steps": [
           {
-            "role": "setup",
-            "content": "Let $C^{(1)}[0, 1]$ be the space of all continuous functions on $[0, 1]$ that have continuous derivative, equipped with the norm $\\|f\\| = \\max_{t \\in [0,1]} |f(t)|$. Define the map $B : C^{(1)}[0, 1] \\to \\mathbb{R}$ by $B(f) = f'(0)$.",
+            "role": "linearity",
+            "content": "For $f,g\\in C^{(1)}[0,1]$ and $\\alpha\\in\\mathbb R$, $$B(\\alpha f+g)=(\\alpha f+g)'(0)=\\alpha f'(0)+g'(0)=\\alpha B(f)+B(g).$$ Hence $B$ is linear.",
+            "uses": [
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "test functions",
+            "content": "For each $n\\in\\mathbb N$, define $f_n(t)=\\sin(nt)$. Then $f_n\\in C^{(1)}[0,1]$ and $\\|f_n\\|\\leq1$.",
+            "uses": [
+              "normed_vector_space"
+            ]
+          },
+          {
+            "role": "derivative growth",
+            "content": "Since $f_n'(t)=n\\cos(nt)$, we have $$B(f_n)=f_n'(0)=n.$$",
             "uses": []
           },
           {
-            "role": "step 1: linearity",
-            "content": "To show that $B$ is linear, let $f, g \\in C^{(1)}[0, 1]$ and let $\\alpha \\in \\mathbb{R}$. We have: $$B(\\alpha f + g) = (\\alpha f + g)'(0) = \\alpha f'(0) + g'(0) = \\alpha B(f) + B(g).$$ Thus, $B$ is linear.",
-            "uses": []
-          },
-          {
-            "role": "step 2: unboundedness",
-            "content": "To show that $B$ is not bounded, we need to show that for every constant $M > 0$, there exists a function $f \\in C^{(1)}[0, 1]$ such that $|B(f)| > M \\|f\\|$. Consider the family of functions defined by $f_n(t) = \\frac{t^n}{n!}$ for $n \\in \\mathbb{N}$. Each $f_n$ is in $C^{(1)}[0, 1]$, and we have: $$B(f_n) = f_n'(0) = \\frac{n t^{n-1}}{n!}\\bigg|_{t=0} = 0$$ for all $n$. However, we also have: $$\\|f_n\\| = \\max_{t \\in [0,1]} |f_n(t)| = \\max_{t \\in [0,1]} \\left|\\frac{t^n}{n!}\\right| = \\frac{1}{n!}.$$ As $n \\to \\infty$, $\\|f_n\\| \\to 0$, but $|B(f_n)| = 0$ for all $n$. Therefore, for any $M > 0$, we can choose $n$ large enough such that $\\|f_n\\| < \\frac{1}{M}$, which implies that $|B(f_n)| = 0 > M \\|f_n\\|$. Hence, $B$ is not bounded.",
-            "uses": []
+            "role": "unboundedness",
+            "content": "If $B$ were bounded, there would be $C>0$ such that $|B(f)|\\leq C\\|f\\|$ for all $f$. Applying this to $f_n$ gives $n=|B(f_n)|\\leq C\\|f_n\\|\\leq C$, impossible for all $n$.",
+            "uses": [
+              "bounded_linear_functional"
+            ]
           },
           {
             "role": "conclusion",
-            "content": "We have shown that $B$ is linear but not bounded, so $B$ defines a linear functional on the normed vector space $(C^{(1)}[0, 1], \\|\\cdot\\|)$ that is not bounded.",
+            "content": "Thus $B$ is linear but not bounded.",
             "uses": []
           }
         ]
@@ -884,9 +908,10 @@
         "references": []
       },
       "tags": [
+        "derivative",
         "exercise",
-        "functional analysis",
-        "linear functional"
+        "linear-functional",
+        "unbounded"
       ],
       "priority": "core"
     },
@@ -941,40 +966,30 @@
     },
     {
       "id": "triangle_inequality",
-      "kind": "theorem",
+      "kind": "property",
       "domain": "foundations",
       "label": "Triangle Inequality",
       "content": {
-        "statement": "Let $X$ be a normed space. Then for all $x, y \\in X$, we have $\\|x + y\\| \\leq \\|x\\| + \\|y\\|$.",
-        "formal": "$$(X,\\|\\cdot\\|)\\text{ normed space},\\ \\|x + y\\| \\leq \\|x\\| + \\|y\\| \\quad \\forall x,y \\in X.$$"
+        "statement": "In a normed space, the norm of a sum is at most the sum of the norms.",
+        "definition": "The triangle inequality is one of the defining axioms of a norm.",
+        "formal": "Let $(X,\\|\\cdot\\|)$ be a normed space. Then for all $x,y\\in X$, $$\\|x+y\\|\\leq\\|x\\|+\\|y\\|.$$",
+        "intuition": "The direct path from $0$ to $x+y$ is no longer than going first to $x$ and then from $x$ to $x+y$.",
+        "notation": [
+          "$\\|x+y\\|\\leq\\|x\\|+\\|y\\|$"
+        ]
       },
       "assumptions": [
         "$(X,\\|\\cdot\\|)$ is a normed space."
       ],
-      "proof": {
-        "steps": [
-          {
-            "role": "setup",
-            "content": "Let $(X,\\|\\cdot\\|)$ be a normed space, and let $x,y \\in X$ be arbitrary.",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "By the definition of a norm, we have $\\|x + y\\|^2 = \\langle x + y, x + y \\rangle = \\|x\\|^2 + 2\\langle x, y \\rangle + \\|y\\|^2$. Since $2\\langle x, y \\rangle \\leq 2\\|x\\|\\|y\\|$ by the Cauchy-Schwarz inequality, we have $\\|x + y\\|^2 \\leq \\|x\\|^2 + 2\\|x\\|\\|y\\| + \\|y\\|^2 = (\\|x\\| + \\|y\\|)^2$. Taking the square root of both sides gives the desired result.",
-            "uses": [
-              "normed_vector_space"
-            ]
-          }
-        ]
-      },
       "source": {
-        "citation": "Bowers-Kalton Theorem 1.1",
+        "citation": "Bowers-Kalton Definition 1.1: norm axiom (N2)",
         "references": []
       },
       "tags": [
-        "normed space",
-        "theorem",
-        "triangle inequality"
+        "norm",
+        "normed-space",
+        "property",
+        "triangle-inequality"
       ],
       "priority": "core"
     },
@@ -1245,6 +1260,48 @@
       "assumptions": [
         "$X$ is finite-dimensional."
       ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Let $X$ be finite-dimensional and let $\\|\\cdot\\|_a$, $\\|\\cdot\\|_b$ be two norms on $X$.",
+            "uses": [
+              "norm",
+              "vector_space"
+            ]
+          },
+          {
+            "role": "coordinate reduction",
+            "content": "Choose a basis of $X$ and identify $X$ algebraically with $\\mathbb K^n$.",
+            "uses": [
+              "vector_space"
+            ]
+          },
+          {
+            "role": "compact unit sphere",
+            "content": "The unit sphere $S_a=\\{x:\\|x\\|_a=1\\}$ is compact in finite dimensions, and the function $x\\mapsto\\|x\\|_b$ is continuous on $S_a$.",
+            "uses": [
+              "compactness",
+              "continuity"
+            ]
+          },
+          {
+            "role": "positive minimum and finite maximum",
+            "content": "Since $S_a$ is compact and $\\|x\\|_b>0$ on $S_a$, there exist $m,M>0$ such that $m\\leq\\|x\\|_b\\leq M$ for all $x\\in S_a$.",
+            "uses": [
+              "compactness",
+              "norm"
+            ]
+          },
+          {
+            "role": "rescale",
+            "content": "For $x\\neq0$, apply the sphere estimate to $x/\\|x\\|_a$ to get $$m\\|x\\|_a\\leq\\|x\\|_b\\leq M\\|x\\|_a.$$ The case $x=0$ is immediate.",
+            "uses": [
+              "norm"
+            ]
+          }
+        ]
+      },
       "tags": [
         "finite-dimensional",
         "norm",
@@ -2127,6 +2184,40 @@
         "notation": []
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
+      "proof": {
+        "steps": [
+          {
+            "role": "embed into product",
+            "content": "Embed the dual unit ball $B_{X^*}$ into the product $\\prod_{x\\in X}\\{\\lambda\\in\\mathbb K:|\\lambda|\\leq\\|x\\|\\}$ by sending $x^*$ to the function $x\\mapsto x^*(x)$.",
+            "uses": [
+              "dual_space",
+              "closed_unit_ball"
+            ]
+          },
+          {
+            "role": "compact ambient product",
+            "content": "Each scalar disk is compact, and the product is compact by Tychonoff's theorem.",
+            "uses": [
+              "compactness"
+            ]
+          },
+          {
+            "role": "closed image",
+            "content": "The image of $B_{X^*}$ is cut out by pointwise linearity conditions and the norm bound, hence is closed in the product.",
+            "uses": [
+              "weak_star_topology",
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "Therefore $B_{X^*}$ is compact in the topology of pointwise convergence on $X$, namely the weak-star topology $\\sigma(X^*,X)$.",
+            "uses": [
+              "weak_star_topology"
+            ]
+          }
+        ]
+      },
       "tags": [
         "compactness",
         "weak-star"
@@ -2327,7 +2418,7 @@
         "measures",
         "riesz representation"
       ],
-      "priority": "standard"
+      "priority": "peripheral"
     },
     {
       "id": "weakly_bounded_implies_norm_bounded",
@@ -2345,6 +2436,49 @@
         "$X$ is Banach.",
         "$A$ is weakly bounded."
       ],
+      "proof": {
+        "steps": [
+          {
+            "role": "canonical family",
+            "content": "For each $a\\in A$, define $T_a:X^*\\to\\mathbb K$ by $T_a(x^*)=x^*(a)$.",
+            "uses": [
+              "dual_space",
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "pointwise boundedness",
+            "content": "Weak boundedness of $A$ says that for every fixed $x^*\\in X^*$, the set $\\{|T_a(x^*)|:a\\in A\\}$ is bounded.",
+            "uses": [
+              "weakly_bounded_set",
+              "boundedness"
+            ]
+          },
+          {
+            "role": "uniform boundedness",
+            "content": "Since $X^*$ is Banach, the uniform boundedness principle gives $$\\sup_{a\\in A}\\|T_a\\|<\\infty.$$",
+            "uses": [
+              "dual_space_is_banach",
+              "uniform_boundedness_principle"
+            ]
+          },
+          {
+            "role": "identify the norm",
+            "content": "By the Hahn-Banach norming functional argument, $\\|T_a\\|=\\|a\\|$ for each $a\\in A$.",
+            "uses": [
+              "hahn_banach_real_normed_spaces",
+              "hahn_banach_complex_normed_spaces"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "Therefore $$\\sup_{a\\in A}\\|a\\|<\\infty,$$ so $A$ is norm bounded.",
+            "uses": [
+              "norm"
+            ]
+          }
+        ]
+      },
       "source": {
         "citation": "2025 exam Question 5",
         "references": []
@@ -2536,6 +2670,40 @@
         "intuition": "Orthogonal projection is the engine of Hilbert space geometry.",
         "notation": []
       },
+      "proof": {
+        "steps": [
+          {
+            "role": "minimizing sequence",
+            "content": "Let $C$ be nonempty, closed, and convex. Choose a sequence $(c_n)$ in $C$ such that $\\|x-c_n\\|\\to\\inf_{c\\in C}\\|x-c\\|$.",
+            "uses": [
+              "convergence"
+            ]
+          },
+          {
+            "role": "parallelogram argument",
+            "content": "The parallelogram identity and convexity imply that $(c_n)$ is Cauchy.",
+            "uses": [
+              "inner_product_space",
+              "cauchy_sequence"
+            ]
+          },
+          {
+            "role": "existence",
+            "content": "Completeness of the Hilbert space gives $c_n\\to c$, and closedness of $C$ gives $c\\in C$.",
+            "uses": [
+              "hilbert_space",
+              "completeness"
+            ]
+          },
+          {
+            "role": "uniqueness",
+            "content": "If two distinct minimizers existed, their midpoint would lie in $C$ and the parallelogram identity would give a strictly smaller distance.",
+            "uses": [
+              "inner_product_space"
+            ]
+          }
+        ]
+      },
       "tags": [
         "hilbert",
         "projection"
@@ -2574,6 +2742,47 @@
         "notation": []
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/riesz-representation.svg",
+      "proof": {
+        "steps": [
+          {
+            "role": "zero case",
+            "content": "If $f=0$, choose $y=0$.",
+            "uses": [
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "kernel",
+            "content": "If $f\\neq0$, then $\\ker f$ is a closed proper subspace of $H$.",
+            "uses": [
+              "kernel",
+              "bounded_linear_functional"
+            ]
+          },
+          {
+            "role": "orthogonal vector",
+            "content": "By the projection theorem, choose $z\\neq0$ with $z\\perp\\ker f$.",
+            "uses": [
+              "projection_theorem"
+            ]
+          },
+          {
+            "role": "representation",
+            "content": "Every $x\\in H$ decomposes as a vector in $\\ker f$ plus a scalar multiple of $z$, giving $f(x)=\\langle x,y\\rangle$ for a suitable $y\\in H$.",
+            "uses": [
+              "hilbert_space",
+              "inner_product_space"
+            ]
+          },
+          {
+            "role": "norm equality and uniqueness",
+            "content": "Cauchy-Schwarz gives $\\|f\\|\\leq\\|y\\|$, and evaluating at $y/\\|y\\|$ gives equality. Uniqueness follows because if $\\langle x,y_1-y_2\\rangle=0$ for all $x$, then $y_1=y_2$.",
+            "uses": [
+              "norm"
+            ]
+          }
+        ]
+      },
       "tags": [
         "duality",
         "hilbert",
@@ -2688,7 +2897,7 @@
         "hilbert",
         "spectral"
       ],
-      "priority": "standard"
+      "priority": "peripheral"
     },
     {
       "id": "spectrum",
@@ -3062,7 +3271,7 @@
         "foundations",
         "hahn-banach"
       ],
-      "priority": "standard"
+      "priority": "peripheral"
     },
     {
       "id": "baire_category_theorem",
@@ -3076,6 +3285,44 @@
         "notation": []
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/baire-category.svg",
+      "proof": {
+        "steps": [
+          {
+            "role": "contradiction setup",
+            "content": "Assume a complete metric space $X$ is a countable union of closed sets $F_n$ with empty interior.",
+            "uses": [
+              "completeness",
+              "metric_space"
+            ]
+          },
+          {
+            "role": "nested balls",
+            "content": "Recursively construct closed balls $\\overline B_n$ with radii tending to zero such that $\\overline B_n\\subseteq \\overline B_{n-1}$ and $\\overline B_n\\cap F_n=\\varnothing$.",
+            "uses": [
+              "metric_space"
+            ]
+          },
+          {
+            "role": "cauchy center sequence",
+            "content": "The centers of the nested balls form a Cauchy sequence.",
+            "uses": [
+              "cauchy_sequence"
+            ]
+          },
+          {
+            "role": "complete limit",
+            "content": "Completeness gives a limit point $x\\in X$, and the nesting forces $x\\in\\overline B_n$ for every $n$.",
+            "uses": [
+              "completeness"
+            ]
+          },
+          {
+            "role": "contradiction",
+            "content": "Since $\\overline B_n\\cap F_n=\\varnothing$ for every $n$, the point $x$ lies in none of the $F_n$, contradicting $X=\\bigcup_nF_n$.",
+            "uses": []
+          }
+        ]
+      },
       "tags": [
         "category",
         "completeness"
@@ -3093,6 +3340,33 @@
         "notation": []
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/open-mapping.svg",
+      "proof": {
+        "steps": [
+          {
+            "role": "apply open mapping",
+            "content": "Let $T:X\\to Y$ be bijective, bounded, and linear between Banach spaces. By the open mapping theorem, $T$ maps open sets in $X$ to open sets in $Y$.",
+            "uses": [
+              "open_mapping_theorem",
+              "bounded_linear_operator",
+              "banach_space"
+            ]
+          },
+          {
+            "role": "inverse continuity",
+            "content": "A bijection has continuous inverse iff it maps open sets to open sets. Hence $T^{-1}:Y\\to X$ is continuous.",
+            "uses": [
+              "continuity"
+            ]
+          },
+          {
+            "role": "boundedness",
+            "content": "For linear maps between normed spaces, continuity is equivalent to boundedness. Thus $T^{-1}$ is bounded.",
+            "uses": [
+              "bounded_linear_operator"
+            ]
+          }
+        ]
+      },
       "tags": [
         "open mapping"
       ],
@@ -3129,6 +3403,39 @@
         "notation": []
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/closed-graph.svg",
+      "proof": {
+        "steps": [
+          {
+            "role": "graph norm",
+            "content": "Define $$\\|x\\|_G=\\|x\\|_X+\\|Tx\\|_Y.$$ If the graph of $T$ is closed and $X,Y$ are Banach, then $(X,\\|\\cdot\\|_G)$ is Banach.",
+            "uses": [
+              "closed_graph",
+              "banach_space"
+            ]
+          },
+          {
+            "role": "identity map",
+            "content": "The identity map $I:(X,\\|\\cdot\\|_G)\\to(X,\\|\\cdot\\|_X)$ is bounded and bijective.",
+            "uses": [
+              "bounded_linear_operator"
+            ]
+          },
+          {
+            "role": "bounded inverse",
+            "content": "By the bounded inverse theorem, the inverse identity map $I^{-1}:(X,\\|\\cdot\\|_X)\\to(X,\\|\\cdot\\|_G)$ is bounded.",
+            "uses": [
+              "bounded_inverse_theorem"
+            ]
+          },
+          {
+            "role": "operator bound",
+            "content": "Thus there is $C>0$ such that $$\\|x\\|_X+\\|Tx\\|_Y\\leq C\\|x\\|_X.$$ Hence $\\|Tx\\|_Y\\leq C\\|x\\|_X$, so $T$ is bounded.",
+            "uses": [
+              "operator_norm"
+            ]
+          }
+        ]
+      },
       "tags": [
         "closed graph",
         "open mapping"
@@ -3183,6 +3490,47 @@
         "notation": []
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/open-mapping.svg",
+      "proof": {
+        "steps": [
+          {
+            "role": "image cover",
+            "content": "Let $T:X\\to Y$ be surjective, bounded, and linear between Banach spaces. Since $X=\\bigcup_{n=1}^\\infty nB_X$, surjectivity gives $$Y=\\bigcup_{n=1}^\\infty T(nB_X).$$",
+            "uses": [
+              "surjective_operator_assumption",
+              "bounded_linear_operator"
+            ]
+          },
+          {
+            "role": "baire category",
+            "content": "Taking closures, Baire's theorem implies that some $\\overline{T(nB_X)}$ has nonempty interior.",
+            "uses": [
+              "baire_category_theorem"
+            ]
+          },
+          {
+            "role": "ball in image closure",
+            "content": "By linearity and symmetry, there exists $r>0$ such that $$B_Y(0,r)\\subseteq\\overline{T(B_X)}.$$",
+            "uses": [
+              "linear_operator"
+            ]
+          },
+          {
+            "role": "remove closure",
+            "content": "A standard iterative approximation argument improves this to $$B_Y(0,r/2)\\subseteq T(B_X).$$",
+            "uses": [
+              "approximation_argument",
+              "completeness"
+            ]
+          },
+          {
+            "role": "openness",
+            "content": "Since $T$ sends a neighborhood of $0$ onto a neighborhood of $0$, linearity implies that $T$ maps every open set in $X$ to an open set in $Y$.",
+            "uses": [
+              "linear_operator"
+            ]
+          }
+        ]
+      },
       "tags": [
         "baire",
         "open mapping"
@@ -3340,34 +3688,66 @@
       "label": "Uniform Boundedness Principle",
       "content": {
         "statement": "A pointwise bounded family of bounded linear operators on a Banach space is uniformly bounded.",
-        "definition": "The uniform boundedness principle, also known as the Banach-Steinhaus theorem, states that if a family of bounded linear operators on a Banach space is pointwise bounded, then it is uniformly bounded in operator norm.",
-        "formal": "If $X$ is Banach and $\\{T_i:X \\to Y\\}$ is a family of bounded linear operators such that for every $x\\in X$, the set $\\{\\|T_i x\\|:i\\in I\\}$ is bounded, then there exists $C<\\infty$ such that $\\|T_i\\|\\leq C$ for all $i\\in I$.",
-        "formula": "$$\\begin{aligned}&\\text{If } X \\text{ is Banach and } \\{T_i:X \\to Y\\} \\text{ is a family of bounded linear operators such that}\\\\ &\\quad \\forall x\\in X, \\{\\|T_i x\\|:i\\in I\\} \\text{ is bounded},\\\\ &\\text{then } \\exists C<\\infty \\text{ such that } \\|T_i\\|\\leq C \\text{ for all } i\\in I.\\end{aligned}$$",
-        "intuition": "If each vector is controlled separately, then a uniform bound on the operators emerges from the Baire category argument.",
-        "notation": [
-          "$\\{T_i:X \\to Y\\}$",
-          "$\\|T_i\\|$"
-        ]
+        "definition": "The uniform boundedness principle, also known as the Banach-Steinhaus theorem, states that if a family of bounded linear operators on a Banach space is pointwise bounded, then the operator norms are uniformly bounded.",
+        "formal": "Let $X$ be a Banach space, let $Y$ be a normed space, and let $\\{T_i:X\\to Y:i\\in I\\}$ be a family of bounded linear operators. If for every $x\\in X$ one has $$\\sup_{i\\in I}\\|T_i x\\|<\\infty,$$ then $$\\sup_{i\\in I}\\|T_i\\|<\\infty.$$",
+        "formula": "$$\\left[\\forall x\\in X:\\sup_{i\\in I}\\|T_i x\\|<\\infty\\right]\\Longrightarrow \\sup_{i\\in I}\\|T_i\\|<\\infty.$$",
+        "intuition": "Pointwise control looks weak because each vector may have its own bound. Completeness upgrades these separate bounds into one uniform operator-norm bound."
       },
       "examples": [
         {
-          "content": "Consider the family of operators $T_n: \\ell^p \\to \\ell^p$ defined by $T_n(x_1,x_2,\\ldots) = (0,0,\\ldots,0,x_n,0,\\ldots)$ where $x_n$ is in the $n$-th position. Each $T_n$ is a bounded linear operator with norm 1. For each fixed vector $x=(x_1,x_2,\\ldots) \\in \\ell^p$, the set $\\{\\|T_n x\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example illustrates that pointwise boundedness does not imply uniform boundedness if the domain space is not complete."
-        },
-        {
-          "content": "Let $X=C[0,1]$ be the space of continuous functions on the interval $[0,1]$ with the supremum norm, and let $Y=\\mathbb{R}$. Define a family of operators $T_n: X \\to Y$ by $T_n(f) = f(1/n)$. Each $T_n$ is a bounded linear operator with norm 1. For each fixed function $f \\in C[0,1]$, the set $\\{\\|T_n f\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example shows that even in a complete space, pointwise boundedness does not guarantee uniform boundedness without the completeness assumption."
-        },
-        {
-          "content": "Consider the family of operators $T_n: \\ell^p \\to \\ell^p$ defined by $T_n(x_1,x_2,\\ldots) = (x_1,x_2,\\ldots,x_{n-1},0,x_{n+1},\\ldots)$ where the $n$-th term is set to zero. Each $T_n$ is a bounded linear operator with norm 1. For each fixed vector $x=(x_1,x_2,\\ldots) \\in \\ell^p$, the set $\\{\\|T_n x\\|: n \\in \\mathbb{N}\\}$ is bounded since it contains at most one nonzero term. However, the family $\\{T_n\\}$ is not uniformly bounded since $\\|T_n\\|=1$ for all $n$. This example demonstrates that pointwise boundedness does not imply uniform boundedness if the domain space is not complete."
+          "content": "Completeness is necessary. On $c_{00}$ with the $\\ell^\\infty$ norm, define $T_n(x)=\\sum_{k=1}^n x_k$. For each fixed $x\\in c_{00}$, the sequence $(T_nx)$ is eventually constant, hence bounded. But $\\|T_n\\|=n$, so the family is not uniformly bounded."
         }
       ],
       "assumptions": [
-        "The domain space $X$ is a Banach space.",
-        "The family $\\{T_i:X \\to Y\\}$ consists of bounded linear operators.",
-        "For each $x\\in X$, the set $\\{\\|T_i x\\|:i\\in I\\}$ is bounded."
+        "$X$ is Banach.",
+        "$Y$ is normed.",
+        "$T_i:X\\to Y$ is bounded and linear for every $i\\in I$.",
+        "$\\sup_i\\|T_i x\\|<\\infty$ for every fixed $x\\in X$."
       ],
+      "proof": {
+        "steps": [
+          {
+            "role": "closed sets",
+            "content": "For each $n\\in\\mathbb N$, define $$E_n=\\{x\\in X:\\sup_{i\\in I}\\|T_i x\\|\\leq n\\}.$$ Each $E_n$ is closed because each $T_i$ is continuous.",
+            "uses": [
+              "bounded_linear_operator",
+              "continuity"
+            ]
+          },
+          {
+            "role": "cover",
+            "content": "The pointwise boundedness assumption gives $$X=\\bigcup_{n=1}^\\infty E_n.$$",
+            "uses": [
+              "pointwise_bounded_family_assumption"
+            ]
+          },
+          {
+            "role": "baire",
+            "content": "Since $X$ is Banach, it is a complete metric space. By the Baire category theorem, some $E_N$ has nonempty interior.",
+            "uses": [
+              "baire_category_theorem",
+              "banach_space"
+            ]
+          },
+          {
+            "role": "local bound",
+            "content": "Thus there exist $x_0\\in X$ and $r>0$ such that $B(x_0,r)\\subseteq E_N$. For $\\|h\\|<r$, both $x_0+h$ and $x_0$ are controlled, so $$\\sup_i\\|T_i h\\|\\leq 2N.$$",
+            "uses": [
+              "normed_vector_space"
+            ]
+          },
+          {
+            "role": "rescale",
+            "content": "For arbitrary $x\\neq0$, apply the previous estimate to $h=(r/2)x/\\|x\\|$. This gives $$\\sup_i\\|T_i x\\|\\leq \\frac{4N}{r}\\|x\\|.$$ Hence $\\sup_i\\|T_i\\|\\leq 4N/r<\\infty$.",
+            "uses": [
+              "operator_norm"
+            ]
+          }
+        ]
+      },
       "tags": [
         "baire",
-        "banach_steinhaus",
+        "banach-steinhaus",
         "ubp"
       ],
       "priority": "core"
@@ -3427,32 +3807,82 @@
       "priority": "standard"
     },
     {
-      "id": "partially_ordered_set",
+      "id": "partial_order",
       "kind": "definition",
       "domain": "order_theory",
-      "label": "Partially ordered set",
+      "label": "Partial Order",
       "content": {
-        "statement": "A partially ordered set is a set equipped with a comparison relation that is reflexive, antisymmetric, and transitive.",
-        "formal": "A partially ordered set is a pair $(P,\\leq)$, where $P$ is a set and $\\leq$ is a relation on $P$ satisfying: for all $a,b,c\\in P$, (i) $a\\leq a$; (ii) if $a\\leq b$ and $b\\leq a$, then $a=b$; and (iii) if $a\\leq b$ and $b\\leq c$, then $a\\leq c$.",
-        "intuition": "Think of a partially ordered set as a universe where some objects can be compared by size, extension, inclusion, strength, or information content, but not necessarily all objects can be compared. In the Hahn-Banach proof, one extension is larger than another if it is defined on a bigger subspace and agrees with the smaller one.",
+        "statement": "A partial order is a relation that is reflexive, antisymmetric, and transitive.",
+        "definition": "A partial order on a set $P$ is a relation that behaves like an abstract version of $\\leq$, except that not every two elements must be comparable.",
+        "formal": "Let $P$ be a set. A relation $\\preceq\\subseteq P\\times P$ is a partial order if, for all $a,b,c\\in P$: (i) $a\\preceq a$; (ii) if $a\\preceq b$ and $b\\preceq a$, then $a=b$; and (iii) if $a\\preceq b$ and $b\\preceq c$, then $a\\preceq c$.",
+        "intuition": "A partial order compares objects only when the comparison makes sense. Unlike a total order, it permits incomparable elements.",
         "notation": [
-          "$(P,\\leq)$: a partially ordered set",
-          "$a\\leq b$: $a$ is below $b$, smaller than $b$, or contained/extended by $b$ depending on context"
+          "$\\preceq\\subseteq P\\times P$",
+          "$a\\preceq b$",
+          "$a\\leq b$"
         ]
       },
       "examples": [
         {
-          "content": "If $P$ is a collection of subsets of a set $E$, then $(P,\\subseteq)$ is partially ordered by inclusion."
+          "content": "For any set $S$, subset inclusion $A\\subseteq B$ defines a partial order on $\\mathcal P(S)$."
+        },
+        {
+          "content": "Divisibility defines a partial order on $\\mathbb N$: $a\\preceq b$ iff $a$ divides $b$."
+        },
+        {
+          "content": "Pointwise order defines a partial order on real-valued functions: $f\\preceq g$ iff $f(x)\\leq g(x)$ for every $x$."
+        }
+      ],
+      "source": {
+        "citation": "Bowers-Kalton, Definition 3.1",
+        "references": []
+      },
+      "tags": [
+        "hahn-banach",
+        "partial-order",
+        "poset",
+        "relation",
+        "zorn"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "partially_ordered_set",
+      "kind": "definition",
+      "domain": "order_theory",
+      "label": "Partially Ordered Set",
+      "content": {
+        "statement": "A partially ordered set, or poset, is a set equipped with a partial order.",
+        "definition": "A partially ordered set is a pair $(P,\\preceq)$ where $P$ is a set and $\\preceq$ is a relation on $P$ that is reflexive, antisymmetric, and transitive.",
+        "formal": "A pair $(P,\\preceq)$ is a partially ordered set iff $\\preceq\\subseteq P\\times P$ and, for all $a,b,c\\in P$: (i) $a\\preceq a$; (ii) if $a\\preceq b$ and $b\\preceq a$, then $a=b$; and (iii) if $a\\preceq b$ and $b\\preceq c$, then $a\\preceq c$.",
+        "intuition": "A poset is a universe where some objects can be compared by size, inclusion, extension, strength, or information content, but not every pair must be comparable. In Hahn-Banach, admissible extensions are ordered by extension: one object is larger if it is defined on a larger subspace and agrees with the smaller one.",
+        "notation": [
+          "$(P,\\preceq)$",
+          "$(P,\\leq)$",
+          "$a\\preceq b$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "$(\\mathcal P(S),\\subseteq)$ is a partially ordered set: every subset is contained in itself, mutual containment gives equality, and containment is transitive."
+        },
+        {
+          "content": "In Hahn-Banach arguments, admissible extensions can be ordered by extension: $(M,f)\\preceq(N,g)$ iff $M\\subseteq N$ and $g|_M=f$."
         }
       ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
+      "source": {
+        "citation": "Bowers-Kalton, Definition 3.1",
+        "references": []
+      },
       "tags": [
         "foundations",
         "hahn-banach",
         "order-theory",
+        "poset",
         "zorns-lemma"
       ],
-      "priority": "standard"
+      "priority": "core"
     },
     {
       "id": "upper_bound",
@@ -3541,11 +3971,6 @@
     {
       "source": "hahn_banach_real_normed_spaces",
       "target": "normed_vector_space",
-      "relation": "assumes"
-    },
-    {
-      "source": "hahn_banach_theorem",
-      "target": "scalar_field_real_or_complex",
       "relation": "assumes"
     },
     {
@@ -4015,6 +4440,11 @@
     },
     {
       "source": "convergence",
+      "target": "sequence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "convergence",
       "target": "topology_induced_by_metric",
       "relation": "defined_in_terms_of"
     },
@@ -4099,22 +4529,17 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "ell_p_spaces",
+      "target": "sequence",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "equivalent_norms",
       "target": "norm",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_10",
-      "target": "cauchy_sequence",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "exercise_1_10",
-      "target": "closed_subspace",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "exercise_1_10",
       "target": "convergence",
       "relation": "defined_in_terms_of"
     },
@@ -4140,7 +4565,7 @@
     },
     {
       "source": "exercise_1_2",
-      "target": "cauchy_sequence",
+      "target": "boundedness",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4150,41 +4575,61 @@
     },
     {
       "source": "exercise_1_2",
-      "target": "metric_space",
+      "target": "normed_vector_space",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_3",
-      "target": "cauchy_sequence",
+      "target": "norm",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_3",
-      "target": "convergence",
+      "target": "normed_vector_space",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_3",
-      "target": "metric_space",
+      "target": "triangle_inequality",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_4",
-      "target": "cauchy_sequence",
+      "target": "bounded_function_on_domain",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_4",
-      "target": "convergence",
+      "target": "bounded_linear_operator",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_4",
-      "target": "metric_space",
+      "target": "normed_vector_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_4",
+      "target": "unbounded_scalar_multiples",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "exercise_1_7",
+      "target": "bounded_linear_functional",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_7",
+      "target": "linear_functional",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_7",
+      "target": "normed_vector_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_8",
       "target": "bounded_linear_functional",
       "relation": "defined_in_terms_of"
     },
@@ -4201,6 +4646,11 @@
     {
       "source": "exercise_1_9",
       "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "exercise_1_9",
+      "target": "linear_functional",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4260,17 +4710,7 @@
     },
     {
       "source": "hahn_banach_theorem",
-      "target": "dual_space",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "hahn_banach_theorem",
       "target": "linear_functional",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "hahn_banach_theorem",
-      "target": "normed_vector_space",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4391,6 +4831,11 @@
     {
       "source": "locally_convex_space",
       "target": "topological_vector_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "locally_convex_space",
+      "target": "vector_space",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4529,6 +4974,18 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "partial_order",
+      "target": "relation",
+      "relation": "defined_in_terms_of",
+      "notes": "A partial order is a relation on a set satisfying reflexivity, antisymmetry, and transitivity."
+    },
+    {
+      "source": "partially_ordered_set",
+      "target": "partial_order",
+      "relation": "defined_in_terms_of",
+      "notes": "A poset is a set together with a partial order."
+    },
+    {
       "source": "pointwise_bounded_family_assumption",
       "target": "boundedness",
       "relation": "defined_in_terms_of"
@@ -4541,6 +4998,11 @@
     {
       "source": "pointwise_limit",
       "target": "sequence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "positive_homogeneity",
+      "target": "vector_space",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4661,6 +5123,11 @@
     {
       "source": "sequence_limit_vs_variable_limit",
       "target": "function",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "sequence_limit_vs_variable_limit",
+      "target": "limit_of_sequence",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4805,6 +5272,11 @@
     },
     {
       "source": "weak_convergence",
+      "target": "convergence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_convergence",
       "target": "dual_space",
       "relation": "defined_in_terms_of"
     },
@@ -4815,12 +5287,27 @@
     },
     {
       "source": "weak_convergence",
+      "target": "sequence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_convergence",
       "target": "weak_topology",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_star_convergence",
+      "target": "convergence",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_star_convergence",
       "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_star_convergence",
+      "target": "sequence",
       "relation": "defined_in_terms_of"
     },
     {
@@ -4879,6 +5366,11 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "weakly_bounded_set",
+      "target": "linear_functional",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "zorns_lemma",
       "target": "chain",
       "relation": "defined_in_terms_of"
@@ -4887,6 +5379,12 @@
       "source": "zorns_lemma",
       "target": "maximal_element",
       "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "zorns_lemma",
+      "target": "partially_ordered_set",
+      "relation": "defined_in_terms_of",
+      "notes": "Zorn's lemma is stated for partially ordered sets."
     },
     {
       "source": "zorns_lemma",
@@ -4956,16 +5454,6 @@
     {
       "source": "function",
       "target": "operator",
-      "relation": "generalizes"
-    },
-    {
-      "source": "hahn_banach_theorem",
-      "target": "hahn_banach_complex_normed_spaces",
-      "relation": "generalizes"
-    },
-    {
-      "source": "hahn_banach_theorem",
-      "target": "hahn_banach_real_normed_spaces",
       "relation": "generalizes"
     },
     {
@@ -5629,6 +6117,11 @@
       "relation": "satisfies"
     },
     {
+      "source": "baire_category_theorem",
+      "target": "cauchy_sequence",
+      "relation": "uses"
+    },
+    {
       "source": "banach_alaoglu_theorem",
       "target": "axiom_of_choice",
       "relation": "uses"
@@ -5640,7 +6133,17 @@
     },
     {
       "source": "banach_alaoglu_theorem",
+      "target": "linear_functional",
+      "relation": "uses"
+    },
+    {
+      "source": "banach_alaoglu_theorem",
       "target": "weak_topology",
+      "relation": "uses"
+    },
+    {
+      "source": "bounded_inverse_theorem",
+      "target": "continuity",
       "relation": "uses"
     },
     {
@@ -5655,12 +6158,42 @@
     },
     {
       "source": "bounded_operators_banach_space",
+      "target": "bounded_linear_operator",
+      "relation": "uses"
+    },
+    {
+      "source": "bounded_operators_banach_space",
       "target": "cauchy_sequence",
+      "relation": "uses"
+    },
+    {
+      "source": "bounded_operators_banach_space",
+      "target": "linear_operator",
+      "relation": "uses"
+    },
+    {
+      "source": "bounded_operators_banach_space",
+      "target": "normed_vector_space",
+      "relation": "uses"
+    },
+    {
+      "source": "bounded_operators_banach_space",
+      "target": "operator_norm",
+      "relation": "uses"
+    },
+    {
+      "source": "closed_graph_theorem",
+      "target": "bounded_inverse_theorem",
       "relation": "uses"
     },
     {
       "source": "closed_graph_theorem",
       "target": "open_mapping_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "closed_graph_theorem",
+      "target": "operator_norm",
       "relation": "uses"
     },
     {
@@ -5675,6 +6208,11 @@
     },
     {
       "source": "dual_space_is_banach",
+      "target": "bounded_operator_space",
+      "relation": "uses"
+    },
+    {
+      "source": "dual_space_is_banach",
       "target": "bounded_operators_banach_space",
       "relation": "uses"
     },
@@ -5685,12 +6223,47 @@
     },
     {
       "source": "finite_dimensional_norm_equivalence",
+      "target": "compactness",
+      "relation": "uses"
+    },
+    {
+      "source": "finite_dimensional_norm_equivalence",
+      "target": "continuity",
+      "relation": "uses"
+    },
+    {
+      "source": "finite_dimensional_norm_equivalence",
       "target": "equivalent_norms",
+      "relation": "uses"
+    },
+    {
+      "source": "finite_dimensional_norm_equivalence",
+      "target": "norm",
+      "relation": "uses"
+    },
+    {
+      "source": "finite_dimensional_norm_equivalence",
+      "target": "vector_space",
       "relation": "uses"
     },
     {
       "source": "hahn_banach_complex_normed_spaces",
       "target": "hahn_banach_real_normed_spaces",
+      "relation": "uses"
+    },
+    {
+      "source": "hahn_banach_complex_normed_spaces",
+      "target": "vector_space",
+      "relation": "uses"
+    },
+    {
+      "source": "hahn_banach_real_normed_spaces",
+      "target": "hahn_banach_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "hahn_banach_real_normed_spaces",
+      "target": "norm",
       "relation": "uses"
     },
     {
@@ -5715,11 +6288,6 @@
     },
     {
       "source": "hahn_banach_theorem",
-      "target": "separation_of_points",
-      "relation": "uses"
-    },
-    {
-      "source": "hahn_banach_theorem",
       "target": "zorns_lemma",
       "relation": "uses"
     },
@@ -5735,7 +6303,22 @@
     },
     {
       "source": "open_mapping_theorem",
+      "target": "approximation_argument",
+      "relation": "uses"
+    },
+    {
+      "source": "open_mapping_theorem",
       "target": "baire_category_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "open_mapping_theorem",
+      "target": "completeness",
+      "relation": "uses"
+    },
+    {
+      "source": "open_mapping_theorem",
+      "target": "linear_operator",
       "relation": "uses"
     },
     {
@@ -5760,6 +6343,31 @@
     },
     {
       "source": "pointwise_limit",
+      "target": "boundedness",
+      "relation": "uses"
+    },
+    {
+      "source": "pointwise_limit",
+      "target": "completeness",
+      "relation": "uses"
+    },
+    {
+      "source": "pointwise_limit",
+      "target": "linear_functional",
+      "relation": "uses"
+    },
+    {
+      "source": "pointwise_limit",
+      "target": "norm",
+      "relation": "uses"
+    },
+    {
+      "source": "pointwise_limit",
+      "target": "operator_norm",
+      "relation": "uses"
+    },
+    {
+      "source": "pointwise_limit",
       "target": "uniform_boundedness_principle",
       "relation": "uses"
     },
@@ -5769,8 +6377,38 @@
       "relation": "uses"
     },
     {
+      "source": "projection_theorem",
+      "target": "cauchy_sequence",
+      "relation": "uses"
+    },
+    {
+      "source": "projection_theorem",
+      "target": "convergence",
+      "relation": "uses"
+    },
+    {
+      "source": "projection_theorem",
+      "target": "inner_product_space",
+      "relation": "uses"
+    },
+    {
       "source": "riesz_representation_theorem",
       "target": "adjoint_operator",
+      "relation": "uses"
+    },
+    {
+      "source": "riesz_representation_theorem",
+      "target": "bounded_linear_functional",
+      "relation": "uses"
+    },
+    {
+      "source": "riesz_representation_theorem",
+      "target": "kernel",
+      "relation": "uses"
+    },
+    {
+      "source": "riesz_representation_theorem",
+      "target": "norm",
       "relation": "uses"
     },
     {
@@ -5819,6 +6457,16 @@
       "relation": "uses"
     },
     {
+      "source": "uniform_boundedness_principle",
+      "target": "continuity",
+      "relation": "uses"
+    },
+    {
+      "source": "uniform_boundedness_principle",
+      "target": "normed_vector_space",
+      "relation": "uses"
+    },
+    {
       "source": "weak_compactness_results",
       "target": "banach_alaoglu_theorem",
       "relation": "uses"
@@ -5826,6 +6474,36 @@
     {
       "source": "weak_compactness_results",
       "target": "diagonal_argument",
+      "relation": "uses"
+    },
+    {
+      "source": "weakly_bounded_implies_norm_bounded",
+      "target": "boundedness",
+      "relation": "uses"
+    },
+    {
+      "source": "weakly_bounded_implies_norm_bounded",
+      "target": "dual_space_is_banach",
+      "relation": "uses"
+    },
+    {
+      "source": "weakly_bounded_implies_norm_bounded",
+      "target": "hahn_banach_complex_normed_spaces",
+      "relation": "uses"
+    },
+    {
+      "source": "weakly_bounded_implies_norm_bounded",
+      "target": "hahn_banach_real_normed_spaces",
+      "relation": "uses"
+    },
+    {
+      "source": "weakly_bounded_implies_norm_bounded",
+      "target": "linear_functional",
+      "relation": "uses"
+    },
+    {
+      "source": "weakly_bounded_implies_norm_bounded",
+      "target": "norm",
       "relation": "uses"
     },
     {

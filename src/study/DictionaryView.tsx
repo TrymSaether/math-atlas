@@ -1,5 +1,5 @@
 import { createElement, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, ArrowLeft, Search } from "lucide-react";
+import { ArrowUpRight, ArrowLeft, ChevronLeft, ChevronRight, FileText, GraduationCap, Search } from "lucide-react";
 
 import { useStore } from "@/app/store";
 import type { AtlasMap } from "@/atlas/model";
@@ -11,9 +11,20 @@ import { getDomainTone } from "@/atlas/colors";
 import { useConceptView } from "./concept/view";
 import { kindAbbrev } from "@shared/maps/nodeCategory";
 import { kindIcon } from "@/atlas/nodeCategoryIcons";
-import { KIND_ORDER, dictionaryEntries, sectionFacet, type DictSortMode, type SectionFacet } from "./dictionary";
+import {
+  KIND_ORDER,
+  buildSearchIndex,
+  dictionaryEntries,
+  normalizeSearchText,
+  searchHit,
+  sectionFacet,
+  type DictSortMode,
+  type SectionFacet,
+} from "./dictionary";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";
 import { hasNodeVisual } from "./concept/visualModel";
+import { useDrill, prerequisiteDeck } from "./drill";
+import type { ProgressStatus } from "@/progress/api";
 
 export function DictionaryView() {
   const mapId = useStore((s) => s.mapId);
@@ -29,8 +40,10 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const toggleTopic = useStore((s) => s.toggleTopic);
   const resetTopics = useStore((s) => s.resetTopics);
   const selectedId = useStore((s) => s.selectedId);
+  const progress = useStore((s) => s.progress[mapId]);
   const mapTitle = useStore((s) => s.catalog.find((e) => e.slug === mapId)?.title ?? mapId);
   const indexRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   const entries = useMemo(() => {
     const base = dictionaryEntries(map);
@@ -39,8 +52,10 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
     return [...base, ...visualOnly];
   }, [map]);
   const facet = useMemo(() => sectionFacet(map, entries), [map, entries]);
+  const searchIndex = useMemo(() => buildSearchIndex(entries), [entries]);
   const [sortBy, setSortBy] = useState<DictSortMode>("alpha");
   const [query, setQuery] = useState("");
+  const [learningOnly, setLearningOnly] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(selectedId);
   const [mobileDetail, setMobileDetail] = useState(false);
 
@@ -52,16 +67,24 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
       .filter((d) => d.count > 0);
   }, [entries, map]);
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+  // Full-text filter: the query matches through titles, source refs, and every
+  // content field (LaTeX-normalized). `textOnly` marks entries that matched in
+  // their body but not their title, so the index can hint why they're listed.
+  const { filtered, textOnly } = useMemo(() => {
+    const nq = normalizeSearchText(query);
+    const textOnly = new Set<string>();
     const items = entries.filter((e) => {
       if (kinds.size > 0 && !kinds.has(e.kind)) return false;
       if (topics.size > 0 && !topics.has(e.domain)) return false;
-      if (q && !e.label.toLowerCase().includes(q) && !(e.source?.ref ?? "").toLowerCase().includes(q)) return false;
+      if (learningOnly && progress?.[e.id] !== "learning") return false;
+      const hit = searchHit(e, nq, searchIndex);
+      if (!hit) return false;
+      if (nq && hit === "text") textOnly.add(e.id);
       return true;
     });
-    return items.sort((a, b) => compareEntries(a, b, sortBy, facet));
-  }, [entries, facet, kinds, topics, sortBy, query]);
+    items.sort((a, b) => compareEntries(a, b, sortBy, facet));
+    return { filtered: items, textOnly };
+  }, [entries, facet, kinds, topics, sortBy, query, learningOnly, progress, searchIndex]);
 
   const groups = useMemo(() => groupEntries(filtered, sortBy, facet), [filtered, sortBy, facet]);
 
@@ -92,6 +115,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   }, [activeId]);
 
   const activeEntry = activeId ? (map.nodeById.get(activeId) ?? null) : null;
+  const activeIndex = activeId ? filtered.findIndex((e) => e.id === activeId) : -1;
 
   const openRow = (id: string) => {
     setActiveId(id);
@@ -99,12 +123,47 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
     setMobileDetail(true);
   };
 
+  const step = (delta: number) => {
+    if (filtered.length === 0) return;
+    const next = filtered[Math.max(0, Math.min(filtered.length - 1, activeIndex + delta))];
+    if (next && next.id !== activeId) {
+      setActiveId(next.id);
+      select(next.id);
+    }
+  };
+
+  // ↑/↓ walk the index (also from the filter input); Enter opens the entry.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      const inSearch = t === searchRef.current;
+      if (!inSearch && t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        step(e.key === "ArrowDown" ? 1 : -1);
+      } else if (e.key === "Enter" && activeId) {
+        if (inSearch) e.preventDefault();
+        openRow(activeId);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  });
+
+  const jumpToGroup = (groupId: string) => {
+    const el = indexRef.current?.querySelector<HTMLElement>(`#${CSS.escape(groupId)}`);
+    el?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <div className="absolute inset-0 overflow-hidden bg-background text-foreground">
       <div className="absolute inset-x-0 bottom-0 top-(--shell-dock-top) grid h-[calc(100%-var(--shell-dock-top))] grid-cols-[minmax(300px,360px)_minmax(0,1fr)] max-[860px]:grid-cols-1">
         {/* ---- Index column ---- */}
         <aside
-          className={`flex min-h-0 flex-col border-r border-border bg-muted ${mobileDetail ? "max-[860px]:hidden" : ""}`}
+          className={`relative flex min-h-0 flex-col border-r border-border bg-muted ${mobileDetail ? "max-[860px]:hidden" : ""}`}
           aria-label="Dictionary index"
         >
           <header className="flex-shrink-0 border-b border-border bg-card px-4 pb-3 pt-3.5">
@@ -121,11 +180,12 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 aria-hidden
               />
               <input
+                ref={searchRef}
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Filter entries…"
-                aria-label="Filter entries"
+                placeholder="Search entries and text…"
+                aria-label="Search entries and text"
                 className="min-h-[34px] w-full rounded-md border border-border bg-muted py-1.5 pl-7 pr-2.5 font-sans text-footnote text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-ring focus:bg-card"
               />
             </div>
@@ -182,10 +242,18 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 onClick={() => setSortBy("section")}
               />
               <Chip label="Kind" active={sortBy === "kind"} onClick={() => setSortBy("kind")} />
+              <span aria-hidden className="mx-0.5 h-3.5 w-px bg-border" />
+              <Chip label="Learning" active={learningOnly} onClick={() => setLearningOnly((v) => !v)} />
             </div>
           </header>
 
-          <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto px-2 pb-10 pt-1.5" ref={indexRef}>
+          <div className="relative min-h-0 flex-1">
+            <div
+              className={`panel-scrollbar h-full overflow-y-auto px-2 pb-10 pt-1.5 ${
+                sortBy === "alpha" && groups.length > 2 ? "pr-6" : ""
+              }`}
+              ref={indexRef}
+            >
             {entries.length === 0 ? (
               <p className="px-6 py-16 text-center italic text-muted-foreground">
                 No dictionary entries for {mapTitle} yet.
@@ -197,7 +265,10 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
             ) : (
               groups.map((group) => (
                 <section key={group.id} className="mt-2.5 first:mt-0.5">
-                  <h2 className="sticky top-0 z-[1] m-0 flex items-baseline gap-1.5 bg-gradient-to-b from-muted from-70% to-transparent px-2.5 pb-1 pt-1.5 font-mono text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground">
+                  <h2
+                    id={group.id}
+                    className="sticky top-0 z-[1] m-0 flex items-baseline gap-1.5 bg-gradient-to-b from-muted from-70% to-transparent px-2.5 pb-1 pt-1.5 font-mono text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground [scroll-margin-top:4px]"
+                  >
                     {group.label}
                     <span className="text-caption-2 font-medium text-muted-foreground/70">{group.items.length}</span>
                   </h2>
@@ -206,11 +277,33 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                       key={entry.id}
                       entry={entry}
                       active={entry.id === activeId}
+                      status={progress?.[entry.id]}
+                      textHit={textOnly.has(entry.id)}
                       onClick={() => openRow(entry.id)}
                     />
                   ))}
                 </section>
               ))
+            )}
+            </div>
+
+            {/* Alphabet rail — jump to a letter group when sorted A–Z. */}
+            {sortBy === "alpha" && groups.length > 2 && (
+              <nav
+                aria-label="Jump to letter"
+                className="absolute inset-y-2 right-0.5 flex flex-col items-center justify-center gap-px overflow-hidden"
+              >
+                {groups.map((group) => (
+                  <button
+                    key={group.id}
+                    type="button"
+                    onClick={() => jumpToGroup(group.id)}
+                    className="rounded-sm px-1 font-mono text-[9.5px] leading-[1.35] text-muted-foreground/70 transition-colors hover:bg-accent hover:text-foreground"
+                  >
+                    {group.label}
+                  </button>
+                ))}
+              </nav>
             )}
           </div>
         </aside>
@@ -224,6 +317,8 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
               entry={activeEntry}
               map={map}
               mapId={mapId}
+              prev={activeIndex > 0 ? filtered[activeIndex - 1] : null}
+              next={activeIndex >= 0 && activeIndex < filtered.length - 1 ? filtered[activeIndex + 1] : null}
               onBack={() => setMobileDetail(false)}
               onPickRelated={openRow}
             />
@@ -238,7 +333,31 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   );
 }
 
-function IndexRow({ entry, active, onClick }: { entry: GraphNode; active: boolean; onClick: () => void }) {
+function ProgressDot({ status }: { status: ProgressStatus }) {
+  const known = status === "known";
+  return (
+    <span
+      aria-hidden
+      title={known ? "Known" : "Still learning"}
+      className={`h-1.5 w-1.5 flex-shrink-0 rounded-full ${known ? "bg-success" : ""}`}
+      style={known ? undefined : { background: "var(--domain-orange)" }}
+    />
+  );
+}
+
+function IndexRow({
+  entry,
+  active,
+  status,
+  textHit,
+  onClick,
+}: {
+  entry: GraphNode;
+  active: boolean;
+  status?: ProgressStatus;
+  textHit?: boolean;
+  onClick: () => void;
+}) {
   const tone = getDomainTone(entry.domain);
   const icon = kindIcon(entry.kind);
   return (
@@ -268,6 +387,12 @@ function IndexRow({ entry, active, onClick }: { entry: GraphNode; active: boolea
       >
         <MathText text={entry.label} />
       </span>
+      {textHit && (
+        <span title="Matches entry text" className="flex flex-shrink-0 items-center">
+          <FileText className="h-3 w-3 text-muted-foreground/60" aria-label="Matches entry text" />
+        </span>
+      )}
+      {status && <ProgressDot status={status} />}
       <span className="flex-shrink-0 font-mono text-caption-1 text-muted-foreground">{kindAbbrev(entry.kind)}</span>
     </button>
   );
@@ -277,22 +402,38 @@ function DetailPane({
   entry,
   map,
   mapId,
+  prev,
+  next,
   onBack,
   onPickRelated,
 }: {
   entry: GraphNode;
   map: AtlasMap;
   mapId: MapId;
+  prev: GraphNode | null;
+  next: GraphNode | null;
   onBack: () => void;
   onPickRelated: (id: string) => void;
 }) {
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
+  const setScoped = useDrill((s) => s.setScoped);
   const view = useConceptView(entry, map, mapId);
 
   const openInAtlas = () => {
     select(entry.id);
     setSurface("atlas");
+  };
+
+  // Prerequisite closure: this entry plus everything its statement depends on.
+  const practiceIds = useMemo(
+    () => prerequisiteDeck(entry.id, (id) => map.nodeById.get(id)?.statementDependencies),
+    [entry, map],
+  );
+
+  const practice = () => {
+    setScoped({ title: entry.label, ids: practiceIds });
+    setSurface("flashcards");
   };
 
   return (
@@ -316,13 +457,60 @@ function DetailPane({
 
         <footer className="mt-7 flex flex-col gap-4 border-t border-dashed border-border pt-[18px]">
           <ConceptRelations relations={view.relations} map={map} onSelect={onPickRelated} includeSeeAlso />
-          <button
-            type="button"
-            className="inline-flex min-h-[30px] items-center gap-1 self-start rounded-sm border border-primary/40 bg-primary/10 px-3 py-1.5 font-mono text-caption-1 text-primary transition hover:bg-primary/20"
-            onClick={openInAtlas}
-          >
-            Show in atlas <ArrowUpRight className="h-3 w-3" aria-hidden />
-          </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              className="inline-flex min-h-[30px] items-center gap-1 rounded-sm border border-primary/40 bg-primary/10 px-3 py-1.5 font-mono text-caption-1 text-primary transition hover:bg-primary/20"
+              onClick={openInAtlas}
+            >
+              Show in atlas <ArrowUpRight className="h-3 w-3" aria-hidden />
+            </button>
+            <button
+              type="button"
+              className="inline-flex min-h-[30px] items-center gap-1.5 rounded-sm border border-border bg-card px-3 py-1.5 font-mono text-caption-1 text-muted-foreground transition hover:border-input hover:text-foreground"
+              onClick={practice}
+              title={
+                practiceIds.length > 1
+                  ? `Drill this entry and its ${practiceIds.length - 1} prerequisites as flashcards`
+                  : "Drill this entry as a flashcard"
+              }
+            >
+              <GraduationCap className="h-3.5 w-3.5" aria-hidden />
+              Practice this
+              {practiceIds.length > 1 && <span className="opacity-70">+{practiceIds.length - 1} prereqs</span>}
+            </button>
+          </div>
+
+          {(prev || next) && (
+            <nav className="flex items-center justify-between gap-3 border-t border-dashed border-border pt-3.5" aria-label="Adjacent entries">
+              {prev ? (
+                <button
+                  type="button"
+                  onClick={() => onPickRelated(prev.id)}
+                  className="group inline-flex min-w-0 items-center gap-1.5 rounded-sm py-1 pr-2 text-left text-footnote text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <ChevronLeft className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground/70 group-hover:text-foreground" aria-hidden />
+                  <span className="min-w-0 truncate">
+                    <MathText text={prev.label} />
+                  </span>
+                </button>
+              ) : (
+                <span />
+              )}
+              {next && (
+                <button
+                  type="button"
+                  onClick={() => onPickRelated(next.id)}
+                  className="group inline-flex min-w-0 items-center gap-1.5 rounded-sm py-1 pl-2 text-right text-footnote text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <span className="min-w-0 truncate">
+                    <MathText text={next.label} />
+                  </span>
+                  <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground/70 group-hover:text-foreground" aria-hidden />
+                </button>
+              )}
+            </nav>
+          )}
         </footer>
       </div>
     </article>

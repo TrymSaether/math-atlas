@@ -1,97 +1,22 @@
-import { useCallback, useEffect, useMemo, useReducer } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Check, ChevronLeft, ChevronRight, RotateCcw, Shuffle, Sparkles, XIcon } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, RotateCcw, Shuffle, Sparkles, X, XIcon } from "lucide-react";
 
 import { useStore } from "@/app/store";
 import type { AtlasMap } from "@/atlas/model";
 import type { MapId } from "@/maps";
+import { MathText } from "@/math/MathText";
 import { nodeAnswerText } from "./concept/content";
 import { useConceptView } from "./concept/view";
 import type { GraphNode } from "@/maps/types";
 import { ConceptHeader, ConceptBody } from "./concept";
 import { hasNodeVisual } from "./concept/visualModel";
+import { useDrill, shuffle, type CardDirection, type DeckScope, type Rating } from "./drill";
+import { useSrs, isDue, srsKey } from "./srs";
 
 /** A node carries enough to drill if it has a title and at least one answer-side facet. */
 function answerText(n: GraphNode): string {
   return nodeAnswerText(n);
-}
-
-type Rating = "again" | "got";
-
-interface DrillState {
-  /** Shuffle seed — bumping it reshuffles and resets the run. */
-  seed: number;
-  /** Ordered ids being studied this run. */
-  order: string[];
-  pos: number;
-  flipped: boolean;
-  ratings: Record<string, Rating>;
-}
-
-type DrillAction =
-  | { type: "reset"; order: string[]; seed: number }
-  | { type: "flip" }
-  | { type: "go"; pos: number }
-  | { type: "rate"; id: string; rating: Rating }
-  | { type: "reshuffle"; order: string[] }
-  | { type: "review"; order: string[] };
-
-function drillReducer(state: DrillState, action: DrillAction): DrillState {
-  switch (action.type) {
-    case "reset":
-      return { seed: action.seed, order: action.order, pos: 0, flipped: false, ratings: {} };
-    case "flip":
-      return { ...state, flipped: !state.flipped };
-    case "go": {
-      const pos = Math.max(0, Math.min(state.order.length - 1, action.pos));
-      return { ...state, pos, flipped: false };
-    }
-    case "rate": {
-      const ratings = { ...state.ratings, [action.id]: action.rating };
-      const atEnd = state.pos >= state.order.length - 1;
-      return {
-        ...state,
-        ratings,
-        pos: atEnd ? state.pos : state.pos + 1,
-        flipped: false,
-      };
-    }
-    case "reshuffle":
-      return {
-        ...state,
-        seed: state.seed + 1,
-        order: action.order,
-        pos: 0,
-        flipped: false,
-        ratings: {},
-      };
-    case "review":
-      return { ...state, order: action.order, pos: 0, flipped: false, ratings: {} };
-    default:
-      return state;
-  }
-}
-
-/** Deterministic PRNG so a given seed always produces the same shuffle. */
-function mulberry32(seed: number): () => number {
-  let a = seed >>> 0;
-  return () => {
-    a |= 0;
-    a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function shuffle(ids: string[], seed: number): string[] {
-  const rng = mulberry32(seed);
-  const out = [...ids];
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
 }
 
 export function FlashcardsView() {
@@ -107,63 +32,94 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const topics = useStore((s) => s.topics);
   const setSurface = useStore((s) => s.setSurface);
   const select = useStore((s) => s.select);
+  const progress = useStore((s) => s.progress[mapId]);
+  const setNodeProgress = useStore((s) => s.setNodeProgress);
   const reduceMotion = useReducedMotion();
 
-  const deck = useMemo(
-    () =>
-      map.data.nodes.filter((n) => {
-        if (kinds.size > 0 && !kinds.has(n.kind)) return false;
-        if (topics.size > 0 && !topics.has(n.domain)) return false;
-        return Boolean(answerText(n) || hasNodeVisual(n));
-      }),
-    [map, kinds, topics],
-  );
-  const deckIds = useMemo(() => deck.map((n) => n.id), [deck]);
-  const deckKey = deckIds.join("|");
+  const scope = useDrill((s) => s.scope);
+  const setScope = useDrill((s) => s.setScope);
+  const direction = useDrill((s) => s.direction);
+  const setDirection = useDrill((s) => s.setDirection);
+  const scoped = useDrill((s) => s.scoped);
+  const setScoped = useDrill((s) => s.setScoped);
+  const run = useDrill((s) => s.run);
+  const drill = useDrill.getState;
 
-  const [state, dispatch] = useReducer(
-    drillReducer,
-    undefined,
-    (): DrillState => ({
-      seed: 1,
-      order: shuffle(deckIds, 1),
-      pos: 0,
-      flipped: false,
-      ratings: {},
+  const srsCards = useSrs((s) => s.cards);
+  const rateSrs = useSrs((s) => s.rate);
+
+  // Base deck: an explicit scoped deck (concept + prerequisites) wins; otherwise
+  // the toolbar filters decide. Either way a card needs an answer side.
+  const baseDeck = useMemo(() => {
+    const drillable = (n: GraphNode) => Boolean(answerText(n) || hasNodeVisual(n));
+    if (scoped) {
+      return scoped.ids.map((id) => map.nodeById.get(id)).filter((n): n is GraphNode => Boolean(n && drillable(n)));
+    }
+    return map.data.nodes.filter((n) => {
+      if (kinds.size > 0 && !kinds.has(n.kind)) return false;
+      if (topics.size > 0 && !topics.has(n.domain)) return false;
+      return drillable(n);
+    });
+  }, [map, kinds, topics, scoped]);
+
+  const scopeCounts = useMemo(
+    () => ({
+      all: baseDeck.length,
+      due: baseDeck.filter((n) => isDue(srsCards[srsKey(mapId, n.id)])).length,
+      learning: baseDeck.filter((n) => progress?.[n.id] === "learning").length,
     }),
+    [baseDeck, srsCards, mapId, progress],
   );
 
-  // Rebuild the run whenever the filtered deck identity changes.
+  // Due/learning membership is snapshotted when a run starts (and again on
+  // restart): rating a card changes its due date, and the running deck must
+  // not shrink under the user. Hence srsCards/progress stay out of the deps
+  // and out of the deck identity below.
+  const deckIds = useMemo(() => {
+    if (!scoped && scope === "due") {
+      return baseDeck.filter((n) => isDue(srsCards[srsKey(mapId, n.id)])).map((n) => n.id);
+    }
+    if (!scoped && scope === "learning") {
+      return baseDeck.filter((n) => progress?.[n.id] === "learning").map((n) => n.id);
+    }
+    return baseDeck.map((n) => n.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [baseDeck, scoped, scope]);
+
+  const baseKey = useMemo(() => baseDeck.map((n) => n.id).join("|"), [baseDeck]);
+  const deckKey = `${scoped ? `scoped:${scoped.title}` : `scope:${scope}`}|${baseKey}`;
+
+  // Start a fresh run whenever the deck identity changes; an unchanged deck
+  // resumes the in-flight run (the whole point of keeping it in the store).
   useEffect(() => {
-    dispatch({ type: "reset", order: shuffle(deckIds, state.seed), seed: state.seed });
+    if (run.deckKey !== deckKey) drill().reset(deckIds, deckKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deckKey]);
 
-  const total = state.order.length;
-  const ratedCount = Object.keys(state.ratings).length;
-  const gotCount = Object.values(state.ratings).filter((r) => r === "got").length;
-  const againIds = state.order.filter((id) => state.ratings[id] === "again");
+  const order = run.deckKey === deckKey ? run.order : shuffle(deckIds, run.seed);
+  const total = order.length;
+  const ratedCount = Object.keys(run.ratings).length;
+  const gotCount = Object.values(run.ratings).filter((r) => r === "got").length;
+  const againIds = order.filter((id) => run.ratings[id] === "again");
   const finished = total > 0 && ratedCount === total;
 
-  const currentId = state.order[state.pos];
+  const currentId = order[run.pos];
   const node = currentId ? (map.nodeById.get(currentId) ?? null) : null;
 
-  const flip = useCallback(() => dispatch({ type: "flip" }), []);
-  const go = useCallback((delta: number) => dispatch({ type: "go", pos: state.pos + delta }), [state.pos]);
-  const setNodeProgress = useStore((s) => s.setNodeProgress);
+  const flip = useCallback(() => drill().flip(), [drill]);
+  const go = useCallback((delta: number) => drill().go(drill().run.pos + delta), [drill]);
   const rate = useCallback(
     (rating: Rating) => {
-      if (!currentId) return;
-      dispatch({ type: "rate", id: currentId, rating });
+      const id = drill().run.order[drill().run.pos];
+      if (!id) return;
+      drill().rate(id, rating);
+      rateSrs(mapId, id, rating);
       // Persist a "got" as known; "again" keeps it in the learning set.
-      setNodeProgress(mapId, currentId, rating === "got" ? "known" : "learning");
+      setNodeProgress(mapId, id, rating === "got" ? "known" : "learning");
     },
-    [currentId, mapId, setNodeProgress],
+    [drill, mapId, rateSrs, setNodeProgress],
   );
-  const reshuffle = useCallback(
-    () => dispatch({ type: "reshuffle", order: shuffle(deckIds, state.seed + 1) }),
-    [deckIds, state.seed],
-  );
+  const reshuffle = useCallback(() => drill().reshuffle(deckIds), [drill, deckIds]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -183,31 +139,60 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
         go(-1);
-      } else if (state.flipped && (e.key === "1" || e.key.toLowerCase() === "a")) {
+      } else if (run.flipped && (e.key === "1" || e.key.toLowerCase() === "a")) {
         e.preventDefault();
         rate("again");
-      } else if (state.flipped && (e.key === "2" || e.key.toLowerCase() === "g")) {
+      } else if (run.flipped && (e.key === "2" || e.key.toLowerCase() === "g")) {
         e.preventDefault();
         rate("got");
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [finished, flip, go, rate, state.flipped, setSurface]);
+  }, [finished, flip, go, rate, run.flipped, setSurface]);
 
   return (
     <div className="absolute inset-0 flex flex-col items-center px-4 pb-4 pt-17">
       <div className="flex w-full max-w-170 flex-1 flex-col">
+        {/* Deck scope + card direction */}
+        <div className="mb-2 flex flex-wrap items-center gap-1.5">
+          {scoped ? (
+            <span className="inline-flex min-h-[26px] items-center gap-1.5 rounded-sm border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-caption-1 font-medium text-primary">
+              Practicing: <MathText text={scoped.title} />
+              <span className="font-mono opacity-70">{total}</span>
+              <button
+                type="button"
+                onClick={() => setScoped(null)}
+                aria-label="Back to full deck"
+                title="Back to full deck"
+                className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-primary/20"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          ) : (
+            <div className="flex items-center gap-1.5" role="group" aria-label="Deck scope">
+              <ScopeChip label="All" count={scopeCounts.all} active={scope === "all"} onClick={() => setScope("all")} />
+              <ScopeChip label="Due" count={scopeCounts.due} active={scope === "due"} onClick={() => setScope("due")} />
+              <ScopeChip
+                label="Learning"
+                count={scopeCounts.learning}
+                active={scope === "learning"}
+                onClick={() => setScope("learning")}
+              />
+            </div>
+          )}
+          <div className="ml-auto flex items-center gap-1.5" role="group" aria-label="Card direction">
+            <DirectionChip value="term" current={direction} onPick={setDirection} />
+            <DirectionChip value="statement" current={direction} onPick={setDirection} />
+          </div>
+        </div>
+
         {/* Progress rail */}
         <div className="mb-3 flex items-center gap-3">
-          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
-            <div
-              className="h-full rounded-full bg-primary transition-[width] duration-300"
-              style={{ width: total ? `${(ratedCount / total) * 100}%` : "0%" }}
-            />
-          </div>
+          <ProgressRail order={order} ratings={run.ratings} pos={run.pos} onJump={(i) => drill().go(i)} />
           <span className="shrink-0 font-mono text-caption-2 text-muted-foreground">
-            {total ? Math.min(state.pos + 1, total) : 0}/{total}
+            {total ? Math.min(run.pos + 1, total) : 0}/{total}
           </span>
           <button
             onClick={reshuffle}
@@ -221,14 +206,14 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
         </div>
 
         {total === 0 ? (
-          <EmptyState onBack={() => setSurface("atlas")} />
+          <EmptyState scope={scoped ? "all" : scope} onBack={() => setSurface("atlas")} />
         ) : finished ? (
           <SummaryCard
             total={total}
             gotCount={gotCount}
             againCount={againIds.length}
             onRestart={reshuffle}
-            onReview={() => againIds.length && dispatch({ type: "review", order: againIds })}
+            onReview={() => againIds.length && drill().review(againIds)}
             onClose={() => setSurface("atlas")}
           />
         ) : (
@@ -237,14 +222,14 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
               <div className="relative min-h-0 flex-1">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
-                    key={`${node.id}:${state.flipped ? "back" : "front"}`}
+                    key={`${node.id}:${run.flipped ? "back" : "front"}`}
                     initial={reduceMotion ? false : { opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
                     transition={{ duration: reduceMotion ? 0 : 0.18, ease: [0.2, 0.7, 0.2, 1] }}
                     className="absolute inset-0"
                   >
-                    {state.flipped ? (
+                    {run.flipped ? (
                       <CardBack
                         node={node}
                         map={map}
@@ -255,7 +240,7 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                         }}
                       />
                     ) : (
-                      <CardFront node={node} map={map} mapId={mapId} onFlip={flip} />
+                      <CardFront node={node} map={map} mapId={mapId} direction={direction} onFlip={flip} />
                     )}
                   </motion.div>
                 </AnimatePresence>
@@ -263,11 +248,11 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
 
               {/* Controls */}
               <div className="mt-3 grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3">
-                <PagerButton label="Previous card" disabled={state.pos === 0} onClick={() => go(-1)}>
+                <PagerButton label="Previous card" disabled={run.pos === 0} onClick={() => go(-1)}>
                   <ChevronLeft className="h-4 w-4" />
                 </PagerButton>
 
-                {state.flipped ? (
+                {run.flipped ? (
                   <div className="flex min-w-0 flex-wrap items-center justify-center gap-2">
                     <RateButton tone="again" onClick={() => rate("again")}>
                       <XIcon className="h-4 w-4" /> Again
@@ -289,7 +274,7 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                   </button>
                 )}
 
-                <PagerButton label="Next card" disabled={state.pos >= total - 1} onClick={() => go(1)}>
+                <PagerButton label="Next card" disabled={run.pos >= total - 1} onClick={() => go(1)}>
                   <ChevronRight className="h-4 w-4" />
                 </PagerButton>
               </div>
@@ -298,6 +283,108 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
         )}
       </div>
     </div>
+  );
+}
+
+/**
+ * Segmented, clickable progress rail: one tick per card, colored by its rating
+ * this run. Falls back to a continuous bar for very large decks where the
+ * ticks would be sub-pixel.
+ */
+function ProgressRail({
+  order,
+  ratings,
+  pos,
+  onJump,
+}: {
+  order: string[];
+  ratings: Record<string, Rating>;
+  pos: number;
+  onJump: (pos: number) => void;
+}) {
+  const total = order.length;
+  if (total === 0 || total > 80) {
+    const ratedCount = Object.keys(ratings).length;
+    return (
+      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
+        <div
+          className="h-full rounded-full bg-primary transition-[width] duration-300"
+          style={{ width: total ? `${(ratedCount / total) * 100}%` : "0%" }}
+        />
+      </div>
+    );
+  }
+  return (
+    <div className="flex h-2.5 flex-1 items-center gap-px" role="group" aria-label="Card progress">
+      {order.map((id, i) => {
+        const rating = ratings[id];
+        const current = i === pos;
+        const color =
+          rating === "got" ? "bg-success/80" : rating === "again" ? "bg-destructive/70" : "bg-secondary";
+        return (
+          <button
+            key={id}
+            type="button"
+            onClick={() => onJump(i)}
+            aria-label={`Card ${i + 1} of ${total}`}
+            className={`h-full min-w-0 flex-1 first:rounded-l-full last:rounded-r-full ${color} transition-[transform,opacity] hover:opacity-80 ${
+              current ? "scale-y-125 ring-1 ring-inset ring-primary" : ""
+            }`}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function ScopeChip({
+  label,
+  count,
+  active,
+  onClick,
+}: {
+  label: string;
+  count: number;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className="inline-flex min-h-[26px] items-center gap-1.5 rounded-sm border border-border bg-card px-2.5 py-0.5 text-caption-1 font-medium text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary"
+    >
+      {label}
+      <span className="font-mono text-caption-2 opacity-70">{count}</span>
+    </button>
+  );
+}
+
+const DIRECTION_LABEL: Record<CardDirection, string> = {
+  term: "Term first",
+  statement: "Statement first",
+};
+
+function DirectionChip({
+  value,
+  current,
+  onPick,
+}: {
+  value: CardDirection;
+  current: CardDirection;
+  onPick: (d: CardDirection) => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onPick(value)}
+      aria-pressed={current === value}
+      title={value === "statement" ? "Show the statement and recall the name" : "Show the name and recall the statement"}
+      className="min-h-[26px] rounded-sm border border-border bg-card px-2.5 py-0.5 font-mono text-caption-2 text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary"
+    >
+      {DIRECTION_LABEL[value]}
+    </button>
   );
 }
 
@@ -314,19 +401,48 @@ function CardShell({ children, tone, footer }: { children: React.ReactNode; tone
   );
 }
 
-function CardFront({ node, map, mapId, onFlip }: { node: GraphNode; map: AtlasMap; mapId: MapId; onFlip: () => void }) {
+function CardFront({
+  node,
+  map,
+  mapId,
+  direction,
+  onFlip,
+}: {
+  node: GraphNode;
+  map: AtlasMap;
+  mapId: MapId;
+  direction: CardDirection;
+  onFlip: () => void;
+}) {
   const view = useConceptView(node, map, mapId);
+  // Statement-first only works when there is a statement to show; cards
+  // without one silently fall back to the classic term-first front.
+  const reversed = direction === "statement" && Boolean(view.statement);
   return (
     <CardShell tone={view.tone.color}>
       <button
         onClick={onFlip}
         className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-5 px-8 py-10 text-left"
       >
-        <div className="w-full max-w-md">
-          <ConceptHeader view={view} size="card" />
-        </div>
+        {reversed ? (
+          <div className="w-full max-w-md space-y-4">
+            <span
+              className="inline-flex items-center rounded-full px-2 py-0.5 font-mono text-caption-2 font-medium"
+              style={{ backgroundColor: view.tone.tint, color: view.tone.text }}
+            >
+              {view.kindLabel}
+            </span>
+            <div className="text-callout leading-relaxed text-foreground">
+              <MathText text={view.statement} />
+            </div>
+          </div>
+        ) : (
+          <div className="w-full max-w-md">
+            <ConceptHeader view={view} size="card" />
+          </div>
+        )}
         <span className="font-mono text-caption-2 uppercase tracking-label-wide text-muted-foreground">
-          Tap or press space to flip
+          {reversed ? "Name this concept — tap to reveal" : "Tap or press space to flip"}
         </span>
       </button>
     </CardShell>
@@ -413,13 +529,21 @@ function SummaryCard({
   );
 }
 
-function EmptyState({ onBack }: { onBack: () => void }) {
+function EmptyState({ scope, onBack }: { scope: DeckScope; onBack: () => void }) {
+  const message =
+    scope === "due"
+      ? "Nothing is due for review — nicely done."
+      : scope === "learning"
+        ? "No cards are marked as still learning."
+        : "No cards match the current filters.";
+  const hint =
+    scope === "all"
+      ? "Widen the domain or category filters in the toolbar to build a study deck."
+      : "Switch the deck scope to All to keep drilling anyway.";
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-card px-8 py-12 text-center">
-      <p className="text-callout text-foreground">No cards match the current filters.</p>
-      <p className="max-w-85 text-footnote text-muted-foreground">
-        Widen the domain or category filters in the toolbar to build a study deck.
-      </p>
+      <p className="text-callout text-foreground">{message}</p>
+      <p className="max-w-85 text-footnote text-muted-foreground">{hint}</p>
       <button
         onClick={onBack}
         className="mt-1 h-10 rounded-sm border border-border bg-card px-5 text-footnote font-medium text-foreground transition-colors hover:bg-secondary"
