@@ -1,0 +1,40 @@
+.paper {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  color: var(--foreground);
+}
+
+.paper--flat {
+  box-shadow: var(--elevation-flat);
+}
+
+.paper--subtle {
+  box-shadow: var(--elevation-subtle);
+}
+
+.paper--card {
+  box-shadow: var(--elevation-card);
+}
+
+.paper--raised {
+  box-shadow: var(--elevation-raised);
+}
+
+.paper--interactive {
+  transition:
+    border-color var(--duration-fast) var(--ease-apple),
+    background var(--duration-fast) var(--ease-apple),
+    box-shadow var(--duration-fast) var(--ease-apple),
+    transform var(--duration-fast) var(--ease-apple);
+}
+
+.paper--interactive:hover {
+  box-shadow: var(--elevation-raised);
+}
+
+.paper--selected {
+  border-color: var(--state-selected-border);
+  background: color-mix(in srgb, var(--primary) 6%, var(--card));
+}
