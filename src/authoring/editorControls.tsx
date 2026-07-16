@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
 
 import { getDomainTone } from "@/atlas/colors";
 import { Surface } from "@/design";
 import { cn } from "@/ui/cn";
 import { MathText } from "@/math/MathText";
+import { usePopoverDismiss } from "@/app/usePopover";
 
 /* Shared authoring form-control class recipes (was styles/components/authoring.css). */
 export const FIELD = "block";
@@ -12,23 +13,23 @@ const LABEL =
   "mb-1.5 block font-sans text-caption-1 font-semibold leading-tight tracking-[0.004em] text-muted-foreground";
 const HINT = "ml-2 font-sans text-caption-1 font-medium text-muted-foreground/70";
 export const CONTROL =
-  "min-h-[44px] w-full rounded-md border border-border/90 bg-card/80 px-3 py-2 text-footnote leading-[1.35] text-foreground outline-none transition placeholder:text-muted-foreground/70 hover:border-input/80 hover:bg-card/90 focus:border-ring focus:bg-card focus:shadow-[0_0_0_1px_var(--ring)]";
+  "min-h-(--control-h-xl) w-full rounded-md border border-border/90 bg-card/80 px-3 py-2 text-footnote leading-[1.35] text-foreground outline-none transition placeholder:text-muted-foreground/70 hover:border-input/80 hover:bg-card/90 focus:border-ring focus:bg-card focus:shadow-[0_0_0_1px_var(--ring)]";
 export const CONTROL_MONO = "font-mono text-footnote";
 const SELECT_TRIGGER =
   "flex items-center justify-between gap-2.5 text-left aria-expanded:border-ring aria-expanded:bg-card aria-expanded:shadow-[0_0_0_1px_var(--ring)]";
 const SELECT_OPTION =
-  "flex min-h-[44px] w-full items-center justify-between gap-2.5 rounded-md px-2.5 py-1.5 text-left text-footnote text-muted-foreground transition hover:bg-accent hover:text-foreground";
+  "flex min-h-(--control-h-xl) w-full items-center justify-between gap-2.5 rounded-md px-2.5 py-1.5 text-left text-footnote text-muted-foreground transition hover:bg-accent hover:text-foreground";
 const SELECT_OPTION_ACTIVE = "bg-primary/10 text-foreground";
 const PICKER_OPTION =
-  "flex min-h-[44px] w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-footnote text-foreground hover:bg-secondary";
+  "flex min-h-(--control-h-xl) w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-footnote text-foreground hover:bg-secondary";
 export const ACTION =
-  "inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-md border border-border bg-card font-semibold text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground focus-visible:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_16%,transparent)] focus-visible:outline-none active:scale-[0.98]";
+  "inline-flex min-h-(--control-h-xl) items-center justify-center gap-1.5 rounded-md border border-border bg-card font-semibold text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground focus-visible:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_16%,transparent)] focus-visible:outline-none active:scale-[0.98]";
 export const ACTION_PRIMARY =
   "border-primary bg-primary text-primary-foreground hover:border-primary hover:bg-primary hover:text-primary-foreground";
 export const ACTION_DANGER =
   "border-destructive/30 bg-destructive/[0.07] text-destructive hover:border-destructive/50 hover:bg-destructive/10 hover:text-destructive";
 export const CHIP =
-  "inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-md border border-border bg-card px-3 text-caption-1 font-semibold capitalize text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground";
+  "inline-flex min-h-(--control-h-xl) items-center justify-center gap-1.5 rounded-md border border-border bg-card px-3 text-caption-1 font-semibold capitalize text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground";
 export const CHIP_ACTIVE = "border-primary/50 bg-primary/10 text-foreground";
 
 export function FieldLabel({ label, hint }: { label?: string; hint?: string }) {
@@ -105,29 +106,18 @@ export function SelectField({
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const selected = options.find((option) => option.value === value);
+  const closeSelect = useCallback(() => setOpen(false), []);
 
-  useEffect(() => {
-    if (!open) return;
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
+  usePopoverDismiss({ open, onClose: closeSelect, containerRef: ref, triggerRef });
 
   return (
     <div className={FIELD} ref={ref}>
       <FieldLabel label={label} />
       <div className="relative">
         <button
+          ref={triggerRef}
           type="button"
           className={cn(CONTROL, SELECT_TRIGGER)}
           onClick={() => setOpen((o) => !o)}

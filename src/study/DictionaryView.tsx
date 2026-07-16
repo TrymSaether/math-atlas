@@ -25,6 +25,7 @@ import { ConceptHeader, ConceptBody, ConceptRelations } from "./concept";
 import { hasNodeVisual } from "./concept/visualModel";
 import { useDrill, prerequisiteDeck } from "./drill";
 import type { ProgressStatus } from "@/progress/api";
+import { Chip } from "@/ui/chip";
 
 export function DictionaryView() {
   const mapId = useStore((s) => s.mapId);
@@ -186,7 +187,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search entries and text…"
                 aria-label="Search entries and text"
-                className="min-h-[34px] w-full rounded-md border border-border bg-muted py-1.5 pl-7 pr-2.5 font-sans text-footnote text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-ring focus:bg-card"
+                className="min-h-(--control-h-lg) w-full rounded-md border border-border bg-muted py-1.5 pl-7 pr-2.5 font-sans text-footnote text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-ring focus:bg-card"
               />
             </div>
 
@@ -199,7 +200,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                     <button
                       key={d.id}
                       type="button"
-                      className="inline-flex min-h-[24px] max-w-full items-center gap-1.5 rounded-sm border border-border bg-card px-2 py-[3px] text-caption-2 font-medium text-muted-foreground transition hover:border-input"
+                      className="inline-flex min-h-(--control-h-xs) max-w-full items-center gap-1.5 rounded-sm border border-border bg-card px-2 py-[3px] text-caption-2 font-medium text-muted-foreground transition hover:border-input"
                       aria-pressed={active}
                       onClick={() => toggleTopic(d.id)}
                       style={
@@ -235,15 +236,19 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
               <span className="mr-0.5 font-mono text-caption-2 uppercase tracking-label-tight text-muted-foreground">
                 Sort
               </span>
-              <Chip label="A–Z" active={sortBy === "alpha"} onClick={() => setSortBy("alpha")} />
-              <Chip
-                label={facet.mode === "chapter" ? "Chapter" : "Domain"}
-                active={sortBy === "section"}
-                onClick={() => setSortBy("section")}
-              />
-              <Chip label="Kind" active={sortBy === "kind"} onClick={() => setSortBy("kind")} />
+              <Chip size="xs" variant="mono" active={sortBy === "alpha"} onClick={() => setSortBy("alpha")}>
+                A–Z
+              </Chip>
+              <Chip size="xs" variant="mono" active={sortBy === "section"} onClick={() => setSortBy("section")}>
+                {facet.mode === "chapter" ? "Chapter" : "Domain"}
+              </Chip>
+              <Chip size="xs" variant="mono" active={sortBy === "kind"} onClick={() => setSortBy("kind")}>
+                Kind
+              </Chip>
               <span aria-hidden className="mx-0.5 h-3.5 w-px bg-border" />
-              <Chip label="Learning" active={learningOnly} onClick={() => setLearningOnly((v) => !v)} />
+              <Chip size="xs" variant="mono" active={learningOnly} onClick={() => setLearningOnly((v) => !v)}>
+                Learning
+              </Chip>
             </div>
           </header>
 
@@ -254,37 +259,37 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
               }`}
               ref={indexRef}
             >
-            {entries.length === 0 ? (
-              <p className="px-6 py-16 text-center italic text-muted-foreground">
-                No dictionary entries for {mapTitle} yet.
-              </p>
-            ) : groups.length === 0 ? (
-              <p className="px-6 py-16 text-center italic text-muted-foreground">
-                No entries match the current filters.
-              </p>
-            ) : (
-              groups.map((group) => (
-                <section key={group.id} className="mt-2.5 first:mt-0.5">
-                  <h2
-                    id={group.id}
-                    className="sticky top-0 z-[1] m-0 flex items-baseline gap-1.5 bg-gradient-to-b from-muted from-70% to-transparent px-2.5 pb-1 pt-1.5 font-mono text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground [scroll-margin-top:4px]"
-                  >
-                    {group.label}
-                    <span className="text-caption-2 font-medium text-muted-foreground/70">{group.items.length}</span>
-                  </h2>
-                  {group.items.map((entry) => (
-                    <IndexRow
-                      key={entry.id}
-                      entry={entry}
-                      active={entry.id === activeId}
-                      status={progress?.[entry.id]}
-                      textHit={textOnly.has(entry.id)}
-                      onClick={() => openRow(entry.id)}
-                    />
-                  ))}
-                </section>
-              ))
-            )}
+              {entries.length === 0 ? (
+                <p className="px-6 py-16 text-center italic text-muted-foreground">
+                  No dictionary entries for {mapTitle} yet.
+                </p>
+              ) : groups.length === 0 ? (
+                <p className="px-6 py-16 text-center italic text-muted-foreground">
+                  No entries match the current filters.
+                </p>
+              ) : (
+                groups.map((group) => (
+                  <section key={group.id} className="mt-2.5 first:mt-0.5">
+                    <h2
+                      id={group.id}
+                      className="sticky top-0 z-[1] m-0 flex items-baseline gap-1.5 bg-gradient-to-b from-muted from-70% to-transparent px-2.5 pb-1 pt-1.5 font-mono text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground [scroll-margin-top:4px]"
+                    >
+                      {group.label}
+                      <span className="text-caption-2 font-medium text-muted-foreground/70">{group.items.length}</span>
+                    </h2>
+                    {group.items.map((entry) => (
+                      <IndexRow
+                        key={entry.id}
+                        entry={entry}
+                        active={entry.id === activeId}
+                        status={progress?.[entry.id]}
+                        textHit={textOnly.has(entry.id)}
+                        onClick={() => openRow(entry.id)}
+                      />
+                    ))}
+                  </section>
+                ))
+              )}
             </div>
 
             {/* Alphabet rail — jump to a letter group when sorted A–Z. */}
@@ -364,7 +369,7 @@ function IndexRow({
     <button
       type="button"
       id={`dict-row-${entry.id}`}
-      className="relative flex min-h-[34px] w-full items-center gap-2 rounded-md border-none bg-transparent py-1.5 pl-3 pr-2.5 text-left [scroll-margin:48px_0] transition-colors hover:bg-accent"
+      className="relative flex min-h-(--control-h-lg) w-full items-center gap-2 rounded-md border-none bg-transparent py-1.5 pl-3 pr-2.5 text-left [scroll-margin:48px_0] transition-colors hover:bg-accent"
       onClick={onClick}
       aria-current={active}
       style={active ? { background: tone.tint } : undefined}
@@ -460,14 +465,14 @@ function DetailPane({
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              className="inline-flex min-h-[30px] items-center gap-1 rounded-sm border border-primary/40 bg-primary/10 px-3 py-1.5 font-mono text-caption-1 text-primary transition hover:bg-primary/20"
+              className="inline-flex min-h-(--control-h-md) items-center gap-1 rounded-sm border border-primary/40 bg-primary/10 px-3 py-1.5 font-mono text-caption-1 text-primary transition hover:bg-primary/20"
               onClick={openInAtlas}
             >
               Show in atlas <ArrowUpRight className="h-3 w-3" aria-hidden />
             </button>
             <button
               type="button"
-              className="inline-flex min-h-[30px] items-center gap-1.5 rounded-sm border border-border bg-card px-3 py-1.5 font-mono text-caption-1 text-muted-foreground transition hover:border-input hover:text-foreground"
+              className="inline-flex min-h-(--control-h-md) items-center gap-1.5 rounded-sm border border-border bg-card px-3 py-1.5 font-mono text-caption-1 text-muted-foreground transition hover:border-input hover:text-foreground"
               onClick={practice}
               title={
                 practiceIds.length > 1
@@ -482,14 +487,20 @@ function DetailPane({
           </div>
 
           {(prev || next) && (
-            <nav className="flex items-center justify-between gap-3 border-t border-dashed border-border pt-3.5" aria-label="Adjacent entries">
+            <nav
+              className="flex items-center justify-between gap-3 border-t border-dashed border-border pt-3.5"
+              aria-label="Adjacent entries"
+            >
               {prev ? (
                 <button
                   type="button"
                   onClick={() => onPickRelated(prev.id)}
                   className="group inline-flex min-w-0 items-center gap-1.5 rounded-sm py-1 pr-2 text-left text-footnote text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  <ChevronLeft className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground/70 group-hover:text-foreground" aria-hidden />
+                  <ChevronLeft
+                    className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground/70 group-hover:text-foreground"
+                    aria-hidden
+                  />
                   <span className="min-w-0 truncate">
                     <MathText text={prev.label} />
                   </span>
@@ -506,7 +517,10 @@ function DetailPane({
                   <span className="min-w-0 truncate">
                     <MathText text={next.label} />
                   </span>
-                  <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground/70 group-hover:text-foreground" aria-hidden />
+                  <ChevronRight
+                    className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground/70 group-hover:text-foreground"
+                    aria-hidden
+                  />
                 </button>
               )}
             </nav>
@@ -514,19 +528,6 @@ function DetailPane({
         </footer>
       </div>
     </article>
-  );
-}
-
-function Chip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      className="min-h-[24px] rounded-sm border border-border bg-card px-2.5 py-[3px] font-mono text-caption-2 text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary"
-      aria-pressed={active}
-      onClick={onClick}
-    >
-      {label}
-    </button>
   );
 }
 

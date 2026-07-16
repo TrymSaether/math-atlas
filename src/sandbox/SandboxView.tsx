@@ -71,9 +71,9 @@ function inEditable(target: EventTarget | null): boolean {
   if (!el?.tagName) return false;
   return Boolean(
     el.tagName === "INPUT" ||
-      el.tagName === "TEXTAREA" ||
-      el.isContentEditable ||
-      el.closest?.("math-field, [contenteditable]"),
+    el.tagName === "TEXTAREA" ||
+    el.isContentEditable ||
+    el.closest?.("math-field, [contenteditable]"),
   );
 }
 
@@ -384,6 +384,7 @@ function WorkspaceMenu() {
               }}
             >
               <input
+                // eslint-disable-next-line jsx-a11y/no-autofocus -- input only mounts on the user's own "Save" click; focusing it is expected, not a page-load autofocus.
                 autoFocus
                 value={saveName}
                 onChange={(e) => setSaveName(e.target.value)}

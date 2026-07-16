@@ -114,6 +114,15 @@
   --radius-2xl: 1.25rem; /* 20px */
   --radius-pill: 999px;
 
+  /* ---- control-height scale — recurring row/pill/field min-heights, referenced
+     as arbitrary values (e.g. min-h-(--control-h-lg)) since Tailwind's spacing
+     scale doesn't cover this namespace. ---- */
+  --control-h-xs: 24px;
+  --control-h-sm: 26px;
+  --control-h-md: 30px;
+  --control-h-lg: 34px;
+  --control-h-xl: 44px;
+
   /* ---- floating-shell layout geometry ----------------------------------
      The docked columns (sidebar, left panels) and content offsets read these
      as arbitrary values (e.g. top-[var(--shell-dock-top)]). */

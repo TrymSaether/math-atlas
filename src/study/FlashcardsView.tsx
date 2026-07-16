@@ -13,6 +13,7 @@ import { ConceptHeader, ConceptBody } from "./concept";
 import { hasNodeVisual } from "./concept/visualModel";
 import { useDrill, shuffle, type CardDirection, type DeckScope, type Rating } from "./drill";
 import { useSrs, isDue, srsKey } from "./srs";
+import { Chip } from "@/ui/chip";
 
 /** A node carries enough to drill if it has a title and at least one answer-side facet. */
 function answerText(n: GraphNode): string {
@@ -157,7 +158,7 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
         {/* Deck scope + card direction */}
         <div className="mb-2 flex flex-wrap items-center gap-1.5">
           {scoped ? (
-            <span className="inline-flex min-h-[26px] items-center gap-1.5 rounded-sm border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-caption-1 font-medium text-primary">
+            <span className="inline-flex min-h-(--control-h-sm) items-center gap-1.5 rounded-sm border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-caption-1 font-medium text-primary">
               Practicing: <MathText text={scoped.title} />
               <span className="font-mono opacity-70">{total}</span>
               <button
@@ -172,19 +173,34 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
             </span>
           ) : (
             <div className="flex items-center gap-1.5" role="group" aria-label="Deck scope">
-              <ScopeChip label="All" count={scopeCounts.all} active={scope === "all"} onClick={() => setScope("all")} />
-              <ScopeChip label="Due" count={scopeCounts.due} active={scope === "due"} onClick={() => setScope("due")} />
-              <ScopeChip
-                label="Learning"
-                count={scopeCounts.learning}
-                active={scope === "learning"}
-                onClick={() => setScope("learning")}
-              />
+              <Chip active={scope === "all"} onClick={() => setScope("all")}>
+                All <span className="font-mono text-caption-2 opacity-70">{scopeCounts.all}</span>
+              </Chip>
+              <Chip active={scope === "due"} onClick={() => setScope("due")}>
+                Due <span className="font-mono text-caption-2 opacity-70">{scopeCounts.due}</span>
+              </Chip>
+              <Chip active={scope === "learning"} onClick={() => setScope("learning")}>
+                Learning <span className="font-mono text-caption-2 opacity-70">{scopeCounts.learning}</span>
+              </Chip>
             </div>
           )}
           <div className="ml-auto flex items-center gap-1.5" role="group" aria-label="Card direction">
-            <DirectionChip value="term" current={direction} onPick={setDirection} />
-            <DirectionChip value="statement" current={direction} onPick={setDirection} />
+            <Chip
+              variant="mono"
+              active={direction === "term"}
+              onClick={() => setDirection("term")}
+              title="Show the name and recall the statement"
+            >
+              {DIRECTION_LABEL.term}
+            </Chip>
+            <Chip
+              variant="mono"
+              active={direction === "statement"}
+              onClick={() => setDirection("statement")}
+              title="Show the statement and recall the name"
+            >
+              {DIRECTION_LABEL.statement}
+            </Chip>
           </div>
         </div>
 
@@ -319,8 +335,7 @@ function ProgressRail({
       {order.map((id, i) => {
         const rating = ratings[id];
         const current = i === pos;
-        const color =
-          rating === "got" ? "bg-success/80" : rating === "again" ? "bg-destructive/70" : "bg-secondary";
+        const color = rating === "got" ? "bg-success/80" : rating === "again" ? "bg-destructive/70" : "bg-secondary";
         return (
           <button
             key={id}
@@ -337,56 +352,10 @@ function ProgressRail({
   );
 }
 
-function ScopeChip({
-  label,
-  count,
-  active,
-  onClick,
-}: {
-  label: string;
-  count: number;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className="inline-flex min-h-[26px] items-center gap-1.5 rounded-sm border border-border bg-card px-2.5 py-0.5 text-caption-1 font-medium text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary"
-    >
-      {label}
-      <span className="font-mono text-caption-2 opacity-70">{count}</span>
-    </button>
-  );
-}
-
 const DIRECTION_LABEL: Record<CardDirection, string> = {
   term: "Term first",
   statement: "Statement first",
 };
-
-function DirectionChip({
-  value,
-  current,
-  onPick,
-}: {
-  value: CardDirection;
-  current: CardDirection;
-  onPick: (d: CardDirection) => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={() => onPick(value)}
-      aria-pressed={current === value}
-      title={value === "statement" ? "Show the statement and recall the name" : "Show the name and recall the statement"}
-      className="min-h-[26px] rounded-sm border border-border bg-card px-2.5 py-0.5 font-mono text-caption-2 text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary"
-    >
-      {DIRECTION_LABEL[value]}
-    </button>
-  );
-}
 
 function CardShell({ children, tone, footer }: { children: React.ReactNode; tone: string; footer?: React.ReactNode }) {
   return (

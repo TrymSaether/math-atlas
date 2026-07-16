@@ -48,7 +48,7 @@ export function ExpressionPanel() {
           >
             <button
               type="button"
-              className="flex min-h-[34px] w-full items-center gap-1.5 rounded-t-md border-b border-border/50 px-2 pb-1.5 pt-2 text-left text-caption-2 font-bold uppercase leading-none tracking-label-tight text-muted-foreground transition-colors hover:bg-foreground/[0.04] hover:text-foreground focus-visible:bg-primary/10 focus-visible:shadow-[inset_0_0_0_1px_var(--primary)] focus-visible:outline-none"
+              className="flex min-h-(--control-h-lg) w-full items-center gap-1.5 rounded-t-md border-b border-border/50 px-2 pb-1.5 pt-2 text-left text-caption-2 font-bold uppercase leading-none tracking-label-tight text-muted-foreground transition-colors hover:bg-foreground/[0.04] hover:text-foreground focus-visible:bg-primary/10 focus-visible:shadow-[inset_0_0_0_1px_var(--primary)] focus-visible:outline-none"
               aria-expanded={!collapsed[section.id]}
               onClick={() => setCollapsed((next) => ({ ...next, [section.id]: !next[section.id] }))}
             >
@@ -166,6 +166,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
   };
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- mouse-only convenience for clicking elsewhere in the row; the nested MathField's onFocus already selects it on keyboard/focus.
     <div
       onMouseDown={() => selectRow(row.id)}
       className="group relative mb-0 overflow-hidden rounded-sm border border-transparent bg-transparent transition-colors hover:border-border/30 hover:bg-foreground/5 data-[selected=true]:border-primary/25 data-[selected=true]:bg-primary/[0.06] data-[selected=true]:shadow-[inset_2px_0_0_var(--primary)]"
@@ -173,7 +174,7 @@ function ExpressionRow({ row, index, computed }: { row: Row; index: number; comp
       data-status={status}
       data-row-type={rowType}
     >
-      <div className="flex min-h-[44px] items-stretch">
+      <div className="flex min-h-(--control-h-xl) items-stretch">
         {/* Index gutter */}
         <div
           className="flex w-6 items-center justify-center py-1 font-mono text-caption-2 leading-none tabular-nums text-muted-foreground"

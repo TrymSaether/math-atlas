@@ -166,7 +166,7 @@ export function PathsPanel() {
             aria-pressed={includeProof}
             onClick={() => setIncludeProof(!includeProof)}
             className={cn(
-              "inline-flex min-h-[30px] items-center gap-1.5 rounded-full px-3 text-caption font-medium transition-colors",
+              "inline-flex min-h-(--control-h-md) items-center gap-1.5 rounded-full px-3 text-caption font-medium transition-colors",
               includeProof ? "bg-primary/10 text-primary" : "bg-muted text-foreground hover:bg-accent",
             )}
           >

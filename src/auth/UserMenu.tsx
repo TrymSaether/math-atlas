@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { LogIn, LogOut, User } from "lucide-react";
 import { signOut, useSession } from "./client";
 import { Button } from "@/ui/button";
 import { Surface } from "@/design";
+import { usePopoverDismiss } from "@/app/usePopover";
 import { AuthDialog } from "./AuthDialog";
 
 /**
@@ -15,20 +16,10 @@ export function UserMenu() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
-  useEffect(() => {
-    if (!menuOpen) return;
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setMenuOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [menuOpen]);
+  usePopoverDismiss({ open: menuOpen, onClose: closeMenu, containerRef: ref, triggerRef });
 
   const user = session?.user;
 
@@ -55,6 +46,7 @@ export function UserMenu() {
   return (
     <div className="relative" ref={ref}>
       <Button
+        ref={triggerRef}
         variant="ghost"
         size="icon"
         className="size-9"

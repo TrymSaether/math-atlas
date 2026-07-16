@@ -1,15 +1,14 @@
 import { Dialog } from "radix-ui";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { signIn, signInWithGoogle, signUp } from "./client";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
-import { Surface, spring } from "@/design";
+import { ModalShell } from "@/ui/modal-shell";
+import { Surface } from "@/design";
 
 type Mode = "signin" | "signup";
 
 export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
-  const reduceMotion = useReducedMotion();
   const [mode, setMode] = useState<Mode>("signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -61,106 +60,85 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
   const isSignup = mode === "signup";
 
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <AnimatePresence>
-        {open && (
-          <Dialog.Portal forceMount>
-            <Dialog.Overlay asChild>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px]"
-              />
-            </Dialog.Overlay>
-            <Dialog.Content asChild>
-              <motion.div
-                initial={reduceMotion ? false : { opacity: 0, y: -12, scale: 0.99 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.99 }}
-                transition={reduceMotion ? { duration: 0 } : spring.gentle}
-                className="fixed top-1/2 left-1/2 z-50 w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2"
-              >
-                <Dialog.Title className="sr-only">{isSignup ? "Create an account" : "Sign in"}</Dialog.Title>
-                <Dialog.Description className="sr-only">Sign in to sync and share your maps.</Dialog.Description>
-                <Surface material="thick" className="p-0">
-                  <form onSubmit={submit} className="flex flex-col gap-3 p-5">
-                    <h2 className="text-title-3 font-semibold text-foreground">
-                      {isSignup ? "Create an account" : "Welcome back"}
-                    </h2>
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      disabled={busy || googleBusy}
-                      onClick={continueWithGoogle}
-                      className="h-11 gap-2"
-                    >
-                      <GoogleGIcon className="size-[18px] shrink-0" />
-                      {googleBusy ? "Opening Google…" : "Continue with Google"}
-                    </Button>
-                    <div className="flex items-center gap-2 text-caption font-medium tracking-wide text-muted-foreground uppercase">
-                      <span className="h-px flex-1 bg-border" aria-hidden />
-                      <span>or</span>
-                      <span className="h-px flex-1 bg-border" aria-hidden />
-                    </div>
-                    {isSignup && (
-                      <Field
-                        label="Name"
-                        type="text"
-                        autoComplete="name"
-                        value={name}
-                        onChange={setName}
-                        placeholder="Ada Lovelace"
-                      />
-                    )}
-                    <Field
-                      label="Email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      value={email}
-                      onChange={setEmail}
-                      placeholder="you@example.com"
-                    />
-                    <Field
-                      label="Password"
-                      type="password"
-                      autoComplete={isSignup ? "new-password" : "current-password"}
-                      required
-                      value={password}
-                      onChange={setPassword}
-                      placeholder="••••••••"
-                    />
+    <ModalShell
+      open={open}
+      onOpenChange={onOpenChange}
+      contentClassName="top-1/2 left-1/2 w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2"
+    >
+      <Dialog.Title className="sr-only">{isSignup ? "Create an account" : "Sign in"}</Dialog.Title>
+      <Dialog.Description className="sr-only">Sign in to sync and share your maps.</Dialog.Description>
+      <Surface material="thick" className="p-0">
+        <form onSubmit={submit} className="flex flex-col gap-3 p-5">
+          <h2 className="text-title-3 font-semibold text-foreground">
+            {isSignup ? "Create an account" : "Welcome back"}
+          </h2>
+          <Button
+            type="button"
+            variant="secondary"
+            disabled={busy || googleBusy}
+            onClick={continueWithGoogle}
+            className="h-11 gap-2"
+          >
+            <GoogleGIcon className="size-[18px] shrink-0" />
+            {googleBusy ? "Opening Google…" : "Continue with Google"}
+          </Button>
+          <div className="flex items-center gap-2 text-caption font-medium tracking-wide text-muted-foreground uppercase">
+            <span className="h-px flex-1 bg-border" aria-hidden />
+            <span>or</span>
+            <span className="h-px flex-1 bg-border" aria-hidden />
+          </div>
+          {isSignup && (
+            <Field
+              label="Name"
+              type="text"
+              autoComplete="name"
+              value={name}
+              onChange={setName}
+              placeholder="Ada Lovelace"
+            />
+          )}
+          <Field
+            label="Email"
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={setEmail}
+            placeholder="you@example.com"
+          />
+          <Field
+            label="Password"
+            type="password"
+            autoComplete={isSignup ? "new-password" : "current-password"}
+            required
+            value={password}
+            onChange={setPassword}
+            placeholder="••••••••"
+          />
 
-                    {error && (
-                      <p className="text-caption font-medium text-destructive" role="alert">
-                        {error}
-                      </p>
-                    )}
+          {error && (
+            <p className="text-caption font-medium text-destructive" role="alert">
+              {error}
+            </p>
+          )}
 
-                    <Button type="submit" disabled={busy || googleBusy} className="mt-1 h-11">
-                      {busy ? "Please wait…" : isSignup ? "Create account" : "Sign in"}
-                    </Button>
+          <Button type="submit" disabled={busy || googleBusy} className="mt-1 h-11">
+            {busy ? "Please wait…" : isSignup ? "Create account" : "Sign in"}
+          </Button>
 
-                    <button
-                      type="button"
-                      className="text-caption text-muted-foreground underline-offset-2 hover:underline"
-                      onClick={() => {
-                        setMode(isSignup ? "signin" : "signup");
-                        setError(null);
-                      }}
-                    >
-                      {isSignup ? "Already have an account? Sign in" : "No account yet? Create one"}
-                    </button>
-                  </form>
-                </Surface>
-              </motion.div>
-            </Dialog.Content>
-          </Dialog.Portal>
-        )}
-      </AnimatePresence>
-    </Dialog.Root>
+          <button
+            type="button"
+            className="text-caption text-muted-foreground underline-offset-2 hover:underline"
+            onClick={() => {
+              setMode(isSignup ? "signin" : "signup");
+              setError(null);
+            }}
+          >
+            {isSignup ? "Already have an account? Sign in" : "No account yet? Create one"}
+          </button>
+        </form>
+      </Surface>
+    </ModalShell>
   );
 }
 

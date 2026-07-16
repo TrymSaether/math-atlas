@@ -125,7 +125,6 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
       <header className="flex items-center justify-between px-3.5 pt-3 pb-1.5">
         <span className="text-headline font-semibold text-foreground">Filters</span>
         <Button
-          autoFocus
           variant="ghost"
           size="icon"
           className="size-8 text-muted-foreground"

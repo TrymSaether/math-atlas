@@ -22,7 +22,7 @@ const SIZE_STYLES: Record<
   },
   card: {
     grid: "grid-cols-[3px_minmax(0,1fr)] gap-x-2.5",
-    rail: "min-h-[34px]",
+    rail: "min-h-(--control-h-lg)",
     title: "leading-[1.1]",
     meta: "mt-1.5 gap-1.25",
   },
