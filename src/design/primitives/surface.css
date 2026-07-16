@@ -8,72 +8,78 @@
  * near-solid material, not glass.
  */
 
-.surface {
-  position: relative;
-  isolation: isolate;
-  border-radius: var(--radius-lg);
-  border: 0.5px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  color: var(--foreground);
-}
+/* Layered as `components` so Tailwind utility classes (e.g. `absolute`,
+   `position`) always win the cascade over these defaults, regardless of
+   import order — unlayered CSS otherwise beats layered Tailwind utilities
+   outright, which silently broke `absolute` positioning on <Surface> users. */
+@layer components {
+  .surface {
+    position: relative;
+    isolation: isolate;
+    border-radius: var(--radius-lg);
+    border: 0.5px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    color: var(--foreground);
+  }
 
-.surface::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow: inset 0 1px 0 0 var(--glass-specular);
-  background: radial-gradient(
-    140px 90px at var(--surface-mx, 50%) var(--surface-my, 0%),
-    var(--glass-specular),
-    transparent 70%
-  );
-  opacity: 0.5;
-}
+  .surface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 1px 0 0 var(--glass-specular);
+    background: radial-gradient(
+      140px 90px at var(--surface-mx, 50%) var(--surface-my, 0%),
+      var(--glass-specular),
+      transparent 70%
+    );
+    opacity: 0.5;
+  }
 
-.surface--ultrathin {
-  background: var(--glass-ultrathin-fill);
-  -webkit-backdrop-filter: blur(var(--glass-ultrathin-blur)) saturate(var(--glass-ultrathin-saturate));
-  backdrop-filter: blur(var(--glass-ultrathin-blur)) saturate(var(--glass-ultrathin-saturate));
-}
+  .surface--ultrathin {
+    background: var(--glass-ultrathin-fill);
+    -webkit-backdrop-filter: blur(var(--glass-ultrathin-blur)) saturate(var(--glass-ultrathin-saturate));
+    backdrop-filter: blur(var(--glass-ultrathin-blur)) saturate(var(--glass-ultrathin-saturate));
+  }
 
-.surface--thin {
-  background: var(--glass-thin-fill);
-  -webkit-backdrop-filter: blur(var(--glass-thin-blur)) saturate(var(--glass-thin-saturate));
-  backdrop-filter: blur(var(--glass-thin-blur)) saturate(var(--glass-thin-saturate));
-}
+  .surface--thin {
+    background: var(--glass-thin-fill);
+    -webkit-backdrop-filter: blur(var(--glass-thin-blur)) saturate(var(--glass-thin-saturate));
+    backdrop-filter: blur(var(--glass-thin-blur)) saturate(var(--glass-thin-saturate));
+  }
 
-.surface--regular {
-  background: var(--glass-regular-fill);
-  -webkit-backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-regular-saturate));
-  backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-regular-saturate));
-}
+  .surface--regular {
+    background: var(--glass-regular-fill);
+    -webkit-backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-regular-saturate));
+    backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-regular-saturate));
+  }
 
-.surface--thick {
-  background: var(--glass-thick-fill);
-  -webkit-backdrop-filter: blur(var(--glass-thick-blur)) saturate(var(--glass-thick-saturate));
-  backdrop-filter: blur(var(--glass-thick-blur)) saturate(var(--glass-thick-saturate));
-}
-
-/* near-solid — graph nodes (content, not chrome) */
-.surface--chrome {
-  background: var(--glass-chrome-fill);
-}
-
-/* opt out of the specular edge (e.g. nested fills) */
-.surface--plain::before {
-  content: none;
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  .surface--ultrathin,
-  .surface--thin,
-  .surface--regular,
   .surface--thick {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    background: var(--card);
+    background: var(--glass-thick-fill);
+    -webkit-backdrop-filter: blur(var(--glass-thick-blur)) saturate(var(--glass-thick-saturate));
+    backdrop-filter: blur(var(--glass-thick-blur)) saturate(var(--glass-thick-saturate));
+  }
+
+  /* near-solid — graph nodes (content, not chrome) */
+  .surface--chrome {
+    background: var(--glass-chrome-fill);
+  }
+
+  /* opt out of the specular edge (e.g. nested fills) */
+  .surface--plain::before {
+    content: none;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .surface--ultrathin,
+    .surface--thin,
+    .surface--regular,
+    .surface--thick {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: var(--card);
+    }
   }
 }
