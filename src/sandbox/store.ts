@@ -318,8 +318,7 @@ export const useSandbox = create<SandboxState>((set) => {
         ws: { ...s.ws, marks: [...s.ws.marks, { ...mark, id: newId("mark") } as Mark] },
       })),
 
-    removeMark: (id) =>
-      set((s) => ({ ...record(s), ws: { ...s.ws, marks: s.ws.marks.filter((m) => m.id !== id) } })),
+    removeMark: (id) => set((s) => ({ ...record(s), ws: { ...s.ws, marks: s.ws.marks.filter((m) => m.id !== id) } })),
   };
 });
 
