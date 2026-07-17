@@ -16,7 +16,7 @@ import {
   UI,
 } from "../core/FigureFrame";
 import { RangeControl } from "../core/RangeControl";
-import { type FigureProps } from "../core/types";
+import type { FigureProps } from "../core/types";
 
 const TERMS = 16;
 

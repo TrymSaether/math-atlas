@@ -14,7 +14,7 @@ import {
   Vector,
 } from "../core/FigureFrame";
 import { useMovablePoint } from "../core/mafs";
-import { type FigureProps } from "../core/types";
+import type { FigureProps } from "../core/types";
 
 const T_MAX = 4; // seconds shown
 const SIGNAL_HZ = 3; // the true tone frequency

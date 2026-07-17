@@ -22,7 +22,6 @@ import {
   type MapPayload,
   type MapRole,
 } from "../../shared/contracts";
-import { apiUrl, authHeaders } from "@/auth/client";
 import type { MapId } from "./registry";
 import { DEV_OFFLINE_FALLBACK, devCatalog, devMap } from "./devFallback";
 
@@ -42,15 +41,14 @@ export interface CatalogEntry {
 const ROLE_RANK: Record<string, number> = { owner: 3, editor: 2, viewer: 1, public: 0 };
 
 const opts = (extra?: RequestInit): RequestInit => ({
-  credentials: "omit",
-  headers: authHeaders(),
+  headers: { "Content-Type": "application/json" },
   ...extra,
 });
 
 /** Fetch the catalog and collapse to one entry per slug (best access wins). */
 export async function fetchCatalog(): Promise<CatalogEntry[]> {
   try {
-    const res = await fetch(apiUrl("/api/maps/catalog"), opts());
+    const res = await fetch("/api/maps/catalog", opts());
     if (!res.ok) throw new Error(`catalog failed: ${res.status}`);
     const rows = MapCatalogResponseSchema.parse(await res.json());
 
@@ -76,7 +74,7 @@ export async function fetchCatalog(): Promise<CatalogEntry[]> {
 
 export async function fetchMap(id: string): Promise<MapPayload> {
   try {
-    const res = await fetch(apiUrl(`/api/maps/${id}`), opts());
+    const res = await fetch(`/api/maps/${id}`, opts());
     if (!res.ok) throw new Error(`map fetch failed: ${res.status}`);
     return MapPayloadSchema.parse(await res.json());
   } catch (err) {
@@ -91,7 +89,7 @@ export async function fetchMap(id: string): Promise<MapPayload> {
 /** Fork a readable map into the caller's own editable copy; returns the new id. */
 export async function forkMap(fromId: string): Promise<{ id: string; slug: string }> {
   const body = ForkMapRequestSchema.parse({ fromId });
-  const res = await fetch(apiUrl("/api/maps"), opts({ method: "POST", body: JSON.stringify(body) }));
+  const res = await fetch("/api/maps", opts({ method: "POST", body: JSON.stringify(body) }));
   if (!res.ok) throw new Error(`fork failed: ${res.status} ${await res.text()}`);
   return ForkMapResponseSchema.parse(await res.json());
 }
@@ -105,7 +103,7 @@ export async function saveMapSource(
   baseUpdated?: string,
 ): Promise<SaveResult> {
   const body = SaveMapRequestSchema.parse({ baseVersion, source, baseUpdated });
-  const res = await fetch(apiUrl(`/api/maps/${id}`), opts({ method: "PUT", body: JSON.stringify(body) }));
+  const res = await fetch(`/api/maps/${id}`, opts({ method: "PUT", body: JSON.stringify(body) }));
   if (res.status === 409) {
     const conflict = SaveMapConflictResponseSchema.parse(await res.json());
     return { ok: false, conflict: true, updated: conflict.updated };
@@ -116,14 +114,14 @@ export async function saveMapSource(
 }
 
 export async function deleteMap(id: string): Promise<void> {
-  const res = await fetch(apiUrl(`/api/maps/${id}`), opts({ method: "DELETE" }));
+  const res = await fetch(`/api/maps/${id}`, opts({ method: "DELETE" }));
   if (!res.ok && res.status !== 404) throw new Error(`delete failed: ${res.status}`);
 }
 
 // --- Collaborators (Phase 4) ---
 
 export async function listCollaborators(id: string): Promise<Collaborator[]> {
-  const res = await fetch(apiUrl(`/api/maps/${id}/collaborators`), opts());
+  const res = await fetch(`/api/maps/${id}/collaborators`, opts());
   if (!res.ok) throw new Error(`collaborators failed: ${res.status}`);
   return CollaboratorsResponseSchema.parse(await res.json());
 }
@@ -134,10 +132,7 @@ export async function addCollaborator(
   role: "editor" | "viewer" = "editor",
 ): Promise<{ ok?: boolean; error?: string }> {
   const request = AddCollaboratorRequestSchema.parse({ email, role });
-  const res = await fetch(
-    apiUrl(`/api/maps/${id}/collaborators`),
-    opts({ method: "POST", body: JSON.stringify(request) }),
-  );
+  const res = await fetch(`/api/maps/${id}/collaborators`, opts({ method: "POST", body: JSON.stringify(request) }));
   const body: unknown = await res.json().catch(() => ({}));
   if (!res.ok) {
     const error = ApiErrorSchema.safeParse(body);
@@ -148,6 +143,6 @@ export async function addCollaborator(
 }
 
 export async function removeCollaborator(id: string, userId: string): Promise<void> {
-  const res = await fetch(apiUrl(`/api/maps/${id}/collaborators/${userId}`), opts({ method: "DELETE" }));
+  const res = await fetch(`/api/maps/${id}/collaborators/${userId}`, opts({ method: "DELETE" }));
   if (!res.ok && res.status !== 404) throw new Error(`remove failed: ${res.status}`);
 }

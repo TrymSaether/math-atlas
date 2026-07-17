@@ -23,12 +23,12 @@ import {
   SaveMapConflictResponseSchema,
   SaveMapRequestSchema,
   SaveMapResponseSchema,
-} from "../../shared/contracts";
-import { db } from "../db/client";
-import { mapCollaborators, maps, mapSources, user } from "../db/schema";
-import { auth } from "../auth";
-import { SourceGraphSchema } from "@shared/maps/source";
-import { buildArtifact } from "@shared/maps/build";
+} from "../../shared/contracts/index.ts";
+import { db } from "../db/client.ts";
+import { mapCollaborators, maps, mapSources, user } from "../db/schema.ts";
+import { auth } from "../auth.ts";
+import { SourceGraphSchema } from "../../shared/maps/source.ts";
+import { buildArtifact } from "../../shared/maps/build.ts";
 
 export const mapsRoute = new Hono();
 
@@ -243,7 +243,7 @@ mapsRoute.delete("/:id", async (c) => {
   if (!userId) return c.json(apiError("Unauthorized"), 401);
 
   const access = await resolveAccess(c.req.param("id"), userId);
-  if (!access || access.role !== "owner") return c.json(apiError("Forbidden"), 403);
+  if (access?.role !== "owner") return c.json(apiError("Forbidden"), 403);
 
   await db.delete(maps).where(eq(maps.id, access.map.id));
   return c.body(null, 204);
@@ -260,7 +260,7 @@ async function requireOwner(c: {
   const userId = await getUserId(c);
   if (!userId) return new Response(JSON.stringify(apiError("Unauthorized")), { status: 401 });
   const access = await resolveAccess(c.req.param("id"), userId);
-  if (!access || access.role !== "owner") {
+  if (access?.role !== "owner") {
     return new Response(JSON.stringify(apiError("Forbidden")), { status: 403 });
   }
   return { map: access.map };

@@ -4,13 +4,13 @@
  * one is expected, examples, diagrams, intuition, and notation. Percentages are
  * colour-banded so gaps jump out.
  */
-import type { Command } from "../core/command";
-import { loadMaps, type Ctx } from "../core/context";
-import type { CliMap } from "../core/model";
-import { categoryOf } from "@shared/maps/nodeCategory";
-import { table } from "../reporters/table";
-import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color";
-import { pct, padStart } from "../utils/text";
+import type { Command } from "../core/command.ts";
+import { loadMaps, type Ctx } from "../core/context.ts";
+import type { CliMap } from "../core/model.ts";
+import { categoryOf } from "../../../shared/maps/nodeCategory.ts";
+import { table } from "../reporters/table.ts";
+import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color.ts";
+import { pct, padStart } from "../utils/text.ts";
 
 const FACETS = ["body", "proof", "examples", "diagram", "intuition", "notation"] as const;
 type Facet = (typeof FACETS)[number];

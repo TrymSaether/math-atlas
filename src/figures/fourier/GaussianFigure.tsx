@@ -1,7 +1,7 @@
 import { gaussian } from "./fourierMath";
 import { DIA, FONT, FigureCaption, FigureFrame, FunctionCurve, Line, STROKE, Text, Vector } from "../core/FigureFrame";
 import { useMovablePoint } from "../core/mafs";
-import { type FigureProps } from "../core/types";
+import type { FigureProps } from "../core/types";
 
 const CAPTION: Record<string, string> = {
   gaussian_transform:

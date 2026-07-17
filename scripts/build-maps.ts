@@ -20,8 +20,8 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join, basename } from "node:path";
 import { fileURLToPath } from "node:url";
-import { SourceGraphSchema } from "@shared/maps/source";
-import { buildArtifact } from "@shared/maps/build";
+import { SourceGraphSchema } from "../shared/maps/source.ts";
+import { buildArtifact } from "../shared/maps/build.ts";
 
 const MAPS_DIR = process.env.MAPS_DIR ?? fileURLToPath(new URL("../src/maps/sources", import.meta.url));
 

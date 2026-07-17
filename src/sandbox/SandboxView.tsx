@@ -71,9 +71,9 @@ function inEditable(target: EventTarget | null): boolean {
   if (!el?.tagName) return false;
   return Boolean(
     el.tagName === "INPUT" ||
-    el.tagName === "TEXTAREA" ||
-    el.isContentEditable ||
-    el.closest?.("math-field, [contenteditable]"),
+      el.tagName === "TEXTAREA" ||
+      el.isContentEditable ||
+      el.closest?.("math-field, [contenteditable]"),
   );
 }
 
@@ -125,6 +125,7 @@ export function SandboxView() {
               {ws.views.map((v) => (
                 <span key={v.id} className="flex items-center">
                   <button
+                    type="button"
                     onClick={() => applyView(v.id)}
                     className="rounded-sm px-2 py-1 text-caption-2 text-muted-foreground"
                     title="Apply saved view"
@@ -132,6 +133,7 @@ export function SandboxView() {
                     {v.name}
                   </button>
                   <button
+                    type="button"
                     onClick={() => removeView(v.id)}
                     className="px-0.5 text-muted-foreground/70"
                     title="Remove view"

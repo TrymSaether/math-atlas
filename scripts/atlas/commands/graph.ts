@@ -8,16 +8,16 @@
  *   rank        centrality ranking (--by degree|betweenness)
  *   topo        topological order of the dependency DAG
  */
-import type { Command } from "../core/command";
-import { loadMaps, CliError, type Ctx } from "../core/context";
-import { findConcept, type CliMap } from "../core/model";
-import { shortestPath, prerequisiteChain, orphans, detectCycles, topoSort, betweenness } from "../graph/algorithms";
-import { edgeLabel } from "@shared/maps/relations";
-import { renderTree, renderList } from "../reporters/tree";
-import { table } from "../reporters/table";
-import { bold, dim, cyan, gray, red, yellow, green } from "../utils/color";
-import { MARK, kindGlyph } from "../utils/glyphs";
-import { padStart } from "../utils/text";
+import type { Command } from "../core/command.ts";
+import { loadMaps, CliError, type Ctx } from "../core/context.ts";
+import { findConcept, type CliMap } from "../core/model.ts";
+import { shortestPath, prerequisiteChain, orphans, detectCycles, topoSort, betweenness } from "../graph/algorithms.ts";
+import { edgeLabel } from "../../../shared/maps/relations.ts";
+import { renderTree, renderList } from "../reporters/tree.ts";
+import { table } from "../reporters/table.ts";
+import { bold, dim, cyan, gray, red, yellow, green } from "../utils/color.ts";
+import { MARK, kindGlyph } from "../utils/glyphs.ts";
+import { padStart } from "../utils/text.ts";
 
 function requireMap(maps: CliMap[]): CliMap {
   if (maps.length === 1) return maps[0];
@@ -154,9 +154,9 @@ function cmdTopo(map: CliMap): number {
   const { order, hasCycle } = topoSort(map);
   process.stdout.write("\n" + bold(`Topological order — ${map.id}`) + "\n\n");
   if (hasCycle) process.stdout.write("  " + yellow(`${MARK.warning} graph has a cycle; order is partial`) + "\n\n");
-  order.forEach((id, i) =>
-    process.stdout.write("  " + gray(padStart(String(i + 1), 4)) + "  " + label(map, id) + "\n"),
-  );
+  order.forEach((id, i) => {
+    process.stdout.write("  " + gray(padStart(String(i + 1), 4)) + "  " + label(map, id) + "\n");
+  });
   process.stdout.write("\n");
   return 0;
 }

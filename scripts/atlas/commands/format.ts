@@ -9,12 +9,12 @@
  * order within each object, 2-space indent. `--check` reports drift and exits 1.
  */
 import { writeFileSync } from "node:fs";
-import { SourceGraphSchema } from "@shared/maps/source";
-import type { Command } from "../core/command";
-import { loadSourceFiles, CliError, type Ctx } from "../core/context";
-import type { SourceFile } from "../core/loadSources";
-import { bold, dim, cyan, green, yellow, red, gray } from "../utils/color";
-import { MARK } from "../utils/glyphs";
+import { SourceGraphSchema } from "../../../shared/maps/source.ts";
+import type { Command } from "../core/command.ts";
+import { loadSourceFiles, CliError, type Ctx } from "../core/context.ts";
+import type { SourceFile } from "../core/loadSources.ts";
+import { bold, dim, cyan, green, yellow, red, gray } from "../utils/color.ts";
+import { MARK } from "../utils/glyphs.ts";
 
 type Obj = Record<string, unknown>;
 

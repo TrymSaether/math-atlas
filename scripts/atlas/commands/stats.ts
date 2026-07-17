@@ -3,16 +3,16 @@
  * per-kind breakdowns, edge/relation counts, density, average dependencies, and
  * the longest prerequisite chain. Rendered as tables + bar charts.
  */
-import type { Command } from "../core/command";
-import { loadMaps, type Ctx } from "../core/context";
-import type { CliMap } from "../core/model";
-import { topoSort } from "../graph/algorithms";
-import { table } from "../reporters/table";
-import { barRow } from "../reporters/bars";
-import { swatch } from "../utils/color";
-import { bold, dim, cyan, gray } from "../utils/color";
-import { kindGlyph } from "../utils/glyphs";
-import { padStart } from "../utils/text";
+import type { Command } from "../core/command.ts";
+import { loadMaps, type Ctx } from "../core/context.ts";
+import type { CliMap } from "../core/model.ts";
+import { topoSort } from "../graph/algorithms.ts";
+import { table } from "../reporters/table.ts";
+import { barRow } from "../reporters/bars.ts";
+import { swatch } from "../utils/color.ts";
+import { bold, dim, cyan, gray } from "../utils/color.ts";
+import { kindGlyph } from "../utils/glyphs.ts";
+import { padStart } from "../utils/text.ts";
 
 function mapStats(map: CliMap): Record<string, number | string> {
   const n = map.nodes.length;

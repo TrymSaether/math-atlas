@@ -4,16 +4,16 @@
  * central concepts, thin domains, oversized concepts, and foundational roots.
  * Pure read-only; reuses the graph algorithms for components and centrality.
  */
-import type { Command } from "../core/command";
-import { loadMaps, type Ctx } from "../core/context";
-import type { CliMap } from "../core/model";
-import { components, betweenness, roots, detectCycles } from "../graph/algorithms";
-import { categoryOf } from "@shared/maps/nodeCategory";
-import { meter } from "../reporters/bars";
-import { table } from "../reporters/table";
-import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color";
-import { MARK, kindGlyph } from "../utils/glyphs";
-import { pct, padStart } from "../utils/text";
+import type { Command } from "../core/command.ts";
+import { loadMaps, type Ctx } from "../core/context.ts";
+import type { CliMap } from "../core/model.ts";
+import { components, betweenness, roots, detectCycles } from "../graph/algorithms.ts";
+import { categoryOf } from "../../../shared/maps/nodeCategory.ts";
+import { meter } from "../reporters/bars.ts";
+import { table } from "../reporters/table.ts";
+import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color.ts";
+import { MARK, kindGlyph } from "../utils/glyphs.ts";
+import { pct, padStart } from "../utils/text.ts";
 
 function has(node: CliMap["nodes"][number], key: string): boolean {
   const v = (node.content as Record<string, unknown>)[key];

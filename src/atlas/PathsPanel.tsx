@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ArrowUpDown, Check, ChevronLeft, ChevronRight, Flag, MapPin, Network, Play, Route, X } from "lucide-react";
 import { useStore } from "@/app/store";
 import { useRouteResult } from "./route";

@@ -12,10 +12,10 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { and, eq } from "drizzle-orm";
-import { db } from "./db/client";
-import { maps, mapSources, user } from "./db/schema";
-import { SourceGraphSchema } from "@shared/maps/source";
-import { buildArtifact } from "@shared/maps/build";
+import { db } from "./db/client.ts";
+import { maps, mapSources, user } from "./db/schema.ts";
+import { SourceGraphSchema } from "../shared/maps/source.ts";
+import { buildArtifact } from "../shared/maps/build.ts";
 
 const SYSTEM_USER_ID = "system";
 const MAPS_DIR = fileURLToPath(new URL("../src/maps/sources", import.meta.url));

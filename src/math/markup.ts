@@ -2,7 +2,7 @@ import katex from "katex";
 
 export type MathSegment = { type: "text"; value: string } | { type: "math"; value: string; display: boolean };
 
-function escape(value: string): string {
+function escapeHtml(value: string): string {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
@@ -15,7 +15,7 @@ function restoreAllowedInlineHtml(value: string): string {
 }
 
 function renderTextMarkup(value: string): string {
-  return restoreAllowedInlineHtml(escape(value))
+  return restoreAllowedInlineHtml(escapeHtml(value))
     .replace(/\\textbf\{([^{}]*)\}/g, "<strong>$1</strong>")
     .replace(/\\(?:textit|emph)\{([^{}]*)\}/g, "<em>$1</em>")
     .replace(/\\text\{([^{}]*)\}/g, "$1")
@@ -44,7 +44,7 @@ export function renderKatex(source: string, display: boolean): string {
       output: "html",
     });
   } catch {
-    return escape(source);
+    return escapeHtml(source);
   }
 }
 
@@ -113,7 +113,9 @@ function findMathEnd(text: string, from: number, close: string): number {
 
 export function renderMathInString(text: string): string {
   return splitMathSegments(text)
-    .map((segment) => (segment.type === "text" ? escape(segment.value) : renderKatex(segment.value, segment.display)))
+    .map((segment) =>
+      segment.type === "text" ? escapeHtml(segment.value) : renderKatex(segment.value, segment.display),
+    )
     .join("");
 }
 

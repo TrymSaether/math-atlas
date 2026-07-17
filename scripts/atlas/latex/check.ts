@@ -7,9 +7,9 @@
  *      unsupported macros and malformed environments KaTeX understands.
  */
 import katex from "katex";
-import type { CliMap } from "../core/model";
-import { type Diagnostic, error } from "../diagnostics/diagnostic";
-import { scanTex, extractMath, type TexField } from "./scan";
+import type { CliMap } from "../core/model.ts";
+import { type Diagnostic, error } from "../diagnostics/diagnostic.ts";
+import { scanTex, extractMath, type TexField } from "./scan.ts";
 
 function countUnescaped(s: string, ch: string): number {
   let n = 0;

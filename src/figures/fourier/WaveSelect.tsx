@@ -1,4 +1,4 @@
-import { type WaveKind } from "./fourierMath";
+import type { WaveKind } from "./fourierMath";
 import { SegmentedControl, type SegmentOption } from "../core/SegmentedControl";
 
 const OPTIONS: ReadonlyArray<SegmentOption<WaveKind>> = [

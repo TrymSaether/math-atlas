@@ -1,3 +1,3 @@
-export * from "./common";
-export * from "./maps";
-export * from "./progress";
+export * from "./common.ts";
+export * from "./maps.ts";
+export * from "./progress.ts";

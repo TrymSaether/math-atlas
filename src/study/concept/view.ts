@@ -225,18 +225,18 @@ export function buildConceptView(node: GraphNode, map: AtlasMap, mapId: MapId): 
 
   const hasContent = Boolean(
     statement ||
-    formalStatement ||
-    definition ||
-    formula ||
-    intuition ||
-    gloss ||
-    extras.length ||
-    exampleEntries.length ||
-    assumptions.length ||
-    properties.length ||
-    notation.length ||
-    steps.length ||
-    relations.count,
+      formalStatement ||
+      definition ||
+      formula ||
+      intuition ||
+      gloss ||
+      extras.length ||
+      exampleEntries.length ||
+      assumptions.length ||
+      properties.length ||
+      notation.length ||
+      steps.length ||
+      relations.count,
   );
 
   return {

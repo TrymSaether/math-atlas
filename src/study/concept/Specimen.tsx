@@ -454,6 +454,7 @@ export function ConnectionChip({
   const icon = kindIcon(node.kind);
   return (
     <button
+      type="button"
       onClick={onClick}
       title={
         caption ? `${node.label} · ${caption} · ${KIND_LABEL[node.kind]}` : `${node.label} · ${KIND_LABEL[node.kind]}`

@@ -3,9 +3,9 @@
  * islands. The strict SourceGraphSchema already blocks self-loops and dup edges;
  * this layer adds the graph-shaped findings it cannot see.
  */
-import type { CliMap } from "../core/model";
-import { type Diagnostic, warning } from "../diagnostics/diagnostic";
-import { detectCycles, components, orphans } from "../graph/algorithms";
+import type { CliMap } from "../core/model.ts";
+import { type Diagnostic, warning } from "../diagnostics/diagnostic.ts";
+import { detectCycles, components, orphans } from "../graph/algorithms.ts";
 
 export function run(map: CliMap): Diagnostic[] {
   const out: Diagnostic[] = [];

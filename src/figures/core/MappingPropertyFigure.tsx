@@ -16,7 +16,7 @@ import {
   type Vec2,
 } from "./FigureFrame";
 import { RangeControl } from "./RangeControl";
-import { type FigureProps } from "./types";
+import type { FigureProps } from "./types";
 
 type MappingKind = "injective" | "surjective" | "bijective";
 

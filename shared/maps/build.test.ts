@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { buildArtifact } from "./build";
-import { SourceGraphSchema, type SourceConcept, type SourceEdge, type SourceGraph } from "./source";
+import { buildArtifact } from "./build.ts";
+import { SourceGraphSchema, type SourceConcept, type SourceEdge, type SourceGraph } from "./source.ts";
 
 function concept(id: string, overrides: Partial<SourceConcept> = {}): SourceConcept {
   return {

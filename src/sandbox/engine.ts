@@ -363,7 +363,9 @@ export function compile(ws: Workspace): CompiledWorkspace {
         if (p.name && p.name !== "y") {
           scope[p.name] = (...args: number[]) => {
             const local: Scope = { ...scope };
-            (p.params ?? ["x"]).forEach((pn, i) => (local[pn] = args[i]));
+            (p.params ?? ["x"]).forEach((pn, i) => {
+              local[pn] = args[i];
+            });
             const v = evalNode(expr, local);
             return v as number;
           };

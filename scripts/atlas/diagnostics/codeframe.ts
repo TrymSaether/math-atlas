@@ -4,7 +4,7 @@
  * human-meaningful instead: the concept's `"id": "<id>"` line. The frame shows a
  * few lines of context with the offending line marked, TypeScript-compiler style.
  */
-import { gray, red, dim, bold } from "../utils/color";
+import { gray, red, dim, bold } from "../utils/color.ts";
 
 export interface Located {
   line: number; // 1-based

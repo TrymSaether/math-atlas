@@ -7,7 +7,6 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  base: "/math-atlas/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -22,11 +21,6 @@ export default defineConfig({
     // The on-demand sandbox intentionally bundles mathjs, MathLive, and Mafs.
     // Its isolated lazy chunk is larger than Vite's generic application limit.
     chunkSizeWarningLimit: 1600,
-    rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, "index.html"),
-      },
-    },
   },
   server: {
     host: true,

@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect, useMemo } from "react";
 import { CircleAlert } from "lucide-react";
 import { useStore } from "./store";
 import { registerDomainTones } from "@/atlas/colors";
-import { authEnabled } from "@/auth/client";
 import { useKeyboardNav } from "./useKeyboardNav";
 import { useUrlSync } from "./useUrlSync";
 import { Background } from "./Background";
@@ -93,8 +92,8 @@ export function AppShell() {
   return (
     <div className="relative h-dvh w-screen overflow-hidden bg-background text-foreground">
       <Background />
-      {authEnabled && <SessionBridge />}
-      {authEnabled && <StaleMapBanner />}
+      <SessionBridge />
+      <StaleMapBanner />
 
       <main className="absolute inset-0">
         {map ? (

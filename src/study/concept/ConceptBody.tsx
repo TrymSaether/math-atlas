@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { MathText, MathProse } from "@/math/MathText";
 import type { AtlasMap } from "@/atlas/model";
 import type { ConceptView } from "./view";

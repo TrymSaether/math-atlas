@@ -174,7 +174,7 @@ export const WORKSPACE_IDS = Object.keys(WORKSPACES);
 
 /** Deep-clone a prepared workspace so edits don't mutate the shared template. */
 export function loadWorkspace(id: string): Workspace {
-  const tpl = WORKSPACES[id] ?? WORKSPACES["blank"];
+  const tpl = WORKSPACES[id] ?? WORKSPACES.blank;
   return structuredClone(tpl);
 }
 

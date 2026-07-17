@@ -1,8 +1,8 @@
 /**
  * Box-drawing tree renderer for dependency / edge views.
  */
-import { BOX } from "../utils/glyphs";
-import { gray } from "../utils/color";
+import { BOX } from "../utils/glyphs.ts";
+import { gray } from "../utils/color.ts";
 
 export interface TreeNode {
   label: string;

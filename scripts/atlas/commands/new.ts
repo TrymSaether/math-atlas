@@ -6,15 +6,15 @@
  */
 import { writeFileSync } from "node:fs";
 import { createInterface } from "node:readline/promises";
-import { SourceGraphSchema } from "@shared/maps/source";
-import { slugify, uniqueSlug } from "@/authoring/model";
-import type { Command } from "../core/command";
-import { loadSourceFiles, CliError, stringFlag, type Ctx } from "../core/context";
-import type { SourceFile } from "../core/loadSources";
-import { conceptTemplate, domainTemplate } from "../schemas/templates";
-import { fuzzySearch } from "../utils/fuzzy";
-import { bold, dim, cyan, green, gray } from "../utils/color";
-import { MARK, kindGlyph } from "../utils/glyphs";
+import { SourceGraphSchema } from "../../../shared/maps/source.ts";
+import { slugify, uniqueSlug } from "../../../src/authoring/model.ts";
+import type { Command } from "../core/command.ts";
+import { loadSourceFiles, CliError, stringFlag, type Ctx } from "../core/context.ts";
+import type { SourceFile } from "../core/loadSources.ts";
+import { conceptTemplate, domainTemplate } from "../schemas/templates.ts";
+import { fuzzySearch } from "../utils/fuzzy.ts";
+import { bold, dim, cyan, green, gray } from "../utils/color.ts";
+import { MARK, kindGlyph } from "../utils/glyphs.ts";
 
 const KINDS = ["theorem", "definition", "proof", "construction", "example", "exercise", "lemma", "corollary", "domain"];
 

@@ -4,10 +4,10 @@
  * trailing `hint:`. Ends with an aggregate summary line. `--json` callers bypass
  * this and serialise the raw Diagnostic[] instead.
  */
-import { type Diagnostic, type Severity, countBySeverity } from "./diagnostic";
-import { frameForConcept } from "./codeframe";
-import { MARK } from "../utils/glyphs";
-import { red, yellow, cyan, green, dim, bold, gray } from "../utils/color";
+import { type Diagnostic, type Severity, countBySeverity } from "./diagnostic.ts";
+import { frameForConcept } from "./codeframe.ts";
+import { MARK } from "../utils/glyphs.ts";
+import { red, yellow, cyan, green, dim, bold, gray } from "../utils/color.ts";
 
 const SEV_STYLE: Record<Severity, { mark: string; paint: (s: string) => string; word: string }> = {
   error: { mark: MARK.error, paint: red, word: "error" },

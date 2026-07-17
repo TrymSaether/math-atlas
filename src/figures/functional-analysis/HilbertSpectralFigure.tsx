@@ -17,7 +17,7 @@ import {
   type Vec2,
 } from "../core/FigureFrame";
 import { RangeControl } from "../core/RangeControl";
-import { type FigureProps } from "../core/types";
+import type { FigureProps } from "../core/types";
 
 function dot(a: Vec2, b: Vec2): number {
   return a[0] * b[0] + a[1] * b[1];

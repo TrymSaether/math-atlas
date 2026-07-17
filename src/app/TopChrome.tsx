@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { useStore, type Surface as SurfaceId } from "./store";
 import { schemeFor, siblingOf } from "./themes";
-import { authEnabled } from "@/auth/client";
 import { cn } from "@/ui/cn";
 import { usePopoverDismiss } from "./usePopover";
 import { ConfirmDialog } from "@/ui/ConfirmDialog";
@@ -75,7 +74,7 @@ function MapMenu() {
 
   const onListKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
     if (catalog.length === 0) return;
-    const currentIndex = optionRefs.current.findIndex((el) => el === document.activeElement);
+    const currentIndex = optionRefs.current.indexOf(document.activeElement as HTMLButtonElement | null);
     const fromIndex = currentIndex >= 0 ? currentIndex : activeIndexRef.current;
     let nextIndex: number;
     if (e.key === "ArrowDown") nextIndex = (fromIndex + 1) % catalog.length;
@@ -309,7 +308,7 @@ function TopRightControls() {
 
       <Surface material="regular" className="flex items-center rounded-full p-1">
         <ThemeToggle />
-        {authEnabled && <UserMenu />}
+        <UserMenu />
       </Surface>
     </div>
   );

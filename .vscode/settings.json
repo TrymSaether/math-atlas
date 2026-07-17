@@ -1,51 +1,29 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "biomejs.biome",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.biome": "explicit"
   },
-  "eslint.validate": ["javascript", "typescript", "typescriptreact"],
   "files.exclude": {
     "**/.git": true,
     "**/.DS_Store": true,
     "**/node_modules": true,
     "**/dist": true,
-    "**/build": true,
     "**/.cache": true,
     "**/.vite": true,
-    "**/coverage": true,
-    "**/.turbo": true,
-    "**/.next": true,
-    "**/.eslintcache": true,
-    "**/*.tsbuildinfo": true,
-    // MAPS
-    "src/data/maps/topology.json": true,
-    "src/data/maps/functional_analysis.json": true,
-    "src/data/maps/fourier_analysis.json": true,
-    "**/*/*.nojekyll": true
+    "**/*.tsbuildinfo": true
   },
   "files.watcherExclude": {
     "**/node_modules/**": true,
     "**/dist/**": true,
-    "**/build/**": true,
     "**/.cache/**": true,
-    "**/.vite/**": true,
-    "**/coverage/**": true
+    "**/.vite/**": true
   },
   "search.exclude": {
     "**/node_modules": true,
     "**/dist": true,
-    "**/build": true,
     "**/.cache": true,
-    "**/.vite": true,
-    "**/coverage": true,
-    "**/package-lock.json": true,
-    "**/pnpm-lock.yaml": true,
-    "**/yarn.lock": true,
-    "src/data/maps/*.source.json": false
+    "**/package-lock.json": true
   },
-  "css.lint.unknownAtRules": "ignore",
-  "[svg]": {
-    "editor.defaultFormatter": "jock.svg"
-  }
+  "css.lint.unknownAtRules": "ignore"
 }

@@ -7,9 +7,9 @@
  * derived `degree`/`depth` fields. Validation itself stays in the strict
  * SourceGraphSchema; this module assumes its input already parsed.
  */
-import type { SourceGraph } from "./source";
-import { orientEdge, RELATIONS } from "./relations";
-import { ARTIFACT_VERSION, type Artifact, type ArtifactEdge } from "./artifact";
+import type { SourceGraph } from "./source.ts";
+import { orientEdge, RELATIONS } from "./relations.ts";
+import { ARTIFACT_VERSION, type Artifact, type ArtifactEdge } from "./artifact.ts";
 
 export function deterministicEdgeId(from: string, to: string, relation: string): string {
   return `e_${from}__${relation}__${to}`;

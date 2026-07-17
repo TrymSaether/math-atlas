@@ -4,15 +4,15 @@
  * lint passes (structure, content, diagrams, references, +suggestions). Emits
  * codeframed ERROR/WARNING/SUGGESTION and a summary; non-zero exit on any error.
  */
-import { z } from "zod";
-import { SourceGraphSchema } from "@shared/maps/source";
-import type { Command } from "../core/command";
-import { loadSourceFiles, type Ctx } from "../core/context";
-import { buildCliMap } from "../core/model";
-import { runLints } from "../validators";
-import { type Diagnostic, error, countBySeverity } from "../diagnostics/diagnostic";
-import { reportDiagnostics } from "../diagnostics/reporter";
-import { bold, dim, cyan } from "../utils/color";
+import type { z } from "zod";
+import { SourceGraphSchema } from "../../../shared/maps/source.ts";
+import type { Command } from "../core/command.ts";
+import { loadSourceFiles, type Ctx } from "../core/context.ts";
+import { buildCliMap } from "../core/model.ts";
+import { runLints } from "../validators/index.ts";
+import { type Diagnostic, error, countBySeverity } from "../diagnostics/diagnostic.ts";
+import { reportDiagnostics } from "../diagnostics/reporter.ts";
+import { bold, dim, cyan } from "../utils/color.ts";
 
 /** Resolve the anchor concept id for a Zod issue path, when there is one. */
 function anchorFor(json: unknown, path: readonly PropertyKey[]): string | undefined {

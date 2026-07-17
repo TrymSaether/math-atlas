@@ -2,10 +2,11 @@
 
 Personal hobby project for browsing math concepts as dependency graphs.
 
-Live version: <https://trymsaether.github.io/math-atlas/>
+Live version: <https://math-atlas-api.onrender.com/>
 
 The app is built with React, TypeScript, React Flow, and a small Hono/Postgres
-backend. The main content lives in `src/maps/sources/*.source.json`.
+backend that also serves the built SPA (one origin for everything). The main
+content lives in `src/maps/sources/*.source.json`.
 
 ## Run Locally
 
@@ -31,14 +32,18 @@ API: <http://localhost:8787>
 ## Common Commands
 
 ```sh
-npm run dev              # frontend
+npm run dev              # frontend (proxies /api to the server)
 npm run dev:server       # API server
 npm run check:maps       # validate map source files
 npm run seed:maps        # write built-in maps to the database
 npm run build            # map validation + app build
-npm run check            # format + lint + typecheck + tests + build
-npm run format           # format code and docs
+npm run check            # biome + typecheck + tests + build (the CI gate)
+npm run format           # format with biome
+npm run atlas            # map authoring CLI (stats, validate, format, …)
 ```
+
+Deploys: pushing to `main` runs CI (`npm run check`); Render deploys the single
+web service (API + SPA) once checks pass.
 
 ## Editing Maps
 
@@ -46,7 +51,7 @@ There are two paths.
 
 Live app:
 
-- Sign in and edit at <https://trymsaether.github.io/math-atlas/>.
+- Sign in and edit at <https://math-atlas-api.onrender.com/>.
 - Public maps fork to your own editable copy before saving.
 
 Repo/source maps:

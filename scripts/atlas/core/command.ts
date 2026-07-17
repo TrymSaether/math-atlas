@@ -1,5 +1,5 @@
 /** The command contract every file in commands/ implements. */
-import type { Ctx } from "./context";
+import type { Ctx } from "./context.ts";
 
 export interface Command {
   name: string;

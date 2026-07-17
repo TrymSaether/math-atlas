@@ -4,8 +4,8 @@
  * the graph never records a dependency edge for. That gap means the dependency
  * DAG understates what the result actually rests on — a real authoring slip.
  */
-import type { CliMap } from "../core/model";
-import { type Diagnostic, suggestion } from "../diagnostics/diagnostic";
+import type { CliMap } from "../core/model.ts";
+import { type Diagnostic, suggestion } from "../diagnostics/diagnostic.ts";
 
 export function run(map: CliMap): Diagnostic[] {
   const out: Diagnostic[] = [];

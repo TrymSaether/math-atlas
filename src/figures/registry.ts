@@ -1,7 +1,7 @@
 import { type ComponentType, type LazyExoticComponent, lazy } from "react";
 
 import type { GraphNode } from "@/maps/types";
-import { type FigureProps } from "./core/types";
+import type { FigureProps } from "./core/types";
 
 type FigureComponent = LazyExoticComponent<ComponentType<FigureProps>>;
 

@@ -15,7 +15,7 @@ import {
   Text,
 } from "../core/FigureFrame";
 import { RangeControl } from "../core/RangeControl";
-import { type FigureProps } from "../core/types";
+import type { FigureProps } from "../core/types";
 
 const PROBE_VALUES = [1, 0.72, 0.52, 0.38, 0.28, 0.2, 0.15, 0.11, 0.08, 0.06, 0.045, 0.034];
 

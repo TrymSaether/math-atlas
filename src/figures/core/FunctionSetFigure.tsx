@@ -16,7 +16,7 @@ import {
   UI,
   type Vec2,
 } from "./FigureFrame";
-import { type FigureProps } from "./types";
+import type { FigureProps } from "./types";
 
 type FunctionNode =
   | "function"

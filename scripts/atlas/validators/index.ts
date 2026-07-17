@@ -1,12 +1,12 @@
 /** Aggregate the extra lint passes (on top of SourceGraphSchema). */
-import type { CliMap } from "../core/model";
-import type { Workspace } from "../core/workspace";
-import type { Diagnostic } from "../diagnostics/diagnostic";
-import * as structure from "./structure";
-import * as content from "./content";
-import * as diagrams from "./diagrams";
-import * as references from "./references";
-import * as suggestions from "./suggestions";
+import type { CliMap } from "../core/model.ts";
+import type { Workspace } from "../core/workspace.ts";
+import type { Diagnostic } from "../diagnostics/diagnostic.ts";
+import * as structure from "./structure.ts";
+import * as content from "./content.ts";
+import * as diagrams from "./diagrams.ts";
+import * as references from "./references.ts";
+import * as suggestions from "./suggestions.ts";
 
 export interface LintOptions {
   /** Run the (slower, advisory) suggestion heuristics. */

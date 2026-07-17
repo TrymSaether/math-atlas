@@ -18,7 +18,7 @@ import {
   type Vec2,
 } from "../core/FigureFrame";
 import { RangeControl } from "../core/RangeControl";
-import { type FigureProps } from "../core/types";
+import type { FigureProps } from "../core/types";
 
 const ELLIPSE_STEPS = 160;
 

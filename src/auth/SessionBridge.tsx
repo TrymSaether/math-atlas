@@ -9,8 +9,6 @@ import { useStore } from "@/app/store";
  * - first resolve → refresh the catalog (the cache seeds it instantly on init).
  * - sign-in / sign-out → reload the catalog + active map (access changed: a
  *   user's editable forks and shared maps appear/disappear).
- *
- * Only mounted when `authEnabled` (dev, or a prod build with VITE_API_URL).
  */
 export function SessionBridge() {
   const { data, isPending } = useSession();

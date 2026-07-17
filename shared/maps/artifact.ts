@@ -14,9 +14,9 @@
  * to paper over with casts in the load/edit paths.
  */
 import { z } from "zod";
-import { DOMAIN_PALETTE_KEYS } from "./palette";
-import { RELATION_KEYS } from "./relations";
-import { SourceConceptSchema } from "./source";
+import { DOMAIN_PALETTE_KEYS } from "./palette.ts";
+import { RELATION_KEYS } from "./relations.ts";
+import { SourceConceptSchema } from "./source.ts";
 
 export const ARTIFACT_VERSION = 1;
 

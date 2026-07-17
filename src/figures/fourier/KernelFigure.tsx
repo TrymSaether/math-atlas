@@ -16,7 +16,7 @@ import {
 } from "../core/FigureFrame";
 import { RangeControl } from "../core/RangeControl";
 import { SegmentedControl, type SegmentOption } from "../core/SegmentedControl";
-import { type FigureProps } from "../core/types";
+import type { FigureProps } from "../core/types";
 
 type Kind = "dirichlet" | "fejer" | "poisson";
 
@@ -89,7 +89,7 @@ function spectralWeight(kind: Kind, index: number, param: number): number {
   const k = Math.abs(index);
   if (kind === "dirichlet") return k <= param ? 1 : 0;
   if (kind === "fejer") return Math.max(0, 1 - k / (param + 1));
-  return Math.pow(param, k);
+  return param ** k;
 }
 
 function lobePolygons(samples: Vec2[], sign: "positive" | "negative"): Vec2[][] {
@@ -197,9 +197,9 @@ export default function KernelFigure({ nodeId }: FigureProps) {
         <LaTeX at={[0, -0.25]} tex={String.raw`\Delta x_{\mathrm{res}}`} />
         <LaTeX at={[-2, 1]} tex={String.raw`\|${LABEL[kind]}\|_1${massLabel}`} />
         <LaTeX at={[2, 1]} tex={String.raw`${LABEL[kind]}(0)=${isPoisson ? peak.toFixed(1) : peak}`} />
-        // x-axis label
+        {/* x-axis label */}
         <LaTeX at={[Math.PI - 0.3, -0.25]} tex={String.raw`x`} />
-        // y-axis label
+        {/* y-axis label */}
         <LaTeX at={[-0.3, 1.05]} tex={String.raw`\widehat K(k)`} />
       </FigureFrame>
 

@@ -6,14 +6,14 @@
  *   attach   set a concept's diagram field to an SVG path, then re-validate
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { SourceGraphSchema } from "@shared/maps/source";
-import type { Command } from "../core/command";
-import { loadMaps, loadSourceFiles, CliError, type Ctx } from "../core/context";
-import { run as diagramLints, diagramFsPath } from "../validators/diagrams";
-import { reportDiagnostics } from "../diagnostics/reporter";
-import { type Diagnostic, warning, countBySeverity } from "../diagnostics/diagnostic";
-import { bold, dim, cyan, green, yellow } from "../utils/color";
-import { MARK } from "../utils/glyphs";
+import { SourceGraphSchema } from "../../../shared/maps/source.ts";
+import type { Command } from "../core/command.ts";
+import { loadMaps, loadSourceFiles, CliError, type Ctx } from "../core/context.ts";
+import { run as diagramLints, diagramFsPath } from "../validators/diagrams.ts";
+import { reportDiagnostics } from "../diagnostics/reporter.ts";
+import { type Diagnostic, warning, countBySeverity } from "../diagnostics/diagnostic.ts";
+import { bold, dim, cyan, green, yellow } from "../utils/color.ts";
+import { MARK } from "../utils/glyphs.ts";
 
 function lintSvg(ws: Ctx["ws"], map: string, file: string, concept: string, ref: string): Diagnostic[] {
   const out: Diagnostic[] = [];

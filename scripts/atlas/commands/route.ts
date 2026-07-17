@@ -4,13 +4,13 @@
  * target itself. `--from <id>` prunes what you already know (its prereqs);
  * `--to <id>` overrides the destination so `route a --to b` plans a→…→b.
  */
-import type { Command } from "../core/command";
-import { loadMaps, CliError, stringFlag, type Ctx } from "../core/context";
-import { findConcept, type CliMap } from "../core/model";
-import { prerequisiteChain } from "../graph/algorithms";
-import { bold, dim, cyan, gray, green } from "../utils/color";
-import { kindGlyph, MARK } from "../utils/glyphs";
-import { padStart } from "../utils/text";
+import type { Command } from "../core/command.ts";
+import { loadMaps, CliError, stringFlag, type Ctx } from "../core/context.ts";
+import { findConcept, type CliMap } from "../core/model.ts";
+import { prerequisiteChain } from "../graph/algorithms.ts";
+import { bold, dim, cyan, gray, green } from "../utils/color.ts";
+import { kindGlyph, MARK } from "../utils/glyphs.ts";
+import { padStart } from "../utils/text.ts";
 
 function step(map: CliMap, id: string, i: number): string {
   const n = map.nodeById.get(id)!;
@@ -65,7 +65,9 @@ function run(ctx: Ctx): number {
     process.stdout.write(green(`  ${MARK.ok} ${target} is foundational — nothing to learn first`) + "\n\n");
     return 0;
   }
-  path.forEach((id, i) => process.stdout.write(step(map, id, i + 1) + "\n"));
+  path.forEach((id, i) => {
+    process.stdout.write(step(map, id, i + 1) + "\n");
+  });
   process.stdout.write("\n" + dim("  tip: ") + cyan(`atlas explain ${target}`) + dim(" for the full card") + "\n\n");
   return 0;
 }

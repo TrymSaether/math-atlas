@@ -1,0 +1,58 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.4/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    // sources are formatted by `atlas format`; atlas-assets are generated
+    "includes": ["**", "!src/maps/sources", "!public/atlas-assets", "!.claude"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "lineWidth": 120
+  },
+  "css": {
+    "parser": { "tailwindDirectives": true }
+  },
+  "linter": {
+    "domains": { "react": "recommended" },
+    "rules": {
+      "preset": "recommended",
+      // Rules below are switched off where the codebase deliberately uses the
+      // pattern (string concat, `!`, CSS !important, String.raw for LaTeX,
+      // index keys in static lists, KaTeX HTML injection, regex-exec loops).
+      "style": {
+        "useTemplate": "off",
+        "noNonNullAssertion": "off"
+      },
+      "complexity": {
+        "noImportantStyles": "off",
+        "noUselessStringRaw": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off",
+        "noAssignInExpressions": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      // Stricter than the react-hooks rule this code was written against;
+      // its 18 findings are deliberate mount-only effects.
+      "correctness": {
+        "useExhaustiveDependencies": "off"
+      },
+      // Stricter than jsx-a11y recommended (which this code passed). The
+      // remaining findings are real but need UI work, not lint churn.
+      "a11y": {
+        "useSemanticElements": "off",
+        "noSvgWithoutTitle": "off",
+        "noLabelWithoutControl": "off",
+        "noAutofocus": "off",
+        "noStaticElementInteractions": "off",
+        "useKeyWithClickEvents": "off",
+        "useAriaPropsSupportedByRole": "off"
+      }
+    }
+  },
+  "assist": {
+    "actions": { "source": { "organizeImports": "off" } }
+  }
+}

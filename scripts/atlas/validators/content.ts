@@ -4,9 +4,9 @@
  * where a field is genuinely optional. Missing intuition on a core concept is a
  * suggestion, not a warning.
  */
-import type { CliMap } from "../core/model";
-import { type Diagnostic, warning, suggestion } from "../diagnostics/diagnostic";
-import { categoryOf } from "@shared/maps/nodeCategory";
+import type { CliMap } from "../core/model.ts";
+import { type Diagnostic, warning, suggestion } from "../diagnostics/diagnostic.ts";
+import { categoryOf } from "../../../shared/maps/nodeCategory.ts";
 
 export function run(map: CliMap): Diagnostic[] {
   const out: Diagnostic[] = [];

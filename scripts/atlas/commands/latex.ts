@@ -5,16 +5,16 @@
  * (`fix`/`normalize` are intentionally conservative and currently alias `check`
  * in report-only mode; auto-rewrites land behind an explicit --write later.)
  */
-import type { Command } from "../core/command";
-import { loadMaps, CliError, type Ctx } from "../core/context";
-import { findConcept } from "../core/model";
-import { checkLatex } from "../latex/check";
-import { scanTex } from "../latex/scan";
-import { reportDiagnostics } from "../diagnostics/reporter";
-import { countBySeverity } from "../diagnostics/diagnostic";
-import { texToPlain } from "../utils/text";
-import { bold, dim, green } from "../utils/color";
-import { MARK } from "../utils/glyphs";
+import type { Command } from "../core/command.ts";
+import { loadMaps, CliError, type Ctx } from "../core/context.ts";
+import { findConcept } from "../core/model.ts";
+import { checkLatex } from "../latex/check.ts";
+import { scanTex } from "../latex/scan.ts";
+import { reportDiagnostics } from "../diagnostics/reporter.ts";
+import { countBySeverity } from "../diagnostics/diagnostic.ts";
+import { texToPlain } from "../utils/text.ts";
+import { bold, dim, green } from "../utils/color.ts";
+import { MARK } from "../utils/glyphs.ts";
 
 function run(ctx: Ctx): number {
   const sub = ctx.positionals[0] ?? "check";

@@ -8,7 +8,7 @@ import {
   PutProgressRequestSchema,
   SaveMapConflictResponseSchema,
   SaveMapRequestSchema,
-} from "./index";
+} from "./index.ts";
 
 describe("map API contracts", () => {
   it("accepts the current catalog response shape and roles", () => {

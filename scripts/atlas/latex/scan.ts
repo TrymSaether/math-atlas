@@ -3,7 +3,7 @@
  * authored as prose with inline `$…$` math, so we surface the whole field (for
  * delimiter balance) plus the extracted math segments (for KaTeX parsing).
  */
-import type { CliMap } from "../core/model";
+import type { CliMap } from "../core/model.ts";
 
 export interface TexField {
   conceptId: string;

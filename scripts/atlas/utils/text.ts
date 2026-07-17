@@ -3,7 +3,7 @@
  * The TeX→plain pass is deliberately lightweight — enough to read a statement in
  * the terminal, not a full renderer (that is what the app + KaTeX are for).
  */
-import { visibleLength } from "./color";
+import { visibleLength } from "./color.ts";
 
 const TEX_REPLACEMENTS: [RegExp, string][] = [
   [/\\mathbb\{([A-Z])\}/g, "$1"],

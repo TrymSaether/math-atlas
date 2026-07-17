@@ -10,8 +10,8 @@
  * silently carried. Add a new facet to ContentSchema the day a map needs it.
  */
 import { z } from "zod";
-import { DOMAIN_PALETTE_KEYS } from "./palette";
-import { AUTHORABLE_RELATIONS, RELATIONS } from "./relations";
+import { DOMAIN_PALETTE_KEYS } from "./palette.ts";
+import { AUTHORABLE_RELATIONS, RELATIONS } from "./relations.ts";
 
 const Slug = z.string().regex(/^[a-z0-9_]+$/, "ids must be lower_snake_case slugs");
 const Tex = z.string().min(1);
@@ -184,7 +184,7 @@ export const SourceGraphSchema = z
           path: ["concepts", i, "domain"],
           message: `Concept ${c.id} references missing domain: ${c.domain}`,
         });
-      (c.proof?.steps ?? []).forEach((step, s) =>
+      (c.proof?.steps ?? []).forEach((step, s) => {
         step.uses.forEach((u, k) => {
           if (!conceptIds.has(u))
             ctx.addIssue({
@@ -192,8 +192,8 @@ export const SourceGraphSchema = z
               path: ["concepts", i, "proof", "steps", s, "uses", k],
               message: `Concept ${c.id} proof step references missing concept: ${u}`,
             });
-        }),
-      );
+        });
+      });
     }
 
     const edgeIds = new Set<string>();

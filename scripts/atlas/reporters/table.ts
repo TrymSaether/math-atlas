@@ -3,9 +3,9 @@
  * cells still line up. Intentionally tiny — no wrapping, no borders by default;
  * a light header rule keeps it readable without looking like a spreadsheet.
  */
-import { dim, gray, bold } from "../utils/color";
-import { visibleLength } from "../utils/color";
-import { padEnd, padStart } from "../utils/text";
+import { dim, gray, bold } from "../utils/color.ts";
+import { visibleLength } from "../utils/color.ts";
+import { padEnd, padStart } from "../utils/text.ts";
 
 export interface Column {
   header: string;

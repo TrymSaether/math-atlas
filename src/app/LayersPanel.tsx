@@ -1,4 +1,4 @@
-import { type CSSProperties, type ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { X } from "lucide-react";
 import { useStore } from "./store";
 import { getDomainTone } from "@/atlas/colors";

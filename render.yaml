@@ -1,7 +1,7 @@
-# Render blueprint for the math-atlas API (Hono on Node).
-# Deploy: Render dashboard → New → Blueprint → pick this repo/branch.
-# DATABASE_URL and BETTER_AUTH_SECRET are secrets — set them in the dashboard
-# (sync:false keeps them out of the repo).
+# Render blueprint: one web service serving both the API and the built SPA.
+# DATABASE_URL and the auth secrets are set in the Render dashboard (sync: false).
+# The service name is kept as math-atlas-api so the existing service and its
+# onrender.com URL are preserved.
 services:
   - type: web
     name: math-atlas-api
@@ -9,10 +9,16 @@ services:
     plan: free
     region: frankfurt
     branch: main
-    buildCommand: npm install
-    startCommand: npm run start:server
+    # Deploy only after the commit's GitHub Actions CI run passes.
+    autoDeployTrigger: checksPass
+    # --include=dev: Render sets NODE_ENV=production, which would otherwise
+    # make npm ci skip the devDependencies the Vite build needs.
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: node server/index.ts
     healthCheckPath: /api/health
     envVars:
+      - key: NODE_VERSION
+        value: "26"
       - key: DATABASE_URL
         sync: false
       - key: BETTER_AUTH_SECRET
@@ -21,12 +27,7 @@ services:
         sync: false
       - key: GOOGLE_CLIENT_SECRET
         sync: false
-      # Public API origin. Google OAuth redirect URI:
+      # Public origin of the app. Google OAuth redirect URI:
       # https://math-atlas-api.onrender.com/api/auth/callback/google
       - key: BETTER_AUTH_URL
         value: https://math-atlas-api.onrender.com
-      # The SPA origin (GitHub Pages) — trusted origin for CORS / OAuth popup.
-      - key: APP_URL
-        value: https://trymsaether.github.io
-      - key: WEB_ORIGINS
-        value: https://trymsaether.github.io

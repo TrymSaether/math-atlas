@@ -12,10 +12,10 @@ import {
   OkResponseSchema,
   ProgressResponseSchema,
   PutProgressRequestSchema,
-} from "../../shared/contracts";
-import { db } from "../db/client";
-import { userProgress } from "../db/schema";
-import { auth } from "../auth";
+} from "../../shared/contracts/index.ts";
+import { db } from "../db/client.ts";
+import { userProgress } from "../db/schema.ts";
+import { auth } from "../auth.ts";
 
 export const progressRoute = new Hono();
 

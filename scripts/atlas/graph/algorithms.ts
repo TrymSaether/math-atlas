@@ -5,8 +5,8 @@
  * talk about prerequisites/dependents respect that; undirected helpers (path,
  * components) ignore direction.
  */
-import type { CliMap } from "../core/model";
-import type { ArtifactEdge } from "@shared/maps/artifact";
+import type { CliMap } from "../core/model.ts";
+import type { ArtifactEdge } from "../../../shared/maps/artifact.ts";
 
 /** All concept ids reachable as prerequisites of `start` (transitive, excl. start). */
 export function prerequisiteChain(map: CliMap, start: string): string[] {

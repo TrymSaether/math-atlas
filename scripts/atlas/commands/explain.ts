@@ -4,14 +4,14 @@
  * what depends on it, related concepts, its proof chain, and examples. TeX is
  * rendered to readable plain text.
  */
-import type { Command } from "../core/command";
-import { loadMaps, CliError, type Ctx } from "../core/context";
-import { findConcept, type CliMap } from "../core/model";
-import { kindGlyph } from "../utils/glyphs";
-import { swatch, bold, dim, cyan, gray, italic } from "../utils/color";
-import { texToPlain, wrap } from "../utils/text";
-import { fuzzySearch } from "../utils/fuzzy";
-import type { ArtifactNode } from "@shared/maps/artifact";
+import type { Command } from "../core/command.ts";
+import { loadMaps, CliError, type Ctx } from "../core/context.ts";
+import { findConcept, type CliMap } from "../core/model.ts";
+import { kindGlyph } from "../utils/glyphs.ts";
+import { swatch, bold, dim, cyan, gray, italic } from "../utils/color.ts";
+import { texToPlain, wrap } from "../utils/text.ts";
+import { fuzzySearch } from "../utils/fuzzy.ts";
+import type { ArtifactNode } from "../../../shared/maps/artifact.ts";
 
 function section(title: string, body: string): void {
   process.stdout.write("\n  " + bold(title) + "\n");

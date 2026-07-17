@@ -211,6 +211,7 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
             {total ? Math.min(run.pos + 1, total) : 0}/{total}
           </span>
           <button
+            type="button"
             onClick={reshuffle}
             disabled={total === 0}
             className="flex h-7 items-center gap-1.5 rounded-sm border border-border bg-card px-2.5 text-caption-1 font-medium text-muted-foreground transition-colors hover:bg-secondary disabled:opacity-40"
@@ -281,6 +282,7 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                   </div>
                 ) : (
                   <button
+                    type="button"
                     onClick={flip}
                     className="flex h-11 items-center justify-center gap-2 rounded-sm border border-transparent bg-primary px-5 text-body font-semibold text-primary-foreground transition-transform active:scale-[0.98]"
                     style={{ boxShadow: "var(--shadow-e2)" }}
@@ -390,6 +392,7 @@ function CardFront({
   return (
     <CardShell tone={view.tone.color}>
       <button
+        type="button"
         onClick={onFlip}
         className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-5 px-8 py-10 text-left"
       >
@@ -425,6 +428,7 @@ function CardBack({ node, map, mapId, onOpen }: { node: GraphNode; map: AtlasMap
       tone={view.tone.color}
       footer={
         <button
+          type="button"
           onClick={onOpen}
           className="flex shrink-0 items-center justify-center gap-1.5 border-t border-border py-2.5 text-caption-1 font-medium text-primary transition-colors hover:bg-muted"
         >
@@ -474,6 +478,7 @@ function SummaryCard({
       <div className="flex flex-wrap items-center justify-center gap-2.5">
         {againCount > 0 && (
           <button
+            type="button"
             onClick={onReview}
             className="flex h-11 items-center gap-2 rounded-sm bg-primary px-6 text-body font-semibold text-primary-foreground transition-transform active:scale-[0.98]"
             style={{ boxShadow: "var(--shadow-e2)" }}
@@ -482,12 +487,14 @@ function SummaryCard({
           </button>
         )}
         <button
+          type="button"
           onClick={onRestart}
           className="flex h-11 items-center gap-2 rounded-sm border border-border bg-card px-5 text-body font-medium text-foreground transition-colors hover:bg-secondary"
         >
           <RotateCcw className="h-4 w-4" /> Restart deck
         </button>
         <button
+          type="button"
           onClick={onClose}
           className="h-11 rounded-sm px-5 text-body font-medium text-muted-foreground transition-colors hover:bg-secondary"
         >
@@ -514,6 +521,7 @@ function EmptyState({ scope, onBack }: { scope: DeckScope; onBack: () => void })
       <p className="text-callout text-foreground">{message}</p>
       <p className="max-w-85 text-footnote text-muted-foreground">{hint}</p>
       <button
+        type="button"
         onClick={onBack}
         className="mt-1 h-10 rounded-sm border border-border bg-card px-5 text-footnote font-medium text-foreground transition-colors hover:bg-secondary"
       >
@@ -536,6 +544,7 @@ function PagerButton({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
@@ -551,6 +560,7 @@ function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => 
   const got = tone === "got";
   return (
     <button
+      type="button"
       onClick={onClick}
       className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-body font-semibold transition-transform active:scale-[0.98] ${got ? "border-primary/40 bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground"}`}
     >

@@ -17,6 +17,7 @@ vi.mock("../db/client", () => {
     chain.where = vi.fn(() => chain);
     chain.innerJoin = vi.fn(() => chain);
     chain.limit = vi.fn(() => Promise.resolve(result));
+    // biome-ignore lint/suspicious/noThenProperty: mimics drizzle's thenable query builder
     chain.then = (resolve: (value: unknown[]) => unknown, reject: (reason: unknown) => unknown) =>
       Promise.resolve(result).then(resolve, reject);
     return chain;
@@ -48,8 +49,8 @@ vi.mock("../db/client", () => {
   };
 });
 
-import { mapsRoute } from "./maps";
-import { progressRoute } from "./progress";
+import { mapsRoute } from "./maps.ts";
+import { progressRoute } from "./progress.ts";
 
 beforeEach(() => {
   routeMocks.getSession.mockReset();

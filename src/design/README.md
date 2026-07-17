@@ -36,13 +36,13 @@ This is the Tailwind v4 + shadcn convention. `bg-background`, `text-muted-foregr
 `<Surface material="…">` is the single liquid-glass primitive. Material tiers and
 their intended surfaces (from the ratified visual bar):
 
-| material     | use                                   |
-| ------------ | ------------------------------------- |
-| `ultrathin`  | tooltips, transient HUD               |
-| `thin`       | sidebars                              |
-| `regular`    | toolbars, control panels              |
-| `thick`      | command palette, dialogs/sheets       |
-| `chrome`     | graph nodes (near-solid, not glass)   |
+| material    | use                                 |
+| ----------- | ----------------------------------- |
+| `ultrathin` | tooltips, transient HUD             |
+| `thin`      | sidebars                            |
+| `regular`   | toolbars, control panels            |
+| `thick`     | command palette, dialogs/sheets     |
+| `chrome`    | graph nodes (near-solid, not glass) |
 
 - `reactive` makes the specular highlight follow the pointer (cheap, all browsers).
 - `GlassFilter` + `supportsDisplacement()` add Apple's refraction on **Chromium

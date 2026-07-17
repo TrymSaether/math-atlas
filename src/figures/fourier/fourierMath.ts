@@ -214,6 +214,6 @@ export function rootsOfUnity(n: number): { x: number; y: number }[] {
  */
 export function weierstrass(x: number, terms: number, a = 0.5, b = 3): number {
   let s = 0;
-  for (let k = 0; k < terms; k++) s += Math.pow(a, k) * Math.cos(Math.pow(b, k) * Math.PI * x);
+  for (let k = 0; k < terms; k++) s += a ** k * Math.cos(b ** k * Math.PI * x);
   return s;
 }

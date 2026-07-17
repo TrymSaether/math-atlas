@@ -16,7 +16,7 @@ import {
   type Vec2,
 } from "../core/FigureFrame";
 import { RangeControl } from "../core/RangeControl";
-import { type FigureProps } from "../core/types";
+import type { FigureProps } from "../core/types";
 
 const U: Vec2 = [1.5, 0];
 const VLEN = 1.25;
