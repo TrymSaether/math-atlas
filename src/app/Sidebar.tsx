@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { ChevronDown, MapPin, Moon, PanelLeft, Search, Sun } from "lucide-react";
+import { ChevronDown, MapPin, Moon, PanelLeft, Sun } from "lucide-react";
 import { useStore } from "./store";
 import { schemeFor, siblingOf } from "./themes";
 import { getDomainTone } from "@/atlas/colors";
@@ -11,6 +11,9 @@ import { Button } from "@/ui/button";
 import { Surface } from "@/design";
 
 import { LIBRARY_DESTINATIONS, TOOL_DESTINATIONS, type ShellDestination } from "./destinations";
+
+const sidebarRowInteraction =
+  "outline-none transition-[background-color,color,box-shadow] duration-[var(--duration-fast)] hover:bg-accent active:bg-accent/80 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none motion-reduce:transition-none";
 
 /**
  * The docked liquid-glass sidebar — the shell's single navigation + search
@@ -39,11 +42,17 @@ function DestinationList({ destinations }: { destinations: readonly ShellDestina
               title={destination.description}
               onClick={() => destination.activate({ setSurface, setMode })}
               className={cn(
-                "flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left transition-colors",
-                isActive ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent",
+                "group flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left",
+                sidebarRowInteraction,
+                isActive ? "bg-primary/10 text-primary hover:bg-primary/15 active:bg-primary/20" : "text-foreground",
               )}
             >
-              <Icon className={cn("size-4.75 shrink-0", isActive ? "text-primary" : "text-muted-foreground")} />
+              <Icon
+                className={cn(
+                  "size-4.75 shrink-0 transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none",
+                  isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground",
+                )}
+              />
               <span className={cn("text-subhead", isActive && "font-medium")}>{destination.label}</span>
             </button>
           </li>
@@ -71,12 +80,14 @@ function Section({
         type="button"
         onClick={onToggle}
         aria-expanded={!collapsed}
-        className="group flex w-full items-center gap-1.5 px-2 pt-3.5 pb-1 text-left"
+        className="group flex w-full items-center gap-1.5 rounded-md px-2 pt-3.5 pb-1 text-left outline-none transition-[background-color,color,box-shadow] duration-[var(--duration-fast)] hover:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none motion-reduce:transition-none"
       >
-        <span className="text-footnote font-semibold tracking-wide text-muted-foreground">{title}</span>
+        <span className="text-footnote font-semibold tracking-wide text-muted-foreground transition-colors duration-[var(--duration-fast)] group-hover:text-foreground motion-reduce:transition-none">
+          {title}
+        </span>
         <ChevronDown
           className={cn(
-            "size-3 text-muted-foreground opacity-0 transition-[transform,opacity] group-hover:opacity-70",
+            "size-3 text-muted-foreground opacity-0 transition-[transform,opacity,color] duration-[var(--duration-fast)] group-hover:text-foreground group-hover:opacity-70 motion-reduce:transition-none",
             collapsed && "-rotate-90 opacity-70",
           )}
         />
@@ -94,7 +105,7 @@ function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      className="size-8 text-muted-foreground"
+      className="size-8 rounded-full text-muted-foreground hover:bg-accent/60 hover:text-foreground focus-visible:outline-none"
       aria-label={isDark ? "Switch to light appearance" : "Switch to dark appearance"}
       title={isDark ? "Light" : "Dark"}
       onClick={() => setTheme(siblingOf(theme))}
@@ -123,6 +134,7 @@ function RecentsSection() {
   const mapId = useStore((s) => s.mapId);
   const map = useStore((s) => s.loadedMaps[mapId]);
   const recents = useStore((s) => s.recents);
+  const selectedId = useStore((s) => s.selectedId);
   const select = useStore((s) => s.select);
   const clearRecents = useStore((s) => s.clearRecents);
 
@@ -141,7 +153,11 @@ function RecentsSection() {
     <div className="mt-0.5">
       <div className="flex items-center justify-between gap-2 px-2 pt-3.5 pb-1">
         <span className="text-footnote font-semibold tracking-wide text-muted-foreground">Recents</span>
-        <button type="button" className="text-footnote font-medium text-primary hover:underline" onClick={clearRecents}>
+        <button
+          type="button"
+          className="rounded-sm text-footnote font-medium text-primary outline-none transition-[color,box-shadow] duration-[var(--duration-fast)] hover:text-primary/80 hover:underline focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none motion-reduce:transition-none"
+          onClick={clearRecents}
+        >
           Clear
         </button>
       </div>
@@ -152,11 +168,21 @@ function RecentsSection() {
               type="button"
               onClick={() => select(node.id)}
               title={node.label}
-              className="flex min-h-13 w-full items-center gap-3 rounded-sm px-2.5 py-1.75 text-left transition-colors hover:bg-accent"
+              aria-current={node.id === selectedId ? "true" : undefined}
+              className={cn(
+                "group flex min-h-13 w-full items-center gap-3 rounded-md px-2.5 py-1.75 text-left",
+                sidebarRowInteraction,
+                node.id === selectedId && "bg-primary/10 hover:bg-primary/15 active:bg-primary/20",
+              )}
             >
               <ConceptGlyph mapId={mapId} domainId={node.domain} />
               <span className="flex min-w-0 flex-1 flex-col gap-px">
-                <span className="truncate text-subhead font-medium text-foreground">
+                <span
+                  className={cn(
+                    "truncate text-subhead font-medium transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none",
+                    node.id === selectedId ? "text-primary" : "text-foreground",
+                  )}
+                >
                   <MathText text={node.label} />
                 </span>
                 <span className="truncate text-caption text-muted-foreground">
@@ -172,7 +198,6 @@ function RecentsSection() {
 }
 
 export function Sidebar() {
-  const setPaletteOpen = useStore((s) => s.setPaletteOpen);
   const mapId = useStore((s) => s.mapId);
   const mapTitle = useStore((s) => s.catalog.find((e) => e.slug === mapId)?.title ?? mapId);
   const domains = useStore((s) => s.loadedMaps[s.mapId]?.data.domains ?? []);
@@ -201,13 +226,13 @@ export function Sidebar() {
 
   if (collapsed) {
     return (
-      <div className="absolute top-4 left-4 z-(--z-shell,30)">
+      <div className="absolute top-[var(--shell-edge)] left-[calc(50%_-_min(260px,calc((100vw_-_32px)/2))_-_48px)] z-(--z-shell-raised) max-[980px]:left-[calc(var(--hig-sidebar-w)+var(--shell-edge)*2-48px)]">
         <Surface material="thin" className="flex size-10 items-center justify-center rounded-full">
           <Button
             type="button"
             variant="ghost"
             size="icon"
-            className="size-10 rounded-full text-muted-foreground hover:bg-accent/60"
+            className="size-10 rounded-full text-muted-foreground hover:bg-accent/60 hover:text-foreground focus-visible:outline-none"
             aria-label="Show sidebar"
             title="Show sidebar"
             onClick={() => setCollapsed(false)}
@@ -230,7 +255,7 @@ export function Sidebar() {
           <Button
             variant="ghost"
             size="icon"
-            className="size-8 text-muted-foreground"
+            className="size-8 rounded-full text-muted-foreground hover:bg-accent/60 hover:text-foreground focus-visible:outline-none"
             aria-label="Hide sidebar"
             title="Hide sidebar"
             onClick={() => setCollapsed(true)}
@@ -238,19 +263,6 @@ export function Sidebar() {
             <PanelLeft className="size-4" />
           </Button>
         </header>
-
-        <div className="px-3 pt-1 pb-2">
-          <button
-            type="button"
-            onClick={() => setPaletteOpen(true)}
-            aria-label="Search concepts and theorems"
-            className="flex h-10 w-full items-center gap-2 rounded-full bg-muted px-3.5 text-muted-foreground transition-colors hover:bg-accent"
-          >
-            <Search className="size-4.5 shrink-0" />
-            <span className="min-w-0 flex-1 truncate text-left text-body">Search concepts, theorems…</span>
-            <kbd className="shrink-0 rounded bg-foreground/6 px-1.5 py-px text-caption text-muted-foreground">⌘K</kbd>
-          </button>
-        </div>
 
         <nav className="min-h-0 flex-1 overflow-y-auto px-2 pt-1 pb-2" aria-label="Library">
           <Section title="Library" collapsed={closedSecs.has("library")} onToggle={() => toggleSec("library")}>
@@ -268,13 +280,18 @@ export function Sidebar() {
                   <li key={d.id}>
                     <button
                       type="button"
-                      className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-foreground transition-colors hover:bg-accent"
+                      className={cn(
+                        "group flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-foreground",
+                        sidebarRowInteraction,
+                      )}
                     >
                       <span
                         className="mx-1.25 size-2.75 shrink-0 rounded-full"
                         style={{ background: getDomainTone(d.id).color }}
                       />
-                      <span className="text-subhead">{d.label}</span>
+                      <span className="text-subhead transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none">
+                        {d.label}
+                      </span>
                     </button>
                   </li>
                 ))}

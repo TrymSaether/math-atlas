@@ -8,7 +8,6 @@ import {
   Pencil,
   Plus,
   RotateCcw,
-  Search,
   Sun,
   Variable,
   WalletCards,
@@ -23,25 +22,11 @@ import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
 import { Surface } from "@/design";
 import { UserMenu } from "@/auth/UserMenu";
 import { LogoMark } from "./Logo";
+import { PaletteSearchButton } from "./PaletteSearchButton";
 
 /** The single most-important affordance: a Maps-style search field → palette. */
 function SearchField() {
-  const setPaletteOpen = useStore((s) => s.setPaletteOpen);
-  return (
-    <Surface material="regular" className="rounded-full">
-      <button
-        type="button"
-        className="flex h-11 w-full items-center gap-2 rounded-full px-4 text-muted-foreground transition-colors hover:bg-accent"
-        onClick={() => setPaletteOpen(true)}
-        aria-label="Search concepts and theorems"
-        title="Search concepts and theorems"
-      >
-        <Search className="size-[18px] shrink-0" />
-        <span className="min-w-0 flex-1 truncate text-left text-body">Search concepts, theorems…</span>
-        <kbd className="shrink-0 rounded bg-foreground/[0.06] px-1.5 py-px font-mono text-caption">⌘K</kbd>
-      </button>
-    </Surface>
-  );
+  return <PaletteSearchButton />;
 }
 
 /** Brand mark + active-map dropdown (switches between catalog maps). */

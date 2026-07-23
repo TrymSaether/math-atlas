@@ -1,5 +1,5 @@
 import { Dialog } from "radix-ui";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CornerDownLeft, Map as MapIcon } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/ui/command";
 import { ModalShell } from "@/ui/modal-shell";
@@ -9,6 +9,7 @@ import { getDomainTone } from "@/atlas/colors";
 import { kindIcon } from "@/atlas/nodeCategoryIcons";
 import { KIND_LABEL } from "@/maps/types";
 import { MathText } from "@/math/MathText";
+import { rememberPaletteReturnFocus, restorePaletteReturnFocus } from "./paletteFocus";
 
 export function CommandPalette() {
   const mapId = useStore((s) => s.mapId);
@@ -21,26 +22,37 @@ export function CommandPalette() {
   const catalog = useStore((s) => s.catalog);
   const [query, setQuery] = useState("");
 
-  const setPaletteOpen = (nextOpen: boolean) => {
-    if (!nextOpen) setQuery("");
-    setOpen(nextOpen);
-  };
+  const setPaletteOpen = useCallback(
+    (nextOpen: boolean) => {
+      if (!nextOpen) setQuery("");
+      setOpen(nextOpen);
+    },
+    [setOpen],
+  );
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        setPaletteOpen(!useStore.getState().paletteOpen);
+        const nextOpen = !useStore.getState().paletteOpen;
+        if (nextOpen && document.activeElement instanceof HTMLElement && document.activeElement !== document.body) {
+          rememberPaletteReturnFocus(document.activeElement);
+        }
+        setPaletteOpen(nextOpen);
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [setOpen]);
+  }, [setPaletteOpen]);
 
   return (
     <ModalShell
       open={open}
       onOpenChange={setPaletteOpen}
+      onCloseAutoFocus={(event) => {
+        event.preventDefault();
+        restorePaletteReturnFocus();
+      }}
       aria-describedby={undefined}
       contentClassName="left-1/2 top-[12%] w-[min(680px,calc(100vw-24px))] -translate-x-1/2"
     >
@@ -71,9 +83,7 @@ export function CommandPalette() {
                     <MapIcon className="size-3.5" aria-hidden />
                   </span>
                   <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
-                  {entry.slug === mapId && (
-                    <span className="shrink-0 text-caption text-muted-foreground">Current</span>
-                  )}
+                  {entry.slug === mapId && <span className="shrink-0 text-caption text-muted-foreground">Current</span>}
                   <CornerDownLeft
                     className="size-3.5 text-primary opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
                     aria-hidden
@@ -148,15 +158,7 @@ function Keycap({ children }: { children: string }) {
   );
 }
 
-function Shortcut({
-  keys,
-  label,
-  className,
-}: {
-  keys: string[];
-  label: string;
-  className?: string;
-}) {
+function Shortcut({ keys, label, className }: { keys: string[]; label: string; className?: string }) {
   return (
     <span className={`items-center gap-1.5 ${className ?? "flex"}`}>
       <span className="flex items-center gap-0.5">

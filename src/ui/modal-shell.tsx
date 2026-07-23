@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { Dialog } from "radix-ui";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { spring } from "@/design";
@@ -12,6 +12,7 @@ export interface ModalShellProps {
   children: ReactNode;
   /** Forwarded to Dialog.Content — e.g. block Escape while a submit is in flight. */
   onEscapeKeyDown?: (event: KeyboardEvent) => void;
+  onCloseAutoFocus?: ComponentProps<typeof Dialog.Content>["onCloseAutoFocus"];
   role?: string;
   "aria-describedby"?: string;
 }
@@ -28,6 +29,7 @@ export function ModalShell({
   contentClassName,
   children,
   onEscapeKeyDown,
+  onCloseAutoFocus,
   role,
   "aria-describedby": ariaDescribedby,
 }: ModalShellProps) {
@@ -35,32 +37,43 @@ export function ModalShell({
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <AnimatePresence>
-        {open && (
-          <Dialog.Portal forceMount>
-            <Dialog.Overlay asChild>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: reduceMotion ? 0 : 0.16 }}
-                className="fixed inset-0 z-(--z-modal) bg-black/40 backdrop-blur-[2px]"
-              />
-            </Dialog.Overlay>
-            <Dialog.Content asChild onEscapeKeyDown={onEscapeKeyDown} role={role} aria-describedby={ariaDescribedby}>
-              <motion.div
-                initial={reduceMotion ? false : { opacity: 0, y: -10, scale: 0.985 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.99 }}
-                transition={reduceMotion ? { duration: 0 } : spring.gentle}
-                className={cn("fixed z-(--z-modal)", contentClassName)}
+      <Dialog.Portal forceMount>
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              key="dialog-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.16 }}
+              className="fixed inset-0 z-(--z-modal)"
+            >
+              <Dialog.Overlay forceMount className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+            </motion.div>
+          )}
+          {open && (
+            <motion.div
+              key="dialog-content"
+              initial={reduceMotion ? false : { opacity: 0, y: -10, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.99 }}
+              transition={reduceMotion ? { duration: 0 } : spring.gentle}
+              className={cn("fixed z-(--z-modal)", contentClassName)}
+            >
+              <Dialog.Content
+                forceMount
+                onEscapeKeyDown={onEscapeKeyDown}
+                onCloseAutoFocus={onCloseAutoFocus}
+                role={role}
+                aria-describedby={ariaDescribedby}
+                className="outline-none"
               >
                 {children}
-              </motion.div>
-            </Dialog.Content>
-          </Dialog.Portal>
-        )}
-      </AnimatePresence>
+              </Dialog.Content>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Dialog.Portal>
     </Dialog.Root>
   );
 }
