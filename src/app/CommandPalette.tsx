@@ -1,5 +1,6 @@
 import { Dialog } from "radix-ui";
 import { useEffect, useState } from "react";
+import { CornerDownLeft, Map as MapIcon } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/ui/command";
 import { ModalShell } from "@/ui/modal-shell";
 import { Surface } from "@/design";
@@ -20,39 +21,40 @@ export function CommandPalette() {
   const catalog = useStore((s) => s.catalog);
   const [query, setQuery] = useState("");
 
+  const setPaletteOpen = (nextOpen: boolean) => {
+    if (!nextOpen) setQuery("");
+    setOpen(nextOpen);
+  };
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        setOpen(!useStore.getState().paletteOpen);
+        setPaletteOpen(!useStore.getState().paletteOpen);
       }
-      if (e.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [setOpen]);
 
-  // Clear the query when the palette closes (compare against the previous value
-  // during render rather than syncing in an effect).
-  const [prevOpen, setPrevOpen] = useState(open);
-  if (open !== prevOpen) {
-    setPrevOpen(open);
-    if (!open) setQuery("");
-  }
-
   return (
     <ModalShell
       open={open}
-      onOpenChange={setOpen}
+      onOpenChange={setPaletteOpen}
       aria-describedby={undefined}
-      contentClassName="left-1/2 top-[16%] w-[620px] max-w-[92vw] -translate-x-1/2"
+      contentClassName="left-1/2 top-[12%] w-[min(680px,calc(100vw-24px))] -translate-x-1/2"
     >
       <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
       <Surface material="thick" reactive className="overflow-hidden">
         <Command loop className="bg-transparent text-foreground">
-          <CommandInput value={query} onValueChange={setQuery} placeholder="Search concepts, definitions, theorems…" />
-          <CommandList className="max-h-[min(60vh,420px)]">
-            <CommandEmpty>No results.</CommandEmpty>
+          <CommandInput
+            value={query}
+            onValueChange={setQuery}
+            aria-label="Search the atlas"
+            placeholder="Search concepts, definitions, theorems…"
+          />
+          <CommandList className="max-h-[min(62vh,440px)]">
+            <CommandEmpty>No matching concepts or fields</CommandEmpty>
 
             <CommandGroup heading="Fields">
               {catalog.map((entry) => (
@@ -61,10 +63,21 @@ export function CommandPalette() {
                   value={`field ${entry.title}`}
                   onSelect={() => {
                     setMap(entry.slug);
-                    setOpen(false);
+                    setPaletteOpen(false);
                   }}
+                  className="group"
                 >
-                  Open {entry.title}
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                    <MapIcon className="size-3.5" aria-hidden />
+                  </span>
+                  <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
+                  {entry.slug === mapId && (
+                    <span className="shrink-0 text-caption text-muted-foreground">Current</span>
+                  )}
+                  <CornerDownLeft
+                    className="size-3.5 text-primary opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
+                    aria-hidden
+                  />
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -80,24 +93,29 @@ export function CommandPalette() {
                       value={`${n.label} ${n.kind} ${n.tags.join(" ")}`}
                       onSelect={() => {
                         select(n.id);
-                        setOpen(false);
+                        setPaletteOpen(false);
                       }}
-                      className="gap-2.5"
+                      className="group"
                     >
-                      <span className="size-2 shrink-0 rounded-full" style={{ background: tone.color }} />
                       <span
-                        className="flex size-4 shrink-0 items-center justify-center rounded-full"
+                        className="flex size-6 shrink-0 items-center justify-center rounded-full"
                         style={{ background: tone.tint, color: tone.color }}
                       >
-                        <Icon className="size-2.5" aria-hidden />
+                        <Icon className="size-3.5" aria-hidden />
                       </span>
-                      <span className="w-24 shrink-0 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                      <span className="w-26 shrink-0 text-caption-2 font-medium tracking-[var(--tracking-label-tight)] text-muted-foreground uppercase">
                         {KIND_LABEL[n.kind]}
                       </span>
-                      <span className="min-w-0 flex-1 truncate text-sm text-foreground">
+                      <span className="min-w-0 flex-1 truncate font-medium text-foreground">
                         <MathText text={n.label} />
                       </span>
-                      <span className="ml-2 max-w-36 truncate text-xs text-muted-foreground">{n.topicCluster}</span>
+                      <span className="ml-2 hidden max-w-36 truncate text-caption text-muted-foreground sm:block">
+                        {n.topicCluster}
+                      </span>
+                      <CornerDownLeft
+                        className="size-3.5 text-primary opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
+                        aria-hidden
+                      />
                     </CommandItem>
                   );
                 })}
@@ -105,12 +123,48 @@ export function CommandPalette() {
             )}
           </CommandList>
 
-          <div className="flex items-center justify-between border-t border-border px-3 py-2 text-xs text-muted-foreground">
-            <span>↑↓ navigate · ↵ select · esc close</span>
-            <span className="font-mono">⌘K</span>
+          <div className="flex min-h-10 items-center justify-between gap-3 border-t border-border px-4 text-caption text-muted-foreground">
+            <div className="flex items-center gap-3">
+              <Shortcut keys={["↑", "↓"]} label="Navigate" />
+              <Shortcut keys={["↵"]} label="Open" />
+              <Shortcut keys={["esc"]} label="Close" className="hidden sm:flex" />
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Keycap>⌘</Keycap>
+              <Keycap>K</Keycap>
+            </div>
           </div>
         </Command>
       </Surface>
     </ModalShell>
+  );
+}
+
+function Keycap({ children }: { children: string }) {
+  return (
+    <kbd className="min-w-5 rounded-sm border border-border bg-foreground/[0.04] px-1 py-0.5 text-center font-mono text-caption-2 leading-none text-muted-foreground shadow-[0_1px_0_var(--border)]">
+      {children}
+    </kbd>
+  );
+}
+
+function Shortcut({
+  keys,
+  label,
+  className,
+}: {
+  keys: string[];
+  label: string;
+  className?: string;
+}) {
+  return (
+    <span className={`items-center gap-1.5 ${className ?? "flex"}`}>
+      <span className="flex items-center gap-0.5">
+        {keys.map((key) => (
+          <Keycap key={key}>{key}</Keycap>
+        ))}
+      </span>
+      <span>{label}</span>
+    </span>
   );
 }
