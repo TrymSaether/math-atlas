@@ -31,6 +31,7 @@ import {
 import { Button } from "@/ui/button";
 import { Surface } from "@/design";
 import { cn } from "@/ui/cn";
+import { FloatingControlButton, FloatingControlDivider, FloatingControlDock } from "@/ui/floating-controls";
 import { useSandbox, isUserWorkspaceId } from "./store";
 import { WORKSPACES, WORKSPACE_IDS } from "./library";
 import type { ViewRect } from "./types";
@@ -52,16 +53,9 @@ function zoomRect(r: ViewRect, factor: number): ViewRect {
 /** Icon button for the sandbox view dock — same shell icon button as atlas canvas controls. */
 function DockBtn({ label, onClick, children }: { label: string; onClick: () => void; children: ReactNode }) {
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="size-9 rounded-full text-foreground"
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-    >
+    <FloatingControlButton onClick={onClick} aria-label={label} title={label}>
       {children}
-    </Button>
+    </FloatingControlButton>
   );
 }
 
@@ -119,7 +113,7 @@ export function SandboxView() {
         <PlaneView rows={ws.rows} compiled={compiled} viewport={ws.viewport} marks={ws.marks} onMovePoint={setPoint} />
 
         {/* Saved views + view dock, right rail */}
-        <div className="pointer-events-none absolute bottom-4 right-4 flex flex-col items-end gap-2">
+        <div className="pointer-events-none absolute bottom-[var(--shell-edge)] right-[var(--shell-edge)] flex flex-col items-end gap-[var(--shell-gap-md)]">
           {ws.views.length > 0 && (
             <Surface material="regular" className="pointer-events-auto flex items-center gap-0.5 rounded-full p-1">
               {ws.views.map((v) => (
@@ -144,24 +138,22 @@ export function SandboxView() {
               ))}
             </Surface>
           )}
-          <div className="pointer-events-auto inline-flex w-12 flex-col items-center gap-2.5">
-            <Surface material="regular" className="flex w-12 flex-col items-center gap-0.5 rounded-[24px] p-1">
+          <FloatingControlDock className="pointer-events-auto" aria-label="Sandbox view controls">
               <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
                 <Plus className="size-[17px]" />
               </DockBtn>
               <DockBtn label="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
                 <Minus className="size-[17px]" />
               </DockBtn>
+              <FloatingControlDivider />
               <DockBtn label="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
                 <Maximize className="size-[17px]" />
               </DockBtn>
-            </Surface>
-            <Surface material="regular" className="flex size-12 items-center justify-center rounded-full">
+              <FloatingControlDivider />
               <DockBtn label="Save view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
                 <Bookmark className="size-[17px]" />
               </DockBtn>
-            </Surface>
-          </div>
+          </FloatingControlDock>
         </div>
       </main>
 

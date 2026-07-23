@@ -120,7 +120,7 @@ export function AppShell() {
       {!onAtlas && <TopChrome />}
       {onAtlas && map && <Sidebar />}
       {onAtlas && map && (
-        <div className="pointer-events-auto absolute top-[var(--shell-edge)] left-1/2 z-(--z-shell-raised) w-[min(520px,calc(100vw-32px))] -translate-x-1/2 max-[980px]:right-[var(--shell-edge)] max-[980px]:left-[calc(var(--hig-sidebar-w)+var(--shell-edge)*2)] max-[980px]:w-auto max-[980px]:max-w-[520px] max-[980px]:translate-x-0">
+        <div className="pointer-events-auto absolute top-[var(--shell-edge)] left-1/2 z-(--z-shell-raised) w-[min(520px,calc(100vw-32px))] -translate-x-1/2 max-[980px]:right-[var(--shell-edge)] max-[980px]:left-[calc(var(--hig-sidebar-w)+var(--shell-edge)*2)] max-[980px]:w-auto max-[980px]:max-w-[520px] max-[980px]:translate-x-0 max-[720px]:left-[68px]">
           <PaletteSearchButton />
         </div>
       )}

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { MouseEvent } from "react";
+import type { KeyboardEvent, MouseEvent } from "react";
 import { useReactFlow, useStore as useReactFlowStore, useViewport, type Node } from "@xyflow/react";
 import { ATLAS_NODE_HEIGHT, ATLAS_NODE_WIDTH, type DomainBounds } from "./layout";
 import { getMutedDomainTone } from "./colors";
@@ -103,7 +103,7 @@ export function MinimapCard({
   const viewW = Math.max(0.5, viewRight - viewX);
   const viewH = Math.max(0.5, viewBottom - viewY);
 
-  const handleClick = (event: MouseEvent<SVGSVGElement>) => {
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * W;
     const y = ((event.clientY - rect.top) / rect.height) * H;
@@ -111,78 +111,95 @@ export function MinimapCard({
     rf.setCenter(flowPoint.x, flowPoint.y, { zoom: rf.getZoom(), duration: 280 });
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    rf.fitView({ padding: 0.12, duration: 360 });
+  };
+
   return (
     <Surface
       material="regular"
-      className="absolute bottom-[var(--shell-edge)] right-[72px] z-(--z-shell) hidden rounded-[22px] p-1.5 md:block"
+      className="absolute bottom-[var(--shell-edge)] right-[calc(var(--shell-edge)+56px)] z-(--z-shell) hidden rounded-[24px] p-1.5 transition-[box-shadow,transform] duration-[var(--duration-base)] ease-[var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[var(--glass-shadow),0_18px_44px_-22px_rgba(0,0,0,0.38)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:block"
     >
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        width={W}
-        height={H}
+      <div
         onClick={handleClick}
-        className="block cursor-pointer rounded-[16px] bg-muted shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_68%,transparent)]"
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="button"
+        aria-label="Map overview. Click to recenter; press Enter to fit the map."
+        className="cursor-crosshair rounded-[18px] bg-muted/80 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_72%,transparent)] outline-none transition-[background-color,box-shadow] focus-visible:shadow-[inset_0_0_0_2px_var(--ring)]"
       >
-        {[...regions.entries()].map(([domainId, region]) => {
-          const tone = getMutedDomainTone(domainId);
-          const a = layout.toMini(region.x, region.y);
-          const b = layout.toMini(region.x + region.width, region.y + region.height);
-          if (region.shape === "circle") {
-            const center = layout.toMini(region.x + region.width / 2, region.y + region.height / 2);
+        <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} className="block rounded-[18px]">
+          {[...regions.entries()].map(([domainId, region]) => {
+            const tone = getMutedDomainTone(domainId);
+            const a = layout.toMini(region.x, region.y);
+            const b = layout.toMini(region.x + region.width, region.y + region.height);
+            if (region.shape === "circle") {
+              const center = layout.toMini(region.x + region.width / 2, region.y + region.height / 2);
+              return (
+                <circle
+                  key={domainId}
+                  cx={center.x}
+                  cy={center.y}
+                  r={Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y)) / 2}
+                  fill={tone.tint}
+                  stroke={tone.border}
+                  strokeWidth={0.75}
+                  opacity={0.38}
+                />
+              );
+            }
             return (
-              <circle
+              <rect
                 key={domainId}
-                cx={center.x}
-                cy={center.y}
-                r={Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y)) / 2}
+                x={a.x}
+                y={a.y}
+                width={b.x - a.x}
+                height={b.y - a.y}
+                rx={4}
                 fill={tone.tint}
                 stroke={tone.border}
                 strokeWidth={0.75}
                 opacity={0.38}
               />
             );
-          }
-          return (
-            <rect
-              key={domainId}
-              x={a.x}
-              y={a.y}
-              width={b.x - a.x}
-              height={b.y - a.y}
-              rx={4}
-              fill={tone.tint}
-              stroke={tone.border}
-              strokeWidth={0.75}
-              opacity={0.38}
-            />
-          );
-        })}
-        <rect
-          x={viewX}
-          y={viewY}
-          width={viewW}
-          height={viewH}
-          rx={5}
-          fill="color-mix(in srgb, var(--primary) 4%, transparent)"
-          stroke="color-mix(in srgb, var(--primary) 72%, var(--card))"
-          strokeWidth={0.95}
-          opacity={0.84}
-        />
-        {points.map((point) => {
-          const p = layout.toMini(point.cx, point.cy);
-          const selected = point.id === selectedId;
-          const tone = getMutedDomainTone(point.domainId);
-          return selected ? (
-            <g key={point.id}>
-              <circle cx={p.x} cy={p.y} r={3.4} fill="var(--card)" opacity={0.94} />
-              <circle cx={p.x} cy={p.y} r={2.2} fill={tone.color} opacity={0.96} />
-              <circle cx={p.x} cy={p.y} r={4.2} fill="none" stroke={tone.color} strokeWidth={0.8} opacity={0.78} />
-            </g>
-          ) : (
-            <circle key={point.id} cx={p.x} cy={p.y} r={1.35} fill={tone.color} opacity={0.66} />
-          );
-        })}
-      </svg>
+          })}
+          <rect
+            x={viewX}
+            y={viewY}
+            width={viewW}
+            height={viewH}
+            rx={5}
+            fill="color-mix(in srgb, var(--primary) 4%, transparent)"
+            stroke="color-mix(in srgb, var(--primary) 72%, var(--card))"
+            strokeWidth={0.95}
+            opacity={0.84}
+          />
+          {points.map((point) => {
+            const p = layout.toMini(point.cx, point.cy);
+            const selected = point.id === selectedId;
+            const tone = getMutedDomainTone(point.domainId);
+            return selected ? (
+              <g key={point.id}>
+                <circle cx={p.x} cy={p.y} r={3.4} fill="var(--card)" opacity={0.94} />
+                <circle cx={p.x} cy={p.y} r={2.2} fill={tone.color} opacity={0.96} />
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r={4.2}
+                  fill="none"
+                  stroke={tone.color}
+                  strokeWidth={0.8}
+                  opacity={0.78}
+                />
+              </g>
+            ) : (
+              <circle key={point.id} cx={p.x} cy={p.y} r={1.35} fill={tone.color} opacity={0.66} />
+            );
+          })}
+        </svg>
+      </div>
     </Surface>
   );
 }

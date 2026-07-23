@@ -202,7 +202,7 @@ export function Sidebar() {
   const mapTitle = useStore((s) => s.catalog.find((e) => e.slug === mapId)?.title ?? mapId);
   const domains = useStore((s) => s.loadedMaps[s.mapId]?.data.domains ?? []);
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => window.matchMedia("(max-width: 720px)").matches);
   const [closedSecs, setClosedSecs] = useState<Set<string>>(() => new Set());
 
   // Let the left-docked panels reflow to the screen edge when the sidebar is
@@ -226,7 +226,7 @@ export function Sidebar() {
 
   if (collapsed) {
     return (
-      <div className="absolute top-[var(--shell-edge)] left-[calc(50%_-_min(260px,calc((100vw_-_32px)/2))_-_48px)] z-(--z-shell-raised) max-[980px]:left-[calc(var(--hig-sidebar-w)+var(--shell-edge)*2-48px)]">
+      <div className="absolute top-[var(--shell-edge)] left-[var(--shell-edge)] z-(--z-shell-raised)">
         <Surface material="thin" className="flex size-10 items-center justify-center rounded-full">
           <Button
             type="button"
