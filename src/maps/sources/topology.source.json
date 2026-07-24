@@ -58,10 +58,14 @@
         "statement": "Every indexed family of nonempty sets has a choice function.",
         "formal": "If $(A_i)_{i\\in I}$ and $A_i\\ne\\varnothing$ for all $i$, then there exists $c:I\\to\\bigcup_{i\\in I}A_i$ such that $c(i)\\in A_i$ for all $i$.",
         "intuition": "You may choose one element from each set in a family, even when there is no explicit rule for making the choices.",
-        "notation": ["AC"]
+        "notation": [
+          "AC"
+        ]
       },
       "diagram": "/atlas-assets/topology/diagrams/axiom-of-choice.svg",
-      "tags": ["choice"],
+      "tags": [
+        "choice"
+      ],
       "priority": "standard"
     },
     {
@@ -75,7 +79,10 @@
         "intuition": "Topology is extra structure; the same set can carry many different topologies.",
         "notation": []
       },
-      "tags": ["non-example", "topology-prerequisite"],
+      "tags": [
+        "non-example",
+        "topology-prerequisite"
+      ],
       "priority": "standard"
     },
     {
@@ -89,7 +96,10 @@
         "intuition": "Prove the claim on small generating pieces, then extend by unions and finite intersections.",
         "notation": []
       },
-      "tags": ["bases", "proof-method"],
+      "tags": [
+        "bases",
+        "proof-method"
+      ],
       "priority": "standard"
     },
     {
@@ -103,7 +113,9 @@
         "formal": "$f:X\\to Y$ is bijective iff for every $y\\in Y$ there exists a unique $x\\in X$ such that $f(x)=y$.",
         "intuition": "Every point in the codomain gets hit by exactly one point in the domain.",
         "gloss": "A function that is both injective and surjective: a perfect one-to-one correspondence between the domain and codomain.",
-        "notation": ["bijective"]
+        "notation": [
+          "bijective"
+        ]
       },
       "examples": [
         {
@@ -116,7 +128,9 @@
         "ref": "Def. A.7",
         "references": []
       },
-      "tags": ["functions"],
+      "tags": [
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -156,7 +170,9 @@
         "formal": "$A\\times B=\\{(a,b):a\\in A\\land b\\in B\\}$.",
         "intuition": "The set underlying product spaces and the ambient set for binary relations.",
         "gloss": "All pairings of an element of $A$ with an element of $B$ — the set underlying the product topology.",
-        "notation": ["$A\\times B$"]
+        "notation": [
+          "$A\\times B$"
+        ]
       },
       "examples": [
         {
@@ -169,7 +185,10 @@
         "ref": "Def. A.5",
         "references": []
       },
-      "tags": ["products", "set-theory"],
+      "tags": [
+        "products",
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -182,10 +201,15 @@
         "definition": "A function selecting one element from each set in a family.",
         "formal": "$\\forall i\\in I,\\ A_i\\ne\\varnothing$ and $c(i)\\in A_i$.",
         "intuition": "The concrete object whose existence is asserted by the Axiom of Choice.",
-        "notation": ["$c(i)\\in A_i$"]
+        "notation": [
+          "$c(i)\\in A_i$"
+        ]
       },
       "diagram": "/atlas-assets/topology/diagrams/choice-function.svg",
-      "tags": ["choice", "functions"],
+      "tags": [
+        "choice",
+        "functions"
+      ],
       "priority": "standard"
     },
     {
@@ -198,9 +222,13 @@
         "definition": "The target set specified as part of a function.",
         "formal": "For $f:X\\to Y$, $\\operatorname{cod}(f)=Y$.",
         "intuition": "The set a function is allowed to land in; the image may be smaller.",
-        "notation": ["$\\operatorname{cod}(f)$"]
+        "notation": [
+          "$\\operatorname{cod}(f)$"
+        ]
       },
-      "tags": ["functions"],
+      "tags": [
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -214,7 +242,9 @@
         "formal": "$B^c=X\\setminus B=\\{x\\in X\\mid x\\notin B\\}$.",
         "intuition": "The operation linking open and closed sets.",
         "gloss": "The difference of $A$ and $B$ when an ambient set $A$ is understood. Openness and closedness in topology are dual via complements.",
-        "notation": ["$B^c$, $X\\setminus B$"]
+        "notation": [
+          "$B^c$, $X\\setminus B$"
+        ]
       },
       "examples": [
         {
@@ -227,7 +257,10 @@
         "ref": "Def. A.4",
         "references": []
       },
-      "tags": ["set-theory", "topology-prerequisite"],
+      "tags": [
+        "set-theory",
+        "topology-prerequisite"
+      ],
       "priority": "core"
     },
     {
@@ -241,7 +274,9 @@
         "formal": "$(g\\circ f)(x)=g(f(x))$ whenever $\\operatorname{cod}(f)=\\operatorname{dom}(g)$.",
         "intuition": "Do $f$ first, then $g$. This is the backbone of continuity and functoriality.",
         "gloss": "Apply $f$, then $g$. Composition is associative and the identity acts as a unit — the backbone of categorical thinking in topology.",
-        "notation": ["$g\\circ f$"]
+        "notation": [
+          "$g\\circ f$"
+        ]
       },
       "examples": [
         {
@@ -254,7 +289,9 @@
         "ref": "Def. A.9",
         "references": []
       },
-      "tags": ["functions"],
+      "tags": [
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -303,7 +340,9 @@
         "formal": "$A\\setminus B=\\{x\\in A\\mid x\\notin B\\}$.",
         "intuition": "What remains of $A$ after excluding $B$. Complements are relative set differences.",
         "gloss": "What remains of $A$ after removing $B$. Disjoint from $B$, with $(A\\setminus B)\\cup B=A\\cup B$.",
-        "notation": ["$A\\setminus B$"]
+        "notation": [
+          "$A\\setminus B$"
+        ]
       },
       "examples": [
         {
@@ -316,7 +355,9 @@
         "ref": "Def. A.3",
         "references": []
       },
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "standard"
     },
     {
@@ -330,7 +371,9 @@
         "formal": "$\\bigsqcup_{i\\in I}A_i=\\{(a,i)\\mid i\\in I,\\ a\\in A_i\\}$.",
         "intuition": "Copies of the same point from different pieces do not accidentally merge.",
         "gloss": "Combine sets while keeping track of which piece each element came from, so copies never merge. Used to describe $p^{-1}(U)$ for covering maps.",
-        "notation": ["$\\bigsqcup_{i\\in I}A_i$"]
+        "notation": [
+          "$\\bigsqcup_{i\\in I}A_i$"
+        ]
       },
       "examples": [
         {
@@ -343,7 +386,10 @@
         "ref": "Def. A.14",
         "references": []
       },
-      "tags": ["constructions", "set-theory"],
+      "tags": [
+        "constructions",
+        "set-theory"
+      ],
       "priority": "standard"
     },
     {
@@ -356,9 +402,13 @@
         "definition": "The input set of a function.",
         "formal": "For $f:X\\to Y$, $\\operatorname{dom}(f)=X$.",
         "intuition": "The side where function evaluation starts.",
-        "notation": ["$\\operatorname{dom}(f)$"]
+        "notation": [
+          "$\\operatorname{dom}(f)$"
+        ]
       },
-      "tags": ["functions"],
+      "tags": [
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -371,9 +421,13 @@
         "definition": "The unique set containing no elements.",
         "formal": "$\\varnothing=\\{x\\mid x\\ne x\\}$; equivalently, $\\forall x\\,(x\\notin\\varnothing)$.",
         "intuition": "The smallest set and the mandatory open set in every topology.",
-        "notation": ["$\\varnothing$, $\\{\\}$"]
+        "notation": [
+          "$\\varnothing$, $\\{\\}$"
+        ]
       },
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -386,10 +440,15 @@
         "definition": "A relation that partitions a set into equivalence classes.",
         "formal": "$\\forall x\\,x\\sim x$; $x\\sim y\\Rightarrow y\\sim x$; $(x\\sim y\\land y\\sim z)\\Rightarrow x\\sim z$.",
         "intuition": "It formalizes “same for the purpose at hand” and is the set-theoretic input for quotient constructions.",
-        "notation": ["$x\\sim y$, $X/{\\sim}$"]
+        "notation": [
+          "$x\\sim y$, $X/{\\sim}$"
+        ]
       },
       "diagram": "/atlas-assets/topology/diagrams/equivalence-relation.svg",
-      "tags": ["quotients", "set-theory"],
+      "tags": [
+        "quotients",
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -402,9 +461,13 @@
         "definition": "A set bijective with an initial segment of the natural numbers.",
         "formal": "$A$ is finite if $A\\cong\\{1,\\dots,n\\}$ for some $n\\in\\mathbb N$, with $n=0$ corresponding to $\\varnothing$.",
         "intuition": "The set-theoretic notion behind finite subcovers and finite intersections.",
-        "notation": ["$|A|<\\infty$"]
+        "notation": [
+          "$|A|<\\infty$"
+        ]
       },
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "standard"
     },
     {
@@ -417,10 +480,15 @@
         "definition": "A finite subfamily of a cover whose union still contains the covered object.",
         "formal": "If $(U_i)_{i\\in I}$ covers $X$, a finite subcover is $U_{i_1},\\dots,U_{i_n}$ with $X\\subseteq\\bigcup_{k=1}^n U_{i_k}$.",
         "intuition": "The key finite extraction demanded by compactness.",
-        "notation": ["$U_{i_1},\\dots,U_{i_n}$"]
+        "notation": [
+          "$U_{i_1},\\dots,U_{i_n}$"
+        ]
       },
       "diagram": "/atlas-assets/topology/diagrams/finite-subcover.svg",
-      "tags": ["compactness-prerequisite", "covers"],
+      "tags": [
+        "compactness-prerequisite",
+        "covers"
+      ],
       "priority": "core"
     },
     {
@@ -434,7 +502,10 @@
         "intuition": "This is the moment where compactness converts infinite-looking data into finite data.",
         "notation": []
       },
-      "tags": ["compactness", "proof-method"],
+      "tags": [
+        "compactness",
+        "proof-method"
+      ],
       "priority": "standard"
     },
     {
@@ -447,9 +518,14 @@
         "definition": "A single-valued, total relation from a domain to a codomain.",
         "formal": "$f\\subseteq X\\times Y$ and for every $x\\in X$ there exists a unique $y\\in Y$ with $(x,y)\\in f$.",
         "intuition": "A rule with no ambiguity: every input has exactly one output.",
-        "notation": ["$f:X\\to Y$, $x\\mapsto f(x)$"]
+        "notation": [
+          "$f:X\\to Y$, $x\\mapsto f(x)$"
+        ]
       },
-      "tags": ["foundation", "functions"],
+      "tags": [
+        "foundation",
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -549,9 +625,13 @@
         "definition": "The function that leaves every element fixed.",
         "formal": "$\\operatorname{id}_X(x)=x$ for every $x\\in X$.",
         "intuition": "The neutral element for composition of maps.",
-        "notation": ["$\\operatorname{id}_X$"]
+        "notation": [
+          "$\\operatorname{id}_X$"
+        ]
       },
-      "tags": ["functions"],
+      "tags": [
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -564,9 +644,14 @@
         "definition": "The set of outputs of a function.",
         "formal": "$f(X)=\\{f(x) : x\\in X\\}$",
         "intuition": "The set of values that the function actually takes on.",
-        "notation": ["$f(X)$"]
+        "notation": [
+          "$f(X)$"
+        ]
       },
-      "tags": ["foundation", "functions"],
+      "tags": [
+        "foundation",
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -580,7 +665,9 @@
         "formal": "$f(A)=\\{y\\in Y:\\exists x\\in A,\\ f(x)=y\\}$.",
         "intuition": "What the function actually hits.",
         "gloss": "All values actually attained by $f$. $f$ is surjective exactly when $f(A)=B$.",
-        "notation": ["$f(A)$, $\\operatorname{im}(f)$"]
+        "notation": [
+          "$f(A)$, $\\operatorname{im}(f)$"
+        ]
       },
       "examples": [
         {
@@ -593,7 +680,9 @@
         "ref": "Def. A.6",
         "references": []
       },
-      "tags": ["functions"],
+      "tags": [
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -607,7 +696,9 @@
         "formal": "$i:A\\to X$, $i(a)=a$.",
         "intuition": "It does nothing to points; it only changes the ambient viewpoint.",
         "gloss": "The map that views a subset as sitting inside the ambient set. Composing with it recovers a restriction: $f\\circ i=f|_R$.",
-        "notation": ["$i:A\\hookrightarrow X$"]
+        "notation": [
+          "$i:A\\hookrightarrow X$"
+        ]
       },
       "examples": [
         {
@@ -620,7 +711,10 @@
         "ref": "Def. A.13",
         "references": []
       },
-      "tags": ["functions", "topology-prerequisite"],
+      "tags": [
+        "functions",
+        "topology-prerequisite"
+      ],
       "priority": "standard"
     },
     {
@@ -633,10 +727,14 @@
         "definition": "A collection whose members are labeled by an index set.",
         "formal": "An indexed family over $I$ is a function $A:I\\to\\mathcal U$, usually written $i\\mapsto A_i$.",
         "intuition": "Used for arbitrary unions, open covers, products, and choice functions.",
-        "notation": ["$(A_i)_{i\\in I}$, $\\{A_i\\}_{i\\in I}$"]
+        "notation": [
+          "$(A_i)_{i\\in I}$, $\\{A_i\\}_{i\\in I}$"
+        ]
       },
       "diagram": "/atlas-assets/topology/diagrams/indexed-family.svg",
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -650,7 +748,9 @@
         "formal": "$f(x_1)=f(x_2)\\Rightarrow x_1=x_2$.",
         "intuition": "No two distinct points in the domain get sent to the same point in the codomain.",
         "gloss": "No two distinct points in the domain get sent to the same point in the codomain.",
-        "notation": ["injective"]
+        "notation": [
+          "injective"
+        ]
       },
       "examples": [
         {
@@ -663,7 +763,9 @@
         "ref": "Def. A.7",
         "references": []
       },
-      "tags": ["functions"],
+      "tags": [
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -677,7 +779,9 @@
         "formal": "$\\bigcup_{i\\in I}A_i=\\{x:\\exists i\\in I, x\\in A_i\\}$ and $\\bigcap_{i\\in I}A_i=\\{x:\\forall i\\in I, x\\in A_i\\}$.",
         "intuition": "Union glues open pieces together; intersection checks simultaneous membership.",
         "gloss": "Intersection keeps common elements; union pools both. They are commutative, associative, and distribute over each other.",
-        "notation": ["$A\\cup B$, $A\\cap B$, $\\bigcup_i A_i$, $\\bigcap_i A_i$"]
+        "notation": [
+          "$A\\cup B$, $A\\cap B$, $\\bigcup_i A_i$, $\\bigcap_i A_i$"
+        ]
       },
       "examples": [
         {
@@ -690,7 +794,9 @@
         "ref": "Def. A.2",
         "references": []
       },
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -704,14 +810,20 @@
         "formal": "$f^{-1}=\\{(y,x)\\in Y\\times X : (x,y)\\in f\\}.$",
         "intuition": "The inverse relation records how to move backward through $f$. Without bijectivity, one output may have no input or several inputs, so the backward relation need not be a function.",
         "gloss": "Do not confuse this inverse relation with the set preimage $f^{-1}(B)$; the same notation is overloaded by context.",
-        "notation": ["$f^{-1}$"]
+        "notation": [
+          "$f^{-1}$"
+        ]
       },
       "examples": [
         {
           "content": "If $f:\\mathbb R\\to\\mathbb R$ is $f(x)=x+1$, then $f^{-1}(y)=y-1$. If $f(x)=x^2$, the inverse relation is not a function $\\mathbb R\\to\\mathbb R$."
         }
       ],
-      "tags": ["functions", "inverse", "relations"],
+      "tags": [
+        "functions",
+        "inverse",
+        "relations"
+      ],
       "priority": "core"
     },
     {
@@ -776,9 +888,13 @@
         "definition": "The relation expressing that an object belongs to a set.",
         "formal": "$\\in$ is the primitive relation between objects and sets used to express elementhood.",
         "intuition": "The atomic “is in” relation from which subset, union, intersection, and most set constructions are phrased.",
-        "notation": ["$x\\in A$, $x\\notin A$"]
+        "notation": [
+          "$x\\in A$, $x\\notin A$"
+        ]
       },
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -818,7 +934,10 @@
         "intuition": "To prove compactness, never choose a convenient cover; start with an arbitrary one and force a finite subcover.",
         "notation": []
       },
-      "tags": ["compactness", "proof-method"],
+      "tags": [
+        "compactness",
+        "proof-method"
+      ],
       "priority": "standard"
     },
     {
@@ -831,9 +950,13 @@
         "definition": "A two-entry ordered object used to define products and relations.",
         "formal": "$(a,b)=(c,d)\\Longleftrightarrow a=c\\land b=d$.",
         "intuition": "Unlike sets, order matters: $(a,b)$ and $(b,a)$ need not be the same.",
-        "notation": ["$(a,b)$"]
+        "notation": [
+          "$(a,b)$"
+        ]
       },
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -845,9 +968,14 @@
         "statement": "A set equipped with a reflexive, antisymmetric, and transitive relation.",
         "definition": "A partially ordered set $(P,\\le)$ is a set $P$ together with a binary relation $\\le$ that is reflexive ($x\\le x$), antisymmetric (if $x\\le y$ and $y\\le x$ then $x=y$), and transitive (if $x\\le y$ and $y\\le z$ then $x\\le z$).",
         "intuition": "A poset is a set of elements with a notion of order that allows for incomparable elements.",
-        "notation": ["$(P,\\le)$"]
+        "notation": [
+          "$(P,\\le)$"
+        ]
       },
-      "tags": ["definition", "order-theory"],
+      "tags": [
+        "definition",
+        "order-theory"
+      ],
       "priority": "standard"
     },
     {
@@ -860,9 +988,13 @@
         "definition": "A construction sending a set to the set of all of its subsets.",
         "formal": "$\\mathcal P(X)=\\{A\\mid A\\subseteq X\\}$.",
         "intuition": "A topology on $X$ is not just any object. It is a selected subcollection of $\\mathcal P(X)$.",
-        "notation": ["$\\mathcal P(X)$, $2^X$"]
+        "notation": [
+          "$\\mathcal P(X)$, $2^X$"
+        ]
       },
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -876,14 +1008,20 @@
         "formal": "$f^{-1}(B)=\\{x\\in X : f(x)\\in B\\}$.",
         "intuition": "Preimages pull questions about subsets of the codomain back to subsets of the domain. This is why continuity is naturally stated using preimages of open sets.",
         "gloss": "Also called the inverse image of $B$ under $f$; this is a set, not the inverse relation $f^{-1}\\subseteq Y\\times X$.",
-        "notation": ["$f^{-1}(B)$"]
+        "notation": [
+          "$f^{-1}(B)$"
+        ]
       },
       "examples": [
         {
           "content": "For $f:\\mathbb R\\to\\mathbb R$ with $f(x)=x^2$, the preimage of $[0,1]$ is $[-1,1]$."
         }
       ],
-      "tags": ["functions", "preimage", "topology-prerequisite"],
+      "tags": [
+        "functions",
+        "preimage",
+        "topology-prerequisite"
+      ],
       "priority": "core"
     },
     {
@@ -895,7 +1033,10 @@
         "intuition": "The open-cover proof reduces compactness to the compact cube case and then passes compactness to closed subsets.",
         "notation": []
       },
-      "tags": ["heine-borel", "open-covers"],
+      "tags": [
+        "heine-borel",
+        "open-covers"
+      ],
       "priority": "standard"
     },
     {
@@ -908,7 +1049,11 @@
         "intuition": "The proof packages the three deleted proof-step nodes: reduction to subbasic covers, choice of coordinates or maximal data, and the finite-subcover contradiction using compact factors.",
         "notation": []
       },
-      "tags": ["proof", "subbasis", "tychonoff"],
+      "tags": [
+        "proof",
+        "subbasis",
+        "tychonoff"
+      ],
       "priority": "standard"
     },
     {
@@ -956,10 +1101,14 @@
         "definition": "A set of ordered pairs.",
         "formal": "$R\\subseteq A\\times B$; write $aRb$ when $(a,b)\\in R$.",
         "intuition": "A relation records which pairs of elements are linked. Functions, orders, and equivalence relations are special relations.",
-        "notation": ["$R\\subseteq A\\times B$, $aRb$"]
+        "notation": [
+          "$R\\subseteq A\\times B$, $aRb$"
+        ]
       },
       "diagram": "/atlas-assets/topology/diagrams/relation.svg",
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -972,9 +1121,14 @@
         "definition": "The function obtained by limiting the domain of a function to a subset.",
         "formal": "$f|_A : A \\to Y$ defined by $f|_A(a) = f(a)$ for all $a\\in A$.",
         "intuition": "The same rule as the original function, but only applied to a smaller set of inputs.",
-        "notation": ["$f|_A$"]
+        "notation": [
+          "$f|_A$"
+        ]
       },
-      "tags": ["foundation", "functions"],
+      "tags": [
+        "foundation",
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -988,7 +1142,9 @@
         "formal": "$f|_A(a)=f(a)$ for every $a\\in A$.",
         "intuition": "Use the same map on a smaller input set.",
         "gloss": "Use the same rule on a smaller domain. Restrictions appear constantly, e.g. $p|_{V_\\lambda}$ in covering maps.",
-        "notation": ["$f|_A$"]
+        "notation": [
+          "$f|_A$"
+        ]
       },
       "examples": [
         {
@@ -1001,7 +1157,9 @@
         "ref": "Def. A.8",
         "references": []
       },
-      "tags": ["functions"],
+      "tags": [
+        "functions"
+      ],
       "priority": "standard"
     },
     {
@@ -1015,7 +1173,10 @@
         "intuition": "Show two objects can be insulated from each other by open sets or functions.",
         "notation": []
       },
-      "tags": ["proof-method", "separation"],
+      "tags": [
+        "proof-method",
+        "separation"
+      ],
       "priority": "standard"
     },
     {
@@ -1028,9 +1189,14 @@
         "definition": "A collection considered as a single mathematical object.",
         "formal": "Set theory treats membership $x\\in A$ as the primitive relation between an object $x$ and a set $A$.",
         "intuition": "The raw substrate of topology: a space starts as a set before any open sets are chosen.",
-        "notation": ["$x\\in A$, $A=\\{\\dots\\}$"]
+        "notation": [
+          "$x\\in A$, $A=\\{\\dots\\}$"
+        ]
       },
-      "tags": ["foundation", "set-theory"],
+      "tags": [
+        "foundation",
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -1070,7 +1236,9 @@
         "formal": "$B\\subseteq A\\Longleftrightarrow \\forall x\\,(x\\in B\\Rightarrow x\\in A)$.",
         "intuition": "All points of the smaller set are already inside the larger set.",
         "gloss": "Everything in $B$ is already in $A$. Sets are equal iff each is a subset of the other.",
-        "notation": ["$B\\subseteq A$, $B\\subsetneq A$"]
+        "notation": [
+          "$B\\subseteq A$, $B\\subsetneq A$"
+        ]
       },
       "examples": [
         {
@@ -1083,7 +1251,9 @@
         "ref": "Def. A.1",
         "references": []
       },
-      "tags": ["set-theory"],
+      "tags": [
+        "set-theory"
+      ],
       "priority": "core"
     },
     {
@@ -1096,10 +1266,17 @@
         "definition": "The least upper bound of a subset of $\\mathbb{R}$.",
         "formal": "$$s=\\sup A\\Longleftrightarrow (\\forall a\\in A,\\ a\\leq s)\\text{ and }(\\forall u,\\ (\\forall a\\in A,\\ a\\leq u)\\Rightarrow s\\leq u).$$",
         "intuition": "The supremum is the smallest ceiling above a set. In compactness arguments, closedness can force this ceiling to lie inside the set, turning a bound into an attained maximum.",
-        "notation": ["$\\sup A$"]
+        "notation": [
+          "$\\sup A$"
+        ]
       },
-      "assumptions": ["$A\\subseteq\\mathbb{R}$ is nonempty and bounded above when existence is asserted."],
-      "tags": ["order", "real-analysis"],
+      "assumptions": [
+        "$A\\subseteq\\mathbb{R}$ is nonempty and bounded above when existence is asserted."
+      ],
+      "tags": [
+        "order",
+        "real-analysis"
+      ],
       "priority": "standard"
     },
     {
@@ -1113,7 +1290,9 @@
         "formal": "$\\forall y\\in Y\\,\\exists x\\in X:f(x)=y$.",
         "intuition": "Every point in the codomain gets hit by at least one point in the domain.",
         "gloss": "Every point in the codomain gets hit by at least one point in the domain.",
-        "notation": ["surjective"]
+        "notation": [
+          "surjective"
+        ]
       },
       "examples": [
         {
@@ -1126,7 +1305,9 @@
         "ref": "Def. A.7",
         "references": []
       },
-      "tags": ["functions"],
+      "tags": [
+        "functions"
+      ],
       "priority": "core"
     },
     {
@@ -1138,7 +1319,10 @@
         "definition": "Given sets $A$ and $B$, their \\textbf{union} is $$A \\cup B = \\{x \\mid x \\in A \\text{ or } x \\in B\\}.$$ Here \\emph{or} is inclusive: $x$ may belong to $A$, to $B$, or to both. More generally, for a family of sets $\\{A_i\\}_{i\\in I}$, $$\\bigcup_{i\\in I} A_i = \\{x \\mid \\exists i\\in I \\text{ such that } x\\in A_i\\}.$$",
         "intuition": "The union collects everything that appears in at least one of the sets. Shared elements are not duplicated, because sets record membership, not multiplicity.",
         "gloss": "The union is the set of all elements belonging to at least one of the given sets.",
-        "notation": ["A \\cup B", "\\bigcup_{i \\in I} A_i"]
+        "notation": [
+          "A \\cup B",
+          "\\bigcup_{i \\in I} A_i"
+        ]
       },
       "examples": [
         {
@@ -1164,7 +1348,10 @@
         "$x \\in \\bigcup_{i\\in I} A_i \\Longleftrightarrow \\exists i\\in I \\text{ such that } x\\in A_i$",
         "The word \\emph{or} in the definition of union is inclusive, not exclusive."
       ],
-      "tags": ["logic", "set_theory"],
+      "tags": [
+        "logic",
+        "set_theory"
+      ],
       "priority": "standard"
     },
     {
@@ -1176,9 +1363,14 @@
         "statement": "If every chain in a partially ordered set has an upper bound, then the poset has a maximal element.",
         "formal": "For a poset $(P,\\le)$, if every chain $C\\subseteq P$ has an upper bound in $P$, then $P$ contains a maximal element.",
         "intuition": "A maximality principle equivalent to the Axiom of Choice; often used to build maximal covers, bases, ideals, or filters.",
-        "notation": ["Zorn's Lemma"]
+        "notation": [
+          "Zorn's Lemma"
+        ]
       },
-      "tags": ["choice", "maximality"],
+      "tags": [
+        "choice",
+        "maximality"
+      ],
       "priority": "standard"
     },
     {
@@ -1202,9 +1394,15 @@
         "statement": "In a topological space, any union of open sets is open.",
         "formal": "$$\\{U_i\\}_{i\\in I}\\subseteq\\tau_X\\Longrightarrow\\bigcup_{i\\in I}U_i\\in\\tau_X.$$ ",
         "intuition": "Open sets may be glued together by arbitrary unions without leaving the topology.",
-        "notation": ["$$\\bigcup_{i\\in I}U_i$$"]
+        "notation": [
+          "$$\\bigcup_{i\\in I}U_i$$"
+        ]
       },
-      "tags": ["open-set", "topology-axiom", "union"],
+      "tags": [
+        "open-set",
+        "topology-axiom",
+        "union"
+      ],
       "priority": "core"
     },
     {
@@ -1216,7 +1414,10 @@
         "statement": "The metric space is complete.",
         "notation": []
       },
-      "tags": ["assumption", "hypothesis"],
+      "tags": [
+        "assumption",
+        "hypothesis"
+      ],
       "priority": "standard"
     },
     {
@@ -1230,7 +1431,11 @@
         "intuition": "Baire category says that these spaces cannot be built as a thin countable union of nowhere dense pieces.",
         "notation": []
       },
-      "tags": ["dense-sets", "local-compactness", "metric"],
+      "tags": [
+        "dense-sets",
+        "local-compactness",
+        "metric"
+      ],
       "priority": "standard"
     },
     {
@@ -1244,7 +1449,9 @@
         "formal": "$$\\mathcal B\\subseteq\\tau\\text{ is a basis for }(X,\\tau)\\Longleftrightarrow \\forall U\\in\\tau\\ \\forall x\\in U\\ \\exists B\\in\\mathcal B\\ (x\\in B\\subseteq U).$$",
         "intuition": "A basis gives small reusable open pieces from which all open sets are assembled by unions.",
         "gloss": "A small kit of sets from which all open sets are built as unions. Open $=$ union of basis elements (Thm. 4.10).",
-        "notation": ["$$\\mathcal B$$"]
+        "notation": [
+          "$$\\mathcal B$$"
+        ]
       },
       "examples": [
         {
@@ -1257,7 +1464,9 @@
         "ref": "Def. 4.6",
         "references": []
       },
-      "tags": ["convention-reviewed"],
+      "tags": [
+        "convention-reviewed"
+      ],
       "priority": "standard"
     },
     {
@@ -1270,7 +1479,9 @@
         "definition": "For A⊆X, the boundary ∂_X A is cl_X(A)\\int_X(A). Equivalently, it is the set of points whose every neighborhood meets both A and X\\A.",
         "formal": "$$\\partial_X A=\\overline A\\setminus A^\\circ=\\overline A\\cap\\overline{X\\setminus A}.$$",
         "intuition": "Boundary points are exactly the points where the topology cannot see a whole neighborhood lying entirely inside A or entirely outside A.",
-        "notation": ["$$\\partial_X A, \\; \\operatorname{bd}_X(A)$$"]
+        "notation": [
+          "$$\\partial_X A, \\; \\operatorname{bd}_X(A)$$"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -1324,7 +1535,9 @@
         "formal": "$$C\\subseteq X \\text{ is closed in }(X,\\tau)\\Longleftrightarrow X\\setminus C\\in\\tau.$$",
         "intuition": "Closed sets are the subsets whose outside is topologically open; they contain their limit behavior as far as the topology detects it.",
         "gloss": "Closed = complement is open. Closed sets satisfy the dual axioms: arbitrary intersections and finite unions of closed sets are closed (Thm. 3.28).",
-        "notation": ["$$C\\subseteq X$$ closed, $$X\\setminus C$$"]
+        "notation": [
+          "$$C\\subseteq X$$ closed, $$X\\setminus C$$"
+        ]
       },
       "examples": [
         {
@@ -1352,7 +1565,9 @@
         "formal": "$$\\operatorname{cl}_X(A)=\\overline A=\\bigcap\\{F\\subseteq X: A\\subseteq F\\ \\text{and}\\ F \\text{ is closed in }X\\}.$$",
         "intuition": "The closure adds all points that cannot be separated from A by open neighborhoods.",
         "gloss": "The closure adds exactly the points $A$ “almost reaches.” If $A$ is already closed then $\\overline{A}=A$.",
-        "notation": ["$$\\overline A$$, $$\\operatorname{cl}_X(A)$$"]
+        "notation": [
+          "$$\\overline A$$, $$\\operatorname{cl}_X(A)$$"
+        ]
       },
       "examples": [
         {
@@ -1431,7 +1646,9 @@
         "formal": "$$A\\subseteq X \\text{ is dense in }X\\Longleftrightarrow \\overline A=X\\Longleftrightarrow \\forall\\,\\varnothing\\ne U\\in\\tau,\\ U\\cap A\\ne\\varnothing.$$",
         "intuition": "A dense subset is topologically unavoidable: every nonempty open region of the space contains a point of it.",
         "gloss": "A dense set is everywhere — its closure fills the whole space, so it meets every open set.",
-        "notation": ["$$\\overline A=X$$, $$A$$ dense in $$X$$"]
+        "notation": [
+          "$$\\overline A=X$$, $$A$$ dense in $$X$$"
+        ]
       },
       "examples": [
         {
@@ -1548,7 +1765,9 @@
       "content": {
         "statement": "$\\mathbb{R}^n$ with its standard metric topology.",
         "definition": "R^n with its standard metric topology.",
-        "notation": ["R^n"]
+        "notation": [
+          "R^n"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -1573,7 +1792,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 2.1",
         "references": []
       },
-      "tags": ["continuity", "exercise", "metric-spaces"],
+      "tags": [
+        "continuity",
+        "exercise",
+        "metric-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1590,7 +1813,9 @@
           {
             "role": "setup",
             "content": "The taxi cab metric satisfies the metric axioms: non-negativity, identity of indiscernibles, symmetry, and the triangle inequality.",
-            "uses": ["metric_space"]
+            "uses": [
+              "metric_space"
+            ]
           },
           {
             "role": "non-negativity",
@@ -1623,7 +1848,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 2.2",
         "references": []
       },
-      "tags": ["continuity", "exercise", "metric-spaces"],
+      "tags": [
+        "continuity",
+        "exercise",
+        "metric-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1639,7 +1868,9 @@
           {
             "role": "setup",
             "content": "The map $d'$ satisfies the metric axioms: non-negativity, identity of indiscernibles, symmetry, and the triangle inequality.",
-            "uses": ["metric_space"]
+            "uses": [
+              "metric_space"
+            ]
           },
           {
             "role": "non-negativity",
@@ -1672,7 +1903,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 2.3",
         "references": []
       },
-      "tags": ["continuity", "exercise", "metric-spaces"],
+      "tags": [
+        "continuity",
+        "exercise",
+        "metric-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1690,7 +1925,9 @@
           {
             "role": "argument",
             "content": "The open ball $𝖡((0, 0); 1)$ in the metric space $(\\mathbb{R}^2 , d)$ with the given metrics can be visualized as follows: \\begin{enumerate} \\item (a) For $d_1$, the open ball is a diamond-shaped region defined by the inequality $|x_1| + |x_2| < 1$. \\item (b) For $d_2$, the open ball is a circular region defined by the inequality $x_1^2 + x_2^2 < 1$. \\item (c) For $d_\\infty$, the open ball is a square region defined by the inequalities $|x_1| < 1$ and $|x_2| < 1$. \\end{enumerate}",
-            "uses": ["metric_space"]
+            "uses": [
+              "metric_space"
+            ]
           }
         ]
       },
@@ -1698,7 +1935,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 2.4",
         "references": []
       },
-      "tags": ["continuity", "exercise", "metric-spaces"],
+      "tags": [
+        "continuity",
+        "exercise",
+        "metric-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1715,7 +1956,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 2.5",
         "references": []
       },
-      "tags": ["continuity", "exercise", "metric-spaces"],
+      "tags": [
+        "continuity",
+        "exercise",
+        "metric-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1732,7 +1977,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 2.6",
         "references": []
       },
-      "tags": ["continuity", "exercise", "metric-spaces"],
+      "tags": [
+        "continuity",
+        "exercise",
+        "metric-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1749,7 +1998,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 2.7",
         "references": []
       },
-      "tags": ["continuity", "exercise", "metric-spaces"],
+      "tags": [
+        "continuity",
+        "exercise",
+        "metric-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1766,22 +2019,30 @@
           {
             "role": "argument",
             "content": "To show that $\\mathcal{T}$ is not a topology, we need to check if it satisfies the \\textit{three axioms of a topology}. $$\\begin{aligned} \\emptyset \\in \\mathcal{T} & \\text{ and } X \\in \\mathcal{T} \\\\ \\bigcup_{\\alpha} U_\\alpha \\in \\mathcal{T} & \\text{ for any collection } \\{U_\\alpha\\} \\subseteq \\mathcal{T} \\\\ \\bigcap_{i=1}^n U_i \\in \\mathcal{T} & \\text{ for any finite collection } U_1, U_2, \\ldots, U_n \\in \\mathcal{T} \\end{aligned}$$",
-            "uses": ["topology"]
+            "uses": [
+              "topology"
+            ]
           },
           {
             "role": "argument",
             "content": "We can check that $\\mathcal{T}$ satisfies T1 and T2, but it fails T3. For example, consider the sets $U_1 = \\{a, b\\}$ and $U_2 = \\{b, c, d\\}$, both of which are in $\\mathcal{T}$. The intersection $U_1 \\cap U_2 = \\{b\\}$ is not in $\\mathcal{T}$, which violates T3. Therefore, $\\mathcal{T}$ is not a topology on $X$.",
-            "uses": ["topology"]
+            "uses": [
+              "topology"
+            ]
           },
           {
             "role": "argument",
             "content": "To find a topology $\\mathcal{T}'$ such that $\\mathcal{T} \\subseteq \\mathcal{T}'$, close the displayed family under the missing finite intersections. Since $\\{a,b\\}\\cap\\{b,c,d\\}=\\{b\\}$ and $\\{a,b,c\\}\\cap\\{b,c,d\\}=\\{b,c\\}$, define $$\\mathcal{T}'=\\{\\emptyset,\\{a\\},\\{b\\},\\{a,b\\},\\{b,c\\},\\{a,b,c\\},\\{b,c,d\\},X\\}.$$ This family contains $\\emptyset$ and $X$, is closed under arbitrary unions, and is closed under finite intersections, so it is a topology on $X$ containing $\\mathcal{T}$.",
-            "uses": ["topology"]
+            "uses": [
+              "topology"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Thus $\\mathcal{T}$ is not a topology because it fails finite-intersection closure, while the enlarged family $\\mathcal{T}'$ above is a non-discrete topology containing $\\mathcal{T}$.",
-            "uses": ["topology"]
+            "uses": [
+              "topology"
+            ]
           }
         ]
       },
@@ -1789,7 +2050,10 @@
         "citation": "Thaule, Introduction to Topology, Exercise 3.1",
         "references": []
       },
-      "tags": ["exercise", "topological-spaces"],
+      "tags": [
+        "exercise",
+        "topological-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1815,7 +2079,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 3.2",
         "references": []
       },
-      "tags": ["closed-sets", "closure", "exercise", "topological-spaces"],
+      "tags": [
+        "closed-sets",
+        "closure",
+        "exercise",
+        "topological-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1841,7 +2110,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 3.3",
         "references": []
       },
-      "tags": ["closed-sets", "closure", "exercise", "topological-spaces"],
+      "tags": [
+        "closed-sets",
+        "closure",
+        "exercise",
+        "topological-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1867,7 +2141,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 3.4",
         "references": []
       },
-      "tags": ["closed-sets", "closure", "exercise", "topological-spaces"],
+      "tags": [
+        "closed-sets",
+        "closure",
+        "exercise",
+        "topological-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1893,7 +2172,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 3.6",
         "references": []
       },
-      "tags": ["closed-sets", "closure", "exercise", "topological-spaces"],
+      "tags": [
+        "closed-sets",
+        "closure",
+        "exercise",
+        "topological-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1919,7 +2203,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 3.7",
         "references": []
       },
-      "tags": ["closed-sets", "closure", "exercise", "topological-spaces"],
+      "tags": [
+        "closed-sets",
+        "closure",
+        "exercise",
+        "topological-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1945,7 +2234,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 3.8",
         "references": []
       },
-      "tags": ["closed-sets", "closure", "exercise", "topological-spaces"],
+      "tags": [
+        "closed-sets",
+        "closure",
+        "exercise",
+        "topological-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -1971,7 +2265,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 4.1",
         "references": []
       },
-      "tags": ["bases", "exercise", "standard-topology", "subbases"],
+      "tags": [
+        "bases",
+        "exercise",
+        "standard-topology",
+        "subbases"
+      ],
       "priority": "standard"
     },
     {
@@ -1997,7 +2296,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 4.2",
         "references": []
       },
-      "tags": ["bases", "exercise", "standard-topology", "subbases"],
+      "tags": [
+        "bases",
+        "exercise",
+        "standard-topology",
+        "subbases"
+      ],
       "priority": "standard"
     },
     {
@@ -2023,7 +2327,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 4.3",
         "references": []
       },
-      "tags": ["bases", "exercise", "standard-topology", "subbases"],
+      "tags": [
+        "bases",
+        "exercise",
+        "standard-topology",
+        "subbases"
+      ],
       "priority": "standard"
     },
     {
@@ -2049,7 +2358,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 4.4",
         "references": []
       },
-      "tags": ["bases", "exercise", "standard-topology", "subbases"],
+      "tags": [
+        "bases",
+        "exercise",
+        "standard-topology",
+        "subbases"
+      ],
       "priority": "standard"
     },
     {
@@ -2075,7 +2389,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 4.5",
         "references": []
       },
-      "tags": ["bases", "exercise", "standard-topology", "subbases"],
+      "tags": [
+        "bases",
+        "exercise",
+        "standard-topology",
+        "subbases"
+      ],
       "priority": "standard"
     },
     {
@@ -2101,7 +2420,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 4.6",
         "references": []
       },
-      "tags": ["bases", "exercise", "standard-topology", "subbases"],
+      "tags": [
+        "bases",
+        "exercise",
+        "standard-topology",
+        "subbases"
+      ],
       "priority": "standard"
     },
     {
@@ -2127,7 +2451,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 4.7",
         "references": []
       },
-      "tags": ["bases", "exercise", "standard-topology", "subbases"],
+      "tags": [
+        "bases",
+        "exercise",
+        "standard-topology",
+        "subbases"
+      ],
       "priority": "standard"
     },
     {
@@ -2153,7 +2482,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 4.8",
         "references": []
       },
-      "tags": ["bases", "exercise", "standard-topology", "subbases"],
+      "tags": [
+        "bases",
+        "exercise",
+        "standard-topology",
+        "subbases"
+      ],
       "priority": "standard"
     },
     {
@@ -2170,7 +2504,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 5.1",
         "references": []
       },
-      "tags": ["exercise", "products", "quotients", "subspaces"],
+      "tags": [
+        "exercise",
+        "products",
+        "quotients",
+        "subspaces"
+      ],
       "priority": "standard"
     },
     {
@@ -2187,7 +2526,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 5.2",
         "references": []
       },
-      "tags": ["exercise", "products", "quotients", "subspaces"],
+      "tags": [
+        "exercise",
+        "products",
+        "quotients",
+        "subspaces"
+      ],
       "priority": "standard"
     },
     {
@@ -2204,7 +2548,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 5.3",
         "references": []
       },
-      "tags": ["exercise", "products", "quotients", "subspaces"],
+      "tags": [
+        "exercise",
+        "products",
+        "quotients",
+        "subspaces"
+      ],
       "priority": "standard"
     },
     {
@@ -2221,7 +2570,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 5.5",
         "references": []
       },
-      "tags": ["exercise", "products", "quotients", "subspaces"],
+      "tags": [
+        "exercise",
+        "products",
+        "quotients",
+        "subspaces"
+      ],
       "priority": "standard"
     },
     {
@@ -2238,7 +2592,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 5.6",
         "references": []
       },
-      "tags": ["exercise", "products", "quotients", "subspaces"],
+      "tags": [
+        "exercise",
+        "products",
+        "quotients",
+        "subspaces"
+      ],
       "priority": "standard"
     },
     {
@@ -2255,7 +2614,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 5.7",
         "references": []
       },
-      "tags": ["exercise", "products", "quotients", "subspaces"],
+      "tags": [
+        "exercise",
+        "products",
+        "quotients",
+        "subspaces"
+      ],
       "priority": "standard"
     },
     {
@@ -2293,17 +2657,29 @@
           {
             "role": "argument",
             "content": "If $f$ is a homeomorphism and $U\\subseteq X$ is open, then $f(U)=(f^{-1})^{-1}(U)$ is open in $Y$ because $f^{-1}$ is continuous.",
-            "uses": ["homeomorphism", "open_set", "continuity"]
+            "uses": [
+              "homeomorphism",
+              "open_set",
+              "continuity"
+            ]
           },
           {
             "role": "argument",
             "content": "If $f$ is a bijective open continuous map, then for every open $U\\subseteq X$, $f(U)$ is open, which says $f^{-1}:Y\\to X$ is continuous. Hence $f$ is a homeomorphism.",
-            "uses": ["bijective", "open_set", "homeomorphism"]
+            "uses": [
+              "bijective",
+              "open_set",
+              "homeomorphism"
+            ]
           },
           {
             "role": "conclusion",
             "content": "For a bijection, $f(X\\setminus U)=Y\\setminus f(U)$. Therefore preserving open sets is equivalent to preserving closed sets.",
-            "uses": ["bijective", "closed_set", "open_set"]
+            "uses": [
+              "bijective",
+              "closed_set",
+              "open_set"
+            ]
           }
         ]
       },
@@ -2338,12 +2714,16 @@
           {
             "role": "claim",
             "content": "The identity map $\\operatorname{id}_X:X\\to X$ is continuous, bijective, and its own inverse. Hence $\\operatorname{id}_X$ is a homeomorphism and $X\\cong X$.",
-            "uses": ["homeomorphism"]
+            "uses": [
+              "homeomorphism"
+            ]
           },
           {
             "role": "argument",
             "content": "If $f:X\\to Y$ is a homeomorphism, then $f^{-1}:Y\\to X$ is continuous and bijective with inverse $f$. Hence $X\\cong Y$ implies $Y\\cong X$.",
-            "uses": ["homeomorphism"]
+            "uses": [
+              "homeomorphism"
+            ]
           }
         ]
       },
@@ -2419,7 +2799,9 @@
         "formal": "$$\\operatorname{int}_X(A)=A^\\circ=\\bigcup\\{U\\in\\tau_X:U\\subseteq A\\}.$$",
         "intuition": "The interior keeps exactly the points of $A$ that have room around them: a point $x$ lies in $\\operatorname{int}_X(A)$ precisely when some open neighborhood of $x$ is contained entirely in $A$. Boundary points fail this test because every open neighborhood around them leaks outside $A$.",
         "gloss": "Dual to closure: closure expands $A$ by adding unavoidable nearby points, while interior trims $A$ down to the points it surrounds with open room. Always $$\\operatorname{int}_X(A)\\subseteq A\\subseteq\\overline{A}.$$",
-        "notation": ["$$\\operatorname{int}_X(A),\\quad A^\\circ$$"]
+        "notation": [
+          "$$\\operatorname{int}_X(A),\\quad A^\\circ$$"
+        ]
       },
       "examples": [
         {
@@ -2427,13 +2809,21 @@
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/interior.svg",
-      "assumptions": ["$(X,\\tau_X)$ is a topological space", "$A\\subseteq X$"],
+      "assumptions": [
+        "$(X,\\tau_X)$ is a topological space",
+        "$A\\subseteq X$"
+      ],
       "source": {
         "chapter": "3",
         "ref": "near 3.29",
         "references": []
       },
-      "tags": ["interior-operator", "open-set", "subset-operator", "topology"],
+      "tags": [
+        "interior-operator",
+        "open-set",
+        "subset-operator",
+        "topology"
+      ],
       "priority": "standard"
     },
     {
@@ -2482,7 +2872,11 @@
         "intuition": "Jordan curve theorem formalizes the planar fact that a circle-like curve cuts the plane into two regions.",
         "notation": []
       },
-      "tags": ["boundary", "connectedness", "plane"],
+      "tags": [
+        "boundary",
+        "connectedness",
+        "plane"
+      ],
       "priority": "standard"
     },
     {
@@ -2497,7 +2891,9 @@
         "intuition": "A manifold is a space that may be globally curved or glued, but locally looks like ordinary Euclidean space.",
         "notation": []
       },
-      "tags": ["convention-reviewed"],
+      "tags": [
+        "convention-reviewed"
+      ],
       "priority": "standard"
     },
     {
@@ -2511,7 +2907,9 @@
         "formal": "Let $(M,d)$ with $d:M\\times M\\to[0,\\infty)$, then $$\\begin{align} d(x,y) &= 0 \\quad \\Longleftrightarrow \\quad x=y \\\\ d(x,y) &= d(y,x) \\\\ d(x,z) &\\le d(x,y)+d(y,z) \\end{align}$$",
         "intuition": "Topology with numerical distance still visible.",
         "gloss": "A set equipped with a notion of distance. The three axioms say distance is non-negative (and zero only between identical points), symmetric, and obeys the triangle inequality.",
-        "notation": ["$$(X,d)$$"]
+        "notation": [
+          "$$(X,d)$$"
+        ]
       },
       "examples": [
         {
@@ -2549,22 +2947,34 @@
           {
             "role": "argument",
             "content": "Clearly $\\varnothing\\in\\mathcal{T}_d$. Also $X\\in\\mathcal{T}_d$ because every $x\\in X$ has a metric ball contained in $X$.",
-            "uses": ["metric_space", "topology"]
+            "uses": [
+              "metric_space",
+              "topology"
+            ]
           },
           {
             "role": "argument",
             "content": "If $V=\\bigcup_{\\lambda\\in\\Lambda}U_\\lambda$ with each $U_\\lambda\\in\\mathcal{T}_d$ and $x\\in V$, then $x\\in U_\\lambda$ for some $\\lambda$. A ball around $x$ contained in $U_\\lambda$ is also contained in $V$.",
-            "uses": ["metric_space", "topology"]
+            "uses": [
+              "metric_space",
+              "topology"
+            ]
           },
           {
             "role": "argument",
             "content": "If $x\\in U_1\\cap\\cdots\\cap U_n$, choose radii $r_i>0$ with $\\mathsf{B}(x;r_i)\\subseteq U_i$. Taking $r=\\min_i r_i$ gives $\\mathsf{B}(x;r)\\subseteq U_1\\cap\\cdots\\cap U_n$.",
-            "uses": ["metric_space", "topology"]
+            "uses": [
+              "metric_space",
+              "topology"
+            ]
           },
           {
             "role": "conclusion",
             "content": "The metric-open subsets satisfy the topology axioms, so they define the metric topology $\\mathcal{T}_d$.",
-            "uses": ["topology", "metric_space"]
+            "uses": [
+              "topology",
+              "metric_space"
+            ]
           }
         ]
       },
@@ -2587,7 +2997,9 @@
         "formal": "$$N\\in\\mathcal N_X(x)\\Longleftrightarrow \\exists U\\in\\mathcal T\\ \\text{such that}\\ x\\in U\\subseteq N.$$",
         "intuition": "A neighborhood is any set large enough to contain a genuinely open region around the point; it does not have to be open itself under the broad convention.",
         "gloss": "Broad convention: a neighborhood may be non-open, as long as it contains an open set around the point. When the set itself is open, call it an open neighborhood.",
-        "notation": ["$$\\mathcal N_X(x), \\qquad x\\in U\\subseteq N$$"]
+        "notation": [
+          "$$\\mathcal N_X(x), \\qquad x\\in U\\subseteq N$$"
+        ]
       },
       "examples": [
         {
@@ -2601,7 +3013,9 @@
         "ref": "Def. 3.9",
         "references": []
       },
-      "tags": ["convention-reviewed"],
+      "tags": [
+        "convention-reviewed"
+      ],
       "priority": "standard"
     },
     {
@@ -2626,17 +3040,25 @@
           {
             "role": "argument",
             "content": "If $U$ is open and $x\\in U$, then $U$ itself is an open neighborhood of $x$ contained in $U$.",
-            "uses": ["open_set", "neighborhood"]
+            "uses": [
+              "open_set",
+              "neighborhood"
+            ]
           },
           {
             "role": "argument",
             "content": "Conversely, if every $x\\in U$ lies in an open set $U_x\\subseteq U$, then $U=\\bigcup_{x\\in U}U_x$.",
-            "uses": ["open_set"]
+            "uses": [
+              "open_set"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Since arbitrary unions of open sets are open, $U$ is open.",
-            "uses": ["topology", "open_set"]
+            "uses": [
+              "topology",
+              "open_set"
+            ]
           }
         ]
       },
@@ -2686,7 +3108,9 @@
         "formal": "$$U\\text{ is an open neighborhood of }x\\Longleftrightarrow U\\in\\mathcal T\\ \\text{and}\\ x\\in U.$$",
         "intuition": "An open neighborhood is the clean case: the set itself is one of the topology's open sets and it contains the point.",
         "gloss": "The stricter neighborhood convention used in some notes: the surrounding set is itself open.",
-        "notation": ["$$U\\in\\mathcal T,\\quad x\\in U$$"]
+        "notation": [
+          "$$U\\in\\mathcal T,\\quad x\\in U$$"
+        ]
       },
       "examples": [
         {
@@ -2700,7 +3124,11 @@
         "ref": "Def. 3.9",
         "references": []
       },
-      "tags": ["definition", "neighborhood", "open-set"],
+      "tags": [
+        "definition",
+        "neighborhood",
+        "open-set"
+      ],
       "priority": "core"
     },
     {
@@ -2713,10 +3141,16 @@
         "definition": "An open set of a topological space (X, τ) is a subset U⊆X that is an element of the topology τ.",
         "formal": "$$U\\subseteq X \\text{ is open in }(X,\\mathcal{T})\\Longleftrightarrow U\\in\\mathcal{T}.$$",
         "intuition": "Open sets are the primitive observable neighborhoods of the space; all topological notions are expressed in terms of them.",
-        "notation": ["$$U\\in\\mathcal{T}$$", "$$U\\text{ is open in }X$$", "$$U\\text{ is open in }(X,\\mathcal{T})$$"]
+        "notation": [
+          "$$U\\in\\mathcal{T}$$",
+          "$$U\\text{ is open in }X$$",
+          "$$U\\text{ is open in }(X,\\mathcal{T})$$"
+        ]
       },
       "diagram": "/atlas-assets/topology/diagrams/open-set.svg",
-      "tags": ["definition"],
+      "tags": [
+        "definition"
+      ],
       "priority": "core"
     },
     {
@@ -2754,7 +3188,9 @@
         "statement": "For spaces $X,Y$, the \\textbf{product topology} on $X\\times Y$ is generated by the basis $\\mathcal{B}=\\{U\\times V\\mid U\\ \\text{open in}\\ X,\\ V\\ \\text{open in}\\ Y\\}$.",
         "definition": "Topology generated by inverse images of opens under coordinate projections.",
         "gloss": "Open sets of the product are unions of open rectangles. It is the coarsest topology making both projections continuous (its universal property).",
-        "notation": ["$$\\prod_{i\\in I} X_i$$ denotes the product of indexed spaces."]
+        "notation": [
+          "$$\\prod_{i\\in I} X_i$$ denotes the product of indexed spaces."
+        ]
       },
       "examples": [
         {
@@ -2833,7 +3269,9 @@
         "intuition": "The quotient topology declares precisely the open sets whose full preimage was already open before gluing points together.",
         "notation": []
       },
-      "tags": ["convention-reviewed"],
+      "tags": [
+        "convention-reviewed"
+      ],
       "priority": "standard"
     },
     {
@@ -2844,7 +3282,9 @@
       "content": {
         "statement": "$\\mathbb{Q}$ with the subspace topology inherited from $\\mathbb{R}$.",
         "definition": "Q with the subspace topology inherited from R.",
-        "notation": ["Q"]
+        "notation": [
+          "Q"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -2857,7 +3297,9 @@
       "content": {
         "statement": "$\\mathbb{R}$ with its usual metric topology.",
         "definition": "R with its usual metric topology.",
-        "notation": ["R"]
+        "notation": [
+          "R"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -2886,7 +3328,9 @@
         "formal": "$$\\tau(\\mathcal S)=\\left\\{\\bigcup_{\\lambda\\in\\Lambda}\\bigcap_{k=1}^{n_\\lambda}S_{\\lambda,k}:S_{\\lambda,k}\\in\\mathcal S,\\ n_\\lambda<\\infty\\right\\}.$$",
         "intuition": "A subbasis specifies even simpler open constraints; finite intersections make basic opens, and arbitrary unions make all opens.",
         "gloss": "An even smaller seed: take finite intersections to get a basis, then unions to get the topology. Open sets are unions of finite intersections of subbasis elements.",
-        "notation": ["$$\\mathcal S$$, $$\\langle\\mathcal S\\rangle$$"]
+        "notation": [
+          "$$\\mathcal S$$, $$\\langle\\mathcal S\\rangle$$"
+        ]
       },
       "examples": [
         {
@@ -2899,7 +3343,9 @@
         "ref": "Def. 4.12",
         "references": []
       },
-      "tags": ["convention-reviewed"],
+      "tags": [
+        "convention-reviewed"
+      ],
       "priority": "standard"
     },
     {
@@ -2977,7 +3423,9 @@
         "formal": "A topological space is a pair $(X,\\mathcal{T})$ such that $X$ is a set and $\\mathcal{T}\\in\\operatorname{Top}(X)$.",
         "intuition": "A topological space packages the underlying set together with its chosen topology.",
         "gloss": "The central object of topology: a set together with a choice of which subsets count as open.",
-        "notation": ["$(X,\\mathcal{T})$"]
+        "notation": [
+          "$(X,\\mathcal{T})$"
+        ]
       },
       "examples": [
         {
@@ -2990,7 +3438,9 @@
         "ref": "Def. 3.1",
         "references": []
       },
-      "tags": ["space"],
+      "tags": [
+        "space"
+      ],
       "priority": "core"
     },
     {
@@ -3003,10 +3453,16 @@
         "definition": "Given a set $X$, a topology on $X$ is a collection $\\tau\\subseteq\\mathcal{P}(X)$ of subsets of $X$, called open sets, satisfying the following axioms.",
         "formal": "$$\\begin{align}\\tau&\\subseteq\\mathcal{P}(X),\\tag{Topology} \\\\ \\emptyset,X&\\in\\tau,\\tag{T1} \\\\ \\{U_i\\}_{i\\in I}&\\subseteq\\tau\\Rightarrow\\bigcup_{i\\in I}U_i\\in\\tau,\\tag{T2}\\\\ U_1,\\ldots,U_n &\\in\\tau\\Rightarrow\\bigcap_{k=1}^{n}U_k\\in\\tau \\; (n\\ge1).\\tag{T3}\\end{align}$$",
         "intuition": "A topology specifies which subsets of $X$ are considered open. The topology is the collection $\\tau$ itself; together, $(X,\\tau)$ forms a topological space.",
-        "notation": ["$$\\tau\\subseteq\\mathcal{P}(X)$$", "$$(X,\\tau)$$"]
+        "notation": [
+          "$$\\tau\\subseteq\\mathcal{P}(X)$$",
+          "$$(X,\\tau)$$"
+        ]
       },
       "diagram": "/atlas-assets/topology/diagrams/topology.svg",
-      "tags": ["definition", "field"],
+      "tags": [
+        "definition",
+        "field"
+      ],
       "priority": "core"
     },
     {
@@ -3057,17 +3513,27 @@
           {
             "role": "argument",
             "content": "If $A$ has the quotient topology induced by $\\pi:X\\to A$ and $f:A\\to Y$ is continuous, then $f\\circ\\pi$ is continuous by composition.",
-            "uses": ["quotient_topology", "composition_continuous"]
+            "uses": [
+              "quotient_topology",
+              "composition_continuous"
+            ]
           },
           {
             "role": "argument",
             "content": "Conversely, if $f\\circ\\pi$ is continuous and $V\\subseteq Y$ is open, then $(f\\circ\\pi)^{-1}(V)=\\pi^{-1}(f^{-1}(V))$ is open in $X$. By the quotient topology, $f^{-1}(V)$ is open in $A$.",
-            "uses": ["quotient_topology", "preimage", "continuity"]
+            "uses": [
+              "quotient_topology",
+              "preimage",
+              "continuity"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Any topology on $A$ with this universal property has the same open sets as the quotient topology, by applying the property to the identity maps between the two candidate topologies.",
-            "uses": ["quotient_topology", "identity_map"]
+            "uses": [
+              "quotient_topology",
+              "identity_map"
+            ]
           }
         ]
       },
@@ -3090,7 +3556,10 @@
         "formal": "$$\\overline{\\mathsf{B}}(a;r)=\\{x\\in X\\mid d(x,a)\\le r\\}\\subseteq X$$",
         "intuition": "Fix a point $a$ and a radius $r$. The closed ball contains all points at distance at most $r$ from $a$, including the boundary. The boundary points belong to the set, so the ball is 'sealed shut' and contains all its limit points, which is why it is closed.",
         "gloss": "A metric ball together with its boundary: all points within or exactly at radius $r$ from a centre $a$.",
-        "notation": ["$$\\overline{\\mathsf{B}}(a;r)$$", "$$\\overline{\\mathsf{B}}_d(a;r)$$"]
+        "notation": [
+          "$$\\overline{\\mathsf{B}}(a;r)$$",
+          "$$\\overline{\\mathsf{B}}_d(a;r)$$"
+        ]
       },
       "examples": [
         {
@@ -3129,17 +3598,25 @@
           {
             "role": "setup",
             "content": "Let $W\\subseteq Z$ be open. To prove $g\\circ f$ is continuous, it is enough to show that $(g\\circ f)^{-1}(W)$ is open in $X$.",
-            "uses": ["continuity", "composition_maps"]
+            "uses": [
+              "continuity",
+              "composition_maps"
+            ]
           },
           {
             "role": "calculation",
             "content": "The preimage satisfies $(g\\circ f)^{-1}(W)=f^{-1}(g^{-1}(W))$.",
-            "uses": ["preimage", "composition_maps"]
+            "uses": [
+              "preimage",
+              "composition_maps"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Since $g$ is continuous, $g^{-1}(W)$ is open in $Y$; since $f$ is continuous, $f^{-1}(g^{-1}(W))$ is open in $X$. Hence $g\\circ f$ is continuous.",
-            "uses": ["continuity"]
+            "uses": [
+              "continuity"
+            ]
           }
         ]
       },
@@ -3163,7 +3640,9 @@
         "formal": "$$f:(X,\\tau_X)\\to(Y,\\tau_Y)\\text{ is continuous}\\Longleftrightarrow \\forall V\\in\\tau_Y,\\ f^{-1}(V)\\in\\tau_X.$$",
         "intuition": "Continuity means that topological tests made by open sets in the codomain pull back to valid open tests in the domain.",
         "gloss": "Continuity means that open regions in the target pull back to open regions in the domain. This is the full topological definition: it uses only the open-set structure, not distances, balls, or a metric.",
-        "notation": ["$$f:X\\to Y$$ continuous, $$f^{-1}(V)$$"]
+        "notation": [
+          "$$f:X\\to Y$$ continuous, $$f^{-1}(V)$$"
+        ]
       },
       "examples": [
         {
@@ -3202,17 +3681,25 @@
           {
             "role": "argument",
             "content": "Assume $f$ is continuous at $p$. Given a neighborhood $B$ of $f(p)$, choose an open ball around $f(p)$ inside $B$, then use the $\\varepsilon$-$\\delta$ condition to find a neighborhood of $p$ mapped into $B$.",
-            "uses": ["continuity", "neighborhood_metric"]
+            "uses": [
+              "continuity",
+              "neighborhood_metric"
+            ]
           },
           {
             "role": "argument",
             "content": "Conversely, take $B=\\mathsf{B}_Y(f(p);\\varepsilon)$. The neighborhood condition gives a neighborhood $A$ of $p$ mapped into $B$, and an open ball around $p$ inside $A$ supplies $\\delta$.",
-            "uses": ["continuity", "neighborhood_metric"]
+            "uses": [
+              "continuity",
+              "neighborhood_metric"
+            ]
           },
           {
             "role": "conclusion",
             "content": "The neighborhood formulation and the metric $\\varepsilon$-$\\delta$ formulation of continuity at $p$ are equivalent.",
-            "uses": ["continuity"]
+            "uses": [
+              "continuity"
+            ]
           }
         ]
       },
@@ -3273,17 +3760,26 @@
           {
             "role": "argument",
             "content": "If $f$ is continuous and $B\\in\\mathcal{B}$ is a basis element of $Y$, then $B$ is open and $f^{-1}(B)$ is open in $X$.",
-            "uses": ["continuity", "basis_for_topology"]
+            "uses": [
+              "continuity",
+              "basis_for_topology"
+            ]
           },
           {
             "role": "argument",
             "content": "Conversely, every open $V\\subseteq Y$ is a union of basis elements. Since preimages commute with unions, $f^{-1}(V)$ is a union of open sets when every basis-element preimage is open.",
-            "uses": ["basis_for_topology", "preimage"]
+            "uses": [
+              "basis_for_topology",
+              "preimage"
+            ]
           },
           {
             "role": "remark",
             "content": "The same reduction applies to subbases by first passing from subbasis elements to finite intersections and then to arbitrary unions.",
-            "uses": ["subbasis", "basis_for_topology"]
+            "uses": [
+              "subbasis",
+              "basis_for_topology"
+            ]
           }
         ]
       },
@@ -3318,17 +3814,27 @@
           {
             "role": "argument",
             "content": "Assume $f$ is continuous and $B\\subseteq Y$ is open. For $a\\in f^{-1}(B)$, choose an open ball around $f(a)$ inside $B$ and then use continuity to find a ball around $a$ mapped into it.",
-            "uses": ["continuity", "preimage", "open_set"]
+            "uses": [
+              "continuity",
+              "preimage",
+              "open_set"
+            ]
           },
           {
             "role": "argument",
             "content": "Conversely, if every open $B\\subseteq Y$ has open preimage, apply this to $\\mathsf{B}_Y(f(a);\\varepsilon)$ and use openness of its preimage to get a suitable $\\delta$.",
-            "uses": ["preimage", "open_set"]
+            "uses": [
+              "preimage",
+              "open_set"
+            ]
           },
           {
             "role": "remark",
             "content": "The proof also uses basic preimage rules: preimages commute with unions, intersections, complements, and preserve inclusions. These rules do not require an inverse map.",
-            "uses": ["preimage", "set"]
+            "uses": [
+              "preimage",
+              "set"
+            ]
           }
         ]
       },
@@ -3377,7 +3883,9 @@
         "definition": "In a topological space X, a net (x_i) indexed by a directed set I converges to x∈X if for every neighborhood N of x, the net is eventually in N. For sequences, I=ℕ with its usual order.",
         "formal": "$$(x_i)_{i\\in I}\\to x\\Longleftrightarrow \\forall N\\in\\mathcal N_X(x)\\ \\exists i_0\\in I\\ \\forall i\\ge i_0,\\ x_i\\in N.$$",
         "intuition": "Convergence means that every topological test neighborhood of the proposed limit eventually contains all later terms.",
-        "notation": ["$$x_i\\to x$$, $$x_n\\to x$$"]
+        "notation": [
+          "$$x_i\\to x$$, $$x_n\\to x$$"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -3396,7 +3904,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 2.8",
         "references": []
       },
-      "tags": ["continuity", "exercise", "metric-spaces"],
+      "tags": [
+        "continuity",
+        "exercise",
+        "metric-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -3422,7 +3934,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 3.5",
         "references": []
       },
-      "tags": ["closed-sets", "closure", "exercise", "topological-spaces"],
+      "tags": [
+        "closed-sets",
+        "closure",
+        "exercise",
+        "topological-spaces"
+      ],
       "priority": "standard"
     },
     {
@@ -3439,7 +3956,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 5.4",
         "references": []
       },
-      "tags": ["exercise", "products", "quotients", "subspaces"],
+      "tags": [
+        "exercise",
+        "products",
+        "quotients",
+        "subspaces"
+      ],
       "priority": "standard"
     },
     {
@@ -3456,7 +3978,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 5.8",
         "references": []
       },
-      "tags": ["exercise", "products", "quotients", "subspaces"],
+      "tags": [
+        "exercise",
+        "products",
+        "quotients",
+        "subspaces"
+      ],
       "priority": "standard"
     },
     {
@@ -3470,7 +3997,9 @@
         "formal": "$$f:X\\to Y\\text{ is a homeomorphism}\\Longleftrightarrow f\\text{ is bijective},\\ f\\text{ is continuous},\\ \\text{and }f^{-1}:Y\\to X\\text{ is continuous}.$$",
         "intuition": "A homeomorphism is an isomorphism of topological spaces: it preserves and reflects exactly the open-set structure.",
         "gloss": "The notion of sameness in topology: two spaces are homeomorphic when one can be transformed into the other by a reversible continuous deformation. their open-set structures correspond perfectly in both directions.",
-        "notation": ["$$f:X\\cong Y$$, $$X\\cong Y$$, $$X\\simeq_{\\mathrm{homeo}}Y$$"]
+        "notation": [
+          "$$f:X\\cong Y$$, $$X\\cong Y$$, $$X\\simeq_{\\mathrm{homeo}}Y$$"
+        ]
       },
       "examples": [
         {
@@ -3497,7 +4026,9 @@
         "formal": "$$\\begin{aligned} A\\in\\mathcal N_X(x) &\\Longleftrightarrow \\exists\\varepsilon>0\\text{ such that }B_d(x,\\varepsilon)\\subseteq A,\\\\ B_d(x,\\varepsilon) &=\\{y\\in X\\mid d(x,y)<\\varepsilon\\}. \\end{aligned}$$",
         "intuition": "A neighborhood of $x$ is any set with positive metric breathing room around $x$. The set itself need not be open; it only has to contain a small open ball centered at $x$.",
         "gloss": "Metric version of the broad neighborhood convention: $A$ may be non-open, provided it contains some open ball around $x$. If $A$ itself is open, it is an open neighborhood.",
-        "notation": ["$$\\mathcal N_X(x),\\qquad B_d(x,\\varepsilon)\\subseteq A$$"]
+        "notation": [
+          "$$\\mathcal N_X(x),\\qquad B_d(x,\\varepsilon)\\subseteq A$$"
+        ]
       },
       "examples": [
         {
@@ -3511,7 +4042,12 @@
         "ref": "Def. 2.11",
         "references": []
       },
-      "tags": ["convention-sensitive", "definition", "metric", "neighborhood"],
+      "tags": [
+        "convention-sensitive",
+        "definition",
+        "metric",
+        "neighborhood"
+      ],
       "priority": "standard"
     },
     {
@@ -3576,7 +4112,10 @@
         "formal": "$$\\mathsf{B}(a;r)=\\{x\\in X\\mid d(x,a)<r\\}\\subseteq X$$",
         "intuition": "Fix a point $a$ and a radius $r$. The open ball contains all points strictly closer than $r$ to $a$. Since the boundary points are excluded, every point inside still has some room around it to move without leaving the set, which is exactly why it is open.",
         "gloss": "A basic open neighbourhood in a metric space: all points strictly within radius $r$ of a centre $a$.",
-        "notation": ["$$\\mathsf{B}(a;r)$$", "$$\\mathsf{B}_d(a;r)$$"]
+        "notation": [
+          "$$\\mathsf{B}(a;r)$$",
+          "$$\\mathsf{B}_d(a;r)$$"
+        ]
       },
       "examples": [
         {
@@ -3616,22 +4155,33 @@
           {
             "role": "argument",
             "content": "If $K$ is compact, then every subbasic cover is an open cover, so it has a finite subcover.",
-            "uses": ["compact_space", "subbasis"]
+            "uses": [
+              "compact_space",
+              "subbasis"
+            ]
           },
           {
             "role": "setup",
             "content": "Conversely, assume every subbasic cover has a finite subcover but $K$ is not compact. Use Zorn's lemma to choose a maximal open cover $\\mathcal{C}$ of $K$ with no finite subcover.",
-            "uses": ["zorns_lemma", "cover"]
+            "uses": [
+              "zorns_lemma",
+              "cover"
+            ]
           },
           {
             "role": "argument",
             "content": "Since $\\mathcal{C}$ covers $K$ but $\\mathcal{C}\\cap\\mathcal{S}$ cannot already cover $K$, choose $x$ and then an open $U\\in\\mathcal{C}$ containing $x$, represented using finitely many subbasic sets.",
-            "uses": ["basis_for_topology", "subbasis"]
+            "uses": [
+              "basis_for_topology",
+              "subbasis"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Adding any missing subbasic piece to $\\mathcal{C}$ creates a finite subcover by maximality. Combining finitely many such covers gives a finite subcover from $\\mathcal{C}$, contradiction.",
-            "uses": ["finite_subcover"]
+            "uses": [
+              "finite_subcover"
+            ]
           }
         ]
       },
@@ -3641,7 +4191,11 @@
         "ref": "Thm. 6.40",
         "references": []
       },
-      "tags": ["choice", "compactness", "subbasis"],
+      "tags": [
+        "choice",
+        "compactness",
+        "subbasis"
+      ],
       "priority": "standard"
     },
     {
@@ -3653,7 +4207,10 @@
         "statement": "The ambient space is locally compact.",
         "notation": []
       },
-      "tags": ["assumption", "hypothesis"],
+      "tags": [
+        "assumption",
+        "hypothesis"
+      ],
       "priority": "standard"
     },
     {
@@ -3679,7 +4236,11 @@
         "ref": "Thm. 6.29",
         "references": []
       },
-      "tags": ["compactness", "euclidean", "sequences"],
+      "tags": [
+        "compactness",
+        "euclidean",
+        "sequences"
+      ],
       "priority": "standard"
     },
     {
@@ -3833,22 +4394,34 @@
           {
             "role": "setup",
             "content": "To prove $K$ is closed, show $K^c=X\\setminus K$ is open. Fix $x\\in K^c$.",
-            "uses": ["closed_set", "complement"]
+            "uses": [
+              "closed_set",
+              "complement"
+            ]
           },
           {
             "role": "argument",
             "content": "For each $y\\in K$, Hausdorffness gives disjoint neighborhoods $U_y$ of $x$ and $V_y$ of $y$.",
-            "uses": ["hausdorff_space", "neighborhood"]
+            "uses": [
+              "hausdorff_space",
+              "neighborhood"
+            ]
           },
           {
             "role": "argument",
             "content": "The family $\\{V_y:y\\in K\\}$ covers $K$, so compactness gives finitely many $V_{y_1},\\ldots,V_{y_n}$ covering $K$.",
-            "uses": ["compact_space", "finite_subcover"]
+            "uses": [
+              "compact_space",
+              "finite_subcover"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Let $U=U_{y_1}\\cap\\cdots\\cap U_{y_n}$. Then $U$ is an open neighborhood of $x$ disjoint from the finite union covering $K$, so $U\\subseteq K^c$. Hence $K^c$ is open.",
-            "uses": ["open_set", "closed_set"]
+            "uses": [
+              "open_set",
+              "closed_set"
+            ]
           }
         ]
       },
@@ -3886,7 +4459,9 @@
         "ref": "Def. 6.33",
         "references": []
       },
-      "tags": ["convention-reviewed"],
+      "tags": [
+        "convention-reviewed"
+      ],
       "priority": "standard"
     },
     {
@@ -3910,14 +4485,21 @@
         }
       ],
       "diagram": "/atlas-assets/topology/diagrams/compact-space.svg",
-      "assumptions": ["X is a topological space"],
+      "assumptions": [
+        "X is a topological space"
+      ],
       "source": {
         "citation": "Thaule, Definition 6.29",
         "chapter": "6",
         "ref": "Def. 6.29",
         "references": []
       },
-      "tags": ["convention-reviewed", "finite-subcover", "open-cover", "topological-property"],
+      "tags": [
+        "convention-reviewed",
+        "finite-subcover",
+        "open-cover",
+        "topological-property"
+      ],
       "priority": "standard"
     },
     {
@@ -3943,17 +4525,25 @@
           {
             "role": "setup",
             "content": "Let $\\mathcal{C}=\\{U_\\lambda\\}_{\\lambda\\in\\Lambda}$ be an open cover of $Y$. The family $\\{f^{-1}(U_\\lambda)\\}_{\\lambda\\in\\Lambda}$ is an open cover of $X$ by continuity.",
-            "uses": ["continuity", "cover"]
+            "uses": [
+              "continuity",
+              "cover"
+            ]
           },
           {
             "role": "argument",
             "content": "Since $X$ is compact, finitely many pulled-back sets $f^{-1}(U_{\\lambda_1}),\\ldots,f^{-1}(U_{\\lambda_n})$ cover $X$.",
-            "uses": ["compact_space", "finite_subcover"]
+            "uses": [
+              "compact_space",
+              "finite_subcover"
+            ]
           },
           {
             "role": "conclusion",
             "content": "The corresponding sets $U_{\\lambda_1},\\ldots,U_{\\lambda_n}$ cover $Y$, so the original cover has a finite subcover. Thus $Y$ is compact.",
-            "uses": ["compact_space"]
+            "uses": [
+              "compact_space"
+            ]
           }
         ]
       },
@@ -3963,7 +4553,11 @@
         "ref": "Thm. 6.37",
         "references": []
       },
-      "tags": ["compactness", "continuous-maps", "open-covers"],
+      "tags": [
+        "compactness",
+        "continuous-maps",
+        "open-covers"
+      ],
       "priority": "standard"
     },
     {
@@ -4006,7 +4600,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 6.5",
         "references": []
       },
-      "tags": ["compactness", "connectedness", "exercise", "hausdorff"],
+      "tags": [
+        "compactness",
+        "connectedness",
+        "exercise",
+        "hausdorff"
+      ],
       "priority": "standard"
     },
     {
@@ -4023,7 +4622,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 6.7",
         "references": []
       },
-      "tags": ["compactness", "connectedness", "exercise", "hausdorff"],
+      "tags": [
+        "compactness",
+        "connectedness",
+        "exercise",
+        "hausdorff"
+      ],
       "priority": "standard"
     },
     {
@@ -4037,7 +4641,9 @@
         "formal": "$$X\\text{ compact}\\Longleftrightarrow \\forall\\mathcal F\\subseteq\\{F\\subseteq X:F\\text{ closed}\\},\\ \\left[\\left(\\forall F_1,\\ldots,F_n\\in\\mathcal F,\\ \\bigcap_{k=1}^{n}F_k\\ne\\varnothing\\right)\\Rightarrow \\bigcap_{F\\in\\mathcal F}F\\ne\\varnothing\\right].$$",
         "intuition": "This is the closed-set dual of the open-cover definition: failure of a finite subcover corresponds to finite intersections remaining nonempty.",
         "gloss": "The closed-set dual of compactness: shrinking closed sets that never disjointly vanish in finite batches must share a common point.",
-        "notation": ["$$\\mathcal F$$ has the finite intersection property (FIP)"]
+        "notation": [
+          "$$\\mathcal F$$ has the finite intersection property (FIP)"
+        ]
       },
       "examples": [
         {
@@ -4076,22 +4682,31 @@
           {
             "role": "setup",
             "content": "By compactness preservation, $f(X)$ is compact in $\\mathbb{R}$.",
-            "uses": ["compact_image", "compact_space"]
+            "uses": [
+              "compact_image",
+              "compact_space"
+            ]
           },
           {
             "role": "argument",
             "content": "By Heine-Borel in $\\mathbb{R}$, $f(X)$ is closed and bounded, so it has a supremum and an infimum.",
-            "uses": ["heine_borel_theorem"]
+            "uses": [
+              "heine_borel_theorem"
+            ]
           },
           {
             "role": "argument",
             "content": "If $s=\\sup f(X)$ were not in $f(X)$, closedness of $f(X)$ would give a neighborhood of $s$ disjoint from $f(X)$, producing a smaller upper bound and a contradiction.",
-            "uses": ["closed_set"]
+            "uses": [
+              "closed_set"
+            ]
           },
           {
             "role": "conclusion",
             "content": "The infimum is handled similarly. Thus $f$ attains both a minimum and a maximum on $X$.",
-            "uses": ["compact_space"]
+            "uses": [
+              "compact_space"
+            ]
           }
         ]
       },
@@ -4101,7 +4716,12 @@
         "ref": "Thm. 6.43",
         "references": []
       },
-      "tags": ["compactness", "continuous-maps", "extreme-values", "real-analysis"],
+      "tags": [
+        "compactness",
+        "continuous-maps",
+        "extreme-values",
+        "real-analysis"
+      ],
       "priority": "standard"
     },
     {
@@ -4127,22 +4747,34 @@
           {
             "role": "argument",
             "content": "If $A$ is compact, then $\\mathbb{R}^n$ is Hausdorff, so compact subsets of $\\mathbb{R}^n$ are closed.",
-            "uses": ["compact_subsets_of_hausdorff_are_closed", "hausdorff_space"]
+            "uses": [
+              "compact_subsets_of_hausdorff_are_closed",
+              "hausdorff_space"
+            ]
           },
           {
             "role": "argument",
             "content": "Cover $A$ by centered balls $\\mathsf{B}(0;n)$. A finite subcover gives $A\\subseteq\\mathsf{B}(0;N)$ for some $N$, so $A$ is bounded.",
-            "uses": ["compact_space", "finite_subcover"]
+            "uses": [
+              "compact_space",
+              "finite_subcover"
+            ]
           },
           {
             "role": "setup",
             "content": "If $A$ is closed and bounded, then $A$ lies in a product of closed bounded intervals, which is compact.",
-            "uses": ["product_compact", "compact_space"]
+            "uses": [
+              "product_compact",
+              "compact_space"
+            ]
           },
           {
             "role": "conclusion",
             "content": "An open cover of $A$ can be enlarged by $A^c$ to cover the compact box. A finite subcover restricts to a finite subcover of $A$, so $A$ is compact.",
-            "uses": ["closed_set", "finite_subcover"]
+            "uses": [
+              "closed_set",
+              "finite_subcover"
+            ]
           }
         ]
       },
@@ -4151,7 +4783,12 @@
         "ref": "Thm. 6.42",
         "references": []
       },
-      "tags": ["closed-bounded", "compactness", "euclidean-space", "open-covers"],
+      "tags": [
+        "closed-bounded",
+        "compactness",
+        "euclidean-space",
+        "open-covers"
+      ],
       "priority": "standard"
     },
     {
@@ -4200,7 +4837,9 @@
         "formal": "$$X\\text{ locally compact}\\Longleftrightarrow \\forall x\\in X\\ \\exists N\\in\\mathcal N_X(x)\\ \\text{such that }N\\text{ is compact as a subspace of }X.$$",
         "intuition": "Local compactness means that around every point there is a topologically finite region, even if the whole space is not compact.",
         "gloss": "Compactness, but only locally: every point sits inside some compact neighborhood, even if the whole space runs off to infinity.",
-        "notation": ["$$N\\in\\mathcal N_X(x)$$, $$N$$ compact"]
+        "notation": [
+          "$$N\\in\\mathcal N_X(x)$$, $$N$$ compact"
+        ]
       },
       "examples": [
         {
@@ -4240,7 +4879,9 @@
         "ref": "Def. 6.49",
         "references": []
       },
-      "tags": ["convention-reviewed"],
+      "tags": [
+        "convention-reviewed"
+      ],
       "priority": "standard"
     },
     {
@@ -4277,7 +4918,9 @@
       "content": {
         "statement": "A family $\\{U_i\\}_{i\\in I}$ of open sets covering X.",
         "definition": "A family {U_i}_{i∈I} of open sets covering X.",
-        "notation": ["{U_i}_{i∈I}"]
+        "notation": [
+          "{U_i}_{i∈I}"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -4304,22 +4947,33 @@
           {
             "role": "setup",
             "content": "It suffices to prove the two-factor case; the finite product case follows by induction.",
-            "uses": ["product_space", "compact_space"]
+            "uses": [
+              "product_space",
+              "compact_space"
+            ]
           },
           {
             "role": "argument",
             "content": "For an open cover of $X\\times Y$, each slice $\\{x\\}\\times Y$ is compact and therefore is covered by finitely many cover elements.",
-            "uses": ["compact_space", "product_space"]
+            "uses": [
+              "compact_space",
+              "product_space"
+            ]
           },
           {
             "role": "argument",
             "content": "The tube lemma gives a neighborhood $W_x$ of $x$ such that $W_x\\times Y$ is covered by the same finite subcollection.",
-            "uses": ["tube_lemma"]
+            "uses": [
+              "tube_lemma"
+            ]
           },
           {
             "role": "conclusion",
             "content": "The neighborhoods $W_x$ cover $X$. Choose finitely many using compactness of $X$; the corresponding finite cover elements cover all of $X\\times Y$.",
-            "uses": ["finite_subcover", "compact_space"]
+            "uses": [
+              "finite_subcover",
+              "compact_space"
+            ]
           }
         ]
       },
@@ -4343,7 +4997,9 @@
         "formal": "$$X\\text{ sequentially compact}\\Longleftrightarrow \\forall (x_n)_{n\\in\\mathbb N}\\in X^{\\mathbb N},\\ \\exists n_1<n_2<\\cdots,\\ \\exists x\\in X\\text{ such that }x_{n_k}\\to x.$$",
         "intuition": "Sequential compactness is a sequence-based finiteness property; in general topology it is not equivalent to open-cover compactness without additional hypotheses.",
         "gloss": "Every sequence has a subsequence settling down to a point of the space. Equivalent to compactness for metric spaces, but not in general.",
-        "notation": ["$$x_{n_k}\\to x$$"]
+        "notation": [
+          "$$x_{n_k}\\to x$$"
+        ]
       },
       "examples": [
         {
@@ -4407,17 +5063,26 @@
           {
             "role": "setup",
             "content": "For each $y\\in Y$, choose a basic product neighborhood $W_y\\times V_y\\subseteq U$ containing $(x,y)$.",
-            "uses": ["product_topology", "open_set"]
+            "uses": [
+              "product_topology",
+              "open_set"
+            ]
           },
           {
             "role": "argument",
             "content": "The sets $V_y$ cover $Y$, so compactness gives a finite subcover $V_{y_1},\\ldots,V_{y_n}$.",
-            "uses": ["compact_space", "finite_subcover"]
+            "uses": [
+              "compact_space",
+              "finite_subcover"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Let $W=W_{y_1}\\cap\\cdots\\cap W_{y_n}$. Then $W$ is a neighborhood of $x$ and $W\\times Y\\subseteq U$.",
-            "uses": ["open_set", "product_space"]
+            "uses": [
+              "open_set",
+              "product_space"
+            ]
           }
         ]
       },
@@ -4453,22 +5118,36 @@
           {
             "role": "setup",
             "content": "Apply Alexander's subbase lemma to the canonical subbasis of the product topology.",
-            "uses": ["alexander_subbase_theorem", "product_topology", "subbasis"]
+            "uses": [
+              "alexander_subbase_theorem",
+              "product_topology",
+              "subbasis"
+            ]
           },
           {
             "role": "argument",
             "content": "If compactness failed, Zorn's lemma supplies a maximal open cover with no finite subcover.",
-            "uses": ["zorns_lemma", "axiom_of_choice", "cover"]
+            "uses": [
+              "zorns_lemma",
+              "axiom_of_choice",
+              "cover"
+            ]
           },
           {
             "role": "argument",
             "content": "Subbasic sets constrain one coordinate at a time; failure of a finite subcover would induce an open cover of a compact factor with no finite subcover.",
-            "uses": ["product_topology", "compact_space"]
+            "uses": [
+              "product_topology",
+              "compact_space"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Compactness of each factor gives the needed finite subcover, contradicting the maximal bad cover.",
-            "uses": ["finite_subcover", "compactness"]
+            "uses": [
+              "finite_subcover",
+              "compactness"
+            ]
           }
         ]
       },
@@ -4477,7 +5156,12 @@
         "ref": "Thm. 6.44",
         "references": []
       },
-      "tags": ["choice", "compactness", "product-topology", "subbasis"],
+      "tags": [
+        "choice",
+        "compactness",
+        "product-topology",
+        "subbasis"
+      ],
       "priority": "standard"
     },
     {
@@ -4500,7 +5184,9 @@
       "content": {
         "statement": "$S^1$ with the subspace topology from $\\mathbb{R}^2$.",
         "definition": "S^1 with the subspace topology from R^2.",
-        "notation": ["S^1"]
+        "notation": [
+          "S^1"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -4553,7 +5239,9 @@
         "definition": "A topological space X is connected if there do not exist disjoint nonempty open subsets U,V⊆X whose union is X. Equivalently, the only subsets of X that are both open and closed are ∅ and X.",
         "formal": "$$X\\text{ connected}\\Longleftrightarrow \\nexists U,V\\in\\tau\\ \\text{with }U,V\\ne\\varnothing,\\ U\\cap V=\\varnothing,\\ \\text{and }X=U\\cup V.$$",
         "intuition": "Connectedness means the topology does not split the whole space into two separated open pieces.",
-        "notation": ["$$X$$ connected"]
+        "notation": [
+          "$$X$$ connected"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -4580,17 +5268,25 @@
           {
             "role": "setup",
             "content": "Prove the equivalent statement: if $f:X\\to Y$ is surjective and continuous and $Y$ is disconnected, then $X$ is disconnected.",
-            "uses": ["connected_space", "continuity"]
+            "uses": [
+              "connected_space",
+              "continuity"
+            ]
           },
           {
             "role": "argument",
             "content": "Let $U,V$ be a separation of $Y$. Then $f^{-1}(U)$ and $f^{-1}(V)$ are nonempty open subsets of $X$ because $f$ is surjective and continuous.",
-            "uses": ["preimage", "continuity"]
+            "uses": [
+              "preimage",
+              "continuity"
+            ]
           },
           {
             "role": "conclusion",
             "content": "The preimages are disjoint and their union is $X$, so they form a separation of $X$. Hence connectedness of $X$ forces connectedness of $Y$.",
-            "uses": ["connected_space"]
+            "uses": [
+              "connected_space"
+            ]
           }
         ]
       },
@@ -4617,7 +5313,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 6.1",
         "references": []
       },
-      "tags": ["compactness", "connectedness", "exercise", "hausdorff"],
+      "tags": [
+        "compactness",
+        "connectedness",
+        "exercise",
+        "hausdorff"
+      ],
       "priority": "standard"
     },
     {
@@ -4634,7 +5335,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 6.2",
         "references": []
       },
-      "tags": ["compactness", "connectedness", "exercise", "hausdorff"],
+      "tags": [
+        "compactness",
+        "connectedness",
+        "exercise",
+        "hausdorff"
+      ],
       "priority": "standard"
     },
     {
@@ -4651,7 +5357,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 6.3",
         "references": []
       },
-      "tags": ["compactness", "connectedness", "exercise", "hausdorff"],
+      "tags": [
+        "compactness",
+        "connectedness",
+        "exercise",
+        "hausdorff"
+      ],
       "priority": "standard"
     },
     {
@@ -4668,7 +5379,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 6.8",
         "references": []
       },
-      "tags": ["compactness", "connectedness", "exercise", "hausdorff"],
+      "tags": [
+        "compactness",
+        "connectedness",
+        "exercise",
+        "hausdorff"
+      ],
       "priority": "standard"
     },
     {
@@ -4685,7 +5401,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 7.1",
         "references": []
       },
-      "tags": ["exercise", "fundamental-group", "homotopy"],
+      "tags": [
+        "exercise",
+        "fundamental-group",
+        "homotopy"
+      ],
       "priority": "standard"
     },
     {
@@ -4702,7 +5422,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 7.2",
         "references": []
       },
-      "tags": ["exercise", "fundamental-group", "homotopy"],
+      "tags": [
+        "exercise",
+        "fundamental-group",
+        "homotopy"
+      ],
       "priority": "standard"
     },
     {
@@ -4719,7 +5443,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 7.3",
         "references": []
       },
-      "tags": ["exercise", "fundamental-group", "homotopy"],
+      "tags": [
+        "exercise",
+        "fundamental-group",
+        "homotopy"
+      ],
       "priority": "standard"
     },
     {
@@ -4736,7 +5464,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 7.4",
         "references": []
       },
-      "tags": ["exercise", "fundamental-group", "homotopy"],
+      "tags": [
+        "exercise",
+        "fundamental-group",
+        "homotopy"
+      ],
       "priority": "standard"
     },
     {
@@ -4753,7 +5485,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 7.5",
         "references": []
       },
-      "tags": ["exercise", "fundamental-group", "homotopy"],
+      "tags": [
+        "exercise",
+        "fundamental-group",
+        "homotopy"
+      ],
       "priority": "standard"
     },
     {
@@ -4770,7 +5506,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 7.6",
         "references": []
       },
-      "tags": ["exercise", "fundamental-group", "homotopy"],
+      "tags": [
+        "exercise",
+        "fundamental-group",
+        "homotopy"
+      ],
       "priority": "standard"
     },
     {
@@ -4787,7 +5527,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 7.7",
         "references": []
       },
-      "tags": ["exercise", "fundamental-group", "homotopy"],
+      "tags": [
+        "exercise",
+        "fundamental-group",
+        "homotopy"
+      ],
       "priority": "standard"
     },
     {
@@ -4804,7 +5548,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 7.8",
         "references": []
       },
-      "tags": ["exercise", "fundamental-group", "homotopy"],
+      "tags": [
+        "exercise",
+        "fundamental-group",
+        "homotopy"
+      ],
       "priority": "standard"
     },
     {
@@ -4821,7 +5569,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 8.1",
         "references": []
       },
-      "tags": ["covering-spaces", "exercise", "fundamental-group"],
+      "tags": [
+        "covering-spaces",
+        "exercise",
+        "fundamental-group"
+      ],
       "priority": "standard"
     },
     {
@@ -4838,7 +5590,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 8.2",
         "references": []
       },
-      "tags": ["covering-spaces", "exercise", "fundamental-group"],
+      "tags": [
+        "covering-spaces",
+        "exercise",
+        "fundamental-group"
+      ],
       "priority": "standard"
     },
     {
@@ -4855,7 +5611,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 8.3",
         "references": []
       },
-      "tags": ["covering-spaces", "exercise", "fundamental-group"],
+      "tags": [
+        "covering-spaces",
+        "exercise",
+        "fundamental-group"
+      ],
       "priority": "standard"
     },
     {
@@ -4872,7 +5632,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 8.4",
         "references": []
       },
-      "tags": ["covering-spaces", "exercise", "fundamental-group"],
+      "tags": [
+        "covering-spaces",
+        "exercise",
+        "fundamental-group"
+      ],
       "priority": "standard"
     },
     {
@@ -4889,7 +5653,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 8.5",
         "references": []
       },
-      "tags": ["covering-spaces", "exercise", "fundamental-group"],
+      "tags": [
+        "covering-spaces",
+        "exercise",
+        "fundamental-group"
+      ],
       "priority": "standard"
     },
     {
@@ -4906,7 +5674,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 8.6",
         "references": []
       },
-      "tags": ["covering-spaces", "exercise", "fundamental-group"],
+      "tags": [
+        "covering-spaces",
+        "exercise",
+        "fundamental-group"
+      ],
       "priority": "standard"
     },
     {
@@ -4923,7 +5695,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 8.7",
         "references": []
       },
-      "tags": ["covering-spaces", "exercise", "fundamental-group"],
+      "tags": [
+        "covering-spaces",
+        "exercise",
+        "fundamental-group"
+      ],
       "priority": "standard"
     },
     {
@@ -4940,7 +5716,11 @@
         "citation": "Thaule, Introduction to Topology, Exercise 8.8",
         "references": []
       },
-      "tags": ["covering-spaces", "exercise", "fundamental-group"],
+      "tags": [
+        "covering-spaces",
+        "exercise",
+        "fundamental-group"
+      ],
       "priority": "standard"
     },
     {
@@ -4965,17 +5745,24 @@
           {
             "role": "setup",
             "content": "Assume $r\\notin f(X)$. Then $f(X)\\subseteq (-\\infty,r)\\cup(r,\\infty)$.",
-            "uses": ["connected_space"]
+            "uses": [
+              "connected_space"
+            ]
           },
           {
             "role": "argument",
             "content": "Set $U=f^{-1}((-\\infty,r))$ and $V=f^{-1}((r,\\infty))$. These are disjoint nonempty open sets whose union is $X$.",
-            "uses": ["continuity", "preimage"]
+            "uses": [
+              "continuity",
+              "preimage"
+            ]
           },
           {
             "role": "conclusion",
             "content": "The pair $U,V$ separates $X$, contradicting connectedness. Hence $r\\in f(X)$, so $f(c)=r$ for some $c\\in X$.",
-            "uses": ["connected_space"]
+            "uses": [
+              "connected_space"
+            ]
           }
         ]
       },
@@ -5048,17 +5835,25 @@
           {
             "role": "setup",
             "content": "Assume $X$ is path-connected but disconnected, and let $U,V$ be a separation of $X$.",
-            "uses": ["path_connected_space", "connected_space"]
+            "uses": [
+              "path_connected_space",
+              "connected_space"
+            ]
           },
           {
             "role": "argument",
             "content": "Pick $x\\in U$ and $y\\in V$. Path-connectedness gives a path $f:[a,b]\\to X$ from $x$ to $y$.",
-            "uses": ["path_connected_space"]
+            "uses": [
+              "path_connected_space"
+            ]
           },
           {
             "role": "conclusion",
             "content": "The sets $f^{-1}(U)$ and $f^{-1}(V)$ are disjoint nonempty open subsets whose union is $[a,b]$, contradicting connectedness of intervals.",
-            "uses": ["connected_space", "preimage"]
+            "uses": [
+              "connected_space",
+              "preimage"
+            ]
           }
         ]
       },
@@ -5081,7 +5876,9 @@
         "definition": "A topological space X is path connected if for every pair of points x,y∈X there is a continuous map γ:[0,1]→X from the unit interval to X with γ(0)=x and γ(1)=y.",
         "formal": "$$X\\text{ path connected}\\Longleftrightarrow \\forall x,y\\in X,\\ \\exists \\gamma:[0,1]\\to X\\text{ continuous with }\\gamma(0)=x,\\ \\gamma(1)=y.$$",
         "intuition": "Path connectedness is connectedness witnessed by actual continuous paths between points; it is stronger than connectedness in general.",
-        "notation": ["$$\\gamma:[0,1]\\to X$$, $$\\gamma(0)=x$$, $$\\gamma(1)=y$$"]
+        "notation": [
+          "$$\\gamma:[0,1]\\to X$$, $$\\gamma(0)=x$$, $$\\gamma(1)=y$$"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -5120,22 +5917,30 @@
           {
             "role": "setup",
             "content": "Assume $\\mathbb{R}$ is separated by nonempty disjoint open sets $U$ and $V$, and choose $a\\in U$, $b\\in V$ with $a<b$.",
-            "uses": ["connected_space"]
+            "uses": [
+              "connected_space"
+            ]
           },
           {
             "role": "argument",
             "content": "The sets $A=[a,b]\\cap U$ and $B=[a,b]\\cap V$ separate $[a,b]$, with $a\\in A$ and $b\\in B$.",
-            "uses": ["subspace"]
+            "uses": [
+              "subspace"
+            ]
           },
           {
             "role": "argument",
             "content": "Let $c=\\sup A$. Openness of $B$ rules out $c\\in B$, and openness of $A$ rules out $c\\in A$.",
-            "uses": ["open_set"]
+            "uses": [
+              "open_set"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Since $c\\in[a,b]$ but $c$ belongs to neither side of the separation, contradiction. Therefore $\\mathbb{R}$ is connected.",
-            "uses": ["connected_space"]
+            "uses": [
+              "connected_space"
+            ]
           }
         ]
       },
@@ -5169,7 +5974,9 @@
       "content": {
         "statement": "$S^1\\times S^1$, equivalently a square with opposite sides identified.",
         "definition": "S^1×S^1, equivalently a square with opposite sides identified.",
-        "notation": ["$$T^2$$"]
+        "notation": [
+          "$$T^2$$"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -5183,7 +5990,10 @@
         "statement": "The ambient space is Hausdorff.",
         "notation": []
       },
-      "tags": ["assumption", "hypothesis"],
+      "tags": [
+        "assumption",
+        "hypothesis"
+      ],
       "priority": "standard"
     },
     {
@@ -5195,7 +6005,10 @@
         "statement": "The ambient space is normal.",
         "notation": []
       },
-      "tags": ["assumption", "hypothesis"],
+      "tags": [
+        "assumption",
+        "hypothesis"
+      ],
       "priority": "standard"
     },
     {
@@ -5207,7 +6020,10 @@
         "statement": "The ambient space is regular.",
         "notation": []
       },
-      "tags": ["assumption", "hypothesis"],
+      "tags": [
+        "assumption",
+        "hypothesis"
+      ],
       "priority": "standard"
     },
     {
@@ -5219,7 +6035,10 @@
         "statement": "The ambient space has a countable basis.",
         "notation": []
       },
-      "tags": ["assumption", "hypothesis"],
+      "tags": [
+        "assumption",
+        "hypothesis"
+      ],
       "priority": "standard"
     },
     {
@@ -5232,7 +6051,9 @@
         "definition": "Countability axioms are topological size restrictions on local or global bases, most commonly first countability and second countability.",
         "formal": "$$\\text{First countable: }\\forall x\\in X\\,\\exists\\mathcal B_x\\subseteq\\mathcal N_X(x)\\ (|\\mathcal B_x|\\le\\aleph_0\\ \\text{and }\\mathcal B_x\\text{ is local at }x);\\quad \\text{Second countable: }\\exists\\mathcal B\\text{ basis for }\\tau,\\ |\\mathcal B|\\le\\aleph_0.$$",
         "intuition": "They say that the topology can be probed using only countably many local or global open pieces.",
-        "notation": ["$$\\aleph_0$$, first countable, second countable"]
+        "notation": [
+          "$$\\aleph_0$$, first countable, second countable"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -5251,7 +6072,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 6.4",
         "references": []
       },
-      "tags": ["compactness", "connectedness", "exercise", "hausdorff"],
+      "tags": [
+        "compactness",
+        "connectedness",
+        "exercise",
+        "hausdorff"
+      ],
       "priority": "standard"
     },
     {
@@ -5268,7 +6094,12 @@
         "citation": "Thaule, Introduction to Topology, Exercise 6.6",
         "references": []
       },
-      "tags": ["compactness", "connectedness", "exercise", "hausdorff"],
+      "tags": [
+        "compactness",
+        "connectedness",
+        "exercise",
+        "hausdorff"
+      ],
       "priority": "standard"
     },
     {
@@ -5281,7 +6112,9 @@
         "definition": "A topological space X is first countable if for every point x∈X there is a countable collection of neighborhoods of x such that every neighborhood of x contains one of them.",
         "formal": "$$X\\text{ first countable}\\Longleftrightarrow \\forall x\\in X\\ \\exists\\mathcal B_x\\subseteq\\mathcal N_X(x)\\ \\left(|\\mathcal B_x|\\le\\aleph_0\\ \\land\\ \\forall N\\in\\mathcal N_X(x)\\ \\exists B\\in\\mathcal B_x,\\ x\\in B\\subseteq N\\right).$$",
         "intuition": "First countability gives each point a countable local scale of neighborhoods, making sequences more informative.",
-        "notation": ["$$\\mathcal B_x$$, countable local basis"]
+        "notation": [
+          "$$\\mathcal B_x$$, countable local basis"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -5296,9 +6129,14 @@
         "definition": "A topological space X is Hausdorff, or T2, if for every pair of distinct points x,y∈X there are disjoint open sets U and V with x∈U and y∈V.",
         "formal": "$$(X,\\mathcal T)\\text{ is Hausdorff}\\Longleftrightarrow \\forall x,y\\in X,\\ x\\ne y\\Rightarrow \\exists U,V\\in\\mathcal T\\ \\text{such that }x\\in U,\\ y\\in V,\\ U\\cap V=\\varnothing.$$",
         "intuition": "Hausdorffness says distinct points can be topologically pulled apart by nonoverlapping open regions.",
-        "notation": ["$$T_2$$"]
+        "notation": [
+          "$$T_2$$"
+        ]
       },
-      "tags": ["hausdorff", "separation-axioms"],
+      "tags": [
+        "hausdorff",
+        "separation-axioms"
+      ],
       "priority": "standard"
     },
     {
@@ -5362,9 +6200,13 @@
         "definition": "A topological space is normal if singletons are closed and every pair of disjoint closed subsets can be separated by disjoint open neighborhoods.",
         "formal": "$$(X,\\tau)\\text{ normal}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall F,G\\subseteq X,\\ (F,G\\text{ closed}\\land F\\cap G=\\varnothing)\\Rightarrow \\exists U,V\\in\\tau\\ (F\\subseteq U,\\ G\\subseteq V,\\ U\\cap V=\\varnothing).$$",
         "intuition": "Normality is closed-set separation: two closed pieces can be insulated from one another by open regions.",
-        "notation": ["$$T_4$$ under the T1 convention"]
+        "notation": [
+          "$$T_4$$ under the T1 convention"
+        ]
       },
-      "tags": ["convention-reviewed"],
+      "tags": [
+        "convention-reviewed"
+      ],
       "priority": "standard"
     },
     {
@@ -5377,9 +6219,14 @@
         "definition": "Using the common T1 convention, a topological space X is normal if singletons are closed and every pair of disjoint closed subsets F,G⊆X has disjoint open neighborhoods U,V with F⊆U and G⊆V.",
         "formal": "$$(X,\\tau)\\text{ normal}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall F,G\\subseteq X,\\ (F,G\\text{ closed}\\land F\\cap G=\\varnothing)\\Rightarrow \\exists U,V\\in\\tau\\ (F\\subseteq U,\\ G\\subseteq V,\\ U\\cap V=\\varnothing).$$",
         "intuition": "Normality is a strong separation property for closed sets, not just for individual points.",
-        "notation": ["$$T_4$$ in the T1 convention"]
+        "notation": [
+          "$$T_4$$ in the T1 convention"
+        ]
       },
-      "tags": ["convention-reviewed", "separation-axioms"],
+      "tags": [
+        "convention-reviewed",
+        "separation-axioms"
+      ],
       "priority": "standard"
     },
     {
@@ -5392,9 +6239,13 @@
         "definition": "A topological space is regular if singletons are closed and every point can be separated from every closed set not containing it by disjoint open sets.",
         "formal": "$$(X,\\tau)\\text{ regular}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall x\\in X\\ \\forall F\\subseteq X,\\ (F\\text{ closed}\\land x\\notin F)\\Rightarrow \\exists U,V\\in\\tau\\ (x\\in U,\\ F\\subseteq V,\\ U\\cap V=\\varnothing).$$",
         "intuition": "Regularity says a point and a closed obstacle can be pulled apart topologically.",
-        "notation": ["$$T_3$$ under the T1 convention"]
+        "notation": [
+          "$$T_3$$ under the T1 convention"
+        ]
       },
-      "tags": ["convention-reviewed"],
+      "tags": [
+        "convention-reviewed"
+      ],
       "priority": "standard"
     },
     {
@@ -5407,9 +6258,14 @@
         "definition": "Using the common T1 convention, a topological space X is regular if singletons are closed and, whenever F is closed and x∉F, there are disjoint open sets U,V with x∈U and F⊆V.",
         "formal": "$$(X,\\tau)\\text{ regular}\\Longleftrightarrow [\\forall x\\in X,\\ \\{x\\}\\text{ is closed}]\\ \\land\\ \\forall x\\in X\\ \\forall F\\subseteq X,\\ (F\\text{ closed}\\land x\\notin F)\\Rightarrow \\exists U,V\\in\\tau\\ (x\\in U,\\ F\\subseteq V,\\ U\\cap V=\\varnothing).$$",
         "intuition": "Regularity separates a point from a closed obstacle by disjoint open regions.",
-        "notation": ["$$T_3$$ in the T1 convention"]
+        "notation": [
+          "$$T_3$$ in the T1 convention"
+        ]
       },
-      "tags": ["convention-reviewed", "separation-axioms"],
+      "tags": [
+        "convention-reviewed",
+        "separation-axioms"
+      ],
       "priority": "standard"
     },
     {
@@ -5422,7 +6278,9 @@
         "definition": "A topological space (X, τ) is second countable if there exists a countable basis for τ.",
         "formal": "$$X\\text{ second countable}\\Longleftrightarrow \\exists\\mathcal B\\subseteq\\tau\\ \\left(\\mathcal B\\text{ is a basis for }\\tau\\ \\land\\ |\\mathcal B|\\le\\aleph_0\\right).$$",
         "intuition": "Second countability gives a countable global vocabulary for all open sets.",
-        "notation": ["$$\\mathcal B=\\{B_n:n\\in\\mathbb N\\}$$"]
+        "notation": [
+          "$$\\mathcal B=\\{B_n:n\\in\\mathbb N\\}$$"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -5450,7 +6308,9 @@
         "definition": "Separation axioms are a family of properties, including T0, T1, Hausdorff/T2, regularity, and normality, that measure how well a topology separates points from points or points/closed sets from closed sets using open sets.",
         "formal": "$$T_0:\\forall x\\ne y\\,\\exists U\\in\\tau\\,[(x\\in U\\land y\\notin U)\\lor(y\\in U\\land x\\notin U)],\\quad T_2:\\forall x\\ne y\\,\\exists U,V\\in\\tau\\,(x\\in U,\\ y\\in V,\\ U\\cap V=\\varnothing).$$",
         "intuition": "They quantify how much the topology can distinguish different points or closed regions.",
-        "notation": ["$$T_0,T_1,T_2,T_3,T_4$$"]
+        "notation": [
+          "$$T_0,T_1,T_2,T_3,T_4$$"
+        ]
       },
       "tags": [],
       "priority": "standard"
@@ -5479,7 +6339,11 @@
         "intuition": "Tietze extension upgrades normal separation into an extension theorem for continuous functions.",
         "notation": []
       },
-      "tags": ["closed-sets", "extension", "normality"],
+      "tags": [
+        "closed-sets",
+        "extension",
+        "normality"
+      ],
       "priority": "standard"
     },
     {
@@ -5493,7 +6357,11 @@
         "intuition": "Urysohn lemma turns normality, a separation property for closed sets, into continuous functions.",
         "notation": []
       },
-      "tags": ["closed-sets", "continuity", "normality"],
+      "tags": [
+        "closed-sets",
+        "continuity",
+        "normality"
+      ],
       "priority": "standard"
     },
     {
@@ -5507,7 +6375,11 @@
         "intuition": "Urysohn metrization gives conditions under which abstract open-set topology comes from an actual metric.",
         "notation": []
       },
-      "tags": ["metrization", "regularity", "second-countability"],
+      "tags": [
+        "metrization",
+        "regularity",
+        "second-countability"
+      ],
       "priority": "standard"
     },
     {
@@ -5645,17 +6517,26 @@
           {
             "role": "calculation",
             "content": "For a loop $f$ based at $x_0$, $(h_2\\circ h_1)_*([f])=[(h_2\\circ h_1)\\circ f]$.",
-            "uses": ["induced_homomorphism", "composition_continuous"]
+            "uses": [
+              "induced_homomorphism",
+              "composition_continuous"
+            ]
           },
           {
             "role": "argument",
             "content": "Associativity gives $(h_2\\circ h_1)\\circ f=h_2\\circ(h_1\\circ f)$, so $(h_2\\circ h_1)_*=h_{2*}\\circ h_{1*}$.",
-            "uses": ["composition_maps", "composition_continuous"]
+            "uses": [
+              "composition_maps",
+              "composition_continuous"
+            ]
           },
           {
             "role": "conclusion",
             "content": "For the identity map, $(\\operatorname{id}_X)_*([f])=[\\operatorname{id}_X\\circ f]=[f]$, so the induced map is the identity automorphism of $\\pi_1(X,x_0)$.",
-            "uses": ["identity_map", "fundamental_group"]
+            "uses": [
+              "identity_map",
+              "fundamental_group"
+            ]
           }
         ]
       },
@@ -6046,17 +6927,25 @@
           {
             "role": "setup",
             "content": "To prove $h$ is continuous, test preimages of closed subsets of $Y$. Let $C\\subseteq Y$ be closed.",
-            "uses": ["closed_set", "continuity"]
+            "uses": [
+              "closed_set",
+              "continuity"
+            ]
           },
           {
             "role": "calculation",
             "content": "Because $h$ restricts to $f$ on $A$ and to $g$ on $B$, one has $h^{-1}(C)=f^{-1}(C)\\cup g^{-1}(C)$.",
-            "uses": ["preimage"]
+            "uses": [
+              "preimage"
+            ]
           },
           {
             "role": "conclusion",
             "content": "The sets $f^{-1}(C)$ and $g^{-1}(C)$ are closed in the closed pieces $A$ and $B$, hence closed in $X$. Their finite union is closed, so $h$ is continuous.",
-            "uses": ["closed_set", "continuity"]
+            "uses": [
+              "closed_set",
+              "continuity"
+            ]
           }
         ]
       },
@@ -6256,17 +7145,23 @@
           {
             "role": "setup",
             "content": "Let $k:Y\\to X$ be the inverse homeomorphism of $h:X\\to Y$.",
-            "uses": ["homeomorphism"]
+            "uses": [
+              "homeomorphism"
+            ]
           },
           {
             "role": "argument",
             "content": "Functoriality gives $k_*\\circ h_*=(k\\circ h)_*=(\\operatorname{id}_X)_*$ and $h_*\\circ k_*=(h\\circ k)_*=(\\operatorname{id}_Y)_*$.",
-            "uses": ["functoriality"]
+            "uses": [
+              "functoriality"
+            ]
           },
           {
             "role": "conclusion",
             "content": "Thus $k_*$ is the inverse of $h_*$, so $h_*$ is bijective and the fundamental group is a topological invariant.",
-            "uses": ["bijective"]
+            "uses": [
+              "bijective"
+            ]
           }
         ]
       },
@@ -6301,22 +7196,36 @@
           {
             "role": "setup",
             "content": "Define $\\phi:\\pi_1(X\\times Y,(x_0,y_0))\\to\\pi_1(X,x_0)\\times\\pi_1(Y,y_0)$ by applying the two projection-induced homomorphisms.",
-            "uses": ["fundamental_group", "product_space", "induced_homomorphism"]
+            "uses": [
+              "fundamental_group",
+              "product_space",
+              "induced_homomorphism"
+            ]
           },
           {
             "role": "argument",
             "content": "The map $\\phi$ is a homomorphism because each projection-induced map is a homomorphism and the product group operation is coordinatewise.",
-            "uses": ["homomorphism", "induced_homomorphism"]
+            "uses": [
+              "homomorphism",
+              "induced_homomorphism"
+            ]
           },
           {
             "role": "argument",
             "content": "Given loops $f$ in $X$ and $g$ in $Y$, the loop $h(s)=(f(s),g(s))$ in $X\\times Y$ maps to $([f],[g])$, so $\\phi$ is surjective.",
-            "uses": ["product_space", "surjective"]
+            "uses": [
+              "product_space",
+              "surjective"
+            ]
           },
           {
             "role": "conclusion",
             "content": "If two loops have path-homotopic projections in both coordinates, combine those homotopies coordinatewise to get a path homotopy in $X\\times Y$. Hence $\\phi$ is injective and therefore an isomorphism.",
-            "uses": ["path_homotopy", "injective", "isomorphism"]
+            "uses": [
+              "path_homotopy",
+              "injective",
+              "isomorphism"
+            ]
           }
         ]
       },
