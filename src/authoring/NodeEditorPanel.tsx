@@ -135,7 +135,7 @@ export function NodeEditorPanel({
                   type="button"
                   onClick={() => setConfirmDelete(true)}
                   aria-label="Delete concept"
-                  className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-secondary"
+                  className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-secondary"
                   style={{ color: "var(--muted-foreground)" }}
                 >
                   <Trash2 className="h-4 w-4" />
@@ -145,7 +145,7 @@ export function NodeEditorPanel({
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="flex h-8 w-8 items-center justify-center rounded-sm hover:bg-secondary"
+              className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-secondary"
               style={{ color: "var(--muted-foreground)" }}
             >
               <XIcon className="h-4 w-4" />

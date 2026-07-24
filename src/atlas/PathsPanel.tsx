@@ -45,7 +45,7 @@ function Endpoint({
         <Button
           variant="ghost"
           size="icon"
-          className="size-7 shrink-0 text-muted-foreground"
+          className="size-7 shrink-0 rounded-full text-muted-foreground"
           aria-label={`Clear ${label}`}
           onClick={onClear}
         >
@@ -94,198 +94,201 @@ export function PathsPanel() {
   return (
     <motion.aside
       data-shell-context-panel=""
-      className="ds-panel ds-panel--left w-[min(360px,calc(100vw-24px))]"
+      className="ds-panel ds-panel--left w-[min(360px,calc(100vw-24px))] max-[820px]:w-auto"
       initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
       animate={{ opacity: 1, x: 0, y: 0 }}
       exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
       transition={reduceMotion ? { duration: 0 } : spring.smooth}
     >
-      <Surface material="thick" role="region" aria-label="Paths" className="flex h-full flex-col">
-      <header className="flex items-center justify-between gap-3 pt-3.5 pr-3.5 pb-2.5 pl-[1.125rem]">
-        <h2 className="text-title-3 font-semibold text-foreground">Paths</h2>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="size-8 text-muted-foreground"
-          onClick={() => setMode("explore")}
-          aria-label="Close paths"
-        >
-          <X className="size-4" />
-        </Button>
-      </header>
-
-      {/* Announce tour progress to assistive tech — the visual cue is the map pan. */}
-      <div className="sr-only" role="status" aria-live="polite">
-        {touring ? `Step ${(tourIndex ?? 0) + 1} of ${ordered.length}: ${labelFor(ordered[tourIndex ?? 0])}` : ""}
-      </div>
-
-      <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pt-1 pb-4">
-        <div className="space-y-1.5">
-          <span className="text-caption text-muted-foreground">Route kind</span>
-          <ToggleGroup
-            type="single"
-            value={routeKind}
-            onValueChange={(v) => v && setRouteKind(v as typeof routeKind)}
-            className="w-full gap-0.5 rounded-lg bg-muted p-0.5"
+      <Surface
+        material="thick"
+        role="region"
+        aria-label="Paths"
+        className="flex h-full flex-col max-[820px]:rounded-[var(--radius-xl)]"
+      >
+        <header className="flex items-center justify-between gap-3 pt-3.5 pr-3.5 pb-2.5 pl-[1.125rem]">
+          <h2 className="text-title-3 font-semibold text-foreground">Paths</h2>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-8 rounded-full text-muted-foreground max-[820px]:size-11"
+            onClick={() => setMode("explore")}
+            aria-label="Close paths"
           >
-            <ToggleGroupItem
-              value="prereq"
-              className="h-9 flex-1 gap-1.5 rounded-md text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
-            >
-              <Network className="size-4" /> Prerequisites
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              value="path"
-              className="h-9 flex-1 gap-1.5 rounded-md text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
-            >
-              <Route className="size-4" /> Between two
-            </ToggleGroupItem>
-          </ToggleGroup>
+            <X className="size-4" />
+          </Button>
+        </header>
+
+        {/* Announce tour progress to assistive tech — the visual cue is the map pan. */}
+        <div className="sr-only" role="status" aria-live="polite">
+          {touring ? `Step ${(tourIndex ?? 0) + 1} of ${ordered.length}: ${labelFor(ordered[tourIndex ?? 0])}` : ""}
         </div>
 
-        <div className="relative overflow-hidden rounded-xl bg-muted">
-          {isPath && (
-            <Endpoint
-              icon={<MapPin fill="currentColor" />}
-              tone="var(--primary)"
-              ink="var(--primary-foreground)"
-              label="From"
-              value={routeFrom ? labelFor(routeFrom) : null}
-              onClear={() => setRouteEndpoint("from", null)}
-            />
-          )}
-          <Endpoint
-            icon={<Flag fill="currentColor" />}
-            tone="var(--destructive)"
-            ink="var(--destructive-foreground)"
-            label={isPath ? "To" : "Goal"}
-            value={routeTo ? labelFor(routeTo) : null}
-            onClear={() => setRouteEndpoint("to", null)}
-          />
-          {isPath && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute top-1/2 right-2 size-8 -translate-y-1/2 bg-card shadow-sm"
-              onClick={swapRouteEndpoints}
-              aria-label="Swap endpoints"
-              disabled={!routeFrom && !routeTo}
+        <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pt-1 pb-4">
+          <div className="space-y-1.5">
+            <span className="text-caption text-muted-foreground">Route kind</span>
+            <ToggleGroup
+              type="single"
+              value={routeKind}
+              onValueChange={(v) => v && setRouteKind(v as typeof routeKind)}
+              className="w-full gap-0.5 rounded-full bg-muted p-0.5"
             >
-              <ArrowUpDown className="size-4" />
-            </Button>
-          )}
-        </div>
+              <ToggleGroupItem
+                value="prereq"
+                className="h-9 flex-1 gap-1.5 rounded-none text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
+                style={{ borderRadius: "18px 0 0 18px" }}
+              >
+                <Network className="size-4" /> Prerequisites
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="path"
+                className="h-9 flex-1 gap-1.5 rounded-none text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
+                style={{ borderRadius: "0 18px 18px 0" }}
+              >
+                <Route className="size-4" /> Between two
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
 
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            aria-pressed={includeProof}
-            onClick={() => setIncludeProof(!includeProof)}
-            className={cn(
-              "inline-flex min-h-(--control-h-md) items-center gap-1.5 rounded-full px-3 text-caption font-medium transition-colors",
-              includeProof ? "bg-primary/10 text-primary-text" : "bg-muted text-foreground hover:bg-accent",
+          <div className="relative overflow-hidden rounded-md bg-muted">
+            {isPath && (
+              <Endpoint
+                icon={<MapPin fill="currentColor" />}
+                tone="var(--primary)"
+                ink="var(--primary-foreground)"
+                label="From"
+                value={routeFrom ? labelFor(routeFrom) : null}
+                onClear={() => setRouteEndpoint("from", null)}
+              />
             )}
-          >
-            {includeProof && <Check className="size-3.5" />}
-            Proof prerequisites
-          </button>
-        </div>
+            <Endpoint
+              icon={<Flag fill="currentColor" />}
+              tone="var(--destructive)"
+              ink="var(--destructive-foreground)"
+              label={isPath ? "To" : "Goal"}
+              value={routeTo ? labelFor(routeTo) : null}
+              onClear={() => setRouteEndpoint("to", null)}
+            />
+            {isPath && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-1/2 right-2 size-8 -translate-y-1/2 rounded-full bg-card shadow-sm"
+                onClick={swapRouteEndpoints}
+                aria-label="Swap endpoints"
+                disabled={!routeFrom && !routeTo}
+              >
+                <ArrowUpDown className="size-4" />
+              </Button>
+            )}
+          </div>
 
-        {noPath && (
-          <p className="rounded-md bg-muted px-3 py-2.5 text-footnote text-foreground">
-            No dependency path connects these two concepts.
-          </p>
-        )}
-
-        {!hasGoal && !noPath && (
-          <p className="text-footnote leading-relaxed text-muted-foreground">
-            {isPath
-              ? "Pick two concepts on the map to see every dependency path between them."
-              : "Click a concept on the map to trace everything you need to understand it first, in study order."}
-          </p>
-        )}
-
-        {hasGoal && ordered.length > 0 && (
-          <>
-            <div className="flex items-center justify-between gap-3 rounded-xl bg-primary/10 py-2.5 pr-2.5 pl-3.5">
-              <div className="flex min-w-0 flex-col">
-                <span className="text-headline font-semibold text-foreground">
-                  {ordered.length} {ordered.length === 1 ? "concept" : "concepts"}
-                </span>
-                <span className="text-caption font-medium text-primary-text">study order</span>
-              </div>
-              {!touring ? (
-                <Button
-                  size="sm"
-                  className="hidden gap-1.5 rounded-full max-[820px]:inline-flex"
-                  onClick={startTour}
-                >
-                  <Play className="size-3.5 fill-current" /> Tour
-                </Button>
-              ) : (
-                <div className="hidden items-center gap-0.5 max-[820px]:flex">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="size-8"
-                    onClick={() => tourStep(-1)}
-                    aria-label="Previous step"
-                  >
-                    <ChevronLeft className="size-4" />
-                  </Button>
-                  <span className="min-w-[40px] text-center font-mono text-caption tabular-nums text-foreground">
-                    {(tourIndex ?? 0) + 1}/{ordered.length}
-                  </span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="size-8"
-                    onClick={() => tourStep(1)}
-                    aria-label="Next step"
-                  >
-                    <ChevronRight className="size-4" />
-                  </Button>
-                  <Button variant="secondary" size="sm" className="rounded-full" onClick={endTour}>
-                    Done
-                  </Button>
-                </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              aria-pressed={includeProof}
+              onClick={() => setIncludeProof(!includeProof)}
+              className={cn(
+                "inline-flex min-h-(--control-h-md) items-center gap-1.5 rounded-full px-3 text-caption font-medium transition-colors",
+                includeProof ? "bg-primary/10 text-primary-text" : "bg-muted text-foreground hover:bg-accent",
               )}
-            </div>
+            >
+              {includeProof && <Check className="size-3.5" />}
+              Proof prerequisites
+            </button>
+          </div>
 
-            <ol className="mt-2 space-y-0.5">
-              {ordered.map((id, i) => {
-                const active = selectedId === id;
-                const tone = getDomainTone(map.nodeById.get(id)?.domain ?? "");
-                return (
-                  <li key={id}>
-                    <button
-                      type="button"
-                      onClick={() => select(id)}
-                      className={cn(
-                        "flex min-h-[40px] w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left transition-colors",
-                        active ? "bg-primary/10" : "hover:bg-accent",
-                      )}
+          {noPath && (
+            <p className="rounded-md bg-muted px-3 py-2.5 text-footnote text-foreground">
+              No dependency path connects these two concepts.
+            </p>
+          )}
+
+          {!hasGoal && !noPath && (
+            <p className="text-footnote leading-relaxed text-muted-foreground">
+              {isPath
+                ? "Pick two concepts on the map to see every dependency path between them."
+                : "Click a concept on the map to trace everything you need to understand it first, in study order."}
+            </p>
+          )}
+
+          {hasGoal && ordered.length > 0 && (
+            <>
+              <div className="flex items-center justify-between gap-3 rounded-md bg-primary/10 py-2.5 pr-2.5 pl-3.5">
+                <div className="flex min-w-0 flex-col">
+                  <span className="text-headline font-semibold text-foreground">
+                    {ordered.length} {ordered.length === 1 ? "concept" : "concepts"}
+                  </span>
+                  <span className="text-caption font-medium text-primary-text">study order</span>
+                </div>
+                {!touring ? (
+                  <Button size="sm" className="hidden gap-1.5 rounded-full max-[820px]:inline-flex" onClick={startTour}>
+                    <Play className="size-3.5 fill-current" /> Tour
+                  </Button>
+                ) : (
+                  <div className="hidden items-center gap-0.5 max-[820px]:flex">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="size-8"
+                      onClick={() => tourStep(-1)}
+                      aria-label="Previous step"
                     >
-                      <span className="w-[18px] shrink-0 text-right font-mono text-[11px] tabular-nums text-muted-foreground">
-                        {i + 1}
-                      </span>
-                      <span className="size-2 shrink-0 rounded-full" style={{ background: tone.color }} />
-                      <span
+                      <ChevronLeft className="size-4" />
+                    </Button>
+                    <span className="min-w-[40px] text-center font-mono text-caption tabular-nums text-foreground">
+                      {(tourIndex ?? 0) + 1}/{ordered.length}
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="size-8"
+                      onClick={() => tourStep(1)}
+                      aria-label="Next step"
+                    >
+                      <ChevronRight className="size-4" />
+                    </Button>
+                    <Button variant="secondary" size="sm" className="rounded-full" onClick={endTour}>
+                      Done
+                    </Button>
+                  </div>
+                )}
+              </div>
+
+              <ol className="mt-2 space-y-0.5">
+                {ordered.map((id, i) => {
+                  const active = selectedId === id;
+                  const tone = getDomainTone(map.nodeById.get(id)?.domain ?? "");
+                  return (
+                    <li key={id}>
+                      <button
+                        type="button"
+                        onClick={() => select(id)}
                         className={cn(
-                          "min-w-0 flex-1 truncate text-footnote",
-                          active ? "font-medium text-foreground" : "text-foreground/80",
+                          "flex min-h-[40px] w-full items-center gap-2.5 rounded-sm px-2 py-1.5 text-left transition-colors max-[820px]:min-h-11",
+                          active ? "bg-primary/10" : "hover:bg-accent",
                         )}
                       >
-                        <MathText text={labelFor(id)} />
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ol>
-          </>
-        )}
-      </div>
+                        <span className="w-[18px] shrink-0 text-right font-mono text-[11px] tabular-nums text-muted-foreground">
+                          {i + 1}
+                        </span>
+                        <span className="size-2 shrink-0 rounded-full" style={{ background: tone.color }} />
+                        <span
+                          className={cn(
+                            "min-w-0 flex-1 truncate text-footnote",
+                            active ? "font-medium text-foreground" : "text-foreground/80",
+                          )}
+                        >
+                          <MathText text={labelFor(id)} />
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          )}
+        </div>
       </Surface>
     </motion.aside>
   );

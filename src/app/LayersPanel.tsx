@@ -29,7 +29,7 @@ function Chip({
       onClick={onClick}
       style={style}
       className={cn(
-        "flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-caption-2 font-medium transition-colors",
+        "flex min-h-(--control-h-xs) items-center gap-1.5 rounded-full border px-2.5 py-[3px] text-caption-2 font-medium transition-colors max-[820px]:min-h-(--control-h-sm)",
         active
           ? "border-primary/25 bg-primary/10 text-primary-text"
           : "border-transparent bg-muted text-foreground hover:bg-accent",
@@ -70,13 +70,16 @@ function Segmented({
         type="single"
         value={value}
         onValueChange={(v) => v && onChange(v)}
-        className="w-full gap-0.5 rounded-lg bg-muted p-0.5"
+        className="w-full gap-0.5 rounded-full bg-muted p-0.5"
       >
-        {options.map((option) => (
+        {options.map((option, index) => (
           <ToggleGroupItem
             key={option.id}
             value={option.id}
-            className="flex-1 rounded-md text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
+            className="flex-1 rounded-none text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
+            style={{
+              borderRadius: index === 0 ? "18px 0 0 18px" : index === options.length - 1 ? "0 18px 18px 0" : undefined,
+            }}
           >
             {option.label}
           </ToggleGroupItem>
@@ -121,7 +124,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
       material="regular"
       role="dialog"
       aria-label="Filters and display"
-      className="flex max-h-[min(78vh,580px)] w-[300px] flex-col max-[820px]:w-full"
+      className="flex max-h-[min(78vh,580px)] w-[320px] flex-col max-[820px]:w-full max-[820px]:rounded-[var(--radius-xl)]"
     >
       <span
         aria-hidden
@@ -132,7 +135,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
         <Button
           variant="ghost"
           size="icon"
-          className="size-8 text-muted-foreground"
+          className="size-8 rounded-full text-muted-foreground max-[820px]:size-11"
           onClick={onClose}
           aria-label="Close filters"
         >
@@ -201,7 +204,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
               { id: "cluster", label: "Cluster" },
             ]}
           />
-          <div className="rounded-lg bg-muted/60 px-3 py-0.5">
+          <div className="rounded-md bg-muted/60 px-3 py-0.5">
             <SwitchRow label="Domain regions" checked={showRegions} onToggle={toggleRegions} />
             <SwitchRow label="Soft links" checked={showSoftDeps} onToggle={toggleSoftDeps} />
             <SwitchRow label="Grid" checked={showGrid} onToggle={toggleGrid} />
@@ -210,7 +213,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
         </section>
 
         <section className="space-y-2.5">
-          <div className="rounded-lg bg-muted/60 px-3 py-0.5">
+          <div className="rounded-md bg-muted/60 px-3 py-0.5">
             <SwitchRow label="Focus neighborhood" checked={focusMode} onToggle={toggleFocusMode} />
           </div>
           {focusMode && (

@@ -208,6 +208,7 @@ function FieldMenu() {
                 text-muted-foreground
                 hover:bg-accent hover:text-foreground
                 active:bg-secondary
+                max-[820px]:size-11
               "
               onClick={() => {
                 close();
@@ -239,7 +240,7 @@ function FieldMenu() {
                   className={cn(
                     `
                       flex min-h-10 w-full items-center gap-2
-                      rounded-md px-2.5
+                      rounded-sm px-2.5 max-[820px]:min-h-11
                       text-left text-footnote
                       transition-colors
                     `,

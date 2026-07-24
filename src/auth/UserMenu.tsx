@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type KeyboardEvent as ReactKeyboardEvent,
-} from "react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { Check, CloudOff, HardDrive, LogIn, LogOut, Moon, Sun, User } from "lucide-react";
 import { signOut, useSession } from "./client";
 import { Button } from "@/ui/button";
@@ -35,7 +29,9 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
 
   useEffect(() => {
     if (!menuOpen) return;
-    const frame = requestAnimationFrame(() => menuRef.current?.querySelector<HTMLElement>('[role="menuitem"]')?.focus());
+    const frame = requestAnimationFrame(() =>
+      menuRef.current?.querySelector<HTMLElement>('[role="menuitem"]')?.focus(),
+    );
     return () => cancelAnimationFrame(frame);
   }, [menuOpen]);
 
@@ -62,7 +58,7 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
     <Button
       variant="ghost"
       role="menuitem"
-      className="w-full justify-start gap-2 font-normal text-foreground"
+      className="w-full justify-start gap-2 rounded-sm font-normal text-foreground"
       onClick={() => setTheme(siblingOf(theme))}
     >
       {dark ? <Sun className="size-4 text-muted-foreground" /> : <Moon className="size-4 text-muted-foreground" />}
@@ -105,7 +101,7 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
             <Button
               variant="ghost"
               role="menuitem"
-              className="w-full justify-start gap-2 font-normal text-foreground"
+              className="w-full justify-start gap-2 rounded-sm font-normal text-foreground"
               onClick={() => {
                 setMenuOpen(false);
                 setDialogOpen(true);
@@ -152,7 +148,9 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
         <span className="flex size-6.5 items-center justify-center rounded-full bg-primary text-caption font-semibold text-primary-foreground">
           {initial}
         </span>
-        {showLabel && <span className="shell-account-label max-w-24 truncate text-footnote">{user.name || "Account"}</span>}
+        {showLabel && (
+          <span className="shell-account-label max-w-24 truncate text-footnote">{user.name || "Account"}</span>
+        )}
       </Button>
       {menuOpen && (
         <Surface
@@ -191,7 +189,7 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
           <Button
             variant="ghost"
             role="menuitem"
-            className="mt-1 w-full justify-start gap-2 font-normal"
+            className="mt-1 w-full justify-start gap-2 rounded-sm font-normal"
             onClick={async () => {
               await signOut();
               setMenuOpen(false);

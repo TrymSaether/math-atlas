@@ -14,9 +14,7 @@
   position: absolute;
   top: var(--shell-dock-top, 76px);
   bottom: var(--shell-content-bottom, 14px);
-  left: calc(
-    var(--shell-edge, 14px) + var(--shell-sidebar-occupied, 0px) + var(--shell-sidebar-gap-occupied, 0px)
-  );
+  left: calc(var(--shell-edge, 14px) + var(--shell-sidebar-occupied, 0px) + var(--shell-sidebar-gap-occupied, 0px));
   z-index: var(--z-shell, 20);
   transition: left var(--duration-base, 200ms) var(--ease-apple, ease);
 }
@@ -26,6 +24,7 @@
     right: var(--shell-edge, 10px);
     left: var(--shell-edge, 10px);
     top: max(var(--shell-dock-top, 68px), 18dvh);
+    width: auto;
     display: flex;
     align-items: flex-end;
   }

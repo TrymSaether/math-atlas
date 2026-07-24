@@ -222,7 +222,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                     <button
                       key={d.id}
                       type="button"
-                      className="inline-flex min-h-(--control-h-xs) max-w-full items-center gap-1.5 rounded-sm border border-border bg-card px-2 py-[3px] text-caption-2 font-medium text-muted-foreground transition hover:border-input"
+                      className="inline-flex min-h-(--control-h-xs) max-w-full items-center gap-1.5 rounded-sm border border-border bg-card px-2 py-[3px] text-caption-2 font-medium text-muted-foreground transition hover:border-input max-[860px]:min-h-(--control-h-sm)"
                       aria-pressed={active}
                       onClick={() => toggleTopic(d.id)}
                       style={
@@ -391,7 +391,7 @@ function IndexRow({
     <button
       type="button"
       id={`dict-row-${entry.id}`}
-      className="relative flex min-h-(--control-h-lg) w-full items-center gap-2 rounded-md border-none bg-transparent py-1.5 pl-3 pr-2.5 text-left [scroll-margin:48px_0] transition-colors hover:bg-accent"
+      className="relative flex min-h-(--control-h-lg) w-full items-center gap-2 rounded-sm border-none bg-transparent py-1.5 pl-3 pr-2.5 text-left [scroll-margin:48px_0] transition-colors hover:bg-accent max-[860px]:min-h-(--control-h-xl)"
       onClick={onClick}
       aria-current={active}
       style={active ? { background: tone.tint } : undefined}

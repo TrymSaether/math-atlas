@@ -128,7 +128,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
       role="dialog"
       aria-label={`${view.kindLabel}: ${node.label}`}
       className={cn(
-        "flex h-full flex-col transition-[width] duration-200",
+        "flex h-full flex-col transition-[width] duration-200 max-[820px]:w-full max-[820px]:rounded-[var(--radius-xl)]",
         expanded ? "w-[min(580px,calc(100vw-24px))]" : "w-[min(400px,calc(100vw-24px))]",
       )}
     >
@@ -138,7 +138,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             <Button
               variant="ghost"
               size="icon"
-              className="size-8 text-muted-foreground"
+              className="size-8 rounded-full text-muted-foreground"
               aria-label="Previous in domain"
               title="Previous in domain"
               disabled={!prev}
@@ -149,7 +149,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             <Button
               variant="ghost"
               size="icon"
-              className="size-8 text-muted-foreground"
+              className="size-8 rounded-full text-muted-foreground"
               aria-label="Next in domain"
               title="Next in domain"
               disabled={!next}
@@ -168,7 +168,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
               <Button
                 variant="ghost"
                 size="icon"
-                className={cn("size-8", known ? "text-primary-text" : "text-muted-foreground")}
+                className={cn("size-8 rounded-full", known ? "text-primary-text" : "text-muted-foreground")}
                 aria-label={known ? "Mark as not known" : "Mark as known"}
                 title={known ? "Mark as not known" : "Mark as known"}
                 onClick={() => setNodeProgress(mapId, nodeId, known ? null : "known")}
@@ -179,7 +179,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             <Button
               variant="ghost"
               size="icon"
-              className="size-8 text-muted-foreground"
+              className="size-8 rounded-full text-muted-foreground"
               aria-label="Open in Index"
               title="Open in Index"
               onClick={() => openIn("dictionary")}
@@ -189,7 +189,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             <Button
               variant="ghost"
               size="icon"
-              className="size-8 text-muted-foreground"
+              className="size-8 rounded-full text-muted-foreground"
               aria-label="Open in Study"
               title="Open in Study"
               onClick={() => openIn("flashcards")}
@@ -199,7 +199,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             <Button
               variant="ghost"
               size="icon"
-              className={cn("size-8", copied ? "text-primary-text" : "text-muted-foreground")}
+              className={cn("size-8 rounded-full", copied ? "text-primary-text" : "text-muted-foreground")}
               aria-label={copied ? "Link copied" : "Copy link"}
               title="Copy link"
               onClick={copyLink}
@@ -209,7 +209,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             <Button
               variant="ghost"
               size="icon"
-              className="size-8 text-muted-foreground"
+              className="size-8 rounded-full text-muted-foreground"
               aria-label={expanded ? "Collapse card" : "Expand card"}
               title={expanded ? "Collapse card" : "Expand card"}
               onClick={() => setExpanded((v) => !v)}
@@ -219,7 +219,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             <Button
               variant="ghost"
               size="icon"
-              className="size-8 text-muted-foreground"
+              className="size-8 rounded-full text-muted-foreground"
               aria-label="Close"
               title="Close"
               onClick={() => select(null)}

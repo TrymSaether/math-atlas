@@ -43,7 +43,7 @@ function AtlasModes({ onNavigate }: { onNavigate: () => void }) {
                 onNavigate();
               }}
               className={cn(
-                "group flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left",
+                "group flex w-full items-center gap-3 rounded-sm px-2.5 py-2 text-left",
                 sidebarRowInteraction,
                 active ? "bg-primary/10 text-primary-text hover:bg-primary/15 active:bg-primary/20" : "text-foreground",
               )}
@@ -169,7 +169,7 @@ function RecentsSection({ onNavigate }: { onNavigate: () => void }) {
               title={node.label}
               aria-current={node.id === selectedId ? "true" : undefined}
               className={cn(
-                "group flex min-h-13 w-full items-center gap-3 rounded-md px-2.5 py-1.75 text-left",
+                "group flex min-h-13 w-full items-center gap-3 rounded-sm px-2.5 py-1.75 text-left",
                 sidebarRowInteraction,
                 node.id === selectedId && "bg-primary/10 hover:bg-primary/15 active:bg-primary/20",
               )}
@@ -261,71 +261,73 @@ export function Sidebar() {
           transition={reduceMotion ? { duration: 0 } : spring.smooth}
         >
           <Surface material="thin" className="flex h-full flex-col overflow-hidden">
-        <header className="flex min-h-12 items-center gap-2 border-b border-border/60 px-3">
-          <div className="min-w-0 flex-1 truncate text-headline font-semibold text-foreground">Atlas</div>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-8 rounded-full text-muted-foreground hover:bg-accent/60 hover:text-foreground focus-visible:outline-none"
-            aria-label="Hide sidebar"
-            title="Hide sidebar"
-            onClick={() => setCollapsed(true)}
-          >
-            <PanelLeft className="size-4" />
-          </Button>
-        </header>
+            <header className="flex min-h-12 items-center gap-2 border-b border-border/60 px-3">
+              <div className="min-w-0 flex-1 truncate text-headline font-semibold text-foreground">Atlas</div>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-8 rounded-full text-muted-foreground hover:bg-accent/60 hover:text-foreground focus-visible:outline-none"
+                aria-label="Hide sidebar"
+                title="Hide sidebar"
+                onClick={() => setCollapsed(true)}
+              >
+                <PanelLeft className="size-4" />
+              </Button>
+            </header>
 
-        <nav className="min-h-0 flex-1 overflow-y-auto px-2 pt-1 pb-2" aria-label="Atlas">
-          <Section title="View" collapsed={closedSecs.has("view")} onToggle={() => toggleSec("view")}>
-            <AtlasModes onNavigate={dismissMobile} />
-          </Section>
+            <nav className="min-h-0 flex-1 overflow-y-auto px-2 pt-1 pb-2" aria-label="Atlas">
+              <Section title="View" collapsed={closedSecs.has("view")} onToggle={() => toggleSec("view")}>
+                <AtlasModes onNavigate={dismissMobile} />
+              </Section>
 
-          {domains.length > 0 && (
-            <Section title="Domains" collapsed={closedSecs.has("domains")} onToggle={() => toggleSec("domains")}>
-              <ul className="flex flex-col gap-0.5">
-                <li>
-                  <button
-                    type="button"
-                    aria-pressed={topics.size === 0}
-                    onClick={resetTopics}
-                    className={cn(
-                      "group flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-foreground",
-                      sidebarRowInteraction,
-                      topics.size === 0 && "bg-primary/10 text-primary-text hover:bg-primary/15 active:bg-primary/20",
-                    )}
-                  >
-                    <Circle className="mx-0.5 size-4 shrink-0 text-muted-foreground" />
-                    <span className="text-footnote">All domains</span>
-                  </button>
-                </li>
-                {domains.map((d) => (
-                  <li key={d.id}>
-                    <button
-                      type="button"
-                      aria-pressed={topics.has(d.id)}
-                      onClick={() => toggleTopic(d.id)}
-                      className={cn(
-                        "group flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-foreground",
-                        sidebarRowInteraction,
-                        topics.has(d.id) && "bg-primary/10 text-primary-text hover:bg-primary/15 active:bg-primary/20",
-                      )}
-                    >
-                      <span
-                        className="mx-1.25 size-2.75 shrink-0 rounded-full"
-                        style={{ background: getDomainTone(d.id).color }}
-                      />
-                      <span className="text-footnote transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none">
-                        {d.label}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </Section>
-          )}
+              {domains.length > 0 && (
+                <Section title="Domains" collapsed={closedSecs.has("domains")} onToggle={() => toggleSec("domains")}>
+                  <ul className="flex flex-col gap-0.5">
+                    <li>
+                      <button
+                        type="button"
+                        aria-pressed={topics.size === 0}
+                        onClick={resetTopics}
+                        className={cn(
+                          "group flex w-full items-center gap-3 rounded-sm px-2.5 py-2 text-left text-foreground",
+                          sidebarRowInteraction,
+                          topics.size === 0 &&
+                            "bg-primary/10 text-primary-text hover:bg-primary/15 active:bg-primary/20",
+                        )}
+                      >
+                        <Circle className="mx-0.5 size-4 shrink-0 text-muted-foreground" />
+                        <span className="text-footnote">All domains</span>
+                      </button>
+                    </li>
+                    {domains.map((d) => (
+                      <li key={d.id}>
+                        <button
+                          type="button"
+                          aria-pressed={topics.has(d.id)}
+                          onClick={() => toggleTopic(d.id)}
+                          className={cn(
+                            "group flex w-full items-center gap-3 rounded-sm px-2.5 py-2 text-left text-foreground",
+                            sidebarRowInteraction,
+                            topics.has(d.id) &&
+                              "bg-primary/10 text-primary-text hover:bg-primary/15 active:bg-primary/20",
+                          )}
+                        >
+                          <span
+                            className="mx-1.25 size-2.75 shrink-0 rounded-full"
+                            style={{ background: getDomainTone(d.id).color }}
+                          />
+                          <span className="text-footnote transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none">
+                            {d.label}
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </Section>
+              )}
 
-          <RecentsSection onNavigate={dismissMobile} />
-        </nav>
+              <RecentsSection onNavigate={dismissMobile} />
+            </nav>
           </Surface>
         </motion.aside>
       )}
