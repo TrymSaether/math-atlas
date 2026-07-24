@@ -17,28 +17,37 @@ import {
   WalletCards,
   X,
 } from "lucide-react";
+
 import { useStore, type Surface as SurfaceId } from "./store";
 import { schemeFor, siblingOf } from "./themes";
-import { cn } from "@/ui/cn";
 import { usePopoverDismiss } from "./usePopover";
-import { ConfirmDialog } from "@/ui/ConfirmDialog";
-import { Button } from "@/ui/button";
-import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
-import { Surface } from "@/design";
-import { UserMenu } from "@/auth/UserMenu";
+import { useShellActions } from "./ShellActions";
 import { LogoLockup } from "./Logo";
 import { PaletteSearchButton } from "./PaletteSearchButton";
-import { useShellActions } from "./ShellActions";
+
+import { UserMenu } from "@/auth/UserMenu";
+import { Surface } from "@/design";
+import { ConfirmDialog } from "@/ui/ConfirmDialog";
+import { Button } from "@/ui/button";
+import { cn } from "@/ui/cn";
+import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
+
 import "./shell.css";
 
 function Brand() {
-  const setSurface = useStore((s) => s.setSurface);
-  const setMode = useStore((s) => s.setMode);
+  const setSurface = useStore((state) => state.setSurface);
+  const setMode = useStore((state) => state.setMode);
 
   return (
     <Button
       variant="ghost"
-      className="h-10 min-w-0 rounded-full px-2.5 text-foreground has-[>svg]:px-2.5"
+      className="
+        h-9 min-w-0 rounded-full px-2
+        text-foreground
+        hover:bg-accent
+        active:bg-secondary
+        has-[>svg]:px-2
+      "
       onClick={() => {
         setSurface("atlas");
         setMode("explore");
@@ -51,47 +60,88 @@ function Brand() {
   );
 }
 
-/** Persistent field context. Switching fields preserves the current product surface. */
+/**
+ * Persistent field context.
+ * Switching fields preserves the current product surface.
+ */
 function FieldMenu() {
-  const mapId = useStore((s) => s.mapId);
-  const setMap = useStore((s) => s.setMap);
-  const catalog = useStore((s) => s.catalog);
-  const loadingMapId = useStore((s) => s.loadingMapId);
+  const mapId = useStore((state) => state.mapId);
+  const setMap = useStore((state) => state.setMap);
+  const catalog = useStore((state) => state.catalog);
+  const loadingMapId = useStore((state) => state.loadingMapId);
+
   const [open, setOpen] = useState(false);
+
   const ref = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const close = useCallback(() => setOpen(false), []);
+
+  const close = useCallback(() => {
+    setOpen(false);
+  }, []);
+
   const title = catalog.find((entry) => entry.slug === mapId)?.title ?? mapId;
+
   const selectedIndex = Math.max(
     0,
     catalog.findIndex((entry) => entry.slug === mapId),
   );
 
-  usePopoverDismiss({ open, onClose: close, containerRef: ref, triggerRef });
+  usePopoverDismiss({
+    open,
+    onClose: close,
+    containerRef: ref,
+    triggerRef,
+  });
 
   useEffect(() => {
     if (!open) return;
-    const frame = requestAnimationFrame(() => optionRefs.current[selectedIndex]?.focus());
-    return () => cancelAnimationFrame(frame);
+
+    const frame = requestAnimationFrame(() => {
+      optionRefs.current[selectedIndex]?.focus();
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+    };
   }, [open, selectedIndex]);
 
   const onListKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
     if (!catalog.length) return;
-    const current = optionRefs.current.indexOf(document.activeElement as HTMLButtonElement);
+
+    const activeElement = document.activeElement as HTMLButtonElement;
+    const current = optionRefs.current.indexOf(activeElement);
     const from = current >= 0 ? current : selectedIndex;
+
     let next: number | null = null;
-    if (event.key === "ArrowDown") next = (from + 1) % catalog.length;
-    if (event.key === "ArrowUp") next = (from - 1 + catalog.length) % catalog.length;
-    if (event.key === "Home") next = 0;
-    if (event.key === "End") next = catalog.length - 1;
+
+    if (event.key === "ArrowDown") {
+      next = (from + 1) % catalog.length;
+    }
+
+    if (event.key === "ArrowUp") {
+      next = (from - 1 + catalog.length) % catalog.length;
+    }
+
+    if (event.key === "Home") {
+      next = 0;
+    }
+
+    if (event.key === "End") {
+      next = catalog.length - 1;
+    }
+
     if (next === null) return;
+
     event.preventDefault();
     optionRefs.current[next]?.focus();
   };
 
   const choose = (slug: string) => {
-    if (slug !== mapId) setMap(slug);
+    if (slug !== mapId) {
+      setMap(slug);
+    }
+
     setOpen(false);
     triggerRef.current?.focus();
   };
@@ -101,43 +151,73 @@ function FieldMenu() {
       <Button
         ref={triggerRef}
         variant="ghost"
-        className="h-10 w-full max-w-[220px] min-w-0 gap-1.5 rounded-full px-2.5 text-subhead font-medium text-foreground has-[>svg]:px-2.5 max-[820px]:max-w-full"
-        onClick={() => setOpen((value) => !value)}
+        className="
+          h-9 w-full max-w-[220px] min-w-0
+          gap-1 rounded-full px-2.5
+          text-subhead font-medium text-foreground
+          hover:bg-accent
+          active:bg-secondary
+          has-[>svg]:px-2.5
+          max-[820px]:max-w-full
+        "
+        onClick={() => {
+          setOpen((value) => !value);
+        }}
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-label={`Active field: ${title}`}
         title="Choose active field"
       >
         <span className="truncate">{loadingMapId ? "Loading…" : title}</span>
-        <ChevronDown className={cn("size-3.5 shrink-0 text-muted-foreground transition-transform", open && "rotate-180")} />
+
+        <ChevronDown
+          className={cn("size-3 shrink-0 text-tertiary-foreground transition-transform", open && "rotate-180")}
+        />
       </Button>
 
       {open && (
         <Surface
           material="thick"
-          className="shell-field-popover shell-popover-present absolute top-[calc(100%+10px)] left-0 z-(--z-popover) w-[min(300px,calc(100vw-20px))] overflow-y-auto p-1.5"
+          className="
+            shell-field-popover shell-popover-present
+            absolute top-[calc(100%+8px)] left-0
+            z-(--z-popover)
+            w-[min(300px,calc(100vw-20px))]
+            overflow-y-auto p-1.5
+          "
           role="dialog"
           aria-label="Choose mathematical field"
           onKeyDown={onListKeyDown}
         >
           <div className="flex items-center justify-between gap-2 px-2.5 pt-1 pb-1">
             <span className="text-caption font-semibold tracking-wide text-muted-foreground">Mathematical field</span>
+
             <Button
               variant="ghost"
               size="icon"
-              className="size-8 rounded-full text-muted-foreground"
+              className="
+                size-8 rounded-full
+                text-muted-foreground
+                hover:bg-accent hover:text-foreground
+                active:bg-secondary
+              "
               onClick={() => {
                 close();
-                requestAnimationFrame(() => triggerRef.current?.focus());
+
+                requestAnimationFrame(() => {
+                  triggerRef.current?.focus();
+                });
               }}
               aria-label="Close field selector"
             >
               <X className="size-4" />
             </Button>
           </div>
+
           <div role="listbox" aria-label="Mathematical field">
             {catalog.map((entry, index) => {
               const active = entry.slug === mapId;
+
               return (
                 <button
                   key={entry.slug}
@@ -149,16 +229,25 @@ function FieldMenu() {
                   aria-selected={active}
                   tabIndex={active ? 0 : -1}
                   className={cn(
-                    "flex min-h-10 w-full items-center gap-2 rounded-md px-2.5 text-left text-subhead transition-colors",
+                    `
+                      flex min-h-10 w-full items-center gap-2
+                      rounded-md px-2.5
+                      text-left text-subhead
+                      transition-colors
+                    `,
                     active ? "bg-primary/10 text-primary-text" : "text-foreground hover:bg-accent",
                   )}
-                  onClick={() => choose(entry.slug)}
+                  onClick={() => {
+                    choose(entry.slug);
+                  }}
                 >
                   <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
+
                   {active && <Check className="size-4 shrink-0" />}
                 </button>
               );
             })}
+
             {!catalog.length && <p className="px-2.5 py-3 text-caption text-muted-foreground">Loading fields…</p>}
           </div>
         </Surface>
@@ -167,24 +256,46 @@ function FieldMenu() {
   );
 }
 
-const SURFACES: { id: SurfaceId; label: string; Icon: typeof Compass }[] = [
-  { id: "atlas", label: "Atlas", Icon: Compass },
-  { id: "dictionary", label: "Index", Icon: BookOpen },
-  { id: "flashcards", label: "Study", Icon: WalletCards },
-  { id: "sandbox", label: "Sandbox", Icon: Variable },
+const SURFACES: {
+  id: SurfaceId;
+  label: string;
+  Icon: typeof Compass;
+}[] = [
+  {
+    id: "atlas",
+    label: "Atlas",
+    Icon: Compass,
+  },
+  {
+    id: "dictionary",
+    label: "Index",
+    Icon: BookOpen,
+  },
+  {
+    id: "flashcards",
+    label: "Study",
+    Icon: WalletCards,
+  },
+  {
+    id: "sandbox",
+    label: "Sandbox",
+    Icon: Variable,
+  },
 ];
 
 function SurfaceNav({ mobile = false }: { mobile?: boolean }) {
-  const surface = useStore((s) => s.surface);
-  const setSurface = useStore((s) => s.setSurface);
+  const surface = useStore((state) => state.surface);
+  const setSurface = useStore((state) => state.setSurface);
 
   return (
     <ToggleGroup
       type="single"
       value={surface}
-      onValueChange={(value) => value && setSurface(value as SurfaceId)}
+      onValueChange={(value) => {
+        if (value) setSurface(value as SurfaceId);
+      }}
       aria-label="Product navigation"
-      className={cn("gap-0.5", mobile && "grid w-full grid-cols-4")}
+      className={cn("gap-0.5 rounded-full", mobile && "grid w-full grid-cols-4")}
     >
       {SURFACES.map(({ id, label, Icon }) => (
         <ToggleGroupItem
@@ -192,11 +303,19 @@ function SurfaceNav({ mobile = false }: { mobile?: boolean }) {
           value={id}
           title={label}
           className={cn(
-            "h-10 gap-1.5 rounded-full px-3 text-footnote font-medium text-muted-foreground data-[state=on]:bg-card data-[state=on]:text-foreground data-[state=on]:shadow-sm",
+            `
+              h-10 gap-1.5 rounded-full px-3
+              text-footnote font-medium text-muted-foreground
+              transition-[color,background-color,box-shadow]
+              hover:bg-accent hover:text-foreground
+              data-[state=on]:bg-card
+              data-[state=on]:text-foreground
+              data-[state=on]:shadow-sm
+            `,
             mobile && "h-11 flex-col gap-0.5 px-1 text-caption-2",
           )}
         >
-          <Icon className="size-4 shrink-0" />
+          <Icon className="size-4.5 shrink-0" />
           <span className={mobile ? "" : "shell-nav-label"}>{label}</span>
         </ToggleGroupItem>
       ))}
@@ -205,70 +324,109 @@ function SurfaceNav({ mobile = false }: { mobile?: boolean }) {
 }
 
 function EditControls() {
-  const surface = useStore((s) => s.surface);
-  const mode = useStore((s) => s.mode);
-  const setMode = useStore((s) => s.setMode);
-  const mapId = useStore((s) => s.mapId);
-  const map = useStore((s) => s.loadedMaps[s.mapId]);
-  const editMode = useStore((s) => s.editMode);
-  const toggleEditMode = useStore((s) => s.toggleEditMode);
-  const edited = useStore((s) => s.editedMaps.has(s.mapId));
-  const openNodeEditor = useStore((s) => s.openNodeEditor);
-  const revertMap = useStore((s) => s.revertMap);
+  const surface = useStore((state) => state.surface);
+  const mode = useStore((state) => state.mode);
+  const setMode = useStore((state) => state.setMode);
+  const mapId = useStore((state) => state.mapId);
+  const map = useStore((state) => state.loadedMaps[state.mapId]);
+  const editMode = useStore((state) => state.editMode);
+  const toggleEditMode = useStore((state) => state.toggleEditMode);
+  const edited = useStore((state) => state.editedMaps.has(state.mapId));
+  const openNodeEditor = useStore((state) => state.openNodeEditor);
+  const revertMap = useStore((state) => state.revertMap);
+
   const [revertOpen, setRevertOpen] = useState(false);
 
-  if (surface !== "atlas" || mode === "paths" || !map) return null;
+  if (surface !== "atlas" || mode === "paths" || !map) {
+    return null;
+  }
 
   return (
     <>
       <div className="shell-context">
         <Button
           variant="ghost"
-          className={cn("h-10 gap-1.5 rounded-full px-3 has-[>svg]:px-3", editMode ? "text-primary-text" : "text-muted-foreground")}
+          className={cn(
+            `
+              h-9 gap-1.5 rounded-full px-2.5
+              hover:bg-accent
+              active:bg-secondary
+              has-[>svg]:px-2.5
+            `,
+            editMode ? "bg-primary/10 text-primary-text" : "text-muted-foreground hover:text-foreground",
+          )}
           onClick={() => {
-            if (!editMode) setMode("explore");
+            if (!editMode) {
+              setMode("explore");
+            }
+
             toggleEditMode();
           }}
           aria-pressed={editMode}
           aria-label={edited ? "Edit mode, local changes" : "Edit mode"}
           title="Edit map"
         >
-          <Pencil className="size-[17px]" />
+          <Pencil className="size-4" />
+
           <span className="shell-nav-label">Edit</span>
+
           {edited && <span className="size-1.5 rounded-full bg-primary" aria-hidden />}
         </Button>
+
         {editMode && (
           <>
             <Button
               variant="ghost"
               size="icon"
-              className="size-10 rounded-full text-muted-foreground"
+              className="
+                size-9 rounded-full
+                text-muted-foreground
+                hover:bg-accent hover:text-foreground
+                active:bg-secondary
+              "
               aria-label="New concept"
               title="New concept"
-              onClick={() => openNodeEditor({ mode: "create" })}
+              onClick={() => {
+                openNodeEditor({
+                  mode: "create",
+                });
+              }}
             >
-              <Plus className="size-[17px]" />
+              <Plus className="size-4" />
             </Button>
+
             {edited && (
               <Button
                 variant="ghost"
                 size="icon"
-                className="size-10 rounded-full text-muted-foreground"
+                className="
+                  size-9 rounded-full
+                  text-muted-foreground
+                  hover:bg-accent hover:text-foreground
+                  active:bg-secondary
+                "
                 aria-label="Revert edits"
                 title="Revert edits"
-                onClick={() => setRevertOpen(true)}
+                onClick={() => {
+                  setRevertOpen(true);
+                }}
               >
-                <RotateCcw className="size-[17px]" />
+                <RotateCcw className="size-4" />
               </Button>
             )}
           </>
         )}
       </div>
+
       <ConfirmDialog
         open={revertOpen}
         onOpenChange={setRevertOpen}
         title="Revert local edits?"
-        description={<>This restores “{map.data.label || mapId}” to its last saved version. Your local changes can’t be recovered.</>}
+        description={
+          <>
+            This restores “{map.data.label || mapId}” to its last saved version. Your local changes can’t be recovered.
+          </>
+        }
         confirmLabel="Revert"
         destructive
         icon={<RotateCcw className="size-6" />}
@@ -281,44 +439,62 @@ function EditControls() {
 }
 
 function ThemeToggle() {
-  const theme = useStore((s) => s.theme);
-  const setTheme = useStore((s) => s.setTheme);
+  const theme = useStore((state) => state.theme);
+  const setTheme = useStore((state) => state.setTheme);
+
   const dark = schemeFor(theme) === "dark";
+
   return (
     <Button
       variant="ghost"
       size="icon"
-      className="shell-theme size-10 rounded-full text-muted-foreground"
-      onClick={() => setTheme(siblingOf(theme))}
+      className="
+        shell-theme size-9 rounded-full
+        text-muted-foreground
+        hover:bg-accent hover:text-foreground
+        active:bg-secondary
+      "
+      onClick={() => {
+        setTheme(siblingOf(theme));
+      }}
       aria-label={dark ? "Switch to light appearance" : "Switch to dark appearance"}
       title={dark ? "Light appearance" : "Dark appearance"}
     >
-      {dark ? <Sun className="size-[17px]" /> : <Moon className="size-[17px]" />}
+      {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
     </Button>
   );
 }
 
 function AtlasPathControls() {
-  const surface = useStore((s) => s.surface);
-  const mode = useStore((s) => s.mode);
-  const sequenceLength = useStore((s) => s.routeSequence.length);
-  const tourIndex = useStore((s) => s.tourIndex);
-  const startTour = useStore((s) => s.startTour);
-  const tourStep = useStore((s) => s.tourStep);
-  const endTour = useStore((s) => s.endTour);
+  const surface = useStore((state) => state.surface);
+  const mode = useStore((state) => state.mode);
+  const sequenceLength = useStore((state) => state.routeSequence.length);
+  const tourIndex = useStore((state) => state.tourIndex);
+  const startTour = useStore((state) => state.startTour);
+  const tourStep = useStore((state) => state.tourStep);
+  const endTour = useStore((state) => state.endTour);
 
-  if (surface !== "atlas" || mode !== "paths" || sequenceLength === 0) return null;
+  if (surface !== "atlas" || mode !== "paths" || sequenceLength === 0) {
+    return null;
+  }
 
   if (tourIndex === null) {
     return (
       <div className="shell-context">
         <Button
           variant="ghost"
-          className="h-10 gap-1.5 rounded-full px-3 text-muted-foreground has-[>svg]:px-3"
+          className="
+            h-9 gap-1.5 rounded-full px-2.5
+            text-muted-foreground
+            hover:bg-accent hover:text-foreground
+            active:bg-secondary
+            has-[>svg]:px-2.5
+          "
           onClick={startTour}
           title="Start guided tour"
         >
-          <Play className="size-[17px]" />
+          <Play className="size-4" />
+
           <span className="shell-nav-label">Start tour</span>
         </Button>
       </div>
@@ -330,43 +506,68 @@ function AtlasPathControls() {
       <span className="px-1.5 font-mono text-caption tabular-nums text-muted-foreground">
         {tourIndex + 1}/{sequenceLength}
       </span>
+
       <Button
         variant="ghost"
         size="icon"
-        className="size-10 rounded-full text-muted-foreground"
-        onClick={() => tourStep(-1)}
+        className="
+          size-9 rounded-full
+          text-muted-foreground
+          hover:bg-accent hover:text-foreground
+          active:bg-secondary
+        "
+        onClick={() => {
+          tourStep(-1);
+        }}
         disabled={tourIndex === 0}
         aria-label="Previous tour step"
       >
-        <ChevronLeft className="size-[17px]" />
+        <ChevronLeft className="size-4" />
       </Button>
+
       <Button
         variant="ghost"
         size="icon"
-        className="size-10 rounded-full text-muted-foreground"
-        onClick={() => tourStep(1)}
+        className="
+          size-9 rounded-full
+          text-muted-foreground
+          hover:bg-accent hover:text-foreground
+          active:bg-secondary
+        "
+        onClick={() => {
+          tourStep(1);
+        }}
         disabled={tourIndex >= sequenceLength - 1}
         aria-label="Next tour step"
       >
-        <ChevronRight className="size-[17px]" />
+        <ChevronRight className="size-4" />
       </Button>
+
       <Button
         variant="ghost"
         size="icon"
-        className="size-10 rounded-full text-muted-foreground"
+        className="
+          size-9 rounded-full
+          text-muted-foreground
+          hover:bg-accent hover:text-foreground
+          active:bg-secondary
+        "
         onClick={endTour}
         aria-label="End guided tour"
       >
-        <CircleStop className="size-[17px]" />
+        <CircleStop className="size-4" />
       </Button>
     </div>
   );
 }
 
 function ProductContextControls() {
-  const surface = useStore((s) => s.surface);
+  const surface = useStore((state) => state.surface);
   const actions = useShellActions(surface);
-  if (!actions.length) return null;
+
+  if (!actions.length) {
+    return null;
+  }
 
   return (
     <div className="shell-context" aria-label="Page actions">
@@ -375,7 +576,13 @@ function ProductContextControls() {
           key={id}
           variant="ghost"
           className={cn(
-            "h-10 gap-1.5 rounded-full px-3 text-muted-foreground has-[>svg]:px-3",
+            `
+                h-9 gap-1.5 rounded-full px-2.5
+                text-muted-foreground
+                hover:bg-accent hover:text-foreground
+                active:bg-secondary
+                has-[>svg]:px-2.5
+              `,
             pressed && "bg-primary/10 text-primary-text",
             status && "text-success",
           )}
@@ -385,7 +592,8 @@ function ProductContextControls() {
           aria-pressed={pressed}
           title={label}
         >
-          <Icon className="size-[17px]" />
+          <Icon className="size-4" />
+
           <span className="shell-nav-label">{label}</span>
         </Button>
       ))}
@@ -400,7 +608,9 @@ export function TopChrome() {
         <Surface material="regular" className="shell-top-surface">
           <div className="shell-leading">
             <Brand />
+
             <span className="shell-divider" aria-hidden />
+
             <FieldMenu />
           </div>
 
@@ -409,15 +619,20 @@ export function TopChrome() {
           </div>
 
           <div className="shell-desktop-nav justify-self-end">
-            <Surface material="ultrathin" specular={false} className="rounded-full p-0.5 shadow-none">
-              <SurfaceNav />
-            </Surface>
+            <div className="shell-desktop-nav justify-self-end">
+              <Surface material="ultrathin" specular={false} className="rounded-full p-0.5 shadow-none">
+                <SurfaceNav />
+              </Surface>
+            </div>
           </div>
 
           <div className="shell-trailing">
             <EditControls />
             <AtlasPathControls />
             <ProductContextControls />
+
+            <span className="shell-divider shell-divider--trailing" aria-hidden />
+
             <ThemeToggle />
             <UserMenu showLabel />
           </div>

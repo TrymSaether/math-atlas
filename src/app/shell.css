@@ -9,38 +9,56 @@
   --shell-top-h: 52px;
   --shell-dock-top: calc(var(--shell-edge) + var(--shell-top-h) + 10px);
   --shell-content-bottom: var(--shell-edge);
+
   --shell-sidebar-w: 280px;
   --shell-panel-gap: 8px;
+
   --shell-sidebar-occupied: 0px;
   --shell-sidebar-gap-occupied: 0px;
   --shell-panel-occupied: 0px;
   --shell-panel-gap-occupied: 0px;
+
   --shell-canvas-left: calc(
-    var(--shell-edge) + var(--shell-sidebar-occupied) + var(--shell-sidebar-gap-occupied) +
-      var(--shell-panel-occupied) + var(--shell-panel-gap-occupied)
+    var(--shell-edge) +
+    var(--shell-sidebar-occupied) +
+    var(--shell-sidebar-gap-occupied) +
+    var(--shell-panel-occupied) +
+    var(--shell-panel-gap-occupied)
   );
+
   --shell-canvas-right: var(--shell-edge);
 }
 
 .shell-topbar {
   position: absolute;
-  inset: var(--shell-edge) var(--shell-edge) auto;
+  inset: max(var(--shell-edge), env(safe-area-inset-top)) max(var(--shell-edge), env(safe-area-inset-right)) auto
+    max(var(--shell-edge), env(safe-area-inset-left));
+
   z-index: var(--z-shell-raised);
   pointer-events: none;
 }
 
 .shell-top-surface {
+  position: relative;
+
   display: grid;
-  grid-template-columns: minmax(220px, auto) minmax(220px, 520px) minmax(0, 1fr) auto;
+  grid-template-columns:
+    minmax(220px, auto)
+    minmax(0, 1fr)
+    auto;
+
   align-items: center;
   gap: 10px;
+
   min-height: var(--shell-top-h);
   padding: 5px 6px;
-  border-radius: 26px;
+
+  border-radius: var(--radius-xl);
   pointer-events: auto;
 }
 
 .shell-leading,
+.shell-desktop-nav,
 .shell-trailing,
 .shell-context {
   display: flex;
@@ -49,12 +67,23 @@
 }
 
 .shell-leading {
+  grid-column: 1;
   gap: 2px;
 }
 
+.shell-desktop-nav {
+  grid-column: 2;
+  justify-self: end;
+}
+
 .shell-trailing {
+  grid-column: 3;
   justify-content: flex-end;
   gap: 3px;
+}
+
+.shell-context {
+  gap: 1px;
 }
 
 .shell-context:empty {
@@ -62,15 +91,42 @@
 }
 
 .shell-divider {
-  width: 1px;
-  height: 22px;
-  margin: 0 3px;
-  background: var(--border);
+  width: 0.5px;
+  height: 18px;
+  margin-inline: 4px;
+  flex: none;
+
+  background: var(--separator);
+  opacity: 0.72;
 }
 
+/*
+ * Geometrically center the command palette within the complete top surface,
+ * independently of the unequal leading and trailing control groups.
+ */
 .shell-search {
-  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+
+  width: clamp(280px, 32vw, 520px);
   min-width: 0;
+
+  transform: translate(-50%, -50%);
+}
+
+/*
+ * Preserve the slightly raised search treatment, but keep it quieter than
+ * the segmented product control and outer glass surface.
+ */
+.shell-search > * {
+  width: 100%;
+
+  box-shadow:
+    0 0 0 0.5px var(--surface-border),
+    0 1px 2px rgba(0, 0, 0, 0.045),
+    0 3px 8px rgba(0, 0, 0, 0.035);
 }
 
 .shell-mobile-nav {
@@ -78,15 +134,16 @@
 }
 
 .shell-popover-present {
-  transform-origin: top;
+  transform-origin: top center;
   animation: shell-popover-present var(--duration-base) var(--ease-apple);
 }
 
 @keyframes shell-popover-present {
   from {
     opacity: 0;
-    transform: translateY(-5px) scale(0.98);
+    transform: translateY(-3px) scale(0.992);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -96,8 +153,9 @@
 @keyframes shell-sheet-present {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(16px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -107,18 +165,20 @@
 .shell-atlas-sidebar {
   top: var(--shell-dock-top);
   bottom: var(--shell-content-bottom);
-  left: var(--shell-edge);
+  left: max(var(--shell-edge), env(safe-area-inset-left));
+
   width: var(--shell-sidebar-w);
 }
 
 .shell-sidebar-reveal {
   top: var(--shell-dock-top);
-  left: var(--shell-edge);
+  left: max(var(--shell-edge), env(safe-area-inset-left));
 }
 
 .shell-canvas-stage {
   position: absolute;
   inset: var(--shell-dock-top) var(--shell-canvas-right) var(--shell-content-bottom) var(--shell-canvas-left);
+
   overflow: hidden;
   border-radius: var(--radius-lg);
 }
@@ -127,22 +187,66 @@
   position: absolute;
   top: var(--shell-dock-top);
   bottom: var(--shell-content-bottom);
-  left: var(--shell-edge);
+  left: max(var(--shell-edge), env(safe-area-inset-left));
+
   z-index: var(--z-shell);
+
   width: 340px;
-  max-width: calc(100vw - 20px);
+  max-width: calc(100vw - 2 * var(--shell-edge));
+
   overflow: hidden;
   border-radius: var(--radius-lg);
   pointer-events: auto;
 }
 
+/*
+ * Stop using absolute centering before the command palette can collide with
+ * navigation or account controls. It becomes a normal grid column here.
+ */
+@media (max-width: 1320px) {
+  .shell-top-surface {
+    grid-template-columns:
+      minmax(190px, auto)
+      minmax(180px, 1fr)
+      auto
+      auto;
+  }
+
+  .shell-leading {
+    grid-column: 1;
+  }
+
+  .shell-search {
+    position: static;
+    grid-column: 2;
+
+    width: 100%;
+    transform: none;
+  }
+
+  .shell-desktop-nav {
+    grid-column: 3;
+  }
+
+  .shell-trailing {
+    grid-column: 4;
+  }
+
+  .shell-nav-label {
+    display: none;
+  }
+}
+
 @media (max-width: 1180px) {
   .shell-top-surface {
-    grid-template-columns: minmax(190px, auto) minmax(180px, 1fr) auto auto;
+    grid-template-columns:
+      minmax(170px, auto)
+      minmax(160px, 1fr)
+      auto
+      auto;
   }
 
   .shell-brand-copy,
-  .shell-nav-label,
   .shell-account-label {
     display: none;
   }
@@ -152,17 +256,31 @@
   :root {
     --shell-edge: 10px;
     --shell-top-h: 48px;
-    --shell-dock-top: 68px;
-    --shell-content-bottom: 74px;
+
+    --shell-dock-top: calc(max(var(--shell-edge), env(safe-area-inset-top)) + var(--shell-top-h) + 10px);
+
+    --shell-content-bottom: calc(64px + max(var(--shell-edge), env(safe-area-inset-bottom)));
+
     --shell-canvas-left: var(--shell-edge);
+    --shell-canvas-right: var(--shell-edge);
+  }
+
+  .shell-topbar {
+    position: fixed;
   }
 
   .shell-top-surface {
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-columns:
+      auto
+      minmax(0, 1fr)
+      auto
+      auto;
+
     gap: 2px;
     min-height: var(--shell-top-h);
     padding: 4px;
-    border-radius: 24px;
+
+    border-radius: var(--radius-xl);
   }
 
   .shell-leading {
@@ -177,8 +295,15 @@
   }
 
   .shell-search {
+    position: static;
     grid-column: 3;
+
     width: 40px;
+    transform: none;
+  }
+
+  .shell-search > * {
+    box-shadow: none;
   }
 
   .shell-search-copy,
@@ -191,49 +316,62 @@
   }
 
   .shell-mobile-nav {
-    position: absolute;
-    right: var(--shell-edge);
+    position: fixed;
+    right: max(var(--shell-edge), env(safe-area-inset-right));
     bottom: max(var(--shell-edge), env(safe-area-inset-bottom));
-    left: var(--shell-edge);
+    left: max(var(--shell-edge), env(safe-area-inset-left));
+
     z-index: var(--z-shell-raised);
+
     display: block;
     pointer-events: auto;
   }
 
   .shell-mobile-nav > .surface {
-    margin: 0 auto;
     width: min(100%, 430px);
+    margin-inline: auto;
     padding: 4px;
-    border-radius: 24px;
+
+    border-radius: var(--radius-xl);
   }
 
   .shell-atlas-sidebar {
-    right: var(--shell-edge);
+    right: max(var(--shell-edge), env(safe-area-inset-right));
+    left: max(var(--shell-edge), env(safe-area-inset-left));
+
     width: auto;
   }
 
   .shell-sandbox-panel {
     position: fixed;
-    inset: max(var(--shell-dock-top), 18dvh) var(--shell-edge) var(--shell-content-bottom);
+    inset: max(var(--shell-dock-top), 18dvh) max(var(--shell-edge), env(safe-area-inset-right))
+      var(--shell-content-bottom) max(var(--shell-edge), env(safe-area-inset-left));
+
     width: auto;
     max-width: none;
-    border-radius: 24px;
+
+    border-radius: var(--radius-xl);
   }
 
   .shell-field-popover {
     position: fixed;
-    inset: auto var(--shell-edge) var(--shell-content-bottom);
+    inset: auto max(var(--shell-edge), env(safe-area-inset-right)) var(--shell-content-bottom)
+      max(var(--shell-edge), env(safe-area-inset-left));
+
     width: auto;
     max-height: min(70dvh, 560px);
-    transform-origin: bottom;
-    border-radius: 24px;
+
+    transform-origin: bottom center;
+    border-radius: var(--radius-xl);
+
     animation-name: shell-sheet-present;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .shell-top-surface,
-  .shell-popover-present {
+  .shell-popover-present,
+  .shell-field-popover {
     transition: none;
     animation: none;
   }
