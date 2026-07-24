@@ -171,72 +171,74 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
 
   return (
     <div className="absolute inset-x-0 top-[var(--shell-dock-top)] bottom-[var(--shell-content-bottom)] flex flex-col items-center px-4 pb-4">
-      <div className="flex w-full max-w-170 flex-1 flex-col">
-        {/* Deck scope + card direction */}
-        <div className="mb-2 flex flex-wrap items-center gap-1.5">
-          {scoped ? (
-            <span className="inline-flex min-h-(--control-h-sm) items-center gap-1.5 rounded-sm border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-caption-1 font-medium text-primary-text">
-              Practicing: <MathText text={scoped.title} />
-              <span className="font-mono opacity-70">{total}</span>
-              <button
-                type="button"
-                onClick={() => setScoped(null)}
-                aria-label="Back to full deck"
-                title="Back to full deck"
-                className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-primary/20"
+      <div className="my-auto flex h-full max-h-[720px] w-full max-w-170 flex-col">
+        <div className="mb-3 rounded-xl border border-border bg-card p-2.5 shadow-[var(--shadow-e1)]">
+          {/* Deck scope + card direction */}
+          <div className="flex flex-wrap items-center gap-1.5">
+            {scoped ? (
+              <span className="inline-flex min-h-(--control-h-sm) items-center gap-1.5 rounded-sm border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-caption-1 font-medium text-primary-text">
+                Practicing: <MathText text={scoped.title} />
+                <span className="font-mono opacity-70">{total}</span>
+                <button
+                  type="button"
+                  onClick={() => setScoped(null)}
+                  aria-label="Back to full deck"
+                  title="Back to full deck"
+                  className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-primary/20"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </span>
+            ) : (
+              <div className="flex items-center gap-1.5" role="group" aria-label="Deck scope">
+                <Chip active={scope === "all"} onClick={() => setScope("all")}>
+                  All <span className="font-mono text-caption-2 opacity-70">{scopeCounts.all}</span>
+                </Chip>
+                <Chip active={scope === "due"} onClick={() => setScope("due")}>
+                  Due <span className="font-mono text-caption-2 opacity-70">{scopeCounts.due}</span>
+                </Chip>
+                <Chip active={scope === "learning"} onClick={() => setScope("learning")}>
+                  Learning <span className="font-mono text-caption-2 opacity-70">{scopeCounts.learning}</span>
+                </Chip>
+              </div>
+            )}
+            <div className="ml-auto flex items-center gap-1.5" role="group" aria-label="Card direction">
+              <Chip
+                variant="mono"
+                active={direction === "term"}
+                onClick={() => setDirection("term")}
+                title="Show the name and recall the statement"
               >
-                <X className="h-3 w-3" />
-              </button>
-            </span>
-          ) : (
-            <div className="flex items-center gap-1.5" role="group" aria-label="Deck scope">
-              <Chip active={scope === "all"} onClick={() => setScope("all")}>
-                All <span className="font-mono text-caption-2 opacity-70">{scopeCounts.all}</span>
+                {DIRECTION_LABEL.term}
               </Chip>
-              <Chip active={scope === "due"} onClick={() => setScope("due")}>
-                Due <span className="font-mono text-caption-2 opacity-70">{scopeCounts.due}</span>
-              </Chip>
-              <Chip active={scope === "learning"} onClick={() => setScope("learning")}>
-                Learning <span className="font-mono text-caption-2 opacity-70">{scopeCounts.learning}</span>
+              <Chip
+                variant="mono"
+                active={direction === "statement"}
+                onClick={() => setDirection("statement")}
+                title="Show the statement and recall the name"
+              >
+                {DIRECTION_LABEL.statement}
               </Chip>
             </div>
-          )}
-          <div className="ml-auto flex items-center gap-1.5" role="group" aria-label="Card direction">
-            <Chip
-              variant="mono"
-              active={direction === "term"}
-              onClick={() => setDirection("term")}
-              title="Show the name and recall the statement"
-            >
-              {DIRECTION_LABEL.term}
-            </Chip>
-            <Chip
-              variant="mono"
-              active={direction === "statement"}
-              onClick={() => setDirection("statement")}
-              title="Show the statement and recall the name"
-            >
-              {DIRECTION_LABEL.statement}
-            </Chip>
           </div>
-        </div>
 
-        {/* Progress rail */}
-        <div className="mb-3 flex items-center gap-3">
-          <ProgressRail order={order} ratings={run.ratings} pos={run.pos} onJump={(i) => drill().go(i)} />
-          <span className="shrink-0 font-mono text-caption-2 text-muted-foreground">
-            {total ? Math.min(run.pos + 1, total) : 0}/{total}
-          </span>
-          <button
-            type="button"
-            onClick={reshuffle}
-            disabled={total === 0}
-            className="flex h-7 items-center gap-1.5 rounded-sm border border-border bg-card px-2.5 text-caption-1 font-medium text-muted-foreground transition-colors hover:bg-secondary disabled:opacity-40"
-            title="Shuffle and restart"
-          >
-            <Shuffle className="h-3 w-3" />
-            Shuffle
-          </button>
+          {/* Progress rail */}
+          <div className="mt-2.5 flex items-center gap-3">
+            <ProgressRail order={order} ratings={run.ratings} pos={run.pos} onJump={(i) => drill().go(i)} />
+            <span className="shrink-0 font-mono text-caption-2 text-muted-foreground">
+              {total ? Math.min(run.pos + 1, total) : 0}/{total}
+            </span>
+            <button
+              type="button"
+              onClick={reshuffle}
+              disabled={total === 0}
+              className="flex h-7 items-center gap-1.5 rounded-sm border border-border bg-card px-2.5 text-caption-1 font-medium text-muted-foreground transition-colors hover:bg-secondary disabled:opacity-40"
+              title="Shuffle and restart"
+            >
+              <Shuffle className="h-3 w-3" />
+              Shuffle
+            </button>
+          </div>
         </div>
 
         {total === 0 ? (

@@ -77,6 +77,7 @@ export function AppShell() {
   const ensureMapLoaded = useStore((s) => s.ensureMapLoaded);
   const surface = useStore((s) => s.surface);
   const mode = useStore((s) => s.mode);
+  const selectedId = useStore((s) => s.selectedId);
   const editMode = useStore((s) => s.editMode);
   const reduceMotion = useReducedMotion();
 
@@ -91,7 +92,13 @@ export function AppShell() {
   }, [map]);
 
   return (
-    <div className="relative h-dvh w-screen overflow-hidden bg-background text-foreground" data-surface={surface}>
+    <div
+      className="relative h-dvh w-screen overflow-hidden bg-background text-foreground"
+      data-surface={surface}
+      data-canvas-panel-open={
+        surface === "atlas" && (mode === "paths" || selectedId !== null || editMode) ? "" : undefined
+      }
+    >
       <Background />
       <ShellLayoutController />
       <SessionBridge />

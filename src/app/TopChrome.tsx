@@ -48,7 +48,7 @@ function Brand() {
     <Button
       variant="ghost"
       className="
-        h-9 min-w-0 rounded-full px-2
+        h-10 min-w-0 rounded-full px-2
         text-foreground
         hover:bg-accent
         active:bg-secondary
@@ -158,7 +158,7 @@ function FieldMenu() {
         ref={triggerRef}
         variant="ghost"
         className="
-          h-9 w-full max-w-[220px] min-w-0
+          h-10 w-full max-w-[220px] min-w-0
           gap-1 rounded-full px-2.5
           text-footnote font-medium text-foreground
           hover:bg-accent
@@ -184,6 +184,7 @@ function FieldMenu() {
       {open && (
         <Surface
           material="thick"
+          elevation="overlay"
           className="
             shell-field-popover shell-popover-present
             absolute top-[calc(100%+8px)] left-0
@@ -357,7 +358,7 @@ function EditControls() {
           variant="ghost"
           className={cn(
             `
-              h-9 gap-1.5 rounded-full px-2.5 text-footnote font-medium
+              h-10 gap-1.5 rounded-full px-2.5 text-footnote font-medium
               hover:bg-accent
               active:bg-secondary
               has-[>svg]:px-2.5
@@ -388,7 +389,7 @@ function EditControls() {
               variant="ghost"
               size="icon"
               className="
-                size-9 rounded-full
+                h-10 w-10 rounded-full
                 text-muted-foreground
                 hover:bg-accent hover:text-foreground
                 active:bg-secondary
@@ -409,7 +410,7 @@ function EditControls() {
                 variant="ghost"
                 size="icon"
                 className="
-                  size-9 rounded-full
+                  h-10 w-10 rounded-full
                   text-muted-foreground
                   hover:bg-accent hover:text-foreground
                   active:bg-secondary
@@ -458,7 +459,7 @@ function ThemeToggle() {
       variant="ghost"
       size="icon"
       className="
-        shell-theme size-9 rounded-full
+        shell-theme h-10 w-10 rounded-full
         text-muted-foreground
         hover:bg-accent hover:text-foreground
         active:bg-secondary
@@ -493,7 +494,7 @@ function AtlasPathControls() {
         <Button
           variant="ghost"
           className="
-            h-9 gap-1.5 rounded-full px-2.5 text-footnote font-medium
+            h-10 gap-1.5 rounded-full px-2.5 text-footnote font-medium
             text-muted-foreground
             hover:bg-accent hover:text-foreground
             active:bg-secondary
@@ -520,7 +521,7 @@ function AtlasPathControls() {
         variant="ghost"
         size="icon"
         className="
-          size-9 rounded-full
+          h-10 w-10 rounded-full
           text-muted-foreground
           hover:bg-accent hover:text-foreground
           active:bg-secondary
@@ -538,7 +539,7 @@ function AtlasPathControls() {
         variant="ghost"
         size="icon"
         className="
-          size-9 rounded-full
+          h-10 w-10 rounded-full
           text-muted-foreground
           hover:bg-accent hover:text-foreground
           active:bg-secondary
@@ -556,7 +557,7 @@ function AtlasPathControls() {
         variant="ghost"
         size="icon"
         className="
-          size-9 rounded-full
+          h-10 w-10 rounded-full
           text-muted-foreground
           hover:bg-accent hover:text-foreground
           active:bg-secondary
@@ -586,7 +587,7 @@ function ProductContextControls() {
           variant="ghost"
           className={cn(
             `
-                h-9 gap-1.5 rounded-full px-2.5 text-footnote font-medium
+                h-10 gap-1.5 rounded-full px-2.5 text-footnote font-medium
                 text-muted-foreground
                 hover:bg-accent hover:text-foreground
                 active:bg-secondary

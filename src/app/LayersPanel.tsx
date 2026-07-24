@@ -122,15 +122,12 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
     <Surface
       id="atlas-filters"
       material="regular"
+      elevation="overlay"
       role="dialog"
       aria-label="Filters and display"
-      className="flex max-h-[min(78vh,580px)] w-[320px] flex-col max-[820px]:w-full max-[820px]:rounded-[var(--radius-xl)]"
+      className="flex max-h-[min(78vh,580px)] w-[320px] flex-col max-[820px]:max-h-[calc(100dvh-var(--shell-dock-top)-var(--shell-content-bottom)-10px)] max-[820px]:w-full max-[820px]:rounded-[var(--radius-xl)]"
     >
-      <span
-        aria-hidden
-        className="absolute top-1.5 left-1/2 hidden h-1 w-8 -translate-x-1/2 rounded-full bg-muted-foreground/35 max-[820px]:block"
-      />
-      <header className="flex items-center justify-between px-3.5 pt-3 pb-1.5 max-[820px]:pt-4">
+      <header className="flex items-center justify-between px-3.5 pt-3 pb-1.5">
         <span className="text-headline font-semibold text-foreground">Filters</span>
         <Button
           variant="ghost"

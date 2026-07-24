@@ -76,7 +76,7 @@ export function ExpressionPanel() {
       <button
         type="button"
         onClick={() => addRow()}
-        className="flex items-center gap-2 border-t border-border px-3.5 py-2.5 text-footnote font-medium text-muted-foreground transition-colors hover:bg-foreground/[0.06] hover:text-foreground"
+        className="flex min-h-11 items-center gap-2 border-t border-border bg-primary/[0.06] px-3.5 py-2.5 text-footnote font-semibold text-primary-text transition-colors hover:bg-primary/[0.11]"
       >
         <Plus size={14} />
         New expression

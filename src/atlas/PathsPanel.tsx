@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ArrowUpDown, Check, ChevronLeft, ChevronRight, Flag, MapPin, Network, Play, Route, X } from "lucide-react";
+import { ArrowUpDown, ChevronLeft, ChevronRight, Flag, MapPin, Network, Play, Route, X } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useStore } from "@/app/store";
 import { useRouteResult } from "./route";
@@ -8,6 +8,7 @@ import { getDomainTone } from "./colors";
 import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
+import { Switch } from "@/ui/switch";
 import { spring, Surface } from "@/design";
 import { useMediaQuery } from "@/app/useMediaQuery";
 
@@ -95,6 +96,7 @@ export function PathsPanel() {
     <motion.aside
       data-shell-context-panel=""
       className="ds-panel ds-panel--left w-[min(360px,calc(100vw-24px))] max-[820px]:w-auto"
+      style={!hasGoal && !mobile ? { bottom: "auto" } : undefined}
       initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
       animate={{ opacity: 1, x: 0, y: 0 }}
       exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
@@ -102,9 +104,13 @@ export function PathsPanel() {
     >
       <Surface
         material="thick"
+        elevation="raised"
         role="region"
         aria-label="Paths"
-        className="flex h-full flex-col max-[820px]:rounded-[var(--radius-xl)]"
+        className={cn(
+          "flex flex-col max-[820px]:rounded-[var(--radius-xl)]",
+          hasGoal ? "h-full" : "max-h-[min(620px,calc(100dvh-var(--shell-dock-top)-var(--shell-content-bottom)))]",
+        )}
       >
         <header className="flex items-center justify-between gap-3 pt-3.5 pr-3.5 pb-2.5 pl-[1.125rem]">
           <h2 className="text-title-3 font-semibold text-foreground">Paths</h2>
@@ -183,20 +189,15 @@ export function PathsPanel() {
             )}
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              aria-pressed={includeProof}
-              onClick={() => setIncludeProof(!includeProof)}
-              className={cn(
-                "inline-flex min-h-(--control-h-md) items-center gap-1.5 rounded-full px-3 text-caption font-medium transition-colors",
-                includeProof ? "bg-primary/10 text-primary-text" : "bg-muted text-foreground hover:bg-accent",
-              )}
-            >
-              {includeProof && <Check className="size-3.5" />}
-              Proof prerequisites
-            </button>
-          </div>
+          <label className="flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md bg-muted/60 px-3 py-2 text-footnote text-foreground">
+            <span>
+              <span className="block font-medium">Proof prerequisites</span>
+              <span className="block text-caption-2 text-muted-foreground">
+                Include dependencies used inside proofs
+              </span>
+            </span>
+            <Switch checked={includeProof} onCheckedChange={setIncludeProof} />
+          </label>
 
           {noPath && (
             <p className="rounded-md bg-muted px-3 py-2.5 text-footnote text-foreground">

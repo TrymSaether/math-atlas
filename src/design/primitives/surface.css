@@ -89,6 +89,27 @@
   }
 
   /*
+   * Material controls optical density; elevation controls spatial hierarchy.
+   * Keeping them independent prevents a denser sheet from accidentally reading
+   * at the same height as fixed shell chrome.
+   */
+  .surface--elevation-raised {
+    box-shadow: var(--glass-shadow-floating);
+  }
+
+  .surface--elevation-overlay {
+    box-shadow: var(--glass-shadow-overlay);
+  }
+
+  .surface--chrome.surface--elevation-raised {
+    box-shadow: var(--surface-shadow-raised);
+  }
+
+  .surface--chrome.surface--elevation-overlay {
+    box-shadow: var(--shadow-e5);
+  }
+
+  /*
    * Keep canvas motion responsive. Translucency returns after the graph
    * movement debounce clears the root marker.
    */

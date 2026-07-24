@@ -183,7 +183,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-background text-foreground">
-      <div className="absolute inset-x-0 top-(--shell-dock-top) bottom-[var(--shell-content-bottom)] grid grid-cols-[minmax(300px,360px)_minmax(0,1fr)] max-[860px]:grid-cols-1">
+      <div className="absolute right-[var(--shell-edge)] bottom-[var(--shell-content-bottom)] left-[var(--shell-edge)] top-(--shell-dock-top) grid grid-cols-[minmax(300px,360px)_minmax(0,1fr)] overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card shadow-[var(--shadow-e1)] max-[860px]:grid-cols-1">
         {/* ---- Index column ---- */}
         <aside
           className={`relative flex min-h-0 flex-col border-r border-border bg-muted ${mobileDetail ? "max-[860px]:hidden" : ""}`}
@@ -214,7 +214,11 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
             </div>
 
             {domainCounts.length > 1 && (
-              <div className="mt-2.5 flex flex-wrap items-center gap-1.5" role="group" aria-label="Filter by domain">
+              <div
+                className="mt-2.5 flex items-center gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                role="group"
+                aria-label="Filter by domain"
+              >
                 {domainCounts.map((d) => {
                   const tone = getDomainTone(d.id);
                   const active = topics.has(d.id);
@@ -222,7 +226,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                     <button
                       key={d.id}
                       type="button"
-                      className="inline-flex min-h-(--control-h-xs) max-w-full items-center gap-1.5 rounded-sm border border-border bg-card px-2 py-[3px] text-caption-2 font-medium text-muted-foreground transition hover:border-input max-[860px]:min-h-(--control-h-sm)"
+                      className="inline-flex min-h-(--control-h-xs) shrink-0 items-center gap-1.5 rounded-sm border border-border bg-card px-2 py-[3px] text-caption-2 font-medium text-muted-foreground transition hover:border-input max-[860px]:min-h-(--control-h-sm)"
                       aria-pressed={active}
                       onClick={() => toggleTopic(d.id)}
                       style={
@@ -237,7 +241,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                       title={d.label}
                     >
                       <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: tone.color }} />
-                      <span className="max-w-[12ch] overflow-hidden text-ellipsis whitespace-nowrap">{d.label}</span>
+                      <span className="whitespace-nowrap">{d.label}</span>
                       <span className="font-mono text-caption-2 opacity-70">{d.count}</span>
                     </button>
                   );
@@ -391,7 +395,9 @@ function IndexRow({
     <button
       type="button"
       id={`dict-row-${entry.id}`}
-      className="relative flex min-h-(--control-h-lg) w-full items-center gap-2 rounded-sm border-none bg-transparent py-1.5 pl-3 pr-2.5 text-left [scroll-margin:48px_0] transition-colors hover:bg-accent max-[860px]:min-h-(--control-h-xl)"
+      className={`relative flex min-h-(--control-h-lg) w-full items-center gap-2 rounded-sm border-none bg-transparent py-1.5 pl-3 pr-2.5 text-left [scroll-margin:48px_0] transition-colors max-[860px]:min-h-(--control-h-xl) ${
+        active ? "hover:bg-transparent" : "hover:bg-accent"
+      }`}
       onClick={onClick}
       aria-current={active}
       style={active ? { background: tone.tint } : undefined}

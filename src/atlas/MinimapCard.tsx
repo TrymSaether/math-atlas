@@ -39,7 +39,10 @@ export function MinimapCard({
   const mobileTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!mobileOpen) return;
+    document.documentElement.classList.toggle("atlas-minimap-open", mobileOpen);
+    if (!mobileOpen) {
+      return () => document.documentElement.classList.remove("atlas-minimap-open");
+    }
     const frame = requestAnimationFrame(() => mobileCloseRef.current?.focus());
     const onKeyDown = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Escape") setMobileOpen(false);
@@ -48,6 +51,7 @@ export function MinimapCard({
     return () => {
       cancelAnimationFrame(frame);
       document.removeEventListener("keydown", onKeyDown);
+      document.documentElement.classList.remove("atlas-minimap-open");
       requestAnimationFrame(() => mobileTriggerRef.current?.focus());
     };
   }, [mobileOpen]);
@@ -155,75 +159,75 @@ export function MinimapCard({
 
   const overview = (
     <svg
-        viewBox={`0 0 ${W} ${H}`}
-        width={W}
-        height={H}
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
-        role="button"
-        tabIndex={0}
-        aria-label="Map overview. Click to recenter or use arrow keys to move the viewport."
-        className="block cursor-pointer rounded-[16px] bg-muted shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_68%,transparent)]"
-      >
-        {[...regions.entries()].map(([domainId, region]) => {
-          const tone = getMutedDomainTone(domainId);
-          const a = layout.toMini(region.x, region.y);
-          const b = layout.toMini(region.x + region.width, region.y + region.height);
-          if (region.shape === "circle") {
-            const center = layout.toMini(region.x + region.width / 2, region.y + region.height / 2);
-            return (
-              <circle
-                key={domainId}
-                cx={center.x}
-                cy={center.y}
-                r={Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y)) / 2}
-                fill={tone.tint}
-                stroke={tone.border}
-                strokeWidth={0.75}
-                opacity={0.38}
-              />
-            );
-          }
+      viewBox={`0 0 ${W} ${H}`}
+      width={W}
+      height={H}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label="Map overview. Click to recenter or use arrow keys to move the viewport."
+      className="block cursor-pointer rounded-[16px] bg-muted shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_68%,transparent)]"
+    >
+      {[...regions.entries()].map(([domainId, region]) => {
+        const tone = getMutedDomainTone(domainId);
+        const a = layout.toMini(region.x, region.y);
+        const b = layout.toMini(region.x + region.width, region.y + region.height);
+        if (region.shape === "circle") {
+          const center = layout.toMini(region.x + region.width / 2, region.y + region.height / 2);
           return (
-            <rect
+            <circle
               key={domainId}
-              x={a.x}
-              y={a.y}
-              width={b.x - a.x}
-              height={b.y - a.y}
-              rx={4}
+              cx={center.x}
+              cy={center.y}
+              r={Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y)) / 2}
               fill={tone.tint}
               stroke={tone.border}
               strokeWidth={0.75}
               opacity={0.38}
             />
           );
-        })}
-        <rect
-          x={viewX}
-          y={viewY}
-          width={viewW}
-          height={viewH}
-          rx={5}
-          fill="color-mix(in srgb, var(--primary) 4%, transparent)"
-          stroke="color-mix(in srgb, var(--primary) 72%, var(--card))"
-          strokeWidth={0.95}
-          opacity={0.84}
-        />
-        {points.map((point) => {
-          const p = layout.toMini(point.cx, point.cy);
-          const selected = point.id === selectedId;
-          const tone = getMutedDomainTone(point.domainId);
-          return selected ? (
-            <g key={point.id}>
-              <circle cx={p.x} cy={p.y} r={3.4} fill="var(--card)" opacity={0.94} />
-              <circle cx={p.x} cy={p.y} r={2.2} fill={tone.color} opacity={0.96} />
-              <circle cx={p.x} cy={p.y} r={4.2} fill="none" stroke={tone.color} strokeWidth={0.8} opacity={0.78} />
-            </g>
-          ) : (
-            <circle key={point.id} cx={p.x} cy={p.y} r={1.35} fill={tone.color} opacity={0.66} />
-          );
-        })}
+        }
+        return (
+          <rect
+            key={domainId}
+            x={a.x}
+            y={a.y}
+            width={b.x - a.x}
+            height={b.y - a.y}
+            rx={4}
+            fill={tone.tint}
+            stroke={tone.border}
+            strokeWidth={0.75}
+            opacity={0.38}
+          />
+        );
+      })}
+      <rect
+        x={viewX}
+        y={viewY}
+        width={viewW}
+        height={viewH}
+        rx={5}
+        fill="color-mix(in srgb, var(--primary) 4%, transparent)"
+        stroke="color-mix(in srgb, var(--primary) 72%, var(--card))"
+        strokeWidth={0.95}
+        opacity={0.84}
+      />
+      {points.map((point) => {
+        const p = layout.toMini(point.cx, point.cy);
+        const selected = point.id === selectedId;
+        const tone = getMutedDomainTone(point.domainId);
+        return selected ? (
+          <g key={point.id}>
+            <circle cx={p.x} cy={p.y} r={3.4} fill="var(--card)" opacity={0.94} />
+            <circle cx={p.x} cy={p.y} r={2.2} fill={tone.color} opacity={0.96} />
+            <circle cx={p.x} cy={p.y} r={4.2} fill="none" stroke={tone.color} strokeWidth={0.8} opacity={0.78} />
+          </g>
+        ) : (
+          <circle key={point.id} cx={p.x} cy={p.y} r={1.35} fill={tone.color} opacity={0.66} />
+        );
+      })}
     </svg>
   );
 
@@ -231,6 +235,7 @@ export function MinimapCard({
     <>
       <Surface
         material="regular"
+        data-atlas-minimap-control=""
         className="absolute right-[72px] bottom-[var(--shell-edge)] z-(--z-shell) hidden rounded-[22px] p-1.5 md:block"
       >
         {overview}
@@ -239,6 +244,7 @@ export function MinimapCard({
       {!mobileOpen && (
         <Surface
           material="regular"
+          data-atlas-minimap-control=""
           className="absolute right-[58px] bottom-[var(--shell-edge)] z-(--z-shell) flex size-12 items-center justify-center rounded-full md:hidden"
         >
           <Button
@@ -266,6 +272,7 @@ export function MinimapCard({
           >
             <Surface
               material="thick"
+              elevation="overlay"
               role="dialog"
               aria-label="Map overview"
               className="flex max-h-full flex-col overflow-hidden rounded-t-[28px] p-3"

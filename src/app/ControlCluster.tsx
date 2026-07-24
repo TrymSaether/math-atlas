@@ -6,6 +6,7 @@ import { usePopoverDismiss } from "./usePopover";
 import { FloatingControlButton, FloatingControlDivider, FloatingControlDock } from "@/ui/floating-controls";
 import { spring } from "@/design/motion";
 import { LayersPanel } from "./LayersPanel";
+import { useMediaQuery } from "./useMediaQuery";
 
 export function ControlCluster() {
   const flow = useReactFlow();
@@ -14,6 +15,7 @@ export function ControlCluster() {
   const ref = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
+  const mobile = useMediaQuery("(max-width: 820px)");
   const closeLayers = useCallback(() => {
     setLayersOpen(false);
     requestAnimationFrame(() => triggerRef.current?.focus());
@@ -30,15 +32,22 @@ export function ControlCluster() {
     return () => cancelAnimationFrame(frame);
   }, [layersOpen]);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle("atlas-filters-open", layersOpen);
+    return () => document.documentElement.classList.remove("atlas-filters-open");
+  }, [layersOpen]);
+
   return (
     <div
-      className="pointer-events-none absolute right-[var(--shell-edge)] bottom-[var(--shell-content-bottom)] z-(--z-shell-raised) flex items-end gap-[var(--shell-panel-gap)] max-[820px]:bottom-[var(--shell-content-bottom)]"
+      className={`pointer-events-none absolute right-[var(--shell-edge)] bottom-[var(--shell-content-bottom)] flex items-end gap-[var(--shell-panel-gap)] max-[820px]:bottom-[var(--shell-content-bottom)] ${
+        layersOpen ? "z-(--z-popover)" : "z-(--z-shell-raised)"
+      }`}
       ref={ref}
     >
       <AnimatePresence initial={false}>
         {layersOpen && (
           <motion.div
-            className="pointer-events-auto mb-0.5 origin-bottom-right self-end max-[820px]:fixed max-[820px]:right-[var(--shell-edge)] max-[820px]:bottom-[calc(var(--shell-content-bottom)+56px)] max-[820px]:left-[var(--shell-edge)]"
+            className="pointer-events-auto z-(--z-popover) mb-0.5 origin-bottom-right self-end max-[820px]:fixed max-[820px]:right-[var(--shell-edge)] max-[820px]:bottom-[var(--shell-content-bottom)] max-[820px]:left-[var(--shell-edge)]"
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 8, y: 8, scale: 0.96 }}
             animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 6, y: 6, scale: 0.97 }}
@@ -49,7 +58,12 @@ export function ControlCluster() {
         )}
       </AnimatePresence>
 
-      <FloatingControlDock className="pointer-events-auto" aria-label="Canvas controls">
+      <FloatingControlDock
+        data-canvas-dock=""
+        className="pointer-events-auto"
+        aria-label="Canvas controls"
+        aria-hidden={mobile && layersOpen ? true : undefined}
+      >
         <FloatingControlButton
           ref={triggerRef}
           active={layersOpen}
@@ -66,7 +80,11 @@ export function ControlCluster() {
 
         <FloatingControlDivider />
 
-        <FloatingControlButton aria-label="Zoom in" title="Zoom in" onClick={() => flow.zoomIn({ duration: duration(180) })}>
+        <FloatingControlButton
+          aria-label="Zoom in"
+          title="Zoom in"
+          onClick={() => flow.zoomIn({ duration: duration(180) })}
+        >
           <Plus className="size-[18px]" />
         </FloatingControlButton>
         <button
@@ -78,7 +96,11 @@ export function ControlCluster() {
         >
           {Math.round(zoom * 100)}%
         </button>
-        <FloatingControlButton aria-label="Zoom out" title="Zoom out" onClick={() => flow.zoomOut({ duration: duration(180) })}>
+        <FloatingControlButton
+          aria-label="Zoom out"
+          title="Zoom out"
+          onClick={() => flow.zoomOut({ duration: duration(180) })}
+        >
           <Minus className="size-[18px]" />
         </FloatingControlButton>
 
@@ -86,8 +108,15 @@ export function ControlCluster() {
 
         <FloatingControlButton
           aria-label="Fit map to visible area"
-          title="Fit map to visible area"
-          onClick={() => flow.fitView({ padding: 0.12, duration: duration(360) })}
+          title="Frame map at a readable scale"
+          onClick={() =>
+            flow.fitView({
+              padding: mobile ? 0.18 : 0.12,
+              minZoom: mobile ? 0.45 : 0.28,
+              maxZoom: mobile ? 0.82 : 0.78,
+              duration: duration(360),
+            })
+          }
         >
           <Focus className="size-[18px]" />
         </FloatingControlButton>

@@ -19,7 +19,7 @@
     <path d="m24 42.5-3.4-18.5 3.4 3.2 3.4-3.2Z" fill="currentColor" opacity=".42"/>
     <path d="m42.5 24-18.5 3.4 3.2-3.4-3.2-3.4Z" fill="currentColor" opacity=".72"/>
     <path d="m5.5 24 18.5-3.4-3.2 3.4 3.2 3.4Z" fill="currentColor" opacity=".42"/>
-    <text class="word" x="56" y="30">Math Atlas</text>
+    <text class="word" x="56" y="34">Math Atlas</text>
   </g>
   <circle class="accent" cx="24" cy="24" r="2" fill="currentColor"/>
 </svg>

@@ -125,6 +125,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
   return (
     <Surface
       material="thick"
+      elevation="raised"
       role="dialog"
       aria-label={`${view.kindLabel}: ${node.label}`}
       className={cn(
@@ -176,6 +177,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
                 <CircleCheck className="size-4" />
               </Button>
             )}
+            {userId && <span aria-hidden className="mx-1 h-4 w-px bg-border" />}
             <Button
               variant="ghost"
               size="icon"
@@ -196,6 +198,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             >
               <WalletCards className="size-4" />
             </Button>
+            <span aria-hidden className="mx-1 h-4 w-px bg-border" />
             <Button
               variant="ghost"
               size="icon"
@@ -216,6 +219,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             >
               {expanded ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
             </Button>
+            <span aria-hidden className="mx-1 h-4 w-px bg-border" />
             <Button
               variant="ghost"
               size="icon"

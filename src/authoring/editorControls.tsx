@@ -163,6 +163,7 @@ export function SelectField({
         {open && (
           <Surface
             material="thick"
+            elevation="overlay"
             role="listbox"
             className="shell-popover-present absolute inset-x-0 top-[calc(100%+6px)] z-(--z-modal) max-h-[min(300px,42vh)] overflow-y-auto rounded-lg p-1.5"
             onKeyDown={onListKeyDown}

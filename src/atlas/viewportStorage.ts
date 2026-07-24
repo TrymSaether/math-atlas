@@ -6,6 +6,10 @@ export interface StoredViewport {
   x: number;
   y: number;
   zoom: number;
+  /** Container geometry that the translation was calculated against. */
+  containerWidth?: number;
+  containerHeight?: number;
+  compact?: boolean;
 }
 
 type ViewMode = "dependency" | "cluster";
@@ -38,11 +42,15 @@ export function normalizeViewport(value: unknown): StoredViewport | null {
   if (!isFiniteNumber(candidate.x) || !isFiniteNumber(candidate.y) || !isFiniteNumber(candidate.zoom)) {
     return null;
   }
-  return {
+  const normalized: StoredViewport = {
     x: candidate.x,
     y: candidate.y,
     zoom: Math.min(2.4, Math.max(0.08, candidate.zoom)),
   };
+  if (isFiniteNumber(candidate.containerWidth)) normalized.containerWidth = candidate.containerWidth;
+  if (isFiniteNumber(candidate.containerHeight)) normalized.containerHeight = candidate.containerHeight;
+  if (typeof candidate.compact === "boolean") normalized.compact = candidate.compact;
+  return normalized;
 }
 
 function readViewportState(storage: StorageLike | null = browserStorage()): PersistedViewportState {

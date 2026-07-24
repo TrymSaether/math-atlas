@@ -35,7 +35,7 @@ export function DomainRegionNode({ data }: NodeProps<Node<Data>>) {
       <div
         className="absolute inset-0 overflow-hidden border"
         style={{
-          background: `color-mix(in srgb, ${data.tint} ${isCircle ? 36 : 48}%, transparent)`,
+          background: `color-mix(in srgb, ${data.color} ${isCircle ? 7 : 9}%, var(--background))`,
           borderColor: data.border,
           borderRadius: isCircle ? 9999 : "var(--radius-2xl)",
         }}
@@ -52,7 +52,7 @@ export function DomainRegionNode({ data }: NodeProps<Node<Data>>) {
           style={{
             fontSize: watermarkSize,
             color: data.color,
-            opacity: 0.1,
+            opacity: "var(--domain-region-watermark-opacity)",
             textAlign: "center",
             letterSpacing: "-0.01em",
           }}

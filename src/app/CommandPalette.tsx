@@ -1,15 +1,6 @@
 import { Dialog } from "radix-ui";
 import { useCallback, useEffect, useState, type ComponentType } from "react";
-import {
-  BookOpen,
-  CornerDownLeft,
-  Map as MapIcon,
-  Pencil,
-  Route,
-  Variable,
-  WalletCards,
-  X,
-} from "lucide-react";
+import { BookOpen, CornerDownLeft, Map as MapIcon, Pencil, Route, Variable, WalletCards, X } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/ui/command";
 import { ModalShell } from "@/ui/modal-shell";
 import { Surface } from "@/design";
@@ -74,7 +65,7 @@ export function CommandPalette() {
       contentClassName="left-1/2 top-[12%] w-[min(680px,calc(100vw-24px))] -translate-x-1/2"
     >
       <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
-      <Surface material="thick" reactive className="overflow-hidden">
+      <Surface material="thick" elevation="overlay" reactive className="overflow-hidden">
         <Command loop className="bg-transparent text-foreground">
           <div className="relative">
             <CommandInput

@@ -27,6 +27,12 @@
     width: auto;
     display: flex;
     align-items: flex-end;
+    z-index: var(--z-popover, 30);
+    pointer-events: none;
+  }
+
+  .ds-panel--left > .surface {
+    pointer-events: auto;
   }
 
   .ds-panel--left::after {

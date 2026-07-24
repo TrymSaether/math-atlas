@@ -68,7 +68,7 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
     >
       <Dialog.Title className="sr-only">{isSignup ? "Create an account" : "Sign in"}</Dialog.Title>
       <Dialog.Description className="sr-only">Sign in to sync and share your maps.</Dialog.Description>
-      <Surface material="thick" className="relative p-0">
+      <Surface material="thick" elevation="overlay" className="relative p-0">
         <Button
           type="button"
           variant="ghost"

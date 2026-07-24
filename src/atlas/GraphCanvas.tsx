@@ -49,6 +49,12 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const reactFlow = useReactFlow();
   const { x, y, zoom } = useViewport();
   const reduceMotion = useReducedMotion();
+  const defaultFocusId = useMemo(() => {
+    const highestImpact = [...map.metrics.impactByNodeId.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+    return (
+      highestImpact ?? map.data.nodes.find((node) => node.priority === "core")?.id ?? map.data.nodes[0]?.id ?? null
+    );
+  }, [map]);
 
   useEffect(() => {
     setRouteSequence(route.ordered);
@@ -127,8 +133,48 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
     zoom,
   ]);
 
-  // Default view shows the entire map. Restore a saved map/view viewport when
-  // one exists; otherwise fit the active layout once React Flow has mounted it.
+  const frameNode = useCallback(
+    (nodeId: string, targetZoom: number, duration: number) => {
+      const position = projection.activeLayout.positions.get(nodeId);
+      const stage = document.querySelector<HTMLElement>(".shell-canvas-stage");
+      if (!position || !stage) return false;
+      const compact = window.matchMedia("(max-width: 820px)").matches;
+      const zoom = Math.max(targetZoom, Math.min(1.1, reactFlow.getZoom()));
+      const nodeCenterX = position.x + ATLAS_NODE_WIDTH / 2;
+      const nodeCenterY = position.y + ATLAS_NODE_HEIGHT / 2;
+      const targetX = stage.clientWidth * (compact ? 0.5 : 0.42);
+      const targetY = stage.clientHeight * (compact ? 0.34 : 0.36);
+      void reactFlow.setViewport(
+        {
+          x: targetX - nodeCenterX * zoom,
+          y: targetY - nodeCenterY * zoom,
+          zoom,
+        },
+        { duration },
+      );
+      return true;
+    },
+    [projection.activeLayout.positions, reactFlow],
+  );
+
+  const frameReadableView = useCallback(
+    (duration: number) => {
+      const compact = window.matchMedia("(max-width: 820px)").matches;
+      const focusId = useStore.getState().selectedId ?? defaultFocusId;
+      if (compact && focusId && frameNode(focusId, 0.78, duration)) return;
+      void reactFlow.fitView({
+        padding: compact ? 0.18 : 0.12,
+        minZoom: compact ? 0.58 : 0.62,
+        maxZoom: compact ? 0.9 : 0.86,
+        duration,
+      });
+    },
+    [defaultFocusId, frameNode, reactFlow],
+  );
+
+  // Restore only translations calculated for a compatible canvas. A viewport
+  // saved on desktop cannot meaningfully position a compact canvas (and vice
+  // versa), and large container changes should return to a readable frame.
   const viewportPersistenceKey = `${mapId}:${view}`;
   const restoredViewportKeyRef = useRef<string | null>(null);
 
@@ -136,33 +182,72 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
     restoredViewportKeyRef.current = null;
     const savedViewport = savedViewportFor(mapId, view);
     const timeout = window.setTimeout(() => {
-      if (savedViewport) {
+      const stage = document.querySelector<HTMLElement>(".shell-canvas-stage");
+      const compact = window.matchMedia("(max-width: 820px)").matches;
+      const width = stage?.clientWidth ?? window.innerWidth;
+      const height = stage?.clientHeight ?? window.innerHeight;
+      const compatible =
+        savedViewport?.containerWidth !== undefined &&
+        savedViewport.containerHeight !== undefined &&
+        savedViewport.compact === compact &&
+        Math.abs(savedViewport.containerWidth - width) / Math.max(width, 1) < 0.2 &&
+        Math.abs(savedViewport.containerHeight - height) / Math.max(height, 1) < 0.2;
+      if (savedViewport && compatible) {
         reactFlow.setViewport(savedViewport, { duration: 0 });
       } else {
-        reactFlow.fitView({ padding: 0.12, duration: reduceMotion ? 0 : view === "cluster" ? 520 : 0 });
+        frameReadableView(reduceMotion ? 0 : view === "cluster" ? 520 : 0);
       }
       restoredViewportKeyRef.current = viewportPersistenceKey;
-    }, 40);
+    }, 60);
     return () => window.clearTimeout(timeout);
-  }, [reactFlow, mapId, view, viewportPersistenceKey, reduceMotion]);
+  }, [frameReadableView, reactFlow, mapId, view, viewportPersistenceKey, reduceMotion]);
 
   useEffect(() => {
     if (restoredViewportKeyRef.current !== viewportPersistenceKey) return;
     const timeout = window.setTimeout(() => {
-      saveViewport(mapId, view, { x, y, zoom });
+      const stage = document.querySelector<HTMLElement>(".shell-canvas-stage");
+      saveViewport(mapId, view, {
+        x,
+        y,
+        zoom,
+        containerWidth: stage?.clientWidth ?? window.innerWidth,
+        containerHeight: stage?.clientHeight ?? window.innerHeight,
+        compact: window.matchMedia("(max-width: 820px)").matches,
+      });
     }, 150);
     return () => window.clearTimeout(timeout);
   }, [mapId, view, viewportPersistenceKey, x, y, zoom]);
 
   useEffect(() => {
     if (!selectedId) return;
-    const position = projection.activeLayout.positions.get(selectedId);
-    if (!position) return;
-    reactFlow.setCenter(position.x + ATLAS_NODE_WIDTH / 2, position.y + ATLAS_NODE_HEIGHT / 2, {
-      zoom: Math.max(0.9, reactFlow.getZoom()),
-      duration: reduceMotion ? 0 : 450,
-    });
-  }, [selectedId, projection.activeLayout.positions, reactFlow, reduceMotion]);
+    frameNode(selectedId, 0.9, reduceMotion ? 0 : 450);
+  }, [frameNode, reduceMotion, selectedId]);
+
+  useEffect(() => {
+    let timeout = 0;
+    let previousWidth = window.innerWidth;
+    let previousHeight = window.innerHeight;
+    let previousCompact = window.matchMedia("(max-width: 820px)").matches;
+    const onResize = () => {
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(() => {
+        const compact = window.matchMedia("(max-width: 820px)").matches;
+        const widthChange = Math.abs(window.innerWidth - previousWidth) / Math.max(previousWidth, 1);
+        const heightChange = Math.abs(window.innerHeight - previousHeight) / Math.max(previousHeight, 1);
+        if (compact !== previousCompact || widthChange > 0.22 || heightChange > 0.22) {
+          frameReadableView(reduceMotion ? 0 : 280);
+        }
+        previousWidth = window.innerWidth;
+        previousHeight = window.innerHeight;
+        previousCompact = compact;
+      }, 140);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.clearTimeout(timeout);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [frameReadableView, reduceMotion]);
 
   // The shell measures sidebar/panel width independently from React Flow.
   // Counter-shift the viewport by the same amount so opening, closing, or
@@ -207,7 +292,6 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
         proOptions={{ hideAttribution: true }}
         minZoom={0.08}
         maxZoom={2.4}
-        fitView
         panOnScroll
         selectionOnDrag={false}
         nodesDraggable={false}

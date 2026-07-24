@@ -213,6 +213,11 @@ export function Sidebar() {
     setCollapsed(mobile);
   }, [mobile]);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle("atlas-sidebar-open", mobile && !collapsed);
+    return () => document.documentElement.classList.remove("atlas-sidebar-open");
+  }, [collapsed, mobile]);
+
   const toggleSec = (id: string) =>
     setClosedSecs((prev) => {
       const next = new Set(prev);

@@ -15,13 +15,14 @@ export interface PanelProps extends SurfaceProps {
  * to the `thick` material. Pass width/flex via `className`.
  */
 export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
-  { dock = "left", material = "thick", className, ...props },
+  { dock = "left", material = "thick", elevation = "raised", className, ...props },
   ref,
 ) {
   return (
     <Surface
       ref={ref}
       material={material}
+      elevation={elevation}
       data-shell-context-panel=""
       className={cn("ds-panel", dock === "left" && "ds-panel--left", className)}
       {...props}

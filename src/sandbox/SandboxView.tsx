@@ -90,18 +90,17 @@ export function SandboxView() {
   const closeViews = useCallback(() => setViewsOpen(false), []);
   const workspaceSaved = isUserWorkspaceId(ws.id);
   const shellActions = useMemo<readonly ShellAction[]>(
-    () => [
-      {
-        id: "save-workspace",
-        label: workspaceSaved ? "Saved" : "Save",
-        icon: workspaceSaved ? Check : Save,
-        onSelect: () => {
-          if (!workspaceSaved) saveAs(ws.title);
-        },
-        disabled: workspaceSaved,
-        status: workspaceSaved,
-      },
-    ],
+    () =>
+      workspaceSaved
+        ? []
+        : [
+            {
+              id: "save-workspace",
+              label: "Save",
+              icon: Save,
+              onSelect: () => saveAs(ws.title),
+            },
+          ],
     [saveAs, workspaceSaved, ws.title],
   );
   useRegisterShellActions("sandbox", shellActions);
@@ -143,7 +142,13 @@ export function SandboxView() {
       {/* Plane */}
       <main className="absolute inset-0 min-w-0 bg-background">
         <div className="shell-canvas-stage">
-          <PlaneView rows={ws.rows} compiled={compiled} viewport={ws.viewport} marks={ws.marks} onMovePoint={setPoint} />
+          <PlaneView
+            rows={ws.rows}
+            compiled={compiled}
+            viewport={ws.viewport}
+            marks={ws.marks}
+            onMovePoint={setPoint}
+          />
         </div>
 
         {/* Canvas dock + its single attached saved-views popover. */}
@@ -158,7 +163,7 @@ export function SandboxView() {
                 id="sandbox-saved-views"
                 role="dialog"
                 aria-label="Saved views"
-                className="pointer-events-auto origin-bottom-right max-[820px]:fixed max-[820px]:right-[var(--shell-edge)] max-[820px]:bottom-[calc(var(--shell-content-bottom)+56px)] max-[820px]:left-[var(--shell-edge)]"
+                className="pointer-events-auto z-(--z-popover) origin-bottom-right max-[820px]:fixed max-[820px]:right-[var(--shell-edge)] max-[820px]:bottom-[var(--shell-content-bottom)] max-[820px]:left-[var(--shell-edge)]"
                 initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 8, y: 8, scale: 0.96 }}
                 animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
                 exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 6, y: 6, scale: 0.97 }}
@@ -166,6 +171,7 @@ export function SandboxView() {
               >
                 <Surface
                   material="thick"
+                  elevation="overlay"
                   className="max-h-[min(70dvh,520px)] w-[280px] overflow-y-auto rounded-xl p-2 max-[820px]:w-full"
                 >
                   <div className="flex items-center justify-between gap-3 px-2 py-1">
@@ -238,9 +244,19 @@ export function SandboxView() {
             )}
           </AnimatePresence>
 
-          <div className="pointer-events-auto inline-flex w-12 flex-col items-center">
+          <div
+            className={cn(
+              "pointer-events-auto inline-flex w-12 flex-col items-center transition-[opacity,transform] duration-[var(--duration-fast)]",
+              mobile && viewsOpen && "invisible pointer-events-none translate-y-1.5 scale-95 opacity-0",
+            )}
+            aria-hidden={mobile && viewsOpen ? true : undefined}
+          >
             <FloatingControlDock aria-label="Canvas controls">
-              <FloatingControlButton aria-label="Zoom in" title="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
+              <FloatingControlButton
+                aria-label="Zoom in"
+                title="Zoom in"
+                onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}
+              >
                 <Plus className="size-[17px]" />
               </FloatingControlButton>
               <button
@@ -252,11 +268,19 @@ export function SandboxView() {
               >
                 {Math.round((20 / (ws.viewport.xmax - ws.viewport.xmin)) * 100)}%
               </button>
-              <FloatingControlButton aria-label="Zoom out" title="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
+              <FloatingControlButton
+                aria-label="Zoom out"
+                title="Zoom out"
+                onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}
+              >
                 <Minus className="size-[17px]" />
               </FloatingControlButton>
               <FloatingControlDivider />
-              <FloatingControlButton aria-label="Fit default view" title="Fit default view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
+              <FloatingControlButton
+                aria-label="Fit default view"
+                title="Fit default view"
+                onClick={() => setViewport({ ...DEFAULT_RECT })}
+              >
                 <Focus className="size-[17px]" />
               </FloatingControlButton>
               <FloatingControlDivider />
@@ -289,7 +313,11 @@ export function SandboxView() {
             exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
             transition={reduceMotion ? { duration: 0 } : spring.smooth}
           >
-            <Surface material="regular" className="flex h-full flex-col overflow-hidden rounded-[inherit]">
+            <Surface
+              material="regular"
+              elevation="raised"
+              className="flex h-full flex-col overflow-hidden rounded-[inherit]"
+            >
               <div className="flex items-center gap-1 border-b border-border/60 px-2 py-2">
                 <WorkspaceMenu />
                 <div className="flex items-center gap-0.5">
@@ -429,6 +457,7 @@ function WorkspaceMenu() {
           ref={panelRef}
           id="sandbox-workspace-menu"
           material="thick"
+          elevation="overlay"
           role="dialog"
           aria-label="Choose workspace"
           className="shell-popover-present absolute left-0 top-[52px] z-(--z-popover) max-h-[min(58dvh,460px)] w-[280px] overflow-y-auto rounded-xl p-1.5"

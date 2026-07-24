@@ -7,8 +7,9 @@ import "./surface.css";
  * Surface — the single liquid-glass primitive.
  *
  * Compose every floating chrome surface from this (toolbars, panels, palette,
- * sheets). `material` picks the glass tier; `reactive` makes the specular
- * highlight track the pointer. Graph nodes use `material="chrome"`.
+ * sheets). `material` picks the optical density, `elevation` picks the spatial
+ * layer, and `reactive` makes the specular highlight track the pointer. Graph
+ * nodes use `material="chrome"`.
  *
  * @example
  * <Surface material="regular" reactive className="p-4">…</Surface>
@@ -26,10 +27,16 @@ const surfaceVariants = cva("surface", {
       true: "",
       false: "surface--plain",
     },
+    elevation: {
+      base: "surface--elevation-base",
+      raised: "surface--elevation-raised",
+      overlay: "surface--elevation-overlay",
+    },
   },
   defaultVariants: {
     material: "regular",
     specular: true,
+    elevation: "base",
   },
 });
 
@@ -39,7 +46,7 @@ export interface SurfaceProps extends HTMLAttributes<HTMLDivElement>, VariantPro
 }
 
 export const Surface = forwardRef<HTMLDivElement, SurfaceProps>(function Surface(
-  { className, material, specular, reactive = false, onPointerMove, ...props },
+  { className, material, specular, elevation, reactive = false, onPointerMove, ...props },
   ref,
 ) {
   const handlePointerMove = useCallback(
@@ -56,7 +63,7 @@ export const Surface = forwardRef<HTMLDivElement, SurfaceProps>(function Surface
   return (
     <div
       ref={ref}
-      className={cn(surfaceVariants({ material, specular }), className)}
+      className={cn(surfaceVariants({ material, specular, elevation }), className)}
       onPointerMove={reactive ? handlePointerMove : onPointerMove}
       {...props}
     />
