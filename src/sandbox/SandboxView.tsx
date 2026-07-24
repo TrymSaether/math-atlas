@@ -11,12 +11,12 @@
  * workspace menu.
  */
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Bookmark,
   Check,
   ChevronDown,
-  Maximize,
+  Focus,
   Folder,
   FolderHeart,
   Minus,
@@ -28,14 +28,19 @@ import {
   Undo2,
   X,
 } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Button } from "@/ui/button";
-import { Surface } from "@/design";
+import { spring, Surface } from "@/design";
 import { cn } from "@/ui/cn";
 import { useSandbox, isUserWorkspaceId } from "./store";
 import { WORKSPACES, WORKSPACE_IDS } from "./library";
 import type { ViewRect } from "./types";
 import { ExpressionPanel } from "./ExpressionPanel";
 import { PlaneView } from "./PlaneView";
+import { FloatingControlButton, FloatingControlDivider, FloatingControlDock } from "@/ui/floating-controls";
+import { useRegisterShellActions, type ShellAction } from "@/app/ShellActions";
+import { usePopoverDismiss } from "@/app/usePopover";
+import { useMediaQuery } from "@/app/useMediaQuery";
 
 import "mafs/core.css";
 
@@ -47,22 +52,6 @@ function zoomRect(r: ViewRect, factor: number): ViewRect {
   const hw = ((r.xmax - r.xmin) / 2) * factor;
   const hh = ((r.ymax - r.ymin) / 2) * factor;
   return { xmin: cx - hw, xmax: cx + hw, ymin: cy - hh, ymax: cy + hh };
-}
-
-/** Icon button for the sandbox view dock — same shell icon button as atlas canvas controls. */
-function DockBtn({ label, onClick, children }: { label: string; onClick: () => void; children: ReactNode }) {
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="size-9 rounded-full text-foreground"
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-    >
-      {children}
-    </Button>
-  );
 }
 
 /** True when the event target is a text-editing element that owns its own undo. */
@@ -83,6 +72,7 @@ export function SandboxView() {
   const setPoint = useSandbox((s) => s.setPoint);
   const loadById = useSandbox((s) => s.loadById);
   const setViewport = useSandbox((s) => s.setViewport);
+  const saveAs = useSandbox((s) => s.saveAs);
   const saveView = useSandbox((s) => s.saveView);
   const applyView = useSandbox((s) => s.applyView);
   const removeView = useSandbox((s) => s.removeView);
@@ -91,6 +81,42 @@ export function SandboxView() {
   const canUndo = useSandbox((s) => s.history.length > 0);
   const canRedo = useSandbox((s) => s.future.length > 0);
   const [panelOpen, setPanelOpen] = useState(true);
+  const [viewsOpen, setViewsOpen] = useState(false);
+  const viewsContainerRef = useRef<HTMLDivElement>(null);
+  const viewsTriggerRef = useRef<HTMLButtonElement>(null);
+  const viewsPanelRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const mobile = useMediaQuery("(max-width: 820px)");
+  const closeViews = useCallback(() => setViewsOpen(false), []);
+  const workspaceSaved = isUserWorkspaceId(ws.id);
+  const shellActions = useMemo<readonly ShellAction[]>(
+    () => [
+      {
+        id: "save-workspace",
+        label: workspaceSaved ? "Saved" : "Save",
+        icon: workspaceSaved ? Check : Save,
+        onSelect: () => {
+          if (!workspaceSaved) saveAs(ws.title);
+        },
+        disabled: workspaceSaved,
+        status: workspaceSaved,
+      },
+    ],
+    [saveAs, workspaceSaved, ws.title],
+  );
+  useRegisterShellActions("sandbox", shellActions);
+  usePopoverDismiss({
+    open: viewsOpen,
+    onClose: closeViews,
+    containerRef: viewsContainerRef,
+    triggerRef: viewsTriggerRef,
+  });
+
+  useEffect(() => {
+    if (!viewsOpen) return;
+    const frame = requestAnimationFrame(() => viewsPanelRef.current?.querySelector<HTMLElement>("button")?.focus());
+    return () => cancelAnimationFrame(frame);
+  }, [viewsOpen]);
 
   // Start on a worked example so the surface is never empty.
   useEffect(() => {
@@ -116,112 +142,217 @@ export function SandboxView() {
     <div className="absolute inset-0 bg-background text-foreground">
       {/* Plane */}
       <main className="absolute inset-0 min-w-0 bg-background">
-        <PlaneView rows={ws.rows} compiled={compiled} viewport={ws.viewport} marks={ws.marks} onMovePoint={setPoint} />
+        <div className="shell-canvas-stage">
+          <PlaneView rows={ws.rows} compiled={compiled} viewport={ws.viewport} marks={ws.marks} onMovePoint={setPoint} />
+        </div>
 
-        {/* Saved views + view dock, right rail */}
-        <div className="pointer-events-none absolute bottom-4 right-4 flex flex-col items-end gap-2">
-          {ws.views.length > 0 && (
-            <Surface material="regular" className="pointer-events-auto flex items-center gap-0.5 rounded-full p-1">
-              {ws.views.map((v) => (
-                <span key={v.id} className="flex items-center">
-                  <button
-                    type="button"
-                    onClick={() => applyView(v.id)}
-                    className="rounded-sm px-2 py-1 text-caption-2 text-muted-foreground"
-                    title="Apply saved view"
+        {/* Canvas dock + its single attached saved-views popover. */}
+        <div
+          ref={viewsContainerRef}
+          className="pointer-events-none absolute right-[var(--shell-edge)] bottom-[var(--shell-content-bottom)] z-(--z-shell-raised) flex items-end gap-[var(--shell-panel-gap)]"
+        >
+          <AnimatePresence initial={false}>
+            {viewsOpen && (
+              <motion.div
+                ref={viewsPanelRef}
+                id="sandbox-saved-views"
+                role="dialog"
+                aria-label="Saved views"
+                className="pointer-events-auto origin-bottom-right max-[820px]:fixed max-[820px]:right-[var(--shell-edge)] max-[820px]:bottom-[calc(var(--shell-content-bottom)+56px)] max-[820px]:left-[var(--shell-edge)]"
+                initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 8, y: 8, scale: 0.96 }}
+                animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 6, y: 6, scale: 0.97 }}
+                transition={reduceMotion ? { duration: 0.1 } : spring.smooth}
+              >
+                <Surface
+                  material="thick"
+                  className="max-h-[min(70dvh,520px)] w-[280px] overflow-y-auto rounded-xl p-2 max-[820px]:w-full"
+                >
+                  <div className="flex items-center justify-between gap-3 px-2 py-1">
+                    <div>
+                      <h2 className="text-subhead font-semibold text-foreground">Saved views</h2>
+                      <p className="text-caption text-muted-foreground">Return to useful regions of this plane.</p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="size-8 shrink-0 rounded-full text-muted-foreground"
+                      onClick={() => {
+                        closeViews();
+                        requestAnimationFrame(() => viewsTriggerRef.current?.focus());
+                      }}
+                      aria-label="Close saved views"
+                    >
+                      <X className="size-4" />
+                    </Button>
+                  </div>
+
+                  {ws.views.length > 0 ? (
+                    <div className="mt-1 space-y-0.5" role="list" aria-label="Saved plane views">
+                      {ws.views.map((view) => (
+                        <div
+                          key={view.id}
+                          role="listitem"
+                          className="group flex min-h-10 items-center rounded-md transition-colors hover:bg-accent"
+                        >
+                          <button
+                            type="button"
+                            onClick={() => {
+                              applyView(view.id);
+                              closeViews();
+                              requestAnimationFrame(() => viewsTriggerRef.current?.focus());
+                            }}
+                            className="min-w-0 flex-1 px-2.5 py-2 text-left text-footnote font-medium text-foreground"
+                          >
+                            <span className="block truncate">{view.name}</span>
+                          </button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeView(view.id)}
+                            className="mr-1 size-8 shrink-0 rounded-full text-muted-foreground"
+                            aria-label={`Remove ${view.name}`}
+                            title="Remove saved view"
+                          >
+                            <X className="size-3.5" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="mx-2 my-3 rounded-md bg-foreground/[0.04] px-3 py-3 text-caption text-muted-foreground">
+                      No saved views yet. Save the current viewport to return to it later.
+                    </p>
+                  )}
+
+                  <Button
+                    variant="ghost"
+                    className="mt-1 h-10 w-full justify-start gap-2 rounded-md px-2.5 text-footnote font-medium text-primary-text"
+                    onClick={() => saveView(`View ${ws.views.length + 1}`)}
                   >
-                    {v.name}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => removeView(v.id)}
-                    className="px-0.5 text-muted-foreground/70"
-                    title="Remove view"
-                  >
-                    <X size={11} />
-                  </button>
-                </span>
-              ))}
-            </Surface>
-          )}
-          <div className="pointer-events-auto inline-flex w-12 flex-col items-center gap-2.5">
-            <Surface material="regular" className="flex w-12 flex-col items-center gap-0.5 rounded-[24px] p-1">
-              <DockBtn label="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
+                    <Bookmark className="size-4" />
+                    Save current view
+                  </Button>
+                </Surface>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="pointer-events-auto inline-flex w-12 flex-col items-center">
+            <FloatingControlDock aria-label="Canvas controls">
+              <FloatingControlButton aria-label="Zoom in" title="Zoom in" onClick={() => setViewport(zoomRect(ws.viewport, 1 / 1.3))}>
                 <Plus className="size-[17px]" />
-              </DockBtn>
-              <DockBtn label="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
+              </FloatingControlButton>
+              <button
+                type="button"
+                className="min-h-6 w-10 rounded-full px-0.5 font-mono text-[10px] font-medium tabular-nums text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55"
+                aria-label="Reset zoom to 100 percent"
+                title="Reset zoom to 100%"
+                onClick={() => setViewport({ ...DEFAULT_RECT })}
+              >
+                {Math.round((20 / (ws.viewport.xmax - ws.viewport.xmin)) * 100)}%
+              </button>
+              <FloatingControlButton aria-label="Zoom out" title="Zoom out" onClick={() => setViewport(zoomRect(ws.viewport, 1.3))}>
                 <Minus className="size-[17px]" />
-              </DockBtn>
-              <DockBtn label="Reset view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
-                <Maximize className="size-[17px]" />
-              </DockBtn>
-            </Surface>
-            <Surface material="regular" className="flex size-12 items-center justify-center rounded-full">
-              <DockBtn label="Save view" onClick={() => saveView(`view ${ws.views.length + 1}`)}>
+              </FloatingControlButton>
+              <FloatingControlDivider />
+              <FloatingControlButton aria-label="Fit default view" title="Fit default view" onClick={() => setViewport({ ...DEFAULT_RECT })}>
+                <Focus className="size-[17px]" />
+              </FloatingControlButton>
+              <FloatingControlDivider />
+              <FloatingControlButton
+                ref={viewsTriggerRef}
+                active={viewsOpen}
+                aria-label="Saved views"
+                title="Saved views"
+                aria-expanded={viewsOpen}
+                aria-haspopup="dialog"
+                aria-controls="sandbox-saved-views"
+                onClick={() => setViewsOpen((value) => !value)}
+              >
                 <Bookmark className="size-[17px]" />
-              </DockBtn>
-            </Surface>
+              </FloatingControlButton>
+            </FloatingControlDock>
           </div>
         </div>
       </main>
 
       {/* Floating expression panel */}
-      {panelOpen ? (
-        <Surface
-          material="regular"
-          className="pointer-events-auto absolute bottom-3 left-3 top-[68px] z-(--z-shell) flex w-[min(340px,calc(100vw-24px))] flex-col overflow-hidden rounded-lg sm:left-4 sm:w-[340px]"
-        >
-          <div className="flex items-center gap-1 border-b border-border/60 px-2 py-2">
-            <WorkspaceMenu />
-            <div className="flex items-center gap-0.5">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-7 text-muted-foreground"
-                onClick={undo}
-                disabled={!canUndo}
-                aria-label="Undo"
-                title="Undo (⌘Z)"
+      <AnimatePresence initial={false}>
+        {panelOpen ? (
+          <motion.aside
+            key="expressions"
+            data-shell-context-panel=""
+            className="shell-sandbox-panel"
+            initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+            transition={reduceMotion ? { duration: 0 } : spring.smooth}
+          >
+            <Surface material="regular" className="flex h-full flex-col overflow-hidden rounded-[inherit]">
+              <div className="flex items-center gap-1 border-b border-border/60 px-2 py-2">
+                <WorkspaceMenu />
+                <div className="flex items-center gap-0.5">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="size-8 rounded-full text-muted-foreground"
+                    onClick={undo}
+                    disabled={!canUndo}
+                    aria-label="Undo"
+                    title="Undo (⌘Z)"
+                  >
+                    <Undo2 className="size-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="size-8 rounded-full text-muted-foreground"
+                    onClick={redo}
+                    disabled={!canRedo}
+                    aria-label="Redo"
+                    title="Redo (⇧⌘Z)"
+                  >
+                    <Redo2 className="size-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="size-8 rounded-full text-muted-foreground"
+                    onClick={() => setPanelOpen(false)}
+                    aria-label="Hide expressions"
+                    title="Hide expressions"
+                  >
+                    <PanelLeftClose className="size-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="min-h-0 flex-1">
+                <ExpressionPanel />
+              </div>
+            </Surface>
+          </motion.aside>
+        ) : (
+          <motion.div
+            key="expression-reveal"
+            className="pointer-events-auto absolute left-[var(--shell-edge)] top-[var(--shell-dock-top)] z-(--z-shell) origin-top-left"
+            initial={reduceMotion ? false : { opacity: 0, x: -8, scale: 0.96 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -8, scale: 0.96 }}
+            transition={reduceMotion ? { duration: 0 } : spring.snappy}
+          >
+            <FloatingControlDock aria-label="Expression controls">
+              <FloatingControlButton
+                aria-label="Show expressions"
+                title="Show expressions"
+                onClick={() => setPanelOpen(true)}
               >
-                <Undo2 className="size-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-7 text-muted-foreground"
-                onClick={redo}
-                disabled={!canRedo}
-                aria-label="Redo"
-                title="Redo (⇧⌘Z)"
-              >
-                <Redo2 className="size-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-7 text-muted-foreground"
-                onClick={() => setPanelOpen(false)}
-                aria-label="Hide expressions"
-                title="Hide expressions"
-              >
-                <PanelLeftClose className="size-4" />
-              </Button>
-            </div>
-          </div>
-          <div className="min-h-0 flex-1">
-            <ExpressionPanel />
-          </div>
-        </Surface>
-      ) : (
-        <Surface
-          material="regular"
-          className="pointer-events-auto absolute left-3 top-[68px] z-(--z-shell) flex size-11 items-center justify-center rounded-full sm:left-4"
-        >
-          <DockBtn label="Show expressions" onClick={() => setPanelOpen(true)}>
-            <PanelLeftOpen className="size-[17px]" />
-          </DockBtn>
-        </Surface>
-      )}
+                <PanelLeftOpen className="size-[17px]" />
+              </FloatingControlButton>
+            </FloatingControlDock>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -239,40 +370,28 @@ function WorkspaceMenu() {
   const [saving, setSaving] = useState(false);
   const [saveName, setSaveName] = useState("");
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const issueCount = compiled.computed.filter((c) => c?.error || c?.kind === "invalid").length;
   const savedIds = Object.keys(saved);
 
-  const close = () => {
+  const close = useCallback((restoreFocus = false) => {
     setOpen(false);
     setSaving(false);
-  };
+    if (restoreFocus) requestAnimationFrame(() => triggerRef.current?.focus());
+  }, []);
+
+  usePopoverDismiss({ open, onClose: close, containerRef: ref, triggerRef });
 
   useEffect(() => {
     if (!open) return;
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-        setSaving(false);
-      }
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        setSaving(false);
-      }
-    };
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("keydown", onKey);
-    };
+    const frame = requestAnimationFrame(() => panelRef.current?.querySelector<HTMLElement>("button, input")?.focus());
+    return () => cancelAnimationFrame(frame);
   }, [open]);
 
   const commitSave = () => {
     saveAs(saveName.trim() || ws.title);
-    setSaving(false);
-    setOpen(false);
+    close(true);
   };
 
   const itemClass =
@@ -281,10 +400,13 @@ function WorkspaceMenu() {
   return (
     <div ref={ref} className="relative min-w-0 flex-1">
       <button
+        ref={triggerRef}
         type="button"
-        onClick={() => (open ? close() : setOpen(true))}
-        className="flex w-full min-w-0 items-center gap-2.5 rounded-sm px-1.5 py-1 text-left text-foreground transition hover:bg-foreground/[0.06] aria-expanded:bg-primary/10 aria-expanded:shadow-[inset_0_0_0_1px_var(--primary)] [&_svg]:text-muted-foreground aria-expanded:[&_svg]:text-primary"
+        onClick={() => (open ? close(true) : setOpen(true))}
+        className="flex w-full min-w-0 items-center gap-2.5 rounded-sm px-1.5 py-1 text-left text-foreground transition hover:bg-foreground/[0.06] aria-expanded:bg-primary/10 aria-expanded:shadow-[inset_0_0_0_1px_var(--primary)] [&_svg]:text-muted-foreground aria-expanded:[&_svg]:text-primary-text"
         aria-expanded={open}
+        aria-haspopup="dialog"
+        aria-controls="sandbox-workspace-menu"
       >
         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm bg-foreground/[0.06] shadow-[inset_0_0_0_1px_var(--border)]">
           {isUserWorkspaceId(ws.id) ? <FolderHeart className="h-4 w-4" /> : <Folder className="h-4 w-4" />}
@@ -304,8 +426,12 @@ function WorkspaceMenu() {
       </button>
       {open && (
         <Surface
+          ref={panelRef}
+          id="sandbox-workspace-menu"
           material="thick"
-          className="absolute left-0 top-[52px] z-(--z-popover) w-[280px] overflow-hidden rounded-xl p-1.5"
+          role="dialog"
+          aria-label="Choose workspace"
+          className="shell-popover-present absolute left-0 top-[52px] z-(--z-popover) max-h-[min(58dvh,460px)] w-[280px] overflow-y-auto rounded-xl p-1.5"
         >
           {savedIds.length > 0 && (
             <>
@@ -326,11 +452,11 @@ function WorkspaceMenu() {
                       type="button"
                       onClick={() => {
                         loadById(id);
-                        close();
+                        close(true);
                       }}
                       className={cn(
                         "flex min-w-0 flex-1 items-center gap-2 px-2.5 py-2 text-left text-footnote text-muted-foreground transition hover:text-foreground [&_svg]:text-muted-foreground/70",
-                        active && "text-primary hover:text-primary [&_svg]:text-primary",
+                        active && "text-primary-text hover:text-primary-text [&_svg]:text-primary-text",
                       )}
                     >
                       <FolderHeart className="h-3.5 w-3.5 shrink-0" />
@@ -341,9 +467,9 @@ function WorkspaceMenu() {
                       onClick={() => deleteSaved(id)}
                       aria-label={`Delete ${saved[id].title}`}
                       title="Delete workspace"
-                      className="mr-1 rounded-sm p-1 text-muted-foreground/60 transition hover:bg-foreground/10 hover:text-foreground"
+                      className="mr-1 flex size-8 items-center justify-center rounded-full text-muted-foreground transition hover:bg-foreground/10 hover:text-foreground"
                     >
-                      <X size={12} />
+                      <X className="size-3.5" />
                     </button>
                   </div>
                 );
@@ -363,12 +489,12 @@ function WorkspaceMenu() {
                 type="button"
                 onClick={() => {
                   loadById(id);
-                  close();
+                  close(true);
                 }}
                 className={cn(
                   itemClass,
                   active &&
-                    "bg-primary/10 text-primary shadow-[inset_0_0_0_1px_var(--primary)] [&_svg]:text-primary hover:bg-primary/10 hover:text-primary",
+                    "bg-primary/10 text-primary-text shadow-[inset_0_0_0_1px_var(--primary)] [&_svg]:text-primary-text hover:bg-primary/10 hover:text-primary-text",
                 )}
               >
                 <Folder className="h-3.5 w-3.5 shrink-0" />
@@ -420,7 +546,7 @@ function WorkspaceMenu() {
             type="button"
             onClick={() => {
               reset();
-              close();
+              close(true);
             }}
             className={itemClass}
           >

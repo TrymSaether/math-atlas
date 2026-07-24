@@ -22,6 +22,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
     <Surface
       ref={ref}
       material={material}
+      data-shell-context-panel=""
       className={cn("ds-panel", dock === "left" && "ds-panel--left", className)}
       {...props}
     />

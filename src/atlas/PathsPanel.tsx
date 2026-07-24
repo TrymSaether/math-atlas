@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ArrowUpDown, Check, ChevronLeft, ChevronRight, Flag, MapPin, Network, Play, Route, X } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { useStore } from "@/app/store";
 import { useRouteResult } from "./route";
 import { MathText } from "@/math/MathText";
@@ -7,18 +8,21 @@ import { getDomainTone } from "./colors";
 import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
-import { Panel } from "@/design";
+import { spring, Surface } from "@/design";
+import { useMediaQuery } from "@/app/useMediaQuery";
 
 /** A From / To / Goal endpoint row — leading toned glyph, label + value. */
 function Endpoint({
   icon,
   tone,
+  ink,
   label,
   value,
   onClear,
 }: {
   icon: ReactNode;
   tone: string;
+  ink: string;
   label: string;
   value: string | null;
   onClear: () => void;
@@ -26,8 +30,8 @@ function Endpoint({
   return (
     <div className="flex min-h-[54px] w-full items-center gap-3 px-3 py-2 [&+&]:border-t [&+&]:border-border">
       <span
-        className="flex size-7 shrink-0 items-center justify-center rounded-full text-white [&>svg]:size-[15px]"
-        style={{ background: tone, boxShadow: "inset 0 0.5px 0 rgb(255 255 255 / 0.28)" }}
+        className="flex size-7 shrink-0 items-center justify-center rounded-full [&>svg]:size-[15px]"
+        style={{ background: tone, color: ink, boxShadow: "inset 0 0.5px 0 rgb(255 255 255 / 0.28)" }}
       >
         {icon}
       </span>
@@ -59,6 +63,8 @@ function Endpoint({
  * unchanged; endpoints are picked by clicking concepts on the map.
  */
 export function PathsPanel() {
+  const reduceMotion = useReducedMotion();
+  const mobile = useMediaQuery("(max-width: 820px)");
   const map = useStore((s) => s.loadedMaps[s.mapId]);
   const setMode = useStore((s) => s.setMode);
   const routeKind = useStore((s) => s.routeKind);
@@ -86,7 +92,15 @@ export function PathsPanel() {
   const noPath = isPath && Boolean(routeFrom && routeTo) && !route.found;
 
   return (
-    <Panel material="thick" role="region" aria-label="Paths" className="flex w-[min(360px,calc(100vw-24px))] flex-col">
+    <motion.aside
+      data-shell-context-panel=""
+      className="ds-panel ds-panel--left w-[min(360px,calc(100vw-24px))]"
+      initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+      transition={reduceMotion ? { duration: 0 } : spring.smooth}
+    >
+      <Surface material="thick" role="region" aria-label="Paths" className="flex h-full flex-col">
       <header className="flex items-center justify-between gap-3 pt-3.5 pr-3.5 pb-2.5 pl-[1.125rem]">
         <h2 className="text-title-3 font-semibold text-foreground">Paths</h2>
         <Button
@@ -134,6 +148,7 @@ export function PathsPanel() {
             <Endpoint
               icon={<MapPin fill="currentColor" />}
               tone="var(--primary)"
+              ink="var(--primary-foreground)"
               label="From"
               value={routeFrom ? labelFor(routeFrom) : null}
               onClear={() => setRouteEndpoint("from", null)}
@@ -142,6 +157,7 @@ export function PathsPanel() {
           <Endpoint
             icon={<Flag fill="currentColor" />}
             tone="var(--destructive)"
+            ink="var(--destructive-foreground)"
             label={isPath ? "To" : "Goal"}
             value={routeTo ? labelFor(routeTo) : null}
             onClear={() => setRouteEndpoint("to", null)}
@@ -167,7 +183,7 @@ export function PathsPanel() {
             onClick={() => setIncludeProof(!includeProof)}
             className={cn(
               "inline-flex min-h-(--control-h-md) items-center gap-1.5 rounded-full px-3 text-caption font-medium transition-colors",
-              includeProof ? "bg-primary/10 text-primary" : "bg-muted text-foreground hover:bg-accent",
+              includeProof ? "bg-primary/10 text-primary-text" : "bg-muted text-foreground hover:bg-accent",
             )}
           >
             {includeProof && <Check className="size-3.5" />}
@@ -196,14 +212,18 @@ export function PathsPanel() {
                 <span className="text-headline font-semibold text-foreground">
                   {ordered.length} {ordered.length === 1 ? "concept" : "concepts"}
                 </span>
-                <span className="text-caption font-medium text-primary">study order</span>
+                <span className="text-caption font-medium text-primary-text">study order</span>
               </div>
               {!touring ? (
-                <Button size="sm" className="gap-1.5 rounded-full" onClick={startTour}>
+                <Button
+                  size="sm"
+                  className="hidden gap-1.5 rounded-full max-[820px]:inline-flex"
+                  onClick={startTour}
+                >
                   <Play className="size-3.5 fill-current" /> Tour
                 </Button>
               ) : (
-                <div className="flex items-center gap-0.5">
+                <div className="hidden items-center gap-0.5 max-[820px]:flex">
                   <Button
                     variant="ghost"
                     size="icon"
@@ -266,6 +286,7 @@ export function PathsPanel() {
           </>
         )}
       </div>
-    </Panel>
+      </Surface>
+    </motion.aside>
   );
 }

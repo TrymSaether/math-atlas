@@ -26,6 +26,7 @@ import { hasNodeVisual } from "./concept/visualModel";
 import { useDrill, prerequisiteDeck } from "./drill";
 import type { ProgressStatus } from "@/progress/api";
 import { Chip } from "@/ui/chip";
+import { useRegisterShellActions, type ShellAction } from "@/app/ShellActions";
 
 export function DictionaryView() {
   const mapId = useStore((s) => s.mapId);
@@ -41,6 +42,8 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const toggleTopic = useStore((s) => s.toggleTopic);
   const resetTopics = useStore((s) => s.resetTopics);
   const selectedId = useStore((s) => s.selectedId);
+  const setSurface = useStore((s) => s.setSurface);
+  const setMode = useStore((s) => s.setMode);
   const progress = useStore((s) => s.progress[mapId]);
   const mapTitle = useStore((s) => s.catalog.find((e) => e.slug === mapId)?.title ?? mapId);
   const indexRef = useRef<HTMLDivElement>(null);
@@ -117,6 +120,25 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
 
   const activeEntry = activeId ? (map.nodeById.get(activeId) ?? null) : null;
   const activeIndex = activeId ? filtered.findIndex((e) => e.id === activeId) : -1;
+  const shellActions = useMemo<readonly ShellAction[]>(
+    () =>
+      activeId
+        ? [
+            {
+              id: "show-in-atlas",
+              label: "Show in Atlas",
+              icon: ArrowUpRight,
+              onSelect: () => {
+                select(activeId);
+                setMode("explore");
+                setSurface("atlas");
+              },
+            },
+          ]
+        : [],
+    [activeId, select, setMode, setSurface],
+  );
+  useRegisterShellActions("dictionary", shellActions);
 
   const openRow = (id: string) => {
     setActiveId(id);
@@ -161,7 +183,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-background text-foreground">
-      <div className="absolute inset-x-0 bottom-0 top-(--shell-dock-top) grid h-[calc(100%-var(--shell-dock-top))] grid-cols-[minmax(300px,360px)_minmax(0,1fr)] max-[860px]:grid-cols-1">
+      <div className="absolute inset-x-0 top-(--shell-dock-top) bottom-[var(--shell-content-bottom)] grid grid-cols-[minmax(300px,360px)_minmax(0,1fr)] max-[860px]:grid-cols-1">
         {/* ---- Index column ---- */}
         <aside
           className={`relative flex min-h-0 flex-col border-r border-border bg-muted ${mobileDetail ? "max-[860px]:hidden" : ""}`}
@@ -185,8 +207,8 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search entries and text…"
-                aria-label="Search entries and text"
+                placeholder="Filter this index…"
+                aria-label="Filter this index"
                 className="min-h-(--control-h-lg) w-full rounded-md border border-border bg-muted py-1.5 pl-7 pr-2.5 font-sans text-footnote text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-ring focus:bg-card"
               />
             </div>
@@ -223,7 +245,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 {topics.size > 0 && (
                   <button
                     type="button"
-                    className="px-1.5 py-[3px] text-caption-2 text-primary hover:underline"
+                    className="px-1.5 py-[3px] text-caption-2 text-primary-text hover:underline"
                     onClick={resetTopics}
                   >
                     Clear
@@ -446,7 +468,7 @@ function DetailPane({
       <div className="mx-auto max-w-[760px] px-10 pb-24 pt-9 max-[860px]:px-[22px] max-[860px]:pb-20 max-[860px]:pt-6">
         <button
           type="button"
-          className="mb-4 hidden items-center gap-1.5 border-none bg-transparent p-0 font-mono text-caption-1 text-primary max-[860px]:inline-flex"
+          className="mb-4 hidden items-center gap-1.5 border-none bg-transparent p-0 font-mono text-caption-1 text-primary-text max-[860px]:inline-flex"
           onClick={onBack}
         >
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden /> All entries
@@ -465,7 +487,7 @@ function DetailPane({
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              className="inline-flex min-h-(--control-h-md) items-center gap-1 rounded-sm border border-primary/40 bg-primary/10 px-3 py-1.5 font-mono text-caption-1 text-primary transition hover:bg-primary/20"
+              className="inline-flex min-h-(--control-h-md) items-center gap-1 rounded-sm border border-primary/40 bg-primary/10 px-3 py-1.5 font-mono text-caption-1 text-primary-text transition hover:bg-primary/20"
               onClick={openInAtlas}
             >
               Show in atlas <ArrowUpRight className="h-3 w-3" aria-hidden />

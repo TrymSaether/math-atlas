@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo } from "react";
 import { CircleAlert } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useStore } from "./store";
 import { registerDomainTones } from "@/atlas/colors";
 import { useKeyboardNav } from "./useKeyboardNav";
@@ -18,8 +19,8 @@ import { ConceptCard } from "@/study/concept/ConceptCard";
 import { PathsPanel } from "@/atlas/PathsPanel";
 import { EditInspector } from "@/authoring/EditInspector";
 import { Button } from "@/ui/button";
-import { Surface } from "@/design";
-import { PaletteSearchButton } from "./PaletteSearchButton";
+import { easing, Surface } from "@/design";
+import { ShellLayoutController } from "./ShellLayoutController";
 
 // The sandbox pulls in mathjs + mafs + mathlive — load it on demand so the
 // atlas's initial bundle stays light.
@@ -77,6 +78,7 @@ export function AppShell() {
   const surface = useStore((s) => s.surface);
   const mode = useStore((s) => s.mode);
   const editMode = useStore((s) => s.editMode);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     void ensureMapLoaded(mapId);
@@ -88,43 +90,58 @@ export function AppShell() {
     if (map) registerDomainTones(map.data.domains);
   }, [map]);
 
-  const onAtlas = surface === "atlas";
-
   return (
-    <div className="relative h-dvh w-screen overflow-hidden bg-background text-foreground">
+    <div className="relative h-dvh w-screen overflow-hidden bg-background text-foreground" data-surface={surface}>
       <Background />
+      <ShellLayoutController />
       <SessionBridge />
       <StaleMapBanner />
 
-      <main className="absolute inset-0">
-        {map ? (
-          surface === "dictionary" ? (
-            <DictionaryView />
-          ) : surface === "flashcards" ? (
-            <FlashcardsView />
-          ) : surface === "sandbox" ? (
-            <Suspense fallback={<LoadingState label="Loading sandbox…" />}>
-              <SandboxView />
-            </Suspense>
-          ) : (
-            <>
-              <GraphCanvas />
-              {mode === "explore" ? editMode ? <EditInspector /> : <ConceptCard /> : <PathsPanel />}
-            </>
-          )
-        ) : (
-          <MapStatus />
-        )}
+      <main className="absolute inset-0" aria-label={surface === "atlas" ? "Atlas canvas" : undefined}>
+        <AnimatePresence initial={false} mode="wait">
+          <motion.div
+            key={map ? surface : "map-status"}
+            className="absolute inset-0"
+            initial={reduceMotion ? false : { opacity: 0, x: 6 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -6 }}
+            transition={{ duration: reduceMotion ? 0 : 0.18, ease: easing.apple }}
+          >
+            {map ? (
+              surface === "dictionary" ? (
+                <DictionaryView />
+              ) : surface === "flashcards" ? (
+                <FlashcardsView />
+              ) : surface === "sandbox" ? (
+                <Suspense fallback={<LoadingState label="Loading sandbox…" />}>
+                  <SandboxView />
+                </Suspense>
+              ) : (
+                <>
+                  <GraphCanvas />
+                  <AnimatePresence initial={false} mode="popLayout">
+                    {mode === "explore" ? (
+                      editMode ? (
+                        <EditInspector key="edit" />
+                      ) : (
+                        <ConceptCard key="concept" />
+                      )
+                    ) : (
+                      <PathsPanel key="paths" />
+                    )}
+                  </AnimatePresence>
+                </>
+              )
+            ) : (
+              <MapStatus />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
-      {!onAtlas && <TopChrome />}
-      {onAtlas && map && <Sidebar />}
-      {onAtlas && map && (
-        <div className="pointer-events-auto absolute top-[var(--shell-edge)] left-1/2 z-(--z-shell-raised) w-[min(520px,calc(100vw-32px))] -translate-x-1/2 max-[980px]:right-[var(--shell-edge)] max-[980px]:left-[calc(var(--hig-sidebar-w)+var(--shell-edge)*2)] max-[980px]:w-auto max-[980px]:max-w-[520px] max-[980px]:translate-x-0">
-          <PaletteSearchButton />
-        </div>
-      )}
-      {onAtlas && map && <ControlCluster />}
+      <TopChrome />
+      {surface === "atlas" && map && <Sidebar />}
+      {surface === "atlas" && map && <ControlCluster />}
       <CommandPalette />
     </div>
   );

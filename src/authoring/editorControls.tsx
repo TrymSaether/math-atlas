@@ -1,4 +1,12 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import { Check, ChevronDown } from "lucide-react";
 
 import { getDomainTone } from "@/atlas/colors";
@@ -107,10 +115,35 @@ export function SelectField({
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const selected = options.find((option) => option.value === value);
+  const selectedIndex = Math.max(
+    0,
+    options.findIndex((option) => option.value === value),
+  );
   const closeSelect = useCallback(() => setOpen(false), []);
 
   usePopoverDismiss({ open, onClose: closeSelect, containerRef: ref, triggerRef });
+
+  useEffect(() => {
+    if (!open) return;
+    const frame = requestAnimationFrame(() => optionRefs.current[selectedIndex]?.focus());
+    return () => cancelAnimationFrame(frame);
+  }, [open, selectedIndex]);
+
+  const onListKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (!options.length) return;
+    const current = optionRefs.current.indexOf(document.activeElement as HTMLButtonElement);
+    const from = current >= 0 ? current : selectedIndex;
+    let next: number | null = null;
+    if (event.key === "ArrowDown") next = (from + 1) % options.length;
+    if (event.key === "ArrowUp") next = (from - 1 + options.length) % options.length;
+    if (event.key === "Home") next = 0;
+    if (event.key === "End") next = options.length - 1;
+    if (next === null) return;
+    event.preventDefault();
+    optionRefs.current[next]?.focus();
+  };
 
   return (
     <div className={FIELD} ref={ref}>
@@ -131,20 +164,26 @@ export function SelectField({
           <Surface
             material="thick"
             role="listbox"
-            className="absolute inset-x-0 top-[calc(100%+6px)] z-(--z-modal) max-h-[min(300px,42vh)] overflow-y-auto rounded-lg p-1.5"
+            className="shell-popover-present absolute inset-x-0 top-[calc(100%+6px)] z-(--z-modal) max-h-[min(300px,42vh)] overflow-y-auto rounded-lg p-1.5"
+            onKeyDown={onListKeyDown}
           >
-            {options.map((option) => {
+            {options.map((option, index) => {
               const active = option.value === value;
               return (
                 <button
                   key={option.value}
+                  ref={(element) => {
+                    optionRefs.current[index] = element;
+                  }}
                   type="button"
                   role="option"
                   aria-selected={active}
+                  tabIndex={active ? 0 : -1}
                   className={cn(SELECT_OPTION, active && SELECT_OPTION_ACTIVE)}
                   onClick={() => {
                     onChange(option.value);
                     setOpen(false);
+                    requestAnimationFrame(() => triggerRef.current?.focus());
                   }}
                 >
                   <span className="min-w-0 truncate">{option.label}</span>
@@ -173,12 +212,23 @@ export function NodePicker({
 }) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const listId = useId();
   const selected = options.find((o) => o.id === value);
   const matches = useMemo(() => {
     const q = query.toLowerCase().trim();
     if (!q) return options.slice(0, 8);
     return options.filter((o) => o.label.toLowerCase().includes(q) || o.id.includes(q)).slice(0, 8);
   }, [options, query]);
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [query]);
+
+  const choose = (id: string) => {
+    onChange(id);
+    setOpen(false);
+  };
 
   return (
     <div className="relative">
@@ -192,23 +242,56 @@ export function NodePicker({
         }}
         onBlur={() => window.setTimeout(() => setOpen(false), 120)}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            setOpen(false);
+            return;
+          }
+          if (event.key === "ArrowDown") {
+            event.preventDefault();
+            setOpen(true);
+            setActiveIndex((index) => Math.min(index + 1, Math.max(matches.length - 1, 0)));
+            return;
+          }
+          if (event.key === "ArrowUp") {
+            event.preventDefault();
+            setOpen(true);
+            setActiveIndex((index) => Math.max(index - 1, 0));
+            return;
+          }
+          if (event.key === "Enter" && open && matches[activeIndex]) {
+            event.preventDefault();
+            choose(matches[activeIndex].id);
+          }
+        }}
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={open}
+        aria-controls={listId}
+        aria-activedescendant={open && matches[activeIndex] ? `${listId}-${matches[activeIndex].id}` : undefined}
         className={CONTROL}
       />
       {open && matches.length > 0 && (
         <ul
-          className="panel-scrollbar absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-e4)"
-          style={{ background: "var(--card)", borderColor: "var(--border)" }}
+          id={listId}
+          role="listbox"
+          className="shell-popover-present panel-scrollbar absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-e4)"
+          style={{ background: "var(--card)", borderColor: "var(--border)", transformOrigin: "top" }}
         >
-          {matches.map((o) => (
-            <li key={o.id}>
+          {matches.map((o, index) => (
+            <li key={o.id} role="none">
               <button
+                id={`${listId}-${o.id}`}
                 type="button"
+                role="option"
+                aria-selected={index === activeIndex}
                 onMouseDown={(e) => {
                   e.preventDefault();
-                  onChange(o.id);
-                  setOpen(false);
+                  choose(o.id);
                 }}
-                className={PICKER_OPTION}
+                onMouseEnter={() => setActiveIndex(index)}
+                className={cn(PICKER_OPTION, index === activeIndex && "bg-secondary")}
                 style={{ color: "var(--foreground)" }}
               >
                 <span

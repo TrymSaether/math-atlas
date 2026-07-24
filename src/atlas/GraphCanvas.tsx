@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { ReactFlow, useReactFlow, useViewport } from "@xyflow/react";
+import { useReducedMotion } from "motion/react";
 import type { MapId } from "@/maps";
 import type { AtlasMap } from "./model";
 import { savedViewportFor, saveViewport } from "./viewportStorage";
@@ -47,6 +48,7 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const route = useRouteResult();
   const reactFlow = useReactFlow();
   const { x, y, zoom } = useViewport();
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     setRouteSequence(route.ordered);
@@ -137,12 +139,12 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
       if (savedViewport) {
         reactFlow.setViewport(savedViewport, { duration: 0 });
       } else {
-        reactFlow.fitView({ padding: 0.12, duration: view === "cluster" ? 520 : 0 });
+        reactFlow.fitView({ padding: 0.12, duration: reduceMotion ? 0 : view === "cluster" ? 520 : 0 });
       }
       restoredViewportKeyRef.current = viewportPersistenceKey;
     }, 40);
     return () => window.clearTimeout(timeout);
-  }, [reactFlow, mapId, view, viewportPersistenceKey]);
+  }, [reactFlow, mapId, view, viewportPersistenceKey, reduceMotion]);
 
   useEffect(() => {
     if (restoredViewportKeyRef.current !== viewportPersistenceKey) return;
@@ -158,9 +160,40 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
     if (!position) return;
     reactFlow.setCenter(position.x + ATLAS_NODE_WIDTH / 2, position.y + ATLAS_NODE_HEIGHT / 2, {
       zoom: Math.max(0.9, reactFlow.getZoom()),
-      duration: 450,
+      duration: reduceMotion ? 0 : 450,
     });
-  }, [selectedId, projection.activeLayout.positions, reactFlow]);
+  }, [selectedId, projection.activeLayout.positions, reactFlow, reduceMotion]);
+
+  // The shell measures sidebar/panel width independently from React Flow.
+  // Counter-shift the viewport by the same amount so opening, closing, or
+  // resizing chrome does not make the graph jump beneath the learner.
+  useEffect(() => {
+    const onShellInsets = (event: Event) => {
+      const deltaLeft = (event as CustomEvent<{ deltaLeft: number }>).detail.deltaLeft;
+      if (!deltaLeft) return;
+      const current = reactFlow.getViewport();
+      const nextX = current.x - deltaLeft;
+      void reactFlow.setViewport({ ...current, x: nextX }, { duration: 0 });
+
+      if (!selectedId) return;
+      const position = projection.activeLayout.positions.get(selectedId);
+      if (!position) return;
+      requestAnimationFrame(() => {
+        const stage = document.querySelector<HTMLElement>(".shell-canvas-stage");
+        if (!stage) return;
+        const nodeCenterX = position.x + ATLAS_NODE_WIDTH / 2;
+        const screenX = nodeCenterX * current.zoom + nextX;
+        const safeMargin = Math.min(120, stage.clientWidth * 0.2);
+        if (screenX >= safeMargin && screenX <= stage.clientWidth - safeMargin) return;
+        reactFlow.setCenter(nodeCenterX, position.y + ATLAS_NODE_HEIGHT / 2, {
+          zoom: current.zoom,
+          duration: reduceMotion ? 0 : 200,
+        });
+      });
+    };
+    window.addEventListener("math-atlas:shell-insets", onShellInsets);
+    return () => window.removeEventListener("math-atlas:shell-insets", onShellInsets);
+  }, [projection.activeLayout.positions, reactFlow, reduceMotion, selectedId]);
 
   return (
     <>
@@ -193,5 +226,9 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
 }
 
 export function GraphCanvas() {
-  return <InnerGraph />;
+  return (
+    <div className="shell-canvas-stage">
+      <InnerGraph />
+    </div>
+  );
 }

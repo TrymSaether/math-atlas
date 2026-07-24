@@ -1,10 +1,13 @@
 import { ReactFlowProvider } from "@xyflow/react";
 import { AppShell } from "./AppShell";
+import { ShellActionsProvider } from "./ShellActions";
 
 export default function App() {
   return (
     <ReactFlowProvider>
-      <AppShell />
+      <ShellActionsProvider>
+        <AppShell />
+      </ShellActionsProvider>
     </ReactFlowProvider>
   );
 }

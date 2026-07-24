@@ -1,19 +1,29 @@
-/** Math Atlas "Vertex A" mark — the brand letter built from a prerequisite graph.
- *  Structure uses currentColor (inherits text color); the crossbar edge and its
- *  nodes use the accent so the mark tracks the in-app theme. */
+/**
+ * The original Math Atlas compass rose, refined into a quieter single-colour
+ * system mark. It reads as navigation at small sizes and as an atlas rather
+ * than as a generic network visual.
+ */
 export function LogoMark({ className, size = 28 }: { className?: string; size?: number }) {
   return (
-    <svg className={className} width={size} height={size} viewBox="0 0 100 100" fill="none" aria-hidden>
-      <g stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M50 18 L24 82" />
-        <path d="M50 18 L76 82" />
-      </g>
-      <path d="M37 50 L63 50" stroke="var(--primary)" strokeWidth="3.4" strokeLinecap="round" />
-      <circle cx="50" cy="18" r="7" fill="currentColor" />
-      <circle cx="24" cy="82" r="7" fill="var(--card)" stroke="currentColor" strokeWidth="3.4" />
-      <circle cx="76" cy="82" r="7" fill="var(--card)" stroke="currentColor" strokeWidth="3.4" />
-      <circle cx="37" cy="50" r="5.5" fill="var(--primary)" />
-      <circle cx="63" cy="50" r="5.5" fill="var(--primary)" />
+    <svg className={className} width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
+      <circle cx="24" cy="24" r="20.25" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="24" cy="24" r="14.25" stroke="currentColor" strokeWidth="1.15" opacity="0.28" />
+      <path d="M24 5.5 27.4 24 24 20.8 20.6 24Z" fill="currentColor" />
+      <path d="m24 42.5-3.4-18.5 3.4 3.2 3.4-3.2Z" fill="currentColor" opacity="0.42" />
+      <path d="m42.5 24-18.5 3.4 3.2-3.4-3.2-3.4Z" fill="currentColor" opacity="0.72" />
+      <path d="m5.5 24 18.5-3.4-3.2 3.4 3.2 3.4Z" fill="currentColor" opacity="0.42" />
+      <circle cx="24" cy="24" r="2" fill="var(--primary)" />
     </svg>
+  );
+}
+
+export function LogoLockup({ compact = false }: { compact?: boolean }) {
+  return (
+    <span className="inline-flex min-w-0 items-center gap-2">
+      <LogoMark className="size-7 shrink-0" />
+      {!compact && (
+        <span className="shell-brand-copy truncate text-subhead font-semibold tracking-[-0.015em]">Math Atlas</span>
+      )}
+    </span>
   );
 }

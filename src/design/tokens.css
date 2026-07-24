@@ -16,39 +16,68 @@
  */
 
 :root {
-  /* ---- shadcn semantic contract (Apple light surfaces) ---- */
-  --background: #f4f4f6;
+  /* -----------------------------------------------------------------------
+     APPLE-LIKE LIGHT APPEARANCE
+     Content surfaces stay calm and mostly opaque.
+     Liquid Glass is reserved for elevated chrome and controls.
+     -------------------------------------------------------------------- */
+
+  --background: #f5f5f7;
   --foreground: #1d1d1f;
 
-  --card: #ffffff;
+  --card: rgba(255, 255, 255, 0.92);
   --card-foreground: #1d1d1f;
-  --popover: #ffffff;
+
+  --popover: rgba(252, 252, 253, 0.88);
   --popover-foreground: #1d1d1f;
 
-  --primary: #007aff; /* Apple system blue — the brand/accent */
+  --primary: #007aff;
+  --primary-hover: #0071e3;
+  --primary-pressed: #0068d1;
+  --primary-text: #0066cc;
   --primary-foreground: #ffffff;
 
-  --secondary: #e9e9ee;
+  --secondary: rgba(118, 118, 128, 0.12);
+  --secondary-hover: rgba(118, 118, 128, 0.18);
   --secondary-foreground: #1d1d1f;
 
-  --muted: #eeeef1;
-  --muted-foreground: #6e6e73; /* Apple secondary label */
+  --muted: rgba(118, 118, 128, 0.1);
+  --muted-foreground: #6e6e73;
+  --tertiary-foreground: #86868b;
+  --quaternary-foreground: #aeaeb2;
 
-  /* shadcn "accent" = the neutral hover surface. Named -surface so it can't
-     collide with the legacy brand `--accent` (which wins specificity under
-     [data-theme]); brand lives in --primary. */
-  --accent-surface: #e9e9ee;
+  --accent-surface: rgba(118, 118, 128, 0.12);
+  --accent-surface-hover: rgba(118, 118, 128, 0.18);
   --accent-surface-foreground: #1d1d1f;
 
-  --destructive: #ff3b30; /* Apple system red */
+  --destructive: #ff3b30;
   --destructive-foreground: #ffffff;
 
-  --success: #34c759; /* Apple system green */
+  --success: #34c759;
   --success-foreground: #ffffff;
 
-  --border: rgba(0, 0, 0, 0.1);
-  --input: rgba(0, 0, 0, 0.12);
-  --ring: #007aff;
+  /* Separators should usually be softer than a conventional web border. */
+  --separator: rgba(60, 60, 67, 0.16);
+  --separator-opaque: #d1d1d6;
+  --border: rgba(60, 60, 67, 0.14);
+  --input: rgba(60, 60, 67, 0.18);
+  --ring: rgba(0, 122, 255, 0.42);
+
+  /* -----------------------------------------------------------------------
+     RADII
+     Apple-like shapes are continuous and generous, but avoid turning every
+     rectangular content card into a pill.
+     -------------------------------------------------------------------- */
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+  --radius-pill: 999px;
+
+  --radius: var(--radius-md);
 
   /* ---- domain palette ----------------------------------------------------
      Base hues for the knowledge graph. `getDomainTone()` (src/atlas/colors.ts)
@@ -75,64 +104,102 @@
   --domain-rose: #e11d48;
   --domain-slate: #64748b;
 
-  /* ---- radius scale (visual bar: xs6 sm10 md14 lg20 xl28) ---- */
-  --radius: 0.875rem; /* 14px — the base; shadcn `rounded-lg` */
+  /* -----------------------------------------------------------------------
+     STANDARD CONTENT SURFACES
+     Use these for cards, inspectors, graph nodes, tables, and content panes.
+     -------------------------------------------------------------------- */
 
-  /* ---- liquid-glass material tiers (backdrop-filter baseline) ---- */
-  --glass-ultrathin-blur: 20px;
-  --glass-ultrathin-saturate: 180%;
-  --glass-ultrathin-fill: rgba(255, 255, 255, 0.45);
+  --surface-fill: rgba(255, 255, 255, 0.82);
+  --surface-fill-opaque: #ffffff;
+  --surface-border: rgba(60, 60, 67, 0.1);
 
-  --glass-thin-blur: 30px;
-  --glass-thin-saturate: 180%;
-  --glass-thin-fill: rgba(255, 255, 255, 0.55);
+  --surface-shadow:
+    0 0.5px 0 rgba(255, 255, 255, 0.9) inset, 0 0 0 0.5px rgba(60, 60, 67, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04),
+    0 6px 18px rgba(0, 0, 0, 0.05);
 
-  --glass-regular-blur: 40px;
-  --glass-regular-saturate: 180%;
-  --glass-regular-fill: rgba(255, 255, 255, 0.65);
+  --surface-shadow-raised:
+    0 0.5px 0 rgba(255, 255, 255, 0.94) inset, 0 0 0 0.5px rgba(60, 60, 67, 0.09), 0 2px 5px rgba(0, 0, 0, 0.05),
+    0 12px 32px rgba(0, 0, 0, 0.08);
 
-  --glass-thick-blur: 50px;
-  --glass-thick-saturate: 200%;
-  --glass-thick-fill: rgba(255, 255, 255, 0.78);
+  /* -----------------------------------------------------------------------
+     LIQUID GLASS
+     CSS approximation only: real Apple Liquid Glass is dynamic and rendered
+     by the system. These tokens mimic its hierarchy rather than its exact
+     optical behavior.
+     -------------------------------------------------------------------- */
 
-  /* near-solid material for graph nodes (content, not chrome) */
-  --glass-chrome-fill: rgba(252, 252, 253, 0.94);
+  --glass-clear-blur: 18px;
+  --glass-clear-saturate: 145%;
+  --glass-clear-fill: rgba(255, 255, 255, 0.34);
 
-  /* shared glass edge + shadow recipe */
-  --glass-border: rgba(255, 255, 255, 0.18);
-  --glass-specular: rgba(255, 255, 255, 0.55);
-  --glass-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.08), 0 12px 32px -8px rgba(0, 0, 0, 0.18);
+  --glass-thin-blur: 24px;
+  --glass-thin-saturate: 150%;
+  --glass-thin-fill: rgba(255, 255, 255, 0.46);
 
-  /* ---- motion (Apple spring + signature easing) ---- */
+  --glass-regular-blur: 32px;
+  --glass-regular-saturate: 155%;
+  --glass-regular-fill: rgba(246, 246, 248, 0.58);
+
+  --glass-thick-blur: 40px;
+  --glass-thick-saturate: 160%;
+  --glass-thick-fill: rgba(246, 246, 248, 0.72);
+
+  /* Tint should be contextual rather than a strong permanent white border. */
+  --glass-tint: rgba(255, 255, 255, 0.42);
+  --glass-border: rgba(255, 255, 255, 0.44);
+  --glass-separator: rgba(60, 60, 67, 0.12);
+
+  /* Directional upper highlight creates a more glass-like edge.
+     A uniform bright outline tends to look like generic glassmorphism. */
+  --glass-highlight: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(255, 255, 255, 0.16) 38%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+
+  /* Tighter contact shadow + broad, very low-opacity ambient shadow. */
+  --glass-shadow:
+    0 0.5px 0 rgba(255, 255, 255, 0.76) inset,
+    0 0 0 0.5px rgba(60, 60, 67, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    0 16px 40px rgba(0, 0, 0, 0.08);
+
+  --glass-shadow-floating:
+    0 0.5px 0 rgba(255, 255, 255, 0.82) inset,
+    0 0 0 0.5px rgba(60, 60, 67, 0.13),
+    0 2px 5px rgba(0, 0, 0, 0.07),
+    0 10px 28px rgba(0, 0, 0, 0.09),
+    0 28px 64px rgba(0, 0, 0, 0.08);
+
+  /* -----------------------------------------------------------------------
+     MOTION
+     -------------------------------------------------------------------- */
+
   --ease-apple: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-fast: 120ms;
-  --duration-base: 200ms;
-  --duration-slow: 320ms;
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  /* ---- extra radii referenced as raw vars (squircle cards, pills) ---- */
-  --radius-2xl: 1.25rem; /* 20px */
-  --radius-pill: 999px;
+  --duration-instant: 80ms;
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-slow: 360ms;
 
-  /* ---- control-height scale — recurring row/pill/field min-heights, referenced
-     as arbitrary values (e.g. min-h-(--control-h-lg)) since Tailwind's spacing
-     scale doesn't cover this namespace. ---- */
+  /* -----------------------------------------------------------------------
+     CONTROLS
+     -------------------------------------------------------------------- */
+
   --control-h-xs: 24px;
-  --control-h-sm: 26px;
-  --control-h-md: 30px;
-  --control-h-lg: 34px;
+  --control-h-sm: 28px;
+  --control-h-md: 32px;
+  --control-h-lg: 36px;
   --control-h-xl: 44px;
 
-  /* ---- floating-shell layout geometry ----------------------------------
-     The docked columns (sidebar, left panels) and content offsets read these
-     as arbitrary values (e.g. top-[var(--shell-dock-top)]). */
-  --shell-edge: 14px;
-  --shell-chrome-h: 60px;
-  --shell-dock-top: calc(var(--shell-chrome-h) + var(--shell-edge));
-  --shell-gap-md: 8px;
-  --hig-sidebar-w: 280px;
+  /* -----------------------------------------------------------------------
+     STACKING
+     -------------------------------------------------------------------- */
 
-  /* ---- stacking order --------------------------------------------------- */
   --z-below: -1;
   --z-background: -10;
   --z-shell: 20;
@@ -140,13 +207,6 @@
   --z-popover: 30;
   --z-banner: 50;
   --z-modal: 60;
-}
-
-@media (max-width: 720px) {
-  :root {
-    --shell-edge: 12px;
-    --shell-chrome-h: 112px;
-  }
 }
 
 @theme inline {
@@ -157,6 +217,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-text: var(--primary-text);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -237,6 +298,7 @@
   --popover-foreground: #eceef4;
 
   --primary: #0a84ff; /* Apple dark system blue */
+  --primary-text: #68b5ff;
   --primary-foreground: #ffffff;
 
   --secondary: #28324f;
@@ -267,7 +329,7 @@
 
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-specular: rgba(255, 255, 255, 0.12);
-  --glass-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+  --glass-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px -8px rgba(0, 0, 0, 0.6);
 
   /* Domain hues — lifted for legibility on dark surfaces. */
   --domain-blue: #58c4dd;

@@ -15,7 +15,7 @@ export function StaleMapBanner() {
   if (!staleMap || staleMap !== mapId) return null;
 
   return (
-    <div className="pointer-events-auto fixed top-16 left-1/2 z-[var(--z-banner,60)] -translate-x-1/2">
+    <div className="pointer-events-auto fixed top-[var(--shell-dock-top)] left-1/2 z-[var(--z-banner,60)] -translate-x-1/2">
       <Surface
         material="regular"
         className="flex items-center gap-3 rounded-full py-2 pr-2 pl-4 text-footnote text-foreground"

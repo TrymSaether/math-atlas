@@ -1,94 +1,97 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useReactFlow, useViewport } from "@xyflow/react";
-import { Maximize, Minus, Plus, SlidersHorizontal } from "lucide-react";
+import { Focus, Minus, Plus, SlidersHorizontal } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { usePopoverDismiss } from "./usePopover";
-import { cn } from "@/ui/cn";
-import { Button } from "@/ui/button";
-import { Surface } from "@/design";
+import { FloatingControlButton, FloatingControlDivider, FloatingControlDock } from "@/ui/floating-controls";
+import { spring } from "@/design/motion";
 import { LayersPanel } from "./LayersPanel";
 
-/**
- * Bottom-trailing utility stack. Each unrelated action gets its own glass shape;
- * only the tightly related zoom controls share a capsule.
- */
 export function ControlCluster() {
-  const rf = useReactFlow();
+  const flow = useReactFlow();
   const { zoom } = useViewport();
   const [layersOpen, setLayersOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const closeLayers = useCallback(() => setLayersOpen(false), []);
+  const reduceMotion = useReducedMotion();
+  const closeLayers = useCallback(() => {
+    setLayersOpen(false);
+    requestAnimationFrame(() => triggerRef.current?.focus());
+  }, []);
+  const duration = (milliseconds: number) => (reduceMotion ? 0 : milliseconds);
 
   usePopoverDismiss({ open: layersOpen, onClose: closeLayers, containerRef: ref, triggerRef });
 
+  useEffect(() => {
+    if (!layersOpen) return;
+    const frame = requestAnimationFrame(() => {
+      ref.current?.querySelector<HTMLElement>("#atlas-filters button")?.focus();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [layersOpen]);
+
   return (
     <div
-      className="pointer-events-auto absolute bottom-[var(--shell-edge)] right-[var(--shell-edge)] z-(--z-shell-raised) flex items-end gap-2.5"
+      className="pointer-events-none absolute right-[var(--shell-edge)] bottom-[var(--shell-content-bottom)] z-(--z-shell-raised) flex items-end gap-[var(--shell-panel-gap)] max-[820px]:bottom-[var(--shell-content-bottom)]"
       ref={ref}
     >
-      {layersOpen && (
-        <div className="mr-0.5 self-end">
-          <LayersPanel onClose={() => setLayersOpen(false)} />
-        </div>
-      )}
-      <div className="inline-flex w-12 flex-col items-center gap-2.5">
-        <Surface material="regular" className="rounded-full">
-          <Button
-            ref={triggerRef}
-            variant="ghost"
-            size="icon"
-            className={cn("size-11 rounded-full", layersOpen ? "text-primary" : "text-foreground")}
-            onClick={() => setLayersOpen((v) => !v)}
-            aria-label="Filters"
-            aria-pressed={layersOpen}
-            title="Filters"
+      <AnimatePresence initial={false}>
+        {layersOpen && (
+          <motion.div
+            className="pointer-events-auto mb-0.5 origin-bottom-right self-end max-[820px]:fixed max-[820px]:right-[var(--shell-edge)] max-[820px]:bottom-[calc(var(--shell-content-bottom)+56px)] max-[820px]:left-[var(--shell-edge)]"
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 8, y: 8, scale: 0.96 }}
+            animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 6, y: 6, scale: 0.97 }}
+            transition={reduceMotion ? { duration: 0.1 } : spring.smooth}
           >
-            <SlidersHorizontal className="size-[18px]" />
-          </Button>
-        </Surface>
+            <LayersPanel onClose={closeLayers} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        <Surface material="regular" className="flex flex-col items-center rounded-full py-1" aria-label="Zoom controls">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-9 rounded-full text-foreground"
-            aria-label="Zoom in"
-            title="Zoom in"
-            onClick={() => rf.zoomIn({ duration: 200 })}
-          >
-            <Plus className="size-[18px]" />
-          </Button>
-          <span
-            className="py-0.5 font-mono text-[11px] tabular-nums text-muted-foreground"
-            aria-label={`Zoom ${Math.round(zoom * 100)} percent`}
-          >
-            {Math.round(zoom * 100)}%
-          </span>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-9 rounded-full text-foreground"
-            aria-label="Zoom out"
-            title="Zoom out"
-            onClick={() => rf.zoomOut({ duration: 200 })}
-          >
-            <Minus className="size-[18px]" />
-          </Button>
-        </Surface>
+      <FloatingControlDock className="pointer-events-auto" aria-label="Canvas controls">
+        <FloatingControlButton
+          ref={triggerRef}
+          active={layersOpen}
+          onClick={() => setLayersOpen((value) => !value)}
+          aria-label="Filters and display"
+          aria-pressed={layersOpen}
+          aria-expanded={layersOpen}
+          aria-haspopup="dialog"
+          aria-controls="atlas-filters"
+          title="Filters and display"
+        >
+          <SlidersHorizontal className="size-[18px]" />
+        </FloatingControlButton>
 
-        <Surface material="regular" className="rounded-full">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-11 rounded-full text-foreground"
-            aria-label="Fit to view"
-            title="Fit to view"
-            onClick={() => rf.fitView({ padding: 0.12, duration: 400 })}
-          >
-            <Maximize className="size-[18px]" />
-          </Button>
-        </Surface>
-      </div>
+        <FloatingControlDivider />
+
+        <FloatingControlButton aria-label="Zoom in" title="Zoom in" onClick={() => flow.zoomIn({ duration: duration(180) })}>
+          <Plus className="size-[18px]" />
+        </FloatingControlButton>
+        <button
+          type="button"
+          className="min-h-6 w-10 rounded-full px-0.5 font-mono text-[10px] font-medium tabular-nums text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55"
+          aria-label={`Reset zoom from ${Math.round(zoom * 100)} percent to 100 percent`}
+          title="Reset zoom to 100%"
+          onClick={() => flow.zoomTo(1, { duration: duration(260) })}
+        >
+          {Math.round(zoom * 100)}%
+        </button>
+        <FloatingControlButton aria-label="Zoom out" title="Zoom out" onClick={() => flow.zoomOut({ duration: duration(180) })}>
+          <Minus className="size-[18px]" />
+        </FloatingControlButton>
+
+        <FloatingControlDivider />
+
+        <FloatingControlButton
+          aria-label="Fit map to visible area"
+          title="Fit map to visible area"
+          onClick={() => flow.fitView({ padding: 0.12, duration: duration(360) })}
+        >
+          <Focus className="size-[18px]" />
+        </FloatingControlButton>
+      </FloatingControlDock>
     </div>
   );
 }

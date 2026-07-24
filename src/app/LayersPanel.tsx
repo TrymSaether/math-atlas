@@ -31,7 +31,7 @@ function Chip({
       className={cn(
         "flex items-center gap-1.5 rounded-full border px-3 py-1 text-footnote transition-colors",
         active
-          ? "border-primary/25 bg-primary/10 text-primary"
+          ? "border-primary/25 bg-primary/10 text-primary-text"
           : "border-transparent bg-muted text-foreground hover:bg-accent",
       )}
     >
@@ -117,12 +117,17 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
 
   return (
     <Surface
+      id="atlas-filters"
       material="regular"
       role="dialog"
       aria-label="Filters and display"
-      className="flex max-h-[min(78vh,580px)] w-[300px] flex-col"
+      className="flex max-h-[min(78vh,580px)] w-[300px] flex-col max-[820px]:w-full"
     >
-      <header className="flex items-center justify-between px-3.5 pt-3 pb-1.5">
+      <span
+        aria-hidden
+        className="absolute top-1.5 left-1/2 hidden h-1 w-8 -translate-x-1/2 rounded-full bg-muted-foreground/35 max-[820px]:block"
+      />
+      <header className="flex items-center justify-between px-3.5 pt-3 pb-1.5 max-[820px]:pt-4">
         <span className="text-headline font-semibold text-foreground">Filters</span>
         <Button
           variant="ghost"
@@ -142,7 +147,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
             <span className="text-caption font-semibold tracking-wide text-muted-foreground uppercase">Domains</span>
             <button
               type="button"
-              className="text-footnote font-medium text-primary hover:underline"
+              className="text-footnote font-medium text-primary-text hover:underline"
               onClick={resetTopics}
             >
               All
@@ -150,11 +155,12 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
           </div>
           <div className="flex flex-wrap gap-1.5">
             {map.data.domains.map((domain) => {
-              const dimmed = topics.size > 0 && !topics.has(domain.id);
+              const allDomains = topics.size === 0;
+              const dimmed = !allDomains && !topics.has(domain.id);
               return (
                 <Chip
                   key={domain.id}
-                  active={topics.has(domain.id)}
+                  active={allDomains || topics.has(domain.id)}
                   onClick={() => toggleTopic(domain.id)}
                   dotColor={getDomainTone(domain.id).color}
                   style={{ opacity: dimmed ? 0.55 : 1 }}
@@ -197,7 +203,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
             <SwitchRow label="Domain regions" checked={showRegions} onToggle={toggleRegions} />
             <SwitchRow label="Soft links" checked={showSoftDeps} onToggle={toggleSoftDeps} />
             <SwitchRow label="Grid" checked={showGrid} onToggle={toggleGrid} />
-            <SwitchRow label="Minimap" checked={showMinimap} onToggle={toggleMinimap} />
+            <SwitchRow label="Map overview" checked={showMinimap} onToggle={toggleMinimap} />
           </div>
         </section>
 

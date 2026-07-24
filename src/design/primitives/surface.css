@@ -1,23 +1,21 @@
 /*
- * Surface — the one liquid-glass primitive.
+ * Surface — the shared material primitive.
  *
- * Every floating chrome surface composes this. Material tiers map to the glass
- * tokens in tokens.css; the ::before layer carries the top-lit specular edge and
- * the pointer-reactive highlight (driven by --surface-mx / --surface-my, which
- * <Surface reactive> updates on pointermove). Graph nodes use `chrome` — a
- * near-solid material, not glass.
+ * Floating chrome uses the liquid-glass tiers. Graph nodes and content surfaces
+ * use `chrome`, which maps to the standard near-opaque surface tokens.
+ *
+ * The ::before layer renders the directional glass edge and optional
+ * pointer-reactive reflection driven by --surface-mx / --surface-my.
  */
 
-/* Layered as `components` so Tailwind utility classes (e.g. `absolute`,
-   `position`) always win the cascade over these defaults, regardless of
-   import order — unlayered CSS otherwise beats layered Tailwind utilities
-   outright, which silently broke `absolute` positioning on <Surface> users. */
 @layer components {
   .surface {
     position: relative;
     isolation: isolate;
-    border-radius: var(--radius-lg);
+
     border: 0.5px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+
     box-shadow: var(--glass-shadow);
     color: var(--foreground);
   }
@@ -26,48 +24,83 @@
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
+
+    /* Keep this in the surface stacking context but above its background.
+       As the first child, normal content still paints above it. */
+    z-index: 0;
+
     border-radius: inherit;
     pointer-events: none;
-    box-shadow: inset 0 1px 0 0 var(--glass-specular);
-    background: radial-gradient(
-      140px 90px at var(--surface-mx, 50%) var(--surface-my, 0%),
-      var(--glass-specular),
-      transparent 70%
-    );
-    opacity: 0.5;
+
+    background:
+      radial-gradient(140px 90px at var(--surface-mx, 50%) var(--surface-my, 0%), var(--glass-tint), transparent 70%),
+      var(--glass-highlight);
+
+    opacity: 0.42;
   }
 
   .surface--ultrathin {
     background: var(--glass-ultrathin-fill);
+
     -webkit-backdrop-filter: blur(var(--glass-ultrathin-blur)) saturate(var(--glass-ultrathin-saturate));
+
     backdrop-filter: blur(var(--glass-ultrathin-blur)) saturate(var(--glass-ultrathin-saturate));
   }
 
   .surface--thin {
     background: var(--glass-thin-fill);
+
     -webkit-backdrop-filter: blur(var(--glass-thin-blur)) saturate(var(--glass-thin-saturate));
+
     backdrop-filter: blur(var(--glass-thin-blur)) saturate(var(--glass-thin-saturate));
   }
 
   .surface--regular {
     background: var(--glass-regular-fill);
+
     -webkit-backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-regular-saturate));
+
     backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-regular-saturate));
   }
 
   .surface--thick {
     background: var(--glass-thick-fill);
+
     -webkit-backdrop-filter: blur(var(--glass-thick-blur)) saturate(var(--glass-thick-saturate));
+
     backdrop-filter: blur(var(--glass-thick-blur)) saturate(var(--glass-thick-saturate));
   }
 
-  /* near-solid — graph nodes (content, not chrome) */
+  /*
+   * Near-opaque content material for graph nodes, cards, and inspectors.
+   * It deliberately uses the standard surface system rather than Liquid Glass.
+   */
   .surface--chrome {
-    background: var(--glass-chrome-fill);
+    border-color: var(--surface-border);
+    background: var(--surface-fill-opaque);
+    box-shadow: var(--surface-shadow);
   }
 
-  /* opt out of the specular edge (e.g. nested fills) */
+  /*
+   * Standard content surfaces should not receive the glass reflection.
+   */
+  .surface--chrome::before {
+    content: none;
+  }
+
+  /*
+   * Keep canvas motion responsive. Translucency returns after the graph
+   * movement debounce clears the root marker.
+   */
+  :root.is-panning .surface--ultrathin,
+  :root.is-panning .surface--thin,
+  :root.is-panning .surface--regular,
+  :root.is-panning .surface--thick {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  /* Opt out of the optical highlight, such as for nested glass fills. */
   .surface--plain::before {
     content: none;
   }
@@ -77,9 +110,17 @@
     .surface--thin,
     .surface--regular,
     .surface--thick {
+      background: var(--card);
+
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
-      background: var(--card);
+    }
+
+    .surface--ultrathin::before,
+    .surface--thin::before,
+    .surface--regular::before,
+    .surface--thick::before {
+      content: none;
     }
   }
 }

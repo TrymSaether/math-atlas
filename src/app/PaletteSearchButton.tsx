@@ -27,13 +27,13 @@ function SearchControl({ compact = false }: { compact?: boolean }) {
         open && "text-foreground",
       )}
     >
-      <Search className={cn("shrink-0", compact ? "size-4" : "size-[18px]", open && "text-primary")} aria-hidden />
-      <span className={cn("min-w-0 flex-1 truncate text-left", compact ? "text-subhead" : "text-body")}>
+      <Search className={cn("shrink-0", compact ? "size-4" : "size-[18px]", open && "text-primary-text")} aria-hidden />
+      <span className={cn("shell-search-copy min-w-0 flex-1 truncate text-left", compact ? "text-subhead" : "text-body")}>
         Search concepts, theorems…
       </span>
       <kbd
         className={cn(
-          "shrink-0 rounded border border-border bg-foreground/[0.04] px-1.5 py-0.5 font-mono text-caption-2 leading-none text-muted-foreground shadow-[0_1px_0_var(--border)]",
+          "shell-search-shortcut shrink-0 rounded border border-border bg-foreground/[0.04] px-1.5 py-0.5 font-mono text-caption-2 leading-none text-muted-foreground shadow-[0_1px_0_var(--border)]",
           open && "text-foreground",
         )}
       >

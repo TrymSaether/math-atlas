@@ -23,7 +23,8 @@ import { ConceptHeader, ConceptBody, ConceptRelations } from "./index";
 import { shareUrl } from "@/app/useUrlSync";
 import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
-import { Surface } from "@/design";
+import { spring, Surface } from "@/design";
+import { useMediaQuery } from "@/app/useMediaQuery";
 
 const USED_BY_INITIAL = 8;
 
@@ -38,6 +39,7 @@ export function ConceptCard() {
   const map = useStore((s) => s.loadedMaps[mapId]);
   const id = useStore((s) => s.selectedId);
   const reduceMotion = useReducedMotion();
+  const mobile = useMediaQuery("(max-width: 820px)");
 
   const node = id && map ? (map.nodeById.get(id) ?? null) : null;
   const open = node !== null && map !== undefined;
@@ -47,10 +49,11 @@ export function ConceptCard() {
       {open && node && map && (
         <motion.aside
           key={node.id}
-          initial={reduceMotion ? false : { opacity: 0, x: -14 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -14 }}
-          transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.2, 0.7, 0.2, 1] }}
+          initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+          transition={reduceMotion ? { duration: 0 } : spring.smooth}
+          data-shell-context-panel=""
           className="ds-panel ds-panel--left"
         >
           <CardContent nodeId={node.id} />
@@ -165,7 +168,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
               <Button
                 variant="ghost"
                 size="icon"
-                className={cn("size-8", known ? "text-primary" : "text-muted-foreground")}
+                className={cn("size-8", known ? "text-primary-text" : "text-muted-foreground")}
                 aria-label={known ? "Mark as not known" : "Mark as known"}
                 title={known ? "Mark as not known" : "Mark as known"}
                 onClick={() => setNodeProgress(mapId, nodeId, known ? null : "known")}
@@ -196,7 +199,7 @@ function CardContent({ nodeId }: { nodeId: string }) {
             <Button
               variant="ghost"
               size="icon"
-              className={cn("size-8", copied ? "text-primary" : "text-muted-foreground")}
+              className={cn("size-8", copied ? "text-primary-text" : "text-muted-foreground")}
               aria-label={copied ? "Link copied" : "Copy link"}
               title="Copy link"
               onClick={copyLink}

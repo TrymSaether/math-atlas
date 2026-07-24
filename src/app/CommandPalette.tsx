@@ -1,6 +1,16 @@
 import { Dialog } from "radix-ui";
 import { useCallback, useEffect, useState } from "react";
-import { CornerDownLeft, Map as MapIcon } from "lucide-react";
+import {
+  BookOpen,
+  Compass,
+  CornerDownLeft,
+  Map as MapIcon,
+  Pencil,
+  Route,
+  Variable,
+  WalletCards,
+  X,
+} from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/ui/command";
 import { ModalShell } from "@/ui/modal-shell";
 import { Surface } from "@/design";
@@ -10,6 +20,7 @@ import { kindIcon } from "@/atlas/nodeCategoryIcons";
 import { KIND_LABEL } from "@/maps/types";
 import { MathText } from "@/math/MathText";
 import { rememberPaletteReturnFocus, restorePaletteReturnFocus } from "./paletteFocus";
+import { Button } from "@/ui/button";
 
 export function CommandPalette() {
   const mapId = useStore((s) => s.mapId);
@@ -18,8 +29,14 @@ export function CommandPalette() {
   const open = useStore((s) => s.paletteOpen);
   const setOpen = useStore((s) => s.setPaletteOpen);
   const select = useStore((s) => s.select);
+  const setSurface = useStore((s) => s.setSurface);
+  const setMode = useStore((s) => s.setMode);
   const setMap = useStore((s) => s.setMap);
   const catalog = useStore((s) => s.catalog);
+  const surface = useStore((s) => s.surface);
+  const mode = useStore((s) => s.mode);
+  const editMode = useStore((s) => s.editMode);
+  const toggleEditMode = useStore((s) => s.toggleEditMode);
   const [query, setQuery] = useState("");
 
   const setPaletteOpen = useCallback(
@@ -59,14 +76,103 @@ export function CommandPalette() {
       <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
       <Surface material="thick" reactive className="overflow-hidden">
         <Command loop className="bg-transparent text-foreground">
-          <CommandInput
-            value={query}
-            onValueChange={setQuery}
-            aria-label="Search the atlas"
-            placeholder="Search concepts, definitions, theorems…"
-          />
+          <div className="relative">
+            <CommandInput
+              value={query}
+              onValueChange={setQuery}
+              aria-label="Search Math Atlas"
+              placeholder="Search concepts, definitions, theorems…"
+              className="pr-8"
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-3 right-3 size-9 rounded-full text-muted-foreground"
+              onClick={() => setPaletteOpen(false)}
+              aria-label="Close search"
+            >
+              <X className="size-4" />
+            </Button>
+          </div>
           <CommandList className="max-h-[min(62vh,440px)]">
-            <CommandEmpty>No matching concepts or fields</CommandEmpty>
+            <CommandEmpty>No matching destination, field, concept, or command</CommandEmpty>
+
+            <CommandGroup heading="Go to">
+              <PaletteDestination
+                value="go atlas map explore canvas"
+                label="Atlas"
+                detail="Explore the active field"
+                icon={Compass}
+                badge={surface === "atlas" && mode === "explore" ? "Current" : undefined}
+                onSelect={() => {
+                  setSurface("atlas");
+                  setMode("explore");
+                  setPaletteOpen(false);
+                }}
+              />
+              <PaletteDestination
+                value="go paths route guided learning atlas mode"
+                label="Paths"
+                detail="Guided routes in Atlas"
+                icon={Route}
+                badge={surface === "atlas" && mode === "paths" ? "Current · Atlas mode" : "Atlas mode"}
+                onSelect={() => {
+                  setSurface("atlas");
+                  setMode("paths");
+                  setPaletteOpen(false);
+                }}
+              />
+              <PaletteDestination
+                value="go index dictionary definitions concepts"
+                label="Index"
+                detail="Browse concepts and definitions"
+                icon={BookOpen}
+                badge={surface === "dictionary" ? "Current" : undefined}
+                onSelect={() => {
+                  setSurface("dictionary");
+                  setPaletteOpen(false);
+                }}
+              />
+              <PaletteDestination
+                value="go study flashcards practice review"
+                label="Study"
+                detail="Review the active field"
+                icon={WalletCards}
+                badge={surface === "flashcards" ? "Current" : undefined}
+                onSelect={() => {
+                  setSurface("flashcards");
+                  setPaletteOpen(false);
+                }}
+              />
+              <PaletteDestination
+                value="go sandbox geometry expressions workspace"
+                label="Sandbox"
+                detail="Experiment on a live plane"
+                icon={Variable}
+                badge={surface === "sandbox" ? "Current" : undefined}
+                onSelect={() => {
+                  setSurface("sandbox");
+                  setPaletteOpen(false);
+                }}
+              />
+            </CommandGroup>
+
+            {data && (
+              <CommandGroup heading="Commands">
+                <PaletteDestination
+                  value="command edit map author concepts"
+                  label={editMode ? "Finish editing map" : "Edit map"}
+                  detail={editMode ? "Return to exploration" : "Add or revise concepts"}
+                  icon={Pencil}
+                  onSelect={() => {
+                    setSurface("atlas");
+                    setMode("explore");
+                    toggleEditMode();
+                    setPaletteOpen(false);
+                  }}
+                />
+              </CommandGroup>
+            )}
 
             <CommandGroup heading="Fields">
               {catalog.map((entry) => (
@@ -85,7 +191,7 @@ export function CommandPalette() {
                   <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
                   {entry.slug === mapId && <span className="shrink-0 text-caption text-muted-foreground">Current</span>}
                   <CornerDownLeft
-                    className="size-3.5 text-primary opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
+                    className="size-3.5 text-primary-text opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
                     aria-hidden
                   />
                 </CommandItem>
@@ -102,6 +208,8 @@ export function CommandPalette() {
                       key={n.id}
                       value={`${n.label} ${n.kind} ${n.tags.join(" ")}`}
                       onSelect={() => {
+                        setSurface("atlas");
+                        setMode("explore");
                         select(n.id);
                         setPaletteOpen(false);
                       }}
@@ -123,7 +231,7 @@ export function CommandPalette() {
                         {n.topicCluster}
                       </span>
                       <CornerDownLeft
-                        className="size-3.5 text-primary opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
+                        className="size-3.5 text-primary-text opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
                         aria-hidden
                       />
                     </CommandItem>
@@ -147,6 +255,39 @@ export function CommandPalette() {
         </Command>
       </Surface>
     </ModalShell>
+  );
+}
+
+function PaletteDestination({
+  value,
+  label,
+  detail,
+  icon: Icon,
+  badge,
+  onSelect,
+}: {
+  value: string;
+  label: string;
+  detail: string;
+  icon: typeof Compass;
+  badge?: string;
+  onSelect: () => void;
+}) {
+  return (
+    <CommandItem value={value} onSelect={onSelect} className="group">
+      <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-foreground/[0.06] text-muted-foreground">
+        <Icon className="size-3.5" aria-hidden />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate font-medium text-foreground">{label}</span>
+        <span className="block truncate text-caption text-muted-foreground">{detail}</span>
+      </span>
+      {badge && <span className="shrink-0 text-caption text-muted-foreground">{badge}</span>}
+      <CornerDownLeft
+        className="size-3.5 shrink-0 text-primary-text opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
+        aria-hidden
+      />
+    </CommandItem>
   );
 }
 

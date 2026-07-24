@@ -3,7 +3,8 @@ import { Pencil, Plus } from "lucide-react";
 import { useStore } from "@/app/store";
 import { NodeEditorPanel } from "./NodeEditorPanel";
 import { Button } from "@/ui/button";
-import { Surface } from "@/design";
+import { spring, Surface } from "@/design";
+import { useMediaQuery } from "@/app/useMediaQuery";
 
 /**
  * Shell-native Edit Mode inspector. The authoring engine still lives in
@@ -12,6 +13,7 @@ import { Surface } from "@/design";
  */
 export function EditInspector() {
   const reduceMotion = useReducedMotion();
+  const mobile = useMediaQuery("(max-width: 820px)");
   const mapId = useStore((s) => s.mapId);
   const map = useStore((s) => s.loadedMaps[mapId]);
   const selectedId = useStore((s) => s.selectedId);
@@ -30,17 +32,18 @@ export function EditInspector() {
     else select(null);
   };
 
-  const transition = { duration: reduceMotion ? 0 : 0.2, ease: [0.2, 0.7, 0.2, 1] } as const;
+  const transition = reduceMotion ? ({ duration: 0 } as const) : spring.smooth;
 
   return (
     <AnimatePresence>
       {open ? (
         <motion.aside
           key={editingId ?? "new"}
-          initial={reduceMotion ? false : { opacity: 0, x: -14 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -14 }}
+          initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
           transition={transition}
+          data-shell-context-panel=""
           className="ds-panel ds-panel--left"
         >
           <Surface material="thick" className="flex h-full w-[min(460px,calc(100vw-24px))] flex-col">
@@ -50,10 +53,11 @@ export function EditInspector() {
       ) : (
         <motion.aside
           key="empty"
-          initial={reduceMotion ? false : { opacity: 0, x: -14 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -14 }}
+          initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
           transition={transition}
+          data-shell-context-panel=""
           className="ds-panel ds-panel--left"
         >
           <Surface

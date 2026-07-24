@@ -1,5 +1,6 @@
 import { Dialog } from "radix-ui";
 import { useState } from "react";
+import { X } from "lucide-react";
 import { signIn, signInWithGoogle, signUp } from "./client";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
@@ -67,9 +68,19 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
     >
       <Dialog.Title className="sr-only">{isSignup ? "Create an account" : "Sign in"}</Dialog.Title>
       <Dialog.Description className="sr-only">Sign in to sync and share your maps.</Dialog.Description>
-      <Surface material="thick" className="p-0">
+      <Surface material="thick" className="relative p-0">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="absolute top-3 right-3 z-10 size-9 rounded-full text-muted-foreground"
+          onClick={() => onOpenChange(false)}
+          aria-label="Close account dialog"
+        >
+          <X className="size-4" />
+        </Button>
         <form onSubmit={submit} className="flex flex-col gap-3 p-5">
-          <h2 className="text-title-3 font-semibold text-foreground">
+          <h2 className="pr-10 text-title-3 font-semibold text-foreground">
             {isSignup ? "Create an account" : "Welcome back"}
           </h2>
           <Button

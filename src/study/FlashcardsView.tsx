@@ -14,6 +14,7 @@ import { hasNodeVisual } from "./concept/visualModel";
 import { useDrill, shuffle, type CardDirection, type DeckScope, type Rating } from "./drill";
 import { useSrs, isDue, srsKey } from "./srs";
 import { Chip } from "@/ui/chip";
+import { useRegisterShellActions, type ShellAction } from "@/app/ShellActions";
 
 /** A node carries enough to drill if it has a title and at least one answer-side facet. */
 function answerText(n: GraphNode): string {
@@ -121,6 +122,22 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
     [drill, mapId, rateSrs, setNodeProgress],
   );
   const reshuffle = useCallback(() => drill().reshuffle(deckIds), [drill, deckIds]);
+  const shellActions = useMemo<readonly ShellAction[]>(
+    () =>
+      ratedCount > 0
+        ? [
+            {
+              id: "restart-study",
+              label: "Restart",
+              icon: RotateCcw,
+              onSelect: reshuffle,
+              disabled: total === 0,
+            },
+          ]
+        : [],
+    [ratedCount, reshuffle, total],
+  );
+  useRegisterShellActions("flashcards", shellActions);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -153,12 +170,12 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   }, [finished, flip, go, rate, run.flipped, setSurface]);
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center px-4 pb-4 pt-17">
+    <div className="absolute inset-x-0 top-[var(--shell-dock-top)] bottom-[var(--shell-content-bottom)] flex flex-col items-center px-4 pb-4">
       <div className="flex w-full max-w-170 flex-1 flex-col">
         {/* Deck scope + card direction */}
         <div className="mb-2 flex flex-wrap items-center gap-1.5">
           {scoped ? (
-            <span className="inline-flex min-h-(--control-h-sm) items-center gap-1.5 rounded-sm border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-caption-1 font-medium text-primary">
+            <span className="inline-flex min-h-(--control-h-sm) items-center gap-1.5 rounded-sm border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-caption-1 font-medium text-primary-text">
               Practicing: <MathText text={scoped.title} />
               <span className="font-mono opacity-70">{total}</span>
               <button
@@ -430,7 +447,7 @@ function CardBack({ node, map, mapId, onOpen }: { node: GraphNode; map: AtlasMap
         <button
           type="button"
           onClick={onOpen}
-          className="flex shrink-0 items-center justify-center gap-1.5 border-t border-border py-2.5 text-caption-1 font-medium text-primary transition-colors hover:bg-muted"
+          className="flex shrink-0 items-center justify-center gap-1.5 border-t border-border py-2.5 text-caption-1 font-medium text-primary-text transition-colors hover:bg-muted"
         >
           Open full entry in dictionary
         </button>
@@ -465,7 +482,7 @@ function SummaryCard({
       className="flex flex-1 flex-col items-center justify-center gap-6 rounded-2xl border border-border bg-card px-8 py-12 text-center"
       style={{ boxShadow: "var(--shadow-e2)" }}
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary-text">
         <Sparkles className="h-7 w-7" />
       </div>
       <div className="space-y-1.5">
@@ -562,7 +579,7 @@ function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => 
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-body font-semibold transition-transform active:scale-[0.98] ${got ? "border-primary/40 bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground"}`}
+      className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-body font-semibold transition-transform active:scale-[0.98] ${got ? "border-primary/40 bg-primary/10 text-primary-text" : "border-border bg-card text-muted-foreground"}`}
     >
       {children}
     </button>
