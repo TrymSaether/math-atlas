@@ -29,7 +29,7 @@ function Chip({
       onClick={onClick}
       style={style}
       className={cn(
-        "flex items-center gap-1.5 rounded-full border px-3 py-1 text-caption font-medium transition-colors",
+        "flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-caption-2 font-medium transition-colors",
         active
           ? "border-primary/25 bg-primary/10 text-primary-text"
           : "border-transparent bg-muted text-foreground hover:bg-accent",
