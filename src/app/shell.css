@@ -110,7 +110,7 @@
   left: 50%;
   z-index: 1;
 
-  width: clamp(280px, 32vw, 520px);
+  width: clamp(260px, 26vw, 380px);
   min-width: 0;
 
   transform: translate(-50%, -50%);
