@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/ui/cn";
 
 const chipVariants = cva(
-  "inline-flex items-center justify-center gap-1.5 rounded-sm border border-border bg-card text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary",
+  "inline-flex items-center justify-center gap-1.5 rounded-sm border border-border bg-card text-muted-foreground transition hover:border-input hover:text-foreground aria-pressed:border-primary/40 aria-pressed:bg-primary/10 aria-pressed:text-primary-text",
   {
     variants: {
       size: {

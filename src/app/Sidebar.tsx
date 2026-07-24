@@ -54,7 +54,7 @@ function AtlasModes({ onNavigate }: { onNavigate: () => void }) {
                   active ? "text-primary-text" : "text-muted-foreground group-hover:text-foreground",
                 )}
               />
-              <span className={cn("text-subhead", active && "font-medium")}>{label}</span>
+              <span className={cn("text-footnote", active && "font-medium")}>{label}</span>
             </button>
           </li>
         );
@@ -84,7 +84,7 @@ function Section({
         aria-expanded={!collapsed}
         className="group flex w-full items-center gap-1.5 rounded-md px-2 pt-3.5 pb-1 text-left outline-none transition-[background-color,color,box-shadow] duration-[var(--duration-fast)] hover:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none motion-reduce:transition-none"
       >
-        <span className="text-footnote font-semibold tracking-wide text-muted-foreground transition-colors duration-[var(--duration-fast)] group-hover:text-foreground motion-reduce:transition-none">
+        <span className="text-caption font-semibold text-muted-foreground transition-colors duration-[var(--duration-fast)] group-hover:text-foreground motion-reduce:transition-none">
           {title}
         </span>
         <ChevronDown
@@ -148,10 +148,10 @@ function RecentsSection({ onNavigate }: { onNavigate: () => void }) {
   return (
     <div className="mt-0.5">
       <div className="flex items-center justify-between gap-2 px-2 pt-3.5 pb-1">
-        <span className="text-footnote font-semibold tracking-wide text-muted-foreground">Recents</span>
+        <span className="text-caption font-semibold text-muted-foreground">Recents</span>
         <button
           type="button"
-          className="rounded-sm text-footnote font-medium text-primary-text outline-none transition-[color,box-shadow] duration-[var(--duration-fast)] hover:text-primary-text/80 hover:underline focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none motion-reduce:transition-none"
+          className="rounded-sm text-caption font-medium text-primary-text outline-none transition-[color,box-shadow] duration-[var(--duration-fast)] hover:text-primary-text/80 hover:underline focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none motion-reduce:transition-none"
           onClick={clearRecents}
         >
           Clear
@@ -178,13 +178,13 @@ function RecentsSection({ onNavigate }: { onNavigate: () => void }) {
               <span className="flex min-w-0 flex-1 flex-col gap-px">
                 <span
                   className={cn(
-                    "truncate text-subhead font-medium transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none",
+                    "truncate text-footnote font-medium transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none",
                     node.id === selectedId ? "text-primary-text" : "text-foreground",
                   )}
                 >
                   <MathText text={node.label} />
                 </span>
-                <span className="truncate text-caption text-muted-foreground">
+                <span className="truncate text-caption-2 text-muted-foreground">
                   {map?.domainById.get(node.domain)?.label ?? node.topicCluster}
                 </span>
               </span>
@@ -197,8 +197,6 @@ function RecentsSection({ onNavigate }: { onNavigate: () => void }) {
 }
 
 export function Sidebar() {
-  const mapId = useStore((s) => s.mapId);
-  const mapTitle = useStore((s) => s.catalog.find((e) => e.slug === mapId)?.title ?? mapId);
   const domains = useStore((s) => s.loadedMaps[s.mapId]?.data.domains ?? []);
   const topics = useStore((s) => s.topics);
   const toggleTopic = useStore((s) => s.toggleTopic);
@@ -264,10 +262,7 @@ export function Sidebar() {
         >
           <Surface material="thin" className="flex h-full flex-col overflow-hidden">
         <header className="flex min-h-12 items-center gap-2 border-b border-border/60 px-3">
-          <div className="min-w-0 flex-1">
-            <div className="truncate text-headline font-semibold text-foreground">Atlas</div>
-            <div className="truncate text-caption text-muted-foreground">{mapTitle}</div>
-          </div>
+          <div className="min-w-0 flex-1 truncate text-headline font-semibold text-foreground">Atlas</div>
           <Button
             variant="ghost"
             size="icon"
@@ -286,7 +281,7 @@ export function Sidebar() {
           </Section>
 
           {domains.length > 0 && (
-            <Section title={mapTitle} collapsed={closedSecs.has("domains")} onToggle={() => toggleSec("domains")}>
+            <Section title="Domains" collapsed={closedSecs.has("domains")} onToggle={() => toggleSec("domains")}>
               <ul className="flex flex-col gap-0.5">
                 <li>
                   <button
@@ -300,7 +295,7 @@ export function Sidebar() {
                     )}
                   >
                     <Circle className="mx-0.5 size-4 shrink-0 text-muted-foreground" />
-                    <span className="text-subhead">All domains</span>
+                    <span className="text-footnote">All domains</span>
                   </button>
                 </li>
                 {domains.map((d) => (
@@ -319,7 +314,7 @@ export function Sidebar() {
                         className="mx-1.25 size-2.75 shrink-0 rounded-full"
                         style={{ background: getDomainTone(d.id).color }}
                       />
-                      <span className="text-subhead transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none">
+                      <span className="text-footnote transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none">
                         {d.label}
                       </span>
                     </button>

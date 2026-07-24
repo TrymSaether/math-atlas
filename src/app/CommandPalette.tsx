@@ -1,8 +1,7 @@
 import { Dialog } from "radix-ui";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ComponentType } from "react";
 import {
   BookOpen,
-  Compass,
   CornerDownLeft,
   Map as MapIcon,
   Pencil,
@@ -21,6 +20,7 @@ import { KIND_LABEL } from "@/maps/types";
 import { MathText } from "@/math/MathText";
 import { rememberPaletteReturnFocus, restorePaletteReturnFocus } from "./paletteFocus";
 import { Button } from "@/ui/button";
+import { LogoMark } from "./Logo";
 
 export function CommandPalette() {
   const mapId = useStore((s) => s.mapId);
@@ -102,7 +102,7 @@ export function CommandPalette() {
                 value="go atlas map explore canvas"
                 label="Atlas"
                 detail="Explore the active field"
-                icon={Compass}
+                icon={LogoMark}
                 badge={surface === "atlas" && mode === "explore" ? "Current" : undefined}
                 onSelect={() => {
                   setSurface("atlas");
@@ -189,7 +189,9 @@ export function CommandPalette() {
                     <MapIcon className="size-3.5" aria-hidden />
                   </span>
                   <span className="min-w-0 flex-1 truncate font-medium">{entry.title}</span>
-                  {entry.slug === mapId && <span className="shrink-0 text-caption text-muted-foreground">Current</span>}
+                  {entry.slug === mapId && (
+                    <span className="shrink-0 text-caption-2 text-muted-foreground">Current</span>
+                  )}
                   <CornerDownLeft
                     className="size-3.5 text-primary-text opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
                     aria-hidden
@@ -227,7 +229,7 @@ export function CommandPalette() {
                       <span className="min-w-0 flex-1 truncate font-medium text-foreground">
                         <MathText text={n.label} />
                       </span>
-                      <span className="ml-2 hidden max-w-36 truncate text-caption text-muted-foreground sm:block">
+                      <span className="ml-2 hidden max-w-36 truncate text-caption-2 text-muted-foreground sm:block">
                         {n.topicCluster}
                       </span>
                       <CornerDownLeft
@@ -241,7 +243,7 @@ export function CommandPalette() {
             )}
           </CommandList>
 
-          <div className="flex min-h-10 items-center justify-between gap-3 border-t border-border px-4 text-caption text-muted-foreground">
+          <div className="flex min-h-10 items-center justify-between gap-3 border-t border-border px-4 text-caption text-muted-foreground max-[520px]:hidden">
             <div className="flex items-center gap-3">
               <Shortcut keys={["↑", "↓"]} label="Navigate" />
               <Shortcut keys={["↵"]} label="Open" />
@@ -269,7 +271,7 @@ function PaletteDestination({
   value: string;
   label: string;
   detail: string;
-  icon: typeof Compass;
+  icon: ComponentType<{ className?: string }>;
   badge?: string;
   onSelect: () => void;
 }) {
@@ -280,9 +282,9 @@ function PaletteDestination({
       </span>
       <span className="min-w-0 flex-1">
         <span className="block truncate font-medium text-foreground">{label}</span>
-        <span className="block truncate text-caption text-muted-foreground">{detail}</span>
+        <span className="block truncate text-caption-2 text-muted-foreground max-[520px]:hidden">{detail}</span>
       </span>
-      {badge && <span className="shrink-0 text-caption text-muted-foreground">{badge}</span>}
+      {badge && <span className="shrink-0 text-caption-2 text-muted-foreground max-[520px]:hidden">{badge}</span>}
       <CornerDownLeft
         className="size-3.5 shrink-0 text-primary-text opacity-0 transition-opacity group-data-[selected=true]:opacity-100"
         aria-hidden

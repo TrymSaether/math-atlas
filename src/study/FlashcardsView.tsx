@@ -430,7 +430,7 @@ function CardFront({
             <ConceptHeader view={view} size="card" />
           </div>
         )}
-        <span className="font-mono text-caption-2 uppercase tracking-label-wide text-muted-foreground">
+        <span className="text-caption-2 font-medium text-muted-foreground">
           {reversed ? "Name this concept — tap to reveal" : "Tap or press space to flip"}
         </span>
       </button>

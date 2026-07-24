@@ -80,9 +80,16 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
           <X className="size-4" />
         </Button>
         <form onSubmit={submit} className="flex flex-col gap-3 p-5">
-          <h2 className="pr-10 text-title-3 font-semibold text-foreground">
-            {isSignup ? "Create an account" : "Welcome back"}
-          </h2>
+          <div className="pr-10">
+            <h2 className="text-title-3 font-semibold text-foreground">
+              {isSignup ? "Create an account" : "Welcome back"}
+            </h2>
+            <p className="mt-1 text-footnote leading-relaxed text-muted-foreground">
+              {isSignup
+                ? "Save progress and keep map edits available across devices."
+                : "Continue with your saved progress and map edits."}
+            </p>
+          </div>
           <Button
             type="button"
             variant="secondary"
@@ -93,7 +100,7 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
             <GoogleGIcon className="size-[18px] shrink-0" />
             {googleBusy ? "Opening Google…" : "Continue with Google"}
           </Button>
-          <div className="flex items-center gap-2 text-caption font-medium tracking-wide text-muted-foreground uppercase">
+          <div className="flex items-center gap-2 text-caption-2 font-semibold tracking-label-tight text-muted-foreground uppercase">
             <span className="h-px flex-1 bg-border" aria-hidden />
             <span>or</span>
             <span className="h-px flex-1 bg-border" aria-hidden />
@@ -188,7 +195,7 @@ function Field({
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange">) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="text-caption font-semibold tracking-wide text-muted-foreground uppercase">{label}</span>
+      <span className="text-caption-2 font-semibold tracking-label-tight text-muted-foreground uppercase">{label}</span>
       <Input {...rest} value={value} onChange={(e) => onChange(e.target.value)} className="h-11" />
     </label>
   );

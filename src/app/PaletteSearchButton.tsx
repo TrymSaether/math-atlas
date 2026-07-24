@@ -28,7 +28,12 @@ function SearchControl({ compact = false }: { compact?: boolean }) {
       )}
     >
       <Search className={cn("shrink-0", compact ? "size-4" : "size-[18px]", open && "text-primary-text")} aria-hidden />
-      <span className={cn("shell-search-copy min-w-0 flex-1 truncate text-left", compact ? "text-subhead" : "text-body")}>
+      <span
+        className={cn(
+          "shell-search-copy min-w-0 flex-1 truncate text-left",
+          compact ? "text-footnote" : "text-subhead",
+        )}
+      >
         Search concepts, theorems…
       </span>
       <kbd

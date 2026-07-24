@@ -245,7 +245,7 @@ export function SandboxView() {
               </FloatingControlButton>
               <button
                 type="button"
-                className="min-h-6 w-10 rounded-full px-0.5 font-mono text-[10px] font-medium tabular-nums text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55"
+                className="min-h-6 w-10 rounded-full px-0.5 font-mono text-caption-2 font-medium tabular-nums text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55"
                 aria-label="Reset zoom to 100 percent"
                 title="Reset zoom to 100%"
                 onClick={() => setViewport({ ...DEFAULT_RECT })}
@@ -413,7 +413,7 @@ function WorkspaceMenu() {
         </span>
         <span className="min-w-0 flex-1">
           <span className="block truncate text-footnote font-semibold">{ws.title}</span>
-          <span className="block truncate font-mono text-caption-2 uppercase tracking-label-tight text-muted-foreground">
+          <span className="block truncate text-caption-2 text-muted-foreground">
             {ws.rows.length} expressions ·{" "}
             {issueCount > 0 ? `${issueCount} issue${issueCount === 1 ? "" : "s"}` : "ready"}
             {isUserWorkspaceId(ws.id) && " · saved"}
@@ -435,7 +435,7 @@ function WorkspaceMenu() {
         >
           {savedIds.length > 0 && (
             <>
-              <div className="px-2.5 pb-1 pt-1.5 text-caption-2 font-semibold uppercase tracking-label-wide text-muted-foreground">
+              <div className="px-2.5 pb-1 pt-1.5 text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground">
                 My workspaces
               </div>
               {savedIds.map((id) => {
@@ -478,7 +478,7 @@ function WorkspaceMenu() {
             </>
           )}
 
-          <div className="px-2.5 pb-1 pt-1.5 text-caption-2 font-semibold uppercase tracking-label-wide text-muted-foreground">
+          <div className="px-2.5 pb-1 pt-1.5 text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground">
             Examples
           </div>
           {WORKSPACE_IDS.map((id) => {

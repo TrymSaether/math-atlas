@@ -31,13 +31,13 @@ const SELECT_OPTION_ACTIVE = "bg-primary/10 text-foreground";
 const PICKER_OPTION =
   "flex min-h-(--control-h-xl) w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-footnote text-foreground hover:bg-secondary";
 export const ACTION =
-  "inline-flex min-h-(--control-h-xl) items-center justify-center gap-1.5 rounded-md border border-border bg-card font-semibold text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground focus-visible:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_16%,transparent)] focus-visible:outline-none active:scale-[0.98]";
+  "inline-flex min-h-(--control-h-xl) items-center justify-center gap-1.5 rounded-md border border-border bg-card text-footnote font-medium text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground focus-visible:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_16%,transparent)] focus-visible:outline-none active:scale-[0.98]";
 export const ACTION_PRIMARY =
   "border-primary bg-primary text-primary-foreground hover:border-primary hover:bg-primary hover:text-primary-foreground";
 export const ACTION_DANGER =
   "border-destructive/30 bg-destructive/[0.07] text-destructive hover:border-destructive/50 hover:bg-destructive/10 hover:text-destructive";
 export const CHIP =
-  "inline-flex min-h-(--control-h-xl) items-center justify-center gap-1.5 rounded-md border border-border bg-card px-3 text-caption-1 font-semibold capitalize text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground";
+  "inline-flex min-h-(--control-h-xl) items-center justify-center gap-1.5 rounded-md border border-border bg-card px-3 text-caption-1 font-medium capitalize text-muted-foreground transition hover:border-input hover:bg-accent hover:text-foreground";
 export const CHIP_ACTIVE = "border-primary/50 bg-primary/10 text-foreground";
 
 export function FieldLabel({ label, hint }: { label?: string; hint?: string }) {

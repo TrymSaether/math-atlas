@@ -31,5 +31,5 @@
   <path d="M196,120 C248,12 486,12 539,120" fill="none" stroke="var(--dia-acc,#2457c5)" stroke-width="2.2" marker-end="url(#arr-acc)" />
   <text x="368" y="34" font-size="18" text-anchor="middle" fill="var(--dia-acc,#2457c5)" font-style="italic">g ∘ f</text>
 
-  <text x="360" y="278" font-size="14" text-anchor="middle" font-family="var(--font-sans,'Inter',sans-serif)" fill="var(--dia-mut,#8c8274)">X ≅ Y and Y ≅ Z  ⟹  X ≅ Z</text>
+  <text x="360" y="278" font-size="14" text-anchor="middle" font-family="var(--font-sans,system-ui,sans-serif)" fill="var(--dia-mut,#8c8274)">X ≅ Y and Y ≅ Z  ⟹  X ≅ Z</text>
 </svg>

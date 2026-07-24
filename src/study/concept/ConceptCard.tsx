@@ -233,11 +233,11 @@ function CardContent({ nodeId }: { nodeId: string }) {
           <dl className="mt-3 grid grid-cols-3 gap-2">
             {stats.map((stat) => (
               <div className="flex flex-col gap-0.5" key={stat.label}>
-                <dd className="flex items-center gap-1.5 text-title-3 font-semibold text-foreground">
+                <dd className="flex items-center gap-1.5 text-headline font-semibold text-foreground">
                   <stat.icon className="size-4 text-muted-foreground" aria-hidden />
                   {stat.value}
                 </dd>
-                <dt className="text-caption text-muted-foreground">{stat.label}</dt>
+                <dt className="text-caption-2 text-muted-foreground">{stat.label}</dt>
               </div>
             ))}
           </dl>

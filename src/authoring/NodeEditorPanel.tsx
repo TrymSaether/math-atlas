@@ -105,7 +105,7 @@ export function NodeEditorPanel({
       {/* Header */}
       <header className="relative shrink-0 px-5 pt-3.5">
         <div className="mb-3 flex items-center justify-between">
-          <span className="text-caption-1 font-semibold uppercase tracking-label-wide text-muted-foreground">
+          <span className="text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground">
             {editingId === null ? "New concept" : "Edit concept"}
           </span>
           <div className="flex items-center gap-0.5">
@@ -201,7 +201,7 @@ export function NodeEditorPanel({
 
         <div>
           <FieldLabel label="Priority" />
-          <div className="flex flex-wrap gap-2 text-sm">
+          <div className="flex flex-wrap gap-2 text-footnote">
             {PRIORITIES.map((p) => (
               <button
                 key={p}
@@ -311,7 +311,7 @@ export function NodeEditorPanel({
           className={cn(
             ACTION,
             ACTION_PRIMARY,
-            "ml-auto inline-flex min-h-9 items-center gap-1 rounded-full px-3 text-caption-1",
+            "ml-auto inline-flex min-h-9 items-center gap-1 rounded-full px-3 text-footnote",
           )}
           style={justSaved ? { background: "var(--success)", color: "var(--success-foreground)" } : undefined}
         >

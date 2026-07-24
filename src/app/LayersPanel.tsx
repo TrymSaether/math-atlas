@@ -29,7 +29,7 @@ function Chip({
       onClick={onClick}
       style={style}
       className={cn(
-        "flex items-center gap-1.5 rounded-full border px-3 py-1 text-footnote transition-colors",
+        "flex items-center gap-1.5 rounded-full border px-3 py-1 text-caption font-medium transition-colors",
         active
           ? "border-primary/25 bg-primary/10 text-primary-text"
           : "border-transparent bg-muted text-foreground hover:bg-accent",
@@ -44,7 +44,7 @@ function Chip({
 /** A labelled row with a trailing shadcn Switch. */
 function SwitchRow({ label, checked, onToggle }: { label: string; checked: boolean; onToggle: () => void }) {
   return (
-    <label className="flex cursor-pointer items-center justify-between gap-3 py-1.5 text-subhead text-foreground">
+    <label className="flex cursor-pointer items-center justify-between gap-3 py-1.5 text-footnote text-foreground">
       <span>{label}</span>
       <Switch checked={checked} onCheckedChange={() => onToggle()} />
     </label>
@@ -144,10 +144,12 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
         {/* Content filters first — the load-bearing controls. */}
         <section>
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-caption font-semibold tracking-wide text-muted-foreground uppercase">Domains</span>
+            <span className="text-caption-2 font-semibold tracking-label-tight text-muted-foreground uppercase">
+              Domains
+            </span>
             <button
               type="button"
-              className="text-footnote font-medium text-primary-text hover:underline"
+              className="text-caption font-medium text-primary-text hover:underline"
               onClick={resetTopics}
             >
               All
@@ -173,7 +175,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
         </section>
 
         <section>
-          <span className="mb-2 block text-caption font-semibold tracking-wide text-muted-foreground uppercase">
+          <span className="mb-2 block text-caption-2 font-semibold tracking-label-tight text-muted-foreground uppercase">
             Concept kinds
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -187,7 +189,7 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
 
         {/* Secondary: how the map is drawn. */}
         <section className="space-y-2.5">
-          <span className="block text-caption font-semibold tracking-wide text-muted-foreground uppercase">
+          <span className="block text-caption-2 font-semibold tracking-label-tight text-muted-foreground uppercase">
             Display
           </span>
           <Segmented

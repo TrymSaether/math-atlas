@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import {
   BookOpen,
   Check,
@@ -6,7 +13,6 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleStop,
-  Compass,
   Moon,
   Pencil,
   Plus,
@@ -22,7 +28,7 @@ import { useStore, type Surface as SurfaceId } from "./store";
 import { schemeFor, siblingOf } from "./themes";
 import { usePopoverDismiss } from "./usePopover";
 import { useShellActions } from "./ShellActions";
-import { LogoLockup } from "./Logo";
+import { LogoLockup, LogoMark } from "./Logo";
 import { PaletteSearchButton } from "./PaletteSearchButton";
 
 import { UserMenu } from "@/auth/UserMenu";
@@ -154,7 +160,7 @@ function FieldMenu() {
         className="
           h-9 w-full max-w-[220px] min-w-0
           gap-1 rounded-full px-2.5
-          text-subhead font-medium text-foreground
+          text-footnote font-medium text-foreground
           hover:bg-accent
           active:bg-secondary
           has-[>svg]:px-2.5
@@ -190,7 +196,9 @@ function FieldMenu() {
           onKeyDown={onListKeyDown}
         >
           <div className="flex items-center justify-between gap-2 px-2.5 pt-1 pb-1">
-            <span className="text-caption font-semibold tracking-wide text-muted-foreground">Mathematical field</span>
+            <span className="text-caption-2 font-semibold tracking-label-tight text-muted-foreground uppercase">
+              Mathematical field
+            </span>
 
             <Button
               variant="ghost"
@@ -232,7 +240,7 @@ function FieldMenu() {
                     `
                       flex min-h-10 w-full items-center gap-2
                       rounded-md px-2.5
-                      text-left text-subhead
+                      text-left text-footnote
                       transition-colors
                     `,
                     active ? "bg-primary/10 text-primary-text" : "text-foreground hover:bg-accent",
@@ -259,12 +267,12 @@ function FieldMenu() {
 const SURFACES: {
   id: SurfaceId;
   label: string;
-  Icon: typeof Compass;
+  Icon: ComponentType<{ className?: string }>;
 }[] = [
   {
     id: "atlas",
     label: "Atlas",
-    Icon: Compass,
+    Icon: LogoMark,
   },
   {
     id: "dictionary",
@@ -348,7 +356,7 @@ function EditControls() {
           variant="ghost"
           className={cn(
             `
-              h-9 gap-1.5 rounded-full px-2.5
+              h-9 gap-1.5 rounded-full px-2.5 text-footnote font-medium
               hover:bg-accent
               active:bg-secondary
               has-[>svg]:px-2.5
@@ -484,7 +492,7 @@ function AtlasPathControls() {
         <Button
           variant="ghost"
           className="
-            h-9 gap-1.5 rounded-full px-2.5
+            h-9 gap-1.5 rounded-full px-2.5 text-footnote font-medium
             text-muted-foreground
             hover:bg-accent hover:text-foreground
             active:bg-secondary
@@ -577,7 +585,7 @@ function ProductContextControls() {
           variant="ghost"
           className={cn(
             `
-                h-9 gap-1.5 rounded-full px-2.5
+                h-9 gap-1.5 rounded-full px-2.5 text-footnote font-medium
                 text-muted-foreground
                 hover:bg-accent hover:text-foreground
                 active:bg-secondary
@@ -619,11 +627,9 @@ export function TopChrome() {
           </div>
 
           <div className="shell-desktop-nav justify-self-end">
-            <div className="shell-desktop-nav justify-self-end">
-              <Surface material="ultrathin" specular={false} className="rounded-full p-0.5 shadow-none">
-                <SurfaceNav />
-              </Surface>
-            </div>
+            <Surface material="ultrathin" specular={false} className="rounded-full p-0.5 shadow-none">
+              <SurfaceNav />
+            </Surface>
           </div>
 
           <div className="shell-trailing">

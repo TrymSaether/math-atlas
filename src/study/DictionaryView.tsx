@@ -255,20 +255,20 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
             )}
 
             <div className="mt-2.5 flex items-center gap-1.5">
-              <span className="mr-0.5 font-mono text-caption-2 uppercase tracking-label-tight text-muted-foreground">
+              <span className="mr-0.5 text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground">
                 Sort
               </span>
               <Chip size="xs" variant="mono" active={sortBy === "alpha"} onClick={() => setSortBy("alpha")}>
                 A–Z
               </Chip>
-              <Chip size="xs" variant="mono" active={sortBy === "section"} onClick={() => setSortBy("section")}>
+              <Chip size="xs" variant="label" active={sortBy === "section"} onClick={() => setSortBy("section")}>
                 {facet.mode === "chapter" ? "Chapter" : "Domain"}
               </Chip>
-              <Chip size="xs" variant="mono" active={sortBy === "kind"} onClick={() => setSortBy("kind")}>
+              <Chip size="xs" variant="label" active={sortBy === "kind"} onClick={() => setSortBy("kind")}>
                 Kind
               </Chip>
               <span aria-hidden className="mx-0.5 h-3.5 w-px bg-border" />
-              <Chip size="xs" variant="mono" active={learningOnly} onClick={() => setLearningOnly((v) => !v)}>
+              <Chip size="xs" variant="label" active={learningOnly} onClick={() => setLearningOnly((v) => !v)}>
                 Learning
               </Chip>
             </div>
@@ -325,7 +325,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                     key={group.id}
                     type="button"
                     onClick={() => jumpToGroup(group.id)}
-                    className="rounded-sm px-1 font-mono text-[9.5px] leading-[1.35] text-muted-foreground/70 transition-colors hover:bg-accent hover:text-foreground"
+                    className="rounded-sm px-1 font-mono text-caption-2 leading-[1.35] text-muted-foreground/70 transition-colors hover:bg-accent hover:text-foreground"
                   >
                     {group.label}
                   </button>

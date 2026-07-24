@@ -77,7 +77,11 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
           ref={triggerRef}
           variant="ghost"
           size={showLabel ? "default" : "icon"}
-          className={showLabel ? "h-10 gap-1.5 rounded-full px-3 text-muted-foreground has-[>svg]:px-3" : "size-10 rounded-full text-muted-foreground"}
+          className={
+            showLabel
+              ? "h-9 gap-1.5 rounded-full px-2.5 text-footnote font-medium text-muted-foreground has-[>svg]:px-2.5"
+              : "size-9 rounded-full text-muted-foreground"
+          }
           onClick={() => setMenuOpen((open) => !open)}
           aria-label="Sign in"
           aria-haspopup="menu"
@@ -113,7 +117,7 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
             {appearanceAction}
             <div
               role="none"
-              className="mt-1 flex items-start gap-2 border-t border-border px-2 py-2 text-caption leading-relaxed text-muted-foreground"
+              className="mt-1 flex items-start gap-2 border-t border-border px-2 py-2 text-caption-2 leading-relaxed text-muted-foreground"
             >
               <HardDrive className="mt-0.5 size-3.5 shrink-0" />
               Progress and edits stay on this device until you sign in.
@@ -133,7 +137,11 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
         ref={triggerRef}
         variant="ghost"
         size={showLabel ? "default" : "icon"}
-        className={showLabel ? "h-10 gap-2 rounded-full px-1.5 pr-3 has-[>svg]:px-1.5" : "size-10 rounded-full"}
+        className={
+          showLabel
+            ? "h-9 gap-2 rounded-full px-1.5 pr-2.5 text-footnote font-medium has-[>svg]:px-1.5"
+            : "size-9 rounded-full"
+        }
         onClick={() => setMenuOpen((o) => !o)}
         aria-label="Account"
         aria-haspopup="menu"
@@ -141,7 +149,7 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
         aria-controls="account-menu"
         title={user.email}
       >
-        <span className="flex size-7 items-center justify-center rounded-full bg-primary text-[13px] font-semibold text-primary-foreground">
+        <span className="flex size-6.5 items-center justify-center rounded-full bg-primary text-caption font-semibold text-primary-foreground">
           {initial}
         </span>
         {showLabel && <span className="shell-account-label max-w-24 truncate text-footnote">{user.name || "Account"}</span>}
@@ -159,13 +167,13 @@ export function UserMenu({ showLabel = false }: { showLabel?: boolean }) {
           <div role="none" className="flex items-center gap-2 px-2 py-1.5">
             <User className="size-[18px] shrink-0 text-muted-foreground" />
             <div className="min-w-0">
-              {user.name && <div className="truncate text-footnote text-foreground">{user.name}</div>}
-              <div className="truncate text-caption text-muted-foreground">{user.email}</div>
+              {user.name && <div className="truncate text-footnote font-medium text-foreground">{user.name}</div>}
+              <div className="truncate text-caption-2 text-muted-foreground">{user.email}</div>
             </div>
           </div>
           <div
             role="none"
-            className="mx-1 my-1 flex items-center gap-2 rounded-md bg-muted/70 px-2 py-1.5 text-caption text-muted-foreground"
+            className="mx-1 my-1 flex items-center gap-2 rounded-md bg-muted/70 px-2 py-1.5 text-caption-2 text-muted-foreground"
           >
             {editedCount > 0 ? (
               <>

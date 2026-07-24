@@ -71,7 +71,7 @@ export function ControlCluster() {
         </FloatingControlButton>
         <button
           type="button"
-          className="min-h-6 w-10 rounded-full px-0.5 font-mono text-[10px] font-medium tabular-nums text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55"
+          className="min-h-6 w-10 rounded-full px-0.5 font-mono text-caption-2 font-medium tabular-nums text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55"
           aria-label={`Reset zoom from ${Math.round(zoom * 100)} percent to 100 percent`}
           title="Reset zoom to 100%"
           onClick={() => flow.zoomTo(1, { duration: duration(260) })}

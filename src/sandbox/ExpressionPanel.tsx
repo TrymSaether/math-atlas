@@ -48,7 +48,7 @@ export function ExpressionPanel() {
           >
             <button
               type="button"
-              className="flex min-h-(--control-h-lg) w-full items-center gap-1.5 rounded-t-md border-b border-border/50 px-2 pb-1.5 pt-2 text-left text-caption-2 font-bold uppercase leading-none tracking-label-tight text-muted-foreground transition-colors hover:bg-foreground/[0.04] hover:text-foreground focus-visible:bg-primary/10 focus-visible:shadow-[inset_0_0_0_1px_var(--primary)] focus-visible:outline-none"
+              className="flex min-h-(--control-h-lg) w-full items-center gap-1.5 rounded-t-md border-b border-border/50 px-2 pb-1.5 pt-2 text-left text-caption-2 font-semibold uppercase leading-none tracking-label-tight text-muted-foreground transition-colors hover:bg-foreground/[0.04] hover:text-foreground focus-visible:bg-primary/10 focus-visible:shadow-[inset_0_0_0_1px_var(--primary)] focus-visible:outline-none"
               aria-expanded={!collapsed[section.id]}
               onClick={() => setCollapsed((next) => ({ ...next, [section.id]: !next[section.id] }))}
             >
@@ -76,7 +76,7 @@ export function ExpressionPanel() {
       <button
         type="button"
         onClick={() => addRow()}
-        className="flex items-center gap-2 border-t border-border px-3.5 py-2.5 text-caption-1 text-muted-foreground transition-colors hover:bg-foreground/[0.06] hover:text-foreground"
+        className="flex items-center gap-2 border-t border-border px-3.5 py-2.5 text-footnote font-medium text-muted-foreground transition-colors hover:bg-foreground/[0.06] hover:text-foreground"
       >
         <Plus size={14} />
         New expression
@@ -326,7 +326,7 @@ function ParamSlider({
       <NumBox label="Minimum value" value={slider.min} onChange={(min) => onConfig({ ...slider, min })} />
       <div className="relative flex min-h-[16px] min-w-0 flex-1 items-center">
         {dragging && (
-          <span className="pointer-events-none absolute bottom-4 left-[var(--slider-progress)] z-[1] min-w-[28px] -translate-x-1/2 rounded-full border border-[color-mix(in_srgb,var(--slider-color)_28%,transparent)] bg-card px-1.5 py-1 text-center font-mono text-[10px] leading-none tabular-nums text-foreground shadow-[0_4px_10px_rgba(0,0,0,0.12)]">
+          <span className="pointer-events-none absolute bottom-4 left-[var(--slider-progress)] z-[1] min-w-[28px] -translate-x-1/2 rounded-full border border-[color-mix(in_srgb,var(--slider-color)_28%,transparent)] bg-card px-1.5 py-1 text-center font-mono text-caption-2 leading-none tabular-nums text-foreground shadow-[0_4px_10px_rgba(0,0,0,0.12)]">
             {formatValue(value)}
           </span>
         )}
@@ -388,7 +388,7 @@ function RowMeta({ row, computed, status }: { row: Row; computed?: Computed; sta
         <ChevronDown
           className={`h-3 w-3 shrink-0 text-muted-foreground/70 transition-transform ${open ? "" : "-rotate-90"}`}
         />
-        <span className="font-mono text-[9.5px] font-bold uppercase tracking-label-tight text-muted-foreground">
+        <span className="text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground">
           Details
         </span>
         {status === "error" && <CircleAlert className="shrink-0" size={12} />}
@@ -404,7 +404,7 @@ function RowMeta({ row, computed, status }: { row: Row; computed?: Computed; sta
       </button>
 
       {open && (
-        <dl className="mt-1.5 grid max-w-full grid-cols-[auto_minmax(0,1fr)] gap-x-2 gap-y-1 border-t border-border/40 pt-1 [&_dd]:min-w-0 [&_dd]:overflow-hidden [&_dd]:text-ellipsis [&_dd]:whitespace-nowrap [&_dd]:text-caption-2 [&_dd]:text-muted-foreground [&_dt]:whitespace-nowrap [&_dt]:font-mono [&_dt]:text-[9.5px] [&_dt]:font-bold [&_dt]:uppercase [&_dt]:tracking-label-tight [&_dt]:text-muted-foreground/70">
+        <dl className="mt-1.5 grid max-w-full grid-cols-[auto_minmax(0,1fr)] gap-x-2 gap-y-1 border-t border-border/40 pt-1 [&_dd]:min-w-0 [&_dd]:overflow-hidden [&_dd]:text-ellipsis [&_dd]:whitespace-nowrap [&_dd]:text-caption-2 [&_dd]:text-muted-foreground [&_dt]:whitespace-nowrap [&_dt]:text-caption-2 [&_dt]:font-semibold [&_dt]:uppercase [&_dt]:tracking-label-tight [&_dt]:text-muted-foreground/70">
           {details.map((detail) => (
             <div key={detail.label} className="contents">
               <dt>{detail.label}</dt>
