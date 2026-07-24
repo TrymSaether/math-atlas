@@ -43,10 +43,9 @@
 
   display: grid;
   grid-template-columns:
-    minmax(220px, 1fr)
-    minmax(240px, 380px)
-    auto
-    auto;
+    minmax(0, 1fr)
+    minmax(240px, 360px)
+    minmax(0, 1fr);
 
   align-items: center;
   gap: 10px;
@@ -59,6 +58,7 @@
 }
 
 .shell-leading,
+.shell-right,
 .shell-desktop-nav,
 .shell-trailing,
 .shell-context {
@@ -72,13 +72,19 @@
   gap: 2px;
 }
 
-.shell-desktop-nav {
+.shell-right {
   grid-column: 3;
   justify-self: end;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.shell-desktop-nav {
+  flex: none;
 }
 
 .shell-trailing {
-  grid-column: 4;
+  flex: none;
   justify-content: flex-end;
   gap: 3px;
 }
@@ -192,31 +198,36 @@
   pointer-events: auto;
 }
 
+/*
+ * Preserve a truly centered command control by compacting the denser right
+ * cluster before it can intrude into the symmetric center track.
+ */
+@media (max-width: 1560px) {
+  .shell-nav-label {
+    display: none;
+  }
+}
+
 @media (max-width: 1320px) {
   .shell-top-surface {
     grid-template-columns:
-      minmax(190px, auto)
-      minmax(180px, 1fr)
-      auto
-      auto;
+      minmax(0, 1fr)
+      minmax(180px, 320px)
+      minmax(0, 1fr);
   }
 
   .shell-leading {
     grid-column: 1;
   }
 
-  .shell-nav-label {
-    display: none;
-  }
 }
 
 @media (max-width: 1180px) {
   .shell-top-surface {
     grid-template-columns:
-      minmax(170px, auto)
-      minmax(160px, 1fr)
-      auto
-      auto;
+      minmax(0, 1fr)
+      minmax(160px, 300px)
+      minmax(0, 1fr);
   }
 
   .shell-brand-copy,
@@ -257,6 +268,10 @@
   }
 
   .shell-leading {
+    display: contents;
+  }
+
+  .shell-right {
     display: contents;
   }
 

@@ -62,7 +62,7 @@ export function CommandPalette() {
         restorePaletteReturnFocus();
       }}
       aria-describedby={undefined}
-      contentClassName="left-1/2 top-[12%] w-[min(680px,calc(100vw-24px))] -translate-x-1/2"
+      contentClassName="inset-x-0 top-[12%] mx-auto w-[min(680px,calc(100vw-24px))]"
     >
       <Dialog.Title className="sr-only">Search the atlas</Dialog.Title>
       <Surface material="thick" elevation="overlay" reactive className="overflow-hidden">

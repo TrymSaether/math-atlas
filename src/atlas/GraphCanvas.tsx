@@ -132,10 +132,12 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
     route,
     zoom,
   ]);
+  const layoutPositionsRef = useRef(projection.activeLayout.positions);
+  layoutPositionsRef.current = projection.activeLayout.positions;
 
   const frameNode = useCallback(
     (nodeId: string, targetZoom: number, duration: number) => {
-      const position = projection.activeLayout.positions.get(nodeId);
+      const position = layoutPositionsRef.current.get(nodeId);
       const stage = document.querySelector<HTMLElement>(".shell-canvas-stage");
       if (!position || !stage) return false;
       const compact = window.matchMedia("(max-width: 820px)").matches;
@@ -154,7 +156,7 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
       );
       return true;
     },
-    [projection.activeLayout.positions, reactFlow],
+    [reactFlow],
   );
 
   const frameReadableView = useCallback(

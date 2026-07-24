@@ -108,12 +108,10 @@ export function ControlCluster() {
 
         <FloatingControlButton
           aria-label="Fit map to visible area"
-          title="Frame map at a readable scale"
+          title="Fit map to visible area"
           onClick={() =>
             flow.fitView({
               padding: mobile ? 0.18 : 0.12,
-              minZoom: mobile ? 0.45 : 0.28,
-              maxZoom: mobile ? 0.82 : 0.78,
               duration: duration(360),
             })
           }

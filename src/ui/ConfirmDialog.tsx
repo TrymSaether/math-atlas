@@ -49,7 +49,7 @@ export function ConfirmDialog({
       onOpenChange={(nextOpen) => !busy && onOpenChange(nextOpen)}
       onEscapeKeyDown={(event) => busy && event.preventDefault()}
       role="alertdialog"
-      contentClassName="top-1/2 left-1/2 w-[min(340px,92vw)] -translate-x-1/2 -translate-y-1/2"
+      contentClassName="inset-0 m-auto h-fit w-[min(340px,92vw)]"
     >
       <Surface material="thick" className="flex flex-col gap-4 p-5">
         <div className="flex gap-3">

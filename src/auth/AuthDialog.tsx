@@ -64,7 +64,7 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
     <ModalShell
       open={open}
       onOpenChange={onOpenChange}
-      contentClassName="top-1/2 left-1/2 w-[min(380px,92vw)] -translate-x-1/2 -translate-y-1/2"
+      contentClassName="inset-0 m-auto h-fit w-[min(380px,92vw)]"
     >
       <Dialog.Title className="sr-only">{isSignup ? "Create an account" : "Sign in"}</Dialog.Title>
       <Dialog.Description className="sr-only">Sign in to sync and share your maps.</Dialog.Description>

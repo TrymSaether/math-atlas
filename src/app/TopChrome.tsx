@@ -628,21 +628,23 @@ export function TopChrome() {
             <PaletteSearchButton compact />
           </div>
 
-          <div className="shell-desktop-nav justify-self-end">
-            <Surface material="ultrathin" specular={false} className="rounded-full p-0.5 shadow-none">
-              <SurfaceNav />
-            </Surface>
-          </div>
+          <div className="shell-right">
+            <div className="shell-desktop-nav">
+              <Surface material="ultrathin" specular={false} className="rounded-full p-0.5 shadow-none">
+                <SurfaceNav />
+              </Surface>
+            </div>
 
-          <div className="shell-trailing">
-            <EditControls />
-            <AtlasPathControls />
-            <ProductContextControls />
+            <div className="shell-trailing">
+              <EditControls />
+              <AtlasPathControls />
+              <ProductContextControls />
 
-            <span className="shell-divider shell-divider--trailing" aria-hidden />
+              <span className="shell-divider shell-divider--trailing" aria-hidden />
 
-            <ThemeToggle />
-            <UserMenu showLabel />
+              <ThemeToggle />
+              <UserMenu showLabel />
+            </div>
           </div>
         </Surface>
       </header>
