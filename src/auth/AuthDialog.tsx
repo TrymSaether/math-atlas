@@ -61,11 +61,7 @@ export function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange
   const isSignup = mode === "signup";
 
   return (
-    <ModalShell
-      open={open}
-      onOpenChange={onOpenChange}
-      contentClassName="inset-0 m-auto h-fit w-[min(380px,92vw)]"
-    >
+    <ModalShell open={open} onOpenChange={onOpenChange} contentClassName="inset-0 m-auto h-fit w-[min(380px,92vw)]">
       <Dialog.Title className="sr-only">{isSignup ? "Create an account" : "Sign in"}</Dialog.Title>
       <Dialog.Description className="sr-only">Sign in to sync and share your maps.</Dialog.Description>
       <Surface material="thick" elevation="overlay" className="relative p-0">

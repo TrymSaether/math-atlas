@@ -219,7 +219,6 @@
   .shell-leading {
     grid-column: 1;
   }
-
 }
 
 @media (max-width: 1180px) {

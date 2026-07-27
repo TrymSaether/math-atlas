@@ -274,14 +274,14 @@ export function NodePicker({
         className={CONTROL}
       />
       {open && matches.length > 0 && (
-        <ul
+        <div
           id={listId}
           role="listbox"
           className="shell-popover-present panel-scrollbar absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border p-1 shadow-(--shadow-e4)"
           style={{ background: "var(--card)", borderColor: "var(--border)", transformOrigin: "top" }}
         >
           {matches.map((o, index) => (
-            <li key={o.id} role="none">
+            <div key={o.id} role="none">
               <button
                 id={`${listId}-${o.id}`}
                 type="button"
@@ -304,9 +304,9 @@ export function NodePicker({
                   <MathText text={o.label} />
                 </span>
               </button>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
