@@ -30,7 +30,16 @@ import { hasNodeVisual } from "./visualModel";
  */
 export type ConceptDensity = "card" | "panel" | "full";
 
-type Field = "assumptions" | "definition" | "formula" | "formal" | "notation" | "intuition" | "gloss" | "examples";
+type Field =
+  | "assumptions"
+  | "definition"
+  | "formula"
+  | "formal"
+  | "notation"
+  | "properties"
+  | "intuition"
+  | "gloss"
+  | "examples";
 
 interface DensitySpec {
   fields: Field[];
@@ -43,15 +52,25 @@ interface DensitySpec {
 
 const DENSITY: Record<ConceptDensity, DensitySpec> = {
   card: {
-    fields: ["definition", "formula", "intuition", "examples"],
-    exampleLimit: 2,
+    fields: ["assumptions", "definition", "formal", "formula", "notation", "properties", "examples", "intuition"],
+    exampleLimit: 1,
     proof: true,
     proofOpen: false,
     proofCollapsible: true,
     spine: "dict",
   },
   panel: {
-    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "examples"],
+    fields: [
+      "assumptions",
+      "definition",
+      "formula",
+      "formal",
+      "notation",
+      "properties",
+      "intuition",
+      "gloss",
+      "examples",
+    ],
     exampleLimit: 2,
     proof: false,
     proofOpen: false,
@@ -59,7 +78,17 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
     spine: "panel",
   },
   full: {
-    fields: ["assumptions", "definition", "formula", "formal", "notation", "intuition", "gloss", "examples"],
+    fields: [
+      "assumptions",
+      "definition",
+      "formula",
+      "formal",
+      "notation",
+      "properties",
+      "intuition",
+      "gloss",
+      "examples",
+    ],
     proof: true,
     proofOpen: true,
     proofCollapsible: true,
@@ -73,6 +102,7 @@ const FIELD_LABEL: Record<Field, string> = {
   formula: "Formula",
   formal: "Formal",
   notation: "Notation",
+  properties: "Properties",
   intuition: "Intuition",
   gloss: "In words",
   examples: "Examples",
@@ -98,12 +128,28 @@ export function ConceptBody({
 
   return (
     <div className="space-y-4">
-      {showVisual && hasNodeVisual(node) && <NodeVisual node={node} />}
+      {showVisual &&
+        hasNodeVisual(node) &&
+        (density === "card" ? (
+          <Collapsible
+            toneColor={tone.color}
+            label="Visual"
+            defaultOpen={!view.statement && fields.length === 0}
+            collapsible
+          >
+            <NodeVisual node={node} />
+          </Collapsible>
+        ) : (
+          <NodeVisual node={node} />
+        ))}
 
       {view.statement && (
-        <Spine tone={tone} kind={node.kind} size={spec.spine}>
-          <MathProse text={view.statement} asBlock />
-        </Spine>
+        <section>
+          {density === "card" && <Eyebrow color={tone.color}>Required answer</Eyebrow>}
+          <Spine tone={tone} kind={node.kind} size={spec.spine}>
+            <MathProse text={view.statement} asBlock />
+          </Spine>
+        </section>
       )}
 
       {fields.length > 0 && (
@@ -114,18 +160,38 @@ export function ConceptBody({
         </div>
       )}
 
-      {view.extraContent.length > 0 && (
-        <div className="space-y-4">
-          {view.extraContent.map((entry) => (
-            <ExtraEnvironment key={entry.key} entry={entry} />
-          ))}
-        </div>
-      )}
+      {view.extraContent.length > 0 &&
+        (density === "card" ? (
+          <Collapsible
+            toneColor={tone.color}
+            label="Additional details"
+            defaultOpen={!view.statement && fields.length === 0}
+            collapsible
+          >
+            <div className="space-y-4">
+              {view.extraContent.map((entry) => (
+                <ExtraEnvironment key={entry.key} entry={entry} />
+              ))}
+            </div>
+          </Collapsible>
+        ) : (
+          <div className="space-y-4">
+            {view.extraContent.map((entry) => (
+              <ExtraEnvironment key={entry.key} entry={entry} />
+            ))}
+          </div>
+        ))}
 
       {spec.proof && view.proof.hasProof && (
         <Collapsible
           toneColor={tone.color}
-          label={view.proof.label}
+          label={
+            density === "card"
+              ? view.proof.label === "Solution"
+                ? "Solution strategy & details"
+                : "Proof strategy & details"
+              : view.proof.label
+          }
           defaultOpen={spec.proofOpen}
           collapsible={spec.proofCollapsible}
         >
@@ -223,8 +289,17 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
       return (
         <section>
           <Eyebrow>{label}</Eyebrow>
-          <div className="panel-scrollbar max-w-full overflow-x-auto text-body text-foreground">
-            <MathText text={view.definition} asBlock />
+          <div className="relative max-w-full">
+            <div
+              className="panel-scrollbar max-w-full overflow-x-auto pr-8 text-body text-foreground"
+              title="Scroll horizontally to view wide mathematics"
+            >
+              <MathText text={view.definition} asBlock />
+            </div>
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 right-0 w-7 bg-linear-to-l from-card to-transparent md:hidden"
+            />
           </div>
         </section>
       );
@@ -241,6 +316,27 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
               <MathProse text={view.formalStatement} asBlock />
             )}
           </DisplayBox>
+        </section>
+      );
+
+    case "properties":
+      return (
+        <section>
+          <Eyebrow>{label}</Eyebrow>
+          <ul className="m-0 space-y-1.5 p-0">
+            {view.properties.map((property, index) => (
+              <li key={index} className="flex gap-2.5 text-body text-foreground">
+                <span
+                  aria-hidden
+                  className="mt-2.25 h-1 w-1 shrink-0 rounded-full"
+                  style={{ background: tone.color }}
+                />
+                <span className="min-w-0">
+                  <MathProse text={property} />
+                </span>
+              </li>
+            ))}
+          </ul>
         </section>
       );
 
@@ -315,8 +411,17 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
 /** Bordered display block for formal statements / formulas — wide math scrolls within. */
 function DisplayBox({ children }: { children: ReactNode }) {
   return (
-    <div className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-muted px-4 py-3 font-math leading-[1.6] text-foreground">
-      {children}
+    <div className="relative max-w-full">
+      <div
+        className="panel-scrollbar max-w-full overflow-x-auto rounded-md border border-border bg-muted px-4 py-3 pr-8 font-math leading-[1.6] text-foreground"
+        title="Scroll horizontally to view wide mathematics"
+      >
+        {children}
+      </div>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-y-px right-px w-7 rounded-r-md bg-linear-to-l from-muted to-transparent md:hidden"
+      />
     </div>
   );
 }
@@ -353,6 +458,8 @@ function hasField(view: ConceptView, field: Field): boolean {
       return !!view.formalStatement;
     case "notation":
       return view.notation.length > 0;
+    case "properties":
+      return view.properties.length > 0;
     case "intuition":
       return !!view.intuition;
     case "gloss":

@@ -1,24 +1,54 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Dialog } from "radix-ui";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Check, ChevronLeft, ChevronRight, RotateCcw, Shuffle, Sparkles, X, XIcon } from "lucide-react";
+import {
+  Check,
+  ChevronLeft,
+  Minus,
+  RotateCcw,
+  Shuffle,
+  SkipForward,
+  SlidersHorizontal,
+  Sparkles,
+  Undo2,
+  X,
+  XIcon,
+} from "lucide-react";
 
 import { useStore } from "@/app/store";
+import { useRegisterShellActions, type ShellAction } from "@/app/ShellActions";
 import type { AtlasMap } from "@/atlas/model";
 import type { MapId } from "@/maps";
+import { KIND_LABEL, type GraphNode } from "@/maps/types";
 import { MathText } from "@/math/MathText";
+import type { ProgressStatus } from "@/progress/api";
+import { Surface } from "@/design";
+import { Chip } from "@/ui/chip";
+import { ConfirmDialog } from "@/ui/ConfirmDialog";
+import { ModalShell } from "@/ui/modal-shell";
+import { ConceptBody, ConceptHeader } from "./concept";
 import { nodeAnswerText } from "./concept/content";
 import { useConceptView } from "./concept/view";
-import type { GraphNode } from "@/maps/types";
-import { ConceptHeader, ConceptBody } from "./concept";
 import { hasNodeVisual } from "./concept/visualModel";
-import { useDrill, shuffle, type CardDirection, type DeckScope, type Rating } from "./drill";
-import { useSrs, isDue, srsKey } from "./srs";
-import { Chip } from "@/ui/chip";
-import { useRegisterShellActions, type ShellAction } from "@/app/ShellActions";
+import {
+  dependentDeck,
+  prerequisiteDeck,
+  shuffle,
+  useDrill,
+  type CardDirection,
+  type CardOutcome,
+  type DeckScope,
+  type Rating,
+  type SessionSize,
+} from "./drill";
+import { formatInterval, intervalFor, isDue, srsKey, useSrs, type SrsCard } from "./srs";
 
-/** A node carries enough to drill if it has a title and at least one answer-side facet. */
-function answerText(n: GraphNode): string {
-  return nodeAnswerText(n);
+function isDrillable(node: GraphNode): boolean {
+  return Boolean(nodeAnswerText(node) || hasNodeVisual(node));
+}
+
+function limitDeck(ids: string[], size: SessionSize): string[] {
+  return size === "all" ? ids : ids.slice(0, size);
 }
 
 export function FlashcardsView() {
@@ -28,10 +58,17 @@ export function FlashcardsView() {
   return <FlashcardsBody map={map} mapId={mapId} />;
 }
 
+interface ExternalUndo {
+  id: string;
+  srs: SrsCard | undefined;
+  progress: ProgressStatus | null;
+  changedExternal: boolean;
+}
+
 function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
-  // Share the TopBar/dictionary filter state so a narrowed atlas narrows the deck.
   const kinds = useStore((s) => s.kinds);
   const topics = useStore((s) => s.topics);
+  const selectedId = useStore((s) => s.selectedId);
   const setSurface = useStore((s) => s.setSurface);
   const select = useStore((s) => s.select);
   const progress = useStore((s) => s.progress[mapId]);
@@ -42,172 +79,242 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const setScope = useDrill((s) => s.setScope);
   const direction = useDrill((s) => s.direction);
   const setDirection = useDrill((s) => s.setDirection);
+  const sessionSize = useDrill((s) => s.sessionSize);
+  const setSessionSize = useDrill((s) => s.setSessionSize);
   const scoped = useDrill((s) => s.scoped);
   const setScoped = useDrill((s) => s.setScoped);
+  const missedIds = useDrill((s) => s.missedIds);
   const run = useDrill((s) => s.run);
   const drill = useDrill.getState;
 
   const srsCards = useSrs((s) => s.cards);
   const rateSrs = useSrs((s) => s.rate);
+  const restoreSrs = useSrs((s) => s.restore);
 
-  // Base deck: an explicit scoped deck (concept + prerequisites) wins; otherwise
-  // the toolbar filters decide. Either way a card needs an answer side.
+  const [builderOpen, setBuilderOpen] = useState(false);
+  const [restartOpen, setRestartOpen] = useState(false);
+  const [externalUndo, setExternalUndo] = useState<ExternalUndo | null>(null);
+
   const baseDeck = useMemo(() => {
-    const drillable = (n: GraphNode) => Boolean(answerText(n) || hasNodeVisual(n));
     if (scoped) {
-      return scoped.ids.map((id) => map.nodeById.get(id)).filter((n): n is GraphNode => Boolean(n && drillable(n)));
+      return scoped.ids
+        .map((id) => map.nodeById.get(id))
+        .filter((node): node is GraphNode => Boolean(node && isDrillable(node)));
     }
-    return map.data.nodes.filter((n) => {
-      if (kinds.size > 0 && !kinds.has(n.kind)) return false;
-      if (topics.size > 0 && !topics.has(n.domain)) return false;
-      return drillable(n);
+    return map.data.nodes.filter((node) => {
+      if (kinds.size > 0 && !kinds.has(node.kind)) return false;
+      if (topics.size > 0 && !topics.has(node.domain)) return false;
+      return isDrillable(node);
     });
   }, [map, kinds, topics, scoped]);
 
+  const missedSet = useMemo(() => new Set(missedIds), [missedIds]);
   const scopeCounts = useMemo(
     () => ({
       all: baseDeck.length,
-      due: baseDeck.filter((n) => isDue(srsCards[srsKey(mapId, n.id)])).length,
-      learning: baseDeck.filter((n) => progress?.[n.id] === "learning").length,
+      due: baseDeck.filter((node) => isDue(srsCards[srsKey(mapId, node.id)])).length,
+      learning: baseDeck.filter((node) => progress?.[node.id] === "learning").length,
+      missed: baseDeck.filter((node) => missedSet.has(node.id)).length,
     }),
-    [baseDeck, srsCards, mapId, progress],
+    [baseDeck, srsCards, mapId, progress, missedSet],
   );
 
-  // Due/learning membership is snapshotted when a run starts (and again on
-  // restart): rating a card changes its due date, and the running deck must
-  // not shrink under the user. Hence srsCards/progress stay out of the deps
-  // and out of the deck identity below.
   const deckIds = useMemo(() => {
-    if (!scoped && scope === "due") {
-      return baseDeck.filter((n) => isDue(srsCards[srsKey(mapId, n.id)])).map((n) => n.id);
-    }
-    if (!scoped && scope === "learning") {
-      return baseDeck.filter((n) => progress?.[n.id] === "learning").map((n) => n.id);
-    }
-    return baseDeck.map((n) => n.id);
+    if (scope === "due")
+      return baseDeck.filter((node) => isDue(srsCards[srsKey(mapId, node.id)])).map((node) => node.id);
+    if (scope === "learning")
+      return baseDeck.filter((node) => progress?.[node.id] === "learning").map((node) => node.id);
+    if (scope === "missed") return baseDeck.filter((node) => missedSet.has(node.id)).map((node) => node.id);
+    return baseDeck.map((node) => node.id);
+    // Due and learning membership is intentionally snapshotted by deckKey.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [baseDeck, scoped, scope]);
+  }, [baseDeck, scope, missedSet]);
 
-  const baseKey = useMemo(() => baseDeck.map((n) => n.id).join("|"), [baseDeck]);
-  const deckKey = `${scoped ? `scoped:${scoped.title}` : `scope:${scope}`}|${baseKey}`;
+  const baseKey = useMemo(() => baseDeck.map((node) => node.id).join("|"), [baseDeck]);
+  const deckKey = `${scoped ? `scoped:${scoped.title}` : "filtered"}|scope:${scope}|size:${sessionSize}|${baseKey}`;
 
-  // Start a fresh run whenever the deck identity changes; an unchanged deck
-  // resumes the in-flight run (the whole point of keeping it in the store).
   useEffect(() => {
-    if (run.deckKey !== deckKey) drill().reset(deckIds, deckKey);
+    if (run.deckKey !== deckKey) {
+      drill().reset(deckIds, deckKey);
+      setExternalUndo(null);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deckKey]);
 
-  const order = run.deckKey === deckKey ? run.order : shuffle(deckIds, run.seed);
+  const order = run.deckKey === deckKey ? run.order : limitDeck(shuffle(deckIds, run.seed), sessionSize);
   const total = order.length;
-  const ratedCount = Object.keys(run.ratings).length;
-  const gotCount = Object.values(run.ratings).filter((r) => r === "got").length;
-  const againIds = order.filter((id) => run.ratings[id] === "again");
-  const finished = total > 0 && ratedCount === total;
-
+  const completedCount = Object.keys(run.ratings).length;
+  const finished = total > 0 && completedCount === total;
   const currentId = order[run.pos];
   const node = currentId ? (map.nodeById.get(currentId) ?? null) : null;
 
+  const outcomeIds = useMemo(
+    () => ({
+      again: order.filter((id) => run.ratings[id] === "again"),
+      partial: order.filter((id) => run.ratings[id] === "partial"),
+      got: order.filter((id) => run.ratings[id] === "got"),
+      skipped: order.filter((id) => run.ratings[id] === "skipped"),
+    }),
+    [order, run.ratings],
+  );
+  const retryIds = [...outcomeIds.again, ...outcomeIds.partial, ...outcomeIds.skipped];
+
   const flip = useCallback(() => drill().flip(), [drill]);
-  const go = useCallback((delta: number) => drill().go(drill().run.pos + delta), [drill]);
+  const goBack = useCallback(() => {
+    setExternalUndo(null);
+    drill().go(drill().run.pos - 1);
+  }, [drill]);
+
   const rate = useCallback(
     (rating: Rating) => {
-      const id = drill().run.order[drill().run.pos];
+      const current = drill().run;
+      const id = current.order[current.pos];
       if (!id) return;
+      const key = srsKey(mapId, id);
+      setExternalUndo({
+        id,
+        srs: useSrs.getState().cards[key],
+        progress: useStore.getState().progress[mapId]?.[id] ?? null,
+        changedExternal: true,
+      });
       drill().rate(id, rating);
       rateSrs(mapId, id, rating);
-      // Persist a "got" as known; "again" keeps it in the learning set.
       setNodeProgress(mapId, id, rating === "got" ? "known" : "learning");
     },
     [drill, mapId, rateSrs, setNodeProgress],
   );
-  const reshuffle = useCallback(() => drill().reshuffle(deckIds), [drill, deckIds]);
+
+  const skip = useCallback(() => {
+    const current = drill().run;
+    const id = current.order[current.pos];
+    if (!id) return;
+    setExternalUndo({ id, srs: undefined, progress: null, changedExternal: false });
+    drill().skip(id);
+  }, [drill]);
+
+  const undo = useCallback(() => {
+    if (!drill().run.undo || !externalUndo) return;
+    drill().undo();
+    if (externalUndo.changedExternal) {
+      restoreSrs(mapId, externalUndo.id, externalUndo.srs);
+      setNodeProgress(mapId, externalUndo.id, externalUndo.progress);
+    }
+    setExternalUndo(null);
+  }, [drill, externalUndo, mapId, restoreSrs, setNodeProgress]);
+
+  const reshuffle = useCallback(() => {
+    setExternalUndo(null);
+    drill().reshuffle(deckIds);
+  }, [deckIds, drill]);
+  const requestRestart = useCallback(() => {
+    if (completedCount > 0) setRestartOpen(true);
+    else reshuffle();
+  }, [completedCount, reshuffle]);
+
   const shellActions = useMemo<readonly ShellAction[]>(
     () =>
-      ratedCount > 0
+      completedCount > 0
         ? [
             {
               id: "restart-study",
-              label: "Restart",
+              label: "Restart & shuffle",
               icon: RotateCcw,
-              onSelect: reshuffle,
+              onSelect: requestRestart,
               disabled: total === 0,
             },
           ]
         : [],
-    [ratedCount, reshuffle, total],
+    [completedCount, requestRestart, total],
   );
   useRegisterShellActions("flashcards", shellActions);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      const t = e.target as HTMLElement | null;
-      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-      if (e.key === "Escape") {
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.tagName === "BUTTON" ||
+          target.tagName === "A" ||
+          target.isContentEditable)
+      )
+        return;
+      if (builderOpen || restartOpen) return;
+      if (event.key === "Escape") {
         setSurface("atlas");
         return;
       }
+      if (event.key.toLowerCase() === "u" && run.undo && externalUndo) {
+        event.preventDefault();
+        undo();
+        return;
+      }
       if (finished) return;
-      if (e.key === " " || e.key === "Enter") {
-        e.preventDefault();
+      if (event.key === " " || event.key === "Enter") {
+        event.preventDefault();
         flip();
-      } else if (e.key === "ArrowRight") {
-        e.preventDefault();
-        go(1);
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        go(-1);
-      } else if (run.flipped && (e.key === "1" || e.key.toLowerCase() === "a")) {
-        e.preventDefault();
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        goBack();
+      } else if (event.key.toLowerCase() === "s") {
+        event.preventDefault();
+        skip();
+      } else if (run.flipped && (event.key === "1" || event.key.toLowerCase() === "a")) {
+        event.preventDefault();
         rate("again");
-      } else if (run.flipped && (e.key === "2" || e.key.toLowerCase() === "g")) {
-        e.preventDefault();
+      } else if (run.flipped && (event.key === "2" || event.key.toLowerCase() === "p")) {
+        event.preventDefault();
+        rate("partial");
+      } else if (run.flipped && (event.key === "3" || event.key.toLowerCase() === "g")) {
+        event.preventDefault();
         rate("got");
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [finished, flip, go, rate, run.flipped, setSurface]);
+  }, [
+    builderOpen,
+    externalUndo,
+    finished,
+    flip,
+    goBack,
+    rate,
+    restartOpen,
+    run.flipped,
+    run.undo,
+    setSurface,
+    skip,
+    undo,
+  ]);
+
+  const deckLabel = scoped
+    ? `${scoped.title} · ${SCOPE_LABEL[scope]}`
+    : `${SCOPE_LABEL[scope]} · ${topics.size || "all"} domain${topics.size === 1 ? "" : "s"} · ${
+        kinds.size || "all"
+      } kind${kinds.size === 1 ? "" : "s"}`;
+
+  const summary = useMemo(() => summarizeWeaknesses(order, run.ratings, map), [map, order, run.ratings]);
 
   return (
     <div className="absolute inset-x-0 top-[var(--shell-dock-top)] bottom-[var(--shell-content-bottom)] flex flex-col items-center px-4 pb-4">
       <div className="my-auto flex h-full max-h-[720px] w-full max-w-170 flex-col">
         <div className="mb-3 rounded-xl border border-border bg-card p-2.5 shadow-[var(--shadow-e1)]">
-          {/* Deck scope + card direction */}
           <div className="flex flex-wrap items-center gap-1.5">
-            {scoped ? (
-              <span className="inline-flex min-h-(--control-h-sm) items-center gap-1.5 rounded-sm border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-caption-1 font-medium text-primary-text">
-                Practicing: <MathText text={scoped.title} />
-                <span className="font-mono opacity-70">{total}</span>
-                <button
-                  type="button"
-                  onClick={() => setScoped(null)}
-                  aria-label="Back to full deck"
-                  title="Back to full deck"
-                  className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-primary/20"
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              </span>
-            ) : (
-              <div className="flex items-center gap-1.5" role="group" aria-label="Deck scope">
-                <Chip active={scope === "all"} onClick={() => setScope("all")}>
-                  All <span className="font-mono text-caption-2 opacity-70">{scopeCounts.all}</span>
+            <div className="flex items-center gap-1.5" role="group" aria-label="Deck scope">
+              {(["all", "due", "learning", "missed"] as const).map((value) => (
+                <Chip key={value} active={scope === value} onClick={() => setScope(value)}>
+                  {SCOPE_LABEL[value]} <span className="font-mono text-caption-2 opacity-70">{scopeCounts[value]}</span>
                 </Chip>
-                <Chip active={scope === "due"} onClick={() => setScope("due")}>
-                  Due <span className="font-mono text-caption-2 opacity-70">{scopeCounts.due}</span>
-                </Chip>
-                <Chip active={scope === "learning"} onClick={() => setScope("learning")}>
-                  Learning <span className="font-mono text-caption-2 opacity-70">{scopeCounts.learning}</span>
-                </Chip>
-              </div>
-            )}
+              ))}
+            </div>
             <div className="ml-auto flex items-center gap-1.5" role="group" aria-label="Card direction">
               <Chip
                 variant="mono"
                 active={direction === "term"}
                 onClick={() => setDirection("term")}
-                title="Show the name and recall the statement"
+                title="Show the concept name and recall its mathematical content"
               >
                 {DIRECTION_LABEL.term}
               </Chip>
@@ -215,41 +322,66 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 variant="mono"
                 active={direction === "statement"}
                 onClick={() => setDirection("statement")}
-                title="Show the statement and recall the name"
+                title="Show the mathematical statement and recall its name"
               >
                 {DIRECTION_LABEL.statement}
+              </Chip>
+              <Chip variant="mono" active={builderOpen || scoped !== null} onClick={() => setBuilderOpen(true)}>
+                <SlidersHorizontal className="h-3 w-3" /> Deck
               </Chip>
             </div>
           </div>
 
-          {/* Progress rail */}
+          <div className="mt-2 flex min-w-0 items-center gap-2 text-caption-2 text-muted-foreground">
+            <span className="min-w-0 flex-1 truncate" title={deckLabel}>
+              {deckLabel}
+            </span>
+            {scoped && (
+              <button
+                type="button"
+                onClick={() => setScoped(null)}
+                className="shrink-0 text-primary-text hover:underline"
+              >
+                Clear scope
+              </button>
+            )}
+          </div>
+
           <div className="mt-2.5 flex items-center gap-3">
-            <ProgressRail order={order} ratings={run.ratings} pos={run.pos} onJump={(i) => drill().go(i)} />
+            <ProgressRail order={order} ratings={run.ratings} pos={run.pos} onJump={(pos) => drill().go(pos)} />
             <span className="shrink-0 font-mono text-caption-2 text-muted-foreground">
               {total ? Math.min(run.pos + 1, total) : 0}/{total}
             </span>
             <button
               type="button"
-              onClick={reshuffle}
+              onClick={requestRestart}
               disabled={total === 0}
               className="flex h-7 items-center gap-1.5 rounded-sm border border-border bg-card px-2.5 text-caption-1 font-medium text-muted-foreground transition-colors hover:bg-secondary disabled:opacity-40"
-              title="Shuffle and restart"
+              title={completedCount > 0 ? "Restart and shuffle this session" : "Shuffle this session"}
             >
               <Shuffle className="h-3 w-3" />
-              Shuffle
+              {completedCount > 0 ? "Restart & shuffle" : "Shuffle"}
             </button>
           </div>
         </div>
 
         {total === 0 ? (
-          <EmptyState scope={scoped ? "all" : scope} onBack={() => setSurface("atlas")} />
+          <EmptyState scope={scope} onConfigure={() => setBuilderOpen(true)} onBack={() => setSurface("atlas")} />
         ) : finished ? (
           <SummaryCard
             total={total}
-            gotCount={gotCount}
-            againCount={againIds.length}
-            onRestart={reshuffle}
-            onReview={() => againIds.length && drill().review(againIds)}
+            counts={{
+              got: outcomeIds.got.length,
+              partial: outcomeIds.partial.length,
+              again: outcomeIds.again.length,
+              skipped: outcomeIds.skipped.length,
+            }}
+            retryCount={retryIds.length}
+            summary={summary}
+            canUndo={Boolean(run.undo && externalUndo)}
+            onUndo={undo}
+            onRestart={requestRestart}
+            onReview={() => retryIds.length && drill().review(retryIds)}
             onClose={() => setSurface("atlas")}
           />
         ) : (
@@ -282,52 +414,95 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 </AnimatePresence>
               </div>
 
-              {/* Controls */}
               <div className="mt-3 grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3">
-                <PagerButton label="Previous card" disabled={run.pos === 0} onClick={() => go(-1)}>
+                <PagerButton label="Previous card" disabled={run.pos === 0} onClick={goBack}>
                   <ChevronLeft className="h-4 w-4" />
                 </PagerButton>
 
                 {run.flipped ? (
-                  <div className="flex min-w-0 flex-wrap items-center justify-center gap-2">
-                    <RateButton tone="again" onClick={() => rate("again")}>
-                      <XIcon className="h-4 w-4" /> Again
-                      <Kbd>1</Kbd>
-                    </RateButton>
-                    <RateButton tone="got" onClick={() => rate("got")}>
-                      <Check className="h-4 w-4" /> Got it
-                      <Kbd>2</Kbd>
-                    </RateButton>
+                  <div className="grid min-w-0 grid-cols-3 gap-1.5">
+                    {(["again", "partial", "got"] as const).map((rating, index) => (
+                      <RateButton
+                        key={rating}
+                        tone={rating}
+                        interval={formatInterval(intervalFor(srsCards[srsKey(mapId, node.id)], rating))}
+                        shortcut={String(index + 1)}
+                        onClick={() => rate(rating)}
+                      />
+                    ))}
                   </div>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={flip}
-                    className="flex h-11 items-center justify-center gap-2 rounded-sm border border-transparent bg-primary px-5 text-body font-semibold text-primary-foreground transition-transform active:scale-[0.98]"
-                    style={{ boxShadow: "var(--shadow-e2)" }}
-                  >
-                    <span>Show answer</span>
-                    <Kbd onAccent>Space</Kbd>
-                  </button>
+                  <div className="flex min-w-0 items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={flip}
+                      className="flex h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-sm border border-transparent bg-primary px-5 text-body font-semibold text-primary-foreground transition-transform active:scale-[0.98]"
+                      style={{ boxShadow: "var(--shadow-e2)" }}
+                    >
+                      <span>Show answer</span>
+                      <Kbd onAccent>Space</Kbd>
+                    </button>
+                    {run.undo && externalUndo && (
+                      <button
+                        type="button"
+                        onClick={undo}
+                        className="flex h-11 shrink-0 items-center gap-1.5 rounded-sm border border-border bg-card px-3 text-footnote font-medium text-muted-foreground hover:bg-secondary"
+                      >
+                        <Undo2 className="h-3.5 w-3.5" /> Undo <Kbd>U</Kbd>
+                      </button>
+                    )}
+                  </div>
                 )}
 
-                <PagerButton label="Next card" disabled={run.pos >= total - 1} onClick={() => go(1)}>
-                  <ChevronRight className="h-4 w-4" />
+                <PagerButton label="Skip card" onClick={skip}>
+                  <SkipForward className="h-4 w-4" />
                 </PagerButton>
               </div>
             </>
           )
         )}
       </div>
+
+      <DeckBuilder
+        open={builderOpen}
+        onOpenChange={setBuilderOpen}
+        map={map}
+        focusId={currentId ?? selectedId ?? null}
+        scope={scope}
+        sessionSize={sessionSize}
+        onApply={({ scope: nextScope, size, scoped: nextScoped, kinds: nextKinds, topics: nextTopics }) => {
+          useStore.setState({ kinds: nextKinds, topics: nextTopics });
+          setScope(nextScope);
+          setSessionSize(size);
+          setScoped(nextScoped);
+          setBuilderOpen(false);
+        }}
+      />
+
+      <ConfirmDialog
+        open={restartOpen}
+        onOpenChange={setRestartOpen}
+        title="Restart this study session?"
+        description="Your ratings and skips from this session will be cleared. Long-term review history is kept."
+        confirmLabel="Restart & shuffle"
+        onConfirm={reshuffle}
+      />
     </div>
   );
 }
 
-/**
- * Segmented, clickable progress rail: one tick per card, colored by its rating
- * this run. Falls back to a continuous bar for very large decks where the
- * ticks would be sub-pixel.
- */
+const SCOPE_LABEL: Record<DeckScope, string> = {
+  all: "All",
+  due: "Due",
+  learning: "Learning",
+  missed: "Missed",
+};
+
+const DIRECTION_LABEL: Record<CardDirection, string> = {
+  term: "Recall statement",
+  statement: "Recall name",
+};
+
 function ProgressRail({
   order,
   ratings,
@@ -335,36 +510,48 @@ function ProgressRail({
   onJump,
 }: {
   order: string[];
-  ratings: Record<string, Rating>;
+  ratings: Record<string, CardOutcome>;
   pos: number;
   onJump: (pos: number) => void;
 }) {
   const total = order.length;
   if (total === 0 || total > 80) {
-    const ratedCount = Object.keys(ratings).length;
+    const completed = Object.keys(ratings).length;
     return (
-      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
+      <div
+        className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary"
+        aria-label={`${completed} of ${total} completed`}
+      >
         <div
           className="h-full rounded-full bg-primary transition-[width] duration-300"
-          style={{ width: total ? `${(ratedCount / total) * 100}%` : "0%" }}
+          style={{ width: total ? `${(completed / total) * 100}%` : "0%" }}
         />
       </div>
     );
   }
   return (
     <div className="flex h-2.5 flex-1 items-center gap-px" role="group" aria-label="Card progress">
-      {order.map((id, i) => {
-        const rating = ratings[id];
-        const current = i === pos;
-        const color = rating === "got" ? "bg-success/80" : rating === "again" ? "bg-destructive/70" : "bg-secondary";
+      {order.map((id, index) => {
+        const outcome = ratings[id];
+        const color =
+          outcome === "got"
+            ? "bg-success/80"
+            : outcome === "partial"
+              ? "bg-[color:var(--domain-amber)]/80"
+              : outcome === "again"
+                ? "bg-destructive/70"
+                : outcome === "skipped"
+                  ? "bg-muted-foreground/50"
+                  : "bg-secondary";
         return (
           <button
             key={id}
             type="button"
-            onClick={() => onJump(i)}
-            aria-label={`Card ${i + 1} of ${total}`}
-            className={`h-full min-w-0 flex-1 first:rounded-l-full last:rounded-r-full ${color} transition-[transform,opacity] hover:opacity-80 ${
-              current ? "scale-y-125 ring-1 ring-inset ring-primary" : ""
+            onClick={() => onJump(index)}
+            disabled={index > pos && !outcome}
+            aria-label={`Card ${index + 1} of ${total}${outcome ? `, ${outcome}` : ""}`}
+            className={`h-full min-w-0 flex-1 first:rounded-l-full last:rounded-r-full ${color} transition-[transform,opacity] hover:opacity-80 disabled:cursor-default disabled:hover:opacity-100 ${
+              index === pos ? "scale-y-125 ring-1 ring-inset ring-primary" : ""
             }`}
           />
         );
@@ -372,11 +559,6 @@ function ProgressRail({
     </div>
   );
 }
-
-const DIRECTION_LABEL: Record<CardDirection, string> = {
-  term: "Term first",
-  statement: "Statement first",
-};
 
 function CardShell({ children, tone, footer }: { children: React.ReactNode; tone: string; footer?: React.ReactNode }) {
   return (
@@ -389,6 +571,16 @@ function CardShell({ children, tone, footer }: { children: React.ReactNode; tone
       {footer}
     </div>
   );
+}
+
+function recallPrompt(kind: string): string {
+  if (kind === "definition") return "Give the precise definition.";
+  if (["theorem", "lemma", "proposition", "corollary"].includes(kind)) return "State the hypotheses and conclusion.";
+  if (kind === "property") return "State the property and when it applies.";
+  if (kind === "example") return "Explain what this example demonstrates.";
+  if (kind === "counterexample" || kind === "non_example") return "Which claim or missing assumption does this refute?";
+  if (kind === "exercise") return "Identify the key method or first step.";
+  return "Recall the essential mathematical content.";
 }
 
 function CardFront({
@@ -405,8 +597,6 @@ function CardFront({
   onFlip: () => void;
 }) {
   const view = useConceptView(node, map, mapId);
-  // Statement-first only works when there is a statement to show; cards
-  // without one silently fall back to the classic term-first front.
   const reversed = direction === "statement" && Boolean(view.statement);
   return (
     <CardShell tone={view.tone.color}>
@@ -428,12 +618,13 @@ function CardFront({
             </div>
           </div>
         ) : (
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-md space-y-4">
             <ConceptHeader view={view} size="card" />
+            <p className="text-callout font-medium text-foreground">{recallPrompt(node.kind)}</p>
           </div>
         )}
         <span className="text-caption-2 font-medium text-muted-foreground">
-          {reversed ? "Name this concept — tap to reveal" : "Tap or press space to flip"}
+          {reversed ? "Name this concept — tap to reveal" : "Commit to an answer — tap or press space to reveal"}
         </span>
       </button>
     </CardShell>
@@ -455,67 +646,179 @@ function CardBack({ node, map, mapId, onOpen }: { node: GraphNode; map: AtlasMap
         </button>
       }
     >
-      <div className="space-y-4 px-6 py-5">
+      <div className="space-y-4 px-5 py-5 sm:px-6">
         <ConceptHeader view={view} size="card" />
-        <ConceptBody view={view} map={map} density="card" showVisual={false} />
+        <ConceptBody view={view} map={map} density="card" showVisual />
       </div>
     </CardShell>
   );
 }
 
+function RateButton({
+  tone,
+  interval,
+  shortcut,
+  onClick,
+}: {
+  tone: Rating;
+  interval: string;
+  shortcut: string;
+  onClick: () => void;
+}) {
+  const label = tone === "again" ? "Again" : tone === "partial" ? "Partial" : "Got it";
+  const Icon = tone === "again" ? XIcon : tone === "partial" ? Minus : Check;
+  const color =
+    tone === "got"
+      ? "border-primary/40 bg-primary/10 text-primary-text"
+      : tone === "partial"
+        ? "border-[color:var(--domain-amber)]/40 bg-[color:var(--domain-amber)]/10 text-foreground"
+        : "border-border bg-card text-muted-foreground";
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex min-h-11 min-w-0 flex-col items-center justify-center rounded-sm border px-1.5 py-1.5 transition-transform active:scale-[0.98] ${color}`}
+      title={`${label}; next review in ${interval}`}
+    >
+      <span className="flex items-center gap-1 text-footnote font-semibold">
+        <Icon className="h-3.5 w-3.5" /> {label} <Kbd>{shortcut}</Kbd>
+      </span>
+      <span className="font-mono text-caption-2 opacity-70">{interval}</span>
+    </button>
+  );
+}
+
+interface SummaryCounts {
+  got: number;
+  partial: number;
+  again: number;
+  skipped: number;
+}
+
+interface WeaknessSummary {
+  domains: { label: string; count: number }[];
+  kinds: { label: string; count: number }[];
+  prerequisites: { label: string; count: number }[];
+}
+
+function ranked(entries: Map<string, number>, label: (id: string) => string): { label: string; count: number }[] {
+  return [...entries.entries()]
+    .sort((a, b) => b[1] - a[1] || label(a[0]).localeCompare(label(b[0])))
+    .slice(0, 3)
+    .map(([id, count]) => ({ label: label(id), count }));
+}
+
+function summarizeWeaknesses(order: string[], outcomes: Record<string, CardOutcome>, map: AtlasMap): WeaknessSummary {
+  const domains = new Map<string, number>();
+  const kinds = new Map<string, number>();
+  const prerequisites = new Map<string, number>();
+  for (const id of order) {
+    const outcome = outcomes[id];
+    if (!outcome || outcome === "got") continue;
+    const node = map.nodeById.get(id);
+    if (!node) continue;
+    domains.set(node.domain, (domains.get(node.domain) ?? 0) + 1);
+    kinds.set(node.kind, (kinds.get(node.kind) ?? 0) + 1);
+    for (const prerequisite of node.statementDependencies) {
+      prerequisites.set(prerequisite, (prerequisites.get(prerequisite) ?? 0) + 1);
+    }
+  }
+  return {
+    domains: ranked(domains, (id) => map.domainById.get(id)?.label ?? id),
+    kinds: ranked(kinds, (id) => KIND_LABEL[id]),
+    prerequisites: ranked(prerequisites, (id) => map.nodeById.get(id)?.label ?? id),
+  };
+}
+
 function SummaryCard({
   total,
-  gotCount,
-  againCount,
+  counts,
+  retryCount,
+  summary,
+  canUndo,
+  onUndo,
   onRestart,
   onReview,
   onClose,
 }: {
   total: number;
-  gotCount: number;
-  againCount: number;
+  counts: SummaryCounts;
+  retryCount: number;
+  summary: WeaknessSummary;
+  canUndo: boolean;
+  onUndo: () => void;
   onRestart: () => void;
   onReview: () => void;
   onClose: () => void;
 }) {
-  const pct = Math.round((gotCount / total) * 100);
   return (
     <div
-      className="flex flex-1 flex-col items-center justify-center gap-6 rounded-2xl border border-border bg-card px-8 py-12 text-center"
+      className="panel-scrollbar flex flex-1 flex-col items-center overflow-y-auto rounded-2xl border border-border bg-card px-6 py-8 text-center"
       style={{ boxShadow: "var(--shadow-e2)" }}
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary-text">
-        <Sparkles className="h-7 w-7" />
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary-text">
+        <Sparkles className="h-6 w-6" />
       </div>
-      <div className="space-y-1.5">
-        <h2 className="text-title-1 font-semibold text-foreground">Deck complete</h2>
-        <p className="text-body text-muted-foreground">
-          You got <strong className="text-foreground">{gotCount}</strong> of {total} ({pct}%).
-          {againCount > 0 && ` ${againCount} to review.`}
+      <div className="mt-4 space-y-1">
+        <h2 className="text-title-1 font-semibold text-foreground">Session complete</h2>
+        <p className="text-footnote text-muted-foreground">
+          {total} cards reviewed. Results describe this session, not mastery.
         </p>
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-2.5">
-        {againCount > 0 && (
+      <div className="mt-5 grid w-full max-w-lg grid-cols-4 gap-2">
+        {(
+          [
+            ["Got it", counts.got],
+            ["Partial", counts.partial],
+            ["Again", counts.again],
+            ["Skipped", counts.skipped],
+          ] as const
+        ).map(([label, count]) => (
+          <div key={label} className="rounded-md border border-border bg-muted px-2 py-3">
+            <strong className="block font-mono text-title-3 text-foreground">{count}</strong>
+            <span className="text-caption-2 text-muted-foreground">{label}</span>
+          </div>
+        ))}
+      </div>
+
+      {(summary.domains.length > 0 || summary.kinds.length > 0 || summary.prerequisites.length > 0) && (
+        <div className="mt-5 grid w-full max-w-lg gap-3 text-left sm:grid-cols-3">
+          <WeaknessList title="Domains to revisit" items={summary.domains} />
+          <WeaknessList title="Card types" items={summary.kinds} />
+          <WeaknessList title="Prerequisites" items={summary.prerequisites} />
+        </div>
+      )}
+
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+        {canUndo && (
+          <button
+            type="button"
+            onClick={onUndo}
+            className="flex h-11 items-center gap-2 rounded-sm border border-border px-4 text-body font-medium text-foreground hover:bg-secondary"
+          >
+            <Undo2 className="h-4 w-4" /> Undo last
+          </button>
+        )}
+        {retryCount > 0 && (
           <button
             type="button"
             onClick={onReview}
-            className="flex h-11 items-center gap-2 rounded-sm bg-primary px-6 text-body font-semibold text-primary-foreground transition-transform active:scale-[0.98]"
-            style={{ boxShadow: "var(--shadow-e2)" }}
+            className="flex h-11 items-center gap-2 rounded-sm bg-primary px-5 text-body font-semibold text-primary-foreground active:scale-[0.98]"
           >
-            Review {againCount} missed
+            Review {retryCount} unfinished
           </button>
         )}
         <button
           type="button"
           onClick={onRestart}
-          className="flex h-11 items-center gap-2 rounded-sm border border-border bg-card px-5 text-body font-medium text-foreground transition-colors hover:bg-secondary"
+          className="flex h-11 items-center gap-2 rounded-sm border border-border px-4 text-body font-medium text-foreground hover:bg-secondary"
         >
-          <RotateCcw className="h-4 w-4" /> Restart deck
+          <RotateCcw className="h-4 w-4" /> Restart
         </button>
         <button
           type="button"
           onClick={onClose}
-          className="h-11 rounded-sm px-5 text-body font-medium text-muted-foreground transition-colors hover:bg-secondary"
+          className="h-11 rounded-sm px-4 text-body font-medium text-muted-foreground hover:bg-secondary"
         >
           Back to atlas
         </button>
@@ -524,29 +827,246 @@ function SummaryCard({
   );
 }
 
-function EmptyState({ scope, onBack }: { scope: DeckScope; onBack: () => void }) {
+function WeaknessList({ title, items }: { title: string; items: { label: string; count: number }[] }) {
+  if (items.length === 0) return null;
+  return (
+    <section className="rounded-md border border-border p-3">
+      <h3 className="reading-label text-muted-foreground">{title}</h3>
+      <ul className="mt-2 space-y-1.5 text-footnote text-foreground">
+        {items.map((item) => (
+          <li key={item.label} className="flex justify-between gap-2">
+            <MathText text={item.label} /> <span className="font-mono text-muted-foreground">{item.count}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function EmptyState({ scope, onConfigure, onBack }: { scope: DeckScope; onConfigure: () => void; onBack: () => void }) {
   const message =
     scope === "due"
-      ? "Nothing is due for review — nicely done."
+      ? "Nothing is due for review."
       : scope === "learning"
-        ? "No cards are marked as still learning."
-        : "No cards match the current filters.";
-  const hint =
-    scope === "all"
-      ? "Widen the domain or category filters in the toolbar to build a study deck."
-      : "Switch the deck scope to All to keep drilling anyway.";
+        ? "No cards are marked as learning."
+        : scope === "missed"
+          ? "No missed or skipped cards yet."
+          : "No cards match this deck.";
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-card px-8 py-12 text-center">
       <p className="text-callout text-foreground">{message}</p>
-      <p className="max-w-85 text-footnote text-muted-foreground">{hint}</p>
-      <button
-        type="button"
-        onClick={onBack}
-        className="mt-1 h-10 rounded-sm border border-border bg-card px-5 text-footnote font-medium text-foreground transition-colors hover:bg-secondary"
-      >
-        Back to atlas
-      </button>
+      <p className="max-w-85 text-footnote text-muted-foreground">Adjust the deck or return to the atlas.</p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={onConfigure}
+          className="h-10 rounded-sm bg-primary px-5 text-footnote font-semibold text-primary-foreground"
+        >
+          Configure deck
+        </button>
+        <button
+          type="button"
+          onClick={onBack}
+          className="h-10 rounded-sm border border-border px-5 text-footnote font-medium text-foreground hover:bg-secondary"
+        >
+          Back to atlas
+        </button>
+      </div>
     </div>
+  );
+}
+
+type GraphDeckScope = "filtered" | "current" | "prerequisites" | "dependents";
+
+function DeckBuilder({
+  open,
+  onOpenChange,
+  map,
+  focusId,
+  scope,
+  sessionSize,
+  onApply,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  map: AtlasMap;
+  focusId: string | null;
+  scope: DeckScope;
+  sessionSize: SessionSize;
+  onApply: (config: {
+    scope: DeckScope;
+    size: SessionSize;
+    scoped: { title: string; ids: string[] } | null;
+    kinds: Set<string>;
+    topics: Set<string>;
+  }) => void;
+}) {
+  const activeKinds = useStore((s) => s.kinds);
+  const activeTopics = useStore((s) => s.topics);
+  const [draftScope, setDraftScope] = useState(scope);
+  const [draftSize, setDraftSize] = useState(sessionSize);
+  const [graphScope, setGraphScope] = useState<GraphDeckScope>("filtered");
+  const [draftKinds, setDraftKinds] = useState(() => new Set(activeKinds));
+  const [draftTopics, setDraftTopics] = useState(() => new Set(activeTopics));
+
+  useEffect(() => {
+    if (!open) return;
+    setDraftScope(scope);
+    setDraftSize(sessionSize);
+    setGraphScope("filtered");
+    setDraftKinds(new Set(activeKinds));
+    setDraftTopics(new Set(activeTopics));
+  }, [activeKinds, activeTopics, open, scope, sessionSize]);
+
+  const focus = focusId ? (map.nodeById.get(focusId) ?? null) : null;
+  const toggle = (source: Set<string>, value: string, update: (next: Set<string>) => void) => {
+    const next = new Set(source);
+    if (next.has(value)) next.delete(value);
+    else next.add(value);
+    update(next);
+  };
+
+  const apply = () => {
+    let nextScoped: { title: string; ids: string[] } | null = null;
+    if (graphScope !== "filtered" && focus) {
+      if (graphScope === "current") nextScoped = { title: focus.label, ids: [focus.id] };
+      if (graphScope === "prerequisites") {
+        nextScoped = {
+          title: `${focus.label} prerequisites`,
+          ids: prerequisiteDeck(focus.id, (id) => map.nodeById.get(id)?.statementDependencies),
+        };
+      }
+      if (graphScope === "dependents") {
+        nextScoped = {
+          title: `${focus.label} dependents`,
+          ids: dependentDeck(focus.id, (id) =>
+            map.outgoingEdgesByNodeId
+              .get(id)
+              ?.filter((edge) => edge.isDependency)
+              .map((edge) => edge.to),
+          ),
+        };
+      }
+    }
+    onApply({ scope: draftScope, size: draftSize, scoped: nextScoped, kinds: draftKinds, topics: draftTopics });
+  };
+
+  return (
+    <ModalShell
+      open={open}
+      onOpenChange={onOpenChange}
+      contentClassName="inset-0 m-auto h-fit max-h-[88vh] w-[min(680px,94vw)]"
+    >
+      <Surface material="thick" className="panel-scrollbar max-h-[88vh] overflow-y-auto p-5">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <Dialog.Title className="text-title-3 font-semibold text-foreground">Build a study deck</Dialog.Title>
+            <Dialog.Description className="mt-1 text-footnote text-muted-foreground">
+              Choose what belongs in this sitting. Atlas filters remain the shared source of truth.
+            </Dialog.Description>
+          </div>
+          <Dialog.Close asChild>
+            <button
+              type="button"
+              aria-label="Close deck builder"
+              className="rounded-full p-1.5 text-muted-foreground hover:bg-secondary"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </Dialog.Close>
+        </div>
+
+        <BuilderSection title="Review state">
+          {(["all", "due", "learning", "missed"] as const).map((value) => (
+            <Chip key={value} active={draftScope === value} onClick={() => setDraftScope(value)}>
+              {SCOPE_LABEL[value]}
+            </Chip>
+          ))}
+        </BuilderSection>
+
+        <BuilderSection title="Graph scope">
+          {(["filtered", "current", "prerequisites", "dependents"] as const).map((value) => (
+            <Chip
+              key={value}
+              active={graphScope === value}
+              disabled={value !== "filtered" && !focus}
+              onClick={() => setGraphScope(value)}
+            >
+              {value === "filtered" ? "Current filters" : value === "current" ? "Current concept" : KIND_LABEL[value]}
+            </Chip>
+          ))}
+          {!focus && (
+            <p className="w-full text-caption-2 text-muted-foreground">Select a concept to use graph-based scopes.</p>
+          )}
+          {focus && graphScope !== "filtered" && (
+            <p className="w-full truncate text-caption-2 text-muted-foreground" title={focus.label}>
+              From <MathText text={focus.label} />
+            </p>
+          )}
+        </BuilderSection>
+
+        <BuilderSection title="Session size">
+          {([5, 10, 20, "all"] as const).map((value) => (
+            <Chip key={value} active={draftSize === value} onClick={() => setDraftSize(value)}>
+              {value === "all" ? "All matching" : value}
+            </Chip>
+          ))}
+        </BuilderSection>
+
+        <BuilderSection title="Domains">
+          <Chip active={draftTopics.size === 0} onClick={() => setDraftTopics(new Set())}>
+            All domains
+          </Chip>
+          {map.data.domains.map((domain) => (
+            <Chip
+              key={domain.id}
+              active={draftTopics.has(domain.id)}
+              onClick={() => toggle(draftTopics, domain.id, setDraftTopics)}
+            >
+              {domain.label}
+            </Chip>
+          ))}
+        </BuilderSection>
+
+        <BuilderSection title="Concept kinds">
+          <Chip active={draftKinds.size === 0} onClick={() => setDraftKinds(new Set())}>
+            All kinds
+          </Chip>
+          {map.kinds.map((kind) => (
+            <Chip key={kind} active={draftKinds.has(kind)} onClick={() => toggle(draftKinds, kind, setDraftKinds)}>
+              {KIND_LABEL[kind]}
+            </Chip>
+          ))}
+        </BuilderSection>
+
+        <div className="mt-5 flex justify-end gap-2 border-t border-border pt-4">
+          <Dialog.Close asChild>
+            <button
+              type="button"
+              className="h-10 rounded-sm border border-border px-4 text-footnote font-medium text-foreground hover:bg-secondary"
+            >
+              Cancel
+            </button>
+          </Dialog.Close>
+          <button
+            type="button"
+            onClick={apply}
+            className="h-10 rounded-sm bg-primary px-5 text-footnote font-semibold text-primary-foreground"
+          >
+            Start deck
+          </button>
+        </div>
+      </Surface>
+    </ModalShell>
+  );
+}
+
+function BuilderSection({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="mt-5">
+      <h3 className="mb-2 reading-label text-muted-foreground">{title}</h3>
+      <div className="flex flex-wrap gap-1.5">{children}</div>
+    </section>
   );
 }
 
@@ -575,23 +1095,12 @@ function PagerButton({
   );
 }
 
-function RateButton({ tone, onClick, children }: { tone: Rating; onClick: () => void; children: React.ReactNode }) {
-  const got = tone === "got";
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`flex h-11 items-center gap-2 rounded-sm border px-5 text-body font-semibold transition-transform active:scale-[0.98] ${got ? "border-primary/40 bg-primary/10 text-primary-text" : "border-border bg-card text-muted-foreground"}`}
-    >
-      {children}
-    </button>
-  );
-}
-
 function Kbd({ children, onAccent = false }: { children: React.ReactNode; onAccent?: boolean }) {
   return (
     <kbd
-      className={`ml-0.5 hidden h-5 items-center rounded border px-1.5 font-mono text-caption-2 sm:inline-flex ${onAccent ? "border-transparent text-primary-foreground" : "border-border bg-secondary text-muted-foreground"}`}
+      className={`ml-0.5 hidden h-5 items-center rounded border px-1.5 font-mono text-caption-2 sm:inline-flex ${
+        onAccent ? "border-transparent text-primary-foreground" : "border-border bg-secondary text-muted-foreground"
+      }`}
       style={onAccent ? { background: "color-mix(in srgb, var(--card) 25%, transparent)" } : undefined}
     >
       {children}

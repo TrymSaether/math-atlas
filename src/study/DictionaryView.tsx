@@ -451,6 +451,7 @@ function DetailPane({
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
   const setScoped = useDrill((s) => s.setScoped);
+  const setScope = useDrill((s) => s.setScope);
   const view = useConceptView(entry, map, mapId);
 
   const openInAtlas = () => {
@@ -465,6 +466,7 @@ function DetailPane({
   );
 
   const practice = () => {
+    setScope("all");
     setScoped({ title: entry.label, ids: practiceIds });
     setSurface("flashcards");
   };
