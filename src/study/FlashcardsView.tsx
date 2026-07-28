@@ -26,6 +26,7 @@ import { Surface } from "@/design";
 import { Chip } from "@/ui/chip";
 import { ConfirmDialog } from "@/ui/ConfirmDialog";
 import { ModalShell } from "@/ui/modal-shell";
+import { SegmentedControl } from "@/ui/segmented-control";
 import { ConceptBody, ConceptHeader } from "./concept";
 import { nodeAnswerText } from "./concept/content";
 import { useConceptView } from "./concept/view";
@@ -302,30 +303,42 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
       <div className="my-auto flex h-full max-h-[720px] w-full max-w-170 flex-col">
         <div className="mb-3 rounded-xl border border-border bg-card p-2.5 shadow-[var(--shadow-e1)]">
           <div className="flex flex-wrap items-center gap-1.5">
-            <div className="flex items-center gap-1.5" role="group" aria-label="Deck scope">
-              {(["all", "due", "learning", "missed"] as const).map((value) => (
-                <Chip key={value} active={scope === value} onClick={() => setScope(value)}>
-                  {SCOPE_LABEL[value]} <span className="font-mono text-caption-2 opacity-70">{scopeCounts[value]}</span>
-                </Chip>
-              ))}
-            </div>
-            <div className="ml-auto flex items-center gap-1.5" role="group" aria-label="Card direction">
-              <Chip
-                variant="mono"
-                active={direction === "term"}
-                onClick={() => setDirection("term")}
-                title="Show the concept name and recall its mathematical content"
-              >
-                {DIRECTION_LABEL.term}
-              </Chip>
-              <Chip
-                variant="mono"
-                active={direction === "statement"}
-                onClick={() => setDirection("statement")}
-                title="Show the mathematical statement and recall its name"
-              >
-                {DIRECTION_LABEL.statement}
-              </Chip>
+            <SegmentedControl
+              value={scope}
+              onChange={setScope}
+              ariaLabel="Deck scope"
+              options={(["all", "due", "learning", "missed"] as const).map((value) => ({
+                value,
+                label: (
+                  <>
+                    {SCOPE_LABEL[value]}{" "}
+                    <span className="font-mono text-caption-2 opacity-70">{scopeCounts[value]}</span>
+                  </>
+                ),
+              }))}
+              size="small"
+              equalWidth={false}
+            />
+            <div className="ml-auto flex items-center gap-1.5">
+              <SegmentedControl
+                value={direction}
+                onChange={setDirection}
+                ariaLabel="Card direction"
+                options={[
+                  {
+                    value: "term",
+                    label: DIRECTION_LABEL.term,
+                    title: "Show the concept name and recall its mathematical content",
+                  },
+                  {
+                    value: "statement",
+                    label: DIRECTION_LABEL.statement,
+                    title: "Show the mathematical statement and recall its name",
+                  },
+                ]}
+                size="small"
+                equalWidth={false}
+              />
               <Chip variant="mono" active={builderOpen || scoped !== null} onClick={() => setBuilderOpen(true)}>
                 <SlidersHorizontal className="h-3 w-3" /> Deck
               </Chip>

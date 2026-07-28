@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/ui/cn";
 
 const searchVariants = cva(
-  "group/search inline-flex min-w-0 items-center gap-2 border text-foreground transition-[background-color,border-color,box-shadow] duration-[var(--duration-fast)] outline-none motion-reduce:transition-none",
+  "group/search inline-flex min-w-0 items-center gap-2 border text-foreground transition-[background-color,border-color,box-shadow] duration-[var(--duration-fast)] outline-none focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/35 motion-reduce:transition-none",
   {
     variants: {
       appearance: {

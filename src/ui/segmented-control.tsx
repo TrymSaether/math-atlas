@@ -59,6 +59,23 @@ export function SegmentedControl<T extends string>({
   itemClassName,
 }: SegmentedControlProps<T>) {
   const labelId = useId();
+  const enabledValues = options.filter((option) => !option.disabled).map((option) => option.value);
+
+  const selectFromKey = (current: T, key: string) => {
+    const currentIndex = enabledValues.indexOf(current);
+    if (currentIndex < 0) return;
+
+    let nextIndex: number | null = null;
+    if (key === "ArrowRight" || key === "ArrowDown") nextIndex = (currentIndex + 1) % enabledValues.length;
+    if (key === "ArrowLeft" || key === "ArrowUp") {
+      nextIndex = (currentIndex - 1 + enabledValues.length) % enabledValues.length;
+    }
+    if (key === "Home") nextIndex = 0;
+    if (key === "End") nextIndex = enabledValues.length - 1;
+
+    const next = nextIndex === null ? undefined : enabledValues[nextIndex];
+    if (next && next !== value) onChange(next);
+  };
 
   return (
     <div className={cn("min-w-0", label && "space-y-1.5")}>
@@ -79,7 +96,8 @@ export function SegmentedControl<T extends string>({
         orientation="horizontal"
         spacing={1}
         className={cn(
-          "isolate inline-grid w-fit items-stretch gap-px disabled:opacity-45",
+          "isolate w-fit items-stretch gap-px disabled:opacity-45",
+          equalWidth ? "inline-grid" : "inline-flex",
           APPEARANCE[appearance],
           className,
         )}
@@ -93,9 +111,7 @@ export function SegmentedControl<T extends string>({
             aria-label={option.ariaLabel}
             title={option.title}
             disabled={option.disabled}
-            onFocus={() => {
-              if (option.value !== value) onChange(option.value);
-            }}
+            onKeyDown={(event) => selectFromKey(option.value, event.key)}
             className={cn(
               "min-w-0 rounded-[5px] border border-transparent font-medium text-muted-foreground shadow-none transition-[background-color,border-color,color,box-shadow] duration-150",
               appearance === "capsule" && "rounded-full",

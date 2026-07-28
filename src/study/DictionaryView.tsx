@@ -1,5 +1,5 @@
 import { createElement, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, ArrowLeft, ChevronLeft, ChevronRight, FileText, GraduationCap, Search } from "lucide-react";
+import { ArrowUpRight, ArrowLeft, ChevronLeft, ChevronRight, FileText, GraduationCap } from "lucide-react";
 
 import { useStore } from "@/app/store";
 import type { AtlasMap } from "@/atlas/model";
@@ -26,6 +26,8 @@ import { hasNodeVisual } from "./concept/visualModel";
 import { useDrill, prerequisiteDeck } from "./drill";
 import type { ProgressStatus } from "@/progress/api";
 import { Chip } from "@/ui/chip";
+import { SearchField } from "@/ui/search-field";
+import { SegmentedControl } from "@/ui/segmented-control";
 import { useRegisterShellActions, type ShellAction } from "@/app/ShellActions";
 
 export function DictionaryView() {
@@ -197,21 +199,17 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
               </span>
             </div>
 
-            <div className="relative mt-3">
-              <Search
-                className="pointer-events-none absolute left-[9px] top-1/2 h-[13px] w-[13px] -translate-y-1/2 text-muted-foreground/70"
-                aria-hidden
-              />
-              <input
-                ref={searchRef}
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Filter this index…"
-                aria-label="Filter this index"
-                className="min-h-(--control-h-lg) w-full rounded-md border border-border bg-muted py-1.5 pl-7 pr-2.5 font-sans text-footnote text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-ring focus:bg-card"
-              />
-            </div>
+            <SearchField
+              ref={searchRef}
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              onClear={query ? () => setQuery("") : undefined}
+              placeholder="Filter this index…"
+              aria-label="Filter this index"
+              appearance="sidebar"
+              size="large"
+              className="mt-3 w-full"
+            />
 
             {domainCounts.length > 1 && (
               <div
@@ -262,15 +260,18 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
               <span className="mr-0.5 text-caption-2 font-semibold uppercase tracking-label-tight text-muted-foreground">
                 Sort
               </span>
-              <Chip size="xs" variant="mono" active={sortBy === "alpha"} onClick={() => setSortBy("alpha")}>
-                A–Z
-              </Chip>
-              <Chip size="xs" variant="label" active={sortBy === "section"} onClick={() => setSortBy("section")}>
-                {facet.mode === "chapter" ? "Chapter" : "Domain"}
-              </Chip>
-              <Chip size="xs" variant="label" active={sortBy === "kind"} onClick={() => setSortBy("kind")}>
-                Kind
-              </Chip>
+              <SegmentedControl
+                value={sortBy}
+                onChange={setSortBy}
+                ariaLabel="Sort dictionary"
+                options={[
+                  { value: "alpha", label: "A–Z" },
+                  { value: "section", label: facet.mode === "chapter" ? "Chapter" : "Domain" },
+                  { value: "kind", label: "Kind" },
+                ]}
+                size="mini"
+                equalWidth={false}
+              />
               <span aria-hidden className="mx-0.5 h-3.5 w-px bg-border" />
               <Chip size="xs" variant="label" active={learningOnly} onClick={() => setLearningOnly((v) => !v)}>
                 Learning
@@ -570,7 +571,11 @@ function compareEntries(a: GraphNode, b: GraphNode, sortBy: DictSortMode, facet:
     return order.indexOf(facet.valueOf(a)) - order.indexOf(facet.valueOf(b)) || alpha;
   }
   if (sortBy === "kind") {
-    return (KIND_ORDER[a.kind] ?? 99) - (KIND_ORDER[b.kind] ?? 99) || alpha;
+    return (
+      (KIND_ORDER[a.kind] ?? 99) - (KIND_ORDER[b.kind] ?? 99) ||
+      KIND_LABEL[a.kind].localeCompare(KIND_LABEL[b.kind], undefined, { sensitivity: "base" }) ||
+      alpha
+    );
   }
   return alpha;
 }
