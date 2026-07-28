@@ -256,8 +256,8 @@ function LoadedGraph({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   // resizing chrome does not make the graph jump beneath the learner.
   useEffect(() => {
     const onShellInsets = (event: Event) => {
-      const deltaLeft = (event as CustomEvent<{ deltaLeft: number }>).detail.deltaLeft;
-      if (!deltaLeft) return;
+      const { deltaLeft, deltaRight } = (event as CustomEvent<{ deltaLeft: number; deltaRight: number }>).detail;
+      if (!deltaLeft && !deltaRight) return;
       const current = reactFlow.getViewport();
       const nextX = current.x - deltaLeft;
       void reactFlow.setViewport({ ...current, x: nextX }, { duration: 0 });

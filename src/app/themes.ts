@@ -36,10 +36,10 @@ export const THEMES: ThemeDef[] = [
     scheme: "light",
     family: "slate",
     preview: {
-      bg: "#F8FAFC",
+      bg: "#F2F2F4",
       surface: "#FFFFFF",
-      ink: "#0F172A",
-      accent: "#2563EB",
+      ink: "#1D1D1F",
+      accent: "#007AFF",
     },
   },
   {
@@ -48,10 +48,10 @@ export const THEMES: ThemeDef[] = [
     scheme: "dark",
     family: "slate",
     preview: {
-      bg: "#0E1322",
-      surface: "#1F2740",
+      bg: "#1C1C1E",
+      surface: "#2C2C2E",
       ink: "#ECEEF4",
-      accent: "#58C4DD",
+      accent: "#0A84FF",
     },
   },
 ];

@@ -29,10 +29,8 @@ import { useMediaQuery } from "@/app/useMediaQuery";
 const USED_BY_INITIAL = 8;
 
 /**
- * The concept place-card — the deep-study surface. A left-docked thick-glass card
- * built on the shared `useConceptView` + concept/* renderers, presented as one
- * calm scroll: identity, statement, figure, the facet stack, proof, then
- * navigable relations.
+ * The concept inspector — a persistent utility panel for studying the selected
+ * graph object without making the graph itself stop being the primary canvas.
  */
 export function ConceptCard() {
   const mapId = useStore((s) => s.mapId);
@@ -49,12 +47,12 @@ export function ConceptCard() {
       {open && node && map && (
         <motion.aside
           key={node.id}
-          initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+          initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: 14 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
-          exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
+          exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: 14 }}
           transition={reduceMotion ? { duration: 0 } : spring.smooth}
-          data-shell-context-panel=""
-          className="ds-panel ds-panel--left"
+          data-shell-inspector=""
+          className="ds-panel ds-inspector"
         >
           <CardContent nodeId={node.id} />
         </motion.aside>
@@ -124,17 +122,18 @@ function CardContent({ nodeId }: { nodeId: string }) {
 
   return (
     <Surface
-      material="thick"
+      material="inspector"
+      specular={false}
       elevation="raised"
-      role="dialog"
+      role="complementary"
       aria-label={`${view.kindLabel}: ${node.label}`}
       className={cn(
-        "flex h-full flex-col transition-[width] duration-200 max-[820px]:w-full max-[820px]:rounded-[var(--radius-xl)]",
-        expanded ? "w-[min(580px,calc(100vw-24px))]" : "w-[min(400px,calc(100vw-24px))]",
+        "inspector-surface flex h-full flex-col transition-[width] duration-200 max-[820px]:w-full max-[820px]:rounded-[var(--radius-xl)]",
+        expanded ? "w-[min(560px,calc(100vw-24px))]" : "w-[min(380px,calc(100vw-24px))]",
       )}
     >
       <header className="shrink-0">
-        <div className="flex min-h-11 items-center justify-between gap-3 px-3 pt-2 pb-1">
+        <div className="inspector-toolbar flex min-h-11 items-center justify-between gap-3 border-b border-border/70 px-3 py-2">
           <div className="inline-flex items-center gap-0.5">
             <Button
               variant="ghost"

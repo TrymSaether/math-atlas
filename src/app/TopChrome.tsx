@@ -183,7 +183,8 @@ function FieldMenu() {
 
       {open && (
         <Surface
-          material="thick"
+          material="popover"
+          specular={false}
           elevation="overlay"
           className="
             shell-field-popover shell-popover-present
@@ -309,6 +310,7 @@ function SurfaceNav({ mobile = false }: { mobile?: boolean }) {
         title: label,
       }))}
       size={mobile ? "large" : "regular"}
+      appearance={mobile ? "capsule" : "toolbar"}
       className="w-full"
       itemClassName={cn("gap-1.5", mobile && "flex-col gap-0.5 px-1 text-caption-2")}
     />
@@ -597,7 +599,7 @@ export function TopChrome() {
   return (
     <>
       <header className="shell-topbar" aria-label="Math Atlas">
-        <Surface material="regular" className="shell-top-surface">
+        <Surface material="toolbar" specular={false} className="shell-top-surface">
           <div className="shell-leading">
             <Brand />
 
@@ -607,14 +609,12 @@ export function TopChrome() {
           </div>
 
           <div className="shell-search">
-            <PaletteSearchButton compact />
+            <PaletteSearchButton />
           </div>
 
           <div className="shell-right">
             <div className="shell-desktop-nav">
-              <Surface material="ultrathin" specular={false} className="rounded-full p-0.5 shadow-none">
-                <SurfaceNav />
-              </Surface>
+              <SurfaceNav />
             </div>
 
             <div className="shell-trailing">
@@ -632,7 +632,7 @@ export function TopChrome() {
       </header>
 
       <nav className="shell-mobile-nav" aria-label="Product navigation">
-        <Surface material="regular">
+        <Surface material="toolbar" specular={false}>
           <SurfaceNav mobile />
         </Surface>
       </nav>

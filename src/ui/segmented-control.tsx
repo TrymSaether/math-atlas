@@ -9,6 +9,7 @@ export interface SegmentOption<T extends string> {
   ariaLabel?: string;
   icon?: ReactNode;
   title?: string;
+  disabled?: boolean;
 }
 
 type AccessibleName = { label: string; ariaLabel?: never } | { label?: never; ariaLabel: string };
@@ -17,15 +18,25 @@ type SegmentedControlProps<T extends string> = AccessibleName & {
   value: T;
   options: ReadonlyArray<SegmentOption<T>>;
   onChange: (value: T) => void;
-  size?: "small" | "regular" | "large";
+  size?: "mini" | "small" | "regular" | "large";
+  appearance?: "standard" | "toolbar" | "capsule";
+  equalWidth?: boolean;
+  disabled?: boolean;
   className?: string;
   itemClassName?: string;
 };
 
 const SIZE = {
-  small: "h-8 px-2.5 text-caption-1",
-  regular: "h-9 px-3 text-footnote",
-  large: "h-11 px-3 text-footnote",
+  mini: "h-(--control-h-mini) px-1.5 text-caption-2",
+  small: "h-(--control-h-sm) px-2 text-caption-1",
+  regular: "h-(--control-h-md) px-2.5 text-footnote",
+  large: "h-(--control-h-lg) px-3 text-subhead",
+} as const;
+
+const APPEARANCE = {
+  standard: "rounded-[8px] border border-border/70 bg-secondary p-0.5 shadow-[inset_0_0.5px_rgb(0_0_0/0.08)]",
+  toolbar: "rounded-[7px] border border-border/60 bg-background/55 p-0.5 shadow-[inset_0_0.5px_rgb(0_0_0/0.1)]",
+  capsule: "rounded-full border border-border/60 bg-secondary p-0.5",
 } as const;
 
 /**
@@ -41,6 +52,9 @@ export function SegmentedControl<T extends string>({
   options,
   onChange,
   size = "regular",
+  appearance = "standard",
+  equalWidth = true,
+  disabled = false,
   className,
   itemClassName,
 }: SegmentedControlProps<T>) {
@@ -65,10 +79,12 @@ export function SegmentedControl<T extends string>({
         orientation="horizontal"
         spacing={1}
         className={cn(
-          "isolate inline-grid w-fit items-stretch gap-px rounded-[10px] border border-border/70 bg-muted/85 p-[3px] shadow-[inset_0_0.5px_0_rgb(255_255_255/0.2)]",
+          "isolate inline-grid w-fit items-stretch gap-px disabled:opacity-45",
+          APPEARANCE[appearance],
           className,
         )}
-        style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}
+        style={{ gridTemplateColumns: equalWidth ? `repeat(${options.length}, minmax(0, 1fr))` : undefined }}
+        disabled={disabled}
       >
         {options.map((option) => (
           <ToggleGroupItem
@@ -76,11 +92,13 @@ export function SegmentedControl<T extends string>({
             value={option.value}
             aria-label={option.ariaLabel}
             title={option.title}
+            disabled={option.disabled}
             onFocus={() => {
               if (option.value !== value) onChange(option.value);
             }}
             className={cn(
-              "min-w-0 rounded-[7px] border border-transparent font-medium text-muted-foreground shadow-none transition-[background-color,border-color,color,box-shadow] duration-150",
+              "min-w-0 rounded-[5px] border border-transparent font-medium text-muted-foreground shadow-none transition-[background-color,border-color,color,box-shadow] duration-150",
+              appearance === "capsule" && "rounded-full",
               "hover:bg-card/45 hover:text-foreground",
               "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-1 focus-visible:ring-offset-muted",
               "data-[state=on]:border-border/70 data-[state=on]:bg-card data-[state=on]:text-foreground data-[state=on]:shadow-[0_1px_2px_rgb(0_0_0/0.12),0_0_0_0.5px_rgb(255_255_255/0.18)_inset]",

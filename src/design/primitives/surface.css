@@ -81,10 +81,57 @@
     box-shadow: var(--surface-shadow);
   }
 
+  .surface--content,
+  .surface--toolbar,
+  .surface--sidebar,
+  .surface--inspector,
+  .surface--popover {
+    border-color: var(--material-stroke);
+    -webkit-backdrop-filter: blur(28px) saturate(145%);
+    backdrop-filter: blur(28px) saturate(145%);
+  }
+
+  .surface--content {
+    background: var(--material-content-fill);
+    box-shadow: var(--surface-shadow);
+  }
+
+  .surface--toolbar {
+    background: var(--material-toolbar-fill);
+    box-shadow: var(--material-toolbar-shadow);
+  }
+
+  .surface--sidebar {
+    background: var(--material-sidebar-fill);
+    box-shadow: none;
+  }
+
+  .surface--inspector {
+    background: var(--material-inspector-fill);
+    box-shadow: var(--material-panel-shadow);
+  }
+
+  .surface--inspector.surface--elevation-raised {
+    box-shadow: var(--material-panel-shadow);
+  }
+
+  .surface--popover {
+    background: var(--material-popover-fill);
+    box-shadow: var(--glass-shadow-overlay);
+  }
+
   /*
    * Standard content surfaces should not receive the glass reflection.
    */
   .surface--chrome::before {
+    content: none;
+  }
+
+  .surface--content::before,
+  .surface--toolbar::before,
+  .surface--sidebar::before,
+  .surface--inspector::before,
+  .surface--popover::before {
     content: none;
   }
 
@@ -133,6 +180,15 @@
     .surface--thick {
       background: var(--card);
 
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .surface--content,
+    .surface--toolbar,
+    .surface--sidebar,
+    .surface--inspector,
+    .surface--popover {
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }

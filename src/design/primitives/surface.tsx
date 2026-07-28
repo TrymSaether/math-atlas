@@ -22,6 +22,11 @@ const surfaceVariants = cva("surface", {
       regular: "surface--regular",
       thick: "surface--thick",
       chrome: "surface--chrome",
+      content: "surface--content",
+      toolbar: "surface--toolbar",
+      sidebar: "surface--sidebar",
+      inspector: "surface--inspector",
+      popover: "surface--popover",
     },
     specular: {
       true: "",

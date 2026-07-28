@@ -31,22 +31,37 @@ directory plus `src/index.css` is now the entire styling layer.
 This is the Tailwind v4 + shadcn convention. `bg-background`, `text-muted-foreground`,
 `border-border`, `rounded-lg`, `text-title-2` etc. all flow from here.
 
-## Glass
+## Materials
 
-`<Surface material="…">` is the single liquid-glass primitive. Material tiers and
-their intended surfaces (from the ratified visual bar):
+`<Surface material="…">` is the shared material primitive. Prefer semantic
+materials for application structure and optical tiers for small transient layers:
 
-| material    | use                                 |
-| ----------- | ----------------------------------- |
-| `ultrathin` | tooltips, transient HUD             |
-| `thin`      | sidebars                            |
-| `regular`   | toolbars, control panels            |
-| `thick`     | command palette, dialogs/sheets     |
-| `chrome`    | graph nodes (near-solid, not glass) |
+| material    | use                                      |
+| ----------- | ---------------------------------------- |
+| `content`   | page and workspace backgrounds           |
+| `toolbar`   | unified application toolbar               |
+| `sidebar`   | composed navigation sidebars              |
+| `inspector` | concept and object inspectors              |
+| `popover`   | menus, pickers, and transient panels       |
+| `ultrathin` | tooltips and transient HUD                 |
+| `thin`      | lightweight compatibility surfaces        |
+| `regular`   | floating control panels                    |
+| `thick`     | dialogs and sheets                         |
+| `chrome`    | graph nodes (near-solid, not translucent)  |
 
 - `reactive` makes the specular highlight follow the pointer (cheap, all browsers).
 - `GlassFilter` + `supportsDisplacement()` add Apple's refraction on **Chromium
   only**, for one or two hero surfaces — never across the canvas.
+
+## Controls
+
+- `Button` implements primary, bordered, tinted, plain, borderless, and
+  destructive families in mini, small, regular, and large sizes. Compatibility
+  aliases remain available while callers migrate.
+- `SegmentedControl` implements standard, toolbar, and capsule appearances in
+  every size, including disabled controls and disabled options.
+- `SearchField` and `SearchTrigger` implement toolbar, sidebar, and content
+  appearances in small, regular, and large sizes.
 
 ## Motion
 

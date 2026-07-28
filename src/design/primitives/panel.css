@@ -19,6 +19,20 @@
   transition: left var(--duration-base, 200ms) var(--ease-apple, ease);
 }
 
+.ds-inspector {
+  position: absolute;
+  top: var(--shell-dock-top, 64px);
+  right: var(--shell-edge, 10px);
+  bottom: var(--shell-content-bottom, 10px);
+  z-index: var(--z-shell, 20);
+  pointer-events: auto;
+}
+
+.ds-inspector > .surface {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
 @media (max-width: 820px) {
   .ds-panel--left {
     right: var(--shell-edge, 10px);
@@ -31,11 +45,42 @@
     pointer-events: none;
   }
 
+  .ds-inspector {
+    right: var(--shell-edge, 10px);
+    left: var(--shell-edge, 10px);
+    top: max(var(--shell-dock-top, 58px), 18dvh);
+    bottom: var(--shell-content-bottom, 74px);
+    display: flex;
+    align-items: flex-end;
+    width: auto;
+    z-index: var(--z-popover, 30);
+    pointer-events: none;
+  }
+
+  .ds-inspector > .surface {
+    pointer-events: auto;
+    border-radius: var(--radius-xl);
+  }
+
   .ds-panel--left > .surface {
     pointer-events: auto;
   }
 
   .ds-panel--left::after {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    z-index: 2;
+    width: 34px;
+    height: 4px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--muted-foreground) 38%, transparent);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .ds-inspector::after {
     content: "";
     position: absolute;
     top: 7px;
