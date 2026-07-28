@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 
+import { SegmentedControl } from "@/ui/segmented-control";
+
 import {
   Arrow,
   DIA,
@@ -13,7 +15,6 @@ import {
   Point,
   STROKE,
   Text,
-  UI,
   type Vec2,
 } from "./FigureFrame";
 import type { FigureProps } from "./types";
@@ -155,33 +156,14 @@ function Control({
   onChange: (choice: Choice) => void;
 }) {
   return (
-    <div
-      role="radiogroup"
-      aria-label="Figure case"
-      className="mt-2.5 inline-flex flex-wrap gap-1 rounded-md border p-0.5"
-      style={{ borderColor: UI.border, background: UI.panel }}
-    >
-      {choices.map((choice) => {
-        const active = choice === value;
-        return (
-          <button
-            key={choice}
-            type="button"
-            role="radio"
-            aria-checked={active}
-            onClick={() => onChange(choice)}
-            className="rounded-sm px-2.5 py-1 text-caption-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-(--focus-ring) focus-visible:ring-offset-1 focus-visible:ring-offset-(--figure-bg)"
-            style={{
-              background: active ? DIA.accent : "transparent",
-              color: active ? UI.onColor : UI.text,
-              fontWeight: active ? 600 : 400,
-            }}
-          >
-            {labels[choice]}
-          </button>
-        );
-      })}
-    </div>
+    <SegmentedControl
+      value={value}
+      options={choices.map((choice) => ({ value: choice, label: labels[choice] }))}
+      onChange={onChange}
+      ariaLabel="Figure case"
+      size="small"
+      className="mt-2.5"
+    />
   );
 }
 

@@ -36,7 +36,7 @@ import { Surface } from "@/design";
 import { ConfirmDialog } from "@/ui/ConfirmDialog";
 import { Button } from "@/ui/button";
 import { cn } from "@/ui/cn";
-import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
+import { SegmentedControl } from "@/ui/segmented-control";
 
 import "./shell.css";
 
@@ -298,38 +298,20 @@ function SurfaceNav({ mobile = false }: { mobile?: boolean }) {
   const setSurface = useStore((state) => state.setSurface);
 
   return (
-    <ToggleGroup
-      type="single"
+    <SegmentedControl
       value={surface}
-      onValueChange={(value) => {
-        if (value) setSurface(value as SurfaceId);
-      }}
-      aria-label="Product navigation"
-      className={cn("gap-0.5 rounded-full", mobile && "grid w-full grid-cols-4")}
-    >
-      {SURFACES.map(({ id, label, Icon }) => (
-        <ToggleGroupItem
-          key={id}
-          value={id}
-          title={label}
-          className={cn(
-            `
-              h-10 gap-1.5 rounded-full px-3
-              text-footnote font-medium text-muted-foreground
-              transition-[color,background-color,box-shadow]
-              hover:bg-accent hover:text-foreground
-              data-[state=on]:bg-card
-              data-[state=on]:text-foreground
-              data-[state=on]:shadow-sm
-            `,
-            mobile && "h-11 flex-col gap-0.5 px-1 text-caption-2",
-          )}
-        >
-          <Icon className="size-4.5 shrink-0" />
-          <span className={mobile ? "" : "shell-nav-label"}>{label}</span>
-        </ToggleGroupItem>
-      ))}
-    </ToggleGroup>
+      onChange={(value) => setSurface(value)}
+      ariaLabel="Product navigation"
+      options={SURFACES.map(({ id, label, Icon }) => ({
+        value: id,
+        label: <span className={mobile ? "" : "shell-nav-label"}>{label}</span>,
+        icon: <Icon className="size-4.5 shrink-0" />,
+        title: label,
+      }))}
+      size={mobile ? "large" : "regular"}
+      className="w-full"
+      itemClassName={cn("gap-1.5", mobile && "flex-col gap-0.5 px-1 text-caption-2")}
+    />
   );
 }
 

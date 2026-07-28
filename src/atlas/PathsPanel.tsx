@@ -7,7 +7,7 @@ import { MathText } from "@/math/MathText";
 import { getDomainTone } from "./colors";
 import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
-import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
+import { SegmentedControl } from "@/ui/segmented-control";
 import { Switch } from "@/ui/switch";
 import { spring, Surface } from "@/design";
 import { useMediaQuery } from "@/app/useMediaQuery";
@@ -131,30 +131,16 @@ export function PathsPanel() {
         </div>
 
         <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pt-1 pb-4">
-          <div className="space-y-1.5">
-            <span className="text-caption text-muted-foreground">Route kind</span>
-            <ToggleGroup
-              type="single"
-              value={routeKind}
-              onValueChange={(v) => v && setRouteKind(v as typeof routeKind)}
-              className="w-full gap-0.5 rounded-full bg-muted p-0.5"
-            >
-              <ToggleGroupItem
-                value="prereq"
-                className="h-9 flex-1 gap-1.5 rounded-none text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
-                style={{ borderRadius: "18px 0 0 18px" }}
-              >
-                <Network className="size-4" /> Prerequisites
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="path"
-                className="h-9 flex-1 gap-1.5 rounded-none text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
-                style={{ borderRadius: "0 18px 18px 0" }}
-              >
-                <Route className="size-4" /> Between two
-              </ToggleGroupItem>
-            </ToggleGroup>
-          </div>
+          <SegmentedControl
+            label="Route kind"
+            value={routeKind}
+            onChange={(value) => setRouteKind(value)}
+            options={[
+              { value: "prereq", label: "Prerequisites", icon: <Network className="size-4" /> },
+              { value: "path", label: "Between two", icon: <Route className="size-4" /> },
+            ]}
+            className="w-full"
+          />
 
           <div className="relative overflow-hidden rounded-md bg-muted">
             {isPath && (

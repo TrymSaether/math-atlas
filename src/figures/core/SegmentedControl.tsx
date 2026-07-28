@@ -1,5 +1,5 @@
 import { MathText } from "@/math/MathText";
-import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
+import { SegmentedControl as BaseSegmentedControl } from "@/ui/segmented-control";
 
 export interface SegmentOption<T extends string> {
   value: T;
@@ -25,22 +25,16 @@ export function SegmentedControl<T extends string>({
   ariaLabel: string;
 }) {
   return (
-    <ToggleGroup
-      type="single"
+    <BaseSegmentedControl
       value={value}
-      onValueChange={(v) => v && onChange(v as T)}
-      aria-label={ariaLabel}
-      className="mt-2.5 w-full gap-0.5 rounded-lg bg-muted p-0.5"
-    >
-      {options.map((opt) => (
-        <ToggleGroupItem
-          key={opt.value}
-          value={opt.value}
-          className="h-8 flex-1 rounded-md text-caption data-[state=on]:bg-card data-[state=on]:text-foreground data-[state=on]:shadow-sm"
-        >
-          <MathText text={opt.label} />
-        </ToggleGroupItem>
-      ))}
-    </ToggleGroup>
+      options={options.map((option) => ({
+        value: option.value,
+        label: <MathText text={option.label} />,
+      }))}
+      onChange={onChange}
+      ariaLabel={ariaLabel}
+      size="small"
+      className="mt-2.5 w-full"
+    />
   );
 }

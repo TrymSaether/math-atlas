@@ -6,7 +6,7 @@ import { KIND_LABEL, type NodeKind } from "@/maps/types";
 import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
 import { Switch } from "@/ui/switch";
-import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
+import { SegmentedControl } from "@/ui/segmented-control";
 import { Surface } from "@/design";
 
 /** A filter pill with an active (brand-tinted) state and an optional tone dot. */
@@ -48,44 +48,6 @@ function SwitchRow({ label, checked, onToggle }: { label: string; checked: boole
       <span>{label}</span>
       <Switch checked={checked} onCheckedChange={() => onToggle()} />
     </label>
-  );
-}
-
-/** A full-width segmented control built on shadcn ToggleGroup. */
-function Segmented({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  options: readonly { id: string; label: string }[];
-}) {
-  return (
-    <div className="space-y-1.5">
-      <span className="text-caption text-muted-foreground">{label}</span>
-      <ToggleGroup
-        type="single"
-        value={value}
-        onValueChange={(v) => v && onChange(v)}
-        className="w-full gap-0.5 rounded-full bg-muted p-0.5"
-      >
-        {options.map((option, index) => (
-          <ToggleGroupItem
-            key={option.id}
-            value={option.id}
-            className="flex-1 rounded-none text-footnote data-[state=on]:bg-card data-[state=on]:shadow-sm"
-            style={{
-              borderRadius: index === 0 ? "18px 0 0 18px" : index === options.length - 1 ? "0 18px 18px 0" : undefined,
-            }}
-          >
-            {option.label}
-          </ToggleGroupItem>
-        ))}
-      </ToggleGroup>
-    </div>
   );
 }
 
@@ -192,14 +154,15 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
           <span className="block text-caption-2 font-semibold tracking-label-tight text-muted-foreground uppercase">
             Display
           </span>
-          <Segmented
+          <SegmentedControl
             label="Layout"
             value={view}
             onChange={(v) => setView(v as typeof view)}
             options={[
-              { id: "dependency", label: "Dependency" },
-              { id: "cluster", label: "Cluster" },
+              { value: "dependency", label: "Dependency" },
+              { value: "cluster", label: "Cluster" },
             ]}
+            className="w-full"
           />
           <div className="rounded-md bg-muted/60 px-3 py-0.5">
             <SwitchRow label="Domain regions" checked={showRegions} onToggle={toggleRegions} />
@@ -214,15 +177,16 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
             <SwitchRow label="Focus neighborhood" checked={focusMode} onToggle={toggleFocusMode} />
           </div>
           {focusMode && (
-            <Segmented
+            <SegmentedControl
               label="Focus depth"
               value={String(focusDepth)}
               onChange={(v) => setFocusDepth(Number(v))}
               options={[
-                { id: "1", label: "1 hop" },
-                { id: "2", label: "2 hops" },
-                { id: "3", label: "3 hops" },
+                { value: "1", label: "1 hop" },
+                { value: "2", label: "2 hops" },
+                { value: "3", label: "3 hops" },
               ]}
+              className="w-full"
             />
           )}
         </section>

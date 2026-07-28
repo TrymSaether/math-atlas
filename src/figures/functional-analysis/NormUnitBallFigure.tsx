@@ -1,6 +1,7 @@
-import { useMemo, useState, type CSSProperties } from "react";
+import { useMemo, useState } from "react";
 
 import { MathText } from "@/math/MathText";
+import { SegmentedControl } from "@/ui/segmented-control";
 import { Slider } from "@/ui/slider";
 import {
   Circle,
@@ -127,58 +128,34 @@ function NormModeSelect({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <div
-        role="radiogroup"
-        aria-label="Norm type"
-        className="inline-flex w-fit flex-wrap gap-1 rounded-md border p-1"
-        style={{ borderColor: UI.border, background: UI.panel }}
-      >
-        {MODES.map((mode) => {
-          const active = mode.kind === value;
-          return (
-            <div
-              key={mode.kind}
-              role="radio"
-              aria-checked={active}
-              aria-label={mode.aria}
-              tabIndex={0}
-              onClick={() => onChange(mode.kind)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  onChange(mode.kind);
-                }
-              }}
-              className="flex min-h-8 cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-caption-1 transition-colors focus:outline-none focus:ring-2 focus:ring-(--accent-border)"
-              style={{
-                background: active ? DIA.accent : "transparent",
-                color: active ? UI.onColor : UI.text,
-                fontWeight: active ? 600 : 400,
-              }}
-            >
-              <span className="shrink-0">
-                <MathText text={mode.label} />
-              </span>
-              {mode.kind === "lp" && active && (
-                <>
-                  <Slider
-                    min={P_MIN}
-                    max={P_MAX}
-                    step={P_STEP}
-                    value={[p]}
-                    onPointerDown={(event) => event.stopPropagation()}
-                    onValueChange={(v) => onPChange(v[0])}
-                    className="w-20"
-                    aria-label="Tunable lp exponent"
-                    style={{ "--primary": UI.onColor } as CSSProperties}
-                  />
-                  <span className="min-w-7 text-right tabular-nums">{formatCoord(p)}</span>
-                </>
-              )}
-            </div>
-          );
-        })}
-      </div>
+      <SegmentedControl
+        value={value}
+        options={MODES.map((mode) => ({
+          value: mode.kind,
+          label: <MathText text={mode.label} />,
+          ariaLabel: mode.aria,
+        }))}
+        onChange={onChange}
+        ariaLabel="Norm type"
+        size="small"
+      />
+      {value === "lp" && (
+        <div className="flex max-w-sm items-center gap-3 rounded-[10px] border border-border/70 bg-muted/55 px-3 py-2">
+          <span className="shrink-0 text-caption-1 text-muted-foreground">
+            Exponent <MathText text="$p$" />
+          </span>
+          <Slider
+            min={P_MIN}
+            max={P_MAX}
+            step={P_STEP}
+            value={[p]}
+            onValueChange={(next) => onPChange(next[0])}
+            className="min-w-24 flex-1"
+            aria-label="Tunable lp exponent"
+          />
+          <span className="min-w-7 text-right text-caption-1 text-foreground tabular-nums">{formatCoord(p)}</span>
+        </div>
+      )}
     </div>
   );
 }
