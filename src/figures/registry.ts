@@ -102,6 +102,15 @@ export const FIGURE_REGISTRY: Record<string, FigureComponent> = {
   pointwise_bounded_family_assumption: lazy(() => import("./functional-analysis/UniformBoundednessFigure")),
   bounded_operators_banach_space: lazy(() => import("./functional-analysis/UniformBoundednessFigure")),
 
+  // Order relations: full directed relation and its Hasse reduction.
+  partially_ordered_set: lazy(() => import("./topology/PartiallyOrderedSetFigure")),
+
+  // Point-set topology: separation, connectedness, paths, and quotient gluing.
+  connectedness: lazy(() => import("./topology/ConnectednessFigure")),
+  path_connectedness: lazy(() => import("./topology/ConnectednessFigure")),
+  hausdorff_property: lazy(() => import("./topology/HausdorffFigure")),
+  quotient_topology: lazy(() => import("./topology/QuotientTopologyFigure")),
+
   // --- Exercises & exam problems: reuse the figure that best illustrates them ---
   // Fourier-series waveforms (triangle / sawtooth / square + partial sums).
   exam2025_p1a: lazy(() => import("./fourier/SeriesFigure")),

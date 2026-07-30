@@ -132,15 +132,25 @@
       "domain": "foundations",
       "label": "Axiom of Choice",
       "content": {
-        "statement": "Every family of nonempty sets admits a choice function.",
-        "intuition": "A global choice principle enabling maximal-object arguments.",
-        "notation": []
+        "statement": "Every indexed family of nonempty sets admits a choice function.",
+        "definition": "Let $I$ be a set and let $(A_i)_{i\\in I}$ be a family of sets such that $A_i\\neq\\varnothing$ for every $i\\in I$. The Axiom of Choice asserts that there exists a function $f:I\\to\\bigcup_{i\\in I}A_i$ such that $f(i)\\in A_i$ for every $i\\in I$.",
+        "formal": "$$\\left[(\\forall i\\in I)\\,A_i\\neq\\varnothing\\right]\\Longrightarrow\\left[(\\exists f:I\\to\\bigcup_{i\\in I}A_i)(\\forall i\\in I)\\,f(i)\\in A_i\\right].$$",
+        "formula": "$$\\left[(\\forall i\\in I)\\,A_i\\neq\\varnothing\\right]\\Longrightarrow\\prod_{i\\in I}A_i\\neq\\varnothing.$$",
+        "intuition": "One may select one element from every set in an arbitrary family, even when no explicit or canonical selection rule is available.",
+        "gloss": "Every family of nonempty sets has a simultaneous selection.",
+        "notation": [
+          "$(A_i)_{i\\in I}$",
+          "$f(i)\\in A_i$",
+          "$\\prod_{i\\in I}A_i\\neq\\varnothing$"
+        ]
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
       "tags": [
-        "foundations"
+        "choice-function",
+        "foundations",
+        "set-theory"
       ],
-      "priority": "standard"
+      "priority": "core"
     },
     {
       "id": "bounded_function_on_domain",
@@ -1221,6 +1231,43 @@
       "priority": "core"
     },
     {
+      "id": "convex_set",
+      "kind": "definition",
+      "domain": "spaces_norms",
+      "label": "Convex set",
+      "content": {
+        "statement": "A subset of a vector space is convex if it contains the line segment joining every pair of its points.",
+        "definition": "Let $X$ be a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and let $C\\subseteq X$. The set $C$ is convex if every convex combination of two points of $C$ belongs to $C$.",
+        "formal": "$$C\\text{ is convex}\\iff(\\forall x,y\\in C)(\\forall\\lambda\\in[0,1])\\;\\lambda x+(1-\\lambda)y\\in C.$$",
+        "formula": "$$[x,y]=\\{\\lambda x+(1-\\lambda)y:\\lambda\\in[0,1]\\}\\subseteq C.$$",
+        "intuition": "Every line segment between two points of the set remains entirely inside the set.",
+        "gloss": "A subset containing every line segment between its points.",
+        "notation": [
+          "$C\\subseteq X$",
+          "$\\lambda x+(1-\\lambda)y$",
+          "$[x,y]$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "Every vector subspace and every norm ball are convex."
+        },
+        {
+          "content": "The unit circle $\\{x\\in\\mathbb R^2:\\|x\\|=1\\}$ is not convex."
+        }
+      ],
+      "assumptions": [
+        "$X$ is a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
+        "$C\\subseteq X$."
+      ],
+      "tags": [
+        "convexity",
+        "geometry",
+        "vector-space"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "equivalent_norms",
       "kind": "definition",
       "domain": "spaces_norms",
@@ -2282,11 +2329,6 @@
       "kind": "theorem",
       "domain": "duality_weak_topologies",
       "label": "Canonical embedding is isometric",
-      "assumptions": [
-        "$X$ is a normed vector space.",
-        "$X^*$ is the continuous dual of $X$.",
-        "$X^{**}$ is the bidual of $X$."
-      ],
       "content": {
         "statement": "Every normed space embeds linearly and isometrically into its bidual.",
         "formal": "For $x\\in X$, define $Jx\\in X^{**}$ by $(Jx)(f)=f(x)$. Then $$\\|Jx\\|_{X^{**}}=\\sup_{\\|f\\|_{X^*}\\leq1}|f(x)|=\\|x\\|_X.$$",
@@ -2296,6 +2338,11 @@
           "$(Jx)(f)=f(x)$"
         ]
       },
+      "assumptions": [
+        "$X$ is a normed vector space.",
+        "$X^*$ is the continuous dual of $X$.",
+        "$X^{**}$ is the bidual of $X$."
+      ],
       "proof": {
         "steps": [
           {
@@ -2333,16 +2380,16 @@
       "kind": "theorem",
       "domain": "duality_weak_topologies",
       "label": "Closed convex sets are weakly closed",
-      "assumptions": [
-        "$X$ is a locally convex space.",
-        "$C\\subset X$ is a convex set."
-      ],
       "content": {
         "statement": "A norm-closed convex subset of a locally convex space is closed for the weak topology induced by its continuous dual.",
         "formal": "$$C\\text{ convex and closed}\\Longrightarrow C\\text{ is }\\sigma(X,X^*)\\text{-closed}.$$",
         "intuition": "Continuous linear functionals separate every exterior point, so weak limits cannot escape a closed convex set.",
         "notation": []
       },
+      "assumptions": [
+        "$X$ is a locally convex space.",
+        "$C\\subset X$ is a convex set."
+      ],
       "proof": {
         "steps": [
           {
@@ -2641,15 +2688,15 @@
       "kind": "theorem",
       "domain": "duality_weak_topologies",
       "label": "Sequential criterion for reflexivity",
-      "assumptions": [
-        "$X$ is a Banach space."
-      ],
       "content": {
         "statement": "A Banach space is reflexive if and only if every bounded sequence has a weakly convergent subsequence.",
         "formal": "$$X\\text{ reflexive}\\iff \\text{every bounded sequence in }X\\text{ has a weakly convergent subsequence}.$$",
         "intuition": "Reflexivity turns norm-bounded sets into weakly compact sets, and weak compactness can be read sequentially.",
         "notation": []
       },
+      "assumptions": [
+        "$X$ is a Banach space."
+      ],
       "proof": {
         "steps": [
           {
@@ -4292,35 +4339,42 @@
       "domain": "order_theory",
       "label": "Partially Ordered Set",
       "content": {
-        "statement": "A partially ordered set, or poset, is a set equipped with a partial order.",
-        "definition": "A partially ordered set is a pair $(P,\\preceq)$ where $P$ is a set and $\\preceq$ is a relation on $P$ that is reflexive, antisymmetric, and transitive.",
-        "formal": "A pair $(P,\\preceq)$ is a partially ordered set iff $\\preceq\\subseteq P\\times P$ and, for all $a,b,c\\in P$: (i) $a\\preceq a$; (ii) if $a\\preceq b$ and $b\\preceq a$, then $a=b$; and (iii) if $a\\preceq b$ and $b\\preceq c$, then $a\\preceq c$.",
-        "intuition": "A poset is a universe where some objects can be compared by size, inclusion, extension, strength, or information content, but not every pair must be comparable. In Hahn-Banach, admissible extensions are ordered by extension: one object is larger if it is defined on a larger subspace and agrees with the smaller one.",
+        "statement": "A partially ordered set is a set equipped with a reflexive, antisymmetric, and transitive binary relation.",
+        "definition": "A partially ordered set, or poset, is an ordered pair $(P,\\leq)$, where $P$ is a set and $\\leq\\,\\subseteq P\\times P$ is a binary relation satisfying reflexivity, antisymmetry, and transitivity.",
+        "formal": "Let $P$ be a set and let $\\leq\\,\\subseteq P\\times P$. Then $(P,\\leq)$ is a partially ordered set if and only if $(\\forall x\\in P)(x\\leq x)$, $(\\forall x,y\\in P)(((x\\leq y)\\land(y\\leq x))\\Rightarrow x=y)$, and $(\\forall x,y,z\\in P)(((x\\leq y)\\land(y\\leq z))\\Rightarrow x\\leq z)$.",
+        "formula": "$$\\operatorname{Poset}(P,\\leq)\\iff$$ $$\\begin{aligned}&x\\leq x &&\\text{(Reflexivity)}\\\\&(x\\leq y)\\land(y\\leq x) \\Rightarrow x=y &&\\text{(Antisymmetry)}\\\\&(x\\leq y)\\land(y\\leq z)\\Rightarrow x\\leq z &&\\text{(Transitivity)}\\end{aligned}$$",
+        "intuition": "A partial order provides a consistent notion of one object lying below, preceding, being contained in, or carrying no more information than another. Unlike a total order, it does not require every pair of elements to be comparable. Thus a poset describes a branching hierarchy rather than necessarily a single linear arrangement.",
         "notation": [
-          "$(P,\\preceq)$",
           "$(P,\\leq)$",
-          "$a\\preceq b$"
+          "$(P,\\preceq)$",
+          "$x\\leq y$",
+          "$x<y\\iff x\\leq y\\land x\\neq y$",
+          "$x\\parallel y\\iff \\neg(x\\leq y)\\land\\neg(y\\leq x)$"
         ]
       },
       "examples": [
         {
-          "content": "$(\\mathcal P(S),\\subseteq)$ is a partially ordered set: every subset is contained in itself, mutual containment gives equality, and containment is transitive."
+          "content": "For any set $X$, the power set $(\\mathcal P(X),\\subseteq)$ is a poset. Set inclusion is reflexive, antisymmetric, and transitive, while two subsets may be incomparable."
         },
         {
-          "content": "In Hahn-Banach arguments, admissible extensions can be ordered by extension: $(M,f)\\preceq(N,g)$ iff $M\\subseteq N$ and $g|_M=f$."
+          "content": "The positive integers ordered by divisibility form the poset $(\\mathbb N_{>0},\\mid)$, where $m\\mid n$ means that there exists $k\\in\\mathbb N_{>0}$ such that $n=mk$."
         }
       ],
-      "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
       "source": {
-        "citation": "Bowers-Kalton, Definition 3.1",
-        "references": []
+        "citation": "Standard definition in order theory",
+        "references": [
+          "Partial order",
+          "Preorder",
+          "Total order",
+          "Hasse diagram"
+        ]
       },
       "tags": [
-        "foundations",
-        "hahn-banach",
+        "binary-relation",
+        "foundational",
         "order-theory",
-        "poset",
-        "zorns-lemma"
+        "partial-order",
+        "poset"
       ],
       "priority": "core"
     },
@@ -4901,6 +4955,11 @@
     {
       "source": "convergence",
       "target": "topology_induced_by_metric",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "convex_set",
+      "target": "vector_space",
       "relation": "defined_in_terms_of"
     },
     {

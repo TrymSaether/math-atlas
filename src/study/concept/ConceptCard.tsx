@@ -18,6 +18,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useStore } from "@/app/store";
+import type { AtlasMap } from "@/atlas/model";
+import type { MapId } from "@/maps";
+import type { GraphNode } from "@/maps/types";
 import { useConceptView } from "./view";
 import { ConceptHeader, ConceptBody, ConceptRelations } from "./index";
 import { shareUrl } from "@/app/useUrlSync";
@@ -48,7 +51,7 @@ export function ConceptCard() {
     <AnimatePresence>
       {open && node && map && (
         <motion.aside
-          key={node.id}
+          key={`${mapId}:${node.id}`}
           initial={reduceMotion ? false : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
@@ -56,24 +59,22 @@ export function ConceptCard() {
           data-shell-context-panel=""
           className="ds-panel ds-panel--left"
         >
-          <CardContent nodeId={node.id} />
+          <CardContent map={map} mapId={mapId} node={node} />
         </motion.aside>
       )}
     </AnimatePresence>
   );
 }
 
-function CardContent({ nodeId }: { nodeId: string }) {
-  const mapId = useStore((s) => s.mapId);
-  const map = useStore((s) => s.loadedMaps[mapId])!;
-  const node = map.nodeById.get(nodeId)!;
+function CardContent({ map, mapId, node }: { map: AtlasMap; mapId: MapId; node: GraphNode }) {
+  const nodeId = node.id;
   const select = useStore((s) => s.select);
   const setSurface = useStore((s) => s.setSurface);
   const userId = useStore((s) => s.userId);
   const known = useStore((s) => s.progress[mapId]?.[nodeId] === "known");
   const setNodeProgress = useStore((s) => s.setNodeProgress);
   const view = useConceptView(node, map, mapId);
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   const [copied, setCopied] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 

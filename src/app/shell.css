@@ -137,6 +137,15 @@
   animation: shell-popover-present var(--duration-base) var(--ease-apple);
 }
 
+/*
+ * Mobile context panels use the popover layer. Lift the top chrome's stacking
+ * context while its field chooser is open so the chooser remains interactive
+ * above those panels instead of behaving like an outside click target.
+ */
+.shell-topbar:has(.shell-field-popover) {
+  z-index: calc(var(--z-popover) + 1);
+}
+
 @keyframes shell-popover-present {
   from {
     opacity: 0;
@@ -264,6 +273,16 @@
     padding: 4px;
 
     border-radius: var(--radius-xl);
+  }
+
+  /*
+   * A backdrop filter establishes the top surface as the containing block for
+   * fixed descendants. Release it while the mobile field sheet is open so the
+   * sheet's viewport-relative bottom inset is actually viewport-relative.
+   */
+  .shell-top-surface:has(.shell-field-popover) {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .shell-leading {

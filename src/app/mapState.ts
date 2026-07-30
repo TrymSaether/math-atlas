@@ -113,6 +113,10 @@ export function createMapWorkflowSlice(
         routeMode: false,
         tourIndex: null,
         routeSequence: [],
+        // Editors are transient and tied to a node in the map they were opened
+        // from. Never carry an edit target or validation error across maps.
+        nodeEditor: null,
+        editError: null,
       });
       void get().ensureMapLoaded(mapId);
     },
