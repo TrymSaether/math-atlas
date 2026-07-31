@@ -3018,7 +3018,7 @@
       "id": "riesz_representation_c_k",
       "kind": "theorem",
       "domain": "duality_weak_topologies",
-      "label": "Riesz Representation Theorem for C(K)",
+      "label": "Riesz Representation Theorem for $\\mathcal C(K)$",
       "content": {
         "statement": "Every continuous linear functional on $C(K)$ is integration against a unique regular Borel measure, isometrically.",
         "formal": "Let $K$ be a compact Hausdorff space and $C(K)$ the space of continuous $\\mathbb K$-valued functions with the supremum norm. Then $$C(K)^*\\cong M(K),$$ where $M(K)$ is the space of regular Borel measures on $K$ of finite total variation: every $\\varphi\\in C(K)^*$ is represented by a unique $\\mu\\in M(K)$ via $$\\varphi(f)=\\int_K f\\,d\\mu\\qquad\\text{for all }f\\in C(K),$$ and the correspondence is isometric, $$\\|\\varphi\\|_{C(K)^*}=|\\mu|(K).$$",
@@ -3611,6 +3611,49 @@
       "priority": "core"
     },
     {
+      "id": "hilbert_adjoint_operator",
+      "kind": "construction",
+      "domain": "hilbert_spectral",
+      "label": "Adjoint of a bounded operator on Hilbert spaces",
+      "content": {
+        "definition": "The Hilbert adjoint of a bounded operator between Hilbert spaces is the unique bounded operator moving the operator across the inner product.",
+        "formal": "Let $H,K$ be Hilbert spaces and $T\\in\\mathcal B(H,K)$. There is a unique $T^*\\in\\mathcal B(K,H)$ with $$\\forall x\\in H\\ \\forall y\\in K:\\quad\\langle Tx,y\\rangle_K=\\langle x,T^*y\\rangle_H.$$ Existence: for fixed $y\\in K$ the map $x\\mapsto\\langle Tx,y\\rangle_K$ is a bounded linear functional on $H$, so by the Riesz representation theorem there is a unique vector, called $T^*y$, representing it. Properties: $$\\|T^*\\|=\\|T\\|,\\qquad T^{**}=T,\\qquad (\\lambda T)^*=\\overline{\\lambda}\\,T^*,\\qquad \\|T^*T\\|=\\|T\\|^2.$$",
+        "intuition": "The infinite-dimensional conjugate transpose. Where the Banach adjoint reroutes probes, the Hilbert adjoint stays among vectors, because Riesz lets every probe be named by a vector.",
+        "gloss": "Type discipline: this $T^*$ maps $K\\to H$, i.e. vectors to vectors, unlike the Banach adjoint $Y^*\\to X^*$ which maps functionals to functionals. The map $T\\mapsto T^*$ is conjugate-linear, and the conjugation is inherited from the conjugate-linearity of the Riesz map.",
+        "notation": [
+          "$T^*\\in\\mathcal B(K,H)$",
+          "$\\langle Tx,y\\rangle=\\langle x,T^*y\\rangle$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "For $H=K=\\mathbb C^n$ with the standard inner product and $T$ given by a matrix $A$, the adjoint is the conjugate transpose $A^*=\\overline{A}^{\\,\\mathsf T}$. Self-adjointness $T=T^*$ is Hermitian symmetry.",
+          "label": "Matrices",
+          "role": "example"
+        },
+        {
+          "content": "$\\ker T^*=(\\operatorname{ran}T)^\\perp$ and $\\overline{\\operatorname{ran}T}=(\\ker T^*)^\\perp$. These are the Hilbert-space form of the rank-nullity relations and are the standard tool for deciding solvability of $Tx=y$.",
+          "label": "Kernel and range relation",
+          "role": "application"
+        },
+        {
+          "content": "Existence of $T^*$ is not automatic; it is exactly one application of the Riesz representation theorem per vector $y\\in K$. On an incomplete inner product space the adjoint may fail to exist, since the representing vector need not lie in the space.",
+          "label": "Depends on Riesz representation",
+          "role": "application"
+        }
+      ],
+      "assumptions": [
+        "$H,K$ are Hilbert spaces; completeness is used through the Riesz representation theorem.",
+        "$T$ is bounded; unbounded operators have adjoints only under densely-defined domain conditions."
+      ],
+      "tags": [
+        "adjoint",
+        "hilbert",
+        "operator"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "cauchy_schwarz_inequality",
       "kind": "theorem",
       "domain": "hilbert_spectral",
@@ -3858,174 +3901,6 @@
       "priority": "core"
     },
     {
-      "id": "hilbert_adjoint_operator",
-      "kind": "construction",
-      "domain": "hilbert_spectral",
-      "label": "Hilbert-space adjoint",
-      "content": {
-        "definition": "The Hilbert adjoint of a bounded operator between Hilbert spaces is the unique bounded operator moving the operator across the inner product.",
-        "formal": "Let $H,K$ be Hilbert spaces and $T\\in\\mathcal B(H,K)$. There is a unique $T^*\\in\\mathcal B(K,H)$ with $$\\forall x\\in H\\ \\forall y\\in K:\\quad\\langle Tx,y\\rangle_K=\\langle x,T^*y\\rangle_H.$$ Existence: for fixed $y\\in K$ the map $x\\mapsto\\langle Tx,y\\rangle_K$ is a bounded linear functional on $H$, so by the Riesz representation theorem there is a unique vector, called $T^*y$, representing it. Properties: $$\\|T^*\\|=\\|T\\|,\\qquad T^{**}=T,\\qquad (\\lambda T)^*=\\overline{\\lambda}\\,T^*,\\qquad \\|T^*T\\|=\\|T\\|^2.$$",
-        "intuition": "The infinite-dimensional conjugate transpose. Where the Banach adjoint reroutes probes, the Hilbert adjoint stays among vectors, because Riesz lets every probe be named by a vector.",
-        "gloss": "Type discipline: this $T^*$ maps $K\\to H$, i.e. vectors to vectors, unlike the Banach adjoint $Y^*\\to X^*$ which maps functionals to functionals. The map $T\\mapsto T^*$ is conjugate-linear, and the conjugation is inherited from the conjugate-linearity of the Riesz map.",
-        "notation": [
-          "$T^*\\in\\mathcal B(K,H)$",
-          "$\\langle Tx,y\\rangle=\\langle x,T^*y\\rangle$"
-        ]
-      },
-      "examples": [
-        {
-          "content": "For $H=K=\\mathbb C^n$ with the standard inner product and $T$ given by a matrix $A$, the adjoint is the conjugate transpose $A^*=\\overline{A}^{\\,\\mathsf T}$. Self-adjointness $T=T^*$ is Hermitian symmetry.",
-          "label": "Matrices",
-          "role": "example"
-        },
-        {
-          "content": "$\\ker T^*=(\\operatorname{ran}T)^\\perp$ and $\\overline{\\operatorname{ran}T}=(\\ker T^*)^\\perp$. These are the Hilbert-space form of the rank-nullity relations and are the standard tool for deciding solvability of $Tx=y$.",
-          "label": "Kernel and range relation",
-          "role": "application"
-        },
-        {
-          "content": "Existence of $T^*$ is not automatic; it is exactly one application of the Riesz representation theorem per vector $y\\in K$. On an incomplete inner product space the adjoint may fail to exist, since the representing vector need not lie in the space.",
-          "label": "Depends on Riesz representation",
-          "role": "application"
-        }
-      ],
-      "assumptions": [
-        "$H,K$ are Hilbert spaces; completeness is used through the Riesz representation theorem.",
-        "$T$ is bounded; unbounded operators have adjoints only under densely-defined domain conditions."
-      ],
-      "tags": [
-        "adjoint",
-        "hilbert",
-        "operator"
-      ],
-      "priority": "core"
-    },
-    {
-      "id": "riesz_representation_theorem",
-      "kind": "theorem",
-      "domain": "hilbert_spectral",
-      "label": "Hilbert-space Riesz Representation Theorem",
-      "content": {
-        "statement": "Every continuous linear functional on a Hilbert space is given by the inner product against a unique vector, and the correspondence is isometric.",
-        "formal": "Let $H$ be a Hilbert space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ with inner product linear in the first slot. Then $$\\forall f\\in H^*\\ \\exists!\\,y\\in H\\ \\forall x\\in H:\\quad f(x)=\\langle x,y\\rangle,$$ and moreover $\\|f\\|_{H^*}=\\|y\\|_H$. The vector $y$ is quantified before $x$, so one $y$ serves every $x$. The induced map $$R:H^*\\to H,\\qquad R(f)=y,$$ is a bijective isometry which is linear when $\\mathbb K=\\mathbb R$ and conjugate-linear when $\\mathbb K=\\mathbb C$, since $\\overline{\\lambda}$ appears on pulling a scalar out of the second slot.",
-        "intuition": "A Hilbert space is its own dual. Every continuous scalar probe on $H$ is already realised by a vector of $H$ measuring against it, so no genuinely new objects appear in $H^*$. The proof finds that vector: $f$ kills a closed hyperplane, and the direction orthogonal to that hyperplane, correctly scaled, is the representing vector.",
-        "gloss": "Type check: $f$ is a functional on $H$, $y$ is an element of $H$, $\\langle x,y\\rangle$ is a scalar. The theorem identifies two different kinds of object via $R$, and it is $R$ that is conjugate-linear, not the inner product.",
-        "notation": [
-          "$f(x)=\\langle x,y\\rangle$",
-          "$R:H^*\\to H$",
-          "$\\ker f$"
-        ]
-      },
-      "examples": [
-        {
-          "content": "The theorem fails on incomplete inner product spaces, because the projection theorem needs completeness to produce the orthogonal direction. Take $H_0=c_{00}\\subseteq\\ell^2$, the finitely supported sequences, and $$f(x)=\\sum_{n=1}^\\infty\\frac{x_n}{n},$$ a finite sum for each $x\\in H_0$, so $f$ is well defined, linear and bounded with $\\|f\\|=\\|(1/n)_n\\|_2$. Any representing vector would have to be $y=(1/n)_{n\\in\\mathbb N}$, which lies in $\\ell^2$ but not in $H_0$. So no $y\\in H_0$ represents $f$.",
-          "label": "Completeness is load-bearing",
-          "role": "failure_mode"
-        },
-        {
-          "content": "For a discontinuous linear functional the kernel is dense rather than closed, so $(\\ker f)^\\perp=\\{0\\}$ and step three produces nothing. On any infinite-dimensional Hilbert space a Hamel basis yields an unbounded linear functional, and no vector represents it: $y$ would make $f=\\langle\\cdot,y\\rangle$ bounded by Cauchy-Schwarz.",
-          "label": "Continuity is load-bearing",
-          "role": "failure_mode"
-        },
-        {
-          "content": "For $\\mathbb K=\\mathbb C$ and $\\lambda\\in\\mathbb C$, the functional $\\lambda f$ is represented by $\\overline{\\lambda}y$, since $(\\lambda f)(x)=\\lambda\\langle x,y\\rangle=\\langle x,\\overline{\\lambda}y\\rangle$. Hence $R(\\lambda f)=\\overline{\\lambda}R(f)$, so $H^*$ is anti-isomorphic, not isomorphic, to $H$ as a complex vector space. With the opposite convention (inner product linear in the second slot) the conjugates move to the other side.",
-          "label": "The map $R$ is conjugate-linear, not linear",
-          "role": "example"
-        },
-        {
-          "content": "Applying the theorem twice gives a linear isometric bijection $H\\to H^{**}$ (two conjugations compose to the identity), and this map is the canonical embedding $J$. Hence every Hilbert space is reflexive, and by the reflexivity criterion every bounded sequence in $H$ has a weakly convergent subsequence.",
-          "label": "Consequence: Hilbert spaces are reflexive",
-          "role": "application"
-        },
-        {
-          "content": "Every $f\\in(\\ell^2)^*$ has the form $f(x)=\\sum_n x_n\\overline{y_n}$ for a unique $y\\in\\ell^2$ with $\\|f\\|=\\|y\\|_2$. This is the $p=2$ instance of $\\ell^p$ duality, and the only one where the dual is the space itself.",
-          "label": "Concrete case $H=\\ell^2$",
-          "role": "example"
-        }
-      ],
-      "diagram": "/atlas-assets/functional_analysis/diagrams/riesz-representation.svg",
-      "assumptions": [
-        "$H$ is a Hilbert space, i.e. an inner product space complete in the induced norm. Completeness is used via the projection theorem and cannot be dropped.",
-        "$f$ is a continuous (equivalently bounded) linear functional; continuity is used exactly once, to make $\\ker f$ closed.",
-        "The inner product is taken linear in the first slot and conjugate-linear in the second; with the other convention the conjugates in the formulas move.",
-        "No separability is required."
-      ],
-      "proof": {
-        "steps": [
-          {
-            "role": "degenerate case",
-            "content": "If $f=0$, take $y=0$; then $f(x)=0=\\langle x,0\\rangle$ for all $x$. Assume from now on $f\\neq0$.",
-            "uses": [
-              "linear_functional"
-            ]
-          },
-          {
-            "role": "the kernel is a closed proper subspace",
-            "content": "Since $f$ is linear, $\\ker f$ is a subspace; since $f$ is continuous, $\\ker f=f^{-1}(\\{0\\})$ is closed as the preimage of the closed set $\\{0\\}$. Since $f\\neq0$, it is proper. Continuity is used exactly here, and this is the only place it is needed.",
-            "uses": [
-              "kernel",
-              "bounded_linear_functional",
-              "closed_subspace"
-            ]
-          },
-          {
-            "role": "produce an orthogonal direction",
-            "content": "Because $\\ker f$ is a closed proper subspace of the Hilbert space $H$, the projection theorem gives the orthogonal decomposition $H=\\ker f\\oplus(\\ker f)^\\perp$ with $(\\ker f)^\\perp\\neq\\{0\\}$. Choose $z\\in(\\ker f)^\\perp$ with $z\\neq0$; then $f(z)\\neq0$, since $z\\in\\ker f$ would force $z\\in\\ker f\\cap(\\ker f)^\\perp=\\{0\\}$.",
-            "uses": [
-              "projection_theorem",
-              "orthogonal_complement",
-              "hilbert_space"
-            ]
-          },
-          {
-            "role": "construct the representing vector",
-            "content": "Define explicitly $$y=\\frac{\\overline{f(z)}}{\\|z\\|^2}\\,z\\ \\in H.$$ This is the one construction the proof performs; the conjugate is required so that $y$ sits in the second, conjugate-linear slot of the inner product. Check it works on $z$: $$\\langle z,y\\rangle=\\Big\\langle z,\\tfrac{\\overline{f(z)}}{\\|z\\|^2}z\\Big\\rangle=\\frac{f(z)}{\\|z\\|^2}\\langle z,z\\rangle=f(z),$$ using conjugate-linearity in the second slot, which conjugates $\\overline{f(z)}$ back to $f(z)$.",
-            "uses": [
-              "inner_product_space",
-              "hilbert_space"
-            ]
-          },
-          {
-            "role": "verify on all of H",
-            "content": "Let $x\\in H$ be arbitrary and set $$u=x-\\frac{f(x)}{f(z)}z,$$ which is legitimate since $f(z)\\neq0$. Then by linearity $f(u)=f(x)-\\frac{f(x)}{f(z)}f(z)=0$, so $u\\in\\ker f$, hence $\\langle u,y\\rangle=0$ because $y$ is a scalar multiple of $z\\in(\\ker f)^\\perp$. Therefore $$\\langle x,y\\rangle=\\Big\\langle u+\\tfrac{f(x)}{f(z)}z,\\ y\\Big\\rangle=0+\\frac{f(x)}{f(z)}\\langle z,y\\rangle=\\frac{f(x)}{f(z)}f(z)=f(x).$$",
-            "uses": [
-              "inner_product_space",
-              "orthogonal_complement",
-              "linear_functional"
-            ]
-          },
-          {
-            "role": "norm equality",
-            "content": "Two inequalities. By Cauchy-Schwarz, $|f(x)|=|\\langle x,y\\rangle|\\leq\\|x\\|\\,\\|y\\|$, so $\\|f\\|\\leq\\|y\\|$. Conversely, if $y\\neq0$, evaluating at the unit vector $x=y/\\|y\\|$ gives $$|f(y/\\|y\\|)|=\\frac{|\\langle y,y\\rangle|}{\\|y\\|}=\\frac{\\|y\\|^2}{\\|y\\|}=\\|y\\|,$$ so $\\|f\\|\\geq\\|y\\|$. Hence $\\|f\\|=\\|y\\|$; the case $y=0$ is immediate.",
-            "uses": [
-              "cauchy_schwarz_inequality",
-              "norm",
-              "dual_norm_geometry"
-            ]
-          },
-          {
-            "role": "uniqueness",
-            "content": "Suppose $\\langle x,y_1\\rangle=f(x)=\\langle x,y_2\\rangle$ for all $x\\in H$. Then $\\langle x,y_1-y_2\\rangle=0$ for all $x$; taking $x=y_1-y_2$ gives $\\|y_1-y_2\\|^2=0$, so $y_1=y_2$ by positive definiteness of the inner product.",
-            "uses": [
-              "inner_product_space"
-            ]
-          }
-        ]
-      },
-      "source": {
-        "citation": "Riesz-Frechet representation theorem",
-        "references": []
-      },
-      "tags": [
-        "duality",
-        "hilbert",
-        "isometry",
-        "representation",
-        "riesz representation"
-      ],
-      "priority": "core"
-    },
-    {
       "id": "inner_product_space",
       "kind": "structure",
       "domain": "hilbert_spectral",
@@ -4179,6 +4054,131 @@
         "operator"
       ],
       "priority": "standard"
+    },
+    {
+      "id": "riesz_representation_theorem",
+      "kind": "theorem",
+      "domain": "hilbert_spectral",
+      "label": "Riesz Representation Theorem for Hilbert spaces",
+      "content": {
+        "statement": "Every continuous linear functional on a Hilbert space is given by the inner product against a unique vector, and the correspondence is isometric.",
+        "formal": "Let $H$ be a Hilbert space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ with inner product linear in the first slot. Then $$\\forall f\\in H^*\\ \\exists!\\,y\\in H\\ \\forall x\\in H:\\quad f(x)=\\langle x,y\\rangle,$$ and moreover $\\|f\\|_{H^*}=\\|y\\|_H$. The vector $y$ is quantified before $x$, so one $y$ serves every $x$. The induced map $$R:H^*\\to H,\\qquad R(f)=y,$$ is a bijective isometry which is linear when $\\mathbb K=\\mathbb R$ and conjugate-linear when $\\mathbb K=\\mathbb C$, since $\\overline{\\lambda}$ appears on pulling a scalar out of the second slot.",
+        "intuition": "A Hilbert space is its own dual. Every continuous scalar probe on $H$ is already realised by a vector of $H$ measuring against it, so no genuinely new objects appear in $H^*$. The proof finds that vector: $f$ kills a closed hyperplane, and the direction orthogonal to that hyperplane, correctly scaled, is the representing vector.",
+        "gloss": "Type check: $f$ is a functional on $H$, $y$ is an element of $H$, $\\langle x,y\\rangle$ is a scalar. The theorem identifies two different kinds of object via $R$, and it is $R$ that is conjugate-linear, not the inner product.",
+        "notation": [
+          "$f(x)=\\langle x,y\\rangle$",
+          "$R:H^*\\to H$",
+          "$\\ker f$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "The theorem fails on incomplete inner product spaces, because the projection theorem needs completeness to produce the orthogonal direction. Take $H_0=c_{00}\\subseteq\\ell^2$, the finitely supported sequences, and $$f(x)=\\sum_{n=1}^\\infty\\frac{x_n}{n},$$ a finite sum for each $x\\in H_0$, so $f$ is well defined, linear and bounded with $\\|f\\|=\\|(1/n)_n\\|_2$. Any representing vector would have to be $y=(1/n)_{n\\in\\mathbb N}$, which lies in $\\ell^2$ but not in $H_0$. So no $y\\in H_0$ represents $f$.",
+          "label": "Completeness is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "For a discontinuous linear functional the kernel is dense rather than closed, so $(\\ker f)^\\perp=\\{0\\}$ and step three produces nothing. On any infinite-dimensional Hilbert space a Hamel basis yields an unbounded linear functional, and no vector represents it: $y$ would make $f=\\langle\\cdot,y\\rangle$ bounded by Cauchy-Schwarz.",
+          "label": "Continuity is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "For $\\mathbb K=\\mathbb C$ and $\\lambda\\in\\mathbb C$, the functional $\\lambda f$ is represented by $\\overline{\\lambda}y$, since $(\\lambda f)(x)=\\lambda\\langle x,y\\rangle=\\langle x,\\overline{\\lambda}y\\rangle$. Hence $R(\\lambda f)=\\overline{\\lambda}R(f)$, so $H^*$ is anti-isomorphic, not isomorphic, to $H$ as a complex vector space. With the opposite convention (inner product linear in the second slot) the conjugates move to the other side.",
+          "label": "The map $R$ is conjugate-linear, not linear",
+          "role": "example"
+        },
+        {
+          "content": "Applying the theorem twice gives a linear isometric bijection $H\\to H^{**}$ (two conjugations compose to the identity), and this map is the canonical embedding $J$. Hence every Hilbert space is reflexive, and by the reflexivity criterion every bounded sequence in $H$ has a weakly convergent subsequence.",
+          "label": "Consequence: Hilbert spaces are reflexive",
+          "role": "application"
+        },
+        {
+          "content": "Every $f\\in(\\ell^2)^*$ has the form $f(x)=\\sum_n x_n\\overline{y_n}$ for a unique $y\\in\\ell^2$ with $\\|f\\|=\\|y\\|_2$. This is the $p=2$ instance of $\\ell^p$ duality, and the only one where the dual is the space itself.",
+          "label": "Concrete case $H=\\ell^2$",
+          "role": "example"
+        }
+      ],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/riesz-representation.svg",
+      "assumptions": [
+        "$H$ is a Hilbert space, i.e. an inner product space complete in the induced norm. Completeness is used via the projection theorem and cannot be dropped.",
+        "$f$ is a continuous (equivalently bounded) linear functional; continuity is used exactly once, to make $\\ker f$ closed.",
+        "The inner product is taken linear in the first slot and conjugate-linear in the second; with the other convention the conjugates in the formulas move.",
+        "No separability is required."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "degenerate case",
+            "content": "If $f=0$, take $y=0$; then $f(x)=0=\\langle x,0\\rangle$ for all $x$. Assume from now on $f\\neq0$.",
+            "uses": [
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "the kernel is a closed proper subspace",
+            "content": "Since $f$ is linear, $\\ker f$ is a subspace; since $f$ is continuous, $\\ker f=f^{-1}(\\{0\\})$ is closed as the preimage of the closed set $\\{0\\}$. Since $f\\neq0$, it is proper. Continuity is used exactly here, and this is the only place it is needed.",
+            "uses": [
+              "kernel",
+              "bounded_linear_functional",
+              "closed_subspace"
+            ]
+          },
+          {
+            "role": "produce an orthogonal direction",
+            "content": "Because $\\ker f$ is a closed proper subspace of the Hilbert space $H$, the projection theorem gives the orthogonal decomposition $H=\\ker f\\oplus(\\ker f)^\\perp$ with $(\\ker f)^\\perp\\neq\\{0\\}$. Choose $z\\in(\\ker f)^\\perp$ with $z\\neq0$; then $f(z)\\neq0$, since $z\\in\\ker f$ would force $z\\in\\ker f\\cap(\\ker f)^\\perp=\\{0\\}$.",
+            "uses": [
+              "projection_theorem",
+              "orthogonal_complement",
+              "hilbert_space"
+            ]
+          },
+          {
+            "role": "construct the representing vector",
+            "content": "Define explicitly $$y=\\frac{\\overline{f(z)}}{\\|z\\|^2}\\,z\\ \\in H.$$ This is the one construction the proof performs; the conjugate is required so that $y$ sits in the second, conjugate-linear slot of the inner product. Check it works on $z$: $$\\langle z,y\\rangle=\\Big\\langle z,\\tfrac{\\overline{f(z)}}{\\|z\\|^2}z\\Big\\rangle=\\frac{f(z)}{\\|z\\|^2}\\langle z,z\\rangle=f(z),$$ using conjugate-linearity in the second slot, which conjugates $\\overline{f(z)}$ back to $f(z)$.",
+            "uses": [
+              "inner_product_space",
+              "hilbert_space"
+            ]
+          },
+          {
+            "role": "verify on all of H",
+            "content": "Let $x\\in H$ be arbitrary and set $$u=x-\\frac{f(x)}{f(z)}z,$$ which is legitimate since $f(z)\\neq0$. Then by linearity $f(u)=f(x)-\\frac{f(x)}{f(z)}f(z)=0$, so $u\\in\\ker f$, hence $\\langle u,y\\rangle=0$ because $y$ is a scalar multiple of $z\\in(\\ker f)^\\perp$. Therefore $$\\langle x,y\\rangle=\\Big\\langle u+\\tfrac{f(x)}{f(z)}z,\\ y\\Big\\rangle=0+\\frac{f(x)}{f(z)}\\langle z,y\\rangle=\\frac{f(x)}{f(z)}f(z)=f(x).$$",
+            "uses": [
+              "inner_product_space",
+              "orthogonal_complement",
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "norm equality",
+            "content": "Two inequalities. By Cauchy-Schwarz, $|f(x)|=|\\langle x,y\\rangle|\\leq\\|x\\|\\,\\|y\\|$, so $\\|f\\|\\leq\\|y\\|$. Conversely, if $y\\neq0$, evaluating at the unit vector $x=y/\\|y\\|$ gives $$|f(y/\\|y\\|)|=\\frac{|\\langle y,y\\rangle|}{\\|y\\|}=\\frac{\\|y\\|^2}{\\|y\\|}=\\|y\\|,$$ so $\\|f\\|\\geq\\|y\\|$. Hence $\\|f\\|=\\|y\\|$; the case $y=0$ is immediate.",
+            "uses": [
+              "cauchy_schwarz_inequality",
+              "norm",
+              "dual_norm_geometry"
+            ]
+          },
+          {
+            "role": "uniqueness",
+            "content": "Suppose $\\langle x,y_1\\rangle=f(x)=\\langle x,y_2\\rangle$ for all $x\\in H$. Then $\\langle x,y_1-y_2\\rangle=0$ for all $x$; taking $x=y_1-y_2$ gives $\\|y_1-y_2\\|^2=0$, so $y_1=y_2$ by positive definiteness of the inner product.",
+            "uses": [
+              "inner_product_space"
+            ]
+          }
+        ]
+      },
+      "source": {
+        "citation": "Riesz-Frechet representation theorem",
+        "references": []
+      },
+      "tags": [
+        "duality",
+        "hilbert",
+        "isometry",
+        "representation",
+        "riesz representation"
+      ],
+      "priority": "core"
     },
     {
       "id": "self_adjoint_operator",
