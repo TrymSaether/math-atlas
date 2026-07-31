@@ -3,7 +3,7 @@
   "label": "Functional Analysis",
   "field": "functional_analysis",
   "version": 1,
-  "updated": "2026-07-28",
+  "updated": "2026-07-31",
   "domains": [
     {
       "id": "foundations",
@@ -399,36 +399,91 @@
       "domain": "foundations",
       "label": "If $T$ vanishes on a vector, then $S$ must also vanish on that vector",
       "content": {
-        "statement": "Let $X$ be a normed vector space and suppose $T$ and $S$ are in $X^*$. If $T(x) = 0$ implies that $S(x) = 0$, show that there is a constant $c$ such that $S(x) = c T(x)$ for all $x \\in X$.",
-        "formal": "$$X\\text{ normed vector space},\\ T,S \\in X^*,\\ T(x) = 0 \\implies S(x) = 0 \\implies \\exists c \\in \\mathbb{R} : S(x) = c T(x) \\forall x \\in X.$$",
-        "intuition": "If $T$ vanishes on a vector, then $S$ must also vanish on that vector. This means that the kernel of $T$ is contained in the kernel of $S$. Since both $T$ and $S$ are linear functionals, this implies that $S$ can be expressed as a scalar multiple of $T$."
+        "statement": "Let $X$ be a normed vector space and let $T,S\\in X^*$. Suppose that $T(x)=0$ implies $S(x)=0$ for every $x\\in X$. Show that there is a scalar $c$ with $S=cT$, that is, $S(x)=cT(x)$ for all $x\\in X$.",
+        "formal": "Let $X$ be a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and let $T,S\\in X^*$. Then $$\\Big(\\forall x\\in X:\\ T(x)=0\\implies S(x)=0\\Big)\\quad\\implies\\quad\\Big(\\exists c\\in\\mathbb K\\ \\forall x\\in X:\\ S(x)=cT(x)\\Big).$$ Equivalently, $\\ker T\\subseteq\\ker S$ implies $S\\in\\operatorname{span}\\{T\\}$. Note the quantifier order: the scalar $c$ is chosen once and must then work for every $x$, so it may not depend on $x$.",
+        "intuition": "The hypothesis says exactly that $\\ker T\\subseteq\\ker S$. A functional is determined by its kernel up to a scalar, because $\\ker T$ has codimension at most one: modulo $\\ker T$ the space is at most one-dimensional, and a linear map on a one-dimensional space is multiplication by a constant. So $S$ can only be a rescaling of $T$.",
+        "gloss": "The construction of $c$ needs a single vector $x_0$ outside $\\ker T$, which exists precisely when $T\\neq0$; the degenerate case $T=0$ must be handled separately.",
+        "notation": [
+          "$\\ker T=\\{x\\in X:T(x)=0\\}$",
+          "$S=cT$"
+        ]
       },
+      "examples": [
+        {
+          "content": "If $S=cT$ then $T(x)=0$ gives $S(x)=c\\cdot0=0$, so $\\ker T\\subseteq\\ker S$. Hence the two conditions are equivalent: $$\\ker T\\subseteq\\ker S\\iff\\exists c\\in\\mathbb K:\\ S=cT.$$",
+          "label": "The converse direction is immediate",
+          "role": "example"
+        },
+        {
+          "content": "For $T\\neq0$ the decomposition $x=u+\\frac{T(x)}{T(x_0)}x_0$ with $u\\in\\ker T$ exhibits $X=\\ker T\\oplus\\operatorname{span}\\{x_0\\}$. This is the structural fact the argument turns on, and it is what fails for maps into higher-dimensional targets: the analogous statement for operators $T,S:X\\to Y$ with $\\dim Y\\geq2$ is false.",
+          "label": "Why $\\ker T$ has codimension at most one",
+          "role": "example"
+        }
+      ],
       "assumptions": [
-        "$X$ is a normed vector space.",
-        "$T$ and $S$ are linear functionals in $X^*$."
+        "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
+        "$T,S\\in X^*$ are continuous linear functionals.",
+        "The hypothesis is the kernel inclusion $\\ker T\\subseteq\\ker S$, quantified over all $x\\in X$.",
+        "Continuity is not used; the statement holds for arbitrary linear functionals on a vector space."
       ],
       "proof": {
         "steps": [
           {
             "role": "setup",
-            "content": "Let $X$ be a normed vector space, and let $T, S \\in X^*$ be linear functionals such that $T(x) = 0$ implies $S(x) = 0$ for all $x \\in X$.",
-            "uses": []
+            "content": "Let $T,S\\in X^*$ satisfy $\\ker T\\subseteq\\ker S$. The goal is a single scalar $c\\in\\mathbb K$, independent of $x$, with $S(x)=cT(x)$ for all $x\\in X$.",
+            "uses": [
+              "linear_functional",
+              "normed_vector_space"
+            ]
           },
           {
-            "role": "argument",
-            "content": "Since $T(x) = 0$ implies $S(x) = 0$, the kernel of $T$ is contained in the kernel of $S$. Let $x_0 \\in X$ be such that $T(x_0) \\neq 0$. Then for any $x \\in X$, we can write: $$x = x - \\frac{T(x)}{T(x_0)} x_0 + \\frac{T(x)}{T(x_0)} x_0.$$ Applying $S$ to both sides gives: $$S(x) = S\\left(x - \\frac{T(x)}{T(x_0)} x_0\\right) + S\\left(\\frac{T(x)}{T(x_0)} x_0\\right).$$ Since $x - \\frac{T(x)}{T(x_0)} x_0$ is in the kernel of $T$, it is also in the kernel of $S$, so $S\\left(x - \\frac{T(x)}{T(x_0)} x_0\\right) = 0$. Therefore, we have: $$S(x) = S\\left(\\frac{T(x)}{T(x_0)} x_0\\right) = \\frac{T(x)}{T(x_0)} S(x_0).$$ Letting $c = \\frac{S(x_0)}{T(x_0)}$, we get: $$S(x) = c T(x)$$ for all $x \\in X$.",
+            "role": "degenerate case",
+            "content": "Suppose first $T=0$. Then $\\ker T=X$, so the hypothesis gives $S(x)=0$ for every $x\\in X$, i.e. $S=0$. Any $c\\in\\mathbb K$ then satisfies $S=cT$, for instance $c=0$. This case must be treated separately because the next step requires a vector on which $T$ does not vanish.",
             "uses": [
-              "normed_vector_space",
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "choose a normalising vector",
+            "content": "Now suppose $T\\neq0$. By definition there exists $x_0\\in X$ with $T(x_0)\\neq0$. Define $$c=\\frac{S(x_0)}{T(x_0)}\\in\\mathbb K,$$ which is well defined since $T(x_0)\\neq0$. The scalar $c$ is fixed once and for all here, before any $x$ is considered.",
+            "uses": [
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "decompose an arbitrary vector",
+            "content": "Let $x\\in X$ be arbitrary and set $$u=x-\\frac{T(x)}{T(x_0)}x_0.$$ Applying $T$ and using linearity, $$T(u)=T(x)-\\frac{T(x)}{T(x_0)}T(x_0)=T(x)-T(x)=0,$$ so $u\\in\\ker T$.",
+            "uses": [
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "transfer along the kernel inclusion",
+            "content": "Since $\\ker T\\subseteq\\ker S$, we get $S(u)=0$. Expanding by linearity of $S$, $$0=S(u)=S(x)-\\frac{T(x)}{T(x_0)}S(x_0).$$",
+            "uses": [
               "linear_functional"
             ]
           },
           {
             "role": "conclusion",
-            "content": "We have shown that there exists a constant $c$ such that $S(x) = c T(x)$ for all $x \\in X$. Hence, if $T$ vanishes on a vector, then $S$ must also vanish on that vector, and $S$ can be expressed as a scalar multiple of $T$.",
-            "uses": []
+            "content": "Rearranging and using the definition of $c$, $$S(x)=\\frac{T(x)}{T(x_0)}S(x_0)=\\frac{S(x_0)}{T(x_0)}T(x)=cT(x).$$ Since $x\\in X$ was arbitrary and $c$ was fixed beforehand, $S=cT$ as required.",
+            "uses": [
+              "linear_functional"
+            ]
           }
         ]
-      }
+      },
+      "source": {
+        "citation": "Bowers-Kalton Exercise 1.9",
+        "references": []
+      },
+      "tags": [
+        "exercise",
+        "kernel",
+        "linear-functional",
+        "normed space"
+      ],
+      "priority": "core"
     },
     {
       "id": "exercise_1_2",
@@ -449,36 +504,42 @@
         "steps": [
           {
             "role": "setup",
-            "content": "Let $(X,\\|\\cdot\\|)$ be a normed space, and suppose $x_n \\to x$. Let $\\epsilon > 0$ be arbitrary.",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "Since $x_n \\to x$, for every $\\delta > 0$ there exists N in N such that for all k >= N, \\|x_k - x\\| < \\delta. Choose $\\delta = 1$. Since $\\epsilon > 0$, $\\delta > 0$.",
+            "content": "Let $(X,\\|\\cdot\\|)$ be a normed space and suppose $x_n\\to x$ in norm. The goal is a single $M\\in[0,\\infty)$ with $\\|x_n\\|\\leq M$ for every $n\\in\\mathbb N$, so $M$ may not depend on $n$.",
             "uses": [
               "normed_vector_space",
-              "convergence"
+              "limit_of_sequence"
             ]
           },
           {
-            "role": "claim",
-            "content": "There exists $N \\in \\mathbb{N}$ such that for all $k >= N, \\|x_k - x\\| < 1$.",
-            "uses": []
-          },
-          {
-            "role": "argument",
-            "content": "Let $n >= N$. Since the bound holds for every $k >= N$, we get $\\|x_n - x\\| < 1$.",
-            "uses": []
+            "role": "instantiate convergence",
+            "content": "By definition of $x_n\\to x$, $$\\forall\\varepsilon>0\\ \\exists N\\in\\mathbb N\\ \\forall k\\geq N:\\quad\\|x_k-x\\|<\\varepsilon.$$ Apply this with the specific choice $\\varepsilon=1$, which is legitimate since $1>0$, to obtain $N\\in\\mathbb N$ such that $\\|x_k-x\\|<1$ for all $k\\geq N$.",
+            "uses": [
+              "limit_of_sequence",
+              "norm"
+            ]
           },
           {
             "role": "calculation",
-            "content": "$$\\begin{aligned}\\|x_n\\|&=\\|x_n - x + x\\|\\\\ &\\leq \\|x_n - x\\| + \\|x\\|\\\\ &< 1 + \\|x\\|.\\end{aligned}$$",
-            "uses": []
+            "content": "For any $n\\geq N$, $$\\begin{aligned}\\|x_n\\|&=\\|x_n-x+x\\| && \\text{add and subtract }x\\\\ &\\leq\\|x_n-x\\|+\\|x\\| && \\text{triangle inequality}\\\\ &<1+\\|x\\| && \\text{previous step, }n\\geq N.\\end{aligned}$$",
+            "uses": [
+              "norm",
+              "triangle_inequality"
+            ]
+          },
+          {
+            "role": "handle the finite initial segment",
+            "content": "The indices $n<N$ are finitely many, so $\\max_{1\\leq n<N}\\|x_n\\|$ exists as a maximum over a finite set of reals (this is where finiteness is essential; an infinite set of norms need not attain a maximum).",
+            "uses": [
+              "norm"
+            ]
           },
           {
             "role": "conclusion",
-            "content": "Therefore, for all $n >= N$, we have $\\|x_n\\| < 1 + \\|x\\|$. Let $M = \\max(1 + \\|x\\|, \\max_{1 \\leq n < N} \\|x_n\\|)$. Then for all $n \\in \\mathbb{N}$, we have $\\|x_n\\| \\leq M$. Hence $(x_n)$ is bounded.",
-            "uses": []
+            "content": "Put $$M=\\max\\Big\\{1+\\|x\\|,\\ \\max_{1\\leq n<N}\\|x_n\\|\\Big\\}.$$ Then $\\|x_n\\|\\leq M$ for every $n\\in\\mathbb N$: for $n\\geq N$ by the calculation, and for $n<N$ by construction of the second term. Hence $(x_n)$ is bounded.",
+            "uses": [
+              "norm",
+              "boundedness"
+            ]
           }
         ]
       },
@@ -1004,6 +1065,45 @@
       "priority": "core"
     },
     {
+      "id": "tychonoff_theorem",
+      "kind": "theorem",
+      "domain": "foundations",
+      "label": "Tychonoff's Theorem",
+      "content": {
+        "statement": "An arbitrary product of compact topological spaces is compact in the product topology.",
+        "formal": "Let $I$ be any index set and $(K_i,\\mathcal T_i)_{i\\in I}$ a family of compact topological spaces. Then $$P=\\prod_{i\\in I}K_i$$ is compact in the product topology, i.e. the initial topology induced by the projections $\\pi_j:P\\to K_j$. The index set $I$ may be uncountable; this is the case that matters in applications, where $I=X$ is the whole normed space.",
+        "intuition": "Compactness survives arbitrary products, which is surprising because the product topology is very coarse: a basic open set constrains only finitely many coordinates. That coarseness is exactly what makes the theorem true, and it is why weak-star compactness of the dual ball comes for free once the ball is realised inside a product of discs.",
+        "gloss": "The strength is in the arbitrary index set. Finite and countable products are much easier; the general case is equivalent to the axiom of choice.",
+        "notation": [
+          "$\\prod_{i\\in I}K_i$",
+          "$\\pi_j$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "Tychonoff for arbitrary compact spaces is equivalent to the axiom of choice (Kelley). For compact Hausdorff spaces it is strictly weaker, being equivalent to the ultrafilter lemma. Since discs in $\\mathbb K$ are compact Hausdorff, Banach-Alaoglu needs only the ultrafilter lemma, not full choice.",
+          "label": "Equivalence with choice",
+          "role": "example"
+        },
+        {
+          "content": "The result is specific to the product topology. The box topology on an infinite product of compact spaces is strictly finer and destroys compactness: $\\{0,1\\}^{\\mathbb N}$ with the box topology is discrete, hence non-compact, while with the product topology it is the compact Cantor set.",
+          "label": "Failure for other topologies",
+          "role": "failure_mode"
+        }
+      ],
+      "assumptions": [
+        "Each factor $K_i$ is compact.",
+        "$P$ carries the product topology, not the box topology.",
+        "Some choice principle is assumed: full AC in general, the ultrafilter lemma in the compact Hausdorff case."
+      ],
+      "tags": [
+        "compactness",
+        "product topology",
+        "topology"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "lp_norms_on_r2",
       "kind": "example",
       "domain": "spaces_norms",
@@ -1179,12 +1279,34 @@
       "domain": "spaces_norms",
       "label": "Compactness",
       "content": {
-        "definition": "A space or subset is compact if every open cover admits a finite subcover.",
-        "formal": "$K\\subseteq X\\text{ compact}\\iff\\text{ every open cover of }K\\text{ has a finite subcover}.$",
-        "intuition": "Compactness is topological finiteness. In metric spaces it can be detected by sequences: every sequence in a compact set has a convergent subsequence.",
-        "notation": []
+        "definition": "A topological space or subset is compact if every open cover admits a finite subcover.",
+        "formal": "Let $(Y,\\mathcal T)$ be a topological space and $K\\subseteq Y$. Then $$K\\ \\text{compact}\\quad:\\Longleftrightarrow\\quad\\forall\\,\\mathcal U\\subseteq\\mathcal T\\ \\text{with}\\ K\\subseteq\\bigcup\\mathcal U:\\ \\exists U_1,\\dots,U_n\\in\\mathcal U\\ \\text{with}\\ K\\subseteq\\bigcup_{i=1}^nU_i.$$ Equivalent formulations in a general topological space: every net in $K$ has a subnet converging in $K$; every family of closed subsets of $K$ with the finite intersection property has nonempty intersection. Sequential compactness, $$\\forall(y_n)\\subseteq K\\ \\exists\\ \\text{subsequence}\\ (y_{n_k})\\ \\exists y\\in K:\\ y_{n_k}\\to y,$$ is equivalent to compactness in metric spaces but not in general.",
+        "intuition": "Compactness is topological finiteness. In metric spaces it can be detected by sequences, but in the weak and weak-star topologies, which are typically not metrizable, sequences are too weak an instrument and nets are needed.",
+        "gloss": "The compact-versus-sequentially-compact gap is exactly what makes Banach-Alaoglu insufficient on its own for subsequence extraction, and why separability or Eberlein-Smulian is invoked.",
+        "notation": [
+          "$\\mathcal U$",
+          "$K\\subseteq\\bigcup_{i=1}^n U_i$"
+        ]
       },
+      "examples": [
+        {
+          "content": "In $\\mathbb R^n$ or $\\mathbb C^n$ a set is compact if and only if it is closed and bounded. This is the fact that makes each scalar disc $\\{\\lambda:|\\lambda|\\leq\\|x\\|\\}$ compact in the proof of Banach-Alaoglu.",
+          "label": "Heine-Borel in $\\mathbb K^n$",
+          "role": "example"
+        },
+        {
+          "content": "The two notions diverge outside metric spaces. With $X=\\ell^\\infty$, the ball $B_{X^*}$ is weak-star compact by Banach-Alaoglu yet not weak-star sequentially compact. So compactness of a ball does not by itself license passing to a convergent subsequence.",
+          "label": "Compact but not sequentially compact",
+          "role": "failure_mode"
+        },
+        {
+          "content": "If $K$ is compact and $F\\subseteq K$ is closed, then $F$ is compact; and in a Hausdorff space compact sets are closed. Both directions are used in the proof of Banach-Alaoglu, the first to cut $\\Phi(B_{X^*})$ out of the product.",
+          "label": "Closed subset of a compact space",
+          "role": "example"
+        }
+      ],
       "tags": [
+        "compactness",
         "property",
         "topology"
       ],
@@ -1406,7 +1528,7 @@
       "label": "L^p spaces",
       "content": {
         "definition": "Equivalence classes of p-integrable measurable functions.",
-        "formal": "L^p(\\Omega)= {f: integral |f|^p < infinity}/a.e. equality.",
+        "formal": "Let $(\\Omega,\\mathcal A,\\mu)$ be a measure space and $1\\leq p<\\infty$. Then $$L^p(\\Omega)=\\Big\\{f:\\Omega\\to\\mathbb K\\ \\text{measurable}\\ :\\ \\int_\\Omega|f|^p\\,d\\mu<\\infty\\Big\\}\\Big/\\sim,$$ where $f\\sim g$ means $f=g$ $\\mu$-almost everywhere, normed by $$\\|f\\|_p=\\Big(\\int_\\Omega|f|^p\\,d\\mu\\Big)^{1/p}.$$ For $p=\\infty$, $\\|f\\|_\\infty=\\operatorname*{ess\\,sup}_{\\Omega}|f|$. Quotienting by almost-everywhere equality is what makes $\\|\\cdot\\|_p$ positive definite rather than a seminorm.",
         "intuition": "Function-space analogue of ell^p.",
         "notation": [
           "L^p"
@@ -1674,6 +1796,46 @@
       "priority": "core"
     },
     {
+      "id": "riesz_lemma_noncompactness",
+      "kind": "theorem",
+      "domain": "spaces_norms",
+      "label": "Riesz: compact unit ball characterises finite dimension",
+      "content": {
+        "statement": "The closed unit ball of a normed space is compact in the norm topology if and only if the space is finite-dimensional.",
+        "formal": "Let $X$ be a normed vector space over $\\mathbb K$. Then $$B_X\\ \\text{is norm compact}\\iff\\dim X<\\infty.$$ The nontrivial direction rests on Riesz's lemma: if $Y\\subsetneq X$ is a proper closed subspace and $0<\\theta<1$, then $$\\exists x_\\theta\\in X,\\ \\|x_\\theta\\|=1:\\quad\\operatorname{dist}(x_\\theta,Y)=\\inf_{y\\in Y}\\|x_\\theta-y\\|\\geq\\theta.$$ Iterating with $\\theta=1/2$ produces a sequence $(x_n)\\subseteq B_X$ with $\\|x_n-x_m\\|\\geq1/2$ for $n\\neq m$, which has no convergent subsequence.",
+        "intuition": "In infinite dimensions there is always room to pick a new unit vector staying a fixed distance from the span of all previous ones, so the unit ball contains an infinite $1/2$-separated set. This is the precise reason every compactness theorem in Banach space theory must weaken the topology, and it is the counterexample that gives Banach-Alaoglu its content.",
+        "gloss": "Read as a negative result it says: norm compactness of $B_X$ is not something extra hypotheses can buy in infinite dimensions.",
+        "notation": [
+          "$\\operatorname{dist}(x,Y)$",
+          "$B_X$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "For $1\\leq p<\\infty$ the standard basis satisfies $\\|e_n\\|_p=1$ and $\\|e_n-e_m\\|_p=2^{1/p}$ for $n\\neq m$, giving the separated sequence directly without invoking Riesz's lemma.",
+          "label": "Explicit separated sequence in $\\ell^p$",
+          "role": "example"
+        },
+        {
+          "content": "In $\\ell^1=(c_0)^*$ the ball $B_{\\ell^1}$ is not norm compact by this result, yet is weak-star compact by Banach-Alaoglu. The same set is compact in one topology and not in the other, which is what makes the choice of topology in Alaoglu load-bearing rather than decorative.",
+          "label": "Contrast with Banach-Alaoglu",
+          "role": "application"
+        }
+      ],
+      "assumptions": [
+        "$X$ is a normed vector space; completeness is not required.",
+        "The topology is the norm topology.",
+        "Riesz's lemma needs $Y$ closed and proper; the constant $\\theta$ cannot in general be taken equal to $1$."
+      ],
+      "tags": [
+        "compactness",
+        "counterexample",
+        "infinite-dimensional",
+        "unit-ball"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "topological_vector_space",
       "kind": "structure",
       "domain": "spaces_norms",
@@ -1900,8 +2062,7 @@
         ]
       },
       "source": {
-        "citation": "Standard functional analysis theorem: completeness of B(X,Y) when Y is Banach.",
-        "ref": "Bounded linear operators between normed spaces; Banach space completeness theorem.",
+        "citation": "Standard functional analysis theorem: completeness of $\\mathcal{B}(X,Y)$ when $Y$ is Banach; bounded linear operators between normed spaces.",
         "references": [
           "bounded_operator_space",
           "operator_norm",
@@ -2103,7 +2264,7 @@
       "content": {
         "statement": "A map is nonlinear if it fails additivity or homogeneity.",
         "definition": "Failure of linearity.",
-        "formal": "F(x+y)\\ne F(x)+F(y) \\text{ or } F(\\lambda x)\\ne \\lambda F(x).",
+        "formal": "A map $F:X\\to Y$ between vector spaces over $\\mathbb K$ is nonlinear if linearity fails for at least one instance, i.e. $$\\exists x,y\\in X:\\ F(x+y)\\neq F(x)+F(y)\\qquad\\text{or}\\qquad\\exists x\\in X,\\ \\lambda\\in\\mathbb K:\\ F(\\lambda x)\\neq\\lambda F(x).$$ Note the quantifier: nonlinearity is a single counterexample, not failure for all arguments.",
         "intuition": "The map does not respect superposition.",
         "notation": []
       },
@@ -2278,48 +2439,114 @@
       "domain": "duality_weak_topologies",
       "label": "Banach-Alaoglu Theorem",
       "content": {
-        "statement": "The closed unit ball of the dual space is compact in the weak-star topology.",
-        "formal": "B_{X^*} is compact in sigma(X^*,X).",
-        "intuition": "Pointwise bounded scalar probes have compactness in the weakest natural topology.",
-        "notation": []
+        "statement": "The closed unit ball of the dual space is compact in the weak-star topology. No completeness, separability or reflexivity of $X$ is required.",
+        "formal": "Let $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and let $X$ be a normed vector space over $\\mathbb K$, with continuous dual $X^*=\\mathcal L(X,\\mathbb K)$ and closed dual unit ball $$B_{X^*}=\\{x^*\\in X^*:\\|x^*\\|_{X^*}\\leq1\\}.$$ Then $B_{X^*}$ is compact in the weak-star topology $\\sigma(X^*,X)$, that is, $$\\forall\\,\\mathcal U\\subseteq\\sigma(X^*,X)\\ \\text{with}\\ B_{X^*}\\subseteq\\bigcup\\mathcal U:\\ \\exists\\,U_1,\\dots,U_n\\in\\mathcal U\\ \\text{with}\\ B_{X^*}\\subseteq\\bigcup_{i=1}^nU_i.$$ Equivalently, in net form: every net $(x_\\alpha^*)_{\\alpha\\in A}$ in $B_{X^*}$ admits a subnet $(x^*_{\\alpha_\\beta})_\\beta$ and some $x^*\\in B_{X^*}$ with $$\\forall x\\in X:\\quad x^*_{\\alpha_\\beta}(x)\\longrightarrow x^*(x).$$ The limit $x^*$ may depend on the net and the chosen subnet, but not on $x$.",
+        "intuition": "Elements of $B_{X^*}$ are exactly the functionals whose values are constrained pointwise: $|x^*(x)|\\leq\\|x\\|$ for every $x$. So the ball sits inside a product of scalar discs, one disc per vector $x$, and Tychonoff makes that product compact. Weak-star is precisely the topology in which this product picture is faithful, which is why the theorem is false for the norm topology.",
+        "gloss": "The single real idea is Tychonoff; every other step is bookkeeping about which conditions are pointwise-closed.",
+        "notation": [
+          "$B_{X^*}=\\{x^*\\in X^*:\\|x^*\\|\\leq1\\}$",
+          "$\\sigma(X^*,X)$"
+        ]
       },
+      "examples": [
+        {
+          "content": "Compactness genuinely requires the weak-star topology. If $\\dim X^*=\\infty$, then $B_{X^*}$ is not norm compact: by Riesz's lemma there is a sequence in $B_{X^*}$ with mutual distances at least $1/2$, so no norm-convergent subsequence exists. Concretely, in $\\ell^1=(c_0)^*$ the basis vectors satisfy $\\|e_n-e_m\\|_1=2$ for $n\\neq m$.",
+          "label": "Norm topology fails",
+          "role": "failure_mode"
+        },
+        {
+          "content": "The result does not survive replacing $\\sigma(X^*,X)$ by $\\sigma(X^*,X^{**})$. By Kakutani's theorem, $B_{X^*}$ is weakly compact if and only if $X^*$ is reflexive. For $X=c_0$ the ball $B_{\\ell^1}$ is weak-star compact but not weakly compact, since $\\ell^1$ is not reflexive.",
+          "label": "Weak topology fails",
+          "role": "failure_mode"
+        },
+        {
+          "content": "The hypothesis that the ball is closed is load-bearing. The open ball $\\{x^*:\\|x^*\\|<1\\}$ is not weak-star compact, since it is not even weak-star closed: its weak-star closure is $B_{X^*}$.",
+          "label": "Open ball fails",
+          "role": "failure_mode"
+        },
+        {
+          "content": "Compactness here is the open-cover notion, and does not by itself give sequences. For $X=\\ell^\\infty$, which is non-separable, $B_{X^*}$ is weak-star compact yet not weak-star sequentially compact. Only when $X$ is separable is $B_{X^*}$ weak-star metrizable, giving the sequential form used in practice.",
+          "label": "Compact but not sequentially compact",
+          "role": "failure_mode"
+        },
+        {
+          "content": "If $X$ is separable, $(B_{X^*},\\sigma(X^*,X))$ is a compact metrizable space, so every norm-bounded sequence $(x_n^*)\\subseteq X^*$ has a weak-star convergent subsequence. This is the form used to extract limits in calculus of variations and PDE.",
+          "label": "Separable case: the sequential corollary",
+          "role": "application"
+        },
+        {
+          "content": "If $X$ is reflexive then $\\sigma(X^*,X)=\\sigma(X^*,X^{**})$, and applying the theorem to $X^*$ shows $B_X$ is weakly compact. Combined with Eberlein-Smulian this yields weak sequential compactness of bounded sets in reflexive spaces.",
+          "label": "Reflexive case",
+          "role": "application"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
+      "assumptions": [
+        "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$. Completeness of $X$ is not assumed and is not used.",
+        "$B_{X^*}$ carries the weak-star topology $\\sigma(X^*,X)$, not the dual-norm topology and not $\\sigma(X^*,X^{**})$.",
+        "The ball is the closed unit ball; the open ball is not weak-star compact.",
+        "Tychonoff's theorem is invoked for a product of compact Hausdorff spaces, so the ultrafilter lemma suffices and full choice is not needed."
+      ],
       "proof": {
         "steps": [
           {
-            "role": "embed into product",
-            "content": "Embed the dual unit ball $B_{X^*}$ into the product $\\prod_{x\\in X}\\{\\lambda\\in\\mathbb K:|\\lambda|\\leq\\|x\\|\\}$ by sending $x^*$ to the function $x\\mapsto x^*(x)$.",
+            "role": "pointwise bound",
+            "content": "Let $x^*\\in B_{X^*}$. By definition of the dual norm, $|x^*(x)|\\leq\\|x^*\\|\\,\\|x\\|\\leq\\|x\\|$ for every $x\\in X$. Hence $x^*(x)\\in D_x:=\\{\\lambda\\in\\mathbb K:|\\lambda|\\leq\\|x\\|\\}$, and the norm bound on the functional has been converted into a family of bounds on numbers, one for each $x$.",
             "uses": [
+              "operator_norm",
               "dual_space",
               "closed_unit_ball"
             ]
           },
           {
-            "role": "compact ambient product",
-            "content": "Each scalar disk is compact, and the product is compact by Tychonoff's theorem.",
+            "role": "embed into a product",
+            "content": "Define $$\\Phi:B_{X^*}\\to P:=\\prod_{x\\in X}D_x,\\qquad \\Phi(x^*)=(x^*(x))_{x\\in X}.$$ The map $\\Phi$ is well defined by the previous step and injective, since two functionals agreeing at every $x\\in X$ are equal as functions.",
             "uses": [
-              "compactness"
+              "linear_functional",
+              "dual_space"
+            ]
+          },
+          {
+            "role": "compact ambient product",
+            "content": "Each $D_x\\subseteq\\mathbb K$ is closed and bounded, hence compact by Heine-Borel. By Tychonoff's theorem the product $P$ is compact in the product topology. This is the only nontrivial ingredient in the proof.",
+            "uses": [
+              "compactness",
+              "axiom_of_choice"
+            ]
+          },
+          {
+            "role": "identify the topologies",
+            "content": "The product topology on $P$ is the topology of pointwise convergence on $X$, and $\\sigma(X^*,X)$ is by construction the initial topology induced by the evaluations $\\hat x(x^*)=x^*(x)$. These are the same family of maps, so $\\Phi$ is a homeomorphism from $(B_{X^*},\\sigma(X^*,X))$ onto its image $\\Phi(B_{X^*})\\subseteq P$ with the subspace topology.",
+            "uses": [
+              "weak_star_topology"
             ]
           },
           {
             "role": "closed image",
-            "content": "The image of $B_{X^*}$ is cut out by pointwise linearity conditions and the norm bound, hence is closed in the product.",
+            "content": "The image is cut out by linearity, which is a pointwise condition: for fixed $x,y\\in X$ and $\\lambda\\in\\mathbb K$ the set $$C_{x,y,\\lambda}=\\{\\varphi\\in P:\\varphi(x+\\lambda y)-\\varphi(x)-\\lambda\\varphi(y)=0\\}$$ is closed, being the preimage of $\\{0\\}$ under a map continuous in the product topology (it depends on three coordinates only). Hence $$\\Phi(B_{X^*})=\\bigcap_{x,y\\in X,\\ \\lambda\\in\\mathbb K}C_{x,y,\\lambda}$$ is closed in $P$; the norm bound $\\|x^*\\|\\leq1$ is already encoded in the discs $D_x$.",
             "uses": [
-              "weak_star_topology",
-              "linear_functional"
+              "linear_functional",
+              "weak_star_topology"
             ]
           },
           {
             "role": "conclusion",
-            "content": "Therefore $B_{X^*}$ is compact in the topology of pointwise convergence on $X$, namely the weak-star topology $\\sigma(X^*,X)$.",
+            "content": "A closed subset of a compact space is compact, so $\\Phi(B_{X^*})$ is compact in $P$. Transporting back through the homeomorphism $\\Phi^{-1}$ shows $B_{X^*}$ is compact in $\\sigma(X^*,X)$.",
             "uses": [
+              "compactness",
               "weak_star_topology"
             ]
           }
         ]
       },
+      "source": {
+        "citation": "Banach-Alaoglu; see also the sequential form for separable $X$ (Banach-Alaoglu-Bourbaki)",
+        "references": []
+      },
       "tags": [
         "compactness",
+        "duality",
+        "tychonoff",
         "weak-star"
       ],
       "priority": "core"
@@ -2541,13 +2768,24 @@
       "domain": "duality_weak_topologies",
       "label": "Dual unit ball with weak-star topology",
       "content": {
-        "statement": "The closed unit ball of X* is considered with sigma(X*,X).",
-        "intuition": "Banach-Alaoglu is a compactness theorem for this specific topology.",
-        "notation": []
+        "statement": "The closed unit ball of $X^*$ is considered with the weak-star topology $\\sigma(X^*,X)$, not with the dual-norm topology and not with $\\sigma(X^*,X^{**})$.",
+        "formal": "$$B_{X^*}=\\{x^*\\in X^*:\\|x^*\\|_{X^*}\\leq1\\}\\quad\\text{equipped with}\\quad\\sigma(X^*,X).$$ Three distinct topologies are available on $X^*$, ordered by fineness: $$\\sigma(X^*,X)\\ \\subseteq\\ \\sigma(X^*,X^{**})\\ \\subseteq\\ \\mathcal T_{\\|\\cdot\\|_{X^*}}.$$ Banach-Alaoglu asserts compactness of $B_{X^*}$ in the coarsest of the three, and is false in the other two whenever $\\dim X^*=\\infty$.",
+        "intuition": "Banach-Alaoglu is a compactness theorem for one specific topology, and the hypothesis is doing real work: compactness is bought by weakening the topology until the ball fits inside a product of scalar discs. The closedness of the ball matters too, since the open ball is not even weak-star closed.",
+        "notation": [
+          "$B_{X^*}$",
+          "$\\sigma(X^*,X)$"
+        ]
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
+      "assumptions": [
+        "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$; completeness is not required.",
+        "The ball is closed, i.e. $\\|x^*\\|\\leq1$ rather than $\\|x^*\\|<1$.",
+        "A distinguished predual $X$ is fixed, since $\\sigma(X^*,X)$ depends on it."
+      ],
       "tags": [
         "assumption",
+        "compactness",
+        "unit-ball",
         "weak-star"
       ],
       "priority": "core"
@@ -2598,16 +2836,33 @@
       "label": "Goldstine's Theorem",
       "content": {
         "statement": "The canonical image of the closed unit ball of a normed space is weak-star dense in the closed unit ball of its bidual.",
-        "formal": "$$\\overline{J(B_X)}^{\\,\\sigma(X^{**},X^*)}=B_{X^{**}}.$$",
-        "intuition": "Vectors in $X$ approximate bidual vectors on every finite collection of dual probes.",
-        "notation": []
+        "formal": "Let $X$ be a normed space, $J:X\\to X^{**}$ the canonical embedding. Then $$\\overline{J(B_X)}^{\\,\\sigma(X^{**},X^*)}=B_{X^{**}}.$$ Explicitly: for every $x^{**}\\in B_{X^{**}}$, every finite set $x_1^*,\\dots,x_n^*\\in X^*$ and every $\\varepsilon>0$, there exists $x\\in B_X$ with $$|x_i^*(x)-x^{**}(x_i^*)|<\\varepsilon\\qquad\\text{for }i=1,\\dots,n.$$ The vector $x$ may depend on all of $x^{**}$, the finitely many probes, and $\\varepsilon$.",
+        "intuition": "Vectors in $X$ approximate bidual vectors on every finite collection of dual probes. Density is only weak-star, so no single $x\\in B_X$ works for all probes at once unless $X$ is reflexive; the finiteness of the probe set is what makes the approximation possible.",
+        "gloss": "Pairs with Alaoglu in the standard reflexivity argument: Alaoglu makes $J(B_X)$ closed once it is compact, Goldstine makes it dense, and closed plus dense gives equality.",
+        "notation": [
+          "$J(B_X)$",
+          "$\\sigma(X^{**},X^*)$"
+        ]
       },
+      "examples": [
+        {
+          "content": "In $X=c_0$ we have $X^{**}=\\ell^\\infty$, and $J(B_{c_0})$ is weak-star dense in $B_{\\ell^\\infty}$. But $J(c_0)=c_0$ is norm closed in $\\ell^\\infty$ and proper, so $\\mathbf 1=(1,1,\\dots)\\in B_{\\ell^\\infty}$ is at norm distance $1$ from $J(B_{c_0})$. Approximation holds on finitely many probes only.",
+          "label": "Density is not norm density",
+          "role": "failure_mode"
+        },
+        {
+          "content": "If $J(B_X)$ happens to be weak-star compact, hence closed, Goldstine upgrades density to equality $J(B_X)=B_{X^{**}}$, which is surjectivity of $J$ on balls and therefore reflexivity.",
+          "label": "Use in the reflexivity criterion",
+          "role": "application"
+        }
+      ],
       "assumptions": [
-        "$X$ is a normed vector space.",
-        "$X^*$ is the continuous dual of $X$.",
-        "$X^{**}$ is the bidual of $X$."
+        "$X$ is a normed vector space; completeness is not required.",
+        "$X^*$ is the continuous dual and $X^{**}$ the bidual.",
+        "The closure is taken in $\\sigma(X^{**},X^*)$, the weak-star topology of $X^{**}$ over the predual $X^*$."
       ],
       "tags": [
+        "bidual",
         "density",
         "duality",
         "weak-star"
@@ -2621,7 +2876,7 @@
       "label": "Linear functional",
       "content": {
         "definition": "A linear map from a vector space to its scalar field.",
-        "formal": "f:X\\to K linear.",
+        "formal": "Let $X$ be a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$. A linear functional is a map $f:X\\to\\mathbb K$ satisfying $$f(x+\\lambda y)=f(x)+\\lambda f(y)\\qquad\\text{for all }x,y\\in X,\\ \\lambda\\in\\mathbb K.$$ If $X$ is normed, $f$ is continuous if and only if it is bounded, i.e. $$\\exists C\\in[0,\\infty)\\ \\forall x\\in X:\\quad|f(x)|\\leq C\\|x\\|,$$ and the set of such $f$ is the continuous dual $X^*=\\mathcal L(X,\\mathbb K)$.",
         "intuition": "A scalar measurement of vectors.",
         "notation": [
           "f, x*"
@@ -2661,7 +2916,7 @@
       "label": "Riesz Representation Theorem for C(K)",
       "content": {
         "statement": "The dual of C(K) is the space of finite Borel measures on K.",
-        "formal": "C(K)^*\\cong M(K),\\qquad \\varphi(f)=\\int_K f\\,d\\mu,\\qquad \\|\\varphi\\|=|\\mu|(K).",
+        "formal": "Let $K$ be a compact Hausdorff space and $C(K)$ the space of continuous $\\mathbb K$-valued functions with the supremum norm. Then $$C(K)^*\\cong M(K),$$ where $M(K)$ is the space of regular Borel measures on $K$ of finite total variation: every $\\varphi\\in C(K)^*$ is represented by a unique $\\mu\\in M(K)$ via $$\\varphi(f)=\\int_K f\\,d\\mu\\qquad\\text{for all }f\\in C(K),$$ and the correspondence is isometric, $$\\|\\varphi\\|_{C(K)^*}=|\\mu|(K).$$",
         "intuition": "Every continuous scalar probe on C(K) is integration against a measure.",
         "notation": [
           "C(K)^*=M(K)"
@@ -2689,32 +2944,77 @@
       "domain": "duality_weak_topologies",
       "label": "Sequential criterion for reflexivity",
       "content": {
-        "statement": "A Banach space is reflexive if and only if every bounded sequence has a weakly convergent subsequence.",
-        "formal": "$$X\\text{ reflexive}\\iff \\text{every bounded sequence in }X\\text{ has a weakly convergent subsequence}.$$",
-        "intuition": "Reflexivity turns norm-bounded sets into weakly compact sets, and weak compactness can be read sequentially.",
-        "notation": []
+        "statement": "A Banach space is reflexive if and only if every norm-bounded sequence has a weakly convergent subsequence.",
+        "formal": "Let $X$ be a Banach space. Then $$X\\ \\text{reflexive}\\iff\\forall(x_n)_{n\\in\\mathbb N}\\subseteq X\\ \\text{with}\\ \\sup_n\\|x_n\\|<\\infty:\\ \\exists\\ \\text{subsequence}\\ (x_{n_k})\\ \\exists x\\in X:\\ x_{n_k}\\rightharpoonup x.$$ Reflexivity means the canonical embedding $J:X\\to X^{**}$, $(Jx)(x^*)=x^*(x)$, is surjective. Completeness of $X$ is essential: $J$ is an isometry, so a reflexive space is isometrically isomorphic to the Banach space $X^{**}$ and hence complete.",
+        "intuition": "Reflexivity turns norm-bounded sets into weakly compact sets, and on a Banach space weak compactness can be read off sequences. The forward direction is Alaoglu transported down through $J$; the reverse rebuilds surjectivity of $J$ from Goldstine density.",
+        "gloss": "Note the asymmetry: reflexivity is a statement about $J$ being onto, not merely about $X$ and $X^{**}$ being isomorphic. James constructed a non-reflexive space isometrically isomorphic to its bidual.",
+        "notation": [
+          "$J:X\\to X^{**}$",
+          "$x_{n_k}\\rightharpoonup x$"
+        ]
       },
+      "examples": [
+        {
+          "content": "The criterion is stated for Banach spaces and the reverse direction needs it: reflexivity implies $X\\cong X^{**}$ isometrically, and $X^{**}$ is complete as a dual space, so a reflexive normed space is automatically Banach. An incomplete normed space can therefore never be reflexive, whatever its sequences do.",
+          "label": "Completeness is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "In $c_0$ the sequence of partial-sum vectors is bounded with no weakly convergent subsequence; likewise in $\\ell^1$, where by Schur's property weak and norm convergence of sequences coincide, so a weakly convergent subsequence of $(e_n)$ would have to be norm convergent, which is impossible since $\\|e_n-e_m\\|_1=2$. Both spaces are thus non-reflexive.",
+          "label": "The standard non-reflexive examples",
+          "role": "example"
+        },
+        {
+          "content": "These are reflexive, so every bounded sequence has a weakly convergent subsequence. For $p=1$ and $p=\\infty$ reflexivity fails, which is exactly why $L^1$ and $L^\\infty$ are awkward in variational problems.",
+          "label": "$\\ell^p$ for $1<p<\\infty$",
+          "role": "example"
+        }
+      ],
       "assumptions": [
-        "$X$ is a Banach space."
+        "$X$ is a Banach space; completeness is used and cannot be dropped.",
+        "Reflexivity means surjectivity of the canonical $J$, not abstract isomorphism $X\\cong X^{**}$."
       ],
       "proof": {
         "steps": [
           {
             "role": "forward implication",
-            "content": "If $X$ is reflexive, Banach-Alaoglu makes $B_{X^{**}}$ weak-star compact; under $J(X)=X^{**}$ this gives weak compactness of $B_X$. Eberlein-Smulian then gives weakly convergent subsequences.",
+            "content": "Assume $X$ reflexive. Applying Banach-Alaoglu to the dual of $X^*$ gives that $B_{X^{**}}$ is $\\sigma(X^{**},X^*)$-compact. Since $J(X)=X^{**}$, the topology $\\sigma(X^{**},X^*)$ pulls back along the isometry $J$ to $\\sigma(X,X^*)$, so $B_X$ is weakly compact.",
             "uses": [
               "reflexive_space",
               "banach_alaoglu_theorem",
-              "eberlein_smulian_theorem"
+              "canonical_embedding_isometry"
+            ]
+          },
+          {
+            "role": "sequential form",
+            "content": "A norm-bounded sequence lies in $rB_X$ for some $r>0$, which is weakly compact by the previous step. Eberlein-Smulian converts weak compactness into weak sequential compactness on a Banach space, yielding a weakly convergent subsequence with limit in $X$.",
+            "uses": [
+              "eberlein_smulian_theorem",
+              "weak_convergence"
             ]
           },
           {
             "role": "reverse implication",
-            "content": "If every bounded sequence has a weakly convergent subsequence, Eberlein-Smulian makes $B_X$ weakly compact. Hence $J(B_X)$ is weak-star compact and closed in $B_{X^{**}}$; Goldstine density forces equality, so $J$ is onto.",
+            "content": "Assume every bounded sequence has a weakly convergent subsequence. Then $B_X$ is weakly sequentially compact, so weakly compact by Eberlein-Smulian.",
             "uses": [
-              "eberlein_smulian_theorem",
+              "eberlein_smulian_theorem"
+            ]
+          },
+          {
+            "role": "transport to the bidual",
+            "content": "The map $J$ is a homeomorphism from $(X,\\sigma(X,X^*))$ onto $(J(X),\\sigma(X^{**},X^*))$, since both topologies are induced by the same family of probes $x^*\\in X^*$. Hence $J(B_X)$ is $\\sigma(X^{**},X^*)$-compact, therefore closed in the Hausdorff space $(X^{**},\\sigma(X^{**},X^*))$.",
+            "uses": [
+              "canonical_embedding_isometry",
+              "weak_star_topology",
+              "compactness"
+            ]
+          },
+          {
+            "role": "Goldstine density forces equality",
+            "content": "Goldstine's theorem gives $\\overline{J(B_X)}^{\\,\\sigma(X^{**},X^*)}=B_{X^{**}}$. Since $J(B_X)$ is already closed in that topology, $J(B_X)=B_{X^{**}}$. Scaling by $r>0$ gives $J(rB_X)=rB_{X^{**}}$, and every element of $X^{**}$ lies in some $rB_{X^{**}}$, so $J$ is surjective and $X$ is reflexive.",
+            "uses": [
               "goldstine_theorem",
-              "canonical_embedding_isometry"
+              "reflexive_space"
             ]
           }
         ]
@@ -2807,14 +3107,39 @@
       "domain": "duality_weak_topologies",
       "label": "Weak compactness results",
       "content": {
-        "statement": "Banach-Alaoglu is the compactness source behind weak and weak-star compactness arguments.",
-        "intuition": "Compactness appears after weakening the topology.",
+        "statement": "Banach-Alaoglu is the compactness source behind weak and weak-star compactness arguments: it supplies limit points for bounded families of functionals, and the standard results in the area are obtained by transporting it along the canonical embedding.",
+        "formal": "The cluster of results built on $B_{X^*}$ being $\\sigma(X^*,X)$-compact: $$\\begin{aligned}&\\text{(i) Banach-Alaoglu:} && B_{X^*}\\ \\text{is}\\ \\sigma(X^*,X)\\text{-compact for every normed }X.\\\\ &\\text{(ii) Kakutani:} && B_X\\ \\text{is}\\ \\sigma(X,X^*)\\text{-compact}\\iff X\\ \\text{is reflexive}.\\\\ &\\text{(iii) Eberlein-Smulian:} && \\text{for }K\\subseteq X\\ \\text{Banach, weak compactness}\\iff\\text{weak sequential compactness}.\\\\ &\\text{(iv) separable case:} && X\\ \\text{separable}\\implies(B_{X^*},\\sigma(X^*,X))\\ \\text{is compact metrizable}.\\end{aligned}$$",
+        "intuition": "Compactness appears after weakening the topology. In infinite dimensions the norm-closed unit ball is never compact, so every compactness statement in Banach space theory is bought by trading the norm topology for a coarser one; Alaoglu is the cheapest such trade because it needs no hypothesis on $X$ at all.",
+        "gloss": "Route to remember: Alaoglu gives compactness upstairs in $X^{**}$; reflexivity is what lets you pull it back down to $X$.",
         "notation": []
       },
+      "examples": [
+        {
+          "content": "For $K$ compact metric, $C(K)$ is separable and $C(K)^*\\cong M(K)$. A sequence of probability measures $(\\mu_n)$ lies in $B_{M(K)}$, so by the separable case there is a subsequence and a $\\mu\\in B_{M(K)}$ with $\\int f\\,d\\mu_{n_k}\\to\\int f\\,d\\mu$ for every $f\\in C(K)$. This is exactly weak-star convergence of measures.",
+          "label": "Extracting a limit from a bounded sequence of measures",
+          "role": "application"
+        },
+        {
+          "content": "If $X$ is reflexive and $(x_n)$ is norm bounded, then Alaoglu applied to $X^*$ plus $J(X)=X^{**}$ makes $B_X$ weakly compact, and Eberlein-Smulian converts this to a weakly convergent subsequence. This is the standard existence step in the direct method of the calculus of variations.",
+          "label": "Reflexive spaces: bounded sequences have weakly convergent subsequences",
+          "role": "application"
+        },
+        {
+          "content": "By Riesz's lemma, $B_X$ is norm compact if and only if $\\dim X<\\infty$. So no amount of hypotheses on an infinite-dimensional $X$ will make the norm-closed unit ball compact; weakening the topology is not a convenience but the only available move.",
+          "label": "Why the norm topology is never an option",
+          "role": "failure_mode"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
+      "assumptions": [
+        "$X$ is a normed vector space; individual results in the cluster add completeness or separability as indicated."
+      ],
       "tags": [
         "application",
-        "weak topology"
+        "compactness",
+        "duality",
+        "weak topology",
+        "weak-star"
       ],
       "priority": "standard"
     },
@@ -2824,17 +3149,37 @@
       "domain": "duality_weak_topologies",
       "label": "Weak convergence",
       "content": {
-        "statement": "A sequence converges weakly if every continuous linear functional converges on it.",
-        "definition": "Weak convergence $x_n\\rightharpoonup x$ means convergence in the weak topology $\\sigma(X,X^*)$.",
-        "formal": "$$x_n\\rightharpoonup x \\iff \\forall x^*\\in X^*:\\ x^*(x_n)\\to x^*(x).$$",
-        "intuition": "Vectors converge when every scalar probe in the dual agrees that they converge.",
+        "statement": "A sequence $(x_n)$ in $X$ converges weakly to $x\\in X$ if the scalars $x^*(x_n)$ converge to $x^*(x)$ for every continuous linear functional $x^*\\in X^*$. The limit $x$ is a single vector required to work for all probes simultaneously.",
+        "definition": "Weak convergence $x_n\\rightharpoonup x$ means convergence of the sequence $(x_n)$ to $x$ in the weak topology $\\sigma(X,X^*)$.",
+        "formal": "Let $X$ be a normed vector space over $\\mathbb K$, let $(x_n)_{n\\in\\mathbb N}\\subseteq X$ and let $x\\in X$. Then $$x_n\\rightharpoonup x\\quad:\\Longleftrightarrow\\quad\\forall x^*\\in X^*:\\ \\lim_{n\\to\\infty}x^*(x_n)=x^*(x).$$ Unfolding the scalar limit, $$\\exists x\\in X\\ \\forall x^*\\in X^*\\ \\forall\\varepsilon>0\\ \\exists N\\in\\mathbb N\\ \\forall n\\geq N:\\quad|x^*(x_n)-x^*(x)|<\\varepsilon.$$ The vector $x$ is quantified outside $x^*$, so it may not depend on the probe; the index $N$ is quantified inside and may depend on both $x^*$ and $\\varepsilon$.",
+        "intuition": "Vectors converge when every scalar probe in the dual agrees that they converge, and all probes agree on the same limiting vector. Weak convergence tests $x_n$ against $X^*$ one functional at a time, with no uniformity in $x^*$ required.",
+        "gloss": "Contrast with norm convergence, which is uniformity over the whole dual ball: $\\|x_n-x\\|=\\sup_{\\|x^*\\|\\leq1}|x^*(x_n-x)|$.",
         "notation": [
-          "x_n\\rightharpoonup x"
+          "$x_n\\rightharpoonup x$",
+          "$x_n\\xrightarrow{w}x$"
         ]
       },
+      "examples": [
+        {
+          "content": "If $\\|x_n-x\\|\\to0$ then $|x^*(x_n)-x^*(x)|\\leq\\|x^*\\|\\,\\|x_n-x\\|\\to0$ for every $x^*$, so $x_n\\rightharpoonup x$. The converse fails: in $\\ell^2$, $e_n\\rightharpoonup 0$ while $\\|e_n-0\\|_2=1$.",
+          "label": "Norm convergence is strictly stronger",
+          "role": "example"
+        },
+        {
+          "content": "From $x_n\\rightharpoonup x$ one gets $\\|x\\|\\leq\\liminf_n\\|x_n\\|$, but not $\\|x_n\\|\\to\\|x\\|$. In $\\ell^2$ with $e_n\\rightharpoonup0$ the inequality is strict: $0=\\|0\\|<\\liminf\\|e_n\\|=1$. In a Hilbert space, $x_n\\rightharpoonup x$ together with $\\|x_n\\|\\to\\|x\\|$ does upgrade to norm convergence (the Radon-Riesz property).",
+          "label": "The norm is only weakly lower semicontinuous",
+          "role": "failure_mode"
+        },
+        {
+          "content": "If $x_n\\rightharpoonup x$ then $\\{x_n:n\\in\\mathbb N\\}$ is weakly bounded, since each $(x^*(x_n))_n$ converges and is therefore a bounded scalar sequence. Uniform boundedness applied in $X^*$ (which is Banach regardless of $X$) then gives $\\sup_n\\|x_n\\|<\\infty$.",
+          "label": "Weakly convergent sequences are bounded",
+          "role": "example"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
       "assumptions": [
-        "$X$ is a normed space."
+        "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
+        "Weak limits are unique, since $\\sigma(X,X^*)$ is Hausdorff by Hahn-Banach."
       ],
       "tags": [
         "convergence",
@@ -2849,28 +3194,52 @@
       "domain": "duality_weak_topologies",
       "label": "Weak topology",
       "content": {
-        "definition": "The weak topology on $X$, denoted by $\\sigma(X,X^*)$, is the coarsest topology on $X$ making every functional $x^*\\in X^*$ continuous.",
-        "formal": "Equivalently, $\\sigma(X,X^*)$ is generated by the seminorms $$p_{x^*}(x)=|x^*(x)|,\\quad x^*\\in X^*.$$",
-        "intuition": "The weak topology keeps only the information detected by continuous linear functionals: two vectors are close when every scalar-valued probe $x^*\\in X^*$ gives nearly the same value on them.",
+        "definition": "The weak topology on $X$, written $\\sigma(X,X^*)$, is the coarsest topology on $X$ for which every $x^*\\in X^*$ remains continuous. Equivalently, it is the initial topology induced by the family of maps $\\{x^*:X\\to\\mathbb K\\}_{x^*\\in X^*}$.",
+        "formal": "Let $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and let $X$ be a normed vector space over $\\mathbb K$ with continuous dual $X^*=\\mathcal L(X,\\mathbb K)$. The weak topology is $$\\sigma(X,X^*)=\\bigcap\\{\\mathcal T:\\mathcal T\\text{ a topology on }X\\text{ with }x^*\\in C(X,\\mathbb K)\\ \\forall x^*\\in X^*\\}.$$ A subbase is given by the preimages $$S=\\{(x^*)^{-1}(U):x^*\\in X^*,\\ U\\subseteq\\mathbb K\\text{ open}\\},$$ so a base of neighbourhoods of $x_0\\in X$ consists of the finite intersections $$V(x_0;x_1^*,\\dots,x_n^*;\\varepsilon)=\\{x\\in X:|x_i^*(x-x_0)|<\\varepsilon\\ \\text{for } i=1,\\dots,n\\},$$ indexed by $n\\in\\mathbb N$, $x_1^*,\\dots,x_n^*\\in X^*$ and $\\varepsilon>0$. Equivalently $\\sigma(X,X^*)$ is the locally convex topology generated by the seminorms $$p_{x^*}(x)=|x^*(x)|,\\qquad x^*\\in X^*.$$",
+        "intuition": "The weak topology keeps only the information detected by continuous linear functionals: two vectors are close when finitely many scalar probes $x^*\\in X^*$ give nearly the same value on them. Only finitely many probes appear in any one basic neighbourhood, which is exactly why the topology is coarser than the norm topology.",
+        "gloss": "Basic weak neighbourhoods constrain finitely many coordinates at a time, so they are unbounded in infinitely many directions.",
         "notation": [
-          "$\\sigma(X,X^*)$"
+          "$\\sigma(X,X^*)$",
+          "$p_{x^*}(x)=|x^*(x)|$"
         ]
       },
       "examples": [
         {
-          "content": "All linear functionals are continuous in finite dimensions, so the weak topology does not introduce any new open sets. In $\\mathbb{R}^n$, the weak topology coincides with the standard Euclidean topology $$\\mathcal{T}_{\\text{weak}}=\\mathcal{T}_{\\text{Euclidean}} = \\{U\\subseteq \\mathbb{R}^n:\\ \\forall x\\in U,\\ \\exists \\epsilon>0:\\ B_\\epsilon(x)\\subseteq U\\}.$$",
+          "content": "Every linear functional on a finite-dimensional normed space is continuous, and a base of weak neighbourhoods of $0$ obtained from a dual basis $e_1^*,\\dots,e_n^*$ is a box around $0$. Hence $$\\sigma(\\mathbb R^n,(\\mathbb R^n)^*)=\\mathcal T_{\\text{Euclidean}},$$ and weak convergence coincides with coordinatewise, hence norm, convergence.",
           "label": "Finite-dimensional case",
           "role": "example"
         },
         {
-          "content": "In infinite-dimensional spaces, the weak topology is strictly coarser than the norm topology.",
+          "content": "In $\\ell^2$ the standard basis satisfies $e_n\\rightharpoonup 0$ by Bessel's inequality, while $\\|e_n\\|_2=1$ for all $n$. So $\\sigma(X,X^*)$ is strictly coarser than the norm topology, and the norm is not weakly continuous.",
           "label": "Infinite-dimensional case",
           "role": "example"
+        },
+        {
+          "content": "If $\\dim X=\\infty$, every weakly open $V\\ni 0$ contains an infinite-dimensional subspace: with $V\\supseteq V(0;x_1^*,\\dots,x_n^*;\\varepsilon)$, the subspace $\\bigcap_{i=1}^n\\ker x_i^*$ has codimension at most $n$, hence is nontrivial, and lies in $V$. Consequently no weakly open set is norm bounded, and the weak topology is not induced by any norm.",
+          "label": "Weak neighbourhoods are never norm bounded",
+          "role": "failure_mode"
+        },
+        {
+          "content": "For $\\dim X=\\infty$ the topology $\\sigma(X,X^*)$ is not metrizable on all of $X$, since a countable neighbourhood base at $0$ would involve countably many functionals and the argument above would then produce a norm-bounded weak neighbourhood. Metrizability can still hold on norm-bounded subsets, provided $X^*$ is separable.",
+          "label": "Not metrizable",
+          "role": "failure_mode"
         }
       ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
+      "assumptions": [
+        "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
+        "$X^*$ denotes the continuous dual $\\mathcal L(X,\\mathbb K)$, not the algebraic dual."
+      ],
+      "properties": [
+        "Locally convex and translation invariant; $(X,\\sigma(X,X^*))$ is a topological vector space.",
+        "Hausdorff, because $X^*$ separates points of $X$ (a consequence of Hahn-Banach).",
+        "Coarser than the norm topology, with equality if and only if $\\dim X<\\infty$.",
+        "Agrees with the norm topology on convex sets in the sense that norm-closed convex sets are weakly closed."
+      ],
       "tags": [
         "duality",
+        "initial topology",
+        "locally convex",
         "weak topology"
       ],
       "priority": "core"
@@ -2882,25 +3251,70 @@
       "label": "Weak-null preserving maps are bounded",
       "content": {
         "statement": "A linear map between Banach spaces that sends every weakly null sequence to a weakly null sequence is bounded.",
-        "formal": "$$x_n\\rightharpoonup0\\Longrightarrow Tx_n\\rightharpoonup0\\quad\\Longrightarrow\\quad T\\in\\mathcal B(X,Y).$$",
-        "intuition": "An unbounded map can amplify a norm-null sequence into an unbounded one, but weakly convergent sequences must be norm bounded.",
-        "notation": []
+        "formal": "Let $X,Y$ be Banach spaces over $\\mathbb K$ and let $T:X\\to Y$ be linear. Suppose $$\\forall(x_n)_{n\\in\\mathbb N}\\subseteq X:\\quad x_n\\rightharpoonup0\\ \\Longrightarrow\\ Tx_n\\rightharpoonup0.$$ Then $T\\in\\mathcal B(X,Y)$, that is, $$\\exists C\\in[0,\\infty)\\ \\forall x\\in X:\\quad\\|Tx\\|_Y\\leq C\\|x\\|_X.$$",
+        "intuition": "An unbounded map can amplify a norm-null sequence into an unbounded one, but weakly convergent sequences must be norm bounded. Rescaling turns the failure of boundedness into a norm-null sequence whose image is unbounded, contradicting that hypothesis.",
+        "gloss": "The move is: unboundedness gives a badly behaved sequence, rescale it to be null, then let the hypothesis and weak boundedness collide.",
+        "notation": [
+          "$\\mathcal B(X,Y)$",
+          "$x_n\\rightharpoonup0$"
+        ]
       },
+      "examples": [
+        {
+          "content": "The upgrade from weak boundedness to norm boundedness uses the uniform boundedness principle, which needs a Banach space. Completeness of $X$ is not used anywhere in the argument above, so the theorem holds for $X$ merely normed.",
+          "label": "Completeness of $Y$ is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "The converse direction is elementary: if $T\\in\\mathcal B(X,Y)$ and $x_n\\rightharpoonup0$, then for $y^*\\in Y^*$ the composition $y^*\\circ T$ lies in $X^*$, so $y^*(Tx_n)=(y^*\\circ T)(x_n)\\to0$, giving $Tx_n\\rightharpoonup0$. Hence the stated condition characterises boundedness.",
+          "label": "Weak-to-weak continuity is automatic for bounded maps",
+          "role": "example"
+        }
+      ],
+      "assumptions": [
+        "$Y$ is Banach; this is what licenses uniform boundedness.",
+        "$T$ is linear; the rescaling step uses homogeneity.",
+        "$X$ is normed. Completeness of $X$ is not needed for this argument."
+      ],
       "proof": {
         "steps": [
           {
-            "role": "unbounded sequence",
-            "content": "If $T$ were unbounded, choose $\\|y_n\\|=1$ with $\\|Ty_n\\|>n^2$ and set $x_n=y_n/n$.",
+            "role": "negate boundedness",
+            "content": "Suppose $T\\notin\\mathcal B(X,Y)$. Then $\\sup_{\\|y\\|\\leq1}\\|Ty\\|=\\infty$, so for every $n\\in\\mathbb N$ there is $y_n\\in X$ with $\\|y_n\\|=1$ and $\\|Ty_n\\|>n^2$.",
             "uses": [
-              "operator_norm"
+              "operator_norm",
+              "bounded_linear_operator"
+            ]
+          },
+          {
+            "role": "rescale to a null sequence",
+            "content": "Set $x_n=y_n/n$. Then $\\|x_n\\|=1/n\\to0$, so $x_n\\to0$ in norm, and hence $x_n\\rightharpoonup0$ since $|x^*(x_n)|\\leq\\|x^*\\|\\,\\|x_n\\|\\to0$ for each $x^*\\in X^*$.",
+            "uses": [
+              "weak_convergence",
+              "norm"
+            ]
+          },
+          {
+            "role": "apply the hypothesis",
+            "content": "By hypothesis $Tx_n\\rightharpoonup0$ in $Y$. In particular $\\{Tx_n:n\\in\\mathbb N\\}$ is weakly bounded, since each scalar sequence $(y^*(Tx_n))_n$ converges and is therefore bounded.",
+            "uses": [
+              "weak_convergence",
+              "weakly_bounded_set"
+            ]
+          },
+          {
+            "role": "upgrade to norm boundedness",
+            "content": "Since $Y$ is Banach, weak boundedness implies norm boundedness, so $\\sup_n\\|Tx_n\\|<\\infty$.",
+            "uses": [
+              "weakly_bounded_implies_norm_bounded",
+              "banach_space"
             ]
           },
           {
             "role": "contradiction",
-            "content": "Then $x_n\\to0$ in norm and hence weakly, so $Tx_n\\rightharpoonup0$ by hypothesis. But $\\|Tx_n\\|>n$, contradicting norm boundedness of weakly convergent sequences.",
+            "content": "But by linearity $\\|Tx_n\\|=\\|Ty_n\\|/n>n^2/n=n\\to\\infty$, contradicting the previous step. Hence $T$ is bounded.",
             "uses": [
-              "weak_convergence",
-              "weakly_bounded_implies_norm_bounded"
+              "bounded_linear_operator"
             ]
           }
         ]
@@ -2923,21 +3337,43 @@
       "domain": "duality_weak_topologies",
       "label": "Weak-star convergence",
       "content": {
-        "statement": "A sequence of functionals $(x_n^*)_{n=1}^\\infty$ converges weak-star to $x^*$ if for every vector $x$, the scalars $x_n^*(x)$ converge to $x^*(x)$.",
-        "definition": "Weak-star convergence $x_n^*\\overset{w^*}{\\to}x^*$ means convergence in \\sigma(X^*,X).",
-        "formal": "$$x_n^*\\overset{w^*}{\\to}x^* \\iff \\forall x\\in X:\\ x_n^*(x)\\to x^*(x).$$",
-        "intuition": "Functionals converge by agreeing pointwise on every vector.",
+        "statement": "A sequence of functionals $(x_n^*)$ converges weak-star to $x^*$ if for every vector $x\\in X$ the scalars $x_n^*(x)$ converge to $x^*(x)$. The limit functional $x^*$ is one object required to work at every $x$ simultaneously.",
+        "definition": "Weak-star convergence $x_n^*\\overset{w^*}{\\to}x^*$ means convergence of the sequence $(x_n^*)$ to $x^*$ in the weak-star topology $\\sigma(X^*,X)$, that is, pointwise convergence of functions on $X$.",
+        "formal": "Let $X$ be a normed vector space over $\\mathbb K$, let $(x_n^*)_{n\\in\\mathbb N}\\subseteq X^*$ and let $x^*\\in X^*$. Then $$x_n^*\\overset{w^*}{\\to}x^*\\quad:\\Longleftrightarrow\\quad\\forall x\\in X:\\ \\lim_{n\\to\\infty}x_n^*(x)=x^*(x).$$ Fully unfolded, $$\\exists x^*\\in X^*\\ \\forall x\\in X\\ \\forall\\varepsilon>0\\ \\exists N\\in\\mathbb N\\ \\forall n\\geq N:\\quad|x_n^*(x)-x^*(x)|<\\varepsilon.$$ The functional $x^*$ is quantified outside $x$, so it may not depend on the test vector; $N$ may depend on both $x$ and $\\varepsilon$, which is precisely the absence of uniformity that distinguishes this from dual-norm convergence.",
+        "intuition": "Functionals converge by agreeing pointwise on every vector. Weak-star convergence is the same notion as pointwise convergence of functions, transported into $X^*$.",
+        "gloss": "Dual-norm convergence is the uniform version of the same statement: $\\|x_n^*-x^*\\|=\\sup_{\\|x\\|\\leq1}|x_n^*(x)-x^*(x)|\\to0$, i.e. $N$ chosen independently of $x$ in the unit ball.",
         "notation": [
-          "x_n^*\\overset{w^*}{\\to}x^*"
+          "$x_n^*\\overset{w^*}{\\to}x^*$",
+          "$x_n^*\\xrightarrow{\\sigma(X^*,X)}x^*$"
         ]
       },
+      "examples": [
+        {
+          "content": "In $X=c_0$ with $X^*=\\ell^1$, the partial-sum functionals or the basis vectors $e_n\\in\\ell^1$ satisfy $e_n\\overset{w^*}{\\to}0$ while $\\|e_n\\|_1=1$. Pointwise decay at each fixed $x\\in c_0$ does not force decay of the norm.",
+          "label": "Weak-star limits need not be norm limits",
+          "role": "example"
+        },
+        {
+          "content": "Since $\\hat X\\subseteq X^{**}$, testing against all of $X^{**}$ is a stronger demand than testing against $\\hat X$: $$x_n^*\\rightharpoonup x^*\\ \\text{in }X^*\\quad\\Longrightarrow\\quad x_n^*\\overset{w^*}{\\to}x^*.$$ The converse holds for all sequences exactly when $X$ is reflexive; $e_n\\in\\ell^1=(c_0)^*$ is the standard counterexample.",
+          "label": "Weak convergence implies weak-star, not conversely",
+          "role": "example"
+        },
+        {
+          "content": "Banach-Alaoglu gives compactness of $B_{X^*}$, not sequential compactness. For non-separable $X$ such as $\\ell^\\infty$, $B_{X^*}$ is weak-star compact but not weak-star sequentially compact, so a bounded sequence of functionals need have no weak-star convergent subsequence; one must pass to subnets. For separable $X$, $B_{X^*}$ is weak-star metrizable and subsequences do suffice.",
+          "label": "Sequences do not suffice in general",
+          "role": "failure_mode"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
       "assumptions": [
-        "$X$ is a normed space."
+        "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
+        "Weak-star limits are unique, since $\\sigma(X^*,X)$ is Hausdorff.",
+        "The limit is asserted to lie in $X^*$; pointwise limits of linear maps are linear, but boundedness of the limit requires either a norm bound on the sequence or completeness of $X$ via uniform boundedness."
       ],
       "tags": [
         "convergence",
         "duality",
+        "pointwise convergence",
         "weak-star"
       ],
       "priority": "core"
@@ -2948,16 +3384,48 @@
       "domain": "duality_weak_topologies",
       "label": "Weak-star topology",
       "content": {
-        "definition": "The coarsest topology on $X^\\ast$ making every evaluation map $x^\\ast \\mapsto x^\\ast(x)$ continuous for $x \\in X$.",
-        "formal": "$$\\sigma(X^\\ast,X)=\\text{the coarsest topology on }X^\\ast \\text{ making all evaluation maps }x^\\ast \\mapsto x^\\ast(x)\\text{ continuous for }x\\in X.$$",
-        "intuition": "Pointwise convergence on the predual $X$.",
+        "definition": "The weak-star topology $\\sigma(X^*,X)$ is the coarsest topology on $X^*$ making every evaluation map $\\hat x:X^*\\to\\mathbb K$, $\\hat x(x^*)=x^*(x)$, continuous, as $x$ ranges over $X$. It is the topology of pointwise convergence on the predual $X$.",
+        "formal": "Let $X$ be a normed vector space over $\\mathbb K$ and $X^*=\\mathcal L(X,\\mathbb K)$. For $x\\in X$ define the evaluation functional $$\\hat x:X^*\\to\\mathbb K,\\qquad \\hat x(x^*)=x^*(x).$$ Then $$\\sigma(X^*,X)=\\text{the initial topology on }X^*\\text{ induced by }\\{\\hat x:x\\in X\\},$$ with subbase $\\{\\hat x^{-1}(U):x\\in X,\\ U\\subseteq\\mathbb K\\text{ open}\\}$ and basic neighbourhoods $$V(x_0^*;x_1,\\dots,x_n;\\varepsilon)=\\{x^*\\in X^*:|(x^*-x_0^*)(x_i)|<\\varepsilon\\ \\text{for } i=1,\\dots,n\\},$$ for $n\\in\\mathbb N$, $x_1,\\dots,x_n\\in X$, $\\varepsilon>0$. Equivalently it is generated by the seminorms $q_x(x^*)=|x^*(x)|$, $x\\in X$.",
+        "intuition": "Pointwise convergence on the predual $X$. Each vector $x\\in X$ is reinterpreted one level up as a coordinate function $\\hat x$ on $X^*$, and the weak-star topology is the product-style topology those coordinates generate.",
+        "gloss": "Same recipe as the weak topology, applied one level up: $\\sigma(X,X^*)$ probes $X$ by $X^*$, while $\\sigma(X^*,X)$ probes $X^*$ by the image $\\hat X\\subseteq X^{**}$ only.",
         "notation": [
-          "$\\sigma(X^\\ast,X)$"
+          "$\\sigma(X^*,X)$",
+          "$\\hat x(x^*)=x^*(x)$",
+          "$q_x(x^*)=|x^*(x)|$"
         ]
       },
+      "examples": [
+        {
+          "content": "The dual $X^*$ carries two probe topologies: $\\sigma(X^*,X^{**})$ (its own weak topology) and $\\sigma(X^*,X)$ (weak-star). Since the canonical embedding gives $\\hat X\\subseteq X^{**}$, fewer probes are available for weak-star, so $$\\sigma(X^*,X)\\subseteq\\sigma(X^*,X^{**}),$$ with equality if and only if $X$ is reflexive.",
+          "label": "Weak-star versus weak on $X^*$",
+          "role": "example"
+        },
+        {
+          "content": "Take $X=c_0$, so $X^*=\\ell^1$ and $X^{**}=\\ell^\\infty$. The standard basis $(e_n)\\subseteq\\ell^1$ satisfies $e_n\\overset{w^*}{\\to}0$, because $\\langle e_n,x\\rangle=x_n\\to0$ for every $x\\in c_0$. But $e_n\\not\\rightharpoonup0$ weakly in $\\ell^1$: testing against $\\mathbf 1=(1,1,\\dots)\\in\\ell^\\infty=X^{**}$ gives $\\langle e_n,\\mathbf 1\\rangle=1\\not\\to0$. This is exactly the failure of $c_0$ to be reflexive.",
+          "label": "A genuinely coarser example",
+          "role": "example"
+        },
+        {
+          "content": "For $\\dim X=\\infty$, $\\sigma(X^*,X)$ is not metrizable on $X^*$ globally. It is metrizable on the norm-bounded set $B_{X^*}$ precisely when $X$ is separable, which is what makes sequential extraction legitimate for separable $X$ and forces the use of nets in general.",
+          "label": "Not metrizable on all of $X^*$",
+          "role": "failure_mode"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
+      "assumptions": [
+        "$X$ is a normed vector space; $X^*$ is its continuous dual.",
+        "The construction requires a distinguished predual $X$, so it is a topology on a dual space, not on an abstract Banach space."
+      ],
+      "properties": [
+        "Locally convex; $(X^*,\\sigma(X^*,X))$ is a topological vector space.",
+        "Hausdorff, since $\\hat X$ separates points of $X^*$: if $x^*\\neq y^*$ then $x^*(x)\\neq y^*(x)$ for some $x\\in X$, directly from the definition of equality of functions. No Hahn-Banach is needed here.",
+        "Coarser than $\\sigma(X^*,X^{**})$, which is coarser than the dual-norm topology.",
+        "Makes $B_{X^*}$ compact (Banach-Alaoglu), which the two finer topologies do not in general."
+      ],
       "tags": [
         "duality",
+        "initial topology",
+        "locally convex",
         "weak-star"
       ],
       "priority": "core"
@@ -2970,7 +3438,7 @@
       "content": {
         "statement": "A set is weakly bounded if every continuous linear functional is bounded on it.",
         "definition": "Weak boundedness means boundedness after testing by every element of the dual space.",
-        "formal": "A\\subseteq X \\text{ weakly bounded } \\iff \\forall x^*\\in X^*:\\ \\sup_{a\\in A}|x^*(a)|<\\infty.",
+        "formal": "Let $X$ be a normed space over $\\mathbb K$ and $A\\subseteq X$. Then $$A\\ \\text{weakly bounded}\\quad:\\Longleftrightarrow\\quad\\forall x^*\\in X^*:\\ \\sup_{a\\in A}|x^*(a)|<\\infty.$$ The bound is allowed to depend on $x^*$; requiring one bound valid for all $x^*$ simultaneously would be norm boundedness. That the two coincide for $X$ Banach is the content of the uniform boundedness principle.",
         "intuition": "The set may look large in X, but every scalar probe sees only bounded values.",
         "notation": []
       },
@@ -3134,7 +3602,7 @@
       "label": "Hilbert space",
       "content": {
         "definition": "A complete inner product space.",
-        "formal": "An inner product space H complete under \\|x\\|=\\sqrt{\\langle x,x\\rangle}.",
+        "formal": "A Hilbert space is a pair $(H,\\langle\\cdot,\\cdot\\rangle)$ where $H$ is an inner product space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ that is complete with respect to the induced norm $$\\|x\\|=\\sqrt{\\langle x,x\\rangle}.$$ Completeness means every Cauchy sequence converges in $H$: $$\\forall(x_n)\\subseteq H:\\ \\big(\\forall\\varepsilon>0\\ \\exists N\\ \\forall m,n\\geq N:\\|x_n-x_m\\|<\\varepsilon\\big)\\implies\\exists x\\in H:\\ \\|x_n-x\\|\\to0.$$",
         "intuition": "Euclidean geometry after passing to infinite dimensions.",
         "notation": [
           "H"
@@ -3214,7 +3682,7 @@
       "label": "Inner product space",
       "content": {
         "definition": "A vector space equipped with an inner product inducing a norm.",
-        "formal": "(H,\\langle\\cdot,\\cdot\\rangle) with positive-definite sesquilinear inner product.",
+        "formal": "An inner product space is a pair $(H,\\langle\\cdot,\\cdot\\rangle)$ with $H$ a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and $\\langle\\cdot,\\cdot\\rangle:H\\times H\\to\\mathbb K$ satisfying, for all $x,y,z\\in H$ and $\\lambda\\in\\mathbb K$: $$\\begin{aligned}&\\text{(i) linearity in the first slot:} && \\langle x+\\lambda y,z\\rangle=\\langle x,z\\rangle+\\lambda\\langle y,z\\rangle,\\\\ &\\text{(ii) conjugate symmetry:} && \\langle x,y\\rangle=\\overline{\\langle y,x\\rangle},\\\\ &\\text{(iii) positive definiteness:} && \\langle x,x\\rangle\\geq0\\ \\text{ and }\\ \\langle x,x\\rangle=0\\iff x=0.\\end{aligned}$$ Conditions (i) and (ii) together give conjugate linearity in the second slot, so the form is sesquilinear over $\\mathbb C$ and bilinear over $\\mathbb R$.",
         "intuition": "A vector space where angles and orthogonality make sense.",
         "notation": [
           "(H, <·,·>)"
@@ -3708,10 +4176,37 @@
       "label": "Zorn's lemma",
       "content": {
         "statement": "If every chain in a partially ordered set has an upper bound, then the poset has a maximal element.",
-        "intuition": "The maximal-extension engine behind Hahn-Banach.",
-        "notation": []
+        "formal": "Let $(P,\\leq)$ be a partially ordered set. Call $C\\subseteq P$ a chain if $\\leq$ restricted to $C$ is total, i.e. $\\forall a,b\\in C:\\ a\\leq b\\ \\text{or}\\ b\\leq a$. Then $$\\Big(P\\neq\\emptyset\\ \\wedge\\ \\forall\\ \\text{chains}\\ C\\subseteq P\\ \\exists u\\in P\\ \\forall a\\in C:\\ a\\leq u\\Big)\\implies\\exists m\\in P\\ \\forall a\\in P:\\ \\big(m\\leq a\\implies a=m\\big).$$ The element $m$ is maximal, not maximum: it is not required that $a\\leq m$ for all $a\\in P$. The upper bound $u$ must lie in $P$ but need not lie in $C$.",
+        "intuition": "The maximal-extension engine behind Hahn-Banach. One partially orders the set of partial extensions of a functional, checks that a chain of extensions can be glued into a common extension serving as an upper bound, and Zorn's lemma then supplies a maximal extension, which a separate argument shows must be defined on all of $X$.",
+        "gloss": "Equivalent to the axiom of choice and to the well-ordering theorem, over ZF.",
+        "notation": [
+          "$(P,\\leq)$",
+          "$C\\subseteq P$ a chain"
+        ]
       },
+      "examples": [
+        {
+          "content": "The empty poset satisfies the chain condition vacuously (its only chain is $\\emptyset$, which has no upper bound requirement met only if some $u\\in P$ exists) yet has no maximal element. The hypothesis $P\\neq\\emptyset$, or equivalently insisting that the empty chain have an upper bound, rules this out.",
+          "label": "Nonemptiness is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "In the poset of proper subsets of $\\{1,2\\}$ ordered by inclusion, both $\\{1\\}$ and $\\{2\\}$ are maximal, and neither is a maximum. Zorn's lemma asserts existence of a maximal element only, and gives no uniqueness.",
+          "label": "Maximal is not maximum",
+          "role": "example"
+        },
+        {
+          "content": "Take $P=\\mathbb N$ with its usual order. The chain $C=P$ has no upper bound in $P$, the hypothesis fails, and indeed $\\mathbb N$ has no maximal element. This is the shape of the check one must perform in any application.",
+          "label": "A chain with no upper bound",
+          "role": "failure_mode"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/poset-zorn.svg",
+      "assumptions": [
+        "$(P,\\leq)$ is a nonempty partially ordered set.",
+        "Every chain in $P$, including the empty chain, has an upper bound lying in $P$.",
+        "Zorn's lemma is equivalent to the axiom of choice over ZF; it is an assumption, not a theorem of ZF."
+      ],
       "tags": [
         "foundations",
         "hahn-banach"
@@ -3781,10 +4276,37 @@
       "label": "Bounded Inverse Theorem",
       "content": {
         "statement": "A bijective bounded linear operator between Banach spaces has bounded inverse.",
-        "intuition": "Banach-space bijections are automatically topological isomorphisms.",
-        "notation": []
+        "formal": "Let $X,Y$ be Banach spaces over $\\mathbb K$ and let $T\\in\\mathcal B(X,Y)$ be a bijection. Then $T^{-1}\\in\\mathcal B(Y,X)$, that is, $$\\exists C\\in(0,\\infty)\\ \\forall y\\in Y:\\quad\\|T^{-1}y\\|_X\\leq C\\|y\\|_Y.$$ Equivalently, in terms of $T$ itself, there is $c>0$ with $\\|Tx\\|_Y\\geq c\\|x\\|_X$ for all $x\\in X$, so $T$ is bounded below and is a topological isomorphism.",
+        "intuition": "Banach-space bijections are automatically topological isomorphisms. Continuity of the inverse, which in general has to be assumed, comes for free from completeness of both spaces via the open mapping theorem.",
+        "gloss": "A corollary of the open mapping theorem, hence ultimately of Baire category; the completeness of both $X$ and $Y$ is what is really doing the work.",
+        "notation": [
+          "$T^{-1}$",
+          "$\\mathcal B(X,Y)$"
+        ]
       },
+      "examples": [
+        {
+          "content": "Let $X=(c_{00},\\|\\cdot\\|_\\infty)$, the finitely supported sequences, which is not complete, and define $T:X\\to X$ by $(Tx)_n=x_n/n$. Then $T$ is linear, bounded with $\\|T\\|=1$, and bijective onto $c_{00}$, but $T^{-1}$ given by $(T^{-1}y)_n=ny_n$ is unbounded, since $T^{-1}e_n=ne_n$. The conclusion fails precisely because $X$ is not Banach.",
+          "label": "Completeness cannot be dropped",
+          "role": "failure_mode"
+        },
+        {
+          "content": "For $T\\in\\mathcal B(X,Y)$ between Banach spaces, $T$ is invertible with bounded inverse if and only if $T$ is surjective and bounded below, i.e. $\\exists c>0\\ \\forall x:\\ \\|Tx\\|\\geq c\\|x\\|$. Bounded below alone gives injectivity and closed range, but not surjectivity.",
+          "label": "Equivalent formulation: bounded below",
+          "role": "example"
+        },
+        {
+          "content": "If a vector space is complete under two norms $\\|\\cdot\\|_1$ and $\\|\\cdot\\|_2$ and one dominates the other, say $\\|x\\|_2\\leq C\\|x\\|_1$, then applying the theorem to the identity map shows the norms are equivalent. Comparability plus completeness forces equivalence.",
+          "label": "Comparison of norms",
+          "role": "application"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/open-mapping.svg",
+      "assumptions": [
+        "$X$ and $Y$ are Banach spaces; completeness of both is required and neither can be dropped.",
+        "$T$ is linear, bounded, and bijective.",
+        "The result is a corollary of the open mapping theorem, which rests on the Baire category theorem."
+      ],
       "proof": {
         "steps": [
           {
@@ -3813,6 +4335,8 @@
         ]
       },
       "tags": [
+        "bounded",
+        "isomorphism",
         "open mapping"
       ],
       "priority": "core"
@@ -4418,6 +4942,11 @@
       "relation": "assumes"
     },
     {
+      "source": "bounded_inverse_theorem",
+      "target": "banach_space",
+      "relation": "assumes"
+    },
+    {
       "source": "bounded_linear_operator",
       "target": "normed_vector_space",
       "relation": "assumes"
@@ -4470,6 +4999,11 @@
     {
       "source": "eberlein_smulian_theorem",
       "target": "banach_space",
+      "relation": "assumes"
+    },
+    {
+      "source": "exercise_1_9",
+      "target": "normed_vector_space",
       "relation": "assumes"
     },
     {
@@ -4533,6 +5067,11 @@
       "relation": "assumes"
     },
     {
+      "source": "reflexivity_sequence_criterion",
+      "target": "banach_space",
+      "relation": "assumes"
+    },
+    {
       "source": "riesz_representation_c_k",
       "target": "compactness",
       "relation": "assumes"
@@ -4555,6 +5094,11 @@
     {
       "source": "uniform_boundedness_principle",
       "target": "pointwise_bounded_family_assumption",
+      "relation": "assumes"
+    },
+    {
+      "source": "weak_null_preserver_boundedness",
+      "target": "banach_space",
       "relation": "assumes"
     },
     {
@@ -4670,6 +5214,11 @@
     {
       "source": "banach_alaoglu_theorem",
       "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "banach_alaoglu_theorem",
+      "target": "normed_vector_space",
       "relation": "defined_in_terms_of"
     },
     {
@@ -5188,6 +5737,11 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "goldstine_theorem",
+      "target": "closed_unit_ball",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "hahn_banach_complex_normed_spaces",
       "target": "bounded_linear_functional",
       "relation": "defined_in_terms_of"
@@ -5575,6 +6129,21 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "riesz_lemma_noncompactness",
+      "target": "closed_unit_ball",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "riesz_lemma_noncompactness",
+      "target": "compactness",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "riesz_lemma_noncompactness",
+      "target": "normed_vector_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "riesz_representation_c_k",
       "target": "bounded_linear_operator",
       "relation": "defined_in_terms_of"
@@ -5740,6 +6309,11 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "tychonoff_theorem",
+      "target": "compactness",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "unbounded_scalar_multiples",
       "target": "norm",
       "relation": "defined_in_terms_of"
@@ -5815,6 +6389,11 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "weak_null_preserver_boundedness",
+      "target": "bounded_linear_operator",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "weak_star_convergence",
       "target": "convergence",
       "relation": "defined_in_terms_of"
@@ -5822,6 +6401,11 @@
     {
       "source": "weak_star_convergence",
       "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_star_convergence",
+      "target": "linear_functional",
       "relation": "defined_in_terms_of"
     },
     {
@@ -5836,12 +6420,22 @@
     },
     {
       "source": "weak_star_topology",
+      "target": "continuity",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_star_topology",
       "target": "dual_space",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "weak_star_topology",
       "target": "weak_topology",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_topology",
+      "target": "continuity",
       "relation": "defined_in_terms_of"
     },
     {
@@ -6068,6 +6662,11 @@
     {
       "source": "operator",
       "target": "nonlinear_operator",
+      "relation": "generalizes"
+    },
+    {
+      "source": "riesz_lemma_noncompactness",
+      "target": "noncompact_closed_unit_ball_in_infinite_dimensions",
       "relation": "generalizes"
     },
     {
@@ -6521,8 +7120,38 @@
       "relation": "related_to"
     },
     {
+      "source": "banach_alaoglu_theorem",
+      "target": "eberlein_smulian_theorem",
+      "relation": "related_to"
+    },
+    {
+      "source": "banach_alaoglu_theorem",
+      "target": "goldstine_theorem",
+      "relation": "related_to"
+    },
+    {
+      "source": "banach_alaoglu_theorem",
+      "target": "noncompact_closed_unit_ball_in_infinite_dimensions",
+      "relation": "related_to"
+    },
+    {
+      "source": "banach_alaoglu_theorem",
+      "target": "reflexive_space",
+      "relation": "related_to"
+    },
+    {
+      "source": "banach_alaoglu_theorem",
+      "target": "riesz_lemma_noncompactness",
+      "relation": "related_to"
+    },
+    {
       "source": "compact_self_adjoint_eigenvalues",
       "target": "spectral_theorem",
+      "relation": "related_to"
+    },
+    {
+      "source": "goldstine_theorem",
+      "target": "reflexive_space",
       "relation": "related_to"
     },
     {
@@ -6553,6 +7182,41 @@
     {
       "source": "uniform_boundedness_principle",
       "target": "open_mapping_theorem",
+      "relation": "related_to"
+    },
+    {
+      "source": "weak_compactness_results",
+      "target": "riesz_lemma_noncompactness",
+      "relation": "related_to"
+    },
+    {
+      "source": "weak_convergence",
+      "target": "weakly_bounded_implies_norm_bounded",
+      "relation": "related_to"
+    },
+    {
+      "source": "weak_star_convergence",
+      "target": "reflexive_space",
+      "relation": "related_to"
+    },
+    {
+      "source": "weak_star_convergence",
+      "target": "weak_convergence",
+      "relation": "related_to"
+    },
+    {
+      "source": "weak_star_topology",
+      "target": "locally_convex_space",
+      "relation": "related_to"
+    },
+    {
+      "source": "weak_star_topology",
+      "target": "reflexive_space",
+      "relation": "related_to"
+    },
+    {
+      "source": "weak_topology",
+      "target": "locally_convex_space",
       "relation": "related_to"
     },
     {
@@ -6662,6 +7326,16 @@
     },
     {
       "source": "banach_alaoglu_theorem",
+      "target": "operator_norm",
+      "relation": "uses"
+    },
+    {
+      "source": "banach_alaoglu_theorem",
+      "target": "tychonoff_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "banach_alaoglu_theorem",
       "target": "weak_topology",
       "relation": "uses"
     },
@@ -6673,6 +7347,11 @@
     {
       "source": "bounded_inverse_theorem",
       "target": "open_mapping_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "bounded_inverse_theorem",
+      "target": "operator_norm",
       "relation": "uses"
     },
     {
@@ -7002,6 +7681,11 @@
     },
     {
       "source": "reflexivity_sequence_criterion",
+      "target": "canonical_embedding_isometry",
+      "relation": "uses"
+    },
+    {
+      "source": "reflexivity_sequence_criterion",
       "target": "eberlein_smulian_theorem",
       "relation": "uses"
     },
@@ -7013,6 +7697,11 @@
     {
       "source": "reflexivity_sequence_criterion",
       "target": "reflexive_space",
+      "relation": "uses"
+    },
+    {
+      "source": "reflexivity_sequence_criterion",
+      "target": "weak_convergence",
       "relation": "uses"
     },
     {
@@ -7071,6 +7760,11 @@
       "relation": "uses"
     },
     {
+      "source": "tychonoff_theorem",
+      "target": "axiom_of_choice",
+      "relation": "uses"
+    },
+    {
       "source": "unbounded_scalar_multiples",
       "target": "scalar_limit_to_infinity",
       "relation": "uses"
@@ -7101,6 +7795,21 @@
       "relation": "uses"
     },
     {
+      "source": "weak_compactness_results",
+      "target": "eberlein_smulian_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "weak_compactness_results",
+      "target": "reflexive_space",
+      "relation": "uses"
+    },
+    {
+      "source": "weak_null_preserver_boundedness",
+      "target": "operator_norm",
+      "relation": "uses"
+    },
+    {
       "source": "weak_null_preserver_boundedness",
       "target": "weak_convergence",
       "relation": "uses"
@@ -7108,6 +7817,11 @@
     {
       "source": "weak_null_preserver_boundedness",
       "target": "weakly_bounded_implies_norm_bounded",
+      "relation": "uses"
+    },
+    {
+      "source": "weak_topology",
+      "target": "hahn_banach_theorem",
       "relation": "uses"
     },
     {
