@@ -1480,6 +1480,44 @@
       "priority": "core"
     },
     {
+      "id": "hoelder_inequality",
+      "kind": "theorem",
+      "domain": "spaces_norms",
+      "label": "Hoelder's inequality",
+      "content": {
+        "statement": "The integral of a product is bounded by the product of the conjugate-exponent norms.",
+        "formal": "Let $(\\Omega,\\mathcal A,\\mu)$ be a measure space and let $p,q\\in[1,\\infty]$ be conjugate exponents, $\\frac1p+\\frac1q=1$. Then for all measurable $f,g$, $$\\int_\\Omega|fg|\\,d\\mu\\leq\\|f\\|_p\\,\\|g\\|_q,$$ so $f\\in L^p$ and $g\\in L^q$ imply $fg\\in L^1$. For $p=q=2$ this is the Cauchy-Schwarz inequality. Equality holds if and only if $|f|^p$ and $|g|^q$ are proportional almost everywhere (for $1<p<\\infty$).",
+        "intuition": "The conjugate relation $\\frac1p+\\frac1q=1$ is exactly the balance making the product integrable: whatever integrability one factor lacks, the other must supply. It is the inequality that makes the pairing $(f,g)\\mapsto\\int f\\overline g$ bounded, hence the reason $L^q$ embeds into $(L^p)^*$.",
+        "gloss": "Everything compared here is a number: both sides are extended reals in $[0,\\infty]$.",
+        "notation": [
+          "$\\frac1p+\\frac1q=1$",
+          "$\\|fg\\|_1\\leq\\|f\\|_p\\|g\\|_q$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "If $\\frac1p+\\frac1q<1$ the inequality fails in general. On $\\Omega=(0,1)$ with Lebesgue measure take $f(t)=g(t)=t^{-1/2}$, which lies in $L^p$ for $p<2$; for $p=q=3/2$ the product $fg(t)=t^{-1}$ is not integrable, while both norms are finite.",
+          "label": "Conjugacy cannot be relaxed",
+          "role": "failure_mode"
+        },
+        {
+          "content": "Minkowski's inequality $\\|f+g\\|_p\\leq\\|f\\|_p+\\|g\\|_p$ is proved by applying Hoelder to $\\int|f+g|^{p-1}|f|$ and $\\int|f+g|^{p-1}|g|$, using that $(p-1)q=p$. So Hoelder is what makes $\\|\\cdot\\|_p$ a norm.",
+          "label": "Gives the triangle inequality for $\\|\\cdot\\|_p$",
+          "role": "application"
+        }
+      ],
+      "assumptions": [
+        "$(\\Omega,\\mathcal A,\\mu)$ is a measure space; no $\\sigma$-finiteness is needed.",
+        "$p,q$ are conjugate: $\\frac1p+\\frac1q=1$, with the conventions $1/\\infty=0$."
+      ],
+      "tags": [
+        "L^p",
+        "inequality",
+        "norm"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "incomplete_normed_spaces_as_non_examples_of_banach_spaces",
       "kind": "counterexample",
       "domain": "spaces_norms",
@@ -2419,19 +2457,40 @@
       "domain": "duality_weak_topologies",
       "label": "Adjoint operator",
       "content": {
-        "definition": "For $T:X\\to Y$, the map $T^*:Y^*\\to X^*$ defined by composition with $T$.",
-        "formal": "$\\langle T^* y^*, x \\rangle = \\langle y^*, Tx \\rangle$.",
-        "intuition": "Move $T$ from vectors to scalar probes by precomposition.",
+        "definition": "The Banach-space adjoint of $T\\in\\mathcal B(X,Y)$ is the operator $T^*\\in\\mathcal B(Y^*,X^*)$ obtained by precomposition with $T$: it sends a functional on $Y$ to a functional on $X$.",
+        "formal": "Let $X,Y$ be normed spaces over $\\mathbb K$ and $T\\in\\mathcal B(X,Y)$. Define $$T^*:Y^*\\to X^*,\\qquad T^*y^*=y^*\\circ T,$$ that is, $$(T^*y^*)(x)=y^*(Tx)\\qquad\\text{for all }x\\in X,\\ y^*\\in Y^*.$$ In the duality pairing $\\langle x^*,x\\rangle:=x^*(x)$ this reads $$\\langle T^*y^*,x\\rangle=\\langle y^*,Tx\\rangle.$$ The map $T\\mapsto T^*$ is linear, and isometric: $\\|T^*\\|=\\|T\\|$.",
+        "intuition": "Move $T$ from vectors to scalar probes by precomposition. A probe on the target becomes a probe on the source by first applying $T$ and then measuring.",
+        "gloss": "Type discipline: $T^*$ acts on functionals, not on vectors. It goes $Y^*\\to X^*$, reversing the arrow. The pairing $\\langle\\cdot,\\cdot\\rangle$ here is the bilinear duality pairing, not an inner product, and no conjugation occurs. This is a different construction from the Hilbert adjoint, which acts $Y\\to X$ on vectors and is conjugate-linear in $T$.",
         "notation": [
-          "$T^*$"
+          "$T^*:Y^*\\to X^*$",
+          "$(T^*y^*)(x)=y^*(Tx)$",
+          "$\\langle x^*,x\\rangle=x^*(x)$"
         ]
       },
+      "examples": [
+        {
+          "content": "$\\|T^*\\|=\\|T\\|$ holds for every $T\\in\\mathcal B(X,Y)$. The inequality $\\|T^*\\|\\leq\\|T\\|$ is direct from $|(T^*y^*)(x)|\\leq\\|y^*\\|\\|T\\|\\|x\\|$; the reverse uses Hahn-Banach to pick a norming functional for $Tx$.",
+          "label": "It is isometric",
+          "role": "example"
+        },
+        {
+          "content": "On a Hilbert space the two notions are related but not equal. The Banach adjoint is $T^*:H^*\\to H^*$ and is linear in $T$; the Hilbert adjoint is $T^*:H\\to H$ characterised by $\\langle Tx,y\\rangle=\\langle x,T^*y\\rangle$, and satisfies $(\\lambda T)^*=\\overline{\\lambda}T^*$. They correspond under the Riesz map, and the conjugation appears precisely because that map is conjugate-linear.",
+          "label": "Contrast with the Hilbert adjoint",
+          "role": "failure_mode"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/adjoint-operator.svg",
+      "assumptions": [
+        "$X,Y$ are normed spaces over the same field $\\mathbb K$; completeness is not required.",
+        "$T$ is bounded and linear, which is what makes $y^*\\circ T$ continuous.",
+        "The pairing is the duality pairing between $X^*$ and $X$, not an inner product."
+      ],
       "tags": [
+        "adjoint",
         "duality",
         "operator"
       ],
-      "priority": "standard"
+      "priority": "core"
     },
     {
       "id": "banach_alaoglu_theorem",
@@ -2808,6 +2867,52 @@
       "priority": "core"
     },
     {
+      "id": "l_p_duality",
+      "kind": "theorem",
+      "domain": "duality_weak_topologies",
+      "label": "Duality of $L^p$ spaces",
+      "content": {
+        "statement": "For conjugate exponents with $1\\leq p<\\infty$, the dual of $L^p$ is isometrically isomorphic to $L^q$, with functionals given by integration against a function.",
+        "formal": "Let $(\\Omega,\\mathcal A,\\mu)$ be a $\\sigma$-finite measure space, $1\\leq p<\\infty$, and let $q$ be the conjugate exponent, $$\\frac1p+\\frac1q=1,\\qquad q=\\infty\\ \\text{when}\\ p=1.$$ Then the map $$\\Lambda:L^q(\\mu)\\to L^p(\\mu)^*,\\qquad (\\Lambda g)(f)=\\int_\\Omega f\\,\\overline{g}\\,d\\mu,$$ is a bijective isometry, so $$L^p(\\mu)^*\\cong L^q(\\mu),\\qquad\\|\\Lambda g\\|_{(L^p)^*}=\\|g\\|_q.$$ For sequence spaces this reads $(\\ell^p)^*\\cong\\ell^q$.",
+        "intuition": "Every continuous probe on $L^p$ is integration against a function from the conjugate space, and Holder's inequality is exactly the statement that such integration is bounded. The exponent $q$ is forced: it is the unique one making the pairing bounded for all $f$.",
+        "gloss": "The case $p=q=2$ is the Riesz representation theorem for the Hilbert space $L^2$, the one point where the space is its own dual.",
+        "notation": [
+          "$\\frac1p+\\frac1q=1$",
+          "$(L^p)^*\\cong L^q$",
+          "$(\\ell^p)^*\\cong\\ell^q$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "The theorem requires $p<\\infty$. It is false that $(L^\\infty)^*\\cong L^1$: the dual of $L^\\infty$ is strictly larger, containing functionals such as a Banach limit or, on $\\ell^\\infty$, extensions of the limit functional from $c$ obtained by Hahn-Banach, which are not given by any $\\ell^1$ sequence. Consequently $(\\ell^1)^*\\cong\\ell^\\infty$ holds while $(\\ell^\\infty)^*\\cong\\ell^1$ fails, and this asymmetry is why $\\ell^1$ is not reflexive.",
+          "label": "$p=\\infty$ is excluded",
+          "role": "failure_mode"
+        },
+        {
+          "content": "Applying the theorem twice gives $(L^p)^{**}\\cong(L^q)^*\\cong L^p$, and the composite is the canonical embedding, so $L^p$ is reflexive for $1<p<\\infty$. It fails for $p=1$ and $p=\\infty$, which is exactly why bounded sequences in $L^1$ need not have weakly convergent subsequences.",
+          "label": "Reflexivity for $1<p<\\infty$",
+          "role": "application"
+        },
+        {
+          "content": "For $p=1$ the hypothesis of $\\sigma$-finiteness is needed: on a non-$\\sigma$-finite measure space $(L^1)^*$ can be strictly larger than $L^\\infty$. For $1<p<\\infty$ the result holds without it.",
+          "label": "$\\sigma$-finiteness",
+          "role": "failure_mode"
+        }
+      ],
+      "assumptions": [
+        "$(\\Omega,\\mathcal A,\\mu)$ is a measure space, $\\sigma$-finite when $p=1$.",
+        "$1\\leq p<\\infty$; the case $p=\\infty$ is genuinely excluded.",
+        "$q$ is the conjugate exponent defined by $1/p+1/q=1$."
+      ],
+      "tags": [
+        "L^p",
+        "duality",
+        "representation",
+        "riesz representation"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "eberlein_smulian_theorem",
       "kind": "theorem",
       "domain": "duality_weak_topologies",
@@ -2915,16 +3020,44 @@
       "domain": "duality_weak_topologies",
       "label": "Riesz Representation Theorem for C(K)",
       "content": {
-        "statement": "The dual of C(K) is the space of finite Borel measures on K.",
+        "statement": "Every continuous linear functional on $C(K)$ is integration against a unique regular Borel measure, isometrically.",
         "formal": "Let $K$ be a compact Hausdorff space and $C(K)$ the space of continuous $\\mathbb K$-valued functions with the supremum norm. Then $$C(K)^*\\cong M(K),$$ where $M(K)$ is the space of regular Borel measures on $K$ of finite total variation: every $\\varphi\\in C(K)^*$ is represented by a unique $\\mu\\in M(K)$ via $$\\varphi(f)=\\int_K f\\,d\\mu\\qquad\\text{for all }f\\in C(K),$$ and the correspondence is isometric, $$\\|\\varphi\\|_{C(K)^*}=|\\mu|(K).$$",
-        "intuition": "Every continuous scalar probe on C(K) is integration against a measure.",
+        "intuition": "Every continuous scalar probe on $C(K)$ is integration against a measure. Where the Hilbert version identifies the dual with the space itself, here the dual is a genuinely different object: functions in, measures out. The norm of the functional is the total mass of the measure.",
+        "gloss": "Type discipline: $f\\in C(K)$ is a function, $\\varphi\\in C(K)^*$ is a functional, $\\mu\\in M(K)$ is a measure, and $|\\mu|(K)$ is a number. The theorem is an isometric isomorphism between the second and third of these.",
         "notation": [
-          "C(K)^*=M(K)"
+          "$C(K)^*\\cong M(K)$",
+          "$\\varphi(f)=\\int_K f\\,d\\mu$",
+          "$|\\mu|(K)$"
         ]
       },
+      "examples": [
+        {
+          "content": "For $t\\in K$ the evaluation functional $\\varphi(f)=f(t)$ is continuous with $\\|\\varphi\\|=1$, and corresponds to the Dirac measure $\\delta_t$, since $\\int_Kf\\,d\\delta_t=f(t)$ and $|\\delta_t|(K)=1$.",
+          "label": "Point evaluation is a Dirac measure",
+          "role": "example"
+        },
+        {
+          "content": "Without restricting to regular measures the correspondence is not injective: on a non-metrizable compact Hausdorff space distinct Borel measures can integrate all continuous functions identically. Regularity, i.e. inner approximation by compacts and outer approximation by opens, is what pins down $\\mu$ uniquely. When $K$ is compact metric every finite Borel measure is automatically regular, which is why the hypothesis is invisible in the Bowers-Kalton version.",
+          "label": "Regularity is needed for uniqueness",
+          "role": "failure_mode"
+        },
+        {
+          "content": "Combining with Banach-Alaoglu: for $K$ compact metric, $C(K)$ is separable, so $B_{M(K)}$ is weak-star compact and metrizable. Every sequence of probability measures on $K$ therefore has a subsequence converging weak-star, which is Prokhorov-type compactness obtained purely by duality.",
+          "label": "Source of weak-star compactness for measures",
+          "role": "application"
+        },
+        {
+          "content": "For $K=[0,1]$ the bidual $C(K)^{**}=M(K)^*$ is strictly larger than $C(K)$, since $M(K)$ contains $\\delta_t$ for every $t$ and $M(K)^*$ contains functionals not given by continuous functions. So $C[0,1]$ is a standard non-reflexive space, and bounded sequences in it need not have weakly convergent subsequences.",
+          "label": "$C(K)$ is not reflexive",
+          "role": "example"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/riesz-representation.svg",
       "assumptions": [
-        "K is compact metric, in the Bowers-Kalton version."
+        "$K$ is a compact Hausdorff space; in the Bowers-Kalton version $K$ is compact metric, where regularity is automatic.",
+        "$C(K)$ carries the supremum norm $\\|f\\|_\\infty=\\sup_{t\\in K}|f(t)|$.",
+        "$M(K)$ consists of regular Borel measures of finite total variation, normed by $\\|\\mu\\|=|\\mu|(K)$.",
+        "Regularity is required for uniqueness of the representing measure."
       ],
       "source": {
         "citation": "Bowers-Kalton Theorem 2.20",
@@ -2934,9 +3067,10 @@
         "C(K)",
         "duality",
         "measures",
+        "representation",
         "riesz representation"
       ],
-      "priority": "peripheral"
+      "priority": "core"
     },
     {
       "id": "reflexivity_sequence_criterion",
@@ -3477,6 +3611,71 @@
       "priority": "core"
     },
     {
+      "id": "cauchy_schwarz_inequality",
+      "kind": "theorem",
+      "domain": "hilbert_spectral",
+      "label": "Cauchy-Schwarz inequality",
+      "content": {
+        "statement": "The modulus of an inner product is bounded by the product of the norms, with equality exactly for linearly dependent vectors.",
+        "formal": "Let $(H,\\langle\\cdot,\\cdot\\rangle)$ be an inner product space over $\\mathbb K$. Then $$\\forall x,y\\in H:\\quad|\\langle x,y\\rangle|\\leq\\|x\\|\\,\\|y\\|,\\qquad\\|x\\|=\\sqrt{\\langle x,x\\rangle},$$ with equality if and only if $x$ and $y$ are linearly dependent.",
+        "intuition": "An inner product cannot exceed what the two lengths allow; the deficit measures the angle between the vectors. It is the inequality that makes $\\sqrt{\\langle x,x\\rangle}$ satisfy the triangle inequality, hence be a norm at all.",
+        "gloss": "Everything is a number here: $\\langle x,y\\rangle$ is a scalar, $|\\langle x,y\\rangle|$ and the two norms are non-negative reals. Completeness plays no role.",
+        "notation": [
+          "$|\\langle x,y\\rangle|\\leq\\|x\\|\\|y\\|$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "The triangle inequality follows: $\\|x+y\\|^2=\\|x\\|^2+2\\operatorname{Re}\\langle x,y\\rangle+\\|y\\|^2\\leq\\|x\\|^2+2\\|x\\|\\|y\\|+\\|y\\|^2=(\\|x\\|+\\|y\\|)^2$. Without Cauchy-Schwarz, $\\sqrt{\\langle x,x\\rangle}$ is not known to be a norm.",
+          "label": "It is what makes the induced norm a norm",
+          "role": "application"
+        },
+        {
+          "content": "For fixed $y$, the map $x\\mapsto\\langle x,y\\rangle$ is a bounded linear functional of norm exactly $\\|y\\|$, by Cauchy-Schwarz for the upper bound and $x=y$ for attainment. This is the easy half of the Riesz representation theorem.",
+          "label": "Continuity of the inner product",
+          "role": "application"
+        }
+      ],
+      "assumptions": [
+        "$(H,\\langle\\cdot,\\cdot\\rangle)$ is an inner product space; completeness is not required.",
+        "Positive definiteness of the inner product is used for the case $y\\neq0$ and for the equality condition."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "degenerate case",
+            "content": "If $y=0$ then both sides are $0$. Assume $y\\neq0$, so $\\langle y,y\\rangle>0$ by positive definiteness.",
+            "uses": [
+              "inner_product_space"
+            ]
+          },
+          {
+            "role": "expand a well-chosen square",
+            "content": "Put $\\lambda=\\dfrac{\\langle x,y\\rangle}{\\langle y,y\\rangle}$ and expand, using linearity in the first slot and conjugate-linearity in the second: $$0\\leq\\|x-\\lambda y\\|^2=\\langle x,x\\rangle-\\overline{\\lambda}\\langle x,y\\rangle-\\lambda\\overline{\\langle x,y\\rangle}+|\\lambda|^2\\langle y,y\\rangle=\\|x\\|^2-\\frac{|\\langle x,y\\rangle|^2}{\\|y\\|^2}.$$",
+            "uses": [
+              "inner_product_space",
+              "norm"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "Rearranging gives $|\\langle x,y\\rangle|^2\\leq\\|x\\|^2\\|y\\|^2$, and taking square roots gives the inequality. Equality holds exactly when $\\|x-\\lambda y\\|=0$, i.e. $x=\\lambda y$, which is linear dependence.",
+            "uses": [
+              "norm",
+              "inner_product_space"
+            ]
+          }
+        ]
+      },
+      "tags": [
+        "hilbert",
+        "inequality",
+        "inner product",
+        "norm"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "compact_self_adjoint_operator_assumption",
       "kind": "assumption",
       "domain": "hilbert_spectral",
@@ -3550,23 +3749,56 @@
       "domain": "hilbert_spectral",
       "label": "Hilbert projection theorem",
       "content": {
-        "statement": "Every point in a Hilbert space has a unique nearest point in a nonempty closed convex subset.",
-        "formal": "For closed convex C subset H and x in H, there is unique c in C minimizing ||x-c||.",
-        "intuition": "Orthogonal projection is the engine of Hilbert space geometry.",
-        "notation": []
+        "statement": "Every point of a Hilbert space has a unique nearest point in any nonempty closed convex subset.",
+        "formal": "Let $H$ be a Hilbert space, $C\\subseteq H$ nonempty, closed and convex, and $x\\in H$. Then $$\\exists!\\,c_0\\in C:\\quad\\|x-c_0\\|=\\operatorname{dist}(x,C)=\\inf_{c\\in C}\\|x-c\\|.$$ When $C=M$ is a closed subspace, the nearest point map $P_M:H\\to M$ is linear, satisfies $P_M^2=P_M$, $\\|P_M\\|\\leq1$, and yields the orthogonal decomposition $$H=M\\oplus M^\\perp,\\qquad x=P_Mx+(x-P_Mx),\\quad x-P_Mx\\in M^\\perp.$$",
+        "intuition": "Orthogonal projection is the engine of Hilbert space geometry. The inner product makes the distance function strictly convex through the parallelogram identity, so a minimiser cannot be attained twice, and completeness guarantees the minimising sequence actually converges.",
+        "gloss": "This is the existence result the Riesz representation theorem runs on: it is what produces a nonzero vector orthogonal to a closed proper subspace.",
+        "notation": [
+          "$P_M$",
+          "$M^\\perp$",
+          "$\\operatorname{dist}(x,C)$"
+        ]
       },
+      "examples": [
+        {
+          "content": "Without convexity uniqueness fails: in $H=\\mathbb R^2$ take $C=\\{(x,y):x^2+y^2=1\\}$, the unit circle, which is closed and nonempty but not convex. The point $x=(0,0)$ is at distance $1$ from every point of $C$, so the nearest point is not unique. Existence can also fail in infinite dimensions for closed non-convex sets.",
+          "label": "Convexity is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "Take $C=\\{y\\in H:\\|y\\|<1\\}$, the open unit ball, which is convex but not closed, and $x$ with $\\|x\\|=2$. Then $\\operatorname{dist}(x,C)=1$ but no point of $C$ attains it, since the infimum is approached only as $\\|y\\|\\to1$.",
+          "label": "Closedness is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "In an incomplete inner product space the minimising sequence is Cauchy but need not converge. In $c_{00}$ with the $\\ell^2$ inner product, the closed convex set $C=\\{y\\in c_{00}:\\sum_n y_n/n=1\\}$ admits a minimising sequence for the distance to $0$ whose limit lies in $\\ell^2\\setminus c_{00}$, so no minimiser exists in the space.",
+          "label": "Completeness is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "The result is genuinely Hilbertian, since the parallelogram identity characterises inner product norms. In $(\\mathbb R^2,\\|\\cdot\\|_\\infty)$ with $C=\\{(t,0):t\\in[-1,1]\\}$ closed and convex, the point $(0,1)$ is at distance $1$ from every point of $C$, so uniqueness fails.",
+          "label": "Fails in general Banach spaces",
+          "role": "failure_mode"
+        }
+      ],
+      "assumptions": [
+        "$H$ is a Hilbert space; completeness is used to converge the minimising sequence.",
+        "$C$ is nonempty, closed and convex; each of the three is load-bearing.",
+        "The norm comes from an inner product, so the parallelogram identity is available."
+      ],
       "proof": {
         "steps": [
           {
-            "role": "minimizing sequence",
-            "content": "Let $C$ be nonempty, closed, and convex. Choose a sequence $(c_n)$ in $C$ such that $\\|x-c_n\\|\\to\\inf_{c\\in C}\\|x-c\\|$.",
+            "role": "minimising sequence",
+            "content": "Let $d=\\inf_{c\\in C}\\|x-c\\|$, finite since $C\\neq\\emptyset$. By definition of infimum choose $(c_n)\\subseteq C$ with $\\|x-c_n\\|\\to d$.",
             "uses": [
-              "convergence"
+              "convergence",
+              "norm"
             ]
           },
           {
-            "role": "parallelogram argument",
-            "content": "The parallelogram identity and convexity imply that $(c_n)$ is Cauchy.",
+            "role": "parallelogram estimate",
+            "content": "Apply the parallelogram identity $\\|a+b\\|^2+\\|a-b\\|^2=2\\|a\\|^2+2\\|b\\|^2$ to $a=x-c_n$, $b=x-c_m$: $$\\|2x-(c_n+c_m)\\|^2+\\|c_m-c_n\\|^2=2\\|x-c_n\\|^2+2\\|x-c_m\\|^2.$$ Since $C$ is convex, $\\tfrac{1}{2}(c_n+c_m)\\in C$, so $\\|2x-(c_n+c_m)\\|^2=4\\|x-\\tfrac{1}{2}(c_n+c_m)\\|^2\\geq4d^2$. Rearranging, $$\\|c_m-c_n\\|^2\\leq2\\|x-c_n\\|^2+2\\|x-c_m\\|^2-4d^2\\xrightarrow[n,m\\to\\infty]{}2d^2+2d^2-4d^2=0.$$ Hence $(c_n)$ is Cauchy. Convexity is used exactly here.",
             "uses": [
               "inner_product_space",
               "cauchy_sequence"
@@ -3574,26 +3806,36 @@
           },
           {
             "role": "existence",
-            "content": "Completeness of the Hilbert space gives $c_n\\to c$, and closedness of $C$ gives $c\\in C$.",
+            "content": "Completeness of $H$ gives $c_n\\to c_0$ for some $c_0\\in H$, and closedness of $C$ gives $c_0\\in C$. Continuity of the norm gives $\\|x-c_0\\|=\\lim_n\\|x-c_n\\|=d$.",
             "uses": [
               "hilbert_space",
-              "completeness"
+              "completeness",
+              "closed_subspace"
             ]
           },
           {
             "role": "uniqueness",
-            "content": "If two distinct minimizers existed, their midpoint would lie in $C$ and the parallelogram identity would give a strictly smaller distance.",
+            "content": "If $c_0,c_1\\in C$ both attain $d$, the same parallelogram estimate with $c_n=c_0$, $c_m=c_1$ gives $\\|c_1-c_0\\|^2\\leq2d^2+2d^2-4d^2=0$, so $c_0=c_1$.",
             "uses": [
               "inner_product_space"
+            ]
+          },
+          {
+            "role": "orthogonality in the subspace case",
+            "content": "Let $C=M$ be a closed subspace and $u=x-P_Mx$. For any $m\\in M$ and $t\\in\\mathbb K$ minimality gives $\\|u\\|^2\\leq\\|u-tm\\|^2=\\|u\\|^2-2\\operatorname{Re}\\big(\\overline{t}\\langle u,m\\rangle\\big)+|t|^2\\|m\\|^2$. Choosing $t=s\\langle u,m\\rangle$ with $s>0$ small forces $|\\langle u,m\\rangle|^2\\leq s\\,|\\langle u,m\\rangle|^2\\|m\\|^2/2$ in the limit, hence $\\langle u,m\\rangle=0$. So $u\\in M^\\perp$ and $H=M\\oplus M^\\perp$.",
+            "uses": [
+              "inner_product_space",
+              "orthogonal_complement"
             ]
           }
         ]
       },
       "tags": [
+        "convexity",
         "hilbert",
         "projection"
       ],
-      "priority": "standard"
+      "priority": "core"
     },
     {
       "id": "hilbert_space",
@@ -3616,62 +3858,170 @@
       "priority": "core"
     },
     {
+      "id": "hilbert_adjoint_operator",
+      "kind": "construction",
+      "domain": "hilbert_spectral",
+      "label": "Hilbert-space adjoint",
+      "content": {
+        "definition": "The Hilbert adjoint of a bounded operator between Hilbert spaces is the unique bounded operator moving the operator across the inner product.",
+        "formal": "Let $H,K$ be Hilbert spaces and $T\\in\\mathcal B(H,K)$. There is a unique $T^*\\in\\mathcal B(K,H)$ with $$\\forall x\\in H\\ \\forall y\\in K:\\quad\\langle Tx,y\\rangle_K=\\langle x,T^*y\\rangle_H.$$ Existence: for fixed $y\\in K$ the map $x\\mapsto\\langle Tx,y\\rangle_K$ is a bounded linear functional on $H$, so by the Riesz representation theorem there is a unique vector, called $T^*y$, representing it. Properties: $$\\|T^*\\|=\\|T\\|,\\qquad T^{**}=T,\\qquad (\\lambda T)^*=\\overline{\\lambda}\\,T^*,\\qquad \\|T^*T\\|=\\|T\\|^2.$$",
+        "intuition": "The infinite-dimensional conjugate transpose. Where the Banach adjoint reroutes probes, the Hilbert adjoint stays among vectors, because Riesz lets every probe be named by a vector.",
+        "gloss": "Type discipline: this $T^*$ maps $K\\to H$, i.e. vectors to vectors, unlike the Banach adjoint $Y^*\\to X^*$ which maps functionals to functionals. The map $T\\mapsto T^*$ is conjugate-linear, and the conjugation is inherited from the conjugate-linearity of the Riesz map.",
+        "notation": [
+          "$T^*\\in\\mathcal B(K,H)$",
+          "$\\langle Tx,y\\rangle=\\langle x,T^*y\\rangle$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "For $H=K=\\mathbb C^n$ with the standard inner product and $T$ given by a matrix $A$, the adjoint is the conjugate transpose $A^*=\\overline{A}^{\\,\\mathsf T}$. Self-adjointness $T=T^*$ is Hermitian symmetry.",
+          "label": "Matrices",
+          "role": "example"
+        },
+        {
+          "content": "$\\ker T^*=(\\operatorname{ran}T)^\\perp$ and $\\overline{\\operatorname{ran}T}=(\\ker T^*)^\\perp$. These are the Hilbert-space form of the rank-nullity relations and are the standard tool for deciding solvability of $Tx=y$.",
+          "label": "Kernel and range relation",
+          "role": "application"
+        },
+        {
+          "content": "Existence of $T^*$ is not automatic; it is exactly one application of the Riesz representation theorem per vector $y\\in K$. On an incomplete inner product space the adjoint may fail to exist, since the representing vector need not lie in the space.",
+          "label": "Depends on Riesz representation",
+          "role": "application"
+        }
+      ],
+      "assumptions": [
+        "$H,K$ are Hilbert spaces; completeness is used through the Riesz representation theorem.",
+        "$T$ is bounded; unbounded operators have adjoints only under densely-defined domain conditions."
+      ],
+      "tags": [
+        "adjoint",
+        "hilbert",
+        "operator"
+      ],
+      "priority": "core"
+    },
+    {
       "id": "riesz_representation_theorem",
       "kind": "theorem",
       "domain": "hilbert_spectral",
       "label": "Hilbert-space Riesz Representation Theorem",
       "content": {
-        "statement": "Every continuous linear functional on a Hilbert space is inner product with a unique vector.",
-        "formal": "For every f in H*, there exists unique y in H such that f(x)=<x,y> for all x in H and ||f||=||y||.",
-        "intuition": "The dual of a Hilbert space is the Hilbert space itself, anti-linearly or linearly depending on convention.",
-        "notation": []
+        "statement": "Every continuous linear functional on a Hilbert space is given by the inner product against a unique vector, and the correspondence is isometric.",
+        "formal": "Let $H$ be a Hilbert space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ with inner product linear in the first slot. Then $$\\forall f\\in H^*\\ \\exists!\\,y\\in H\\ \\forall x\\in H:\\quad f(x)=\\langle x,y\\rangle,$$ and moreover $\\|f\\|_{H^*}=\\|y\\|_H$. The vector $y$ is quantified before $x$, so one $y$ serves every $x$. The induced map $$R:H^*\\to H,\\qquad R(f)=y,$$ is a bijective isometry which is linear when $\\mathbb K=\\mathbb R$ and conjugate-linear when $\\mathbb K=\\mathbb C$, since $\\overline{\\lambda}$ appears on pulling a scalar out of the second slot.",
+        "intuition": "A Hilbert space is its own dual. Every continuous scalar probe on $H$ is already realised by a vector of $H$ measuring against it, so no genuinely new objects appear in $H^*$. The proof finds that vector: $f$ kills a closed hyperplane, and the direction orthogonal to that hyperplane, correctly scaled, is the representing vector.",
+        "gloss": "Type check: $f$ is a functional on $H$, $y$ is an element of $H$, $\\langle x,y\\rangle$ is a scalar. The theorem identifies two different kinds of object via $R$, and it is $R$ that is conjugate-linear, not the inner product.",
+        "notation": [
+          "$f(x)=\\langle x,y\\rangle$",
+          "$R:H^*\\to H$",
+          "$\\ker f$"
+        ]
       },
+      "examples": [
+        {
+          "content": "The theorem fails on incomplete inner product spaces, because the projection theorem needs completeness to produce the orthogonal direction. Take $H_0=c_{00}\\subseteq\\ell^2$, the finitely supported sequences, and $$f(x)=\\sum_{n=1}^\\infty\\frac{x_n}{n},$$ a finite sum for each $x\\in H_0$, so $f$ is well defined, linear and bounded with $\\|f\\|=\\|(1/n)_n\\|_2$. Any representing vector would have to be $y=(1/n)_{n\\in\\mathbb N}$, which lies in $\\ell^2$ but not in $H_0$. So no $y\\in H_0$ represents $f$.",
+          "label": "Completeness is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "For a discontinuous linear functional the kernel is dense rather than closed, so $(\\ker f)^\\perp=\\{0\\}$ and step three produces nothing. On any infinite-dimensional Hilbert space a Hamel basis yields an unbounded linear functional, and no vector represents it: $y$ would make $f=\\langle\\cdot,y\\rangle$ bounded by Cauchy-Schwarz.",
+          "label": "Continuity is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "For $\\mathbb K=\\mathbb C$ and $\\lambda\\in\\mathbb C$, the functional $\\lambda f$ is represented by $\\overline{\\lambda}y$, since $(\\lambda f)(x)=\\lambda\\langle x,y\\rangle=\\langle x,\\overline{\\lambda}y\\rangle$. Hence $R(\\lambda f)=\\overline{\\lambda}R(f)$, so $H^*$ is anti-isomorphic, not isomorphic, to $H$ as a complex vector space. With the opposite convention (inner product linear in the second slot) the conjugates move to the other side.",
+          "label": "The map $R$ is conjugate-linear, not linear",
+          "role": "example"
+        },
+        {
+          "content": "Applying the theorem twice gives a linear isometric bijection $H\\to H^{**}$ (two conjugations compose to the identity), and this map is the canonical embedding $J$. Hence every Hilbert space is reflexive, and by the reflexivity criterion every bounded sequence in $H$ has a weakly convergent subsequence.",
+          "label": "Consequence: Hilbert spaces are reflexive",
+          "role": "application"
+        },
+        {
+          "content": "Every $f\\in(\\ell^2)^*$ has the form $f(x)=\\sum_n x_n\\overline{y_n}$ for a unique $y\\in\\ell^2$ with $\\|f\\|=\\|y\\|_2$. This is the $p=2$ instance of $\\ell^p$ duality, and the only one where the dual is the space itself.",
+          "label": "Concrete case $H=\\ell^2$",
+          "role": "example"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/riesz-representation.svg",
+      "assumptions": [
+        "$H$ is a Hilbert space, i.e. an inner product space complete in the induced norm. Completeness is used via the projection theorem and cannot be dropped.",
+        "$f$ is a continuous (equivalently bounded) linear functional; continuity is used exactly once, to make $\\ker f$ closed.",
+        "The inner product is taken linear in the first slot and conjugate-linear in the second; with the other convention the conjugates in the formulas move.",
+        "No separability is required."
+      ],
       "proof": {
         "steps": [
           {
-            "role": "zero case",
-            "content": "If $f=0$, choose $y=0$.",
+            "role": "degenerate case",
+            "content": "If $f=0$, take $y=0$; then $f(x)=0=\\langle x,0\\rangle$ for all $x$. Assume from now on $f\\neq0$.",
             "uses": [
               "linear_functional"
             ]
           },
           {
-            "role": "kernel",
-            "content": "If $f\\neq0$, then $\\ker f$ is a closed proper subspace of $H$.",
+            "role": "the kernel is a closed proper subspace",
+            "content": "Since $f$ is linear, $\\ker f$ is a subspace; since $f$ is continuous, $\\ker f=f^{-1}(\\{0\\})$ is closed as the preimage of the closed set $\\{0\\}$. Since $f\\neq0$, it is proper. Continuity is used exactly here, and this is the only place it is needed.",
             "uses": [
               "kernel",
-              "bounded_linear_functional"
+              "bounded_linear_functional",
+              "closed_subspace"
             ]
           },
           {
-            "role": "orthogonal vector",
-            "content": "By the projection theorem, choose $z\\neq0$ with $z\\perp\\ker f$.",
+            "role": "produce an orthogonal direction",
+            "content": "Because $\\ker f$ is a closed proper subspace of the Hilbert space $H$, the projection theorem gives the orthogonal decomposition $H=\\ker f\\oplus(\\ker f)^\\perp$ with $(\\ker f)^\\perp\\neq\\{0\\}$. Choose $z\\in(\\ker f)^\\perp$ with $z\\neq0$; then $f(z)\\neq0$, since $z\\in\\ker f$ would force $z\\in\\ker f\\cap(\\ker f)^\\perp=\\{0\\}$.",
             "uses": [
-              "projection_theorem"
+              "projection_theorem",
+              "orthogonal_complement",
+              "hilbert_space"
             ]
           },
           {
-            "role": "representation",
-            "content": "Every $x\\in H$ decomposes as a vector in $\\ker f$ plus a scalar multiple of $z$, giving $f(x)=\\langle x,y\\rangle$ for a suitable $y\\in H$.",
+            "role": "construct the representing vector",
+            "content": "Define explicitly $$y=\\frac{\\overline{f(z)}}{\\|z\\|^2}\\,z\\ \\in H.$$ This is the one construction the proof performs; the conjugate is required so that $y$ sits in the second, conjugate-linear slot of the inner product. Check it works on $z$: $$\\langle z,y\\rangle=\\Big\\langle z,\\tfrac{\\overline{f(z)}}{\\|z\\|^2}z\\Big\\rangle=\\frac{f(z)}{\\|z\\|^2}\\langle z,z\\rangle=f(z),$$ using conjugate-linearity in the second slot, which conjugates $\\overline{f(z)}$ back to $f(z)$.",
             "uses": [
-              "hilbert_space",
+              "inner_product_space",
+              "hilbert_space"
+            ]
+          },
+          {
+            "role": "verify on all of H",
+            "content": "Let $x\\in H$ be arbitrary and set $$u=x-\\frac{f(x)}{f(z)}z,$$ which is legitimate since $f(z)\\neq0$. Then by linearity $f(u)=f(x)-\\frac{f(x)}{f(z)}f(z)=0$, so $u\\in\\ker f$, hence $\\langle u,y\\rangle=0$ because $y$ is a scalar multiple of $z\\in(\\ker f)^\\perp$. Therefore $$\\langle x,y\\rangle=\\Big\\langle u+\\tfrac{f(x)}{f(z)}z,\\ y\\Big\\rangle=0+\\frac{f(x)}{f(z)}\\langle z,y\\rangle=\\frac{f(x)}{f(z)}f(z)=f(x).$$",
+            "uses": [
+              "inner_product_space",
+              "orthogonal_complement",
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "norm equality",
+            "content": "Two inequalities. By Cauchy-Schwarz, $|f(x)|=|\\langle x,y\\rangle|\\leq\\|x\\|\\,\\|y\\|$, so $\\|f\\|\\leq\\|y\\|$. Conversely, if $y\\neq0$, evaluating at the unit vector $x=y/\\|y\\|$ gives $$|f(y/\\|y\\|)|=\\frac{|\\langle y,y\\rangle|}{\\|y\\|}=\\frac{\\|y\\|^2}{\\|y\\|}=\\|y\\|,$$ so $\\|f\\|\\geq\\|y\\|$. Hence $\\|f\\|=\\|y\\|$; the case $y=0$ is immediate.",
+            "uses": [
+              "cauchy_schwarz_inequality",
+              "norm",
+              "dual_norm_geometry"
+            ]
+          },
+          {
+            "role": "uniqueness",
+            "content": "Suppose $\\langle x,y_1\\rangle=f(x)=\\langle x,y_2\\rangle$ for all $x\\in H$. Then $\\langle x,y_1-y_2\\rangle=0$ for all $x$; taking $x=y_1-y_2$ gives $\\|y_1-y_2\\|^2=0$, so $y_1=y_2$ by positive definiteness of the inner product.",
+            "uses": [
               "inner_product_space"
-            ]
-          },
-          {
-            "role": "norm equality and uniqueness",
-            "content": "Cauchy-Schwarz gives $\\|f\\|\\leq\\|y\\|$, and evaluating at $y/\\|y\\|$ gives equality. Uniqueness follows because if $\\langle x,y_1-y_2\\rangle=0$ for all $x$, then $y_1=y_2$.",
-            "uses": [
-              "norm"
             ]
           }
         ]
       },
+      "source": {
+        "citation": "Riesz-Frechet representation theorem",
+        "references": []
+      },
       "tags": [
         "duality",
         "hilbert",
-        "hilbert-space version"
+        "isometry",
+        "representation",
+        "riesz representation"
       ],
       "priority": "core"
     },
@@ -3695,6 +4045,51 @@
       "priority": "core"
     },
     {
+      "id": "lax_milgram_theorem",
+      "kind": "theorem",
+      "domain": "hilbert_spectral",
+      "label": "Lax-Milgram Theorem",
+      "content": {
+        "statement": "A bounded coercive sesquilinear form on a Hilbert space represents every bounded functional uniquely, generalising Riesz representation to non-symmetric forms.",
+        "formal": "Let $H$ be a Hilbert space and $a:H\\times H\\to\\mathbb K$ sesquilinear with $$\\exists C>0\\ \\forall u,v\\in H:\\ |a(u,v)|\\leq C\\|u\\|\\|v\\|\\qquad\\text{(boundedness)},$$ $$\\exists\\alpha>0\\ \\forall u\\in H:\\ |a(u,u)|\\geq\\alpha\\|u\\|^2\\qquad\\text{(coercivity)}.$$ Then $$\\forall f\\in H^*\\ \\exists!\\,u\\in H\\ \\forall v\\in H:\\quad a(u,v)=f(v),$$ and $\\|u\\|\\leq\\alpha^{-1}\\|f\\|$. Taking $a(u,v)=\\langle v,u\\rangle$ recovers the Riesz representation theorem with $C=\\alpha=1$.",
+        "intuition": "Riesz representation says the inner product represents every functional. Lax-Milgram says any form comparable to the inner product from above and below does the same, even without symmetry. Coercivity is what replaces positive definiteness, and it is the hypothesis that makes the associated operator invertible.",
+        "gloss": "The route: $a$ induces $A\\in\\mathcal B(H)$ by $a(u,v)=\\langle Au,v\\rangle$ via Riesz; boundedness makes $A$ bounded, coercivity makes $A$ bounded below and surjective, so $u=A^{-1}(Rf)$.",
+        "notation": [
+          "$a(u,v)$",
+          "$\\alpha\\|u\\|^2\\leq|a(u,u)|$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "Without a lower bound the associated operator need not be invertible. On $H=\\ell^2$ take $a(u,v)=\\sum_n n^{-1}u_n\\overline{v_n}$, which is bounded and satisfies $a(u,u)>0$ for $u\\neq0$ but is not coercive. The functional $f(v)=\\sum_n n^{-1/2}\\overline{v_n}$ is bounded, yet the equation $a(u,v)=f(v)$ forces $u_n=n^{1/2}$, which is not in $\\ell^2$. Strict positivity is not enough; a uniform $\\alpha$ is required.",
+          "label": "Coercivity is load-bearing",
+          "role": "failure_mode"
+        },
+        {
+          "content": "If $a$ is additionally symmetric it is an equivalent inner product on $H$ and the result is Riesz representation in that inner product. The content of Lax-Milgram is precisely the non-symmetric case, which is why it handles convection-diffusion problems where the symmetric theory does not apply.",
+          "label": "Symmetry is not required",
+          "role": "example"
+        },
+        {
+          "content": "For $-\\Delta u=f$ on a bounded domain with Dirichlet conditions, take $H=H_0^1(\\Omega)$ and $a(u,v)=\\int_\\Omega\\nabla u\\cdot\\overline{\\nabla v}$. The Poincare inequality supplies coercivity, so Lax-Milgram gives a unique weak solution. This is the standard existence argument in the variational theory of elliptic equations.",
+          "label": "Weak formulation of elliptic PDE",
+          "role": "application"
+        }
+      ],
+      "assumptions": [
+        "$H$ is a Hilbert space; completeness is essential, entering through Riesz representation.",
+        "$a$ is sesquilinear, bounded, and coercive; coercivity cannot be weakened to strict positivity.",
+        "Symmetry of $a$ is not assumed."
+      ],
+      "tags": [
+        "coercivity",
+        "hilbert",
+        "representation",
+        "variational"
+      ],
+      "priority": "standard"
+    },
+    {
       "id": "operator_spectrum_analysis",
       "kind": "application",
       "domain": "hilbert_spectral",
@@ -3709,6 +4104,44 @@
         "spectral"
       ],
       "priority": "standard"
+    },
+    {
+      "id": "orthogonal_complement",
+      "kind": "construction",
+      "domain": "hilbert_spectral",
+      "label": "Orthogonal complement",
+      "content": {
+        "definition": "The orthogonal complement of a subset of an inner product space is the set of vectors orthogonal to every element of it.",
+        "formal": "Let $H$ be an inner product space and $S\\subseteq H$ any subset. Then $$S^\\perp=\\{y\\in H:\\langle x,y\\rangle=0\\ \\text{for all }x\\in S\\}.$$ Note $S$ need not be a subspace, but $S^\\perp$ always is, and is always closed: $$S^\\perp=\\bigcap_{x\\in S}\\ker\\langle x,\\cdot\\rangle$$ is an intersection of kernels of continuous functionals. If $H$ is Hilbert and $M\\subseteq H$ is a closed subspace, then $$H=M\\oplus M^\\perp\\qquad\\text{and}\\qquad (M^\\perp)^\\perp=M.$$ For general $S$, $(S^\\perp)^\\perp=\\overline{\\operatorname{span}}\\,S$.",
+        "intuition": "Everything the vectors of $S$ cannot see. Taking the complement twice recovers not $S$ itself but the closed subspace it generates, so $\\perp\\perp$ is a closure operation.",
+        "gloss": "Closedness of $S^\\perp$ is automatic and free; the decomposition $H=M\\oplus M^\\perp$ is not, and needs completeness plus closedness of $M$.",
+        "notation": [
+          "$S^\\perp$",
+          "$M\\oplus M^\\perp$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "Take $H=\\ell^2$ and $M=c_{00}$, a dense non-closed subspace. Then $M^\\perp=\\{0\\}$, so $M\\oplus M^\\perp=M\\neq H$. Density makes the complement collapse, and $(M^\\perp)^\\perp=\\overline{M}=\\ell^2\\neq M$.",
+          "label": "$M$ must be closed for the decomposition",
+          "role": "failure_mode"
+        },
+        {
+          "content": "For a subspace $M$ of a Hilbert space, $M$ is dense if and only if $M^\\perp=\\{0\\}$. This is the standard route to proving a family is total, e.g. showing polynomials are dense in $L^2[0,1]$ by showing only $0$ is orthogonal to all of them.",
+          "label": "Density criterion",
+          "role": "application"
+        }
+      ],
+      "assumptions": [
+        "$H$ is an inner product space; $S^\\perp$ is defined and closed without completeness.",
+        "The decomposition $H=M\\oplus M^\\perp$ requires $H$ complete and $M$ closed."
+      ],
+      "tags": [
+        "hilbert",
+        "orthogonality",
+        "projection"
+      ],
+      "priority": "core"
     },
     {
       "id": "orthonormal_basis",
@@ -5017,6 +5450,11 @@
       "relation": "assumes"
     },
     {
+      "source": "lax_milgram_theorem",
+      "target": "hilbert_space",
+      "relation": "assumes"
+    },
+    {
       "source": "linear_functional",
       "target": "scalar_field_real_or_complex",
       "relation": "assumes"
@@ -5078,7 +5516,7 @@
     },
     {
       "source": "riesz_representation_theorem",
-      "target": "domain_is_banach_space",
+      "target": "hilbert_space",
       "relation": "assumes"
     },
     {
@@ -5364,6 +5802,16 @@
     {
       "source": "cartesian_product",
       "target": "set",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "cauchy_schwarz_inequality",
+      "target": "inner_product_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "cauchy_schwarz_inequality",
+      "target": "norm",
       "relation": "defined_in_terms_of"
     },
     {
@@ -5792,6 +6240,16 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "hilbert_adjoint_operator",
+      "target": "hilbert_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hilbert_adjoint_operator",
+      "target": "inner_product_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "hilbert_space",
       "target": "completeness",
       "relation": "defined_in_terms_of"
@@ -5804,6 +6262,11 @@
     {
       "source": "hilbert_space",
       "target": "metric_induced_by_norm",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "hoelder_inequality",
+      "target": "l_p_spaces",
       "relation": "defined_in_terms_of"
     },
     {
@@ -5839,6 +6302,16 @@
     {
       "source": "kernel",
       "target": "vector_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "l_p_duality",
+      "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "l_p_duality",
+      "target": "l_p_spaces",
       "relation": "defined_in_terms_of"
     },
     {
@@ -6037,6 +6510,16 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "orthogonal_complement",
+      "target": "closed_subspace",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "orthogonal_complement",
+      "target": "inner_product_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "orthonormal_basis",
       "target": "hilbert_space",
       "relation": "defined_in_terms_of"
@@ -6080,12 +6563,12 @@
     },
     {
       "source": "projection_theorem",
-      "target": "compactness",
+      "target": "completeness",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "projection_theorem",
-      "target": "completeness",
+      "target": "convex_set",
       "relation": "defined_in_terms_of"
     },
     {
@@ -6191,6 +6674,11 @@
     {
       "source": "self_adjoint_operator",
       "target": "bounded_linear_operator",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "self_adjoint_operator",
+      "target": "hilbert_adjoint_operator",
       "relation": "defined_in_terms_of"
     },
     {
@@ -6575,6 +7063,11 @@
       "relation": "generalizes"
     },
     {
+      "source": "hoelder_inequality",
+      "target": "cauchy_schwarz_inequality",
+      "relation": "generalizes"
+    },
+    {
       "source": "inner_product_space",
       "target": "ell_2_as_hilbert_space",
       "relation": "generalizes"
@@ -6582,6 +7075,11 @@
     {
       "source": "inner_product_space",
       "target": "hilbert_space",
+      "relation": "generalizes"
+    },
+    {
+      "source": "lax_milgram_theorem",
+      "target": "riesz_representation_theorem",
       "relation": "generalizes"
     },
     {
@@ -7165,6 +7663,16 @@
       "relation": "related_to"
     },
     {
+      "source": "hilbert_adjoint_operator",
+      "target": "adjoint_operator",
+      "relation": "related_to"
+    },
+    {
+      "source": "l_p_duality",
+      "target": "reflexive_space",
+      "relation": "related_to"
+    },
+    {
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "semantic_strength_function_operator",
       "relation": "related_to"
@@ -7176,7 +7684,32 @@
     },
     {
       "source": "riesz_representation_c_k",
+      "target": "banach_alaoglu_theorem",
+      "relation": "related_to"
+    },
+    {
+      "source": "riesz_representation_c_k",
       "target": "hahn_banach_theorem",
+      "relation": "related_to"
+    },
+    {
+      "source": "riesz_representation_c_k",
+      "target": "reflexive_space",
+      "relation": "related_to"
+    },
+    {
+      "source": "riesz_representation_theorem",
+      "target": "l_p_duality",
+      "relation": "related_to"
+    },
+    {
+      "source": "riesz_representation_theorem",
+      "target": "reflexive_space",
+      "relation": "related_to"
+    },
+    {
+      "source": "riesz_representation_theorem",
+      "target": "riesz_representation_c_k",
       "relation": "related_to"
     },
     {
@@ -7270,6 +7803,11 @@
       "relation": "satisfies"
     },
     {
+      "source": "inner_product_space",
+      "target": "cauchy_schwarz_inequality",
+      "relation": "satisfies"
+    },
+    {
       "source": "kernel",
       "target": "closed_subspace",
       "relation": "satisfies"
@@ -7277,6 +7815,11 @@
     {
       "source": "l_p_spaces",
       "target": "banach_space",
+      "relation": "satisfies"
+    },
+    {
+      "source": "l_p_spaces",
+      "target": "hoelder_inequality",
       "relation": "satisfies"
     },
     {
@@ -7303,6 +7846,11 @@
       "source": "norm_as_sublinear_functional",
       "target": "sublinear_functional",
       "relation": "satisfies"
+    },
+    {
+      "source": "adjoint_operator",
+      "target": "hahn_banach_theorem",
+      "relation": "uses"
     },
     {
       "source": "baire_category_theorem",
@@ -7565,6 +8113,11 @@
       "relation": "uses"
     },
     {
+      "source": "hilbert_adjoint_operator",
+      "target": "riesz_representation_theorem",
+      "relation": "uses"
+    },
+    {
       "source": "injective_postcomposition_boundedness",
       "target": "bounded_linear_operator",
       "relation": "uses"
@@ -7577,6 +8130,16 @@
     {
       "source": "inner_product_space",
       "target": "normed_vector_space",
+      "relation": "uses"
+    },
+    {
+      "source": "l_p_duality",
+      "target": "hoelder_inequality",
+      "relation": "uses"
+    },
+    {
+      "source": "lax_milgram_theorem",
+      "target": "riesz_representation_theorem",
       "relation": "uses"
     },
     {
@@ -7612,6 +8175,11 @@
     {
       "source": "operator_spectrum_analysis",
       "target": "spectrum",
+      "relation": "uses"
+    },
+    {
+      "source": "orthogonal_complement",
+      "target": "hilbert_space",
       "relation": "uses"
     },
     {
@@ -7675,6 +8243,11 @@
       "relation": "uses"
     },
     {
+      "source": "projection_theorem",
+      "target": "orthogonal_complement",
+      "relation": "uses"
+    },
+    {
       "source": "reflexivity_sequence_criterion",
       "target": "banach_alaoglu_theorem",
       "relation": "uses"
@@ -7716,12 +8289,27 @@
     },
     {
       "source": "riesz_representation_theorem",
+      "target": "cauchy_schwarz_inequality",
+      "relation": "uses"
+    },
+    {
+      "source": "riesz_representation_theorem",
+      "target": "closed_subspace",
+      "relation": "uses"
+    },
+    {
+      "source": "riesz_representation_theorem",
       "target": "kernel",
       "relation": "uses"
     },
     {
       "source": "riesz_representation_theorem",
       "target": "norm",
+      "relation": "uses"
+    },
+    {
+      "source": "riesz_representation_theorem",
+      "target": "orthogonal_complement",
       "relation": "uses"
     },
     {
