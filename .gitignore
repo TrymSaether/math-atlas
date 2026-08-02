@@ -25,3 +25,4 @@ output
 
 # playwright
 .playwright-cli
+src/maps/sources/TMA4190-complete-reference.md
