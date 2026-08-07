@@ -30,6 +30,7 @@ import { ConceptBody, ConceptHeader } from "./concept";
 import { nodeAnswerText } from "./concept/content";
 import { useConceptView } from "./concept/view";
 import { hasNodeVisual } from "./concept/visualModel";
+import { CATEGORY_META, categoryOf, railBackground } from "@shared/maps/nodeCategory";
 import {
   dependentDeck,
   prerequisiteDeck,
@@ -560,13 +561,28 @@ function ProgressRail({
   );
 }
 
-function CardShell({ children, tone, footer }: { children: React.ReactNode; tone: string; footer?: React.ReactNode }) {
+function CardShell({
+  children,
+  tone,
+  kind,
+  footer,
+}: {
+  children: React.ReactNode;
+  tone: string;
+  kind: string;
+  footer?: React.ReactNode;
+}) {
+  const texture = CATEGORY_META[categoryOf(kind)].rail;
   return (
     <div
-      className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card"
+      className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card"
       style={{ boxShadow: "var(--shadow-e2)" }}
     >
-      <span aria-hidden className="h-1 w-full shrink-0" style={{ background: tone }} />
+      <span
+        aria-hidden
+        className="absolute inset-y-0 left-0 z-10 w-1"
+        style={{ background: railBackground(tone, texture) }}
+      />
       <div className="panel-scrollbar min-h-0 flex-1 overflow-y-auto">{children}</div>
       {footer}
     </div>
@@ -599,7 +615,7 @@ function CardFront({
   const view = useConceptView(node, map, mapId);
   const reversed = direction === "statement" && Boolean(view.statement);
   return (
-    <CardShell tone={view.tone.color}>
+    <CardShell tone={view.tone.color} kind={node.kind}>
       <button
         type="button"
         onClick={onFlip}
@@ -649,6 +665,7 @@ function CardBack({ node, map, mapId, onOpen }: { node: GraphNode; map: AtlasMap
   return (
     <CardShell
       tone={view.tone.color}
+      kind={node.kind}
       footer={
         <button
           type="button"
