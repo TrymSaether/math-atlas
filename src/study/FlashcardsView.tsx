@@ -347,8 +347,7 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
               </button>
             )}
           </div>
-
-          <div className="mt-2.5 flex items-center gap-3">
+          <div className="mt-0 flex items-center gap-2">
             <ProgressRail order={order} ratings={run.ratings} pos={run.pos} onJump={(pos) => drill().go(pos)} />
             <span className="shrink-0 font-mono text-caption-2 text-muted-foreground">
               {total ? Math.min(run.pos + 1, total) : 0}/{total}

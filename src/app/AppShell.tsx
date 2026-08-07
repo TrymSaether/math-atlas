@@ -103,6 +103,7 @@ export function AppShell() {
       <ShellLayoutController />
       <SessionBridge />
       <StaleMapBanner />
+      <TopChrome />
 
       <main className="absolute inset-0" aria-label={surface === "atlas" ? "Atlas canvas" : undefined}>
         <AnimatePresence initial={false} mode="wait">
@@ -146,7 +147,6 @@ export function AppShell() {
         </AnimatePresence>
       </main>
 
-      <TopChrome />
       {surface === "atlas" && map && <Sidebar />}
       {surface === "atlas" && map && <ControlCluster />}
       <CommandPalette />

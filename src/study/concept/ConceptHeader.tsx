@@ -37,7 +37,8 @@ export function ConceptHeader({ view, size = "panel" }: { view: ConceptView; siz
 
   return (
     <div className={`grid items-stretch ${styles.grid}`}>
-      <span aria-hidden className={`w-full rounded-sm ${styles.rail}`} style={{ backgroundColor: tone.color }} />
+      {/* Rail */}
+      <span aria-hidden className={`rounded-sm ${styles.rail}`} style={{ backgroundColor: tone.color }} />
 
       <div className="min-w-0 self-start">
         <h2 className={`m-0 max-w-full text-title-3 font-semibold wrap-break-word ${styles.title}`}>

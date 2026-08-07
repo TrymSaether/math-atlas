@@ -47,8 +47,7 @@ export function EditInspector() {
           className="ds-panel ds-panel--left"
         >
           <Surface
-            material="thick"
-            elevation="raised"
+            material="regular"
             className="flex h-full w-[min(460px,calc(100vw-24px))] flex-col max-[820px]:w-full max-[820px]:rounded-[var(--radius-xl)]"
           >
             <NodeEditorPanel editingId={editingId} map={map} mapId={mapId} onClose={close} />
@@ -65,8 +64,7 @@ export function EditInspector() {
           className="ds-panel ds-panel--left"
         >
           <Surface
-            material="thick"
-            elevation="raised"
+            material="regular"
             className="flex w-[min(340px,calc(100vw-24px))] flex-col gap-3 px-4 py-4 max-[820px]:w-full max-[820px]:rounded-[var(--radius-xl)]"
             role="dialog"
             aria-label="Edit mode"

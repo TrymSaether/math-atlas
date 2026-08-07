@@ -125,8 +125,7 @@ function CardContent({ map, mapId, node }: { map: AtlasMap; mapId: MapId; node: 
 
   return (
     <Surface
-      material="thick"
-      elevation="raised"
+      material="regular"
       role="dialog"
       aria-label={`${view.kindLabel}: ${node.label}`}
       className={cn(

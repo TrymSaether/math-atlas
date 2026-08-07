@@ -16,7 +16,7 @@ const sidebarRowInteraction =
 
 /**
  * The docked liquid-glass sidebar — the shell's single navigation + search
- * surface. Built on the shared shell geometry, a `thin` glass Surface, shadcn
+ * surface. Built on the shared shell geometry, a `regular` glass Surface, shadcn
  * Button, lucide icons, and the canonical interaction tokens.
  */
 
@@ -234,7 +234,7 @@ export function Sidebar() {
       {collapsed ? (
         <motion.div
           key="sidebar-reveal"
-          className="shell-sidebar-reveal absolute z-(--z-shell-raised)"
+          className="shell-sidebar-reveal absolute z-(--z-shell)"
           initial={reduceMotion ? false : { opacity: 0, scale: 0.9, x: -6 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
           exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.92, x: -6 }}
@@ -265,7 +265,7 @@ export function Sidebar() {
           exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -18 }}
           transition={reduceMotion ? { duration: 0 } : spring.smooth}
         >
-          <Surface material="thin" className="flex h-full flex-col overflow-hidden">
+          <Surface material="regular" className="flex h-full flex-col overflow-hidden">
             <header className="flex min-h-12 items-center gap-2 border-b border-border/60 px-3">
               <div className="min-w-0 flex-1 truncate text-headline font-semibold text-foreground">Atlas</div>
               <Button

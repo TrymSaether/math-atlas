@@ -1,7 +1,7 @@
 /*
- * One geometry contract for every product surface. The chrome floats visually,
- * while --shell-dock-top and --shell-content-bottom reserve the space beneath
- * it for page columns, canvas panels, and bottom controls.
+ * One geometry contract for every product surface. Persistent shell chrome
+ * shares one visual plane, while --shell-dock-top and --shell-content-bottom
+ * reserve space for page columns, canvas panels, and bottom controls.
  */
 
 :root {
@@ -34,7 +34,7 @@
   inset: max(var(--shell-edge), env(safe-area-inset-top)) max(var(--shell-edge), env(safe-area-inset-right)) auto
     max(var(--shell-edge), env(safe-area-inset-left));
 
-  z-index: var(--z-shell-raised);
+  z-index: var(--z-shell);
   pointer-events: none;
 }
 
@@ -325,7 +325,7 @@
     bottom: max(var(--shell-edge), env(safe-area-inset-bottom));
     left: max(var(--shell-edge), env(safe-area-inset-left));
 
-    z-index: var(--z-shell-raised);
+    z-index: var(--z-shell);
 
     display: block;
     pointer-events: auto;

@@ -115,7 +115,6 @@ export function ConceptBody({
 
       {view.statement && (
         <section>
-          {density === "card" && <Eyebrow color={tone.color}>Required answer</Eyebrow>}
           <Spine tone={tone} kind={node.kind} size={spec.spine}>
             <MathProse text={view.statement} asBlock />
           </Spine>

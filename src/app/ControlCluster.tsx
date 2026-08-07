@@ -40,7 +40,7 @@ export function ControlCluster() {
   return (
     <div
       className={`pointer-events-none absolute right-[var(--shell-edge)] bottom-[var(--shell-content-bottom)] flex items-end gap-[var(--shell-panel-gap)] max-[820px]:bottom-[var(--shell-content-bottom)] ${
-        layersOpen ? "z-(--z-popover)" : "z-(--z-shell-raised)"
+        layersOpen ? "z-(--z-popover)" : "z-(--z-shell)"
       }`}
       ref={ref}
     >

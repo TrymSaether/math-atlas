@@ -103,8 +103,7 @@ export function PathsPanel() {
       transition={reduceMotion ? { duration: 0 } : spring.smooth}
     >
       <Surface
-        material="thick"
-        elevation="raised"
+        material="regular"
         role="region"
         aria-label="Paths"
         className={cn(

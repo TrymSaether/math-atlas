@@ -154,7 +154,7 @@ export function SandboxView() {
         {/* Canvas dock + its single attached saved-views popover. */}
         <div
           ref={viewsContainerRef}
-          className="pointer-events-none absolute right-[var(--shell-edge)] bottom-[var(--shell-content-bottom)] z-(--z-shell-raised) flex items-end gap-[var(--shell-panel-gap)]"
+          className="pointer-events-none absolute right-[var(--shell-edge)] bottom-[var(--shell-content-bottom)] z-(--z-shell) flex items-end gap-[var(--shell-panel-gap)]"
         >
           <AnimatePresence initial={false}>
             {viewsOpen && (
@@ -315,7 +315,6 @@ export function SandboxView() {
           >
             <Surface
               material="regular"
-              elevation="raised"
               className="flex h-full flex-col overflow-hidden rounded-[inherit]"
             >
               <div className="flex items-center gap-1 border-b border-border/60 px-2 py-2">
