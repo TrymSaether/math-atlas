@@ -574,13 +574,13 @@ function CardShell({ children, tone, footer }: { children: React.ReactNode; tone
 }
 
 function recallPrompt(kind: string): string {
-  if (kind === "definition") return "Give the precise definition.";
-  if (["theorem", "lemma", "proposition", "corollary"].includes(kind)) return "State the hypotheses and conclusion.";
-  if (kind === "property") return "State the property and when it applies.";
-  if (kind === "example") return "Explain what this example demonstrates.";
-  if (kind === "counterexample" || kind === "non_example") return "Which claim or missing assumption does this refute?";
-  if (kind === "exercise") return "Identify the key method or first step.";
-  return "Recall the essential mathematical content.";
+  if (kind === "definition") return "Give the definition.";
+  if (["theorem", "lemma", "proposition", "corollary"].includes(kind)) return "State the result precisely.";
+  if (kind === "property") return "State the property.";
+  if (kind === "example") return "What does this example show?";
+  if (kind === "counterexample" || kind === "non_example") return "What does this refute?";
+  if (kind === "exercise") return "What is the key idea?";
+  return "Recall the key idea.";
 }
 
 function CardFront({
@@ -603,29 +603,42 @@ function CardFront({
       <button
         type="button"
         onClick={onFlip}
-        className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-5 px-8 py-10 text-left"
+        className="flex h-full w-full cursor-pointer items-center justify-center px-8 py-10 text-center"
       >
         {reversed ? (
-          <div className="w-full max-w-md space-y-4">
+          <div className="flex w-full max-w-lg flex-col items-center">
             <span
               className="inline-flex items-center rounded-full px-2 py-0.5 font-mono text-caption-2 font-medium"
               style={{ backgroundColor: view.tone.tint, color: view.tone.text }}
             >
               {view.kindLabel}
             </span>
-            <div className="text-callout leading-relaxed text-foreground">
+            <div className="mt-4 text-callout leading-relaxed text-foreground">
               <MathText text={view.statement} />
             </div>
           </div>
         ) : (
-          <div className="w-full max-w-md space-y-4">
-            <ConceptHeader view={view} size="card" />
-            <p className="text-callout font-medium text-foreground">{recallPrompt(node.kind)}</p>
+          <div className="flex w-full max-w-lg flex-col items-center">
+            <h2 className="m-0 max-w-full text-title-2 font-semibold leading-tight text-foreground wrap-break-word">
+              <MathText text={view.node.label} />
+            </h2>
+
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 font-mono text-caption-2 font-medium"
+                style={{ backgroundColor: view.tone.tint, color: view.tone.text }}
+              >
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: view.tone.color }} />
+                {view.domainLabel}
+              </span>
+              <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 font-mono text-caption-2 font-medium text-muted-foreground">
+                {view.kindLabel}
+              </span>
+            </div>
+
+            <p className="mt-5 text-callout font-medium text-foreground">{recallPrompt(node.kind)}</p>
           </div>
         )}
-        <span className="text-caption-2 font-medium text-muted-foreground">
-          {reversed ? "Name this concept — tap to reveal" : "Commit to an answer — tap or press space to reveal"}
-        </span>
       </button>
     </CardShell>
   );
