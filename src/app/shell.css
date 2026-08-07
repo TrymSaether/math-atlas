@@ -5,7 +5,7 @@
  */
 
 :root {
-  --shell-edge: 14px;
+  --shell-edge: 8px;
   --shell-top-h: 52px;
   --shell-dock-top: calc(var(--shell-edge) + var(--shell-top-h) + 10px);
   --shell-content-bottom: var(--shell-edge);
@@ -48,7 +48,7 @@
     minmax(0, 1fr);
 
   align-items: center;
-  gap: 10px;
+  gap: 4px;
 
   min-height: var(--shell-top-h);
   padding: 5px 6px;
