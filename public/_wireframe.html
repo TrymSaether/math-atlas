@@ -1,0 +1,451 @@
+<title>Math Atlas — Persistent Shell Wireframe</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #e9ebf0;
+    --canvas: #f3f4f7;
+    --panel: #ffffff;
+    --panel-2: #f6f7f9;
+    --glass: rgba(255,255,255,0.66);
+    --glass-line: rgba(255,255,255,0.75);
+    --ink: #1d1d1f;
+    --ink-2: #565962;
+    --ink-3: #8a8e98;
+    --line: rgba(10, 14, 30, 0.10);
+    --line-strong: rgba(10, 14, 30, 0.18);
+    --blue: #007aff;
+    --blue-tint: rgba(0, 122, 255, 0.10);
+    --blue-tint-2: rgba(0, 122, 255, 0.16);
+    --amber: #c9690a;
+    --amber-tint: rgba(201, 105, 10, 0.12);
+    --amber-line: rgba(201, 105, 10, 0.45);
+    --green: #1e874b;
+    --green-tint: rgba(30, 135, 75, 0.12);
+    --d1: #2563eb; --d2: #16a34a; --d3: #7c3aed; --d4: #dc2626; --d5: #0d9488; --d6: #f97316; --d7: #eab308;
+    --radius-sm: 9px;
+    --radius-pill: 999px;
+    --shadow-panel: 0 1px 2px rgba(10,14,30,.06), 0 14px 40px -16px rgba(10,14,30,.24);
+    --shadow-float: 0 0 0 .5px rgba(10,14,30,.05), 0 2px 6px rgba(10,14,30,.10), 0 18px 44px -14px rgba(10,14,30,.32);
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --maxw: 1120px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b101b; --canvas: #101626; --panel: #182034; --panel-2: #121829;
+      --glass: rgba(26,32,52,0.6); --glass-line: rgba(255,255,255,0.10);
+      --ink: #eceef4; --ink-2: #aab0be; --ink-3: #737a8a;
+      --line: rgba(255,255,255,0.10); --line-strong: rgba(255,255,255,0.20);
+      --blue: #4c9bff; --blue-tint: rgba(76,155,255,0.15); --blue-tint-2: rgba(76,155,255,0.24);
+      --amber: #f0ac5f; --amber-tint: rgba(240,172,95,0.15); --amber-line: rgba(240,172,95,0.5);
+      --green: #6bd494; --green-tint: rgba(107,212,148,0.15);
+      --d1:#58c4dd; --d2:#83c167; --d3:#b594d6; --d4:#fc6255; --d5:#5cd0b3; --d6:#f0ac5f; --d7:#ffd93d;
+      --shadow-panel: 0 1px 2px rgba(0,0,0,.5), 0 16px 44px -18px rgba(0,0,0,.7);
+      --shadow-float: 0 0 0 .5px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.5), 0 20px 50px -14px rgba(0,0,0,.75);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#0b101b; --canvas:#101626; --panel:#182034; --panel-2:#121829;
+    --glass:rgba(26,32,52,0.6); --glass-line:rgba(255,255,255,0.10);
+    --ink:#eceef4; --ink-2:#aab0be; --ink-3:#737a8a;
+    --line:rgba(255,255,255,0.10); --line-strong:rgba(255,255,255,0.20);
+    --blue:#4c9bff; --blue-tint:rgba(76,155,255,0.15); --blue-tint-2:rgba(76,155,255,0.24);
+    --amber:#f0ac5f; --amber-tint:rgba(240,172,95,0.15); --amber-line:rgba(240,172,95,0.5);
+    --green:#6bd494; --green-tint:rgba(107,212,148,0.15);
+    --d1:#58c4dd; --d2:#83c167; --d3:#b594d6; --d4:#fc6255; --d5:#5cd0b3; --d6:#f0ac5f; --d7:#ffd93d;
+    --shadow-panel:0 1px 2px rgba(0,0,0,.5),0 16px 44px -18px rgba(0,0,0,.7);
+    --shadow-float:0 0 0 .5px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.5),0 20px 50px -14px rgba(0,0,0,.75);
+  }
+  :root[data-theme="light"] {
+    --bg:#e9ebf0; --canvas:#f3f4f7; --panel:#fff; --panel-2:#f6f7f9;
+    --glass:rgba(255,255,255,0.66); --glass-line:rgba(255,255,255,0.75);
+    --ink:#1d1d1f; --ink-2:#565962; --ink-3:#8a8e98;
+    --line:rgba(10,14,30,0.10); --line-strong:rgba(10,14,30,0.18);
+    --blue:#007aff; --blue-tint:rgba(0,122,255,0.10); --blue-tint-2:rgba(0,122,255,0.16);
+    --amber:#c9690a; --amber-tint:rgba(201,105,10,0.12); --amber-line:rgba(201,105,10,0.45);
+    --green:#1e874b; --green-tint:rgba(30,135,75,0.12);
+    --d1:#2563eb; --d2:#16a34a; --d3:#7c3aed; --d4:#dc2626; --d5:#0d9488; --d6:#f97316; --d7:#eab308;
+    --shadow-panel:0 1px 2px rgba(10,14,30,.06),0 14px 40px -16px rgba(10,14,30,.24);
+    --shadow-float:0 0 0 .5px rgba(10,14,30,.05),0 2px 6px rgba(10,14,30,.10),0 18px 44px -14px rgba(10,14,30,.32);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: radial-gradient(1200px 600px at 12% -12%, var(--blue-tint), transparent 60%), var(--bg);
+    color: var(--ink); font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 40px 24px 80px; }
+
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); font-weight: 600; margin: 0 0 10px; }
+  h1 { font-size: clamp(26px, 4.2vw, 40px); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 12px; text-wrap: balance; font-weight: 680; }
+  .lede { max-width: 64ch; color: var(--ink-2); font-size: 16px; margin: 0; }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 22px; align-items: center; }
+  .key { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); }
+  .swatch { width: 26px; height: 15px; border-radius: 5px; flex: none; }
+  .swatch.global { background: var(--blue-tint-2); border: 1.5px solid var(--blue); }
+  .swatch.ctx { background: var(--amber-tint); border: 1.5px dashed var(--amber-line); }
+  .swatch.content { background: var(--panel-2); border: 1.5px solid var(--line-strong); }
+
+  section { margin-top: 46px; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+  .sec-num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); font-weight: 600; }
+  h2 { font-size: 19px; letter-spacing: -0.01em; margin: 0; font-weight: 640; }
+  .sec-sub { color: var(--ink-2); font-size: 14px; margin: 0 0 16px; max-width: 70ch; }
+
+  /* verdict banner */
+  .verdict {
+    display: flex; gap: 14px; align-items: flex-start; margin: 18px 0 6px;
+    border: 1px solid var(--green); background: var(--green-tint); border-radius: 14px; padding: 15px 17px;
+  }
+  .verdict .flag { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .06em; color: #fff; background: var(--green); padding: 3px 9px; border-radius: 6px; white-space: nowrap; flex: none; margin-top: 1px; }
+  .verdict p { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+  .verdict b { color: var(--ink); font-weight: 600; }
+
+  /* window frame + full-bleed stage */
+  .frame { border-radius: 18px; box-shadow: var(--shadow-panel); overflow: hidden; border: 1px solid var(--line); }
+  .titlebar { height: 30px; display: flex; align-items: center; gap: 7px; padding: 0 13px; border-bottom: 1px solid var(--line); background: var(--panel-2); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); }
+  .titlebar span { margin-left: 8px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
+
+  .stage {
+    position: relative; background: var(--canvas); min-height: 460px; overflow: hidden;
+  }
+  /* full-bleed content layers */
+  .layer-map {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 26%, var(--d1) 0 3.5px, transparent 3.5px),
+      radial-gradient(circle at 46% 60%, var(--d2) 0 3.5px, transparent 3.5px),
+      radial-gradient(circle at 62% 34%, var(--d3) 0 3.5px, transparent 3.5px),
+      radial-gradient(circle at 80% 66%, var(--d4) 0 3.5px, transparent 3.5px),
+      radial-gradient(circle at 40% 82%, var(--d6) 0 3.5px, transparent 3.5px),
+      radial-gradient(circle at 72% 20%, var(--d5) 0 3.5px, transparent 3.5px),
+      radial-gradient(circle at 88% 44%, var(--d7) 0 3.5px, transparent 3.5px),
+      radial-gradient(circle at 55% 48%, var(--d1) 0 3.5px, transparent 3.5px),
+      radial-gradient(circle at 24% 52%, var(--d3) 0 3.5px, transparent 3.5px);
+  }
+  /* domain band tint stripes behind the map */
+  .layer-map::before {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background: linear-gradient(180deg,
+      color-mix(in srgb, var(--d1) 8%, transparent) 0 22%,
+      color-mix(in srgb, var(--d2) 8%, transparent) 22% 44%,
+      color-mix(in srgb, var(--d3) 8%, transparent) 44% 66%,
+      color-mix(in srgb, var(--d4) 8%, transparent) 66% 100%);
+  }
+
+  /* the ONE floating glass island — the persistent frame */
+  .island {
+    position: absolute; top: 14px; left: 14px; bottom: 14px; width: 216px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid var(--glass-line); border-radius: 16px; box-shadow: var(--shadow-float);
+    padding: 12px; display: flex; flex-direction: column; gap: 9px; z-index: 3;
+  }
+  .island .grow { flex: 1 1 auto; }
+  .cell { border: 1.5px solid var(--blue); background: var(--blue-tint); border-radius: var(--radius-sm); padding: 7px 9px; display: flex; flex-direction: column; gap: 5px; }
+  .cell.mut { border-color: var(--line-strong); background: color-mix(in srgb, var(--panel-2) 60%, transparent); }
+  .cell.mut .lab { color: var(--ink-3); }
+  .lab { font-family: var(--mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: var(--blue); font-weight: 600; }
+  .brand { display: flex; align-items: center; gap: 8px; }
+  .logo { width: 22px; height: 22px; border-radius: 7px; flex: none; background: linear-gradient(150deg, var(--blue), color-mix(in srgb, var(--blue) 50%, #7c3aed)); }
+  .brand b { font-size: 13px; letter-spacing: -0.01em; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; min-height: 22px; padding: 3px 9px; border-radius: var(--radius-pill); font-size: 11px; color: var(--ink-2); background: color-mix(in srgb, var(--panel) 70%, transparent); border: 1px solid var(--line); }
+  .navrow { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-2); }
+  .navrow .ic { width: 14px; height: 14px; border-radius: 4px; background: var(--line-strong); flex: none; }
+  .navrow.active { color: var(--ink); font-weight: 600; }
+  .navrow.active .ic { background: var(--blue); }
+  .foot { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-2); }
+  .foot .av { width: 18px; height: 18px; border-radius: 50%; background: var(--line-strong); flex: none; }
+
+  /* floating contextual clusters (dashed = surface-contextual) */
+  .cluster { position: absolute; display: flex; gap: 7px; z-index: 3; }
+  .cluster.br { right: 14px; bottom: 14px; flex-direction: column; align-items: flex-end; }
+  .cluster.tr { right: 14px; top: 14px; align-items: center; }
+  .ctx-chip {
+    border: 1.5px dashed var(--amber-line); background: var(--amber-tint);
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+    border-radius: 9px; padding: 6px 9px; font-size: 10.5px; color: var(--amber); font-weight: 600;
+    font-family: var(--mono); letter-spacing: .02em; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .content-tag {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); text-align: center;
+    color: var(--ink-3); font-size: 12px; max-width: 34ch; z-index: 2;
+  }
+  .content-tag b { color: var(--ink-2); }
+
+  /* structured (non-map) content layers */
+  .layer-doc { position: absolute; inset: 0; padding: 22px 26px 22px 250px; display: flex; flex-direction: column; gap: 9px; }
+  .bar { height: 9px; border-radius: 5px; background: var(--line-strong); opacity: .6; }
+  .card-lg { position: absolute; inset: 22px 26px 22px 250px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--panel) 80%, transparent); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; }
+  .grid-mock { position: absolute; inset: 0 122px 0 250px; background: linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0/26px 26px, linear-gradient(0deg, var(--line) 1px, transparent 1px) 0 0/26px 26px; }
+
+  /* callouts */
+  .callouts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px 22px; margin-top: 18px; }
+  .callout { display: flex; gap: 10px; font-size: 13px; color: var(--ink-2); }
+  .callout .tag { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: .04em; padding: 2px 7px; border-radius: 6px; height: fit-content; white-space: nowrap; flex: none; }
+  .tag.g { color: var(--blue); background: var(--blue-tint-2); }
+  .tag.c { color: var(--amber); background: var(--amber-tint); }
+  .callout b { color: var(--ink); font-weight: 600; }
+
+  /* four surface grid */
+  .surfaces { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .surf .stage { min-height: 210px; }
+  .surf .island { width: 92px; padding: 8px; gap: 6px; top: 10px; left: 10px; bottom: 10px; }
+  .surf .island .logo { width: 16px; height: 16px; border-radius: 5px; }
+  .surf .island .dotrow { display: flex; align-items: center; gap: 5px; }
+  .surf .island .di { width: 13px; height: 13px; border-radius: 4px; background: var(--line-strong); }
+  .surf .island .di.on { background: var(--blue); }
+  .surf .island .pill { font-size: 8.5px; padding: 2px 6px; }
+  .surf .island .av { width: 14px; height: 14px; }
+  .surf .layer-doc { padding: 16px 16px 16px 116px; }
+  .surf .card-lg { inset: 16px 16px 16px 116px; }
+  .surf .grid-mock { inset: 0 74px 0 116px; }
+  .surf-name { position: absolute; left: 116px; top: 12px; font-size: 12px; font-weight: 640; z-index: 2; }
+  .surf-name .role { font-family: var(--mono); font-size: 9px; color: var(--ink-3); font-weight: 500; margin-left: 6px; }
+
+  /* spec table */
+  .tbl-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+  table { border-collapse: collapse; width: 100%; min-width: 660px; font-size: 13.5px; }
+  th, td { text-align: left; padding: 11px 14px; vertical-align: top; border-bottom: 1px solid var(--line); }
+  thead th { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; background: var(--panel-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  td b { font-weight: 600; }
+  .badge { font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
+  .badge.g { color: var(--blue); background: var(--blue-tint-2); }
+  .badge.c { color: var(--amber); background: var(--amber-tint); }
+  .move { color: var(--ink-3); } .move .to { color: var(--ink); font-weight: 600; }
+  td small { color: var(--ink-3); } code { font-family: var(--mono); font-size: .88em; }
+
+  /* resolved + open */
+  .decks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .deck { border: 1px solid var(--line); border-radius: 14px; padding: 17px; background: var(--panel); box-shadow: var(--shadow-panel); }
+  .deck.done { border-color: var(--green); }
+  .deck h3 { margin: 0 0 3px; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+  .deck h3 .st { font-family: var(--mono); font-size: 9.5px; font-weight: 700; padding: 2px 7px; border-radius: 6px; }
+  .st.res { color: #fff; background: var(--green); } .st.open { color: var(--amber); background: var(--amber-tint); }
+  .deck p { font-size: 13px; color: var(--ink-2); margin: 8px 0 0; } .deck p b { color: var(--ink); }
+  .deck .q { font-size: 11.5px; color: var(--ink-3); font-family: var(--mono); margin: 2px 0 0; }
+  .opt { display: flex; gap: 9px; padding: 9px 0 0; margin-top: 9px; border-top: 1px dashed var(--line); font-size: 12.5px; color: var(--ink-2); }
+  .opt .mark { font-weight: 700; font-size: 10px; padding: 2px 8px; border-radius: var(--radius-pill); height: fit-content; white-space: nowrap; flex: none; }
+  .opt .mark.pick { color: #fff; background: var(--green); }
+  .opt .mark.alt { color: var(--ink-2); background: var(--panel-2); border: 1px solid var(--line); }
+  .opt b { color: var(--ink); }
+
+  footer { margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-3); }
+
+  @media (max-width: 760px) {
+    .callouts, .surfaces, .decks { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Math Atlas · shell architecture · rev 2</p>
+    <h1>One floating island, over a content layer that swaps</h1>
+    <p class="lede">
+      The most Apple-Maps-true shell isn't a top bar — it's a <b>full-bleed content layer</b> with a
+      single <b>floating glass sidebar</b> and floating controls on top. Your Atlas already does exactly
+      this; the fix is to render that same island on <b>all four surfaces</b> and let only the layer
+      beneath it change — a map on Atlas, a document or tool on the others.
+    </p>
+    <div class="legend">
+      <span class="key"><span class="swatch global"></span> Global — the persistent island (everywhere)</span>
+      <span class="key"><span class="swatch ctx"></span> Surface-contextual (floats, one surface)</span>
+      <span class="key"><span class="swatch content"></span> Content layer (full-bleed, swaps)</span>
+    </div>
+  </header>
+
+  <div class="verdict">
+    <span class="flag">VERDICT</span>
+    <p><b>Persistent frame = the floating left island, not a spanning top bar.</b> Apple Maps floats a
+      translucent sidebar (search · places · avatar) top-left over a full-screen map, with zoom/compass
+      floating bottom-right — no top chrome. That's the model, and it suits math-atlas because the graph
+      is a genuine map. Coherence comes from keeping the <i>island identical</i> everywhere and only
+      changing the layer it floats above. <b>Map/field selector → global</b>, docked at the island's top.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>The persistent island — on the Atlas (map) layer</h2></div>
+    <p class="sec-sub">Full-bleed graph behind; the one glass island floats top-left carrying every global
+      affordance; the graph's own controls float bottom-right, inside the content.</p>
+
+    <div class="frame">
+      <div class="titlebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span>math-atlas — Atlas</span></div>
+      <div class="stage">
+        <div class="layer-map"></div>
+
+        <!-- the ONE island -->
+        <aside class="island">
+          <div class="cell"><span class="lab">Brand → home</span><div class="brand"><span class="logo"></span><b>Math Atlas</b></div></div>
+          <div class="cell"><span class="lab">Map / field · GLOBAL</span><span class="pill">◑ Fourier Analysis ▾</span></div>
+          <div class="cell"><span class="lab">Search → ⌘K</span><span class="pill" style="width:100%">⌕ Search concepts…</span></div>
+          <div class="cell mut">
+            <span class="lab">Library</span>
+            <div class="navrow active"><span class="ic"></span> Atlas</div>
+            <div class="navrow"><span class="ic"></span> Paths</div>
+            <div class="navrow"><span class="ic"></span> Index</div>
+            <div class="navrow"><span class="ic"></span> Study</div>
+            <span class="lab" style="margin-top:3px">Tools</span>
+            <div class="navrow"><span class="ic"></span> Sandbox</div>
+          </div>
+          <div class="grow"></div>
+          <div class="cell"><span class="lab">Account · theme</span><div class="foot"><span class="av"></span> Sign in · ◐</div></div>
+        </aside>
+
+        <!-- graph-contextual, floating -->
+        <div class="cluster tr"><span class="ctx-chip">✎ Edit</span></div>
+        <div class="cluster br">
+          <span class="ctx-chip">⧉ Minimap</span>
+          <span class="ctx-chip">⊕ ⊖ · Fit · Filters</span>
+        </div>
+        <p class="content-tag"><b>Content layer</b> — the graph canvas, full-bleed<br>(concept card / paths panel open here too)</p>
+      </div>
+    </div>
+
+    <div class="callouts">
+      <div class="callout"><span class="tag g">MOVES IN</span><span><b>Brand, map selector, account</b> leave TopChrome — where they only appeared off-graph — and dock into the island, so they exist on Atlas at last.</span></div>
+      <div class="callout"><span class="tag g">DEDUPED</span><span><b>Search &amp; theme</b> collapse from two implementations (Sidebar + TopChrome) to one each, inside the island.</span></div>
+      <div class="callout"><span class="tag c">STAYS PUT</span><span><b>ControlCluster</b> (zoom · fit · filters · minimap) keeps floating bottom-right — it's the Apple-Maps map controls, contextual to the graph.</span></div>
+      <div class="callout"><span class="tag c">NO TOP BAR</span><span>TopChrome is <b>retired</b>. Its unique tenants move into the island; the spanning bar itself — the un-Maps part — goes away.</span></div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Same island, four content layers</h2></div>
+    <p class="sec-sub">The island (collapsed to icons here) is byte-identical on all four. Atlas floats over a
+      map; the others float over a document or tool layer. Chrome never reflows — you only swap what's beneath.</p>
+
+    <div class="surfaces">
+      <!-- Atlas -->
+      <div class="frame surf">
+        <div class="titlebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span>Atlas · map layer</span></div>
+        <div class="stage">
+          <div class="layer-map"></div>
+          <aside class="island">
+            <span class="logo"></span><span class="pill">◑ ▾</span>
+            <div class="dotrow"><span class="di on"></span><span class="di"></span></div>
+            <div class="dotrow"><span class="di"></span><span class="di"></span></div>
+            <span class="grow"></span><span class="av"></span>
+          </aside>
+          <div class="cluster tr"><span class="ctx-chip">✎</span></div>
+          <div class="cluster br"><span class="ctx-chip">⧉</span><span class="ctx-chip">⊕⊖</span></div>
+        </div>
+      </div>
+
+      <!-- Index -->
+      <div class="frame surf">
+        <div class="titlebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span>Index · doc layer</span></div>
+        <div class="stage">
+          <span class="surf-name">Dictionary <span class="role">// content</span></span>
+          <div class="layer-doc">
+            <div class="bar" style="width:68%"></div><div class="bar" style="width:50%"></div>
+            <div class="bar" style="width:60%"></div><div class="bar" style="width:42%"></div>
+            <div class="bar" style="width:55%"></div><div class="bar" style="width:34%"></div>
+          </div>
+          <aside class="island">
+            <span class="logo"></span><span class="pill">◑ ▾</span>
+            <div class="dotrow"><span class="di"></span><span class="di"></span></div>
+            <div class="dotrow"><span class="di on"></span><span class="di"></span></div>
+            <span class="grow"></span><span class="av"></span>
+          </aside>
+          <div class="cluster tr"><span class="ctx-chip">A·Z</span></div>
+        </div>
+      </div>
+
+      <!-- Study -->
+      <div class="frame surf">
+        <div class="titlebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span>Study · doc layer</span></div>
+        <div class="stage">
+          <span class="surf-name">Flashcards <span class="role">// content</span></span>
+          <div class="card-lg"><div class="bar" style="width:44%"></div><div class="bar" style="width:30%"></div></div>
+          <aside class="island">
+            <span class="logo"></span><span class="pill">◑ ▾</span>
+            <div class="dotrow"><span class="di"></span><span class="di"></span></div>
+            <div class="dotrow"><span class="di"></span><span class="di on"></span></div>
+            <span class="grow"></span><span class="av"></span>
+          </aside>
+          <div class="cluster tr"><span class="ctx-chip">4 / 30</span></div>
+          <div class="cluster br"><span class="ctx-chip">✗ ◔◑◕● ✓</span></div>
+        </div>
+      </div>
+
+      <!-- Sandbox -->
+      <div class="frame surf">
+        <div class="titlebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span>Sandbox · tool layer</span></div>
+        <div class="stage">
+          <span class="surf-name">Plane <span class="role">// content</span></span>
+          <div class="grid-mock"></div>
+          <aside class="island">
+            <span class="logo"></span><span class="pill">◑ ▾</span>
+            <div class="dotrow"><span class="di"></span><span class="di"></span></div>
+            <div class="dotrow"><span class="di"></span><span class="di"></span></div>
+            <span class="grow"></span><span class="di on" style="border-radius:5px"></span><span class="av"></span>
+          </aside>
+          <div class="cluster tr"><span class="ctx-chip">ƒ(x)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>Region-by-region ownership</h2></div>
+    <p class="sec-sub">Each region, its scope, and where it moves from in today's code.</p>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>Region</th><th>Scope</th><th>Holds</th><th>Today → proposed</th></tr></thead>
+        <tbody>
+          <tr><td><b>Island · brand</b></td><td><span class="badge g">GLOBAL</span></td><td>Logo + wordmark; click → Atlas</td><td class="move"><small>TopChrome <code>MapMenu</code>, off-graph only</small><br>→ <span class="to">island top, all surfaces</span></td></tr>
+          <tr><td><b>Island · map / field</b></td><td><span class="badge g">GLOBAL</span></td><td>Active map / field switcher</td><td class="move"><small>TopChrome <code>MapMenu</code> dropdown</small><br>→ <span class="to">island, under brand (your call)</span></td></tr>
+          <tr><td><b>Island · search</b></td><td><span class="badge g">GLOBAL</span></td><td>Search field → ⌘K palette</td><td class="move"><small>duplicated: Sidebar + TopChrome</small><br>→ <span class="to">one instance in island</span></td></tr>
+          <tr><td><b>Island · navigation</b></td><td><span class="badge g">GLOBAL</span></td><td>Library (Atlas·Paths·Index·Study) + Tools (Sandbox)</td><td class="move"><small>Sidebar list vs TopChrome <code>SurfaceNav</code> toggle</small><br>→ <span class="to">single list</span></td></tr>
+          <tr><td><b>Island · footer</b></td><td><span class="badge g">GLOBAL</span></td><td>Account / sign-in (<code>UserMenu</code>) + theme</td><td class="move"><small><code>UserMenu</code> TopChrome-only; theme in both</small><br>→ <span class="to">pinned island footer</span></td></tr>
+          <tr><td><b>Content layer</b></td><td><span class="badge c">SURFACE</span></td><td>Graph · Index · Flashcards · Sandbox — full-bleed, one at a time</td><td class="move"><span class="to">unchanged — already switched in <code>AppShell</code></span></td></tr>
+          <tr><td><b>Atlas controls</b></td><td><span class="badge c">SURFACE</span></td><td>Zoom·fit·filters·minimap (<code>ControlCluster</code>); edit; concept card / paths</td><td class="move"><span class="to">keeps floating inside the map layer</span></td></tr>
+          <tr><td><b>Index / Study / Sandbox controls</b></td><td><span class="badge c">SURFACE</span></td><td>A·Z jump &amp; filter · card rating &amp; progress · expression tools</td><td class="move"><small>no dedicated home today</small><br>→ <span class="to">float inside each content layer</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 4 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>Decisions &amp; remaining refinements</h2></div>
+    <div class="decks">
+      <div class="deck done">
+        <h3>Persistent frame <span class="st res">RESOLVED</span></h3>
+        <p class="q">// judged: most Apple-Maps-like</p>
+        <div class="opt"><span class="mark pick">CHOSEN</span><span><b>Floating glass island</b>, rendered on all four surfaces over a full-bleed content layer. No spanning top bar — TopChrome retires.</span></div>
+      </div>
+      <div class="deck done">
+        <h3>Map / field selector <span class="st res">RESOLVED</span></h3>
+        <p class="q">// your call</p>
+        <div class="opt"><span class="mark pick">CHOSEN</span><span><b>Global &amp; always visible</b>, docked at the island's top. Index and Study read the same map, so the active field stays present everywhere.</span></div>
+      </div>
+      <div class="deck">
+        <h3>Island collapse behaviour <span class="st open">OPEN</span></h3>
+        <p class="q">// how much canvas does the graph get?</p>
+        <div class="opt"><span class="mark alt">A</span><span><b>Collapsible to an icon rail</b> (Apple-Maps chevron) — full-bleed graph when you want it, nav a click away.</span></div>
+        <div class="opt"><span class="mark alt">B</span><span><b>Always expanded.</b> Simpler, but eats ~216px of canvas permanently.</span></div>
+      </div>
+      <div class="deck">
+        <h3>Do the doc layers go edge-to-edge? <span class="st open">OPEN</span></h3>
+        <p class="q">// Index / Study / Sandbox beneath the island</p>
+        <div class="opt"><span class="mark alt">A</span><span><b>Full-bleed like the map</b> — island floats over content that flows to the edges. Most coherent with Atlas.</span></div>
+        <div class="opt"><span class="mark alt">B</span><span><b>Reading column</b> — content gets a max-width and margins for legibility (Index/Study are prose-ish), island still floats.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    IA / layout only — no visual restyle. Preserves the current architecture: surface switching already
+    lives in <code>AppShell</code> (content is <code>absolute inset-0</code>, chrome floats above). This
+    consolidates the two chrome systems into one floating island and relocates the orphaned affordances into it.
+  </footer>
+</div>
