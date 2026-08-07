@@ -2,7 +2,7 @@
   "id": "functional_analysis_mini_graph_v1",
   "label": "Functional Analysis",
   "field": "functional_analysis",
-  "version": 2,
+  "version": 3,
   "updated": "2026-08-07",
   "domains": [
     {
@@ -2407,7 +2407,8 @@
         "gloss": "The single real idea is Tychonoff; every other step is bookkeeping about which conditions are pointwise-closed.",
         "notation": [
           "$B_{X^*}=\\{x^*\\in X^*:\\|x^*\\|\\leq1\\}$",
-          "$\\sigma(X^*,X)$"
+          "$\\sigma(X^*,X)$",
+          "$A^\\circ=\\{x^*\\in X^*:\\sup_{a\\in A}|x^*(a)|\\leq1\\}$"
         ]
       },
       "examples": [
@@ -2440,6 +2441,16 @@
           "content": "If $X$ is reflexive then $\\sigma(X^*,X)=\\sigma(X^*,X^{**})$, and applying the theorem to $X^*$ shows $B_X$ is weakly compact. Combined with Eberlein-Smulian this yields weak sequential compactness of bounded sets in reflexive spaces.",
           "label": "Reflexive case",
           "role": "application"
+        },
+        {
+          "content": "With $X=C(K)$, $K$ compact Hausdorff, Riesz representation gives $X^*=M(K)$, and Alaoglu says the probability measures on $K$ form a weak-star compact convex set. This is the standard existence mechanism for invariant measures, limits of empirical distributions, and Prokhorov-type tightness arguments.",
+          "label": "Compactness of the space of measures",
+          "role": "example"
+        },
+        {
+          "content": "The theorem is about the *dual* ball. $B_X$ itself is weakly compact only when $X$ is reflexive; $B_{c_0}$ and $B_{L^1}$ are not. Applying Alaoglu to $X$ rather than to a space presented as a dual is the most common misuse.",
+          "label": "It is $B_{X^*}$, not $B_X$",
+          "role": "failure_mode"
         }
       ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
@@ -3063,19 +3074,56 @@
       "id": "weakly_bounded_implies_norm_bounded",
       "kind": "theorem",
       "domain": "duality_weak_topologies",
-      "label": "Weak boundedness equals norm boundedness in Banach spaces",
+      "label": "Weak boundedness equals norm boundedness",
       "content": {
-        "statement": "In a Banach space, every weakly bounded set is norm bounded.",
-        "formal": "Let $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$, let $X$ be a normed vector space over $\\mathbb K$, and let $A\\subseteq X$. Suppose that $$\\forall x^*\\in X^*\\;\\exists C\\in[0,\\infty)\\; \\forall a\\in A, \\qquad|x^*(a)|\\le C.$$ Then $$\\exists M\\in[0,\\infty) \\forall a\\in A,\\qquad\\|a\\|_X\\le M.$$Here $X^*=\\mathcal L(X,\\mathbb K)$ denotes the continuous dual of $X$.",
-        "intuition": "If every scalar probe sees boundedness, completeness upgrades this to actual norm boundedness."
+        "statement": "In any normed space, a set is weakly bounded if and only if it is norm bounded. Completeness of $X$ is not required: the uniform boundedness argument is run on $X^*$, which is complete for every normed $X$.",
+        "formal": "Let $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$, let $X$ be a normed vector space over $\\mathbb K$ with continuous dual $X^*=\\mathcal L(X,\\mathbb K)$, and let $A\\subseteq X$. Then $$\\Big(\\forall x^*\\in X^*\\ \\exists C\\in[0,\\infty)\\ \\forall a\\in A:\\ |x^*(a)|\\leq C\\Big)\\quad\\Longleftrightarrow\\quad\\Big(\\exists M\\in[0,\\infty)\\ \\forall a\\in A:\\ \\|a\\|_X\\leq M\\Big).$$ In the hypothesis the constant $C$ is quantified after $x^*$, so it may depend on the probe; the content of the theorem is that it need not.",
+        "intuition": "The set may look large inside $X$, but every scalar probe sees only bounded values. Uniform boundedness says the probes cannot be fooled: pointwise control over all of $X^*$ already forces a single uniform bound.",
+        "gloss": "Bookkeeping rule for the whole duality: for $A\\subseteq X$ the uniform boundedness argument runs on $X^*$, which is free; for $B\\subseteq X^*$ it runs on $X$, which costs completeness. Only the second statement needs a Banach hypothesis.",
+        "notation": [
+          "$\\sup_{a\\in A}|x^*(a)|<\\infty$",
+          "$\\sup_{a\\in A}\\|a\\|=\\sup_{a\\in A}\\sup_{\\|x^*\\|\\leq1}|x^*(a)|$"
+        ]
       },
+      "examples": [
+        {
+          "content": "A weakly convergent sequence is weakly bounded, since each $x^*$ sends it to a convergent hence bounded scalar sequence, and is therefore norm bounded. This is the standard route to 'weakly convergent implies bounded', and it needs nothing about $X$ beyond being normed.",
+          "label": "Weakly convergent sequences are norm bounded",
+          "role": "example"
+        },
+        {
+          "content": "The hypothesis must be tested against all of $X^*$. In $\\ell^2$ the set $\\{ne_n:n\\in\\mathbb N\\}$ is norm unbounded, and some probe does detect it: $x^*=(k^{-3/4})_k\\in\\ell^2$ gives $\\langle ne_n,x^*\\rangle=n^{1/4}\\to\\infty$. Checking only the coordinate functionals would have suggested boundedness.",
+          "label": "Probing must range over the whole dual",
+          "role": "example"
+        },
+        {
+          "content": "The completeness hypothesis is commonly misattributed here. Weakly bounded implies norm bounded in every normed space; it is the dual statement, weak-star bounded implies norm bounded in $X^*$, that genuinely needs $X$ Banach and fails without it.",
+          "label": "Completeness of $X$ is not the hypothesis",
+          "role": "failure_mode"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
       "assumptions": [
-        "$X$ is Banach.",
-        "$A$ is weakly bounded."
+        "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$; completeness of $X$ is neither assumed nor used.",
+        "$X^*$ is a Banach space, which holds for every normed $X$ since the scalar field is complete.",
+        "$A\\subseteq X$ is weakly bounded, i.e. $\\sigma(X,X^*)$-bounded.",
+        "Hahn-Banach is used, for the isometry of the canonical embedding into $X^{**}$."
+      ],
+      "properties": [
+        "Weakly bounded $\\Leftrightarrow$ norm bounded $\\Leftrightarrow$ absorbed by every neighbourhood of $0$, so the weak and norm topologies have the same bounded sets.",
+        "The two topologies nevertheless differ in closed sets, compact sets and convergent sequences; boundedness is the one notion on which they agree.",
+        "Consequently every weakly compact set is norm bounded."
       ],
       "proof": {
         "steps": [
+          {
+            "role": "reverse implication",
+            "content": "If $M=\\sup_{a\\in A}\\|a\\|<\\infty$ then $|x^*(a)|\\leq\\|x^*\\|\\,\\|a\\|\\leq M\\|x^*\\|$ for every $x^*\\in X^*$ and $a\\in A$, so $A$ is weakly bounded. Only continuity of $x^*$ is used; the substance is in the converse.",
+            "uses": [
+              "bounded_linear_functional",
+              "dual_norm_geometry"
+            ]
+          },
           {
             "role": "canonical family",
             "content": "For each $a\\in A$, define $T_a:X^*\\to\\mathbb K$ by $T_a(x^*)=x^*(a)$.",
@@ -3094,7 +3142,7 @@
           },
           {
             "role": "uniform boundedness",
-            "content": "Since $X^*$ is Banach, the uniform boundedness principle gives $$\\sup_{a\\in A}\\|T_a\\|<\\infty.$$",
+            "content": "The space $X^*$ is complete for every normed $X$, being the space of bounded operators into the complete field $\\mathbb K$. So the uniform boundedness principle applies on $X^*$ and gives $$\\sup_{a\\in A}\\|T_a\\|<\\infty.$$ This is the only appeal to completeness in the proof, and it is completeness of $X^*$, not of $X$.",
             "uses": [
               "dual_space_is_banach",
               "uniform_boundedness_principle"
@@ -3121,9 +3169,11 @@
         "citation": "2025 exam Question 5"
       },
       "tags": [
+        "boundedness",
         "exam",
         "uniform boundedness",
-        "weak boundedness"
+        "weak boundedness",
+        "weak topology"
       ],
       "priority": "core"
     },
@@ -3354,42 +3404,314 @@
       "priority": "core"
     },
     {
-      "id": "weak_star_convergence",
+      "id": "weak_star_bounded_set",
       "kind": "definition",
       "domain": "duality_weak_topologies",
-      "label": "Weak-star convergence",
+      "label": "Weak-star bounded set",
       "content": {
-        "statement": "A sequence of functionals $(x_n^*)$ converges weak-star to $x^*$ if for every vector $x\\in X$ the scalars $x_n^*(x)$ converge to $x^*(x)$. The limit functional $x^*$ is one object required to work at every $x$ simultaneously.",
-        "formal": "Let $X$ be a normed vector space over $\\mathbb K$, let $(x_n^*)_{n\\in\\mathbb N}\\subseteq X^*$ and let $x^*\\in X^*$. Then $$x_n^*\\overset{w^*}{\\to}x^*\\quad:\\Longleftrightarrow\\quad\\forall x\\in X:\\ \\lim_{n\\to\\infty}x_n^*(x)=x^*(x).$$ Fully unfolded, $$\\exists x^*\\in X^*\\ \\forall x\\in X\\ \\forall\\varepsilon>0\\ \\exists N\\in\\mathbb N\\ \\forall n\\geq N:\\quad|x_n^*(x)-x^*(x)|<\\varepsilon.$$ The functional $x^*$ is quantified outside $x$, so it may not depend on the test vector; $N$ may depend on both $x$ and $\\varepsilon$, which is precisely the absence of uniformity that distinguishes this from dual-norm convergence.",
-        "intuition": "Functionals converge by agreeing pointwise on every vector. Weak-star convergence is the same notion as pointwise convergence of functions, transported into $X^*$.",
-        "gloss": "Dual-norm convergence is the uniform version of the same statement: $\\|x_n^*-x^*\\|=\\sup_{\\|x\\|\\leq1}|x_n^*(x)-x^*(x)|\\to0$, i.e. $N$ chosen independently of $x$ in the unit ball.",
+        "statement": "A set of functionals is weak-star bounded if it is pointwise bounded on the predual. When $X$ is a Banach space this is equivalent to norm boundedness - this is precisely where completeness is indispensable.",
+        "formal": "Let $X$ be a normed space and $B\\subseteq X^*$. Then $$B\\ \\text{weak-star bounded}\\quad:\\Longleftrightarrow\\quad\\forall x\\in X:\\ \\sup_{x^*\\in B}|x^*(x)|<\\infty.$$ If $X$ is a Banach space, the uniform boundedness principle applied to $B$ as a family of bounded operators $X\\to\\mathbb K$ gives $$\\sup_{x^*\\in B}\\|x^*\\|<\\infty,$$ i.e. weak-star bounded $\\Leftrightarrow$ norm bounded. Without completeness of $X$ the implication fails.",
+        "intuition": "Each vector of the predual sees a bounded set of values; Baire category on the complete space $X$ upgrades this to a single uniform bound. The Banach hypothesis lives on $X$ here, unlike the weak case where the complete space used is $X^*$.",
+        "gloss": "The clean way to keep the two straight: for $A\\subseteq X$ apply uniform boundedness on $X^*$ (always complete), so no hypothesis on $X$; for $B\\subseteq X^*$ apply it on $X$, so $X$ must be Banach.",
         "notation": [
-          "$x_n^*\\overset{w^*}{\\to}x^*$",
-          "$x_n^*\\xrightarrow{\\sigma(X^*,X)}x^*$"
+          "$\\forall x\\in X,\\ \\sup_{x^*\\in B}|x^*(x)|<\\infty$",
+          "$B\\text{ is }\\sigma(X^*,X)\\text{-bounded}$"
         ]
       },
       "examples": [
         {
-          "content": "In $X=c_0$ with $X^*=\\ell^1$, the partial-sum functionals or the basis vectors $e_n\\in\\ell^1$ satisfy $e_n\\overset{w^*}{\\to}0$ while $\\|e_n\\|_1=1$. Pointwise decay at each fixed $x\\in c_0$ does not force decay of the norm.",
-          "label": "Weak-star limits need not be norm limits",
+          "content": "Any weak-star convergent sequence in the dual of a Banach space is weak-star bounded, hence norm bounded, and the limit satisfies $\\|x^*\\|\\leq\\liminf\\|x_n^*\\|$. This is the standard justification for 'weak-star convergent $\\Rightarrow$ bounded', and it is exactly the step that lets one apply Banach-Alaoglu afterwards.",
+          "label": "Weak-star convergent sequences are bounded (X Banach)",
           "role": "example"
         },
         {
-          "content": "Since $\\hat X\\subseteq X^{**}$, testing against all of $X^{**}$ is a stronger demand than testing against $\\hat X$: $$x_n^*\\rightharpoonup x^*\\ \\text{in }X^*\\quad\\Longrightarrow\\quad x_n^*\\overset{w^*}{\\to}x^*.$$ The converse holds for all sequences exactly when $X$ is reflexive; $e_n\\in\\ell^1=(c_0)^*$ is the standard counterexample.",
-          "label": "Weak convergence implies weak-star, not conversely",
+          "content": "Take $X=c_{00}$ with the sup norm, an incomplete normed space with $X^*=\\ell^1$ (the dual of $c_0$). The set $B=\\{n\\,e_n:n\\in\\mathbb N\\}\\subseteq\\ell^1$ is weak-star bounded, since for fixed finitely supported $x$ one has $\\langle ne_n,x\\rangle=nx_n=0$ for all large $n$, yet $\\|n e_n\\|_1=n$ is unbounded. Completeness of $X$ cannot be dropped.",
+          "label": "Failure without completeness of the predual",
+          "role": "failure_mode"
+        },
+        {
+          "content": "Weak-star boundedness is formally weaker than weak boundedness in $X^*$ (fewer probes: $\\hat X$ rather than $X^{**}$), but for $X$ Banach all three notions - weak-star bounded, weakly bounded, norm bounded - coincide on subsets of $X^*$. The distinction between these topologies shows up in closed sets, compact sets and convergence, never in bounded sets.",
+          "label": "All three boundedness notions agree",
+          "role": "example"
+        }
+      ],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
+      "assumptions": [
+        "$X$ is a normed space for the definition; $X$ is Banach for the equivalence with norm boundedness.",
+        "The uniform boundedness principle is applied on $X$, whose completeness supplies the Baire category argument."
+      ],
+      "properties": [
+        "For $X$ Banach: weak-star bounded $\\Leftrightarrow$ weakly bounded $\\Leftrightarrow$ norm bounded.",
+        "Norm-bounded weak-star closed subsets of $X^*$ are weak-star compact (Banach-Alaoglu), so for $X$ Banach 'weak-star bounded and weak-star closed' already gives compactness.",
+        "The dual-space version of uniform boundedness: a pointwise convergent sequence of functionals on a Banach space has a bounded limit, and the convergence is uniform on norm-compact subsets of $X$."
+      ],
+      "tags": [
+        "Banach-Steinhaus",
+        "boundedness",
+        "duality",
+        "uniform boundedness",
+        "weak-star"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "weak_star_boundedness_equals_norm_boundedness",
+      "kind": "theorem",
+      "domain": "duality_weak_topologies",
+      "label": "Weak-star boundedness equals norm boundedness",
+      "content": {
+        "statement": "A pointwise bounded family of functionals on a Banach space is uniformly bounded in the dual norm. Here completeness of the predual is essential, and this is the one place in the duality where it is.",
+        "formal": "Let $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$, let $X$ be a Banach space over $\\mathbb K$ and let $B\\subseteq X^*$. Then $$\\Big(\\forall x\\in X:\\ \\sup_{x^*\\in B}|x^*(x)|<\\infty\\Big)\\quad\\Longleftrightarrow\\quad\\sup_{x^*\\in B}\\|x^*\\|<\\infty.$$ The forward implication fails for incomplete $X$; the reverse holds for any normed space.",
+        "intuition": "Each vector of the predual sees a bounded set of values, and Baire category on the complete space $X$ upgrades this to one uniform bound. Compare the weak case, where the same argument is run on $X^*$ and costs nothing.",
+        "gloss": "This is Banach-Steinhaus specialised to scalar-valued operators; the Baire step is what fails when $X$ is merely normed.",
+        "notation": [
+          "$\\sup_{x^*\\in B}|x^*(x)|<\\infty$",
+          "$E_n=\\{x\\in X:\\sup_{x^*\\in B}|x^*(x)|\\leq n\\}$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "Every weak-star convergent sequence in the dual of a Banach space is norm bounded, and the limit obeys $\\|x^*\\|\\leq\\liminf_n\\|x_n^*\\|$. This is the step that licenses applying Banach-Alaoglu afterwards.",
+          "label": "Weak-star convergent sequences are bounded",
           "role": "example"
         },
         {
-          "content": "Banach-Alaoglu gives compactness of $B_{X^*}$, not sequential compactness. For non-separable $X$ such as $\\ell^\\infty$, $B_{X^*}$ is weak-star compact but not weak-star sequentially compact, so a bounded sequence of functionals need have no weak-star convergent subsequence; one must pass to subnets. For separable $X$, $B_{X^*}$ is weak-star metrizable and subsequences do suffice.",
-          "label": "Sequences do not suffice in general",
+          "content": "Take $X=c_{00}$ with the sup norm, an incomplete space whose dual is $\\ell^1$. The family $B=\\{ne_n:n\\in\\mathbb N\\}$ is weak-star bounded, since $\\langle ne_n,x\\rangle=nx_n=0$ for all large $n$ at each fixed finitely supported $x$, yet $\\|ne_n\\|_1=n\\to\\infty$. Completeness of the predual cannot be dropped.",
+          "label": "Failure without completeness of the predual",
+          "role": "failure_mode"
+        },
+        {
+          "content": "The Baire argument gives no rate: it produces the bound $2N/r$ with $N$ and $r$ obtained non-constructively. Uniform boundedness is an existence statement, and quantitative versions need extra input such as an explicit gliding-hump construction.",
+          "label": "No effective bound",
+          "role": "failure_mode"
+        }
+      ],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
+      "assumptions": [
+        "$X$ is a Banach space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$; the forward implication is false for incomplete $X$.",
+        "$B\\subseteq X^*$ is a family of bounded linear functionals.",
+        "The Baire category theorem is applied to $X$."
+      ],
+      "properties": [
+        "For $X$ Banach, weak-star bounded $\\Leftrightarrow$ weakly bounded $\\Leftrightarrow$ norm bounded on subsets of $X^*$.",
+        "Combined with Banach-Alaoglu, a weak-star closed and weak-star bounded subset of $X^*$ is weak-star compact.",
+        "Specialising to a pointwise convergent sequence recovers the fact that the limit functional is bounded, with $\\|x^*\\|\\leq\\liminf_n\\|x_n^*\\|$."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Assume $\\sup_{x^*\\in B}|x^*(x)|<\\infty$ for every $x\\in X$ and put $$E_n=\\{x\\in X:\\ |x^*(x)|\\leq n\\ \\text{for all}\\ x^*\\in B\\}=\\bigcap_{x^*\\in B}|x^*|^{-1}([0,n]).$$ Each $E_n$ is closed, being an intersection of preimages of closed sets under continuous maps, and $X=\\bigcup_{n\\in\\mathbb N}E_n$ by the pointwise hypothesis.",
+            "uses": [
+              "bounded_linear_functional",
+              "continuity"
+            ]
+          },
+          {
+            "role": "baire category",
+            "content": "Since $X$ is complete, the Baire category theorem gives an $N$ with $\\operatorname{int}E_N\\neq\\emptyset$, so there are $x_0\\in X$ and $r>0$ with $\\overline B(x_0,r)\\subseteq E_N$. This is the only step using completeness of $X$, and it is exactly the step that fails for incomplete preduals.",
+            "uses": [
+              "baire_category_theorem",
+              "banach_space"
+            ]
+          },
+          {
+            "role": "local bound to uniform bound",
+            "content": "For $\\|y\\|\\leq1$ and $x^*\\in B$ write $ry=(x_0+ry)-x_0$ with both points in $E_N$, so $$r|x^*(y)|=|x^*(x_0+ry)-x^*(x_0)|\\leq2N.$$ Taking the supremum over $\\|y\\|\\leq1$ yields $\\|x^*\\|\\leq2N/r$ for every $x^*\\in B$.",
+            "uses": [
+              "linear_functional",
+              "operator_norm"
+            ]
+          },
+          {
+            "role": "reverse implication",
+            "content": "Conversely, if $\\sup_{x^*\\in B}\\|x^*\\|=M<\\infty$ then $|x^*(x)|\\leq M\\|x\\|$ for every $x\\in X$, so $B$ is weak-star bounded. No hypothesis on $X$ is needed here.",
+            "uses": [
+              "bounded_linear_functional"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "Hence weak-star boundedness and norm boundedness coincide on subsets of $X^*$ when $X$ is Banach. Combined with the weak case, all three notions - weak-star bounded, weakly bounded, norm bounded - agree on $X^*$. $\\blacksquare$",
+            "uses": [
+              "weakly_bounded_implies_norm_bounded",
+              "uniform_boundedness_principle"
+            ]
+          }
+        ]
+      },
+      "source": {
+        "citation": "Banach-Steinhaus; cf. Uniform Boundedness Principle"
+      },
+      "tags": [
+        "Banach-Steinhaus",
+        "boundedness",
+        "duality",
+        "uniform boundedness",
+        "weak-star"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "weak_star_continuous_functionals",
+      "kind": "theorem",
+      "domain": "duality_weak_topologies",
+      "label": "Weak-star continuous functionals are evaluations",
+      "content": {
+        "statement": "A linear functional on $X^*$ is weak-star continuous exactly when it is evaluation at a vector of the predual. The dual of $(X^*,\\sigma(X^*,X))$ is $\\hat X$, which is why the duality closes up instead of generating an endless tower of new spaces.",
+        "formal": "Let $X$ be a normed vector space over $\\mathbb K$ and let $\\varphi:X^*\\to\\mathbb K$ be linear. Then $$\\varphi\\ \\text{is}\\ \\sigma(X^*,X)\\text{-continuous}\\quad\\Longleftrightarrow\\quad\\exists x\\in X\\ \\forall x^*\\in X^*:\\ \\varphi(x^*)=x^*(x).$$ Equivalently $\\big(X^*,\\sigma(X^*,X)\\big)^*=\\hat X$, where $\\hat x(x^*)=x^*(x)$.",
+        "intuition": "The weak-star topology was built out of exactly the evaluations $\\hat x$, and nothing new appears. A functional continuous for a topology whose basic neighbourhoods constrain finitely many coordinates at a time must be controlled by finitely many coordinates, and a functional controlled by finitely many linear functionals is a combination of them.",
+        "gloss": "This is what makes weak-star separation usable: separating functionals produced by Hahn-Banach in $(X^*,\\sigma(X^*,X))$ can be taken to live in the predual.",
+        "notation": [
+          "$\\hat x(x^*)=x^*(x)$",
+          "$\\big(X^*,\\sigma(X^*,X)\\big)^*=\\hat X$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "In $\\ell^1=(c_0)^*$ the functional $a\\mapsto\\sum_na_n$ is given by $\\mathbf1\\in\\ell^\\infty=(\\ell^1)^*$, which is norm continuous but not weak-star continuous, since $\\mathbf1\\notin\\widehat{c_0}$. Concretely $e_n\\overset{w^*}{\\to}0$ while $\\sum_k(e_n)_k=1$ for every $n$.",
+          "label": "Norm continuous but not weak-star continuous",
+          "role": "example"
+        },
+        {
+          "content": "Consequence: a subspace $M\\subseteq X^*$ is weak-star closed if and only if $M=A^\\perp$ for some $A\\subseteq X$, so weak-star closed subspaces are exactly those cut out by evaluations at genuine vectors of the predual. The hyperplane $\\{a\\in\\ell^1:\\sum_na_n=0\\}$ is norm closed but weak-star dense.",
+          "label": "Weak-star closed subspaces are annihilators",
+          "role": "example"
+        },
+        {
+          "content": "The result concerns linear functionals only. The norm $\\|\\cdot\\|$ on $X^*$ is weak-star lower semicontinuous but not weak-star continuous whenever $\\dim X=\\infty$, as $e_n\\overset{w^*}{\\to}0$ with $\\|e_n\\|_1=1$ shows in $\\ell^1=(c_0)^*$.",
+          "label": "Linearity is essential",
           "role": "failure_mode"
         }
       ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
       "assumptions": [
-        "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
-        "$\\sigma(X^*,X)$ is Hausdorff, so weak-star limits are unique.",
-        "The limit is asserted to lie in $X^*$; pointwise limits of linear maps are linear, but boundedness of the limit requires either a norm bound on the sequence or completeness of $X$ via uniform boundedness."
+        "$X$ is a normed vector space; no completeness is required.",
+        "$\\varphi$ is linear on $X^*$; the statement is false for nonlinear maps.",
+        "The linear-algebra lemma: if $\\ker\\varphi\\supseteq\\bigcap_{i=1}^n\\ker\\psi_i$ for linear functionals $\\varphi,\\psi_1,\\dots,\\psi_n$, then $\\varphi\\in\\operatorname{span}\\{\\psi_1,\\dots,\\psi_n\\}$."
+      ],
+      "properties": [
+        "$\\big(X^*,\\sigma(X^*,X)\\big)^*=\\hat X$, whereas $\\big(X^*,\\|\\cdot\\|\\big)^*=X^{**}$; the two agree exactly when $X$ is reflexive.",
+        "The analogous statement one level down: $\\big(X,\\sigma(X,X^*)\\big)^*=X^*$, so passing to the weak topology does not change the dual.",
+        "Together with Hahn-Banach separation in locally convex spaces, this gives the bipolar theorem and the description of weak-star closures of convex sets."
+      ],
+      "proof": {
+        "steps": [
+          {
+            "role": "setup",
+            "content": "Recall the base of weak-star neighbourhoods of $0$: $$V(x_1,\\dots,x_n;\\varepsilon)=\\{x^*\\in X^*:\\ |x^*(x_i)|<\\varepsilon,\\ i=1,\\dots,n\\},\\qquad n\\in\\mathbb N,\\ x_i\\in X,\\ \\varepsilon>0.$$",
+            "uses": [
+              "weak_star_topology",
+              "locally_convex_space"
+            ]
+          },
+          {
+            "role": "easy direction",
+            "content": "Each $\\hat x$ is $\\sigma(X^*,X)$-continuous by construction, since the weak-star topology is by definition the coarsest topology making every evaluation continuous.",
+            "uses": [
+              "weak_star_topology"
+            ]
+          },
+          {
+            "role": "continuity gives a finite constraint",
+            "content": "Suppose $\\varphi$ is weak-star continuous. Then $\\varphi^{-1}(\\{\\lambda\\in\\mathbb K:|\\lambda|<1\\})$ is a neighbourhood of $0$, so there exist $x_1,\\dots,x_n\\in X$ and $\\varepsilon>0$ with $$V(x_1,\\dots,x_n;\\varepsilon)\\subseteq\\{x^*\\in X^*:|\\varphi(x^*)|<1\\}.$$",
+            "uses": [
+              "continuity",
+              "weak_star_topology"
+            ]
+          },
+          {
+            "role": "kernel inclusion",
+            "content": "If $x^*\\in\\bigcap_{i=1}^n\\ker\\hat x_i$ then $tx^*\\in V(x_1,\\dots,x_n;\\varepsilon)$ for every scalar $t$, so $|t\\varphi(x^*)|<1$ for all $t$, forcing $\\varphi(x^*)=0$. Hence $$\\bigcap_{i=1}^n\\ker\\hat x_i\\subseteq\\ker\\varphi.$$",
+            "uses": [
+              "linear_functional"
+            ]
+          },
+          {
+            "role": "conclusion",
+            "content": "By the linear-algebra lemma there are scalars $\\alpha_1,\\dots,\\alpha_n$ with $\\varphi=\\sum_{i=1}^n\\alpha_i\\hat x_i$, and since $x\\mapsto\\hat x$ is linear this reads $\\varphi=\\hat x$ for $x=\\sum_{i=1}^n\\alpha_ix_i\\in X$. Therefore the weak-star continuous linear functionals on $X^*$ are precisely the evaluations at vectors of $X$. $\\blacksquare$",
+            "uses": [
+              "canonical_embedding_isometry",
+              "linear_functional"
+            ]
+          }
+        ]
+      },
+      "source": {
+        "citation": "Standard; cf. Rudin: Functional Analysis, Ch.3"
+      },
+      "tags": [
+        "duality",
+        "locally convex",
+        "separation",
+        "weak-star"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "weak_star_convergence",
+      "kind": "definition",
+      "domain": "duality_weak_topologies",
+      "label": "Weak-star convergence",
+      "content": {
+        "statement": "A sequence of functionals $(x_n^*)$ converges weak-star to $x^*$ if the scalars $x_n^*(x)$ converge to $x^*(x)$ for every vector $x\\in X$. The limit $x^*$ is a single functional required to work at every test vector simultaneously; the rate at which it is approached may vary from vector to vector.",
+        "formal": "Let $X$ be a normed space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$, let $(x_n^*)_{n\\in\\mathbb N}\\subseteq X^*$ and let $x^*\\in X^*$. Then $$x_n^*\\overset{w^*}{\\longrightarrow}x^*\\quad:\\Longleftrightarrow\\quad\\forall x\\in X:\\ \\lim_{n\\to\\infty}x_n^*(x)=x^*(x).$$ Unfolded to quantifiers, $$\\forall x\\in X\\ \\ \\forall\\varepsilon>0\\ \\ \\exists N\\in\\mathbb N\\ \\ \\forall n\\geq N:\\quad|x_n^*(x)-x^*(x)|<\\varepsilon.$$ Compare the dual-norm statement, in which the vector is quantified *inside* $N$: $$\\|x_n^*-x^*\\|=\\sup_{\\|x\\|\\leq1}|x_n^*(x)-x^*(x)|\\to0\\quad\\Longleftrightarrow\\quad\\forall\\varepsilon>0\\ \\exists N\\ \\forall n\\geq N\\ \\forall\\|x\\|\\leq1:\\ |x_n^*(x)-x^*(x)|<\\varepsilon.$$ The order of $\\exists N$ and $\\forall x$ is the entire difference between the two notions.",
+        "intuition": "Functionals converge by agreeing pointwise on every vector. Weak-star convergence *is* pointwise convergence of functions, transported into $X^*$; dual-norm convergence is its uniform-on-the-unit-ball counterpart. The familiar gap between pointwise and uniform convergence of functions reappears here verbatim.",
+        "gloss": "The three standard modes on a dual space, in increasing strength: $$x_n^*\\overset{w^*}{\\to}x^*\\ \\ (\\text{test against }X)\\quad\\Longleftarrow\\quad x_n^*\\rightharpoonup x^*\\ \\ (\\text{test against }X^{**})\\quad\\Longleftarrow\\quad\\|x_n^*-x^*\\|\\to0.$$",
+        "notation": [
+          "$x_n^*\\overset{w^*}{\\to}x^*$",
+          "$x_n^*\\xrightarrow{\\sigma(X^*,X)}x^*$",
+          "$\\forall x\\in X,\\ \\langle x_n^*,x\\rangle\\to\\langle x^*,x\\rangle$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "In $X=c_0$ with $X^*=\\ell^1$, the standard basis vectors satisfy $\\langle e_n,x\\rangle=x_n\\to0$ for every $x\\in c_0$, so $e_n\\overset{w^*}{\\to}0$ while $\\|e_n\\|_1=1$ for all $n$. Pointwise decay at each fixed vector does not force decay of the norm; the mass escapes to infinity along the coordinates rather than shrinking.",
+          "label": "Weak-star limits need not be norm limits",
+          "role": "example"
+        },
+        {
+          "content": "Two examples that carry the same phenomenon in analysis. (i) *Concentration*: in $X=C[0,1]$ with $X^*=M[0,1]$, $\\delta_{1/n}\\overset{w^*}{\\to}\\delta_0$, since $\\int f\\,d\\delta_{1/n}=f(1/n)\\to f(0)$ by continuity, yet $\\|\\delta_{1/n}-\\delta_0\\|_{TV}=2$ for all $n$. (ii) *Oscillation*: in $X=L^1[0,2\\pi]$ with $X^*=L^\\infty[0,2\\pi]$, $\\sin(nt)\\overset{w^*}{\\to}0$ by Riemann-Lebesgue, yet $\\|\\sin(n\\cdot)\\|_\\infty=1$. Weak-star limits forget concentration and oscillation; the norm remembers them.",
+          "label": "Concentration and oscillation",
+          "role": "example"
+        },
+        {
+          "content": "Since the canonical embedding gives $\\hat X\\subseteq X^{**}$, weak convergence in $X^*$ tests against strictly more functionals than weak-star does, so $$x_n^*\\rightharpoonup x^*\\ \\text{in }X^*\\quad\\Longrightarrow\\quad x_n^*\\overset{w^*}{\\to}x^*,$$ and the implication reverses whenever $X$ is reflexive. It does *not* reverse in general: $e_n\\overset{w^*}{\\to}0$ in $\\ell^1=(c_0)^*$, but testing against $\\mathbf1=(1,1,\\dots)\\in\\ell^\\infty=(\\ell^1)^*$ gives $\\langle e_n,\\mathbf1\\rangle=1\\not\\to0$, so $e_n\\not\\rightharpoonup0$.",
+          "label": "Weak convergence implies weak-star, not conversely",
+          "role": "example"
+        },
+        {
+          "content": "Reflexivity of $X$ characterizes equality of the *topologies* $\\sigma(X^*,X)=\\sigma(X^*,X^{**})$, but it does not characterize agreement of the two notions of *sequential* convergence, which is a strictly weaker demand (the Grothendieck property). Counterexample: $X=\\ell^\\infty$ is not reflexive, yet every weak-star convergent sequence in $(\\ell^\\infty)^*$ converges weakly. Do not upgrade the topological 'iff' to a sequential one.",
+          "label": "Reflexivity is not the sequential criterion",
+          "role": "failure_mode"
+        },
+        {
+          "content": "The norm is only weak-star *lower semicontinuous*: $x_n^*\\overset{w^*}{\\to}x^*$ gives $\\|x^*\\|\\leq\\liminf_n\\|x_n^*\\|$, with strict inequality in every example above. Pairing is likewise only separately continuous: $x_n^*\\overset{w^*}{\\to}x^*$ together with $\\|x_n-x\\|\\to0$ yields $x_n^*(x_n)\\to x^*(x)$ (using boundedness of $(x_n^*)$), but $x_n\\rightharpoonup x$ is not enough - in $\\ell^2$, $e_n\\overset{w^*}{\\to}0$ and $e_n\\rightharpoonup0$ while $\\langle e_n,e_n\\rangle=1$.",
+          "label": "Norm drops in the limit; pairing is not jointly continuous",
+          "role": "failure_mode"
+        },
+        {
+          "content": "Banach-Alaoglu gives compactness of $B_{X^*}$, not sequential compactness. For $X=\\ell^\\infty$ the evaluations $\\delta_n\\in B_{(\\ell^\\infty)^*}$ have no weak-star convergent subsequence: given any $(n_k)$, the vector $x\\in\\ell^\\infty$ with $x_{n_k}=(-1)^k$ makes $\\delta_{n_k}(x)$ oscillate. In general one must pass to subnets; for $X$ separable, $B_{X^*}$ is weak-star metrizable and subsequences do suffice.",
+          "label": "Sequences do not suffice in general",
+          "role": "failure_mode"
+        },
+        {
+          "content": "Weak-star convergent sequences are norm bounded when $X$ is *complete* (uniform boundedness). Without completeness this fails: in $X=c_{00}$ with the sup norm, $X^*=\\ell^1$, and $f_n=n\\,e_n$ satisfies $f_n(x)=n x_n=0$ for $n$ large at each fixed finitely supported $x$, so $f_n\\overset{w^*}{\\to}0$ while $\\|f_n\\|_1=n\\to\\infty$.",
+          "label": "Boundedness of the sequence needs completeness of $X$",
+          "role": "failure_mode"
+        }
+      ],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
+      "assumptions": [
+        "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$; no completeness is required for the definition itself.",
+        "$\\sigma(X^*,X)$ is Hausdorff, so weak-star limits are unique; this needs only that $\\hat X$ separates points of $X^*$, which is immediate from equality of functions.",
+        "The limit is asserted to lie in $X^*$. Pointwise limits of linear maps are automatically linear, but boundedness of the limit requires either an a priori norm bound on $(x_n^*)$ or completeness of $X$ via uniform boundedness."
+      ],
+      "properties": [
+        "Linear: $x_n^*\\overset{w^*}{\\to}x^*$ and $y_n^*\\overset{w^*}{\\to}y^*$ imply $\\alpha x_n^*+\\beta y_n^*\\overset{w^*}{\\to}\\alpha x^*+\\beta y^*$.",
+        "Norm convergence $\\Rightarrow$ weak convergence in $X^*$ $\\Rightarrow$ weak-star convergence; all implications are strict in general.",
+        "$\\|\\cdot\\|$ is weak-star lower semicontinuous, so weak-star limits of the closed ball stay in the closed ball.",
+        "If $(x_n^*)$ is norm bounded, it suffices to check $x_n^*(x)\\to x^*(x)$ on a dense subset (or a spanning set) of $X$."
       ],
       "tags": [
         "convergence",
@@ -3406,47 +3728,62 @@
       "label": "Weak-star topology",
       "content": {
         "statement": "The weak-star topology $\\sigma(X^*,X)$ is the coarsest topology on $X^*$ making every evaluation map $\\hat x:X^*\\to\\mathbb K$, $\\hat x(x^*)=x^*(x)$, continuous, as $x$ ranges over $X$. It is the topology of pointwise convergence on the predual $X$.",
-        "formal": "Let $X$ be a normed vector space over $\\mathbb K$ and $X^*=\\mathcal L(X,\\mathbb K)$. For $x\\in X$ define the evaluation functional $$\\hat x:X^*\\to\\mathbb K,\\qquad \\hat x(x^*)=x^*(x).$$ Then $$\\sigma(X^*,X)=\\text{the initial topology on }X^*\\text{ induced by }\\{\\hat x:x\\in X\\},$$ with subbase $\\{\\hat x^{-1}(U):x\\in X,\\ U\\subseteq\\mathbb K\\text{ open}\\}$ and basic neighbourhoods $$V(x_0^*;x_1,\\dots,x_n;\\varepsilon)=\\{x^*\\in X^*:|(x^*-x_0^*)(x_i)|<\\varepsilon\\ \\text{for } i=1,\\dots,n\\},$$ for $n\\in\\mathbb N$, $x_1,\\dots,x_n\\in X$, $\\varepsilon>0$. Equivalently it is generated by the seminorms $q_x(x^*)=|x^*(x)|$, $x\\in X$.",
-        "intuition": "Pointwise convergence on the predual $X$. Each vector $x\\in X$ is reinterpreted one level up as a coordinate function $\\hat x$ on $X^*$, and the weak-star topology is the product-style topology those coordinates generate.",
-        "gloss": "Same recipe as the weak topology, applied one level up: $\\sigma(X,X^*)$ probes $X$ by $X^*$, while $\\sigma(X^*,X)$ probes $X^*$ by the image $\\hat X\\subseteq X^{**}$ only.",
+        "formal": "Let $X$ be a normed space over $\\mathbb K$ and $X^*=\\mathcal L(X,\\mathbb K)$. For $x\\in X$ define $$\\hat x:X^*\\to\\mathbb K,\\qquad\\hat x(x^*)=x^*(x).$$ Then $\\sigma(X^*,X)$ is the initial topology on $X^*$ induced by the family $\\{\\hat x:x\\in X\\}$, with subbase $$\\{\\hat x^{-1}(U):x\\in X,\\ U\\subseteq\\mathbb K\\ \\text{open}\\}$$ and basic neighbourhoods $$V(x_0^*;x_1,\\dots,x_n;\\varepsilon)=\\{x^*\\in X^*:\\ |(x^*-x_0^*)(x_i)|<\\varepsilon,\\ i=1,\\dots,n\\},\\qquad n\\in\\mathbb N,\\ x_i\\in X,\\ \\varepsilon>0.$$ Equivalently it is the locally convex topology generated by the seminorms $q_x(x^*)=|x^*(x)|$, $x\\in X$. Note that every basic neighbourhood is *unbounded* in norm: it constrains only finitely many coordinates, so it contains the infinite-codimensional subspace $\\bigcap_{i=1}^n\\ker\\hat x_i$ translated to $x_0^*$.",
+        "intuition": "Pointwise convergence on the predual. Each vector $x\\in X$ is reinterpreted one level up as a coordinate function $\\hat x$ on $X^*$, and $\\sigma(X^*,X)$ is the product-style topology those coordinates generate - the subspace topology inherited from $\\mathbb K^X$ with the product topology.",
+        "gloss": "Same recipe as the weak topology, applied one level up: $\\sigma(X,X^*)$ probes $X$ with all of $X^*$, while $\\sigma(X^*,X)$ probes $X^*$ with the image $\\hat X\\subseteq X^{**}$ only. Fewer probes, coarser topology, more compact sets.",
         "notation": [
           "$\\sigma(X^*,X)$",
-          "$\\hat x(x^*)=x^*(x)$",
-          "$q_x(x^*)=|x^*(x)|$"
+          "$\\hat x(x^*)=x^*(x)=\\langle x^*,x\\rangle$",
+          "$q_x(x^*)=|x^*(x)|$",
+          "$V(x_0^*;x_1,\\dots,x_n;\\varepsilon)=\\{x^*\\in X^*:|(x^*-x_0^*)(x_i)|<\\varepsilon,\\ i=1,\\dots,n\\}$"
         ]
       },
       "examples": [
         {
-          "content": "The dual $X^*$ carries two probe topologies: $\\sigma(X^*,X^{**})$ (its own weak topology) and $\\sigma(X^*,X)$ (weak-star). Since the canonical embedding gives $\\hat X\\subseteq X^{**}$, fewer probes are available for weak-star, so $$\\sigma(X^*,X)\\subseteq\\sigma(X^*,X^{**}),$$ with equality if and only if $X$ is reflexive.",
+          "content": "The dual $X^*$ carries two probe topologies: its own weak topology $\\sigma(X^*,X^{**})$ and the weak-star topology $\\sigma(X^*,X)$. Since $\\hat X\\subseteq X^{**}$, $$\\sigma(X^*,X)\\subseteq\\sigma(X^*,X^{**})\\subseteq\\tau_{\\|\\cdot\\|},$$ with $\\sigma(X^*,X)=\\sigma(X^*,X^{**})$ if and only if $X$ is reflexive, and the second inclusion an equality only when $\\dim X<\\infty$.",
           "label": "Weak-star versus weak on $X^*$",
           "role": "example"
         },
         {
-          "content": "Take $X=c_0$, so $X^*=\\ell^1$ and $X^{**}=\\ell^\\infty$. The standard basis $(e_n)\\subseteq\\ell^1$ satisfies $e_n\\overset{w^*}{\\to}0$, because $\\langle e_n,x\\rangle=x_n\\to0$ for every $x\\in c_0$. But $e_n\\not\\rightharpoonup0$ weakly in $\\ell^1$: testing against $\\mathbf 1=(1,1,\\dots)\\in\\ell^\\infty=X^{**}$ gives $\\langle e_n,\\mathbf 1\\rangle=1\\not\\to0$. This is exactly the failure of $c_0$ to be reflexive.",
+          "content": "Take $X=c_0$, so $X^*=\\ell^1$ and $X^{**}=\\ell^\\infty$. The standard basis $(e_n)\\subseteq\\ell^1$ satisfies $e_n\\overset{w^*}{\\to}0$ because $\\langle e_n,x\\rangle=x_n\\to0$ for every $x\\in c_0$, but $e_n\\not\\rightharpoonup0$ weakly in $\\ell^1$: testing against $\\mathbf1\\in\\ell^\\infty=X^{**}$ gives $1$ for all $n$. This is exactly the failure of $c_0$ to be reflexive, made visible by a single sequence.",
           "label": "A genuinely coarser example",
           "role": "example"
         },
         {
-          "content": "For $\\dim X=\\infty$, $\\sigma(X^*,X)$ is not metrizable on $X^*$ globally. It is metrizable on the norm-bounded set $B_{X^*}$ precisely when $X$ is separable, which is what makes sequential extraction legitimate for separable $X$ and forces the use of nets in general.",
+          "content": "Norm-closed does not imply weak-star closed, even for hyperplanes. In $\\ell^1=(c_0)^*$ the subspace $H=\\{a\\in\\ell^1:\\sum_n a_n=0\\}$ is the kernel of $\\mathbf1\\in\\ell^\\infty=(\\ell^1)^*$, hence norm closed, but $\\mathbf1\\notin\\widehat{c_0}$, so $H$ is weak-star *dense* in $\\ell^1$. In general, a subspace $M\\subseteq X^*$ is weak-star closed iff $M=A^\\perp$ for some $A\\subseteq X$, i.e. iff it is cut out by evaluations at genuine vectors of the predual.",
+          "label": "Norm closed but weak-star dense",
+          "role": "example"
+        },
+        {
+          "content": "For $\\dim X=\\infty$, $\\sigma(X^*,X)$ is never metrizable on all of $X^*$: a countable base at $0$ would come from countably many seminorms $q_{x_k}$, forcing $\\bigcap_k\\ker\\hat x_k=\\{0\\}$ and hence $\\dim X^*<\\infty$. It *is* metrizable on the norm-bounded set $B_{X^*}$ precisely when $X$ is separable, which is what makes sequential extraction legitimate for separable $X$ and forces the use of nets otherwise.",
           "label": "Not metrizable on all of $X^*$",
+          "role": "failure_mode"
+        },
+        {
+          "content": "$\\sigma(X^*,X)$ is a locally convex topology but not a normed one, and multiplication is only separately continuous in the relevant pairings. Sets that are weak-star open are automatically norm unbounded, so no weak-star neighbourhood of $0$ is contained in $B_{X^*}$; in particular the weak-star topology has no bounded neighbourhoods and cannot come from a norm when $\\dim X=\\infty$.",
+          "label": "Locally convex but never normable in infinite dimensions",
           "role": "failure_mode"
         }
       ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
       "assumptions": [
-        "$X$ is a normed vector space; $X^*$ is its continuous dual.",
-        "The construction requires a distinguished predual $X$, so it is a topology on a dual space, not on an abstract Banach space."
+        "$X$ is a normed vector space; $X^*$ denotes its continuous dual.",
+        "The construction requires a distinguished predual $X$: weak-star is a topology on a space *presented as* a dual, not an intrinsic invariant of the Banach space. Different preduals can give different weak-star topologies."
       ],
       "properties": [
-        "Locally convex; $(X^*,\\sigma(X^*,X))$ is a topological vector space.",
-        "Hausdorff, since $\\hat X$ separates points of $X^*$: if $x^*\\neq y^*$ then $x^*(x)\\neq y^*(x)$ for some $x\\in X$, directly from the definition of equality of functions. No Hahn-Banach is needed here.",
-        "Coarser than $\\sigma(X^*,X^{**})$, which is coarser than the dual-norm topology.",
-        "Makes $B_{X^*}$ compact (Banach-Alaoglu), which the two finer topologies do not in general."
+        "Locally convex Hausdorff topological vector space. Hausdorffness holds because $\\hat X$ separates points of $X^*$: if $x^*\\neq y^*$ then $x^*(x)\\neq y^*(x)$ for some $x\\in X$, directly from equality of functions - no Hahn-Banach needed, in contrast with the weak topology on $X$.",
+        "Coarser than $\\sigma(X^*,X^{**})$, which is coarser than the dual-norm topology; all coincide iff $\\dim X<\\infty$.",
+        "The continuous dual of $(X^*,\\sigma(X^*,X))$ is exactly $\\hat X$: a linear functional on $X^*$ is weak-star continuous iff it is evaluation at some $x\\in X$. This is the structural reason the whole duality theory closes up.",
+        "Banach-Alaoglu: $B_{X^*}$ is weak-star compact, which the two finer topologies do not achieve in general.",
+        "Goldstine: $\\widehat{B_X}$ is weak-star dense in $B_{X^{**}}$, hence $\\hat X$ is weak-star dense in $X^{**}$.",
+        "Krein-Smulian (for $X$ Banach): a convex $C\\subseteq X^*$ is weak-star closed iff $C\\cap rB_{X^*}$ is weak-star closed for every $r>0$.",
+        "Weak-star closure of a convex set can be computed by bipolars: $\\overline{\\operatorname{co}}^{\\,w^*}(A)=A_\\circ{}^\\circ$ for $A\\subseteq X^*$ balanced convex."
       ],
       "tags": [
         "duality",
         "initial topology",
         "locally convex",
+        "polar",
         "weak-star"
       ],
       "priority": "core"
@@ -3457,13 +3794,42 @@
       "domain": "duality_weak_topologies",
       "label": "Weakly bounded set",
       "content": {
-        "statement": "A set is weakly bounded if every continuous linear functional is bounded on it.",
-        "formal": "Let $X$ be a normed space over $\\mathbb K$ and $A\\subseteq X$. Then $$A\\ \\text{weakly bounded}\\quad:\\Longleftrightarrow\\quad\\forall x^*\\in X^*:\\ \\sup_{a\\in A}|x^*(a)|<\\infty.$$ The bound is allowed to depend on $x^*$; requiring one bound valid for all $x^*$ simultaneously would be norm boundedness. That the two coincide for $X$ Banach is the content of the uniform boundedness principle.",
-        "intuition": "The set may look large in X, but every scalar probe sees only bounded values."
+        "statement": "A set is weakly bounded if every continuous linear functional is bounded on it. For subsets of a normed space this is equivalent to norm boundedness - no completeness assumption needed.",
+        "formal": "Let $X$ be a normed space over $\\mathbb K$ and $A\\subseteq X$. Then $$A\\ \\text{weakly bounded}\\quad:\\Longleftrightarrow\\quad\\forall x^*\\in X^*:\\ \\sup_{a\\in A}|x^*(a)|<\\infty.$$ The bound is permitted to depend on $x^*$; demanding one bound valid for all $x^*\\in B_{X^*}$ simultaneously is exactly norm boundedness, since $$\\sup_{a\\in A}\\|a\\|=\\sup_{a\\in A}\\ \\sup_{\\|x^*\\|\\le1}|x^*(a)|.$$ The two coincide: $$A\\ \\text{weakly bounded}\\quad\\Longleftrightarrow\\quad A\\ \\text{norm bounded}.$$",
+        "intuition": "The set may look large inside $X$, but every scalar probe sees only bounded values. Uniform boundedness says the probes cannot be fooled: pointwise control on all of $X^*$ already forces uniform control.",
+        "gloss": "Proof of the nontrivial direction: view $A$ inside $X^{**}$ via the canonical embedding, so $\\{\\hat a:a\\in A\\}$ is a family of bounded functionals on $X^*$, pointwise bounded by hypothesis. Since $X^*$ is a Banach space *regardless of whether $X$ is complete*, uniform boundedness gives $\\sup_{a\\in A}\\|\\hat a\\|<\\infty$, and $\\|\\hat a\\|=\\|a\\|$ by Hahn-Banach.",
+        "notation": [
+          "$\\forall x^*\\in X^*,\\ \\sup_{a\\in A}|x^*(a)|<\\infty$",
+          "$A\\text{ is }\\sigma(X,X^*)\\text{-bounded}$"
+        ]
       },
+      "examples": [
+        {
+          "content": "In any normed space, $\\{e_n\\}$-type sets that are weakly null are in particular weakly bounded, hence norm bounded - consistent with $\\|e_n\\|=1$. By contrast $\\{n e_n\\}\\subseteq\\ell^2$ is not weakly bounded: testing against $x^*=e_k$ is harmless, but $x^*=(1/k)_k\\in\\ell^2$ gives $\\langle ne_n,x^*\\rangle=1$ - bounded again. The genuine obstruction shows up against $x^*=(k^{-3/4})_k\\in\\ell^2$, where the values $n^{1/4}$ are unbounded. Weak boundedness must be checked against all of $X^*$, not a convenient subfamily.",
+          "label": "Probing must range over the whole dual",
+          "role": "example"
+        },
+        {
+          "content": "A weakly convergent sequence is weakly bounded (each $x^*$ maps it to a convergent, hence bounded, scalar sequence), therefore norm bounded. This is the standard route to 'weakly convergent $\\Rightarrow$ bounded', and it needs nothing about $X$ beyond being normed.",
+          "label": "Weakly convergent sequences are norm bounded",
+          "role": "example"
+        },
+        {
+          "content": "The equivalence is a statement about subsets of $X$, where the relevant uniform boundedness is applied in the always-complete space $X^*$. The analogous statement one level up - weak-star bounded implies norm bounded in $X^*$ - genuinely requires $X$ to be Banach, and fails otherwise. Attributing the completeness hypothesis to the wrong side of the duality is the usual error here.",
+          "label": "Completeness is not needed here",
+          "role": "failure_mode"
+        }
+      ],
       "diagram": "/atlas-assets/functional_analysis/diagrams/weak-topology-probes.svg",
       "assumptions": [
-        "$X$ is a normed space."
+        "$X$ is a normed space over $\\mathbb K$; completeness of $X$ is not required.",
+        "Hahn-Banach is used, for the isometry $\\|\\hat a\\|=\\|a\\|$ of the canonical embedding.",
+        "Uniform boundedness is applied on $X^*$, which is complete for any normed $X$."
+      ],
+      "properties": [
+        "Weakly bounded $\\Leftrightarrow$ norm bounded $\\Leftrightarrow$ absorbed by every neighbourhood of $0$ (boundedness in the TVS sense agrees for the weak and norm topologies).",
+        "The weak and norm topologies therefore have the same bounded sets, even though they have different closed sets, compact sets, and convergent sequences.",
+        "Consequently a weakly compact set is norm bounded, and a weakly closed norm-bounded set in a reflexive space is weakly compact."
       ],
       "source": {
         "citation": "2025 exam Question 5"
@@ -3471,6 +3837,7 @@
       "tags": [
         "boundedness",
         "exam",
+        "uniform boundedness",
         "weak topology"
       ],
       "priority": "core"
@@ -5386,8 +5753,13 @@
       "relation": "assumes"
     },
     {
+      "source": "weak_star_boundedness_equals_norm_boundedness",
+      "target": "banach_space",
+      "relation": "assumes"
+    },
+    {
       "source": "weakly_bounded_implies_norm_bounded",
-      "target": "domain_is_banach_space",
+      "target": "normed_vector_space",
       "relation": "assumes"
     },
     {
@@ -6728,6 +7100,26 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "weak_star_boundedness_equals_norm_boundedness",
+      "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_star_boundedness_equals_norm_boundedness",
+      "target": "weak_star_bounded_set",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_star_continuous_functionals",
+      "target": "dual_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "weak_star_continuous_functionals",
+      "target": "weak_star_topology",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "weak_star_convergence",
       "target": "convergence",
       "relation": "defined_in_terms_of"
@@ -6785,11 +7177,6 @@
     {
       "source": "weak_topology",
       "target": "normed_vector_space",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "weakly_bounded_implies_norm_bounded",
-      "target": "banach_space",
       "relation": "defined_in_terms_of"
     },
     {
@@ -7489,6 +7876,16 @@
       "relation": "related_to"
     },
     {
+      "source": "banach_alaoglu_theorem",
+      "target": "weak_star_boundedness_equals_norm_boundedness",
+      "relation": "related_to"
+    },
+    {
+      "source": "closed_convex_separation",
+      "target": "weak_star_continuous_functionals",
+      "relation": "related_to"
+    },
+    {
       "source": "compact_self_adjoint_eigenvalues",
       "target": "spectral_theorem",
       "relation": "related_to"
@@ -7574,6 +7971,11 @@
       "relation": "related_to"
     },
     {
+      "source": "weak_star_continuous_functionals",
+      "target": "reflexive_space",
+      "relation": "related_to"
+    },
+    {
       "source": "weak_star_convergence",
       "target": "reflexive_space",
       "relation": "related_to"
@@ -7596,6 +7998,11 @@
     {
       "source": "weak_topology",
       "target": "locally_convex_space",
+      "relation": "related_to"
+    },
+    {
+      "source": "weakly_bounded_implies_norm_bounded",
+      "target": "weak_star_boundedness_equals_norm_boundedness",
       "relation": "related_to"
     },
     {
@@ -8251,6 +8658,36 @@
     {
       "source": "weak_null_preserver_boundedness",
       "target": "weakly_bounded_implies_norm_bounded",
+      "relation": "uses"
+    },
+    {
+      "source": "weak_star_boundedness_equals_norm_boundedness",
+      "target": "baire_category_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "weak_star_boundedness_equals_norm_boundedness",
+      "target": "operator_norm",
+      "relation": "uses"
+    },
+    {
+      "source": "weak_star_boundedness_equals_norm_boundedness",
+      "target": "uniform_boundedness_principle",
+      "relation": "uses"
+    },
+    {
+      "source": "weak_star_continuous_functionals",
+      "target": "canonical_embedding_isometry",
+      "relation": "uses"
+    },
+    {
+      "source": "weak_star_continuous_functionals",
+      "target": "linear_functional",
+      "relation": "uses"
+    },
+    {
+      "source": "weak_star_convergence",
+      "target": "weak_star_boundedness_equals_norm_boundedness",
       "relation": "uses"
     },
     {
