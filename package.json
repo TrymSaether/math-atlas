@@ -22,7 +22,7 @@
     "preview": "vite preview",
     "lint": "biome lint .",
     "format": "biome format --write .",
-    "check": "biome ci . && npm run typecheck && npm test && npm run build"
+    "check": "npm run format && biome lint . && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
     "@hono/node-server": "^2.0.5",
