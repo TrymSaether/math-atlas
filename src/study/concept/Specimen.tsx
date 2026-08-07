@@ -100,7 +100,7 @@ export function Facet({
   );
 }
 
-/** A boxed math block used for formal statement / definition / formula facets. */
+/** A boxed math block used for formal-statement and formula facets. */
 export function MathBox({ text }: { text: string }) {
   return (
     <div className="panel-scrollbar block max-w-full overflow-x-auto rounded-sm border border-border bg-muted px-3.5 py-2.5 font-math text-body leading-[1.6] text-foreground">

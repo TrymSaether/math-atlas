@@ -8,7 +8,7 @@ function concept(id: string, overrides: Partial<SourceConcept> = {}): SourceConc
     kind: "definition",
     domain: "core",
     label: id,
-    content: { notation: [] },
+    content: { statement: `${id} statement`, notation: [] },
     examples: [],
     assumptions: [],
     properties: [],
@@ -133,13 +133,21 @@ describe("SourceGraphSchema characterization", () => {
       version: 1,
       updated: "2026-06-27",
       domains: [{ id: "core", label: "Core", order: 0, palette: "blue" }],
-      concepts: [{ id: "alpha", kind: "definition", domain: "core", label: "Alpha" }],
+      concepts: [
+        {
+          id: "alpha",
+          kind: "definition",
+          domain: "core",
+          label: "Alpha",
+          content: { statement: "Alpha statement." },
+        },
+      ],
     };
 
     const parsed = SourceGraphSchema.parse(input);
 
     expect(parsed.concepts[0]).toMatchObject({
-      content: { notation: [] },
+      content: { statement: "Alpha statement.", notation: [] },
       examples: [],
       assumptions: [],
       properties: [],

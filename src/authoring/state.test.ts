@@ -19,7 +19,7 @@ const source: SourceGraph = {
       kind: "definition",
       domain: "core",
       label: "Root",
-      content: { notation: [] },
+      content: { statement: "The root concept.", notation: [] },
       examples: [],
       assumptions: [],
       properties: [],
@@ -98,6 +98,7 @@ describe("authoring state", () => {
     const { state } = setup();
     const draft = emptyDraft("core");
     draft.label = "Root";
+    draft.statement = "A second root concept.";
 
     expect(state.commitNode(draft)).toEqual({ ok: true, id: "root_2" });
     expect(state.selectedId).toBe("root_2");
@@ -124,6 +125,7 @@ describe("authoring state", () => {
     saveMap.mockResolvedValueOnce({ status: "conflict" });
     const draft = emptyDraft("core");
     draft.label = "Another concept";
+    draft.statement = "Another canonical statement.";
 
     expect(state.commitNode(draft).ok).toBe(true);
     await runScheduledSave();

@@ -13,8 +13,8 @@ import { hasNodeVisual } from "./visualModel";
  *
  * Each facet renders as its own environment whose chrome signals its kind —
  * borrowing the LaTeX theorem-environment idea so the eye distinguishes a
- * definition from an intuition from a worked example without reading a word:
- *  - Define / In words → plain (and muted) prose, the running body text.
+ * formal statement from an intuition from a worked example without reading:
+ *  - In words           → plain (and muted) prose, the running body text.
  *  - Formal / Formula   → a bordered display box (the equation environment).
  *  - Intuition          → a tone-ruled aside.
  *  - Example            → a neutral-ruled aside.
@@ -30,16 +30,7 @@ import { hasNodeVisual } from "./visualModel";
  */
 export type ConceptDensity = "card" | "panel" | "full";
 
-type Field =
-  | "assumptions"
-  | "definition"
-  | "formula"
-  | "formal"
-  | "notation"
-  | "properties"
-  | "intuition"
-  | "gloss"
-  | "examples";
+type Field = "assumptions" | "formula" | "formal" | "notation" | "properties" | "intuition" | "gloss" | "examples";
 
 interface DensitySpec {
   fields: Field[];
@@ -52,7 +43,7 @@ interface DensitySpec {
 
 const DENSITY: Record<ConceptDensity, DensitySpec> = {
   card: {
-    fields: ["assumptions", "definition", "formal", "formula", "notation", "properties", "examples", "intuition"],
+    fields: ["assumptions", "formal", "formula", "notation", "properties", "examples", "intuition"],
     exampleLimit: 1,
     proof: true,
     proofOpen: false,
@@ -60,17 +51,7 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
     spine: "dict",
   },
   panel: {
-    fields: [
-      "assumptions",
-      "definition",
-      "formula",
-      "formal",
-      "notation",
-      "properties",
-      "intuition",
-      "gloss",
-      "examples",
-    ],
+    fields: ["assumptions", "formula", "formal", "notation", "properties", "intuition", "gloss", "examples"],
     exampleLimit: 2,
     proof: false,
     proofOpen: false,
@@ -78,17 +59,7 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
     spine: "panel",
   },
   full: {
-    fields: [
-      "assumptions",
-      "definition",
-      "formula",
-      "formal",
-      "notation",
-      "properties",
-      "intuition",
-      "gloss",
-      "examples",
-    ],
+    fields: ["assumptions", "formula", "formal", "notation", "properties", "intuition", "gloss", "examples"],
     proof: true,
     proofOpen: true,
     proofCollapsible: true,
@@ -98,7 +69,6 @@ const DENSITY: Record<ConceptDensity, DensitySpec> = {
 
 const FIELD_LABEL: Record<Field, string> = {
   assumptions: "Assumes",
-  definition: "Definition",
   formula: "Formula",
   formal: "Formal",
   notation: "Notation",
@@ -285,25 +255,6 @@ function Environment({ view, field, exampleLimit }: { view: ConceptView; field: 
         </section>
       );
 
-    case "definition":
-      return (
-        <section>
-          <Eyebrow>{label}</Eyebrow>
-          <div className="relative max-w-full">
-            <div
-              className="panel-scrollbar max-w-full overflow-x-auto pr-8 text-body text-foreground"
-              title="Scroll horizontally to view wide mathematics"
-            >
-              <MathText text={view.definition} asBlock />
-            </div>
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-y-0 right-0 w-7 bg-linear-to-l from-card to-transparent md:hidden"
-            />
-          </div>
-        </section>
-      );
-
     case "formula":
     case "formal":
       return (
@@ -450,8 +401,6 @@ function hasField(view: ConceptView, field: Field): boolean {
   switch (field) {
     case "assumptions":
       return view.assumptions.length > 0;
-    case "definition":
-      return !!view.definition;
     case "formula":
       return !!view.formula;
     case "formal":

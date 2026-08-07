@@ -95,3 +95,4 @@ module they cover.
 ## Docs
 
 - [Data schema](docs/data-schema.md)
+- [Map content style](docs/map-content-style.md)

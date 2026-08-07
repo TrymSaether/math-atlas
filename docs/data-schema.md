@@ -1,5 +1,9 @@
 # Math Atlas — target data schema
 
+The field-by-field authoring and wording contract is in
+[`map-content-style.md`](./map-content-style.md). This document describes the
+storage and graph model.
+
 Two shapes, one source-to-runtime transform between them.
 
 ```
@@ -105,22 +109,30 @@ export const SourceConcept = z
     domain: Slug, // partition membership
     label: z.string().min(1),
 
-    // knowledge — content. All optional; supply what applies to the kind.
+    // knowledge — one required canonical statement plus optional distinct facets.
     content: z
       .object({
-        statement: Tex.optional(), // informal statement
-        definition: Tex.optional(), // genus+differentia style is fine here
-        formal: Tex.optional(), // precise/formal statement
-        formula: Tex.optional(), // displayed formula/identity — distinct from notation
-        intuition: Prose.optional(), // prose, not a restatement of definition
+        statement: Tex, // canonical readable statement
+        formal: Tex.optional(), // rigorous expansion with hypotheses and scope
+        formula: DisplayTex.optional(), // one compact $$...$$ block
+        intuition: Prose.optional(), // mental model, not a restatement
         gloss: Prose.optional(), // short dictionary-style gloss; drives Dictionary view
-        notation: z.array(Tex).default([]),
+        notation: z.array(InlineTex).default([]), // one $...$ item per entry
       })
-      .strict()
-      .default({ notation: [] }),
+      .strict(),
 
     // optional structured pedagogy (kept only if a renderer uses it)
-    examples: z.array(z.object({ tex: Tex, caption: z.string().optional() }).strict()).default([]),
+    examples: z
+      .array(
+        z
+          .object({
+            content: Tex,
+            label: z.string().optional(),
+            role: z.enum(["example", "counterexample", "non_example", "application", "failure_mode"]).optional(),
+          })
+          .strict(),
+      )
+      .default([]),
     diagram: z.string().optional(), // single curated diagram path (figure pipeline owns the rest)
     assumptions: z.array(Prose).default([]), // free-text hypotheses; NOT concept refs, so not edges
 
@@ -259,15 +271,16 @@ memory, then builds cheap indexes.
 | current field(s)                                                             | action                                                                                                         | target            |
 | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ----------------- |
 | `id`, `kind`, `domain`, `label`                                              | **keep**                                                                                                       | identity/ontology |
-| `statement`/`definition`/`formal_statement`/`intuition`/`notation`           | **keep**, nest under `content`                                                                                 | knowledge         |
-| `formula`, `mathematicalFormula`                                             | **drop** (derive display from `notation`)                                                                      | —                 |
+| `statement`/`formal_statement`/`intuition`/`notation`                        | **keep**, nest under `content`                                                                                 | knowledge         |
+| `definition`                                                                 | **fold** readable text into `statement`, rigorous expansion into `formal`, and symbolic definitions into `formula` | content        |
+| `formula`, `mathematicalFormula`                                             | **keep one** compact symbolic display under `content.formula`                                                  | content           |
 | `dependencies` (by class)                                                    | **fold into edges** by relation, then drop                                                                     | edges             |
 | `outgoing_relations`                                                         | **drop** (derive from edges)                                                                                   | —                 |
 | `related`                                                                    | **convert** to `related_to` edges                                                                              | edges             |
 | edge `direction`                                                             | **drop** (implied by relation)                                                                                 | —                 |
 | edge `dependency_class`                                                      | **drop** (implied by relation)                                                                                 | —                 |
 | `satisfies`/`violates`/`proves`/`related_theorems`/`demonstrates`            | **convert** to edges (decided: keep — relational, on-vision)                                                   | edges             |
-| `genus`/`differentia`                                                        | **drop**, fold into `content.definition` (decided: no renderer)                                                | content           |
+| `genus`/`differentia`                                                        | **drop**, fold into the canonical `content.statement`                                                          | content           |
 | `examples`/`non_examples`/`counterexample` (text arrays)                     | **drop** (decided: examples come from figures + example-nodes); keep single curated `example` + `diagram_path` | —                 |
 | `equivalent_definitions`                                                     | **drop** (or `related_to` edge if it targets a concept)                                                        | —                 |
 | `proof`/`proof_steps`/`solution_steps`/`proof_dependencies`                  | **keep** as `proof.steps[].uses`                                                                               | content + edges   |

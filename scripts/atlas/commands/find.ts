@@ -20,7 +20,7 @@ interface Hit {
 
 function gloss(node: ArtifactNode): string {
   const c = node.content;
-  const text = c.gloss ?? c.statement ?? c.definition ?? c.intuition ?? "";
+  const text = c.gloss ?? c.statement ?? c.intuition ?? "";
   return text ? truncate(texToPlain(text), 60) : "";
 }
 

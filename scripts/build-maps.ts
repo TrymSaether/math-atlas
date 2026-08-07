@@ -38,6 +38,7 @@ function main(): void {
   }
 
   let failed = 0;
+  const sharedConcepts = new Map<string, { file: string; label: string; kind: string }>();
   for (const file of sources) {
     const raw = JSON.parse(readFileSync(join(MAPS_DIR, file), "utf8"));
     const parsed = SourceGraphSchema.safeParse(raw);
@@ -45,6 +46,18 @@ function main(): void {
       console.error(formatIssues(file, parsed.error));
       failed += 1;
       continue;
+    }
+    for (const concept of parsed.data.concepts) {
+      const first = sharedConcepts.get(concept.id);
+      if (first && (first.label !== concept.label || first.kind !== concept.kind)) {
+        console.error(
+          `  ✗ shared concept '${concept.id}' differs: ${first.file} uses [${first.kind}] '${first.label}', ` +
+            `${file} uses [${concept.kind}] '${concept.label}'`,
+        );
+        failed += 1;
+      } else if (!first) {
+        sharedConcepts.set(concept.id, { file, label: concept.label, kind: concept.kind });
+      }
     }
     const { artifact, warnings } = buildArtifact(parsed.data);
     for (const w of warnings) console.warn(`  ⚠ ${file}: ${w}`);

@@ -1,14 +1,6 @@
 import type { GraphNode } from "@/maps/types";
 
-export const KNOWN_CONTENT_KEYS = new Set([
-  "statement",
-  "definition",
-  "formal",
-  "formula",
-  "intuition",
-  "gloss",
-  "notation",
-]);
+export const KNOWN_CONTENT_KEYS = new Set(["statement", "formal", "formula", "intuition", "gloss", "notation"]);
 
 function clean(value: string | undefined): string {
   return (value ?? "").trim();
@@ -61,22 +53,12 @@ export function proofBlockLabel(kind: string): "Proof" | "Solution" {
 
 /** Readable lead text for cards, panels, dictionary entries, and search. */
 export function nodeStatement(node: GraphNode): string {
-  return (
-    clean(node.content.statement) ||
-    clean(node.content.definition) ||
-    clean(node.content.formal) ||
-    clean(node.content.intuition)
-  );
+  return clean(node.content.statement);
 }
 
 /** Formal prose statement from the `formal` content field. */
 export function nodeFormalStatement(node: GraphNode): string {
   return clean(node.content.formal);
-}
-
-/** Symbolic definition block from the `definition` content field. */
-export function nodeDefinition(node: GraphNode, seen: string[] = []): string {
-  return distinct(node.content.definition, seen);
 }
 
 export function nodeFormula(node: GraphNode, seen: string[] = []): string {
@@ -103,7 +85,6 @@ export function nodeSearchText(node: GraphNode): string {
     node.tags.join(" "),
     nodeStatement(node),
     nodeFormalStatement(node),
-    nodeDefinition(node),
     nodeFormula(node),
     node.content.gloss,
     examplesText(node),

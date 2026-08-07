@@ -1,6 +1,6 @@
 /**
  * `atlas coverage` — per-domain completeness matrix. Each domain is scored on the
- * facets that make a concept useful: a body (definition/statement), a proof where
+ * facets that make a concept useful: a canonical statement, a proof where
  * one is expected, examples, diagrams, intuition, and notation. Percentages are
  * colour-banded so gaps jump out.
  */
@@ -27,7 +27,7 @@ function score(nodes: CliMap["nodes"], facet: Facet): [number, number] {
       const den = nodes.filter((n) =>
         ["definition", "theorem", "structure", "construction"].includes(categoryOf(n.kind)),
       );
-      return [den.filter((n) => has(n, "definition") || has(n, "statement") || has(n, "formal")).length, den.length];
+      return [den.filter((n) => has(n, "statement")).length, den.length];
     }
     case "proof": {
       const den = nodes.filter((n) => categoryOf(n.kind) === "theorem");

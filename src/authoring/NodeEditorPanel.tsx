@@ -221,16 +221,7 @@ export function NodeEditorPanel({
           onChange={(v) => set({ statement: v })}
           area
           mono
-          hint="LaTeX"
-          preview
-        />
-        <Field
-          label="Definition"
-          value={draft.definition}
-          onChange={(v) => set({ definition: v })}
-          area
-          mono
-          hint="LaTeX"
+          hint="required · readable prose + inline LaTeX"
           preview
         />
         <Field
@@ -239,7 +230,7 @@ export function NodeEditorPanel({
           onChange={(v) => set({ formal: v })}
           area
           mono
-          hint="LaTeX"
+          hint="optional · rigorous hypotheses and scope"
           preview
         />
         <Field
@@ -248,7 +239,7 @@ export function NodeEditorPanel({
           onChange={(v) => set({ formula: v })}
           area
           mono
-          hint="LaTeX"
+          hint="optional · one $$...$$ block"
           preview
         />
         <Field label="Intuition" value={draft.intuition} onChange={(v) => set({ intuition: v })} area />

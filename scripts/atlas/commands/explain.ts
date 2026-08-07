@@ -1,6 +1,6 @@
 /**
  * `atlas explain <concept>` — a terminal study card for one concept: its
- * statement/definition, intuition, notation, what it builds on (prerequisites),
+ * statement, formal form, intuition, notation, what it builds on (prerequisites),
  * what depends on it, related concepts, its proof chain, and examples. TeX is
  * rendered to readable plain text.
  */
@@ -66,7 +66,6 @@ function run(ctx: Ctx): number {
 
   if (c.statement) section("Statement", paragraph(c.statement));
   if (c.formal) section("Formal", paragraph(c.formal));
-  if (c.definition) section("Definition", paragraph(c.definition));
   if (c.formula) section("Formula", paragraph(c.formula));
   if (c.intuition) section("Intuition", italic(paragraph(c.intuition)));
   if (c.notation?.length) section("Notation", c.notation.map((n) => texToPlain(n)).join("   "));

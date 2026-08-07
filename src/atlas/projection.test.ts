@@ -11,7 +11,7 @@ function concept(id: string, overrides: Partial<SourceConcept> = {}): SourceConc
     kind: "definition",
     domain: "foundations",
     label: id,
-    content: { notation: [] },
+    content: { statement: `${id} statement`, notation: [] },
     examples: [],
     assumptions: [],
     properties: [],

@@ -4,7 +4,7 @@ import { getDomainTone } from "@/atlas/colors";
 import type { AtlasMap } from "@/atlas/model";
 import { cn } from "@/ui/cn";
 import { MathText } from "@/math/MathText";
-import { emptyExample, emptyProofStep, type ExampleDraft, type ProofStepDraft } from "./model";
+import { emptyExample, emptyProofStep, EXAMPLE_ROLES, type ExampleDraft, type ProofStepDraft } from "./model";
 import { ACTION, CONTROL, CONTROL_MONO, FIELD, FieldLabel, NodePicker } from "./editorControls";
 
 /** Editor for the worked-examples array (content body + optional label & role). */
@@ -38,13 +38,19 @@ export function ExamplesEditor({
                 placeholder="Label (optional)"
                 className={cn(CONTROL, "flex-1")}
               />
-              <input
-                type="text"
+              <select
                 value={ex.role}
                 onChange={(e) => patch(i, { role: e.target.value })}
-                placeholder="Role (optional)"
+                aria-label="Example role"
                 className={cn(CONTROL, "flex-1")}
-              />
+              >
+                <option value="">No role</option>
+                {EXAMPLE_ROLES.map((role) => (
+                  <option key={role} value={role}>
+                    {role.replaceAll("_", " ")}
+                  </option>
+                ))}
+              </select>
               <button
                 type="button"
                 onClick={() => remove(i)}

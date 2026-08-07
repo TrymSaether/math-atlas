@@ -11,7 +11,7 @@ export interface TexField {
   tex: string;
 }
 
-const CONTENT_KEYS = ["statement", "definition", "formal", "formula", "intuition", "gloss"] as const;
+const CONTENT_KEYS = ["statement", "formal", "formula", "intuition", "gloss"] as const;
 
 export function scanTex(map: CliMap): TexField[] {
   const out: TexField[] = [];

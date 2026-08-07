@@ -186,6 +186,11 @@ export function createAuthoringSlice(
         set({ editError: error });
         return { ok: false, error };
       }
+      if (!draft.statement.trim()) {
+        const error = "A canonical statement is required.";
+        set({ editError: error });
+        return { ok: false, error };
+      }
       const base = workingSource(get());
       if (!base) return { ok: false, error: "Map not loaded." };
 

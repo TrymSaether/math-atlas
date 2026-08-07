@@ -35,7 +35,7 @@ const CONCEPT_ORDER = [
   "tags",
   "priority",
 ];
-const CONTENT_ORDER = ["statement", "definition", "formal", "formula", "intuition", "gloss", "notation"];
+const CONTENT_ORDER = ["statement", "formal", "formula", "intuition", "gloss", "notation"];
 const EXAMPLE_ORDER = ["content", "label", "role"];
 const STEP_ORDER = ["role", "content", "uses"];
 const SOURCE_ORDER = ["citation", "chapter", "ref", "references"];
@@ -65,14 +65,32 @@ function canonicalize(json: Obj): Obj {
     top.concepts = (top.concepts as Obj[])
       .map((c) => {
         const out = orderKeys(c, CONCEPT_ORDER);
-        if (out.content && typeof out.content === "object") out.content = orderKeys(out.content as Obj, CONTENT_ORDER);
+        if (out.content && typeof out.content === "object") {
+          const content = { ...(out.content as Obj) };
+          if (Array.isArray(content.notation) && content.notation.length === 0) delete content.notation;
+          out.content = orderKeys(content, CONTENT_ORDER);
+        }
         if (Array.isArray(out.examples)) out.examples = (out.examples as Obj[]).map((e) => orderKeys(e, EXAMPLE_ORDER));
+        for (const key of ["examples", "assumptions", "properties", "tags"]) {
+          if (Array.isArray(out[key]) && (out[key] as unknown[]).length === 0) delete out[key];
+        }
+        if (out.priority === "standard") delete out.priority;
         if (out.proof && typeof out.proof === "object") {
           const proof = out.proof as Obj;
-          if (Array.isArray(proof.steps)) proof.steps = (proof.steps as Obj[]).map((s) => orderKeys(s, STEP_ORDER));
+          if (Array.isArray(proof.steps)) {
+            proof.steps = (proof.steps as Obj[]).map((step) => {
+              const next = { ...step };
+              if (Array.isArray(next.uses) && next.uses.length === 0) delete next.uses;
+              return orderKeys(next, STEP_ORDER);
+            });
+          }
           out.proof = orderKeys(proof, ["steps"]);
         }
-        if (out.source && typeof out.source === "object") out.source = orderKeys(out.source as Obj, SOURCE_ORDER);
+        if (out.source && typeof out.source === "object") {
+          const source = { ...(out.source as Obj) };
+          if (Array.isArray(source.references) && source.references.length === 0) delete source.references;
+          out.source = orderKeys(source, SOURCE_ORDER);
+        }
         if (Array.isArray(out.tags)) out.tags = [...(out.tags as string[])].sort();
         return out;
       })

@@ -27,7 +27,7 @@ const STOPWORDS = new Set([
 function conceptText(concept: { content?: Record<string, unknown>; proof?: { steps: { content: string }[] } }): string {
   const c = concept.content ?? {};
   const parts: string[] = [];
-  for (const k of ["statement", "definition", "formal", "intuition", "gloss"]) {
+  for (const k of ["statement", "formal", "intuition", "gloss"]) {
     const v = c[k];
     if (typeof v === "string") parts.push(v);
   }

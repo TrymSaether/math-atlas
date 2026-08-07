@@ -17,6 +17,32 @@ const Slug = z.string().regex(/^[a-z0-9_]+$/, "ids must be lower_snake_case slug
 const Tex = z.string().min(1);
 const Prose = z.string().min(1);
 
+const DisplayTex = Tex.refine(
+  (value) => {
+    const text = value.trim();
+    return /^\$\$[\s\S]*\$\$$/.test(text) && text.split("$$").length === 3;
+  },
+  {
+    message: "formula must be one display-math block wrapped in $$...$$",
+  },
+).refine(
+  (value) =>
+    [...value.matchAll(/\\text\{([^{}]*)\}/g)].every(
+      (match) => match[1].trim().split(/\s+/).filter(Boolean).length <= 3,
+    ),
+  { message: "formula annotations inside \\text{...} must contain at most three words" },
+);
+
+const InlineTex = Tex.refine(
+  (value) => {
+    const text = value.trim();
+    return /^\$(?!\$)[\s\S]*(?<!\$)\$$/.test(text) && !text.includes("$$") && text.split("$").length === 3;
+  },
+  {
+    message: "notation must be one inline-math item wrapped in $...$",
+  },
+);
+
 // Full observed kind vocabulary. Kept inclusive (identity passthrough from the
 // source) because the UI assigns distinct glyphs/categories per kind in
 // nodeCategory.ts — collapsing kinds here would erase those distinctions.
@@ -57,23 +83,46 @@ export const SourceDomainSchema = z
 
 const ContentSchema = z
   .object({
-    statement: Tex.optional(),
-    definition: Tex.optional(),
+    /** Canonical readable content shown first. Required on every concept. */
+    statement: Tex,
+    /** Optional rigorous expansion: hypotheses, scope, and conclusion. */
     formal: Tex.optional(),
-    /** Displayed formula/identity — distinct from `notation` (symbols used). */
-    formula: Tex.optional(),
+    /** Compact symbolic identity/equivalence/estimate, always display math. */
+    formula: DisplayTex.optional(),
     intuition: Prose.optional(),
     /** Short dictionary-style gloss; drives the Dictionary view. */
     gloss: Prose.optional(),
-    notation: z.array(Tex).default([]),
+    /** Symbols only, one inline-math item per array entry. */
+    notation: z
+      .array(InlineTex)
+      .refine((items) => new Set(items).size === items.length, { message: "notation items must be unique" })
+      .default([]),
   })
-  .strict();
+  .strict()
+  .superRefine((content, ctx) => {
+    const facets = ["statement", "formal", "formula", "intuition", "gloss"] as const;
+    const seen = new Map<string, string>();
+    for (const key of facets) {
+      const value = content[key]?.trim().replace(/\s+/g, " ");
+      if (!value) continue;
+      const first = seen.get(value);
+      if (first) {
+        ctx.addIssue({
+          code: "custom",
+          path: [key],
+          message: `${key} duplicates ${first}; store each explanation once`,
+        });
+      } else {
+        seen.set(value, key);
+      }
+    }
+  });
 
 const ExampleSchema = z
   .object({
     content: Tex,
     label: z.string().min(1).optional(),
-    role: z.string().min(1).optional(),
+    role: z.enum(["example", "counterexample", "non_example", "application", "failure_mode"]).optional(),
   })
   .strict();
 
@@ -101,7 +150,7 @@ export const SourceConceptSchema = z
     kind: z.enum(KIND_VALUES),
     domain: Slug,
     label: z.string().min(1),
-    content: ContentSchema.default({ notation: [] }),
+    content: ContentSchema,
     examples: z.array(ExampleSchema).default([]),
     /** Single curated diagram (the figure pipeline owns rich examples). */
     diagram: z.string().min(1).optional(),

@@ -16,7 +16,7 @@ const source: SourceGraph = {
       kind: "definition",
       domain: "core",
       label: "Open Set",
-      content: { notation: [] },
+      content: { statement: "An open set belongs to the topology.", notation: [] },
       examples: [],
       assumptions: [],
       properties: [],

@@ -1,5 +1,5 @@
 /**
- * `atlas doctor` — deep health dashboard. Coverage meters (definition / statement
+ * `atlas doctor` — deep health dashboard. Coverage meters (canonical statement
  * / proof / intuition / diagram), graph density and connectivity, the most
  * central concepts, thin domains, oversized concepts, and foundational roots.
  * Pure read-only; reuses the graph algorithms for components and centrality.
@@ -66,11 +66,7 @@ function renderMap(map: CliMap): void {
   const meterRow = (label: string, num: number, den: number) =>
     process.stdout.write("  " + dim(label.padEnd(18)) + meter(num, den) + "\n");
   process.stdout.write("  " + bold("Coverage") + "\n");
-  meterRow(
-    "definitions",
-    dx.definitions.filter((d) => has(d, "definition") || has(d, "statement")).length,
-    dx.definitions.length,
-  );
+  meterRow("definitions", dx.definitions.filter((d) => has(d, "statement")).length, dx.definitions.length);
   meterRow(
     "theorem stmts",
     dx.theorems.filter((t) => has(t, "statement") || has(t, "formal")).length,

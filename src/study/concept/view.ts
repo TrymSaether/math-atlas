@@ -17,14 +17,7 @@ import type { MapId } from "@/maps";
 import type { GraphNode, ProofStep } from "@/maps/types";
 import { KIND_LABEL } from "@/maps/types";
 import { getDomainTone, type DomainTone } from "@/atlas/colors";
-import {
-  nodeStatement,
-  nodeFormalStatement,
-  nodeDefinition,
-  nodeFormula,
-  proofBlockLabel,
-  KNOWN_CONTENT_KEYS,
-} from "./content";
+import { nodeStatement, nodeFormalStatement, nodeFormula, proofBlockLabel, KNOWN_CONTENT_KEYS } from "./content";
 import { compactNodeRef, nodeSourceCitation } from "./meta";
 import { getDomainGlyphId, type DomainGlyphKey } from "@/atlas/domainGlyphs";
 import { RELATIONS, RELATION_KEYS, RELATION_TERSE, orientedRelation, type RelationType } from "@shared/maps/relations";
@@ -101,7 +94,6 @@ export interface ConceptView {
   statement: string;
   /** Formal restatement, blank when identical to `statement`. */
   formalStatement: string;
-  definition: string;
   formula: string;
   notation: string[];
   intuition: string;
@@ -204,8 +196,7 @@ export function buildConceptView(node: GraphNode, map: AtlasMap, mapId: MapId): 
   const statement = nodeStatement(node);
   const formal = nodeFormalStatement(node);
   const formalStatement = formal && formal !== statement ? formal : "";
-  const definition = nodeDefinition(node, [statement, formal]);
-  const formula = nodeFormula(node, [statement, formal, definition]);
+  const formula = nodeFormula(node, [statement, formal]);
   const intuition = (node.content.intuition ?? "").trim();
   const rawGloss = (node.content.gloss ?? "").trim();
   const gloss = rawGloss && rawGloss !== intuition && rawGloss !== statement ? rawGloss : "";
@@ -226,7 +217,6 @@ export function buildConceptView(node: GraphNode, map: AtlasMap, mapId: MapId): 
   const hasContent = Boolean(
     statement ||
       formalStatement ||
-      definition ||
       formula ||
       intuition ||
       gloss ||
@@ -249,7 +239,6 @@ export function buildConceptView(node: GraphNode, map: AtlasMap, mapId: MapId): 
     sourceCitation: nodeSourceCitation(node),
     statement,
     formalStatement,
-    definition,
     formula,
     notation,
     intuition,

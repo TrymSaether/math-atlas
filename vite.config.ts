@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
@@ -7,6 +7,10 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  test: {
+    // Nested assistant worktrees are separate checkouts, not part of this suite.
+    exclude: ["**/node_modules/**", "**/.git/**", "**/.claude/worktrees/**"],
+  },
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
