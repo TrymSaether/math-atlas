@@ -3388,7 +3388,7 @@
       "diagram": "/atlas-assets/functional_analysis/diagrams/banach-alaoglu.svg",
       "assumptions": [
         "$X$ is a normed vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$.",
-        "Weak-star limits are unique, since $\\sigma(X^*,X)$ is Hausdorff.",
+        "$\\sigma(X^*,X)$ is Hausdorff, so weak-star limits are unique.",
         "The limit is asserted to lie in $X^*$; pointwise limits of linear maps are linear, but boundedness of the limit requires either a norm bound on the sequence or completeness of $X$ via uniform boundedness."
       ],
       "tags": [

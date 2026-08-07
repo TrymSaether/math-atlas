@@ -253,7 +253,13 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
         return;
       }
       if (finished) return;
-      if (event.key === " " || event.key === "Enter") {
+      if (event.key === " ") {
+        event.preventDefault();
+        if (!event.repeat) {
+          if (run.flipped) skip();
+          else flip();
+        }
+      } else if (event.key === "Enter") {
         event.preventDefault();
         flip();
       } else if (event.key === "ArrowLeft") {
