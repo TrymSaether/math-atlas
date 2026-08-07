@@ -2834,6 +2834,7 @@
       "content": {
         "statement": "If $\\mathcal{T}_1,\\mathcal{T}_2$ are topologies on $X$, then $\\mathcal{T}_1\\cap\\mathcal{T}_2$ is a topology. More generally $\\bigcap_{\\lambda}\\mathcal{T}_\\lambda$ is a topology for any family.",
         "intuition": "Topologies are closed under intersection — the basis for “generating” the smallest topology containing a given collection. The \\emph{union} of topologies generally is not a topology.",
+        "formal": "$$\\mathcal{T}_1,\\mathcal{T}_2\\text{ topologies on }X\\Longrightarrow \\mathcal{T}_1\\cap\\mathcal{T}_2\\text{ is a topology on }X.$$",
         "gloss": "Topologies are closed under intersection — the basis for “generating” the smallest topology containing a given collection. The \\emph{union} of topologies generally is not a topology.",
         "notation": []
       },
@@ -3661,6 +3662,37 @@
     },
     {
       "id": "continuity_point_metric",
+      "kind": "definition",
+      "domain": "continuity",
+      "label": "Continuity at a Point (Metric)",
+      "content": {
+        "statement": "$f\\colon\\left(X,d_X\\right)\\to\\left(Y,d_Y\\right)$ is continuous at $p \\in X$ if $$\\forall\\varepsilon>0\\;\\exists\\delta>0\\;\\forall q\\in X\\;\\colon d_X(p,q)<\\delta\\implies d_Y(f(p),f(q))<\\varepsilon.$$",
+        "intuition": "The $\\varepsilon$-$\\delta$ definition of continuity at a point, which is the standard definition in analysis.",
+        "gloss": "The $\\varepsilon$-$\\delta$ definition of continuity at a point, which is the standard definition in analysis.",
+        "formal": "$$f\\text{ is continuous at }p\\in X\\Longleftrightarrow \\forall\\varepsilon>0\\;\\exists\\delta>0\\;\\forall q\\in X:\\ d_X(p,q)<\\delta\\implies d_Y(f(p),f(q))<\\varepsilon.$$",
+        "notation": [
+          "$$f\\colon\\left(X,d_X\\right)\\to\\left(Y,d_Y\\right)$$",
+          "$$d_X(p,q)$$",
+          "$$d_Y(f(p),f(q))$$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "The identity map $\\operatorname{id}\\colon\\mathbb{R}\\to\\mathbb{R}$ is continuous at every point, since for any $\\varepsilon>0$ we can take $\\delta=\\varepsilon$."
+        }
+      ],
+      "diagram": "/atlas-assets/topology/diagrams/continuity-point-metric.svg",
+      "source": {
+        "citation": "Thaule, Introduction to Topology (TMA4190)",
+        "chapter": "2",
+        "ref": "Def. 2.11",
+        "references": []
+      },
+      "tags": [],
+      "priority": "standard"
+    },
+    {
+      "id": "continuity_point_nbhd",
       "kind": "theorem",
       "domain": "continuity",
       "label": "Continuity at a Point (Nbhd Form)",
@@ -11961,12 +11993,12 @@
       "relation": "related_to"
     },
     {
-      "source": "continuity_point_metric",
+      "source": "continuity_point_nbhd",
       "target": "continuity_point_top",
       "relation": "related_to"
     },
     {
-      "source": "continuity_point_metric",
+      "source": "continuity_point_nbhd",
       "target": "continuous_map_metric",
       "relation": "related_to"
     },
@@ -12786,12 +12818,12 @@
       "relation": "uses"
     },
     {
-      "source": "continuity_point_metric",
+      "source": "continuity_point_nbhd",
       "target": "continuity",
       "relation": "uses"
     },
     {
-      "source": "continuity_point_metric",
+      "source": "continuity_point_nbhd",
       "target": "neighborhood_metric",
       "relation": "uses"
     },

@@ -25,5 +25,8 @@
     "**/.cache": true,
     "**/package-lock.json": true
   },
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  }
 }
