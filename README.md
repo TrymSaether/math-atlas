@@ -37,7 +37,7 @@ npm run dev:server       # API server
 npm run check:maps       # validate map source files
 npm run seed:maps        # write built-in maps to the database
 npm run build            # map validation + app build
-npm run check            # biome + typecheck + tests + build (the CI gate)
+npm run check            # format + biome lint + typecheck + tests + build (the CI gate)
 npm run format           # format with biome
 npm run atlas            # map authoring CLI (stats, validate, format, …)
 ```
