@@ -5574,6 +5574,38 @@
         "order-theory",
         "zorns-lemma"
       ]
+    },
+    {
+      "id": "graph_of_operator",
+      "kind": "definition",
+      "domain": "operators",
+      "label": "Graph of an operator",
+      "content": {
+        "statement": "The graph of an operator $T$ is the set of input-output pairs $(x,Tx)$.",
+        "gloss": "For an operator $T:D(T)\\subseteq X\\to Y$, its graph is the subset of $X\\times Y$ consisting of all pairs $(x,Tx)$ with $x\\in D(T)$.",
+        "formal": "$$\\operatorname{Graph}(T)=G(T):=\\{(x,Tx)\\in X\\times Y:x\\in D(T)\\}=\\{(x,Tx):x\\in D(T)\\}\\subseteq X\\times Y.$$",
+        "intuition": "The graph records each admissible input together with its corresponding output as a single point in the product space.",
+        "notation": [
+          "$\\operatorname{Graph}(T)$",
+          "$G(T)$",
+          "$(x,Tx)\\in G(T)$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "If $T:X\\to Y$ is defined on all of $X$, then $G(T)=\\{(x,Tx):x\\in X\\}$."
+        }
+      ],
+      "source": {
+        "citation": "Curated concept graph",
+        "references": []
+      },
+      "tags": [
+        "graph",
+        "operator",
+        "product-space"
+      ],
+      "priority": "core"
     }
   ],
   "edges": [
@@ -8749,6 +8781,21 @@
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "bounded_function_on_domain",
       "relation": "violates"
+    },
+    {
+      "source": "graph_of_operator",
+      "target": "cartesian_product",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "graph_of_operator",
+      "target": "domain_and_codomain",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "closed_graph",
+      "target": "graph_of_operator",
+      "relation": "defined_in_terms_of"
     }
   ]
 }
