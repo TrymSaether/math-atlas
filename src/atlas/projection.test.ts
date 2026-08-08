@@ -125,6 +125,21 @@ describe("buildGraphProjection", () => {
     expect(projection.edges.map((edge) => edge.data?.routeReveal?.delay)).toEqual([130, 260, 260]);
   });
 
+  it("force-reveals an explicitly selected node through kind, domain, and search filters", () => {
+    const map = fixtureMap();
+    const projection = buildGraphProjection(
+      baseInput(map, {
+        kinds: new Set(["definition"]),
+        topics: new Set(["foundations"]),
+        search: "no matching text",
+        selectedId: "c",
+      }),
+    );
+
+    expect(projection.conceptNodes.map((node) => node.id)).toEqual(["c"]);
+    expect(projection.conceptNodes[0]?.data.isSelected).toBe(true);
+  });
+
   it("projects the selected focus neighborhood without pulling in hidden soft edges", () => {
     const map = fixtureMap();
     const projection = buildGraphProjection(baseInput(map, { selectedId: "b", focusMode: true, focusDepth: 1 }));

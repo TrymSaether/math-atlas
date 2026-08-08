@@ -28,6 +28,7 @@ import { cn } from "@/ui/cn";
 import { Button } from "@/ui/button";
 import { spring, Surface } from "@/design";
 import { useMediaQuery } from "@/app/useMediaQuery";
+import { useDrill } from "@/study/drill";
 
 const USED_BY_INITIAL = 8;
 
@@ -73,6 +74,8 @@ function CardContent({ map, mapId, node }: { map: AtlasMap; mapId: MapId; node: 
   const userId = useStore((s) => s.userId);
   const known = useStore((s) => s.progress[mapId]?.[nodeId] === "known");
   const setNodeProgress = useStore((s) => s.setNodeProgress);
+  const setStudyScope = useDrill((s) => s.setScope);
+  const setScopedDeck = useDrill((s) => s.setScoped);
   const view = useConceptView(node, map, mapId);
   const [expanded, setExpanded] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -120,6 +123,10 @@ function CardContent({ map, mapId, node }: { map: AtlasMap; mapId: MapId; node: 
 
   const openIn = (surface: "dictionary" | "flashcards") => {
     select(nodeId);
+    if (surface === "flashcards") {
+      setStudyScope("all");
+      setScopedDeck({ title: node.label, ids: [nodeId] });
+    }
     setSurface(surface);
   };
 

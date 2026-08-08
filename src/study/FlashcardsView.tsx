@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Dialog } from "radix-ui";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
@@ -95,6 +95,20 @@ function FlashcardsBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const [builderOpen, setBuilderOpen] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
   const [externalUndo, setExternalUndo] = useState<ExternalUndo | null>(null);
+
+  // A node-bearing deep link to Study is an explicit lookup, so initialize a
+  // focused deck once on entry. Normal Study navigation without a selected
+  // drillable node continues to use the filtered default deck.
+  const initializedLookup = useRef(false);
+  useEffect(() => {
+    if (initializedLookup.current) return;
+    initializedLookup.current = true;
+    if (scoped || !selectedId) return;
+    const selected = map.nodeById.get(selectedId);
+    if (!selected || !isDrillable(selected)) return;
+    setScope("all");
+    setScoped({ title: selected.label, ids: [selected.id] });
+  }, [map, scoped, selectedId, setScope, setScoped]);
 
   const baseDeck = useMemo(() => {
     if (scoped) {
@@ -997,7 +1011,8 @@ function DeckBuilder({
           <div>
             <Dialog.Title className="text-title-3 font-semibold text-foreground">Build a study deck</Dialog.Title>
             <Dialog.Description className="mt-1 text-footnote text-muted-foreground">
-              Choose what belongs in this sitting. Atlas filters remain the shared source of truth.
+              Choose what belongs in this sitting. Atlas filters seed the default deck; direct lookups create a focused
+              deck.
             </Dialog.Description>
           </div>
           <Dialog.Close asChild>

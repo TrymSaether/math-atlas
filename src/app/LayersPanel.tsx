@@ -147,6 +147,9 @@ export function LayersPanel({ onClose }: { onClose: () => void }) {
               </Chip>
             ))}
           </div>
+          <p className="mt-2 text-caption-2 leading-relaxed text-muted-foreground">
+            These filters shape the map and default study deck. Search and direct links can still reveal any concept.
+          </p>
         </section>
 
         {/* Secondary: how the map is drawn. */}

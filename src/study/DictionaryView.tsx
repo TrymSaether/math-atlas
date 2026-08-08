@@ -37,10 +37,6 @@ export function DictionaryView() {
 
 function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const select = useStore((s) => s.select);
-  const kinds = useStore((s) => s.kinds);
-  const topics = useStore((s) => s.topics);
-  const toggleTopic = useStore((s) => s.toggleTopic);
-  const resetTopics = useStore((s) => s.resetTopics);
   const selectedId = useStore((s) => s.selectedId);
   const setSurface = useStore((s) => s.setSurface);
   const setMode = useStore((s) => s.setMode);
@@ -59,6 +55,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const searchIndex = useMemo(() => buildSearchIndex(entries), [entries]);
   const [sortBy, setSortBy] = useState<DictSortMode>("alpha");
   const [query, setQuery] = useState("");
+  const [domains, setDomains] = useState<Set<string>>(() => new Set());
   const [learningOnly, setLearningOnly] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(selectedId);
   const [mobileDetail, setMobileDetail] = useState(false);
@@ -78,9 +75,11 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
     const nq = normalizeSearchText(query);
     const textOnly = new Set<string>();
     const items = entries.filter((e) => {
-      if (kinds.size > 0 && !kinds.has(e.kind)) return false;
-      if (topics.size > 0 && !topics.has(e.domain)) return false;
-      if (learningOnly && progress?.[e.id] !== "learning") return false;
+      // A query is a lookup across the complete dictionary. Local browse
+      // facets only narrow the resting index and never make an entry
+      // unsearchable.
+      if (!nq && domains.size > 0 && !domains.has(e.domain)) return false;
+      if (!nq && learningOnly && progress?.[e.id] !== "learning") return false;
       const hit = searchHit(e, nq, searchIndex);
       if (!hit) return false;
       if (nq && hit === "text") textOnly.add(e.id);
@@ -88,7 +87,7 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
     });
     items.sort((a, b) => compareEntries(a, b, sortBy, facet));
     return { filtered: items, textOnly };
-  }, [entries, facet, kinds, topics, sortBy, query, learningOnly, progress, searchIndex]);
+  }, [entries, facet, domains, sortBy, query, learningOnly, progress, searchIndex]);
 
   const groups = useMemo(() => groupEntries(filtered, sortBy, facet), [filtered, sortBy, facet]);
 
@@ -98,15 +97,32 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
   const [prevSelectedId, setPrevSelectedId] = useState(selectedId);
   if (selectedId !== prevSelectedId) {
     setPrevSelectedId(selectedId);
-    if (selectedId && entries.some((e) => e.id === selectedId)) {
+    // Direct lookup eligibility is broader than index membership: every node
+    // in the loaded map can be inspected even when it has no curated index row.
+    if (selectedId && map.nodeById.has(selectedId)) {
       setActiveId(selectedId);
       setMobileDetail(true);
     }
   }
 
-  if (filtered.length > 0 && (!activeId || !filtered.some((e) => e.id === activeId))) {
+  if (
+    filtered.length > 0 &&
+    (!activeId ||
+      !map.nodeById.has(activeId) ||
+      (!filtered.some((entry) => entry.id === activeId) && activeId !== selectedId))
+  ) {
     setActiveId(filtered[0].id);
   }
+
+  const toggleDomain = (id: string) => {
+    select(null);
+    setDomains((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   // Reveal the active row in the index list.
   useEffect(() => {
@@ -206,9 +222,12 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 ref={searchRef}
                 type="text"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Filter this index…"
-                aria-label="Filter this index"
+                onChange={(e) => {
+                  select(null);
+                  setQuery(e.target.value);
+                }}
+                placeholder="Search all entries…"
+                aria-label="Search all dictionary entries"
                 className="min-h-(--control-h-lg) w-full rounded-md border border-border bg-muted py-1.5 pl-7 pr-2.5 font-sans text-footnote text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-ring focus:bg-card"
               />
             </div>
@@ -221,14 +240,14 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
               >
                 {domainCounts.map((d) => {
                   const tone = getDomainTone(d.id);
-                  const active = topics.has(d.id);
+                  const active = domains.size === 0 || domains.has(d.id);
                   return (
                     <button
                       key={d.id}
                       type="button"
                       className="inline-flex min-h-(--control-h-xs) shrink-0 items-center gap-1.5 rounded-sm border border-border bg-card px-2 py-[3px] text-caption-2 font-medium text-muted-foreground transition hover:border-input max-[860px]:min-h-(--control-h-sm)"
                       aria-pressed={active}
-                      onClick={() => toggleTopic(d.id)}
+                      onClick={() => toggleDomain(d.id)}
                       style={
                         active
                           ? {
@@ -246,11 +265,14 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                     </button>
                   );
                 })}
-                {topics.size > 0 && (
+                {domains.size > 0 && (
                   <button
                     type="button"
                     className="px-1.5 py-[3px] text-caption-2 text-primary-text hover:underline"
-                    onClick={resetTopics}
+                    onClick={() => {
+                      select(null);
+                      setDomains(new Set());
+                    }}
                   >
                     Clear
                   </button>
@@ -272,7 +294,15 @@ function DictionaryBody({ map, mapId }: { map: AtlasMap; mapId: MapId }) {
                 Kind
               </Chip>
               <span aria-hidden className="mx-0.5 h-3.5 w-px bg-border" />
-              <Chip size="xs" variant="label" active={learningOnly} onClick={() => setLearningOnly((v) => !v)}>
+              <Chip
+                size="xs"
+                variant="label"
+                active={learningOnly}
+                onClick={() => {
+                  select(null);
+                  setLearningOnly((v) => !v);
+                }}
+              >
                 Learning
               </Chip>
             </div>
@@ -597,7 +627,7 @@ interface Group {
 
 function groupEntries(items: GraphNode[], sortBy: DictSortMode, facet: SectionFacet): Group[] {
   const groups: Group[] = [];
-  let current: Group | null = null;
+  const groupById = new Map<string, Group>();
   for (const entry of items) {
     let label: string;
     let id: string;
@@ -613,11 +643,13 @@ function groupEntries(items: GraphNode[], sortBy: DictSortMode, facet: SectionFa
       label = letter;
       id = `dict-L-${letter}`;
     }
-    if (!current || current.label !== label) {
-      current = { id, label, items: [] };
-      groups.push(current);
+    let group = groupById.get(id);
+    if (!group) {
+      group = { id, label, items: [] };
+      groupById.set(id, group);
+      groups.push(group);
     }
-    current.items.push(entry);
+    group.items.push(entry);
   }
   return groups;
 }

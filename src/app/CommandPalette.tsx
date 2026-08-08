@@ -12,6 +12,9 @@ import { MathText } from "@/math/MathText";
 import { rememberPaletteReturnFocus, restorePaletteReturnFocus } from "./paletteFocus";
 import { Button } from "@/ui/button";
 import { LogoMark } from "./Logo";
+import { nodeSearchText, nodeAnswerText } from "@/study/concept/content";
+import { hasNodeVisual } from "@/study/concept/visualModel";
+import { useDrill } from "@/study/drill";
 
 export function CommandPalette() {
   const mapId = useStore((s) => s.mapId);
@@ -28,6 +31,8 @@ export function CommandPalette() {
   const mode = useStore((s) => s.mode);
   const editMode = useStore((s) => s.editMode);
   const toggleEditMode = useStore((s) => s.toggleEditMode);
+  const setStudyScope = useDrill((s) => s.setScope);
+  const setScopedDeck = useDrill((s) => s.setScoped);
   const [query, setQuery] = useState("");
 
   const setPaletteOpen = useCallback(
@@ -196,14 +201,20 @@ export function CommandPalette() {
                 {data.nodes.map((n) => {
                   const tone = getDomainTone(n.domain);
                   const Icon = kindIcon(n.kind);
+                  const studyAvailable = Boolean(nodeAnswerText(n) || hasNodeVisual(n));
                   return (
                     <CommandItem
                       key={n.id}
-                      value={`${n.label} ${n.kind} ${n.tags.join(" ")}`}
+                      value={nodeSearchText(n)}
                       onSelect={() => {
-                        setSurface("atlas");
-                        setMode("explore");
                         select(n.id);
+                        if (surface === "flashcards" && studyAvailable) {
+                          setStudyScope("all");
+                          setScopedDeck({ title: n.label, ids: [n.id] });
+                        } else if (surface !== "dictionary") {
+                          setSurface("atlas");
+                          setMode("explore");
+                        }
                         setPaletteOpen(false);
                       }}
                       className="group"

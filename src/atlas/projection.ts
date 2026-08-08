@@ -208,6 +208,11 @@ export function buildGraphProjection(input: GraphProjectionInput): GraphProjecti
 
   const filteredNodes = data.nodes.filter((node) => {
     if (route.nodeIds.has(node.id)) return true;
+    // Filters describe the resting map, not whether a concept exists. An
+    // explicit selection (search result, relation link, recent, deep link)
+    // remains visible so every navigation path can resolve its destination
+    // without mutating the learner's saved filters.
+    if (node.id === selectedId) return true;
     if (!kinds.has(node.kind)) return false;
     if (topics.size && !topics.has(node.domain)) return false;
     if (normalizedSearch) {
