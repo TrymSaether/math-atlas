@@ -313,10 +313,7 @@ export function SandboxView() {
             exit={reduceMotion ? { opacity: 0 } : mobile ? { opacity: 0, y: 28 } : { opacity: 0, x: -14 }}
             transition={reduceMotion ? { duration: 0 } : spring.smooth}
           >
-            <Surface
-              material="regular"
-              className="flex h-full flex-col overflow-hidden rounded-[inherit]"
-            >
+            <Surface material="regular" className="flex h-full flex-col overflow-hidden rounded-[inherit]">
               <div className="flex items-center gap-1 border-b border-border/60 px-2 py-2">
                 <WorkspaceMenu />
                 <div className="flex items-center gap-0.5">
