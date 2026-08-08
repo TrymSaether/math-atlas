@@ -28,5 +28,6 @@
   "css.lint.unknownAtRules": "ignore",
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
-  }
+  },
+  "svg.preview.background": "editor"
 }

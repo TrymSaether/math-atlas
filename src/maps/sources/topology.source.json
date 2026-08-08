@@ -7075,6 +7075,16 @@
       "relation": "defined_in_terms_of"
     },
     {
+      "source": "continuity_point_metric",
+      "target": "function",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "continuity_point_metric",
+      "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
       "source": "continuity_preimage_metric",
       "target": "continuity",
       "relation": "defined_in_terms_of"
@@ -7107,6 +7117,11 @@
     {
       "source": "continuous_map_metric",
       "target": "neighborhood_metric",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "continuous_map_metric",
+      "target": "continuity_point_metric",
       "relation": "defined_in_terms_of"
     },
     {
@@ -9445,6 +9460,11 @@
       "relation": "generalizes"
     },
     {
+      "source": "continuity_point_top",
+      "target": "continuity_point_metric",
+      "relation": "generalizes"
+    },
+    {
       "source": "group",
       "target": "fundamental_group",
       "relation": "generalizes"
@@ -11037,6 +11057,11 @@
     {
       "source": "continuity_point_nbhd",
       "target": "continuity_point_top",
+      "relation": "related_to"
+    },
+    {
+      "source": "continuity_point_nbhd",
+      "target": "continuity_point_metric",
       "relation": "related_to"
     },
     {

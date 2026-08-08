@@ -5596,6 +5596,7 @@
           "content": "If $T:X\\to Y$ is defined on all of $X$, then $G(T)=\\{(x,Tx):x\\in X\\}$."
         }
       ],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/graph-of-operator.svg",
       "source": {
         "citation": "Curated concept graph",
         "references": []
