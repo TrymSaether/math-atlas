@@ -476,7 +476,7 @@
       },
       "assumptions": [
         "$(X,\\|\\cdot\\|)$ is a normed space.",
-        "$$\\lim_{n\\to\\infty} x_n = x \\quad \\Leftrightarrow \\quad \\forall \\varepsilon > 0,\\ \\exists N:\\ n\\ge N \\implies \\|x_n-x\\|<\\varepsilon$$."
+        "$$\\lim_{n\\to\\infty} x_n = x \\quad \\Leftrightarrow \\quad \\forall \\varepsilon > 0,\\ \\exists N:\\ n\\ge N \\implies \\|x_n-x\\|<\\varepsilon$$"
       ],
       "proof": {
         "steps": [
@@ -544,7 +544,7 @@
       },
       "assumptions": [
         "$(X,d)$ is a metric space.",
-        "$$\\lim_{n\\to\\infty} x_n = x \\quad \\Leftrightarrow \\quad \\forall \\varepsilon > 0,\\ \\exists N:\\ n\\ge N \\implies d(x_n,x)<\\varepsilon$$."
+        "$$\\lim_{n\\to\\infty} x_n = x \\quad \\Leftrightarrow \\quad \\forall \\varepsilon > 0,\\ \\exists N:\\ n\\ge N \\implies d(x_n,x)<\\varepsilon$$"
       ],
       "proof": {
         "steps": [
@@ -2185,7 +2185,7 @@
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/kernel-quotient.svg",
       "assumptions": [
-        "$$T:X\\to Y is linear.$$."
+        "$$T:X\\to Y is linear.$$"
       ],
       "tags": [
         "kernel",

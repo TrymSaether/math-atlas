@@ -806,7 +806,7 @@
       },
       "assumptions": [
         "$$\\mathcal M(\\mathbb R)\\subset L^1(\\mathbb R)\\cap L^2(\\mathbb R),\\qquad (1+x^2)^{-1}\\in L^1(\\mathbb R)\\cap L^2(\\mathbb R).$$",
-        "$$1+x^2\\le (1+|x|)^2\\le 2(1+x^2)\\quad\\Longrightarrow\\quad \\mathcal M(\\mathbb R)=C_2(\\mathbb R)\\ \\text{as sets, up to equivalent constants}.$$."
+        "$$1+x^2\\le (1+|x|)^2\\le 2(1+x^2)\\quad\\Longrightarrow\\quad \\mathcal M(\\mathbb R)=C_2(\\mathbb R)\\ \\text{as sets, up to equivalent constants}.$$"
       ],
       "source": {
         "citation": "Stein--Shakarchi: Ch.5 §1.1 (functions of moderate decrease)",
@@ -963,7 +963,7 @@
         "$$m>0\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset C_0(\\mathbb R^d),\\quad \\text{where }C_0(\\mathbb R^d)\\text{ denotes continuous functions vanishing at infinity}.$$",
         "$$m>d\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset L^1(\\mathbb R^d).$$",
         "$$2m>d\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset L^2(\\mathbb R^d).$$",
-        "$$\\mathcal M(\\mathbb R)=C_2(\\mathbb R)\\ \\text{when }C_2(\\mathbb R)\\text{ is defined using }(1+|x|)^{-2}\\text{ decay}.$$."
+        "$$\\mathcal M(\\mathbb R)=C_2(\\mathbb R)\\ \\text{when }C_2(\\mathbb R)\\text{ is defined using }(1+|x|)^{-2}\\text{ decay}.$$"
       ],
       "source": {
         "citation": "Course notation; Stein--Shakarchi Ch.5 §1.1 for the corresponding $d=1$, $m=2$ moderate decrease class",
@@ -2356,7 +2356,7 @@
       "label": "Exam 2026 · Problem 2: Decay Rates of Fourier Coefficients",
       "content": {
         "statement": "Determine the largest guaranteed Fourier-coefficient decay exponent under several assumptions.",
-        "formal": "Let $f$ be a $2\\pi$-periodic Riemann integrable function such that for some constants $C,r>0$, $$|\\widehat f(n)|\\le \\frac{C}{|n|^r},\\qquad n\\in\\mathbb Z.$$ Determine the largest guaranteed value of $r$ in the four cases: $f\\in C^3(\\mathbb R)$ with bounded first three derivatives; $f\\in C^1(\\mathbb R)$ with bounded derivative and Hölder-$1/2$ derivative; $$f(x)=\\sum_{k=1}^{\\infty}2^{-k}\\chi_{[-1/k,\\pi]}(x),\\qquad x\\in[-\\pi,\\pi];$$ and $$f(x)=\\sum_{k=0}^{\\infty}3^{-k/4}e^{i3^kx}.$$."
+        "formal": "Let $f$ be a $2\\pi$-periodic Riemann integrable function such that for some constants $C,r>0$, $$|\\widehat f(n)|\\le \\frac{C}{|n|^r},\\qquad n\\in\\mathbb Z.$$ Determine the largest guaranteed value of $r$ in the four cases: $f\\in C^3(\\mathbb R)$ with bounded first three derivatives; $f\\in C^1(\\mathbb R)$ with bounded derivative and Hölder-$1/2$ derivative; $$f(x)=\\sum_{k=1}^{\\infty}2^{-k}\\chi_{[-1/k,\\pi]}(x),\\qquad x\\in[-\\pi,\\pi];$$ and $$f(x)=\\sum_{k=0}^{\\infty}3^{-k/4}e^{i3^kx}.$$"
       },
       "assumptions": [
         "The function is $2\\pi$-periodic and Riemann integrable.",
@@ -4035,7 +4035,7 @@
       },
       "assumptions": [
         "$$\\lambda_k\\in\\mathbb N,\\qquad \\lambda_1<\\lambda_2<\\cdots.$$",
-        "$$\\exists q>1\\ \\text{ such that }\\ \\lambda_{k+1}/\\lambda_k\\ge q\\ \\text{ for all }k.$$."
+        "$$\\exists q>1\\ \\text{ such that }\\ \\lambda_{k+1}/\\lambda_k\\ge q\\ \\text{ for all }k.$$"
       ]
     },
     {
@@ -5007,7 +5007,7 @@
       "label": "Exam 2026 · Problem 4: Fourier Transform Solution of the Wave Equation",
       "content": {
         "statement": "Analyze a Fourier-defined function, prove an $L^2$ estimate, prove smoothness, and verify that it solves the wave equation with initial conditions.",
-        "formal": "Let $f$ be continuous on $\\mathbb R$ with Fourier transform $$\\widehat f(\\xi)=\\chi_{[-1,1]}(\\xi)=\\begin{cases}1, & |\\xi|\\le 1,\\\\0, & |\\xi|>1.\\end{cases}$$ Define $$u(x,t)=\\mathcal F^{-1}\\left[\\widehat f(\\xi)\\cos(\\pi |\\xi|t)\\right](x)=\\int_{-1}^{1}\\cos(\\pi |\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ Show that for $t>0$, $$\\int_{\\mathbb R}|u(x,t)|^2\\,dx\\le \\int_{\\mathbb R}|f(x)|^2\\,dx.$$ Show that $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$. Show that $$u_{tt}=\\frac14u_{xx}$$ on $\\mathbb R\\times(0,\\infty)$, and that for every $x\\in\\mathbb R$, $$\\lim_{t\\to0^+}u(x,t)=f(x),\\qquad \\lim_{t\\to0^+}u_t(x,t)=0.$$."
+        "formal": "Let $f$ be continuous on $\\mathbb R$ with Fourier transform $$\\widehat f(\\xi)=\\chi_{[-1,1]}(\\xi)=\\begin{cases}1, & |\\xi|\\le 1,\\\\0, & |\\xi|>1.\\end{cases}$$ Define $$u(x,t)=\\mathcal F^{-1}\\left[\\widehat f(\\xi)\\cos(\\pi |\\xi|t)\\right](x)=\\int_{-1}^{1}\\cos(\\pi |\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ Show that for $t>0$, $$\\int_{\\mathbb R}|u(x,t)|^2\\,dx\\le \\int_{\\mathbb R}|f(x)|^2\\,dx.$$ Show that $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$. Show that $$u_{tt}=\\frac14u_{xx}$$ on $\\mathbb R\\times(0,\\infty)$, and that for every $x\\in\\mathbb R$, $$\\lim_{t\\to0^+}u(x,t)=f(x),\\qquad \\lim_{t\\to0^+}u_t(x,t)=0.$$"
       },
       "assumptions": [
         "$\\widehat f=\\chi_{[-1,1]}$.",
