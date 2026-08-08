@@ -732,7 +732,7 @@
       "label": "Inverse of a Function",
       "content": {
         "statement": "The inverse of a function $f:X\\to Y$ is the relation that reverses the ordered pairs of $f$. It is a function $Y\\to X$ exactly when $f$ is bijective.",
-        "formal": "$f^{-1}=\\{(y,x)\\in Y\\times X : (x,y)\\in f\\}.$.",
+        "formal": "$f^{-1}=\\{(y,x)\\in Y\\times X : (x,y)\\in f\\}$.",
         "intuition": "The inverse relation records how to move backward through $f$. Without bijectivity, one output may have no input or several inputs, so the backward relation need not be a function.",
         "gloss": "Do not confuse this inverse relation with the set preimage $f^{-1}(B)$; the same notation is overloaded by context.",
         "notation": [
@@ -1187,7 +1187,7 @@
       "domain": "foundations",
       "label": "Union",
       "content": {
-        "statement": "Given sets $A$ and $B$, their \\textbf{union} is $$A \\cup B = \\{x \\mid x \\in A \\text{ or } x \\in B\\}.$$ Here \\emph{or} is inclusive: $x$ may belong to $A$, to $B$, or to both. More generally, for a family of sets $\\{A_i\\}_{i\\in I}$, $$\\bigcup_{i\\in I} A_i = \\{x \\mid \\exists i\\in I \\text{ such that } x\\in A_i\\}.$$.",
+        "statement": "Given sets $A$ and $B$, their \\textbf{union} is $$A \\cup B = \\{x \\mid x \\in A \\text{ or } x \\in B\\}.$$ Here \\emph{or} is inclusive: $x$ may belong to $A$, to $B$, or to both. More generally, for a family of sets $\\{A_i\\}_{i\\in I}$, $$\\bigcup_{i\\in I} A_i = \\{x \\mid \\exists i\\in I \\text{ such that } x\\in A_i\\}.$$",
         "intuition": "The union collects everything that appears in at least one of the sets. Shared elements are not duplicated, because sets record membership, not multiplicity.",
         "gloss": "The union is the set of all elements belonging to at least one of the given sets.",
         "notation": [
@@ -2467,7 +2467,7 @@
         "statement": "For a subset A of a topological space X, the interior of A is the largest open subset of X contained in A.",
         "formula": "$$\\operatorname{int}_X(A)=A^\\circ=\\bigcup\\{U\\in\\tau_X:U\\subseteq A\\}.$$",
         "intuition": "The interior keeps exactly the points of $A$ that have room around them: a point $x$ lies in $\\operatorname{int}_X(A)$ precisely when some open neighborhood of $x$ is contained entirely in $A$. Boundary points fail this test because every open neighborhood around them leaks outside $A$.",
-        "gloss": "Dual to closure: closure expands $A$ by adding unavoidable nearby points, while interior trims $A$ down to the points it surrounds with open room. Always $$\\operatorname{int}_X(A)\\subseteq A\\subseteq\\overline{A}.$$.",
+        "gloss": "Dual to closure: closure expands $A$ by adding unavoidable nearby points, while interior trims $A$ down to the points it surrounds with open room. Always $$\\operatorname{int}_X(A)\\subseteq A\\subseteq\\overline{A}.$$",
         "notation": [
           "$\\operatorname{int}_X(A),\\quad A^\\circ$"
         ]
@@ -2559,8 +2559,8 @@
       "domain": "spaces_constructions",
       "label": "Metric space",
       "content": {
-        "statement": "A \\textbf{metric space} $(X,d)$ is a non-empty set $X$ with a map $d\\colon X\\times X\\to\\mathbb{R}$ such that for all $x,y,z\\in X$: $$\\begin{aligned} \\textbf{(M1)}\\quad d(x,y) &\\ge 0,\\ \\text{and}\\ d(x,y)=0\\Leftrightarrow x=y \\\\ \\textbf{(M2)}\\quad d(x,y) &= d(y,x) \\\\ \\textbf{(M3)}\\quad d(x,z) &\\le d(x,y)+d(y,z). \\end{aligned}$$.",
-        "formal": "Let $(M,d)$ with $d:M\\times M\\to[0,\\infty)$, then $$\\begin{align} d(x,y) &= 0 \\quad \\Longleftrightarrow \\quad x=y \\\\ d(x,y) &= d(y,x) \\\\ d(x,z) &\\le d(x,y)+d(y,z) \\end{align}$$.",
+        "statement": "A \\textbf{metric space} $(X,d)$ is a non-empty set $X$ with a map $d\\colon X\\times X\\to\\mathbb{R}$ such that for all $x,y,z\\in X$: $$\\begin{aligned} \\textbf{(M1)}\\quad d(x,y) &\\ge 0,\\ \\text{and}\\ d(x,y)=0\\Leftrightarrow x=y \\\\ \\textbf{(M2)}\\quad d(x,y) &= d(y,x) \\\\ \\textbf{(M3)}\\quad d(x,z) &\\le d(x,y)+d(y,z). \\end{aligned}$$",
+        "formal": "Let $(M,d)$ with $d:M\\times M\\to[0,\\infty)$, then $$\\begin{align} d(x,y) &= 0 \\quad \\Longleftrightarrow \\quad x=y \\\\ d(x,y) &= d(y,x) \\\\ d(x,z) &\\le d(x,y)+d(y,z). \\end{align}$$",
         "intuition": "Topology with numerical distance still visible.",
         "gloss": "A set equipped with a notion of distance. The three axioms say distance is non-negative (and zero only between identical points), symmetric, and obeys the triangle inequality.",
         "notation": [
@@ -3217,7 +3217,7 @@
       "domain": "continuity",
       "label": "Continuity at a Point (Metric)",
       "content": {
-        "statement": "$f\\colon\\left(X,d_X\\right)\\to\\left(Y,d_Y\\right)$ is continuous at $p \\in X$ if $$\\forall\\varepsilon>0\\;\\exists\\delta>0\\;\\forall q\\in X\\;\\colon d_X(p,q)<\\delta\\implies d_Y(f(p),f(q))<\\varepsilon.$$.",
+        "statement": "$f\\colon\\left(X,d_X\\right)\\to\\left(Y,d_Y\\right)$ is continuous at $p \\in X$ if $$\\forall\\varepsilon>0\\;\\exists\\delta>0\\;\\forall q\\in X\\;\\colon d_X(p,q)<\\delta\\implies d_Y(f(p),f(q))<\\varepsilon.$$",
         "formula": "$$f\\text{ is continuous at }p\\in X\\Longleftrightarrow \\forall\\varepsilon>0\\;\\exists\\delta>0\\;\\forall q\\in X:\\ d_X(p,q)<\\delta\\implies d_Y(f(p),f(q))<\\varepsilon.$$",
         "intuition": "The $\\varepsilon$-$\\delta$ definition of continuity at a point, which is the standard definition in analysis.",
         "notation": [
@@ -3292,7 +3292,7 @@
       "domain": "continuity",
       "label": "Continuity at a Point (Topological)",
       "content": {
-        "statement": "Let $X$ and $Y$ be topological spaces, let $x\\in X$, and let $f\\colon X\\to Y$. The map $f$ is \\textbf{continuous at} $x$ if for every neighborhood $V$ of $f(x)$ there is a neighborhood $U$ of $x$ such that $f(U)\\subseteq V$. $$\\begin{aligned} f\\text{ is continuous at }x \\quad \\Longleftrightarrow\\quad \\forall V\\in\\mathcal{N}_Y(f(x))\\;\\exists U\\in\\mathcal{N}_X(x)\\text{ such that } f(U)\\subseteq V. \\end{aligned}$$.",
+        "statement": "Let $X$ and $Y$ be topological spaces, let $x\\in X$, and let $f\\colon X\\to Y$. The map $f$ is \\textbf{continuous at} $x$ if for every neighborhood $V$ of $f(x)$ there is a neighborhood $U$ of $x$ such that $f(U)\\subseteq V$. $$\\begin{aligned} f\\text{ is continuous at }x \\quad \\Longleftrightarrow\\quad \\forall V\\in\\mathcal{N}_Y(f(x))\\;\\exists U\\in\\mathcal{N}_X(x)\\text{ such that } f(U)\\subseteq V. \\end{aligned}$$",
         "intuition": "Local continuity stated with neighborhoods. A map is continuous iff it is continuous at every point (Thm. 3.18)."
       },
       "examples": [
@@ -3362,7 +3362,7 @@
       "domain": "continuity",
       "label": "Continuity via Preimages of Open Sets",
       "content": {
-        "statement": "Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces, and let $f\\colon X\\to Y$ be a function. Then $f$ is continuous if and only if, for every open set $V\\subseteq Y$, the preimage $f^{-1}(V)=\\{x\\in X: f(x)\\in V\\}$ is open in $X$. $$ f\\colon X\\to Y \\text{ is continuous} \\iff \\forall V\\subseteq Y,\\ \\bigl(V \\text{ is open in } Y \\Rightarrow f^{-1}(V) \\text{ is open in } X\\bigr). $$.",
+        "statement": "Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces, and let $f\\colon X\\to Y$ be a function. Then $f$ is continuous if and only if, for every open set $V\\subseteq Y$, the preimage $f^{-1}(V)=\\{x\\in X: f(x)\\in V\\}$ is open in $X$. $$ f\\colon X\\to Y \\text{ is continuous} \\iff \\forall V\\subseteq Y,\\ \\bigl(V \\text{ is open in } Y \\Rightarrow f^{-1}(V) \\text{ is open in } X\\bigr). $$",
         "intuition": "Continuity can be tested entirely by pulling back open sets: open sets in the codomain must have open preimages in the domain. This reformulates the usual distance-based idea of continuity in a way that no longer explicitly mentions distances, which is why it becomes the standard definition in topology."
       },
       "examples": [
@@ -7065,16 +7065,6 @@
       "relation": "defined_in_terms_of"
     },
     {
-      "source": "continuity_point_top",
-      "target": "continuity",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "continuity_point_top",
-      "target": "neighborhood",
-      "relation": "defined_in_terms_of"
-    },
-    {
       "source": "continuity_point_metric",
       "target": "function",
       "relation": "defined_in_terms_of"
@@ -7082,6 +7072,16 @@
     {
       "source": "continuity_point_metric",
       "target": "metric_space",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "continuity_point_top",
+      "target": "continuity",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "continuity_point_top",
+      "target": "neighborhood",
       "relation": "defined_in_terms_of"
     },
     {
@@ -7111,17 +7111,17 @@
     },
     {
       "source": "continuous_map_metric",
+      "target": "continuity_point_metric",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "continuous_map_metric",
       "target": "metric_space",
       "relation": "defined_in_terms_of"
     },
     {
       "source": "continuous_map_metric",
       "target": "neighborhood_metric",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "continuous_map_metric",
-      "target": "continuity_point_metric",
       "relation": "defined_in_terms_of"
     },
     {
@@ -11056,12 +11056,12 @@
     },
     {
       "source": "continuity_point_nbhd",
-      "target": "continuity_point_top",
+      "target": "continuity_point_metric",
       "relation": "related_to"
     },
     {
       "source": "continuity_point_nbhd",
-      "target": "continuity_point_metric",
+      "target": "continuity_point_top",
       "relation": "related_to"
     },
     {

@@ -412,7 +412,7 @@
       "label": "Fubini's Theorem",
       "content": {
         "statement": "An absolutely integrable function on a product measure space may be integrated in either order.",
-        "formal": "Let $(X,\\mathcal A,\\mu)$ and $(Y,\\mathcal B,\\nu)$ be $\\sigma$-finite measure spaces, and let $f:X\\times Y\\to\\mathbb C$ be measurable. If $f\\in L^1(X\\times Y,\\mu\\times\\nu)$, then for almost every $x\\in X$, $f(x,\\cdot)\\in L^1(Y)$; for almost every $y\\in Y$, $f(\\cdot,y)\\in L^1(X)$; the functions $x\\mapsto\\int_Y f(x,y)\\,d\\nu(y)$ and $y\\mapsto\\int_X f(x,y)\\,d\\mu(x)$ are integrable; and $$\\int_{X\\times Y}f\\,d(\\mu\\times\\nu)=\\int_X\\left(\\int_Y f(x,y)\\,d\\nu(y)\\right)d\\mu(x)=\\int_Y\\left(\\int_X f(x,y)\\,d\\mu(x)\\right)d\\nu(y).$$.",
+        "formal": "Let $(X,\\mathcal A,\\mu)$ and $(Y,\\mathcal B,\\nu)$ be $\\sigma$-finite measure spaces, and let $f:X\\times Y\\to\\mathbb C$ be measurable. If $f\\in L^1(X\\times Y,\\mu\\times\\nu)$, then for almost every $x\\in X$, $f(x,\\cdot)\\in L^1(Y)$; for almost every $y\\in Y$, $f(\\cdot,y)\\in L^1(X)$; the functions $x\\mapsto\\int_Y f(x,y)\\,d\\nu(y)$ and $y\\mapsto\\int_X f(x,y)\\,d\\mu(x)$ are integrable; and $$\\int_{X\\times Y}f\\,d(\\mu\\times\\nu)=\\int_X\\left(\\int_Y f(x,y)\\,d\\nu(y)\\right)d\\mu(x)=\\int_Y\\left(\\int_X f(x,y)\\,d\\mu(x)\\right)d\\nu(y).$$",
         "formula": "$$\\begin{aligned} f\\in L^1(X\\times Y)&\\Longrightarrow \\\\ \\int_{X\\times Y}f(x,y)\\,d(\\mu\\times\\nu)(x,y)&=\\int_X\\int_Y f(x,y)\\,d\\nu(y)\\,d\\mu(x) \\\\ &=\\int_Y\\int_X f(x,y)\\,d\\mu(x)\\,d\\nu(y). \\end{aligned}$$",
         "intuition": "Fubini's theorem says that absolute integrability prevents hidden cancellation. If the total absolute mass is finite, then the integral can be computed by sweeping first in the $Y$-direction and then in the $X$-direction, or the other way around.",
         "notation": [
@@ -730,7 +730,7 @@
       "label": "Measure",
       "content": {
         "statement": "A measure assigns nonnegative sizes to measurable sets in a countably additive way.",
-        "formal": "Let $(X,\\mathcal A)$ be a measurable space. A measure is a function $\\mu:\\mathcal A\\to[0,\\infty]$ such that $\\mu(\\varnothing)=0$ and, for every pairwise disjoint sequence $(A_n)_{n\\ge1}\\subseteq\\mathcal A$, $$\\mu\\left(\\bigcup_{n=1}^{\\infty}A_n\\right)=\\sum_{n=1}^{\\infty}\\mu(A_n).$$.",
+        "formal": "Let $(X,\\mathcal A)$ be a measurable space. A measure is a function $\\mu:\\mathcal A\\to[0,\\infty]$ such that $\\mu(\\varnothing)=0$ and, for every pairwise disjoint sequence $(A_n)_{n\\ge1}\\subseteq\\mathcal A$, $$\\mu\\left(\\bigcup_{n=1}^{\\infty}A_n\\right)=\\sum_{n=1}^{\\infty}\\mu(A_n).$$",
         "formula": "$$\\mu:\\mathcal A\\to[0,\\infty],\\qquad \\mu(\\varnothing)=0,\\qquad \\mu\\left(\\bigcup_{n=1}^{\\infty}A_n\\right)=\\sum_{n=1}^{\\infty}\\mu(A_n).$$",
         "intuition": "A measure generalizes length, area, volume, mass, probability, and counting.",
         "notation": [
@@ -805,7 +805,7 @@
         ]
       },
       "assumptions": [
-        "$$\\mathcal M(\\mathbb R)\\subset L^1(\\mathbb R)\\cap L^2(\\mathbb R),\\qquad (1+x^2)^{-1}\\in L^1(\\mathbb R)\\cap L^2(\\mathbb R).$$.",
+        "$$\\mathcal M(\\mathbb R)\\subset L^1(\\mathbb R)\\cap L^2(\\mathbb R),\\qquad (1+x^2)^{-1}\\in L^1(\\mathbb R)\\cap L^2(\\mathbb R).$$",
         "$$1+x^2\\le (1+|x|)^2\\le 2(1+x^2)\\quad\\Longrightarrow\\quad \\mathcal M(\\mathbb R)=C_2(\\mathbb R)\\ \\text{as sets, up to equivalent constants}.$$."
       ],
       "source": {
@@ -959,10 +959,10 @@
         ]
       },
       "assumptions": [
-        "$$m_2\\ge m_1>0\\quad\\Longrightarrow\\quad C_{m_2}(\\mathbb R^d)\\subset C_{m_1}(\\mathbb R^d).$$.",
-        "$$m>0\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset C_0(\\mathbb R^d),\\quad \\text{where }C_0(\\mathbb R^d)\\text{ denotes continuous functions vanishing at infinity}.$$.",
-        "$$m>d\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset L^1(\\mathbb R^d).$$.",
-        "$$2m>d\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset L^2(\\mathbb R^d).$$.",
+        "$$m_2\\ge m_1>0\\quad\\Longrightarrow\\quad C_{m_2}(\\mathbb R^d)\\subset C_{m_1}(\\mathbb R^d).$$",
+        "$$m>0\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset C_0(\\mathbb R^d),\\quad \\text{where }C_0(\\mathbb R^d)\\text{ denotes continuous functions vanishing at infinity}.$$",
+        "$$m>d\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset L^1(\\mathbb R^d).$$",
+        "$$2m>d\\quad\\Longrightarrow\\quad C_m(\\mathbb R^d)\\subset L^2(\\mathbb R^d).$$",
         "$$\\mathcal M(\\mathbb R)=C_2(\\mathbb R)\\ \\text{when }C_2(\\mathbb R)\\text{ is defined using }(1+|x|)^{-2}\\text{ decay}.$$."
       ],
       "source": {
@@ -2182,7 +2182,7 @@
       "label": "Convolution on the Circle",
       "content": {
         "statement": "Convolution on $\\mathbb T$ combines two periodic functions by averaging one function against translated copies of the other.",
-        "formal": "Let $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$ and let $dm(t)=dt/(2\\pi)$. For $f,g\\in L^1(\\mathbb T)$, their convolution is defined by $$(f*g)(x)=\\int_{\\mathbb T}f(x-t)g(t)\\,dm(t)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)g(t)\\,dt.$$.",
+        "formal": "Let $\\mathbb T=\\mathbb R/2\\pi\\mathbb Z$ and let $dm(t)=dt/(2\\pi)$. For $f,g\\in L^1(\\mathbb T)$, their convolution is defined by $$(f*g)(x)=\\int_{\\mathbb T}f(x-t)g(t)\\,dm(t)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)g(t)\\,dt.$$",
         "formula": "$$(f*K)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-t)K(t)\\,dt.$$",
         "intuition": "Convolution is a sliding weighted average. The kernel $g(t)$ tells how much the nearby value $f(x-t)$ contributes to the output at $x$. This is why kernels in Fourier analysis act like averaging devices.",
         "gloss": "The normalized sliding-average operation for periodic functions on $\\mathbb T$.",
@@ -2432,7 +2432,7 @@
       "label": "Fourier Spectrum",
       "content": {
         "statement": "The full indexed sequence of Fourier coefficients of a periodic function.",
-        "formal": "For $f\\in L^1(\\mathbb T)$, its Fourier spectrum is the two-sided sequence $\\{\\widehat f(n)\\}_{n\\in\\mathbb Z}$. The coefficient at $n=0$ is the normalized average of $f$: $$\\widehat f(0)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)\\,dx.$$.",
+        "formal": "For $f\\in L^1(\\mathbb T)$, its Fourier spectrum is the two-sided sequence $\\{\\widehat f(n)\\}_{n\\in\\mathbb Z}$. The coefficient at $n=0$ is the normalized average of $f$: $$\\widehat f(0)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)\\,dx.$$",
         "formula": "$$\\widehat f=\\{\\widehat f(n)\\}_{n\\in\\mathbb Z}.$$",
         "intuition": "The spectrum is the frequency-side fingerprint of $f$: low indices record coarse oscillation and large $|n|$ records fine oscillation.",
         "notation": [
@@ -2872,7 +2872,7 @@
       "label": "SS 2.6.4 — Sine series of $\\theta(\\pi-\\theta)$",
       "content": {
         "statement": "Find the odd Fourier series of $\\theta(\\pi-\\theta)$.",
-        "formal": "Consider the $2\\pi$-periodic odd function whose restriction to $[0,\\pi]$ is $f(\\theta)=\\theta(\\pi-\\theta)$. (a) Draw the graph of $f$. (b) Compute the Fourier coefficients of $f$ and show that $$f(\\theta)=\\frac8\\pi\\sum_{k\\ge1,\\ k\\ \\mathrm{odd}}\\frac{\\sin k\\theta}{k^3}.$$.",
+        "formal": "Consider the $2\\pi$-periodic odd function whose restriction to $[0,\\pi]$ is $f(\\theta)=\\theta(\\pi-\\theta)$. (a) Draw the graph of $f$. (b) Compute the Fourier coefficients of $f$ and show that $$f(\\theta)=\\frac8\\pi\\sum_{k\\ge1,\\ k\\ \\mathrm{odd}}\\frac{\\sin k\\theta}{k^3}.$$",
         "intuition": "A smooth-looking parabola arch, odd-extended, is very smooth except at the joins, giving rapid $1/k^3$ decay and only odd harmonics by the half-wave symmetry."
       },
       "proof": {
@@ -2900,7 +2900,7 @@
       "label": "SS 2.6.5 — Triangular-tent cosine series",
       "content": {
         "statement": "Cosine series of a triangular tent of half-width $\\delta$.",
-        "formal": "On $[-\\pi,\\pi]$, define the triangular tent function $$f(\\theta)=\\begin{cases}0,& |\\theta|>\\delta,\\\\ 1-|\\theta|/\\delta,& |\\theta|\\le\\delta.\\end{cases}$$ Show that $$f(\\theta)=\\frac{\\delta}{2\\pi}+2\\sum_{n=1}^{\\infty}\\frac{1-\\cos(n\\delta)}{n^2\\pi\\delta}\\cos n\\theta.$$.",
+        "formal": "On $[-\\pi,\\pi]$, define the triangular tent function $$f(\\theta)=\\begin{cases}0,& |\\theta|>\\delta,\\\\ 1-|\\theta|/\\delta,& |\\theta|\\le\\delta.\\end{cases}$$ Show that $$f(\\theta)=\\frac{\\delta}{2\\pi}+2\\sum_{n=1}^{\\infty}\\frac{1-\\cos(n\\delta)}{n^2\\pi\\delta}\\cos n\\theta.$$",
         "intuition": "A narrow tent of width $\\delta$: width controls the spectral envelope through the factor $1-\\cos n\\delta$, while the corner fixes the $1/n^2$ decay."
       },
       "proof": {
@@ -3024,7 +3024,7 @@
       "label": "SS 3.3.9 — Parseval and the sum $\\sum 1/(n+\\alpha)^2$",
       "content": {
         "statement": "Derive $\\sum 1/(n+\\alpha)^2=\\pi^2/\\sin^2\\pi\\alpha$ from Parseval.",
-        "formal": "For $\\alpha\\notin\\mathbb Z$, show that the Fourier series of $$\\frac{\\pi}{\\sin\\pi\\alpha}e^{i(\\pi-x)\\alpha}$$ on $[0,2\\pi]$ is $$\\sum_{n=-\\infty}^{\\infty}\\frac{e^{inx}}{n+\\alpha}.$$ Apply Parseval's formula to show that $$\\sum_{n=-\\infty}^{\\infty}\\frac1{(n+\\alpha)^2}=\\frac{\\pi^2}{(\\sin\\pi\\alpha)^2}.$$.",
+        "formal": "For $\\alpha\\notin\\mathbb Z$, show that the Fourier series of $$\\frac{\\pi}{\\sin\\pi\\alpha}e^{i(\\pi-x)\\alpha}$$ on $[0,2\\pi]$ is $$\\sum_{n=-\\infty}^{\\infty}\\frac{e^{inx}}{n+\\alpha}.$$ Apply Parseval's formula to show that $$\\sum_{n=-\\infty}^{\\infty}\\frac1{(n+\\alpha)^2}=\\frac{\\pi^2}{(\\sin\\pi\\alpha)^2}.$$",
         "intuition": "A single complex exponential profile has a tidy spectrum $1/(n+\\alpha)$; Parseval then sums its squares to the classic cosecant-squared identity."
       },
       "proof": {
@@ -4034,7 +4034,7 @@
         ]
       },
       "assumptions": [
-        "$$\\lambda_k\\in\\mathbb N,\\qquad \\lambda_1<\\lambda_2<\\cdots.$$.",
+        "$$\\lambda_k\\in\\mathbb N,\\qquad \\lambda_1<\\lambda_2<\\cdots.$$",
         "$$\\exists q>1\\ \\text{ such that }\\ \\lambda_{k+1}/\\lambda_k\\ge q\\ \\text{ for all }k.$$."
       ]
     },
@@ -4158,7 +4158,7 @@
       "label": "SS 2.6.15 — Closed form of the Fejér kernel",
       "content": {
         "statement": "Derive the squared-sine closed form of the Fejér kernel.",
-        "formal": "Prove that the Fejér kernel is given by $$F_N(x)=\\frac1N\\frac{\\sin^2(Nx/2)}{\\sin^2(x/2)}.$$ Hint: use $NF_N(x)=D_0(x)+\\cdots+D_{N-1}(x)$, where $D_n$ is the Dirichlet kernel; if $\\omega=e^{ix}$, then $$NF_N(x)=\\sum_{n=0}^{N-1}\\frac{\\omega^{-n}-\\omega^{n+1}}{1-\\omega}.$$.",
+        "formal": "Prove that the Fejér kernel is given by $$F_N(x)=\\frac1N\\frac{\\sin^2(Nx/2)}{\\sin^2(x/2)}.$$ Hint: use $NF_N(x)=D_0(x)+\\cdots+D_{N-1}(x)$, where $D_n$ is the Dirichlet kernel; if $\\omega=e^{ix}$, then $$NF_N(x)=\\sum_{n=0}^{N-1}\\frac{\\omega^{-n}-\\omega^{n+1}}{1-\\omega}.$$",
         "intuition": "Averaging the oscillating Dirichlet kernels produces a perfect square — positivity is exactly why Cesàro means behave where raw partial sums fail."
       },
       "proof": {
@@ -4230,7 +4230,7 @@
       "label": "SS 2.6.17b — Cesàro sum at a jump",
       "content": {
         "statement": "Fejér means converge to the midpoint at a jump discontinuity.",
-        "formal": "Assume $f$ is integrable and has a jump discontinuity at $\\theta$, meaning the one-sided limits $$f(\\theta^+)=\\lim_{h\\to0^+}f(\\theta+h),\\qquad f(\\theta^-)=\\lim_{h\\to0^+}f(\\theta-h)$$ exist. Using the same type of argument as for Abel means at a jump, show that the Fourier series of $f$ at $\\theta$ is Cesàro summable to $$\\frac{f(\\theta^+)+f(\\theta^-)}2.$$.",
+        "formal": "Assume $f$ is integrable and has a jump discontinuity at $\\theta$, meaning the one-sided limits $$f(\\theta^+)=\\lim_{h\\to0^+}f(\\theta+h),\\qquad f(\\theta^-)=\\lim_{h\\to0^+}f(\\theta-h)$$ exist. Using the same type of argument as for Abel means at a jump, show that the Fourier series of $f$ at $\\theta$ is Cesàro summable to $$\\frac{f(\\theta^+)+f(\\theta^-)}2.$$",
         "intuition": "Fejér's positive, concentrating kernel reads off the symmetric average of the two one-sided values — so Cesàro summation tames jumps where ordinary partial sums (Gibbs) overshoot."
       },
       "proof": {
@@ -4470,7 +4470,7 @@
       "label": "SS 4.5.11 — Heat flow converges to its data in $L^2$",
       "content": {
         "statement": "Heat-kernel smoothing converges to the initial data in $L^2$.",
-        "formal": "Show that if $u(x,t)=(f*H_t)(x)$, where $H_t$ is the heat kernel and $f$ is Riemann integrable, then\n$$\\int_0^1 |u(x,t)-f(x)|^2\\,dx\\to0\\qquad\\text{as }t\\to0.$$.",
+        "formal": "Show that if $u(x,t)=(f*H_t)(x)$, where $H_t$ is the heat kernel and $f$ is Riemann integrable, then\n$$\\int_0^1 |u(x,t)-f(x)|^2\\,dx\\to0\\qquad\\text{as }t\\to0.$$",
         "intuition": "On the Fourier side heat flow is the multiplier $e^{-4\\pi^2k^2t}\\to1$; Parseval turns convergence of the data into termwise convergence dominated by Bessel's bound."
       },
       "proof": {
@@ -4522,7 +4522,7 @@
       "label": "Uniform Convergence",
       "content": {
         "statement": "A sequence of functions converges uniformly if one index works for all points of the domain at once.",
-        "formal": "Let $E$ be a set and let $f_n,f:E\\to\\mathbb C$. The sequence $f_n$ converges uniformly to $f$ on $E$ if $$\\sup_{x\\in E}|f_n(x)-f(x)|\\xrightarrow[n\\to\\infty]{}0.$$.",
+        "formal": "Let $E$ be a set and let $f_n,f:E\\to\\mathbb C$. The sequence $f_n$ converges uniformly to $f$ on $E$ if $$\\sup_{x\\in E}|f_n(x)-f(x)|\\xrightarrow[n\\to\\infty]{}0.$$",
         "formula": "$$\\|f_n-f\\|_{\\infty,E}=\\sup_{x\\in E}|f_n(x)-f(x)|\\to0.$$",
         "intuition": "Pointwise convergence lets the required index depend on the point $x$. Uniform convergence is stronger: after one large enough $N$, the whole graph of $f_n$ lies inside an $\\varepsilon$-tube around the graph of $f$.",
         "gloss": "Convergence of functions with one error bound valid simultaneously at every point.",
@@ -5933,7 +5933,7 @@
       "label": "SS 5.6.1 — A logarithmic variant of the heat equation",
       "content": {
         "statement": "Solve an Euler-type heat equation by reduction to the standard heat equation.",
-        "formal": "The equation $$x^2\\frac{\\partial^2u}{\\partial x^2}+ax\\frac{\\partial u}{\\partial x}=\\frac{\\partial u}{\\partial t},\\qquad u(x,0)=f(x),\\qquad 0<x<\\infty,\\ t>0,$$ is a variant of the heat equation. To solve it, make the change of variables $x=e^{-y}$, so $-\\infty<y<\\infty$, and set $$U(y,t)=u(e^{-y},t),\\qquad F(y)=f(e^{-y}).$$ Show that the problem reduces to $$\\frac{\\partial^2U}{\\partial y^2}+(1-a)\\frac{\\partial U}{\\partial y}=\\frac{\\partial U}{\\partial t},\\qquad U(y,0)=F(y).$$ Solve this equation by taking the Fourier transform in the $y$ variable, computing $$\\int_{-\\infty}^{\\infty}e^{(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi)t}e^{2\\pi i\\xi v}\\,d\\xi,$$ and show that the solution of the original problem is $$u(x,t)=\\frac1{(4\\pi t)^{1/2}}\\int_0^\\infty e^{-(\\log(v/x)+(1-a)t)^2/(4t)}f(v)\\,\\frac{dv}{v}.$$.",
+        "formal": "The equation $$x^2\\frac{\\partial^2u}{\\partial x^2}+ax\\frac{\\partial u}{\\partial x}=\\frac{\\partial u}{\\partial t},\\qquad u(x,0)=f(x),\\qquad 0<x<\\infty,\\ t>0,$$ is a variant of the heat equation. To solve it, make the change of variables $x=e^{-y}$, so $-\\infty<y<\\infty$, and set $$U(y,t)=u(e^{-y},t),\\qquad F(y)=f(e^{-y}).$$ Show that the problem reduces to $$\\frac{\\partial^2U}{\\partial y^2}+(1-a)\\frac{\\partial U}{\\partial y}=\\frac{\\partial U}{\\partial t},\\qquad U(y,0)=F(y).$$ Solve this equation by taking the Fourier transform in the $y$ variable, computing $$\\int_{-\\infty}^{\\infty}e^{(-4\\pi^2\\xi^2+(1-a)2\\pi i\\xi)t}e^{2\\pi i\\xi v}\\,d\\xi,$$ and show that the solution of the original problem is $$u(x,t)=\\frac1{(4\\pi t)^{1/2}}\\int_0^\\infty e^{-(\\log(v/x)+(1-a)t)^2/(4t)}f(v)\\,\\frac{dv}{v}.$$",
         "intuition": "A logarithmic change of variable turns the Euler-type operator $x^2\\partial_x^2+ax\\partial_x$ into the constant-coefficient heat operator, so the solution is Gaussian smoothing in $\\log x$."
       },
       "proof": {
@@ -5968,7 +5968,7 @@
       "label": "SS 5.6.2 — The Black–Scholes equation",
       "content": {
         "statement": "Reduce Black–Scholes to the heat equation and read off the option price.",
-        "formal": "The Black--Scholes equation from finance theory is $$\\frac{\\partial V}{\\partial t}+rs\\frac{\\partial V}{\\partial s}+\\frac{\\sigma^2s^2}{2}\\frac{\\partial^2V}{\\partial s^2}-rV=0,\\qquad 0<t<T,$$ with final boundary condition $V(s,T)=F(s)$. An appropriate change of variables reduces this to Problem 1. Alternatively, use the substitution $$V(s,t)=e^{ax+b\\tau}U(x,\\tau),\\qquad x=\\log s,\\qquad \\tau=\\frac{\\sigma^2}{2}(T-t),$$ with $$a=\\frac12-\\frac{r}{\\sigma^2},\\qquad b=-\\left(\\frac12+\\frac{r}{\\sigma^2}\\right)^2,$$ to reduce the equation to the one-dimensional heat equation with initial condition $$U(x,0)=e^{-ax}F(e^x).$$ Conclude that a solution of the Black--Scholes equation is $$V(s,t)=\\frac{e^{-r(T-t)}}{\\sqrt{2\\pi\\sigma^2(T-t)}}\\int_0^\\infty \\exp\\left(-\\frac{(\\log(s/s^*)+(r-\\sigma^2/2)(T-t))^2}{2\\sigma^2(T-t)}\\right)F(s^*)\\,ds^*.$$.",
+        "formal": "The Black--Scholes equation from finance theory is $$\\frac{\\partial V}{\\partial t}+rs\\frac{\\partial V}{\\partial s}+\\frac{\\sigma^2s^2}{2}\\frac{\\partial^2V}{\\partial s^2}-rV=0,\\qquad 0<t<T,$$ with final boundary condition $V(s,T)=F(s)$. An appropriate change of variables reduces this to Problem 1. Alternatively, use the substitution $$V(s,t)=e^{ax+b\\tau}U(x,\\tau),\\qquad x=\\log s,\\qquad \\tau=\\frac{\\sigma^2}{2}(T-t),$$ with $$a=\\frac12-\\frac{r}{\\sigma^2},\\qquad b=-\\left(\\frac12+\\frac{r}{\\sigma^2}\\right)^2,$$ to reduce the equation to the one-dimensional heat equation with initial condition $$U(x,0)=e^{-ax}F(e^x).$$ Conclude that a solution of the Black--Scholes equation is $$V(s,t)=\\frac{e^{-r(T-t)}}{\\sqrt{2\\pi\\sigma^2(T-t)}}\\int_0^\\infty \\exp\\left(-\\frac{(\\log(s/s^*)+(r-\\sigma^2/2)(T-t))^2}{2\\sigma^2(T-t)}\\right)F(s^*)\\,ds^*.$$",
         "intuition": "Option pricing is heat diffusion in disguise: log-price plus a discounting/drift gauge transform turns Black–Scholes into $U_\\tau=U_{xx}$, whose Gaussian kernel is the log-normal risk-neutral density."
       },
       "proof": {
@@ -6067,7 +6067,7 @@
       "label": "SS 6.6.3 — Rotation invariance of surface measure",
       "content": {
         "statement": "Spherical surface measure is invariant under rotations.",
-        "formal": "Using the polar-coordinate formula $$\\int_{\\mathbb R^d}F(x)\\,dx=\\int_{S^{d-1}}\\int_0^\\infty F(r\\gamma)r^{d-1}\\,dr\\,d\\sigma(\\gamma),$$ apply it to functions of the separated form $F(x)=g(r)f(\\gamma)$, where $x=r\\gamma$, to prove rotation invariance of surface measure: for every rotation $R$ and every continuous function $f$ on $S^{d-1}$, $$\\int_{S^{d-1}} f(R\\gamma)\\,d\\sigma(\\gamma)=\\int_{S^{d-1}}f(\\gamma)\\,d\\sigma(\\gamma).$$.",
+        "formal": "Using the polar-coordinate formula $$\\int_{\\mathbb R^d}F(x)\\,dx=\\int_{S^{d-1}}\\int_0^\\infty F(r\\gamma)r^{d-1}\\,dr\\,d\\sigma(\\gamma),$$ apply it to functions of the separated form $F(x)=g(r)f(\\gamma)$, where $x=r\\gamma$, to prove rotation invariance of surface measure: for every rotation $R$ and every continuous function $f$ on $S^{d-1}$, $$\\int_{S^{d-1}} f(R\\gamma)\\,d\\sigma(\\gamma)=\\int_{S^{d-1}}f(\\gamma)\\,d\\sigma(\\gamma).$$",
         "intuition": "Surface measure inherits rotation invariance from Lebesgue measure: separate radius from direction, and the common radial factor cancels."
       },
       "proof": {
@@ -6123,7 +6123,7 @@
       "label": "SS 6.6.6 — Heisenberg uncertainty in d dimensions",
       "content": {
         "statement": "The $d$-dimensional Heisenberg uncertainty inequality.",
-        "formal": "Let $\\psi\\in\\mathcal S(\\mathbb R^d)$ satisfy the normalization $$\\int_{\\mathbb R^d}|\\psi(x)|^2\\,dx=1.$$ Prove the $d$-dimensional Heisenberg uncertainty inequality $$\\left(\\int_{\\mathbb R^d}|x|^2|\\psi(x)|^2\\,dx\\right)\\left(\\int_{\\mathbb R^d}|\\xi|^2|\\widehat\\psi(\\xi)|^2\\,d\\xi\\right)\\ge \\frac{d^2}{16\\pi^2}.$$.",
+        "formal": "Let $\\psi\\in\\mathcal S(\\mathbb R^d)$ satisfy the normalization $$\\int_{\\mathbb R^d}|\\psi(x)|^2\\,dx=1.$$ Prove the $d$-dimensional Heisenberg uncertainty inequality $$\\left(\\int_{\\mathbb R^d}|x|^2|\\psi(x)|^2\\,dx\\right)\\left(\\int_{\\mathbb R^d}|\\xi|^2|\\widehat\\psi(\\xi)|^2\\,d\\xi\\right)\\ge \\frac{d^2}{16\\pi^2}.$$",
         "intuition": "The divergence identity for $x|\\psi|^2$ gives a factor $d$ on the left; Cauchy–Schwarz plus Plancherel then spreads the uncertainty over all $d$ coordinates."
       },
       "proof": {
@@ -7360,7 +7360,7 @@
       "label": "SS 7.3.3 — C² decay and the discrete inversion formula",
       "content": {
         "statement": "$C^2$ decay yields the continuous Fourier inversion as the limit of the discrete one.",
-        "formal": "Using the same finite-difference method, prove that if $f$ is $C^2$ on the circle, then there is a constant $c$, independent of $N$ and $n$, such that $$|a_N(n)|\\le \\frac{c}{|n|^2}\\qquad\\text{whenever }0<|n|\\le N/2.$$ Then use this estimate to derive the continuous inversion formula $$f(e^{2\\pi ix})=\\sum_{n=-\\infty}^{\\infty}a(n)e^{2\\pi inx}$$ from the finite Fourier inversion formula. Hint: for the decay estimate, use the second symmetric difference $$f(e^{2\\pi i(k+\\ell)/N})+f(e^{2\\pi i(k-\\ell)/N})-2f(e^{2\\pi ik/N}).$$ For the inversion step, when $N$ is odd, write the finite inversion formula as $$f(e^{2\\pi ik/N})=\\sum_{|n|<N/2}a_N(n)e^{2\\pi ikn/N}.$$.",
+        "formal": "Using the same finite-difference method, prove that if $f$ is $C^2$ on the circle, then there is a constant $c$, independent of $N$ and $n$, such that $$|a_N(n)|\\le \\frac{c}{|n|^2}\\qquad\\text{whenever }0<|n|\\le N/2.$$ Then use this estimate to derive the continuous inversion formula $$f(e^{2\\pi ix})=\\sum_{n=-\\infty}^{\\infty}a(n)e^{2\\pi inx}$$ from the finite Fourier inversion formula. Hint: for the decay estimate, use the second symmetric difference $$f(e^{2\\pi i(k+\\ell)/N})+f(e^{2\\pi i(k-\\ell)/N})-2f(e^{2\\pi ik/N}).$$ For the inversion step, when $N$ is odd, write the finite inversion formula as $$f(e^{2\\pi ik/N})=\\sum_{|n|<N/2}a_N(n)e^{2\\pi ikn/N}.$$",
         "intuition": "Two derivatives give summable $1/|n|^2$ decay, which makes the finite DFT inversion pass to the limit — the continuous Fourier series emerges from its sampled version."
       },
       "proof": {
@@ -7745,7 +7745,7 @@
       "label": "SS 4.5.10 — Averaging along an equidistributed sequence",
       "content": {
         "statement": "Averages of a mean-zero periodic function along an equidistributed sequence vanish.",
-        "formal": "Suppose that $f$ is a periodic function on $\\mathbb R$ of period $1$, and $\\{\\xi_n\\}$ is a sequence which is equidistributed in $[0,1)$. Prove the following.\n\n\textbf{(a)} If $f$ is continuous and satisfies\n$$\\int_0^1 f(x)\\,dx=0,$$\nthen\n$$\\lim_{N\\to\\infty}\\frac1N\\sum_{n=1}^{N}f(x+\\xi_n)=0$$\nuniformly in $x$.\n\nHint: Establish this result first for trigonometric polynomials.\n\n\textbf{(b)} If $f$ is merely integrable on $[0,1]$ and satisfies\n$$\\int_0^1 f(x)\\,dx=0,$$\nthen\n$$\\lim_{N\\to\\infty}\\int_0^1\\left|\\frac1N\\sum_{n=1}^{N}f(x+\\xi_n)\\right|^2 dx=0.$$.",
+        "formal": "Suppose that $f$ is a periodic function on $\\mathbb R$ of period $1$, and $\\{\\xi_n\\}$ is a sequence which is equidistributed in $[0,1)$. Prove the following.\n\n\textbf{(a)} If $f$ is continuous and satisfies\n$$\\int_0^1 f(x)\\,dx=0,$$\nthen\n$$\\lim_{N\\to\\infty}\\frac1N\\sum_{n=1}^{N}f(x+\\xi_n)=0$$\nuniformly in $x$.\n\nHint: Establish this result first for trigonometric polynomials.\n\n\textbf{(b)} If $f$ is merely integrable on $[0,1]$ and satisfies\n$$\\int_0^1 f(x)\\,dx=0,$$\nthen\n$$\\lim_{N\\to\\infty}\\int_0^1\\left|\\frac1N\\sum_{n=1}^{N}f(x+\\xi_n)\\right|^2 dx=0.$$",
         "intuition": "Equidistribution makes a moving average against a mean-zero profile cancel — uniformly when $f$ is smooth (Fejér), and in mean-square when $f$ is rough (Parseval + dominated convergence)."
       },
       "proof": {
@@ -7830,7 +7830,7 @@
       "label": "SS 4.5.8 — $\\langle an^\\sigma\\rangle$ is equidistributed $(0<\\sigma<1)$",
       "content": {
         "statement": "Fractional parts of $an^\\sigma$ ($0<\\sigma<1$) are equidistributed.",
-        "formal": "Show that for any $a\\ne0$ and any $\\sigma$ with $0<\\sigma<1$, the sequence $\\langle an^\\sigma\nangle$ is equidistributed in $[0,1)$.\n\nHint: Prove that\n$$\\sum_{n=1}^{N}e^{2\\pi i b n^\\sigma}=O(N^\\sigma)+O(N^{1-\\sigma})\\qquad(b\\ne0).$$\nIn fact, note the following estimate:\n$$\\sum_{n=1}^{N} e^{2\\pi i b n^\\sigma}-\\int_1^N e^{2\\pi i b x^\\sigma}\\,dx\n=O\\left(\\sum_{n=1}^{N} n^{-1+\\sigma}\\right).$$.",
+        "formal": "Show that for any $a\\ne0$ and any $\\sigma$ with $0<\\sigma<1$, the sequence $\\langle an^\\sigma\nangle$ is equidistributed in $[0,1)$.\n\nHint: Prove that\n$$\\sum_{n=1}^{N}e^{2\\pi i b n^\\sigma}=O(N^\\sigma)+O(N^{1-\\sigma})\\qquad(b\\ne0).$$\nIn fact, note the following estimate:\n$$\\sum_{n=1}^{N} e^{2\\pi i b n^\\sigma}-\\int_1^N e^{2\\pi i b x^\\sigma}\\,dx\n=O\\left(\\sum_{n=1}^{N} n^{-1+\\sigma}\\right).$$",
         "intuition": "Sub-linear, slowly turning phases dephase: the Weyl sum is dwarfed by $N$ because neither the discretisation error ($N^\\sigma$) nor the oscillatory integral ($N^{1-\\sigma}$) keeps up."
       },
       "proof": {
@@ -7896,7 +7896,7 @@
       "label": "SS 5.5.18 — The Riemann $\\zeta$–$\\theta$–$\\Gamma$ integral identity",
       "content": {
         "statement": "The Mellin-transform identity linking $\\zeta$, $\\vartheta$, and $\\Gamma$.",
-        "formal": "The zeta function is defined for $s>1$ by $$\\zeta(s)=\\sum_{n=1}^{\\infty}\\frac1{n^s}.$$ Verify the identity $$\\pi^{-s/2}\\Gamma(s/2)\\zeta(s)=\\frac12\\int_0^\\infty t^{s/2-1}(\\vartheta(t)-1)\\,dt\\qquad(s>1),$$ where $\\Gamma$ and $\\vartheta$ are the gamma and theta functions, respectively: $$\\Gamma(s)=\\int_0^\\infty e^{-t}t^{s-1}\\,dt,\\qquad \\vartheta(t)=\\sum_{n=-\\infty}^{\\infty}e^{-\\pi n^2t}.$$.",
+        "formal": "The zeta function is defined for $s>1$ by $$\\zeta(s)=\\sum_{n=1}^{\\infty}\\frac1{n^s}.$$ Verify the identity $$\\pi^{-s/2}\\Gamma(s/2)\\zeta(s)=\\frac12\\int_0^\\infty t^{s/2-1}(\\vartheta(t)-1)\\,dt\\qquad(s>1),$$ where $\\Gamma$ and $\\vartheta$ are the gamma and theta functions, respectively: $$\\Gamma(s)=\\int_0^\\infty e^{-t}t^{s-1}\\,dt,\\qquad \\vartheta(t)=\\sum_{n=-\\infty}^{\\infty}e^{-\\pi n^2t}.$$",
         "intuition": "Each $n^{-s}$ is a Gamma integral in disguise; summing them assembles $\\zeta$, while the tail $\\vartheta-1$ packages the whole series — the bridge from theta's modularity to $\\zeta$'s functional equation."
       },
       "proof": {

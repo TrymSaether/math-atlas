@@ -129,7 +129,7 @@
       "label": "Axiom of Choice",
       "content": {
         "statement": "Every indexed family of nonempty sets admits a choice function.",
-        "formal": "$$\\left[(\\forall i\\in I)\\,A_i\\neq\\varnothing\\right]\\Longrightarrow\\left[(\\exists f:I\\to\\bigcup_{i\\in I}A_i)(\\forall i\\in I)\\,f(i)\\in A_i\\right].$$.",
+        "formal": "$$\\left[(\\forall i\\in I)\\,A_i\\neq\\varnothing\\right]\\Longrightarrow\\left[(\\exists f:I\\to\\bigcup_{i\\in I}A_i)(\\forall i\\in I)\\,f(i)\\in A_i\\right].$$",
         "formula": "$$\\left[(\\forall i\\in I)\\,A_i\\neq\\varnothing\\right]\\Longrightarrow\\prod_{i\\in I}A_i\\neq\\varnothing.$$",
         "intuition": "One may select one element from every set in an arbitrary family, even when no explicit or canonical selection rule is available.",
         "gloss": "Every family of nonempty sets has a simultaneous selection.",
@@ -266,7 +266,7 @@
       "label": "Convergence",
       "content": {
         "statement": "Convergence means that a sequence eventually remains inside every neighborhood of a proposed limit.",
-        "formal": "$$x_n\\to x\\iff \\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall n\\ge N:\\ d(x_n,x)<\\varepsilon.$$.",
+        "formal": "$$x_n\\to x\\iff \\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall n\\ge N:\\ d(x_n,x)<\\varepsilon.$$",
         "formula": "$$x_n\\to x\\text{ in }(X,\\|\\cdot\\|)\\iff \\|x_n-x\\|\\to 0.$$",
         "intuition": "Convergence compares each far-out term to one external object, the limit. This is different from Cauchy, which compares far-out terms to each other.",
         "notation": [
@@ -732,7 +732,7 @@
       "label": "Scalar limit to infinity",
       "content": {
         "statement": "For real scalars, $\\lambda\\to+\\infty$ and $\\lambda\\to-\\infty$ are meaningful; for complex scalars, escape to infinity is written $|\\lambda|\\to\\infty$.",
-        "formal": "$$\\mathbb K=\\mathbb R:\\ \\lambda\\to+\\infty\\text{ or }\\lambda\\to-\\infty,\\qquad \\mathbb K=\\mathbb C:\\ |\\lambda|\\to\\infty.$$.",
+        "formal": "$$\\mathbb K=\\mathbb R:\\ \\lambda\\to+\\infty\\text{ or }\\lambda\\to-\\infty,\\qquad \\mathbb K=\\mathbb C:\\ |\\lambda|\\to\\infty.$$",
         "formula": "$$|\\lambda_n|\\to\\infty\\iff \\forall R>0\\,\\exists N\\in\\mathbb N\\,\\forall n\\ge N:\\ |\\lambda_n|>R.$$",
         "intuition": "Real scalars escape to the right or left on a line. Complex scalars escape every disk centered at zero; there is no distinguished positive direction.",
         "notation": [
@@ -831,7 +831,7 @@
       "label": "Sequence limit versus variable limit",
       "content": {
         "statement": "A sequence limit varies over natural-number indices; a variable limit varies over a larger domain such as $[0,\\infty)$, $\\mathbb R$, or $\\mathbb C$.",
-        "formal": "$$a:\\mathbb N\\to S,\\qquad a_n=a(n),\\qquad \\lim_{n\\to\\infty}a_n\\text{ is a sequence limit}.$$.",
+        "formal": "$$a:\\mathbb N\\to S,\\qquad a_n=a(n),\\qquad \\lim_{n\\to\\infty}a_n\\text{ is a sequence limit}.$$",
         "formula": "$$f(t)=ct,\\ t\\in[0,\\infty),\\ c>0\\implies f(t)\\to\\infty,\\qquad a_n=f(n)=cn\\implies a_n\\to\\infty.$$",
         "intuition": "A sequence limit samples the path at integer indices. A variable limit may use every allowed point in the domain. In proofs, the sequence version is often enough.",
         "notation": [
@@ -990,7 +990,7 @@
       "label": "Triangle Inequality",
       "content": {
         "statement": "In a normed space, the norm of a sum is at most the sum of the norms.",
-        "formal": "Let $(X,\\|\\cdot\\|)$ be a normed space. Then for all $x,y\\in X$, $$\\|x+y\\|\\leq\\|x\\|+\\|y\\|.$$.",
+        "formal": "Let $(X,\\|\\cdot\\|)$ be a normed space. Then for all $x,y\\in X$, $$\\|x+y\\|\\leq\\|x\\|+\\|y\\|.$$",
         "intuition": "The direct path from $0$ to $x+y$ is no longer than going first to $x$ and then from $x$ to $x+y$.",
         "notation": [
           "$\\|x+y\\|\\leq\\|x\\|+\\|y\\|$"
@@ -1150,7 +1150,7 @@
       "label": "Cauchy sequence",
       "content": {
         "statement": "A sequence in a metric space is Cauchy if, eventually, all of its terms are arbitrarily close to each other.",
-        "formal": "Let $(M,d)$ be a metric space and let $(x_n)_{n\\in\\mathbb{N}}$ be a sequence in $M$. The sequence $(x_n)$ is Cauchy if and only if $$\\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall m,n\\ge N:\\ d(x_m,x_n)<\\varepsilon.$$.",
+        "formal": "Let $(M,d)$ be a metric space and let $(x_n)_{n\\in\\mathbb{N}}$ be a sequence in $M$. The sequence $(x_n)$ is Cauchy if and only if $$\\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall m,n\\ge N:\\ d(x_m,x_n)<\\varepsilon.$$",
         "formula": "$$\\begin{aligned} (x_n)\\text{ is Cauchy} &\\iff \\forall \\varepsilon>0\\,\\exists N\\in\\mathbb{N}\\,\\forall m,n\\ge N:\\ d(x_m,x_n)<\\varepsilon \\\\ &\\iff \\operatorname{diam}\\{x_n:n\\ge N\\}\\to 0\\text{ as }N\\to\\infty \\\\ &\\iff d(x_m,x_n)\\to 0\\text{ as }m,n\\to\\infty. \\end{aligned}$$",
         "intuition": "A Cauchy sequence becomes internally stable: sufficiently far out, its terms are close to each other, independently of whether they converge to a point of the space.",
         "notation": [
@@ -1297,7 +1297,7 @@
       "label": "Convex set",
       "content": {
         "statement": "A subset of a vector space is convex if it contains the line segment joining every pair of its points.",
-        "formal": "$$C\\text{ is convex}\\iff(\\forall x,y\\in C)(\\forall\\lambda\\in[0,1])\\;\\lambda x+(1-\\lambda)y\\in C.$$.",
+        "formal": "$$C\\text{ is convex}\\iff(\\forall x,y\\in C)(\\forall\\lambda\\in[0,1])\\;\\lambda x+(1-\\lambda)y\\in C.$$",
         "formula": "$$[x,y]=\\{\\lambda x+(1-\\lambda)y:\\lambda\\in[0,1]\\}\\subseteq C.$$",
         "intuition": "Every line segment between two points of the set remains entirely inside the set.",
         "gloss": "A subset containing every line segment between its points.",
@@ -1358,7 +1358,7 @@
       "label": "Finite-dimensional norm equivalence",
       "content": {
         "statement": "Every two norms on a finite-dimensional vector space are equivalent.",
-        "formal": "If $\\dim X<\\infty$ and $\\|\\cdot\\|_a,\\|\\cdot\\|_b$ are norms on $X$, then $$\\exists c,C>0\\ \\forall x\\in X:\\ c\\|x\\|_a\\leq\\|x\\|_b\\leq C\\|x\\|_a.$$.",
+        "formal": "If $\\dim X<\\infty$ and $\\|\\cdot\\|_a,\\|\\cdot\\|_b$ are norms on $X$, then $$\\exists c,C>0\\ \\forall x\\in X:\\ c\\|x\\|_a\\leq\\|x\\|_b\\leq C\\|x\\|_a.$$",
         "intuition": "In finite dimensions, every norm unit ball can be squeezed between two scaled copies of any other. This is why different finite-dimensional norms induce the same open sets and convergence."
       },
       "assumptions": [
@@ -1519,7 +1519,7 @@
       "label": "Limit of a sequence",
       "content": {
         "statement": "A limit is the object that a sequence eventually gets arbitrarily close to, measured by the ambient metric or norm.",
-        "formal": "$$x_n\\to x\\text{ in }(M,d)\\iff \\forall\\varepsilon>0\\,\\exists N\\in\\mathbb N\\,\\forall n\\ge N:\\ d(x_n,x)<\\varepsilon.$$.",
+        "formal": "$$x_n\\to x\\text{ in }(M,d)\\iff \\forall\\varepsilon>0\\,\\exists N\\in\\mathbb N\\,\\forall n\\ge N:\\ d(x_n,x)<\\varepsilon.$$",
         "formula": "$$x_n\\to x\\text{ in }(X,\\|\\cdot\\|_X)\\iff \\|x_n-x\\|_X\\to0.$$",
         "intuition": "The sequence is the indexed list; the limit is a separate point. A metric or norm is what makes the phrase 'gets close to' precise.",
         "notation": [
@@ -1639,7 +1639,7 @@
       "label": "Norm",
       "content": {
         "statement": "A norm is a length function on a vector space satisfying positive definiteness, absolute homogeneity, and the triangle inequality.",
-        "formal": "Let $X$ be a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$. A norm on $X$ is a function $\\|\\cdot\\|:X\\to[0,\\infty)$ such that for all $x,y\\in X$ and $\\lambda\\in\\mathbb K$, $$\\begin{aligned} &\\|x\\|\\ge 0,\\\\ &\\|x\\|=0\\iff x=0,\\\\ &\\|\\lambda x\\|=|\\lambda|\\,\\|x\\|,\\\\ &\\|x+y\\|\\le \\|x\\|+\\|y\\|. \\end{aligned}$$.",
+        "formal": "Let $X$ be a vector space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$. A norm on $X$ is a function $\\|\\cdot\\|:X\\to[0,\\infty)$ such that for all $x,y\\in X$ and $\\lambda\\in\\mathbb K$, $$\\begin{aligned} &\\|x\\|\\ge 0,\\\\ &\\|x\\|=0\\iff x=0,\\\\ &\\|\\lambda x\\|=|\\lambda|\\,\\|x\\|,\\\\ &\\|x+y\\|\\le \\|x\\|+\\|y\\|. \\end{aligned}$$",
         "intuition": "A norm is the analytic version of length, but the best picture is its unit ball: vectors inside cost at most one unit of size, and every other length is read by scaling that shape until it reaches the vector.",
         "notation": [
           "$\\|x\\|,\\qquad \\|\\cdot\\|,\\qquad \\|\\cdot\\|_X$"
@@ -1741,7 +1741,7 @@
       ],
       "properties": [
         "The canonical quotient map $q : X \\to X/Y$ given by $q(x)=x+Y$ is linear and surjective.",
-        "The kernel of $q$ is exactly $Y$, $$\\ker(q)=Y.$$.",
+        "The kernel of $q$ is exactly $Y$, $$\\ker(q)=Y.$$",
         "dim($X/Y$) = dim($X$) - dim($Y$) in the finite-dimensional case.",
         "If $T : X \\to Z$ is linear with $Y \\subseteq \\ker(T)$, then $T$ factors uniquely through $X/Y$."
       ],
@@ -1879,7 +1879,7 @@
       "label": "Bounded Linear Functional",
       "content": {
         "statement": "A bounded linear functional is a bounded linear operator from a normed space to the scalar field.",
-        "formal": "Let $(X,\\|\\cdot\\|_X)$ be a normed vector space over $\\mathbb{K}\\in\\{\\mathbb{R},\\mathbb{C}\\}$. A bounded linear functional on $X$ is a linear map $f:X\\to \\mathbb{K}$ such that $$\\exists C\\ge 0\\,\\forall x\\in X:\\ |f(x)|\\le C\\|x\\|_X.$$.",
+        "formal": "Let $(X,\\|\\cdot\\|_X)$ be a normed vector space over $\\mathbb{K}\\in\\{\\mathbb{R},\\mathbb{C}\\}$. A bounded linear functional on $X$ is a linear map $f:X\\to \\mathbb{K}$ such that $$\\exists C\\ge 0\\,\\forall x\\in X:\\ |f(x)|\\le C\\|x\\|_X.$$",
         "intuition": "A bounded linear functional is a way to assign a scalar value to each vector in a way that is linear and does not grow faster than a constant times the norm of the vector.",
         "notation": [
           "$f\\in X^\\ast=\\mathcal{B}(X,\\mathbb{K})\\iff f\\text{ is linear and }\\exists C\\ge 0\\ \\forall x\\in X:\\ |f(x)|\\le C\\|x\\|_X.$"
@@ -1911,7 +1911,7 @@
       "label": "Bounded Linear Operator",
       "content": {
         "statement": "A bounded linear operator is a linear map between normed vector spaces whose output norm is controlled by a constant multiple of the input norm.",
-        "formal": "Let $(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ be normed vector spaces. A linear map $T:X\\to Y$ is bounded iff $$\\exists C\\ge 0\\,\\forall x\\in X:\\ \\|Tx\\|_Y\\le C\\|x\\|_X.$$.",
+        "formal": "Let $(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ be normed vector spaces. A linear map $T:X\\to Y$ is bounded iff $$\\exists C\\ge 0\\,\\forall x\\in X:\\ \\|Tx\\|_Y\\le C\\|x\\|_X.$$",
         "intuition": "The operator may stretch vectors, but only by one uniform linear factor. This is not the same as saying the image of all of $X$ is bounded; nonzero linear maps on unbounded normed spaces usually have unbounded image.",
         "notation": [
           "$T\\in\\mathcal{B}(X,Y)\\iff T\\text{ is linear and }\\exists C\\ge 0\\ \\forall x\\in X:\\ \\|Tx\\|_Y\\le C\\|x\\|_X.$"
@@ -2108,7 +2108,7 @@
       "label": "Compact operator",
       "content": {
         "statement": "A bounded linear operator that maps bounded sets to relatively compact sets.",
-        "formal": "$$T:X\\to Y \\text{ compact in } \\mathcal{L}(X,Y) \\quad \\iff \\quad T(B_X) \\text{ has compact closure in } Y.$$.",
+        "formal": "$$T:X\\to Y \\text{ compact in } \\mathcal{L}(X,Y) \\quad \\iff \\quad T(B_X) \\text{ has compact closure in } Y.$$",
         "formula": "$$\\begin{aligned}T:X\\to Y \\text{ compact, means } \\forall \\text{ bounded } B\\subseteq X,\\ \\overline{T(B)} \\text{ is compact in } Y.\\end{aligned}$$",
         "intuition": "An infinite-dimensional operator behaving partly like a finite-rank operator.",
         "notation": [
@@ -2135,6 +2135,38 @@
       "tags": [
         "continuous",
         "operator"
+      ],
+      "priority": "core"
+    },
+    {
+      "id": "graph_of_operator",
+      "kind": "definition",
+      "domain": "operators",
+      "label": "Graph of an operator",
+      "content": {
+        "statement": "The graph of an operator $T$ is the set of input-output pairs $(x,Tx)$.",
+        "formal": "$$\\operatorname{Graph}(T)=G(T):=\\{(x,Tx)\\in X\\times Y:x\\in D(T)\\}=\\{(x,Tx):x\\in D(T)\\}\\subseteq X\\times Y.$$",
+        "intuition": "The graph records each admissible input together with its corresponding output as a single point in the product space.",
+        "gloss": "For an operator $T:D(T)\\subseteq X\\to Y$, its graph is the subset of $X\\times Y$ consisting of all pairs $(x,Tx)$ with $x\\in D(T)$.",
+        "notation": [
+          "$\\operatorname{Graph}(T)$",
+          "$G(T)$",
+          "$(x,Tx)\\in G(T)$"
+        ]
+      },
+      "examples": [
+        {
+          "content": "If $T:X\\to Y$ is defined on all of $X$, then $G(T)=\\{(x,Tx):x\\in X\\}$."
+        }
+      ],
+      "diagram": "/atlas-assets/functional_analysis/diagrams/graph-of-operator.svg",
+      "source": {
+        "citation": "Curated concept graph"
+      },
+      "tags": [
+        "graph",
+        "operator",
+        "product-space"
       ],
       "priority": "core"
     },
@@ -2234,7 +2266,7 @@
       },
       "assumptions": [
         "$T:X\\to Y$ is linear.",
-        "$T\\ne 0.$.",
+        "$T\\ne 0$.",
         "$X$ is a normed vector space over an unbounded scalar field."
       ],
       "source": {
@@ -2286,7 +2318,7 @@
       "label": "Operator norm",
       "content": {
         "statement": "The operator norm of a bounded linear operator is its largest possible output size on the unit ball of the domain.",
-        "formal": "Let $T:X\\to Y$ be linear between normed spaces. $$\\|T\\|=\\sup_{\\|x\\|_X\\leq 1}\\|Tx\\|_Y=\\sup_{x\\neq 0}\\frac{\\|Tx\\|_Y}{\\|x\\|_X}.$$.",
+        "formal": "Let $T:X\\to Y$ be linear between normed spaces. $$\\|T\\|=\\sup_{\\|x\\|_X\\leq 1}\\|Tx\\|_Y=\\sup_{x\\neq 0}\\frac{\\|Tx\\|_Y}{\\|x\\|_X}.$$",
         "intuition": "The operator norm is the worst-case stretch factor: send the domain unit ball through $T$ and measure the farthest point in the codomain norm.",
         "notation": [
           "$\\|T\\|$"
@@ -2305,7 +2337,7 @@
       "label": "Space of Bounded Linear Operators",
       "content": {
         "statement": "For normed spaces $X$ and $Y$, $\\mathcal{B}(X,Y)$ is the vector space of bounded linear operators from $X$ to $Y$, equipped with the operator norm.",
-        "formal": "Let $(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ be normed vector spaces over the same scalar field. Then $$\\mathcal{B}(X,Y)=\\{A:X\\to Y: A\\text{ is linear and }\\exists C\\ge0\\ \\forall x\\in X\\ \\|Ax\\|_Y\\le C\\|x\\|_X\\},$$ with $$\\|A\\|_{\\mathrm{op}}=\\sup_{\\|x\\|_X\\le1}\\|Ax\\|_Y.$$.",
+        "formal": "Let $(X,\\|\\cdot\\|_X)$ and $(Y,\\|\\cdot\\|_Y)$ be normed vector spaces over the same scalar field. Then $$\\mathcal{B}(X,Y)=\\{A:X\\to Y: A\\text{ is linear and }\\exists C\\ge0\\ \\forall x\\in X\\ \\|Ax\\|_Y\\le C\\|x\\|_X\\},$$ with $$\\|A\\|_{\\mathrm{op}}=\\sup_{\\|x\\|_X\\le1}\\|Ax\\|_Y.$$",
         "intuition": "This packages all uniformly controlled linear transformations from $X$ to $Y$ into one normed space. Addition and scalar multiplication are done operator-by-operator, while the norm measures the largest stretch on the unit ball of $X$.",
         "notation": [
           "$\\mathcal{B}(X,Y)$",
@@ -2332,7 +2364,7 @@
       "label": "Unbounded scalar multiples",
       "content": {
         "statement": "If $y\\neq0$ in a normed space, then scalar multiples of $y$ have arbitrarily large norm.",
-        "formal": "$$y\\neq0\\quad\\Longrightarrow\\quad \\forall M>0\\,\\exists\\lambda\\in\\mathbb K:\\ \\|\\lambda y\\|>M.$$.",
+        "formal": "$$y\\neq0\\quad\\Longrightarrow\\quad \\forall M>0\\,\\exists\\lambda\\in\\mathbb K:\\ \\|\\lambda y\\|>M.$$",
         "formula": "$$\\|\\lambda y\\|=|\\lambda|\\|y\\|\\xrightarrow[|\\lambda|\\to\\infty]{}\\infty\\qquad (y\\neq0).$$",
         "intuition": "A nonzero vector determines a line through the origin. Scaling along that line eventually leaves every bounded ball.",
         "notation": [
@@ -2530,7 +2562,7 @@
       "label": "Canonical embedding is isometric",
       "content": {
         "statement": "Every normed space embeds linearly and isometrically into its bidual.",
-        "formal": "For $x\\in X$, define $Jx\\in X^{**}$ by $(Jx)(f)=f(x)$. Then $$\\|Jx\\|_{X^{**}}=\\sup_{\\|f\\|_{X^*}\\leq1}|f(x)|=\\|x\\|_X.$$.",
+        "formal": "For $x\\in X$, define $Jx\\in X^{**}$ by $(Jx)(f)=f(x)$. Then $$\\|Jx\\|_{X^{**}}=\\sup_{\\|f\\|_{X^*}\\leq1}|f(x)|=\\|x\\|_X.$$",
         "intuition": "The bidual records every continuous scalar measurement of a vector without losing its norm.",
         "notation": [
           "$J:X\\to X^{**}$",
@@ -2674,7 +2706,7 @@
       "label": "Dual Space is Banach",
       "content": {
         "statement": "For every normed vector space $X$ over $\\mathbb{K}\\in\\{\\mathbb{R},\\mathbb{C}\\}$, the dual space $X^*$ is a Banach space.",
-        "formal": "Let $(X,\\|\\cdot\\|_X)$ be a normed vector space over $\\mathbb{K}\\in\\{\\mathbb{R},\\mathbb{C}\\}$. Then $$X^*=\\mathcal{B}(X,\\mathbb{K})$$ is complete under the operator norm $$\\|f\\|=\\sup_{\\|x\\|_X\\le 1}|f(x)|.$$.",
+        "formal": "Let $(X,\\|\\cdot\\|_X)$ be a normed vector space over $\\mathbb{K}\\in\\{\\mathbb{R},\\mathbb{C}\\}$. Then $$X^*=\\mathcal{B}(X,\\mathbb{K})$$ is complete under the operator norm $$\\|f\\|=\\sup_{\\|x\\|_X\\le 1}|f(x)|.$$",
         "formula": "$$\\begin{aligned} X^*&=\\mathcal{B}(X,\\mathbb{K}),\\\\ \\|f\\|_{X^*}&=\\sup_{\\|x\\|_X\\le 1}|f(x)|,\\\\ \\mathbb{K}\\text{ Banach}&\\Longrightarrow X^*\\text{ Banach}. \\end{aligned}$$",
         "intuition": "The dual is a special case of the theorem that bounded operators into a Banach codomain form a Banach space. The domain $X$ need only be normed; completeness comes from the scalar codomain $\\mathbb{K}$.",
         "notation": [
@@ -2928,7 +2960,7 @@
       "label": "Riesz Representation Theorem for $\\mathcal C(K)$",
       "content": {
         "statement": "Every continuous linear functional on $C(K)$ is integration against a unique regular Borel measure, isometrically.",
-        "formal": "Let $K$ be a compact Hausdorff space and $C(K)$ the space of continuous $\\mathbb K$-valued functions with the supremum norm. Then $$C(K)^*\\cong M(K),$$ where $M(K)$ is the space of regular Borel measures on $K$ of finite total variation: every $\\varphi\\in C(K)^*$ is represented by a unique $\\mu\\in M(K)$ via $$\\varphi(f)=\\int_K f\\,d\\mu\\qquad\\text{for all }f\\in C(K),$$ and the correspondence is isometric, $$\\|\\varphi\\|_{C(K)^*}=|\\mu|(K).$$.",
+        "formal": "Let $K$ be a compact Hausdorff space and $C(K)$ the space of continuous $\\mathbb K$-valued functions with the supremum norm. Then $$C(K)^*\\cong M(K),$$ where $M(K)$ is the space of regular Borel measures on $K$ of finite total variation: every $\\varphi\\in C(K)^*$ is represented by a unique $\\mu\\in M(K)$ via $$\\varphi(f)=\\int_K f\\,d\\mu\\qquad\\text{for all }f\\in C(K),$$ and the correspondence is isometric, $$\\|\\varphi\\|_{C(K)^*}=|\\mu|(K).$$",
         "intuition": "Every continuous scalar probe on $C(K)$ is integration against a measure. Where the Hilbert version identifies the dual with the space itself, here the dual is a genuinely different object: functions in, measures out. The norm of the functional is the total mass of the measure.",
         "gloss": "Type discipline: $f\\in C(K)$ is a function, $\\varphi\\in C(K)^*$ is a functional, $\\mu\\in M(K)$ is a measure, and $|\\mu|(K)$ is a number. The theorem is an isometric isomorphism between the second and third of these.",
         "notation": [
@@ -3184,7 +3216,7 @@
       "label": "Weak compactness results",
       "content": {
         "statement": "Banach-Alaoglu is the compactness source behind weak and weak-star compactness arguments: it supplies limit points for bounded families of functionals, and the standard results in the area are obtained by transporting it along the canonical embedding.",
-        "formal": "The cluster of results built on $B_{X^*}$ being $\\sigma(X^*,X)$-compact: $$\\begin{aligned}&\\text{(i) Banach-Alaoglu:} && B_{X^*}\\ \\text{is}\\ \\sigma(X^*,X)\\text{-compact for every normed }X.\\\\ &\\text{(ii) Kakutani:} && B_X\\ \\text{is}\\ \\sigma(X,X^*)\\text{-compact}\\iff X\\ \\text{is reflexive}.\\\\ &\\text{(iii) Eberlein-Smulian:} && \\text{for }K\\subseteq X\\ \\text{Banach, weak compactness}\\iff\\text{weak sequential compactness}.\\\\ &\\text{(iv) separable case:} && X\\ \\text{separable}\\implies(B_{X^*},\\sigma(X^*,X))\\ \\text{is compact metrizable}.\\end{aligned}$$.",
+        "formal": "The cluster of results built on $B_{X^*}$ being $\\sigma(X^*,X)$-compact: $$\\begin{aligned}&\\text{(i) Banach-Alaoglu:} && B_{X^*}\\ \\text{is}\\ \\sigma(X^*,X)\\text{-compact for every normed }X.\\\\ &\\text{(ii) Kakutani:} && B_X\\ \\text{is}\\ \\sigma(X,X^*)\\text{-compact}\\iff X\\ \\text{is reflexive}.\\\\ &\\text{(iii) Eberlein-Smulian:} && \\text{for }K\\subseteq X\\ \\text{Banach, weak compactness}\\iff\\text{weak sequential compactness}.\\\\ &\\text{(iv) separable case:} && X\\ \\text{separable}\\implies(B_{X^*},\\sigma(X^*,X))\\ \\text{is compact metrizable}.\\end{aligned}$$",
         "intuition": "Compactness appears after weakening the topology. In infinite dimensions the norm-closed unit ball is never compact, so every compactness statement in Banach space theory is bought by trading the norm topology for a coarser one; Alaoglu is the cheapest such trade because it needs no hypothesis on $X$ at all.",
         "gloss": "Route to remember: Alaoglu gives compactness upstairs in $X^{**}$; reflexivity is what lets you pull it back down to $X$."
       },
@@ -3268,7 +3300,7 @@
       "label": "Weak topology",
       "content": {
         "statement": "The weak topology on $X$, written $\\sigma(X,X^*)$, is the coarsest topology on $X$ for which every $x^*\\in X^*$ remains continuous. Equivalently, it is the initial topology induced by the family of maps $\\{x^*:X\\to\\mathbb K\\}_{x^*\\in X^*}$.",
-        "formal": "Let $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and let $X$ be a normed vector space over $\\mathbb K$ with continuous dual $X^*=\\mathcal L(X,\\mathbb K)$. The weak topology is $$\\sigma(X,X^*)=\\bigcap\\{\\mathcal T:\\mathcal T\\text{ a topology on }X\\text{ with }x^*\\in C(X,\\mathbb K)\\ \\forall x^*\\in X^*\\}.$$ A subbase is given by the preimages $$S=\\{(x^*)^{-1}(U):x^*\\in X^*,\\ U\\subseteq\\mathbb K\\text{ open}\\},$$ so a base of neighbourhoods of $x_0\\in X$ consists of the finite intersections $$V(x_0;x_1^*,\\dots,x_n^*;\\varepsilon)=\\{x\\in X:|x_i^*(x-x_0)|<\\varepsilon\\ \\text{for } i=1,\\dots,n\\},$$ indexed by $n\\in\\mathbb N$, $x_1^*,\\dots,x_n^*\\in X^*$ and $\\varepsilon>0$. Equivalently $\\sigma(X,X^*)$ is the locally convex topology generated by the seminorms $$p_{x^*}(x)=|x^*(x)|,\\qquad x^*\\in X^*.$$.",
+        "formal": "Let $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ and let $X$ be a normed vector space over $\\mathbb K$ with continuous dual $X^*=\\mathcal L(X,\\mathbb K)$. The weak topology is $$\\sigma(X,X^*)=\\bigcap\\{\\mathcal T:\\mathcal T\\text{ a topology on }X\\text{ with }x^*\\in C(X,\\mathbb K)\\ \\forall x^*\\in X^*\\}.$$ A subbase is given by the preimages $$S=\\{(x^*)^{-1}(U):x^*\\in X^*,\\ U\\subseteq\\mathbb K\\text{ open}\\},$$ so a base of neighbourhoods of $x_0\\in X$ consists of the finite intersections $$V(x_0;x_1^*,\\dots,x_n^*;\\varepsilon)=\\{x\\in X:|x_i^*(x-x_0)|<\\varepsilon\\ \\text{for } i=1,\\dots,n\\},$$ indexed by $n\\in\\mathbb N$, $x_1^*,\\dots,x_n^*\\in X^*$ and $\\varepsilon>0$. Equivalently $\\sigma(X,X^*)$ is the locally convex topology generated by the seminorms $$p_{x^*}(x)=|x^*(x)|,\\qquad x^*\\in X^*.$$",
         "intuition": "The weak topology keeps only the information detected by continuous linear functionals: two vectors are close when finitely many scalar probes $x^*\\in X^*$ give nearly the same value on them. Only finitely many probes appear in any one basic neighbourhood, which is exactly why the topology is coarser than the norm topology.",
         "gloss": "Basic weak neighbourhoods constrain finitely many coordinates at a time, so they are unbounded in infinitely many directions.",
         "notation": [
@@ -3324,7 +3356,7 @@
       "label": "Weak-null preserving maps are bounded",
       "content": {
         "statement": "A linear map between Banach spaces that sends every weakly null sequence to a weakly null sequence is bounded.",
-        "formal": "Let $X,Y$ be Banach spaces over $\\mathbb K$ and let $T:X\\to Y$ be linear. Suppose $$\\forall(x_n)_{n\\in\\mathbb N}\\subseteq X:\\quad x_n\\rightharpoonup0\\ \\Longrightarrow\\ Tx_n\\rightharpoonup0.$$ Then $T\\in\\mathcal B(X,Y)$, that is, $$\\exists C\\in[0,\\infty)\\ \\forall x\\in X:\\quad\\|Tx\\|_Y\\leq C\\|x\\|_X.$$.",
+        "formal": "Let $X,Y$ be Banach spaces over $\\mathbb K$ and let $T:X\\to Y$ be linear. Suppose $$\\forall(x_n)_{n\\in\\mathbb N}\\subseteq X:\\quad x_n\\rightharpoonup0\\ \\Longrightarrow\\ Tx_n\\rightharpoonup0.$$ Then $T\\in\\mathcal B(X,Y)$, that is, $$\\exists C\\in[0,\\infty)\\ \\forall x\\in X:\\quad\\|Tx\\|_Y\\leq C\\|x\\|_X.$$",
         "intuition": "An unbounded map can amplify a norm-null sequence into an unbounded one, but weakly convergent sequences must be norm bounded. Rescaling turns the failure of boundedness into a norm-null sequence whose image is unbounded, contradicting that hypothesis.",
         "gloss": "The move is: unboundedness gives a badly behaved sequence, rescale it to be null, then let the hypothesis and weak boundedness collide.",
         "notation": [
@@ -3868,7 +3900,7 @@
       "label": "Adjoint of a bounded operator on Hilbert spaces",
       "content": {
         "statement": "The Hilbert adjoint of a bounded operator between Hilbert spaces is the unique bounded operator moving the operator across the inner product.",
-        "formal": "Let $H,K$ be Hilbert spaces and $T\\in\\mathcal B(H,K)$. There is a unique $T^*\\in\\mathcal B(K,H)$ with $$\\forall x\\in H\\ \\forall y\\in K:\\quad\\langle Tx,y\\rangle_K=\\langle x,T^*y\\rangle_H.$$ Existence: for fixed $y\\in K$ the map $x\\mapsto\\langle Tx,y\\rangle_K$ is a bounded linear functional on $H$, so by the Riesz representation theorem there is a unique vector, called $T^*y$, representing it. Properties: $$\\|T^*\\|=\\|T\\|,\\qquad T^{**}=T,\\qquad (\\lambda T)^*=\\overline{\\lambda}\\,T^*,\\qquad \\|T^*T\\|=\\|T\\|^2.$$.",
+        "formal": "Let $H,K$ be Hilbert spaces and $T\\in\\mathcal B(H,K)$. There is a unique $T^*\\in\\mathcal B(K,H)$ with $$\\forall x\\in H\\ \\forall y\\in K:\\quad\\langle Tx,y\\rangle_K=\\langle x,T^*y\\rangle_H.$$ Existence: for fixed $y\\in K$ the map $x\\mapsto\\langle Tx,y\\rangle_K$ is a bounded linear functional on $H$, so by the Riesz representation theorem there is a unique vector, called $T^*y$, representing it. Properties: $$\\|T^*\\|=\\|T\\|,\\qquad T^{**}=T,\\qquad (\\lambda T)^*=\\overline{\\lambda}\\,T^*,\\qquad \\|T^*T\\|=\\|T\\|^2.$$",
         "intuition": "The infinite-dimensional conjugate transpose. Where the Banach adjoint reroutes probes, the Hilbert adjoint stays among vectors, because Riesz lets every probe be named by a vector.",
         "gloss": "Type discipline: this $T^*$ maps $K\\to H$, i.e. vectors to vectors, unlike the Banach adjoint $Y^*\\to X^*$ which maps functionals to functionals. The map $T\\mapsto T^*$ is conjugate-linear, and the conjugation is inherited from the conjugate-linearity of the Riesz map.",
         "notation": [
@@ -3990,7 +4022,7 @@
       "label": "Eigenvalues of compact self-adjoint operators",
       "content": {
         "statement": "Eigenvalues of a compact self-adjoint operator are real; eigenspaces for distinct eigenvalues are orthogonal; every nonzero eigenspace is finite-dimensional.",
-        "formal": "If $T=T^*$ is compact, then $$Tx=\\lambda x\\Longrightarrow\\lambda\\in\\mathbb R,$$ $$\\lambda_1\\ne\\lambda_2\\Longrightarrow E_{\\lambda_1}\\perp E_{\\lambda_2},$$ and $$\\lambda\\ne0\\Longrightarrow\\dim E_\\lambda<\\infty.$$.",
+        "formal": "If $T=T^*$ is compact, then $$Tx=\\lambda x\\Longrightarrow\\lambda\\in\\mathbb R,$$ $$\\lambda_1\\ne\\lambda_2\\Longrightarrow E_{\\lambda_1}\\perp E_{\\lambda_2},$$ and $$\\lambda\\ne0\\Longrightarrow\\dim E_\\lambda<\\infty.$$",
         "intuition": "Self-adjointness controls the geometry of eigenvectors, while compactness forbids an infinite orthonormal family at any nonzero eigenvalue.",
         "notation": [
           "$E_\\lambda=\\ker(T-\\lambda I)$"
@@ -4041,7 +4073,7 @@
       "label": "Hilbert projection theorem",
       "content": {
         "statement": "Every point of a Hilbert space has a unique nearest point in any nonempty closed convex subset.",
-        "formal": "Let $H$ be a Hilbert space, $C\\subseteq H$ nonempty, closed and convex, and $x\\in H$. Then $$\\exists!\\,c_0\\in C:\\quad\\|x-c_0\\|=\\operatorname{dist}(x,C)=\\inf_{c\\in C}\\|x-c\\|.$$ When $C=M$ is a closed subspace, the nearest point map $P_M:H\\to M$ is linear, satisfies $P_M^2=P_M$, $\\|P_M\\|\\leq1$, and yields the orthogonal decomposition $$H=M\\oplus M^\\perp,\\qquad x=P_Mx+(x-P_Mx),\\quad x-P_Mx\\in M^\\perp.$$.",
+        "formal": "Let $H$ be a Hilbert space, $C\\subseteq H$ nonempty, closed and convex, and $x\\in H$. Then $$\\exists!\\,c_0\\in C:\\quad\\|x-c_0\\|=\\operatorname{dist}(x,C)=\\inf_{c\\in C}\\|x-c\\|.$$ When $C=M$ is a closed subspace, the nearest point map $P_M:H\\to M$ is linear, satisfies $P_M^2=P_M$, $\\|P_M\\|\\leq1$, and yields the orthogonal decomposition $$H=M\\oplus M^\\perp,\\qquad x=P_Mx+(x-P_Mx),\\quad x-P_Mx\\in M^\\perp.$$",
         "intuition": "Orthogonal projection is the engine of Hilbert space geometry. The inner product makes the distance function strictly convex through the parallelogram identity, so a minimiser cannot be attained twice, and completeness guarantees the minimising sequence actually converges.",
         "gloss": "This is the existence result the Riesz representation theorem runs on: it is what produces a nonzero vector orthogonal to a closed proper subspace.",
         "notation": [
@@ -4135,7 +4167,7 @@
       "label": "Hilbert space",
       "content": {
         "statement": "A complete inner product space.",
-        "formal": "A Hilbert space is a pair $(H,\\langle\\cdot,\\cdot\\rangle)$ where $H$ is an inner product space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ that is complete with respect to the induced norm $$\\|x\\|=\\sqrt{\\langle x,x\\rangle}.$$ Completeness means every Cauchy sequence converges in $H$: $$\\forall(x_n)\\subseteq H:\\ \\big(\\forall\\varepsilon>0\\ \\exists N\\ \\forall m,n\\geq N:\\|x_n-x_m\\|<\\varepsilon\\big)\\implies\\exists x\\in H:\\ \\|x_n-x\\|\\to0.$$.",
+        "formal": "A Hilbert space is a pair $(H,\\langle\\cdot,\\cdot\\rangle)$ where $H$ is an inner product space over $\\mathbb K\\in\\{\\mathbb R,\\mathbb C\\}$ that is complete with respect to the induced norm $$\\|x\\|=\\sqrt{\\langle x,x\\rangle}.$$ Completeness means every Cauchy sequence converges in $H$: $$\\forall(x_n)\\subseteq H:\\ \\big(\\forall\\varepsilon>0\\ \\exists N\\ \\forall m,n\\geq N:\\|x_n-x_m\\|<\\varepsilon\\big)\\implies\\exists x\\in H:\\ \\|x_n-x\\|\\to0.$$",
         "intuition": "Euclidean geometry after passing to infinite dimensions.",
         "notation": [
           "$H$"
@@ -4782,7 +4814,7 @@
       "label": "Separation of closed convex sets",
       "content": {
         "statement": "A point outside a closed convex set in a locally convex space can be strictly separated from the set by a continuous linear functional; for a balanced set containing zero, separation can be expressed using absolute values.",
-        "formal": "If $C\\subset X$ is closed and convex and $x_0\\notin C$, then some $f\\in X^*$ satisfies $$\\sup_{x\\in C}\\operatorname{Re}f(x)<\\operatorname{Re}f(x_0).$$ If $C$ is also balanced and $0\\in C$, one may arrange $$\\sup_{x\\in C}|f(x)|<|f(x_0)|.$$.",
+        "formal": "If $C\\subset X$ is closed and convex and $x_0\\notin C$, then some $f\\in X^*$ satisfies $$\\sup_{x\\in C}\\operatorname{Re}f(x)<\\operatorname{Re}f(x_0).$$ If $C$ is also balanced and $0\\in C$, one may arrange $$\\sup_{x\\in C}|f(x)|<|f(x_0)|.$$",
         "intuition": "Local convexity supplies a continuous gauge, and Hahn-Banach converts that gauge into a scalar witness separating the point from the set."
       },
       "assumptions": [
@@ -5069,7 +5101,7 @@
       "label": "Closed Graph Theorem",
       "content": {
         "statement": "A linear operator between Banach spaces is bounded if its graph is closed.",
-        "formal": "If $X,Y$ are Banach and $T:X \\to Y$ is linear with graph(T) closed in $X \\times Y$, then $T$ is bounded. $$\\exists C<\\infty \\text{ such that } ||Tx|| \\leq C||x|| \\text{ for all } x \\in X.$$.",
+        "formal": "If $X,Y$ are Banach and $T:X \\to Y$ is linear with graph(T) closed in $X \\times Y$, then $T$ is bounded. $$\\exists C<\\infty \\text{ such that } ||Tx|| \\leq C||x|| \\text{ for all } x \\in X.$$",
         "intuition": "A graph-compatible limit rule forces norm continuity."
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/closed-graph.svg",
@@ -5155,7 +5187,7 @@
       "label": "Open Mapping Theorem",
       "content": {
         "statement": "A surjective bounded linear operator between Banach spaces maps open sets to open sets.",
-        "formal": "If $T:X \\to Y$ is bounded linear and onto, with $X,Y$ Banach, then $T$ is open. $$\\forall U \\subset X \\text{ open}, T(U) \\subset Y \\text{ is open}.$$.",
+        "formal": "If $T:X \\to Y$ is bounded linear and onto, with $X,Y$ Banach, then $T$ is open. $$\\forall U \\subset X \\text{ open}, T(U) \\subset Y \\text{ is open}.$$",
         "intuition": "A complete linear surjection cannot crush all neighborhoods."
       },
       "diagram": "/atlas-assets/functional_analysis/diagrams/open-mapping.svg",
@@ -5352,7 +5384,7 @@
       "label": "Uniform Boundedness Principle",
       "content": {
         "statement": "A pointwise bounded family of bounded linear operators on a Banach space is uniformly bounded.",
-        "formal": "Let $X$ be a Banach space, let $Y$ be a normed space, and let $\\{T_i:X\\to Y:i\\in I\\}$ be a family of bounded linear operators. If for every $x\\in X$ one has $$\\sup_{i\\in I}\\|T_i x\\|<\\infty,$$ then $$\\sup_{i\\in I}\\|T_i\\|<\\infty.$$.",
+        "formal": "Let $X$ be a Banach space, let $Y$ be a normed space, and let $\\{T_i:X\\to Y:i\\in I\\}$ be a family of bounded linear operators. If for every $x\\in X$ one has $$\\sup_{i\\in I}\\|T_i x\\|<\\infty,$$ then $$\\sup_{i\\in I}\\|T_i\\|<\\infty.$$",
         "formula": "$$\\left[\\forall x\\in X:\\sup_{i\\in I}\\|T_i x\\|<\\infty\\right]\\Longrightarrow \\sup_{i\\in I}\\|T_i\\|<\\infty.$$",
         "intuition": "Pointwise control looks weak because each vector may have its own bound. Completeness upgrades these separate bounds into one uniform operator-norm bound."
       },
@@ -5574,39 +5606,6 @@
         "order-theory",
         "zorns-lemma"
       ]
-    },
-    {
-      "id": "graph_of_operator",
-      "kind": "definition",
-      "domain": "operators",
-      "label": "Graph of an operator",
-      "content": {
-        "statement": "The graph of an operator $T$ is the set of input-output pairs $(x,Tx)$.",
-        "gloss": "For an operator $T:D(T)\\subseteq X\\to Y$, its graph is the subset of $X\\times Y$ consisting of all pairs $(x,Tx)$ with $x\\in D(T)$.",
-        "formal": "$$\\operatorname{Graph}(T)=G(T):=\\{(x,Tx)\\in X\\times Y:x\\in D(T)\\}=\\{(x,Tx):x\\in D(T)\\}\\subseteq X\\times Y.$$",
-        "intuition": "The graph records each admissible input together with its corresponding output as a single point in the product space.",
-        "notation": [
-          "$\\operatorname{Graph}(T)$",
-          "$G(T)$",
-          "$(x,Tx)\\in G(T)$"
-        ]
-      },
-      "examples": [
-        {
-          "content": "If $T:X\\to Y$ is defined on all of $X$, then $G(T)=\\{(x,Tx):x\\in X\\}$."
-        }
-      ],
-      "diagram": "/atlas-assets/functional_analysis/diagrams/graph-of-operator.svg",
-      "source": {
-        "citation": "Curated concept graph",
-        "references": []
-      },
-      "tags": [
-        "graph",
-        "operator",
-        "product-space"
-      ],
-      "priority": "core"
     }
   ],
   "edges": [
@@ -6107,6 +6106,11 @@
     },
     {
       "source": "closed_graph",
+      "target": "graph_of_operator",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "closed_graph",
       "target": "linear_operator",
       "relation": "defined_in_terms_of"
     },
@@ -6438,6 +6442,16 @@
     {
       "source": "goldstine_theorem",
       "target": "closed_unit_ball",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "graph_of_operator",
+      "target": "cartesian_product",
+      "relation": "defined_in_terms_of"
+    },
+    {
+      "source": "graph_of_operator",
+      "target": "domain_and_codomain",
       "relation": "defined_in_terms_of"
     },
     {
@@ -8782,21 +8796,6 @@
       "source": "nonzero_linear_map_on_unbounded_normed_space",
       "target": "bounded_function_on_domain",
       "relation": "violates"
-    },
-    {
-      "source": "graph_of_operator",
-      "target": "cartesian_product",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "graph_of_operator",
-      "target": "domain_and_codomain",
-      "relation": "defined_in_terms_of"
-    },
-    {
-      "source": "closed_graph",
-      "target": "graph_of_operator",
-      "relation": "defined_in_terms_of"
     }
   ]
 }
