@@ -112,6 +112,9 @@ export const FIGURE_REGISTRY: Record<string, FigureComponent> = {
   quotient_topology: lazy(() => import("./topology/QuotientTopologyFigure")),
 
   // --- Exercises & exam problems: reuse the figure that best illustrates them ---
+  tma4170_2026_problem_1: lazy(() => import("./fourier/GaussianFigure")),
+  tma4170_2026_problem_2: lazy(() => import("./fourier/DecayRatesFigure")),
+  tma4170_2026_problem_4: lazy(() => import("./fourier/WaveEquationFigure")),
   // Fourier-series waveforms (triangle / sawtooth / square + partial sums).
   exam2025_p1a: lazy(() => import("./fourier/SeriesFigure")),
   ss2_6_ex3: lazy(() => import("./fourier/SeriesFigure")),

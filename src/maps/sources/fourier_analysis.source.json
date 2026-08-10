@@ -3,7 +3,7 @@
   "label": "Fourier Analysis",
   "field": "fourier_analysis",
   "version": 2,
-  "updated": "2026-08-07",
+  "updated": "2026-08-10",
   "domains": [
     {
       "id": "foundations",
@@ -2356,13 +2356,58 @@
       "label": "Exam 2026 · Problem 2: Decay Rates of Fourier Coefficients",
       "content": {
         "statement": "Determine the largest guaranteed Fourier-coefficient decay exponent under several assumptions.",
-        "formal": "Let $f$ be a $2\\pi$-periodic Riemann integrable function such that for some constants $C,r>0$, $$|\\widehat f(n)|\\le \\frac{C}{|n|^r},\\qquad n\\in\\mathbb Z.$$ Determine the largest guaranteed value of $r$ in the four cases: $f\\in C^3(\\mathbb R)$ with bounded first three derivatives; $f\\in C^1(\\mathbb R)$ with bounded derivative and Hölder-$1/2$ derivative; $$f(x)=\\sum_{k=1}^{\\infty}2^{-k}\\chi_{[-1/k,\\pi]}(x),\\qquad x\\in[-\\pi,\\pi];$$ and $$f(x)=\\sum_{k=0}^{\\infty}3^{-k/4}e^{i3^kx}.$$"
+        "formal": "Let $f$ be a $2\\pi$-periodic Riemann integrable function such that for some constants $C,r>0$, $$|\\widehat f(n)|\\le \\frac{C}{|n|^r},\\qquad n\\in\\mathbb Z\\setminus\\{0\\}.$$ Determine the largest guaranteed value of $r$ in the four cases: $f\\in C^3(\\mathbb R)$ with bounded first three derivatives; $f\\in C^1(\\mathbb R)$ with bounded derivative and Hölder-$1/2$ derivative; $$f(x)=\\sum_{k=1}^{\\infty}2^{-k}\\chi_{[-1/k,\\pi]}(x),\\qquad x\\in[-\\pi,\\pi];$$ and $$f(x)=\\sum_{k=0}^{\\infty}3^{-k/4}e^{i3^kx}.$$",
+        "formula": "$$\\boxed{r_{(a)}=3.00,\\qquad r_{(b)}=1.50,\\qquad r_{(c)}=1.00,\\qquad r_{(d)}=0.25.}$$",
+        "intuition": "Each classical derivative contributes one power of frequency decay. A Hölder-$1/2$ derivative contributes another half-power. A jump limits decay to order $1/n$, while the lacunary example displays its exponent directly at the active frequencies $n=3^k$.",
+        "notation": [
+          "$\\widehat{f'}(n)=in\\widehat f(n).$",
+          "$n=3^k\\Longrightarrow\\widehat f(n)=n^{-1/4}.$"
+        ]
       },
       "assumptions": [
         "The function is $2\\pi$-periodic and Riemann integrable.",
         "Numerical answers should be given to two decimal places.",
         "The problem concerns guaranteed upper bounds for decay rates of Fourier coefficients."
       ],
+      "proof": {
+        "steps": [
+          {
+            "role": "case (a): three derivatives",
+            "content": "For $n\\ne0$, periodicity cancels every boundary term. Integrating by parts three times gives $$\\widehat f(n)=\\frac1{(in)^3}\\widehat{f^{(3)}}(n).$$ Since $f^{(3)}$ is bounded on one period, $$|\\widehat{f^{(3)}}(n)|\\le\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|f^{(3)}(x)|\\,dx\\le\\|f^{(3)}\\|_\\infty.$$ Hence $|\\widehat f(n)|\\le\\|f^{(3)}\\|_\\infty|n|^{-3}$, so $r=3.00$. The hypotheses alone do not supply a fourth derivative or a stronger quantitative modulus, so no larger power is guaranteed.",
+            "uses": [
+              "decay_smoothness",
+              "fourier_coefficient"
+            ]
+          },
+          {
+            "role": "case (b): Hölder derivative",
+            "content": "Let $g=f'$. The Hölder-$1/2$ condition gives $|g(x+h)-g(x)|\\le L|h|^{1/2}$. Translation of the Fourier integral yields $$\\widehat{g(\\cdot+h)-g}(n)=(e^{inh}-1)\\widehat g(n).$$ Choose $h=\\pi/|n|$, so $|e^{inh}-1|=2$. Then $$2|\\widehat g(n)|\\le\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}|g(x+h)-g(x)|\\,dx\\le L\\left(\\frac\\pi{|n|}\\right)^{1/2}.$$ Therefore $|\\widehat g(n)|\\le C|n|^{-1/2}$. Since $\\widehat g(n)=in\\widehat f(n)$, $$|\\widehat f(n)|\\le C|n|^{-3/2},$$ and the largest guaranteed exponent is $r=1.50$.",
+            "uses": [
+              "holder_lipschitz_continuity",
+              "decay_smoothness",
+              "fourier_coefficient"
+            ]
+          },
+          {
+            "role": "case (c): weighted jumps",
+            "content": "The series converges uniformly because $\\sum_{k\\ge1}2^{-k}=1$. For $n\\ne0$, interchange sum and integral and compute $$\\begin{aligned}\\widehat f(n)&=\\frac1{2\\pi}\\sum_{k=1}^\\infty2^{-k}\\int_{-1/k}^{\\pi}e^{-inx}\\,dx\\\\&=\\frac1{2\\pi in}\\left(\\sum_{k=1}^\\infty2^{-k}e^{in/k}-(-1)^n\\sum_{k=1}^\\infty2^{-k}\\right)\\\\&=\\frac1{2\\pi in}\\left(\\sum_{k=1}^\\infty2^{-k}e^{in/k}-(-1)^n\\right).\\end{aligned}$$ The bracket has modulus at most $2$, so $|\\widehat f(n)|\\le1/(\\pi|n|)$ and $r=1.00$ works. It is sharp: $f$ has jumps (already a jump of size $1/2$ at $x=-1$). If some $r>1$ were guaranteed, then $\\sum_n|\\widehat f(n)|<\\infty$; the Fourier series would converge uniformly to a continuous function with the same coefficients, contradicting the jump discontinuity. Thus no $r>1$ is guaranteed.",
+            "uses": [
+              "fourier_coefficient",
+              "absolute_coefficients",
+              "absolute_coefficients_uniform_convergence",
+              "fourier_series_uniqueness_theorem"
+            ]
+          },
+          {
+            "role": "case (d): lacunary spectrum",
+            "content": "The frequencies $3^k$ are distinct, so orthogonality reads the coefficients directly: $$\\widehat f(n)=\\begin{cases}3^{-k/4},&n=3^k,\\ k\\ge0,\\\\0,&\\text{otherwise}.\\end{cases}$$ At an active frequency $n=3^k$, $3^{-k/4}=n^{-1/4}$. Thus $|\\widehat f(n)|\\le|n|^{-1/4}$ and $r=0.25$ works. If $r>1/4$, the proposed estimate at $n=3^k$ would require $$3^{-k/4}\\le C3^{-kr}\\quad\\Longleftrightarrow\\quad3^{k(r-1/4)}\\le C,$$ which is impossible as $k\\to\\infty$. Therefore $r=0.25$ is exact.",
+            "uses": [
+              "lacunary_function",
+              "fourier_coefficient"
+            ]
+          }
+        ]
+      },
       "source": {
         "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 2",
         "ref": "tma4170v2026.pdf"
@@ -3772,7 +3817,13 @@
       "label": "Exam 2026 · Problem 3: Fejer Kernel, Cesaro Means, and Uniform Convergence",
       "content": {
         "statement": "Show that the Fejér kernel is a good kernel and use it to prove uniform convergence of Cesàro means for continuous periodic functions.",
-        "formal": "For $N\\in\\mathbb N$, define the Fejér kernel by $$F_N(x)=\\frac1N\\sum_{k=0}^{N-1}D_k(x)=\\frac1N\\frac{\\sin^2\\left(\\frac N2x\\right)}{\\sin^2\\left(\\frac12x\\right)},$$ where $$D_k(x)=\\sum_{n=-k}^{k}e^{inx}.$$ Show that $$\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(x)\\,dx=1,$$ and show that $F_N$ is a good kernel on $[-\\pi,\\pi]$. For $f\\in C(\\mathbb R)$ $2\\pi$-periodic, define $$\\sigma_N(f)(x)=\\frac1N\\sum_{k=0}^{N-1}S_k(f)(x),$$ where $$S_k(f)(x)=\\sum_{n=-k}^{k}\\widehat f(n)e^{inx},\\qquad \\widehat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx.$$ Show that $$\\sigma_N(f)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(y)f(x-y)\\,dy,$$ and explain why $\\sigma_N(f)\\to f$ uniformly as $N\\to\\infty$."
+        "formal": "For $N\\in\\mathbb N$, define the Fejér kernel by $$F_N(x)=\\frac1N\\sum_{k=0}^{N-1}D_k(x)=\\frac1N\\frac{\\sin^2\\left(\\frac N2x\\right)}{\\sin^2\\left(\\frac12x\\right)},$$ where $$D_k(x)=\\sum_{n=-k}^{k}e^{inx}.$$ Show that $$\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(x)\\,dx=1,$$ and show that $F_N$ is a good kernel on $[-\\pi,\\pi]$. For $f\\in C(\\mathbb R)$ $2\\pi$-periodic, define $$\\sigma_N(f)(x)=\\frac1N\\sum_{k=0}^{N-1}S_k(f)(x),$$ where $$S_k(f)(x)=\\sum_{n=-k}^{k}\\widehat f(n)e^{inx},\\qquad \\widehat f(n)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x)e^{-inx}\\,dx.$$ Show that $$\\sigma_N(f)(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(y)f(x-y)\\,dy,$$ and explain why $\\sigma_N(f)\\to f$ uniformly as $N\\to\\infty$.",
+        "formula": "$$\\begin{aligned}F_N&\\ge0,\\qquad \\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N=1,\\\\ \\sigma_N(f)&=f*F_N,\\qquad \\|\\sigma_N(f)-f\\|_\\infty\\to0.\\end{aligned}$$",
+        "intuition": "Averaging Dirichlet kernels turns an oscillatory reconstruction rule into a positive unit-mass bump. As the bump concentrates at the origin, convolution samples only values of $f$ near $x$; uniform continuity turns that localization into uniform convergence.",
+        "notation": [
+          "$F_N=\\frac1N\\sum_{k=0}^{N-1}D_k.$",
+          "$\\sigma_N(f)=\\frac1N\\sum_{k=0}^{N-1}S_k(f)=f*F_N.$"
+        ]
       },
       "assumptions": [
         "The function $f$ is continuous and $2\\pi$-periodic.",
@@ -3782,8 +3833,8 @@
       "proof": {
         "steps": [
           {
-            "role": "part (a)",
-            "content": "Show that $F_N\\ge0$, $\\frac1{2\\pi}\\int F_N=1$, $\\int |F_N|$ is uniformly bounded, and the tail mass outside $|x|<\\delta$ tends to $0$.",
+            "role": "part (a): positivity and mass",
+            "content": "For $x\\notin2\\pi\\mathbb Z$, $$F_N(x)=\\frac1N\\left(\\frac{\\sin(Nx/2)}{\\sin(x/2)}\\right)^2\\ge0,$$ and the removable value at $x=0$ is $F_N(0)=N$. Also every $D_k$ has constant Fourier coefficient $1$, hence normalized integral $1$. Averaging gives $$\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(x)\\,dx=\\frac1N\\sum_{k=0}^{N-1}\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}D_k(x)\\,dx=1.$$ Since $F_N\\ge0$, its normalized $L^1$ norm is also exactly $1$.",
             "uses": [
               "fejer_kernel",
               "good_kernel",
@@ -3791,20 +3842,36 @@
             ]
           },
           {
-            "role": "part (b)",
-            "content": "Write $S_k(f)=f*D_k$, average over $k=0,\\dots,N-1$, and use $F_N=\\frac1N\\sum_{k=0}^{N-1}D_k$ to get $\\sigma_N(f)=f*F_N$.",
+            "role": "part (a): concentration",
+            "content": "Fix $0<\\delta\\le\\pi$. When $\\delta\\le|x|\\le\\pi$, $\\sin^2(x/2)\\ge\\sin^2(\\delta/2)$ and $\\sin^2(Nx/2)\\le1$, so $$0\\le F_N(x)\\le\\frac1{N\\sin^2(\\delta/2)}.$$ Therefore $$\\frac1{2\\pi}\\int_{\\delta\\le|x|\\le\\pi}|F_N(x)|\\,dx\\le\\frac1{N\\sin^2(\\delta/2)}\\xrightarrow[N\\to\\infty]{}0.$$ Together with positivity, unit mass, and $\\|F_N\\|_{L^1(dm)}=1$, this proves that $\\{F_N\\}$ is a good kernel.",
+            "uses": [
+              "fejer_kernel",
+              "good_kernel"
+            ]
+          },
+          {
+            "role": "part (b): partial sums as convolutions",
+            "content": "Because the sum defining $D_k$ is finite, interchange sum and integral: $$\\begin{aligned}(f*D_k)(x)&=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-y)\\sum_{n=-k}^ke^{iny}\\,dy\\\\&=\\sum_{n=-k}^k\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}f(x-y)e^{iny}\\,dy.\\end{aligned}$$ With $z=x-y$ and periodicity, the $n$th integral is $e^{inx}\\widehat f(n)$. Hence $(f*D_k)(x)=S_k(f)(x)$.",
             "uses": [
               "partial_sum",
               "fourier_coefficient",
               "dirichlet_kernel",
+              "convolution"
+            ]
+          },
+          {
+            "role": "part (b): Cesàro identity",
+            "content": "Now average the convolution identity and use linearity: $$\\begin{aligned}\\sigma_N(f)(x)&=\\frac1N\\sum_{k=0}^{N-1}S_k(f)(x)=\\frac1N\\sum_{k=0}^{N-1}(f*D_k)(x)\\\\&=f*\\left(\\frac1N\\sum_{k=0}^{N-1}D_k\\right)(x)=(f*F_N)(x)\\\\&=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(y)f(x-y)\\,dy.\\end{aligned}$$",
+            "uses": [
+              "partial_sum",
               "fejer_kernel",
               "convolution",
               "cesaro_summation"
             ]
           },
           {
-            "role": "conclusion",
-            "content": "Since $F_N$ is a good kernel and $f\\in C(\\mathbb T)$, the good-kernel theorem gives $f*F_N\\to f$ uniformly. Therefore $\\sigma_N(f)\\to f$ uniformly.",
+            "role": "part (b): uniform convergence",
+            "content": "Using the unit-mass identity, $$\\sigma_N(f)(x)-f(x)=\\frac1{2\\pi}\\int_{-\\pi}^{\\pi}F_N(y)\\bigl(f(x-y)-f(x)\\bigr)\\,dy.$$ Let $\\varepsilon>0$. Uniform continuity of $f$ on $\\mathbb T$ gives $\\delta>0$ such that $|f(x-y)-f(x)|<\\varepsilon/2$ whenever $|y|<\\delta$, uniformly in $x$. Split the integral there. The near part is at most $\\varepsilon/2$ because the normalized mass is $1$. The far part is at most $$2\\|f\\|_\\infty\\frac1{2\\pi}\\int_{|y|\\ge\\delta}F_N(y)\\,dy,$$ which is $<\\varepsilon/2$ for all sufficiently large $N$ by concentration. Thus $\\|\\sigma_N(f)-f\\|_\\infty<\\varepsilon$, proving uniform convergence.",
             "uses": [
               "good_kernel",
               "fejer_theorem",
@@ -4978,9 +5045,12 @@
       "content": {
         "statement": "Work with functions of moderate decrease and compute Fourier transforms of exponential and Gaussian-product functions.",
         "formal": "Denote the space of continuous functions of moderate decrease by $$C_m(\\mathbb R^d)=\\left\\{f\\in C(\\mathbb R^d):\\sup_{x\\in\\mathbb R^d}(1+|x|^{d+\\varepsilon})|f(x)|<\\infty \\text{ for some }\\varepsilon>0\\right\\}.$$ Let $f(x)=e^{-2\\pi |x|}$. Show that $f\\in C_m(\\mathbb R)$ and compute $$\\widehat f(\\xi)=\\int_{-\\infty}^{\\infty}f(x)e^{-2\\pi ix\\xi}\\,dx.$$ Let $$g(x_1,x_2,x_3)=e^{-\\pi x_1^2-\\pi x_2^2-2\\pi |x_3|}.$$ Show that $g\\in C_m(\\mathbb R^3)$. Compute $\\widehat g$ and show that $$\\widehat g(R(\\xi_1,\\xi_2),\\xi_3)=\\widehat g(\\xi_1,\\xi_2,\\xi_3)$$ for every rotation $R$ in $\\mathbb R^2$.",
+        "formula": "$$\\begin{aligned} \\widehat f(\\xi)&=\\frac{1}{\\pi(1+\\xi^2)},\\\\ \\widehat g(\\xi_1,\\xi_2,\\xi_3)&=\\frac{e^{-\\pi(\\xi_1^2+\\xi_2^2)}}{\\pi(1+\\xi_3^2)},\\\\ \\widehat g(R(\\xi_1,\\xi_2),\\xi_3)&=\\widehat g(\\xi_1,\\xi_2,\\xi_3). \\end{aligned}$$",
+        "intuition": "Exponential and Gaussian tails beat every polynomial, so moderate decrease is automatic. The three-dimensional function separates into one-dimensional factors; its Fourier transform therefore separates too. The first two frequency variables enter only through their radius, which makes planar rotation invariance visible immediately.",
         "notation": [
           "$\\widehat f(\\xi)=\\int_{\\mathbb R}f(x)e^{-2\\pi ix\\xi}\\,dx.$",
-          "$K(x)=e^{-\\pi x^2},\\qquad \\widehat K=K.$"
+          "$K(x)=e^{-\\pi x^2},\\qquad \\widehat K=K.$",
+          "$g(x_1,x_2,x_3)=K(x_1)K(x_2)f(x_3).$"
         ]
       },
       "assumptions": [
@@ -4988,6 +5058,48 @@
         "For full score, the inequality $$1+|x|^k\\le \\sqrt3(1+|x_1|)^k(1+|x_2|)^k(1+|x_3|)^k$$ should be proved.",
         "One may use without proof that $K(x)=e^{-\\pi x^2}$ satisfies $\\widehat K=K$."
       ],
+      "proof": {
+        "steps": [
+          {
+            "role": "part (a): moderate decrease",
+            "content": "The function $f(x)=e^{-2\\pi|x|}$ is continuous. Choose $\\varepsilon=1$, so $d+\\varepsilon=2$. The function $h(r)=(1+r^2)e^{-2\\pi r}$ is continuous for $r\\ge0$ and tends to $0$ as $r\\to\\infty$ because exponential decay dominates polynomial growth. Hence $h$ is bounded and $$\\sup_{x\\in\\mathbb R}(1+|x|^2)|f(x)|<\\infty.$$ Therefore $f\\in C_m(\\mathbb R)$.",
+            "uses": [
+              "moderate_decrease"
+            ]
+          },
+          {
+            "role": "part (a): transform",
+            "content": "Split the integral at $0$ and use $|x|=x$ on $(0,\\infty)$ and $|x|=-x$ on $(-\\infty,0)$: $$\\begin{aligned}\\widehat f(\\xi)&=\\int_0^\\infty e^{-2\\pi x}e^{-2\\pi i\\xi x}\\,dx+\\int_{-\\infty}^0e^{2\\pi x}e^{-2\\pi i\\xi x}\\,dx\\\\&=\\frac1{2\\pi(1+i\\xi)}+\\frac1{2\\pi(1-i\\xi)}\\\\&=\\frac{(1-i\\xi)+(1+i\\xi)}{2\\pi(1+\\xi^2)}=\\frac1{\\pi(1+\\xi^2)}.\\end{aligned}$$",
+            "uses": [
+              "fourier_transform"
+            ]
+          },
+          {
+            "role": "part (b): moderate decrease",
+            "content": "Put $P(x)=\\prod_{j=1}^3(1+|x_j|)$. Since $P(x)\\ge1+|x_1|+|x_2|+|x_3|\\ge1+|x|$, for every $k\\ge1$, $$1+|x|^k\\le(1+|x|)^k\\le P(x)^k\\le\\sqrt3\\,P(x)^k.$$ Taking $k=4=3+1$ gives the requested estimate (in fact with the stronger constant $1$). Thus $$\\begin{aligned}(1+|x|^4)|g(x)|&\\le\\prod_{j=1}^2(1+|x_j|)^4e^{-\\pi x_j^2}\\,(1+|x_3|)^4e^{-2\\pi|x_3|}.\\end{aligned}$$ Each one-variable factor is bounded because its exponential tail beats the polynomial, so $g\\in C_m(\\mathbb R^3)$.",
+            "uses": [
+              "moderate_decrease",
+              "gaussian_transform"
+            ]
+          },
+          {
+            "role": "part (b): product transform",
+            "content": "Write $g(x_1,x_2,x_3)=K(x_1)K(x_2)f(x_3)$ with $K(x)=e^{-\\pi x^2}$. Absolute integrability permits Fubini, so the three-dimensional transform factors: $$\\begin{aligned}\\widehat g(\\xi_1,\\xi_2,\\xi_3)&=\\widehat K(\\xi_1)\\widehat K(\\xi_2)\\widehat f(\\xi_3)\\\\&=e^{-\\pi\\xi_1^2}e^{-\\pi\\xi_2^2}\\frac1{\\pi(1+\\xi_3^2)}\\\\&=\\frac{e^{-\\pi(\\xi_1^2+\\xi_2^2)}}{\\pi(1+\\xi_3^2)}.\\end{aligned}$$",
+            "uses": [
+              "fourier_transform",
+              "gaussian_transform",
+              "fubini_theorem"
+            ]
+          },
+          {
+            "role": "part (b): rotation invariance",
+            "content": "If $R$ is a rotation of $\\mathbb R^2$, then $|R(\\xi_1,\\xi_2)|^2=\\xi_1^2+\\xi_2^2$. The formula for $\\widehat g$ depends on $(\\xi_1,\\xi_2)$ only through this squared radius. Consequently $$\\widehat g(R(\\xi_1,\\xi_2),\\xi_3)=\\frac{e^{-\\pi|R(\\xi_1,\\xi_2)|^2}}{\\pi(1+\\xi_3^2)}=\\widehat g(\\xi_1,\\xi_2,\\xi_3).$$",
+            "uses": [
+              "gaussian_transform"
+            ]
+          }
+        ]
+      },
       "source": {
         "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 1",
         "ref": "tma4170v2026.pdf"
@@ -5007,7 +5119,13 @@
       "label": "Exam 2026 · Problem 4: Fourier Transform Solution of the Wave Equation",
       "content": {
         "statement": "Analyze a Fourier-defined function, prove an $L^2$ estimate, prove smoothness, and verify that it solves the wave equation with initial conditions.",
-        "formal": "Let $f$ be continuous on $\\mathbb R$ with Fourier transform $$\\widehat f(\\xi)=\\chi_{[-1,1]}(\\xi)=\\begin{cases}1, & |\\xi|\\le 1,\\\\0, & |\\xi|>1.\\end{cases}$$ Define $$u(x,t)=\\mathcal F^{-1}\\left[\\widehat f(\\xi)\\cos(\\pi |\\xi|t)\\right](x)=\\int_{-1}^{1}\\cos(\\pi |\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ Show that for $t>0$, $$\\int_{\\mathbb R}|u(x,t)|^2\\,dx\\le \\int_{\\mathbb R}|f(x)|^2\\,dx.$$ Show that $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$. Show that $$u_{tt}=\\frac14u_{xx}$$ on $\\mathbb R\\times(0,\\infty)$, and that for every $x\\in\\mathbb R$, $$\\lim_{t\\to0^+}u(x,t)=f(x),\\qquad \\lim_{t\\to0^+}u_t(x,t)=0.$$"
+        "formal": "Let $f$ be continuous on $\\mathbb R$ with Fourier transform $$\\widehat f(\\xi)=\\chi_{[-1,1]}(\\xi)=\\begin{cases}1, & |\\xi|\\le 1,\\\\0, & |\\xi|>1.\\end{cases}$$ Define $$u(x,t)=\\mathcal F^{-1}\\left[\\widehat f(\\xi)\\cos(\\pi |\\xi|t)\\right](x)=\\int_{-1}^{1}\\cos(\\pi |\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ Show that for $t>0$, $$\\int_{\\mathbb R}|u(x,t)|^2\\,dx\\le \\int_{\\mathbb R}|f(x)|^2\\,dx.$$ Show that $u\\in C^\\infty(\\mathbb R\\times(0,\\infty))$. Show that $$u_{tt}=\\frac14u_{xx}$$ on $\\mathbb R\\times(0,\\infty)$, and that for every $x\\in\\mathbb R$, $$\\lim_{t\\to0^+}u(x,t)=f(x),\\qquad \\lim_{t\\to0^+}u_t(x,t)=0.$$",
+        "formula": "$$\\begin{aligned}f(x)&=\\frac{\\sin(2\\pi x)}{\\pi x},\\qquad f(0)=2,\\\\ u(x,t)&=\\frac12\\left[f\\left(x+\\frac t2\\right)+f\\left(x-\\frac t2\\right)\\right],\\\\ u_{tt}&=\\frac14u_{xx},\\qquad u(\\cdot,0)=f,\\quad u_t(\\cdot,0)=0.\\end{aligned}$$",
+        "intuition": "The compact frequency band makes every derivative harmless. Each frequency oscillates in time without gaining magnitude, so energy cannot increase. Splitting the cosine multiplier into two exponentials reveals two sinc profiles traveling left and right at speed $1/2$.",
+        "notation": [
+          "$\\widehat u(\\xi,t)=\\chi_{[-1,1]}(\\xi)\\cos(\\pi|\\xi|t).$",
+          "$u(x,t)=\\frac12[f(x+t/2)+f(x-t/2)].$"
+        ]
       },
       "assumptions": [
         "$\\widehat f=\\chi_{[-1,1]}$.",
@@ -5015,6 +5133,58 @@
         "The wave equation is considered on $\\mathbb R\\times(0,\\infty)$.",
         "The initial limits are pointwise in $x$."
       ],
+      "proof": {
+        "steps": [
+          {
+            "role": "identify the initial profile",
+            "content": "Because $\\chi_{[-1,1]}\\in L^1(\\mathbb R)$, Fourier inversion gives $$f(x)=\\int_{-1}^{1}e^{2\\pi i\\xi x}\\,d\\xi=\\begin{cases}\\dfrac{e^{2\\pi ix}-e^{-2\\pi ix}}{2\\pi ix}=\\dfrac{\\sin(2\\pi x)}{\\pi x},&x\\ne0,\\\\2,&x=0.\\end{cases}$$ The value at $0$ is the removable limit, so $f$ is continuous.",
+            "uses": [
+              "fourier_inversion",
+              "sinc_function"
+            ]
+          },
+          {
+            "role": "part (a): energy estimate",
+            "content": "For fixed $t>0$, Plancherel's theorem and $|\\cos|\\le1$ give $$\\begin{aligned}\\int_{\\mathbb R}|u(x,t)|^2\\,dx&=\\int_{\\mathbb R}|\\widehat u(\\xi,t)|^2\\,d\\xi\\\\&=\\int_{-1}^{1}\\cos^2(\\pi|\\xi|t)\\,d\\xi\\\\&\\le\\int_{-1}^{1}1\\,d\\xi=\\int_{\\mathbb R}|\\widehat f(\\xi)|^2\\,d\\xi=\\int_{\\mathbb R}|f(x)|^2\\,dx.\\end{aligned}$$ In fact $\\|f\\|_2^2=2$.",
+            "uses": [
+              "plancherel_theorem"
+            ]
+          },
+          {
+            "role": "part (b): smoothness",
+            "content": "For integers $a,b\\ge0$, formally differentiating the integral produces $$\\partial_x^a\\partial_t^b u(x,t)=\\int_{-1}^{1}(2\\pi i\\xi)^a\\,\\partial_t^b\\cos(\\pi|\\xi|t)\\,e^{2\\pi i\\xi x}\\,d\\xi.$$ On every compact set of $(x,t)$, the absolute value of the integrand is bounded by $(2\\pi)^a\\pi^b$, an integrable constant on $[-1,1]$. Dominated convergence therefore justifies every derivative and proves $u\\in C^\\infty(\\mathbb R^2)$, hence on the required domain.",
+            "uses": [
+              "dominated_convergence_theorem",
+              "fourier_inversion"
+            ]
+          },
+          {
+            "role": "part (c): wave equation",
+            "content": "Differentiate twice under the integral: $$u_{tt}(x,t)=\\int_{-1}^{1}-\\pi^2|\\xi|^2\\cos(\\pi|\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ Likewise, $$u_{xx}(x,t)=\\int_{-1}^{1}(2\\pi i\\xi)^2\\cos(\\pi|\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi=-4\\pi^2\\int_{-1}^{1}\\xi^2\\cos(\\pi|\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ Since $|\\xi|^2=\\xi^2$, the two expressions give $u_{tt}=\\frac14u_{xx}$.",
+            "uses": [
+              "differentiation_rule",
+              "wave_equation_euclidean_space"
+            ]
+          },
+          {
+            "role": "part (c): initial limits",
+            "content": "For fixed $x$, $\\cos(\\pi|\\xi|t)e^{2\\pi i\\xi x}\\to e^{2\\pi i\\xi x}$ and its modulus is at most $1$ on $[-1,1]$. Dominated convergence gives $$u(x,t)\\to\\int_{-1}^{1}e^{2\\pi i\\xi x}\\,d\\xi=f(x).$$ Also $$u_t(x,t)=-\\pi\\int_{-1}^{1}|\\xi|\\sin(\\pi|\\xi|t)e^{2\\pi i\\xi x}\\,d\\xi.$$ The integrand tends to $0$ and is dominated by $\\pi|\\xi|\\in L^1([-1,1])$, so $u_t(x,t)\\to0$.",
+            "uses": [
+              "dominated_convergence_theorem",
+              "fourier_inversion"
+            ]
+          },
+          {
+            "role": "traveling-wave form",
+            "content": "Because cosine is even, $\\cos(\\pi|\\xi|t)=\\cos(\\pi\\xi t)=\\frac12(e^{2\\pi i\\xi t/2}+e^{-2\\pi i\\xi t/2})$. Substitution in the inverse transform yields $$\\begin{aligned}u(x,t)&=\\frac12\\int_{-1}^{1}e^{2\\pi i\\xi(x+t/2)}\\,d\\xi+\\frac12\\int_{-1}^{1}e^{2\\pi i\\xi(x-t/2)}\\,d\\xi\\\\&=\\frac12\\left[f\\left(x+\\frac t2\\right)+f\\left(x-\\frac t2\\right)\\right].\\end{aligned}$$ Thus the initial sinc profile splits into equal left- and right-moving waves of speed $1/2$.",
+            "uses": [
+              "fourier_inversion",
+              "translation_modulation",
+              "wave_equation_euclidean_space"
+            ]
+          }
+        ]
+      },
       "source": {
         "citation": "TMA4170 Fourier Analysis exam, June 5, 2026, Problem 4",
         "ref": "tma4170v2026.pdf"
@@ -12253,12 +12423,27 @@
     },
     {
       "source": "tma4170_2026_problem_1",
+      "target": "fubini_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_1",
       "target": "gaussian_transform",
       "relation": "uses"
     },
     {
       "source": "tma4170_2026_problem_1",
       "target": "moderate_decrease",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_2",
+      "target": "absolute_coefficients",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_2",
+      "target": "absolute_coefficients_uniform_convergence",
       "relation": "uses"
     },
     {
@@ -12273,7 +12458,17 @@
     },
     {
       "source": "tma4170_2026_problem_2",
+      "target": "fourier_series_uniqueness_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_2",
       "target": "holder_lipschitz_continuity",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_2",
+      "target": "lacunary_function",
       "relation": "uses"
     },
     {
@@ -12323,6 +12518,11 @@
     },
     {
       "source": "tma4170_2026_problem_4",
+      "target": "dominated_convergence_theorem",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_4",
       "target": "fourier_inversion",
       "relation": "uses"
     },
@@ -12338,7 +12538,22 @@
     },
     {
       "source": "tma4170_2026_problem_4",
+      "target": "sinc_function",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_4",
+      "target": "translation_modulation",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_4",
       "target": "wave_equation",
+      "relation": "uses"
+    },
+    {
+      "source": "tma4170_2026_problem_4",
+      "target": "wave_equation_euclidean_space",
       "relation": "uses"
     },
     {
