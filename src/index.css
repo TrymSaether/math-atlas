@@ -1,8 +1,2705 @@
-/* Application stylesheet manifest. The rebuilt design system is the single
-   source of truth; there is no legacy layer left to override. */
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import "./design/tokens.css"; /* canonical token layer (light + dark) */
-@import "./design/base.css"; /* global resets, focus, shared utilities */
-@import "./design/vendor.css"; /* MathLive / Mafs / @xyflow / global theming */
-@import "./design/figures.css"; /* figure + diagram token contract & classes */
+/* ========================================================================
+   Math Atlas — Design Tokens
+   Light (paper) + Dark (chalkboard). 8-color Manim/Atlas domain palette.
+   ======================================================================== */
+
+
+:root,
+:root[data-theme="paper"] {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: #F8FAFC;
+  --bg-deep: #F1F5F9;
+  --surface: #FFFFFF;
+  --surface-2: #FCFCFD;
+  --surface-3: #F1F5F9;
+
+  /* Ink */
+  --fg-1: #0F172A;
+  --fg-2: #475569;
+  --fg-3: #94A3B8;
+  --fg-4: #CBD5E1;
+  --fg-on-color: #FFFFFF;
+
+  /* Borders */
+  --border: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --border-subtle: #F1F5F9;
+  --hairline: #E2E8F0;
+
+  /* 8 Atlas domains */
+  --blue: #2563EB;
+  /* Foundations */
+  --green: #16A34A;
+  /* Continuity */
+  --purple: #7C3AED;
+  /* Connectedness */
+  --red: #DC2626;
+  /* Fundamental Group */
+  --teal: #0D9488;
+  /* Covering Spaces */
+  --orange: #F97316;
+  /* Compactness */
+  --pink: #DB2777;
+  /* Homotopy */
+  --gold: #EAB308;
+  /* Examples */
+
+  /* Pastel surface tints (96% L) */
+  --blue-50: #EFF4FF;
+  --green-50: #ECFBF1;
+  --purple-50: #F4EEFE;
+  --red-50: #FEF1F1;
+  --teal-50: #EAF7F5;
+  --orange-50: #FFF1E8;
+  --pink-50: #FDEEF5;
+  --gold-50: #FBF6E1;
+
+  /* Border weight for region outlines (88% L) */
+  --blue-200: #C9DAFE;
+  --green-200: #BEE9CB;
+  --purple-200: #D8C8FB;
+  --red-200: #F4C5C5;
+  --teal-200: #B8DDD6;
+  --orange-200: #F8CFB0;
+  --pink-200: #F4C0D7;
+  --gold-200: #EFDF8E;
+
+  --accent: var(--blue);
+  --accent-soft: var(--blue-50);
+  --accent-border: var(--blue-200);
+
+  --selection: rgba(37, 99, 235, 0.18);
+
+  /* Edges are monochrome ink — color is reserved for domains. */
+  --edge-ink: #64748B;
+  --edge-highlight: var(--blue);
+
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-2: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-3: 0 12px 32px rgba(15, 23, 42, 0.10), 0 2px 6px rgba(15, 23, 42, 0.05);
+
+  --grid-dot: #E5E7EB;
+  --grid-major: rgba(15, 23, 42, 0.05);
+  --grid-minor: rgba(15, 23, 42, 0.025);
+
+  /* Diagram tokens (used by inline SVGs in /public/atlas-assets/diagrams). */
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+
+  /* Sandbox fact-status glyph colors (★ ✓ ≅ ○). Alias theme vars so they
+     retune across every theme — no per-theme block needed. */
+  --fact-computed: var(--green);
+  /* ✓ machine-verified */
+  --fact-recognized: var(--blue);
+  /* ≅ matched a known pattern */
+  --fact-user: var(--gold);
+  /* ★ user-asserted, unverified */
+  --fact-pending: var(--fg-3);
+  /* ○ no input yet */
+}
+
+:root[data-theme="chalkboard"] {
+  color-scheme: dark;
+
+  /* Chalkboard surfaces */
+  --bg: #0E1322;
+  --bg-deep: #080C18;
+  --surface: #161D2F;
+  --surface-2: #1F2740;
+  --surface-3: #28324F;
+
+  --fg-1: #ECEEF4;
+  --fg-2: #A8B0C0;
+  --fg-3: #6B7280;
+  --fg-4: #3F4761;
+  --fg-on-color: #0E1322;
+
+  --border: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --hairline: rgba(255, 255, 255, 0.10);
+
+  /* Same hues, lifted for contrast on chalkboard */
+  --blue: #58C4DD;
+  --green: #83C167;
+  --purple: #B594D6;
+  --red: #FC6255;
+  --teal: #5CD0B3;
+  --orange: #F0AC5F;
+  --pink: #D147BD;
+  --gold: #FFD93D;
+
+  --blue-50: rgba(88, 196, 221, 0.12);
+  --green-50: rgba(131, 193, 103, 0.12);
+  --purple-50: rgba(181, 148, 214, 0.14);
+  --red-50: rgba(252, 98, 85, 0.12);
+  --teal-50: rgba(92, 208, 179, 0.12);
+  --orange-50: rgba(240, 172, 95, 0.12);
+  --pink-50: rgba(209, 71, 189, 0.12);
+  --gold-50: rgba(255, 217, 61, 0.12);
+
+  --blue-200: rgba(88, 196, 221, 0.36);
+  --green-200: rgba(131, 193, 103, 0.36);
+  --purple-200: rgba(181, 148, 214, 0.36);
+  --red-200: rgba(252, 98, 85, 0.36);
+  --teal-200: rgba(92, 208, 179, 0.36);
+  --orange-200: rgba(240, 172, 95, 0.36);
+  --pink-200: rgba(209, 71, 189, 0.36);
+  --gold-200: rgba(255, 217, 61, 0.36);
+
+  --accent: var(--blue);
+  --accent-soft: var(--blue-50);
+  --accent-border: var(--blue-200);
+
+  --selection: rgba(88, 196, 221, 0.28);
+
+  /* Edges are monochrome ink — color is reserved for domains. */
+  --edge-ink: #6B7689;
+  --edge-highlight: var(--blue);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.55);
+
+  --grid-dot: rgba(255, 255, 255, 0.08);
+  --grid-major: rgba(255, 255, 255, 0.05);
+  --grid-minor: rgba(255, 255, 255, 0.025);
+
+  /* Diagram tokens */
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* 3B1B Light — a warm lecture-note page with the Manim/3Blue1Brown blue
+   leading the interaction color and a brown-gold counterpoint. */
+:root[data-theme="3b1b-light"] {
+  color-scheme: light;
+
+  --bg: #F7F3EA;
+  --bg-deep: #ECE3D3;
+  --surface: #FFFDF7;
+  --surface-2: #FBF7ED;
+  --surface-3: #F1E8D8;
+
+  --fg-1: #1F2328;
+  --fg-2: #4C5360;
+  --fg-3: #8A8172;
+  --fg-4: #CDBFA7;
+  --fg-on-color: #FFFDF7;
+
+  --border: #E2D6C3;
+  --border-strong: #CDBFA7;
+  --border-subtle: #F0E6D6;
+  --hairline: #E2D6C3;
+
+  --blue: #236B8E;
+  --green: #4E8E4A;
+  --purple: #8A5FBF;
+  --red: #C84C3F;
+  --teal: #169C8C;
+  --orange: #D17A22;
+  --pink: #B6429A;
+  --gold: #C89C28;
+
+  --blue-50: #E3F1F6;
+  --green-50: #E9F4E5;
+  --purple-50: #F1E9FA;
+  --red-50: #F8E8E4;
+  --teal-50: #E1F4F1;
+  --orange-50: #F8EAD9;
+  --pink-50: #F5E5F0;
+  --gold-50: #F5EBCF;
+
+  --blue-200: #A9CEDD;
+  --green-200: #BDD9B2;
+  --purple-200: #D2BDE8;
+  --red-200: #E8BBB4;
+  --teal-200: #A9DCD4;
+  --orange-200: #EBC59A;
+  --pink-200: #E2B5D6;
+  --gold-200: #E1CD82;
+
+  --accent: #236B8E;
+  --accent-soft: #E3F1F6;
+  --accent-border: #A9CEDD;
+
+  --selection: rgba(35, 107, 142, 0.17);
+
+  --edge-ink: #7B837F;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(31, 35, 40, 0.05);
+  --shadow-2: 0 4px 14px rgba(31, 35, 40, 0.08), 0 1px 2px rgba(31, 35, 40, 0.05);
+  --shadow-3: 0 18px 50px rgba(31, 35, 40, 0.12), 0 2px 6px rgba(31, 35, 40, 0.06);
+
+  --grid-dot: #DFD3BF;
+  --grid-major: rgba(31, 35, 40, 0.055);
+  --grid-minor: rgba(31, 35, 40, 0.028);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* 3B1B Dark — a Manim-style blackboard: near-black stage, luminous blue,
+   warm brown-gold highlights, and lifted domain colors. */
+:root[data-theme="3b1b-dark"] {
+  color-scheme: dark;
+
+  --bg: #101214;
+  --bg-deep: #090A0C;
+  --surface: #171C20;
+  --surface-2: #1C2227;
+  --surface-3: #273038;
+
+  --fg-1: #F2EFE6;
+  --fg-2: #C8C0B0;
+  --fg-3: #827A6C;
+  --fg-4: #4D463D;
+  --fg-on-color: #101214;
+
+  --border: rgba(242, 239, 230, 0.11);
+  --border-strong: rgba(242, 239, 230, 0.20);
+  --border-subtle: rgba(242, 239, 230, 0.055);
+  --hairline: rgba(242, 239, 230, 0.11);
+
+  --blue: #58C4DD;
+  --green: #83C167;
+  --purple: #B189C6;
+  --red: #FC6255;
+  --teal: #5CD0B3;
+  --orange: #FF862F;
+  --pink: #D147BD;
+  --gold: #E1A158;
+
+  --blue-50: rgba(88, 196, 221, 0.13);
+  --green-50: rgba(131, 193, 103, 0.13);
+  --purple-50: rgba(177, 137, 198, 0.14);
+  --red-50: rgba(252, 98, 85, 0.13);
+  --teal-50: rgba(92, 208, 179, 0.13);
+  --orange-50: rgba(255, 134, 47, 0.13);
+  --pink-50: rgba(209, 71, 189, 0.13);
+  --gold-50: rgba(225, 161, 88, 0.14);
+
+  --blue-200: rgba(88, 196, 221, 0.42);
+  --green-200: rgba(131, 193, 103, 0.38);
+  --purple-200: rgba(177, 137, 198, 0.38);
+  --red-200: rgba(252, 98, 85, 0.38);
+  --teal-200: rgba(92, 208, 179, 0.40);
+  --orange-200: rgba(255, 134, 47, 0.40);
+  --pink-200: rgba(209, 71, 189, 0.38);
+  --gold-200: rgba(225, 161, 88, 0.42);
+
+  --accent: #58C4DD;
+  --accent-soft: rgba(88, 196, 221, 0.14);
+  --accent-border: rgba(88, 196, 221, 0.44);
+
+  --selection: rgba(88, 196, 221, 0.29);
+
+  --edge-ink: #717C83;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.50);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.60);
+  --shadow-3: 0 18px 50px rgba(0, 0, 0, 0.66);
+
+  --grid-dot: rgba(242, 239, 230, 0.085);
+  --grid-major: rgba(242, 239, 230, 0.052);
+  --grid-minor: rgba(242, 239, 230, 0.026);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Manuscript — warm "old paper" reskin matching the symbolic topology
+   SVG/HTML style. Distinct from Paper: warmer surfaces, brown ink, and
+   manuscript-specific diagram fills. */
+:root[data-theme="manuscript"] {
+  color-scheme: light;
+
+  --bg: #F8F5EF;
+  --bg-deep: #EFE7DA;
+  --surface: #FFFDF8;
+  --surface-2: #FBFAF6;
+  --surface-3: #F4EFE6;
+
+  --fg-1: #27221D;
+  --fg-2: #51493F;
+  --fg-3: #8C8274;
+  --fg-4: #D8D0C2;
+  --fg-on-color: #FFFDF8;
+
+  --border: #D8D0C2;
+  --border-strong: #C9BCA6;
+  --border-subtle: #ECE5D8;
+  --hairline: #D8D0C2;
+
+  /* Warm domain hues for manuscript mode. */
+  --blue: #2457C5;
+  --green: #26844A;
+  --purple: #7C3AED;
+  --red: #A8431D;
+  --teal: #0D9488;
+  --orange: #C56A24;
+  --pink: #B83280;
+  --gold: #B89418;
+
+  --blue-50: #DCE8FF;
+  --green-50: #E8F5EC;
+  --purple-50: #F1EAFE;
+  --red-50: #F3E4DA;
+  --teal-50: #EAF7F5;
+  --orange-50: #F7E7DA;
+  --pink-50: #F7E8F0;
+  --gold-50: #F6EFD2;
+
+  --blue-200: #AFC7F7;
+  --green-200: #B9D8C1;
+  --purple-200: #D8C8FB;
+  --red-200: #E3C3B2;
+  --teal-200: #B8DDD6;
+  --orange-200: #E6C5AA;
+  --pink-200: #E7BED2;
+  --gold-200: #DDCB82;
+
+
+  --accent: #2457C5;
+  --accent-soft: #DCE8FF;
+  --accent-border: #AFC7F7;
+
+  --selection: rgba(36, 87, 197, 0.16);
+
+  --edge-ink: #8C8274;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(42, 37, 32, 0.05);
+  --shadow-2: 0 4px 14px rgba(42, 37, 32, 0.08), 0 1px 2px rgba(42, 37, 32, 0.05);
+  --shadow-3: 0 18px 60px rgba(42, 37, 32, 0.10);
+
+  --grid-dot: #E2D7C4;
+  --grid-major: rgba(39, 34, 29, 0.05);
+  --grid-minor: rgba(39, 34, 29, 0.025);
+
+  /* Diagram tokens */
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: #E7DDC9;
+  --dia-fill2: #F4EFE6;
+  --dia-domain: var(--dia-fill);
+  --dia-open: #DCE8FF;
+  --dia-int: #DCE8FF;
+  --dia-set: var(--dia-fill);
+  --dia-boundary: #A8431D;
+  --dia-ext: #8F8678;
+  --dia-ok: #26844A;
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: #2457C5;
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Nocturne — warm dark. Self-contained: dark schemes must redefine the lifted
+   domain palette and tints, so this mirrors Chalkboard's structure in sepia. */
+:root[data-theme="nocturne"] {
+  color-scheme: dark;
+
+  --bg: #16140F;
+  --bg-deep: #100E0A;
+  --surface: #1F1C16;
+  --surface-2: #2A261E;
+  --surface-3: #353026;
+
+  --fg-1: #ECE4D4;
+  --fg-2: #A99E89;
+  --fg-3: #7A7060;
+  --fg-4: #4A4334;
+  --fg-on-color: #16140F;
+
+  --border: rgba(236, 228, 212, 0.12);
+  --border-strong: rgba(236, 228, 212, 0.20);
+  --border-subtle: rgba(236, 228, 212, 0.06);
+  --hairline: rgba(236, 228, 212, 0.12);
+
+  /* Lifted domain hues (warm-leaning) for contrast on sepia. */
+  --blue: #6FB6C9;
+  --green: #9FC279;
+  --purple: #C0A0DA;
+  --red: #F0795F;
+  --teal: #66CDB8;
+  --orange: #E0A05A;
+  --pink: #D96FA8;
+  --gold: #E6C45A;
+
+  --blue-50: rgba(111, 182, 201, 0.13);
+  --green-50: rgba(159, 194, 121, 0.13);
+  --purple-50: rgba(192, 160, 218, 0.14);
+  --red-50: rgba(240, 121, 95, 0.13);
+  --teal-50: rgba(102, 205, 184, 0.13);
+  --orange-50: rgba(224, 160, 90, 0.13);
+  --pink-50: rgba(217, 111, 168, 0.13);
+  --gold-50: rgba(230, 196, 90, 0.13);
+
+  --blue-200: rgba(111, 182, 201, 0.36);
+  --green-200: rgba(159, 194, 121, 0.36);
+  --purple-200: rgba(192, 160, 218, 0.36);
+  --red-200: rgba(240, 121, 95, 0.36);
+  --teal-200: rgba(102, 205, 184, 0.36);
+  --orange-200: rgba(224, 160, 90, 0.36);
+  --pink-200: rgba(217, 111, 168, 0.36);
+  --gold-200: rgba(230, 196, 90, 0.36);
+
+  --accent: #E08A4F;
+  --accent-soft: rgba(224, 138, 79, 0.14);
+  --accent-border: rgba(224, 138, 79, 0.40);
+
+  --selection: rgba(224, 138, 79, 0.26);
+
+  --edge-ink: #7A7060;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --grid-dot: rgba(236, 228, 212, 0.08);
+  --grid-major: rgba(236, 228, 212, 0.05);
+  --grid-minor: rgba(236, 228, 212, 0.025);
+
+  /* Diagram tokens */
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Lagoon — cool aqua light. Slate-family structure retuned to a tidal,
+   blue-green paper with a teal accent. */
+:root[data-theme="lagoon"] {
+  color-scheme: light;
+
+  --bg: #EFF6F6;
+  --bg-deep: #E1EDED;
+  --surface: #FFFFFF;
+  --surface-2: #F6FBFB;
+  --surface-3: #E6F1F1;
+
+  --fg-1: #0C2A2E;
+  --fg-2: #3D5C5F;
+  --fg-3: #7C9A9C;
+  --fg-4: #C2D8D8;
+  --fg-on-color: #FFFFFF;
+
+  --border: #D4E6E5;
+  --border-strong: #BAD4D3;
+  --border-subtle: #E6F1F1;
+  --hairline: #D4E6E5;
+
+  --blue: #2563EB;
+  --green: #16A34A;
+  --purple: #7C3AED;
+  --red: #DC2626;
+  --teal: #0D9488;
+  --orange: #F97316;
+  --pink: #DB2777;
+  --gold: #EAB308;
+
+  --blue-50: #EFF4FF;
+  --green-50: #ECFBF1;
+  --purple-50: #F4EEFE;
+  --red-50: #FEF1F1;
+  --teal-50: #EAF7F5;
+  --orange-50: #FFF1E8;
+  --pink-50: #FDEEF5;
+  --gold-50: #FBF6E1;
+
+  --blue-200: #C9DAFE;
+  --green-200: #BEE9CB;
+  --purple-200: #D8C8FB;
+  --red-200: #F4C5C5;
+  --teal-200: #B8DDD6;
+  --orange-200: #F8CFB0;
+  --pink-200: #F4C0D7;
+  --gold-200: #EFDF8E;
+
+  --accent: #0E7C86;
+  --accent-soft: #DCF0F0;
+  --accent-border: #A7D4D6;
+
+  --selection: rgba(14, 124, 134, 0.16);
+
+  --edge-ink: #6E9092;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(12, 42, 46, 0.04);
+  --shadow-2: 0 4px 14px rgba(12, 42, 46, 0.07), 0 1px 2px rgba(12, 42, 46, 0.04);
+  --shadow-3: 0 16px 44px rgba(12, 42, 46, 0.11), 0 2px 6px rgba(12, 42, 46, 0.05);
+
+  --grid-dot: #D2E5E4;
+  --grid-major: rgba(12, 42, 46, 0.05);
+  --grid-minor: rgba(12, 42, 46, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Deepsea — cool aqua dark. Mirrors Chalkboard's lifted palette over a deep
+   teal-blue background; sibling of Lagoon. */
+:root[data-theme="deepsea"] {
+  color-scheme: dark;
+
+  --bg: #0A1A1F;
+  --bg-deep: #061215;
+  --surface: #102A30;
+  --surface-2: #163840;
+  --surface-3: #1E4751;
+
+  --fg-1: #E4EEF0;
+  --fg-2: #9EB4B8;
+  --fg-3: #647B80;
+  --fg-4: #3A4F55;
+  --fg-on-color: #0A1A1F;
+
+  --border: rgba(228, 238, 240, 0.10);
+  --border-strong: rgba(228, 238, 240, 0.18);
+  --border-subtle: rgba(228, 238, 240, 0.05);
+  --hairline: rgba(228, 238, 240, 0.10);
+
+  --blue: #58C4DD;
+  --green: #83C167;
+  --purple: #B594D6;
+  --red: #FC6255;
+  --teal: #5CD0B3;
+  --orange: #F0AC5F;
+  --pink: #D147BD;
+  --gold: #FFD93D;
+
+  --blue-50: rgba(88, 196, 221, 0.12);
+  --green-50: rgba(131, 193, 103, 0.12);
+  --purple-50: rgba(181, 148, 214, 0.14);
+  --red-50: rgba(252, 98, 85, 0.12);
+  --teal-50: rgba(92, 208, 179, 0.12);
+  --orange-50: rgba(240, 172, 95, 0.12);
+  --pink-50: rgba(209, 71, 189, 0.12);
+  --gold-50: rgba(255, 217, 61, 0.12);
+
+  --blue-200: rgba(88, 196, 221, 0.36);
+  --green-200: rgba(131, 193, 103, 0.36);
+  --purple-200: rgba(181, 148, 214, 0.36);
+  --red-200: rgba(252, 98, 85, 0.36);
+  --teal-200: rgba(92, 208, 179, 0.36);
+  --orange-200: rgba(240, 172, 95, 0.36);
+  --pink-200: rgba(209, 71, 189, 0.36);
+  --gold-200: rgba(255, 217, 61, 0.36);
+
+  --accent: #5CD0B3;
+  --accent-soft: rgba(92, 208, 179, 0.13);
+  --accent-border: rgba(92, 208, 179, 0.40);
+
+  --selection: rgba(92, 208, 179, 0.26);
+
+  --edge-ink: #5E767B;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --grid-dot: rgba(228, 238, 240, 0.08);
+  --grid-major: rgba(228, 238, 240, 0.05);
+  --grid-minor: rgba(228, 238, 240, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Blossom — warm rose light. A blush paper with a deep-rose accent. */
+:root[data-theme="blossom"] {
+  color-scheme: light;
+
+  --bg: #FBF1F3;
+  --bg-deep: #F4E2E6;
+  --surface: #FFFBFC;
+  --surface-2: #FDF5F7;
+  --surface-3: #F7E8EC;
+
+  --fg-1: #2C1620;
+  --fg-2: #5C4049;
+  --fg-3: #9C8088;
+  --fg-4: #E2CDD3;
+  --fg-on-color: #FFFBFC;
+
+  --border: #EFD9DF;
+  --border-strong: #E3C3CC;
+  --border-subtle: #F7E8EC;
+  --hairline: #EFD9DF;
+
+  --blue: #2563EB;
+  --green: #16A34A;
+  --purple: #7C3AED;
+  --red: #DC2626;
+  --teal: #0D9488;
+  --orange: #F97316;
+  --pink: #DB2777;
+  --gold: #EAB308;
+
+  --blue-50: #EFF4FF;
+  --green-50: #ECFBF1;
+  --purple-50: #F4EEFE;
+  --red-50: #FEF1F1;
+  --teal-50: #EAF7F5;
+  --orange-50: #FFF1E8;
+  --pink-50: #FDEEF5;
+  --gold-50: #FBF6E1;
+
+  --blue-200: #C9DAFE;
+  --green-200: #BEE9CB;
+  --purple-200: #D8C8FB;
+  --red-200: #F4C5C5;
+  --teal-200: #B8DDD6;
+  --orange-200: #F8CFB0;
+  --pink-200: #F4C0D7;
+  --gold-200: #EFDF8E;
+
+  --accent: #BE2D5A;
+  --accent-soft: #FADEE6;
+  --accent-border: #EFB6C7;
+
+  --selection: rgba(190, 45, 90, 0.15);
+
+  --edge-ink: #A78A93;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(44, 22, 32, 0.04);
+  --shadow-2: 0 4px 14px rgba(44, 22, 32, 0.07), 0 1px 2px rgba(44, 22, 32, 0.04);
+  --shadow-3: 0 16px 44px rgba(44, 22, 32, 0.11), 0 2px 6px rgba(44, 22, 32, 0.05);
+
+  --grid-dot: #EFD9DF;
+  --grid-major: rgba(44, 22, 32, 0.05);
+  --grid-minor: rgba(44, 22, 32, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Aubergine — deep plum dark. Sibling of Blossom; lifted palette over a rich
+   aubergine background with a rose accent. */
+:root[data-theme="aubergine"] {
+  color-scheme: dark;
+
+  --bg: #18101C;
+  --bg-deep: #120B16;
+  --surface: #241A2A;
+  --surface-2: #2F2237;
+  --surface-3: #3A2C44;
+
+  --fg-1: #ECE2F0;
+  --fg-2: #B0A2B8;
+  --fg-3: #7C7186;
+  --fg-4: #4A3F54;
+  --fg-on-color: #18101C;
+
+  --border: rgba(236, 226, 240, 0.11);
+  --border-strong: rgba(236, 226, 240, 0.19);
+  --border-subtle: rgba(236, 226, 240, 0.05);
+  --hairline: rgba(236, 226, 240, 0.11);
+
+  --blue: #58C4DD;
+  --green: #83C167;
+  --purple: #B594D6;
+  --red: #FC6255;
+  --teal: #5CD0B3;
+  --orange: #F0AC5F;
+  --pink: #E07AC0;
+  --gold: #FFD93D;
+
+  --blue-50: rgba(88, 196, 221, 0.12);
+  --green-50: rgba(131, 193, 103, 0.12);
+  --purple-50: rgba(181, 148, 214, 0.14);
+  --red-50: rgba(252, 98, 85, 0.12);
+  --teal-50: rgba(92, 208, 179, 0.12);
+  --orange-50: rgba(240, 172, 95, 0.12);
+  --pink-50: rgba(224, 122, 192, 0.14);
+  --gold-50: rgba(255, 217, 61, 0.12);
+
+  --blue-200: rgba(88, 196, 221, 0.36);
+  --green-200: rgba(131, 193, 103, 0.36);
+  --purple-200: rgba(181, 148, 214, 0.36);
+  --red-200: rgba(252, 98, 85, 0.36);
+  --teal-200: rgba(92, 208, 179, 0.36);
+  --orange-200: rgba(240, 172, 95, 0.36);
+  --pink-200: rgba(224, 122, 192, 0.40);
+  --gold-200: rgba(255, 217, 61, 0.36);
+
+  --accent: #E07AC0;
+  --accent-soft: rgba(224, 122, 192, 0.14);
+  --accent-border: rgba(224, 122, 192, 0.40);
+
+  --selection: rgba(224, 122, 192, 0.26);
+
+  --edge-ink: #786C82;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --grid-dot: rgba(236, 226, 240, 0.08);
+  --grid-major: rgba(236, 226, 240, 0.05);
+  --grid-minor: rgba(236, 226, 240, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Prism — vibrant light. A bright, saturated palette over a faint lavender
+   paper with an electric-magenta accent. */
+:root[data-theme="prism"] {
+  color-scheme: light;
+
+  --bg: #F7F8FA;
+  --bg-deep: #ECEEF2;
+  --surface: #FFFFFF;
+  --surface-2: #FBFBFD;
+  --surface-3: #EFF0F4;
+
+  --fg-1: #14151A;
+  --fg-2: #44464F;
+  --fg-3: #888A94;
+  --fg-4: #C9CBD3;
+  --fg-on-color: #FFFFFF;
+
+  --border: #E3E5EB;
+  --border-strong: #CDD0D8;
+  --border-subtle: #EFF0F4;
+  --hairline: #E3E5EB;
+
+  --blue: #2563EB;
+  --green: #059669;
+  --purple: #9333EA;
+  --red: #E11D48;
+  --teal: #0891B2;
+  --orange: #EA580C;
+  --pink: #DB2777;
+  --gold: #CA8A04;
+
+  --blue-50: #E6EDFF;
+  --green-50: #DEF7EE;
+  --purple-50: #F3E6FF;
+  --red-50: #FFE4EA;
+  --teal-50: #DEF3FA;
+  --orange-50: #FFEADD;
+  --pink-50: #FFE2F0;
+  --gold-50: #FBF0D6;
+
+  --blue-200: #BBCDFD;
+  --green-200: #ABE6D1;
+  --purple-200: #DDBBFB;
+  --red-200: #F9B6C5;
+  --teal-200: #ACDDEC;
+  --orange-200: #F9C2A1;
+  --pink-200: #F7B3D3;
+  --gold-200: #ECD78A;
+
+  --accent: #4F46E5;
+  --accent-soft: #E7E5FE;
+  --accent-border: #C2BCF8;
+
+  --selection: rgba(79, 70, 229, 0.16);
+
+  --edge-ink: #8A8C96;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(20, 21, 26, 0.05);
+  --shadow-2: 0 4px 14px rgba(20, 21, 26, 0.09), 0 1px 2px rgba(20, 21, 26, 0.05);
+  --shadow-3: 0 16px 44px rgba(20, 21, 26, 0.14), 0 2px 6px rgba(20, 21, 26, 0.06);
+
+  --grid-dot: #E3E5EB;
+  --grid-major: rgba(20, 21, 26, 0.05);
+  --grid-minor: rgba(20, 21, 26, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Neon — vibrant dark. Saturated neon domain hues over a deep violet-black,
+   sibling of Prism, with an electric-pink accent. */
+:root[data-theme="neon"] {
+  color-scheme: dark;
+
+  --bg: #0A0A0E;
+  --bg-deep: #060608;
+  --surface: #141419;
+  --surface-2: #1C1C23;
+  --surface-3: #26262F;
+
+  --fg-1: #F2F3F7;
+  --fg-2: #ABADBA;
+  --fg-3: #71737F;
+  --fg-4: #42434D;
+  --fg-on-color: #0A0A0E;
+
+  --border: rgba(242, 243, 247, 0.11);
+  --border-strong: rgba(242, 243, 247, 0.20);
+  --border-subtle: rgba(242, 243, 247, 0.05);
+  --hairline: rgba(242, 243, 247, 0.11);
+
+  --blue: #38BDF8;
+  --green: #4ADE80;
+  --purple: #C084FC;
+  --red: #FB7185;
+  --teal: #2DD4BF;
+  --orange: #FB923C;
+  --pink: #F472D0;
+  --gold: #FCD34D;
+
+  --blue-50: rgba(56, 189, 248, 0.13);
+  --green-50: rgba(74, 222, 128, 0.13);
+  --purple-50: rgba(192, 132, 252, 0.15);
+  --red-50: rgba(251, 113, 133, 0.13);
+  --teal-50: rgba(45, 212, 191, 0.13);
+  --orange-50: rgba(251, 146, 60, 0.13);
+  --pink-50: rgba(244, 114, 208, 0.15);
+  --gold-50: rgba(252, 211, 77, 0.13);
+
+  --blue-200: rgba(56, 189, 248, 0.40);
+  --green-200: rgba(74, 222, 128, 0.40);
+  --purple-200: rgba(192, 132, 252, 0.40);
+  --red-200: rgba(251, 113, 133, 0.40);
+  --teal-200: rgba(45, 212, 191, 0.40);
+  --orange-200: rgba(251, 146, 60, 0.40);
+  --pink-200: rgba(244, 114, 208, 0.40);
+  --gold-200: rgba(252, 211, 77, 0.40);
+
+  --accent: #22D3EE;
+  --accent-soft: rgba(34, 211, 238, 0.15);
+  --accent-border: rgba(34, 211, 238, 0.44);
+
+  --selection: rgba(34, 211, 238, 0.28);
+
+  --edge-ink: #6C6E7A;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.6);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.65);
+
+  --grid-dot: rgba(242, 243, 247, 0.09);
+  --grid-major: rgba(242, 243, 247, 0.05);
+  --grid-minor: rgba(242, 243, 247, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Journal — academic light. A restrained, journal-paper palette: warm article
+   white, near-black ink, and a sober Oxford-blue accent. */
+:root[data-theme="journal"] {
+  color-scheme: light;
+
+  --bg: #FBFAF7;
+  --bg-deep: #F1EFE9;
+  --surface: #FFFFFF;
+  --surface-2: #FAF9F5;
+  --surface-3: #F0EEE7;
+
+  --fg-1: #1C1B18;
+  --fg-2: #48463F;
+  --fg-3: #8A877C;
+  --fg-4: #CFCCC1;
+  --fg-on-color: #FFFFFF;
+
+  --border: #E4E1D7;
+  --border-strong: #CFCCC1;
+  --border-subtle: #F0EEE7;
+  --hairline: #E4E1D7;
+
+  --blue: #1F3A5F;
+  --green: #2F6B4F;
+  --purple: #5A4A8A;
+  --red: #8A2A2A;
+  --teal: #2A6E6E;
+  --orange: #A35A1E;
+  --pink: #8A2A55;
+  --gold: #8A6A1E;
+
+  --blue-50: #E7ECF3;
+  --green-50: #E6F0EB;
+  --purple-50: #ECE8F4;
+  --red-50: #F4E6E6;
+  --teal-50: #E4F0F0;
+  --orange-50: #F5EAE0;
+  --pink-50: #F4E6ED;
+  --gold-50: #F3EEDF;
+
+  --blue-200: #B6C3D5;
+  --green-200: #B6D0C2;
+  --purple-200: #C9BFDF;
+  --red-200: #DCB6B6;
+  --teal-200: #B0D0D0;
+  --orange-200: #DEC2A6;
+  --pink-200: #DBB6C7;
+  --gold-200: #D8C99E;
+
+  --accent: #1F3A5F;
+  --accent-soft: #E7ECF3;
+  --accent-border: #B6C3D5;
+
+  --selection: rgba(31, 58, 95, 0.15);
+
+  --edge-ink: #8A877C;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(28, 27, 24, 0.04);
+  --shadow-2: 0 4px 12px rgba(28, 27, 24, 0.07), 0 1px 2px rgba(28, 27, 24, 0.04);
+  --shadow-3: 0 14px 40px rgba(28, 27, 24, 0.10), 0 2px 6px rgba(28, 27, 24, 0.05);
+
+  --grid-dot: #E4E1D7;
+  --grid-major: rgba(28, 27, 24, 0.05);
+  --grid-minor: rgba(28, 27, 24, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Lemma — warm cream paper with a vermilion annotation accent.
+   Light: a quiet reading room. Ink near-black, paper cream, accent sparing. */
+:root[data-theme="lemma"] {
+  color-scheme: light;
+
+  --bg: #F4EFE0;
+  --bg-deep: #EFE9D7;
+  --surface: #FFFDF8;
+  --surface-2: #FBF8F1;
+  --surface-3: #F0EAD8;
+
+  --fg-1: #1A1814;
+  --fg-2: #4A453E;
+  --fg-3: #8C8678;
+  --fg-4: #C8BFA7;
+  --fg-on-color: #FFFDF8;
+
+  --border: #D8D0BC;
+  --border-strong: #C8BFA7;
+  --border-subtle: #ECE5D8;
+  --hairline: #D8D0BC;
+
+  /* Warm domain hues — same family as manuscript */
+  --blue: #2457C5;
+  --green: #26844A;
+  --purple: #7C3AED;
+  --red: #A8431D;
+  --teal: #0D9488;
+  --orange: #C56A24;
+  --pink: #B83280;
+  --gold: #B89418;
+
+  --blue-50: #DCE8FF;
+  --green-50: #E8F5EC;
+  --purple-50: #F1EAFE;
+  --red-50: #F3E4DA;
+  --teal-50: #EAF7F5;
+  --orange-50: #F7E7DA;
+  --pink-50: #F7E8F0;
+  --gold-50: #F6EFD2;
+
+  --blue-200: #AFC7F7;
+  --green-200: #B9D8C1;
+  --purple-200: #D8C8FB;
+  --red-200: #E3C3B2;
+  --teal-200: #B8DDD6;
+  --orange-200: #E6C5AA;
+  --pink-200: #E7BED2;
+  --gold-200: #DDCB82;
+
+  /* Vermilion — the single brand accent. Used like a red pen: annotations,
+     active states, focus rings. Never large fills or primary call-to-action. */
+  --accent: #C2410C;
+  --accent-soft: rgba(194, 65, 12, 0.08);
+  --accent-border: rgba(194, 65, 12, 0.28);
+
+  --selection: rgba(194, 65, 12, 0.12);
+
+  --edge-ink: #8C8678;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(26, 24, 20, 0.04), 0 1px 0 rgba(26, 24, 20, 0.02);
+  --shadow-2: 0 4px 14px rgba(26, 24, 20, 0.07), 0 1px 2px rgba(26, 24, 20, 0.04);
+  --shadow-3: 0 14px 40px rgba(26, 24, 20, 0.10), 0 2px 6px rgba(26, 24, 20, 0.05);
+
+  --grid-dot: #D8D0BC;
+  --grid-major: rgba(26, 24, 20, 0.05);
+  --grid-minor: rgba(26, 24, 20, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: #EDE3CE;
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: rgba(194, 65, 12, 0.08);
+  --dia-int: rgba(194, 65, 12, 0.08);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Lemma Dark — an ink-black study lamp, not a paper inversion.
+   Warm near-black bg, paper-cream text, lifted vermilion accent. */
+:root[data-theme="lemma-dark"] {
+  color-scheme: dark;
+
+  --bg: #15130F;
+  --bg-deep: #100D0A;
+  --surface: #1C1A15;
+  --surface-2: #24211B;
+  --surface-3: #2E2A22;
+
+  --fg-1: #F0EAD8;
+  --fg-2: #B5AE9B;
+  --fg-3: #7A7262;
+  --fg-4: #4A4338;
+  --fg-on-color: #15130F;
+
+  --border: rgba(240, 234, 216, 0.10);
+  --border-strong: rgba(240, 234, 216, 0.18);
+  --border-subtle: rgba(240, 234, 216, 0.05);
+  --hairline: rgba(240, 234, 216, 0.10);
+
+  /* Lifted warm hues for contrast on near-black */
+  --blue: #6FB6C9;
+  --green: #9FC279;
+  --purple: #C0A0DA;
+  --red: #F0795F;
+  --teal: #66CDB8;
+  --orange: #E0A05A;
+  --pink: #D96FA8;
+  --gold: #E6C45A;
+
+  --blue-50: rgba(111, 182, 201, 0.13);
+  --green-50: rgba(159, 194, 121, 0.13);
+  --purple-50: rgba(192, 160, 218, 0.14);
+  --red-50: rgba(240, 121, 95, 0.13);
+  --teal-50: rgba(102, 205, 184, 0.13);
+  --orange-50: rgba(224, 160, 90, 0.13);
+  --pink-50: rgba(217, 111, 168, 0.13);
+  --gold-50: rgba(230, 196, 90, 0.13);
+
+  --blue-200: rgba(111, 182, 201, 0.36);
+  --green-200: rgba(159, 194, 121, 0.36);
+  --purple-200: rgba(192, 160, 218, 0.36);
+  --red-200: rgba(240, 121, 95, 0.36);
+  --teal-200: rgba(102, 205, 184, 0.36);
+  --orange-200: rgba(224, 160, 90, 0.36);
+  --pink-200: rgba(217, 111, 168, 0.36);
+  --gold-200: rgba(230, 196, 90, 0.36);
+
+  --accent: #E26B30;
+  --accent-soft: rgba(226, 107, 48, 0.12);
+  --accent-border: rgba(226, 107, 48, 0.36);
+
+  --selection: rgba(226, 107, 48, 0.24);
+
+  --edge-ink: #7A7262;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.60);
+
+  --grid-dot: rgba(240, 234, 216, 0.08);
+  --grid-major: rgba(240, 234, 216, 0.05);
+  --grid-minor: rgba(240, 234, 216, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* Seminar — academic dark. Sibling of Journal: a warm charcoal reader with a
+   lifted, muted palette and a soft slate-blue accent. */
+:root[data-theme="seminar"] {
+  color-scheme: dark;
+
+  --bg: #1A1815;
+  --bg-deep: #131210;
+  --surface: #23211D;
+  --surface-2: #2C2A25;
+  --surface-3: #36332D;
+
+  --fg-1: #ECEAE3;
+  --fg-2: #ACA89C;
+  --fg-3: #76736A;
+  --fg-4: #46443D;
+  --fg-on-color: #1A1815;
+
+  --border: rgba(236, 234, 227, 0.11);
+  --border-strong: rgba(236, 234, 227, 0.19);
+  --border-subtle: rgba(236, 234, 227, 0.05);
+  --hairline: rgba(236, 234, 227, 0.11);
+
+  --blue: #7FA8DC;
+  --green: #88BE8E;
+  --purple: #B49AD4;
+  --red: #E08A82;
+  --teal: #6FC2BA;
+  --orange: #DCA974;
+  --pink: #D88AAE;
+  --gold: #DCC57E;
+
+  --blue-50: rgba(127, 168, 220, 0.13);
+  --green-50: rgba(136, 190, 142, 0.13);
+  --purple-50: rgba(180, 154, 212, 0.14);
+  --red-50: rgba(224, 138, 130, 0.13);
+  --teal-50: rgba(111, 194, 186, 0.13);
+  --orange-50: rgba(220, 169, 116, 0.13);
+  --pink-50: rgba(216, 138, 174, 0.13);
+  --gold-50: rgba(220, 197, 126, 0.13);
+
+  --blue-200: rgba(127, 168, 220, 0.36);
+  --green-200: rgba(136, 190, 142, 0.36);
+  --purple-200: rgba(180, 154, 212, 0.36);
+  --red-200: rgba(224, 138, 130, 0.36);
+  --teal-200: rgba(111, 194, 186, 0.36);
+  --orange-200: rgba(220, 169, 116, 0.36);
+  --pink-200: rgba(216, 138, 174, 0.36);
+  --gold-200: rgba(220, 197, 126, 0.36);
+
+  --accent: #7FA8DC;
+  --accent-soft: rgba(127, 168, 220, 0.14);
+  --accent-border: rgba(127, 168, 220, 0.40);
+
+  --selection: rgba(127, 168, 220, 0.26);
+
+  --edge-ink: #76736A;
+  --edge-highlight: var(--accent);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.6);
+
+  --grid-dot: rgba(236, 234, 227, 0.08);
+  --grid-major: rgba(236, 234, 227, 0.05);
+  --grid-minor: rgba(236, 234, 227, 0.025);
+
+  --dia-paper: var(--surface);
+  --dia-space: var(--surface-2);
+  --dia-panel: var(--surface);
+  --dia-fill: var(--surface-2);
+  --dia-fill2: var(--surface-3);
+  --dia-domain: var(--dia-fill);
+  --dia-open: var(--accent-soft);
+  --dia-int: var(--accent-soft);
+  --dia-set: var(--dia-fill);
+  --dia-boundary: var(--red);
+  --dia-ext: var(--fg-3);
+  --dia-ok: var(--green);
+  --dia-line: var(--border);
+  --dia-ink: var(--fg-1);
+  --dia-acc: var(--accent);
+  --dia-acc2: var(--teal);
+  --dia-acc3: var(--purple);
+  --dia-acc3-fill: var(--purple-50);
+  --dia-mut: var(--fg-3);
+  --dia-muted-fill: var(--border-strong);
+}
+
+/* ---- TYPOGRAPHY ----------------------------------------------------- */
+:root {
+  --font-serif: "DM Serif Display", "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
+  --font-sans: "Inter", "Aptos", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+  --font-math: "STIX Two Text", "STIX Two Math", "Latin Modern Roman", "Cambria Math", "Georgia", serif;
+
+  --type-edge-label: 9px;
+  --type-ui-tiny: 9.5px;
+  --type-ui-2xs: 10px;
+  --type-ui-caption: 10.5px;
+  --type-ui-hint: 11px;
+  --type-ui-meta: 11.5px;
+  --type-ui-xs: 12px;
+  --type-ui-control: 12.5px;
+  --type-ui-sm: 13px;
+  --type-ui-copy: 14.25px;
+  --type-ui-body: 14px;
+  --type-ui-lead: 15px;
+  --type-atlas-brand: 20px;
+  --type-dict-compact-title: 18px;
+  --type-atlas-card: 20px;
+  --type-dict-term: 24px;
+  --type-node-panel-title: 25px;
+  --type-atlas-panel: 27px;
+  --type-atlas-summary: 28px;
+  --type-atlas-display: 34px;
+
+  --tracking-label: 0.13em;
+  --tracking-label-wide: 0.14em;
+  --tracking-label-tight: 0.06em;
+  --tracking-kicker: 0.16em;
+  --tracking-code: 0.02em;
+
+  /* Radius scale — restrained, editorial feel */
+  --radius-xs: 4px;
+  /* kbd, tags, tiny chips */
+  --radius-sm: 8px;
+  /* compact icon buttons, depth picker */
+  --radius-md: 12px;
+  /* segmented controls, small cards */
+  --radius-lg: 16px;
+  /* panels, node cards, tiles */
+  --radius-xl: 18px;
+  /* pill chrome wrappers, search bar */
+  --radius-2xl: 22px;
+  /* popovers, map panel */
+  --radius-pill: 999px;
+
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-micro: 120ms;
+  --dur-std: 220ms;
+
+  --chrome-bg: color-mix(in srgb, var(--surface) 86%, transparent);
+  --chrome-bg-strong: color-mix(in srgb, var(--surface) 94%, transparent);
+  --chrome-hover: color-mix(in srgb, var(--fg-1) 7%, transparent);
+  --chrome-active: color-mix(in srgb, var(--fg-1) 9%, var(--surface) 88%);
+  --chrome-border: color-mix(in srgb, var(--border) 78%, transparent);
+  --chrome-divider: color-mix(in srgb, var(--border) 72%, transparent);
+  --chrome-highlight: color-mix(in srgb, var(--surface) 82%, transparent);
+  --chrome-shadow: 0 8px 22px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --chrome-shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --chrome-shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.13), 0 4px 10px rgba(15, 23, 42, 0.07);
+}
+
+:root[data-theme="chalkboard"],
+:root[data-theme="3b1b-dark"],
+:root[data-theme="nocturne"],
+:root[data-theme="deepsea"],
+:root[data-theme="aubergine"],
+:root[data-theme="neon"],
+:root[data-theme="seminar"],
+:root[data-theme="lemma-dark"] {
+  --chrome-bg: color-mix(in srgb, var(--surface) 82%, transparent);
+  --chrome-bg-strong: color-mix(in srgb, var(--surface) 92%, transparent);
+  --chrome-hover: color-mix(in srgb, var(--fg-1) 10%, transparent);
+  --chrome-active: color-mix(in srgb, var(--fg-1) 14%, var(--surface) 84%);
+  --chrome-border: color-mix(in srgb, var(--border-strong) 70%, transparent);
+  --chrome-divider: color-mix(in srgb, var(--border-strong) 58%, transparent);
+  --chrome-highlight: color-mix(in srgb, var(--fg-1) 12%, transparent);
+  --chrome-shadow: 0 10px 28px rgba(0, 0, 0, 0.34), 0 1px 5px rgba(0, 0, 0, 0.26);
+  --chrome-shadow-soft: 0 5px 16px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --chrome-shadow-popover: 0 22px 54px rgba(0, 0, 0, 0.46), 0 5px 14px rgba(0, 0, 0, 0.34);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--type-ui-body);
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--fg-1);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background var(--dur-std) var(--ease-standard),
+    color var(--dur-std) var(--ease-standard);
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Accent-colored keyboard focus ring — scoped to interactive elements only
+   so focusable container divs (e.g. cmdk) don't get an outline. */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible,
+[role="tab"]:focus-visible,
+[role="radio"]:focus-visible,
+[role="switch"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--fg-1);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-math {
+  font-family: var(--font-math);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Floating map chrome */
+.map-chrome {
+  background: var(--chrome-bg);
+  border: 1px solid var(--chrome-border);
+  box-shadow: var(--chrome-shadow), inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(170%) blur(18px);
+  -webkit-backdrop-filter: saturate(170%) blur(18px);
+}
+
+.map-chrome-soft {
+  background: var(--chrome-bg);
+  border: 1px solid var(--chrome-border);
+  box-shadow: var(--chrome-shadow-soft), inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+}
+
+.map-popover {
+  background: var(--chrome-bg-strong);
+  border: 1px solid var(--chrome-border);
+  box-shadow: var(--chrome-shadow-popover), inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(170%) blur(20px);
+  -webkit-backdrop-filter: saturate(170%) blur(20px);
+}
+
+.map-icon-button,
+.map-text-button,
+.map-field-button {
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    transform var(--dur-micro) var(--ease-standard);
+}
+
+.map-field-button {
+  box-shadow: inset 0 0 0 1px var(--chrome-border);
+}
+
+.map-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-pill);
+  color: var(--fg-2);
+}
+
+.map-control-button {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+}
+
+.top-tools .map-icon-button {
+  width: 38px;
+  height: 36px;
+  border-radius: var(--radius-md);
+}
+
+.top-tools .map-text-button {
+  flex-shrink: 0;
+}
+
+/* Vertical canvas dock — compact glass pills on the right rail */
+.canvas-dock .map-icon-button {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+}
+
+.canvas-dock .map-icon-button+.map-icon-button {
+  margin-top: 2px;
+}
+
+.canvas-dock .zoom-readout {
+  width: 32px;
+  height: 22px;
+  margin: 1px 0;
+  font-size: 10px;
+  letter-spacing: 0;
+  color: var(--fg-2);
+}
+
+.canvas-dock .zoom-readout:hover {
+  background: var(--chrome-hover);
+  color: var(--fg-1);
+}
+
+.top-tools .map-icon-button+.map-icon-button,
+.top-tools .map-text-button+.map-icon-button,
+.top-tools .relative+.relative,
+.top-tools .relative+.map-icon-button,
+.top-tools .map-icon-button+.relative {
+  margin-left: 1px;
+}
+
+.map-icon-button:hover,
+.map-text-button:hover,
+.map-field-button:hover {
+  background: var(--chrome-hover);
+  color: var(--fg-1);
+}
+
+.map-icon-button:active,
+.map-text-button:active,
+.map-field-button:active {
+  transform: scale(0.97);
+}
+
+.map-icon-button.is-active,
+.map-text-button.is-active,
+.map-field-button.is-active {
+  background: var(--chrome-active);
+  color: var(--fg-1);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+/* Active selectors and toggles use the same accent treatment as CanvasControls. */
+.canvas-dock .map-icon-button.is-active,
+.top-tools .map-icon-button.is-active,
+.map-field-button.is-active,
+.map-text-button.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.map-icon-button.is-accent {
+  background: var(--accent);
+  color: var(--fg-on-color);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 26%, transparent);
+}
+
+.map-divider {
+  background: var(--chrome-divider);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .map-icon-button,
+  .map-text-button,
+  .map-field-button {
+    transition: none;
+  }
+
+  .map-icon-button:active,
+  .map-text-button:active,
+  .map-field-button:active {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .map-icon-button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .map-control-button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .top-tools .map-icon-button {
+    width: 36px;
+    height: 34px;
+  }
+}
+
+
+/* ---- ATLAS DIAGRAM / ENTRY CARD STYLING ----------------------------
+   Shared stylesheet support for the symbolic SVG style used by the
+   topology entries: warm paper surfaces, serif math labels, compact
+   formula-first annotations, and no miniature essay hiding inside SVG.
+------------------------------------------------------------------------ */
+.entry-card,
+.atlas-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius-2xl) + 2px);
+  box-shadow: var(--shadow-3);
+  color: var(--fg-1);
+}
+
+.entry-panel,
+.atlas-panel {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+}
+
+.entry-kicker,
+.atlas-kicker {
+  color: var(--dia-ok);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.entry-title,
+.atlas-title {
+  font-family: var(--font-serif);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--fg-1);
+}
+
+.entry-copy,
+.atlas-copy {
+  color: var(--fg-2);
+  line-height: 1.62;
+}
+
+.formula,
+.math-chip {
+  font-family: var(--font-mono);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--fg-1);
+}
+
+.themed-diagram {
+  background: var(--dia-space);
+  border: 1px solid var(--dia-line);
+  border-radius: var(--radius-xl);
+  color: var(--dia-ink);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+
+.themed-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--dia-space);
+}
+
+/* SVG classes used by diagram assets. CSS custom properties still work when
+   the SVG is inline; external SVGs can use the same class names internally. */
+.svg-label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  fill: var(--dia-ink);
+  paint-order: stroke;
+  stroke: var(--dia-space);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.svg-symbol {
+  font-family: var(--font-serif);
+  fill: var(--dia-ink);
+}
+
+.svg-muted {
+  fill: var(--dia-mut);
+}
+
+.svg-acc {
+  fill: var(--dia-acc);
+}
+
+.svg-bound {
+  fill: var(--dia-boundary);
+}
+
+.svg-ok {
+  fill: var(--dia-ok);
+}
+
+.dia-stroke {
+  stroke: var(--dia-ink);
+}
+
+.dia-stroke-muted {
+  stroke: var(--dia-mut);
+}
+
+.dia-stroke-acc {
+  stroke: var(--dia-acc);
+}
+
+.dia-stroke-bound {
+  stroke: var(--dia-boundary);
+}
+
+.dia-fill-set {
+  fill: var(--dia-set);
+}
+
+.dia-fill-int {
+  fill: var(--dia-int);
+}
+
+.dia-fill-space {
+  fill: var(--dia-space);
+}
+
+/* React Flow theming */
+.react-flow__renderer {
+  background: transparent !important;
+}
+
+.react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.react-flow__handle {
+  width: 6px !important;
+  height: 6px !important;
+  background: transparent !important;
+  border: 0 !important;
+  opacity: 0;
+}
+
+.react-flow__handle.graph-node-handle {
+  width: 8px !important;
+  height: 8px !important;
+  background: var(--handle-color) !important;
+  border: 1.5px solid var(--surface) !important;
+  opacity: 0 !important;
+  transition: opacity 0.15s !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+}
+
+.react-flow__node:hover .react-flow__handle.graph-node-handle {
+  opacity: 0.75 !important;
+}
+
+.react-flow__handle.graph-node-handle-left {
+  left: -4px !important;
+}
+
+.react-flow__handle.graph-node-handle-right {
+  right: -4px !important;
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__minimap {
+  background: color-mix(in srgb, var(--surface) 92%, transparent) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+}
+
+.react-flow__controls {
+  background: color-mix(in srgb, var(--surface) 96%, transparent) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--fg-2) !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: 0 !important;
+}
+
+.react-flow__controls-button:hover {
+  background: var(--surface-3) !important;
+}
+
+.react-flow__controls-button svg {
+  fill: currentColor;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:focus .react-flow__edge-path {
+  outline: none;
+}
+
+.react-flow__node {
+  font-family: inherit;
+}
+
+.react-flow__node:focus {
+  outline: none;
+}
+
+.react-flow__node-default {
+  box-shadow: none !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fg-4);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-3);
+}
+
+.dock-scrollbar {
+  margin: -14px -2px;
+  padding: 14px 2px;
+  scrollbar-width: none;
+}
+
+.dock-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .dock-scrollbar {
+    overflow: visible;
+  }
+}
+
+/* KaTeX nudges */
+.katex {
+  font-size: 1em;
+}
+
+.katex-display {
+  margin: 0.4em 0;
+  text-align: center;
+}
+
+/* Canvas backdrops */
+.atlas-dots {
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.atlas-grid {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+}
+
+/* ========================================================================
+   Workspace sandbox — tuned to the atlas token system
+   ======================================================================== */
+
+:root {
+  --sandbox-bg: var(--bg);
+  --sandbox-stage: var(--bg);
+  --sandbox-rail: var(--chrome-bg);
+  --sandbox-rail-border: var(--chrome-border);
+  --sandbox-row: transparent;
+  --sandbox-row-hover: color-mix(in srgb, var(--fg-1) 5%, transparent);
+  --sandbox-row-selected: color-mix(in srgb, var(--accent-soft) 42%, transparent);
+  --sandbox-row-selected-border: color-mix(in srgb, var(--accent-border) 70%, transparent);
+  --sandbox-field: color-mix(in srgb, var(--surface) 58%, transparent);
+  --sandbox-field-focus: color-mix(in srgb, var(--accent-soft) 28%, var(--surface) 72%);
+  --sandbox-field-border: color-mix(in srgb, var(--border) 54%, transparent);
+  --sandbox-control: color-mix(in srgb, var(--fg-1) 6%, transparent);
+  --sandbox-control-hover: color-mix(in srgb, var(--fg-1) 10%, transparent);
+  --sandbox-danger-soft: color-mix(in srgb, var(--red) 11%, transparent);
+
+  /* Plane ink: subtle grid, readable axes. Derived from theme tokens so every
+     scheme retunes automatically. */
+  --plane-grid-minor: var(--grid-minor);
+  --plane-grid-major: var(--grid-major);
+  --plane-axis: color-mix(in srgb, var(--edge-ink) 42%, transparent);
+  --plane-label: var(--fg-3);
+}
+
+.sandbox-shell {
+  background: var(--sandbox-bg);
+  color: var(--fg-1);
+}
+
+.sandbox-sidebar {
+  background: var(--sandbox-rail);
+  border: 1px solid var(--sandbox-rail-border);
+  box-shadow: var(--chrome-shadow), inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(170%) blur(18px);
+  -webkit-backdrop-filter: saturate(170%) blur(18px);
+}
+
+.sandbox-sidebar-header {
+  border-bottom: 1px solid var(--sandbox-rail-border);
+}
+
+.sandbox-stage {
+  background:
+    var(--sandbox-stage);
+}
+
+.sandbox-workspace-button {
+  border-radius: var(--radius-sm);
+  color: var(--fg-1);
+  padding: 4px 6px;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-workspace-button:hover {
+  background: var(--sandbox-control);
+}
+
+.sandbox-workspace-button[aria-expanded="true"] {
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.sandbox-workspace-button svg {
+  color: var(--fg-3);
+}
+
+.sandbox-workspace-button[aria-expanded="true"] svg {
+  color: var(--accent);
+}
+
+.sandbox-workspace-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--sandbox-control);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 72%, transparent);
+}
+
+.sandbox-workspace-meta {
+  color: var(--fg-3);
+}
+
+.sandbox-workspace-popover {
+  background: var(--chrome-bg-strong);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--chrome-shadow-popover), inset 0 1px 0 var(--chrome-highlight);
+  color: var(--fg-4);
+  backdrop-filter: saturate(170%) blur(20px);
+  -webkit-backdrop-filter: saturate(170%) blur(20px);
+}
+
+.sandbox-workspace-option {
+  border-radius: var(--radius-md);
+  color: var(--fg-2);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-workspace-option svg {
+  color: var(--fg-4);
+}
+
+.sandbox-workspace-option:hover {
+  background: var(--chrome-hover);
+  color: var(--fg-1);
+}
+
+.sandbox-workspace-option.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.sandbox-workspace-option.is-active svg {
+  color: var(--accent);
+}
+
+.sandbox-menu-divider {
+  background: var(--chrome-divider);
+}
+
+.sandbox-expression-panel {
+  min-height: 0;
+}
+
+.sandbox-expression-list {
+  scrollbar-color: color-mix(in srgb, var(--fg-1) 18%, transparent) transparent;
+}
+
+.sandbox-section {
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface) 22%, transparent);
+}
+
+.sandbox-section + .sandbox-section {
+  margin-top: 5px;
+}
+
+.sandbox-section-header {
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 54%, transparent);
+  border-radius: calc(var(--radius-md) - 1px) calc(var(--radius-md) - 1px) 0 0;
+  color: var(--fg-2);
+  font-size: var(--type-ui-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label-tight);
+  line-height: 1;
+  min-height: 34px;
+  text-transform: uppercase;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-section-header:hover {
+  background: color-mix(in srgb, var(--fg-1) 4%, transparent);
+  color: var(--fg-1);
+}
+
+.sandbox-section-header:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--accent-soft) 22%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-border) 70%, transparent);
+}
+
+.sandbox-section-icon {
+  width: 17px;
+  height: 17px;
+  border-radius: var(--radius-xs);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--fg-3);
+}
+
+.sandbox-section-caret {
+  color: var(--fg-4);
+  transition: transform var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-section-header[aria-expanded="false"] .sandbox-section-caret {
+  transform: rotate(-90deg);
+}
+
+.sandbox-section-rows {
+  overflow: hidden;
+  border-radius: 0 0 calc(var(--radius-md) - 1px) calc(var(--radius-md) - 1px);
+}
+
+.sandbox-expression-row {
+  margin-bottom: 0;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--sandbox-row);
+  box-shadow:
+    inset 2px 0 0 transparent;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-expression-row:hover {
+  background: var(--sandbox-row-hover);
+  border-color: color-mix(in srgb, var(--border) 28%, transparent);
+}
+
+.sandbox-expression-row[data-selected="true"] {
+  background: var(--sandbox-row-selected);
+  border-color: color-mix(in srgb, var(--accent-border) 36%, transparent);
+  box-shadow:
+    inset 2px 0 0 var(--accent);
+}
+
+.sandbox-expression-row[data-row-type="slider"] {
+  border-radius: var(--radius-sm);
+}
+
+.sandbox-row-gutter {
+  color: var(--fg-3);
+  background: transparent;
+  line-height: 1;
+}
+
+.sandbox-color-button {
+  color: var(--fg-3);
+  align-items: flex-start;
+  padding-top: 14px;
+}
+
+.sandbox-expression-row[data-row-type="slider"] .sandbox-color-button {
+  padding-top: 18px;
+}
+
+.sandbox-expression-row[data-selected="true"] .sandbox-color-button {
+  padding-top: 15px;
+}
+
+.sandbox-color-button:hover .sandbox-color-swatch {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 3px currentColor;
+}
+
+.sandbox-color-swatch {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--fg-1) 20%, transparent),
+    0 1px 2px color-mix(in srgb, var(--fg-1) 14%, transparent);
+  transition:
+    transform var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-body {
+  color: var(--fg-1);
+  overflow: hidden;
+}
+
+.sandbox-field-frame {
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--fg-1);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-field-frame:focus-within {
+  background: var(--sandbox-field-focus);
+  border-color: var(--accent-border);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-border) 26%, transparent);
+}
+
+.sandbox-row-readout {
+  min-width: 0;
+  overflow-x: auto;
+  color: var(--fg-3);
+  line-height: 1.2;
+  scrollbar-width: none;
+}
+
+.sandbox-row-readout::-webkit-scrollbar {
+  display: none;
+}
+
+.sandbox-row-readout .katex {
+  font-size: 0.96em;
+}
+
+.sandbox-row-readout svg,
+.sandbox-deps svg {
+  flex-shrink: 0;
+  color: var(--fg-4);
+}
+
+.sandbox-row-error {
+  display: inline-flex;
+  max-width: 100%;
+  border-radius: var(--radius-xs);
+  background: var(--sandbox-danger-soft);
+  color: var(--red);
+  padding: 2px 6px;
+}
+
+.sandbox-param-slider {
+  --slider-color: currentColor;
+  --slider-progress: 50%;
+  color: var(--fg-3);
+  padding-right: 1px;
+  margin-top: 2px;
+}
+
+.sandbox-slider-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 16px;
+}
+
+.sandbox-slider-bubble {
+  position: absolute;
+  left: var(--slider-progress);
+  bottom: 16px;
+  z-index: 1;
+  min-width: 28px;
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in srgb, var(--slider-color) 28%, transparent);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow:
+    0 4px 10px color-mix(in srgb, var(--fg-1) 12%, transparent);
+  color: var(--fg-1);
+  font-size: 10px;
+  line-height: 1;
+  padding: 4px 6px;
+  pointer-events: none;
+  text-align: center;
+}
+
+.sandbox-num-box {
+  appearance: textfield;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--fg-4);
+  line-height: 1.1;
+  transition:
+    border-color var(--dur-micro) var(--ease-standard),
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-num-box::-webkit-outer-spin-button,
+.sandbox-num-box::-webkit-inner-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.sandbox-num-box:hover {
+  border-color: var(--sandbox-field-border);
+  background: color-mix(in srgb, var(--surface) 42%, transparent);
+  color: var(--fg-3);
+}
+
+.sandbox-num-box:focus {
+  border-color: var(--accent-border);
+  background: var(--surface);
+  color: var(--fg-1);
+}
+
+.sandbox-row-meta {
+  color: var(--fg-4);
+  line-height: 1.15;
+}
+
+.sandbox-row-meta-toggle {
+  min-width: 0;
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  color: var(--fg-3);
+  padding: 2px 5px 2px 0;
+  text-align: left;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-meta-toggle:hover {
+  background: color-mix(in srgb, var(--fg-1) 4%, transparent);
+  color: var(--fg-2);
+}
+
+.sandbox-row-meta-toggle[aria-expanded="false"] .sandbox-row-meta-caret {
+  transform: rotate(-90deg);
+}
+
+.sandbox-row-meta-caret {
+  color: var(--fg-4);
+  transition: transform var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-meta-title {
+  color: var(--fg-3);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label-tight);
+  text-transform: uppercase;
+}
+
+.sandbox-row-meta-grid {
+  grid-template-columns: auto minmax(0, 1fr);
+  max-width: 100%;
+  border-top: 1px solid color-mix(in srgb, var(--border) 42%, transparent);
+  padding-top: 4px;
+}
+
+.sandbox-row-meta-grid dt {
+  color: var(--fg-4);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label-tight);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sandbox-row-meta-grid dd {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--fg-3);
+  font-size: var(--type-ui-2xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sandbox-note {
+  min-width: 0;
+  max-width: 116px;
+  color: var(--fg-4);
+}
+
+.sandbox-deps {
+  max-width: 168px;
+  color: var(--fg-3);
+}
+
+.sandbox-row-controls {
+  color: var(--fg-3);
+  opacity: 0;
+  transition: opacity var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-expression-row:hover .sandbox-row-controls,
+.sandbox-expression-row:focus-within .sandbox-row-controls {
+  opacity: 1;
+}
+
+.sandbox-expression-row[data-selected="true"] .sandbox-row-controls {
+  opacity: 0.5;
+}
+
+.sandbox-expression-row[data-selected="true"]:hover .sandbox-row-controls,
+.sandbox-expression-row[data-selected="true"]:focus-within .sandbox-row-controls {
+  opacity: 1;
+}
+
+.sandbox-row-controls button {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-row-controls button:hover {
+  background: var(--sandbox-control-hover);
+  color: var(--fg-1);
+}
+
+.sandbox-add-expression {
+  border-top: 1px solid var(--sandbox-rail-border);
+  color: var(--fg-2);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.sandbox-add-expression:hover {
+  background: var(--sandbox-control);
+  color: var(--fg-1);
+}
+
+/* MathLive field — inherit the panel's ink and strip its chrome. */
+.mf-host math-field {
+  color: var(--fg-1);
+  font-family: var(--font-math);
+  min-height: 20px;
+  padding: 0 4px;
+  --selection-background-color: var(--selection);
+  --caret-color: var(--accent);
+  --primary: var(--accent);
+  --placeholder-color: var(--fg-4);
+  --smart-fence-color: var(--fg-3);
+}
+.mf-host math-field::part(virtual-keyboard-toggle),
+.mf-host math-field::part(menu-toggle) {
+  display: none;
+}
+
+/* Expression-row range slider, tinted to the row's object color (currentColor). */
+.ws-slider {
+  height: 14px;
+  cursor: pointer;
+  appearance: none;
+  background: transparent;
+  border-radius: var(--radius-pill);
+  display: block;
+}
+
+.ws-slider::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background:
+    linear-gradient(
+      to right,
+      var(--slider-color) 0%,
+      var(--slider-color) var(--slider-progress),
+      color-mix(in srgb, var(--fg-1) 10%, transparent) var(--slider-progress),
+      color-mix(in srgb, var(--fg-1) 10%, transparent) 100%
+    );
+}
+
+.ws-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -4.5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 2px solid var(--slider-color);
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--fg-1) 18%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--slider-color) 10%, transparent);
+}
+
+.ws-slider::-moz-range-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--fg-1) 10%, transparent);
+}
+
+.ws-slider::-moz-range-progress {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--slider-color);
+}
+
+.ws-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--surface);
+  border-radius: var(--radius-pill);
+  background: var(--slider-color);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--fg-1) 18%, transparent);
+}
+
+.ws-slider:focus-visible {
+  outline: none;
+}
+
+.ws-slider:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--fg-1) 18%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--slider-color) 18%, transparent);
+}
+
+/* The Mafs plane: fill the pane, theme axes/grid from plane tokens. */
+.sandbox-plane,
+.sandbox-plane .MafsView {
+  width: 100% !important;
+  height: 100%;
+}
+.sandbox-plane .MafsView {
+  --mafs-bg: transparent;
+  --mafs-fg: var(--plane-axis);
+  --mafs-line-color: var(--plane-grid-major);
+  --grid-line-subdivision-color: var(--plane-grid-minor);
+  --mafs-origin-color: var(--plane-axis);
+  --mafs-axis-stroke-width: 1px;
+  font-family: var(--font-sans);
+}
+
+/* Axis number labels — smaller and quieter than the Mafs default. */
+.sandbox-plane .MafsView text {
+  fill: var(--plane-label);
+  fill-opacity: 0.68;
+  font-size: 10px;
+}
+
+/* Compact Mafs surfaces used by atlas node figures. */
+.atlas-mafs-frame {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+}
+
+.atlas-mafs-frame .MafsView {
+  --mafs-bg: transparent;
+  --mafs-fg: var(--fg-2);
+  --mafs-line-color: var(--grid-major);
+  --mafs-origin-color: var(--fg-4);
+  --grid-line-subdivision-color: var(--grid-minor);
+  --mafs-axis-stroke-width: 1px;
+  --mafs-line-stroke-dash-style: 5 5;
+  background: transparent;
+  color: var(--fg-2);
+  font-family: var(--font-sans);
+}
+
+.atlas-mafs-frame .MafsView text {
+  fill: var(--fg-3);
+  fill-opacity: 0.82;
+  font-size: 10px;
+}
