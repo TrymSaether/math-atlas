@@ -1,16 +1,24 @@
 {
-  "extends": "./tsconfig.base.json",
-  "//": "Everything Node runs directly via type stripping: the server, scripts, and the shared modules they import. nodenext + erasableSyntaxOnly make tsc enforce what the Node runtime requires (real import paths, erasable types only).",
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "composite": true,
+    "skipLibCheck": true,
+    "target": "ES2022",
     "lib": ["ES2022"],
-    "types": ["node"],
-    "paths": {},
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "erasableSyntaxOnly": true,
-    "noEmit": true
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "outDir": ".cache/tsconfig-node",
+    "strict": true,
+    "types": ["node"]
   },
-  "include": ["server", "scripts", "shared", "vite.config.ts", "src/authoring/model.ts"]
+  "include": [
+    "vite.config.ts",
+    "scripts/**/*.ts",
+    "src/lib/palette.ts",
+    "src/data/sourceSchema.ts",
+    "src/data/relations.ts",
+    "src/data/artifactSchema.ts",
+    "src/data/buildArtifact.ts"
+  ]
 }
