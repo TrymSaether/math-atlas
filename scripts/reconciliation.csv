@@ -1,0 +1,106 @@
+dictionary_id,term,kind,chapter,decision,canonical_id,domain
+based-map,Based map,Definition,7,new,based_map,algebraic_topology
+basepoint-independence,Basepoint independence,Theorem,7,new,basepoint_independence,algebraic_topology
+basis,Basis for a topology,Definition,4,match,basis_for_topology,spaces_constructions
+binary-operation,Binary operation,Definition,B,new,binary_operation,foundations
+bounded,Bounded subset,Definition,6,new,bounded,compactness
+brouwer,Brouwer fixed point theorem,Theorem,8,match,brouwer_fixed_point_theorem,spaces_constructions
+cartesian-product,Cartesian product,Definition,A,new,cartesian_product,foundations
+closed-subset,Closed subset,Definition,3,new,closed_subset,spaces_constructions
+closure,Closure,Definition,3,match,closure,spaces_constructions
+cofinite-topology,Cofinite topology,Definition,3,new,cofinite_topology,spaces_constructions
+compact-space,Compact space,Definition,6,match,compact_space,compactness
+compact-in-hausdorff-closed,Compact subset of Hausdorff is closed,Theorem,6,new,compact_in_hausdorff_closed,separation_countability
+compact-subspace,Compact subspace,Definition,6,new,compact_subspace,compactness
+comparable-topologies,Comparable topologies (coarser / finer),Definition,3,new,comparable_topologies,spaces_constructions
+complement,Complement,Definition,A,new,complement,foundations
+homeomorphism-equivalence-relation,Homeomorphism is an equivalence relation,Theorem,3,new,homeomorphism_equivalence_relation,spaces_constructions
+composition-continuous,Composition of continuous maps,Theorem,3,new,composition_continuous,spaces_constructions
+composition-maps,Composition of maps,Definition,A,new,composition_maps,foundations
+connected-space,Connected space,Definition,6,match,connected_space,connectedness
+continuity-point-metric,Continuity at a point (nbhd form),Theorem,2,new,continuity_point_metric,continuity
+continuity-point-top,Continuity at a point (topological),Definition,3,new,continuity_point_top,spaces_constructions
+continuity-basis,Continuity via a (sub)basis,Theorem,4,new,continuity_basis,spaces_constructions
+continuity-preimage-metric,Continuity via preimages of open sets,Theorem,2,new,continuity_preimage_metric,continuity
+compact-image,Continuous image of a compact space,Theorem,6,new,compact_image,compactness
+connected-image,Continuous image of a connected space,Theorem,6,new,connected_image,connectedness
+continuous-map-metric,Continuous map (metric),Definition,2,new,continuous_map_metric,continuity
+continuous-map-top,Continuous map (topological),Definition,3,new,continuous_map_top,spaces_constructions
+cover,Cover of a space,Definition,6,new,cover,compactness
+covering-space,Covering space,Definition,8,new,covering_space,algebraic_topology
+cyclic-subgroup,Cyclic subgroup,Theorem,B,new,cyclic_subgroup,foundations
+deformation-retract,Deformation retract,Definition,7,new,deformation_retract,algebraic_topology
+dense,Dense subset,Definition,3,match,dense_subset,spaces_constructions
+set-difference,Difference of sets,Definition,A,new,set_difference,foundations
+discrete-topology,Discrete topology,Definition,3,new,discrete_topology,spaces_constructions
+disjoint-union,Disjoint union,Definition,A,new,disjoint_union,foundations
+equivalence-class,Equivalence class,Definition,5,new,equivalence_class,spaces_constructions
+functoriality,Functoriality of π₁,Theorem,7,new,functoriality,algebraic_topology
+fundamental-group,Fundamental group,Definition,7,new,fundamental_group,algebraic_topology
+fht,Fundamental homomorphism theorem,Theorem,B,new,fht,foundations
+fta,Fundamental theorem of algebra,Theorem,8,new,fta,algebraic_topology
+evt,Generalized extreme value theorem,Theorem,6,new,evt,compactness
+ivt,Generalized intermediate value theorem,Theorem,6,new,ivt,connectedness
+group,Group,Definition,B,new,group,foundations
+homomorphism,Group homomorphism,Definition,B,new,homomorphism,foundations
+hausdorff,Hausdorff space,Definition,6,match,hausdorff_space,separation_countability
+heine-borel,Heine–Borel theorem,Theorem,6,match,heine_borel_theorem,compactness
+homeomorphism-open-closed,Homeo ⇔ open ⇔ closed (bijective),Theorem,5,new,homeomorphism_open_closed,spaces_constructions
+homeomorphism,Homeomorphism,Definition,3,match,homeomorphism,continuity
+homotopy,Homotopy,Definition,7,new,homotopy,algebraic_topology
+homotopy-classes,Homotopy classes,Definition,7,new,homotopy_classes,algebraic_topology
+homotopy-equivalence,Homotopy equivalence,Definition,7,new,homotopy_equivalence,algebraic_topology
+homotopy-equiv-iso,Homotopy equivalence induces iso,Theorem,7,new,homotopy_equiv_iso,algebraic_topology
+homotopy-lifting,Homotopy lifting property,Theorem,8,new,homotopy_lifting,algebraic_topology
+homotopy-type,Homotopy type,Definition,7,new,homotopy_type,algebraic_topology
+image,Image of a map,Definition,A,new,image,foundations
+inclusion-map,Inclusion map,Definition,A,new,inclusion_map,foundations
+indiscrete-topology,Indiscrete topology,Definition,3,new,indiscrete_topology,spaces_constructions
+induced-homomorphism,Induced homomorphism,Definition,7,new,induced_homomorphism,algebraic_topology
+interior,Interior,Concept,3,match,interior,spaces_constructions
+intersection-union,Intersection and union,Definition,A,new,intersection_union,foundations
+intersection-topologies,Intersection of topologies,Theorem,4,new,intersection_topologies,spaces_constructions
+isomorphism,Isomorphism,Definition,B,new,isomorphism,foundations
+lebesgue-number,Lebesgue number lemma,Lemma,8,new,lebesgue_number,algebraic_topology
+coset,Left and right cosets,Definition,B,new,coset,foundations
+lifting,Lifting,Definition,8,new,lifting,algebraic_topology
+lifting-correspondence,Lifting correspondence,Definition,8,new,lifting_correspondence,algebraic_topology
+local-homeomorphism,Local homeomorphism,Definition,8,new,local_homeomorphism,algebraic_topology
+metric-space,Metric space,Definition,2,match,metric_space,spaces_constructions
+neighborhood-metric,Neighborhood (metric),Definition,2,new,neighborhood_metric,continuity
+neighborhood-top,Neighborhood (topological),Definition,3,new,neighborhood_top,spaces_constructions
+neighborhood-characterization-open,Neighborhood characterization of open sets,Theorem,3,new,neighborhood_characterization_open,spaces_constructions
+normal-subgroup,Normal subgroup,Definition,B,new,normal_subgroup,foundations
+nullhomotopic,Nullhomotopic map,Concept,7,new,nullhomotopic,algebraic_topology
+open-closed-set-metric,Open / closed set (metric),Definition,2,new,open_closed_set_metric,continuity
+open-closed-ball,Open and closed balls,Definition,2,new,open_closed_ball,continuity
+open-closed-map,Open and closed maps,Definition,5,new,open_closed_map,spaces_constructions
+pasting-lemma,Pasting lemma,Lemma,7,new,pasting_lemma,algebraic_topology
+path-homotopy,Path homotopy,Definition,7,new,path_homotopy,algebraic_topology
+path-homotopy-classes,Path homotopy classes,Definition,7,new,path_homotopy_classes,algebraic_topology
+path-connected,Path-connected space,Definition,6,match,path_connected_space,connectedness
+path-implies-connected,Path-connected ⇒ connected,Theorem,6,new,path_implies_connected,connectedness
+product-compact,Product of compact spaces is compact,Theorem,6,new,product_compact,compactness
+product-of-paths,Product of paths,Definition,7,new,product_of_paths,algebraic_topology
+product-topology,Product topology,Definition,5,match,product_topology,spaces_constructions
+quotient-group,Quotient (factor) group,Theorem,B,new,quotient_group,foundations
+quotient-space,Quotient space,Definition,5,match,quotient_space,spaces_constructions
+restriction,Restriction of a map,Definition,A,new,restriction,foundations
+retraction,Retraction,Definition,7,new,retraction,algebraic_topology
+simply-connected,Simply connected space,Definition,7,new,simply_connected,algebraic_topology
+subbasis,Subbasis for a topology,Definition,4,match,subbasis,spaces_constructions
+subgroup,Subgroup,Definition,B,new,subgroup,foundations
+subset,Subset,Definition,A,new,subset,foundations
+subspace-topology,Subspace topology,Definition,5,match,subspace_topology,spaces_constructions
+sij,Surjective / injective / bijective,Definition,A,new,sij,foundations
+real-line-connected,The real numbers are connected,Theorem,6,new,real_line_connected,connectedness
+topological-property,Topological property / invariant,Concept,3,new,topological_property,spaces_constructions
+topological-space,Topological space,Definition,3,match,topological_space,spaces_constructions
+metric-topology,Metric topology,Theorem,3,match,metric_topology,spaces_constructions
+generated-topology,Topology generated by a collection,Definition,4,new,generated_topology,spaces_constructions
+tube-lemma,Tube lemma,Lemma,6,new,tube_lemma,compactness
+path-lifting,Unique path lifting property,Theorem,8,new,path_lifting,algebraic_topology
+quotient-universal,Universal property of the quotient,Theorem,5,new,quotient_universal,spaces_constructions
+pi1-invariant,π₁ is a topological invariant,Corollary,7,new,pi1_invariant,algebraic_topology
+pi1-product,π₁ of a product,Theorem,7,new,pi1_product,algebraic_topology
+pi1-circle,π₁(S¹) ≅ ℤ,Theorem,8,new,pi1_circle,algebraic_topology
