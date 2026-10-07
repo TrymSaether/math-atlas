@@ -1,0 +1,168 @@
+/* React Flow theming */
+.react-flow__renderer {
+  background: transparent !important;
+}
+
+.react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.react-flow__handle {
+  width: 6px !important;
+  height: 6px !important;
+  background: transparent !important;
+  border: 0 !important;
+  opacity: 0;
+}
+
+.react-flow__handle.graph-node-handle {
+  width: 8px !important;
+  height: 8px !important;
+  background: var(--handle-color) !important;
+  border: 1.5px solid var(--surface) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.15s !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+}
+
+/* Handles are edge anchors only — nodes are never hand-connected here, so they
+   stay fully hidden (no hover reveal). Hover/selection is expressed on the card. */
+.react-flow__node:hover .react-flow__handle.graph-node-handle {
+  opacity: 0 !important;
+}
+
+.react-flow__handle.graph-node-handle-left {
+  left: -4px !important;
+}
+
+.react-flow__handle.graph-node-handle-right {
+  right: -4px !important;
+}
+
+.react-flow__handle.graph-node-handle-top {
+  top: -4px !important;
+}
+
+.react-flow__handle.graph-node-handle-bottom {
+  bottom: -4px !important;
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__minimap {
+  background: color-mix(in srgb, var(--surface) 92%, transparent) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+}
+
+.react-flow__controls {
+  background: color-mix(in srgb, var(--surface) 96%, transparent) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--fg-2) !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: 0 !important;
+}
+
+.react-flow__controls-button:hover {
+  background: var(--surface-3) !important;
+}
+
+.react-flow__controls-button svg {
+  fill: currentColor;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:focus .react-flow__edge-path {
+  outline: none;
+}
+
+.react-flow__node {
+  font-family: inherit;
+}
+
+.react-flow__node.atlas-flow-node {
+  cursor: pointer !important;
+}
+
+.react-flow__node:focus {
+  outline: none;
+}
+
+.react-flow__node-default {
+  box-shadow: none !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--fg-3) 38%, transparent);
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--fg-3) 62%, transparent);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: color-mix(in srgb, var(--fg-2) 72%, transparent);
+}
+
+/* KaTeX nudges */
+.katex {
+  font-size: 1em;
+}
+
+.katex-display {
+  margin: 0.4em 0;
+  text-align: center;
+}
+
+/* Canvas backdrops */
+.atlas-dots {
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.atlas-grid {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px);
+  background-size:
+    96px 96px,
+    96px 96px,
+    24px 24px,
+    24px 24px;
+}

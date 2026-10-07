@@ -1,8 +1,8 @@
 /**
  * Unicode bar charts and percent meters for stats/coverage/doctor dashboards.
  */
-import { padEnd, padStart, pct } from "../utils/text.ts";
-import { green, yellow, red, dim, gray } from "../utils/color.ts";
+import { padEnd, padStart, pct } from "../utils/text";
+import { green, yellow, red, dim, gray } from "../utils/color";
 
 const BLOCKS = ["", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"];
 

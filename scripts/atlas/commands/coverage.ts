@@ -1,16 +1,16 @@
 /**
  * `atlas coverage` — per-domain completeness matrix. Each domain is scored on the
- * facets that make a concept useful: a canonical statement, a proof where
+ * facets that make a concept useful: a body (definition/statement), a proof where
  * one is expected, examples, diagrams, intuition, and notation. Percentages are
  * colour-banded so gaps jump out.
  */
-import type { Command } from "../core/command.ts";
-import { loadMaps, type Ctx } from "../core/context.ts";
-import type { CliMap } from "../core/model.ts";
-import { categoryOf } from "../../../shared/maps/nodeCategory.ts";
-import { table } from "../reporters/table.ts";
-import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color.ts";
-import { pct, padStart } from "../utils/text.ts";
+import type { Command } from "../core/command";
+import { loadMaps, type Ctx } from "../core/context";
+import type { CliMap } from "../core/model";
+import { categoryOf } from "../../../src/lib/nodeCategory";
+import { table } from "../reporters/table";
+import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color";
+import { pct, padStart } from "../utils/text";
 
 const FACETS = ["body", "proof", "examples", "diagram", "intuition", "notation"] as const;
 type Facet = (typeof FACETS)[number];
@@ -27,7 +27,7 @@ function score(nodes: CliMap["nodes"], facet: Facet): [number, number] {
       const den = nodes.filter((n) =>
         ["definition", "theorem", "structure", "construction"].includes(categoryOf(n.kind)),
       );
-      return [den.filter((n) => has(n, "statement")).length, den.length];
+      return [den.filter((n) => has(n, "definition") || has(n, "statement") || has(n, "formal")).length, den.length];
     }
     case "proof": {
       const den = nodes.filter((n) => categoryOf(n.kind) === "theorem");

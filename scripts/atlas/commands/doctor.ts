@@ -1,19 +1,19 @@
 /**
- * `atlas doctor` — deep health dashboard. Coverage meters (canonical statement
+ * `atlas doctor` — deep health dashboard. Coverage meters (definition / statement
  * / proof / intuition / diagram), graph density and connectivity, the most
  * central concepts, thin domains, oversized concepts, and foundational roots.
  * Pure read-only; reuses the graph algorithms for components and centrality.
  */
-import type { Command } from "../core/command.ts";
-import { loadMaps, type Ctx } from "../core/context.ts";
-import type { CliMap } from "../core/model.ts";
-import { components, betweenness, roots, detectCycles } from "../graph/algorithms.ts";
-import { categoryOf } from "../../../shared/maps/nodeCategory.ts";
-import { meter } from "../reporters/bars.ts";
-import { table } from "../reporters/table.ts";
-import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color.ts";
-import { MARK, kindGlyph } from "../utils/glyphs.ts";
-import { pct, padStart } from "../utils/text.ts";
+import type { Command } from "../core/command";
+import { loadMaps, type Ctx } from "../core/context";
+import type { CliMap } from "../core/model";
+import { components, betweenness, roots, detectCycles } from "../graph/algorithms";
+import { categoryOf } from "../../../src/lib/nodeCategory";
+import { meter } from "../reporters/bars";
+import { table } from "../reporters/table";
+import { bold, dim, cyan, gray, green, yellow, red } from "../utils/color";
+import { MARK, kindGlyph } from "../utils/glyphs";
+import { pct, padStart } from "../utils/text";
 
 function has(node: CliMap["nodes"][number], key: string): boolean {
   const v = (node.content as Record<string, unknown>)[key];
@@ -66,7 +66,11 @@ function renderMap(map: CliMap): void {
   const meterRow = (label: string, num: number, den: number) =>
     process.stdout.write("  " + dim(label.padEnd(18)) + meter(num, den) + "\n");
   process.stdout.write("  " + bold("Coverage") + "\n");
-  meterRow("definitions", dx.definitions.filter((d) => has(d, "statement")).length, dx.definitions.length);
+  meterRow(
+    "definitions",
+    dx.definitions.filter((d) => has(d, "definition") || has(d, "statement")).length,
+    dx.definitions.length,
+  );
   meterRow(
     "theorem stmts",
     dx.theorems.filter((t) => has(t, "statement") || has(t, "formal")).length,

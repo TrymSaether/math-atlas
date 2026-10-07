@@ -5,10 +5,10 @@
  * pointing at `atlas validate`, so individual commands never operate on a map
  * the schema would reject.
  */
-import { SourceGraphSchema } from "../../../shared/maps/source.ts";
-import { resolveWorkspace, type Workspace } from "./workspace.ts";
-import { listSourceFiles, filterByMap, type SourceFile } from "./loadSources.ts";
-import { buildCliMap, type CliMap } from "./model.ts";
+import { SourceGraphSchema } from "../../../src/data/sourceSchema";
+import { resolveWorkspace, type Workspace } from "./workspace";
+import { listSourceFiles, filterByMap, type SourceFile } from "./loadSources";
+import { buildCliMap, type CliMap } from "./model";
 
 export type FlagValue = string | boolean;
 
@@ -25,11 +25,12 @@ export interface Ctx {
 
 /** A user-facing error: printed cleanly, no stack trace. */
 export class CliError extends Error {
-  readonly hint?: string;
-  constructor(message: string, hint?: string) {
+  constructor(
+    message: string,
+    readonly hint?: string,
+  ) {
     super(message);
     this.name = "CliError";
-    this.hint = hint;
   }
 }
 

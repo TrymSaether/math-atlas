@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "//": "Includes the React-free src modules the server reuses (mirrors tsconfig.node.json) so cross-imports typecheck. Run via `npm run typecheck:server`.",
+  "include": [
+    "**/*.ts",
+    "../src/lib/palette.ts",
+    "../src/data/sourceSchema.ts",
+    "../src/data/relations.ts",
+    "../src/data/artifactSchema.ts",
+    "../src/data/buildArtifact.ts"
+  ]
+}

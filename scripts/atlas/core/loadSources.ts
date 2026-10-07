@@ -6,7 +6,7 @@
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import type { Workspace } from "./workspace.ts";
+import type { Workspace } from "./workspace";
 
 export interface SourceFile {
   /** Map id, i.e. filename without `.source.json`. */
@@ -32,7 +32,7 @@ export function listSourceFiles(ws: Workspace): SourceFile[] {
   return files.map((fileName) => {
     const path = join(ws.mapsDir, fileName);
     const raw = readFileSync(path, "utf8");
-    let json: unknown;
+    let json: unknown = undefined;
     let jsonError: SyntaxError | undefined;
     try {
       json = JSON.parse(raw);

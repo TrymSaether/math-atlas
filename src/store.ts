@@ -1,0 +1,1044 @@
+import { create } from "zustand";
+import {
+  DEFAULT_MAP_ID,
+  isMapId,
+  fetchAndBuildMap,
+  fetchCatalog,
+  forkMap,
+  saveMapSource,
+  deleteMap,
+  type CatalogEntry,
+  type LoadedMap,
+  type MapId,
+  type MapRole,
+} from "./data";
+import { applyTheme, readStoredTheme, schemeFor } from "./lib/themes";
+import { defaultVisibleKinds } from "./lib/nodeCategory";
+import type { NodeKind, Relation } from "./types";
+import type { SourceGraph } from "./data/sourceSchema";
+import type { AuthorableRelation } from "./data/relations";
+import type { RouteKind } from "./lib/route";
+import { buildLoadedMapFromSource } from "./data/loadMap";
+import { graphDataToSource } from "./data/toSource";
+import { getCachedCatalog, setCachedCatalog, setCachedMap, clearCachedMap } from "./data/mapCache";
+import { fetchProgress, putProgress, deleteProgress, type ProgressStatus } from "./data/progressApi";
+import {
+  addEdge as addSourceEdge,
+  applyDraft,
+  removeEdge as removeSourceEdge,
+  updateEdge as updateSourceEdge,
+  slugify,
+  uniqueSlug,
+  type NodeDraft,
+} from "./data/authoring";
+
+/** Result of an authoring mutation; `error` is a human-facing validation message. */
+export interface EditResult {
+  ok: boolean;
+  error?: string;
+  id?: string;
+}
+
+/** What the node editor dialog is doing, if open. */
+export type NodeEditorState = { mode: "create" } | { mode: "edit"; nodeId: string } | null;
+
+export type SearchScope = "all" | "title";
+export type ViewMode = "dependency" | "cluster";
+export type EdgeStyle = "smooth" | "straight" | "bezier";
+/** How edge relationship labels read on hover/selection. */
+export type EdgeLabelStyle = "prose" | "terse";
+/** Which surface is shown: the graph canvas, reading/study tools, or sandbox. */
+export type Surface = "atlas" | "dictionary" | "flashcards" | "sandbox";
+/** Atlas interaction mode: free graph exploration vs guided dependency paths. */
+export type AtlasMode = "explore" | "paths";
+
+const APP_STATE_STORAGE_KEY = "math-atlas-state-v1";
+const PERSISTED_STATE_VERSION = 1;
+
+interface PersistedMapState {
+  search?: string;
+  kinds?: NodeKind[];
+  topics?: string[];
+  relations?: Relation[];
+  selectedId?: string | null;
+  routeFrom?: string | null;
+  routeTo?: string | null;
+}
+
+interface PersistedState {
+  version: typeof PERSISTED_STATE_VERSION;
+  mapId?: MapId;
+  searchScope?: SearchScope;
+  view?: ViewMode;
+  showSoftDeps?: boolean;
+  edgeStyle?: EdgeStyle;
+  edgeLabelStyle?: EdgeLabelStyle;
+  focusMode?: boolean;
+  focusDepth?: number;
+  showGrid?: boolean;
+  showRegions?: boolean;
+  showMinimap?: boolean;
+  surface?: Surface;
+  mode?: AtlasMode;
+  routeKind?: RouteKind;
+  routeIncludeProof?: boolean;
+  maps?: Partial<Record<MapId, PersistedMapState>>;
+}
+
+interface State {
+  /** Active theme id (see src/lib/themes.ts). */
+  theme: string;
+  setTheme: (id: string) => void;
+  /** Light/dark of the active theme — drives scheme-dependent UI. */
+  scheme: () => "light" | "dark";
+
+  mapId: MapId;
+  setMap: (mapId: MapId) => void;
+  loadedMaps: Partial<Record<MapId, LoadedMap>>;
+  loadingMapId: MapId | null;
+  mapError: string | null;
+  ensureMapLoaded: (mapId?: MapId) => Promise<void>;
+
+  search: string;
+  setSearch: (s: string) => void;
+  searchScope: SearchScope;
+  setSearchScope: (s: SearchScope) => void;
+
+  kinds: Set<NodeKind>;
+  toggleKind: (k: NodeKind) => void;
+
+  topics: Set<string>;
+  toggleTopic: (t: string) => void;
+  resetTopics: () => void;
+
+  relations: Set<Relation>;
+  toggleRelation: (r: Relation) => void;
+
+  view: ViewMode;
+  setView: (v: ViewMode) => void;
+  /** Pedagogical "learn-this-first" edges — hidden by default to cut the spaghetti. */
+  showSoftDeps: boolean;
+  toggleSoftDeps: () => void;
+  /** Edge routing for the dependency graph. */
+  edgeStyle: EdgeStyle;
+  setEdgeStyle: (s: EdgeStyle) => void;
+  /** Wording of the relationship label shown on hover/selection. */
+  edgeLabelStyle: EdgeLabelStyle;
+  setEdgeLabelStyle: (s: EdgeLabelStyle) => void;
+  focusMode: boolean;
+  toggleFocusMode: () => void;
+  focusDepth: number;
+  setFocusDepth: (d: number) => void;
+
+  /** Canvas "Map layers" toggles (driven by the floating Layers control). */
+  showGrid: boolean;
+  toggleGrid: () => void;
+  showRegions: boolean;
+  toggleRegions: () => void;
+  /** Floating atlas overlays. */
+  showMinimap: boolean;
+  toggleMinimap: () => void;
+
+  selectedId: string | null;
+  select: (id: string | null) => void;
+
+  /**
+   * Directions. Two build modes over the dependency DAG:
+   *   • prereq — upstream cone of a single goal (`routeTo`); `routeFrom` unused.
+   *   • path   — every dependency path between `routeFrom` and `routeTo`.
+   */
+  routeKind: RouteKind;
+  setRouteKind: (kind: RouteKind) => void;
+  /** When true, routes also include proof-only prerequisites (the proof overlay). */
+  routeIncludeProof: boolean;
+  setRouteIncludeProof: (on: boolean) => void;
+  routeMode: boolean;
+  routeFrom: string | null;
+  routeTo: string | null;
+  /** Bumped to replay the traversal animation. */
+  routeRunKey: number;
+  /** Enter/cancel route planning (clears any in-progress pick). */
+  toggleRouteMode: () => void;
+  /** Click handler while planning: prereq sets the goal; path picks start→stop. */
+  pickRoutePoint: (id: string) => void;
+  setRouteEndpoint: (endpoint: "from" | "to", id: string | null) => void;
+  swapRouteEndpoints: () => void;
+  clearRoute: () => void;
+  replayRoute: () => void;
+  /** Current route's study order, mirrored here so the tour can walk it. */
+  routeSequence: string[];
+  setRouteSequence: (ids: string[]) => void;
+  /** Guided tour: index into `routeSequence`, or null when not touring. */
+  tourIndex: number | null;
+  startTour: () => void;
+  tourStep: (delta: number) => void;
+  endTour: () => void;
+
+  surface: Surface;
+  setSurface: (s: Surface) => void;
+
+  /** Atlas mode: free Explore vs guided Paths (the hybrid exploration model). */
+  mode: AtlasMode;
+  setMode: (mode: AtlasMode) => void;
+
+  paletteOpen: boolean;
+  setPaletteOpen: (o: boolean) => void;
+
+  /* ---- Authoring ---------------------------------------------------- */
+  /** Whether authoring affordances are shown. */
+  editMode: boolean;
+  toggleEditMode: () => void;
+  /** Maps with a saved local edit overlay (drives the "edited" badge). */
+  editedMaps: Set<MapId>;
+  /** Session working source per map; lazily derived from the loaded map. */
+  editSources: Partial<Record<MapId, SourceGraph>>;
+  /** Open node editor dialog (create or edit), or null. */
+  nodeEditor: NodeEditorState;
+  /** Last authoring validation error, for inline display. */
+  editError: string | null;
+  openNodeEditor: (state: NonNullable<NodeEditorState>) => void;
+  closeNodeEditor: () => void;
+  /** Create or update a node from a draft. Returns ok + new id (create). */
+  commitNode: (draft: NodeDraft) => EditResult;
+  /** Delete a node and all edges (and proof refs) touching it. */
+  deleteNode: (id: string) => EditResult;
+  /** Add a forward-relation edge, with optional author-only notes. */
+  addNodeEdge: (edge: { source: string; target: string; relation: AuthorableRelation; notes?: string }) => EditResult;
+  /** Edit an existing edge's relation and/or notes, keyed by its semantic key. */
+  updateNodeEdge: (key: string, patch: { relation?: AuthorableRelation; notes?: string }) => EditResult;
+  /** Remove an edge by its semantic key (see authoring.edgeKey). */
+  removeNodeEdge: (key: string) => EditResult;
+  /** Current working source for the active map (for export), or null. */
+  currentEditSource: () => SourceGraph | null;
+  /** Replace the active map from an imported source graph. */
+  importSource: (source: unknown) => EditResult;
+  /** Discard local edits for the active map and restore the built-in. */
+  revertMap: () => Promise<EditResult>;
+
+  /* ---- Account / sync ---------------------------------------------- */
+  /* ---- Account / catalog -------------------------------------------- */
+  /** Signed-in user id, or null. */
+  userId: string | null;
+  setUserId: (id: string | null) => void;
+  /** Maps the caller can open (one entry per slug; best access wins). */
+  catalog: CatalogEntry[];
+  /** Per-slug map entity meta (id / role / saved version), set when a map loads. */
+  mapMeta: Partial<Record<MapId, { id: string; role: MapRole; baseVersion: number; updated: string }>>;
+  /** Fetch the catalog from the API (falls back to cache when offline). */
+  loadCatalog: () => Promise<void>;
+  /** On sign-in/out: reload the catalog and the active map (access changed). */
+  onSessionChange: () => Promise<void>;
+  /** Active map changed on the server (conflict or a collaborator's save). */
+  staleMap: MapId | null;
+  /** Reload the active map fresh from the server (discards unsaved local edits). */
+  reloadActiveMap: () => Promise<void>;
+  /** On window focus: flag the active map stale if the server copy is newer. */
+  checkRemoteUpdate: () => Promise<void>;
+
+  /* ---- Learning progress (Phase 3) ---------------------------------- */
+  /** Per-map node progress (slug → nodeId → status). Signed-in users only. */
+  progress: Partial<Record<MapId, Record<string, ProgressStatus>>>;
+  /** Fetch the caller's progress for a map (no-op signed out). */
+  loadProgress: (mapId: MapId) => Promise<void>;
+  /** Set or clear a node's status (optimistic + server). `null` clears it. */
+  setNodeProgress: (mapId: MapId, nodeId: string, status: ProgressStatus | null) => void;
+}
+
+function toggle<T>(set: Set<T>, v: T) {
+  const next = new Set(set);
+  if (next.has(v)) next.delete(v);
+  else next.add(v);
+  return next;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function readPersistedState(): unknown | null {
+  if (typeof localStorage === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(APP_STATE_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed: unknown = JSON.parse(raw);
+    if (!isRecord(parsed) || parsed.version !== PERSISTED_STATE_VERSION) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writePersistedState(state: PersistedState): void {
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.setItem(APP_STATE_STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    /* ignore private-mode / quota failures */
+  }
+}
+
+function asString(value: unknown): string | undefined {
+  return typeof value === "string" ? value : undefined;
+}
+
+function asBoolean(value: unknown): boolean | undefined {
+  return typeof value === "boolean" ? value : undefined;
+}
+
+function asStringArray(value: unknown): string[] | undefined {
+  return Array.isArray(value) && value.every((item) => typeof item === "string") ? value : undefined;
+}
+
+function asNullableString(value: unknown): string | null | undefined {
+  if (value === null) return null;
+  return typeof value === "string" ? value : undefined;
+}
+
+function isSearchScope(value: unknown): value is SearchScope {
+  return value === "all" || value === "title";
+}
+
+function isViewMode(value: unknown): value is ViewMode {
+  return value === "dependency" || value === "cluster";
+}
+
+function isEdgeStyle(value: unknown): value is EdgeStyle {
+  return value === "smooth" || value === "straight" || value === "bezier";
+}
+
+function isEdgeLabelStyle(value: unknown): value is EdgeLabelStyle {
+  return value === "prose" || value === "terse";
+}
+
+function isSurface(value: unknown): value is Surface {
+  return value === "atlas" || value === "dictionary" || value === "flashcards" || value === "sandbox";
+}
+
+function normalizedFocusDepth(value: unknown): number | undefined {
+  if (typeof value !== "number" || !Number.isFinite(value)) return undefined;
+  return Math.min(3, Math.max(1, Math.round(value)));
+}
+
+function normalizePersistedMapState(value: unknown): PersistedMapState | undefined {
+  if (!isRecord(value)) return undefined;
+  return {
+    search: asString(value.search),
+    kinds: asStringArray(value.kinds),
+    topics: asStringArray(value.topics),
+    relations: asStringArray(value.relations),
+    selectedId: asNullableString(value.selectedId),
+    routeFrom: asNullableString(value.routeFrom),
+    routeTo: asNullableString(value.routeTo),
+  };
+}
+
+function normalizePersistedState(value: unknown | null): PersistedState | null {
+  if (!isRecord(value)) return null;
+  const maps: Partial<Record<MapId, PersistedMapState>> = {};
+  if (isRecord(value.maps)) {
+    for (const [key, mapState] of Object.entries(value.maps)) {
+      if (!isMapId(key)) continue;
+      const normalized = normalizePersistedMapState(mapState);
+      if (normalized) maps[key] = normalized;
+    }
+  }
+  return {
+    version: PERSISTED_STATE_VERSION,
+    mapId: typeof value.mapId === "string" && isMapId(value.mapId) ? value.mapId : undefined,
+    searchScope: isSearchScope(value.searchScope) ? value.searchScope : undefined,
+    view: isViewMode(value.view) ? value.view : undefined,
+    showSoftDeps: asBoolean(value.showSoftDeps),
+    edgeStyle: isEdgeStyle(value.edgeStyle) ? value.edgeStyle : undefined,
+    edgeLabelStyle: isEdgeLabelStyle(value.edgeLabelStyle) ? value.edgeLabelStyle : undefined,
+    focusMode: asBoolean(value.focusMode),
+    focusDepth: normalizedFocusDepth(value.focusDepth),
+    showGrid: asBoolean(value.showGrid),
+    showRegions: asBoolean(value.showRegions),
+    showMinimap: asBoolean(value.showMinimap),
+    surface: isSurface(value.surface) ? value.surface : undefined,
+    mode: value.mode === "explore" || value.mode === "paths" ? value.mode : undefined,
+    routeKind: value.routeKind === "prereq" || value.routeKind === "path" ? value.routeKind : undefined,
+    routeIncludeProof: asBoolean(value.routeIncludeProof),
+    maps,
+  };
+}
+
+const persistedState = normalizePersistedState(readPersistedState());
+const persistedMaps: Partial<Record<MapId, PersistedMapState>> = {
+  ...(persistedState?.maps ?? {}),
+};
+
+/**
+ * Deep link: URL query params (?map=&node=&view=) take precedence over persisted
+ * state on first load, so a shared link opens the exact map / concept / surface
+ * it encodes. The node is injected into the per-map state so it survives the
+ * map-load reset in `mapStateForLoadedMap` (which validates it against the map).
+ */
+function readUrlState(): { mapId?: MapId; node?: string; surface?: Surface } {
+  if (typeof window === "undefined") return {};
+  const p = new URLSearchParams(window.location.search);
+  const map = p.get("map");
+  const node = p.get("node");
+  const view = p.get("view");
+  return {
+    mapId: map && isMapId(map) ? map : undefined,
+    node: node || undefined,
+    surface: isSurface(view) ? view : undefined,
+  };
+}
+const urlState = readUrlState();
+const initialMapId: MapId = urlState.mapId ?? persistedState?.mapId ?? DEFAULT_MAP_ID;
+const initialSurface: Surface = urlState.surface ?? persistedState?.surface ?? "atlas";
+if (urlState.node) {
+  persistedMaps[initialMapId] = { ...(persistedMaps[initialMapId] ?? {}), selectedId: urlState.node };
+}
+
+function rememberMapState(state: State): void {
+  if (!state.loadedMaps[state.mapId]) return;
+  persistedMaps[state.mapId] = {
+    search: state.search,
+    kinds: [...state.kinds],
+    topics: [...state.topics],
+    relations: [...state.relations],
+    selectedId: state.selectedId,
+    routeFrom: state.routeFrom,
+    routeTo: state.routeTo,
+  };
+}
+
+function persistedStateFor(state: State): PersistedState {
+  return {
+    version: PERSISTED_STATE_VERSION,
+    mapId: state.mapId,
+    searchScope: state.searchScope,
+    view: state.view,
+    showSoftDeps: state.showSoftDeps,
+    edgeStyle: state.edgeStyle,
+    edgeLabelStyle: state.edgeLabelStyle,
+    focusMode: state.focusMode,
+    focusDepth: state.focusDepth,
+    showGrid: state.showGrid,
+    showRegions: state.showRegions,
+    showMinimap: state.showMinimap,
+    surface: state.surface,
+    mode: state.mode,
+    routeKind: state.routeKind,
+    routeIncludeProof: state.routeIncludeProof,
+    maps: persistedMaps,
+  };
+}
+
+function setFromPersisted<T extends string>(
+  saved: T[] | undefined,
+  validValues: Iterable<T>,
+  fallback: Iterable<T>,
+): Set<T> {
+  if (!saved) return new Set(fallback);
+  const valid = new Set(validValues);
+  return new Set(saved.filter((value) => valid.has(value)));
+}
+
+function mapStateForLoadedMap(map: LoadedMap, saved: PersistedMapState | undefined) {
+  const validNodeIds = new Set(map.data.nodes.map((node) => node.id));
+  const selectedId = saved?.selectedId && validNodeIds.has(saved.selectedId) ? saved.selectedId : null;
+
+  return {
+    search: saved?.search ?? "",
+    kinds: setFromPersisted(saved?.kinds, map.kinds, defaultVisibleKinds(map.kinds)),
+    topics: setFromPersisted(
+      saved?.topics,
+      map.data.domains.map((domain) => domain.id),
+      [],
+    ),
+    relations: setFromPersisted(saved?.relations, map.relations, map.relations),
+    selectedId,
+    // Routes are transient exploration state — never restored, so the map opens
+    // on the fit-all overview rather than a highlighted cone.
+    routeMode: false,
+    routeFrom: null,
+    routeTo: null,
+  };
+}
+
+/** Slugs the caller owns or can edit — drives the "edited" badge. */
+function editableSlugs(catalog: CatalogEntry[]): Set<MapId> {
+  return new Set(catalog.filter((e) => e.role === "owner" || e.role === "editor").map((e) => e.slug));
+}
+
+/** Replace (or add) a catalog entry for a slug, preserving its title. */
+function upsertCatalog(catalog: CatalogEntry[], next: CatalogEntry): CatalogEntry[] {
+  const i = catalog.findIndex((e) => e.slug === next.slug);
+  if (i === -1) return [...catalog, next];
+  const copy = [...catalog];
+  copy[i] = { ...catalog[i], ...next };
+  return copy;
+}
+
+type Setter = (partial: Partial<State> | ((s: State) => Partial<State>)) => void;
+
+// Debounced per-slug save so rapid edits coalesce into one request.
+const saveTimers = new Map<MapId, ReturnType<typeof setTimeout>>();
+
+function scheduleSave(slug: MapId, get: () => State, set: Setter, delayMs = 800): void {
+  const existing = saveTimers.get(slug);
+  if (existing) clearTimeout(existing);
+  saveTimers.set(
+    slug,
+    setTimeout(() => {
+      saveTimers.delete(slug);
+      void saveMapToServer(slug, get, set);
+    }, delayMs),
+  );
+}
+
+/** Persist a slug's working source: fork the public map first if needed, then PUT. */
+async function saveMapToServer(slug: MapId, get: () => State, set: Setter): Promise<void> {
+  if (!get().userId) return; // editing requires sign-in to persist
+  const source = get().editSources[slug];
+  if (!source) return;
+  let meta = get().mapMeta[slug];
+  try {
+    if (!meta || (meta.role !== "owner" && meta.role !== "editor")) {
+      const fromId = meta?.id ?? get().catalog.find((e) => e.slug === slug)?.id;
+      if (!fromId) return;
+      const fork = await forkMap(fromId);
+      meta = { id: fork.id, role: "owner", baseVersion: source.version, updated: "" };
+      const title = get().catalog.find((e) => e.slug === slug)?.title ?? slug;
+      set((s) => ({
+        mapMeta: { ...s.mapMeta, [slug]: meta! },
+        catalog: upsertCatalog(s.catalog, {
+          slug,
+          id: fork.id,
+          role: "owner",
+          title,
+          updated: "",
+        }),
+      }));
+    }
+    const result = await saveMapSource(meta.id, source.version, source, meta.updated || undefined);
+    if (!result.ok) {
+      // A collaborator saved first — flag the active map for reload.
+      set({ staleMap: slug });
+      return;
+    }
+    const saved = { ...meta, baseVersion: source.version, updated: result.updated };
+    set((s) => ({ mapMeta: { ...s.mapMeta, [slug]: saved } }));
+    const title = get().catalog.find((e) => e.slug === slug)?.title ?? slug;
+    setCachedMap({
+      id: meta.id,
+      slug,
+      title,
+      role: meta.role,
+      updated: result.updated,
+      baseVersion: source.version,
+      source,
+    });
+  } catch (e) {
+    console.warn(`[math-atlas] save failed for "${slug}":`, e);
+  }
+}
+
+/** The active map's working source: the session copy, else derived from the loaded map. */
+function workingSource(state: State): SourceGraph | null {
+  const map = state.loadedMaps[state.mapId];
+  if (!map) return null;
+  return state.editSources[state.mapId] ?? graphDataToSource(map.data);
+}
+
+/**
+ * Validate + build a candidate source graph, and on success swap it into the
+ * active map, persist the overlay, and flag the map as edited. The working
+ * source is re-normalized from the built map so it always matches what renders.
+ */
+function commitCandidate(
+  get: () => State,
+  set: (partial: Partial<State> | ((s: State) => Partial<State>)) => void,
+  candidate: unknown,
+  selectId?: string,
+): EditResult {
+  const result = buildLoadedMapFromSource(candidate);
+  if (!result.ok) {
+    set({ editError: result.error });
+    return { ok: false, error: result.error };
+  }
+  const mapId = get().mapId;
+  const normalized = graphDataToSource(result.map.data);
+  set((s) => ({
+    loadedMaps: { ...s.loadedMaps, [mapId]: result.map },
+    editSources: { ...s.editSources, [mapId]: normalized },
+    editedMaps: new Set(s.editedMaps).add(mapId),
+    editError: null,
+  }));
+  // Persist to the server (debounced); forks the public map first if needed.
+  scheduleSave(mapId, get, set);
+  return { ok: true, id: selectId };
+}
+
+export const useStore = create<State>((set, get) => ({
+  theme: readStoredTheme(),
+  setTheme: (id) => {
+    applyTheme(id);
+    set({ theme: id });
+  },
+  scheme: () => schemeFor(get().theme),
+
+  mapId: initialMapId,
+  loadedMaps: {},
+  loadingMapId: null,
+  mapError: null,
+  ensureMapLoaded: async (mapId = get().mapId) => {
+    if (get().loadedMaps[mapId]) return;
+
+    set({ loadingMapId: mapId, mapError: null });
+    try {
+      if (get().catalog.length === 0) await get().loadCatalog();
+      const entry = get().catalog.find((e) => e.slug === mapId);
+      if (!entry) throw new Error(`Map not available: ${mapId}`);
+      const { map, payload } = await fetchAndBuildMap(entry.id);
+      set((state) => {
+        const loadedMaps = { ...state.loadedMaps, [mapId]: map };
+        const mapMeta = {
+          ...state.mapMeta,
+          [mapId]: {
+            id: payload.id,
+            role: payload.role,
+            baseVersion: payload.baseVersion,
+            updated: payload.updated,
+          },
+        };
+        if (state.mapId !== mapId) {
+          return {
+            loadedMaps,
+            mapMeta,
+            loadingMapId: state.loadingMapId === mapId ? null : state.loadingMapId,
+          };
+        }
+        return {
+          loadedMaps,
+          mapMeta,
+          loadingMapId: null,
+          mapError: null,
+          ...mapStateForLoadedMap(map, persistedMaps[mapId]),
+        };
+      });
+      // Load learning progress for this map once (signed in).
+      if (get().userId && !get().progress[mapId]) void get().loadProgress(mapId);
+    } catch (error) {
+      set({
+        loadingMapId: null,
+        mapError: error instanceof Error ? error.message : String(error),
+      });
+    }
+  },
+  setMap: (mapId) => {
+    rememberMapState(get());
+    const map = get().loadedMaps[mapId];
+    set({
+      mapId,
+      ...(map
+        ? mapStateForLoadedMap(map, persistedMaps[mapId])
+        : {
+            search: persistedMaps[mapId]?.search ?? "",
+            kinds: new Set<NodeKind>(),
+            topics: new Set<string>(),
+            relations: new Set<Relation>(),
+            selectedId: null,
+            routeFrom: null,
+            routeTo: null,
+          }),
+      routeMode: false,
+      tourIndex: null,
+      routeSequence: [],
+    });
+    void get().ensureMapLoaded(mapId);
+  },
+
+  search: persistedMaps[initialMapId]?.search ?? "",
+  setSearch: (s) => set({ search: s }),
+  searchScope: persistedState?.searchScope ?? "all",
+  setSearchScope: (s) => set({ searchScope: s }),
+
+  kinds: new Set(),
+  toggleKind: (k) => set((s) => ({ kinds: toggle(s.kinds, k) })),
+
+  topics: new Set(),
+  toggleTopic: (t) => set((s) => ({ topics: toggle(s.topics, t) })),
+  resetTopics: () => set({ topics: new Set() }),
+
+  relations: new Set(),
+  toggleRelation: (r) => set((s) => ({ relations: toggle(s.relations, r) })),
+
+  view: persistedState?.view ?? "dependency",
+  setView: (view) =>
+    set({
+      view,
+      edgeStyle: view === "cluster" ? "bezier" : "smooth",
+    }),
+  showSoftDeps: persistedState?.showSoftDeps ?? false,
+  toggleSoftDeps: () => set((s) => ({ showSoftDeps: !s.showSoftDeps })),
+  edgeStyle: persistedState?.edgeStyle ?? (persistedState?.view === "cluster" ? "bezier" : "smooth"),
+  setEdgeStyle: (edgeStyle) => set({ edgeStyle }),
+  edgeLabelStyle: persistedState?.edgeLabelStyle ?? "prose",
+  setEdgeLabelStyle: (edgeLabelStyle) => set({ edgeLabelStyle }),
+  focusMode: persistedState?.focusMode ?? false,
+  toggleFocusMode: () => set((s) => ({ focusMode: !s.focusMode })),
+  focusDepth: persistedState?.focusDepth ?? 1,
+  setFocusDepth: (d) => set({ focusDepth: Math.min(3, Math.max(1, d)) }),
+
+  showGrid: persistedState?.showGrid ?? true,
+  toggleGrid: () => set((s) => ({ showGrid: !s.showGrid })),
+  showRegions: persistedState?.showRegions ?? true,
+  toggleRegions: () => set((s) => ({ showRegions: !s.showRegions })),
+  showMinimap: persistedState?.showMinimap ?? true,
+  toggleMinimap: () => set((s) => ({ showMinimap: !s.showMinimap })),
+
+  selectedId: null,
+  select: (id) => set({ selectedId: id }),
+
+  routeKind: persistedState?.routeKind ?? "prereq",
+  setRouteKind: (routeKind) =>
+    set((s) => ({
+      routeKind,
+      // Switching modes invalidates an in-progress pick and any active tour.
+      routeMode: true,
+      routeFrom: null,
+      routeTo: routeKind === "prereq" ? s.selectedId : null,
+      tourIndex: null,
+      routeRunKey: s.routeRunKey + 1,
+    })),
+  routeIncludeProof: persistedState?.routeIncludeProof ?? false,
+  setRouteIncludeProof: (routeIncludeProof) =>
+    set((s) => ({ routeIncludeProof, tourIndex: null, routeRunKey: s.routeRunKey + 1 })),
+  routeMode: false,
+  routeFrom: null,
+  routeTo: null,
+  routeRunKey: 0,
+  toggleRouteMode: () =>
+    set((s) =>
+      s.routeMode
+        ? { routeMode: false, routeFrom: null, routeTo: null, tourIndex: null }
+        : s.routeKind === "prereq"
+          ? { routeMode: true, routeFrom: null, routeTo: s.selectedId, tourIndex: null }
+          : { routeMode: true, routeFrom: s.selectedId, routeTo: null, tourIndex: null },
+    ),
+  pickRoutePoint: (id) =>
+    set((s) => {
+      if (s.routeKind === "prereq") {
+        // One pick = the goal; its prerequisite cone resolves immediately.
+        return {
+          routeTo: id,
+          routeFrom: null,
+          routeMode: false,
+          tourIndex: null,
+          routeRunKey: s.routeRunKey + 1,
+        };
+      }
+      if (!s.routeFrom) {
+        if (s.routeTo && id !== s.routeTo) {
+          return {
+            routeFrom: id,
+            routeMode: false,
+            tourIndex: null,
+            routeRunKey: s.routeRunKey + 1,
+          };
+        }
+        return { routeFrom: id, routeTo: null };
+      }
+      if (id === s.routeFrom) return {};
+      return { routeTo: id, routeMode: false, tourIndex: null, routeRunKey: s.routeRunKey + 1 };
+    }),
+  setRouteEndpoint: (endpoint, id) =>
+    set((s) => {
+      const nextFrom = endpoint === "from" ? id : s.routeFrom;
+      const nextTo = endpoint === "to" ? id : s.routeTo;
+      const dedupedTo = nextFrom && nextTo === nextFrom ? null : nextTo;
+      const complete = Boolean(nextFrom && dedupedTo);
+      return {
+        routeFrom: nextFrom,
+        routeTo: dedupedTo,
+        routeMode: !complete,
+        tourIndex: null,
+        routeRunKey: complete ? s.routeRunKey + 1 : s.routeRunKey,
+      };
+    }),
+  swapRouteEndpoints: () =>
+    set((s) => {
+      const complete = Boolean(s.routeFrom && s.routeTo);
+      return {
+        routeFrom: s.routeTo,
+        routeTo: s.routeFrom,
+        routeMode: !complete,
+        tourIndex: null,
+        routeRunKey: complete ? s.routeRunKey + 1 : s.routeRunKey,
+      };
+    }),
+  clearRoute: () => set({ routeMode: false, routeFrom: null, routeTo: null, tourIndex: null, routeSequence: [] }),
+  replayRoute: () => set((s) => ({ routeRunKey: s.routeRunKey + 1 })),
+
+  routeSequence: [],
+  setRouteSequence: (ids) =>
+    set((s) => {
+      // Keep an active tour in bounds when the underlying sequence changes.
+      if (s.tourIndex === null) return { routeSequence: ids };
+      if (ids.length === 0) return { routeSequence: ids, tourIndex: null };
+      return { routeSequence: ids, tourIndex: Math.min(s.tourIndex, ids.length - 1) };
+    }),
+  tourIndex: null,
+  startTour: () =>
+    set((s) => {
+      if (s.routeSequence.length === 0) return {};
+      return { tourIndex: 0, selectedId: s.routeSequence[0] };
+    }),
+  tourStep: (delta) =>
+    set((s) => {
+      if (s.tourIndex === null || s.routeSequence.length === 0) return {};
+      const next = Math.max(0, Math.min(s.routeSequence.length - 1, s.tourIndex + delta));
+      return { tourIndex: next, selectedId: s.routeSequence[next] };
+    }),
+  endTour: () => set({ tourIndex: null }),
+
+  surface: initialSurface,
+  setSurface: (surface) => set({ surface }),
+
+  mode: persistedState?.mode ?? "explore",
+  setMode: (mode) =>
+    set((s) =>
+      mode === "paths"
+        ? // Enter Paths: begin planning unless a complete route is already set.
+          { mode, routeMode: !(s.routeFrom && s.routeTo) }
+        : // Back to Explore: clear the route overlay and any tour.
+          { mode: "explore", routeMode: false, routeFrom: null, routeTo: null, routeSequence: [], tourIndex: null },
+    ),
+
+  paletteOpen: false,
+  setPaletteOpen: (o) => set({ paletteOpen: o }),
+
+  /* ---- Authoring ---------------------------------------------------- */
+  editMode: false,
+  toggleEditMode: () =>
+    set((s) => ({
+      editMode: !s.editMode,
+      // Leaving edit mode closes any open editor.
+      nodeEditor: s.editMode ? null : s.nodeEditor,
+      editError: null,
+    })),
+  editedMaps: new Set(),
+  editSources: {},
+  nodeEditor: null,
+  editError: null,
+  openNodeEditor: (nodeEditor) => set({ nodeEditor, editError: null }),
+  closeNodeEditor: () => set({ nodeEditor: null, editError: null }),
+
+  commitNode: (draft) => {
+    if (!draft.label.trim()) {
+      const error = "A label is required.";
+      set({ editError: error });
+      return { ok: false, error };
+    }
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+
+    let id = draft.id;
+    let concepts: SourceGraph["concepts"];
+    if (id) {
+      const existing = base.concepts.find((c) => c.id === id);
+      const concept = applyDraft(draft, id, existing);
+      concepts = base.concepts.map((c) => (c.id === id ? concept : c));
+    } else {
+      const taken = new Set(base.concepts.map((c) => c.id));
+      id = uniqueSlug(slugify(draft.label), taken);
+      concepts = [...base.concepts, applyDraft(draft, id)];
+    }
+    const result = commitCandidate(get, set, { ...base, concepts }, id);
+    if (result.ok) set({ selectedId: id, nodeEditor: null });
+    return result;
+  },
+
+  deleteNode: (id) => {
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+    const candidate: SourceGraph = {
+      ...base,
+      // Cascade: drop the concept, its edges, and any proof step that referenced it.
+      concepts: base.concepts
+        .filter((c) => c.id !== id)
+        .map((c) =>
+          c.proof
+            ? {
+                ...c,
+                proof: {
+                  steps: c.proof.steps.map((step) => ({
+                    ...step,
+                    uses: step.uses.filter((u) => u !== id),
+                  })),
+                },
+              }
+            : c,
+        ),
+      edges: base.edges.filter((e) => e.source !== id && e.target !== id),
+    };
+    const result = commitCandidate(get, set, candidate);
+    if (result.ok && get().selectedId === id) set({ selectedId: null });
+    if (result.ok && get().nodeEditor?.mode === "edit") set({ nodeEditor: null });
+    return result;
+  },
+
+  addNodeEdge: (edge) => {
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+    return commitCandidate(get, set, addSourceEdge(base, edge));
+  },
+
+  updateNodeEdge: (key, patch) => {
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+    return commitCandidate(get, set, updateSourceEdge(base, key, patch));
+  },
+
+  removeNodeEdge: (key) => {
+    const base = workingSource(get());
+    if (!base) return { ok: false, error: "Map not loaded." };
+    return commitCandidate(get, set, removeSourceEdge(base, key));
+  },
+
+  currentEditSource: () => workingSource(get()),
+
+  importSource: (source) => commitCandidate(get, set, source),
+
+  revertMap: async () => {
+    const mapId = get().mapId;
+    const meta = get().mapMeta[mapId];
+    // Discard the owned fork on the server (revert = back to the public map).
+    if (meta?.role === "owner") {
+      clearCachedMap(meta.id);
+      try {
+        await deleteMap(meta.id);
+      } catch (e) {
+        console.warn(`[math-atlas] revert delete failed for "${mapId}":`, e);
+      }
+    }
+    set((s) => {
+      const editSources = { ...s.editSources };
+      delete editSources[mapId];
+      const editedMaps = new Set(s.editedMaps);
+      editedMaps.delete(mapId);
+      const loadedMaps = { ...s.loadedMaps };
+      delete loadedMaps[mapId];
+      const mapMeta = { ...s.mapMeta };
+      delete mapMeta[mapId];
+      return { editSources, editedMaps, loadedMaps, mapMeta, nodeEditor: null, editError: null };
+    });
+    try {
+      await get().loadCatalog();
+      await get().ensureMapLoaded(mapId);
+      return { ok: true };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      set({ editError: message });
+      return { ok: false, error: message };
+    }
+  },
+
+  userId: null,
+  setUserId: (id) => set({ userId: id }),
+
+  catalog: getCachedCatalog() ?? [],
+  mapMeta: {},
+  staleMap: null,
+
+  reloadActiveMap: async () => {
+    const slug = get().mapId;
+    const meta = get().mapMeta[slug];
+    if (meta) clearCachedMap(meta.id); // force a fresh fetch, not stale cache
+    set((s) => {
+      const loadedMaps = { ...s.loadedMaps };
+      delete loadedMaps[slug];
+      const mapMeta = { ...s.mapMeta };
+      delete mapMeta[slug];
+      const editSources = { ...s.editSources };
+      delete editSources[slug];
+      const editedMaps = new Set(s.editedMaps);
+      editedMaps.delete(slug);
+      return { loadedMaps, mapMeta, editSources, editedMaps, staleMap: null };
+    });
+    await get().loadCatalog();
+    await get().ensureMapLoaded(slug);
+  },
+
+  checkRemoteUpdate: async () => {
+    const slug = get().mapId;
+    const meta = get().mapMeta[slug];
+    if (!meta || !get().userId || get().staleMap) return;
+    try {
+      const entry = (await fetchCatalog()).find((e) => e.slug === slug && e.id === meta.id);
+      if (entry && meta.updated && new Date(entry.updated) > new Date(meta.updated)) {
+        set({ staleMap: slug });
+      }
+    } catch {
+      /* offline — ignore */
+    }
+  },
+
+  loadCatalog: async () => {
+    try {
+      const catalog = await fetchCatalog();
+      setCachedCatalog(catalog);
+      set({ catalog, editedMaps: editableSlugs(catalog) });
+    } catch (e) {
+      // Offline / backend asleep — keep the cached catalog if we have one.
+      const cached = getCachedCatalog();
+      if (cached && get().catalog.length === 0) set({ catalog: cached });
+      console.warn("[math-atlas] catalog load failed:", e);
+    }
+  },
+
+  onSessionChange: async () => {
+    // Sign in/out changes access — refresh the catalog and reload the active map.
+    await get().loadCatalog();
+    const mapId = get().mapId;
+    set((s) => {
+      const loadedMaps = { ...s.loadedMaps };
+      delete loadedMaps[mapId];
+      const mapMeta = { ...s.mapMeta };
+      delete mapMeta[mapId];
+      const editSources = { ...s.editSources };
+      delete editSources[mapId];
+      return { loadedMaps, mapMeta, editSources };
+    });
+    if (get().userId) await get().loadProgress(mapId);
+    else set({ progress: {} });
+    await get().ensureMapLoaded(mapId);
+  },
+
+  progress: {},
+
+  loadProgress: async (mapId) => {
+    if (!get().userId) return;
+    try {
+      const rows = await fetchProgress(mapId);
+      const byNode: Record<string, ProgressStatus> = {};
+      for (const r of rows) byNode[r.nodeId] = r.status;
+      set((s) => ({ progress: { ...s.progress, [mapId]: byNode } }));
+    } catch (e) {
+      console.warn(`[math-atlas] progress load failed for "${mapId}":`, e);
+    }
+  },
+
+  setNodeProgress: (mapId, nodeId, status) => {
+    // Optimistic local update (works signed out too, just not persisted).
+    set((s) => {
+      const forMap = { ...(s.progress[mapId] ?? {}) };
+      if (status === null) delete forMap[nodeId];
+      else forMap[nodeId] = status;
+      return { progress: { ...s.progress, [mapId]: forMap } };
+    });
+    if (!get().userId) return;
+    const op = status === null ? deleteProgress(mapId, nodeId) : putProgress(mapId, nodeId, status);
+    op.catch((e) => console.warn(`[math-atlas] progress save failed for "${nodeId}":`, e));
+  },
+}));
+
+useStore.subscribe((state) => {
+  rememberMapState(state);
+  writePersistedState(persistedStateFor(state));
+});

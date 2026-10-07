@@ -3,7 +3,7 @@
  * authored as prose with inline `$…$` math, so we surface the whole field (for
  * delimiter balance) plus the extracted math segments (for KaTeX parsing).
  */
-import type { CliMap } from "../core/model.ts";
+import type { CliMap } from "../core/model";
 
 export interface TexField {
   conceptId: string;
@@ -11,7 +11,7 @@ export interface TexField {
   tex: string;
 }
 
-const CONTENT_KEYS = ["statement", "formal", "formula", "intuition", "gloss"] as const;
+const CONTENT_KEYS = ["statement", "definition", "formal", "formula", "intuition", "gloss"] as const;
 
 export function scanTex(map: CliMap): TexField[] {
   const out: TexField[] = [];

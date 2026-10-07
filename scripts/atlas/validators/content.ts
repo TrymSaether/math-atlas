@@ -1,11 +1,12 @@
 /**
- * Editorial content lints layered on top of the strict schema. The schema
- * requires the canonical statement and enforces mechanical formatting; these
- * checks cover useful-but-optional pedagogy.
+ * Content completeness lints — "a definition with no definition", "a theorem
+ * with no statement". Tuned per kind so we nudge where it matters and stay quiet
+ * where a field is genuinely optional. Missing intuition on a core concept is a
+ * suggestion, not a warning.
  */
-import type { CliMap } from "../core/model.ts";
-import { type Diagnostic, suggestion } from "../diagnostics/diagnostic.ts";
-import { categoryOf } from "../../../shared/maps/nodeCategory.ts";
+import type { CliMap } from "../core/model";
+import { type Diagnostic, warning, suggestion } from "../diagnostics/diagnostic";
+import { categoryOf } from "../../../src/lib/nodeCategory";
 
 export function run(map: CliMap): Diagnostic[] {
   const out: Diagnostic[] = [];
@@ -24,6 +25,28 @@ export function run(map: CliMap): Diagnostic[] {
       conceptId: c.id,
       path: `concepts.${c.id}`,
     };
+
+    if (cat === "theorem" && !has("statement") && !has("formal")) {
+      out.push(
+        warning({
+          ...base,
+          code: "content/missing-statement",
+          message: `${c.kind} '${c.id}' has no statement or formal — readers see only a label`,
+          hint: "add content.statement (informal) or content.formal",
+        }),
+      );
+    }
+
+    if (cat === "definition" && !has("definition") && !has("statement") && !has("formal")) {
+      out.push(
+        warning({
+          ...base,
+          code: "content/missing-definition",
+          message: `definition '${c.id}' has no definition/statement body`,
+          hint: "add content.definition",
+        }),
+      );
+    }
 
     if (cat === "theorem" && !c.proof && c.priority !== "peripheral") {
       out.push(

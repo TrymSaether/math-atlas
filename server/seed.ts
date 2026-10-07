@@ -1,7 +1,7 @@
 /**
  * Seed the database with the built-in maps as public/system maps.
  *
- * The authored `src/maps/sources/*.source.json` files are the seed input (they stay
+ * The authored `src/data/maps/*.source.json` files are the seed input (they stay
  * in the repo as the source of record); this replaces the old build-maps step
  * that bundled `*.json` artifacts into the client. Each source is validated with
  * the same SourceGraphSchema + buildArtifact gate, then upserted as a map owned
@@ -12,13 +12,13 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { and, eq } from "drizzle-orm";
-import { db } from "./db/client.ts";
-import { maps, mapSources, user } from "./db/schema.ts";
-import { SourceGraphSchema } from "../shared/maps/source.ts";
-import { buildArtifact } from "../shared/maps/build.ts";
+import { db } from "./db/client";
+import { maps, mapSources, user } from "./db/schema";
+import { SourceGraphSchema } from "../src/data/sourceSchema";
+import { buildArtifact } from "../src/data/buildArtifact";
 
 const SYSTEM_USER_ID = "system";
-const MAPS_DIR = fileURLToPath(new URL("../src/maps/sources", import.meta.url));
+const MAPS_DIR = fileURLToPath(new URL("../src/data/maps", import.meta.url));
 
 // Curated catalog titles for the built-in maps (the source `label` is verbose).
 const CURATED_TITLES: Record<string, string> = {

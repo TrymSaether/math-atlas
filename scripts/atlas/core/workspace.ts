@@ -20,7 +20,7 @@ export function resolveWorkspace(): Workspace {
   const root = process.env.ATLAS_ROOT ?? REPO_ROOT;
   return {
     root,
-    mapsDir: process.env.MAPS_DIR ?? join(root, "src", "maps", "sources"),
+    mapsDir: process.env.MAPS_DIR ?? join(root, "src", "data", "maps"),
     publicDir: process.env.ATLAS_PUBLIC ?? join(root, "public"),
     cacheDir: join(root, "node_modules", ".cache", "atlas"),
   };

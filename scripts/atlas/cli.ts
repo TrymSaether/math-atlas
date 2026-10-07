@@ -6,23 +6,24 @@
  * terminal output or `--json`. Validation, graph, build, authoring and quality
  * tooling all hang off the same load path (core/context.ts → CliMap).
  */
-import { createContext, CliError, type FlagValue } from "./core/context.ts";
-import type { Command } from "./core/command.ts";
-import { setColor, bold, dim, cyan, red } from "./utils/color.ts";
-import { MARK } from "./utils/glyphs.ts";
+import { createContext, CliError, type FlagValue } from "./core/context";
+import type { Command } from "./core/command";
+import { setColor, bold, dim, cyan, red } from "./utils/color";
+import { MARK } from "./utils/glyphs";
 
-import validateCmd from "./commands/validate.ts";
-import statsCmd from "./commands/stats.ts";
-import findCmd from "./commands/find.ts";
-import explainCmd from "./commands/explain.ts";
-import graphCmd from "./commands/graph.ts";
-import doctorCmd from "./commands/doctor.ts";
-import coverageCmd from "./commands/coverage.ts";
-import newCmd from "./commands/new.ts";
-import formatCmd from "./commands/format.ts";
-import latexCmd from "./commands/latex.ts";
-import diagramCmd from "./commands/diagram.ts";
-import routeCmd from "./commands/route.ts";
+import validateCmd from "./commands/validate";
+import statsCmd from "./commands/stats";
+import findCmd from "./commands/find";
+import explainCmd from "./commands/explain";
+import graphCmd from "./commands/graph";
+import buildCmd from "./commands/build";
+import doctorCmd from "./commands/doctor";
+import coverageCmd from "./commands/coverage";
+import newCmd from "./commands/new";
+import formatCmd from "./commands/format";
+import latexCmd from "./commands/latex";
+import diagramCmd from "./commands/diagram";
+import routeCmd from "./commands/route";
 
 const COMMANDS: Command[] = [
   validateCmd,
@@ -31,6 +32,7 @@ const COMMANDS: Command[] = [
   explainCmd,
   graphCmd,
   routeCmd,
+  buildCmd,
   doctorCmd,
   coverageCmd,
   newCmd,
@@ -115,7 +117,7 @@ function printHelp(): void {
   for (const c of COMMANDS) {
     (groups.get(c.group) ?? groups.set(c.group, []).get(c.group)!).push(c);
   }
-  const order = ["Inspect", "Graph", "Author", "Quality"];
+  const order = ["Inspect", "Graph", "Build", "Author", "Quality"];
   for (const g of order) {
     const cmds = groups.get(g);
     if (!cmds) continue;

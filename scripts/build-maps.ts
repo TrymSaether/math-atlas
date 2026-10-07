@@ -16,14 +16,18 @@
  * Usage:
  *   npm run check:maps           validate every *.source.json
  *   npm run seed:maps            validate + seed the API database copy
+ *
+ * Running this file without `--check` still writes legacy `*.json` artifacts for
+ * tooling/debugging, but those artifacts are not the app's runtime source.
  */
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { join, basename } from "node:path";
 import { fileURLToPath } from "node:url";
-import { SourceGraphSchema } from "../shared/maps/source.ts";
-import { buildArtifact } from "../shared/maps/build.ts";
+import { SourceGraphSchema } from "../src/data/sourceSchema";
+import { buildArtifact } from "../src/data/buildArtifact";
 
-const MAPS_DIR = process.env.MAPS_DIR ?? fileURLToPath(new URL("../src/maps/sources", import.meta.url));
+const MAPS_DIR = process.env.MAPS_DIR ?? fileURLToPath(new URL("../src/data/maps", import.meta.url));
+const checkOnly = process.argv.includes("--check");
 
 function formatIssues(file: string, error: import("zod").ZodError): string {
   const lines = error.issues.map((i) => `  ✗ ${i.path.join(".") || "(root)"}: ${i.message}`);
@@ -38,7 +42,6 @@ function main(): void {
   }
 
   let failed = 0;
-  const sharedConcepts = new Map<string, { file: string; label: string; kind: string }>();
   for (const file of sources) {
     const raw = JSON.parse(readFileSync(join(MAPS_DIR, file), "utf8"));
     const parsed = SourceGraphSchema.safeParse(raw);
@@ -47,21 +50,16 @@ function main(): void {
       failed += 1;
       continue;
     }
-    for (const concept of parsed.data.concepts) {
-      const first = sharedConcepts.get(concept.id);
-      if (first && (first.label !== concept.label || first.kind !== concept.kind)) {
-        console.error(
-          `  ✗ shared concept '${concept.id}' differs: ${first.file} uses [${first.kind}] '${first.label}', ` +
-            `${file} uses [${concept.kind}] '${concept.label}'`,
-        );
-        failed += 1;
-      } else if (!first) {
-        sharedConcepts.set(concept.id, { file, label: concept.label, kind: concept.kind });
-      }
-    }
     const { artifact, warnings } = buildArtifact(parsed.data);
     for (const w of warnings) console.warn(`  ⚠ ${file}: ${w}`);
-    console.log(`  ✓ ${basename(file)}  [${artifact.nodes.length} nodes, ${artifact.edges.length} edges]`);
+    const outName = file.replace(/\.source\.json$/, ".json");
+    if (!checkOnly) {
+      writeFileSync(join(MAPS_DIR, outName), JSON.stringify(artifact) + "\n");
+    }
+    console.log(
+      `  ✓ ${basename(file)} → ${checkOnly ? "(check only)" : outName}  ` +
+        `[${artifact.nodes.length} nodes, ${artifact.edges.length} edges]`,
+    );
   }
 
   if (failed > 0) {

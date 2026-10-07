@@ -2,9 +2,9 @@
  * JSON skeletons for `atlas new`. Each returns a source-shaped object the strict
  * SourceGraphSchema will accept once the author fills the TeX in. Kind drives
  * which content facets are pre-stubbed (a theorem gets statement+proof, a
- * definition gets a canonical statement, etc.).
+ * definition gets definition, etc.).
  */
-import type { SourceConcept, SourceDomain } from "../../../shared/maps/source.ts";
+import type { SourceConcept, SourceDomain } from "../../../src/data/sourceSchema";
 
 export type NewKind =
   | "theorem"
@@ -23,7 +23,7 @@ export function conceptTemplate(kind: NewKind | string, id: string, domain: stri
     kind: kind as SourceConcept["kind"],
     domain,
     label,
-    content: { statement: "TODO", notation: [] },
+    content: { notation: [] },
     examples: [],
     assumptions: [],
     properties: [],
@@ -35,15 +35,15 @@ export function conceptTemplate(kind: NewKind | string, id: string, domain: stri
     case "theorem":
     case "lemma":
     case "corollary":
-      c.content.statement = "TODO: readable theorem statement.";
+      c.content.statement = "TODO: informal statement";
       c.content.formal = "TODO: $\\text{formal statement}$";
       c.proof = {
         steps: [{ role: "setup", content: "TODO: proof", uses: [] }],
       };
       break;
     case "definition":
-      c.content.statement = "TODO: readable definition.";
-      c.content.intuition = "TODO: intuition.";
+      c.content.definition = "TODO: genus and differentia";
+      c.content.intuition = "TODO: intuition";
       break;
     case "construction":
       c.content.statement = "TODO: what is built and from what";

@@ -1,17 +1,13 @@
 /**
- * better-auth configuration. Cookie sessions backed by the Drizzle Postgres
- * adapter. The HTTP handler is mounted at /api/auth/* in index.ts.
- *
- * The SPA and the API share one origin (this server serves both in prod; the
- * Vite proxy makes dev same-origin too), so sessions are plain same-origin
- * cookies and OAuth completes with a full-page redirect — no bearer tokens,
- * no popup.
+ * better-auth configuration. Email/password sessions backed by the Drizzle
+ * Postgres adapter. The HTTP handler is mounted at /api/auth/* in index.ts.
  */
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { db } from "./db/client.ts";
-import * as schema from "./db/schema.ts";
-import { env, isLocalhostOrigin } from "./env.ts";
+import { bearer, oauthPopup } from "better-auth/plugins";
+import { db } from "./db/client";
+import * as schema from "./db/schema";
+import { env, isLocalhostOrigin, webOrigins } from "./env";
 
 const socialProviders =
   env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
@@ -27,13 +23,19 @@ export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
   basePath: "/api/auth",
-  // The base origin is trusted by default. In dev the SPA origin is a different
-  // localhost port (the Vite server), so trust any localhost origin as well.
+  // The frontend (GitHub Pages) and API live on different origins in prod, so
+  // auth uses bearer tokens rather than cross-site cookies. Trust the configured
+  // web origins, plus any localhost port for dev / the preview harness.
   trustedOrigins: (request?: Request) => {
     const origin = request?.headers.get("origin");
-    return origin && isLocalhostOrigin(origin) ? [origin] : [];
+    const allowed = [...webOrigins];
+    if (origin && isLocalhostOrigin(origin)) allowed.push(origin);
+    return allowed;
   },
   database: drizzleAdapter(db, { provider: "pg", schema }),
   emailAndPassword: { enabled: true },
   socialProviders,
+  // OAuth completes in a popup so the API can hand the session token back to
+  // the cross-origin SPA, where the bearer client stores it for later requests.
+  plugins: [bearer(), oauthPopup()],
 });

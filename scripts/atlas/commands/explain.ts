@@ -1,17 +1,17 @@
 /**
  * `atlas explain <concept>` — a terminal study card for one concept: its
- * statement, formal form, intuition, notation, what it builds on (prerequisites),
+ * statement/definition, intuition, notation, what it builds on (prerequisites),
  * what depends on it, related concepts, its proof chain, and examples. TeX is
  * rendered to readable plain text.
  */
-import type { Command } from "../core/command.ts";
-import { loadMaps, CliError, type Ctx } from "../core/context.ts";
-import { findConcept, type CliMap } from "../core/model.ts";
-import { kindGlyph } from "../utils/glyphs.ts";
-import { swatch, bold, dim, cyan, gray, italic } from "../utils/color.ts";
-import { texToPlain, wrap } from "../utils/text.ts";
-import { fuzzySearch } from "../utils/fuzzy.ts";
-import type { ArtifactNode } from "../../../shared/maps/artifact.ts";
+import type { Command } from "../core/command";
+import { loadMaps, CliError, type Ctx } from "../core/context";
+import { findConcept, type CliMap } from "../core/model";
+import { kindGlyph } from "../utils/glyphs";
+import { swatch, bold, dim, cyan, gray, italic } from "../utils/color";
+import { texToPlain, wrap } from "../utils/text";
+import { fuzzySearch } from "../utils/fuzzy";
+import type { ArtifactNode } from "../../../src/data/artifactSchema";
 
 function section(title: string, body: string): void {
   process.stdout.write("\n  " + bold(title) + "\n");
@@ -66,6 +66,7 @@ function run(ctx: Ctx): number {
 
   if (c.statement) section("Statement", paragraph(c.statement));
   if (c.formal) section("Formal", paragraph(c.formal));
+  if (c.definition) section("Definition", paragraph(c.definition));
   if (c.formula) section("Formula", paragraph(c.formula));
   if (c.intuition) section("Intuition", italic(paragraph(c.intuition)));
   if (c.notation?.length) section("Notation", c.notation.map((n) => texToPlain(n)).join("   "));

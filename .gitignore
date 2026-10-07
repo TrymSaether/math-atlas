@@ -16,13 +16,17 @@ output
 .env.*
 !.env.example
 
+# Python virtualenv (local tooling, not part of the app)
+.venv
+
 # Editor / OS
 .DS_Store
 
-# Claude Code local state (launch.json is tracked)
-.claude/*
-!.claude/launch.json
+# Generated map artifacts — built from *.source.json by `npm run build:maps`.
+# The source files are the tracked truth; never commit the generated output.
+/src/data/maps/*.json
+!/src/data/maps/*.source.json
 
-# playwright
-.playwright-cli
-src/maps/sources/TMA4190-complete-reference.md
+# Local reference material (not part of the app)
+content/
+_archive/

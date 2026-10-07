@@ -6,9 +6,9 @@
  * cheap adjacency indices over the dependency DAG. Nothing here re-validates:
  * `fromSource` assumes the SourceGraph already parsed against SourceGraphSchema.
  */
-import { buildArtifact } from "../../../shared/maps/build.ts";
-import type { SourceGraph } from "../../../shared/maps/source.ts";
-import type { Artifact, ArtifactEdge, ArtifactNode } from "../../../shared/maps/artifact.ts";
+import { buildArtifact } from "../../../src/data/buildArtifact";
+import type { SourceGraph } from "../../../src/data/sourceSchema";
+import type { Artifact, ArtifactEdge, ArtifactNode } from "../../../src/data/artifactSchema";
 
 export interface CliMap {
   id: string;

@@ -3,15 +3,15 @@
  * Shows the best matches with kind glyph, domain swatch, degree, and a one-line
  * gloss; `--related` expands the top hit with its graph neighbours.
  */
-import type { Command } from "../core/command.ts";
-import { loadMaps, type Ctx } from "../core/context.ts";
-import type { CliMap } from "../core/model.ts";
-import { fuzzySearch } from "../utils/fuzzy.ts";
-import { kindGlyph } from "../utils/glyphs.ts";
-import { swatch, bold, dim, cyan, gray } from "../utils/color.ts";
-import { truncate, padEnd, texToPlain } from "../utils/text.ts";
-import { CliError } from "../core/context.ts";
-import type { ArtifactNode } from "../../../shared/maps/artifact.ts";
+import type { Command } from "../core/command";
+import { loadMaps, type Ctx } from "../core/context";
+import type { CliMap } from "../core/model";
+import { fuzzySearch } from "../utils/fuzzy";
+import { kindGlyph } from "../utils/glyphs";
+import { swatch, bold, dim, cyan, gray } from "../utils/color";
+import { truncate, padEnd, texToPlain } from "../utils/text";
+import { CliError } from "../core/context";
+import type { ArtifactNode } from "../../../src/data/artifactSchema";
 
 interface Hit {
   map: CliMap;
@@ -20,7 +20,7 @@ interface Hit {
 
 function gloss(node: ArtifactNode): string {
   const c = node.content;
-  const text = c.gloss ?? c.statement ?? c.intuition ?? "";
+  const text = c.gloss ?? c.statement ?? c.definition ?? c.intuition ?? "";
   return text ? truncate(texToPlain(text), 60) : "";
 }
 

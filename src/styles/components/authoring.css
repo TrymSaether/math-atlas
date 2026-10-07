@@ -1,0 +1,219 @@
+/* Authoring dialog form controls */
+.authoring-field {
+  display: block;
+}
+
+.authoring-label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--type-ui-caption);
+  font-weight: 650;
+  letter-spacing: var(--tracking-label-tight);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.authoring-hint {
+  margin-left: 8px;
+  font-family: var(--font-sans);
+  font-size: var(--type-ui-xs);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg-4);
+}
+
+.authoring-control {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--surface-2) 70%, var(--surface));
+  color: var(--fg-1);
+  padding: 8px 12px;
+  font-size: var(--type-ui-control);
+  line-height: 1.35;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--surface) 74%, transparent),
+    0 1px 2px rgba(15, 23, 42, 0.025);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard);
+}
+
+.authoring-control::placeholder {
+  color: var(--fg-4);
+}
+
+.authoring-control:hover {
+  border-color: color-mix(in srgb, var(--border-strong) 82%, transparent);
+  background: var(--surface);
+}
+
+.authoring-control:focus,
+.authoring-control:focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--accent) 74%, var(--accent-border));
+  background: var(--surface);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--surface) 76%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--accent-border) 74%, transparent),
+    var(--shadow-2);
+}
+
+textarea.authoring-control {
+  min-height: 64px;
+  resize: vertical;
+}
+
+.authoring-control-mono {
+  font-family: var(--font-mono);
+  font-size: var(--type-ui-sm);
+  letter-spacing: var(--tracking-code);
+}
+
+.authoring-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: left;
+}
+
+.authoring-select-trigger[aria-expanded="true"] {
+  border-color: color-mix(in srgb, var(--accent) 74%, var(--accent-border));
+  background: var(--surface);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--surface) 76%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--accent-border) 74%, transparent),
+    var(--shadow-2);
+}
+
+.authoring-select-trigger-compact {
+  min-height: 32px;
+  border-radius: var(--radius-sm);
+  padding: 5px 9px;
+  font-size: var(--type-ui-xs);
+}
+
+.authoring-select-popover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 60;
+  max-height: min(300px, 42vh);
+  overflow-y: auto;
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--radius-lg);
+  background: var(--chrome-bg-strong);
+  padding: 5px;
+  box-shadow:
+    var(--chrome-shadow-popover),
+    inset 0 1px 0 var(--chrome-highlight);
+  backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur-popover));
+  -webkit-backdrop-filter: saturate(var(--chrome-saturate)) blur(var(--chrome-blur-popover));
+}
+
+.authoring-select-option {
+  display: flex;
+  min-height: 34px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: var(--radius-md);
+  padding: 7px 10px;
+  text-align: left;
+  color: var(--fg-2);
+  font-size: var(--type-ui-sm);
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+
+.authoring-select-option:hover {
+  background: var(--chrome-hover);
+  color: var(--fg-1);
+}
+
+.authoring-select-option.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.authoring-chip,
+.authoring-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg-2);
+  font-weight: 650;
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    border-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard),
+    box-shadow var(--dur-micro) var(--ease-standard),
+    transform var(--dur-micro) var(--ease-standard);
+}
+
+.authoring-chip {
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: var(--type-ui-xs);
+  text-transform: capitalize;
+}
+
+.authoring-chip:hover,
+.authoring-action:hover {
+  border-color: var(--border-strong);
+  background: var(--chrome-hover);
+  color: var(--fg-1);
+}
+
+.authoring-chip:focus-visible,
+.authoring-action:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.authoring-chip.is-active {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.authoring-action:active {
+  transform: scale(0.98);
+}
+
+.authoring-action-primary {
+  border-color: color-mix(in srgb, var(--accent) 88%, var(--border));
+  background: var(--accent);
+  color: var(--fg-on-color);
+}
+
+.authoring-action-primary:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--fg-on-color);
+  filter: brightness(1.06);
+}
+
+.authoring-action-danger {
+  border-color: color-mix(in srgb, var(--danger) 24%, var(--border));
+  background: color-mix(in srgb, var(--danger) 7%, transparent);
+  color: var(--danger);
+}
+
+.authoring-action-danger:hover {
+  border-color: color-mix(in srgb, var(--danger) 42%, var(--border));
+  background: color-mix(in srgb, var(--danger) 11%, transparent);
+  color: var(--danger);
+}

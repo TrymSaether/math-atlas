@@ -4,9 +4,9 @@
  * "fejer_kernel should relate to cesaro_mean" case. Suggestions are advisory and
  * hidden from `validate` unless `--suggest` is passed.
  */
-import type { CliMap } from "../core/model.ts";
-import { type Diagnostic, suggestion } from "../diagnostics/diagnostic.ts";
-import { texToPlain } from "../utils/text.ts";
+import type { CliMap } from "../core/model";
+import { type Diagnostic, suggestion } from "../diagnostics/diagnostic";
+import { texToPlain } from "../utils/text";
 
 /** Labels this short or this generic produce noise, so we skip them as needles. */
 const STOPWORDS = new Set([
@@ -27,7 +27,7 @@ const STOPWORDS = new Set([
 function conceptText(concept: { content?: Record<string, unknown>; proof?: { steps: { content: string }[] } }): string {
   const c = concept.content ?? {};
   const parts: string[] = [];
-  for (const k of ["statement", "formal", "intuition", "gloss"]) {
+  for (const k of ["statement", "definition", "formal", "intuition", "gloss"]) {
     const v = c[k];
     if (typeof v === "string") parts.push(v);
   }

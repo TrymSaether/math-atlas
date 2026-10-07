@@ -1,4 +1,4 @@
-import { defineConfig } from "vitest/config";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
@@ -7,24 +7,20 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  test: {
-    // Nested assistant worktrees are separate checkouts, not part of this suite.
-    exclude: ["**/node_modules/**", "**/.git/**", "**/.claude/worktrees/**"],
-  },
+  base: "/math-atlas/",
   plugins: [react(), tailwindcss()],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@shared": path.resolve(__dirname, "./shared"),
-    },
+    alias: { "@": path.resolve(__dirname, "./src") },
     // better-auth/react must share the app's single React instance, otherwise
     // its hooks trigger "Invalid hook call" from a duplicate copy.
     dedupe: ["react", "react-dom"],
   },
   build: {
-    // The on-demand sandbox intentionally bundles mathjs, MathLive, and Mafs.
-    // Its isolated lazy chunk is larger than Vite's generic application limit.
-    chunkSizeWarningLimit: 1600,
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, "index.html"),
+      },
+    },
   },
   server: {
     host: true,
