@@ -1,0 +1,201 @@
+- generic [ref=e3]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - generic:
+          - img:
+            - generic:
+              - button "Edge from cluster-bubble-continuity to cluster-bubble-spaces_constructions"
+              - button "Edge from cluster-bubble-compactness to cluster-bubble-spaces_constructions" [ref=e8] [cursor=pointer]
+              - button "Edge from cluster-bubble-connectedness to cluster-bubble-spaces_constructions" [ref=e11] [cursor=pointer]
+              - button "Edge from cluster-bubble-foundations to cluster-bubble-spaces_constructions"
+              - button "Edge from cluster-bubble-foundations to cluster-bubble-continuity"
+              - button "Edge from cluster-bubble-spaces_constructions to cluster-bubble-continuity"
+              - button "Edge from cluster-bubble-spaces_constructions to cluster-bubble-compactness" [ref=e14] [cursor=pointer]
+              - button "Edge from cluster-bubble-continuity to cluster-bubble-compactness" [ref=e17] [cursor=pointer]
+              - button "Edge from cluster-bubble-spaces_constructions to cluster-bubble-connectedness" [ref=e20] [cursor=pointer]
+              - button "Edge from cluster-bubble-continuity to cluster-bubble-connectedness" [ref=e23] [cursor=pointer]
+              - button "Edge from cluster-bubble-spaces_constructions to cluster-bubble-separation_countability" [ref=e26] [cursor=pointer]
+              - button "Edge from cluster-bubble-separation_countability to cluster-bubble-spaces_constructions" [ref=e29] [cursor=pointer]
+              - button "Edge from cluster-bubble-separation_countability to cluster-bubble-compactness"
+              - button "Edge from cluster-bubble-spaces_constructions to cluster-bubble-examples" [ref=e32] [cursor=pointer]
+              - button "Edge from cluster-bubble-continuity to cluster-bubble-examples" [ref=e35] [cursor=pointer]
+              - button "Edge from cluster-bubble-compactness to cluster-bubble-examples" [ref=e38] [cursor=pointer]
+              - button "Edge from cluster-bubble-examples to cluster-bubble-compactness" [ref=e41] [cursor=pointer]
+              - button "Edge from cluster-bubble-continuity to cluster-bubble-separation_countability" [ref=e44] [cursor=pointer]
+              - button "Edge from cluster-bubble-proof_methods to cluster-bubble-compactness" [ref=e47] [cursor=pointer]
+              - button "Edge from cluster-bubble-foundations to cluster-bubble-compactness" [ref=e50] [cursor=pointer]
+              - button "Edge from cluster-bubble-examples to cluster-bubble-spaces_constructions" [ref=e53] [cursor=pointer]
+              - button "Edge from cluster-bubble-proof_methods to cluster-bubble-separation_countability" [ref=e56] [cursor=pointer]
+              - button "Edge from cluster-bubble-proof_methods to cluster-bubble-spaces_constructions" [ref=e59] [cursor=pointer]
+              - button "Edge from cluster-bubble-compactness to cluster-bubble-proof_methods" [ref=e62] [cursor=pointer]
+              - button "Edge from cluster-bubble-foundations to cluster-bubble-proof_methods" [ref=e65] [cursor=pointer]
+              - button "Edge from cluster-bubble-spaces_constructions to cluster-bubble-proof_methods" [ref=e68] [cursor=pointer]
+              - button "Edge from cluster-bubble-examples to cluster-bubble-proof_methods"
+              - button "Edge from cluster-bubble-examples to cluster-bubble-separation_countability" [ref=e71] [cursor=pointer]
+              - button "Edge from cluster-bubble-examples to cluster-bubble-connectedness" [ref=e74] [cursor=pointer]
+              - button "Edge from cluster-bubble-connectedness to cluster-bubble-examples" [ref=e77] [cursor=pointer]
+              - button "Edge from cluster-bubble-separation_countability to cluster-bubble-examples" [ref=e80] [cursor=pointer]
+          - generic:
+            - button "4 concepts Foundations set function topology axioms axiom of choice" [ref=e83] [cursor=pointer]:
+              - generic [ref=e84]:
+                - generic [ref=e85]:
+                  - generic [ref=e86]: 4 concepts
+                  - img [ref=e87]
+                - generic [ref=e90]:
+                  - generic [ref=e91]: Foundations
+                  - list [ref=e92]:
+                    - listitem [ref=e93]: set
+                    - listitem [ref=e94]: function
+                    - listitem [ref=e95]: topology axioms
+                    - listitem [ref=e96]: axiom of choice
+            - button "32 concepts Spaces & Constructions Topology complete metric assumption topological space pseudometric space" [ref=e97] [cursor=pointer]:
+              - generic [ref=e98]:
+                - generic [ref=e99]:
+                  - generic [ref=e100]: 32 concepts
+                  - img [ref=e101]
+                - generic [ref=e104]:
+                  - generic [ref=e105]: Spaces & Constructions
+                  - list [ref=e106]:
+                    - listitem [ref=e107]: Topology
+                    - listitem [ref=e108]: complete metric assumption
+                    - listitem [ref=e109]: topological space
+                    - listitem [ref=e110]: pseudometric space
+            - button "3 concepts Continuity continuity homeomorphism convergence" [ref=e111] [cursor=pointer]:
+              - generic [ref=e112]:
+                - generic [ref=e113]:
+                  - generic [ref=e114]: 3 concepts
+                  - img [ref=e115]
+                - generic [ref=e118]:
+                  - generic [ref=e119]: Continuity
+                  - list [ref=e120]:
+                    - listitem [ref=e121]: continuity
+                    - listitem [ref=e122]: homeomorphism
+                    - listitem [ref=e123]: convergence
+            - button "18 concepts Compactness compactness assumption local compactness assumption compact space locally compact space" [ref=e124] [cursor=pointer]:
+              - generic [ref=e125]:
+                - generic [ref=e126]:
+                  - generic [ref=e127]: 18 concepts
+                  - img [ref=e128]
+                - generic [ref=e131]:
+                  - generic [ref=e132]: Compactness
+                  - list [ref=e133]:
+                    - listitem [ref=e134]: compactness assumption
+                    - listitem [ref=e135]: local compactness assumption
+                    - listitem [ref=e136]: compact space
+                    - listitem [ref=e137]: locally compact space
+            - button "4 concepts Connectedness connected space path-connected space connectedness path connectedness" [ref=e138] [cursor=pointer]:
+              - generic [ref=e139]:
+                - generic [ref=e140]:
+                  - generic [ref=e141]: 4 concepts
+                  - img [ref=e142]
+                - generic [ref=e145]:
+                  - generic [ref=e146]: Connectedness
+                  - list [ref=e147]:
+                    - listitem [ref=e148]: connected space
+                    - listitem [ref=e149]: path-connected space
+                    - listitem [ref=e150]: connectedness
+                    - listitem [ref=e151]: path connectedness
+            - button "18 concepts Separation & Countability Hausdorff space regular space normal space second-countable space" [ref=e152] [cursor=pointer]:
+              - generic [ref=e153]:
+                - generic [ref=e154]:
+                  - generic [ref=e155]: 18 concepts
+                  - img [ref=e156]
+                - generic [ref=e159]:
+                  - generic [ref=e160]: Separation & Countability
+                  - list [ref=e161]:
+                    - listitem [ref=e162]: Hausdorff space
+                    - listitem [ref=e163]: regular space
+                    - listitem [ref=e164]: normal space
+                    - listitem [ref=e165]: second-countable space
+            - 'button "18 concepts Proof Methods Heine-Borel step: compact cube Heine-Borel step: closed subset open cover argument finite subcover argument" [ref=e166] [cursor=pointer]':
+              - generic [ref=e167]:
+                - generic [ref=e168]:
+                  - generic [ref=e169]: 18 concepts
+                  - img [ref=e170]
+                - generic [ref=e173]:
+                  - generic [ref=e174]: Proof Methods
+                  - list [ref=e175]:
+                    - listitem [ref=e176]: "Heine-Borel step: compact cube"
+                    - listitem [ref=e177]: "Heine-Borel step: closed subset"
+                    - listitem [ref=e178]: open cover argument
+                    - listitem [ref=e179]: finite subcover argument
+            - button "22 concepts Examples real line with standard topology Euclidean space discrete space indiscrete space" [ref=e180] [cursor=pointer]:
+              - generic [ref=e181]:
+                - generic [ref=e182]:
+                  - generic [ref=e183]: 22 concepts
+                  - img [ref=e184]
+                - generic [ref=e187]:
+                  - generic [ref=e188]: Examples
+                  - list [ref=e189]:
+                    - listitem [ref=e190]: real line with standard topology
+                    - listitem [ref=e191]: Euclidean space
+                    - listitem [ref=e192]: discrete space
+                    - listitem [ref=e193]: indiscrete space
+      - img [ref=e194]
+      - generic [ref=e196]:
+        - button "zoom in" [ref=e197] [cursor=pointer]:
+          - img [ref=e198]
+        - button "zoom out" [ref=e200] [cursor=pointer]:
+          - img [ref=e201]
+        - button "fit view" [ref=e203] [cursor=pointer]:
+          - img [ref=e204]
+    - generic [ref=e207]:
+      - generic [ref=e208]:
+        - button "Overview" [pressed] [ref=e209] [cursor=pointer]:
+          - img [ref=e210]
+          - generic [ref=e212]: Overview
+        - button "Dependency" [ref=e213] [cursor=pointer]:
+          - img [ref=e214]
+          - generic [ref=e218]: Dependency
+        - button "Cluster" [ref=e219] [cursor=pointer]:
+          - img [ref=e220]
+          - generic [ref=e224]: Cluster
+      - button "Focus" [ref=e226] [cursor=pointer]:
+        - img [ref=e227]
+        - generic [ref=e229]: Focus
+      - generic:
+        - button "1" [pressed]
+        - button "2"
+        - button "3"
+      - button "From" [disabled] [ref=e231]:
+        - img [ref=e232]
+        - generic [ref=e235]: From
+      - button "To" [disabled] [ref=e236]:
+        - img [ref=e237]
+        - generic [ref=e240]: To
+      - button "Plan" [disabled] [ref=e241]:
+        - img [ref=e242]
+        - generic [ref=e246]: Plan
+      - button "Clear route" [disabled] [ref=e247]:
+        - img [ref=e248]
+      - button "Zoom out" [ref=e252] [cursor=pointer]:
+        - img [ref=e253]
+      - button "Fit graph" [ref=e254] [cursor=pointer]: 86%
+      - button "Zoom in" [ref=e255] [cursor=pointer]:
+        - img [ref=e256]
+  - banner:
+    - generic [ref=e257]:
+      - generic [ref=e258]:
+        - generic [ref=e259]:
+          - img [ref=e260]
+          - generic [ref=e268]: Math Atlas
+        - button "Field selector" [ref=e269] [cursor=pointer]:
+          - generic [ref=e270]: Topology
+          - img [ref=e271]
+      - generic [ref=e273]:
+        - button "Open search" [ref=e274] [cursor=pointer]:
+          - img [ref=e275]
+          - generic [ref=e278]: Search the atlas
+          - generic [ref=e279]: ⌘K
+        - button "Filters" [ref=e281] [cursor=pointer]:
+          - img [ref=e282]
+        - generic [ref=e283]:
+          - button "Zoom out" [ref=e284] [cursor=pointer]:
+            - img [ref=e285]
+          - button "Zoom in" [ref=e287] [cursor=pointer]:
+            - img [ref=e288]
+          - button "Fit to view" [ref=e290] [cursor=pointer]:
+            - img [ref=e291]
+        - button "Switch to chalkboard theme" [ref=e293] [cursor=pointer]:
+          - img [ref=e294]

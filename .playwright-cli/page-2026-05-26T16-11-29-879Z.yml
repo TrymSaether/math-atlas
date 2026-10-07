@@ -1,0 +1,161 @@
+- generic [ref=e3]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - generic:
+          - img
+          - generic:
+            - generic:
+              - generic:
+                - generic: 4 concepts
+                - img
+              - generic:
+                - generic: Foundations
+                - list:
+                  - listitem: set
+                  - listitem: function
+                  - listitem: topology axioms
+                  - listitem: axiom of choice
+            - generic:
+              - generic:
+                - generic: 32 concepts
+                - img
+              - generic:
+                - generic: Spaces & Constructions
+                - list:
+                  - listitem: Topology
+                  - listitem: complete metric assumption
+                  - listitem: topological space
+                  - listitem: pseudometric space
+            - generic:
+              - generic:
+                - generic: 3 concepts
+                - img
+              - generic:
+                - generic: Continuity
+                - list:
+                  - listitem: continuity
+                  - listitem: homeomorphism
+                  - listitem: convergence
+            - generic:
+              - generic:
+                - generic: 18 concepts
+                - img
+              - generic:
+                - generic: Compactness
+                - list:
+                  - listitem: compactness assumption
+                  - listitem: local compactness assumption
+                  - listitem: compact space
+                  - listitem: locally compact space
+            - generic:
+              - generic:
+                - generic: 4 concepts
+                - img
+              - generic:
+                - generic: Connectedness
+                - list:
+                  - listitem: connected space
+                  - listitem: path-connected space
+                  - listitem: connectedness
+                  - listitem: path connectedness
+            - generic:
+              - generic:
+                - generic: 18 concepts
+                - img
+              - generic:
+                - generic: Separation & Countability
+                - list:
+                  - listitem: Hausdorff space
+                  - listitem: regular space
+                  - listitem: normal space
+                  - listitem: second-countable space
+            - generic:
+              - generic:
+                - generic: 18 concepts
+                - img
+              - generic:
+                - generic: Proof Methods
+                - list:
+                  - listitem: "Heine-Borel step: compact cube"
+                  - listitem: "Heine-Borel step: closed subset"
+                  - listitem: open cover argument
+                  - listitem: finite subcover argument
+            - generic:
+              - generic:
+                - generic: 22 concepts
+                - img
+              - generic:
+                - generic: Examples
+                - list:
+                  - listitem: real line with standard topology
+                  - listitem: Euclidean space
+                  - listitem: discrete space
+                  - listitem: indiscrete space
+      - img [ref=e8]
+      - generic [ref=e10]:
+        - button "zoom in" [ref=e11] [cursor=pointer]:
+          - img [ref=e12]
+        - button "zoom out" [ref=e14] [cursor=pointer]:
+          - img [ref=e15]
+        - button "fit view" [ref=e17] [cursor=pointer]:
+          - img [ref=e18]
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - button "Overview" [pressed] [ref=e23] [cursor=pointer]:
+          - img [ref=e24]
+          - generic [ref=e26]: Overview
+        - button "Dependency" [ref=e27] [cursor=pointer]:
+          - img [ref=e28]
+          - generic [ref=e32]: Dependency
+        - button "Cluster" [ref=e33] [cursor=pointer]:
+          - img [ref=e34]
+          - generic [ref=e38]: Cluster
+      - button "Focus" [ref=e40] [cursor=pointer]:
+        - img [ref=e41]
+        - generic [ref=e43]: Focus
+      - generic:
+        - button "1" [pressed]
+        - button "2"
+        - button "3"
+      - button "From" [disabled] [ref=e45]:
+        - img [ref=e46]
+        - generic [ref=e49]: From
+      - button "To" [disabled] [ref=e50]:
+        - img [ref=e51]
+        - generic [ref=e54]: To
+      - button "Plan" [disabled] [ref=e55]:
+        - img [ref=e56]
+        - generic [ref=e60]: Plan
+      - button "Clear route" [disabled] [ref=e61]:
+        - img [ref=e62]
+      - button "Zoom out" [ref=e66] [cursor=pointer]:
+        - img [ref=e67]
+      - button "Fit graph" [ref=e68] [cursor=pointer]: 86%
+      - button "Zoom in" [ref=e69] [cursor=pointer]:
+        - img [ref=e70]
+  - banner:
+    - generic [ref=e71]:
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - img [ref=e74]
+          - generic [ref=e82]: Math Atlas
+        - button "Field selector" [ref=e83] [cursor=pointer]:
+          - generic [ref=e84]: Topology
+          - img [ref=e85]
+      - generic [ref=e87]:
+        - button "Open search" [ref=e88] [cursor=pointer]:
+          - img [ref=e89]
+          - generic [ref=e92]: Search the atlas
+          - generic [ref=e93]: ⌘K
+        - button "Filters" [ref=e95] [cursor=pointer]:
+          - img [ref=e96]
+        - generic [ref=e97]:
+          - button "Zoom out" [ref=e98] [cursor=pointer]:
+            - img [ref=e99]
+          - button "Zoom in" [ref=e101] [cursor=pointer]:
+            - img [ref=e102]
+          - button "Fit to view" [ref=e104] [cursor=pointer]:
+            - img [ref=e105]
+        - button "Switch to chalkboard theme" [ref=e107] [cursor=pointer]:
+          - img [ref=e108]

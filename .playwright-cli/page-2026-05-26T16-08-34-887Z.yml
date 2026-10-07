@@ -1,0 +1,28 @@
+- generic [ref=e3]:
+  - main [ref=e4]:
+    - generic [ref=e5]: Loading atlas…
+  - banner:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - img [ref=e9]
+          - generic [ref=e17]: Math Atlas
+        - button "Field selector" [ref=e18] [cursor=pointer]:
+          - generic [ref=e19]: Topology
+          - img [ref=e20]
+      - generic [ref=e22]:
+        - button "Open search" [ref=e23] [cursor=pointer]:
+          - img [ref=e24]
+          - generic [ref=e27]: Search the atlas
+          - generic [ref=e28]: ⌘K
+        - button "Filters" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+        - generic [ref=e32]:
+          - button "Zoom out" [ref=e33] [cursor=pointer]:
+            - img [ref=e34]
+          - button "Zoom in" [ref=e36] [cursor=pointer]:
+            - img [ref=e37]
+          - button "Fit to view" [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+        - button "Switch to chalkboard theme" [ref=e42] [cursor=pointer]:
+          - img [ref=e43]
