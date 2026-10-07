@@ -9,28 +9,47 @@
           stored = localStorage.getItem("math-map-theme");
         } catch {}
         const prefersDark = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)").matches : false;
-        // Signature pair only: Atlas Light (paper) + Atlas Dark (chalkboard).
-        // Any retired theme id falls back to the system preference.
-        const theme =
-          stored === "paper" || stored === "light"
+        const schemes = {
+          paper: "light",
+          chalkboard: "dark",
+          manuscript: "light",
+          nocturne: "dark",
+          lagoon: "light",
+          deepsea: "dark",
+          blossom: "light",
+          aubergine: "dark",
+          prism: "light",
+          neon: "dark",
+          journal: "light",
+          seminar: "dark",
+        };
+        const theme = Object.prototype.hasOwnProperty.call(schemes, stored)
+          ? stored
+          : stored === "light"
             ? "paper"
-            : stored === "chalkboard" || stored === "dark"
+            : stored === "dark"
               ? "chalkboard"
               : prefersDark
                 ? "chalkboard"
                 : "paper";
-        document.documentElement.classList.toggle("dark", theme === "chalkboard");
+        document.documentElement.classList.toggle("dark", schemes[theme] === "dark");
         document.documentElement.dataset.theme = theme;
       })();
     </script>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/atlas-assets/logo-mark.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Math Atlas</title>
+    <title>Math Atlas · A Knowledge Operating System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+      integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+"
+      crossorigin="anonymous"
     />
   </head>
   <body class="antialiased overflow-hidden">
